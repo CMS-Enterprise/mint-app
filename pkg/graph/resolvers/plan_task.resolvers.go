@@ -13,50 +13,48 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // PlanTaskToggleComplete is the resolver for the planTaskToggleComplete field.
-func (r *mutationResolver) PlanTaskToggleComplete(ctx context.Context, planTaskID uuid.UUID, isComplete bool) (*model.PlanTask, error) {
+func (r *mutationResolver) PlanTaskToggleComplete(ctx context.Context, planTaskID uuid.UUID, isComplete bool) (*models.PlanTask, error) {
 	// Stub: return a fake task so frontend can test; State and *UserAccount fields are resolved by field resolvers.
-	status := model.PlanTaskStatusToDo
+	status := models.PlanTaskStatusToDo
 	if isComplete {
-		status = model.PlanTaskStatusComplete
+		status = models.PlanTaskStatusComplete
 	}
 	now := time.Now()
-	return &model.PlanTask{
-		ID:          planTaskID,
-		Key:         model.PlanTaskKeyModelPlan,
-		Status:      status,
-		CreatedBy:   planTaskID,
-		CreatedDts:  now,
-		ModifiedDts: &now,
-	}, nil
+	task := models.NewPlanTask(planTaskID, uuid.Nil, models.PlanTaskKeyModelPlan, status)
+	task.ID = planTaskID
+	task.CreatedDts = now
+	task.ModifiedDts = &now
+	return task, nil
 }
 
 // State is the resolver for the state field.
-func (r *planTaskResolver) State(ctx context.Context, obj *model.PlanTask) (model.PlanTaskState, error) {
+func (r *planTaskResolver) State(ctx context.Context, obj *models.PlanTask) (model.PlanTaskState, error) {
 	if obj == nil {
 		return model.PlanTaskStateToDo, nil
 	}
-	if obj.Status == model.PlanTaskStatusComplete {
+	if obj.Status == models.PlanTaskStatusComplete {
 		return model.PlanTaskStateComplete, nil
 	}
 	return model.PlanTaskStateToDo, nil
 }
 
 // CompletedByUserAccount is the resolver for the completedByUserAccount field.
-func (r *planTaskResolver) CompletedByUserAccount(ctx context.Context, obj *model.PlanTask) (*authentication.UserAccount, error) {
+func (r *planTaskResolver) CompletedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error) {
 	return nil, nil
 }
 
 // CreatedByUserAccount is the resolver for the createdByUserAccount field.
-func (r *planTaskResolver) CreatedByUserAccount(ctx context.Context, obj *model.PlanTask) (*authentication.UserAccount, error) {
+func (r *planTaskResolver) CreatedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error) {
 	// Stub: return empty account so frontend can test until user loader is wired.
 	return &authentication.UserAccount{}, nil
 }
 
 // ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
-func (r *planTaskResolver) ModifiedByUserAccount(ctx context.Context, obj *model.PlanTask) (*authentication.UserAccount, error) {
+func (r *planTaskResolver) ModifiedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error) {
 	return nil, nil
 }
 

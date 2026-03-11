@@ -1,0 +1,25 @@
+INSERT INTO plan_task (
+    id,
+    model_plan_id,
+    key,
+    status,
+    created_by
+)
+VALUES (
+    :id,
+    :model_plan_id,
+    :key,
+    :status,
+    :created_by
+)
+RETURNING
+    id,
+    model_plan_id,
+    key,
+    status,
+    completed_by,
+    completed_dts,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;
