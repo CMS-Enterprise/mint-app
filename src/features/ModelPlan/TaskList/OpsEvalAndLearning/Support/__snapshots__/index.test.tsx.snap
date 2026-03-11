@@ -621,7 +621,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               data-testid="label"
               for="ops-eval-and-learning-iddoc-support"
             >
-              Are you planning to use IDDOC support?
+              Do you anticipate needing the 4i and/or ACO-OS systems?
             </label>
             <div
               class="usa-alert usa-alert--info flex mto-warning"
@@ -651,15 +651,7 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
             <p
               class="text-base margin-y-1"
             >
-              IDDOC is the contract that supports the 
-              <a
-                class="usa-link deep-underline"
-                data-discover="true"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning?solution=accountable-care-organization&section=about"
-              >
-                ACO-OS (Accountable Care Organization Operating System)
-              </a>
-               and 
+              Most often used in the implementation and operations of ACO and kidney models, the 
               <a
                 class="usa-link deep-underline"
                 data-discover="true"
@@ -667,12 +659,20 @@ exports[`Model Plan Ops Eval and Learning > matches snapshot 1`] = `
               >
                 4i (4innovation)
               </a>
-               systems. These systems can provide support for design, development, operations, and maintenance of a model. 4i and ACO-OS are most often used in the implementation and operations of ACO and kidney models.
+               and 
+              <a
+                class="usa-link deep-underline"
+                data-discover="true"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list/ops-eval-and-learning?solution=accountable-care-organization&section=about"
+              >
+                ACO-OS (Accountable Care Organization Operating System)
+              </a>
+               systems can provide support for the data exchange and operational interactions for a model.
             </p>
             <p
               class="text-base margin-y-1 margin-top-2"
             >
-              If you select yes, you will be asked to complete an additional questionnaire about technical details needed for the 4i and ACO-OS.
+              If you select yes, you will be asked to complete an additional questionnaire about technical details needed for the 4i and ACO-OS systems.
             </p>
             <fieldset
               class="usa-fieldset"
