@@ -167,6 +167,13 @@ BEGIN
     modified_by_id = h_new -> 'modified_by';
     plan_id        = h_new -> 'model_plan_id';
 
+    -- Early exit: if nothing actually changed, there is nothing to update.
+    -- Without this guard the DELETE below would wipe all reasons for this
+    -- trigger_table + plan while the INSERT would add nothing back.
+    IF array_length(changedKeys, 1) IS NULL THEN
+        RETURN NULL;
+    END IF;
+
     -- Step 1: Get per-field reasons for the current row state
     WITH Reasons AS (
         SELECT *

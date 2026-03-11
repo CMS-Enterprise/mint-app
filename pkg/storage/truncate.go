@@ -65,6 +65,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNAnalyzedAudit),
 		string(models.TNTag),
 		string(models.TNNdaAgreement),
+		string(models.TNUserNotificationPreferences),
 		string(models.TNUserNotification),
 		string(models.TNActivity),
 		string(models.TNUserViewCustomization),
@@ -76,8 +77,6 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 
 		// Core tables
 		string(models.TNModelPlan),
-
-		"audit.change",
 	}
 
 	// Join table names for the TRUNCATE statement
@@ -92,7 +91,12 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		return err
 	}
 
-	return nil
+	// Truncate audit.change last, after all user account cleanup. Any audit trigger
+	// that fires during removeNonSystemAccounts (e.g. on user_notification_preferences
+	// or other audited tables) writes to audit.change — clearing it here ensures those
+	// rows don't block future user_account deletions in subsequent test runs.
+	_, err = s.db.Exec("TRUNCATE audit.change")
+	return err
 }
 
 func removeNonSystemAccounts(s *Store) error {
