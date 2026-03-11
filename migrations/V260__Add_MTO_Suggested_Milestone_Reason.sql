@@ -174,11 +174,14 @@ BEGIN
         RETURN NULL;
     END IF;
 
-    -- Step 1: Get per-field reasons for the current row state
+    -- Step 1: Get per-field reasons for the current row state.
+    -- Use '{*}' (full row scan) so multi-column milestones are evaluated against ALL
+    -- trigger columns, not just the ones that changed. This prevents incorrectly
+    -- removing a suggestion when only one of several trigger columns changes.
     WITH Reasons AS (
         SELECT *
         FROM DETERMINE_MTO_MILESTONE_SUGGESTION_REASONS(
-            TG_TABLE_NAME::text, plan_id, h_new, changedKeys
+            TG_TABLE_NAME::text, plan_id, h_new, '{*}'::TEXT[]
         )
     ),
     -- Aggregate: milestones that now have at least one reason are suggested
@@ -223,11 +226,10 @@ BEGIN
         INSERT (id, mto_common_milestone_id, model_plan_id, created_by)
         VALUES (gen_random_uuid(), source.mto_common_milestone_id, source.model_plan_id, modified_by_id);
 
-    -- Step 3: Refresh reasons for this trigger table + model plan
-    -- Delete stale reasons only for the columns that actually changed (changedKeys).
-    -- Scoping by changedKeys keeps this DELETE symmetric with the INSERT below:
-    -- if only metadata (modified_dts, modified_by) changed, no data-column reasons are
-    -- touched, preventing the DELETE from wiping reasons that the INSERT cannot restore.
+    -- Step 3: Refresh reasons for this trigger table + model plan.
+    -- Delete ALL stale reasons for this table, then re-derive from the full current row
+    -- state ('{*}'). Using the full row scan on both DELETE and INSERT ensures the two
+    -- operations are symmetric: no reason is left behind and no duplicate is inserted.
     DELETE FROM mto_suggested_milestone_reason r
     USING mto_suggested_milestone s,
           public.mto_common_milestone cm
@@ -235,10 +237,9 @@ BEGIN
       AND s.mto_common_milestone_id    = cm.id
       AND s.model_plan_id              = plan_id
       AND r.trigger_table              = TG_TABLE_NAME::mto_milestone_suggestion_reason_table
-      AND cm.trigger_table             = TG_TABLE_NAME::text
-      AND r.trigger_col                = ANY(changedKeys);
+      AND cm.trigger_table             = TG_TABLE_NAME::text;
 
-    -- Insert updated reasons (joining function output to the current mto_suggested_milestone rows)
+    -- Insert updated reasons derived from the full current row state.
     INSERT INTO mto_suggested_milestone_reason (
         id,
         mto_suggested_milestone_id,
@@ -255,7 +256,7 @@ BEGIN
         r.trigger_val,
         modified_by_id
     FROM DETERMINE_MTO_MILESTONE_SUGGESTION_REASONS(
-             TG_TABLE_NAME::text, plan_id, h_new, changedKeys
+             TG_TABLE_NAME::text, plan_id, h_new, '{*}'::TEXT[]
          ) r
     JOIN mto_suggested_milestone s
         ON  s.mto_common_milestone_id = r.mto_common_milestone_id
