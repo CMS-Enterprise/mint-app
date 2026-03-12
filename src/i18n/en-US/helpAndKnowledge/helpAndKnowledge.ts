@@ -1590,7 +1590,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           header: 'Additional resources',
           links: [
             {
-              link: 'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
+              link: 'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/QualVert/ModelResources/Forms/AllItems.aspx',
               external: true
             },
             {
