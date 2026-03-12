@@ -81,29 +81,21 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 
 }
 
-// MilestoneReasonTranslation holds the human-readable field label, translated answer,
-// and a combined explanation sentence for a single mto_suggested_milestone_reason row.
+// MilestoneReasonTranslation holds the human-readable question label and translated answer
+// for a single mto_suggested_milestone_reason row.
 type MilestoneReasonTranslation struct {
-	// FieldLabel is the human-readable question label for the triggering field,
+	// Question is the human-readable question label for the triggering field,
 	// e.g. "Will you manage Part C/D enrollment?".
 	// Falls back to the raw column name when no translation is available.
-	FieldLabel string
+	Question string
 	// Answer is the human-readable answer for the triggering value,
 	// e.g. "Yes" or "Yes, we expect to develop policies to manage the overlaps".
 	// Falls back to the raw (or sanitized) value when no translation is available.
 	Answer string
-	// Reason is a full-sentence explanation combining FieldLabel and Answer,
-	// e.g. "You answered 'Yes' to: Will you manage Part C/D enrollment?"
-	Reason string
-}
-
-// milestoneReasonSentence formats a FieldLabel+Answer pair into a complete explanation sentence.
-func milestoneReasonSentence(fieldLabel, answer string) string {
-	return fmt.Sprintf("You answered '%s' to: %s", answer, fieldLabel)
 }
 
 // TranslateMilestoneReason translates a raw (trigger_col, trigger_val) pair from
-// mto_suggested_milestone_reason into human-readable label+answer strings using the
+// mto_suggested_milestone_reason into human-readable question+answer strings using the
 // existing field translation layer.
 //
 // It looks up the translation for the given trigger_table, finds the field by its db column name
@@ -111,11 +103,7 @@ func milestoneReasonSentence(fieldLabel, answer string) string {
 // resolves the value through the field's options map.
 // Falls back to the raw values if no translation is found at any step.
 func TranslateMilestoneReason(table models.MilestoneSuggestionReasonTable, col, val string) MilestoneReasonTranslation {
-	fallback := MilestoneReasonTranslation{
-		FieldLabel: col,
-		Answer:     val,
-		Reason:     milestoneReasonSentence(col, val),
-	}
+	fallback := MilestoneReasonTranslation{Question: col, Answer: val}
 
 	translation, err := GetTranslation(models.TableName(table))
 	if err != nil {
@@ -132,7 +120,7 @@ func TranslateMilestoneReason(table models.MilestoneSuggestionReasonTable, col, 
 		return fallback
 	}
 
-	fieldLabel := field.GetLabel()
+	question := field.GetLabel()
 
 	// Sanitize PostgreSQL boolean representation before options lookup
 	sanitized := val
@@ -147,27 +135,14 @@ func TranslateMilestoneReason(table models.MilestoneSuggestionReasonTable, col, 
 
 	options, hasOptions := field.GetOptions()
 	if !hasOptions {
-		return MilestoneReasonTranslation{
-			FieldLabel: fieldLabel,
-			Answer:     sanitized,
-			Reason:     milestoneReasonSentence(fieldLabel, sanitized),
-		}
+		return MilestoneReasonTranslation{Question: question, Answer: sanitized}
 	}
 
 	translated, ok := options[sanitized]
 	if !ok {
-		return MilestoneReasonTranslation{
-			FieldLabel: fieldLabel,
-			Answer:     sanitized,
-			Reason:     milestoneReasonSentence(fieldLabel, sanitized),
-		}
+		return MilestoneReasonTranslation{Question: question, Answer: sanitized}
 	}
-	answer := fmt.Sprint(translated)
-	return MilestoneReasonTranslation{
-		FieldLabel: fieldLabel,
-		Answer:     answer,
-		Reason:     milestoneReasonSentence(fieldLabel, answer),
-	}
+	return MilestoneReasonTranslation{Question: question, Answer: fmt.Sprint(translated)}
 }
 
 // UnknownTranslation is the default translation returned when there isn't a translation. This effectively just lets the raw data be returned in liu of a translation
