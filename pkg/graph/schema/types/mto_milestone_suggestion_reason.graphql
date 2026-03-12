@@ -1,0 +1,48 @@
+"""
+MilestoneSuggestionReasons is an aggregate type that represents the suggestion context for
+a common milestone in the context of a specific model plan.
+"""
+type MilestoneSuggestionReasons {
+  """
+  Whether this milestone is currently suggested based on the model plan's answers.
+  """
+  isSuggested: Boolean!
+  """
+  The specific per-field reasons why this milestone is suggested.
+  Empty when isSuggested is false.
+  """
+  reasons: [MilestoneSuggestionReason!]!
+  """
+  Total count of suggestion reasons (equivalent to len(reasons)).
+  """
+  count: Int!
+}
+
+"""
+MilestoneSuggestionReason represents a single per-field reason why a milestone was suggested.
+Each reason corresponds to one (field, value) pair that matched a trigger condition stored
+in the mto_common_milestone table.
+"""
+type MilestoneSuggestionReason {
+  """
+  The task list table that contains the field which triggered this suggestion.
+  """
+  table: String!
+  """
+  The raw database column name that triggered this suggestion.
+  For example: "manage_part_c_d_enrollment" or "appeal_performance".
+  """
+  field: String!
+  """
+  The human-readable question label for the triggering field.
+  For example: "Will you manage Part C/D enrollment?".
+  Falls back to the raw column name when no translation is available.
+  """
+  question: String!
+  """
+  The human-readable answer that matched the trigger condition.
+  For example: "Yes", "LOI", or "APPLICATION_REVIEW_AND_SCORING_TOOL".
+  Falls back to the raw value when no translation is available.
+  """
+  answer: String
+}

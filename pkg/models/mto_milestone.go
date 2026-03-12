@@ -54,9 +54,13 @@ type MTOMilestone struct {
 	baseStruct
 	modelPlanRelation
 
-	Name                 *string    `json:"name" db:"name"` // From Common Milestone Table if linked
-	Description          *string    `json:"description" db:"description"`
-	MTOCommonMilestoneID *uuid.UUID `json:"mtoCommonMilestoneID" db:"mto_common_milestone_id"` // Foreign Key to the Common Milestone Table
+	Name        *string `json:"name" db:"name"` // From Common Milestone Table if linked
+	Description *string `json:"description" db:"description"`
+	// MTOCommonMilestoneID is a foreign key to mto_common_milestone.id. It has database triggers
+	// (sync_iddoc_on_milestone_insert/update/delete) that automatically update iddoc_questionnaire.needed
+	// when the IDDOC_SUPPORT milestone is added, updated, or deleted. See V254__Add_IDDOC_Triggers.sql.
+	// Note: the triggers were updated in V259 to use mto_common_milestone_id after the key column was dropped.
+	MTOCommonMilestoneID *uuid.UUID `json:"mtoCommonMilestoneID" db:"mto_common_milestone_id"`
 
 	MTOCategoryID        *uuid.UUID                                  `json:"mtoCategoryID" db:"mto_category_id"`
 	ResponsibleComponent EnumArray[MTOMilestoneResponsibleComponent] `json:"responsibleComponent" db:"responsible_component"`

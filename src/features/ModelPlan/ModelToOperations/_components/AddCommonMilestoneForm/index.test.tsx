@@ -24,7 +24,12 @@ describe('Add common milestone form', () => {
                   description: 'Description 1',
                   isArchived: false,
                   isAdded: false,
-                  isSuggested: false,
+                  suggested: {
+                    __typename: 'MilestoneSuggestionReasons' as const,
+                    isSuggested: false,
+                    count: 0,
+                    reasons: []
+                  },
                   categoryName: 'Category 1',
                   subCategoryName: 'SubCategory 1',
                   facilitatedByRole: [],

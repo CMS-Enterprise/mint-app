@@ -93,7 +93,7 @@ const MilestoneCard = ({
             <span className="text-base-dark">
               {t('milestoneLibrary.milestone')}
             </span>
-            {milestone.isSuggested && (
+            {milestone.suggested.isSuggested && (
               <span className="padding-right-1 model-to-operations__milestone-tag">
                 <Icon.LightbulbOutline
                   aria-label="lightbulb"
@@ -115,7 +115,7 @@ const MilestoneCard = ({
             {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
           </div>
 
-          {milestone.isSuggested && (
+          {milestone.suggested.isSuggested && (
             <SuggestedMilestoneToggle
               milestone={milestone}
               className="margin-top-2"

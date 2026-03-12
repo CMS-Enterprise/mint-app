@@ -5,6 +5,7 @@ WITH QUERIED_IDS AS (
 
 SELECT
     mto_common_milestone.id,
+    mto_common_milestone.key,
     mto_common_milestone.name,
     mto_common_milestone.description,
     mto_common_milestone.category_name,
@@ -18,7 +19,7 @@ SELECT
     -- mto_common_milestone.trigger_vals
     qIDs.model_plan_id,
     (mto_milestone.id IS NOT NULL) AS is_added,
-    (mto_suggested_milestone.id IS NOT NULL) AS is_suggested
+    mto_suggested_milestone.id AS mto_suggested_milestone_id
 FROM mto_common_milestone
 -- CROSS JOIN joins the model plan id to every record, without a specific join condition
 CROSS JOIN QUERIED_IDS AS qIDs

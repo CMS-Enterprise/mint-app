@@ -18,6 +18,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNMTOMilestoneNote),
 		string(models.TNMTOMilestone),
 		string(models.TNMTOSolution),
+		string(models.TNMTOSuggestedMilestoneReason),
 		string(models.TNMTOSuggestedMilestone),
 		string(models.TNMTOCategory),
 		string(models.TNMTOInfo),
@@ -112,6 +113,7 @@ func removeNonSystemAccounts(s *Store) error {
 	if err != nil {
 		return err
 	}
+
 	_, err = s.db.Exec(fmt.Sprintf(scriptUser, systemAccounts))
 	if err != nil {
 		return err
