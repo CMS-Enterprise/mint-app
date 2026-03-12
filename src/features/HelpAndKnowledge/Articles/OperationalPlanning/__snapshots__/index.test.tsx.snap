@@ -1,0 +1,1229 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Operational planning for Medicare Advantage and Part D models > matches the snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class=""
+        data-testid="grid"
+      >
+        <button
+          class="usa-button usa-button--unstyled margin-top-6"
+          data-testid="button"
+          type="button"
+        >
+          <svg
+            aria-label="close"
+            class="usa-icon margin-right-05 text-tbottom"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+            />
+          </svg>
+          Close tab
+        </button>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-bottom-1"
+          tabindex="-1"
+        >
+          Operational planning for Medicare Advantage and Part D models
+        </h1>
+        <a
+          class="usa-link width-fit-content display-block margin-bottom-1"
+          data-discover="true"
+          href="/help-and-knowledge/articles?category=getting-started"
+        >
+          <span
+            aria-label="Articles under the Getting started category"
+            class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+            data-testid="tag"
+          >
+            Getting started
+          </span>
+        </a>
+        <div
+          class="text-light"
+        >
+          <p
+            class="font-body-lg line-height-sans-5 margin-top-0 margin-bottom-1"
+          >
+            This article contains information to assist in planning the pre-implementation and the operational tasks for models that test changes to the Part D Prescription Drug Program and/or the Part C Medicare Advantage program.
+          </p>
+          <p
+            class="line-height-normal margin-top-0 margin-bottom-4"
+          >
+            If you have any questions or concerns about the content of this article, please contact the MINT Team at 
+            <a
+              class="usa-link"
+              href="mailto:MINTTeam@cms.hhs.gov"
+            >
+              MINTTeam@cms.hhs.gov
+            </a>
+            .
+          </p>
+          <p
+            class="font-body-md margin-top-0 margin-bottom-3"
+          >
+            Click to expand each accordion to reveal more information about each topic.
+          </p>
+        </div>
+        <div
+          class="usa-accordion margin-bottom-4"
+          data-allow-multiple="true"
+          data-testid="accordion"
+        >
+          <h3
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="model-application-and-participant-selection:-general-tasks-related-to-cms-plan-bid-and-enrollment"
+              aria-expanded="true"
+              class="usa-accordion__button"
+              data-testid="accordionButton_model-application-and-participant-selection:-general-tasks-related-to-cms-plan-bid-and-enrollment"
+              type="button"
+            >
+              Model application and participant selection: General tasks related to CMS plan bid and enrollment
+            </button>
+          </h3>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_model-application-and-participant-selection:-general-tasks-related-to-cms-plan-bid-and-enrollment"
+            id="model-application-and-participant-selection:-general-tasks-related-to-cms-plan-bid-and-enrollment"
+          >
+            <div
+              class="text-light margin-bottom-3 line-height-normal font-body-md"
+            >
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  As part of the annual bidding cycle, PDP sponsors are required to include various design elements in the development of the upcoming contract year bid. The model elements may need to be included in the design elements.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  CMS reviews proposals and (where necessary) and negotiates with plans.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  Include in the model schedule the date that the MA or MAPD plan bids are due since model team may need to access and review Plan bids. This date is the first Monday of June each year.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  Also, the Plan Benefit Package (PBP) software and Health Plan Management System (HPMS) Modules updates begin in July and August prior to upcoming bid year.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The Medicare Part C and D Annual Calendar is released on 
+                  <button
+                    class="usa-button usa-button--unstyled"
+                    data-testid="button"
+                    type="button"
+                  >
+                    <span
+                      class="display-flex flex-align-center line-height-normal"
+                      style="column-gap: 0.25rem;"
+                    >
+                      HPMS home page
+                      <svg
+                        aria-label="launch"
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  .
+                </p>
+              </div>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  BSG guidance document - Understanding Systems and Processes
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  Medicare and Medicaid Plan Applications and Annual Requirements site
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+          <h3
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="model-application-and-participant-selection:-applications-and-bid-reviews"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_model-application-and-participant-selection:-applications-and-bid-reviews"
+              type="button"
+            >
+              Model application and participant selection: Applications and bid reviews
+            </button>
+          </h3>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_model-application-and-participant-selection:-applications-and-bid-reviews"
+            hidden=""
+            id="model-application-and-participant-selection:-applications-and-bid-reviews"
+          >
+            <div
+              class="text-light margin-bottom-3 line-height-normal font-body-md"
+            >
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  As the Plans should have enough time to apply to the model and provide bids between the release of the RFA and complete by the first Monday of June, the timing of when applications are released and when they are due back in should be carefully planned with the bid cycle milestones in mind.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  Also of equal importance is the time needed for the model teams’ technical review panel to review the applications. The Part C or D model participants can be selected and provisionally accepted into the model in time for the Plan to prepare bids and meet CMS bid milestones. It is suggested that the model review and provisional approval is completed in March or April timeframe
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  When bids are involved in the RFA, there could be a need for actuarial help desk support when the RFA is released and while Plans are filling out their applications, in the event there are questions.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  After the Plans are provisionally approved for the model, their bids updated and submitted by the first Monday in June per CMS milestone deadlines, a review will be needed in June and July to compare the bids that were provided in the RFA to the bids submitted in early June to verify the bid to the Plans’ RFA responses.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  Lastly, each year the Model Lead signs off in the HPMS system that the Plans have been finally approved to participate in that performance year’s (PY20XX model). There may be job codes required for this ability to sign off. This signoff occurs in August.
+                </p>
+              </div>
+            </div>
+          </div>
+          <h3
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="participant-agreement:-cms-contract-addendum"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_participant-agreement:-cms-contract-addendum"
+              type="button"
+            >
+              Participant agreement: CMS contract addendum
+            </button>
+          </h3>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_participant-agreement:-cms-contract-addendum"
+            hidden=""
+            id="participant-agreement:-cms-contract-addendum"
+          >
+            <div
+              class="text-light margin-bottom-3 line-height-normal font-body-md"
+            >
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  For Participatory models, the model participant agreement is in the form of a contract addendum. This addendum is a provided annually for each performance year of the model. The addendum is to the Plans Part C or D contract (an MA Organization or a Prescription Drug Plan Sponsor (PDP Sponsor) with CMS.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The model schedule should include the milestone task and date when MA or MAPD contracts signed each year, as a contract addendum for the model is a part of that overall contract package.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The annual contract addendum must also go through clearance, and if waivers are involved, check with the Waiver team for their review. This waiver team review may take several weeks.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The model lead provides the cleared annual contract addendum to the HPMS team to include as part of the HPMS system Electronic Contracting module for signatures. In the past, this addendum is due to the HPMS team by the end of May of each year, and there is a specific timeline for it. The CMS point of contact (POC) for the HPMS Electronic Contracting Module is Daniel Summers, with Greg Buglio as backup (CM/MDBG/DPD).
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  Senior CMMI leadership electronically signs in HPMS in late September when the upcoming year’s contracts fully executed (signed by both parties: Part C/Part D Sponsor and CMS). It is advised that the signature access and functionality are tested out in late August or early September to ensure the process goes smoothly.
+                </p>
+              </div>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  CMMI Waiver Resources
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+          <h3
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="internal-and-external-communication-about-the-model"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_internal-and-external-communication-about-the-model"
+              type="button"
+            >
+              Internal and external communication about the model
+            </button>
+          </h3>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_internal-and-external-communication-about-the-model"
+            hidden=""
+            id="internal-and-external-communication-about-the-model"
+          >
+            <div
+              class="text-light margin-bottom-3 line-height-normal font-body-md"
+            >
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  For new models, the team should plan on announcing the model as soon as feasible to allow potential model participants, namely plan sponsors, adequate time to review the design parameters and decide on participation before bids are due in June of each year. HPMS system is used for announcements, and for the release of the RFA.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  In addition, one of the main communication vehicles would be to include model information and/or other information in the Advance Call letter in January each year, and the Rate and Policy Announcement and Final Call Letter in April each year.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  As the model team includes the tasks to meet the call letter deadlines each year, the tasks may also require clearance of language.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The model team may need to include information within the Medicare Plan Finder tool. This tool contains plan and drug benefit data on the Medicare.gov website. Timing for the release of this tool has been early October each year.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The model team should look into the need to update HPMS guidance materials.
+                </p>
+              </div>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MDBG DPDP SharePoint site - 2020 Call Letter documents
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MDB DPDP SharePoint site to Part D Model Docs  to see examples
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  Medicare Plan Finder link
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  CMS.gov Internet Only Manuals
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  CMS Managed Care Eligibility and Enrollment
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+          <h3
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="determine-it-system-needs-for-plan-bid-functionality,-enrollment-data,-other-data"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_determine-it-system-needs-for-plan-bid-functionality,-enrollment-data,-other-data"
+              type="button"
+            >
+              Determine IT system needs for plan bid functionality, enrollment data, other data
+            </button>
+          </h3>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_determine-it-system-needs-for-plan-bid-functionality,-enrollment-data,-other-data"
+            hidden=""
+            id="determine-it-system-needs-for-plan-bid-functionality,-enrollment-data,-other-data"
+          >
+            <div
+              class="text-light margin-bottom-3 line-height-normal font-body-md"
+            >
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The Medicare Enrollment and Payment Systems (MEPS):
+                </p>
+                <ul
+                  class="padding-left-3 margin-top-0 margin-bottom-1"
+                >
+                  <li
+                    class="line-height-normal"
+                  >
+                    MEPS is a suite of systems for MAPD. MEPS includes MARx, DDPS, PRS, DBS, EDB, MDB, RASS, TPS. The system descriptions are available on the MEPS SharePoint site landing page.
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    As an example, Medicare Advantage Part D System (MARx) is the primary interface for plan sponsors and the source of Part C and D beneficiary enrollment.
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Change requests for these systems are channeled through MEPS.
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  For Plan bids, the main system is the Health Plan Management System (HPMS). Note that the model team will need access to certain HPMS modules in time to review bids. The team may also need to have training in HPMS Bid Desk Review module. This module provides the functionality to approve the model bids electronically.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  Historically, several HPMS modules have been used on models, and may need to be considered for future Part C and D models. Those are:
+                </p>
+                <ol
+                  class="padding-left-3 margin-y-0"
+                >
+                  <li
+                    class="line-height-normal"
+                  >
+                    Plan Benefit Package PBP module- Used by plan organizations to define the details of their plan benefit packages.
+                    <ol
+                      class="padding-left-3 "
+                      type="a"
+                    >
+                      <li
+                        class="line-height-normal"
+                      >
+                        Andrew Chu is the point of contact
+                      </li>
+                    </ol>
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Bid Pricing Tool (BPT)
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Bid Desk Review (BDR)
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Formulary
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Electronic Contracting
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Actuarial Certification
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Complaint Tracking
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Marketing
+                  </li>
+                </ol>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The model team should plan for submitting (via CR) any requirements, testing and the final production release. The Model team may be part of the requirements sessions along with other CMS system stakeholders and also participate in user acceptance testing (UAT)
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  There may be requirements resulting in change requests for MARx enrollment, such as a flag field to designate a Plan is part of a model.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The Part C & D Star Ratings are published on Medicare.gov (Fall of each year). These ratings may be part of Plans’ quality data needed for evaluation or model implementation.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The model team members or contractors may require access to Encounter data in the IDR for use in monitoring efforts of the model.
+                </p>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  The CMS Integrated Data Repository (IDR) has a SharePoint page with many references, and also has an IDR BI user group that meets regularly. Information on the user group can be found on the SharePoint page.
+                </p>
+              </div>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  Medicare Enrollment and Payment Systems (MEPS) SharePoint site
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  CMS website - HPMS
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  MAPD Plan Communications User Guide -Using MARx
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  BSG DADD Reference CMS-Wide Processes document
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  CMS-wide systems SharePoint home page
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  CMS-wide Systems IDR SharePoint home page
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div>
+              <button
+                class="usa-button usa-button--unstyled"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  Integrated Data Repository (IDR) SharePoint site
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+          <h3
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="determine-it-system-needs-for-plan-payment"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_determine-it-system-needs-for-plan-payment"
+              type="button"
+            >
+              Determine IT system needs for plan payment
+            </button>
+          </h3>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_determine-it-system-needs-for-plan-payment"
+            hidden=""
+            id="determine-it-system-needs-for-plan-payment"
+          >
+            <div
+              class="text-light margin-bottom-3 line-height-normal font-body-md"
+            >
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  For those models that are adjusting the MAPD payments for their models, the two main systems for Plan Payment are MARx and APPS.
+                </p>
+                <ul
+                  class="padding-left-3 margin-top-0 margin-bottom-1"
+                >
+                  <li
+                    class="line-height-normal"
+                  >
+                    MARx to enroll and pay plans
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    APPS (automated plan payment system) processes MARx payments to MAPD plans
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  MARx is under the MEPS suite of systems. For APPS, the CM system owner is the Medicare Plan Payment Group (MPPG), Division of Payment Operations (DPO).
+                </p>
+              </div>
+            </div>
+          </div>
+          <h3
+            class="usa-accordion__heading"
+          >
+            <button
+              aria-controls="operations-for-each-performance-year-of-the-model"
+              aria-expanded="false"
+              class="usa-accordion__button"
+              data-testid="accordionButton_operations-for-each-performance-year-of-the-model"
+              type="button"
+            >
+              Operations for each performance year of the model
+            </button>
+          </h3>
+          <div
+            class="usa-accordion__content usa-prose"
+            data-testid="accordionItem_operations-for-each-performance-year-of-the-model"
+            hidden=""
+            id="operations-for-each-performance-year-of-the-model"
+          >
+            <div
+              class="text-light margin-bottom-3 line-height-normal font-body-md"
+            >
+              <div>
+                <p
+                  class="margin-top-0 margin-bottom-1"
+                >
+                  Several of the processes that were done before the model goes live and described above are repeated annually. Those processes include:
+                </p>
+                <ul
+                  class="padding-left-3 margin-top-0 margin-bottom-1"
+                >
+                  <li
+                    class="line-height-normal"
+                  >
+                    Update external communications (call letter)
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Provide new or updated requirements to various HPMS module teams
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    The applications and application review, bid review, formulary review
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4"
+        >
+          Last updated 03/11/2026
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-6 margin-bottom-neg-7"
+    >
+      <div
+        class="margin-bottom-neg-7 padding-bottom-4 padding-top-2 bg-primary-lighter"
+      >
+        <div
+          class="grid-container padding-top-4 padding-bottom-10"
+          data-testid="gridContainer"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-1"
+          >
+            Related help resources
+          </h2>
+          <dt
+            class="margin-bottom-4"
+          >
+            Below are some additional help resources that you may find useful.
+          </dt>
+          <ul
+            class="usa-card-group"
+            data-testid="CardGroup"
+          >
+            <li
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+              >
+                <div
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
+                >
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
+                  >
+                    High-level project plan
+                  </h3>
+                </div>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  data-discover="true"
+                  href="/help-and-knowledge/articles?category=getting-started"
+                >
+                  <span
+                    aria-label="Articles under the Getting started category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    Getting started
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body padding-top-2"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    Use this high-level project plan to understand and track the key pieces of work involved in developing a model. The MINT Team can assist model teams in completing this for upcoming models once collaboration begins.
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
+                >
+                  <button
+                    aria-label="Read High-level project plan article"
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Read
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+              >
+                <div
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
+                >
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
+                  >
+                    Phases involved in creating IT and operational support for models
+                  </h3>
+                </div>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  data-discover="true"
+                  href="/help-and-knowledge/articles?category=it-implementation"
+                >
+                  <span
+                    aria-label="Articles under the IT implementation category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    IT implementation
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body padding-top-2"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    There are two phases invovled in creating IT and operational support for CMMI models.
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
+                >
+                  <button
+                    aria-label="Read Phases involved in creating IT and operational support for models article"
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Read
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li
+              class="usa-card desktop:grid-col-4 article article-card--isLink"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
+              >
+                <div
+                  class="usa-card__header padding-0"
+                  data-testid="CardHeader"
+                >
+                  <h3
+                    class="line-height-body-4 margin-bottom-1"
+                  >
+                    Overview for adding a model
+                  </h3>
+                </div>
+                <a
+                  class="usa-link width-fit-content display-block "
+                  data-discover="true"
+                  href="/help-and-knowledge/articles?category=getting-started"
+                >
+                  <span
+                    aria-label="Articles under the Getting started category"
+                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                    data-testid="tag"
+                  >
+                    Getting started
+                  </span>
+                </a>
+                <div
+                  class="usa-card__body padding-x-0 article__body padding-top-2"
+                  data-testid="CardBody"
+                >
+                  <p>
+                    Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the operational solutions the model will use and track its status through implementation
+                  </p>
+                </div>
+                <div
+                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                  data-testid="CardFooter"
+                >
+                  <button
+                    aria-label="Read Overview for adding a model article"
+                    class="usa-button usa-button--outline"
+                    type="button"
+                  >
+                    Read
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <a
+            class="usa-link"
+            data-discover="true"
+            href="/help-and-knowledge/articles"
+          >
+            View all help resources
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
