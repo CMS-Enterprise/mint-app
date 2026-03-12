@@ -81,8 +81,9 @@ const SuggestedMilestoneToggle = ({
   // Toggle the collapsed state of milestone question/answer
   const [infoToggle, setInfoToggle] = useState<boolean>(false);
 
+  // TODO(Elle): need to restruct to use id or smt
   // Config map of milestone key to route, translations, gql schema, etc
-  const milestoneConfig = milestoneMap[milestone.key || ''];
+  const milestoneConfig = milestoneMap[milestone.id || ''];
   const parentField = milestoneConfig?.parentField;
   const fieldName = milestoneConfig?.fieldName;
 

@@ -71,7 +71,7 @@ type MTOTemplateSubCategory {
 type MTOTemplateMilestone {
   id: UUID!
   name: String!
-  key: MTOCommonMilestoneKey
+  mtoCommonMilestoneID: UUID!
   templateID: UUID!
   mtoTemplateCategoryID: UUID
 

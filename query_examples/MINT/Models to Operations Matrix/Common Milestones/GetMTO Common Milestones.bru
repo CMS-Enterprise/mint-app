@@ -21,13 +21,14 @@ body:graphql {
   modelPlan(id: "{{modelPlanID}}") {
       mtoMatrix{
           commonMilestones {
+              id
               name
-              key
               categoryName
               subCategoryName
               facilitatedByRole
               section
-  
+              
+              isArchived
               isAdded
               # isSuggested
               # commonSolutions:
@@ -58,7 +59,7 @@ body:graphql {
                           id
                           name
                           addedFromMilestoneLibrary
-                          key
+                          mtoCommonMilestoneID
                           facilitatedBy
                           needBy
                           status

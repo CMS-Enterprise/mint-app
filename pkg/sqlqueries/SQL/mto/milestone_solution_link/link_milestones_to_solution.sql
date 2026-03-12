@@ -24,7 +24,7 @@ WITH source_links AS (
 SELECT
     m.id,
     m.model_plan_id,
-    m.mto_common_milestone_key,
+    m.mto_common_milestone_id,
     m.mto_category_id,
     COALESCE(m.name, mto_common_milestone.name) AS "name",
     m.facilitated_by,
@@ -37,5 +37,5 @@ SELECT
     m.modified_by,
     m.modified_dts
 FROM mto_milestone m
-LEFT JOIN mto_common_milestone ON m.mto_common_milestone_key = mto_common_milestone.key
+LEFT JOIN mto_common_milestone ON m.mto_common_milestone_id = mto_common_milestone.id
 JOIN source_links ON m.id = source_links.milestone_id;

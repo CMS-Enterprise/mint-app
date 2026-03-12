@@ -11,7 +11,7 @@ SELECT
     mto_common_solution.type,
     mto_common_solution.subjects,
     mto_common_solution.filter_view,
-    NULL AS mto_common_milestone_key,
+    NULL AS mto_common_milestone_id,
     FALSE AS is_added
 FROM mto_common_solution
 INNER JOIN QUERIED_IDS AS qIDs ON mto_common_solution.key = qIDs.key

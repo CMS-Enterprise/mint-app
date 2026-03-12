@@ -19,7 +19,7 @@ auth:apikey {
 body:graphql {
   query ModelPlanMTOCategories {
   modelPlan(id: "{{modelPlanID}}") {
-      mtoMatrix{
+      mtoMatrix {
           status
           milestonesWithNoLinkedSolutions {
               name
@@ -48,7 +48,6 @@ body:graphql {
               }
               
           }
-  
           categories{
               id
               position
@@ -63,7 +62,7 @@ body:graphql {
                           id
                           name
                           addedFromMilestoneLibrary
-                          key
+                          mtoCommonMilestoneID
                           facilitatedBy
                           needBy
                           status
@@ -71,47 +70,17 @@ body:graphql {
                           # isDraftMilestone
                   }
               }
-              }
           }
-        }
-        milestones {
-          name
-          createdDts
-          createdBy
-        }
-        categories {
-          id
-          position
-          name
-          isUncategorized
-          subCategories {
+          templates {
             id
-            position
             name
-            isUncategorized
-            milestones {
-              id
-              name
-              addedFromMilestoneLibrary
-              key
-              facilitatedBy
-              needBy
-              status
-              riskIndicator
-              # isDraftMilestone
-            }
+            isAdded
+            dateAdded
           }
-        }
-        mtoTemplates {
-          id
-          name
-          isAdded
-          dateAdded
-        }
       }
+      
       id
       modelName
     }
   }
-  
 }

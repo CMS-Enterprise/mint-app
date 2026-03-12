@@ -39,7 +39,6 @@ import {
   GetMtoTemplatesDocument,
   GetMtoTemplatesQuery,
   GetMtoTemplatesQueryVariables,
-  MtoCommonMilestoneKey,
   MtoCommonSolutionCmsComponent,
   MtoCommonSolutionKey,
   MtoCommonSolutionOwnerType,
@@ -101,7 +100,7 @@ export const mtoMatrixMock: MockedResponse<
               {
                 __typename: 'MTOMilestone',
                 id: '123',
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                mtoCommonMilestoneID: '123456',
                 name: 'Milestone 1'
               }
             ],
@@ -156,7 +155,7 @@ export const mtoMatrixMockFull: MockedResponse<
                         __typename: 'MTOMilestone',
                         id: 'ca2f9f0d-1048-463e-a584-8ec0481122f9',
                         name: 'Acquire a learning contractor',
-                        key: MtoCommonMilestoneKey.ACQUIRE_A_LEARN_CONT as MtoCommonMilestoneKey,
+                        mtoCommonMilestoneID: '123456',
                         facilitatedBy: [
                           MtoFacilitator.MODEL_TEAM,
                           MtoFacilitator.MODEL_LEAD,
@@ -190,7 +189,7 @@ export const mtoMatrixMockFull: MockedResponse<
                 __typename: 'MTOMilestone',
                 id: 'ca2f9f0d-1048-463e-a584-8ec0481122f9',
                 name: 'Acquire a learning contractor',
-                key: MtoCommonMilestoneKey.ACQUIRE_A_LEARN_CONT
+                mtoCommonMilestoneID: '123456'
               }
             ],
 
@@ -230,7 +229,7 @@ export const allMilestoneMock: MockedResponse<
               {
                 __typename: 'MTOMilestone',
                 id: '123',
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                mtoCommonMilestoneID: '123456',
                 name: 'Milestone 1',
                 status: MtoMilestoneStatus.NOT_STARTED,
                 riskIndicator: MtoRiskIndicator.ON_TRACK,
@@ -271,8 +270,9 @@ export const commonMilestonesMock: MockedResponse<
             commonMilestones: [
               {
                 __typename: 'MTOCommonMilestone',
+                id: '123456',
                 name: 'Test Milestone',
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                isArchived: false,
                 isAdded: false,
                 isSuggested: true,
                 categoryName: 'Test Category',
@@ -476,8 +476,8 @@ export const milestoneMock = (
           __typename: 'MTOMilestone',
           id: '123',
           name: 'Milestone 1',
+          mtoCommonMilestoneID: '123456',
           description: 'Description 1',
-          key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
           responsibleComponent: [],
           facilitatedBy: [],
           facilitatedByOther: '',
@@ -501,7 +501,7 @@ export const milestoneMock = (
           },
           commonMilestone: {
             __typename: 'MTOCommonMilestone',
-            key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+            id: '123456',
             description: 'Description 1',
             commonSolutions: [
               {
@@ -560,7 +560,7 @@ export const allMilestonesMock: MockedResponse<
             {
               __typename: 'MTOMilestone',
               id: '123',
-              key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+              mtoCommonMilestoneID: '123456',
               name: 'Milestone 1',
               status: MtoMilestoneStatus.COMPLETED,
               riskIndicator: MtoRiskIndicator.AT_RISK,
@@ -605,14 +605,14 @@ export const solutionMock = (
             {
               __typename: 'MTOMilestone',
               id: '123',
-              key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+              mtoCommonMilestoneID: '123456',
               name: 'Milestone 1',
               status: MtoMilestoneStatus.COMPLETED,
               riskIndicator: MtoRiskIndicator.AT_RISK,
               commonMilestone: {
                 __typename: 'MTOCommonMilestone',
+                id: '123456',
                 name: 'Common Milestone 1',
-                key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
                 isAdded: true
               }
             }
@@ -1000,7 +1000,7 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                 {
                   __typename: 'MTOMilestone',
                   id: '123',
-                  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                  mtoCommonMilestoneID: '123456',
                   name: 'Test Milestone 1',
                   needBy: '2022-05-12T15:01:39.190679Z',
                   responsibleComponent: [],
@@ -1037,7 +1037,7 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                 {
                   __typename: 'MTOMilestone',
                   id: '456',
-                  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+                  mtoCommonMilestoneID: '123456',
                   name: 'Test Milestone 2',
                   needBy: '2022-05-12T15:01:39.190679Z',
                   responsibleComponent: [],

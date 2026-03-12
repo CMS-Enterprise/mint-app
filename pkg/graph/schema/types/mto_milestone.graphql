@@ -53,7 +53,7 @@ type MTOMilestone {
   id: UUID!
   name: String! # If sourced from a Common Milestone, this will resolve from the common milestone table (you can't edit this for common milestones!)
   description: String
-  key: MTOCommonMilestoneKey
+  mtoCommonMilestoneID: UUID # If this milestone is sourced from a common milestone, this will be the ID of that common milestone
   """
   Note: an mtoCategoryID can be null in the database. When that is the case, it will be nested under two uncategorized Categories
   This means that `MTOMilestone.mtoCategoryID` does _not_ always equal `MTOMilestone.Category.ID`
@@ -120,7 +120,7 @@ extend type Mutation {
   ): MTOMilestone! @hasRole(role: MINT_USER)
   createMTOMilestoneCommon(
     modelPlanID: UUID!
-    commonMilestoneKey: MTOCommonMilestoneKey!
+    commonMilestoneID: UUID!
     commonSolutions: [MTOCommonSolutionKey!]
   ): MTOMilestone! @hasRole(role: MINT_USER)
   updateMTOMilestone(

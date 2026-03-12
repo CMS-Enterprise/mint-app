@@ -431,12 +431,12 @@
       "INNOVATION": "4i"
     }
   },
-  "key": {
-    "gqlField": "key",
-    "goField": "Key",
-    "dbField": "mto_common_milestone_key",
-    "label": "Key",
-    "dataType": "STRING",
+  "mtoCommonMilestoneID": {
+    "gqlField": "mtoCommonMilestoneID",
+    "goField": "MtoCommonMilestoneID",
+    "dbField": "mto_common_milestone_id",
+    "label": "MTO common milestone ID",
+    "dataType": "UUID",
     "formType": "TEXT",
     "order": 3,
     "tableReference": "mto_common_milestone"

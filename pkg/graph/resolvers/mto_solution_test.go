@@ -14,19 +14,19 @@ import (
 
 func (suite *ResolverSuite) TestMTOSolutionGetByMilestoneIDLOADER() {
 	plan1 := suite.createModelPlan("model plan 1")
-	commonMilestoneKey1 := models.MTOCommonMilestoneKeyAppSupportCon
-	milestone1 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey1, []models.MTOCommonSolutionKey{
+	commonMilestone1 := suite.getMTOCommonMilestoneByName("Acquire an application support contractor")
+	milestone1 := suite.createMilestoneCommon(plan1.ID, commonMilestone1.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKCcw,
 		models.MTOCSKApps,
 	})
 
-	commonMilestoneKey2 := models.MTOCommonMilestoneKeyCommWPart
-	milestone2 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey2, []models.MTOCommonSolutionKey{
+	commonMilestone2 := suite.getMTOCommonMilestoneByName("Communicate with participants")
+	milestone2 := suite.createMilestoneCommon(plan1.ID, commonMilestone2.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKCcw,
 		models.MTOCSKApps,
 	})
-	commonMilestoneKey3 := models.MTOCommonMilestoneKeyAcquireALearnCont
-	milestone3 := suite.createMilestoneCommon(plan1.ID, commonMilestoneKey3, []models.MTOCommonSolutionKey{
+	commonMilestone3 := suite.getMTOCommonMilestoneByName("Acquire a learning contractor")
+	milestone3 := suite.createMilestoneCommon(plan1.ID, commonMilestone3.ID, []models.MTOCommonSolutionKey{
 		models.MTOCSKBcda,
 		models.MTOCSKCmsBox,
 		models.MTOCSKCcw,
