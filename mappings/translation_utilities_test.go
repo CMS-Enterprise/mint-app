@@ -310,6 +310,84 @@ func assertTFieldWithChildren(t *testing.T, field reflect.StructField, translati
 
 }
 
+// TestTranslateMilestoneReason tests that TranslateMilestoneReason correctly returns
+// the human-readable field label, translated answer, and combined reason sentence.
+func TestTranslateMilestoneReason(t *testing.T) {
+	tests := []struct {
+		name           string
+		table          models.MilestoneSuggestionReasonTable
+		col            string
+		val            string
+		expectedLabel  string
+		expectedAnswer string
+		expectedReason string
+	}{
+		{
+			name:           "boolean true translates to label and Yes",
+			table:          models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics,
+			col:            "manage_part_c_d_enrollment",
+			val:            "t",
+			expectedLabel:  "Will you manage Part C/D enrollment?",
+			expectedAnswer: "Yes",
+			expectedReason: "You answered 'Yes' to: Will you manage Part C/D enrollment?",
+		},
+		{
+			name:           "boolean false translates to label and No",
+			table:          models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics,
+			col:            "manage_part_c_d_enrollment",
+			val:            "f",
+			expectedLabel:  "Will you manage Part C/D enrollment?",
+			expectedAnswer: "No",
+			expectedReason: "You answered 'No' to: Will you manage Part C/D enrollment?",
+		},
+		{
+			name:           "enum value translates to label and answer",
+			table:          models.MilestoneSuggestionReasonTablePlanParticipantsAndProviders,
+			col:            "provider_overlap",
+			val:            "YES_NEED_POLICIES",
+			expectedLabel:  "Will the providers overlap with other models?",
+			expectedAnswer: "Yes, we expect to develop policies to manage the overlaps",
+			expectedReason: "You answered 'Yes, we expect to develop policies to manage the overlaps' to: Will the providers overlap with other models?",
+		},
+		{
+			name:           "unknown column falls back to raw col and val",
+			table:          models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics,
+			col:            "nonexistent_column",
+			val:            "t",
+			expectedLabel:  "nonexistent_column",
+			expectedAnswer: "t",
+			expectedReason: "You answered 't' to: nonexistent_column",
+		},
+		{
+			name:           "unknown table falls back to raw col and val",
+			table:          models.MilestoneSuggestionReasonTable("not_a_real_table"),
+			col:            "manage_part_c_d_enrollment",
+			val:            "t",
+			expectedLabel:  "manage_part_c_d_enrollment",
+			expectedAnswer: "t",
+			expectedReason: "You answered 't' to: manage_part_c_d_enrollment",
+		},
+		{
+			name:           "unknown option value falls back to label and sanitized val",
+			table:          models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics,
+			col:            "manage_part_c_d_enrollment",
+			val:            "UNKNOWN_VALUE",
+			expectedLabel:  "Will you manage Part C/D enrollment?",
+			expectedAnswer: "UNKNOWN_VALUE",
+			expectedReason: "You answered 'UNKNOWN_VALUE' to: Will you manage Part C/D enrollment?",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := TranslateMilestoneReason(tt.table, tt.col, tt.val)
+			assert.Equal(t, tt.expectedLabel, result.FieldLabel)
+			assert.Equal(t, tt.expectedAnswer, result.Answer)
+			assert.Equal(t, tt.expectedReason, result.Reason)
+		})
+	}
+}
+
 // assertStringPointerNilOrNotEmpty requires a non empty string if a string pointer is not nil
 func assertStringPointerNilOrNotEmpty(t *testing.T, value *string, sectionName string, field reflect.StructField) {
 	if value == nil {

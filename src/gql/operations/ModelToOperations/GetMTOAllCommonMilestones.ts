@@ -14,7 +14,9 @@ export default gql(/* GraphQL */ `
         reasons {
           table
           field
+          fieldLabel
           answer
+          reason
         }
       }
       categoryName

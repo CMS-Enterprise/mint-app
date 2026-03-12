@@ -9,6 +9,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/mappings"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -45,11 +46,13 @@ func (r *mTOCommonMilestoneResolver) Suggested(ctx context.Context, obj *models.
 
 	reasons := make([]*model.MilestoneSuggestionReason, 0, len(dbReasons))
 	for _, dbReason := range dbReasons {
-		answer := dbReason.TriggerVal
+		t := mappings.TranslateMilestoneReason(dbReason.TriggerTable, dbReason.TriggerCol, dbReason.TriggerVal)
 		reasons = append(reasons, &model.MilestoneSuggestionReason{
-			Table:  string(dbReason.TriggerTable),
-			Field:  dbReason.TriggerCol,
-			Answer: &answer,
+			Table:      string(dbReason.TriggerTable),
+			Field:      dbReason.TriggerCol,
+			FieldLabel: t.FieldLabel,
+			Answer:     &t.Answer,
+			Reason:     t.Reason,
 		})
 	}
 

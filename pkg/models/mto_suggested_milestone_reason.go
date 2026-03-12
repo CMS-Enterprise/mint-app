@@ -24,6 +24,8 @@ type MTOSuggestedMilestoneReason struct {
 	TriggerTable            MilestoneSuggestionReasonTable `json:"triggerTable" db:"trigger_table"`
 	// TriggerCol is the individual column name (e.g. "manage_part_c_d_enrollment")
 	TriggerCol string `json:"triggerCol" db:"trigger_col"`
-	// TriggerVal is the specific value that matched the trigger condition (e.g. "t", "LOI")
+	// TriggerVal is the raw database value that matched the trigger condition (e.g. "t" for boolean true).
+	// Note: this is the internal DB representation, not the human-readable answer label shown in the UI.
+	// Future Enhancement: translate trigger_val to a human-readable answer using the translation layer.
 	TriggerVal string `json:"triggerVal" db:"trigger_val"`
 }

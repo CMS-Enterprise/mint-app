@@ -219,12 +219,20 @@ type MTOSolutionTranslation struct {
 type MilestoneSuggestionReason struct {
 	// The task list table that contains the field which triggered this suggestion.
 	Table string `json:"table"`
-	// The specific field name (database column) that triggered this suggestion.
+	// The raw database column name that triggered this suggestion.
 	// For example: "manage_part_c_d_enrollment" or "appeal_performance".
 	Field string `json:"field"`
-	// The specific value that matched the trigger condition.
-	// For example: "t" (true), "LOI", or "APPLICATION_REVIEW_AND_SCORING_TOOL".
+	// The human-readable label for the triggering field.
+	// For example: "Will you manage Part C/D enrollment?".
+	// Falls back to the raw column name when no translation is available.
+	FieldLabel string `json:"fieldLabel"`
+	// The human-readable answer that matched the trigger condition.
+	// For example: "Yes", "LOI", or "APPLICATION_REVIEW_AND_SCORING_TOOL".
+	// Falls back to the raw value when no translation is available.
 	Answer *string `json:"answer,omitempty"`
+	// A full-sentence explanation of why this milestone was suggested.
+	// For example: "You answered 'Yes' to: Will you manage Part C/D enrollment?"
+	Reason string `json:"reason"`
 }
 
 // MilestoneSuggestionReasons is an aggregate type that represents the suggestion context for
