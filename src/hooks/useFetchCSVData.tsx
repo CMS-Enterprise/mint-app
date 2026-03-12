@@ -363,7 +363,7 @@ const csvFormatter = (
     const selectedCSVFields = isFilterGroup(exportSection)
       ? selectFilteredFields(allPlanTranslation, exportSection)
       : removedUnneededData(
-          csvData[0],
+          flattenedData[0],
           allPlanTranslation,
           csvFields(i18next.t)[exportSection]
         );
