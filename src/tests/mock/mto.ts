@@ -275,7 +275,7 @@ export const commonMilestonesMock: MockedResponse<
                 isArchived: false,
                 isAdded: false,
                 suggested: {
-                  __typename: 'MilestoneSuggestionReasons' as const,
+                  __typename: 'MilestoneSuggestionReasons',
                   isSuggested: true,
                   count: 0,
                   reasons: []

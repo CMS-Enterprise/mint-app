@@ -218,7 +218,7 @@ type MTOSolutionTranslation struct {
 // in the mto_common_milestone table.
 type MilestoneSuggestionReason struct {
 	// The task list table that contains the field which triggered this suggestion.
-	Table string `json:"table"`
+	Table models.TableName `json:"table"`
 	// The raw database column name that triggered this suggestion.
 	// For example: "manage_part_c_d_enrollment" or "appeal_performance".
 	Field string `json:"field"`

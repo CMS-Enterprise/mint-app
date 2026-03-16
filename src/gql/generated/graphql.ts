@@ -1714,7 +1714,7 @@ export type MilestoneSuggestionReason = {
    */
   question: Scalars['String']['output'];
   /** The task list table that contains the field which triggered this suggestion. */
-  table: Scalars['String']['output'];
+  table: TableName;
 };
 
 /**
@@ -6556,7 +6556,7 @@ export type GetGlobalMtoCommonSolutionsQuery = { __typename: 'Query', mtoCommonS
 export type GetMtoAllCommonMilestonesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMtoAllCommonMilestonesQuery = { __typename: 'Query', mtoCommonMilestones: Array<{ __typename: 'MTOCommonMilestone', id: UUID, name: string, description: string, isArchived: boolean, isAdded: boolean, categoryName: string, subCategoryName?: string | null, facilitatedByRole: Array<MtoFacilitator>, suggested: { __typename: 'MilestoneSuggestionReasons', isSuggested: boolean, count: number, reasons: Array<{ __typename: 'MilestoneSuggestionReason', table: string, field: string, question: string, answer?: string | null }> }, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> }> };
+export type GetMtoAllCommonMilestonesQuery = { __typename: 'Query', mtoCommonMilestones: Array<{ __typename: 'MTOCommonMilestone', id: UUID, name: string, description: string, isArchived: boolean, isAdded: boolean, categoryName: string, subCategoryName?: string | null, facilitatedByRole: Array<MtoFacilitator>, suggested: { __typename: 'MilestoneSuggestionReasons', isSuggested: boolean, count: number, reasons: Array<{ __typename: 'MilestoneSuggestionReason', table: TableName, field: string, question: string, answer?: string | null }> }, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> }> };
 
 export type GetMtoAllMilestonesQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -6584,7 +6584,7 @@ export type GetMtoMilestonesQueryVariables = Exact<{
 }>;
 
 
-export type GetMtoMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID }, commonMilestones: Array<{ __typename: 'MTOCommonMilestone', id: UUID, name: string, description: string, isArchived: boolean, isAdded: boolean, categoryName: string, subCategoryName?: string | null, facilitatedByRole: Array<MtoFacilitator>, suggested: { __typename: 'MilestoneSuggestionReasons', isSuggested: boolean, count: number, reasons: Array<{ __typename: 'MilestoneSuggestionReason', table: string, field: string, question: string, answer?: string | null }> }, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> }> } } };
+export type GetMtoMilestonesQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, mtoMatrix: { __typename: 'ModelsToOperationMatrix', info: { __typename: 'MTOInfo', id: UUID }, commonMilestones: Array<{ __typename: 'MTOCommonMilestone', id: UUID, name: string, description: string, isArchived: boolean, isAdded: boolean, categoryName: string, subCategoryName?: string | null, facilitatedByRole: Array<MtoFacilitator>, suggested: { __typename: 'MilestoneSuggestionReasons', isSuggested: boolean, count: number, reasons: Array<{ __typename: 'MilestoneSuggestionReason', table: TableName, field: string, question: string, answer?: string | null }> }, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> }> } } };
 
 export type GetMtoCommonSolutionModelUsageQueryVariables = Exact<{ [key: string]: never; }>;
 
