@@ -26,3 +26,8 @@ func MTOCommonMilestoneGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models
 	// Future Enhancement look into expanding this to also take contextual model plan data to return is added etc
 	return loaders.MTOCommonMilestone.ByID.Load(ctx, id)
 }
+
+// MTOSuggestedMilestoneReasonGetByIDLOADER returns all suggestion reasons for a given mto_suggested_milestone ID.
+func MTOSuggestedMilestoneReasonGetByIDLOADER(ctx context.Context, id uuid.UUID) ([]*models.MTOSuggestedMilestoneReason, error) {
+	return loaders.MTOSuggestedMilestoneReason.ByMTOSuggestedMilestoneID.Load(ctx, id)
+}

@@ -20,8 +20,13 @@ describe('MilestoneCard Component', () => {
     categoryName: 'Test Category',
     subCategoryName: 'Test SubCategory',
     isArchived: false,
-    isSuggested: true,
     isAdded: false,
+    suggested: {
+      __typename: 'MilestoneSuggestionReasons' as const,
+      isSuggested: true,
+      count: 0,
+      reasons: []
+    },
     facilitatedByRole: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
     commonSolutions: [
       {

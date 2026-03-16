@@ -244,9 +244,9 @@ const MilstoneCardGroup = ({
     () =>
       milestones.filter(milestone => {
         if (addedMilestonesHidden) {
-          return milestone.isSuggested && !milestone.isAdded;
+          return milestone.suggested.isSuggested && !milestone.isAdded;
         }
-        return milestone.isSuggested;
+        return milestone.suggested.isSuggested;
       }),
     [milestones, addedMilestonesHidden]
   );
@@ -283,9 +283,9 @@ const MilstoneCardGroup = ({
     () =>
       allItems.filter(milestone => {
         if (addedMilestonesHidden) {
-          return milestone.isSuggested && !milestone.isAdded;
+          return milestone.suggested.isSuggested && !milestone.isAdded;
         }
-        return milestone.isSuggested;
+        return milestone.suggested.isSuggested;
       }),
     [allItems, addedMilestonesHidden]
   );

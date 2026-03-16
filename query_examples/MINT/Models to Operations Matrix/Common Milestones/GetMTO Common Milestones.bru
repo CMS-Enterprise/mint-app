@@ -30,7 +30,16 @@ body:graphql {
               
               isArchived
               isAdded
-              # isSuggested
+              suggested {
+                  isSuggested
+                  count
+                  reasons {
+                      table
+                      field
+                      question
+                      answer
+                  }
+              }
               # commonSolutions:
   
           }

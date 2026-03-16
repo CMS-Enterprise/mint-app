@@ -50,7 +50,9 @@ export default gql(/* GraphQL */ `
           name
         }
         commonMilestones {
-          isSuggested
+          suggested {
+            isSuggested
+          }
           isAdded
         }
         recentEdit {
