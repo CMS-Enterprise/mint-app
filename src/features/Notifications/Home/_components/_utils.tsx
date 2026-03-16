@@ -150,6 +150,7 @@ export const UnsubscribableActivities = {
   DATES_CHANGED: 'datesChanged',
   IDDOC_QUESTIONNAIRE_COMPLETED: 'iddocQuestionnaireComplete',
   INCORRECT_MODEL_STATUS: 'incorrectModelStatus',
+  MTO_READY_FOR_REVIEW: 'mtoReadyForReview',
   NEW_DISCUSSION_ADDED: 'newDiscussionAdded',
   NEW_MODEL_PLAN: 'newModelPlan'
 } as const;

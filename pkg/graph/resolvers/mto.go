@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/samber/lo"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
@@ -170,15 +171,21 @@ func TrySendMTOReadyForReviewNotifications(
 	principal authentication.Principal,
 	np sqlutils.NamedPreparer,
 ) {
+	modelPlan, notifErr := ModelPlanGetByIDLOADER(ctx, mtoInfo.ModelPlanID)
+	if notifErr != nil {
+		logger.Error("failed to get model plan for MTO ready for review notifications", zap.Error(notifErr))
+		return
+	}
+
 	uans, uacErr := storage.UserAccountGetNotificationPreferencesForMTOReadyForReview(np, mtoInfo.ModelPlanID)
 	if uacErr != nil {
 		logger.Error("failed to get user account notification preferences for MTO ready for review", zap.Error(uacErr))
 		return
 	}
 
-	_, inAppUANs := models.FilterNotificationPreferences(uans)
+	emailUANs, inAppUANs := models.FilterNotificationPreferences(uans)
 
-	_, notifErr := notifications.ActivityMTOReadyForReviewCreate(
+	_, notifErr = notifications.ActivityMTOReadyForReviewCreate(
 		ctx,
 		principal.Account().ID,
 		np,
@@ -192,7 +199,126 @@ func TrySendMTOReadyForReviewNotifications(
 		return
 	}
 
-	// TODO: send email notifications when email template is available
+	go func() {
+		if emailService == nil {
+			return
+		}
+
+		// Send email to MINT Team (no subscriber footer)
+		notifErr = SendMTOReadyForReviewEmailNotification(
+			emailService,
+			emailAddressBook,
+			modelPlan,
+			emailAddressBook.MINTTeamEmail,
+			principal.Account().CommonName,
+			false,
+		)
+		if notifErr != nil {
+			logger.Error("failed to send MTO ready for review email to MINT team", zap.Error(notifErr))
+			return
+		}
+
+		// Send email to opted-in users (with subscriber unsubscribe footer)
+		notifErr = SendMTOReadyForReviewEmailNotifications(
+			emailService,
+			emailAddressBook,
+			emailUANs,
+			modelPlan,
+			principal.Account().CommonName,
+			true,
+		)
+		if notifErr != nil {
+			logger.Error("failed to send MTO ready for review email notifications", zap.Error(notifErr))
+		}
+	}()
+}
+
+func getExecutedMTOReadyForReviewEmail(
+	emailService oddmail.EmailService,
+	modelPlan *models.ModelPlan,
+	markedReadyForReviewByUserName string,
+	showFooter bool,
+) (string, string, error) {
+	subjectContent := email.MTOReadyForReviewSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+	bodyContent := email.MTOReadyForReviewBodyContent{
+		ClientAddress:                  emailService.GetConfig().GetClientAddress(),
+		ModelName:                      modelPlan.ModelName,
+		ModelID:                        modelPlan.GetModelPlanID().String(),
+		MarkedReadyForReviewByUserName: markedReadyForReviewByUserName,
+		ShowFooter:                     showFooter,
+	}
+	return email.MTOReadyForReview.ReadyForReview.GetContent(subjectContent, bodyContent)
+}
+
+// SendMTOReadyForReviewEmailNotification sends a single MTO ready for review email to a given address
+func SendMTOReadyForReviewEmailNotification(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	modelPlan *models.ModelPlan,
+	userEmail string,
+	markedReadyForReviewByUserName string,
+	showFooter bool,
+) error {
+	emailSubject, emailBody, err := getExecutedMTOReadyForReviewEmail(
+		emailService,
+		modelPlan,
+		markedReadyForReviewByUserName,
+		showFooter,
+	)
+	if err != nil {
+		return err
+	}
+	return emailService.Send(
+		addressBook.DefaultSender,
+		[]string{userEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+}
+
+// SendMTOReadyForReviewEmailNotifications sends MTO ready for review emails to all opted-in receivers via BCC
+func SendMTOReadyForReviewEmailNotifications(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	receivers []*models.UserAccountAndNotificationPreferences,
+	modelPlan *models.ModelPlan,
+	markedReadyForReviewByUserName string,
+	showFooter bool,
+) error {
+	if len(receivers) == 0 {
+		return nil
+	}
+
+	emailSubject, emailBody, err := getExecutedMTOReadyForReviewEmail(
+		emailService,
+		modelPlan,
+		markedReadyForReviewByUserName,
+		showFooter,
+	)
+	if err != nil {
+		return err
+	}
+
+	receiverEmails := lo.Map(
+		receivers,
+		func(pref *models.UserAccountAndNotificationPreferences, _ int) string {
+			return pref.Email
+		},
+	)
+
+	return emailService.Send(
+		addressBook.DefaultSender,
+		[]string{},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(receiverEmails),
+	)
 }
 
 // MTOTemplateGetByModelPlanIDLOADER implements resolver logic to get all MTO templates by a model plan ID using a data loader

@@ -275,7 +275,8 @@ const notifications = {
         DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:
           'when a data exchange approach is completed',
         IDDOC_QUESTIONNAIRE_COMPLETED:
-          'when a 4i/ACO-OS questionnaire is completed'
+          'when a 4i/ACO-OS questionnaire is completed',
+        MTO_READY_FOR_REVIEW: 'when an MTO is marked ready for review'
       }
     }
   }

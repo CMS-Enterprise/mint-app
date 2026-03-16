@@ -68,7 +68,9 @@ const mockNotificationSettingsWithInApp: MockedResponse<
             dataExchangeApproachMarkedCompleteNotificationType: null,
             incorrectModelStatus: [],
             iddocQuestionnaireComplete: [],
-            iddocQuestionnaireCompletedNotificationType: null
+            iddocQuestionnaireCompletedNotificationType: null,
+            mtoReadyForReview: [],
+            mtoReadyForReviewNotificationType: null
           }
         }
       }
@@ -108,7 +110,9 @@ const mockNotificationSettingsWithoutInApp: MockedResponse<
             dataExchangeApproachMarkedCompleteNotificationType: null,
             incorrectModelStatus: [],
             iddocQuestionnaireComplete: [],
-            iddocQuestionnaireCompletedNotificationType: null
+            iddocQuestionnaireCompletedNotificationType: null,
+            mtoReadyForReview: [],
+            mtoReadyForReviewNotificationType: null
           }
         }
       }
@@ -148,7 +152,9 @@ const mockNotificationSettingsEmpty: MockedResponse<
             dataExchangeApproachMarkedCompleteNotificationType: null,
             incorrectModelStatus: [],
             iddocQuestionnaireComplete: [],
-            iddocQuestionnaireCompletedNotificationType: null
+            iddocQuestionnaireCompletedNotificationType: null,
+            mtoReadyForReview: [],
+            mtoReadyForReviewNotificationType: null
           }
         }
       }
