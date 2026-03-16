@@ -28,8 +28,9 @@ const SuggestedMilestoneToggle = ({
 
   const {
     answers: milestoneAnswers,
-    questionKey,
+    scrollElement,
     questionUrl,
+    groupLabel,
     isMultiQuestions
   } = useMemo(
     () => formatMilestoneAnswers(milestone.suggested?.reasons || []),
@@ -94,7 +95,7 @@ const SuggestedMilestoneToggle = ({
               <p data-testid="milestone-question" className="margin-0">
                 Q:{' '}
                 {isMultiQuestions
-                  ? 'TODO'
+                  ? groupLabel
                   : milestone.suggested.reasons[0]?.question}
               </p>
 
@@ -114,7 +115,7 @@ const SuggestedMilestoneToggle = ({
                   className="display-block"
                   to={`/models/${modelID}/collaboration-area/model-plan/${questionUrl}`}
                   state={{
-                    scrollElement: questionKey
+                    scrollElement
                   }}
                 >
                   {t('milestoneLibrary.goToQuestion')}

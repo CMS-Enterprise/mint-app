@@ -67,7 +67,7 @@ const getQuestionConfig = (reason: MilestoneSuggestionReason) => {
   const tableConfig =
     modelPlanTableMap[reason.table as keyof typeof modelPlanTableMap];
 
-  if (!tableConfig) return { questionKey: '', route: '' };
+  if (!tableConfig) return { questionKey: '', route: '', groupLabel: '' };
 
   const { translationConfig, routes, path } = tableConfig;
 
@@ -75,7 +75,7 @@ const getQuestionConfig = (reason: MilestoneSuggestionReason) => {
     Object.keys(translationConfig) as Array<keyof typeof translationConfig>
   ).find(key => translationConfig[key].dbField === reason.field);
 
-  if (!questionKey) return { questionKey: '', route: path };
+  if (!questionKey) return { questionKey: '', route: path, groupLabel: '' };
 
   const pageOrder = translationConfig[questionKey]?.order;
 
@@ -84,7 +84,8 @@ const getQuestionConfig = (reason: MilestoneSuggestionReason) => {
 
   return {
     questionKey,
-    route: subRoute ? `${path}/${subRoute}` : path
+    route: subRoute ? `${path}/${subRoute}` : path,
+    groupLabel: translationConfig[questionKey]?.groupLabel || ''
   };
 };
 
@@ -92,6 +93,7 @@ export type ReasonType = {
   question: string;
   questionKey: string;
   questionUrl: string;
+  groupLabel?: string;
   answers: string[];
 };
 
@@ -117,6 +119,7 @@ export const formatMilestoneAnswers = (
           question,
           questionKey: getQuestionConfig(reason).questionKey,
           questionUrl: getQuestionConfig(reason).route,
+          groupLabel: getQuestionConfig(reason).groupLabel,
           answers: existingReason
             ? [...existingReason.answers, answer]
             : [answer]
@@ -130,8 +133,11 @@ export const formatMilestoneAnswers = (
 
   return {
     answers: formattedAnswers,
-    questionKey: formattedAnswers[0]?.questionKey, // should only have one question key, used to for scroll
+    scrollElement: formattedAnswers[0]?.groupLabel
+      ? formattedAnswers[0]?.groupLabel
+      : formattedAnswers[0]?.questionKey, // scroll to either question or group label
     questionUrl: formattedAnswers[0]?.questionUrl, // should only have one url
+    groupLabel: formattedAnswers[0]?.groupLabel, // only multiple questions have groupLabel
     isMultiQuestions: formattedAnswers.length > 1
   };
 };
