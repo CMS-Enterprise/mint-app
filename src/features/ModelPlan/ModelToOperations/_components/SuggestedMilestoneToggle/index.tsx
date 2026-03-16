@@ -6,9 +6,11 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 
+import {
+  formatMilestoneAnswers,
+  ReasonType
+} from '../../_utils/suggestedMilestone';
 import { MilestoneCardType } from '../../MilestoneLibrary';
-
-import { formatMilestoneAnswers, ReasonType } from './utils';
 
 type SuggestedMilestoneToggleType = {
   milestone: MilestoneCardType;
