@@ -86,6 +86,10 @@ const notifications = {
       IDDOC_QUESTIONNAIRE_COMPLETED: {
         text: ' marked the 4i/ACO-OS questionnaire complete for {{-modelName}}.',
         cta: 'View questionnaire'
+      },
+      MTO_READY_FOR_REVIEW: {
+        text: ' marked the Models to Operations Matrix ready for review for {{-modelName}}.',
+        cta: 'View milestones'
       }
     },
     dailyDigest: {

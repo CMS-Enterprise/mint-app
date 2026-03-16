@@ -31,6 +31,8 @@ body:graphql {
         newModelPlan: [EMAIL, IN_APP]
         iddocQuestionnaireComplete: [EMAIL, IN_APP]
         iddocQuestionnaireCompletedNotificationType: ALL_MODELS
+        mtoReadyForReview: [IN_APP]
+        mtoReadyForReviewNotificationType: MY_MODELS
       }
     ) {
       dailyDigestComplete
@@ -44,6 +46,8 @@ body:graphql {
       newModelPlan
       iddocQuestionnaireComplete
       iddocQuestionnaireCompletedNotificationType
+      mtoReadyForReview
+      mtoReadyForReviewNotificationType
     }
   }
 }

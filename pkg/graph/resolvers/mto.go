@@ -9,7 +9,11 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -100,11 +104,24 @@ func MTOMostRecentTranslatedAudit(ctx context.Context, store *storage.Store, log
 	return records[0], nil
 }
 
-func MTOToggleReadyForReview(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID, isReadyForReview bool) (*models.MTOInfo, error) {
+func MTOToggleReadyForReview(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
+	modelPlanID uuid.UUID,
+	isReadyForReview bool,
+	emailService oddmail.EmailService,
+	emailAddressBook email.AddressBook,
+) (*models.MTOInfo, error) {
 	mtoInfo, err := MTOInfoGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
+
+	// Track whether we're making a new ready-for-review transition (for notification purposes)
+	newlyMarkedReadyForReview := false
+
 	// Clear out ready for review if no
 	if !isReadyForReview {
 		mtoInfo.ReadyForReviewBy = nil
@@ -121,7 +138,7 @@ func MTOToggleReadyForReview(ctx context.Context, logger *zap.Logger, principal 
 
 			mtoInfo.ReadyForReviewBy = &userID
 			mtoInfo.ReadyForReviewDts = &now
-
+			newlyMarkedReadyForReview = true
 		}
 	}
 
@@ -130,8 +147,52 @@ func MTOToggleReadyForReview(ctx context.Context, logger *zap.Logger, principal 
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOInfoUpdate(store, logger, mtoInfo)
+	updated, err := storage.MTOInfoUpdate(store, logger, mtoInfo)
+	if err != nil {
+		return nil, err
+	}
 
+	if newlyMarkedReadyForReview {
+		TrySendMTOReadyForReviewNotifications(ctx, updated, logger, emailService, emailAddressBook, principal, store)
+	}
+
+	return updated, nil
+}
+
+// TrySendMTOReadyForReviewNotifications sends in-app (and eventually email) notifications
+// when an MTO is marked ready for review for the first time.
+func TrySendMTOReadyForReviewNotifications(
+	ctx context.Context,
+	mtoInfo *models.MTOInfo,
+	logger *zap.Logger,
+	emailService oddmail.EmailService,
+	emailAddressBook email.AddressBook,
+	principal authentication.Principal,
+	np sqlutils.NamedPreparer,
+) {
+	uans, uacErr := storage.UserAccountGetNotificationPreferencesForMTOReadyForReview(np, mtoInfo.ModelPlanID)
+	if uacErr != nil {
+		logger.Error("failed to get user account notification preferences for MTO ready for review", zap.Error(uacErr))
+		return
+	}
+
+	_, inAppUANs := models.FilterNotificationPreferences(uans)
+
+	_, notifErr := notifications.ActivityMTOReadyForReviewCreate(
+		ctx,
+		principal.Account().ID,
+		np,
+		inAppUANs,
+		mtoInfo.ModelPlanID,
+		mtoInfo.ID,
+		principal.Account().ID,
+	)
+	if notifErr != nil {
+		logger.Error("failed to create MTO ready for review activity", zap.Error(notifErr))
+		return
+	}
+
+	// TODO: send email notifications when email template is available
 }
 
 // MTOTemplateGetByModelPlanIDLOADER implements resolver logic to get all MTO templates by a model plan ID using a data loader
