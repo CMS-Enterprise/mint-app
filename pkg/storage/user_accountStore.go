@@ -16,6 +16,24 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
+// UserAccountCollectionGet returns all user accounts from the database
+func (s *Store) UserAccountCollectionGet() ([]*authentication.UserAccount, error) {
+	var users []*authentication.UserAccount
+
+	stmt, err := s.db.PrepareNamed(sqlqueries.UserAccount.CollectionGet)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	err = stmt.Select(&users, map[string]interface{}{})
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
+
 // UserAccountGetByUsername gets a user account by a give username
 func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*authentication.UserAccount, error) {
 	user := &authentication.UserAccount{}
