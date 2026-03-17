@@ -11,7 +11,6 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
-	"github.com/aws/aws-sdk-go-v2/feature/s3/manager"
 	s3New "github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
 
@@ -156,9 +155,7 @@ func (c S3Client) ExpectNoBucket() bool {
 
 // UploadFile uploads a io.Reader to the bucket configured in the S3Client
 func (c S3Client) UploadFile(ctx context.Context, file io.Reader, key string) error {
-	uploader := manager.NewUploader(c.client)
-
-	_, err := uploader.Upload(ctx, &s3New.PutObjectInput{
+	_, err := c.client.PutObject(ctx, &s3New.PutObjectInput{
 		Bucket: &c.config.Bucket,
 		Key:    &key,
 		Body:   file,
