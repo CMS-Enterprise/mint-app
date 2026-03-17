@@ -11,7 +11,7 @@ import {
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import ExternalLink from 'components/ExternalLink';
-import { ECHIMP_URL_SSO } from 'constants/echimp';
+import { ECHIMP_URL_SSO, ECHIMP_URL_TEMP_SSO } from 'constants/echimp';
 
 import './index.scss';
 
@@ -41,6 +41,21 @@ export const echimpUrl = (type?: 'ffs' | 'tdl', id?: string) => {
     return id ? `${ECHIMP_URL_SSO}?sysSelect=TDL&crNum=${id}` : ECHIMP_URL_SSO;
   }
   return ECHIMP_URL_SSO;
+};
+
+// Remove later once integration is completed
+export const echimpTempUrl = (type?: 'ffs' | 'tdl', id?: string) => {
+  if (type === 'ffs') {
+    return id
+      ? `${import.meta.env.VITE_TEMP_ECHIMP_URL}/ffs-ui/${id}/cr-summary`
+      : ECHIMP_URL_TEMP_SSO;
+  }
+  if (type === 'tdl') {
+    return id
+      ? `${ECHIMP_URL_TEMP_SSO}?sysSelect=TDL&crNum=${id}`
+      : ECHIMP_URL_TEMP_SSO;
+  }
+  return ECHIMP_URL_TEMP_SSO;
 };
 
 export const DataOrNoData = ({ data }: { data: string | null | undefined }) => {
@@ -75,6 +90,11 @@ const EChimpCard = ({
   const echimpURL = flags?.echimpFFSURLEnabled
     ? echimpUrl(isCR ? 'ffs' : 'tdl', id)
     : `${ECHIMP_URL_SSO}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`;
+
+  // Remove later once integration is completed
+  const tempEchimpURL = flags?.echimpFFSURLEnabled
+    ? echimpTempUrl(isCR ? 'ffs' : 'tdl', id)
+    : `${ECHIMP_URL_TEMP_SSO}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`;
 
   return (
     <Card
@@ -143,7 +163,11 @@ const EChimpCard = ({
         >
           {crtdlsT('echimpCard.viewMore')}
         </Button>
-        <ExternalLink href={echimpURL} className="margin-right-0" toEchimp>
+        <ExternalLink
+          href={flags.echimpIntegrationEnabled ? tempEchimpURL : echimpURL}
+          className="margin-right-0"
+          toEchimp
+        >
           {crtdlsT('echimpCard.viewThisInECHIMP')}
         </ExternalLink>
       </CardFooter>
