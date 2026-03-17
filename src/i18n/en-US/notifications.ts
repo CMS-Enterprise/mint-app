@@ -88,8 +88,8 @@ const notifications = {
         cta: 'View questionnaire'
       },
       MTO_READY_FOR_REVIEW: {
-        text: ' marked the Models to Operations Matrix ready for review for {{-modelName}}.',
-        cta: 'View milestones'
+        text: ' marked the model-to-operations matrix (MTO) for {{-modelName}} as ready for review.',
+        cta: 'View MTO'
       }
     },
     dailyDigest: {
