@@ -45,6 +45,7 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             modelsApproachingClearanceEnabled: false,
             mintAnalyticsEnabled: true,
             echimpFFSURLEnabled: false,
+            echimpIntegrationEnabled: false,
             sandbox: true
           }
         });
