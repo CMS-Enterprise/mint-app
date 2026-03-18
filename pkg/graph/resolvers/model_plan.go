@@ -97,6 +97,19 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		// Create the default task cards for the plan (one per key)
+		for _, key := range []models.PlanTaskKey{
+			models.PlanTaskKeyModelPlan,
+			models.PlanTaskKeyMto,
+			models.PlanTaskKeyDataExchange,
+		} {
+			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, key, models.PlanTaskStatusToDo)
+			_, err = storage.PlanTaskCreate(tx, logger, task)
+			if err != nil {
+				return nil, err
+			}
+		}
+
 		baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
 
 		// Create a default plan basics object
