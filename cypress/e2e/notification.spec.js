@@ -734,8 +734,8 @@ describe('Notification Center', () => {
       'include',
       '/collaboration-area/model-to-operations/matrix'
     );
-    cy.get('[data-testid="tasklist-tag"').contains('In progress');
-    cy.get('[data-testid="tasklist-tag"')
+    cy.get('[data-testid="tasklist-tag"]').contains('In progress');
+    cy.get('[data-testid="tasklist-tag"]')
       .contains('Ready for review')
       .should('not.exist');
     cy.contains('button', 'Is this MTO ready for review?').click();
@@ -743,8 +743,8 @@ describe('Notification Center', () => {
     cy.get('[data-testid="mto-ready-for-review-modal"]').within(() => {
       cy.contains('button', 'Mark as ready for review').click();
     });
-    cy.get('[data-testid="tasklist-tag"').contains('Ready for review');
-    cy.get('[data-testid="tasklist-tag"')
+    cy.get('[data-testid="tasklist-tag"]').contains('Ready for review');
+    cy.get('[data-testid="tasklist-tag"]')
       .contains('In progress')
       .should('not.exist');
 
