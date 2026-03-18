@@ -86,6 +86,10 @@ const notifications = {
       IDDOC_QUESTIONNAIRE_COMPLETED: {
         text: ' marked the 4i/ACO-OS questionnaire complete for {{-modelName}}.',
         cta: 'View questionnaire'
+      },
+      MTO_READY_FOR_REVIEW: {
+        text: ' marked the model-to-operations matrix (MTO) for {{-modelName}} as ready for review.',
+        cta: 'View MTO'
       }
     },
     dailyDigest: {
@@ -271,7 +275,8 @@ const notifications = {
         DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:
           'when a data exchange approach is completed',
         IDDOC_QUESTIONNAIRE_COMPLETED:
-          'when a 4i/ACO-OS questionnaire is completed'
+          'when a 4i/ACO-OS questionnaire is completed',
+        MTO_READY_FOR_REVIEW: 'when an MTO is marked ready for review'
       }
     }
   }
