@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
@@ -18,6 +18,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import UswdsReactLink from 'components/LinkWrapper';
 
 import type { LastModifiedSectionData } from '../_components/LastModifiedSection';
 import LastModifiedSection from '../_components/LastModifiedSection';
@@ -134,12 +135,34 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
 
   if (hasNoCurrentTasks) {
     return (
-      <Alert type="info">
-        <h3 className="margin-top-0 margin-bottom-1">
-          {t('emptyState.heading')}
-        </h3>
-        <p className="margin-0">{t('emptyState.copy')}</p>
-      </Alert>
+      <>
+        <Alert
+          type="info"
+          heading={t('emptyState.heading')}
+          className="margin-bottom-3"
+        >
+          {t('emptyState.copy')}
+          <Trans
+            i18nKey="tasks:emptyState.viewCompletedTasks"
+            components={{
+              link1: <UswdsReactLink to="#" className="deep-underline" />
+            }}
+          />
+        </Alert>
+        <div className="display-flex flex-justify-end">
+          <Button
+            type="button"
+            unstyled
+            className="deep-underline"
+            onClick={() => {
+              // TODO: navigate to "See all tasks" page when built
+              navigate(`/models/${modelID}/collaboration-area`);
+            }}
+          >
+            {t('seeAllTasks')}
+          </Button>
+        </div>
+      </>
     );
   }
 
@@ -186,10 +209,10 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
               </div>
             )}
           </CardBody>
-          <CardFooter className="display-flex border-top-0">
+          <CardFooter className="display-flex border-top-0 padding-top-1">
             <Button
               type="button"
-              className="margin-right-1"
+              className="margin-right-2"
               onClick={() =>
                 navigate(t(`${currentTaskKey}.primaryPath`, { modelID }))
               }
