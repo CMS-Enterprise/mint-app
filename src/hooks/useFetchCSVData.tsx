@@ -93,6 +93,9 @@ const getUserHeaderLabel = (fieldName: string, dataField: string): string => {
   if (fieldName === 'markedCompleteByUserAccount.commonName') {
     return i18next.t('dataExchangeApproach:markedCompleteBy.label');
   }
+  if (fieldName === 'completedByUserAccount.commonName') {
+    return i18next.t('iddocQuestionnaire:completedBy.label');
+  }
   // If no translation, format using hardcoded label in csvFields
   return dataField;
 };
@@ -328,13 +331,15 @@ export const downloadFile = (data: string, filename: string) => {
   element.click();
 };
 
-// Flattens the MTO data to be in a single row for each model plan, rather than all nested under mtoMatrix
+// Flattens the Questionnaire and MTO data to be in a single row for each model plan, rather than all nested
 const flattenMTOData = (data: CSVModelPlanType[]) => {
   const flattenedData: any = [...data];
 
   flattenedData.forEach((plan: any, index: number) => {
     const dataObj = { ...flattenedData[index] };
 
+    dataObj.dataExchangeApproach = plan.questionnaires.dataExchangeApproach;
+    dataObj.iddocQuestionnaire = plan.questionnaires.iddocQuestionnaire;
     dataObj.mtoMilestone = plan.mtoMatrix.milestones;
     dataObj.mtoSolution = plan.mtoMatrix.solutions;
     dataObj.mtoCategory = plan.mtoMatrix.categories;

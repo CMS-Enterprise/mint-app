@@ -1,13 +1,16 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Alert from 'components/Alert';
 import EChimpCardsTable from 'components/EChimpCards/EChimpCardsTable';
 import ExternalLink from 'components/ExternalLink';
-import { ECHIMP_URL_SSO } from 'constants/echimp';
+import { ECHIMP_URL_SSO, ECHIMP_URL_TEMP_SSO } from 'constants/echimp';
 
 const ReadOnlyCRTDLs = () => {
   const { t } = useTranslation('crtdlsMisc');
+
+  const flags = useFlags();
 
   return (
     <div
@@ -24,7 +27,11 @@ const ReadOnlyCRTDLs = () => {
             el: (
               <ExternalLink
                 className="margin-right-0"
-                href={ECHIMP_URL_SSO}
+                href={
+                  flags.echimpIntegrationEnabled
+                    ? ECHIMP_URL_TEMP_SSO
+                    : ECHIMP_URL_SSO
+                }
                 toEchimp
               >
                 {' '}
