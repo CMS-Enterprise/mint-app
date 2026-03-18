@@ -10,11 +10,6 @@ import { MilestoneCardType } from '../../MilestoneLibrary';
 
 import SuggestedMilestoneToggle from '.';
 
-// Mocking the utility function to control data flow
-// vi.mock('../../_utils/suggestedMilestone', () => ({
-//   formatMilestoneAnswers: vi.fn()
-// }));
-
 const mockSuggestedMilestone: MilestoneCardType = {
   __typename: 'MTOCommonMilestone',
   id: '123456',

@@ -5,6 +5,7 @@ import generalCharacteristics from 'i18n/en-US/modelPlan/generalCharacteristics'
 import opsEvalAndLearning from 'i18n/en-US/modelPlan/opsEvalAndLearning';
 import { participantsAndProviders } from 'i18n/en-US/modelPlan/participantsAndProviders';
 import payments from 'i18n/en-US/modelPlan/payments';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
 const generalCharacteristicsRoutes: { [key: number]: string } = {
   2: 'key-characteristics',
@@ -58,7 +59,7 @@ const modelPlanTableMap = {
   },
   [TableName.PLAN_PAYMENTS]: {
     translationConfig: payments,
-    path: 'payments',
+    path: 'payment',
     routes: paymentRoutes
   }
 };
@@ -113,13 +114,15 @@ export const formatMilestoneAnswers = (
         return reformattedReasons;
       }
 
+      const questionConfig = getQuestionConfig(reason);
+
       return {
         ...reformattedReasons,
         [field]: {
           question,
-          questionKey: getQuestionConfig(reason).questionKey,
-          questionUrl: getQuestionConfig(reason).route,
-          groupLabel: getQuestionConfig(reason).groupLabel,
+          questionKey: questionConfig.questionKey,
+          questionUrl: questionConfig.route,
+          groupLabel: questionConfig.groupLabel,
           answers: existingReason
             ? [...existingReason.answers, answer]
             : [answer]
@@ -134,7 +137,7 @@ export const formatMilestoneAnswers = (
   return {
     answers: formattedAnswers,
     scrollElement: formattedAnswers[0]?.groupLabel
-      ? formattedAnswers[0]?.groupLabel
+      ? convertToLowercaseAndDashes(formattedAnswers[0]?.groupLabel)
       : formattedAnswers[0]?.questionKey, // scroll to either question or group label
     questionUrl: formattedAnswers[0]?.questionUrl, // should only have one url
     groupLabel: formattedAnswers[0]?.groupLabel, // only multiple questions have groupLabel
