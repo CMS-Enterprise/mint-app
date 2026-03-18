@@ -78,12 +78,16 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
 
-  const orderedTasks = TASK_KEY_ORDER.map(key =>
-    tasks.find(task => task.key === key)
-  ).filter(
-    (task): task is GetCollaborationAreaQuery['modelPlan']['tasks'][number] =>
-      Boolean(task)
+  const incompleteTasks = tasks.filter(
+    incompleteTask => incompleteTask.state !== PlanTaskState.COMPLETE
   );
+  const orderedTasks = TASK_KEY_ORDER.flatMap(key => {
+    const taskForKey = incompleteTasks.find(
+      incompleteTask => incompleteTask.key === key
+    );
+    return taskForKey ? [taskForKey] : [];
+  });
+
   const hasNoCurrentTasks = orderedTasks.length === 0;
 
   const [currentIndex, setCurrentIndex] = useState(0);
