@@ -243,6 +243,12 @@ const notifications = {
             copy: 'When a 4i/ACO-OS questionnaire is completed',
             modelSpecific: 'whichModelTypes',
             notificationType: 'iddocQuestionnaireCompletedNotificationType'
+          },
+          {
+            name: 'mtoReadyForReview',
+            copy: 'When a model-to-operations matrix (MTO) is ready for review',
+            modelSpecific: 'whichModelTypes',
+            notificationType: 'mtoReadyForReviewNotificationType'
           }
         ]
       }
