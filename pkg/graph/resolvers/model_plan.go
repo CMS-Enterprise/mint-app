@@ -97,7 +97,7 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		// Create the default task cards for the plan (one per key)
+		// Create default tasks for the model plan
 		for _, key := range []models.PlanTaskKey{
 			models.PlanTaskKeyModelPlan,
 			models.PlanTaskKeyMto,
@@ -334,6 +334,8 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
+	oldStatus := existingPlan.Status
+
 	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
@@ -342,6 +344,14 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
 	if err != nil {
 		return nil, err
+	}
+
+	// MODEL_PLAN task progression: when model status changes to CLEARED, mark MODEL_PLAN task COMPLETE
+	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
+		updErr := updateModelPlanTaskStatus(logger, retPlan.ID, models.PlanTaskStatusComplete, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
 	}
 	return retPlan, err
 
