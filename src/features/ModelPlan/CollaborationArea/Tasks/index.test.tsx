@@ -42,7 +42,7 @@ describe('TasksWrapper', () => {
     expect(getByText('See all (3)')).toBeInTheDocument();
   });
 
-  it('uses StateTag reflecting task state when tasks have COMPLETE state', async () => {
+  it('hides tasks with COMPLETE state and renders next state', async () => {
     const router = createMemoryRouter(
       [
         {
@@ -58,13 +58,16 @@ describe('TasksWrapper', () => {
       { initialEntries: [`/models/${modelID}/collaboration-area`] }
     );
 
-    const { getByText } = setup(<RouterProvider router={router} />);
+    const { getByText, queryByText } = setup(
+      <RouterProvider router={router} />
+    );
 
     await waitFor(() => {
       expect(getByText('Current tasks')).toBeInTheDocument();
     });
 
-    expect(getByText('Complete')).toBeInTheDocument();
+    expect(queryByText('Complete')).not.toBeInTheDocument();
+    expect(getByText('To do')).toBeInTheDocument();
   });
 
   it('renders MODEL_PLAN card with IN_PROGRESS status copy (heading and primary action)', async () => {
@@ -113,7 +116,7 @@ describe('TasksWrapper', () => {
           element: (
             <TasksWrapper
               modelPlan={modelPlanWithModified}
-              tasks={planTasksWithModelPlanComplete}
+              tasks={planTasksWithModelPlanInProgress}
             />
           )
         }

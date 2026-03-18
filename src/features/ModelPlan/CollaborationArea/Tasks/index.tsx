@@ -35,11 +35,11 @@ type StateConfig = {
 const STATE_CONFIG: Record<PlanTaskState, StateConfig> = {
   [PlanTaskState.TO_DO]: {
     style: 'bg-warning-light',
-    icon: <Icon.PriorityHigh />
+    icon: <Icon.PriorityHigh aria-label="To do" />
   },
   [PlanTaskState.COMPLETE]: {
     style: 'bg-success-dark text-white',
-    icon: <Icon.Check />
+    icon: <Icon.Check aria-label="Complete" />
   }
 };
 
