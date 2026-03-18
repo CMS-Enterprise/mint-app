@@ -348,7 +348,21 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 
 	// MODEL_PLAN task progression: when model status changes to CLEARED, mark MODEL_PLAN task COMPLETE
 	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
-		updErr := updateModelPlanTaskStatus(logger, retPlan.ID, models.PlanTaskStatusComplete, principal, store)
+		updErr := updatePlanTaskStatusByKey(store, logger, retPlan.ID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusComplete, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+
+		// DATA_EXCHANGE task progression: when model status changes to CLEARED, mark DATA_EXCHANGE task COMPLETE
+		updErr = updatePlanTaskStatusByKey(store, logger, retPlan.ID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusComplete, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+	}
+
+	// MTO task progression: when model status changes to ACTIVE, mark MTO task COMPLETE
+	if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
+		updErr := updatePlanTaskStatusByKey(store, logger, retPlan.ID, models.PlanTaskKeyMto, models.PlanTaskStatusComplete, principal, store)
 		if updErr != nil {
 			return nil, updErr
 		}

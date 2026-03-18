@@ -10,6 +10,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -24,48 +25,44 @@ func PlanTaskGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) 
 	return loaders.PlanTask.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
-func updateModelPlanTaskStatus(
+func updatePlanTaskStatusByKey(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
 	newStatus models.PlanTaskStatus,
 	principal authentication.Principal,
 	store *storage.Store,
 ) error {
-	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(store, logger, []uuid.UUID{modelPlanID})
+	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(np, logger, []uuid.UUID{modelPlanID})
 	if err != nil {
 		return err
 	}
 
-	var modelPlanTask *models.PlanTask
+	var task *models.PlanTask
 	for _, t := range tasks {
-		if t.Key == models.PlanTaskKeyModelPlan {
-			modelPlanTask = t
+		if t.Key == key {
+			task = t
 			break
 		}
 	}
-	if modelPlanTask == nil {
+	if task == nil {
 		return nil
 	}
 
-	// Early return if no change needed
-	if modelPlanTask.Status == newStatus {
-		return nil
-	}
-
-	// Ensure the updated value is persisted by PlanTaskUpdate
-	modelPlanTask.Status = newStatus
+	task.Status = newStatus
 
 	if newStatus == models.PlanTaskStatusComplete {
-		modelPlanTask.CompletedBy = &principal.Account().ID
-		modelPlanTask.CompletedDts = helpers.PointerTo(time.Now().UTC())
+		task.CompletedBy = &principal.Account().ID
+		task.CompletedDts = helpers.PointerTo(time.Now().UTC())
 	} else {
-		modelPlanTask.CompletedBy = nil
-		modelPlanTask.CompletedDts = nil
+		task.CompletedBy = nil
+		task.CompletedDts = nil
 	}
 
 	err = BaseStructPreUpdate(
 		logger,
-		modelPlanTask,
+		task,
 		map[string]interface{}{"status": newStatus},
 		principal,
 		store,
@@ -76,6 +73,6 @@ func updateModelPlanTaskStatus(
 		return err
 	}
 
-	_, err = storage.PlanTaskUpdate(store, logger, modelPlanTask)
+	_, err = storage.PlanTaskUpdate(np, logger, task)
 	return err
 }
