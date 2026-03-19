@@ -185,7 +185,6 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
 
   return (
     <div>
-      <h2 className="margin-top-0">{t('heading')}</h2>
       <CardGroup>
         <Card
           gridLayout={{ desktop: { col: 12 } }}
