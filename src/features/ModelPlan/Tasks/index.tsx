@@ -1,16 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import {
-  Button,
+  CardGroup,
   Grid,
   GridContainer,
   Header,
   PrimaryNav
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
+import TaskCard from 'features/ModelPlan/CollaborationArea/Cards/TaskCard';
 import {
   GetCollaborationAreaQuery,
+  PlanTaskKey,
   PlanTaskState,
   useGetCollaborationAreaQuery
 } from 'gql/generated/graphql';
@@ -28,20 +30,24 @@ type PlanTaskEntry = GetCollaborationAreaQuery['modelPlan']['tasks'][number];
 
 type TabId = 'current' | 'completed';
 
+// Current tasks are shown in this fixed order per requirements.
+const CURRENT_TASK_ORDER: PlanTaskKey[] = [
+  PlanTaskKey.MODEL_PLAN,
+  PlanTaskKey.DATA_EXCHANGE,
+  PlanTaskKey.MTO
+];
+
 const getTabIdFromSearchParams = (tab: string | null): TabId => {
   return tab === 'completed' ? 'completed' : 'current';
 };
 
 const getCompletedDts = (task: PlanTaskEntry): string => {
-  // `completedDts` is requested by the updated `GetCollaborationArea` operation.
-  // Until codegen catches up, keep this access tolerant for runtime/test mocks.
   return ((task as any).completedDts ?? '') as string;
 };
 
 const Tasks = () => {
   const { t } = useTranslation('tasks');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
-  const navigate = useNavigate();
   const { modelID = '' } = useParams<{ modelID: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -52,12 +58,17 @@ const Tasks = () => {
   });
 
   const modelName = data?.modelPlan?.modelName ?? '';
+  const modelPlan = data?.modelPlan;
+  const tasks = modelPlan?.tasks ?? [];
 
-  const tasks = data?.modelPlan?.tasks ?? [];
+  const currentTasks = CURRENT_TASK_ORDER.flatMap(key => {
+    const task = tasks.find(
+      planTask =>
+        planTask.key === key && planTask.state !== PlanTaskState.COMPLETE
+    );
+    return task ? [task] : [];
+  });
 
-  const currentTasks = tasks.filter(
-    task => task.state !== PlanTaskState.COMPLETE
-  );
   const completedTasks = tasks.filter(
     task => task.state === PlanTaskState.COMPLETE
   );
@@ -131,7 +142,7 @@ const Tasks = () => {
           <Header
             basic
             extended={false}
-            className="model-to-operations__nav-container margin-bottom-3  border-base-light border-bottom-1px"
+            className="model-to-operations__nav-container margin-bottom-3 border-base-light border-bottom-1px"
           >
             <div className="usa-nav-container padding-0">
               <PrimaryNav
@@ -175,45 +186,18 @@ const Tasks = () => {
             >
               {currentTasks.length === 0 ? (
                 <Alert type="info" heading={t('emptyState.current.heading')}>
-                  <div className="display-flex flex-direction-column gap-2">
-                    <span>{t('emptyState.current.copy')}</span>
-                  </div>
+                  {t('emptyState.current.copy')}
                 </Alert>
               ) : (
-                <ol className="model-plan-tasks__list padding-left-0 margin-top-0 margin-bottom-0">
-                  {currentTasks.map(task => {
-                    const baseKey = `${task.key}.${task.status}`;
-                    const heading = t(`${baseKey}.heading`);
-                    const primaryAction = t(`${baseKey}.primaryAction`);
-                    const primaryPath = t(
-                      `${task.key}.${task.status}.primaryPath`,
-                      {
-                        modelID
-                      }
-                    );
-
-                    return (
-                      <li
-                        key={task.key}
-                        className="model-plan-tasks__list-item"
-                      >
-                        <div className="model-plan-tasks__row display-flex flex-justify flex-align-center">
-                          <h3 className="margin-0">{heading}</h3>
-                          <Button
-                            type="button"
-                            className="margin-left-4"
-                            onClick={() => navigate(primaryPath)}
-                          >
-                            {primaryAction}
-                          </Button>
-                        </div>
-                        <div className="model-plan-tasks__state">
-                          {t(`state.${task.state}`)}
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ol>
+                <CardGroup>
+                  {currentTasks.map(task => (
+                    <TaskCard
+                      key={task.key}
+                      task={task}
+                      modelPlan={modelPlan!}
+                    />
+                  ))}
+                </CardGroup>
               )}
             </section>
           )}
@@ -229,40 +213,15 @@ const Tasks = () => {
                   {t('emptyState.completed.copy')}
                 </Alert>
               ) : (
-                <ol className="model-plan-tasks__list padding-left-0 margin-top-0 margin-bottom-0">
-                  {completedTasksNewestToOldest.map(task => {
-                    const baseKey = `${task.key}.${task.status}`;
-                    const heading = t(`${baseKey}.heading`);
-                    const primaryAction = t(`${baseKey}.primaryAction`);
-                    const primaryPath = t(
-                      `${task.key}.${task.status}.primaryPath`,
-                      {
-                        modelID
-                      }
-                    );
-
-                    return (
-                      <li
-                        key={task.key}
-                        className="model-plan-tasks__list-item"
-                      >
-                        <div className="model-plan-tasks__row display-flex flex-justify flex-align-center">
-                          <h3 className="margin-0">{heading}</h3>
-                          <Button
-                            type="button"
-                            className="margin-left-4"
-                            onClick={() => navigate(primaryPath)}
-                          >
-                            {primaryAction}
-                          </Button>
-                        </div>
-                        <div className="model-plan-tasks__state">
-                          {t(`state.${task.state}`)}
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ol>
+                <CardGroup>
+                  {completedTasksNewestToOldest.map(task => (
+                    <TaskCard
+                      key={task.key}
+                      task={task}
+                      modelPlan={modelPlan!}
+                    />
+                  ))}
+                </CardGroup>
               )}
             </section>
           )}

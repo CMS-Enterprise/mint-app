@@ -1,63 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardGroup,
-  CardHeader,
-  Icon
-} from '@trussworks/react-uswds';
+import { Button, CardGroup, Icon } from '@trussworks/react-uswds';
 import {
   GetCollaborationAreaQuery,
   PlanTaskKey,
-  PlanTaskState,
-  PlanTaskStatus
+  PlanTaskState
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 
-import type { LastModifiedSectionData } from '../_components/LastModifiedSection';
-import LastModifiedSection from '../_components/LastModifiedSection';
-import {
-  getLastModifiedSection,
-  getSectionStartedCount
-} from '../_utils/modelPlanSectionUtils';
-
-type StateConfig = {
-  style: string;
-  icon: React.ReactNode;
-};
-
-const STATE_CONFIG: Record<PlanTaskState, StateConfig> = {
-  [PlanTaskState.TO_DO]: {
-    style: 'bg-warning-light',
-    icon: <Icon.PriorityHigh aria-label="To do" />
-  },
-  [PlanTaskState.COMPLETE]: {
-    style: 'bg-success-dark text-white',
-    icon: <Icon.Check aria-label="Complete" />
-  }
-};
-
-const StateTag = ({ state }: { state: PlanTaskState }) => {
-  const { t } = useTranslation('tasks');
-
-  const { style, icon } = STATE_CONFIG[state];
-
-  return (
-    <div
-      className={`line-height-body-1 text-bold display-flex flex-align-center ${style}`}
-      style={{ padding: '7px 11px', gap: '0.5rem' }}
-    >
-      {icon}
-      <span>{t(`state.${state}`)}</span>
-    </div>
-  );
-};
+import TaskCard from '../Cards/TaskCard';
 
 // Fixed order per AC: Start Model Plan → Start MTO → Start Data Exchange
 const TASK_KEY_ORDER: PlanTaskKey[] = [
@@ -73,7 +27,6 @@ type TasksWrapperProps = {
 
 const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
   const { t } = useTranslation('tasks');
-  const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const { t: tableAndPaginationT } = useTranslation('tableAndPagination');
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
@@ -96,46 +49,6 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
     const maxIndex = Math.max(0, orderedTasks.length - 1);
     setCurrentIndex(prev => Math.min(prev, maxIndex));
   }, [orderedTasks.length]);
-
-  const lastModifiedSection = getLastModifiedSection(modelPlan);
-  const sectionStartedCounter = getSectionStartedCount(modelPlan);
-
-  function getLastEditSectionForTask(
-    taskKey: PlanTaskKey
-  ): LastModifiedSectionData | null {
-    if (taskKey === PlanTaskKey.MODEL_PLAN) {
-      return lastModifiedSection ?? null;
-    }
-    if (taskKey === PlanTaskKey.MTO) {
-      const recentEdit = modelPlan?.mtoMatrix?.recentEdit;
-      if (recentEdit?.date) {
-        return {
-          modifiedDts: recentEdit.date,
-          modifiedByUserAccount: {
-            commonName: recentEdit.actorName ?? ''
-          }
-        };
-      }
-      return null;
-    }
-    if (taskKey === PlanTaskKey.DATA_EXCHANGE) {
-      const dataExchangeApproach =
-        modelPlan?.questionnaires?.dataExchangeApproach;
-      if (
-        dataExchangeApproach?.modifiedDts &&
-        dataExchangeApproach.modifiedByUserAccount?.commonName
-      ) {
-        return {
-          modifiedDts: dataExchangeApproach.modifiedDts,
-          modifiedByUserAccount: {
-            commonName: dataExchangeApproach.modifiedByUserAccount.commonName
-          }
-        };
-      }
-      return null;
-    }
-    return null;
-  }
 
   if (hasNoCurrentTasks) {
     return (
@@ -177,66 +90,11 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
   }
 
   const currentTask = orderedTasks[currentIndex];
-  const currentTaskKey = currentTask.key;
-  const taskStatus = currentTask.status;
-  const taskState = currentTask.state;
-  const baseKey = `${currentTaskKey}.${taskStatus}`;
-  const lastEditSection = getLastEditSectionForTask(currentTaskKey);
 
   return (
     <div>
       <CardGroup>
-        <Card
-          gridLayout={{ desktop: { col: 12 } }}
-          className="collaboration-area__card minh-0 margin-bottom-3"
-        >
-          <CardHeader>
-            <div className="display-flex flex-align-center flex-justify">
-              <h3 className="usa-card__heading">{t(`${baseKey}.heading`)}</h3>
-              <StateTag state={taskState} />
-            </div>
-          </CardHeader>
-          <CardBody>
-            <p>{t(`${currentTaskKey}.copy`)}</p>
-
-            {/* Only show section details if task is not TO_DO */}
-            {taskStatus !== PlanTaskStatus.TO_DO && (
-              <div className="display-flex flex-align-center flex-wrap-wrap">
-                {currentTaskKey === PlanTaskKey.MODEL_PLAN && (
-                  <>
-                    <span className="text-base">
-                      {collaborationAreaT('modelPlanCard.sectionsStarted', {
-                        sectionsStarted: sectionStartedCounter
-                      })}
-                    </span>
-                    <span className="text-base margin-x-2">|</span>
-                  </>
-                )}
-                {lastEditSection && (
-                  <LastModifiedSection section={lastEditSection} />
-                )}
-              </div>
-            )}
-          </CardBody>
-          <CardFooter className="display-flex border-top-0 padding-top-1">
-            <Button
-              type="button"
-              className="margin-right-2"
-              onClick={() =>
-                navigate(t(`${currentTaskKey}.primaryPath`, { modelID }))
-              }
-            >
-              {t(`${baseKey}.primaryAction`)}
-            </Button>
-            <Button
-              type="button"
-              outline
-              onClick={() => navigate(t(`${currentTaskKey}.secondaryPath`))}
-            >
-              {t(`${currentTaskKey}.secondaryAction`)}
-            </Button>
-          </CardFooter>
-        </Card>
+        <TaskCard task={currentTask} modelPlan={modelPlan} />
       </CardGroup>
 
       <div className="display-flex flex-align-center flex-justify">

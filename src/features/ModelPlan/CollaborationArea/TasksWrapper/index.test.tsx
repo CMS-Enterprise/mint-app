@@ -1,6 +1,5 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { waitFor } from '@testing-library/react';
 import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
 import { collaborationAreaData } from 'tests/mock/general';
 import {
@@ -30,13 +29,9 @@ describe('TasksWrapper', () => {
       { initialEntries: [`/models/${modelID}/collaboration-area`] }
     );
 
-    const { getByText } = setup(<RouterProvider router={router} />);
+    const { findByText, getByText } = setup(<RouterProvider router={router} />);
 
-    await waitFor(() => {
-      expect(getByText('Current tasks')).toBeInTheDocument();
-    });
-
-    expect(getByText('Start your Model Plan')).toBeInTheDocument();
+    await findByText('Start your Model Plan');
     expect(getByText('Previous')).toBeInTheDocument();
     expect(getByText('Next')).toBeInTheDocument();
     expect(getByText('See all (3)')).toBeInTheDocument();
@@ -58,13 +53,11 @@ describe('TasksWrapper', () => {
       { initialEntries: [`/models/${modelID}/collaboration-area`] }
     );
 
-    const { getByText, queryByText } = setup(
+    const { findByText, getByText, queryByText } = setup(
       <RouterProvider router={router} />
     );
 
-    await waitFor(() => {
-      expect(getByText('Current tasks')).toBeInTheDocument();
-    });
+    await findByText('To do');
 
     expect(queryByText('Complete')).not.toBeInTheDocument();
     expect(getByText('To do')).toBeInTheDocument();
@@ -86,13 +79,9 @@ describe('TasksWrapper', () => {
       { initialEntries: [`/models/${modelID}/collaboration-area`] }
     );
 
-    const { getByText } = setup(<RouterProvider router={router} />);
+    const { findByText, getByText } = setup(<RouterProvider router={router} />);
 
-    await waitFor(() => {
-      expect(getByText('Current tasks')).toBeInTheDocument();
-    });
-
-    expect(getByText('Iterate on your Model Plan')).toBeInTheDocument();
+    await findByText('Iterate on your Model Plan');
     expect(getByText('Continue')).toBeInTheDocument();
   });
 
@@ -124,14 +113,10 @@ describe('TasksWrapper', () => {
       { initialEntries: [`/models/${modelID}/collaboration-area`] }
     );
 
-    const { getByText } = setup(<RouterProvider router={router} />);
-
-    await waitFor(() => {
-      expect(getByText('Current tasks')).toBeInTheDocument();
-    });
+    const { findByText } = setup(<RouterProvider router={router} />);
 
     expect(
-      getByText(/Most recent edit on 05\/12\/2022 by/)
+      await findByText(/Most recent edit on 05\/12\/2022 by/)
     ).toBeInTheDocument();
   });
 });
