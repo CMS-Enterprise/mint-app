@@ -17,6 +17,7 @@ export default gql(/* GraphQL */ `
         key
         state
         status
+        completedDts
       }
       isFavorite
       suggestedPhase {

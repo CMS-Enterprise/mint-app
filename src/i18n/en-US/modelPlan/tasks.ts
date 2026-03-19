@@ -12,6 +12,12 @@ const tasks = {
   },
   seeAll: 'See all ({{count}})',
   seeAllTasks: 'See all tasks',
+  tabs: {
+    current: 'Current tasks ({{count}})',
+    completed: 'Completed tasks ({{count}})'
+  },
+  emptyCompletedTasks:
+    'There are no completed tasks yet. Once you complete a task, it will appear here.',
   emptyState: {
     heading: 'Nothing to do here!',
     copy: "You've completed all of the current tasks.",

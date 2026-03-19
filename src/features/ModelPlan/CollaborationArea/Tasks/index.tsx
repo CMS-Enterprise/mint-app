@@ -149,7 +149,12 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
           <Trans
             i18nKey="tasks:emptyState.viewCompletedTasks"
             components={{
-              link1: <UswdsReactLink to="#" className="deep-underline" />
+              link1: (
+                <UswdsReactLink
+                  to={`/models/${modelID}/collaboration-area/tasks?tab=completed`}
+                  className="deep-underline"
+                />
+              )
             }}
           />
         </Alert>
@@ -159,8 +164,9 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
             unstyled
             className="deep-underline"
             onClick={() => {
-              // TODO: navigate to "See all tasks" page when built
-              navigate(`/models/${modelID}/collaboration-area`);
+              navigate(
+                `/models/${modelID}/collaboration-area/tasks?tab=current`
+              );
             }}
           >
             {t('seeAllTasks')}
@@ -272,8 +278,9 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
             unstyled
             className="usa-link"
             onClick={() => {
-              // TODO: navigate to "See all tasks" page when built
-              navigate(`/models/${modelID}/collaboration-area`);
+              navigate(
+                `/models/${modelID}/collaboration-area/tasks?tab=current`
+              );
             }}
           >
             {t('seeAll', { count: orderedTasks.length })}
