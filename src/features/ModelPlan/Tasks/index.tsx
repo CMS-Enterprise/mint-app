@@ -16,6 +16,7 @@ import {
   PlanTaskState,
   useGetCollaborationAreaQuery
 } from 'gql/generated/graphql';
+import { orderBy } from 'lodash';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -53,12 +54,12 @@ const Tasks = () => {
 
   const tabId = getTabIdFromSearchParams(searchParams.get('tab'));
 
-  const { data, loading, error } = useGetCollaborationAreaQuery({
+  const { data, loading } = useGetCollaborationAreaQuery({
     variables: { id: modelID }
   });
 
-  const modelName = data?.modelPlan?.modelName ?? '';
   const modelPlan = data?.modelPlan;
+  const modelName = modelPlan?.modelName ?? '';
   const tasks = modelPlan?.tasks ?? [];
 
   const currentTasks = CURRENT_TASK_ORDER.flatMap(key => {
@@ -73,11 +74,7 @@ const Tasks = () => {
     task => task.state === PlanTaskState.COMPLETE
   );
 
-  const completedTasksNewestToOldest = [...completedTasks].sort((a, b) => {
-    const aDts = getCompletedDts(a);
-    const bDts = getCompletedDts(b);
-    return (bDts || '').localeCompare(aDts || '');
-  });
+  const sortedCompletedTasks = orderBy(completedTasks, getCompletedDts, 'desc');
 
   const tabs = [
     {
@@ -95,23 +92,7 @@ const Tasks = () => {
   };
 
   if (loading) {
-    return (
-      <MainContent className="model-plan-tasks">
-        <div className="height-viewport">
-          <PageLoading />
-        </div>
-      </MainContent>
-    );
-  }
-
-  if (error) {
-    return (
-      <MainContent className="model-plan-tasks">
-        <Alert type="error" heading={t('errorHeading') ?? ''}>
-          {t('errorMessage') ?? ''}
-        </Alert>
-      </MainContent>
-    );
+    return <PageLoading />;
   }
 
   return (
@@ -208,13 +189,13 @@ const Tasks = () => {
               role="tabpanel"
               className="mint-tabs__tab-panel overflow-visible"
             >
-              {completedTasksNewestToOldest.length === 0 ? (
+              {sortedCompletedTasks.length === 0 ? (
                 <Alert type="info" heading={t('emptyState.completed.heading')}>
                   {t('emptyState.completed.copy')}
                 </Alert>
               ) : (
                 <CardGroup>
-                  {completedTasksNewestToOldest.map(task => (
+                  {sortedCompletedTasks.map(task => (
                     <TaskCard
                       key={task.key}
                       task={task}

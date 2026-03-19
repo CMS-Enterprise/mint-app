@@ -105,14 +105,13 @@ describe('Tasks page', () => {
       expect(screen.getByText('Completed tasks (3)')).toBeInTheDocument();
     });
 
-    const listItems = container.querySelectorAll(
-      '.model-plan-tasks__list-item'
+    const cardHeadings = container.querySelectorAll(
+      '.usa-card .usa-card__heading'
     );
 
-    const orderedHeadings = Array.from(listItems).map(item => {
-      const heading = item.querySelector('h3')?.textContent ?? '';
-      return heading;
-    });
+    const orderedHeadings = Array.from(cardHeadings).map(
+      heading => heading.textContent ?? ''
+    );
 
     expect(orderedHeadings).toEqual([
       'Finalize your data exchange approach',
@@ -126,14 +125,13 @@ describe('Tasks page', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText(
-          'There are no completed tasks yet. Once you complete a task, it will appear here.'
-        )
+        screen.getByText('There are no completed tasks yet.')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText('Once you complete a task, it will appear here.')
       ).toBeInTheDocument();
     });
 
-    expect(
-      container.querySelectorAll('.model-plan-tasks__list-item').length
-    ).toBe(0);
+    expect(container.querySelectorAll('.usa-card').length).toBe(0);
   });
 });
