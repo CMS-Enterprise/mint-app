@@ -8,7 +8,9 @@ import (
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
@@ -18,6 +20,25 @@ const (
 	updateUserAccountJobName      string = "UpdateUserAccountJob"
 )
 
+// Max retries for jobs we enqueue ourselves (cron -> batch -> per-user jobs).
+// Faktory's retry count includes the first attempt; e.g. maxRetries=2 => 2 total attempts.
+var (
+	updateUserAccountBatchJobMaxRetry = 3
+	updateUserAccountJobMaxRetry      = 3
+)
+
+// updateUserAccountFromOkta is a seam for unit tests.
+// Production delegates to resolvers.UpdateUserAccountFromOkta.
+var updateUserAccountFromOkta = func(
+	ctx context.Context,
+	store *storage.Store,
+	oktaClient oktaapi.Client,
+	logger *FaktoryLogger,
+	username string,
+) error {
+	return resolvers.UpdateUserAccountFromOkta[*FaktoryLogger](ctx, store, oktaClient, logger, username)
+}
+
 // UpdateUserAccountCronJob is the cron-triggered entry point that pushes the batch job
 func (w *Worker) UpdateUserAccountCronJob(ctx context.Context, args ...interface{}) error {
 	helper := faktory_worker.HelperFor(ctx)
@@ -25,6 +46,7 @@ func (w *Worker) UpdateUserAccountCronJob(ctx context.Context, args ...interface
 	return helper.With(func(cl *faktory.Client) error {
 		job := faktory.NewJob(updateUserAccountBatchJobName)
 		job.Queue = criticalQueue
+		job.Retry = &updateUserAccountBatchJobMaxRetry
 		return cl.Push(job)
 	})
 }
@@ -35,9 +57,9 @@ func (w *Worker) UpdateUserAccountBatchJob(ctx context.Context, args ...interfac
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("getting collection of user accounts to update")
 
-	users, err := w.Store.UserAccountCollectionGet()
+	users, err := storage.UserAccountCollectionGet(w.Store)
 	if err != nil {
-		logger.Error("unable to get user account collection for the update user account batch job", zap.Error(err))
+		logger.ErrorOrWarn("unable to get user account collection for the update user account batch job", zap.Error(err))
 		return err
 	}
 
@@ -49,8 +71,9 @@ func (w *Worker) UpdateUserAccountBatchJob(ctx context.Context, args ...interfac
 			jobLogger := logger.With(logfields.UserID(user.ID))
 			job := faktory.NewJob(updateUserAccountJobName, *user.Username)
 			job.Queue = criticalQueue
+			job.Retry = &updateUserAccountJobMaxRetry
 			if err := cl.Push(job); err != nil {
-				jobLogger.Error("issue pushing update user account job", zap.Error(err))
+				jobLogger.ErrorOrWarn("issue pushing update user account job", zap.Error(err))
 				return fmt.Errorf("error pushing UpdateUserAccountJob for userID %v: %w", user.ID, err)
 			}
 		}
@@ -65,41 +88,10 @@ func (w *Worker) UpdateUserAccountJob(ctx context.Context, args ...interface{}) 
 
 	if len(args) < 1 {
 		err := fmt.Errorf("no arguments were provided for this job")
-		logger.Error(err.Error(), zap.Error(err))
+		logger.ErrorOrWarn(err.Error(), zap.Error(err))
 		return err
 	}
 
 	username := fmt.Sprint(args[0])
-
-	userInfo, err := w.OktaAPIClient.FetchUserInfo(ctx, username)
-	if err != nil {
-		logger.Error("failed to fetch user info from okta", zap.Error(err))
-		return err
-	}
-
-	existingUser, err := storage.UserAccountGetByUsername(w.Store, username)
-	if err != nil {
-		logger.Error("failed to get user account by username", zap.Error(err))
-		return err
-	}
-	if existingUser == nil {
-		logger.Error("user account not found for username")
-		return fmt.Errorf("user account not found for username")
-	}
-
-	logger = logger.With(logfields.UserID(existingUser.ID))
-
-	existingUser.CommonName = userInfo.DisplayName
-	existingUser.Email = userInfo.Email
-	existingUser.GivenName = userInfo.FirstName
-	existingUser.FamilyName = userInfo.LastName
-
-	_, err = storage.UserAccountUpdateByUserName(w.Store, existingUser)
-	if err != nil {
-		logger.Error("failed to update user account", zap.Error(err))
-		return err
-	}
-
-	logger.Info("user account updated successfully")
-	return nil
+	return updateUserAccountFromOkta(ctx, w.Store, w.OktaAPIClient, logger, username)
 }

@@ -24,7 +24,6 @@ func execute() {
 func init() {
 	rootCmd.AddCommand(serveCmd)
 	rootCmd.AddCommand(testCmd)
-	rootCmd.AddCommand(workerCmd)
 }
 
 func main() {

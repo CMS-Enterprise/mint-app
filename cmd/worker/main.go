@@ -1,3 +1,4 @@
+// Package main is the entrypoint for command line execution of MINT worker helpers.
 package main
 
 import (
@@ -8,16 +9,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var workerCmd = &cobra.Command{
+var rootCmd = &cobra.Command{
 	Use:   "worker",
-	Short: "Manage MINT Faktory workers",
-	Long:  `Manage MINT Faktory workers`,
+	Short: "MINT worker helper commands",
+	Long:  "MINT worker helper commands (dev-only).",
 }
 
 var pushJobCmd = &cobra.Command{
 	Use:   "push-job [job-type]",
 	Short: "Push a job onto the Faktory critical queue",
-	Long:  `Push a job onto the Faktory critical queue by job type name`,
+	Long:  "Push a job onto the Faktory critical queue by job type name",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		jobType := args[0]
@@ -42,5 +43,16 @@ var pushJobCmd = &cobra.Command{
 }
 
 func init() {
-	workerCmd.AddCommand(pushJobCmd)
+	rootCmd.AddCommand(pushJobCmd)
+}
+
+func execute() {
+	if err := rootCmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+}
+
+func main() {
+	execute()
 }

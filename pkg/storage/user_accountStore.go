@@ -17,21 +17,12 @@ import (
 )
 
 // UserAccountCollectionGet returns all user accounts from the database
-func (s *Store) UserAccountCollectionGet() ([]*authentication.UserAccount, error) {
-	var users []*authentication.UserAccount
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.UserAccount.CollectionGet)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	err = stmt.Select(&users, map[string]interface{}{})
-	if err != nil {
-		return nil, err
-	}
-
-	return users, nil
+func UserAccountCollectionGet(np sqlutils.NamedPreparer) ([]*authentication.UserAccount, error) {
+	return sqlutils.SelectProcedure[authentication.UserAccount](
+		np,
+		sqlqueries.UserAccount.CollectionGet,
+		map[string]interface{}{},
+	)
 }
 
 // UserAccountGetByUsername gets a user account by a give username

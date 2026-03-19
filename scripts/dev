@@ -324,6 +324,44 @@ namespace :hosts do
   end
 end
 
+namespace :faktory do
+  desc "Push a job onto the Faktory critical queue"
+  task :push_job => :consume_args do |t, args|
+    job_type = args.to_a.first.to_s.strip
+    if job_type.empty?
+      puts "Usage: scripts/dev faktory:push_job <job-type>"
+      exit(1)
+    end
+
+    sh "go run ./cmd/worker push-job #{job_type}"
+  end
+
+  desc "List all Faktory job types registered in pkg/worker"
+  task :list do
+    worker_go = File.read("pkg/worker/worker.go")
+
+    # Extract job-name variables from Worker.getJobWrappers(), then resolve each
+    # variable to its string value (e.g. updateUserAccountBatchJobName -> "UpdateUserAccountBatchJob").
+    wrapper_vars = worker_go.scan(/Name:\s*([A-Za-z0-9_]+),/).flatten.uniq
+
+    decls = {}
+    Dir.glob("pkg/worker/*.go").each do |path|
+      File.read(path).scan(/([A-Za-z0-9_]+)\s+string\s*=\s*"([^"]+)"/).each do |var, value|
+        decls[var] = value
+      end
+    end
+
+    job_types = wrapper_vars.map { |var| decls[var] }.compact.uniq.sort
+
+    if job_types.empty?
+      puts "No job types found. Ensure pkg/worker/worker.go has job registrations and job-name constants exist."
+      exit(1)
+    end
+
+    job_types.each { |jt| puts jt }
+  end
+end
+
 namespace :db do
   desc "Runs database migrations and wait for them to complete"
   task :migrate do
