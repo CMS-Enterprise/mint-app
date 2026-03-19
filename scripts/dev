@@ -333,7 +333,25 @@ namespace :faktory do
       exit(1)
     end
 
-    sh "go run ./cmd/worker push-job #{job_type}"
+    # NOTE:
+    # - The backend runs in Docker where `faktory` is resolvable as a service name.
+    # - This command runs on the host machine (`go run ...` directly), where `faktory`
+    #   may not resolve. So we rewrite `faktory` => `localhost` for host execution.
+    faktory_url = ENV["FAKTORY_URL"] || "tcp://localhost:7419"
+    # Replace the host portion only (`faktory` => `localhost`) while preserving optional userinfo.
+    # Examples:
+    # - tcp://faktory:7419 => tcp://localhost:7419
+    # - tcp://:password@faktory:7419 => tcp://:password@localhost:7419
+    rewritten_faktory_url = faktory_url.sub(
+      /\Atcp:\/\/([^@]+@)?faktory:/,
+      "tcp://\\1localhost:"
+    )
+
+    if rewritten_faktory_url != faktory_url
+      puts "Rewriting FAKTORY_URL for host execution: #{rewritten_faktory_url}"
+    end
+
+    sh({ "FAKTORY_URL" => rewritten_faktory_url }, "go run ./cmd/worker push-job #{job_type}")
   end
 
   desc "List all Faktory job types registered in pkg/worker"
