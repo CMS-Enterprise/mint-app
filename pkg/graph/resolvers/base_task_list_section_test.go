@@ -49,7 +49,7 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 		"goal":      "Some goal",
 	}
 
-	err := BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
+	err := BaseTaskListSectionPreUpdate(zap.NewNop(), planBasics, changes, suite.Principal, &storage.Store{})
 	//0/5 in Progess
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskInProgress)
@@ -61,7 +61,7 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 	changes["status"] = models.TaskReadyForReview
 
 	suite.Principal.UserAccount.ID = rev
-	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
+	err = BaseTaskListSectionPreUpdate(zap.NewNop(), planBasics, changes, suite.Principal, &storage.Store{})
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskReadyForReview)
 	suite.Equal(*planBasics.ReadyForReviewBy, rev)
@@ -69,7 +69,7 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 
 	//2/5 Ready for Clearance
 	changes["status"] = models.TaskReadyForClearance
-	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
+	err = BaseTaskListSectionPreUpdate(zap.NewNop(), planBasics, changes, suite.Principal, &storage.Store{})
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskReadyForClearance)
 	suite.Equal(*planBasics.ReadyForReviewBy, rev)
@@ -77,7 +77,7 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 
 	//3/5 When changed from READY_FOR_CLEARANCE it will always be moved to IN_PROGRESS
 	changes["status"] = models.TaskReadyForReview
-	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
+	err = BaseTaskListSectionPreUpdate(zap.NewNop(), planBasics, changes, suite.Principal, &storage.Store{})
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskInProgress)
 

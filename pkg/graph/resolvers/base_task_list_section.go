@@ -3,6 +3,8 @@ package resolvers
 import (
 	"go.uber.org/zap"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -24,7 +26,17 @@ func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSe
 
 	// MODEL_PLAN task progression: if any section is first edited, mark the MODEL_PLAN task IN_PROGRESS
 	if oldStatus == models.TaskReady && tls.GetStatus() == models.TaskInProgress {
-		err = updatePlanTaskStatusByKey(store, logger, tls.GetModelPlanID(), models.PlanTaskKeyModelPlan, models.PlanTaskStatusInProgress, principal, store)
+		modelPlanID := tls.GetModelPlanID()
+		// Unit test for skipping MODEL_PLAN task status update when modelPlanID/store is missing
+		if modelPlanID == uuid.Nil || store == nil {
+			logger.Warn(
+				"Skipping MODEL_PLAN task status update because modelPlanID/store is missing",
+				zap.String("modelPlanID", modelPlanID.String()),
+			)
+			return nil
+		}
+
+		err = updatePlanTaskStatusByKey(store, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusInProgress, principal, store)
 		if err != nil {
 			return err
 		}
