@@ -182,7 +182,7 @@ const Tasks = () => {
             <section
               id="current-panel"
               role="tabpanel"
-              className="mint-tabs__tab-panel"
+              className="mint-tabs__tab-panel overflow-visible"
             >
               {currentTasks.length === 0 ? (
                 <Alert type="info" heading={t('emptyState.current.heading')}>
@@ -206,7 +206,7 @@ const Tasks = () => {
             <section
               id="completed-panel"
               role="tabpanel"
-              className="mint-tabs__tab-panel"
+              className="mint-tabs__tab-panel overflow-visible"
             >
               {completedTasksNewestToOldest.length === 0 ? (
                 <Alert type="info" heading={t('emptyState.completed.heading')}>
