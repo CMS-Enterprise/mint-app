@@ -1,7 +1,13 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { Button } from '@trussworks/react-uswds';
+import {
+  Button,
+  Grid,
+  GridContainer,
+  Header,
+  PrimaryNav
+} from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import {
   GetCollaborationAreaQuery,
@@ -10,7 +16,7 @@ import {
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
-import UswdsReactLink from 'components/LinkWrapper';
+import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
@@ -34,6 +40,7 @@ const getCompletedDts = (task: PlanTaskEntry): string => {
 
 const Tasks = () => {
   const { t } = useTranslation('tasks');
+  const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const navigate = useNavigate();
   const { modelID = '' } = useParams<{ modelID: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -43,6 +50,8 @@ const Tasks = () => {
   const { data, loading, error } = useGetCollaborationAreaQuery({
     variables: { id: modelID }
   });
+
+  const modelName = data?.modelPlan?.modelName ?? '';
 
   const tasks = data?.modelPlan?.tasks ?? [];
 
@@ -96,142 +105,169 @@ const Tasks = () => {
 
   return (
     <MainContent className="model-plan-tasks" data-testid="tasks-page">
-      <PageHeading className="margin-top-4 margin-bottom-4">Tasks</PageHeading>
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
+          <Breadcrumbs
+            items={[
+              BreadcrumbItemOptions.HOME,
+              BreadcrumbItemOptions.COLLABORATION_AREA,
+              BreadcrumbItemOptions.TASKS
+            ]}
+          />
+          <div className="margin-bottom-5">
+            <PageHeading className="margin-top-4 margin-bottom-0">
+              {t('breadcrumb')}
+            </PageHeading>
+            <p
+              className="margin-top-1 font-body-lg"
+              data-testid="model-plan-name"
+            >
+              {collaborationAreaT('modelPlan', {
+                modelName
+              })}
+            </p>
+          </div>
 
-      <div className="mint-tabs">
-        <ul className="mint-tabs__tab-list" role="tablist">
-          {tabs.map(tab => {
-            const isSelected = tabId === tab.id;
+          <Header
+            basic
+            extended={false}
+            className="model-to-operations__nav-container margin-bottom-3  border-base-light border-bottom-1px"
+          >
+            <div className="usa-nav-container padding-0">
+              <PrimaryNav
+                items={tabs.map(tab => {
+                  const isSelected = tabId === tab.id;
 
-            return (
-              <li
-                key={tab.id}
-                className={classnames('mint-tabs__tab', {
-                  'mint-tabs__tab--selected': isSelected
+                  return (
+                    <button
+                      type="button"
+                      key={tab.id}
+                      onClick={() => handleTabClick(tab.id)}
+                      className={classnames(
+                        'usa-nav__link margin-left-neg-2 margin-right-2',
+                        {
+                          'usa-current': isSelected
+                        }
+                      )}
+                      data-testid={`${tab.id}-tab`}
+                    >
+                      <span
+                        className={classnames({
+                          'text-primary': isSelected
+                        })}
+                      >
+                        {tab.label}
+                      </span>
+                    </button>
+                  );
                 })}
-                role="presentation"
-                data-testid={`${tab.id}-tab`}
-              >
-                <button
-                  id={`${tab.id}-tab-btn`}
-                  type="button"
-                  role="tab"
-                  className="mint-tabs__tab-btn"
-                  aria-selected={isSelected}
-                  tabIndex={isSelected ? undefined : -1}
-                  aria-controls={`${tab.id}-panel`}
-                  onClick={() => handleTabClick(tab.id)}
-                >
-                  <span className="mint-tabs__tab-text">{tab.label}</span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+                mobileExpanded={false}
+                className="flex-justify-start margin-0 padding-0"
+              />
+            </div>
+          </Header>
 
-      {tabId === 'current' && (
-        <section
-          id="current-panel"
-          role="tabpanel"
-          className="mint-tabs__tab-panel"
-        >
-          {currentTasks.length === 0 ? (
-            <Alert type="info" heading={t('emptyState.heading')}>
-              <div className="display-flex flex-direction-column gap-2">
-                <span>{t('emptyState.copy')}</span>
-                <Trans
-                  i18nKey="tasks:emptyState.viewCompletedTasks"
-                  components={{
-                    link1: (
-                      <UswdsReactLink
-                        to={`/models/${modelID}/collaboration-area/tasks?tab=completed`}
-                        className="deep-underline"
-                      />
-                    )
-                  }}
-                />
-              </div>
-            </Alert>
-          ) : (
-            <ol className="model-plan-tasks__list padding-left-0 margin-top-0 margin-bottom-0">
-              {currentTasks.map(task => {
-                const baseKey = `${task.key}.${task.status}`;
-                const heading = t(`${baseKey}.heading`);
-                const primaryAction = t(`${baseKey}.primaryAction`);
-                const primaryPath = t(
-                  `${task.key}.${task.status}.primaryPath`,
-                  {
-                    modelID
-                  }
-                );
+          {tabId === 'current' && (
+            <section
+              id="current-panel"
+              role="tabpanel"
+              className="mint-tabs__tab-panel"
+            >
+              {currentTasks.length === 0 ? (
+                <Alert type="info" heading={t('emptyState.current.heading')}>
+                  <div className="display-flex flex-direction-column gap-2">
+                    <span>{t('emptyState.current.copy')}</span>
+                  </div>
+                </Alert>
+              ) : (
+                <ol className="model-plan-tasks__list padding-left-0 margin-top-0 margin-bottom-0">
+                  {currentTasks.map(task => {
+                    const baseKey = `${task.key}.${task.status}`;
+                    const heading = t(`${baseKey}.heading`);
+                    const primaryAction = t(`${baseKey}.primaryAction`);
+                    const primaryPath = t(
+                      `${task.key}.${task.status}.primaryPath`,
+                      {
+                        modelID
+                      }
+                    );
 
-                return (
-                  <li key={task.key} className="model-plan-tasks__list-item">
-                    <div className="model-plan-tasks__row display-flex flex-justify flex-align-center">
-                      <h3 className="margin-0">{heading}</h3>
-                      <Button
-                        type="button"
-                        className="margin-left-4"
-                        onClick={() => navigate(primaryPath)}
+                    return (
+                      <li
+                        key={task.key}
+                        className="model-plan-tasks__list-item"
                       >
-                        {primaryAction}
-                      </Button>
-                    </div>
-                    <div className="model-plan-tasks__state">
-                      {t(`state.${task.state}`)}
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
+                        <div className="model-plan-tasks__row display-flex flex-justify flex-align-center">
+                          <h3 className="margin-0">{heading}</h3>
+                          <Button
+                            type="button"
+                            className="margin-left-4"
+                            onClick={() => navigate(primaryPath)}
+                          >
+                            {primaryAction}
+                          </Button>
+                        </div>
+                        <div className="model-plan-tasks__state">
+                          {t(`state.${task.state}`)}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ol>
+              )}
+            </section>
           )}
-        </section>
-      )}
 
-      {tabId === 'completed' && (
-        <section
-          id="completed-panel"
-          role="tabpanel"
-          className="mint-tabs__tab-panel"
-        >
-          {completedTasksNewestToOldest.length === 0 ? (
-            <Alert type="info">{t('emptyCompletedTasks')}</Alert>
-          ) : (
-            <ol className="model-plan-tasks__list padding-left-0 margin-top-0 margin-bottom-0">
-              {completedTasksNewestToOldest.map(task => {
-                const baseKey = `${task.key}.${task.status}`;
-                const heading = t(`${baseKey}.heading`);
-                const primaryAction = t(`${baseKey}.primaryAction`);
-                const primaryPath = t(
-                  `${task.key}.${task.status}.primaryPath`,
-                  {
-                    modelID
-                  }
-                );
+          {tabId === 'completed' && (
+            <section
+              id="completed-panel"
+              role="tabpanel"
+              className="mint-tabs__tab-panel"
+            >
+              {completedTasksNewestToOldest.length === 0 ? (
+                <Alert type="info" heading={t('emptyState.completed.heading')}>
+                  {t('emptyState.completed.copy')}
+                </Alert>
+              ) : (
+                <ol className="model-plan-tasks__list padding-left-0 margin-top-0 margin-bottom-0">
+                  {completedTasksNewestToOldest.map(task => {
+                    const baseKey = `${task.key}.${task.status}`;
+                    const heading = t(`${baseKey}.heading`);
+                    const primaryAction = t(`${baseKey}.primaryAction`);
+                    const primaryPath = t(
+                      `${task.key}.${task.status}.primaryPath`,
+                      {
+                        modelID
+                      }
+                    );
 
-                return (
-                  <li key={task.key} className="model-plan-tasks__list-item">
-                    <div className="model-plan-tasks__row display-flex flex-justify flex-align-center">
-                      <h3 className="margin-0">{heading}</h3>
-                      <Button
-                        type="button"
-                        className="margin-left-4"
-                        onClick={() => navigate(primaryPath)}
+                    return (
+                      <li
+                        key={task.key}
+                        className="model-plan-tasks__list-item"
                       >
-                        {primaryAction}
-                      </Button>
-                    </div>
-                    <div className="model-plan-tasks__state">
-                      {t(`state.${task.state}`)}
-                    </div>
-                  </li>
-                );
-              })}
-            </ol>
+                        <div className="model-plan-tasks__row display-flex flex-justify flex-align-center">
+                          <h3 className="margin-0">{heading}</h3>
+                          <Button
+                            type="button"
+                            className="margin-left-4"
+                            onClick={() => navigate(primaryPath)}
+                          >
+                            {primaryAction}
+                          </Button>
+                        </div>
+                        <div className="model-plan-tasks__state">
+                          {t(`state.${task.state}`)}
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ol>
+              )}
+            </section>
           )}
-        </section>
-      )}
+        </Grid>
+      </GridContainer>
     </MainContent>
   );
 };

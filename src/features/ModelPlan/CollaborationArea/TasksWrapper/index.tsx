@@ -142,12 +142,12 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
       <>
         <Alert
           type="info"
-          heading={t('emptyState.heading')}
+          heading={t('emptyState.current.heading')}
           className="margin-bottom-3"
         >
-          {t('emptyState.copy')}
+          {t('emptyState.current.copy')}{' '}
           <Trans
-            i18nKey="tasks:emptyState.viewCompletedTasks"
+            i18nKey="tasks:emptyState.current.viewCompletedTasks"
             components={{
               link1: (
                 <UswdsReactLink
