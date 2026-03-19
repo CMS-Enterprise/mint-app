@@ -407,6 +407,35 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'dataExchangeApproach.markedCompleteDts',
   'dataExchangeApproach.status',
 
+  // IDDOC Questionnaire
+  'iddocQuestionnaire.technicalContactsIdentified',
+  'iddocQuestionnaire.technicalContactsIdentifiedDetail',
+  'iddocQuestionnaire.technicalContactsIdentifiedNote',
+  'iddocQuestionnaire.captureParticipantInfo',
+  'iddocQuestionnaire.captureParticipantInfoNote',
+  'iddocQuestionnaire.icdOwner',
+  'iddocQuestionnaire.draftIcdDueDate',
+  'iddocQuestionnaire.icdNote',
+  'iddocQuestionnaire.uatNeeds',
+  'iddocQuestionnaire.stcNeeds',
+  'iddocQuestionnaire.testingTimelines',
+  'iddocQuestionnaire.testingNote',
+  'iddocQuestionnaire.dataMonitoringFileTypes', // array
+  'iddocQuestionnaire.dataMonitoringFileOther',
+  'iddocQuestionnaire.dataResponseType',
+  'iddocQuestionnaire.dataResponseFileFrequency',
+  'iddocQuestionnaire.dataFullTimeOrIncremental',
+  'iddocQuestionnaire.eftSetUp',
+  'iddocQuestionnaire.unsolicitedAdjustmentsIncluded',
+  'iddocQuestionnaire.dataFlowDiagramsNeeded',
+  'iddocQuestionnaire.produceBenefitEnhancementFiles',
+  'iddocQuestionnaire.fileNamingConventions',
+  'iddocQuestionnaire.dataMonitoringNote',
+  'iddocQuestionnaire.isComplete',
+  'iddocQuestionnaire.completedByUserAccount.commonName',
+  'iddocQuestionnaire.completedDts',
+  'iddocQuestionnaire.taskListStatus',
+
   // Collaborators
   {
     label: `${t<string, {}, string>(

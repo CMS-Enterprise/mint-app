@@ -4,10 +4,14 @@ import { Icon } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
-import { DataOrNoData, echimpUrl } from 'components/EChimpCards/EChimpCard';
+import {
+  DataOrNoData,
+  echimpTempUrl,
+  echimpUrl
+} from 'components/EChimpCards/EChimpCard';
 import ExternalLink from 'components/ExternalLink';
 import TruncatedText from 'components/TruncatedText';
-import { ECHIMP_URL_SSO } from 'constants/echimp';
+import { ECHIMP_URL_SSO, ECHIMP_URL_TEMP_SSO } from 'constants/echimp';
 
 import properlyCapitalizeInitiator from './_utils';
 
@@ -52,6 +56,11 @@ const CRAndTDLSidePanel = ({
   const echimpURL = flags?.echimpFFSURLEnabled
     ? echimpUrl(isCR ? 'ffs' : 'tdl', id)
     : `${ECHIMP_URL_SSO}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`;
+
+  // Remove later once integration is completed
+  const tempEchimpURL = flags?.echimpFFSURLEnabled
+    ? echimpTempUrl(isCR ? 'ffs' : 'tdl', id)
+    : `${ECHIMP_URL_TEMP_SSO}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`;
 
   return (
     <div className="padding-y-5 padding-x-8 side-panel--cr-and-tdl maxw-tablet">
@@ -156,7 +165,7 @@ const CRAndTDLSidePanel = ({
         )}
 
         <ExternalLink
-          href={echimpURL}
+          href={flags.echimpIntegrationEnabled ? tempEchimpURL : echimpURL}
           className="sidepanel--full-width margin-right-0"
           toEchimp
         >
