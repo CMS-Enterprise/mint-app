@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, CardGroup, Icon } from '@trussworks/react-uswds';
+import { CURRENT_TASK_ORDER } from 'features/ModelPlan/Tasks';
 import {
   GetCollaborationAreaQuery,
-  PlanTaskKey,
   PlanTaskState
 } from 'gql/generated/graphql';
 
@@ -12,13 +12,6 @@ import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 
 import TaskCard from '../Cards/TaskCard';
-
-// Fixed order per AC: Start Model Plan → Start MTO → Start Data Exchange
-const TASK_KEY_ORDER: PlanTaskKey[] = [
-  PlanTaskKey.MODEL_PLAN,
-  PlanTaskKey.MTO,
-  PlanTaskKey.DATA_EXCHANGE
-];
 
 type TasksWrapperProps = {
   modelPlan: GetCollaborationAreaQuery['modelPlan'];
@@ -34,7 +27,7 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
   const incompleteTasks = tasks.filter(
     incompleteTask => incompleteTask.state !== PlanTaskState.COMPLETE
   );
-  const orderedTasks = TASK_KEY_ORDER.flatMap(key => {
+  const orderedTasks = CURRENT_TASK_ORDER.flatMap(key => {
     const taskForKey = incompleteTasks.find(
       incompleteTask => incompleteTask.key === key
     );

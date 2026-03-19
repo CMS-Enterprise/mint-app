@@ -22,12 +22,9 @@ import {
   getSectionStartedCount
 } from '../../_utils/modelPlanSectionUtils';
 
-type PlanTaskEntry = GetCollaborationAreaQuery['modelPlan']['tasks'][number];
-type ModelPlanData = GetCollaborationAreaQuery['modelPlan'];
-
 type TaskCardProps = {
-  task: PlanTaskEntry;
-  modelPlan: ModelPlanData;
+  task: GetCollaborationAreaQuery['modelPlan']['tasks'][number];
+  modelPlan: GetCollaborationAreaQuery['modelPlan'];
 };
 
 type TaskStateConfig = {

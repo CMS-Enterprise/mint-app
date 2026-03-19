@@ -15,7 +15,8 @@ const tasks = {
   seeAllTasks: 'See all tasks',
   tabs: {
     current: 'Current tasks ({{count}})',
-    completed: 'Completed tasks ({{count}})'
+    completed: 'Completed tasks ({{count}})',
+    ariaLabel: 'Switch between current and completed tasks'
   },
   emptyState: {
     current: {

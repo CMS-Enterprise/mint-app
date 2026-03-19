@@ -10,6 +10,7 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import TaskCard from 'features/ModelPlan/CollaborationArea/Cards/TaskCard';
+import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
   GetCollaborationAreaQuery,
   PlanTaskKey,
@@ -32,7 +33,7 @@ type PlanTaskEntry = GetCollaborationAreaQuery['modelPlan']['tasks'][number];
 type TabId = 'current' | 'completed';
 
 // Current tasks are shown in this fixed order per requirements.
-const CURRENT_TASK_ORDER: PlanTaskKey[] = [
+export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.MTO
@@ -43,7 +44,7 @@ const getTabIdFromSearchParams = (tab: string | null): TabId => {
 };
 
 const getCompletedDts = (task: PlanTaskEntry): string => {
-  return ((task as any).completedDts ?? '') as string;
+  return task.completedDts ?? '';
 };
 
 const Tasks = () => {
@@ -52,15 +53,36 @@ const Tasks = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const setTasksTab = (nextTab: TabId) => {
+    setSearchParams(prev => {
+      const params = new URLSearchParams(prev);
+      params.set('tab', nextTab);
+      return params;
+    });
+  };
+
   const tabId = getTabIdFromSearchParams(searchParams.get('tab'));
 
-  const { data, loading } = useGetCollaborationAreaQuery({
+  const { data, loading, error } = useGetCollaborationAreaQuery({
     variables: { id: modelID }
   });
 
-  const modelPlan = data?.modelPlan;
-  const modelName = modelPlan?.modelName ?? '';
-  const tasks = modelPlan?.tasks ?? [];
+  if (loading) {
+    return (
+      <MainContent className="model-plan-tasks">
+        <div className="height-viewport">
+          <PageLoading />
+        </div>
+      </MainContent>
+    );
+  }
+
+  if (error || !data?.modelPlan) {
+    return <NotFoundPartial errorMessage={error?.message} />;
+  }
+
+  const { modelPlan } = data;
+  const { modelName, tasks } = modelPlan;
 
   const currentTasks = CURRENT_TASK_ORDER.flatMap(key => {
     const task = tasks.find(
@@ -86,14 +108,6 @@ const Tasks = () => {
       label: t('tabs.completed', { count: completedTasks.length })
     }
   ];
-
-  const handleTabClick = (nextTabId: TabId) => {
-    setSearchParams({ tab: nextTabId });
-  };
-
-  if (loading) {
-    return <PageLoading />;
-  }
 
   return (
     <MainContent className="model-plan-tasks" data-testid="tasks-page">
@@ -127,25 +141,25 @@ const Tasks = () => {
           >
             <div className="usa-nav-container padding-0">
               <PrimaryNav
+                role="tablist"
+                aria-label={t('tabs.ariaLabel')}
                 items={tabs.map(tab => {
-                  const isSelected = tabId === tab.id;
-
                   return (
                     <button
                       type="button"
                       key={tab.id}
-                      onClick={() => handleTabClick(tab.id)}
+                      onClick={() => setTasksTab(tab.id)}
                       className={classnames(
                         'usa-nav__link margin-left-neg-2 margin-right-2',
                         {
-                          'usa-current': isSelected
+                          'usa-current': tabId === tab.id
                         }
                       )}
                       data-testid={`${tab.id}-tab`}
                     >
                       <span
                         className={classnames({
-                          'text-primary': isSelected
+                          'text-primary': tabId === tab.id
                         })}
                       >
                         {tab.label}
@@ -163,6 +177,8 @@ const Tasks = () => {
             <section
               id="current-panel"
               role="tabpanel"
+              aria-labelledby="current-tab"
+              tabIndex={0}
               className="mint-tabs__tab-panel overflow-visible"
             >
               {currentTasks.length === 0 ? (
@@ -175,7 +191,7 @@ const Tasks = () => {
                     <TaskCard
                       key={task.key}
                       task={task}
-                      modelPlan={modelPlan!}
+                      modelPlan={modelPlan}
                     />
                   ))}
                 </CardGroup>
@@ -187,6 +203,8 @@ const Tasks = () => {
             <section
               id="completed-panel"
               role="tabpanel"
+              aria-labelledby="completed-tab"
+              tabIndex={0}
               className="mint-tabs__tab-panel overflow-visible"
             >
               {sortedCompletedTasks.length === 0 ? (
@@ -199,7 +217,7 @@ const Tasks = () => {
                     <TaskCard
                       key={task.key}
                       task={task}
-                      modelPlan={modelPlan!}
+                      modelPlan={modelPlan}
                     />
                   ))}
                 </CardGroup>
