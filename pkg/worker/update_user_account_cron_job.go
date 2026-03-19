@@ -44,7 +44,7 @@ func (w *Worker) UpdateUserAccountCronJob(ctx context.Context, args ...interface
 	helper := faktory_worker.HelperFor(ctx)
 
 	return helper.With(func(cl *faktory.Client) error {
-		job := faktory.NewJob(updateUserAccountBatchJobName)
+		job := faktory.NewJob(updateUserAccountBatchJobName, "")
 		job.Queue = criticalQueue
 		job.Retry = &updateUserAccountBatchJobMaxRetry
 		return cl.Push(job)
