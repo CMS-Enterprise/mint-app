@@ -3,6 +3,7 @@
 require "rake"
 require "json"
 require "yaml"
+require "shellwords"
 require "irb"        # debugging
 require "io/console" # for IO#getch
 
@@ -328,8 +329,10 @@ namespace :faktory do
   desc "Push a job onto the Faktory critical queue"
   task :push_job => :consume_args do |t, args|
     job_type = args.to_a.first.to_s.strip
+    job_args = args.to_a.drop(1).map(&:to_s)
+
     if job_type.empty?
-      puts "Usage: scripts/dev faktory:push_job <job-type>"
+      puts "Usage: scripts/dev faktory:push_job <job-type> [args...]"
       exit(1)
     end
 
@@ -351,7 +354,19 @@ namespace :faktory do
       puts "Rewriting FAKTORY_URL for host execution: #{rewritten_faktory_url}"
     end
 
-    sh({ "FAKTORY_URL" => rewritten_faktory_url }, "go run ./cmd/worker push-job #{job_type}")
+    escaped_job_type = Shellwords.shellescape(job_type)
+    escaped_job_args = job_args.map { |a| Shellwords.shellescape(a) }.join(" ")
+
+    if job_args.empty?
+      puts "faktory:push_job pushing #{job_type} with NO args"
+    else
+      puts "faktory:push_job pushing #{job_type} with args: #{job_args.inspect}"
+    end
+
+    cmd = "go run ./cmd/worker push-job #{escaped_job_type}"
+    cmd += " #{escaped_job_args}" unless escaped_job_args.empty?
+
+    sh({ "FAKTORY_URL" => rewritten_faktory_url }, cmd)
   end
 
   desc "List all Faktory job types registered in pkg/worker"

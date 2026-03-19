@@ -16,12 +16,13 @@ var rootCmd = &cobra.Command{
 }
 
 var pushJobCmd = &cobra.Command{
-	Use:   "push-job [job-type]",
+	Use:   "push-job [job-type] [args...]",
 	Short: "Push a job onto the Faktory critical queue",
 	Long:  "Push a job onto the Faktory critical queue by job type name",
-	Args:  cobra.ExactArgs(1),
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		jobType := args[0]
+		jobArgs := args[1:]
 
 		client, err := faktory.Open()
 		if err != nil {
@@ -30,7 +31,31 @@ var pushJobCmd = &cobra.Command{
 		}
 		defer client.Close()
 
-		job := faktory.NewJob(jobType, []interface{}{}...)
+		// Faktory job arguments are JSON-serializable values. For the dev helper we treat
+		// CLI args as strings; job handlers typically accept strings via fmt.Sprint.
+		interfaces := make([]interface{}, 0, len(jobArgs))
+		for _, a := range jobArgs {
+			interfaces = append(interfaces, a)
+		}
+
+		// Faktory protocol requires the `args` parameter to be present.
+		// The contribsys client may omit `args` entirely when no variadic args are provided,
+		// which causes errors like:
+		//   "unknown: ERR jobs must have an args parameter"
+		//
+		// To keep dev pushing simple, ensure `args` exists even when the user doesn't
+		// provide any job args.
+		if len(jobArgs) == 0 {
+			interfaces = []interface{}{""}
+		}
+
+		if len(jobArgs) > 0 {
+			fmt.Printf("pushing job %q with args: %v\n", jobType, jobArgs)
+		} else {
+			fmt.Printf("pushing job %q with default empty args\n", jobType)
+		}
+
+		job := faktory.NewJob(jobType, interfaces...)
 		job.Queue = "critical"
 
 		if err := client.Push(job); err != nil {
