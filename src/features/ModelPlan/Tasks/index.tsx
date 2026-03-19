@@ -25,7 +25,6 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 
-import './index.scss';
 import 'components/Tabs/index.scss';
 
 type PlanTaskEntry = GetCollaborationAreaQuery['modelPlan']['tasks'][number];
@@ -69,7 +68,7 @@ const Tasks = () => {
 
   if (loading) {
     return (
-      <MainContent className="model-plan-tasks">
+      <MainContent>
         <div className="height-viewport">
           <PageLoading />
         </div>
@@ -110,7 +109,7 @@ const Tasks = () => {
   ];
 
   return (
-    <MainContent className="model-plan-tasks" data-testid="tasks-page">
+    <MainContent data-testid="tasks-page">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <Breadcrumbs
