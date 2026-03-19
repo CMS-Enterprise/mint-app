@@ -33,7 +33,7 @@ import ModelPlanCard from './Cards/ModelPlanCard';
 import MTOCard from './Cards/MTOCard';
 import TeamCard from './Cards/TeamCard';
 import TimelineCard from './Cards/TimelineCard';
-import TasksWrapper from './Tasks';
+import TasksWrapper from './TasksWrapper';
 
 import './index.scss';
 

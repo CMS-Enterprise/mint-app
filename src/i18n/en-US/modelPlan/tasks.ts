@@ -5,6 +5,7 @@ import {
 } from 'gql/generated/graphql';
 
 const tasks = {
+  breadcrumb: 'Tasks',
   heading: 'Current tasks',
   state: {
     [PlanTaskState.TO_DO]: 'To do',
