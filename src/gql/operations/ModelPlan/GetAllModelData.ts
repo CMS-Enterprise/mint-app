@@ -436,6 +436,41 @@ export default gql(/* GraphQL */ `
           createdDts
           status
         }
+        iddocQuestionnaire {
+          id
+          technicalContactsIdentified
+          technicalContactsIdentifiedDetail
+          technicalContactsIdentifiedNote
+          captureParticipantInfo
+          captureParticipantInfoNote
+          icdOwner
+          draftIcdDueDate
+          icdNote
+          uatNeeds
+          stcNeeds
+          testingTimelines
+          testingNote
+          dataMonitoringFileTypes
+          dataMonitoringFileOther
+          dataResponseType
+          dataResponseFileFrequency
+          dataFullTimeOrIncremental
+          eftSetUp
+          unsolicitedAdjustmentsIncluded
+          dataFlowDiagramsNeeded
+          produceBenefitEnhancementFiles
+          fileNamingConventions
+          dataMonitoringNote
+          isComplete
+          completedByUserAccount {
+            id
+            commonName
+          }
+          completedDts
+          modifiedDts
+          createdDts
+          taskListStatus
+        }
       }
       mtoMatrix {
         info {

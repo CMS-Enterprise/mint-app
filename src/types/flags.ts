@@ -7,6 +7,7 @@ export type Flags = {
   modelsApproachingClearanceEnabled: boolean;
   mintAnalyticsEnabled: boolean;
   echimpFFSURLEnabled: boolean;
+  echimpIntegrationEnabled: boolean;
   sandbox: boolean;
 };
 

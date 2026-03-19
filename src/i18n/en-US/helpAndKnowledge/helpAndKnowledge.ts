@@ -1590,7 +1590,7 @@ Payment Processing MARx calculates monthly Medicare payments for each Plan and g
           header: 'Additional resources',
           links: [
             {
-              link: 'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx',
+              link: 'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/QualVert/ModelResources/Forms/AllItems.aspx',
               external: true
             },
             {
@@ -2545,7 +2545,9 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.UPDATING_MTO_STATUS]: 'Updating your MTO status',
   [HelpArticle.SHARING_EXPORTING_MTO]: 'Sharing and exporting your MTO',
   [HelpArticle.LESSON_LEARNED_REPOSITORY]:
-    'Lessons Learned repository on SharePoint'
+    'Lessons Learned repository on SharePoint',
+  [HelpArticle.OPERATIONAL_PLANNING]:
+    'Operational planning for Medicare Advantage and Part D models'
 };
 
 const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {

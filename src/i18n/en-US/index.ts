@@ -7,6 +7,7 @@ import highLevelProjectPlans from './helpAndKnowledge/Articles/highLevelProjectP
 import modelPlanOverview from './helpAndKnowledge/Articles/modelPlanOverview';
 import modelSolutionDesign from './helpAndKnowledge/Articles/modelSolutionDesign';
 import modelSolutionImplementation from './helpAndKnowledge/Articles/modelSolutionImplementation';
+import operationalPlanning from './helpAndKnowledge/Articles/operationalPlanning';
 import phasesInvolved from './helpAndKnowledge/Articles/phasesInvolved';
 import sampleModelPlan from './helpAndKnowledge/Articles/sampleModelPlan';
 import sharingExportingMto from './helpAndKnowledge/Articles/sharingExportingMto';
@@ -211,6 +212,7 @@ const enUS = {
   addCustomSolution,
   updatingMtoStatus,
   sharingExportingMto,
+  operationalPlanning,
   // End Help and Knowledge Center Articles
   tableAndPagination,
   termsAndConditions,
