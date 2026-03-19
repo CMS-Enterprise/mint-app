@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -47,7 +48,7 @@ func updatePlanTaskStatusByKey(
 		}
 	}
 	if task == nil {
-		return nil
+		return fmt.Errorf("plan task not found for modelPlanID %s and key %s", modelPlanID, key)
 	}
 
 	task.Status = newStatus
