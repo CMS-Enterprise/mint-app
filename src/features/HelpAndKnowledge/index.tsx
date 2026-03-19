@@ -13,6 +13,7 @@ import HighLevelProjectPlan from './Articles/HighLevelProjectPlan';
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import ModelSolutionDesign from './Articles/ModelSolutionDesign';
 import ModelSolutionImplementation from './Articles/ModelSolutionImplementation';
+import OperationalPlanning from './Articles/OperationalPlanning';
 import PhasesInvolved from './Articles/PhasesInvolved';
 import SampleModelPlan from './Articles/SampleModelPlan';
 import SharingAndExportingMTO from './Articles/SharingAndExportingMTO';
@@ -84,7 +85,11 @@ export const helpAndKnowledgeRoutes = {
     { path: 'using-solution-library', element: <UsingSolutionLibrary /> },
     { path: 'using-milestone-library', element: <UsingMilestoneLibrary /> },
     { path: 'updating-mto-status', element: <UpdatingMTOStatus /> },
-    { path: 'sharing-exporting-mto', element: <SharingAndExportingMTO /> }
+    { path: 'sharing-exporting-mto', element: <SharingAndExportingMTO /> },
+    {
+      path: 'operational-planning-for-medicare-advantage-and-part-d-models',
+      element: <OperationalPlanning />
+    }
   ]
 };
 

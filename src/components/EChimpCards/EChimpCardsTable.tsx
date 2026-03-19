@@ -9,6 +9,7 @@ import {
   useGetEchimpCrandTdlQuery
 } from 'gql/generated/graphql';
 import i18next from 'i18next';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Alert from 'components/Alert';
 import CRAndTDLSidePanel from 'components/CRAndTDLSidePanel';
@@ -17,7 +18,7 @@ import Sidepanel from 'components/Sidepanel';
 import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
-import { ECHIMP_URL_SSO } from 'constants/echimp';
+import { ECHIMP_URL_SSO, ECHIMP_URL_TEMP_SSO } from 'constants/echimp';
 import usePagination from 'hooks/usePagination';
 
 import EChimpCard from './EChimpCard';
@@ -103,6 +104,8 @@ const EChimpCardsTable = ({
 }) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
+  const flags = useFlags();
+
   const { modelID = '' } = useParams<{ modelID: string }>();
   const { data, loading } = useGetEchimpCrandTdlQuery({
     variables: {
@@ -166,7 +169,14 @@ const EChimpCardsTable = ({
             i18nKey="tableState.empty.copy"
             components={{
               el: (
-                <ExternalLink className="margin-right-0" href={ECHIMP_URL_SSO}>
+                <ExternalLink
+                  className="margin-right-0"
+                  href={
+                    flags.echimpIntegrationEnabled
+                      ? ECHIMP_URL_TEMP_SSO
+                      : ECHIMP_URL_SSO
+                  }
+                >
                   {' '}
                 </ExternalLink>
               )
