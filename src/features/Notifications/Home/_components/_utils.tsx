@@ -11,6 +11,7 @@ import {
   IddocQuestionnaireCompletedActivityMeta,
   IncorrectModelStatusActivityMeta,
   ModelPlanSharedActivityMeta,
+  MtoReadyForReviewActivityMeta,
   NewDiscussionAddedActivityMeta,
   NewDiscussionRepliedActivityMeta,
   NewModelPlanActivityMeta,
@@ -107,6 +108,13 @@ export const isIDDOCQuestionnaireCompleted = (
   return data.__typename === 'IddocQuestionnaireCompletedActivityMeta';
 };
 
+export const isMTOReadyForReview = (
+  data: ActivityMetaData
+): data is MtoReadyForReviewActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'MTOReadyForReviewActivityMeta';
+};
+
 export const getNavUrl = (metaData: ActivityMetaData) => {
   switch (metaData.__typename) {
     case 'AddedAsCollaboratorMeta':
@@ -122,6 +130,9 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
     case 'IddocQuestionnaireCompletedActivityMeta':
       // TODO: Add the route for the iddoc questionnaire completed activity
       return `/models/${metaData.modelPlanID}/read-view/iddoc-questionnaire`;
+
+    case 'MTOReadyForReviewActivityMeta':
+      return `/models/${metaData.modelPlanID}/read-view/milestones`;
 
     case 'TaggedInPlanDiscussionActivityMeta':
     case 'TaggedInDiscussionReplyActivityMeta':
@@ -139,6 +150,7 @@ export const UnsubscribableActivities = {
   DATES_CHANGED: 'datesChanged',
   IDDOC_QUESTIONNAIRE_COMPLETED: 'iddocQuestionnaireComplete',
   INCORRECT_MODEL_STATUS: 'incorrectModelStatus',
+  MTO_READY_FOR_REVIEW: 'mtoReadyForReview',
   NEW_DISCUSSION_ADDED: 'newDiscussionAdded',
   NEW_MODEL_PLAN: 'newModelPlan'
 } as const;
@@ -176,7 +188,9 @@ const activityI18nKeybases = {
   PlanDataExchangeApproachMarkedCompleteActivityMeta:
     'notifications:index.activityType.DATA_EXCHANGE_APPROACH_MARKED_COMPLETE',
   IddocQuestionnaireCompletedActivityMeta:
-    'notifications:index.activityType.IDDOC_QUESTIONNAIRE_COMPLETED'
+    'notifications:index.activityType.IDDOC_QUESTIONNAIRE_COMPLETED',
+  MTOReadyForReviewActivityMeta:
+    'notifications:index.activityType.MTO_READY_FOR_REVIEW'
 };
 
 export const activityText = (data: ActivityMetaData) => {

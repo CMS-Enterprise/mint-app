@@ -32,6 +32,8 @@ type UserNotificationPreferences struct {
 	IddocQuestionnaireCompletedNotificationType        *IDDOCQuestionnaireCompletedNotificationType        `json:"iddocQuestionnaireCompletedNotificationType" db:"iddoc_questionnaire_completed_notification_type"`
 	IncorrectModelStatus                               UserNotificationPreferenceFlags                     `json:"incorrectModelStatus" db:"incorrect_model_status"`
 	IncorrectModelStatusNotificationType               UserNotificationPreferenceFlags                     `json:"incorrectModelStatusNotificationType" db:"incorrect_model_status_notification_type"`
+	MTOReadyForReview                                  UserNotificationPreferenceFlags                     `json:"mtoReadyForReview" db:"mto_ready_for_review"`
+	MTOReadyForReviewNotificationType                  *MTOReadyForReviewNotificationType                  `json:"mtoReadyForReviewNotificationType" db:"mto_ready_for_review_notification_type"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -52,6 +54,7 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		DataExchangeApproachMarkedComplete: EmptyUserNotificationPreferencesFlags(),
 		IddocQuestionnaireComplete:         EmptyUserNotificationPreferencesFlags(),
 		IncorrectModelStatus:               EmptyUserNotificationPreferencesFlags(),
+		MTOReadyForReview:                  EmptyUserNotificationPreferencesFlags(),
 	}
 }
 
@@ -117,6 +120,16 @@ const (
 	IDDOCQuestionnaireCompletedNotificationTypeAllModels      IDDOCQuestionnaireCompletedNotificationType = "ALL_MODELS"
 	IDDOCQuestionnaireCompletedNotificationTypeFollowedModels IDDOCQuestionnaireCompletedNotificationType = "FOLLOWED_MODELS"
 	IDDOCQuestionnaireCompletedNotificationTypeMyModels       IDDOCQuestionnaireCompletedNotificationType = "MY_MODELS"
+)
+
+// MTOReadyForReviewNotificationType is an enum that represents the type of notification a user wants for when an MTO is marked ready for review
+type MTOReadyForReviewNotificationType string
+
+// These constants represent the possible values of an MTOReadyForReviewNotificationType
+const (
+	MTOReadyForReviewNotificationTypeAllModels      MTOReadyForReviewNotificationType = "ALL_MODELS"
+	MTOReadyForReviewNotificationTypeFollowedModels MTOReadyForReviewNotificationType = "FOLLOWED_MODELS"
+	MTOReadyForReviewNotificationTypeMyModels       MTOReadyForReviewNotificationType = "MY_MODELS"
 )
 
 // InApp translates notification preferences to a bool. True means the user desires an in app notification for this notification type

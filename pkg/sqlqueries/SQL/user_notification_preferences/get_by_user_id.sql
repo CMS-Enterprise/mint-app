@@ -17,6 +17,8 @@ SELECT
     iddoc_questionnaire_complete,
     iddoc_questionnaire_completed_notification_type,
     incorrect_model_status,
+    mto_ready_for_review,
+    mto_ready_for_review_notification_type,
     created_by,
     created_dts,
     modified_by,

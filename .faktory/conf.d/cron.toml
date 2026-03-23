@@ -18,3 +18,8 @@
   [cron.job]
     type = "RefreshOktaCronJob"
     queue = "critical"
+[[cron]]
+  schedule = "0 4 * * *"
+  [cron.job]
+    type = "UpdateUserAccountCronJob"
+    queue = "critical"
