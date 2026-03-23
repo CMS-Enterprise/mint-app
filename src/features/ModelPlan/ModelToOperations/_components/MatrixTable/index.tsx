@@ -34,9 +34,10 @@ import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 import {
-  filterMilestonesNeededWithin30Days,
+  filterMilestonesNeededWithinDays,
   flattenToSingleCategory,
-  GetModelToOperationsMatrixCategoryType
+  GetModelToOperationsMatrixCategoryType,
+  parseNeededWithinDaysFromSearchParams
 } from '../../_utils/neededWithin30Days';
 import ActionMenu from '../ActionsMenu';
 
@@ -94,20 +95,41 @@ const MTOTable = ({
     [queryData?.modelPlan.mtoMatrix]
   );
 
-  const neededWithin30Days = params.get('needed-within-thirty-days') === 'true';
+  const neededWithinDays = useMemo(
+    () =>
+      parseNeededWithinDaysFromSearchParams(
+        new URLSearchParams(location.search)
+      ),
+    [location.search]
+  );
+
+  const isTimeWindowFilterActive = neededWithinDays !== null;
 
   const dataForTable = useMemo(() => {
-    if (!neededWithin30Days) return formattedData;
-    const filtered = filterMilestonesNeededWithin30Days(formattedData);
+    if (neededWithinDays === null) return formattedData;
+    const filtered = filterMilestonesNeededWithinDays(
+      formattedData,
+      neededWithinDays
+    );
     const flattened = flattenToSingleCategory(filtered);
 
-    flattened[0].subCategories[0].milestones.sort(
-      (a, b) =>
-        new Date(a.needBy ?? '').getTime() - new Date(b.needBy ?? '').getTime()
-    );
+    if (flattened.length === 0) {
+      return flattened;
+    }
+
+    flattened[0].subCategories[0].milestones.sort((a, b) => {
+      const timeA = new Date(a.needBy ?? '').getTime();
+      const timeB = new Date(b.needBy ?? '').getTime();
+      const invalidA = Number.isNaN(timeA);
+      const invalidB = Number.isNaN(timeB);
+      if (invalidA && invalidB) return 0;
+      if (invalidA) return 1;
+      if (invalidB) return -1;
+      return timeA - timeB;
+    });
 
     return flattened;
-  }, [formattedData, neededWithin30Days]);
+  }, [formattedData, neededWithinDays]);
 
   const [initLocation] = useState<string>(location.pathname);
 
@@ -253,6 +275,27 @@ const MTOTable = ({
   // Holds the current column that should be sorted
   const [currentColumn, setCurrentColumn] = useState<number>(0);
 
+  const prevNeededWithinDaysRef = useRef<typeof neededWithinDays | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    const prev = prevNeededWithinDaysRef.current;
+    prevNeededWithinDaysRef.current = neededWithinDays;
+
+    if (prev !== undefined && prev !== null && neededWithinDays === null) {
+      setCurrentColumn(0);
+      setSortCount(3);
+      setColumnSort(
+        Array.from(columns, () => ({
+          isSorted: false,
+          isSortedDesc: false,
+          sortColumn: ''
+        }))
+      );
+    }
+  }, [neededWithinDays]);
+
   // State to hold the index of rows that should be rendered in conjunction with pagination
   const renderedRowIndexes = useRef<{
     category: number[];
@@ -290,12 +333,12 @@ const MTOTable = ({
         pageNum,
         itemsPerP,
         totalPages,
-        neededWithin30Days
+        isTimeWindowFilterActive
       );
 
       return sliceItems;
     };
-  }, [totalPages, neededWithin30Days]);
+  }, [totalPages, isTimeWindowFilterActive]);
 
   const { Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
@@ -564,8 +607,8 @@ const MTOTable = ({
     });
 
   const renderCategories = () => {
-    // When "needed within 30 days" filter is on, show only milestone rows (no category/subcategory rows)
-    if (neededWithin30Days) {
+    // When a "needed within N days" filter is on, show only milestone rows (no category/subcategory rows)
+    if (isTimeWindowFilterActive) {
       return sortedData.flatMap((category, categoryIndex) =>
         category.subCategories.flatMap((subCategory, subCategoryIndex) =>
           renderMilestones(
@@ -662,7 +705,7 @@ const MTOTable = ({
               closeRoute={initLocation}
             />
           )}
-          {neededWithin30Days && itemLength === 0 ? (
+          {isTimeWindowFilterActive && itemLength === 0 ? (
             <Alert
               type="info"
               heading={t(
@@ -1028,7 +1071,7 @@ export const getRenderedRowIndexes = (
     });
   });
 
-  // When showing only milestones (e.g. "needed within 30 days" filter), skip category/subcategory rows
+  // When showing only milestones (e.g. "needed within N days" filter), skip category/subcategory rows
   if (milestonesOnly) {
     return shownIndexes;
   }
