@@ -50,6 +50,21 @@ func (r *incorrectModelStatusActivityMetaResolver) ModelPlan(ctx context.Context
 }
 
 // ModelPlan is the resolver for the modelPlan field.
+func (r *mTOReadyForReviewActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.MTOReadyForReviewActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// MtoInfo is the resolver for the mtoInfo field.
+func (r *mTOReadyForReviewActivityMetaResolver) MtoInfo(ctx context.Context, obj *models.MTOReadyForReviewActivityMeta) (*models.MTOInfo, error) {
+	return MTOInfoGetByModelPlanIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// MarkedReadyForReviewByUserAccount is the resolver for the markedReadyForReviewByUserAccount field.
+func (r *mTOReadyForReviewActivityMetaResolver) MarkedReadyForReviewByUserAccount(ctx context.Context, obj *models.MTOReadyForReviewActivityMeta) (*authentication.UserAccount, error) {
+	return UserAccountGetByIDLOADER(ctx, obj.MarkedReadyForReview)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
 func (r *modelPlanSharedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error) {
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
@@ -147,6 +162,11 @@ func (r *Resolver) IncorrectModelStatusActivityMeta() generated.IncorrectModelSt
 	return &incorrectModelStatusActivityMetaResolver{r}
 }
 
+// MTOReadyForReviewActivityMeta returns generated.MTOReadyForReviewActivityMetaResolver implementation.
+func (r *Resolver) MTOReadyForReviewActivityMeta() generated.MTOReadyForReviewActivityMetaResolver {
+	return &mTOReadyForReviewActivityMetaResolver{r}
+}
+
 // ModelPlanSharedActivityMeta returns generated.ModelPlanSharedActivityMetaResolver implementation.
 func (r *Resolver) ModelPlanSharedActivityMeta() generated.ModelPlanSharedActivityMetaResolver {
 	return &modelPlanSharedActivityMetaResolver{r}
@@ -183,6 +203,7 @@ type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
 type datesChangedActivityMetaResolver struct{ *Resolver }
 type iddocQuestionnaireCompletedActivityMetaResolver struct{ *Resolver }
 type incorrectModelStatusActivityMetaResolver struct{ *Resolver }
+type mTOReadyForReviewActivityMetaResolver struct{ *Resolver }
 type modelPlanSharedActivityMetaResolver struct{ *Resolver }
 type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
 type newModelPlanActivityMetaResolver struct{ *Resolver }
