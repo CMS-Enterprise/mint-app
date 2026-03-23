@@ -173,6 +173,7 @@
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-react-app": "^7.0.1",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-cypress": "^3.5.0",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react-hooks": "^4.6.2",
