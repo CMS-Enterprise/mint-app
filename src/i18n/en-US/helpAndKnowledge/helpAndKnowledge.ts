@@ -2547,7 +2547,9 @@ const helpArticleNames: Record<HelpArticle, string> = {
   [HelpArticle.LESSON_LEARNED_REPOSITORY]:
     'Lessons Learned repository on SharePoint',
   [HelpArticle.OPERATIONAL_PLANNING]:
-    'Operational planning for Medicare Advantage and Part D models'
+    'Operational planning for Medicare Advantage and Part D models',
+  [HelpArticle.INFORMATION_SYSTEMS_SECURITY_OFFICER]:
+    'Find your model’s assigned Information Systems Security Officer (ISSO) on SharePoint'
 };
 
 const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
@@ -2591,6 +2593,12 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
     title: 'Lessons Learned repository on SharePoint',
     description:
       'The CMMI Lessons Learned Repository allows the storing and retrieval of important lessons from projects around the center, enabling users to identify best practices to increase project team effectiveness and efficiency. This repository houses information for project teams to reference.'
+  },
+  [HelpArticle.INFORMATION_SYSTEMS_SECURITY_OFFICER]: {
+    title:
+      'Find your model’s assigned Information Systems Security Officer (ISSO) on SharePoint',
+    description:
+      'Use this Security and Privacy SharePoint site to find the assigned ISSO for your CMMI model and learn how this privacy and security expert can support your model (and all CMMI staff!).'
   }
 };
 
