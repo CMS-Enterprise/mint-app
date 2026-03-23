@@ -27,6 +27,12 @@ enum IDDOCQuestionnaireCompletedNotificationType {
   MY_MODELS
 }
 
+enum MTOReadyForReviewNotificationType {
+  ALL_MODELS
+  FOLLOWED_MODELS
+  MY_MODELS
+}
+
 """
 UserNotificationPreferences represents a users preferences about what type and where to receive a notification
 """
@@ -59,6 +65,8 @@ type UserNotificationPreferences {
   iddocQuestionnaireComplete: [UserNotificationPreferenceFlag!]!
   iddocQuestionnaireCompletedNotificationType: IDDOCQuestionnaireCompletedNotificationType
   incorrectModelStatus: [UserNotificationPreferenceFlag!]!
+  mtoReadyForReview: [UserNotificationPreferenceFlag!]!
+  mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -98,6 +106,8 @@ input UserNotificationPreferencesChanges
   iddocQuestionnaireComplete: [UserNotificationPreferenceFlag!]
   iddocQuestionnaireCompletedNotificationType: IDDOCQuestionnaireCompletedNotificationType
   incorrectModelStatus: [UserNotificationPreferenceFlag!]
+  mtoReadyForReview: [UserNotificationPreferenceFlag!]
+  mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType
 }
 
 extend type Mutation {

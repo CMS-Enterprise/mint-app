@@ -1,0 +1,33 @@
+{{template "shared_header.html"}}
+
+{{template "shared_non_mint_mailbox_short_header.html" .}}
+<hr/>
+<br/>
+
+<h2>Model-to-operations matrix (MTO) ready for review:</h2>
+<br/>
+
+<h3>{{.ModelName}}</h3>
+<p>Marked ready for review by {{.MarkedReadyForReviewByUserName}}</p>
+<br/>
+<p>
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/milestones">View MTO</a>
+</p>
+<br/>
+
+{{if .ShowFooter}}
+  <hr>
+  <br/>
+  <p>
+    You are currently subscribed to notifications about MTOs that are ready for review. If you no longer wish to receive these email notifications, please
+    <a href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=MTO_READY_FOR_REVIEW" style="font-weight: normal">unsubscribe</a>
+    or change your
+    <a href="{{.ClientAddress}}/notifications/settings" style="font-weight: normal">notification settings</a>.
+  </p>
+{{else}}
+  <hr />
+  <br />
+  {{template "shared_mint_mailbox_footer.html"}}
+{{end}}
+
+{{template "shared_footer.html"}}

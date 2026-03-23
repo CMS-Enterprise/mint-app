@@ -22,6 +22,8 @@ export default gql(/* GraphQL */ `
       incorrectModelStatus
       iddocQuestionnaireComplete
       iddocQuestionnaireCompletedNotificationType
+      mtoReadyForReview
+      mtoReadyForReviewNotificationType
     }
   }
 `);

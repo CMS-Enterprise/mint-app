@@ -72,7 +72,7 @@ func (r *modelsToOperationMatrixResolver) Info(ctx context.Context, obj *models.
 func (r *mutationResolver) MarkMTOReadyForReview(ctx context.Context, modelPlanID uuid.UUID, readyForReview bool) (*models.MTOInfo, error) {
 	princ := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return MTOToggleReadyForReview(ctx, logger, princ, r.store, modelPlanID, readyForReview)
+	return MTOToggleReadyForReview(ctx, logger, princ, r.store, modelPlanID, readyForReview, r.emailService, r.addressBook)
 }
 
 // ModelsToOperationMatrix returns generated.ModelsToOperationMatrixResolver implementation.
