@@ -198,7 +198,11 @@ export const modelToOperationsMisc: Record<string, any> = {
     },
     tableFilters: {
       tableFilters: 'Table filters:',
-      neededWithinThirtyDays: 'Needed within 30 days',
+      neededWithin: 'Needed within',
+      neededWithinAll: 'All',
+      neededWithin30Days: '30 days',
+      neededWithin60Days: '60 days',
+      neededWithin90Days: '90 days',
       noResults: {
         header: 'There are no milestones that match the selected filter(s).',
         content:
