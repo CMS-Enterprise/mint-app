@@ -177,6 +177,19 @@ body:graphql {
                       modelName
                   }
               }
+              ... on MTOReadyForReviewActivityMeta {
+                  version
+                  type
+                  modelPlanID
+                  modelPlan {
+                      modelName
+                  }
+                  mtoInfoID
+                  markedReadyForReview
+                  markedReadyForReviewByUserAccount {
+                      commonName
+                  }
+              }
             }
             createdByUserAccount {
               commonName

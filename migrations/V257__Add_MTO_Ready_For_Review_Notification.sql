@@ -1,0 +1,14 @@
+CREATE TYPE MTO_READY_FOR_REVIEW_NOTIFICATION_TYPE AS ENUM (
+    'ALL_MODELS',
+    'FOLLOWED_MODELS',
+    'MY_MODELS'
+);
+
+ALTER TYPE ACTIVITY_TYPE
+ADD VALUE 'MTO_READY_FOR_REVIEW' AFTER 'DATA_EXCHANGE_APPROACH_MARKED_COMPLETE';
+
+ALTER TABLE user_notification_preferences
+ADD COLUMN mto_ready_for_review USER_NOTIFICATION_PREFERENCE_FLAG[] DEFAULT '{}'::USER_NOTIFICATION_PREFERENCE_FLAG[],
+ADD COLUMN mto_ready_for_review_notification_type MTO_READY_FOR_REVIEW_NOTIFICATION_TYPE DEFAULT NULL;
+
+COMMENT ON COLUMN user_notification_preferences.mto_ready_for_review IS 'Notification preference for when an MTO is marked ready for review';

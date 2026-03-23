@@ -80,6 +80,11 @@ func (r *userNotificationPreferencesResolver) IncorrectModelStatus(ctx context.C
 	return obj.IncorrectModelStatus, nil
 }
 
+// MtoReadyForReview is the resolver for the mtoReadyForReview field.
+func (r *userNotificationPreferencesResolver) MtoReadyForReview(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.MTOReadyForReview, nil
+}
+
 // UserNotificationPreferences returns generated.UserNotificationPreferencesResolver implementation.
 func (r *Resolver) UserNotificationPreferences() generated.UserNotificationPreferencesResolver {
 	return &userNotificationPreferencesResolver{r}
