@@ -23,9 +23,8 @@ const scrollBypass: string[] = [
   '&solution=',
   '&scroll-to-bottom',
   '/collaboration-area/model-to-operations',
-  // MTO table filter: avoid scroll when changing needed-within dropdown (? or & when not first param)
+  // MTO table filter: avoid scroll when toggling "Needed within 30 days" (? or & when not first param)
   'needed-within-thirty-days=',
-  'needed-within-days=',
   // MTO table filter: avoid scroll when toggling "Hide milestones without solutions"
   'hide-milestones-without-solutions=',
   // Read view bypasses for MTO panels
