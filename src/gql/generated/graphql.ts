@@ -2118,7 +2118,6 @@ export type Mutation = {
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
   mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
-  planTaskToggleComplete: PlanTask;
   /**
    * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
    * You cannot have a duplicate name per model plan and parent. If the change makes a conflict, this will error.
@@ -2459,13 +2458,6 @@ export type MutationMarkNotificationAsReadArgs = {
 export type MutationMtoMilestoneUpdateLinkedSolutionsArgs = {
   id: Scalars['UUID']['input'];
   solutionLinks: MtoSolutionLinks;
-};
-
-
-/** Mutations definition for the schema */
-export type MutationPlanTaskToggleCompleteArgs = {
-  isComplete: Scalars['Boolean']['input'];
-  planTaskID: Scalars['UUID']['input'];
 };
 
 
