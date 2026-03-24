@@ -35,7 +35,6 @@ import MTOTableFilters from '../_components/MTOTableFilters';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
 import SuggestedMilestoneBanner from '../_components/SuggestedMilestoneBanner';
-import { getMilestonesNeededWithin30DaysCount } from '../_utils/neededWithin30Days';
 
 import './index.scss';
 
@@ -65,14 +64,6 @@ const MTOHome = () => {
     modelToOperationsMatrix?.commonMilestones.filter(
       obj => obj.suggested.isSuggested && !obj.isAdded
     ) || [];
-
-  const milestonesNeededWithin30DaysCount = useMemo(
-    () =>
-      getMilestonesNeededWithin30DaysCount(
-        modelToOperationsMatrix?.categories || []
-      ),
-    [modelToOperationsMatrix?.categories]
-  );
 
   const navigate = useNavigate();
 
@@ -266,11 +257,7 @@ const MTOHome = () => {
                       {isMatrixStarted ? (
                         <>
                           <MTOTableActions />
-                          <MTOTableFilters
-                            milestonesNeededWithin30DaysCount={
-                              milestonesNeededWithin30DaysCount
-                            }
-                          />
+                          <MTOTableFilters />
                           <MTOTable
                             queryData={data}
                             loading={dataAvalilable}
