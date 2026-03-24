@@ -10,7 +10,6 @@ import (
 
 // BaseTaskListSectionPreUpdate applies incoming changes from to a TaskList Section, and validates it's status
 func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSection, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) error {
-	// section := tls.GetBaseTaskListSection()
 	oldStatus := tls.GetStatus()
 
 	err := BaseStructPreUpdate(logger, tls, changes, principal, store, true, true)
@@ -21,6 +20,15 @@ func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSe
 	err = tls.CalcStatus(oldStatus)
 	if err != nil {
 		return err
+	}
+
+	// MODEL_PLAN task progression: if any section is first edited, mark the MODEL_PLAN task IN_PROGRESS
+	if oldStatus == models.TaskReady && tls.GetStatus() == models.TaskInProgress {
+		modelPlanID := tls.GetModelPlanID()
+		err = updatePlanTaskStatusByKey(store, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusInProgress, principal, store)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
