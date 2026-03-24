@@ -8,15 +8,6 @@ const LEGACY_FILTER_PARAM = 'needed-within-thirty-days';
 
 const DATE_PRESET_STRINGS: number[] = [30, 60, 90];
 
-const PresetDaysOption = ({ days }: { days: number }) => {
-  const { t } = useTranslation('modelToOperationsMisc');
-  return (
-    <option value={days}>
-      {t('table.tableFilters.neededWithinPresetDays', { days })}
-    </option>
-  );
-};
-
 const selectValueFromSearchParams = (params: URLSearchParams): string => {
   if (params.get(LEGACY_FILTER_PARAM) === 'true') {
     return '30';
@@ -75,7 +66,9 @@ const MTOTableFilters = () => {
         >
           <option value="all">{t('table.tableFilters.neededWithinAll')}</option>
           {DATE_PRESET_STRINGS.map(days => (
-            <PresetDaysOption key={`needed-within-days--${days}`} days={days} />
+            <option key={`needed-within-days--${days}`} value={days}>
+              {t('table.tableFilters.neededWithinPresetDays', { days })}
+            </option>
           ))}
         </Select>
       </div>
