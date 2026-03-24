@@ -151,18 +151,12 @@ const Tasks = () => {
                       className={classnames(
                         'usa-nav__link margin-left-neg-2 margin-right-2',
                         {
-                          'usa-current': tabId === tab.id
+                          'usa-current text-primary': tabId === tab.id
                         }
                       )}
                       data-testid={`${tab.id}-tab`}
                     >
-                      <span
-                        className={classnames({
-                          'text-primary': tabId === tab.id
-                        })}
-                      >
-                        {tab.label}
-                      </span>
+                      {tab.label}
                     </button>
                   );
                 })}
@@ -178,7 +172,6 @@ const Tasks = () => {
               role="tabpanel"
               aria-labelledby="current-tab"
               tabIndex={0}
-              className="mint-tabs__tab-panel overflow-visible"
             >
               {currentTasks.length === 0 ? (
                 <Alert type="info" heading={t('emptyState.current.heading')}>
@@ -204,7 +197,6 @@ const Tasks = () => {
               role="tabpanel"
               aria-labelledby="completed-tab"
               tabIndex={0}
-              className="mint-tabs__tab-panel overflow-visible"
             >
               {sortedCompletedTasks.length === 0 ? (
                 <Alert type="info" heading={t('emptyState.completed.heading')}>
