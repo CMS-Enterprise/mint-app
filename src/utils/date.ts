@@ -124,13 +124,10 @@ export const convertDateToISOString = (date: Date | null) => {
 };
 
 /**
- * Returns true if the given ISO date string falls within the next `days` calendar days (UTC),
- * inclusive of today through the end of the Nth day (same window rule as the former 30-day helper).
+ * Returns true if the given ISO date string falls within the next 30 days (UTC),
+ * inclusive of today through the end of the 30th day.
  */
-export const isNeededWithinDays = (
-  needBy: string | null,
-  days: number
-): boolean => {
+export const isNeededWithin30Days = (needBy: string | null): boolean => {
   if (needBy == null) return false;
 
   const needByDate = new Date(needBy);
@@ -141,7 +138,7 @@ export const isNeededWithinDays = (
     Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
   );
   const dayAfterWindowEnd = new Date(todayStart);
-  dayAfterWindowEnd.setUTCDate(dayAfterWindowEnd.getUTCDate() + days + 1);
+  dayAfterWindowEnd.setUTCDate(dayAfterWindowEnd.getUTCDate() + 31);
 
   return needByDate >= todayStart && needByDate < dayAfterWindowEnd;
 };
