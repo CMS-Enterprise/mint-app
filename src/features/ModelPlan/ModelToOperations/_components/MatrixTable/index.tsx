@@ -269,27 +269,6 @@ const MTOTable = ({
   // Holds the current column that should be sorted
   const [currentColumn, setCurrentColumn] = useState<number>(0);
 
-  const prevNeededWithinDaysRef = useRef<typeof neededWithinDays | undefined>(
-    undefined
-  );
-
-  useEffect(() => {
-    const prev = prevNeededWithinDaysRef.current;
-    prevNeededWithinDaysRef.current = neededWithinDays;
-
-    if (prev !== undefined && prev !== null && neededWithinDays === null) {
-      setCurrentColumn(0);
-      setSortCount(3);
-      setColumnSort(
-        Array.from(columns, () => ({
-          isSorted: false,
-          isSortedDesc: false,
-          sortColumn: ''
-        }))
-      );
-    }
-  }, [neededWithinDays]);
-
   // State to hold the index of rows that should be rendered in conjunction with pagination
   const renderedRowIndexes = useRef<{
     category: number[];
