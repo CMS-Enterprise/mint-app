@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Select } from '@trussworks/react-uswds';
+import { Checkbox, Select } from '@trussworks/react-uswds';
 
 const FILTER_PARAM = 'needed-within-days';
 const LEGACY_FILTER_PARAM = 'needed-within-thirty-days';
@@ -23,6 +23,8 @@ const MTOTableFilters = () => {
   const { t } = useTranslation('modelToOperationsMisc');
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [hideCategoryRows, setHideCategoryRows] = useState(false);
 
   const params = new URLSearchParams(location.search);
   const selectValue = selectValueFromSearchParams(params);
@@ -72,6 +74,15 @@ const MTOTableFilters = () => {
           ))}
         </Select>
       </div>
+      <Checkbox
+        id="mto-hide-category-rows"
+        className="margin-bottom-1"
+        data-testid="mto-hide-category-rows"
+        name="hide-category-rows"
+        label={t('table.tableFilters.hideCategoryRows')}
+        checked={hideCategoryRows}
+        onChange={e => setHideCategoryRows(e.target.checked)}
+      />
     </div>
   );
 };
