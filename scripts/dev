@@ -3,6 +3,7 @@
 require "rake"
 require "json"
 require "yaml"
+require "shellwords"
 require "irb"        # debugging
 require "io/console" # for IO#getch
 
@@ -321,6 +322,76 @@ namespace :hosts do
     sh("echo '127.0.0.1 minio' | sudo tee -a /etc/hosts") &&
       sh("sudo killall -HUP mDNSResponder") &&
       sh("sudo dscacheutil -flushcache")
+  end
+end
+
+namespace :faktory do
+  desc "Push a job onto the Faktory critical queue"
+  task :push_job => :consume_args do |t, args|
+    job_type = args.to_a.first.to_s.strip
+    job_args = args.to_a.drop(1).map(&:to_s)
+
+    if job_type.empty?
+      puts "Usage: scripts/dev faktory:push_job <job-type> [args...]"
+      exit(1)
+    end
+
+    # NOTE:
+    # - The backend runs in Docker where `faktory` is resolvable as a service name.
+    # - This command runs on the host machine (`go run ...` directly), where `faktory`
+    #   may not resolve. So we rewrite `faktory` => `localhost` for host execution.
+    faktory_url = ENV["FAKTORY_URL"] || "tcp://localhost:7419"
+    # Replace the host portion only (`faktory` => `localhost`) while preserving optional userinfo.
+    # Examples:
+    # - tcp://faktory:7419 => tcp://localhost:7419
+    # - tcp://:password@faktory:7419 => tcp://:password@localhost:7419
+    rewritten_faktory_url = faktory_url.sub(
+      /\Atcp:\/\/([^@]+@)?faktory:/,
+      "tcp://\\1localhost:"
+    )
+
+    if rewritten_faktory_url != faktory_url
+      puts "Rewriting FAKTORY_URL for host execution: #{rewritten_faktory_url}"
+    end
+
+    escaped_job_type = Shellwords.shellescape(job_type)
+    escaped_job_args = job_args.map { |a| Shellwords.shellescape(a) }.join(" ")
+
+    if job_args.empty?
+      puts "faktory:push_job pushing #{job_type} with NO args"
+    else
+      puts "faktory:push_job pushing #{job_type} with args: #{job_args.inspect}"
+    end
+
+    cmd = "go run ./cmd/worker push-job #{escaped_job_type}"
+    cmd += " #{escaped_job_args}" unless escaped_job_args.empty?
+
+    sh({ "FAKTORY_URL" => rewritten_faktory_url }, cmd)
+  end
+
+  desc "List all Faktory job types registered in pkg/worker"
+  task :list do
+    worker_go = File.read("pkg/worker/worker.go")
+
+    # Extract job-name variables from Worker.getJobWrappers(), then resolve each
+    # variable to its string value (e.g. updateUserAccountBatchJobName -> "UpdateUserAccountBatchJob").
+    wrapper_vars = worker_go.scan(/Name:\s*([A-Za-z0-9_]+),/).flatten.uniq
+
+    decls = {}
+    Dir.glob("pkg/worker/*.go").each do |path|
+      File.read(path).scan(/([A-Za-z0-9_]+)\s+string\s*=\s*"([^"]+)"/).each do |var, value|
+        decls[var] = value
+      end
+    end
+
+    job_types = wrapper_vars.map { |var| decls[var] }.compact.uniq.sort
+
+    if job_types.empty?
+      puts "No job types found. Ensure pkg/worker/worker.go has job registrations and job-name constants exist."
+      exit(1)
+    end
+
+    job_types.each { |jt| puts jt }
   end
 end
 
