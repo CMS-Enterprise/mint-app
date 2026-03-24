@@ -57,7 +57,7 @@ const MTOTableFilters = () => {
 
   return (
     <div
-      className="margin-top-3 display-flex flex-align-center"
+      className="margin-top-3 tablet:display-flex flex-align-center"
       style={{ gap: '1rem' }}
     >
       <p className="margin-y-0 text-bold">
