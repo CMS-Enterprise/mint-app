@@ -8,9 +8,7 @@ import {
   Icon,
   Link
 } from '@trussworks/react-uswds';
-import TemplateCard, {
-  TemplateCardType
-} from 'features/ModelPlan/ModelToOperations/_components/TemplateCard';
+import { TemplateCardType } from 'features/ModelPlan/ModelToOperations/_components/TemplateCard';
 import NotFound from 'features/NotFound';
 import { useGetMtoModelPlanTemplatesQuery } from 'gql/generated/graphql';
 
@@ -29,6 +27,7 @@ import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
+import TemplateCard from '../_components/TemplateCard';
 import TemplatePanel from '../_components/TemplatePanel';
 
 const TemplateLibrary = () => {
