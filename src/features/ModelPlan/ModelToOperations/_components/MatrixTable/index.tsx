@@ -117,16 +117,10 @@ const MTOTable = ({
       return flattened;
     }
 
-    flattened[0].subCategories[0].milestones.sort((a, b) => {
-      const timeA = new Date(a.needBy ?? '').getTime();
-      const timeB = new Date(b.needBy ?? '').getTime();
-      const invalidA = Number.isNaN(timeA);
-      const invalidB = Number.isNaN(timeB);
-      if (invalidA && invalidB) return 0;
-      if (invalidA) return 1;
-      if (invalidB) return -1;
-      return timeA - timeB;
-    });
+    flattened[0].subCategories[0].milestones.sort(
+      (a, b) =>
+        new Date(a.needBy ?? '').getTime() - new Date(b.needBy ?? '').getTime()
+    );
 
     return flattened;
   }, [formattedData, neededWithinDays]);
