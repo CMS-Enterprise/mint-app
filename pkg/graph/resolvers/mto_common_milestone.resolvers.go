@@ -48,7 +48,7 @@ func (r *mTOCommonMilestoneResolver) Suggested(ctx context.Context, obj *models.
 	for _, dbReason := range dbReasons {
 		t := mappings.TranslateMilestoneReason(dbReason.TriggerTable, dbReason.TriggerCol, dbReason.TriggerVal)
 		reasons = append(reasons, &model.MilestoneSuggestionReason{
-			Table:    string(dbReason.TriggerTable),
+			Table:    models.TableName(dbReason.TriggerTable),
 			Field:    dbReason.TriggerCol,
 			Question: t.Question,
 			Answer:   &t.Answer,

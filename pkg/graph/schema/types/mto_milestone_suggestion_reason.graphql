@@ -27,7 +27,7 @@ type MilestoneSuggestionReason {
   """
   The task list table that contains the field which triggered this suggestion.
   """
-  table: String!
+  table: TableName!
   """
   The raw database column name that triggered this suggestion.
   For example: "manage_part_c_d_enrollment" or "appeal_performance".
