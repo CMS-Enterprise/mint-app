@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Checkbox, Select } from '@trussworks/react-uswds';
 
 const FILTER_PARAM = 'needed-within-days';
 const LEGACY_FILTER_PARAM = 'needed-within-thirty-days';
+const HIDE_CATEGORY_ROWS_PARAM = 'hide-category-rows';
 
 const DATE_PRESET_STRINGS: number[] = [30, 60, 90];
 
@@ -19,15 +20,17 @@ const selectValueFromSearchParams = (params: URLSearchParams): string => {
   return 'all';
 };
 
+const hideCategoryRowsFromSearchParams = (params: URLSearchParams): boolean =>
+  params.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
+
 const MTOTableFilters = () => {
   const { t } = useTranslation('modelToOperationsMisc');
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [hideCategoryRows, setHideCategoryRows] = useState(false);
-
   const params = new URLSearchParams(location.search);
   const selectValue = selectValueFromSearchParams(params);
+  const hideCategoryRows = hideCategoryRowsFromSearchParams(params);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const next = new URLSearchParams(location.search);
@@ -40,6 +43,15 @@ const MTOTableFilters = () => {
       next.set(FILTER_PARAM, value);
     }
 
+    navigate({ search: next.toString() }, { replace: true });
+  };
+
+  const handleHideCategoryRowsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const next = new URLSearchParams(location.search);
+    next.set('page', '1');
+    next.set(HIDE_CATEGORY_ROWS_PARAM, e.target.checked ? 'true' : 'false');
     navigate({ search: next.toString() }, { replace: true });
   };
 
@@ -78,10 +90,10 @@ const MTOTableFilters = () => {
         id="mto-hide-category-rows"
         className="margin-bottom-1"
         data-testid="mto-hide-category-rows"
-        name="hide-category-rows"
+        name={HIDE_CATEGORY_ROWS_PARAM}
         label={t('table.tableFilters.hideCategoryRows')}
         checked={hideCategoryRows}
-        onChange={e => setHideCategoryRows(e.target.checked)}
+        onChange={handleHideCategoryRowsChange}
       />
     </div>
   );
