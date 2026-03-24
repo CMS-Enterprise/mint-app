@@ -1,4 +1,4 @@
--- V260: Add mto_suggested_milestone_reason table to store per-field reasons for milestone suggestions
+-- Add mto_suggested_milestone_reason table to store per-field reasons for milestone suggestions
 -- This replaces the simple boolean isSuggested with a richer type that captures which
 -- specific table/column/value combination triggered each suggestion.
 

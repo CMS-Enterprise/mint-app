@@ -3,7 +3,7 @@ package models
 import "github.com/google/uuid"
 
 // MTOCommonMilestoneKey is a stable string identifier for each common milestone.
-// The key column is retained on mto_common_milestone even after the UUID primary key was introduced in V257.
+// The key column is retained on mto_common_milestone even after the UUID primary key was introduced in V259.
 type MTOCommonMilestoneKey string
 
 const (
