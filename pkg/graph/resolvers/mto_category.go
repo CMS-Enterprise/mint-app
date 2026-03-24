@@ -33,22 +33,7 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	if err != nil {
 		return nil, err
 	}
-	created, err := storage.MTOCategoryCreate(store, logger, category)
-	if err != nil {
-		return nil, err
-	}
-
-	// MTO/DATA_EXCHANGE task progression: creating MTO data counts as starting the MTO
-	err = updatePlanTaskStatusByKey(store, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
-	if err != nil {
-		return nil, err
-	}
-	err = updatePlanTaskStatusByKey(store, logger, modelPlanID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusInProgress, principal, store)
-	if err != nil {
-		return nil, err
-	}
-
-	return created, nil
+	return storage.MTOCategoryCreate(store, logger, category)
 }
 
 // MTOCategoryDelete removes an MTOCategory or SubCategory

@@ -275,22 +275,7 @@ func MTOMilestoneUpdate(
 			}
 		}
 
-		updated, updateErr := storage.MTOMilestoneUpdate(tx, logger, existing)
-		if updateErr != nil {
-			return nil, updateErr
-		}
-
-		// MTO/DATA_EXCHANGE task progression: when MTO is started, mark tasks IN_PROGRESS
-		err := updatePlanTaskStatusByKey(tx, logger, updated.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
-		if err != nil {
-			return nil, err
-		}
-		err = updatePlanTaskStatusByKey(tx, logger, updated.ModelPlanID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusInProgress, principal, store)
-		if err != nil {
-			return nil, err
-		}
-
-		return updated, nil
+		return storage.MTOMilestoneUpdate(tx, logger, existing)
 	})
 
 	if err != nil {
