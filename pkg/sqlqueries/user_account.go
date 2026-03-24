@@ -2,6 +2,9 @@ package sqlqueries
 
 import _ "embed"
 
+//go:embed SQL/user_account/collection_get.sql
+var userAccountCollectionGet string
+
 //go:embed SQL/user_account/get_by_username.sql
 var userAccountGetByUsername string
 
@@ -39,6 +42,7 @@ var userAccountGetNotificationPreferencesMTOReadyForReview string
 var userAccountGetLeadModelPlanCount string
 
 type userAccountScripts struct {
+	CollectionGet                                                string
 	GetByUsername                                                string
 	GetByID                                                      string
 	GetByIDLOADER                                                string
@@ -55,6 +59,7 @@ type userAccountScripts struct {
 
 // UserAccount houses all the sql for getting data for user account from the database
 var UserAccount = userAccountScripts{
+	CollectionGet:                          userAccountCollectionGet,
 	GetByUsername:                          userAccountGetByUsername,
 	GetByID:                                userAccountGetByID,
 	GetByIDLOADER:                          userAccountGetByIDLOADER,
