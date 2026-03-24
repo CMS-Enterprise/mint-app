@@ -55,6 +55,45 @@ describe('MTOTableFilters', () => {
       )
     ).toBeInTheDocument();
     expect(getSelect()).toBeInTheDocument();
+    expect(screen.getByTestId('mto-hide-category-rows')).toBeInTheDocument();
+  });
+
+  it('reflects hide-category-rows=true from the URL', () => {
+    renderWithRouter('/matrix?hide-category-rows=true');
+    expect(screen.getByTestId('mto-hide-category-rows')).toBeChecked();
+  });
+
+  it('checking the checkbox sets hide-category-rows=true and resets page', () => {
+    renderWithRouter('/matrix?page=4');
+
+    fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
+
+    expect(mockNavigate).toHaveBeenCalledWith(expect.any(Object), {
+      replace: true
+    });
+    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
+    const nextParams = new URLSearchParams(search);
+    expect(nextParams.get('hide-category-rows')).toBe('true');
+    expect(nextParams.get('page')).toBe('1');
+  });
+
+  it('unchecking the checkbox sets hide-category-rows=false', () => {
+    renderWithRouter('/matrix?hide-category-rows=true');
+
+    fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
+
+    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
+    const nextParams = new URLSearchParams(search);
+    expect(nextParams.get('hide-category-rows')).toBe('false');
+  });
+
+  it('preserves needed-within-days when toggling hide category rows', () => {
+    renderWithRouter('/matrix?needed-within-days=60');
+
+    fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
+
+    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
+    expect(new URLSearchParams(search).get('needed-within-days')).toBe('60');
   });
 
   it('defaults to All when no filter params are present', () => {
