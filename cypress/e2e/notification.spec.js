@@ -697,4 +697,84 @@ describe('Notification Center', () => {
       'You are already unsubscribed from email notifications when a 4i/ACO-OS questionnaire is completed.'
     );
   });
+
+  it('testing MTO is marked Ready for Review Notification', () => {
+    cy.localLogin({ name: 'MINT' });
+    cy.visit('/notifications/settings');
+
+    // Check the MTO Ready for Review in-app checkbox
+    cy.get('[data-testid="notification-setting-email-mtoReadyForReview"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.get('[data-testid="notification-setting-in-app-mtoReadyForReview"]')
+      .should('not.be.disabled')
+      .should('be.not.checked')
+      .check({
+        force: true
+      });
+
+    cy.contains('button', 'Save').click();
+
+    // Navigate back to home to mark MTO ready for review
+    cy.get('[aria-label="Home"]').click();
+    cy.url().should('include', '/');
+
+    cy.enterModelPlanCollaborationArea('Model Plan for MTO testing');
+
+    cy.get('[data-testid="Card"]')
+      .filter(':has(h3:contains("Model-to-operations matrix"))')
+      .within(() => {
+        cy.contains('button', 'Go to matrix').click();
+      });
+    cy.url().should(
+      'include',
+      '/collaboration-area/model-to-operations/matrix'
+    );
+    cy.get('[data-testid="tasklist-tag"]').contains('In progress');
+    cy.get('[data-testid="tasklist-tag"]')
+      .contains('Ready for review')
+      .should('not.exist');
+    cy.contains('button', 'Is this MTO ready for review?').click();
+
+    cy.get('[data-testid="mto-ready-for-review-modal"]').within(() => {
+      cy.contains('button', 'Mark as ready for review').click();
+    });
+    cy.get('[data-testid="tasklist-tag"]').contains('Ready for review');
+    cy.get('[data-testid="tasklist-tag"]')
+      .contains('In progress')
+      .should('not.exist');
+
+    cy.get('[data-testid="navmenu__notification"]').click();
+    cy.url().should('include', '/notifications');
+    cy.get('[data-testid="spinner"]').should('not.exist');
+
+    cy.get('[data-testid="individual-notification"]').contains(
+      'MINT Doe marked the model-to-operations matrix (MTO) for Model Plan for MTO testing as ready for review.'
+    );
+
+    cy.contains('button', 'View MTO').click();
+
+    cy.url().should('include', '/read-view/milestones');
+
+    // Unsubscribe via email link
+    cy.visit('/notifications/settings?unsubscribe_email=MTO_READY_FOR_REVIEW');
+
+    cy.get(
+      '[data-testid="notification-setting-email-mtoReadyForReview"]'
+    ).should('be.not.checked');
+
+    cy.get('[data-testid="toast-success"]').contains(
+      'You have successfully unsubscribed from email notifications when an MTO is marked ready for review.'
+    );
+
+    cy.visit('/notifications/settings?unsubscribe_email=MTO_READY_FOR_REVIEW');
+
+    cy.get('[data-testid="alert"]').contains(
+      'You are already unsubscribed from email notifications when an MTO is marked ready for review.'
+    );
+  });
 });

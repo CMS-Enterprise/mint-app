@@ -2,6 +2,9 @@ package sqlqueries
 
 import _ "embed"
 
+//go:embed SQL/user_account/collection_get.sql
+var userAccountCollectionGet string
+
 //go:embed SQL/user_account/get_by_username.sql
 var userAccountGetByUsername string
 
@@ -32,10 +35,14 @@ var userAccountGetNotificationPreferencesDiscussionAdded string
 //go:embed SQL/user_account/get_notification_preferences_iddoc_questionnaire_completed.sql
 var userAccountGetNotificationPreferencesIDDOCQuestionnaireCompleted string
 
+//go:embed SQL/user_account/get_notification_preferences_mto_ready_for_review.sql
+var userAccountGetNotificationPreferencesMTOReadyForReview string
+
 //go:embed SQL/user_account/get_lead_model_plan_count.sql
 var userAccountGetLeadModelPlanCount string
 
 type userAccountScripts struct {
+	CollectionGet                                                string
 	GetByUsername                                                string
 	GetByID                                                      string
 	GetByIDLOADER                                                string
@@ -46,11 +53,13 @@ type userAccountScripts struct {
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete string
 	GetNotificationPreferencesDiscussionAdded                    string
 	GetNotificationPreferencesIDDOCQuestionnaireCompleted        string
+	GetNotificationPreferencesMTOReadyForReview                  string
 	GetLeadModelPlanCount                                        string
 }
 
 // UserAccount houses all the sql for getting data for user account from the database
 var UserAccount = userAccountScripts{
+	CollectionGet:                          userAccountCollectionGet,
 	GetByUsername:                          userAccountGetByUsername,
 	GetByID:                                userAccountGetByID,
 	GetByIDLOADER:                          userAccountGetByIDLOADER,
@@ -61,5 +70,6 @@ var UserAccount = userAccountScripts{
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete: userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete,
 	GetNotificationPreferencesDiscussionAdded:                    userAccountGetNotificationPreferencesDiscussionAdded,
 	GetNotificationPreferencesIDDOCQuestionnaireCompleted:        userAccountGetNotificationPreferencesIDDOCQuestionnaireCompleted,
+	GetNotificationPreferencesMTOReadyForReview:                  userAccountGetNotificationPreferencesMTOReadyForReview,
 	GetLeadModelPlanCount:                                        userAccountGetLeadModelPlanCount,
 }
