@@ -107,6 +107,7 @@ DROP TRIGGER IF EXISTS sync_iddoc_on_milestone_update ON mto_milestone;
 DROP TRIGGER IF EXISTS sync_iddoc_on_milestone_delete ON mto_milestone;
 
 ALTER TABLE mto_milestone DROP COLUMN mto_common_milestone_key;
+ALTER TABLE mto_common_milestone DROP COLUMN key;
 
 -- Replace sync_iddoc_questionnaire_needed() with a version that uses mto_common_milestone_id
 -- and identifies the IDDOC_SUPPORT library row by name (key column dropped below).
@@ -193,9 +194,6 @@ COMMENT ON FUNCTION sync_iddoc_questionnaire_needed() IS
 '2) INNOVATION or ACO_OS solution exists, '
 '3) IDDOC_SUPPORT milestone exists (matched by common milestone name). '
 'Updated in V259/V261 to use mto_common_milestone_id (UUID FK) and name after key column removal.';
-
--- Drop legacy text key column from the library table (IDDOC sync uses name + UUID FK above)
-ALTER TABLE mto_common_milestone DROP COLUMN key;
 
 -- Recreate milestone triggers without WHEN clause (key column no longer exists on mto_milestone)
 CREATE TRIGGER sync_iddoc_on_milestone_insert
