@@ -95,8 +95,6 @@ SELECT audit.AUDIT_TABLE(
 );
 
 -- -- 8: drop the old key FK columns from child tables
--- Note: mto_common_milestone.key is intentionally kept as a stable named identifier
--- (used by sync_iddoc_questionnaire_needed trigger). Only the FK copies in child tables are dropped.
 ALTER TABLE mto_common_milestone_solution_link DROP COLUMN mto_common_milestone_key;
 ALTER TABLE mto_suggested_milestone DROP COLUMN mto_common_milestone_key;
 ALTER TABLE mto_template_milestone DROP COLUMN mto_common_milestone_key;
@@ -111,7 +109,7 @@ DROP TRIGGER IF EXISTS sync_iddoc_on_milestone_delete ON mto_milestone;
 ALTER TABLE mto_milestone DROP COLUMN mto_common_milestone_key;
 
 -- Replace sync_iddoc_questionnaire_needed() with a version that uses mto_common_milestone_id
--- (looking up mto_common_milestone.key via JOIN) instead of the now-dropped key column.
+-- and identifies the IDDOC_SUPPORT library row by name (key column dropped below).
 CREATE OR REPLACE FUNCTION sync_iddoc_questionnaire_needed()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -132,20 +130,20 @@ BEGIN
         END IF;
     ELSIF TG_TABLE_NAME = 'mto_milestone' THEN
         v_model_plan_id := COALESCE(NEW.model_plan_id, OLD.model_plan_id);
-        -- mto_milestone.mto_common_milestone_key was dropped; look up the key via the UUID FK
+        -- mto_milestone.mto_common_milestone_key was dropped; match the IDDOC_SUPPORT library row by name
         IF (TG_OP = 'DELETE' AND EXISTS(
                 SELECT 1 FROM mto_common_milestone cm
-                WHERE cm.id = OLD.mto_common_milestone_id AND cm.key = 'IDDOC_SUPPORT'
+                WHERE cm.id = OLD.mto_common_milestone_id AND cm.name = 'Establish 4i/ACO-OS support'
             )) OR
            (TG_OP = 'INSERT' AND EXISTS(
                 SELECT 1 FROM mto_common_milestone cm
-                WHERE cm.id = NEW.mto_common_milestone_id AND cm.key = 'IDDOC_SUPPORT'
+                WHERE cm.id = NEW.mto_common_milestone_id AND cm.name = 'Establish 4i/ACO-OS support'
             )) OR
            (TG_OP = 'UPDATE' AND (
                 EXISTS(SELECT 1 FROM mto_common_milestone cm
-                       WHERE cm.id = NEW.mto_common_milestone_id AND cm.key = 'IDDOC_SUPPORT') OR
+                       WHERE cm.id = NEW.mto_common_milestone_id AND cm.name = 'Establish 4i/ACO-OS support') OR
                 EXISTS(SELECT 1 FROM mto_common_milestone cm
-                       WHERE cm.id = OLD.mto_common_milestone_id AND cm.key = 'IDDOC_SUPPORT')
+                       WHERE cm.id = OLD.mto_common_milestone_id AND cm.name = 'Establish 4i/ACO-OS support')
            )) THEN
             v_should_process := TRUE;
         END IF;
@@ -174,7 +172,7 @@ BEGIN
         FROM mto_milestone mm
         JOIN mto_common_milestone cm ON cm.id = mm.mto_common_milestone_id
         WHERE mm.model_plan_id = v_model_plan_id
-          AND cm.key = 'IDDOC_SUPPORT'
+          AND cm.name = 'Establish 4i/ACO-OS support'
     ) INTO v_should_be_needed;
 
     UPDATE iddoc_questionnaire
@@ -193,8 +191,11 @@ COMMENT ON FUNCTION sync_iddoc_questionnaire_needed() IS
 'Automatically syncs the iddoc_questionnaire.needed field based on three business rules: '
 '1) plan_ops_eval_and_learning.iddoc_support = true, '
 '2) INNOVATION or ACO_OS solution exists, '
-'3) IDDOC_SUPPORT milestone exists. '
-'Updated in V259 to use mto_common_milestone_id (UUID FK) instead of the dropped mto_common_milestone_key column.';
+'3) IDDOC_SUPPORT milestone exists (matched by common milestone name). '
+'Updated in V259/V261 to use mto_common_milestone_id (UUID FK) and name after key column removal.';
+
+-- Drop legacy text key column from the library table (IDDOC sync uses name + UUID FK above)
+ALTER TABLE mto_common_milestone DROP COLUMN key;
 
 -- Recreate milestone triggers without WHEN clause (key column no longer exists on mto_milestone)
 CREATE TRIGGER sync_iddoc_on_milestone_insert

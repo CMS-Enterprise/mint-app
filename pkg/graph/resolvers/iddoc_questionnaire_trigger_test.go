@@ -136,17 +136,10 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnMilestone() {
 	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed initially")
 	suite.Equal(models.IDDOCQuestionnaireReady, iddocQuestionnaire.Status, "Status should be models.IDDOCQuestionnaireReady by default")
 
-	// Look up the IDDOC_SUPPORT common milestone UUID by key
-	commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, &plan.ID)
-	suite.NoError(err)
-	var iddocSupportCommonMilestoneID uuid.UUID
-	for _, cm := range commonMilestones {
-		if cm.Key == models.MTOCommonMilestoneKeyIddocSupport {
-			iddocSupportCommonMilestoneID = cm.ID
-			break
-		}
-	}
-	suite.NotEqual(uuid.Nil, iddocSupportCommonMilestoneID, "IDDOC_SUPPORT common milestone should exist")
+	// Look up the IDDOC_SUPPORT common milestone by name (key column removed from mto_common_milestone in V259)
+	iddocSupportCommon := suite.getMTOCommonMilestoneByName("Establish 4i/ACO-OS support")
+	suite.NotNil(iddocSupportCommon, "IDDOC_SUPPORT common milestone should exist")
+	iddocSupportCommonMilestoneID := iddocSupportCommon.ID
 
 	// Add an IDDOC_SUPPORT milestone - this should trigger the IDDOC questionnaire to become needed
 	iddocSupportMilestone, err := MTOMilestoneCreateCommon(
