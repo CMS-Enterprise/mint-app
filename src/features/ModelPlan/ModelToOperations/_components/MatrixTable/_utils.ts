@@ -2,11 +2,7 @@ import type { GetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
 
 import { isNeededWithinDays } from 'utils/date';
 
-import type {
-  CategoryType,
-  MilestoneType,
-  SubCategoryType
-} from '../_components/MatrixTable/columns';
+import type { CategoryType, MilestoneType, SubCategoryType } from './columns';
 
 /**
  * Type for the MTO matrix categories array from the GetModelToOperationsMatrix query.
@@ -19,6 +15,7 @@ export type NeededWithinWindowDays = 30 | 60 | 90;
 export const parseNeededWithinDaysFromSearchParams = (
   params: URLSearchParams
 ): NeededWithinWindowDays | null => {
+  // Legacy URL flag from before `needed-within-days`; equivalent to a 30-day window.
   if (params.get('needed-within-thirty-days') === 'true') {
     return 30;
   }

@@ -33,14 +33,14 @@ import useModalSolutionState from 'hooks/useModalSolutionState';
 import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import ActionMenu from '../ActionsMenu';
+
 import {
   filterMilestonesNeededWithinDays,
   flattenToSingleCategory,
   GetModelToOperationsMatrixCategoryType,
   parseNeededWithinDaysFromSearchParams
-} from '../../_utils/neededWithin30Days';
-import ActionMenu from '../ActionsMenu';
-
+} from './_utils';
 import {
   CategoryType,
   columns,
@@ -54,7 +54,7 @@ import {
 export type GetModelToOperationsMatrixQueryType =
   GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix'];
 
-export type { GetModelToOperationsMatrixCategoryType } from '../../_utils/neededWithin30Days';
+export type { GetModelToOperationsMatrixCategoryType } from './_utils';
 
 const MTOTable = ({
   queryData,
