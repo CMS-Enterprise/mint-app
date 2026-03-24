@@ -178,6 +178,19 @@ export default gql(/* GraphQL */ `
                   modelName
                 }
               }
+              ... on MTOReadyForReviewActivityMeta {
+                version
+                type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
+                mtoInfoID
+                markedReadyForReview
+                markedReadyForReviewByUserAccount {
+                  commonName
+                }
+              }
             }
           }
         }
