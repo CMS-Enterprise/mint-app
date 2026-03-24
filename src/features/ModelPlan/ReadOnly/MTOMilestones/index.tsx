@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import MTOTable from 'features/ModelPlan/ModelToOperations/_components/MatrixTable';
 import MTOTableFilters from 'features/ModelPlan/ModelToOperations/_components/MTOTableFilters';
-import { getMilestonesNeededWithin30DaysCount } from 'features/ModelPlan/ModelToOperations/_utils/neededWithin30Days';
 import { NotFoundPartial } from 'features/NotFound';
 import {
   GetModelToOperationsMatrixQuery,
@@ -30,14 +29,6 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
   const modelToOperationsMatrix =
     data?.modelPlan?.mtoMatrix ||
     ({} as GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix']);
-
-  const milestonesNeededWithin30DaysCount = useMemo(
-    () =>
-      getMilestonesNeededWithin30DaysCount(
-        modelToOperationsMatrix?.categories || []
-      ),
-    [modelToOperationsMatrix?.categories]
-  );
 
   const mtoNotStarted = modelToOperationsMatrix.status === MtoStatus.READY;
 
@@ -71,11 +62,7 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
         </Alert>
       ) : (
         <>
-          <MTOTableFilters
-            milestonesNeededWithin30DaysCount={
-              milestonesNeededWithin30DaysCount
-            }
-          />
+          <MTOTableFilters />
           <MTOTable queryData={data} loading={loading} error={error} readView />
         </>
       )}
