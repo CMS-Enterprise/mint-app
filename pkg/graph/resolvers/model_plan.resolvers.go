@@ -63,7 +63,8 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 
 // Tasks is the resolver for the tasks field.
 func (r *modelPlanResolver) Tasks(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanTask, error) {
-	return PlanTaskGetByModelPlanIDLOADER(ctx, obj.ID)
+	// Stub: return empty list until plan_task data layer and loader are implemented.
+	return []*models.PlanTask{}, nil
 }
 
 // Payments is the resolver for the payments field.

@@ -44,3 +44,7 @@ enum PlanTaskState {
   TO_DO
   COMPLETE
 }
+
+extend type Mutation {
+  planTaskToggleComplete(planTaskID: UUID!, isComplete: Boolean!): PlanTask!
+}

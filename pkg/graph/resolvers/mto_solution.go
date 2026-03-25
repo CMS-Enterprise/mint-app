@@ -61,16 +61,6 @@ func MTOSolutionUpdate(
 			return nil, fmt.Errorf("failed to update solution: %w", err)
 		}
 
-		// MTO/DATA_EXCHANGE task progression: when MTO is started, mark tasks IN_PROGRESS
-		err = updatePlanTaskStatusByKey(tx, logger, updatedSolution.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
-		if err != nil {
-			return nil, err
-		}
-		err = updatePlanTaskStatusByKey(tx, logger, updatedSolution.ModelPlanID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusInProgress, principal, store)
-		if err != nil {
-			return nil, err
-		}
-
 		// Update linked milestones
 		if milestoneLinks != nil && milestoneLinks.MilestoneIDs != nil {
 			_, err := MTOSolutionLinkMilestonesWithTX(

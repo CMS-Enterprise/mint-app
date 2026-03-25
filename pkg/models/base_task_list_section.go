@@ -20,7 +20,6 @@ type IBaseTaskListSection interface {
 	GetModifiedBy() *string
 	SetModifiedBy(principal authentication.Principal) error
 	GetStatus() TaskStatus
-	GetModelPlanID() uuid.UUID
 	MostRecentModification() (time.Time, uuid.UUID)
 }
 
