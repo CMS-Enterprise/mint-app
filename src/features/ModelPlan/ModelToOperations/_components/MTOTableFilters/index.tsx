@@ -38,9 +38,14 @@ const MTOTableFilters = ({
 
   const params = new URLSearchParams(location.search);
   const selectValue = selectValueFromSearchParams(params);
-  const hideCategoryRows = hideCategoryRowsFromSearchParams(params);
+  const isTimeWindowFilterActive = selectValue !== 'all';
+  const hideCategoryRows = isTimeWindowFilterActive
+    ? false
+    : hideCategoryRowsFromSearchParams(params);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTimeWindowFilterChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const next = new URLSearchParams(location.search);
     next.set('page', '1');
     next.delete(FILTER_PARAM);
@@ -49,6 +54,7 @@ const MTOTableFilters = ({
     const { value } = e.target;
     if (DATE_PRESET_STRINGS.includes(Number(value))) {
       next.set(FILTER_PARAM, value);
+      next.set(HIDE_CATEGORY_ROWS_PARAM, 'false');
     }
 
     navigate({ search: next.toString() }, { replace: true });
@@ -84,7 +90,7 @@ const MTOTableFilters = ({
           data-testid="mto-needed-within-days"
           name={FILTER_PARAM}
           value={selectValue}
-          onChange={handleChange}
+          onChange={handleTimeWindowFilterChange}
         >
           <option value="all">{t('table.tableFilters.neededWithinAll')}</option>
           {DATE_PRESET_STRINGS.map(days => (
@@ -102,6 +108,7 @@ const MTOTableFilters = ({
         label={t('table.tableFilters.hideCategoryRows', {
           count: categoryHeaderRowCount
         })}
+        disabled={isTimeWindowFilterActive}
         checked={hideCategoryRows}
         onChange={handleHideCategoryRowsChange}
       />

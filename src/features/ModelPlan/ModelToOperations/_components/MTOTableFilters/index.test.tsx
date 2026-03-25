@@ -102,13 +102,11 @@ describe('MTOTableFilters', () => {
     expect(nextParams.get('hide-category-rows')).toBe('false');
   });
 
-  it('preserves needed-within-days when toggling hide category rows', () => {
-    renderWithRouter('/matrix?needed-within-days=60');
+  it('disables and forces unchecked when a time window filter is selected', () => {
+    renderWithRouter('/matrix?needed-within-days=60&hide-category-rows=true');
 
-    fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
-
-    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
-    expect(new URLSearchParams(search).get('needed-within-days')).toBe('60');
+    expect(screen.getByTestId('mto-hide-category-rows')).toBeDisabled();
+    expect(screen.getByTestId('mto-hide-category-rows')).not.toBeChecked();
   });
 
   it('defaults to All when no filter params are present', () => {
@@ -137,6 +135,7 @@ describe('MTOTableFilters', () => {
     const { search } = mockNavigate.mock.calls[0][0] as { search: string };
     const nextParams = new URLSearchParams(search);
     expect(nextParams.get('needed-within-days')).toBe('30');
+    expect(nextParams.get('hide-category-rows')).toBe('false');
     expect(nextParams.get('page')).toBe('1');
   });
 
