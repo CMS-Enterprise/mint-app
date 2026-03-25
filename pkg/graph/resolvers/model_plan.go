@@ -97,19 +97,6 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		// Create default tasks for the model plan
-		for _, key := range []models.PlanTaskKey{
-			models.PlanTaskKeyModelPlan,
-			models.PlanTaskKeyMto,
-			models.PlanTaskKeyDataExchange,
-		} {
-			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, key, models.PlanTaskStatusToDo)
-			_, err = storage.PlanTaskCreate(tx, logger, task)
-			if err != nil {
-				return nil, err
-			}
-		}
-
 		baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
 
 		// Create a default plan basics object
@@ -334,8 +321,6 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
-	oldStatus := existingPlan.Status
-
 	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
@@ -344,28 +329,6 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
 	if err != nil {
 		return nil, err
-	}
-
-	// MODEL_PLAN task progression: when model status changes to CLEARED, mark MODEL_PLAN task COMPLETE
-	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
-		updErr := updatePlanTaskStatusByKey(store, logger, retPlan.ID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusComplete, principal, store)
-		if updErr != nil {
-			return nil, updErr
-		}
-
-		// DATA_EXCHANGE task progression: when model status changes to CLEARED, mark DATA_EXCHANGE task COMPLETE
-		updErr = updatePlanTaskStatusByKey(store, logger, retPlan.ID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusComplete, principal, store)
-		if updErr != nil {
-			return nil, updErr
-		}
-	}
-
-	// MTO task progression: when model status changes to ACTIVE, mark MTO task COMPLETE
-	if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
-		updErr := updatePlanTaskStatusByKey(store, logger, retPlan.ID, models.PlanTaskKeyMto, models.PlanTaskStatusComplete, principal, store)
-		if updErr != nil {
-			return nil, updErr
-		}
 	}
 	return retPlan, err
 

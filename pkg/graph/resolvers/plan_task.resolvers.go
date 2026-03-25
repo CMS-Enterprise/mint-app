@@ -6,12 +6,30 @@ package resolvers
 
 import (
 	"context"
+	"time"
+
+	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// PlanTaskToggleComplete is the resolver for the planTaskToggleComplete field.
+func (r *mutationResolver) PlanTaskToggleComplete(ctx context.Context, planTaskID uuid.UUID, isComplete bool) (*models.PlanTask, error) {
+	// Stub: return a fake task so frontend can test; State and *UserAccount fields are resolved by field resolvers.
+	status := models.PlanTaskStatusToDo
+	if isComplete {
+		status = models.PlanTaskStatusComplete
+	}
+	now := time.Now()
+	task := models.NewPlanTask(planTaskID, uuid.Nil, models.PlanTaskKeyModelPlan, status)
+	task.ID = planTaskID
+	task.CreatedDts = now
+	task.ModifiedDts = &now
+	return task, nil
+}
 
 // State is the resolver for the state field.
 func (r *planTaskResolver) State(ctx context.Context, obj *models.PlanTask) (model.PlanTaskState, error) {
