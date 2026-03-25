@@ -201,7 +201,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       neededWithin: 'Needed within',
       neededWithinAll: 'All',
       neededWithinPresetDays: '{{days}} days',
-      hideCategoryRows: 'Hide category rows',
+      hideCategoryRows: 'Hide category rows ({{count}})',
       noResults: {
         header: 'There are no milestones that match the selected filter(s).',
         content:

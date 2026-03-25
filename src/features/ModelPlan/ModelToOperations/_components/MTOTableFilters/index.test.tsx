@@ -20,12 +20,15 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('MTOTableFilters', () => {
-  const renderWithRouter = (initialEntry: string) => {
+  const renderWithRouter = (
+    initialEntry: string,
+    props?: React.ComponentProps<typeof MTOTableFilters>
+  ) => {
     const router = createMemoryRouter(
       [
         {
           path: '/matrix',
-          element: <MTOTableFilters />
+          element: <MTOTableFilters {...props} />
         }
       ],
       {
@@ -56,6 +59,18 @@ describe('MTOTableFilters', () => {
     ).toBeInTheDocument();
     expect(getSelect()).toBeInTheDocument();
     expect(screen.getByTestId('mto-hide-category-rows')).toBeInTheDocument();
+  });
+
+  it('shows category and subcategory header count in the hide-rows label', () => {
+    renderWithRouter('/matrix', { categoryHeaderRowCount: 12 });
+    expect(
+      screen.getByRole('checkbox', {
+        name: i18next.t(
+          'modelToOperationsMisc:table.tableFilters.hideCategoryRows',
+          { count: 12 }
+        )
+      })
+    ).toBeInTheDocument();
   });
 
   it('reflects hide-category-rows=true from the URL', () => {

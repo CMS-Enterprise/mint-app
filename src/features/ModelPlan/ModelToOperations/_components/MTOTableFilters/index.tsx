@@ -23,7 +23,15 @@ const selectValueFromSearchParams = (params: URLSearchParams): string => {
 const hideCategoryRowsFromSearchParams = (params: URLSearchParams): boolean =>
   params.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
 
-const MTOTableFilters = () => {
+export type MTOTableFiltersProps = {
+  /** Number of category and subcategory header rows hidden when the checkbox is checked. */
+  categoryHeaderRowCount?: number;
+};
+
+/** Table filter controls for the MTO milestones matrix (date window + hide header rows). */
+const MTOTableFilters = ({
+  categoryHeaderRowCount = 0
+}: MTOTableFiltersProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const location = useLocation();
   const navigate = useNavigate();
@@ -91,7 +99,9 @@ const MTOTableFilters = () => {
         className="margin-bottom-1"
         data-testid="mto-hide-category-rows"
         name={HIDE_CATEGORY_ROWS_PARAM}
-        label={t('table.tableFilters.hideCategoryRows')}
+        label={t('table.tableFilters.hideCategoryRows', {
+          count: categoryHeaderRowCount
+        })}
         checked={hideCategoryRows}
         onChange={handleHideCategoryRowsChange}
       />
