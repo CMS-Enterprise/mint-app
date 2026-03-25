@@ -70,18 +70,45 @@ const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.DATA_EXCHANGE
 ] as const;
 
+const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
+  [PlanTaskKey.MODEL_PLAN]: '2022-01-01T00:00:00Z',
+  [PlanTaskKey.MTO]: '2022-01-02T00:00:00Z',
+  [PlanTaskKey.DATA_EXCHANGE]: '2022-01-03T00:00:00Z'
+};
+
 export function makePlanTasks(
   overrides?: Partial<
-    Record<PlanTaskKey, Partial<Pick<PlanTaskEntry, 'state' | 'status'>>>
+    Record<
+      PlanTaskKey,
+      Partial<Pick<PlanTaskEntry, 'state' | 'status' | 'completedDts'>>
+    >
   >
 ): PlanTaskEntry[] {
-  return PLAN_TASK_KEYS_ORDER.map(key => ({
-    __typename: 'PlanTask' as const,
-    key,
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.TO_DO,
-    ...overrides?.[key]
-  }));
+  return PLAN_TASK_KEYS_ORDER.map(key => {
+    const resolvedState =
+      overrides?.[key]?.state !== undefined
+        ? overrides[key].state
+        : PlanTaskState.TO_DO;
+
+    const resolvedStatus =
+      overrides?.[key]?.status !== undefined
+        ? overrides[key].status
+        : PlanTaskStatus.TO_DO;
+
+    return {
+      __typename: 'PlanTask' as const,
+      key,
+      state: resolvedState,
+      status: resolvedStatus,
+      completedDts:
+        overrides?.[key]?.completedDts ??
+        (resolvedState === PlanTaskState.COMPLETE ||
+        resolvedStatus === PlanTaskStatus.COMPLETE
+          ? DEFAULT_COMPLETED_DTS_BY_KEY[key]
+          : null),
+      ...overrides?.[key]
+    };
+  });
 }
 
 export const planTasksAllToDo = makePlanTasks();

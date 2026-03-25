@@ -33,7 +33,7 @@ import ModelPlanCard from './Cards/ModelPlanCard';
 import MTOCard from './Cards/MTOCard';
 import TeamCard from './Cards/TeamCard';
 import TimelineCard from './Cards/TimelineCard';
-import TasksWrapper from './Tasks';
+import TasksWrapper from './TasksWrapper';
 
 import './index.scss';
 
@@ -46,7 +46,7 @@ export type StatusMessageType = {
 
 const CollaborationArea = () => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
-
+  const { t: tasksT } = useTranslation('tasks');
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
@@ -225,6 +225,7 @@ const CollaborationArea = () => {
 
             <Grid row gap>
               <Grid col={12}>
+                <h2 className="margin-top-0">{tasksT('heading')}</h2>
                 <TasksWrapper modelPlan={modelPlan} tasks={tasks} />
               </Grid>
               <Divider className="margin-y-6" />

@@ -5,6 +5,7 @@ import {
 } from 'gql/generated/graphql';
 
 const tasks = {
+  breadcrumb: 'Tasks',
   heading: 'Current tasks',
   state: {
     [PlanTaskState.TO_DO]: 'To do',
@@ -12,10 +13,21 @@ const tasks = {
   },
   seeAll: 'See all ({{count}})',
   seeAllTasks: 'See all tasks',
+  tabs: {
+    current: 'Current tasks ({{count}})',
+    completed: 'Completed tasks ({{count}})',
+    ariaLabel: 'Switch between current and completed tasks'
+  },
   emptyState: {
-    heading: 'Nothing to do here!',
-    copy: "You've completed all of the current tasks.",
-    viewCompletedTasks: ' <link1>Click here</link1> to view completed tasks.'
+    current: {
+      heading: 'Nothing to do here!',
+      copy: "You've completed all of the current tasks.",
+      viewCompletedTasks: ' <link1>Click here</link1> to view completed tasks.'
+    },
+    completed: {
+      heading: 'There are no completed tasks yet.',
+      copy: 'Once you complete a task, it will appear here.'
+    }
   },
   [PlanTaskKey.MODEL_PLAN]: {
     copy: 'The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.',
