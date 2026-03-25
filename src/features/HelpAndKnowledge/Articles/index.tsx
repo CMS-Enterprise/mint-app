@@ -42,7 +42,8 @@ export enum HelpArticle {
   UPDATING_MTO_STATUS = 'UPDATING_MTO_STATUS',
   SHARING_EXPORTING_MTO = 'SHARING_EXPORTING_MTO',
   LESSON_LEARNED_REPOSITORY = 'LESSON_LEARNED_REPOSITORY',
-  OPERATIONAL_PLANNING = 'OPERATIONAL_PLANNING'
+  OPERATIONAL_PLANNING = 'OPERATIONAL_PLANNING',
+  INFORMATION_SYSTEMS_SECURITY_OFFICER = 'INFORMATION_SYSTEMS_SECURITY_OFFICER'
 }
 
 export type ArticleProps = {
@@ -176,6 +177,14 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
       'https://share.cms.gov/center/cmmi/QualVert/ModelResources/Forms/AllItems.aspx?RootFolder=%2Fcenter%2Fcmmi%2FQualVert%2FModelResources%2FHealth%20Equity&FolderCTID=0x0120005E561329242B614A92093D06F4EE96E1&View=%7B2B63652B%2D67D7%2D4A43%2DA7CD%2D617DDE639979%7D',
     translation: HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY,
     type: ArticleCategories.MODEL_CONCEPT_AND_DESIGN,
+    external: true
+  },
+  {
+    key: HelpArticle.INFORMATION_SYSTEMS_SECURITY_OFFICER,
+    route:
+      'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-BSG-Classic/DITOS/SitePages/IT%20Security%20and%20Privacy.aspx?UserPage%5FRenderAsModern=0',
+    translation: HelpArticle.INFORMATION_SYSTEMS_SECURITY_OFFICER,
+    type: ArticleCategories.GETTING_STARTED,
     external: true
   },
   {
