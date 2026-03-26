@@ -39,7 +39,7 @@ const MTOTableFilters = ({
   const params = new URLSearchParams(location.search);
   const selectValue = selectValueFromSearchParams(params);
   const isTimeWindowFilterActive = selectValue !== 'all';
-  const hideCategoryRows = isTimeWindowFilterActive
+  const isHideCategoryRowsChecked = isTimeWindowFilterActive
     ? false
     : hideCategoryRowsFromSearchParams(params);
 
@@ -109,7 +109,7 @@ const MTOTableFilters = ({
           count: categoryHeaderRowCount
         })}
         disabled={isTimeWindowFilterActive}
-        checked={hideCategoryRows}
+        checked={isHideCategoryRowsChecked}
         onChange={handleHideCategoryRowsChange}
       />
     </div>
