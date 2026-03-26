@@ -42,21 +42,21 @@ const MilestoneCard = ({
   const milestoneParam = params.get('add-milestone');
 
   const [isModalOpen, setIsModalOpen] = useState(
-    milestoneParam === milestone.key
+    milestoneParam === milestone.id
   );
 
   useEffect(() => {
-    if (milestoneParam === milestone.key) {
+    if (milestoneParam === milestone.id) {
       setIsModalOpen(true);
     }
-  }, [milestoneParam, milestone.key, setIsModalOpen]);
+  }, [milestoneParam, milestone.id, setIsModalOpen]);
 
   return (
     <>
       <Modal
         isOpen={isModalOpen}
         closeModal={() => {
-          params.delete('add-milestone', milestone.key);
+          params.delete('add-milestone', milestone.id);
           navigate({ search: params.toString() }, { replace: true });
           setIsModalOpen(false);
         }}
@@ -71,7 +71,7 @@ const MilestoneCard = ({
 
         <AddSolutionToMilestoneForm
           closeModal={() => {
-            params.delete('add-milestone', milestone.key);
+            params.delete('add-milestone', milestone.id);
             navigate({ search: params.toString() }, { replace: true });
             setIsModalOpen(false);
           }}
@@ -93,7 +93,7 @@ const MilestoneCard = ({
             <span className="text-base-dark">
               {t('milestoneLibrary.milestone')}
             </span>
-            {milestone.isSuggested && (
+            {milestone.suggested.isSuggested && (
               <span className="padding-right-1 model-to-operations__milestone-tag">
                 <Icon.LightbulbOutline
                   aria-label="lightbulb"
@@ -115,7 +115,7 @@ const MilestoneCard = ({
             {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
           </div>
 
-          {milestone.isSuggested && (
+          {milestone.suggested.isSuggested && (
             <SuggestedMilestoneToggle
               milestone={milestone}
               className="margin-top-2"
@@ -131,7 +131,7 @@ const MilestoneCard = ({
               className="margin-right-1 deep-underline"
               onClick={() => {
                 setIsSidepanelOpen(true);
-                params.set('milestone', milestone.key);
+                params.set('milestone', milestone.id);
                 navigate({ search: params.toString() });
               }}
             >
@@ -153,7 +153,7 @@ const MilestoneCard = ({
                 className="margin-right-2"
                 onClick={() => {
                   params.delete('milestone');
-                  params.set('add-milestone', milestone.key);
+                  params.set('add-milestone', milestone.id);
                   navigate({ search: params.toString() }, { replace: true });
                   setIsModalOpen(true);
                 }}
@@ -177,7 +177,7 @@ const MilestoneCard = ({
               className="margin-top-2"
               onClick={() => {
                 setIsSidepanelOpen(true);
-                params.set('milestone', milestone.key);
+                params.set('milestone', milestone.id);
                 navigate({ search: params.toString() });
               }}
             >

@@ -10,11 +10,21 @@ export default gql(/* GraphQL */ `
           id
         }
         commonMilestones {
+          id
           name
           description
-          key
+          isArchived
           isAdded
-          isSuggested
+          suggested {
+            isSuggested
+            count
+            reasons {
+              table
+              field
+              question
+              answer
+            }
+          }
           categoryName
           subCategoryName
           facilitatedByRole

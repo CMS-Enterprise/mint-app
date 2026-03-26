@@ -15,6 +15,5 @@ type MTOSolutionTranslation {
     @goTag(key: "db", value: "facilitated_by")
   facilitatedByOther: TranslationField!
     @goTag(key: "db", value: "facilitated_by_other")
-  milestones: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "milestones")
+  milestones: TranslationField! @goTag(key: "db", value: "milestones")
 }

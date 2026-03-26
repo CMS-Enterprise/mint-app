@@ -19,15 +19,21 @@ auth:apikey {
 body:graphql {
   query mtoCommonMilestones {
     mtoCommonMilestones {
+      id
       name
-      key
       categoryName
       subCategoryName
       facilitatedByRole
       section
   
+      isArchived
       isAdded
-      # isSuggested
+      # suggested requires a modelPlanID argument when fetched without model plan context:
+      # suggested(modelPlanID: "{{modelPlanID}}") {
+      #   isSuggested
+      #   count
+      #   reasons { table field question answer }
+      # }
       # commonSolutions:
     }
   }

@@ -112,7 +112,7 @@ export const commonBreadCrumbs = (
   },
   PAYMENTS: {
     text: 'paymentsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/model-plan/payments`
+    url: `/models/${modelID}/collaboration-area/model-plan/payment`
   },
   PREPARE_FOR_CLEARANCE: {
     text: 'prepareForClearance:heading',

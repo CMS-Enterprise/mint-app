@@ -136,6 +136,11 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnMilestone() {
 	suite.False(iddocQuestionnaire.Needed, "IDDOC questionnaire should not be needed initially")
 	suite.Equal(models.IDDOCQuestionnaireReady, iddocQuestionnaire.Status, "Status should be models.IDDOCQuestionnaireReady by default")
 
+	// Look up the IDDOC_SUPPORT common milestone by name (key column removed from mto_common_milestone in V259)
+	iddocSupportCommon := suite.getMTOCommonMilestoneByName("Establish 4i/ACO-OS support")
+	suite.NotNil(iddocSupportCommon, "IDDOC_SUPPORT common milestone should exist")
+	iddocSupportCommonMilestoneID := iddocSupportCommon.ID
+
 	// Add an IDDOC_SUPPORT milestone - this should trigger the IDDOC questionnaire to become needed
 	iddocSupportMilestone, err := MTOMilestoneCreateCommon(
 		suite.testConfigs.Context,
@@ -145,12 +150,12 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnMilestone() {
 		nil, // emailService
 		email.AddressBook{},
 		plan.ID,
-		models.MTOCommonMilestoneKeyIddocSupport,
+		iddocSupportCommonMilestoneID,
 		[]models.MTOCommonSolutionKey{}, // commonSolutions
 	)
 	suite.NoError(err)
 	suite.NotNil(iddocSupportMilestone)
-	suite.Equal(models.MTOCommonMilestoneKeyIddocSupport, *iddocSupportMilestone.Key)
+	suite.NotNil(iddocSupportMilestone.MTOCommonMilestoneID, "milestone should be linked to a common milestone")
 
 	// Reload the IDDOC questionnaire and verify that needed is now true (due to the database trigger)
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)

@@ -187,7 +187,7 @@ type MTOMilestoneTranslation struct {
 	CommonSolutions      models.TranslationFieldWithOptions `json:"commonSolutions" db:"common_solutions"`
 	Solutions            models.TranslationFieldWithOptions `json:"solutions" db:"solutions"`
 	Status               models.TranslationFieldWithOptions `json:"status" db:"status"`
-	Key                  models.TranslationField            `json:"key" db:"mto_common_milestone_key"`
+	MtoCommonMilestoneID models.TranslationField            `json:"mtoCommonMilestoneID" db:"mto_common_milestone_id"`
 	MtoCategoryID        models.TranslationField            `json:"mtoCategoryID" db:"mto_category_id"`
 	AssignedTo           models.TranslationField            `json:"assignedTo" db:"assigned_to"`
 	Notes                models.TranslationField            `json:"notes" db:"notes"`
@@ -210,7 +210,38 @@ type MTOSolutionTranslation struct {
 	NeededBy           models.TranslationField            `json:"neededBy" db:"needed_by"`
 	FacilitatedBy      models.TranslationFieldWithOptions `json:"facilitatedBy" db:"facilitated_by"`
 	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
-	Milestones         models.TranslationFieldWithOptions `json:"milestones" db:"milestones"`
+	Milestones         models.TranslationField            `json:"milestones" db:"milestones"`
+}
+
+// MilestoneSuggestionReason represents a single per-field reason why a milestone was suggested.
+// Each reason corresponds to one (field, value) pair that matched a trigger condition stored
+// in the mto_common_milestone table.
+type MilestoneSuggestionReason struct {
+	// The task list table that contains the field which triggered this suggestion.
+	Table models.TableName `json:"table"`
+	// The raw database column name that triggered this suggestion.
+	// For example: "manage_part_c_d_enrollment" or "appeal_performance".
+	Field string `json:"field"`
+	// The human-readable question label for the triggering field.
+	// For example: "Will you manage Part C/D enrollment?".
+	// Falls back to the raw column name when no translation is available.
+	Question string `json:"question"`
+	// The human-readable answer that matched the trigger condition.
+	// For example: "Yes", "LOI", or "APPLICATION_REVIEW_AND_SCORING_TOOL".
+	// Falls back to the raw value when no translation is available.
+	Answer *string `json:"answer,omitempty"`
+}
+
+// MilestoneSuggestionReasons is an aggregate type that represents the suggestion context for
+// a common milestone in the context of a specific model plan.
+type MilestoneSuggestionReasons struct {
+	// Whether this milestone is currently suggested based on the model plan's answers.
+	IsSuggested bool `json:"isSuggested"`
+	// The specific per-field reasons why this milestone is suggested.
+	// Empty when isSuggested is false.
+	Reasons []*MilestoneSuggestionReason `json:"reasons"`
+	// Total count of suggestion reasons (equivalent to len(reasons)).
+	Count int `json:"count"`
 }
 
 // Represents Model Plan MTO Template Link translation data

@@ -21,6 +21,7 @@ body:graphql {
   modelPlan(id: "{{modelPlanID}}") {
       mtoMatrix{
           commonMilestones {
+              id
               name
               key
               categoryName
@@ -28,6 +29,7 @@ body:graphql {
               section
               facilitatedByRole
   
+              isArchived
               isAdded
               # isSuggested
               commonSolutions {
