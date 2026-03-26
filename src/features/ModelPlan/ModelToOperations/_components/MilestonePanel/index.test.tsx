@@ -2,11 +2,7 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-import {
-  MtoCommonMilestoneKey,
-  MtoCommonSolutionKey,
-  MtoFacilitator
-} from 'gql/generated/graphql';
+import { MtoCommonSolutionKey, MtoFacilitator } from 'gql/generated/graphql';
 import { possibleSolutionsMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
@@ -18,13 +14,19 @@ import MilestonePanel from './index';
 describe('MilestonePanel Component', () => {
   const mockMilestone: MilestoneCardType = {
     __typename: 'MTOCommonMilestone',
-    key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+    id: 'common-milestone-1',
     name: 'Test Milestone',
     description: 'Description 1',
     categoryName: 'Test Category',
     subCategoryName: 'Test SubCategory',
+    isArchived: false,
     isAdded: false,
-    isSuggested: true,
+    suggested: {
+      __typename: 'MilestoneSuggestionReasons' as const,
+      isSuggested: true,
+      count: 0,
+      reasons: []
+    },
     facilitatedByRole: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
     commonSolutions: [
       {

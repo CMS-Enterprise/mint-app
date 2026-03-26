@@ -19,12 +19,12 @@ auth:apikey {
 body:graphql {
   mutation NewMTOMilestone {
       createMTOMilestoneCommon(modelPlanID: "{{modelPlanID}}",
-      commonMilestoneKey: MANAGE_CD,
+      commonMilestoneID: "{{commonMilestoneID}}",
       commonSolutions: [INNOVATION, ACO_OS]
   ) {
       id
       name
-      key
+      mtoCommonMilestoneID
       addedFromMilestoneLibrary
       facilitatedBy
       needBy

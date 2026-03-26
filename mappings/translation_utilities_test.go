@@ -310,6 +310,85 @@ func assertTFieldWithChildren(t *testing.T, field reflect.StructField, translati
 
 }
 
+// TestTranslateMilestoneReason tests that TranslateMilestoneReason correctly returns
+// the human-readable question label and translated answer value.
+func TestTranslateMilestoneReason(t *testing.T) {
+	tests := []struct {
+		name             string
+		table            models.MilestoneSuggestionReasonTable
+		col              string
+		val              string
+		expectedQuestion string
+		expectedAnswer   string
+	}{
+		{
+			name:             "boolean true translates to question and Yes",
+			table:            models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics,
+			col:              "manage_part_c_d_enrollment",
+			val:              "t",
+			expectedQuestion: "Will you manage Part C/D enrollment?",
+			expectedAnswer:   "Yes",
+		},
+		{
+			name:             "boolean false translates to question and No",
+			table:            models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics,
+			col:              "manage_part_c_d_enrollment",
+			val:              "f",
+			expectedQuestion: "Will you manage Part C/D enrollment?",
+			expectedAnswer:   "No",
+		},
+		{
+			name:             "enum value translates to question and answer",
+			table:            models.MilestoneSuggestionReasonTablePlanParticipantsAndProviders,
+			col:              "provider_overlap",
+			val:              "YES_NEED_POLICIES",
+			expectedQuestion: "Will the providers overlap with other models?",
+			expectedAnswer:   "Yes, we expect to develop policies to manage the overlaps",
+		},
+		{
+			name:             "unknown column falls back to raw col and val",
+			table:            models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics,
+			col:              "nonexistent_column",
+			val:              "t",
+			expectedQuestion: "nonexistent_column",
+			expectedAnswer:   "t",
+		},
+		{
+			name:             "unknown table falls back to raw col and val",
+			table:            models.MilestoneSuggestionReasonTable("not_a_real_table"),
+			col:              "manage_part_c_d_enrollment",
+			val:              "t",
+			expectedQuestion: "manage_part_c_d_enrollment",
+			expectedAnswer:   "t",
+		},
+		{
+			name:             "unknown option value falls back to question and sanitized val",
+			table:            models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics,
+			col:              "manage_part_c_d_enrollment",
+			val:              "UNKNOWN_VALUE",
+			expectedQuestion: "Will you manage Part C/D enrollment?",
+			expectedAnswer:   "UNKNOWN_VALUE",
+		},
+		{
+			// STRING field with no options — question is resolved but value is returned as-is
+			name:             "string field with no options falls back to raw val",
+			table:            models.MilestoneSuggestionReasonTablePlanGeneralCharacteristics,
+			col:              "resembles_existing_model_why_how",
+			val:              "some free text answer",
+			expectedQuestion: "Explain why and how the model made this decision.",
+			expectedAnswer:   "some free text answer",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result := TranslateMilestoneReason(tt.table, tt.col, tt.val)
+			assert.Equal(t, tt.expectedQuestion, result.Question)
+			assert.Equal(t, tt.expectedAnswer, result.Answer)
+		})
+	}
+}
+
 // assertStringPointerNilOrNotEmpty requires a non empty string if a string pointer is not nil
 func assertStringPointerNilOrNotEmpty(t *testing.T, value *string, sectionName string, field reflect.StructField) {
 	if value == nil {

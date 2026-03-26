@@ -7,13 +7,9 @@ import SuggestedMilestoneBanner from './index';
 
 const suggestedMilestone: {
   __typename: 'MTOCommonMilestone';
-  isSuggested: boolean;
-  isAdded: boolean;
 }[] = [
   {
-    __typename: 'MTOCommonMilestone',
-    isSuggested: true,
-    isAdded: false
+    __typename: 'MTOCommonMilestone'
   }
 ];
 
@@ -87,9 +83,7 @@ describe('SuggestedMilestoneBanner component', () => {
               suggestedMilestones={[
                 ...suggestedMilestone,
                 {
-                  __typename: 'MTOCommonMilestone',
-                  isSuggested: true,
-                  isAdded: true
+                  __typename: 'MTOCommonMilestone'
                 }
               ]}
             />
