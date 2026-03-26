@@ -63,7 +63,7 @@ const MTOHome = () => {
 
   const suggestedMilestones =
     modelToOperationsMatrix?.commonMilestones.filter(
-      obj => obj.isSuggested && !obj.isAdded
+      obj => obj.suggested.isSuggested && !obj.isAdded
     ) || [];
 
   const navigate = useNavigate();

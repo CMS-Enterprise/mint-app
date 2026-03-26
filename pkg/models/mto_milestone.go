@@ -56,10 +56,11 @@ type MTOMilestone struct {
 
 	Name        *string `json:"name" db:"name"` // From Common Milestone Table if linked
 	Description *string `json:"description" db:"description"`
-	// Key is a foreign key to the Common Milestone Table. It has database triggers
+	// MTOCommonMilestoneID is a foreign key to mto_common_milestone.id. It has database triggers
 	// (sync_iddoc_on_milestone_insert/update/delete) that automatically update iddoc_questionnaire.needed
-	// when IDDOC_SUPPORT milestone is added, updated, or deleted. See V254__Add_IDDOC_Triggers.sql
-	Key *MTOCommonMilestoneKey `json:"key" db:"mto_common_milestone_key"`
+	// when the IDDOC_SUPPORT milestone is added, updated, or deleted. See V254__Add_IDDOC_Triggers.sql.
+	// Note: the triggers were updated in V259 to use mto_common_milestone_id after the key column was dropped.
+	MTOCommonMilestoneID *uuid.UUID `json:"mtoCommonMilestoneID" db:"mto_common_milestone_id"`
 
 	MTOCategoryID        *uuid.UUID                                  `json:"mtoCategoryID" db:"mto_category_id"`
 	ResponsibleComponent EnumArray[MTOMilestoneResponsibleComponent] `json:"responsibleComponent" db:"responsible_component"`
@@ -75,17 +76,17 @@ type MTOMilestone struct {
 // AddedFromMilestoneLibrary returns true or false if this was added from the common milestone library.
 // It simply checks if the common  milestone id is populated or not
 func (m *MTOMilestone) AddedFromMilestoneLibrary() bool {
-	return m.Key != nil
+	return m.MTOCommonMilestoneID != nil
 }
 
 // NewMTOMilestone returns a new mtoMileMTOMilestone object
-func NewMTOMilestone(createdBy uuid.UUID, name *string, description *string, commonMilestoneKey *MTOCommonMilestoneKey, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
+func NewMTOMilestone(createdBy uuid.UUID, name *string, description *string, mtoCommonMilestoneID *uuid.UUID, modelPlanID uuid.UUID, mtoCategoryID *uuid.UUID) *MTOMilestone {
 	return &MTOMilestone{
 		Name:                 name,
 		Description:          description,
 		baseStruct:           NewBaseStruct(createdBy),
 		modelPlanRelation:    NewModelPlanRelation(modelPlanID),
-		Key:                  commonMilestoneKey,
+		MTOCommonMilestoneID: mtoCommonMilestoneID,
 		MTOCategoryID:        mtoCategoryID,
 		IsDraft:              true,
 		RiskIndicator:        MTORiskIndicatorOnTrack,

@@ -4,7 +4,6 @@ import { render, screen } from '@testing-library/react';
 import {
   GetMtoAllMilestonesQuery,
   GetMtoSolutionQuery,
-  MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   MtoMilestoneStatus,
   MtoRiskIndicator,
@@ -34,7 +33,7 @@ describe('LinkMilestoneForm Component', () => {
       commonMilestones: [
         {
           __typename: 'MTOCommonMilestone',
-          key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+          id: 'common-milestone-1',
           name: 'Common Milestone 1',
           commonSolutions: [
             { __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey.BCDA }
@@ -42,7 +41,7 @@ describe('LinkMilestoneForm Component', () => {
         },
         {
           __typename: 'MTOCommonMilestone',
-          key: MtoCommonMilestoneKey.ACQUIRE_A_LEARN_CONT,
+          id: 'common-milestone-2',
           name: 'Common Milestone 2',
           commonSolutions: [
             {
@@ -56,7 +55,7 @@ describe('LinkMilestoneForm Component', () => {
         {
           __typename: 'MTOMilestone',
           id: 'milestone-1',
-          key: MtoCommonMilestoneKey.ADJUST_FFS_CLAIMS,
+          mtoCommonMilestoneID: 'common-milestone-3',
           name: 'Milestone 1',
           status: MtoMilestoneStatus.COMPLETED,
           riskIndicator: MtoRiskIndicator.AT_RISK,
@@ -65,7 +64,7 @@ describe('LinkMilestoneForm Component', () => {
         {
           __typename: 'MTOMilestone',
           id: 'milestone-2',
-          key: MtoCommonMilestoneKey.APP_SUPPORT_CON,
+          mtoCommonMilestoneID: 'common-milestone-4',
           name: 'Milestone 2',
           status: MtoMilestoneStatus.COMPLETED,
           riskIndicator: MtoRiskIndicator.AT_RISK,

@@ -34,7 +34,7 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	// A custom milestone never has a CommonMilestoneKey, so pass in `nil`
+	// A custom milestone never has a CommonMilestoneID, so pass in `nil`
 	milestone := models.NewMTOMilestone(principalAccount.ID, &name, description, nil, modelPlanID, mtoCategoryID)
 
 	err := BaseStructPreCreate(logger, milestone, principal, store, true)
@@ -49,7 +49,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
-	commonMilestoneKey models.MTOCommonMilestoneKey,
+	commonMilestoneID uuid.UUID,
 	commonSolutions []models.MTOCommonSolutionKey,
 ) (*models.MTOMilestone, error) {
 	principalAccount := principal.Account()
@@ -59,7 +59,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
 		// First, fetch the Common Milestone object from the DB
-		commonMilestone, err := MTOCommonMilestoneGetByKeyLOADER(ctx, commonMilestoneKey)
+		commonMilestone, err := MTOCommonMilestoneGetByIDLOADER(ctx, commonMilestoneID)
 		if err != nil {
 			logger.Error("failed to fetch common milestone when creating milestone from library", zap.Error(err))
 			return nil, err
@@ -93,7 +93,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			principalAccount.ID,
 			nil,
 			&commonMilestone.Description,
-			&commonMilestoneKey,
+			&commonMilestone.ID,
 			modelPlanID,
 			&finalCategoryID,
 		)
@@ -141,7 +141,7 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
-	commonMilestoneKey models.MTOCommonMilestoneKey,
+	commonMilestoneID uuid.UUID,
 	commonSolutions []models.MTOCommonSolutionKey,
 ) (*models.MTOMilestoneWithNewlyInsertedStatus, error) {
 	principalAccount := principal.Account()
@@ -150,7 +150,7 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 	}
 
 	// First, fetch the Common Milestone object from the DB
-	commonMilestone, err := MTOCommonMilestoneGetByKeyLOADER(ctx, commonMilestoneKey)
+	commonMilestone, err := MTOCommonMilestoneGetByIDLOADER(ctx, commonMilestoneID)
 	if err != nil {
 		logger.Error("failed to fetch common milestone when creating milestone from library", zap.Error(err))
 		return nil, err
@@ -184,7 +184,7 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 		principalAccount.ID,
 		nil,
 		&commonMilestone.Description,
-		&commonMilestoneKey,
+		&commonMilestone.ID,
 		modelPlanID,
 		&finalCategoryID,
 	)

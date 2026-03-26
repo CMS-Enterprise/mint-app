@@ -20,8 +20,8 @@ export default gql(/* GraphQL */ `
             isUncategorized
             milestones {
               id
+              mtoCommonMilestoneID
               name
-              key
               facilitatedBy
               facilitatedByOther
               assignedToPlanCollaborator {
@@ -46,11 +46,13 @@ export default gql(/* GraphQL */ `
         }
         milestones {
           id
-          key
+          mtoCommonMilestoneID
           name
         }
         commonMilestones {
-          isSuggested
+          suggested {
+            isSuggested
+          }
           isAdded
         }
         recentEdit {

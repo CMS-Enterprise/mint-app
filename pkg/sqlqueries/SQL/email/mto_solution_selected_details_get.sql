@@ -22,7 +22,7 @@ SELECT
         FROM mto_milestone_solution_link AS link
         LEFT JOIN mto_milestone AS milestone ON milestone.id = link.milestone_id
         LEFT JOIN mto_common_milestone AS common_milestone
-            ON common_milestone.key = milestone.mto_common_milestone_key
+            ON common_milestone.id = milestone.mto_common_milestone_id
         WHERE link.solution_id = sol.id
     ) AS milestone_names,
     plan.id AS model_id,

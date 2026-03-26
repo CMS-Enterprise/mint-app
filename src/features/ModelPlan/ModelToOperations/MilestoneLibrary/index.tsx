@@ -232,7 +232,7 @@ const MilstoneCardGroup = ({
   }
 
   const selectedMilestone: MilestoneCardType | undefined = useMemo(() => {
-    return milestones.find(milestone => milestone.key === milestoneParam);
+    return milestones.find(milestone => milestone.id === milestoneParam);
   }, [milestones, milestoneParam]);
 
   const addedMilestones = useMemo(
@@ -244,9 +244,9 @@ const MilstoneCardGroup = ({
     () =>
       milestones.filter(milestone => {
         if (addedMilestonesHidden) {
-          return milestone.isSuggested && !milestone.isAdded;
+          return milestone.suggested.isSuggested && !milestone.isAdded;
         }
-        return milestone.isSuggested;
+        return milestone.suggested.isSuggested;
       }),
     [milestones, addedMilestonesHidden]
   );
@@ -283,9 +283,9 @@ const MilstoneCardGroup = ({
     () =>
       allItems.filter(milestone => {
         if (addedMilestonesHidden) {
-          return milestone.isSuggested && !milestone.isAdded;
+          return milestone.suggested.isSuggested && !milestone.isAdded;
         }
-        return milestone.isSuggested;
+        return milestone.suggested.isSuggested;
       }),
     [allItems, addedMilestonesHidden]
   );
@@ -591,7 +591,7 @@ const MilstoneCardGroup = ({
                     <Grid
                       desktop={{ col: 4 }}
                       tablet={{ col: 6 }}
-                      key={milestone.key}
+                      key={milestone.id}
                     >
                       <MilestoneCard
                         milestone={milestone}

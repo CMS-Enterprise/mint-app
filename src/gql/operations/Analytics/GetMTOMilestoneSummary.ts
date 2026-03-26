@@ -12,7 +12,7 @@ export default gql(/* GraphQL */ `
         }
         milestones {
           id
-          key
+          mtoCommonMilestoneID
           name
           description
           status
