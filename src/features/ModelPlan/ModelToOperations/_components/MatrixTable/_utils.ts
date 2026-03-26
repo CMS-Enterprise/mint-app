@@ -88,7 +88,7 @@ export const filterMilestonesNeededWithinDays = (
 
 /**
  * Flattens the category tree into a single category with a single subcategory
- * containing all milestones. Used when a "needed within N days" filter is on
+ * containing all milestones. Used when category/subcategory rows are hidden
  * so that sorting applies across all visible milestones, not per group.
  */
 export const flattenToSingleCategory = (

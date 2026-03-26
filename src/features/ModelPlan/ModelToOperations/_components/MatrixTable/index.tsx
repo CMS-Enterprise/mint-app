@@ -105,31 +105,40 @@ const MTOTable = ({
 
   const isTimeWindowFilterActive = neededWithinDays !== null;
 
-  const hideCategoryRows = params.get('hide-category-rows') === 'true';
-
   /** Hide category/subcategory rows if time window or "hide category rows" filters are active */
   const tableMilestonesOnlyLayout =
-    isTimeWindowFilterActive || hideCategoryRows;
+    isTimeWindowFilterActive || params.get('hide-category-rows') === 'true';
 
+  /**
+   * Formats data for table based on any applied filters.
+   *
+   * If `tableMilestonesOnlyLayout` is true, the data is flattened into a single category/subcategory containing all milestones.
+   */
   const dataForTable = useMemo(() => {
-    if (neededWithinDays === null) return formattedData;
-    const filtered = filterMilestonesNeededWithinDays(
-      formattedData,
-      neededWithinDays
-    );
-    const flattened = flattenToSingleCategory(filtered);
+    let data = formattedData;
 
-    if (flattened.length === 0) {
-      return flattened;
+    if (!tableMilestonesOnlyLayout) {
+      return data;
     }
 
-    flattened[0].subCategories[0].milestones.sort(
-      (a, b) =>
-        new Date(a.needBy ?? '').getTime() - new Date(b.needBy ?? '').getTime()
-    );
+    // If time window filter is active, filter the data to only include milestones that are needed within the selected window
+    if (neededWithinDays !== null) {
+      data = filterMilestonesNeededWithinDays(formattedData, neededWithinDays);
+    }
+
+    const flattened = flattenToSingleCategory(data);
+
+    // If there are milestones and a time window filter is active, sort the milestones by need by date
+    if (flattened.length > 0 && neededWithinDays !== null) {
+      flattened[0].subCategories[0].milestones.sort(
+        (a, b) =>
+          new Date(a.needBy ?? '').getTime() -
+          new Date(b.needBy ?? '').getTime()
+      );
+    }
 
     return flattened;
-  }, [formattedData, neededWithinDays]);
+  }, [formattedData, neededWithinDays, tableMilestonesOnlyLayout]);
 
   const [initLocation] = useState<string>(location.pathname);
 
