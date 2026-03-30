@@ -30,7 +30,7 @@ type MTOCommonMilestone {
   commonSolutions: [MTOCommonSolution!]!
 }
 
-input MtoCommonMilestoneChanges @goModel(model: "map[string]interface{}") {
+input MTOCommonMilestoneChanges @goModel(model: "map[string]interface{}") {
   name: String
   description: String
   categoryName: String
@@ -48,20 +48,20 @@ extend type Query {
 }
 
 extend type Mutation {
-  createMtoCommonMilestone(
+  createMTOCommonMilestone(
     name: String!
     description: String!
     categoryName: String!
-    subCategoryName: String!
+    subCategoryName: String
     facilitatedByRole: [MTOFacilitator!]!
     mtoCommonSolutionKeys: [MTOCommonSolutionKey!]!
   ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
 
-  updateMtoCommonMilestone(
+  updateMTOCommonMilestone(
     id: UUID!
-    changes: MtoCommonMilestoneChanges!
+    changes: MTOCommonMilestoneChanges!
   ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
 
-  archiveMtoCommonMilestone(id: UUID!): MTOCommonMilestone!
+  archiveMTOCommonMilestone(id: UUID!): MTOCommonMilestone!
     @hasRole(role: MINT_ASSESSMENT)
 }

@@ -68,19 +68,19 @@ func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *m
 	return MTOCommonSolutionGetByCommonMilestoneIDLOADER(ctx, obj.ID)
 }
 
-// CreateMtoCommonMilestone is the resolver for the createMtoCommonMilestone field.
-func (r *mutationResolver) CreateMtoCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName string, facilitatedByRole []models.MTOFacilitator, mtoCommonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
-	panic(fmt.Errorf("not implemented: CreateMtoCommonMilestone - createMtoCommonMilestone"))
+// CreateMTOCommonMilestone is the resolver for the createMTOCommonMilestone field.
+func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName *string, facilitatedByRole []models.MTOFacilitator, mtoCommonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOCommonMilestone - createMTOCommonMilestone"))
 }
 
-// UpdateMtoCommonMilestone is the resolver for the updateMtoCommonMilestone field.
-func (r *mutationResolver) UpdateMtoCommonMilestone(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.MTOCommonMilestone, error) {
-	panic(fmt.Errorf("not implemented: UpdateMtoCommonMilestone - updateMtoCommonMilestone"))
+// UpdateMTOCommonMilestone is the resolver for the updateMTOCommonMilestone field.
+func (r *mutationResolver) UpdateMTOCommonMilestone(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.MTOCommonMilestone, error) {
+	panic(fmt.Errorf("not implemented: UpdateMTOCommonMilestone - updateMTOCommonMilestone"))
 }
 
-// ArchiveMtoCommonMilestone is the resolver for the archiveMtoCommonMilestone field.
-func (r *mutationResolver) ArchiveMtoCommonMilestone(ctx context.Context, id uuid.UUID) (*models.MTOCommonMilestone, error) {
-	panic(fmt.Errorf("not implemented: ArchiveMtoCommonMilestone - archiveMtoCommonMilestone"))
+// ArchiveMTOCommonMilestone is the resolver for the archiveMTOCommonMilestone field.
+func (r *mutationResolver) ArchiveMTOCommonMilestone(ctx context.Context, id uuid.UUID) (*models.MTOCommonMilestone, error) {
+	panic(fmt.Errorf("not implemented: ArchiveMTOCommonMilestone - archiveMTOCommonMilestone"))
 }
 
 // MtoCommonMilestones is the resolver for the mtoCommonMilestones field.
