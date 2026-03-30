@@ -2058,6 +2058,15 @@ export type ModelsToOperationMatrixSolutionsArgs = {
   filterView?: InputMaybe<ModelViewFilter>;
 };
 
+export type MtoCommonMilestoneChanges = {
+  categoryName?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  facilitatedByRole?: InputMaybe<Array<MtoFacilitator>>;
+  mtoCommonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  subCategoryName?: InputMaybe<Scalars['String']['input']>;
+};
+
 export enum MultiSourceDataToCollect {
   COMMERCIAL_CLAIMS = 'COMMERCIAL_CLAIMS',
   LAB_DATA = 'LAB_DATA',
@@ -2073,6 +2082,7 @@ export type Mutation = {
   __typename: 'Mutation';
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
+  archiveMtoCommonMilestone: MtoCommonMilestone;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2092,6 +2102,7 @@ export type Mutation = {
   createMTOSolutionCommon: MtoSolution;
   createMTOSolutionCustom: MtoSolution;
   createModelPlan: ModelPlan;
+  createMtoCommonMilestone: MtoCommonMilestone;
   createPlanCR: PlanCr;
   createPlanCollaborator: PlanCollaborator;
   createPlanDiscussion: PlanDiscussion;
@@ -2167,6 +2178,7 @@ export type Mutation = {
   updateMTOMilestoneNote: MtoMilestoneNote;
   updateMTOSolution: MtoSolution;
   updateModelPlan: ModelPlan;
+  updateMtoCommonMilestone: MtoCommonMilestone;
   updatePlanBasics: PlanBasics;
   updatePlanBeneficiaries: PlanBeneficiaries;
   updatePlanCR: PlanCr;
@@ -2194,6 +2206,12 @@ export type MutationAddPlanFavoriteArgs = {
 /** Mutations definition for the schema */
 export type MutationAgreeToNdaArgs = {
   agree?: Scalars['Boolean']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationArchiveMtoCommonMilestoneArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -2316,6 +2334,17 @@ export type MutationCreateMtoSolutionCustomArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateModelPlanArgs = {
   modelName: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCommonMilestoneArgs = {
+  categoryName: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  facilitatedByRole: Array<MtoFacilitator>;
+  mtoCommonSolutionKeys: Array<MtoCommonSolutionKey>;
+  name: Scalars['String']['input'];
+  subCategoryName: Scalars['String']['input'];
 };
 
 
@@ -2606,6 +2635,13 @@ export type MutationUpdateMtoSolutionArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateModelPlanArgs = {
   changes: ModelPlanChanges;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoCommonMilestoneArgs = {
+  changes: MtoCommonMilestoneChanges;
   id: Scalars['UUID']['input'];
 };
 
