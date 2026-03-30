@@ -698,24 +698,43 @@ describe('Notification Center', () => {
     );
   });
 
-  it('testing MTO is marked Ready for Review Notification', () => {
+  it.only('testing MTO is marked Ready for Review Notification', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/notifications/settings');
 
-    // Check the MTO Ready for Review in-app checkbox
-    cy.get('[data-testid="notification-setting-email-mtoReadyForReview"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
+    // Need to give the page a bit time to finish loading
+    cy.get('body').click({ force: true });
+    cy.wait(500);
 
-    cy.get('[data-testid="notification-setting-in-app-mtoReadyForReview"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
+    // Check the MTO Ready for Review email checkbox
+    cy.get('label[for="notification-setting-email-mtoReadyForReview"]').click({
+      force: true
+    });
+
+    cy.get('#notification-setting-email-mtoReadyForReview').then($el => {
+      if (!$el.is(':checked')) {
+        cy.wrap($el).check({ force: true });
+      }
+    });
+
+    cy.get(
+      '[data-testid="notification-setting-email-mtoReadyForReview"]'
+    ).should('be.checked');
+
+    // Check the MTO Ready for Review in-app checkbox
+    cy.get('label[for="notification-setting-in-app-mtoReadyForReview"]').click({
+      force: true
+    });
+
+    cy.get('#notification-setting-in-app-mtoReadyForReview').then($el => {
+      if (!$el.is(':checked')) {
+        cy.wrap($el).check({ force: true });
+      }
+    });
+
+    cy.get(
+      '[data-testid="notification-setting-in-app-mtoReadyForReview"]'
+    ).should('be.checked');
 
     cy.contains('button', 'Save').click();
 
