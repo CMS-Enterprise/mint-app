@@ -26,6 +26,7 @@ import keyContact, { keyContactMisc } from './helpAndKnowledge/keyContact';
 import keyContactCategory, {
   keyContactCategoryMisc
 } from './helpAndKnowledge/keyContactCategory';
+import adminActions from './home/adminActions';
 import customHome from './home/customHome';
 import homepageSettings from './home/settings';
 import additionalQuestionnaires from './modelPlan/additionalQuestionnaires';
@@ -114,6 +115,7 @@ const enUS = {
   collaborationArea,
   cookies,
   changeHistory,
+  adminActions,
   customHome,
   error,
   filterView,
