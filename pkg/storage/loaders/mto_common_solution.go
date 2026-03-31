@@ -21,8 +21,8 @@ type mtoCommonSolutionLoaders struct {
 	// ByKey returns a list of mto Common Solution records by it's keys. It does not currently have contextual data
 	ByKey LoaderWrapper[models.MTOCommonSolutionKey, *models.MTOCommonSolution]
 
-	// ByCommonMilestoneKey returns a list of mto Common Solution records by it's keys. It does not currently have contextual data
-	ByCommonMilestoneKey LoaderWrapper[models.MTOCommonMilestoneKey, []*models.MTOCommonSolution]
+	// ByCommonMilestoneID returns a list of mto Common Solution records by it's common milestone id. It does not currently have contextual data
+	ByCommonMilestoneID LoaderWrapper[uuid.UUID, []*models.MTOCommonSolution]
 
 	// ByID returns a list of mto Common Solution records by it's id. It does not currently have contextual data
 	ByID LoaderWrapper[uuid.UUID, *models.MTOCommonSolution]
@@ -30,10 +30,10 @@ type mtoCommonSolutionLoaders struct {
 
 // MTOCommonSolution is the singleton instance of all LoaderWrappers related to MTO Common Solutions
 var MTOCommonSolution = &mtoCommonSolutionLoaders{
-	ByModelPlanID:        NewLoaderWrapper(batchMTOCommonSolutionGetByModelPlanID),
-	ByKey:                NewLoaderWrapper(batchMTOCommonSolutionGetByKey),
-	ByCommonMilestoneKey: NewLoaderWrapper(batchMTOCommonSolutionGetByCommonMilestoneKey),
-	ByID:                 NewLoaderWrapper(batchMTOCommonSolutionGetByID),
+	ByModelPlanID:       NewLoaderWrapper(batchMTOCommonSolutionGetByModelPlanID),
+	ByKey:               NewLoaderWrapper(batchMTOCommonSolutionGetByKey),
+	ByCommonMilestoneID: NewLoaderWrapper(batchMTOCommonSolutionGetByCommonMilestoneID),
+	ByID:                NewLoaderWrapper(batchMTOCommonSolutionGetByID),
 }
 
 //Future Enhancement (mto) revisit this and see if you can refactor the dataloader to take *uuid.UUID. The only part that doesn't work is onePerMany,
@@ -88,29 +88,29 @@ func batchMTOCommonSolutionGetByKey(ctx context.Context, commonSolutionKeys []mo
 
 }
 
-// batchMTOCommonSolutionGetByCommonMilestoneKey returns a list of common Solutions as a dataloader.Result for a list of commonMilestoneKeys (they are linked)
-func batchMTOCommonSolutionGetByCommonMilestoneKey(ctx context.Context, commonMilestoneKeys []models.MTOCommonMilestoneKey) []*dataloader.Result[[]*models.MTOCommonSolution] {
+// batchMTOCommonSolutionGetByCommonMilestoneID returns a list of common Solutions as a dataloader.Result for a list of commonMilestoneIDs (they are linked)
+func batchMTOCommonSolutionGetByCommonMilestoneID(ctx context.Context, commonMilestoneIDs []uuid.UUID) []*dataloader.Result[[]*models.MTOCommonSolution] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
 	if err != nil {
-		return errorPerEachKey[models.MTOCommonMilestoneKey, []*models.MTOCommonSolution](commonMilestoneKeys, err)
+		return errorPerEachKey[uuid.UUID, []*models.MTOCommonSolution](commonMilestoneIDs, err)
 	}
 
-	data, err := storage.MTOCommonSolutionGetByCommonMilestoneKeyLoader(loaders.DataReader.Store, logger, commonMilestoneKeys)
+	data, err := storage.MTOCommonSolutionGetByCommonMilestoneIDLoader(loaders.DataReader.Store, logger, commonMilestoneIDs)
 	if err != nil {
-		return errorPerEachKey[models.MTOCommonMilestoneKey, []*models.MTOCommonSolution](commonMilestoneKeys, err)
+		return errorPerEachKey[uuid.UUID, []*models.MTOCommonSolution](commonMilestoneIDs, err)
 	}
 
-	getKeyFunc := func(data *models.MTOCommonSolution) models.MTOCommonMilestoneKey {
-		if data.CommonMilestoneKey != nil {
-			return *data.CommonMilestoneKey
+	getKeyFunc := func(data *models.MTOCommonSolution) uuid.UUID {
+		if data.CommonMilestoneID != nil {
+			return *data.CommonMilestoneID
 		}
-		// We use empty string for safety since the data model is a pointer. In practice, this should be populated from the query
-		return ""
+
+		return uuid.Nil
 	}
 
 	// implement one to many
-	return oneToManyDataLoader(commonMilestoneKeys, data, getKeyFunc)
+	return oneToManyDataLoader(commonMilestoneIDs, data, getKeyFunc)
 
 }
 

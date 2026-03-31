@@ -9,6 +9,7 @@ import {
   Label,
   Radio
 } from '@trussworks/react-uswds';
+import { convertToLowercaseAndDashes } from 'features/HelpAndKnowledge/Articles/TwoPagerMeeting';
 import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
@@ -329,10 +330,12 @@ const Performance = () => {
 
                     <FieldGroup
                       className="margin-top-6"
-                      scrollElement="participantAppeal"
+                      scrollElement={convertToLowercaseAndDashes(
+                        opsEvalAndLearningT('appealPerformance.groupLabel')
+                      )}
                     >
                       <Label htmlFor="ops-eval-and-learning-appeals">
-                        {opsEvalAndLearningMiscT('participantAppeal')}
+                        {opsEvalAndLearningT('appealPerformance.groupLabel')}
                       </Label>
 
                       <MTOWarning

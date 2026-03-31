@@ -1,50 +1,71 @@
 import type { GetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
 
-import { isNeededWithin30Days } from 'utils/date';
+import { isNeededWithinDays } from 'utils/date';
 
-import type {
-  CategoryType,
-  MilestoneType,
-  SubCategoryType
-} from '../_components/MatrixTable/columns';
+import type { CategoryType, MilestoneType, SubCategoryType } from './columns';
 
 /**
  * Type for the MTO matrix categories array from the GetModelToOperationsMatrix query.
- * Used for counting milestones needed within 30 days without depending on formatted table data.
  */
 export type GetModelToOperationsMatrixCategoryType =
   GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix']['categories'];
 
 /**
- * Returns the number of milestones whose needBy date is within the next 30 days (UTC).
+ * Counts category header rows in the MTO matrix (one per category and one per subcategory).
+ *
+ * Excludes uncategorized categories with no milestones.
  */
-export const getMilestonesNeededWithin30DaysCount = (
-  categoryData: GetModelToOperationsMatrixCategoryType
+export const countMtoCategoryHeaderRows = (
+  categories: GetModelToOperationsMatrixCategoryType | null | undefined
 ): number => {
-  let count = 0;
-  categoryData.forEach(category => {
-    category.subCategories?.forEach(subCategory => {
-      subCategory.milestones?.forEach(milestone => {
-        if (isNeededWithin30Days(milestone.needBy ?? null)) count += 1;
-      });
-    });
-  });
-  return count;
+  if (!categories?.length) {
+    return 0;
+  }
+  return categories.reduce((total, category) => {
+    const categoryMilestones =
+      category.subCategories?.reduce(
+        (acc, subCategory) => acc + (subCategory.milestones?.length ?? 0),
+        0
+      ) ?? 0;
+
+    if (category.name === 'Uncategorized' && categoryMilestones === 0) {
+      return total;
+    }
+
+    return total + 1 + (category.subCategories?.length ?? 0);
+  }, 0);
+};
+
+export type NeededWithinWindowDays = 30 | 60 | 90;
+
+export const parseNeededWithinDaysFromSearchParams = (
+  params: URLSearchParams
+): NeededWithinWindowDays | null => {
+  // Legacy URL flag from before `needed-within-days`; equivalent to a 30-day window.
+  if (params.get('needed-within-thirty-days') === 'true') {
+    return 30;
+  }
+  const raw = params.get('needed-within-days');
+  if (raw === '30' || raw === '60' || raw === '90') {
+    return Number(raw) as NeededWithinWindowDays;
+  }
+  return null;
 };
 
 /**
  * Filters the category tree to only include milestones whose needBy date
- * is within the next 30 days (UTC). Drops empty subcategories and categories.
+ * is within the next `days` calendar days (UTC). Drops empty subcategories and categories.
  */
-export const filterMilestonesNeededWithin30Days = (
-  categoryData: CategoryType[]
+export const filterMilestonesNeededWithinDays = (
+  categoryData: CategoryType[],
+  days: NeededWithinWindowDays
 ): CategoryType[] => {
   const categoriesWithFilteredSubcategories = categoryData.map(category => {
     const subCategoriesWithFilteredMilestones = category.subCategories.map(
       subCategory => ({
         ...subCategory,
         milestones: subCategory.milestones.filter(milestone =>
-          isNeededWithin30Days(milestone.needBy)
+          isNeededWithinDays(milestone.needBy, days)
         )
       })
     );
@@ -67,7 +88,7 @@ export const filterMilestonesNeededWithin30Days = (
 
 /**
  * Flattens the category tree into a single category with a single subcategory
- * containing all milestones. Used when "needed within 30 days" filter is on
+ * containing all milestones. Used when category/subcategory rows are hidden
  * so that sorting applies across all visible milestones, not per group.
  */
 export const flattenToSingleCategory = (

@@ -1,48 +1,116 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Checkbox, Select } from '@trussworks/react-uswds';
 
-import CheckboxField from 'components/CheckboxField';
+const FILTER_PARAM = 'needed-within-days';
+const LEGACY_FILTER_PARAM = 'needed-within-thirty-days';
+const HIDE_CATEGORY_ROWS_PARAM = 'hide-category-rows';
 
-const FILTER_PARAM = 'needed-within-thirty-days';
+const DATE_PRESET_STRINGS: number[] = [30, 60, 90];
 
+const selectValueFromSearchParams = (params: URLSearchParams): string => {
+  if (params.get(LEGACY_FILTER_PARAM) === 'true') {
+    return '30';
+  }
+  const paramValue = params.get(FILTER_PARAM);
+  if (paramValue && DATE_PRESET_STRINGS.includes(Number(paramValue))) {
+    return paramValue;
+  }
+  return 'all';
+};
+
+const hideCategoryRowsFromSearchParams = (params: URLSearchParams): boolean =>
+  params.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
+
+export type MTOTableFiltersProps = {
+  /** Number of category and subcategory header rows hidden when the checkbox is checked. */
+  categoryHeaderRowCount?: number;
+};
+
+/** Table filter controls for the MTO milestones matrix (date window + hide header rows). */
 const MTOTableFilters = ({
-  milestonesNeededWithin30DaysCount = 0
-}: {
-  milestonesNeededWithin30DaysCount?: number;
-}) => {
+  categoryHeaderRowCount = 0
+}: MTOTableFiltersProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isChecked =
-    new URLSearchParams(location.search).get(FILTER_PARAM) === 'true';
+  const params = new URLSearchParams(location.search);
+  const selectValue = selectValueFromSearchParams(params);
+  const isTimeWindowFilterActive = selectValue !== 'all';
+  const isHideCategoryRowsChecked = isTimeWindowFilterActive
+    ? false
+    : hideCategoryRowsFromSearchParams(params);
 
-  const handleChange = () => {
+  const handleTimeWindowFilterChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const next = new URLSearchParams(location.search);
-    next.set(FILTER_PARAM, isChecked ? 'false' : 'true');
     next.set('page', '1');
+    next.delete(FILTER_PARAM);
+    next.delete(LEGACY_FILTER_PARAM);
+
+    const { value } = e.target;
+    if (DATE_PRESET_STRINGS.includes(Number(value))) {
+      next.set(FILTER_PARAM, value);
+      next.set(HIDE_CATEGORY_ROWS_PARAM, 'false');
+    }
+
     navigate({ search: next.toString() }, { replace: true });
   };
 
-  const neededWithinThirtyDaysLabel = `${t(
-    'table.tableFilters.neededWithinThirtyDays'
-  )} (${milestonesNeededWithin30DaysCount})`;
+  const handleHideCategoryRowsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const next = new URLSearchParams(location.search);
+    next.set('page', '1');
+    next.set(HIDE_CATEGORY_ROWS_PARAM, e.target.checked ? 'true' : 'false');
+    navigate({ search: next.toString() }, { replace: true });
+  };
 
   return (
-    <div className="margin-top-3 display-flex" style={{ gap: '1rem' }}>
+    <div
+      className="margin-top-3 tablet:display-flex flex-align-center"
+      style={{ gap: '1rem' }}
+    >
       <p className="margin-y-0 text-bold">
         {t('table.tableFilters.tableFilters')}
       </p>
-      <CheckboxField
-        noMargin
-        id={FILTER_PARAM}
-        name={FILTER_PARAM}
-        label={neededWithinThirtyDaysLabel}
-        value={isChecked ? 'true' : 'false'}
-        checked={isChecked}
-        onBlur={() => null}
-        onChange={handleChange}
+      <div className="display-flex flex-align-center" style={{ gap: '0.5rem' }}>
+        <label
+          className="usa-label margin-top-0 margin-bottom-0 text-normal"
+          htmlFor="mto-needed-within-days"
+        >
+          {t('table.tableFilters.neededWithin')}
+        </label>
+        <Select
+          className="margin-top-0 width-auto"
+          id="mto-needed-within-days"
+          data-testid="mto-needed-within-days"
+          name={FILTER_PARAM}
+          value={selectValue}
+          onChange={handleTimeWindowFilterChange}
+        >
+          <option value="all">{t('table.tableFilters.neededWithinAll')}</option>
+          {DATE_PRESET_STRINGS.map(days => (
+            <option key={`needed-within-days--${days}`} value={days}>
+              {t('table.tableFilters.neededWithinPresetDays', { days })}
+            </option>
+          ))}
+        </Select>
+      </div>
+      <Checkbox
+        id="mto-hide-category-rows"
+        className="margin-bottom-1"
+        data-testid="mto-hide-category-rows"
+        name={HIDE_CATEGORY_ROWS_PARAM}
+        label={t('table.tableFilters.hideCategoryRows', {
+          count: categoryHeaderRowCount
+        })}
+        disabled={isTimeWindowFilterActive}
+        checked={isHideCategoryRowsChecked}
+        onChange={handleHideCategoryRowsChange}
       />
     </div>
   );

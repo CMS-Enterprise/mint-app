@@ -4,7 +4,6 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
 import {
   GetMtoMilestoneQuery,
-  MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   MtoMilestoneStatus,
   MtoRiskIndicator,
@@ -27,7 +26,7 @@ const milestone: MilestoneType = {
   __typename: 'MTOMilestone',
   id: '123',
   name: 'Milestone 1',
-  key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+  mtoCommonMilestoneID: 'common-milestone-1',
   responsibleComponent: [],
   facilitatedBy: [],
   needBy: '2021-08-01',
@@ -51,7 +50,7 @@ const milestone: MilestoneType = {
   commonMilestone: {
     __typename: 'MTOCommonMilestone',
     description: 'Description 1',
-    key: MtoCommonMilestoneKey.ACQUIRE_AN_EVAL_CONT,
+    id: 'common-milestone-1',
     commonSolutions: [
       {
         __typename: 'MTOCommonSolution',

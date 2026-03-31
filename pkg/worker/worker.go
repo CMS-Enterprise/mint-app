@@ -106,6 +106,18 @@ func (w *Worker) getJobWrappers(ctx context.Context) []JobWrapper {
 			Name: refreshOktaCronJobName,
 			Job:  w.RefreshOktaCronJob,
 		},
+		{
+			Name: updateUserAccountCronJobName,
+			Job:  w.UpdateUserAccountCronJob,
+		},
+		{
+			Name: updateUserAccountBatchJobName,
+			Job:  w.UpdateUserAccountBatchJob,
+		},
+		{
+			Name: updateUserAccountJobName,
+			Job:  w.UpdateUserAccountJob,
+		},
 	}
 }
 

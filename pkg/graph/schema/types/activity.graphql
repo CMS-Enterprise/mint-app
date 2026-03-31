@@ -11,6 +11,7 @@ enum ActivityType {
   NEW_MODEL_PLAN
   DATES_CHANGED
   DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
+  MTO_READY_FOR_REVIEW
   NEW_DISCUSSION_ADDED
   IDDOC_QUESTIONNAIRE_COMPLETED
   INCORRECT_MODEL_STATUS
@@ -38,6 +39,7 @@ union ActivityMetaData =
   | NewModelPlanActivityMeta
   | DatesChangedActivityMeta
   | PlanDataExchangeApproachMarkedCompleteActivityMeta
+  | MTOReadyForReviewActivityMeta
   | IddocQuestionnaireCompletedActivityMeta
   | NewDiscussionAddedActivityMeta
   | IncorrectModelStatusActivityMeta
@@ -156,6 +158,17 @@ type NewDiscussionAddedActivityMeta {
   modelAbbreviation: String!
   role: String!
   content: String!
+}
+
+type MTOReadyForReviewActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  mtoInfoID: UUID!
+  mtoInfo: MTOInfo!
+  markedReadyForReview: UUID!
+  markedReadyForReviewByUserAccount: UserAccount!
 }
 
 type IncorrectModelStatusActivityMeta {

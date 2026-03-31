@@ -43,7 +43,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
       <GridContainer className="padding-8">
         <Grid row>
           <Grid col={12}>
-            {milestone.isSuggested && (
+            {milestone.suggested.isSuggested && (
               <div className="margin-bottom-4">
                 <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
                   <Icon.LightbulbOutline
@@ -81,7 +81,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
                     outline
                     className="margin-right-2"
                     onClick={() => {
-                      params.set('add-milestone', milestone.key);
+                      params.set('add-milestone', milestone.id);
                       navigate(
                         { search: params.toString() },
                         { replace: true }

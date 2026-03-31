@@ -10,7 +10,7 @@ export default gql(/* GraphQL */ `
           id
         }
         commonMilestones {
-          key
+          id
           name
           commonSolutions {
             key
@@ -18,7 +18,7 @@ export default gql(/* GraphQL */ `
         }
         milestones {
           id
-          key
+          mtoCommonMilestoneID
           name
           status
           riskIndicator

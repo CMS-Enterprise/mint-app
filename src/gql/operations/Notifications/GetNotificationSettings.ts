@@ -21,6 +21,8 @@ export default gql(/* GraphQL */ `
         iddocQuestionnaireComplete
         iddocQuestionnaireCompletedNotificationType
         incorrectModelStatus
+        mtoReadyForReview
+        mtoReadyForReviewNotificationType
       }
       leadModelPlanCount
     }

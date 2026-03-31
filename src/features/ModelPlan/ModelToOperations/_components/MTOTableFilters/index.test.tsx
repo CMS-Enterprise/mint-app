@@ -20,12 +20,15 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('MTOTableFilters', () => {
-  const renderWithRouter = (initialEntry: string) => {
+  const renderWithRouter = (
+    initialEntry: string,
+    props?: React.ComponentProps<typeof MTOTableFilters>
+  ) => {
     const router = createMemoryRouter(
       [
         {
           path: '/matrix',
-          element: <MTOTableFilters />
+          element: <MTOTableFilters {...props} />
         }
       ],
       {
@@ -35,8 +38,7 @@ describe('MTOTableFilters', () => {
     return render(<RouterProvider router={router} />);
   };
 
-  const getCheckbox = () =>
-    screen.getByRole('checkbox', { name: new RegExp('\\(\\d+\\)$') });
+  const getSelect = () => screen.getByTestId('mto-needed-within-days');
 
   beforeEach(() => {
     mockNavigate.mockClear();
@@ -50,27 +52,111 @@ describe('MTOTableFilters', () => {
         i18next.t('modelToOperationsMisc:table.tableFilters.tableFilters')
       )
     ).toBeInTheDocument();
-    expect(getCheckbox()).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        i18next.t('modelToOperationsMisc:table.tableFilters.neededWithin')
+      )
+    ).toBeInTheDocument();
+    expect(getSelect()).toBeInTheDocument();
+    expect(screen.getByTestId('mto-hide-category-rows')).toBeInTheDocument();
   });
 
-  it('when checkbox is checked, unchecking it sets params to false', () => {
+  it('shows category and subcategory header count in the hide-rows label', () => {
+    renderWithRouter('/matrix', { categoryHeaderRowCount: 12 });
+    expect(
+      screen.getByRole('checkbox', {
+        name: i18next.t(
+          'modelToOperationsMisc:table.tableFilters.hideCategoryRows',
+          { count: 12 }
+        )
+      })
+    ).toBeInTheDocument();
+  });
+
+  it('reflects hide-category-rows=true from the URL', () => {
+    renderWithRouter('/matrix?hide-category-rows=true');
+    expect(screen.getByTestId('mto-hide-category-rows')).toBeChecked();
+  });
+
+  it('checking the checkbox sets hide-category-rows=true and resets page', () => {
+    renderWithRouter('/matrix?page=4');
+
+    fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
+
+    expect(mockNavigate).toHaveBeenCalledWith(expect.any(Object), {
+      replace: true
+    });
+    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
+    const nextParams = new URLSearchParams(search);
+    expect(nextParams.get('hide-category-rows')).toBe('true');
+    expect(nextParams.get('page')).toBe('1');
+  });
+
+  it('unchecking the checkbox sets hide-category-rows=false', () => {
+    renderWithRouter('/matrix?hide-category-rows=true');
+
+    fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
+
+    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
+    const nextParams = new URLSearchParams(search);
+    expect(nextParams.get('hide-category-rows')).toBe('false');
+  });
+
+  it('disables and forces unchecked when a time window filter is selected', () => {
+    renderWithRouter('/matrix?needed-within-days=60&hide-category-rows=true');
+
+    expect(screen.getByTestId('mto-hide-category-rows')).toBeDisabled();
+    expect(screen.getByTestId('mto-hide-category-rows')).not.toBeChecked();
+  });
+
+  it('defaults to All when no filter params are present', () => {
+    renderWithRouter('/matrix');
+    expect(getSelect()).toHaveValue('all');
+  });
+
+  it('reflects needed-within-days in the URL', () => {
+    renderWithRouter('/matrix?needed-within-days=60');
+    expect(getSelect()).toHaveValue('60');
+  });
+
+  it('maps legacy needed-within-thirty-days=true to 30 days in the select', () => {
+    renderWithRouter('/matrix?needed-within-thirty-days=true');
+    expect(getSelect()).toHaveValue('30');
+  });
+
+  it('selecting 30 days sets needed-within-days and resets page', () => {
+    renderWithRouter('/matrix?page=3');
+
+    fireEvent.change(getSelect(), { target: { value: '30' } });
+
+    expect(mockNavigate).toHaveBeenCalledWith(expect.any(Object), {
+      replace: true
+    });
+    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
+    const nextParams = new URLSearchParams(search);
+    expect(nextParams.get('needed-within-days')).toBe('30');
+    expect(nextParams.get('hide-category-rows')).toBe('false');
+    expect(nextParams.get('page')).toBe('1');
+  });
+
+  it('selecting All removes filter params and resets page', () => {
+    renderWithRouter('/matrix?page=2&needed-within-days=90');
+
+    fireEvent.change(getSelect(), { target: { value: 'all' } });
+
+    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
+    const nextParams = new URLSearchParams(search);
+    expect(nextParams.get('needed-within-days')).toBeNull();
+    expect(nextParams.get('page')).toBe('1');
+  });
+
+  it('selecting All clears legacy thirty-days param', () => {
     renderWithRouter('/matrix?needed-within-thirty-days=true');
 
-    const checkbox = getCheckbox();
-    expect(checkbox).toBeChecked();
+    fireEvent.change(getSelect(), { target: { value: 'all' } });
 
-    fireEvent.click(checkbox);
-
-    expect(mockNavigate).toHaveBeenCalledWith(
-      expect.objectContaining({
-        search: expect.stringContaining('needed-within-thirty-days=false')
-      }),
-      { replace: true }
-    );
-  });
-
-  it('when params is false, checkbox is unchecked', () => {
-    renderWithRouter('/matrix?needed-within-thirty-days=false');
-    expect(getCheckbox()).not.toBeChecked();
+    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
+    const nextParams = new URLSearchParams(search);
+    expect(nextParams.get('needed-within-thirty-days')).toBeNull();
   });
 });

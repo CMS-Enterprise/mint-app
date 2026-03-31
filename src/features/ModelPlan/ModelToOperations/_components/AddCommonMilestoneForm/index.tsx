@@ -18,7 +18,6 @@ import { MilestoneCardType } from 'features/ModelPlan/ModelToOperations/Mileston
 import {
   // GetCustomMtoSolutionsQuery,
   GetMtoMilestonesDocument,
-  MtoCommonMilestoneKey,
   MtoCommonSolutionKey,
   useCreateMtoMilestoneMutation
   // useGetCustomMtoSolutionsQuery
@@ -60,7 +59,7 @@ const AddCommonMilestoneForm = ({
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const milestoneKey = params.get('add-milestone') as MtoCommonMilestoneKey;
+  const milestoneId = params.get('add-milestone');
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -196,7 +195,7 @@ const AddCommonMilestoneForm = ({
   });
 
   const onSubmit: SubmitHandler<FormValues> = formData => {
-    if (!milestoneKey) return;
+    if (!milestoneId) return;
 
     setErrorMeta({
       overrideMessage: t('modal.solution.alert.error')
@@ -205,7 +204,7 @@ const AddCommonMilestoneForm = ({
     create({
       variables: {
         modelPlanID: modelID,
-        commonMilestoneKey: milestoneKey,
+        commonMilestoneID: milestoneId,
         commonSolutions: formData.commonSolutions
       }
     }).then(response => {

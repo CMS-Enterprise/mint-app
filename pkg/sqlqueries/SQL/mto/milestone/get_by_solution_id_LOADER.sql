@@ -6,7 +6,7 @@ WITH QUERIED_IDS AS (
 SELECT
     mto_milestone.id,
     mto_milestone.model_plan_id,
-    mto_milestone.mto_common_milestone_key,
+    mto_milestone.mto_common_milestone_id,
     mto_milestone.mto_category_id,
     COALESCE(mto_milestone.name, mto_common_milestone.name) AS "name",
     mto_milestone.description,
@@ -29,4 +29,4 @@ INNER JOIN QUERIED_IDS AS qIDs
 INNER JOIN mto_milestone
     ON mto_milestone.id = link.milestone_id
 LEFT JOIN mto_common_milestone
-    ON mto_milestone.mto_common_milestone_key = mto_common_milestone.key;
+    ON mto_milestone.mto_common_milestone_id = mto_common_milestone.id;

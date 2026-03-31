@@ -18,14 +18,14 @@ type mtoCommonMilestoneLoaders struct {
 	// ByModelPlanID Gets a list of mto Common Milestone records  with  contextual data based on its associated with a model plan by the supplied model plan id.
 	ByModelPlanID LoaderWrapper[uuid.UUID, []*models.MTOCommonMilestone]
 
-	// By Key returns an MTO Common Milestone associated with a specific key. It doesn't return any meta data for it.
-	ByKey LoaderWrapper[models.MTOCommonMilestoneKey, *models.MTOCommonMilestone]
+	// ByID returns an MTO Common Milestone associated with a specific ID. It doesn't return any meta data for it.
+	ByID LoaderWrapper[uuid.UUID, *models.MTOCommonMilestone]
 }
 
 // MTOCommonMilestone is the singleton instance of all LoaderWrappers related to MTO Common Milestones
 var MTOCommonMilestone = &mtoCommonMilestoneLoaders{
 	ByModelPlanID: NewLoaderWrapper(batchMTOCommonMilestoneGetByModelPlanID),
-	ByKey:         NewLoaderWrapper(batchMTOCommonMilestoneGetByKey),
+	ByID:          NewLoaderWrapper(batchMTOCommonMilestoneGetByID),
 }
 
 //Future Enhancement (mto) revisit this and see if you can refactor the dataloader to take *uuid.UUID. The only part that doesn't work is onePerMany,
@@ -58,24 +58,24 @@ func batchMTOCommonMilestoneGetByModelPlanID(ctx context.Context, modelPlanIDs [
 
 }
 
-// batchMTOCommonMilestoneGetByKey returns a list of common milestones as a dataloader.Result for a list of commonMilestoneKeys
-func batchMTOCommonMilestoneGetByKey(ctx context.Context, commonMilestoneKeys []models.MTOCommonMilestoneKey) []*dataloader.Result[*models.MTOCommonMilestone] {
+// batchMTOCommonMilestoneGetByID returns a list of common milestones as a dataloader.Result for a list of commonMilestoneIDs
+func batchMTOCommonMilestoneGetByID(ctx context.Context, commonMilestoneIDs []uuid.UUID) []*dataloader.Result[*models.MTOCommonMilestone] {
 	loaders, err := Loaders(ctx)
 	logger := appcontext.ZLogger(ctx)
 	if err != nil {
-		return errorPerEachKey[models.MTOCommonMilestoneKey, *models.MTOCommonMilestone](commonMilestoneKeys, err)
+		return errorPerEachKey[uuid.UUID, *models.MTOCommonMilestone](commonMilestoneIDs, err)
 	}
 
-	data, err := storage.MTOCommonMilestoneGetByKeyLoader(loaders.DataReader.Store, logger, commonMilestoneKeys)
+	data, err := storage.MTOCommonMilestoneGetByIDLoader(loaders.DataReader.Store, logger, commonMilestoneIDs)
 	if err != nil {
-		return errorPerEachKey[models.MTOCommonMilestoneKey, *models.MTOCommonMilestone](commonMilestoneKeys, err)
+		return errorPerEachKey[uuid.UUID, *models.MTOCommonMilestone](commonMilestoneIDs, err)
 	}
 
-	getKeyFunc := func(data *models.MTOCommonMilestone) models.MTOCommonMilestoneKey {
-		return data.Key
+	getKeyFunc := func(data *models.MTOCommonMilestone) uuid.UUID {
+		return data.ID
 	}
 
 	// implement one to many
-	return oneToOneDataLoader(commonMilestoneKeys, data, getKeyFunc)
+	return oneToOneDataLoader(commonMilestoneIDs, data, getKeyFunc)
 
 }

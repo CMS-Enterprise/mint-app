@@ -20,6 +20,7 @@ import {
   DatesChangedNotificationType,
   GetNotificationSettingsQuery,
   IddocQuestionnaireCompletedNotificationType,
+  MtoReadyForReviewNotificationType,
   NewDiscussionAddedNotificationType,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
@@ -105,7 +106,11 @@ const NotificationSettings = () => {
             iddocQuestionnaireCompletedNotificationType:
               data.currentUser.notificationPreferences
                 .iddocQuestionnaireCompletedNotificationType ??
-              IddocQuestionnaireCompletedNotificationType.ALL_MODELS
+              IddocQuestionnaireCompletedNotificationType.ALL_MODELS,
+            mtoReadyForReviewNotificationType:
+              data.currentUser.notificationPreferences
+                .mtoReadyForReviewNotificationType ??
+              MtoReadyForReviewNotificationType.ALL_MODELS
           }
         : undefined,
     [data]

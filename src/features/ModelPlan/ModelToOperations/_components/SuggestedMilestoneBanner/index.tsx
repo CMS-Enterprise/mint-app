@@ -10,7 +10,6 @@ const SuggestedMilestoneBanner = ({
 }: {
   suggestedMilestones: {
     __typename: 'MTOCommonMilestone';
-    isSuggested: boolean;
   }[];
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');

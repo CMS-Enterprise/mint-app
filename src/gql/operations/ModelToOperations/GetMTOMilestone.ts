@@ -4,9 +4,9 @@ export default gql(/* GraphQL */ `
   query GetMTOMilestone($id: UUID!) {
     mtoMilestone(id: $id) {
       id
+      mtoCommonMilestoneID
       name
       description
-      key
       responsibleComponent
       facilitatedBy
       facilitatedByOther
@@ -25,7 +25,7 @@ export default gql(/* GraphQL */ `
       addedFromMilestoneLibrary
       isDraft
       commonMilestone {
-        key
+        id
         description
         commonSolutions {
           key
