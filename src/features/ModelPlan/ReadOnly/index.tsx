@@ -494,90 +494,92 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
           isFilteredView={!!filteredView}
         />
 
-        <GridContainer className="model-plan-alert-wrapper">
-          {ModelWarning}
-        </GridContainer>
-
-        <SectionWrapper
-          className="model-plan__body-content margin-top-4"
-          id="scroll-element"
-        >
-          <GridContainer>
-            {isViewingFilteredGroup ? (
-              <FilteredViewBodyContent
-                modelID={modelID}
-                filteredView={filteredView}
-              />
-            ) : (
-              <Grid row gap>
-                {!isMobile && (
-                  <Grid
-                    desktop={{ col: 3 }}
-                    className="padding-right-4 sticky-nav"
-                  >
-                    <SideNav
-                      isHelpArticle={isHelpArticle}
-                      subComponents={subComponents}
-                    />
-                  </Grid>
-                )}
-
-                <Grid desktop={{ col: 9 }}>
-                  <div
-                    id={
-                      subinfo
-                        ? `read-only-model-plan__${subinfo}-component`
-                        : ''
-                    }
-                  >
-                    <GridContainer className="padding-left-0 padding-right-0">
-                      <Grid row gap>
-                        {/* Central component */}
-                        <Grid
-                          desktop={{
-                            col:
-                              subinfo === 'documents' ||
-                              subinfo === 'crs-and-tdl' ||
-                              subinfo === 'milestones' ||
-                              subinfo === 'solutions-and-it-systems'
-                                ? 12
-                                : 8
-                          }}
-                          className={classnames({
-                            'padding-x-05':
-                              subinfo !== 'documents' &&
-                              subinfo !== 'crs-and-tdl' &&
-                              subinfo !== 'milestones' &&
-                              subinfo !== 'solutions-and-it-systems'
-                          })}
-                        >
-                          {subComponents[subinfo]?.component}
-                        </Grid>
-                        {/* Contact info sidebar */}
-                        {subinfo !== 'documents' &&
-                          subinfo !== 'crs-and-tdl' &&
-                          subinfo !== 'milestones' &&
-                          subinfo !== 'solutions-and-it-systems' && (
-                            <Grid
-                              desktop={{ col: 4 }}
-                              className={classnames({
-                                'sticky-nav': !isMobile
-                              })}
-                            >
-                              <ContactInfo
-                                modelID={modelID}
-                                isViewingTeamPage={subinfo === 'team'}
-                              />
-                            </Grid>
-                          )}
-                      </Grid>
-                    </GridContainer>
-                  </div>
-                </Grid>
-              </Grid>
-            )}
+        <div id="scroll-element">
+          <GridContainer className="model-plan-alert-wrapper">
+            {ModelWarning}
           </GridContainer>
-        </SectionWrapper>
+
+          <SectionWrapper
+            className="model-plan__body-content margin-top-4"
+            // id="scroll-element"
+          >
+            <GridContainer>
+              {isViewingFilteredGroup ? (
+                <FilteredViewBodyContent
+                  modelID={modelID}
+                  filteredView={filteredView}
+                />
+              ) : (
+                <Grid row gap>
+                  {!isMobile && (
+                    <Grid
+                      desktop={{ col: 3 }}
+                      className="padding-right-4 sticky-nav"
+                    >
+                      <SideNav
+                        isHelpArticle={isHelpArticle}
+                        subComponents={subComponents}
+                      />
+                    </Grid>
+                  )}
+
+                  <Grid desktop={{ col: 9 }}>
+                    <div
+                      id={
+                        subinfo
+                          ? `read-only-model-plan__${subinfo}-component`
+                          : ''
+                      }
+                    >
+                      <GridContainer className="padding-left-0 padding-right-0">
+                        <Grid row gap>
+                          {/* Central component */}
+                          <Grid
+                            desktop={{
+                              col:
+                                subinfo === 'documents' ||
+                                subinfo === 'crs-and-tdl' ||
+                                subinfo === 'milestones' ||
+                                subinfo === 'solutions-and-it-systems'
+                                  ? 12
+                                  : 8
+                            }}
+                            className={classnames({
+                              'padding-x-05':
+                                subinfo !== 'documents' &&
+                                subinfo !== 'crs-and-tdl' &&
+                                subinfo !== 'milestones' &&
+                                subinfo !== 'solutions-and-it-systems'
+                            })}
+                          >
+                            {subComponents[subinfo]?.component}
+                          </Grid>
+                          {/* Contact info sidebar */}
+                          {subinfo !== 'documents' &&
+                            subinfo !== 'crs-and-tdl' &&
+                            subinfo !== 'milestones' &&
+                            subinfo !== 'solutions-and-it-systems' && (
+                              <Grid
+                                desktop={{ col: 4 }}
+                                className={classnames({
+                                  'sticky-nav': !isMobile
+                                })}
+                              >
+                                <ContactInfo
+                                  modelID={modelID}
+                                  isViewingTeamPage={subinfo === 'team'}
+                                />
+                              </Grid>
+                            )}
+                        </Grid>
+                      </GridContainer>
+                    </div>
+                  </Grid>
+                </Grid>
+              )}
+            </GridContainer>
+          </SectionWrapper>
+        </div>
       </MainContent>
     </PrintPDFWrapper>
   );
