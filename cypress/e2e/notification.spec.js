@@ -1,799 +1,784 @@
 describe('Notification Center', () => {
-  it('navigates through the Notification page', () => {
-    cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
-    cy.visit('/');
-    cy.enterModelPlanTaskList('Empty Plan');
+  describe('MINT Assessment User Tests', () => {
+    beforeEach(() => {
+      cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
+      cy.visit('/');
+    });
 
-    cy.contains('button', 'Start a discussion').click();
+    it('navigates through the Notification page', () => {
+      cy.enterModelPlanTaskList('Empty Plan');
 
-    // Preliminarily creating two notifications before testing notifications
-    // First notification
-    cy.contains('h1', 'Start a discussion');
+      cy.contains('button', 'Start a discussion').click();
 
-    cy.contains('button', 'Save discussion').should('be.disabled');
+      // Preliminarily creating two notifications before testing notifications
+      // First notification
+      cy.contains('h1', 'Start a discussion');
 
-    cy.get('#user-role').should('not.be.disabled').select('None of the above');
+      cy.contains('button', 'Save discussion').should('be.disabled');
 
-    cy.get('#user-role-description')
-      .type('Designer')
-      .should('have.value', 'Designer');
+      cy.get('#user-role')
+        .should('not.be.disabled')
+        .select('None of the above');
 
-    cy.get('#mention-editor')
-      .type('@ana')
-      .contains('Anabelle Jerde (JTTC)')
-      .click();
-    cy.get('#mention-editor')
-      .type('First Notification')
-      .should('have.text', '@Anabelle Jerde (JTTC) First Notification');
+      cy.get('#user-role-description')
+        .type('Designer')
+        .should('have.value', 'Designer');
 
-    cy.contains('button', 'Save discussion').click();
+      cy.get('#mention-editor')
+        .type('@ana')
+        .contains('Anabelle Jerde (JTTC)')
+        .click();
+      cy.get('#mention-editor')
+        .type('First Notification')
+        .should('have.text', '@Anabelle Jerde (JTTC) First Notification');
 
-    // Second notification
-    cy.contains('button', 'Start a discussion').click();
+      cy.contains('button', 'Save discussion').click();
 
-    cy.get('#user-role').should('not.be.disabled').select('None of the above');
+      // Second notification
+      cy.contains('button', 'Start a discussion').click();
 
-    cy.get('#user-role-description').should('have.value', 'Designer');
+      cy.get('#user-role')
+        .should('not.be.disabled')
+        .select('None of the above');
 
-    cy.get('#mention-editor')
-      .type('@ana')
-      .contains('Anabelle Jerde (JTTC)')
-      .click();
-    cy.get('#mention-editor')
-      .type('Second Notification')
-      .should('have.text', '@Anabelle Jerde (JTTC) Second Notification');
+      cy.get('#user-role-description').should('have.value', 'Designer');
 
-    cy.contains('button', 'Save discussion').click();
+      cy.get('#mention-editor')
+        .type('@ana')
+        .contains('Anabelle Jerde (JTTC)')
+        .click();
+      cy.get('#mention-editor')
+        .type('Second Notification')
+        .should('have.text', '@Anabelle Jerde (JTTC) Second Notification');
 
-    cy.get('[data-testid="close-discussions"]').click({ force: true });
-    cy.get('[data-testid="navmenu__notification"]').first().click();
+      cy.contains('button', 'Save discussion').click();
 
-    // Actual Notification Test
-    cy.get('[data-testid="navmenu__notification"]')
-      .should('have.attr', 'href')
-      .and('equal', '/notifications');
+      cy.get('[data-testid="close-discussions"]').click({ force: true });
+      cy.get('[data-testid="navmenu__notification"]').first().click();
 
-    // Check to see if Notification Nav Button has the red dot
-    cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
-      'exist'
-    );
+      // Actual Notification Test
+      cy.get('[data-testid="navmenu__notification"]')
+        .should('have.attr', 'href')
+        .and('equal', '/notifications');
 
-    cy.get('[data-testid="individual-notification"]')
-      .should('have.length', 2)
-      .first()
-      .find('button', 'View Discussion')
-      .click();
+      // Check to see if Notification Nav Button has the red dot
+      cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
+        'exist'
+      );
 
-    // Navigate to Notification page (faster than cy.visit)
-    cy.get('[data-testid="close-discussions"]').click({ force: true });
-    cy.get('[data-testid="navmenu__notification"]').first().click();
+      cy.get('[data-testid="individual-notification"]')
+        .should('have.length', 2)
+        .first()
+        .find('button', 'View Discussion')
+        .click();
 
-    // Check to see first entry should no longer have red dot
-    cy.get('[data-testid="individual-notification"]')
-      .first()
-      .find('[data-testid="notification-red-dot"]')
-      .should('not.exist');
+      // Navigate to Notification page (faster than cy.visit)
+      cy.get('[data-testid="close-discussions"]').click({ force: true });
+      cy.get('[data-testid="navmenu__notification"]').first().click();
 
-    // Mark all as read
-    cy.contains('button', 'Mark all').click();
+      // Check to see first entry should no longer have red dot
+      cy.get('[data-testid="individual-notification"]')
+        .first()
+        .find('[data-testid="notification-red-dot"]')
+        .should('not.exist');
 
-    // No more red dots
-    cy.get('[data-testid="navmenu__notifications--noNotification"').should(
-      'exist'
-    );
-    cy.get('[data-testid="notification-red-dot"]').should('have.length', 0);
-  });
+      // Mark all as read
+      cy.contains('button', 'Mark all').click();
 
-  it('navigates to see Daily Digest notification', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/notifications');
+      // No more red dots
+      cy.get('[data-testid="navmenu__notifications--noNotification"').should(
+        'exist'
+      );
+      cy.get('[data-testid="notification-red-dot"]').should('have.length', 0);
+    });
 
-    cy.get('[data-testid="individual-notification"]')
-      .first()
-      .find('[data-testid="notification-red-dot"]')
-      .should('exist');
-    cy.contains('button', 'View digest').click();
+    it('testing New Discussion Reply Notification', () => {
+      cy.enterModelPlanTaskList('Empty Plan');
 
-    cy.get('[data-testid="notification--daily-digest"').should('exist');
+      // New Discussion Reply test
+      cy.contains('button', 'View discussions').click();
+      cy.contains('button', 'Reply').first().click();
 
-    cy.contains('h3', 'Empty Plan').siblings('a').click();
+      cy.contains('label', 'Type your reply');
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/models\/.{36}\/change-history/);
+      cy.get('#mention-editor').type(
+        'Triggering new discussion reply notification'
+      );
+
+      cy.contains('button', 'Save reply').click();
+
+      cy.get('[data-testid="close-discussions"]').click({ force: true });
+      cy.get('[data-testid="navmenu__notification"]').first().click();
+
+      cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
+        'exist'
+      );
+
+      cy.get('[data-testid="individual-notification"]').should(
+        'have.length',
+        3
+      );
+
+      // Checking that marking as read works
+      cy.get('[data-testid="individual-notification"]')
+        .first()
+        .find('button', 'View Discussion')
+        .click();
+
+      cy.get('[data-testid="close-discussions"]').click({ force: true });
+      cy.get('[data-testid="navmenu__notification"]').first().click();
+
+      cy.get('[data-testid="individual-notification"]')
+        .first()
+        .find('[data-testid="notification-red-dot"]')
+        .should('not.exist');
     });
   });
 
-  it('navigates to see Notification Settings', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/notifications/settings');
-
-    // Uncheck first checkbox and save
-    cy.get('#notification-setting-email-dailyDigestComplete')
-      .should('be.checked')
-      .uncheck({
-        force: true
-      });
-
-    cy.contains('button', 'Save').click();
-
-    cy.get('[data-testid="toast-success"').should('exist');
-
-    cy.contains('a', 'Notification settings').click();
-
-    // Unchecked first box persists
-    cy.get('#notification-setting-email-dailyDigestComplete').should(
-      'not.be.checked'
-    );
-  });
-
-  it('testing New Discussion Reply Notification', () => {
-    cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
-    cy.visit('/');
-    cy.enterModelPlanTaskList('Empty Plan');
-
-    // New Discussion Reply test
-    cy.contains('button', 'View discussions').click();
-    cy.contains('button', 'Reply').first().click();
-
-    cy.contains('label', 'Type your reply');
-
-    cy.get('#mention-editor').type(
-      'Triggering new discussion reply notification'
-    );
-
-    cy.contains('button', 'Save reply').click();
-
-    cy.get('[data-testid="close-discussions"]').click({ force: true });
-    cy.get('[data-testid="navmenu__notification"]').first().click();
-
-    cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
-      'exist'
-    );
-
-    cy.get('[data-testid="individual-notification"]').should('have.length', 3);
-
-    // Checking that marking as read works
-    cy.get('[data-testid="individual-notification"]')
-      .first()
-      .find('button', 'View Discussion')
-      .click();
-
-    cy.get('[data-testid="close-discussions"]').click({ force: true });
-    cy.get('[data-testid="navmenu__notification"]').first().click();
-
-    cy.get('[data-testid="individual-notification"]')
-      .first()
-      .find('[data-testid="notification-red-dot"]')
-      .should('not.exist');
-  });
-
-  it('testing Adding Collaborator Notification', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/');
-    cy.enterModelPlanCollaborationArea('Empty Plan');
-
-    // Add SF13 as a collaborator
-    cy.get('[data-testid="add-collaborator"]').click();
-
-    cy.get('#react-select-model-team-cedar-contact-input')
-      .click()
-      .type('Jerry', { delay: 100 });
-
-    cy.get('#react-select-model-team-cedar-contact-option-0')
-      .contains('Jerry Seinfeld (Jerry.Seinfeld@local.fake)')
-      .click();
-
-    cy.get('#collaborator-role').within(() => {
-      cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
+  describe('MINT User With No Role Tests', () => {
+    beforeEach(() => {
+      cy.localLogin({ name: 'MINT' });
+      cy.visit('/notifications/settings');
     });
 
-    cy.clickOutside();
+    it('navigates to see Daily Digest notification', () => {
+      cy.visit('/notifications');
 
-    cy.get('[data-testid="multiselect-tag--Evaluation"]')
-      .first()
-      .contains('Evaluation');
+      cy.get('[data-testid="individual-notification"]')
+        .first()
+        .find('[data-testid="notification-red-dot"]')
+        .should('exist');
+      cy.contains('button', 'View digest').click();
 
-    cy.contains('button', 'Add team member').click();
+      cy.get('[data-testid="notification--daily-digest"').should('exist');
 
-    cy.logout();
+      cy.contains('h3', 'Empty Plan').siblings('a').click();
 
-    // Login as SF13
-    cy.localLogin({ name: 'SF13' });
-    cy.visit('/');
-
-    cy.get('[data-testid="navmenu__notification"]').first().click();
-
-    cy.get('[data-testid="individual-notification"]').contains(
-      'MINT Doe added you to the team for Empty Plan.'
-    );
-
-    cy.contains('button', 'Start collaborating').click();
-
-    cy.url().should('include', '/collaboration-area');
-  });
-
-  it('testing Incorrect Model Status Notification', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/notifications/settings');
-
-    // Check the incorrect model status in-app checkbox
-    cy.get('[data-testid="notification-setting-in-app-incorrectModelStatus"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
+      cy.location().should(loc => {
+        expect(loc.pathname).to.match(/models\/.{36}\/change-history/);
       });
-
-    cy.get('[data-testid="notification-setting-email-incorrectModelStatus"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-
-    cy.contains('button', 'Save').click();
-
-    // Navigate back to home to update a timeline
-    cy.get('[aria-label="Home"]').click();
-    cy.url().should('include', '/');
-
-    cy.contains('a', 'Plan with Timeline').click();
-    cy.url().should('include', '/collaboration-area');
-    cy.contains('button', 'Edit timeline').click();
-
-    cy.get('#timeline-completeICIP')
-      .clear()
-      .type('05/23/2015')
-      .should('have.value', '05/23/2015');
-
-    cy.get('#timeline-wrapUpEnds')
-      .clear()
-      .type('05/23/2025')
-      .should('have.value', '05/23/2025');
-
-    cy.clickOutside();
-    cy.contains('button', 'Save').click();
-    cy.wait(500);
-
-    // Comment out since currently need to wait for too long for below notification to show
-    // Navigate back to Notification Center
-    // cy.get('[data-testid="navmenu__notification"]').click();
-    // cy.url().should('include', '/notifications');
-
-    // cy.wait(30000);
-
-    // cy.get('[data-testid="individual-notification"]').contains(
-    //   'MINT suggests that you update the model status for Plan with Timeline.'
-    // );
-
-    // Unsubscribe via email link
-    cy.visit(
-      '/notifications/settings?unsubscribe_email=INCORRECT_MODEL_STATUS'
-    );
-
-    cy.get(
-      '[data-testid="notification-setting-email-incorrectModelStatus"]'
-    ).should('be.not.checked');
-
-    cy.get('[data-testid="toast-success"]').contains(
-      'You have successfully unsubscribed from email notifications when MINT detects an incorrect model status.'
-    );
-
-    cy.visit(
-      '/notifications/settings?unsubscribe_email=INCORRECT_MODEL_STATUS'
-    );
-
-    cy.get('[data-testid="alert"]').contains(
-      'You are already unsubscribed from email notifications when MINT detects an incorrect model status.'
-    );
-  });
-
-  it('testing New Model Plan Notification', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/notifications/settings');
-
-    // Check the new model plan in-app checkbox
-    cy.get('[data-testid="notification-setting-in-app-newModelPlan"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-
-    cy.get('[data-testid="notification-setting-email-newModelPlan"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-
-    cy.contains('button', 'Save').click();
-
-    // Navigate back to home to add a new model to MINT
-    cy.get('[aria-label="Home"]').click();
-    cy.url().should('include', '/');
-
-    cy.contains('a', 'Add a new model to MINT').click();
-    cy.contains('h1', 'Add a new model to MINT');
-    cy.get('[data-testid="continue-link"]').click();
-
-    cy.get('#new-plan-model-name')
-      .type('Cypress Model Plan')
-      .should('have.value', 'Cypress Model Plan');
-
-    cy.contains('button', 'Next').click();
-    cy.url().should('include', '/collaboration-area/collaborators');
-
-    // Navigate back to Notification Center
-    cy.get('[data-testid="navmenu__notification"]').first().click();
-    cy.url().should('include', '/notifications');
-
-    cy.get('[data-testid="individual-notification"]').contains(
-      'MINT Doe created a Model Plan: Cypress Model Plan.'
-    );
-
-    // Unsubscribe via email link
-    cy.visit('/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN');
-
-    cy.get('[data-testid="notification-setting-email-newModelPlan"]').should(
-      'be.not.checked'
-    );
-
-    cy.get('[data-testid="toast-success"]').contains(
-      'You have successfully unsubscribed from email notifications when a new Model Plan is created.'
-    );
-
-    cy.visit('/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN');
-
-    cy.get('[data-testid="alert"]').contains(
-      'You are already unsubscribed from email notifications when a new Model Plan is created.'
-    );
-  });
-
-  it('testing Dates Changed Notification', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/notifications/settings');
-
-    // Check the new model plan in-app checkbox
-    cy.get('[data-testid="notification-setting-in-app-datesChanged"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-
-    cy.get('[data-testid="notification-setting-email-datesChanged"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-
-    cy.contains('button', 'Save').click();
-
-    // Navigate back to home to click "Empty Plan" model plan
-    cy.get('[aria-label="Home"]').click();
-    cy.url().should('include', '/');
-
-    cy.enterModelPlanCollaborationArea('Empty Plan');
-
-    // Enter into timeline form
-    cy.get('[data-testid="to-timeline"]').click();
-
-    cy.url().should('include', '/model-timeline');
-    cy.get('#timeline-completeICIP')
-      .type('12/31/2025')
-      .should('have.value', '12/31/2025');
-
-    cy.clickOutside();
-
-    cy.contains('button', 'Save').click();
-
-    cy.get('[data-testid="page-loading"]').should('not.exist');
-
-    cy.get('[data-testid="navmenu__notification"]').click().click().click();
-
-    cy.url().should('include', '/notifications');
-
-    cy.get('[data-testid="spinner"]').should('not.exist');
-
-    cy.get('[data-testid="individual-notification"]').contains(
-      'updated the dates for Empty Plan.'
-    );
-
-    cy.contains('button', 'View changes')
-      .should('be.not.disabled')
-      .click({ force: true });
-
-    cy.get('[data-testid="notification--dates-changed"]').should('exist');
-
-    // Unsubscribe via email link
-    cy.visit('/notifications/settings?unsubscribe_email=DATES_CHANGED');
-
-    cy.get('[data-testid="notification-setting-email-datesChanged"]').should(
-      'be.not.checked'
-    );
-
-    cy.get('[data-testid="toast-success"]').contains(
-      'You have successfully unsubscribed from email notifications when model dates change.'
-    );
-
-    cy.visit('/notifications/settings?unsubscribe_email=DATES_CHANGED');
-
-    cy.get('[data-testid="alert"]').contains(
-      'You are already unsubscribed from email notifications when model dates change.'
-    );
-  });
-
-  it('testing New Discussion Added Notification', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/notifications/settings');
-
-    // Check the new model plan in-app checkbox
-    cy.get('[data-testid="notification-setting-in-app-newDiscussionAdded"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-
-    cy.get('[data-testid="notification-setting-email-newDiscussionAdded"]')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-
-    cy.contains('button', 'Save').click();
-
-    // Navigate back to home to click "Empty Plan" model plan
-    cy.get('[aria-label="Home"]').click();
-    cy.url().should('include', '/');
-
-    cy.enterModelPlanCollaborationArea('Empty Plan');
-
-    // Start a discussion
-    cy.contains('button', 'Start a discussion').click();
-
-    cy.get('#user-role').should('not.be.disabled').select('MINT Team');
-    cy.get('#mention-editor')
-      .type('How to I get to model characteristics?')
-      .should('have.text', 'How to I get to model characteristics?');
-
-    cy.contains('button', 'Save discussion').click();
-
-    cy.get('[data-testid="page-loading"]').should('not.exist');
-
-    cy.get('[data-testid="close-discussions"]').click();
-    cy.get('[data-testid="discussion-modal"]').should('not.exist');
-
-    cy.get('[data-testid="navmenu__notification"]').click();
-
-    cy.url().should('include', '/notifications');
-
-    cy.get('[data-testid="spinner"]').should('not.exist');
-
-    cy.get('[data-testid="individual-notification"]').contains(
-      'added a discussion for Empty Plan.'
-    );
-
-    cy.contains('button', 'View discussion')
-      .should('be.not.disabled')
-      .click({ force: true });
-
-    // Unsubscribe via email link
-    cy.visit('/notifications/settings?unsubscribe_email=NEW_DISCUSSION_ADDED');
-
-    cy.get(
-      '[data-testid="notification-setting-email-newDiscussionAdded"]'
-    ).should('be.not.checked');
-
-    cy.get('[data-testid="toast-success"]').contains(
-      'You have successfully unsubscribed from email notifications when a new discussion is added.'
-    );
-
-    cy.visit('/notifications/settings?unsubscribe_email=NEW_DISCUSSION_ADDED');
-
-    cy.get('[data-testid="alert"]').contains(
-      'You are already unsubscribed from email notifications when a new discussion is added.'
-    );
-  });
-
-  it('testing Data Exchange Approach is marked Complete Notification', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/notifications/settings');
-
-    // Check the new model plan in-app checkbox
-    cy.get(
-      '[data-testid="notification-setting-in-app-dataExchangeApproachMarkedComplete"]'
-    )
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-
-    cy.get(
-      '[data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"]'
-    )
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
-      });
-
-    cy.contains('button', 'Save').click();
-
-    // Navigate back to home to add a new model to MINT
-    cy.get('[aria-label="Home"]').click();
-    cy.url().should('include', '/');
-
-    cy.enterModelPlanCollaborationArea('Empty Plan');
-    cy.contains('button', 'Go to questionnaires').click();
-
-    cy.url().should('include', '/additional-questionnaires');
-    cy.get('[data-testid="data-exchange-approach-button"]').within(() => {
-      cy.contains('Start').click();
     });
 
-    cy.contains('button', 'Next')
-      .should('not.be.disabled')
-      .click({ force: true });
-    cy.get('#collect-and-send-data-form-next-button')
-      .should('not.be.disabled')
-      .click({ force: true });
-    cy.get('#collection-and-aggregation-form-next-button')
-      .should('not.be.disabled')
-      .click({ force: true });
+    it('navigates to see Notification Settings', () => {
+      // Uncheck first checkbox and save
+      cy.get('#notification-setting-email-dailyDigestComplete')
+        .should('be.checked')
+        .uncheck({
+          force: true
+        });
 
-    cy.get('#additional-data-exchange-considerations-description')
-      .should('not.be.disabled')
-      .type('2025-12-31')
-      .should('have.value', '2025-12-31');
+      cy.contains('button', 'Save').click();
 
-    cy.get('#isDataExchangeApproachComplete-true')
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
+      cy.get('[data-testid="toast-success"').should('exist');
+
+      cy.contains('a', 'Notification settings').click();
+
+      // Unchecked first box persists
+      cy.get('#notification-setting-email-dailyDigestComplete').should(
+        'not.be.checked'
+      );
+    });
+
+    it('testing Adding Collaborator Notification', () => {
+      cy.visit('/');
+      cy.enterModelPlanCollaborationArea('Empty Plan');
+
+      // Add SF13 as a collaborator
+      cy.get('[data-testid="add-collaborator"]').click();
+
+      cy.get('#react-select-model-team-cedar-contact-input')
+        .click()
+        .type('Jerry', { delay: 100 });
+
+      cy.get('#react-select-model-team-cedar-contact-option-0')
+        .contains('Jerry Seinfeld (Jerry.Seinfeld@local.fake)')
+        .click();
+
+      cy.get('#collaborator-role').within(() => {
+        cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
       });
 
-    cy.contains('button', 'Save and return to questionnaires').click();
+      cy.clickOutside();
 
-    cy.url().should('include', '/additional-questionnaires');
-    cy.get('h1').contains('Additional questionnaires');
+      cy.get('[data-testid="multiselect-tag--Evaluation"]')
+        .first()
+        .contains('Evaluation');
 
-    cy.get('[data-testid="navmenu__notification"]').click();
-    cy.url().should('include', '/notifications');
-    cy.get('[data-testid="spinner"]').should('not.exist');
+      cy.contains('button', 'Add team member').click();
 
-    cy.get('[data-testid="individual-notification"]').contains(
-      'MINT Doe marked the data exchange approach complete for Empty Plan.'
-    );
+      cy.logout();
 
-    cy.contains('button', 'View data exchange approach').click();
+      // Login as SF13
+      cy.localLogin({ name: 'SF13' });
+      cy.visit('/');
 
-    cy.url().should('include', '/read-view/data-exchange-approach');
+      cy.get('[data-testid="navmenu__notification"]').first().click();
 
-    // Unsubscribe via email link
-    cy.visit(
-      '/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
-    );
+      cy.get('[data-testid="individual-notification"]').contains(
+        'MINT Doe added you to the team for Empty Plan.'
+      );
 
-    cy.get(
-      '[data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"]'
-    ).should('be.not.checked');
+      cy.contains('button', 'Start collaborating').click();
 
-    cy.get('[data-testid="toast-success"]').contains(
-      'You have successfully unsubscribed from email notifications when a data exchange approach is completed.'
-    );
+      cy.url().should('include', '/collaboration-area');
+    });
 
-    cy.visit(
-      '/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
-    );
+    it('testing Incorrect Model Status Notification', () => {
+      // Check the incorrect model status in-app checkbox
+      cy.get('[data-testid="notification-setting-in-app-incorrectModelStatus"]')
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
 
-    cy.get('[data-testid="alert"]').contains(
-      'You are already unsubscribed from email notifications when a data exchange approach is completed.'
-    );
-  });
+      cy.get('[data-testid="notification-setting-email-incorrectModelStatus"]')
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
 
-  it('testing IDDOC Questionnaire is marked Complete Notification', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/notifications/settings');
+      cy.contains('button', 'Save').click();
 
-    // Check the IDDOC questionnaire in-app checkbox
-    cy.get(
-      '[data-testid="notification-setting-in-app-iddocQuestionnaireComplete"]'
-    )
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
+      // Navigate back to home to update a timeline
+      cy.get('[aria-label="Home"]').click();
+      cy.url().should('include', '/');
+
+      cy.contains('a', 'Plan with Timeline').click();
+      cy.url().should('include', '/collaboration-area');
+      cy.contains('button', 'Edit timeline').click();
+
+      cy.get('#timeline-completeICIP')
+        .clear()
+        .type('05/23/2015')
+        .should('have.value', '05/23/2015');
+
+      cy.get('#timeline-wrapUpEnds')
+        .clear()
+        .type('05/23/2025')
+        .should('have.value', '05/23/2025');
+
+      cy.clickOutside();
+      cy.contains('button', 'Save').click();
+      cy.wait(500);
+
+      // Comment out since currently need to wait for too long for below notification to show
+      // Navigate back to Notification Center
+      // cy.get('[data-testid="navmenu__notification"]').click();
+      // cy.url().should('include', '/notifications');
+
+      // cy.wait(30000);
+
+      // cy.get('[data-testid="individual-notification"]').contains(
+      //   'MINT suggests that you update the model status for Plan with Timeline.'
+      // );
+
+      // Unsubscribe via email link
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=INCORRECT_MODEL_STATUS'
+      );
+
+      cy.get(
+        '[data-testid="notification-setting-email-incorrectModelStatus"]'
+      ).should('be.not.checked');
+
+      cy.get('[data-testid="toast-success"]').contains(
+        'You have successfully unsubscribed from email notifications when MINT detects an incorrect model status.'
+      );
+
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=INCORRECT_MODEL_STATUS'
+      );
+
+      cy.get('[data-testid="alert"]').contains(
+        'You are already unsubscribed from email notifications when MINT detects an incorrect model status.'
+      );
+    });
+
+    it('testing New Model Plan Notification', () => {
+      // Check the new model plan in-app checkbox
+      cy.get('[data-testid="notification-setting-in-app-newModelPlan"]')
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.get('[data-testid="notification-setting-email-newModelPlan"]')
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.contains('button', 'Save').click();
+
+      // Navigate back to home to add a new model to MINT
+      cy.get('[aria-label="Home"]').click();
+      cy.url().should('include', '/');
+
+      cy.contains('a', 'Add a new model to MINT').click();
+      cy.contains('h1', 'Add a new model to MINT');
+      cy.get('[data-testid="continue-link"]').click();
+
+      cy.get('#new-plan-model-name')
+        .type('Cypress Model Plan')
+        .should('have.value', 'Cypress Model Plan');
+
+      cy.contains('button', 'Next').click();
+      cy.url().should('include', '/collaboration-area/collaborators');
+
+      // Navigate back to Notification Center
+      cy.get('[data-testid="navmenu__notification"]').first().click();
+      cy.url().should('include', '/notifications');
+
+      cy.get('[data-testid="individual-notification"]').contains(
+        'MINT Doe created a Model Plan: Cypress Model Plan.'
+      );
+
+      // Unsubscribe via email link
+      cy.visit('/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN');
+
+      cy.get('[data-testid="notification-setting-email-newModelPlan"]').should(
+        'be.not.checked'
+      );
+
+      cy.get('[data-testid="toast-success"]').contains(
+        'You have successfully unsubscribed from email notifications when a new Model Plan is created.'
+      );
+
+      cy.visit('/notifications/settings?unsubscribe_email=NEW_MODEL_PLAN');
+
+      cy.get('[data-testid="alert"]').contains(
+        'You are already unsubscribed from email notifications when a new Model Plan is created.'
+      );
+    });
+
+    it('testing Dates Changed Notification', () => {
+      // Check the new model plan in-app checkbox
+      cy.get('[data-testid="notification-setting-in-app-datesChanged"]')
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.get('[data-testid="notification-setting-email-datesChanged"]')
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.contains('button', 'Save').click();
+
+      // Navigate back to home to click "Empty Plan" model plan
+      cy.get('[aria-label="Home"]').click();
+      cy.url().should('include', '/');
+
+      cy.enterModelPlanCollaborationArea('Empty Plan');
+
+      // Enter into timeline form
+      cy.get('[data-testid="to-timeline"]').click();
+
+      cy.url().should('include', '/model-timeline');
+      cy.get('#timeline-completeICIP')
+        .type('12/31/2025')
+        .should('have.value', '12/31/2025');
+
+      cy.clickOutside();
+
+      cy.contains('button', 'Save').click();
+
+      cy.get('[data-testid="page-loading"]').should('not.exist');
+
+      cy.get('[data-testid="navmenu__notification"]').click().click().click();
+
+      cy.url().should('include', '/notifications');
+
+      cy.get('[data-testid="spinner"]').should('not.exist');
+
+      cy.get('[data-testid="individual-notification"]').contains(
+        'updated the dates for Empty Plan.'
+      );
+
+      cy.contains('button', 'View changes')
+        .should('be.not.disabled')
+        .click({ force: true });
+
+      cy.get('[data-testid="notification--dates-changed"]').should('exist');
+
+      // Unsubscribe via email link
+      cy.visit('/notifications/settings?unsubscribe_email=DATES_CHANGED');
+
+      cy.get('[data-testid="notification-setting-email-datesChanged"]').should(
+        'be.not.checked'
+      );
+
+      cy.get('[data-testid="toast-success"]').contains(
+        'You have successfully unsubscribed from email notifications when model dates change.'
+      );
+
+      cy.visit('/notifications/settings?unsubscribe_email=DATES_CHANGED');
+
+      cy.get('[data-testid="alert"]').contains(
+        'You are already unsubscribed from email notifications when model dates change.'
+      );
+    });
+
+    it('testing New Discussion Added Notification', () => {
+      // Check the new model plan in-app checkbox
+      cy.get('[data-testid="notification-setting-in-app-newDiscussionAdded"]')
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.get('[data-testid="notification-setting-email-newDiscussionAdded"]')
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.contains('button', 'Save').click();
+
+      // Navigate back to home to click "Empty Plan" model plan
+      cy.get('[aria-label="Home"]').click();
+      cy.url().should('include', '/');
+
+      cy.enterModelPlanCollaborationArea('Empty Plan');
+
+      // Start a discussion
+      cy.contains('button', 'Start a discussion').click();
+
+      cy.get('#user-role').should('not.be.disabled').select('MINT Team');
+      cy.get('#mention-editor')
+        .type('How to I get to model characteristics?')
+        .should('have.text', 'How to I get to model characteristics?');
+
+      cy.contains('button', 'Save discussion').click();
+
+      cy.get('[data-testid="page-loading"]').should('not.exist');
+
+      cy.get('[data-testid="close-discussions"]').click();
+      cy.get('[data-testid="discussion-modal"]').should('not.exist');
+
+      cy.get('[data-testid="navmenu__notification"]').click();
+
+      cy.url().should('include', '/notifications');
+
+      cy.get('[data-testid="spinner"]').should('not.exist');
+
+      cy.get('[data-testid="individual-notification"]').contains(
+        'added a discussion for Empty Plan.'
+      );
+
+      cy.contains('button', 'View discussion')
+        .should('be.not.disabled')
+        .click({ force: true });
+
+      // Unsubscribe via email link
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=NEW_DISCUSSION_ADDED'
+      );
+
+      cy.get(
+        '[data-testid="notification-setting-email-newDiscussionAdded"]'
+      ).should('be.not.checked');
+
+      cy.get('[data-testid="toast-success"]').contains(
+        'You have successfully unsubscribed from email notifications when a new discussion is added.'
+      );
+
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=NEW_DISCUSSION_ADDED'
+      );
+
+      cy.get('[data-testid="alert"]').contains(
+        'You are already unsubscribed from email notifications when a new discussion is added.'
+      );
+    });
+
+    it('testing Data Exchange Approach is marked Complete Notification', () => {
+      // Check the new model plan in-app checkbox
+      cy.get(
+        '[data-testid="notification-setting-in-app-dataExchangeApproachMarkedComplete"]'
+      )
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.get(
+        '[data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"]'
+      )
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.contains('button', 'Save').click();
+
+      // Navigate back to home to add a new model to MINT
+      cy.get('[aria-label="Home"]').click();
+      cy.url().should('include', '/');
+
+      cy.enterModelPlanCollaborationArea('Empty Plan');
+      cy.contains('button', 'Go to questionnaires').click();
+
+      cy.url().should('include', '/additional-questionnaires');
+      cy.get('[data-testid="data-exchange-approach-button"]').within(() => {
+        cy.contains('Start').click();
       });
 
-    cy.get(
-      '[data-testid="notification-setting-email-iddocQuestionnaireComplete"]'
-    )
-      .should('not.be.disabled')
-      .should('be.not.checked')
-      .check({
-        force: true
+      cy.contains('button', 'Next')
+        .should('not.be.disabled')
+        .click({ force: true });
+      cy.get('#collect-and-send-data-form-next-button')
+        .should('not.be.disabled')
+        .click({ force: true });
+      cy.get('#collection-and-aggregation-form-next-button')
+        .should('not.be.disabled')
+        .click({ force: true });
+
+      cy.get('#additional-data-exchange-considerations-description')
+        .should('not.be.disabled')
+        .type('2025-12-31')
+        .should('have.value', '2025-12-31');
+
+      cy.get('#isDataExchangeApproachComplete-true')
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.contains('button', 'Save and return to questionnaires').click();
+
+      cy.url().should('include', '/additional-questionnaires');
+      cy.get('h1').contains('Additional questionnaires');
+
+      cy.get('[data-testid="navmenu__notification"]').click();
+      cy.url().should('include', '/notifications');
+      cy.get('[data-testid="spinner"]').should('not.exist');
+
+      cy.get('[data-testid="individual-notification"]').contains(
+        'MINT Doe marked the data exchange approach complete for Empty Plan.'
+      );
+
+      cy.contains('button', 'View data exchange approach').click();
+
+      cy.url().should('include', '/read-view/data-exchange-approach');
+
+      // Unsubscribe via email link
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
+      );
+
+      cy.get(
+        '[data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"]'
+      ).should('be.not.checked');
+
+      cy.get('[data-testid="toast-success"]').contains(
+        'You have successfully unsubscribed from email notifications when a data exchange approach is completed.'
+      );
+
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=DATA_EXCHANGE_APPROACH_MARKED_COMPLETE'
+      );
+
+      cy.get('[data-testid="alert"]').contains(
+        'You are already unsubscribed from email notifications when a data exchange approach is completed.'
+      );
+    });
+
+    it('testing IDDOC Questionnaire is marked Complete Notification', () => {
+      // Check the IDDOC questionnaire in-app checkbox
+      cy.get(
+        '[data-testid="notification-setting-in-app-iddocQuestionnaireComplete"]'
+      )
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.get(
+        '[data-testid="notification-setting-email-iddocQuestionnaireComplete"]'
+      )
+        .should('not.be.disabled')
+        .should('be.not.checked')
+        .check({
+          force: true
+        });
+
+      cy.contains('button', 'Save').click();
+
+      // Navigate back to home to add a new model to MINT
+      cy.get('[aria-label="Home"]').click();
+      cy.url().should('include', '/');
+
+      cy.enterModelPlanTaskList('Empty Plan');
+      cy.get('[data-testid="ops-eval-and-learning"]').click();
+
+      cy.get('#ops-eval-and-learning-help-desk-use-true').should(
+        'not.be.disabled'
+      );
+
+      cy.get('#ops-eval-and-learning-iddoc-support-true')
+        .check({ force: true })
+        .should('be.checked');
+      cy.contains('button', 'Save and return to Model Plan').click();
+
+      cy.get('[data-testid="return-to-collaboration"]').click();
+
+      cy.contains('button', 'Go to questionnaires').click();
+
+      cy.url().should('include', '/additional-questionnaires');
+      cy.get('[data-testid="iddoc-questionnaire-button"]').within(() => {
+        cy.contains('Start').click();
       });
 
-    cy.contains('button', 'Save').click();
+      cy.get('#iddoc-questionnaire-operations-form-next-button')
+        .should('not.be.disabled')
+        .click({ force: true });
+      cy.get('#iddoc-questionnaire-testing-form-next-button')
+        .should('not.be.disabled')
+        .click({ force: true });
 
-    // Navigate back to home to add a new model to MINT
-    cy.get('[aria-label="Home"]').click();
-    cy.url().should('include', '/');
+      cy.get('#is-complete')
+        .should('not.be.disabled')
+        .check({ force: true })
+        .should('be.checked');
 
-    cy.enterModelPlanTaskList('Empty Plan');
-    cy.get('[data-testid="ops-eval-and-learning"]').click();
+      cy.contains('button', 'Save and return to questionnaires').click();
 
-    cy.get('#ops-eval-and-learning-help-desk-use-true').should(
-      'not.be.disabled'
-    );
+      cy.url().should('include', '/additional-questionnaires');
+      cy.get('h1').contains('Additional questionnaires');
 
-    cy.get('#ops-eval-and-learning-iddoc-support-true')
-      .check({ force: true })
-      .should('be.checked');
-    cy.contains('button', 'Save and return to Model Plan').click();
+      cy.get('[data-testid="navmenu__notification"]').click();
+      cy.url().should('include', '/notifications');
+      cy.get('[data-testid="spinner"]').should('not.exist');
 
-    cy.get('[data-testid="return-to-collaboration"]').click();
+      cy.get('[data-testid="individual-notification"]').contains(
+        'MINT Doe marked the 4i/ACO-OS questionnaire complete for Empty Plan.'
+      );
 
-    cy.contains('button', 'Go to questionnaires').click();
+      cy.contains('button', 'View questionnaire').click();
 
-    cy.url().should('include', '/additional-questionnaires');
-    cy.get('[data-testid="iddoc-questionnaire-button"]').within(() => {
-      cy.contains('Start').click();
+      cy.url().should('include', '/read-view/iddoc-questionnaire');
+
+      // Unsubscribe via email link
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=IDDOC_QUESTIONNAIRE_COMPLETED'
+      );
+
+      cy.get(
+        '[data-testid="notification-setting-email-iddocQuestionnaireComplete"]'
+      ).should('be.not.checked');
+
+      cy.get('[data-testid="toast-success"]').contains(
+        'You have successfully unsubscribed from email notifications when a 4i/ACO-OS questionnaire is completed.'
+      );
+
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=IDDOC_QUESTIONNAIRE_COMPLETED'
+      );
+
+      cy.get('[data-testid="alert"]').contains(
+        'You are already unsubscribed from email notifications when a 4i/ACO-OS questionnaire is completed.'
+      );
     });
 
-    cy.get('#iddoc-questionnaire-operations-form-next-button')
-      .should('not.be.disabled')
-      .click({ force: true });
-    cy.get('#iddoc-questionnaire-testing-form-next-button')
-      .should('not.be.disabled')
-      .click({ force: true });
+    it('testing MTO is marked Ready for Review Notification', () => {
+      // Check the MTO Ready for Review email checkbox
+      cy.ensureChecked(
+        '#notification-setting-email-mtoReadyForReview',
+        'label[for="notification-setting-email-mtoReadyForReview"]'
+      );
 
-    cy.get('#is-complete')
-      .should('not.be.disabled')
-      .check({ force: true })
-      .should('be.checked');
+      cy.get(
+        '[data-testid="notification-setting-email-mtoReadyForReview"]'
+      ).should('be.checked');
 
-    cy.contains('button', 'Save and return to questionnaires').click();
+      // Check the MTO Ready for Review in-app checkbox
+      cy.ensureChecked(
+        '#notification-setting-in-app-mtoReadyForReview',
+        'label[for="notification-setting-in-app-mtoReadyForReview"]'
+      );
 
-    cy.url().should('include', '/additional-questionnaires');
-    cy.get('h1').contains('Additional questionnaires');
+      cy.get(
+        '[data-testid="notification-setting-in-app-mtoReadyForReview"]'
+      ).should('be.checked');
 
-    cy.get('[data-testid="navmenu__notification"]').click();
-    cy.url().should('include', '/notifications');
-    cy.get('[data-testid="spinner"]').should('not.exist');
+      cy.contains('button', 'Save').click();
 
-    cy.get('[data-testid="individual-notification"]').contains(
-      'MINT Doe marked the 4i/ACO-OS questionnaire complete for Empty Plan.'
-    );
+      // Navigate back to home to mark MTO ready for review
+      cy.get('[aria-label="Home"]').click();
+      cy.url().should('include', '/');
 
-    cy.contains('button', 'View questionnaire').click();
+      cy.enterModelPlanCollaborationArea('Model Plan for MTO testing');
 
-    cy.url().should('include', '/read-view/iddoc-questionnaire');
+      cy.get('[data-testid="Card"]')
+        .filter(':has(h3:contains("Model-to-operations matrix"))')
+        .within(() => {
+          cy.contains('button', 'Go to matrix').click();
+        });
+      cy.url().should(
+        'include',
+        '/collaboration-area/model-to-operations/matrix'
+      );
+      cy.get('[data-testid="tasklist-tag"]').contains('In progress');
+      cy.get('[data-testid="tasklist-tag"]')
+        .contains('Ready for review')
+        .should('not.exist');
+      cy.contains('button', 'Is this MTO ready for review?').click();
 
-    // Unsubscribe via email link
-    cy.visit(
-      '/notifications/settings?unsubscribe_email=IDDOC_QUESTIONNAIRE_COMPLETED'
-    );
-
-    cy.get(
-      '[data-testid="notification-setting-email-iddocQuestionnaireComplete"]'
-    ).should('be.not.checked');
-
-    cy.get('[data-testid="toast-success"]').contains(
-      'You have successfully unsubscribed from email notifications when a 4i/ACO-OS questionnaire is completed.'
-    );
-
-    cy.visit(
-      '/notifications/settings?unsubscribe_email=IDDOC_QUESTIONNAIRE_COMPLETED'
-    );
-
-    cy.get('[data-testid="alert"]').contains(
-      'You are already unsubscribed from email notifications when a 4i/ACO-OS questionnaire is completed.'
-    );
-  });
-
-  it.only('testing MTO is marked Ready for Review Notification', () => {
-    cy.localLogin({ name: 'MINT' });
-    cy.visit('/notifications/settings');
-
-    // Need to give the page a bit time to finish loading
-    cy.get('body').click({ force: true });
-    cy.wait(500);
-
-    // Check the MTO Ready for Review email checkbox
-    cy.get('label[for="notification-setting-email-mtoReadyForReview"]').click({
-      force: true
-    });
-
-    cy.get('#notification-setting-email-mtoReadyForReview').then($el => {
-      if (!$el.is(':checked')) {
-        cy.wrap($el).check({ force: true });
-      }
-    });
-
-    cy.get(
-      '[data-testid="notification-setting-email-mtoReadyForReview"]'
-    ).should('be.checked');
-
-    // Check the MTO Ready for Review in-app checkbox
-    cy.get('label[for="notification-setting-in-app-mtoReadyForReview"]').click({
-      force: true
-    });
-
-    cy.get('#notification-setting-in-app-mtoReadyForReview').then($el => {
-      if (!$el.is(':checked')) {
-        cy.wrap($el).check({ force: true });
-      }
-    });
-
-    cy.get(
-      '[data-testid="notification-setting-in-app-mtoReadyForReview"]'
-    ).should('be.checked');
-
-    cy.contains('button', 'Save').click();
-
-    // Navigate back to home to mark MTO ready for review
-    cy.get('[aria-label="Home"]').click();
-    cy.url().should('include', '/');
-
-    cy.enterModelPlanCollaborationArea('Model Plan for MTO testing');
-
-    cy.get('[data-testid="Card"]')
-      .filter(':has(h3:contains("Model-to-operations matrix"))')
-      .within(() => {
-        cy.contains('button', 'Go to matrix').click();
+      cy.get('[data-testid="mto-ready-for-review-modal"]').within(() => {
+        cy.contains('button', 'Mark as ready for review').click();
       });
-    cy.url().should(
-      'include',
-      '/collaboration-area/model-to-operations/matrix'
-    );
-    cy.get('[data-testid="tasklist-tag"]').contains('In progress');
-    cy.get('[data-testid="tasklist-tag"]')
-      .contains('Ready for review')
-      .should('not.exist');
-    cy.contains('button', 'Is this MTO ready for review?').click();
+      cy.get('[data-testid="tasklist-tag"]').contains('Ready for review');
+      cy.get('[data-testid="tasklist-tag"]')
+        .contains('In progress')
+        .should('not.exist');
 
-    cy.get('[data-testid="mto-ready-for-review-modal"]').within(() => {
-      cy.contains('button', 'Mark as ready for review').click();
+      cy.get('[data-testid="navmenu__notification"]').click();
+      cy.url().should('include', '/notifications');
+      cy.get('[data-testid="spinner"]').should('not.exist');
+
+      cy.get('[data-testid="individual-notification"]').contains(
+        'MINT Doe marked the model-to-operations matrix (MTO) for Model Plan for MTO testing as ready for review.'
+      );
+
+      cy.contains('button', 'View MTO').click();
+
+      cy.url().should('include', '/read-view/milestones');
+
+      // Unsubscribe via email link
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=MTO_READY_FOR_REVIEW'
+      );
+
+      cy.get(
+        '[data-testid="notification-setting-email-mtoReadyForReview"]'
+      ).should('be.not.checked');
+
+      cy.get('[data-testid="toast-success"]').contains(
+        'You have successfully unsubscribed from email notifications when an MTO is marked ready for review.'
+      );
+
+      cy.visit(
+        '/notifications/settings?unsubscribe_email=MTO_READY_FOR_REVIEW'
+      );
+
+      cy.get('[data-testid="alert"]').contains(
+        'You are already unsubscribed from email notifications when an MTO is marked ready for review.'
+      );
     });
-    cy.get('[data-testid="tasklist-tag"]').contains('Ready for review');
-    cy.get('[data-testid="tasklist-tag"]')
-      .contains('In progress')
-      .should('not.exist');
-
-    cy.get('[data-testid="navmenu__notification"]').click();
-    cy.url().should('include', '/notifications');
-    cy.get('[data-testid="spinner"]').should('not.exist');
-
-    cy.get('[data-testid="individual-notification"]').contains(
-      'MINT Doe marked the model-to-operations matrix (MTO) for Model Plan for MTO testing as ready for review.'
-    );
-
-    cy.contains('button', 'View MTO').click();
-
-    cy.url().should('include', '/read-view/milestones');
-
-    // Unsubscribe via email link
-    cy.visit('/notifications/settings?unsubscribe_email=MTO_READY_FOR_REVIEW');
-
-    cy.get(
-      '[data-testid="notification-setting-email-mtoReadyForReview"]'
-    ).should('be.not.checked');
-
-    cy.get('[data-testid="toast-success"]').contains(
-      'You have successfully unsubscribed from email notifications when an MTO is marked ready for review.'
-    );
-
-    cy.visit('/notifications/settings?unsubscribe_email=MTO_READY_FOR_REVIEW');
-
-    cy.get('[data-testid="alert"]').contains(
-      'You are already unsubscribed from email notifications when an MTO is marked ready for review.'
-    );
   });
 });
