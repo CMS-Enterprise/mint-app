@@ -1,6 +1,8 @@
 package sqlutils
 
 import (
+	"database/sql"
+	"errors"
 	"fmt"
 
 	"github.com/lib/pq"
@@ -25,6 +27,40 @@ func newErrDupConstraintErr(message string, pqErr *pq.Error) *errDupConstraint {
 		baseDBError: newBaseDBError(message, pqErr),
 	}
 
+}
+
+// ErrNoRowsResult is used with errors.As(err, &sqlutils.ErrNoRowsResult) to detect zero-row results from
+// sqlutils helpers (GetProcedure / ProcessDataBaseErrors). See also IsNoRowsResult.
+var ErrNoRowsResult *errNoRowsResult
+
+// errNoRowsResult wraps sql.ErrNoRows from stmt.Get / Scan paths that run through ProcessDataBaseErrors.
+type errNoRowsResult struct {
+	Message string
+}
+
+func newErrNoRowsResult(message string) *errNoRowsResult {
+	return &errNoRowsResult{Message: message}
+}
+
+// Error implements error for errNoRowsResult.
+func (e *errNoRowsResult) Error() string {
+	return fmt.Sprintf("dbErr: no rows in result set: %s", e.Message)
+}
+
+// Unwrap returns sql.ErrNoRows so errors.Is(err, sql.ErrNoRows) continues to work on wrapped errors.
+func (e *errNoRowsResult) Unwrap() error {
+	return sql.ErrNoRows
+}
+
+// IsNoRowsResult reports whether err is sql.ErrNoRows, wraps it, or is a no-rows error from ProcessDataBaseErrors.
+func IsNoRowsResult(err error) bool {
+	if err == nil {
+		return false
+	}
+	if errors.Is(err, sql.ErrNoRows) {
+		return true
+	}
+	return errors.As(err, &ErrNoRowsResult)
 }
 
 // newBaseDBError is a constructor for the base db error.
@@ -69,6 +105,9 @@ func ProcessDataBaseErrors(message string, err error) error {
 			return newBaseDBError(message, pqErr)
 		}
 
+	}
+	if errors.Is(err, sql.ErrNoRows) {
+		return newErrNoRowsResult(message)
 	}
 	return fmt.Errorf(message+" err: %w", err)
 
