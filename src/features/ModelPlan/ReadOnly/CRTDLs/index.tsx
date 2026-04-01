@@ -34,7 +34,6 @@ const ReadOnlyCRTDLs = () => {
         />
       </p>
 
-      {/* TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134 */}
       <Alert type="info" slim className="margin-bottom-5">
         {t('echimp')}
       </Alert>

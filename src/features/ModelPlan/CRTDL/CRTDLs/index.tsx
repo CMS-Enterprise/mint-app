@@ -69,7 +69,6 @@ export const CRTDLs = () => {
             />
           </p>
 
-          {/* TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134 */}
           <Alert type="info" slim className="margin-bottom-6">
             {crtdlsT('echimp')}
           </Alert>
