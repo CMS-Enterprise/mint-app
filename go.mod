@@ -5,7 +5,7 @@ go 1.25.7
 require (
 	github.com/99designs/gqlgen v0.17.78
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
-	github.com/go-openapi/errors v0.22.1
+	github.com/go-openapi/errors v0.22.7
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/mux v1.8.1
