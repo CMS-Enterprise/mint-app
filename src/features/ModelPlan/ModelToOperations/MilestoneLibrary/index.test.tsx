@@ -96,4 +96,37 @@ describe('MilestoneCardGroup Component', () => {
       screen.queryByRole('button', { name: /filter/i })
     ).not.toBeInTheDocument();
   });
+
+  it('does not render the admin section in the MTO milestone library', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
+          element: (
+            <MessageProvider>
+              <MilestoneLibrary />
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/milestone-library'
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider
+        mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
+        addTypename={false}
+      >
+        <Provider store={store1}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
+    );
+
+    expect(screen.queryByText(/Admin actions/i)).not.toBeInTheDocument();
+  });
 });
