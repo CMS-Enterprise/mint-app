@@ -1,45 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AdminActions Component > matches snapshot 1`] = `
-<DocumentFragment>
-  <div
-    class="usa-summary-box bg-info-lighter border-1px border-info-light radius-md padding-3 margin-bottom-5"
-    data-testid="summary-box"
-  >
-    <div
-      class="usa-summary-box__body"
-    >
-      <h2
-        class="usa-summary-box__heading margin-bottom-2"
-      >
-        Admin actions
-      </h2>
-      <div
-        class="usa-summary-box__text"
-      >
-        <h4
-          class="margin-0 margin-bottom-1 line-height-sans-2"
-        >
-          Manage common milestones
-        </h4>
-        <p
-          class="margin-0 margin-bottom-2 line-height-sans-2"
-        >
-          Add, edit, and remove milestones from the common milestone library. This will apply to all MINT users and will affect the common milestones that model teams and IT Leads have access to when completing their MTO.
-        </p>
-        <a
-          class="usa-button usa-button--outline"
-          data-discover="true"
-          href="/"
-        >
-          Add a milestone
-        </a>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
 exports[`CommonMilestoneAdminActions Component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
