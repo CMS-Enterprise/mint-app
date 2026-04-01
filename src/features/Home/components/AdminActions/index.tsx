@@ -19,7 +19,6 @@ const AdminActions = () => {
     description: string;
     cta: string;
     route: string;
-    scrollTo?: string;
   }>('adminActions:actions');
 
   return (

@@ -13,8 +13,7 @@ const adminActions = {
       description:
         'Add, edit, and remove subject matter experts (SMEs) from the contact directory in MINT’s Help and Knowledge Center.',
       cta: 'View SME contact directory',
-      route: '/help-and-knowledge#contact-directory',
-      scrollTo: 'contact-directory'
+      route: '/help-and-knowledge#contact-directory'
     }
   ]
 };
