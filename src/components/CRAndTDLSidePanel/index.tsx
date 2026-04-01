@@ -44,8 +44,6 @@ const CRAndTDLSidePanel = ({
 }: CRAndTDLSidePanelProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
-  const echimpURL = echimpUrl(isCR ? 'ffs' : 'tdl', id);
-
   return (
     <div className="padding-y-5 padding-x-8 side-panel--cr-and-tdl maxw-tablet">
       <div className="sidepanel__header">
@@ -149,7 +147,7 @@ const CRAndTDLSidePanel = ({
         )}
 
         <ExternalLink
-          href={echimpURL}
+          href={echimpUrl(isCR ? 'ffs' : 'tdl', id)}
           className="sidepanel--full-width margin-right-0"
           toEchimp
         >

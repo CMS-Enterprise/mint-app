@@ -68,8 +68,6 @@ const EChimpCard = ({
 }: EChimpCardProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
-  const echimpURL = echimpUrl(isCR ? 'ffs' : 'tdl', id);
-
   return (
     <Card
       gridLayout={{ desktop: { col: isInReadView ? 6 : 4 } }}
@@ -137,7 +135,11 @@ const EChimpCard = ({
         >
           {crtdlsT('echimpCard.viewMore')}
         </Button>
-        <ExternalLink href={echimpURL} className="margin-right-0" toEchimp>
+        <ExternalLink
+          href={echimpUrl(isCR ? 'ffs' : 'tdl', id)}
+          className="margin-right-0"
+          toEchimp
+        >
           {crtdlsT('echimpCard.viewThisInECHIMP')}
         </ExternalLink>
       </CardFooter>
