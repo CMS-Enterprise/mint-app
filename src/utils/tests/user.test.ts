@@ -46,7 +46,6 @@ describe('user', () => {
             changeHistoryReleaseDate: '',
             modelsApproachingClearanceEnabled: false,
             mintAnalyticsEnabled: true,
-            echimpFFSURLEnabled: false,
             sandbox: true
           })
         ).toBe(false);

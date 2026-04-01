@@ -2,12 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Icon } from '@trussworks/react-uswds';
 import i18n from 'config/i18n';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import { DataOrNoData, echimpUrl } from 'components/EChimpCards/EChimpCard';
 import ExternalLink from 'components/ExternalLink';
 import TruncatedText from 'components/TruncatedText';
-import { ECHIMP_URL_SSO } from 'constants/echimp';
 
 import properlyCapitalizeInitiator from './_utils';
 
@@ -46,11 +44,7 @@ const CRAndTDLSidePanel = ({
 }: CRAndTDLSidePanelProps) => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
 
-  const flags = useFlags();
-
-  const echimpURL = flags?.echimpFFSURLEnabled
-    ? echimpUrl(isCR ? 'ffs' : 'tdl', id)
-    : `${ECHIMP_URL_SSO}?sysSelect=${isCR ? 'FFS' : 'TDL'}&crNum=${id}`;
+  const echimpURL = echimpUrl(isCR ? 'ffs' : 'tdl', id);
 
   return (
     <div className="padding-y-5 padding-x-8 side-panel--cr-and-tdl maxw-tablet">
