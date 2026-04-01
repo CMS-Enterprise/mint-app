@@ -56,18 +56,24 @@ export const HelpAndKnowledgeHome = () => {
     );
 
     const updateUrlOnScroll = () => {
-      targetIds.forEach(id => {
-        const element = document.getElementById(id);
-        if (!element) return;
+      const reversedIds = [...targetIds].reverse();
 
+      const activeId = reversedIds.find(id => {
+        const element = document.getElementById(id);
+        if (!element) return false;
         const rect = element.getBoundingClientRect();
 
-        if (rect.top >= 0 && rect.top <= 80) {
-          if (window.location.hash !== `#${id}`) {
-            window.history.replaceState(null, '', `#${id}`);
-          }
-        }
+        const isVisibleAtTop = rect.top >= 0 && rect.top <= 80;
+        const isAtBottom =
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 100;
+
+        return isVisibleAtTop || (id === reversedIds[0] && isAtBottom);
       });
+
+      if (activeId && window.location.hash !== `#${activeId}`) {
+        window.history.replaceState(null, '', `#${activeId}`);
+      }
     };
 
     const handleScroll = () => {

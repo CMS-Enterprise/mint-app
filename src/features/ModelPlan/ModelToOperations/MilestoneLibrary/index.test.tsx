@@ -129,4 +129,35 @@ describe('MilestoneCardGroup Component', () => {
 
     expect(screen.queryByText(/Admin actions/i)).not.toBeInTheDocument();
   });
+
+  it('renders the admin section in the HKC milestone library', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/milestone-library',
+          element: (
+            <MessageProvider>
+              <MilestoneLibrary />
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/help-and-knowledge/milestone-library']
+      }
+    );
+
+    const { getByText } = render(
+      <MockedProvider
+        mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
+        addTypename={false}
+      >
+        <Provider store={store1}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
+    );
+
+    expect(getByText(/Admin actions/i)).toBeInTheDocument();
+  });
 });
