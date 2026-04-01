@@ -1062,6 +1062,15 @@ export type MtoCommonMilestoneSuggestedArgs = {
   modelPlanID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
+export type MtoCommonMilestoneChanges = {
+  categoryName?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  facilitatedByRole?: InputMaybe<Array<MtoFacilitator>>;
+  mtoCommonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  subCategoryName?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
   contactInformation: MtoCommonSolutionContactInformation;
@@ -2073,6 +2082,7 @@ export type Mutation = {
   __typename: 'Mutation';
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
+  archiveMTOCommonMilestone: MtoCommonMilestone;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2082,6 +2092,7 @@ export type Mutation = {
    * Note, the parent must belong to the same model plan, or this will return an error
    */
   createMTOCategory: MtoCategory;
+  createMTOCommonMilestone: MtoCommonMilestone;
   createMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   createMTOCommonSolutionMailboxContact: MtoCommonSolutionContact;
   createMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
@@ -2160,6 +2171,7 @@ export type Mutation = {
   updateIDDOCQuestionnaire: IddocQuestionnaire;
   updateKeyContact: KeyContact;
   updateKeyContactCategory: KeyContactCategory;
+  updateMTOCommonMilestone: MtoCommonMilestone;
   updateMTOCommonSolutionContact: MtoCommonSolutionContact;
   updateMTOCommonSolutionContractor: MtoCommonSolutionContractor;
   updateMTOCommonSolutionSystemOwner: MtoCommonSolutionSystemOwner;
@@ -2198,6 +2210,12 @@ export type MutationAgreeToNdaArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationArchiveMtoCommonMilestoneArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationCreateDiscussionReplyArgs = {
   input: DiscussionReplyCreateInput;
 };
@@ -2231,6 +2249,17 @@ export type MutationCreateMtoCategoryArgs = {
   modelPlanID: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
   parentID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateMtoCommonMilestoneArgs = {
+  categoryName: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  facilitatedByRole: Array<MtoFacilitator>;
+  mtoCommonSolutionKeys: Array<MtoCommonSolutionKey>;
+  name: Scalars['String']['input'];
+  subCategoryName?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -2557,6 +2586,13 @@ export type MutationUpdateKeyContactArgs = {
 export type MutationUpdateKeyContactCategoryArgs = {
   id: Scalars['UUID']['input'];
   name: Scalars['String']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateMtoCommonMilestoneArgs = {
+  changes: MtoCommonMilestoneChanges;
+  id: Scalars['UUID']['input'];
 };
 
 

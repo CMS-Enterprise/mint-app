@@ -30,10 +30,38 @@ type MTOCommonMilestone {
   commonSolutions: [MTOCommonSolution!]!
 }
 
+input MTOCommonMilestoneChanges @goModel(model: "map[string]interface{}") {
+  name: String
+  description: String
+  categoryName: String
+  subCategoryName: String
+  facilitatedByRole: [MTOFacilitator!]
+  mtoCommonSolutionKeys: [MTOCommonSolutionKey!]
+}
+
 extend type Query {
   """
   Fetch all Common Milestones available in the library
   """
   mtoCommonMilestones: [MTOCommonMilestone!]!
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createMTOCommonMilestone(
+    name: String!
+    description: String!
+    categoryName: String!
+    subCategoryName: String
+    facilitatedByRole: [MTOFacilitator!]!
+    mtoCommonSolutionKeys: [MTOCommonSolutionKey!]!
+  ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
+
+  updateMTOCommonMilestone(
+    id: UUID!
+    changes: MTOCommonMilestoneChanges!
+  ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
+
+  archiveMTOCommonMilestone(id: UUID!): MTOCommonMilestone!
+    @hasRole(role: MINT_ASSESSMENT)
 }

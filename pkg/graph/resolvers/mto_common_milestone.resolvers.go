@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -65,6 +66,21 @@ func (r *mTOCommonMilestoneResolver) Suggested(ctx context.Context, obj *models.
 // CommonSolutions is the resolver for the commonSolutions field.
 func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *models.MTOCommonMilestone) ([]*models.MTOCommonSolution, error) {
 	return MTOCommonSolutionGetByCommonMilestoneIDLOADER(ctx, obj.ID)
+}
+
+// CreateMTOCommonMilestone is the resolver for the createMTOCommonMilestone field.
+func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName *string, facilitatedByRole []models.MTOFacilitator, mtoCommonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOCommonMilestone - createMTOCommonMilestone"))
+}
+
+// UpdateMTOCommonMilestone is the resolver for the updateMTOCommonMilestone field.
+func (r *mutationResolver) UpdateMTOCommonMilestone(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.MTOCommonMilestone, error) {
+	panic(fmt.Errorf("not implemented: UpdateMTOCommonMilestone - updateMTOCommonMilestone"))
+}
+
+// ArchiveMTOCommonMilestone is the resolver for the archiveMTOCommonMilestone field.
+func (r *mutationResolver) ArchiveMTOCommonMilestone(ctx context.Context, id uuid.UUID) (*models.MTOCommonMilestone, error) {
+	panic(fmt.Errorf("not implemented: ArchiveMTOCommonMilestone - archiveMTOCommonMilestone"))
 }
 
 // MtoCommonMilestones is the resolver for the mtoCommonMilestones field.
