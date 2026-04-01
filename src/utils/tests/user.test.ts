@@ -47,7 +47,6 @@ describe('user', () => {
             modelsApproachingClearanceEnabled: false,
             mintAnalyticsEnabled: true,
             echimpFFSURLEnabled: false,
-            echimpIntegrationEnabled: false,
             sandbox: true
           })
         ).toBe(false);
