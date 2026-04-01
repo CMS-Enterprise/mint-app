@@ -1,10 +1,31 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 import { commonMilestonesMock, suggestedMilestonesMock } from 'tests/mock/mto';
 
+import { ASSESSMENT } from 'constants/jobCodes';
+import { MessageProvider } from 'hooks/useMessage';
+
 import MilestoneLibrary from '.';
+
+const mockAuthAssessment = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockAuthNotAssessment = {
+  isUserSet: true,
+  groups: [],
+  euaId: 'EFGH'
+};
+
+const mockStore = configureMockStore();
+const store1 = mockStore({ auth: mockAuthAssessment });
+const store2 = mockStore({ auth: mockAuthNotAssessment });
 
 describe('MilestoneCardGroup Component', () => {
   it('renders correctly and matches snapshot', () => {
@@ -12,7 +33,11 @@ describe('MilestoneCardGroup Component', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
-          element: <MilestoneLibrary />
+          element: (
+            <MessageProvider>
+              <MilestoneLibrary />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -27,7 +52,9 @@ describe('MilestoneCardGroup Component', () => {
         mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
         addTypename={false}
       >
-        <RouterProvider router={router} />
+        <Provider store={store2}>
+          <RouterProvider router={router} />
+        </Provider>
       </MockedProvider>
     );
 
@@ -40,7 +67,11 @@ describe('MilestoneCardGroup Component', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
-          element: <MilestoneLibrary />
+          element: (
+            <MessageProvider>
+              <MilestoneLibrary />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -55,7 +86,9 @@ describe('MilestoneCardGroup Component', () => {
         mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
         addTypename={false}
       >
-        <RouterProvider router={router} />
+        <Provider store={store2}>
+          <RouterProvider router={router} />
+        </Provider>
       </MockedProvider>
     );
 

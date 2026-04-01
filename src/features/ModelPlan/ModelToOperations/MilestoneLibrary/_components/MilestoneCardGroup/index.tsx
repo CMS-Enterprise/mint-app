@@ -513,7 +513,9 @@ const MilestoneCardGroup = ({
             {/* Pagination */}
             <div className="display-flex flex-wrap">
               {currentItems.length > 0 && pageCount > 0 && (
-                <>{PaginationComponent}</>
+                <div key={`pagination-wrapper-page-${currentPage}`}>
+                  {PaginationComponent}
+                </div>
               )}
 
               {currentItems.length > 0 && (
