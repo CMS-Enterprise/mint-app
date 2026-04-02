@@ -22,6 +22,7 @@ import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
 import modelPlanMtoTemplateLink from '../../src/i18n/en-US/modelPlan/modelPlanMtoTemplateLink';
 import mtoInfo from '../../src/i18n/en-US/modelPlan/modelToOperations';
 import mtoCategory from '../../src/i18n/en-US/modelPlan/mtoCategory';
+import mtoCommonMilestone from '../../src/i18n/en-US/modelPlan/mtoCommonMilestone';
 import mtoCommonSolutionContact from '../../src/i18n/en-US/modelPlan/mtoCommonSolutionContact';
 import mtoCommonSolutionContractor from '../../src/i18n/en-US/modelPlan/mtoCommonSolutionContractor';
 import mtoMilestone from '../../src/i18n/en-US/modelPlan/mtoMilestone';
@@ -68,6 +69,7 @@ export const translationSections = {
   mto_milestone: mtoMilestone,
   mto_solution: mtoSolution,
   mto_milestone_solution_link: mtoMilestoneSolutionLink,
+  mto_common_milestone: mtoCommonMilestone,
   mto_common_solution_contact: mtoCommonSolutionContact,
   mto_common_solution_contractor: mtoCommonSolutionContractor,
   mto_category: mtoCategory,

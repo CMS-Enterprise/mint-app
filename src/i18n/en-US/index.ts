@@ -55,6 +55,9 @@ import modelToOperations, {
   modelToOperationsMisc
 } from './modelPlan/modelToOperations';
 import mtoCategory from './modelPlan/mtoCategory';
+import mtoCommonMilestone, {
+  mtoCommonMilestoneMisc
+} from './modelPlan/mtoCommonMilestone';
 import mtoCommonSolutionContact, {
   mtoCommonSolutionContactMisc
 } from './modelPlan/mtoCommonSolutionContact';
@@ -155,6 +158,8 @@ const enUS = {
   mtoMilestone,
   mtoMilestoneNote,
   mtoMilestoneNoteMisc,
+  mtoCommonMilestone,
+  mtoCommonMilestoneMisc,
   mtoCommonSolutionContact,
   mtoCommonSolutionContactMisc,
   mtoCommonSolutionContractor,

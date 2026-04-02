@@ -51,6 +51,7 @@ import {
   ModelType,
   ModelViewFilter,
   MtoCategoryTranslation,
+  MtoCommonMilestoneTranslation,
   MtoCommonSolutionCmsComponent,
   MtoCommonSolutionContactTranslation,
   MtoCommonSolutionContractorTranslation,
@@ -1311,6 +1312,29 @@ type TranslationMTOMilestoneSolutionLinkCustomGQL = Omit<
 
 export type TranslationMTOMilestoneSolutionLinkCustom = {
   [K in keyof TranslationMTOMilestoneSolutionLinkCustomGQL]: TranslationMTOMilestoneSolutionLinkCustomForm[K]; // FE form type
+};
+
+// MTO Common Milestone - Change History purposes only
+export type TranslationMTOCommonMilestoneCustomForm = {
+  name: TranslationFieldProperties;
+  description: TranslationFieldProperties;
+  category: TranslationFieldProperties;
+  subCategory: TranslationFieldProperties;
+  facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
+};
+
+type TranslationMTOCommonMilestoneCustomGQL = Omit<
+  MtoCommonMilestoneTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOCommonMilestoneCustom = {
+  [K in keyof TranslationMTOCommonMilestoneCustomGQL]: TranslationMTOCommonMilestoneCustomForm[K]; // FE form type
 };
 
 // MTO Milestone - Change History purposes only

@@ -1071,6 +1071,17 @@ export type MtoCommonMilestoneChanges = {
   subCategoryName?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents MTO Common Milestone translation data */
+export type MtoCommonMilestoneTranslation = {
+  __typename: 'MTOCommonMilestoneTranslation';
+  category: TranslationField;
+  commonSolutions: TranslationFieldWithOptions;
+  description: TranslationField;
+  facilitatedBy: TranslationFieldWithOptions;
+  name: TranslationField;
+  subCategory: TranslationField;
+};
+
 export type MtoCommonSolution = {
   __typename: 'MTOCommonSolution';
   contactInformation: MtoCommonSolutionContactInformation;
