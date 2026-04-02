@@ -105,25 +105,40 @@ const MTOTable = ({
 
   const isTimeWindowFilterActive = neededWithinDays !== null;
 
-  const dataForTable = useMemo(() => {
-    if (neededWithinDays === null) return formattedData;
-    const filtered = filterMilestonesNeededWithinDays(
-      formattedData,
-      neededWithinDays
-    );
-    const flattened = flattenToSingleCategory(filtered);
+  /** Hide category/subcategory rows if time window or "hide category rows" filters are active */
+  const tableMilestonesOnlyLayout =
+    isTimeWindowFilterActive || params.get('hide-category-rows') === 'true';
 
-    if (flattened.length === 0) {
-      return flattened;
+  /**
+   * Formats data for table based on any applied filters.
+   *
+   * If `tableMilestonesOnlyLayout` is true, the data is flattened into a single category/subcategory containing all milestones.
+   */
+  const dataForTable = useMemo(() => {
+    let data = formattedData;
+
+    if (!tableMilestonesOnlyLayout) {
+      return data;
     }
 
-    flattened[0].subCategories[0].milestones.sort(
-      (a, b) =>
-        new Date(a.needBy ?? '').getTime() - new Date(b.needBy ?? '').getTime()
-    );
+    // If time window filter is active, filter the data to only include milestones that are needed within the selected window
+    if (neededWithinDays !== null) {
+      data = filterMilestonesNeededWithinDays(formattedData, neededWithinDays);
+    }
+
+    const flattened = flattenToSingleCategory(data);
+
+    // If there are milestones and a time window filter is active, sort the milestones by need by date
+    if (flattened.length > 0 && neededWithinDays !== null) {
+      flattened[0].subCategories[0].milestones.sort(
+        (a, b) =>
+          new Date(a.needBy ?? '').getTime() -
+          new Date(b.needBy ?? '').getTime()
+      );
+    }
 
     return flattened;
-  }, [formattedData, neededWithinDays]);
+  }, [formattedData, neededWithinDays, tableMilestonesOnlyLayout]);
 
   const [initLocation] = useState<string>(location.pathname);
 
@@ -306,12 +321,12 @@ const MTOTable = ({
         pageNum,
         itemsPerP,
         totalPages,
-        isTimeWindowFilterActive
+        tableMilestonesOnlyLayout
       );
 
       return sliceItems;
     };
-  }, [totalPages, isTimeWindowFilterActive]);
+  }, [totalPages, tableMilestonesOnlyLayout]);
 
   const { Pagination } = usePagination<CategoryType[]>({
     items: sortedData,
@@ -580,8 +595,8 @@ const MTOTable = ({
     });
 
   const renderCategories = () => {
-    // When a "needed within N days" filter is on, show only milestone rows (no category/subcategory rows)
-    if (isTimeWindowFilterActive) {
+    // Time window and/or hide-category-rows: milestone rows only (no category/subcategory DraggableRow headers)
+    if (tableMilestonesOnlyLayout) {
       return sortedData.flatMap((category, categoryIndex) =>
         category.subCategories.flatMap((subCategory, subCategoryIndex) =>
           renderMilestones(
@@ -1044,7 +1059,7 @@ export const getRenderedRowIndexes = (
     });
   });
 
-  // When showing only milestones (e.g. "needed within N days" filter), skip category/subcategory rows
+  // Time window and/or hide-category-rows: skip category/subcategory header rows in the index map
   if (milestonesOnly) {
     return shownIndexes;
   }
