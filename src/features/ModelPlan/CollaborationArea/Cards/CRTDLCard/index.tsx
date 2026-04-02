@@ -7,11 +7,10 @@ import {
   CardHeader
 } from '@trussworks/react-uswds';
 import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
-import { ECHIMP_URL_SSO, ECHIMP_URL_TEMP_SSO } from 'constants/echimp';
+import { ECHIMP_URL_SSO } from 'constants/echimp';
 
 import '../../index.scss';
 
@@ -25,8 +24,6 @@ type CRTDLCardType = {
 
 const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
-
-  const flags = useFlags();
 
   const firstFiveCRTDLs = crtdls.slice(0, 5);
 
@@ -66,11 +63,7 @@ const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
 
       <CardFooter>
         <ExternalLink
-          href={
-            flags.echimpIntegrationEnabled
-              ? ECHIMP_URL_TEMP_SSO
-              : ECHIMP_URL_SSO
-          }
+          href={ECHIMP_URL_SSO}
           className="usa-button"
           variant="unstyled"
           asButton
