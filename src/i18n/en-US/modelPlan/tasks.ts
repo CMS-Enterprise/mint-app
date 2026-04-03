@@ -50,7 +50,7 @@ const tasks = {
   [PlanTaskKey.DATA_EXCHANGE]: {
     copy: 'Work with your IT Lead to determine how your model will exchange data so that CMMI and BSG can help with new policy or technology opportunities. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange, so detailed completion of the data exchange approach will also help the MINT Team understand how best to help you.',
     primaryPath:
-      '/models/{{modelID}}/collaboration-area/data-exchange-approach/about-completing-data-exchange',
+      '/models/{{modelID}}/collaboration-area/additional-questionnaires/data-exchange-approach/about-completing-data-exchange',
     secondaryPath: '/help-and-knowledge/evaluating-data-exchange-approach',
     secondaryAction: 'View help article',
     [PlanTaskStatus.TO_DO]: {
