@@ -64,11 +64,10 @@ describe('Tasks page', () => {
       .contains('button', 'Continue')
       .click();
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(
-        /\/models\/.{36}\/collaboration-area\/model-plan$/
-      );
-    });
+    cy.location('pathname').should(
+      'match',
+      /\/models\/[^/]+\/collaboration-area\/model-plan$/
+    );
 
     cy.go('back');
 
@@ -77,9 +76,10 @@ describe('Tasks page', () => {
       .contains('button', 'View sample Model Plan')
       .click();
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/help-and-knowledge\/sample-model-plan$/);
-    });
+    cy.location('pathname').should(
+      'match',
+      /\/help-and-knowledge\/sample-model-plan$/
+    );
 
     cy.go('back');
 
@@ -88,11 +88,12 @@ describe('Tasks page', () => {
       .contains('button', 'Start')
       .click();
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(
-        /\/collaboration-area\/model-to-operations\/matrix\?view=milestones$/
-      );
-    });
+    // Base path navigates to /matrix; MTOHome adds view (and page) to search — not part of pathname.
+    cy.location('pathname').should(
+      'match',
+      /\/models\/[^/]+\/collaboration-area\/model-to-operations\/matrix$/
+    );
+    cy.location('search').should('include', 'view=milestones');
 
     cy.go('back');
 
@@ -101,11 +102,10 @@ describe('Tasks page', () => {
       .contains('button', 'View help article')
       .click();
 
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(
-        /\/help-and-knowledge\/creating-mto-matrix$/
-      );
-    });
+    cy.location('pathname').should(
+      'match',
+      /\/help-and-knowledge\/creating-mto-matrix$/
+    );
   });
 
   it('Plan with Data Exchange shows a completed task on the Completed tab', () => {
@@ -113,9 +113,14 @@ describe('Tasks page', () => {
 
     cy.contains('button', /See all \(\d+\)/).click();
 
-    cy.url().should('include', '/collaboration-area/tasks');
+    cy.location('pathname').should(
+      'match',
+      /\/models\/[^/]+\/collaboration-area\/tasks$/
+    );
 
     cy.get('[data-testid="completed-tab"]').click();
+
+    cy.url().should('include', 'tab=completed');
 
     cy.contains('h3', 'Finalize your data exchange approach').should(
       'be.visible'
