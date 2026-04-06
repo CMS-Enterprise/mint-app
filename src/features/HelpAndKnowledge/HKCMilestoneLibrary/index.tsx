@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
 import MilestoneCardGroup, {
   MilestoneCardType
@@ -23,6 +24,16 @@ const HKCMilestoneLibrary = () => {
   const { groups } = useSelector((state: AppState) => state.auth);
   const flags = useFlags();
   const isAssessmentTeam = isAssessment(groups, flags);
+
+  const location = useLocation();
+  const isFromHome = React.useRef(location.state?.fromHomePage);
+
+  const returnConfig = {
+    label: isFromHome.current
+      ? hkcT('milestoneLibrary.returnToHome')
+      : hkcT('milestoneLibrary.returnToHkc'),
+    to: isFromHome.current ? '/' : '/help-and-knowledge'
+  };
 
   const {
     data: allCommonMilestones,
@@ -59,13 +70,13 @@ const HKCMilestoneLibrary = () => {
       </p>
 
       <div className="margin-bottom-6">
-        <UswdsReactLink to="/help-and-knowledge" data-testid="return-to-hkc">
+        <UswdsReactLink to={returnConfig.to} data-testid="return-to-hkc">
           <span>
             <Icon.ArrowBack
               className="top-3px margin-right-1"
               aria-label="back"
             />
-            {hkcT('milestoneLibrary.returnToHkc')}
+            {returnConfig.label}
           </span>
         </UswdsReactLink>
       </div>

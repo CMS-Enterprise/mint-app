@@ -9,6 +9,7 @@ import {
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray } from 'utils/translation';
 
 const AdminActions = () => {
@@ -44,6 +45,8 @@ const AdminActions = () => {
             variant="unstyled"
             to={section.route}
             className="display-flex flex-align-center deep-underline"
+            state={{ fromHomePage: true }}
+            data-testid={`to-${convertToLowercaseAndDashes(section.cta)}`}
           >
             {section.cta}
             <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
