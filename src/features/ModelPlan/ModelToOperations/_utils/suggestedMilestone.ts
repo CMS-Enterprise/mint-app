@@ -68,7 +68,7 @@ const getQuestionConfig = (reason: MilestoneSuggestionReason) => {
   const tableConfig =
     modelPlanTableMap[reason.table as keyof typeof modelPlanTableMap];
 
-  if (!tableConfig) return { questionKey: '', route: '', groupLabel: '' };
+  if (!tableConfig) return { questionKey: '', route: '' };
 
   const { translationConfig, routes, path } = tableConfig;
 
@@ -76,7 +76,7 @@ const getQuestionConfig = (reason: MilestoneSuggestionReason) => {
     Object.keys(translationConfig) as Array<keyof typeof translationConfig>
   ).find(key => translationConfig[key].dbField === reason.field);
 
-  if (!questionKey) return { questionKey: '', route: path, groupLabel: '' };
+  if (!questionKey) return { questionKey: '', route: path };
 
   const pageOrder = translationConfig[questionKey]?.order;
 
@@ -85,8 +85,7 @@ const getQuestionConfig = (reason: MilestoneSuggestionReason) => {
 
   return {
     questionKey,
-    route: subRoute ? `${path}/${subRoute}` : path,
-    groupLabel: translationConfig[questionKey]?.groupLabel || ''
+    route: subRoute ? `${path}/${subRoute}` : path
   };
 };
 
@@ -94,7 +93,6 @@ export type ReasonType = {
   question: string;
   questionKey: string;
   questionUrl: string;
-  groupLabel?: string;
   answers: string[];
 };
 
@@ -122,7 +120,6 @@ export const formatMilestoneAnswers = (
           question,
           questionKey: questionConfig.questionKey,
           questionUrl: questionConfig.route,
-          groupLabel: questionConfig.groupLabel,
           answers: existingReason
             ? [...existingReason.answers, answer]
             : [answer]
@@ -134,13 +131,16 @@ export const formatMilestoneAnswers = (
 
   const formattedAnswers = Object.values(formattedReasons);
 
+  const isMultiQuestions = formattedAnswers.length > 1;
+  const groupLabel = isMultiQuestions ? 'appealGroupLabel' : '';
+
   return {
     answers: formattedAnswers,
-    scrollElement: formattedAnswers[0]?.groupLabel
-      ? convertToLowercaseAndDashes(formattedAnswers[0]?.groupLabel)
+    scrollElement: groupLabel
+      ? convertToLowercaseAndDashes(groupLabel)
       : formattedAnswers[0]?.questionKey, // scroll to either question or group label
     questionUrl: formattedAnswers[0]?.questionUrl, // should only have one url
-    groupLabel: formattedAnswers[0]?.groupLabel, // only multiple questions have groupLabel
-    isMultiQuestions: formattedAnswers.length > 1
+    groupLabel, // only certain multiple questions have groupLabel
+    isMultiQuestions
   };
 };
