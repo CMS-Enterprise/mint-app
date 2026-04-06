@@ -14,7 +14,7 @@ import {
   FormGroup,
   Label
 } from '@trussworks/react-uswds';
-import { MilestoneCardType } from 'features/ModelPlan/ModelToOperations/MilestoneLibrary';
+import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
 import {
   // GetCustomMtoSolutionsQuery,
   GetMtoMilestonesDocument,

@@ -9,8 +9,8 @@ import {
   Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import MilestoneCard from 'features/ModelPlan/ModelToOperations/_components/MilestoneCard';
 import MilestonePanel from 'features/ModelPlan/ModelToOperations/_components/MilestonePanel';
+import { GetMtoMilestonesQuery } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
@@ -25,11 +25,11 @@ import useMessage from 'hooks/useMessage';
 import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
-import { MilestoneCardType } from '../..';
+import MilestoneCard from '../MilestoneCard';
 import MilestoneFilterModal, {
   MilestoneSelectedFilters
-} from '../MilestoneFilterModal';
-import getMilestoneFilters from '../MilestoneFilterModal/getMilestoneFilters';
+} from '../MilestoneFilter/MilestoneFilterModal';
+import getMilestoneFilters from '../MilestoneFilter/MilestoneFilterModal/getMilestoneFilters';
 import MilestoneFilterTags from '../MilestoneFilterTags';
 
 const searchMilestones = (
@@ -46,12 +46,15 @@ const searchMilestones = (
 
 type MilestoneViewType = 'suggested' | 'all';
 
+export type MilestoneCardType =
+  GetMtoMilestonesQuery['modelPlan']['mtoMatrix']['commonMilestones'][0];
+
 const MilestoneCardGroup = ({
   milestones,
-  isHkcMilestoneLibrary
+  showFilters = false
 }: {
   milestones: MilestoneCardType[];
-  isHkcMilestoneLibrary: boolean;
+  showFilters?: boolean;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const { t: hkcT } = useTranslation('helpAndKnowledge');
@@ -108,9 +111,7 @@ const MilestoneCardGroup = ({
   const addedMilestonesHidden = params.get('hide-added-milestones') === 'true';
   const milestoneParam: string = params.get('milestone') || '';
 
-  let viewParam: MilestoneViewType = isHkcMilestoneLibrary
-    ? 'all'
-    : 'suggested';
+  let viewParam: MilestoneViewType = showFilters ? 'all' : 'suggested';
 
   const [, setIsSidepanelOpen] = useState(false);
 
@@ -209,14 +210,14 @@ const MilestoneCardGroup = ({
 
   const hasAppliedFilters = useMemo(
     () =>
-      isHkcMilestoneLibrary &&
+      showFilters &&
       (appliedFilters.categoryName.length > 0 ||
         appliedFilters.facilitatedByRole.length > 0),
-    [appliedFilters, isHkcMilestoneLibrary]
+    [appliedFilters, showFilters]
   );
 
   const filteredMilestones = useMemo(() => {
-    if (!isHkcMilestoneLibrary) {
+    if (!showFilters) {
       return selectedMilestones;
     }
 
@@ -237,7 +238,7 @@ const MilestoneCardGroup = ({
     }
 
     return filtered;
-  }, [selectedMilestones, appliedFilters, isHkcMilestoneLibrary]);
+  }, [selectedMilestones, appliedFilters, showFilters]);
 
   const {
     currentItems,
@@ -264,7 +265,12 @@ const MilestoneCardGroup = ({
         modalHeading={t('modal.editMilestone.milestoneTitle')}
         noScrollable
       >
-        {selectedMilestone && <MilestonePanel milestone={selectedMilestone} />}
+        {selectedMilestone && (
+          <MilestonePanel
+            milestone={selectedMilestone}
+            mode={showFilters ? 'hkcMilestoneLibrary' : 'mtoMilestoneLibrary'}
+          />
+        )}
       </Sidepanel>
 
       {!isMTOModalOpen && message && <Expire delay={45000}>{message}</Expire>}
@@ -273,7 +279,7 @@ const MilestoneCardGroup = ({
         <div className="margin-top-2 margin-bottom-4">
           <Grid row>
             <Grid className="display-flex flex-wrap flex-align-center margin-bottom-3">
-              {isHkcMilestoneLibrary && (
+              {showFilters && (
                 <MilestoneFilterModal
                   filters={filterOptions}
                   appliedFilters={appliedFilters}
@@ -287,13 +293,13 @@ const MilestoneCardGroup = ({
                 tableID="help-articles"
                 tableName=""
                 className={classNames('maxw-none tablet:width-mobile-lg', {
-                  'tablet:margin-left-1': isHkcMilestoneLibrary
+                  'tablet:margin-left-1': showFilters
                 })}
                 height5
               />
             </Grid>
 
-            {isHkcMilestoneLibrary && (
+            {showFilters && (
               <MilestoneFilterTags
                 appliedFilters={appliedFilters}
                 setAppliedFilters={setAppliedFilters}
@@ -314,7 +320,7 @@ const MilestoneCardGroup = ({
               </Grid>
             )}
 
-            {!isHkcMilestoneLibrary && (
+            {!showFilters && (
               <Grid
                 desktop={{ col: 12 }}
                 className="display-flex flex-wrap margin-bottom-2"
@@ -378,7 +384,7 @@ const MilestoneCardGroup = ({
               </Grid>
             )}
 
-            {!isHkcMilestoneLibrary && (
+            {!showFilters && (
               <Grid
                 desktop={{ col: 12 }}
                 className="display-flex flex-wrap bg-primary-lighter padding-x-2 padding-y-1"
@@ -483,7 +489,7 @@ const MilestoneCardGroup = ({
                       <MilestoneCard
                         milestone={milestone}
                         setIsSidepanelOpen={setIsSidepanelOpen}
-                        isHkcMilestoneLibrary={isHkcMilestoneLibrary}
+                        showFilters={showFilters}
                       />
                     </Grid>
                   ))}

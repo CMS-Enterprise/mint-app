@@ -10,26 +10,32 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import AddSolutionToMilestoneForm from 'features/ModelPlan/ModelToOperations/_components/AddCommonMilestoneForm';
+import SuggestedMilestoneToggle from 'features/ModelPlan/ModelToOperations/_components/SuggestedMilestoneToggle';
+import {
+  GetMtoAllCommonMilestonesQuery,
+  GetMtoMilestonesQuery
+} from 'gql/generated/graphql';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
-import { MilestoneCardType } from '../../MilestoneLibrary';
-import AddSolutionToMilestoneForm from '../AddCommonMilestoneForm';
-import SuggestedMilestoneToggle from '../SuggestedMilestoneToggle';
+import '../index.scss';
 
-import '../../index.scss';
+export type MilestoneCardType =
+  | GetMtoMilestonesQuery['modelPlan']['mtoMatrix']['commonMilestones'][0]
+  | GetMtoAllCommonMilestonesQuery['mtoCommonMilestones'][0];
 
 const MilestoneCard = ({
   className,
   milestone,
   setIsSidepanelOpen,
-  isHkcMilestoneLibrary
+  showFilters = false
 }: {
   className?: string;
   milestone: MilestoneCardType;
   setIsSidepanelOpen: (isOpen: boolean) => void;
-  isHkcMilestoneLibrary: boolean;
+  showFilters?: boolean;
 }) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const { t: hkcT } = useTranslation('helpAndKnowledge');
@@ -82,9 +88,9 @@ const MilestoneCard = ({
       <Card
         containerProps={{
           className: classNames('radius-md padding-0 margin-0', {
-            'minh-mobile': !isHkcMilestoneLibrary
+            'minh-mobile': !showFilters
           }),
-          style: isHkcMilestoneLibrary ? { minHeight: '260px' } : {}
+          style: showFilters ? { minHeight: '260px' } : {}
         }}
         className={classNames(className, 'margin-bottom-2')}
       >
@@ -123,7 +129,7 @@ const MilestoneCard = ({
           )}
         </CardBody>
 
-        {isHkcMilestoneLibrary && (
+        {showFilters && (
           <CardFooter className="padding-3">
             <Button
               unstyled
@@ -144,7 +150,7 @@ const MilestoneCard = ({
           </CardFooter>
         )}
 
-        {!isHkcMilestoneLibrary && (
+        {!showFilters && (
           <CardFooter className="padding-3">
             {!milestone.isAdded ? (
               <Button

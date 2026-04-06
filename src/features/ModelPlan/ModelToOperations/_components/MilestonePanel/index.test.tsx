@@ -2,12 +2,11 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
+import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
 import { MtoCommonSolutionKey, MtoFacilitator } from 'gql/generated/graphql';
 import { possibleSolutionsMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
-
-import { MilestoneCardType } from '../../MilestoneLibrary';
 
 import MilestonePanel from './index';
 
@@ -43,7 +42,10 @@ describe('MilestonePanel Component', () => {
           path: '/',
           element: (
             <MessageProvider>
-              <MilestonePanel milestone={mockMilestone} />
+              <MilestonePanel
+                milestone={mockMilestone}
+                mode="mtoMilestoneLibrary"
+              />
             </MessageProvider>
           )
         }

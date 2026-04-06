@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
 
 import UswdsReactLink from 'components/LinkWrapper';
 
@@ -10,7 +11,6 @@ import {
   formatMilestoneAnswers,
   ReasonType
 } from '../../_utils/suggestedMilestone';
-import { MilestoneCardType } from '../../MilestoneLibrary';
 
 type SuggestedMilestoneToggleType = {
   milestone: MilestoneCardType;

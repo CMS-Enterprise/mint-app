@@ -7,9 +7,7 @@ import { suggestedMilestonesMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import { MilestoneCardType } from '../../MilestoneLibrary';
-
-import MilestoneCard from './index';
+import MilestoneCard, { MilestoneCardType } from './index';
 
 describe('MilestoneCard Component', () => {
   const mockMilestone: MilestoneCardType = {
@@ -46,7 +44,7 @@ describe('MilestoneCard Component', () => {
               <MilestoneCard
                 milestone={mockMilestone}
                 setIsSidepanelOpen={() => null}
-                isHkcMilestoneLibrary={false}
+                showFilters={false}
               />
             </MessageProvider>
           )
