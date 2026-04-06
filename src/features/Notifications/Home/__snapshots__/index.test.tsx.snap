@@ -173,7 +173,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                   <p
                     class="text-base-darker text-right margin-top-05 margin-bottom-0"
                   >
-                    3 years ago
+                    4 years ago
                   </p>
                 </div>
               </div>
@@ -266,7 +266,7 @@ exports[`Notification Page > matches snapshot 1`] = `
                   <p
                     class="text-base-darker text-right margin-top-05 margin-bottom-0"
                   >
-                    3 years ago
+                    4 years ago
                   </p>
                 </div>
               </div>

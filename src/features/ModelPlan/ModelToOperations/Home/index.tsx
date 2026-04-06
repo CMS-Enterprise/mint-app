@@ -31,6 +31,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import MTOTableActions from '../_components/ActionsTable';
 import ITSystemsTable from '../_components/ITSystemsTable';
 import MTOTable from '../_components/MatrixTable';
+import { countMtoCategoryHeaderRows } from '../_components/MatrixTable/_utils';
 import MTOTableFilters from '../_components/MTOTableFilters';
 import MTOOptionsPanel from '../_components/OptionPanel';
 import MTOStatusBanner from '../_components/StatusBanner';
@@ -95,6 +96,10 @@ const MTOHome = () => {
 
   const isMatrixStarted: boolean =
     data?.modelPlan.mtoMatrix.status !== MtoStatus.READY;
+
+  const categoryHeaderRowCount = countMtoCategoryHeaderRows(
+    modelToOperationsMatrix?.categories
+  );
 
   if (error) {
     return <NotFound />;
@@ -257,7 +262,9 @@ const MTOHome = () => {
                       {isMatrixStarted ? (
                         <>
                           <MTOTableActions />
-                          <MTOTableFilters />
+                          <MTOTableFilters
+                            categoryHeaderRowCount={categoryHeaderRowCount}
+                          />
                           <MTOTable
                             queryData={data}
                             loading={dataAvalilable}

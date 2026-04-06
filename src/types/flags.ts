@@ -6,8 +6,6 @@ export type Flags = {
   changeHistoryReleaseDate: string;
   modelsApproachingClearanceEnabled: boolean;
   mintAnalyticsEnabled: boolean;
-  echimpFFSURLEnabled: boolean;
-  echimpIntegrationEnabled: boolean;
   sandbox: boolean;
 };
 

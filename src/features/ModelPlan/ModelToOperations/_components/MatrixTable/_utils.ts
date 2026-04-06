@@ -10,6 +10,32 @@ import type { CategoryType, MilestoneType, SubCategoryType } from './columns';
 export type GetModelToOperationsMatrixCategoryType =
   GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix']['categories'];
 
+/**
+ * Counts category header rows in the MTO matrix (one per category and one per subcategory).
+ *
+ * Excludes uncategorized categories with no milestones.
+ */
+export const countMtoCategoryHeaderRows = (
+  categories: GetModelToOperationsMatrixCategoryType | null | undefined
+): number => {
+  if (!categories?.length) {
+    return 0;
+  }
+  return categories.reduce((total, category) => {
+    const categoryMilestones =
+      category.subCategories?.reduce(
+        (acc, subCategory) => acc + (subCategory.milestones?.length ?? 0),
+        0
+      ) ?? 0;
+
+    if (category.name === 'Uncategorized' && categoryMilestones === 0) {
+      return total;
+    }
+
+    return total + 1 + (category.subCategories?.length ?? 0);
+  }, 0);
+};
+
 export type NeededWithinWindowDays = 30 | 60 | 90;
 
 export const parseNeededWithinDaysFromSearchParams = (
@@ -62,7 +88,7 @@ export const filterMilestonesNeededWithinDays = (
 
 /**
  * Flattens the category tree into a single category with a single subcategory
- * containing all milestones. Used when a "needed within N days" filter is on
+ * containing all milestones. Used when category/subcategory rows are hidden
  * so that sorting applies across all visible milestones, not per group.
  */
 export const flattenToSingleCategory = (
