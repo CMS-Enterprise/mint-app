@@ -134,13 +134,15 @@ export const formatMilestoneAnswers = (
 
   const formattedAnswers = Object.values(formattedReasons);
 
+  const isMultiQuestions = formattedAnswers.length > 1;
+
   return {
     answers: formattedAnswers,
     scrollElement: formattedAnswers[0]?.groupLabel
       ? convertToLowercaseAndDashes(formattedAnswers[0]?.groupLabel)
       : formattedAnswers[0]?.questionKey, // scroll to either question or group label
     questionUrl: formattedAnswers[0]?.questionUrl, // should only have one url
-    groupLabel: formattedAnswers[0]?.groupLabel, // only multiple questions have groupLabel
-    isMultiQuestions: formattedAnswers.length > 1
+    groupLabel: isMultiQuestions ? 'appealGroupLabel' : '', // only certain multiple questions have groupLabel
+    isMultiQuestions
   };
 };
