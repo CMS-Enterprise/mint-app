@@ -2653,6 +2653,15 @@ const helpAndKnowledge = {
     noResults: {
       heading: 'There are no results that match your filters.',
       body: 'Try changing or clearing your filters to see more milestones.'
+    },
+    adminActions: {
+      title: 'Admin actions',
+      manageCommonMilestones: {
+        header: 'Manage common milestones',
+        description:
+          'Add, edit, and remove milestones from the common milestone library. This will apply to all MINT users and will affect the common milestones that model teams and IT Leads have access to when completing their MTO.',
+        cta: 'Add a milestone'
+      }
     }
   },
   operationalSolutions: 'Operational solutions',

@@ -1,0 +1,90 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AdminActions Component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="usa-summary-box bg-info-lighter border-1px border-info-light radius-md padding-3"
+    data-testid="summary-box"
+  >
+    <div
+      class="usa-summary-box__body"
+    >
+      <h2
+        class="usa-summary-box__heading margin-bottom-2"
+      >
+        Admin actions
+      </h2>
+      <div
+        class="usa-summary-box__text margin-bottom-3"
+      >
+        <h4
+          class="margin-0 margin-bottom-1 line-height-sans-2"
+        >
+          Manage common milestones
+        </h4>
+        <p
+          class="margin-0 margin-bottom-1 line-height-sans-5"
+        >
+          Add, edit, and remove milestones from the common milestone library. This will apply to all MINT users and will affect the common milestones that model teams and IT Leads have access to when completing their MTO.
+        </p>
+        <a
+          class="display-flex flex-align-center deep-underline"
+          data-discover="true"
+          href="/help-and-knowledge/milestone-library"
+        >
+          View common milestones
+          <svg
+            aria-label="forward"
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="usa-summary-box__text"
+      >
+        <h4
+          class="margin-0 margin-bottom-1 line-height-sans-2"
+        >
+          Manage SME contact directory
+        </h4>
+        <p
+          class="margin-0 margin-bottom-1 line-height-sans-5"
+        >
+          Add, edit, and remove subject matter experts (SMEs) from the contact directory in MINT’s Help and Knowledge Center.
+        </p>
+        <a
+          class="display-flex flex-align-center deep-underline"
+          data-discover="true"
+          href="/help-and-knowledge#contact-directory"
+        >
+          View SME contact directory
+          <svg
+            aria-label="forward"
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -73,6 +73,7 @@ const HelpCardGroup = ({
   const { currentItems, pagination, search, pageSize, sort } =
     useSearchSortPagination<ArticleProps, SortOptionsType>({
       items: resources,
+      skipSync: homeItems,
       sortOptions,
       filterFunction: filterResourceArticles,
       sortFunction: handleSortOptions
@@ -193,6 +194,7 @@ const HelpCardGroup = ({
       <div className="display-flex">
         {!homeItems && pageCount >= 1 && (
           <Pagination
+            key={`pagination-page-${currentPage}`}
             pathname={location.pathname}
             currentPage={currentPage}
             maxSlots={7}
