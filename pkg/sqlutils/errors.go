@@ -33,23 +33,26 @@ func newErrDupConstraintErr(message string, pqErr *pq.Error) *errDupConstraint {
 // sqlutils helpers (GetProcedure / ProcessDataBaseErrors). See also IsNoRowsResult.
 var ErrNoRowsResult *errNoRowsResult
 
-// errNoRowsResult wraps sql.ErrNoRows from stmt.Get / Scan paths that run through ProcessDataBaseErrors.
+// errNoRowsResult marks a no-rows result from ProcessDataBaseErrors. It wraps one error value: sqlutils
+// context (prepare vs execute, etc.) chained with %w to the real driver/sql error.
 type errNoRowsResult struct {
-	Message string
+	err error
 }
 
-func newErrNoRowsResult(message string) *errNoRowsResult {
-	return &errNoRowsResult{Message: message}
+func newErrNoRowsResult(message string, underlying error) *errNoRowsResult {
+	return &errNoRowsResult{
+		err: fmt.Errorf("%s: %w", message, underlying),
+	}
 }
 
 // Error implements error for errNoRowsResult.
 func (e *errNoRowsResult) Error() string {
-	return fmt.Sprintf("dbErr: no rows in result set: %s", e.Message)
+	return fmt.Sprintf("dbErr: no rows in result set: %v", e.err)
 }
 
-// Unwrap returns sql.ErrNoRows so errors.Is(err, sql.ErrNoRows) continues to work on wrapped errors.
+// Unwrap returns the wrapped chain (context + underlying); further Unwrap reaches the DB error.
 func (e *errNoRowsResult) Unwrap() error {
-	return sql.ErrNoRows
+	return e.err
 }
 
 // IsNoRowsResult reports whether err is sql.ErrNoRows, wraps it, or is a no-rows error from ProcessDataBaseErrors.
@@ -107,7 +110,7 @@ func ProcessDataBaseErrors(message string, err error) error {
 
 	}
 	if errors.Is(err, sql.ErrNoRows) {
-		return newErrNoRowsResult(message)
+		return newErrNoRowsResult(message, err)
 	}
 	return fmt.Errorf(message+" err: %w", err)
 
