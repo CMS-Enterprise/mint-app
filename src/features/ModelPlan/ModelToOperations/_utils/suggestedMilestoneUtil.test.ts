@@ -52,7 +52,7 @@ describe('SuggestedMilestone Util', () => {
 
       expect(result.answers).toHaveLength(2);
       expect(result.isMultiQuestions).toBe(true);
-      expect(result.scrollElement).toBe(result.answers[0].groupLabel);
+      expect(result.scrollElement).toBe('appealgrouplabel');
     });
 
     it('returns an empty array and undefined values if no reasons are provided', () => {
