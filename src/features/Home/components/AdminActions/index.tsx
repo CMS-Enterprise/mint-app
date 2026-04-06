@@ -36,7 +36,7 @@ const AdminActions = () => {
           <h4 className="margin-0 margin-bottom-1 line-height-sans-2">
             {section.header}
           </h4>
-          <p className="margin-0 margin-bottom-1 line-height-sans-2">
+          <p className="margin-0 margin-bottom-1 line-height-sans-5">
             {section.description}
           </p>
 

@@ -21,7 +21,7 @@ const CommonMilestoneAdminActions = () => {
         <h4 className="margin-0 margin-bottom-1 line-height-sans-2">
           {t('milestoneLibrary.adminActions.manageCommonMilestones.header')}
         </h4>
-        <p className="margin-0 margin-bottom-2 line-height-sans-2">
+        <p className="margin-0 margin-bottom-2 line-height-sans-5">
           {t(
             'milestoneLibrary.adminActions.manageCommonMilestones.description'
           )}

@@ -23,7 +23,7 @@ exports[`CommonMilestoneAdminActions Component > matches snapshot 1`] = `
           Manage common milestones
         </h4>
         <p
-          class="margin-0 margin-bottom-2 line-height-sans-2"
+          class="margin-0 margin-bottom-2 line-height-sans-5"
         >
           Add, edit, and remove milestones from the common milestone library. This will apply to all MINT users and will affect the common milestones that model teams and IT Leads have access to when completing their MTO.
         </p>
