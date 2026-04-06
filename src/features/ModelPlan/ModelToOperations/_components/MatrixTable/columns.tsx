@@ -141,23 +141,57 @@ export type ColumnType = {
   Cell?: (cellRow: RowProps | ExtendedRowProps) => React.ReactNode;
 };
 
-const sortNested = (
+/**
+ * The table stores milestones in a tree: categories → subcategories → milestones.
+ * Sorting a column means sorting each subcategory’s `milestones` array in place (on a shallow copy
+ * of the top-level category list so React state updates stay predictable).
+ */
+const sortMilestonesInCategories = (
   data: CategoryType[],
   direction: 'ASC' | 'DESC',
-  accessor: keyof MilestoneType
-) => {
+  compare: (a: MilestoneType, b: MilestoneType) => number
+): CategoryType[] => {
   const copyData = [...data];
   copyData.forEach(category => {
     category.subCategories.forEach(subCategory => {
-      subCategory.milestones.sort((a, b) =>
-        a[accessor]?.localeCompare(b[accessor])
-      );
+      subCategory.milestones.sort(compare);
       if (direction === 'DESC') {
         subCategory.milestones.reverse();
       }
     });
   });
   return copyData;
+};
+
+const sortNested = (
+  data: CategoryType[],
+  direction: 'ASC' | 'DESC',
+  accessor: keyof MilestoneType
+) =>
+  sortMilestonesInCategories(data, direction, (a, b) => {
+    const left = a[accessor];
+    const right = b[accessor];
+    if (typeof left === 'string' && typeof right === 'string') {
+      return left.localeCompare(right);
+    }
+    return String(left ?? '').localeCompare(String(right ?? ''));
+  });
+
+/**
+ * Facilitated-by is stored as facilitator enums (an array), not a string. `sortNested` calls
+ * `localeCompare` on the cell value, which only works for strings—hence a dedicated key string.
+ * Roles are sorted before joining so two rows with the same set compare equal regardless of
+ * multi-select order; we also fold in OTHER details and assignee like the column cell.
+ */
+const milestoneFacilitatedBySortKey = (milestone: MilestoneType): string => {
+  const roles =
+    milestone.facilitatedBy && milestone.facilitatedBy.length > 0
+      ? [...milestone.facilitatedBy].sort().join(',')
+      : '';
+  const otherText = milestone.facilitatedByOther ?? '';
+  const assignee =
+    milestone.assignedToPlanCollaborator?.userAccount.commonName ?? '';
+  return `${roles}|${otherText}|${assignee}`;
 };
 
 export const columns: ColumnType[] = [
@@ -172,21 +206,13 @@ export const columns: ColumnType[] = [
     accessor: 'riskIndicator',
     width: '60px',
     canSort: false,
-    sort: (data: CategoryType[], direction: 'ASC' | 'DESC') => {
-      const copyData = [...data];
-      copyData.forEach(category => {
-        category.subCategories.forEach(subCategory => {
-          subCategory.milestones.sort(
-            (a, b) =>
-              (riskMap[a.riskIndicator] || 0) - (riskMap[b.riskIndicator] || 0)
-          );
-          if (direction === 'DESC') {
-            subCategory.milestones.reverse();
-          }
-        });
-      });
-      return copyData;
-    },
+    sort: (data, direction) =>
+      sortMilestonesInCategories(
+        data,
+        direction,
+        (a, b) =>
+          (riskMap[a.riskIndicator] || 0) - (riskMap[b.riskIndicator] || 0)
+      ),
     Cell: ({ row, rowType, expanded }: RowProps) => {
       const { riskIndicator } = row;
 
@@ -288,7 +314,12 @@ export const columns: ColumnType[] = [
     Header: i18next.t('modelToOperationsMisc:table.facilitatedBy'),
     accessor: 'facilitatedBy',
     width: '175px',
-    sort: sortNested,
+    sort: (data, direction) =>
+      sortMilestonesInCategories(data, direction, (a, b) =>
+        milestoneFacilitatedBySortKey(a).localeCompare(
+          milestoneFacilitatedBySortKey(b)
+        )
+      ),
     Cell: ({ row, rowType, expanded }: RowProps) => {
       if (rowType !== 'milestone') return <></>;
 
@@ -325,20 +356,10 @@ export const columns: ColumnType[] = [
     Header: i18next.t('modelToOperationsMisc:table.solutions'),
     accessor: 'solutions',
     width: '150px',
-    sort: (data: CategoryType[], direction: 'ASC' | 'DESC') => {
-      const copyData = [...data];
-      copyData.forEach(category => {
-        category.subCategories.forEach(subCategory => {
-          subCategory.milestones.sort((a, b) =>
-            a.solutions.join().localeCompare(b.solutions.join())
-          );
-          if (direction === 'DESC') {
-            subCategory.milestones.reverse();
-          }
-        });
-      });
-      return copyData;
-    },
+    sort: (data, direction) =>
+      sortMilestonesInCategories(data, direction, (a, b) =>
+        a.solutions.join().localeCompare(b.solutions.join())
+      ),
     Cell: ({
       row,
       rowType,

@@ -12,20 +12,17 @@ case "$APP_ENV" in
   "test")
     MINT_URL="https://test.mint.cms.gov"
     export VITE_OKTA_DOMAIN="https://test.idp.idm.cms.gov"
-    export VITE_ECHIMP_URL="https://echimp.cmsdev.local"
-    export VITE_TEMP_ECHIMP_URL="https://echimp-dev.cms.gov"
+    export VITE_ECHIMP_URL="https://echimp-dev.cms.gov"
     ;;
   "impl")
     MINT_URL="https://impl.mint.cms.gov"
     export VITE_OKTA_DOMAIN="https://impl.idp.idm.cms.gov"
-    export VITE_ECHIMP_URL="https://echimp.cms.cmsval"
-    export VITE_TEMP_ECHIMP_URL="https://echimp-impl.cms.gov"
+    export VITE_ECHIMP_URL="https://echimp-impl.cms.gov"
     ;;
   "prod")
     MINT_URL="https://mint.cms.gov"
     export VITE_OKTA_DOMAIN="https://idm.cms.gov"
-    export VITE_ECHIMP_URL="https://echimp.cmsnet"
-    export VITE_TEMP_ECHIMP_URL="https://echimp.cms.gov"
+    export VITE_ECHIMP_URL="https://echimp.cms.gov"
     ;;
   *)
     echo "APP_ENV value not recognized: ${APP_ENV:-unset}"
