@@ -45,7 +45,7 @@ describe('HKC Milestone library Component', () => {
       }
     );
 
-    const { getByTestId, asFragment } = render(
+    const { getByTestId, findByRole, asFragment } = render(
       <MockedProvider
         mocks={[...commonMilestonesLibraryMock]}
         addTypename={false}
@@ -57,7 +57,8 @@ describe('HKC Milestone library Component', () => {
     );
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
-    // Match the snapshot
+    await findByRole('navigation', { name: /pagination/i });
+
     expect(asFragment()).toMatchSnapshot();
   });
 
