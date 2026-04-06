@@ -675,14 +675,14 @@ exports[`Model Plan Ops Eval and Learning Performance > matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-6"
-            data-scroll="appealperformance.grouplabel"
+            data-scroll="appealgrouplabel"
           >
             <label
               class="usa-label"
               data-testid="label"
               for="ops-eval-and-learning-appeals"
             >
-              appealPerformance.groupLabel
+              Will participants be able to appeal the following?
             </label>
             <div
               class="usa-alert usa-alert--info flex mto-warning margin-top-2"

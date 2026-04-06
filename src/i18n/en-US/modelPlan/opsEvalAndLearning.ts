@@ -1231,6 +1231,7 @@ export const opsEvalAndLearningMisc = {
   dataMonitoringHeading: 'Data Monitoring',
   dataMonitoringContinued: 'Data monitoring questions continued',
   riskAdjustments: 'Will you make risk adjustments to the following?',
+  participantAppeal: 'Will participants be able to appeal the following?',
   appealsWarning:
     'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.',
   ccwSpecific: 'Chronic Conditions Warehouse (CCW) questions',
