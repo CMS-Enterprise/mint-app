@@ -1,12 +1,11 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { fireEvent, render } from '@testing-library/react';
+import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
 import { MtoCommonSolutionKey, TableName } from 'gql/generated/graphql';
 import { modelID } from 'tests/mock/readonly';
 import MockedProvider from 'tests/MockedProvider';
 import { vi } from 'vitest';
-
-import { MilestoneCardType } from '../../MilestoneLibrary';
 
 import SuggestedMilestoneToggle from '.';
 

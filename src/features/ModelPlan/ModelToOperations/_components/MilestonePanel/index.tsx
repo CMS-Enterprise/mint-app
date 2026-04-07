@@ -3,25 +3,23 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
+import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
 import i18next from 'i18next';
 
-import { MilestoneCardType } from '../../MilestoneLibrary';
 import { SolutionCard } from '../SolutionCard';
 
 import '../../index.scss';
 
 type MilestonePanelProps = {
   milestone: MilestoneCardType;
+  mode: 'mtoMilestoneLibrary' | 'hkcMilestoneLibrary';
 };
 
-const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
+const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
 
   const navigate = useNavigate();
   const location = useLocation();
-
-  const isHkcMilestoneLibrary =
-    location.pathname.includes('help-and-knowledge');
 
   const params = useMemo(
     () => new URLSearchParams(location.search),
@@ -73,7 +71,7 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
               })}
             </p>
 
-            {!isHkcMilestoneLibrary && (
+            {mode === 'mtoMilestoneLibrary' && (
               <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
                 {!milestone.isAdded ? (
                   <Button
