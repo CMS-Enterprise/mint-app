@@ -107,7 +107,7 @@ func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(
 
 	err = stmt.Get(&retFavorite, arg)
 	if err != nil {
-		if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
+		if sqlutils.IsNoRowsResult(err) { //EXPECT THERE TO BE NULL results, don't treat this as an error
 			return nil, nil
 		}
 		return nil, err
