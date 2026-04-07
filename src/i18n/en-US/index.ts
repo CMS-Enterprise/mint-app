@@ -26,6 +26,9 @@ import keyContact, { keyContactMisc } from './helpAndKnowledge/keyContact';
 import keyContactCategory, {
   keyContactCategoryMisc
 } from './helpAndKnowledge/keyContactCategory';
+import mtoCommonMilestone, {
+  mtoCommonMilestoneMisc
+} from './helpAndKnowledge/mtoCommonMilestone';
 import adminActions from './home/adminActions';
 import customHome from './home/customHome';
 import homepageSettings from './home/settings';
@@ -55,9 +58,6 @@ import modelToOperations, {
   modelToOperationsMisc
 } from './modelPlan/modelToOperations';
 import mtoCategory from './modelPlan/mtoCategory';
-import mtoCommonMilestone, {
-  mtoCommonMilestoneMisc
-} from './modelPlan/mtoCommonMilestone';
 import mtoCommonSolutionContact, {
   mtoCommonSolutionContactMisc
 } from './modelPlan/mtoCommonSolutionContact';

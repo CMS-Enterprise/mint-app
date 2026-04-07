@@ -7,6 +7,7 @@ import * as fs from 'fs';
 
 import keyContact from '../../src/i18n/en-US/helpAndKnowledge/keyContact';
 import keyContactCategory from '../../src/i18n/en-US/helpAndKnowledge/keyContactCategory';
+import mtoCommonMilestone from '../../src/i18n/en-US/helpAndKnowledge/mtoCommonMilestone';
 import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
 import collaborators from '../../src/i18n/en-US/modelPlan/collaborators';
@@ -22,7 +23,6 @@ import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
 import modelPlanMtoTemplateLink from '../../src/i18n/en-US/modelPlan/modelPlanMtoTemplateLink';
 import mtoInfo from '../../src/i18n/en-US/modelPlan/modelToOperations';
 import mtoCategory from '../../src/i18n/en-US/modelPlan/mtoCategory';
-import mtoCommonMilestone from '../../src/i18n/en-US/modelPlan/mtoCommonMilestone';
 import mtoCommonSolutionContact from '../../src/i18n/en-US/modelPlan/mtoCommonSolutionContact';
 import mtoCommonSolutionContractor from '../../src/i18n/en-US/modelPlan/mtoCommonSolutionContractor';
 import mtoMilestone from '../../src/i18n/en-US/modelPlan/mtoMilestone';
