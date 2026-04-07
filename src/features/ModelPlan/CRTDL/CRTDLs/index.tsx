@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
-import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -11,14 +10,12 @@ import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import { ECHIMP_URL_SSO, ECHIMP_URL_TEMP_SSO } from 'constants/echimp';
+import { ECHIMP_URL_SSO } from 'constants/echimp';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 
 export const CRTDLs = () => {
   const { t: crtdlsT } = useTranslation('crtdlsMisc');
   const { t: miscT } = useTranslation('miscellaneous');
-
-  const flags = useFlags();
 
   const { modelID = '' } = useParams<{ modelID: string }>();
   const { modelName } = useContext(ModelInfoContext);
@@ -64,15 +61,7 @@ export const CRTDLs = () => {
               i18nKey="description"
               components={{
                 el: (
-                  <ExternalLink
-                    inlineText
-                    href={
-                      flags.echimpIntegrationEnabled
-                        ? ECHIMP_URL_TEMP_SSO
-                        : ECHIMP_URL_SSO
-                    }
-                    toEchimp
-                  >
+                  <ExternalLink inlineText href={ECHIMP_URL_SSO} toEchimp>
                     {' '}
                   </ExternalLink>
                 )
@@ -80,7 +69,6 @@ export const CRTDLs = () => {
             />
           </p>
 
-          {/* TODO Clean up / remove in https://jiraent.cms.gov/browse/MINT-3134 */}
           <Alert type="info" slim className="margin-bottom-6">
             {crtdlsT('echimp')}
           </Alert>

@@ -181,7 +181,7 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     formType: TranslationFormType.RADIO,
     order: 1.1,
     isPageStart: true,
-    readonlyHeader: 'IDDOC operations',
+    readonlyHeader: '4i and ACO-OS',
     options: {
       true: 'Yes',
       false: 'No'
@@ -329,7 +329,6 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealPerformance',
     goField: 'AppealPerformance',
     dbField: 'appeal_performance',
-    groupLabel: 'Will participants be able to appeal the following?',
     label: 'Performance Scores',
     readonlyLabel: 'Performance scores',
     dataType: TranslationDataType.BOOLEAN,
@@ -344,7 +343,6 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealFeedback',
     goField: 'AppealFeedback',
     dbField: 'appeal_feedback',
-    groupLabel: 'Will participants be able to appeal the following?',
     label: 'Feedback Results',
     readonlyLabel: 'Feedback results',
     dataType: TranslationDataType.BOOLEAN,
@@ -359,7 +357,6 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealPayments',
     goField: 'AppealPayments',
     dbField: 'appeal_payments',
-    groupLabel: 'Will participants be able to appeal the following?',
     label: 'Payments',
     readonlyLabel: 'Payments',
     dataType: TranslationDataType.BOOLEAN,
@@ -374,7 +371,6 @@ export const opsEvalAndLearning: TranslationOpsEvalAndLearning = {
     gqlField: 'appealOther',
     goField: 'AppealOther',
     dbField: 'appeal_other',
-    groupLabel: 'Will participants be able to appeal the following?',
     label: 'Others',
     readonlyLabel: 'Others',
     dataType: TranslationDataType.BOOLEAN,
@@ -1235,6 +1231,7 @@ export const opsEvalAndLearningMisc = {
   dataMonitoringHeading: 'Data Monitoring',
   dataMonitoringContinued: 'Data monitoring questions continued',
   riskAdjustments: 'Will you make risk adjustments to the following?',
+  participantAppeal: 'Will participants be able to appeal the following?',
   appealsWarning:
     'If yes to any of the following, please check with the Legal Vertical on what needs to be in a Participation Agreement and/or regulatory text around your model’s appeal process steps and time frames.',
   ccwSpecific: 'Chronic Conditions Warehouse (CCW) questions',
