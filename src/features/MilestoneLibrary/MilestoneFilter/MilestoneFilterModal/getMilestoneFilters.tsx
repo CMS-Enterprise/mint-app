@@ -1,7 +1,6 @@
+import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
 import { MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
-
-import { MilestoneCardType } from '../..';
 
 type MilestoneFilterFields = Pick<
   MilestoneCardType,

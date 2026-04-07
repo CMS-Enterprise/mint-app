@@ -5,9 +5,7 @@ import { MtoCommonSolutionKey } from 'gql/generated/graphql';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import { MilestoneCardType } from '../..';
-
-import MilestoneCardGroup from '.';
+import MilestoneCardGroup, { MilestoneCardType } from '.';
 
 const commonMilestonesMock: MilestoneCardType[] = [
   {
@@ -59,7 +57,7 @@ const commonMilestonesMock: MilestoneCardType[] = [
 ];
 
 describe('MilestoneCardGroup', () => {
-  it('renders correctly in HKC milestone Library', () => {
+  it('renders correctly when show filter', () => {
     const router = createMemoryRouter(
       [
         {
@@ -68,7 +66,7 @@ describe('MilestoneCardGroup', () => {
             <MessageProvider>
               <MilestoneCardGroup
                 milestones={commonMilestonesMock}
-                isHkcMilestoneLibrary
+                showFilters
               />
             </MessageProvider>
           )
@@ -89,7 +87,7 @@ describe('MilestoneCardGroup', () => {
     expect(queryByText('Add to matrix')).not.toBeInTheDocument();
   });
 
-  it('renders correctly in MTO Library', () => {
+  it('renders correctly when not show filter', () => {
     const router = createMemoryRouter(
       [
         {
@@ -98,7 +96,7 @@ describe('MilestoneCardGroup', () => {
             <MessageProvider>
               <MilestoneCardGroup
                 milestones={commonMilestonesMock}
-                isHkcMilestoneLibrary={false}
+                showFilters={false}
               />
             </MessageProvider>
           )
@@ -131,7 +129,7 @@ describe('MilestoneCardGroup', () => {
             <MessageProvider>
               <MilestoneCardGroup
                 milestones={commonMilestonesMock}
-                isHkcMilestoneLibrary={false}
+                showFilters={false}
               />
             </MessageProvider>
           )
@@ -161,7 +159,7 @@ describe('MilestoneCardGroup', () => {
             <MessageProvider>
               <MilestoneCardGroup
                 milestones={commonMilestonesMock}
-                isHkcMilestoneLibrary={false}
+                showFilters={false}
               />
             </MessageProvider>
           )
@@ -194,7 +192,7 @@ describe('MilestoneCardGroup', () => {
             <MessageProvider>
               <MilestoneCardGroup
                 milestones={commonMilestonesMock}
-                isHkcMilestoneLibrary
+                showFilters
               />
             </MessageProvider>
           )

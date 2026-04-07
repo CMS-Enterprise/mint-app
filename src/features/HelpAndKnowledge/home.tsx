@@ -8,13 +8,13 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
-import KeyContactDirectory from './_components/KeyContactDirectory';
 import MilestoneLibrarySection from './_components/MilestoneLibrarySection';
 import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
 import ResourcesByCategory from './Articles/_components/ResourcesByCategory';
 import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
 import { homeArticles } from './Articles';
+import KeyContactDirectory from './KeyContactDirectory';
 
 const JUMP_TO_LINKS_I18NKEYS = [
   'helpResourcesAndLinks',

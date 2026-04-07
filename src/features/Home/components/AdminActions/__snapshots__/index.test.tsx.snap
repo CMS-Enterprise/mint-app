@@ -30,6 +30,7 @@ exports[`AdminActions Component > matches snapshot 1`] = `
         <a
           class="display-flex flex-align-center deep-underline"
           data-discover="true"
+          data-testid="to-view-common-milestones"
           href="/help-and-knowledge/milestone-library"
         >
           View common milestones
@@ -65,6 +66,7 @@ exports[`AdminActions Component > matches snapshot 1`] = `
         <a
           class="display-flex flex-align-center deep-underline"
           data-discover="true"
+          data-testid="to-view-sme-contact-directory"
           href="/help-and-knowledge#contact-directory"
         >
           View SME contact directory

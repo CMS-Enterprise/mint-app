@@ -2643,6 +2643,7 @@ const helpAndKnowledge = {
     description:
       'The milestones in this library are common milestones that MINT suggests to teams, allowing them to select from a set of often-used milestones to more quickly fill in the model-to-operations matrix (MTO) for their model. Each common milestone has a common category, description, list of roles often responsible for completing the work, and a set of solutions and/or IT systems often used to implement the work for the milestone.',
     returnToHkc: 'Return to Help and Knowledge Center',
+    returnToHome: 'Return to MINT home',
     learnAboutThisMilestone: 'Learn about this milestone',
     filters: {
       primaryCategory: 'primary category',

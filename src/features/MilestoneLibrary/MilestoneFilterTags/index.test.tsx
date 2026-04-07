@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
-import { MilestoneSelectedFilters } from '../MilestoneFilterModal';
+import { MilestoneSelectedFilters } from '../MilestoneFilter/MilestoneFilterModal';
 
 import MilestoneFilterTags from '.';
 

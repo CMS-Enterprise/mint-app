@@ -7,7 +7,7 @@ import { upperFirst } from 'lodash';
 
 import Tag from 'components/Tag';
 
-import { MilestoneSelectedFilters } from '../MilestoneFilterModal';
+import { MilestoneSelectedFilters } from '../MilestoneFilter/MilestoneFilterModal';
 
 type FilterTagProps = {
   label: string;
