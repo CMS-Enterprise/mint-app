@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
@@ -37,4 +39,19 @@ func MTOCommonMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, i
 	}
 	return returned, nil
 
+}
+
+// MTOCommonMilestoneArchive marks a common milestone as archived and updates audit fields.
+func MTOCommonMilestoneArchive(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID, actorUserID uuid.UUID) (*models.MTOCommonMilestone, error) {
+	args := map[string]any{
+		"id":          id,
+		"modified_by": actorUserID,
+	}
+
+	returned, err := sqlutils.GetProcedure[models.MTOCommonMilestone](np, sqlqueries.MTOCommonMilestone.Archive, args)
+	if err != nil {
+		return nil, fmt.Errorf("issue archiving MTOCommonMilestone object: %w", err)
+	}
+
+	return returned, nil
 }

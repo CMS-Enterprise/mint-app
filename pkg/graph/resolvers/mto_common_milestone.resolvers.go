@@ -11,6 +11,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/mappings"
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -70,17 +71,24 @@ func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *m
 
 // CreateMTOCommonMilestone is the resolver for the createMTOCommonMilestone field.
 func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName *string, facilitatedByRole []models.MTOFacilitator, mtoCommonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
-	panic(fmt.Errorf("not implemented: CreateMTOCommonMilestone - createMTOCommonMilestone"))
+	panic("not implemented: CreateMTOCommonMilestone - createMTOCommonMilestone")
 }
 
 // UpdateMTOCommonMilestone is the resolver for the updateMTOCommonMilestone field.
 func (r *mutationResolver) UpdateMTOCommonMilestone(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.MTOCommonMilestone, error) {
-	panic(fmt.Errorf("not implemented: UpdateMTOCommonMilestone - updateMTOCommonMilestone"))
+	panic("not implemented: UpdateMTOCommonMilestone - updateMTOCommonMilestone")
 }
 
 // ArchiveMTOCommonMilestone is the resolver for the archiveMTOCommonMilestone field.
 func (r *mutationResolver) ArchiveMTOCommonMilestone(ctx context.Context, id uuid.UUID) (*models.MTOCommonMilestone, error) {
-	panic(fmt.Errorf("not implemented: ArchiveMTOCommonMilestone - archiveMTOCommonMilestone"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	return ArchiveMTOCommonMilestone(logger, r.store, id, principalAccount.ID)
 }
 
 // MtoCommonMilestones is the resolver for the mtoCommonMilestones field.

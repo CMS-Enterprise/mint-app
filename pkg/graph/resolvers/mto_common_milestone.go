@@ -4,8 +4,10 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
@@ -30,4 +32,14 @@ func MTOCommonMilestoneGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models
 // MTOSuggestedMilestoneReasonGetByIDLOADER returns all suggestion reasons for a given mto_suggested_milestone ID.
 func MTOSuggestedMilestoneReasonGetByIDLOADER(ctx context.Context, id uuid.UUID) ([]*models.MTOSuggestedMilestoneReason, error) {
 	return loaders.MTOSuggestedMilestoneReason.ByMTOSuggestedMilestoneID.Load(ctx, id)
+}
+
+// ArchiveMTOCommonMilestone marks a common milestone as archived.
+func ArchiveMTOCommonMilestone(
+	logger *zap.Logger,
+	store *storage.Store,
+	id uuid.UUID,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	return storage.MTOCommonMilestoneArchive(store, logger, id, actorUserID)
 }

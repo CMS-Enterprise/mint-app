@@ -1,0 +1,41 @@
+meta {
+  name: ArchiveMTO Common Milestone
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation archiveMTOCommonMilestone($id: UUID!) {
+    archiveMTOCommonMilestone(id: $id) {
+      id
+      name
+      description
+      categoryName
+      subCategoryName
+      facilitatedByRole
+      section
+      isArchived
+      isAdded
+      commonSolutions {
+        key
+        name
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{mtoCommonMilestoneID}}"
+  }
+}
+
+vars:pre-request {
+  mtoCommonMilestoneID: 11111111-1111-1111-1111-111111111111
+}
