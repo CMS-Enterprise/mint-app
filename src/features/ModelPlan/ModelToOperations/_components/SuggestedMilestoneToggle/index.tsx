@@ -21,7 +21,10 @@ const SuggestedMilestoneToggle = ({
   milestone,
   className
 }: SuggestedMilestoneToggleType) => {
-  const { t } = useTranslation('modelToOperationsMisc');
+  const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
+  const { t: opsEvalAndLearningMiscT } = useTranslation(
+    'opsEvalAndLearningMisc'
+  );
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -83,7 +86,7 @@ const SuggestedMilestoneToggle = ({
           />
         )}
 
-        {t('milestoneLibrary.whySuggested')}
+        {modelToOperationsMiscT('milestoneLibrary.whySuggested')}
       </button>
 
       {infoToggle && (
@@ -91,13 +94,13 @@ const SuggestedMilestoneToggle = ({
           <div className="margin-left-neg-2px padding-1">
             <div className="border-left-05 border-base-dark padding-left-2 padding-y-1">
               <p className="text-bold margin-top-0">
-                {t('milestoneLibrary.youAnswered')}
+                {modelToOperationsMiscT('milestoneLibrary.youAnswered')}
               </p>
 
               <p data-testid="milestone-question" className="margin-0">
                 Q:{' '}
                 {isMultiQuestions
-                  ? groupLabel
+                  ? opsEvalAndLearningMiscT(groupLabel)
                   : milestone.suggested.reasons[0]?.question}
               </p>
 
@@ -112,7 +115,7 @@ const SuggestedMilestoneToggle = ({
               )}
 
               <p className="margin-bottom-0">
-                {t('milestoneLibrary.changeAnswer')}
+                {modelToOperationsMiscT('milestoneLibrary.changeAnswer')}
                 <UswdsReactLink
                   className="display-block"
                   to={`/models/${modelID}/collaboration-area/model-plan/${questionUrl}`}
@@ -120,7 +123,7 @@ const SuggestedMilestoneToggle = ({
                     scrollElement
                   }}
                 >
-                  {t('milestoneLibrary.goToQuestion')}
+                  {modelToOperationsMiscT('milestoneLibrary.goToQuestion')}
                 </UswdsReactLink>
               </p>
             </div>

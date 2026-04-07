@@ -5,7 +5,7 @@ go 1.25.7
 require (
 	github.com/99designs/gqlgen v0.17.78
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
-	github.com/go-openapi/errors v0.22.1
+	github.com/go-openapi/errors v0.22.7
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/mux v1.8.1
@@ -79,7 +79,7 @@ require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
 	github.com/charmbracelet/lipgloss v1.1.0
-	github.com/go-jose/go-jose/v3 v3.0.4 // indirect
+	github.com/go-jose/go-jose/v3 v3.0.5 // indirect
 	github.com/gorilla/css v1.0.1 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/launchdarkly/go-jsonstream/v3 v3.0.0 // indirect

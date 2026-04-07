@@ -331,11 +331,11 @@ const Performance = () => {
                     <FieldGroup
                       className="margin-top-6"
                       scrollElement={convertToLowercaseAndDashes(
-                        opsEvalAndLearningT('appealPerformance.groupLabel')
+                        'appealGroupLabel'
                       )}
                     >
                       <Label htmlFor="ops-eval-and-learning-appeals">
-                        {opsEvalAndLearningT('appealPerformance.groupLabel')}
+                        {opsEvalAndLearningMiscT('participantAppeal')}
                       </Label>
 
                       <MTOWarning

@@ -30,39 +30,40 @@ const SideNav = ({
 
   const scrollToAboveReadOnlyBodyContent = () => {
     setTimeout(() => {
-      // the height of the filter banner
-      const filterBannerHeight = document.querySelector(
-        '[data-testid="group-filter-banner"]'
-      )?.clientHeight;
-
-      // the height of navigation bar
-      const navBarHeight = document.querySelector(
-        '[data-testid="navigation-bar"]'
-      )?.clientHeight;
-
       // `scroll-element` is the SectionWrapper component, everything below the ModelWarning
       const scrollElement = document.querySelector('#scroll-element');
+      const filterBanner = document.querySelector(
+        '[data-testid="group-filter-banner"]'
+      );
+      const navBar = document.querySelector('[data-testid="navigation-bar"]');
 
-      // if the element, filterBannerHeight, or navBarHeight is undefined or null, abort!
-      if (!scrollElement || !filterBannerHeight || !navBarHeight) {
+      if (!scrollElement || !navBar) {
         return;
       }
 
-      // Find the margin-top value of the scroll element
+      // Extra space below stacked sticky chrome so headings aren’t flush against the banner.
+      const gapBelowStickyChromePx = 8;
+
+      // The filter banner uses `position: sticky` with `top: 96px` / `112px` (see
+      // FilterView/Banner/index.scss), so nav height + banner `clientHeight` understates
+      // how much viewport is covered. Using the live bottom edge of the banner (or nav
+      // when the banner is hidden) matches the true stack.
+      const stickyChromeBottomViewport = filterBanner
+        ? filterBanner.getBoundingClientRect().bottom
+        : navBar.getBoundingClientRect().bottom;
+
       const marginOfScrollElement = parseFloat(
         window.getComputedStyle(scrollElement).marginTop
       );
 
-      // Find the top of the scroll element
-      const { top } = scrollElement.getBoundingClientRect();
+      const scrollElementDocTop =
+        Math.round(scrollElement.getBoundingClientRect().top) + window.scrollY;
 
-      // Calculate all the things
       const distanceFromTopOfPage =
-        Math.round(top) +
-        window.scrollY -
-        filterBannerHeight -
-        navBarHeight -
-        marginOfScrollElement;
+        scrollElementDocTop -
+        Math.round(stickyChromeBottomViewport) -
+        marginOfScrollElement -
+        gapBelowStickyChromePx;
 
       // Only scroll to the top of the body content if user scrolled past the header section
       if (window.scrollY >= distanceFromTopOfPage) {
