@@ -2,7 +2,6 @@ package translatedaudit
 
 import (
 	"context"
-	"database/sql"
 	"errors"
 	"fmt"
 	"strconv"
@@ -11,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -323,7 +323,7 @@ func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Stor
 	// get the document
 	document, err := storage.PlanDocumentGetByIDNoS3Check(store, logger, uuidKey)
 	if err != nil {
-		if err.Error() != "sql: no rows in result set" {
+		if !sqlutils.IsNoRowsResult(err) {
 			// Expect There To Be Null results, only error for other store errors
 			return nil, fmt.Errorf("there was an issue getting the plan document  foreign key reference . err %w", err)
 		}
@@ -409,7 +409,7 @@ func getModelPlanMTOTemplateLinkForeignKeyReference(ctx context.Context, store *
 
 	template, err := loaders.MTOTemplate.ByID.Load(ctx, templateLink.TemplateID)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
+		if sqlutils.IsNoRowsResult(err) {
 			return DataNotAvailableMessage, nil
 		}
 		return "", fmt.Errorf("there was an issue getting the MTO template for translation. err %w", err)
@@ -464,7 +464,7 @@ func getPlanCollaboratorForeignKeyReference(ctx context.Context, store *storage.
 	// get the collaborator
 	collaborator, err := store.PlanCollaboratorGetByID(uuidKey)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
+		if sqlutils.IsNoRowsResult(err) {
 			return DataNotAvailableMessage, nil
 		}
 		return "", fmt.Errorf("there was an issue translating the plan collaborator foreign key reference. err %w", err)
