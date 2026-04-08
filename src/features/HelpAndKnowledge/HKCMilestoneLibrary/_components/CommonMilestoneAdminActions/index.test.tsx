@@ -22,10 +22,10 @@ describe('CommonMilestoneAdminActions Component', () => {
 
     expect(getByText('Admin actions')).toBeInTheDocument();
 
-    const commonMilestoneLink = getByRole('link', {
+    const commonMilestoneButton = getByRole('button', {
       name: /Add a milestone/
     });
-    expect(commonMilestoneLink).toHaveAttribute('href', '/');
+    expect(commonMilestoneButton).toBeInTheDocument();
   });
 
   it('matches snapshot', () => {

@@ -1318,9 +1318,10 @@ export type TranslationMTOMilestoneSolutionLinkCustom = {
 export type TranslationMTOCommonMilestoneCustomForm = {
   name: TranslationFieldProperties;
   description: TranslationFieldProperties;
-  category: TranslationFieldProperties;
-  subCategory: TranslationFieldProperties;
-  facilitatedBy: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  categoryName: TranslationFieldProperties;
+  subCategoryName: TranslationFieldProperties;
+  facilitatedByRole: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  facilitatedByOther: TranslationFieldProperties;
   commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
 };
 
@@ -1522,6 +1523,7 @@ export type TranslationPlan = {
   mtoSolution: TranslationMTOSolutionCustom;
   mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCustom;
   mtoMilestoneNote: TranslationMTOMilestoneNoteCustom;
+  mtoCommonMilestone: TranslationMTOCommonMilestoneCustom;
 };
 
 export type TranslationPlanSection =
@@ -1560,7 +1562,8 @@ export enum PlanSection {
   MTO_MILESTONE = 'mtoMilestone',
   MTO_SOLUTION = 'mtoSolution',
   MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner',
-  MTO_MILESTONE_NOTE = 'mtoMilestoneNote'
+  MTO_MILESTONE_NOTE = 'mtoMilestoneNote',
+  MTO_COMMON_MILESTONE = 'mtoCommonMilestone'
 }
 
 // Model Plan MTO Template Link - Change History purposes only

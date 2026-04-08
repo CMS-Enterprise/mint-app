@@ -4,9 +4,12 @@ Represents MTO Common Milestone translation data
 type MTOCommonMilestoneTranslation {
   name: TranslationField! @goTag(key: "db", value: "name")
   description: TranslationField! @goTag(key: "db", value: "description")
-  category: TranslationField! @goTag(key: "db", value: "category_name")
-  subCategory: TranslationField! @goTag(key: "db", value: "sub_category_name")
-  facilitatedBy: TranslationFieldWithOptions!
+  categoryName: TranslationField! @goTag(key: "db", value: "category_name")
+  subCategoryName: TranslationField!
+    @goTag(key: "db", value: "sub_category_name")
+  facilitatedByRole: TranslationFieldWithOptions!
     @goTag(key: "db", value: "facilitated_by_role")
+  facilitatedByOther: TranslationField!
+    @goTag(key: "db", value: "facilitated_by_other")
   commonSolutions: TranslationFieldWithOptions! #Note: This field does not represent a database field, rather it's returned from a query
 }

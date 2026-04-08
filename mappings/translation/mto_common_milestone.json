@@ -17,7 +17,7 @@
     "formType": "TEXT",
     "order": 1.01
   },
-  "category": {
+  "categoryName": {
     "gqlField": "categoryName",
     "goField": "CategoryName",
     "dbField": "category_name",
@@ -27,7 +27,7 @@
     "formType": "TEXT",
     "order": 1.02
   },
-  "subCategory": {
+  "subCategoryName": {
     "gqlField": "subCategoryName",
     "goField": "SubCategoryName",
     "dbField": "sub_category_name",
@@ -37,13 +37,12 @@
     "formType": "TEXT",
     "order": 1.03
   },
-  "facilitatedBy": {
-    "gqlField": "facilitatedBy",
-    "goField": "FacilitatedBy",
-    "dbField": "facilitated_by",
+  "facilitatedByRole": {
+    "gqlField": "facilitatedByRole",
+    "goField": "FacilitatedByRole",
+    "dbField": "facilitated_by_role",
     "label": "Facilitated by",
-    "exportLabel": "Milestone facilitated by",
-    "sublabel": "Choose the role or group responsible for this work.",
+    "sublabel": "Choose the role(s) or group(s) most often responsible for this work. Select all that apply. IT Leads adding this milestone to their MTO will be able to update this if necessary.",
     "multiSelectLabel": "Selected roles",
     "dataType": "STRING",
     "formType": "MULTISELECT",
@@ -69,15 +68,25 @@
       "OTHER": "Other"
     }
   },
+  "facilitatedByOther": {
+    "gqlField": "facilitatedByOther",
+    "goField": "FacilitatedByOther",
+    "dbField": "facilitated_by_other",
+    "label": "Please describe",
+    "sublabel": "Because you selected “Other” above, please provide a role or title.",
+    "dataType": "STRING",
+    "formType": "TEXT",
+    "order": 1.05
+  },
   "commonSolutions": {
     "gqlField": "commonSolutions",
     "goField": "CommonSolutions",
     "dbField": "common_solutions",
-    "label": "Solutions",
-    "sublabel": "Select from all operational solutions and IT systems included in MINT. Select all that apply. If you choose not to add solutions now, you may add them later via the solution library or by adding a custom solution.",
+    "label": "Commonly used solutions",
+    "sublabel": "Choose the solution(s) that are often used to implement this milestone. Select all that apply. IT Leads adding this milestone to their MTO will be able to update this if necessary.",
     "dataType": "ENUM",
     "formType": "MULTISELECT",
-    "order": 1.05,
+    "order": 1.06,
     "multiSelectLabel": "Selected solutions",
     "options": {
       "INNOVATION": "4innovation",

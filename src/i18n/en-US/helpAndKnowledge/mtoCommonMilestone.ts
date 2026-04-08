@@ -24,7 +24,7 @@ const mtoCommonMilestone: TranslationMTOCommonMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 1.01
   },
-  category: {
+  categoryName: {
     gqlField: 'categoryName',
     goField: 'CategoryName',
     dbField: 'category_name',
@@ -35,7 +35,7 @@ const mtoCommonMilestone: TranslationMTOCommonMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 1.02
   },
-  subCategory: {
+  subCategoryName: {
     gqlField: 'subCategoryName',
     goField: 'SubCategoryName',
     dbField: 'sub_category_name',
@@ -46,13 +46,13 @@ const mtoCommonMilestone: TranslationMTOCommonMilestoneCustom = {
     formType: TranslationFormType.TEXT,
     order: 1.03
   },
-  facilitatedBy: {
-    gqlField: 'facilitatedBy',
-    goField: 'FacilitatedBy',
-    dbField: 'facilitated_by',
+  facilitatedByRole: {
+    gqlField: 'facilitatedByRole',
+    goField: 'FacilitatedByRole',
+    dbField: 'facilitated_by_role',
     label: 'Facilitated by',
-    exportLabel: 'Milestone facilitated by',
-    sublabel: 'Choose the role or group responsible for this work.',
+    sublabel:
+      'Choose the role(s) or group(s) most often responsible for this work. Select all that apply. IT Leads adding this milestone to their MTO will be able to update this if necessary.',
     multiSelectLabel: 'Selected roles',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.MULTISELECT,
@@ -81,16 +81,27 @@ const mtoCommonMilestone: TranslationMTOCommonMilestoneCustom = {
       OTHER: 'Other'
     }
   },
+  facilitatedByOther: {
+    gqlField: 'facilitatedByOther',
+    goField: 'FacilitatedByOther',
+    dbField: 'facilitated_by_other',
+    label: 'Please describe',
+    sublabel:
+      'Because you selected “Other” above, please provide a role or title.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.05
+  },
   commonSolutions: {
     gqlField: 'commonSolutions',
     goField: 'CommonSolutions',
     dbField: 'common_solutions',
-    label: 'Solutions',
+    label: 'Commonly used solutions',
     sublabel:
-      'Select from all operational solutions and IT systems included in MINT. Select all that apply. If you choose not to add solutions now, you may add them later via the solution library or by adding a custom solution.',
+      'Choose the solution(s) that are often used to implement this milestone. Select all that apply. IT Leads adding this milestone to their MTO will be able to update this if necessary.',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
-    order: 1.05,
+    order: 1.06,
     multiSelectLabel: 'Selected solutions',
     options: {
       INNOVATION: '4innovation',
@@ -158,14 +169,25 @@ const mtoCommonMilestone: TranslationMTOCommonMilestoneCustom = {
 export const mtoCommonMilestoneMisc = {
   allFieldsRequired:
     'Fields marked with an asterisk ( <s>*</s> ) are required.',
-  addMilestone: { heading: 'Add a common milestone', cta: 'Add milestone' },
+  addCommonMilestone: {
+    heading: 'Add a common milestone',
+    cta: 'Add milestone'
+  },
+  editCommonMilestone: {
+    heading: 'Edit milestone',
+    cta: 'Save changes'
+  },
+  validation: {
+    fillOut: 'Please fill out the required field.'
+  },
+  charactersAllowed: '75 characters allowed',
   confirmationModal: {
-    edit: {
+    editCommonMilestone: {
       heading: 'Are you sure you want to save changes?',
       text: 'If you have made title and description changes, they will be updated for all models using this common milestone. All other changes will only be applied when this common milestone is added to an MTO after you save changes.',
       cta: 'Save changes'
     },
-    archive: {
+    archiveCommonMilestone: {
       heading: 'Are you sure you want to archive this common milestone?',
       text: 'This action cannot be undone. Any models using this in their model-to-operations matrix (MTO) will automatically have their milestone converted to a custom milestone to retain the data.',
       cta: 'Archive milestone'
