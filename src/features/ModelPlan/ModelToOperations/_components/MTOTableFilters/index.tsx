@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Checkbox, Select } from '@trussworks/react-uswds';
@@ -40,7 +40,8 @@ const MTOTableFilters = ({
   const selectValue = selectValueFromSearchParams(params);
   const isTimeWindowFilterActive = selectValue !== 'all';
 
-  const isHideCategoryRowsChecked = hideCategoryRowsFromSearchParams(params);
+  const isHideCategoryRowsChecked =
+    isTimeWindowFilterActive || hideCategoryRowsFromSearchParams(params);
 
   const handleTimeWindowFilterChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -70,17 +71,6 @@ const MTOTableFilters = ({
     next.set(HIDE_CATEGORY_ROWS_PARAM, e.target.checked ? 'true' : 'false');
     navigate({ search: next.toString() }, { replace: true });
   };
-
-  // Syncs the initial `hide-category-rows` param with the `needed-within-days` param when the component mounts
-  useEffect(() => {
-    const next = new URLSearchParams(location.search);
-    const hideCategoryRowsParam = next.get(HIDE_CATEGORY_ROWS_PARAM);
-
-    if (hideCategoryRowsParam === null && isTimeWindowFilterActive) {
-      next.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
-      navigate({ search: next.toString() }, { replace: true });
-    }
-  }, [isTimeWindowFilterActive, location.search, navigate]);
 
   return (
     <div
