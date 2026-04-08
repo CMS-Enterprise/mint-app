@@ -48,8 +48,10 @@ func PlanDataExchangeApproachUpdate(
 			}
 
 			// If (and only if) we're in the "Ready" status should we should (at least) update to "In Progress"
+			deaChangedToInProgress := false
 			if existing.Status == models.DataExchangeApproachStatusReady {
 				existing.Status = models.DataExchangeApproachStatusInProgress
+				deaChangedToInProgress = true
 			}
 
 			// Variable to track whether or not this update mutation caused the DEA Section
@@ -95,6 +97,14 @@ func PlanDataExchangeApproachUpdate(
 			retDataExchangeApproach, err := storage.PlanDataExchangeApproachUpdate(tx, logger, existing)
 			if err != nil {
 				return nil, err
+			}
+
+			// DATA_EXCHANGE task progression: when approach is started, mark DATA_EXCHANGE task IN_PROGRESS
+			if deaChangedToInProgress {
+				updErr := updatePlanTaskStatusByKey(tx, logger, existing.ModelPlanID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusInProgress, principal, store)
+				if updErr != nil {
+					return nil, updErr
+				}
 			}
 
 			// DATA_EXCHANGE task progression: when approach is marked COMPLETE, mark DATA_EXCHANGE task COMPLETE

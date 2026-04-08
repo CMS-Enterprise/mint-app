@@ -99,7 +99,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.Nil(task.CompletedDts)
 	})
 
-	suite.Run("starting MTO marks MTO and DATA_EXCHANGE tasks IN_PROGRESS", func() {
+	suite.Run("starting MTO marks only MTO task IN_PROGRESS", func() {
 		_, err := MTOCategoryCreate(
 			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
@@ -114,6 +114,27 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		mtoTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyMto)
 		dataExchangeTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDataExchange)
 		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+		suite.Equal(models.PlanTaskStatusToDo, dataExchangeTask.Status)
+	})
+
+	suite.Run("starting data exchange approach marks DATA_EXCHANGE task IN_PROGRESS", func() {
+		dea, err := PlanDataExchangeApproachGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
+		suite.NoError(err)
+		suite.NotNil(dea)
+
+		_, err = PlanDataExchangeApproachUpdate(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			dea.ID,
+			map[string]interface{}{"newDataExchangeMethodsDescription": "Start data exchange approach"},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		dataExchangeTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDataExchange)
 		suite.Equal(models.PlanTaskStatusInProgress, dataExchangeTask.Status)
 	})
 

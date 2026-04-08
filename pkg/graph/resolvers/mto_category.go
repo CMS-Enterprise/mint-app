@@ -38,12 +38,8 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 		return nil, err
 	}
 
-	// MTO/DATA_EXCHANGE task progression: creating MTO data counts as starting the MTO
+	// MTO task progression: creating MTO data counts as starting the MTO
 	err = updatePlanTaskStatusByKey(store, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
-	if err != nil {
-		return nil, err
-	}
-	err = updatePlanTaskStatusByKey(store, logger, modelPlanID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusInProgress, principal, store)
 	if err != nil {
 		return nil, err
 	}
