@@ -62,7 +62,7 @@ describe('Notification Center', () => {
         .and('equal', '/notifications');
 
       // Check to see if Notification Nav Button has the red dot
-      cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
+      cy.get('[data-testid="navmenu__notifications--yesNotification"]').should(
         'exist'
       );
 
@@ -86,7 +86,7 @@ describe('Notification Center', () => {
       cy.contains('button', 'Mark all').click();
 
       // No more red dots
-      cy.get('[data-testid="navmenu__notifications--noNotification"').should(
+      cy.get('[data-testid="navmenu__notifications--noNotification"]').should(
         'exist'
       );
       cy.get('[data-testid="notification-red-dot"]').should('have.length', 0);
@@ -110,7 +110,7 @@ describe('Notification Center', () => {
       cy.get('[data-testid="close-discussions"]').click({ force: true });
       cy.get('[data-testid="navmenu__notification"]').first().click();
 
-      cy.get('[data-testid="navmenu__notifications--yesNotification"').should(
+      cy.get('[data-testid="navmenu__notifications--yesNotification"]').should(
         'exist'
       );
 
@@ -150,7 +150,7 @@ describe('Notification Center', () => {
         .should('exist');
       cy.contains('button', 'View digest').click();
 
-      cy.get('[data-testid="notification--daily-digest"').should('exist');
+      cy.get('[data-testid="notification--daily-digest"]').should('exist');
 
       cy.contains('h3', 'Empty Plan').siblings('a').click();
 
@@ -169,7 +169,7 @@ describe('Notification Center', () => {
 
       cy.contains('button', 'Save').click();
 
-      cy.get('[data-testid="toast-success"').should('exist');
+      cy.get('[data-testid="toast-success"]').should('exist');
 
       cy.contains('a', 'Notification settings').click();
 
