@@ -2,7 +2,6 @@ package translatedaudit
 
 import (
 	"context"
-	"database/sql"
 	"errors"
 	"fmt"
 	"time"
@@ -12,6 +11,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -114,7 +114,7 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 
 		collab, collabErr := store.PlanCollaboratorGetByID(primaryKey)
 		if collabErr != nil {
-			if !errors.Is(collabErr, sql.ErrNoRows) {
+			if !sqlutils.IsNoRowsResult(collabErr) {
 				return nil, nil, collabErr
 			}
 		}
@@ -164,7 +164,7 @@ func PlanDocumentMetaDataGet(ctx context.Context, store *storage.Store, document
 		logger := appcontext.ZLogger(ctx)
 		document, docErr := storage.PlanDocumentGetByIDNoS3Check(store, logger, documentID)
 		if docErr != nil {
-			if !errors.Is(docErr, sql.ErrNoRows) {
+			if !sqlutils.IsNoRowsResult(docErr) {
 				//EXPECT THERE TO BE NULL results, don't treat this as an error
 
 				return nil, nil, fmt.Errorf("there was an issue getting the plan document for the . err %w", docErr)

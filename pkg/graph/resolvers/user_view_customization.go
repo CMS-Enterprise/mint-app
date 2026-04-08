@@ -1,9 +1,6 @@
 package resolvers
 
 import (
-	"database/sql"
-	"errors"
-
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
@@ -36,7 +33,7 @@ func UserViewCustomizationGetByUserID(
 			if err != nil {
 
 				// If the user view customization does not exist, create it
-				if errors.Is(err, sql.ErrNoRows) {
+				if sqlutils.IsNoRowsResult(err) {
 					createdUVC, creationErr := createAndInitializeUserViewCustomization(
 						tx,
 						principal,

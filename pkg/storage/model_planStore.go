@@ -2,7 +2,6 @@ package storage
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 
 	"github.com/lib/pq"
@@ -138,7 +137,7 @@ func (s *Store) ModelPlanGetByID(np sqlutils.NamedPreparer, logger logging.ILogg
 	err = stmt.Get(&plan, arg)
 
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
+		if sqlutils.IsNoRowsResult(err) {
 			logger.Warn("No model plan found for the given modelPlanID",
 				zap.String("modelPlanID", id.String()))
 			return nil, fmt.Errorf("no model plan found for the given modelPlanID: %w", err)
@@ -293,7 +292,7 @@ func ModelPlanCollectionApproachingClearance(np sqlutils.NamedPreparer, logger *
 
 	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.CollectionApproachingClearance, args)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
+		if sqlutils.IsNoRowsResult(err) {
 			return nil, nil
 		}
 		logger.Error(
@@ -317,7 +316,7 @@ func (s *Store) ModelPlanCollectionNewlyCreated(logger *zap.Logger) ([]*models.M
 	args := map[string]interface{}{}
 	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereNewlyCreated, args)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
+		if sqlutils.IsNoRowsResult(err) {
 			return nil, nil
 		}
 		logger.Error(
