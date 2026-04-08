@@ -177,28 +177,6 @@ const CommonMilestoneForm = ({
     values.commonSolutions
   ]);
 
-  // Set's the unsaved changes to state based on symmettrical difference/ change is counted if removed, added, or replaced in array
-  // useEffect(() => {
-  //   const solutionIDDifferenceCount = symmetricDifference(
-  //     solutionIDs,
-  //     solutionIDsInitial
-  //   ).length;
-
-  //   const commonSolutionKeysDifferenceCount = symmetricDifference(
-  //     commonSolutionKeys,
-  //     commonSolutionKeysInitial
-  //   ).length;
-
-  //   setUnsavedSolutionChanges(
-  //     solutionIDDifferenceCount + commonSolutionKeysDifferenceCount
-  //   );
-  // }, [
-  //   solutionIDs,
-  //   solutionIDsInitial,
-  //   commonSolutionKeys,
-  //   commonSolutionKeysInitial
-  // ]);
-
   // Sets dirty state based on changes in form to render the leave confirmation modal
   useEffect(() => {
     if (isSubmitting || unsavedChanges) {
@@ -212,12 +190,9 @@ const CommonMilestoneForm = ({
 
   const onSubmit = useCallback<SubmitHandler<CommonMilestoneFormValues>>(
     formData => {
-      const { facilitatedByRole, ...formChanges } = dirtyInput(
-        formValues,
-        formData
-      );
+      const { formChanges } = dirtyInput(formValues, formData);
 
-      if (facilitatedByRole?.includes(MtoFacilitator.OTHER)) {
+      if (!formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)) {
         formChanges.facilitatedByOther = null;
       }
 
@@ -554,7 +529,7 @@ const CommonMilestoneForm = ({
                       inputId={convertCamelCaseToKebabCase(field.name)}
                       name={field.name}
                       ariaLabel={commonSolutionsConfig.label}
-                      ariaLabelText={facilitatedByRoleConfig.label}
+                      ariaLabelText={commonSolutionsConfig.label}
                       options={[]}
                       groupedOptions={groupedOptions}
                       selectedLabel={

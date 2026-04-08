@@ -48,6 +48,14 @@ const CommonMilestoneSidePanel = ({
 
   const [leavePage, setLeavePage] = useState<boolean>(false);
 
+  const closePanel = useCallback(() => {
+    if (isDirty && !submitted.current) {
+      setLeavePage(true);
+    } else {
+      closeModal();
+    }
+  }, [closeModal, isDirty]);
+
   const footer = (
     <div className="border-top-1px border-base-lighter padding-y-4 panel-footer">
       <Button
@@ -62,20 +70,12 @@ const CommonMilestoneSidePanel = ({
         type="button"
         className="margin-top-0"
         unstyled
-        onClick={closeModal}
+        onClick={closePanel}
       >
         {mtoCommonMilestoneMiscT('cancel')}
       </Button>
     </div>
   );
-
-  const closePanel = useCallback(() => {
-    if (isDirty && !submitted.current) {
-      setLeavePage(true);
-    } else {
-      closeModal();
-    }
-  }, [closeModal, isDirty]);
 
   return (
     <>
