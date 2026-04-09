@@ -11,6 +11,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
 // NDAAgreementGetByUserID returns an NDA based on a UserID
@@ -30,7 +31,7 @@ func (s *Store) NDAAgreementGetByUserID(_ *zap.Logger, userID uuid.UUID) (*model
 
 	err = stmt.Get(&nda, arg)
 	if err != nil {
-		if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
+		if sqlutils.IsNoRowsResult(err) { //EXPECT THERE TO BE NULL results, don't treat this as an error
 			return nil, nil
 		}
 		return nil, err

@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
@@ -350,7 +351,7 @@ func (suite *ResolverSuite) TestDeleteKeyContactCategory_NotFound() {
 
 	suite.Nil(existingCategory)
 	suite.Error(err)
-	suite.Contains(err.Error(), "no rows in result set")
+	suite.True(sqlutils.IsNoRowsResult(err))
 }
 
 // TestGetKeyContactCategory tests retrieving a key contact category by ID.

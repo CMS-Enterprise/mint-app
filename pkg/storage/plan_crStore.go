@@ -9,6 +9,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 
 	_ "embed"
@@ -109,7 +110,7 @@ func (s *Store) PlanCRGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanCR, erro
 	retCR := models.PlanCR{}
 	err = stmt.Get(&retCR, arg)
 	if err != nil {
-		if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
+		if sqlutils.IsNoRowsResult(err) { //EXPECT THERE TO BE NULL results, don't treat this as an error
 			return nil, nil
 		}
 		return nil, err

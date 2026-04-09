@@ -2,13 +2,12 @@ package loaders
 
 import (
 	"context"
-	"database/sql"
-	"errors"
 
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 
 	"github.com/graph-gophers/dataloader/v7"
@@ -111,7 +110,7 @@ func batchMTOMilestoneGetBySolutionID(ctx context.Context, solutionIDs []uuid.UU
 
 	data, err := storage.MTOMilestoneGetBySolutionIDLoader(loaders.DataReader.Store, logger, solutionIDs)
 	if err != nil {
-		if !errors.Is(err, sql.ErrNoRows) { // don't error if there are no results, this could be expected
+		if !sqlutils.IsNoRowsResult(err) { // don't error if there are no results, this could be expected
 			return errorPerEachKey[uuid.UUID, []*models.MTOMilestone](solutionIDs, err)
 		}
 
