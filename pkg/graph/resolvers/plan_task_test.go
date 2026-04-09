@@ -117,6 +117,66 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.Equal(models.PlanTaskStatusToDo, dataExchangeTask.Status)
 	})
 
+	suite.Run("creating common milestone marks MTO task IN_PROGRESS", func() {
+		planWithMilestone := suite.createModelPlan("Plan For Common Milestone Start")
+		commonMilestones, err := MTOCommonMilestoneGetByModelPlanIDLOADER(suite.testConfigs.Context, nil)
+		suite.NoError(err)
+		suite.NotEmpty(commonMilestones)
+		commonMilestone := commonMilestones[0]
+
+		_, err = MTOMilestoneCreateCommon(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+			planWithMilestone.ID,
+			commonMilestone.ID,
+			[]models.MTOCommonSolutionKey{},
+		)
+		suite.NoError(err)
+
+		mtoTask := suite.getPlanTaskByKey(planWithMilestone.ID, models.PlanTaskKeyMto)
+		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+	})
+
+	suite.Run("creating common solution marks MTO task IN_PROGRESS", func() {
+		planWithSolution := suite.createModelPlan("Plan For Common Solution Start")
+
+		_, err := MTOSolutionCreateCommon(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+			planWithSolution.ID,
+			models.MTOCSKInnovation,
+			[]uuid.UUID{},
+		)
+		suite.NoError(err)
+
+		mtoTask := suite.getPlanTaskByKey(planWithSolution.ID, models.PlanTaskKeyMto)
+		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+	})
+
+	suite.Run("creating standard categories marks MTO task IN_PROGRESS", func() {
+		planWithStandards := suite.createModelPlan("Plan For Standard Categories Start")
+
+		_, err := MTOCreateStandardCategories(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			planWithStandards.ID,
+		)
+		suite.NoError(err)
+
+		mtoTask := suite.getPlanTaskByKey(planWithStandards.ID, models.PlanTaskKeyMto)
+		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+	})
+
 	suite.Run("starting data exchange approach marks DATA_EXCHANGE task IN_PROGRESS", func() {
 		dea, err := PlanDataExchangeApproachGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 		suite.NoError(err)

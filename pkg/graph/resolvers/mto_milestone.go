@@ -41,7 +41,21 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOMilestoneCreate(store, logger, milestone)
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
+		createdMilestone, err := storage.MTOMilestoneCreate(tx, logger, milestone)
+		if err != nil {
+			return nil, err
+		}
+
+		// MTO task progression: creating milestone data counts as starting the MTO
+		err = updatePlanTaskStatusByKey(tx, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		if err != nil {
+			return nil, err
+		}
+
+		return createdMilestone, nil
+	})
 }
 
 // MTOMilestoneCreateCommon uses the provided information to create a new Custom MTO Milestone
@@ -124,6 +138,12 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		)
 		if err != nil {
 			logger.Error("failed to create solution when creating common milestone", zap.Error(err))
+			return nil, err
+		}
+
+		// MTO task progression: creating milestone data counts as starting the MTO
+		err = updatePlanTaskStatusByKey(tx, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		if err != nil {
 			return nil, err
 		}
 
@@ -212,6 +232,12 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 	)
 	if err != nil {
 		logger.Error("failed to create solution when creating common milestone", zap.Error(err))
+		return nil, err
+	}
+
+	// MTO task progression: creating milestone data counts as starting the MTO
+	err = updatePlanTaskStatusByKey(tx, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+	if err != nil {
 		return nil, err
 	}
 
@@ -468,6 +494,13 @@ func MTOMilestoneUpdateLinkedSolutions(
 			return err
 		}
 		retSolutions = currentLinkedSolutions
+
+		// MTO task progression: if linking creates MTO data, mark task IN_PROGRESS
+		updErr := updatePlanTaskStatusByKey(tx, logger, milestone.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		if updErr != nil {
+			return updErr
+		}
+
 		// Future Enhancement, return the solutions from in the transaction instead of setting the variable
 		return nil
 

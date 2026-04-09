@@ -94,7 +94,17 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOCategoryUpdate(store, logger, existing)
+	updated, err := storage.MTOCategoryUpdate(store, logger, existing)
+	if err != nil {
+		return nil, err
+	}
+
+	// MTO task progression: editing category data counts as starting the MTO
+	err = updatePlanTaskStatusByKey(store, logger, updated.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+	if err != nil {
+		return nil, err
+	}
+	return updated, nil
 }
 
 // MTOCategoryReorder updates the position of an MTOCategory or SubCategory
@@ -143,7 +153,17 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOCategoryUpdate(store, logger, existing)
+	updated, err := storage.MTOCategoryUpdate(store, logger, existing)
+	if err != nil {
+		return nil, err
+	}
+
+	// MTO task progression: editing category data counts as starting the MTO
+	err = updatePlanTaskStatusByKey(store, logger, updated.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+	if err != nil {
+		return nil, err
+	}
+	return updated, nil
 }
 
 type mtoStandardCategory struct {
@@ -245,6 +265,12 @@ func MTOCreateStandardCategories(ctx context.Context, logger *zap.Logger, princi
 					return err
 				}
 			}
+		}
+
+		// MTO task progression: creating standard category data counts as starting the MTO
+		err := updatePlanTaskStatusByKey(tx, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		if err != nil {
+			return err
 		}
 
 		return nil

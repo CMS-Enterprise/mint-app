@@ -119,7 +119,20 @@ func MTOSolutionCreateCustom(
 		return nil, err
 	}
 
-	return storage.MTOSolutionCreate(store, logger, mtoSolution)
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+		createdSolution, err := storage.MTOSolutionCreate(tx, logger, mtoSolution)
+		if err != nil {
+			return nil, err
+		}
+
+		// MTO task progression: creating solution data counts as starting the MTO
+		err = updatePlanTaskStatusByKey(tx, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		if err != nil {
+			return nil, err
+		}
+
+		return createdSolution, nil
+	})
 }
 
 func MTOSolutionCreateCommon(
@@ -168,6 +181,12 @@ func MTOSolutionCreateCommon(
 			if err != nil {
 				return nil, fmt.Errorf("failed to link milestones to solution: %w", err)
 			}
+		}
+
+		// MTO task progression: creating solution data counts as starting the MTO
+		err = updatePlanTaskStatusByKey(tx, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		if err != nil {
+			return nil, err
 		}
 
 		return solution, nil
