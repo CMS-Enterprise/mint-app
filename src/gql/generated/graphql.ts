@@ -1667,6 +1667,12 @@ export type MtoTemplateCategory = {
   templateID: Scalars['UUID']['output'];
 };
 
+export type MtoTemplateCategoryOption = {
+  __typename: 'MTOTemplateCategoryOption';
+  name: Scalars['String']['output'];
+  subCategories: Array<Scalars['String']['output']>;
+};
+
 export enum MtoTemplateKey {
   ACO_AND_KIDNEY_MODELS = 'ACO_AND_KIDNEY_MODELS',
   EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS = 'EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS',
@@ -4751,6 +4757,7 @@ export type Query = {
   mtoMilestone: MtoMilestone;
   mtoSolution: MtoSolution;
   mtoTemplate?: Maybe<MtoTemplate>;
+  mtoTemplateCategoryOptions: Array<MtoTemplateCategoryOption>;
   mtoTemplates: Array<MtoTemplate>;
   ndaInfo: NdaInfo;
   planCR: PlanCr;

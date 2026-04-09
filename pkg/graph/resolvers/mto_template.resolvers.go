@@ -13,6 +13,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // Categories is the resolver for the categories field.
@@ -83,6 +84,12 @@ func (r *queryResolver) MtoTemplates(ctx context.Context, keys []models.MTOTempl
 // MtoTemplate is the resolver for the mtoTemplate field.
 func (r *queryResolver) MtoTemplate(ctx context.Context, id *uuid.UUID, key *models.MTOTemplateKey) (*models.MTOTemplate, error) {
 	return MTOTemplateGetByIDOrKeyLOADER(ctx, id, key)
+}
+
+// MtoTemplateCategoryOptions is the resolver for the mtoTemplateCategoryOptions field.
+func (r *queryResolver) MtoTemplateCategoryOptions(ctx context.Context) ([]*models.MTOTemplateCategoryOption, error) {
+	logger := appcontext.ZLogger(ctx)
+	return storage.MTOTemplateCategoryOptionsGetAll(r.store, logger)
 }
 
 // MTOTemplate returns generated.MTOTemplateResolver implementation.

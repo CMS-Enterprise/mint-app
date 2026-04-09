@@ -38,6 +38,33 @@ func MTOTemplateCategoryGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.
 	return returned, nil
 }
 
+type mtoTemplateCategoryOptionRow struct {
+	Name          string         `db:"name"`
+	SubCategories pq.StringArray `db:"sub_categories"`
+}
+
+// MTOTemplateCategoryOptionsGetAll returns deduplicated, alphabetized template category options.
+func MTOTemplateCategoryOptionsGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.MTOTemplateCategoryOption, error) {
+	rows, err := sqlutils.SelectProcedure[mtoTemplateCategoryOptionRow](np, sqlqueries.MTOTemplateCategory.GetCategoryOptions, map[string]any{})
+	if err != nil {
+		return nil, err
+	}
+
+	options := make([]*models.MTOTemplateCategoryOption, 0, len(rows))
+	for _, row := range rows {
+		if row == nil {
+			continue
+		}
+
+		options = append(options, &models.MTOTemplateCategoryOption{
+			Name:          row.Name,
+			SubCategories: []string(row.SubCategories),
+		})
+	}
+
+	return options, nil
+}
+
 // MTOTemplateSubCategoryGetByIDLoader returns template subcategories by ID
 func MTOTemplateSubCategoryGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOTemplateSubCategory, error) {
 	args := map[string]interface{}{
