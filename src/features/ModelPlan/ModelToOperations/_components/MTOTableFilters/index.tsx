@@ -39,9 +39,9 @@ const MTOTableFilters = ({
   const params = new URLSearchParams(location.search);
   const selectValue = selectValueFromSearchParams(params);
   const isTimeWindowFilterActive = selectValue !== 'all';
-  const isHideCategoryRowsChecked = isTimeWindowFilterActive
-    ? false
-    : hideCategoryRowsFromSearchParams(params);
+
+  const isHideCategoryRowsChecked =
+    isTimeWindowFilterActive || hideCategoryRowsFromSearchParams(params);
 
   const handleTimeWindowFilterChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -50,11 +50,14 @@ const MTOTableFilters = ({
     next.set('page', '1');
     next.delete(FILTER_PARAM);
     next.delete(LEGACY_FILTER_PARAM);
+    next.delete(HIDE_CATEGORY_ROWS_PARAM);
 
     const { value } = e.target;
     if (DATE_PRESET_STRINGS.includes(Number(value))) {
       next.set(FILTER_PARAM, value);
-      next.set(HIDE_CATEGORY_ROWS_PARAM, 'false');
+
+      // Set hide category rows to true if time window filter is active
+      next.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
     }
 
     navigate({ search: next.toString() }, { replace: true });
