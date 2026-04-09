@@ -11,7 +11,7 @@ SELECT
     parent.name,
     COALESCE(
         array_remove(array_agg(DISTINCT child.name ORDER BY child.name), NULL),
-        ARRAY[]::TEXT[]
+        CAST(ARRAY[] AS TEXT[])
     ) AS sub_categories
 FROM parent_categories parent
 LEFT JOIN mto_template_category child

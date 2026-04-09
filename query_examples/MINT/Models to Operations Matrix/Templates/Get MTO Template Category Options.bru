@@ -1,0 +1,24 @@
+meta {
+  name: Get MTO Template Category Options
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetMtoTemplateCategoryOptions {
+    mtoTemplateCategoryOptions {
+      name
+      subCategories
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}
