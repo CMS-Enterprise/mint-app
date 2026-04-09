@@ -241,7 +241,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                       for="MY_MODEL_PLANS"
                       style="width: fit-content;"
                     >
-                      My Model Plans
+                      My models
                     </label>
                     <p
                       class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
@@ -250,7 +250,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                   <p
                     class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
                   >
-                    This section displays all of the Model Plans that you’re a team member of. Model links go to the Task List.
+                    This section displays all of the models that you’re a team member of. Model links go to the Task List.
                   </p>
                 </div>
               </li>
@@ -282,7 +282,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                       for="ALL_MODEL_PLANS"
                       style="width: fit-content;"
                     >
-                      All Model Plans
+                      All models
                     </label>
                     <p
                       class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line text-gray-30"
@@ -291,7 +291,7 @@ exports[`settings snapshots > matches setting snapshot 1`] = `
                   <p
                     class="padding-left-4 padding-right-2 margin-y-0 font-body-xs"
                   >
-                    This searchable table displays all Model Plans (like the one on the Models tab).
+                    This searchable table displays all models (like the one on the Models tab).
                   </p>
                 </div>
               </li>

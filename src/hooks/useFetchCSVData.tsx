@@ -368,8 +368,7 @@ const csvFormatter = (
           csvFields(i18next.t)[exportSection]
         );
 
-    const modelName =
-      csvData.length > 1 ? 'All Model Plans' : csvData[0].modelName;
+    const modelName = csvData.length > 1 ? 'All models' : csvData[0].modelName;
 
     const modelNameFormatted = modelName.replace(/ /g, '_');
 
