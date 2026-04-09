@@ -73,7 +73,7 @@
     "goField": "FacilitatedByOther",
     "dbField": "facilitated_by_other",
     "label": "Please describe",
-    "sublabel": "Because you selected “Other” above, please provide a role or title.",
+    "sublabel": "Because you selected “Other” above, please provide a role or group.",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.05

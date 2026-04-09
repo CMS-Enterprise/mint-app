@@ -87,7 +87,7 @@ const mtoCommonMilestone: TranslationMTOCommonMilestoneCustom = {
     dbField: 'facilitated_by_other',
     label: 'Please describe',
     sublabel:
-      'Because you selected “Other” above, please provide a role or title.',
+      'Because you selected “Other” above, please provide a role or group.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.05
