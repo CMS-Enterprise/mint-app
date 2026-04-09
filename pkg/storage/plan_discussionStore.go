@@ -1,9 +1,7 @@
 package storage
 
 import (
-	"database/sql"
 	_ "embed"
-	"errors"
 	"fmt"
 	"time"
 
@@ -308,7 +306,7 @@ func (s *Store) GetMostRecentDiscussionRoleSelection(
 		return &selection, nil
 	}
 
-	if errors.Is(err, sql.ErrNoRows) {
+	if sqlutils.IsNoRowsResult(err) {
 		return nil, nil
 	}
 
