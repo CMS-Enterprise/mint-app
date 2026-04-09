@@ -176,7 +176,63 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                         data-testid="Select"
                         id="category-name"
                         name="categoryName"
-                      />
+                      >
+                        <option
+                          value="default"
+                        >
+                          - Select - 
+                        </option>
+                        <option
+                          value="Beneficiaries"
+                        >
+                          Beneficiaries
+                        </option>
+                        <option
+                          value="Evaluation"
+                        >
+                          Evaluation
+                        </option>
+                        <option
+                          value="Learning"
+                        >
+                          Learning
+                        </option>
+                        <option
+                          value="Legal"
+                        >
+                          Legal
+                        </option>
+                        <option
+                          value="Model closeout or extension"
+                        >
+                          Model closeout or extension
+                        </option>
+                        <option
+                          value="Operations"
+                        >
+                          Operations
+                        </option>
+                        <option
+                          value="Participants"
+                        >
+                          Participants
+                        </option>
+                        <option
+                          value="Payers"
+                        >
+                          Payers
+                        </option>
+                        <option
+                          value="Payment"
+                        >
+                          Payment
+                        </option>
+                        <option
+                          value="Quality"
+                        >
+                          Quality
+                        </option>
+                      </select>
                     </div>
                     <div
                       class="usa-form-group margin-top-0 margin-bottom-3"
@@ -207,7 +263,18 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                         disabled=""
                         id="sub-category-name"
                         name="subCategoryName"
-                      />
+                      >
+                        <option
+                          value="default"
+                        >
+                          - Select - 
+                        </option>
+                        <option
+                          value="Uncategorized"
+                        >
+                          Uncategorized
+                        </option>
+                      </select>
                     </div>
                     <div
                       class="usa-form-group margin-0 margin-bottom-3"

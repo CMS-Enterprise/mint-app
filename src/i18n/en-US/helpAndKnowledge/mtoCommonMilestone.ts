@@ -180,6 +180,8 @@ export const mtoCommonMilestoneMisc = {
   validation: {
     fillOut: 'Please fill out the required field.'
   },
+  defaultSelectOptions: '- Select - ',
+  unCategories: 'Uncategorized',
   charactersAllowed: '75 characters allowed',
   confirmationModal: {
     editCommonMilestone: {

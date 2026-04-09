@@ -62,6 +62,63 @@ type CommonMilestoneFormProps = {
   setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
 };
 
+// TODO: TEST DATA - to be removed when query is ready
+const TEST_CATEGORIES_DATA = [
+  {
+    name: 'Beneficiaries',
+    subCategories: []
+  },
+  {
+    name: 'Evaluation',
+    subCategories: []
+  },
+  {
+    name: 'Learning',
+    subCategories: []
+  },
+  {
+    name: 'Legal',
+    subCategories: [
+      'Agreements',
+      'Beneficiary engagement and incentives',
+      'Benefit enhancements'
+    ]
+  },
+  {
+    name: 'Model closeout or extension',
+    subCategories: []
+  },
+  {
+    name: 'Operations',
+    subCategories: [
+      'Benchmarks',
+      'Collect data',
+      'Fee-for-service (FFS)',
+      'Internal functions',
+      'Monitoring',
+      'Participant and beneficiary tracking/alignment',
+      'Send data to participants',
+      'Set up operations'
+    ]
+  },
+  {
+    name: 'Participants',
+    subCategories: ['Application, review, and selection', 'Participant support']
+  },
+  {
+    name: 'Payers',
+    subCategories: []
+  },
+  {
+    name: 'Payment',
+    subCategories: ['Claims-based', 'Non-claims based']
+  },
+  {
+    name: 'Quality',
+    subCategories: []
+  }
+];
+
 const CommonMilestoneForm = ({
   mode,
   closeModal,
@@ -98,7 +155,7 @@ const CommonMilestoneForm = ({
     error: allCommonSolutionsError
   } = useGetGlobalMtoCommonSolutionsQuery();
 
-  const groupedOptions = useMemo(
+  const groupedCommonSolutionOptions = useMemo(
     () => [
       {
         options: sortedSelectOptions(
@@ -113,6 +170,38 @@ const CommonMilestoneForm = ({
     ],
     [allCommonSolutionsData]
   );
+
+  const defaultCategoryOption = {
+    value: 'default',
+    label: mtoCommonMilestoneMiscT('defaultSelectOptions')
+  };
+
+  const uncategorizedOption = {
+    value: 'Uncategorized',
+    label: mtoCommonMilestoneMiscT('unCategories')
+  };
+
+  const { categoryOptions, subCategoryOptions } = useMemo(() => {
+    const subCategories: Record<string, { value: string; label: string }[]> =
+      {};
+
+    const categories = TEST_CATEGORIES_DATA.map(category => {
+      subCategories[category.name] = category.subCategories.map(sub => ({
+        value: sub,
+        label: sub
+      }));
+
+      return {
+        value: category.name,
+        label: category.name
+      };
+    });
+
+    return {
+      categoryOptions: categories,
+      subCategoryOptions: subCategories
+    };
+  }, []);
 
   // Set default values for form
   const formValues = useMemo(
@@ -190,7 +279,7 @@ const CommonMilestoneForm = ({
 
   const onSubmit = useCallback<SubmitHandler<CommonMilestoneFormValues>>(
     formData => {
-      const { formChanges } = dirtyInput(formValues, formData);
+      const formChanges = dirtyInput(formValues, formData);
 
       if (!formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)) {
         formChanges.facilitatedByOther = null;
@@ -343,13 +432,15 @@ const CommonMilestoneForm = ({
                         setValue('subCategoryName', 'default');
                       }}
                     >
-                      {[].map((option: { value: string; label: string }) => {
-                        return (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        );
-                      })}
+                      {[defaultCategoryOption, ...categoryOptions].map(
+                        option => {
+                          return (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          );
+                        }
+                      )}
                     </Select>
                   </FormGroup>
                 )}
@@ -393,7 +484,11 @@ const CommonMilestoneForm = ({
                       defaultValue="default"
                       disabled={watch('categoryName') === 'default'}
                     >
-                      {[].map((option: { value: string; label: string }) => {
+                      {[
+                        defaultCategoryOption,
+                        ...(subCategoryOptions[watch('categoryName')] || []),
+                        uncategorizedOption
+                      ].map((option: { value: string; label: string }) => {
                         return (
                           <option key={option.value} value={option.value}>
                             {option.label}
@@ -531,7 +626,7 @@ const CommonMilestoneForm = ({
                       ariaLabel={commonSolutionsConfig.label}
                       ariaLabelText={commonSolutionsConfig.label}
                       options={[]}
-                      groupedOptions={groupedOptions}
+                      groupedOptions={groupedCommonSolutionOptions}
                       selectedLabel={
                         commonSolutionsConfig.multiSelectLabel || ''
                       }
