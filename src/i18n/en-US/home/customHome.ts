@@ -148,7 +148,7 @@ const customHome = {
     }
   },
   yourModels: 'You have been added as a team member to the models below.',
-  fetchError: 'There was an error fetching models.  Please try again.',
+  fetchError: 'There was an error fetching models. Please try again.',
   downloadAllCSV: 'Download all models as CSV',
   downloadSingleCSV: 'Download this model (CSV)',
   downloadMTOMilestoneSummary: 'Download MTO milestone summary',
