@@ -8,23 +8,17 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/google/uuid"
-
 	"github.com/cms-enterprise/mint-app/mappings"
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/google/uuid"
 )
 
 // FacilitatedByRole is the resolver for the facilitatedByRole field.
 func (r *mTOCommonMilestoneResolver) FacilitatedByRole(ctx context.Context, obj *models.MTOCommonMilestone) ([]models.MTOFacilitator, error) {
 	return obj.FacilitatedByRole, nil
-}
-
-// FacilitatedByOther is the resolver for the facilitatedByOther field.
-func (r *mTOCommonMilestoneResolver) FacilitatedByOther(ctx context.Context, obj *models.MTOCommonMilestone) (*string, error) {
-	panic(fmt.Errorf("not implemented: FacilitatedByOther - facilitatedByOther"))
 }
 
 // Suggested is the resolver for the suggested field.
