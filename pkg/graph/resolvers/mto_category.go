@@ -39,7 +39,7 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	}
 
 	// MTO task progression: creating MTO data counts as starting the MTO
-	err = updatePlanTaskStatusByKey(store, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+	err = updateMTOTaskInProgress(store, logger, modelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 	}
 
 	// MTO task progression: editing category data counts as starting the MTO
-	err = updatePlanTaskStatusByKey(store, logger, updated.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+	err = updateMTOTaskInProgress(store, logger, updated.ModelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	}
 
 	// MTO task progression: editing category data counts as starting the MTO
-	err = updatePlanTaskStatusByKey(store, logger, updated.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+	err = updateMTOTaskInProgress(store, logger, updated.ModelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -268,7 +268,7 @@ func MTOCreateStandardCategories(ctx context.Context, logger *zap.Logger, princi
 		}
 
 		// MTO task progression: creating standard category data counts as starting the MTO
-		err := updatePlanTaskStatusByKey(tx, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		err := updateMTOTaskInProgress(tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return err
 		}

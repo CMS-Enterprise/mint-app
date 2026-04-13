@@ -62,7 +62,7 @@ func MTOSolutionUpdate(
 		}
 
 		// MTO task progression: when MTO is started, mark task IN_PROGRESS
-		err = updatePlanTaskStatusByKey(tx, logger, updatedSolution.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		err = updateMTOTaskInProgress(tx, logger, updatedSolution.ModelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -126,7 +126,7 @@ func MTOSolutionCreateCustom(
 		}
 
 		// MTO task progression: creating solution data counts as starting the MTO
-		err = updatePlanTaskStatusByKey(tx, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		err = updateMTOTaskInProgress(tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -184,7 +184,7 @@ func MTOSolutionCreateCommon(
 		}
 
 		// MTO task progression: creating solution data counts as starting the MTO
-		err = updatePlanTaskStatusByKey(tx, logger, modelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
+		err = updateMTOTaskInProgress(tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
