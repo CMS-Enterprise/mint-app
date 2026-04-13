@@ -19,12 +19,12 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay ReactModal__Overlay--after-open mint-sidepanel__overlay overflow-y-auto"
+      class="ReactModal__Overlay mint-sidepanel__overlay overflow-y-auto"
     >
       <div
         aria-label="Add a common milestone"
         aria-modal="true"
-        class="ReactModal__Content ReactModal__Content--after-open mint-sidepanel__content overflow-hidden"
+        class="ReactModal__Content mint-sidepanel__content overflow-hidden"
         data-testid="side-panel"
         role="dialog"
         tabindex="-1"

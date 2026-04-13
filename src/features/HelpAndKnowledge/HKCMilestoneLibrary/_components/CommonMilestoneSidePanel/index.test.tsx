@@ -58,6 +58,12 @@ describe('CommonMilestoneSidePanel', () => {
       expect(getByRole('button', { name: /Add milestone/i })).toBeDisabled();
     });
 
+    const overlay = baseElement.querySelector('.ReactModal__Overlay');
+    overlay?.classList.remove('ReactModal__Overlay--after-open');
+
+    const content = baseElement.querySelector('.ReactModal__Content');
+    content?.classList.remove('ReactModal__Content--after-open');
+
     expect(baseElement).toMatchSnapshot();
   });
 });
