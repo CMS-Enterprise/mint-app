@@ -123,15 +123,7 @@ const CommonMilestoneForm = ({
   mode,
   closeModal,
   setDisableButton,
-  commonMilestone = {
-    name: '',
-    description: '',
-    categoryName: '',
-    subCategoryName: '',
-    facilitatedByRole: [],
-    facilitatedByOther: '',
-    commonSolutions: []
-  },
+  commonMilestone,
   setIsDirty
 }: CommonMilestoneFormProps) => {
   const { t: mtoCommonMilestoneT } = useTranslation('mtoCommonMilestone');
@@ -229,7 +221,7 @@ const CommonMilestoneForm = ({
     handleSubmit,
     watch,
     setValue,
-    formState: { isSubmitting, dirtyFields }
+    formState: { isSubmitting, dirtyFields, isValid }
   } = methods;
 
   const values = watch();
@@ -268,14 +260,27 @@ const CommonMilestoneForm = ({
 
   // Sets dirty state based on changes in form to render the leave confirmation modal
   useEffect(() => {
-    if (isSubmitting || unsavedChanges) {
+    if (
+      (isAddMode && isValid) ||
+      (isEditMode && unsavedChanges) ||
+      isSubmitting
+    ) {
       setIsDirty(true);
       setDisableButton(false);
     } else {
       setIsDirty(false);
       setDisableButton(true);
     }
-  }, [isSubmitting, unsavedChanges, setIsDirty, setDisableButton]);
+  }, [
+    isSubmitting,
+    unsavedChanges,
+    setIsDirty,
+    setDisableButton,
+    isAddMode,
+    isEditMode,
+    values,
+    isValid
+  ]);
 
   const onSubmit = useCallback<SubmitHandler<CommonMilestoneFormValues>>(
     formData => {
@@ -314,7 +319,7 @@ const CommonMilestoneForm = ({
               {commonMilestone?.name}
             </h2>
 
-            <p className="margin-top-1 margin-bottom-4 text-base-dark line-height-sans-5">
+            <p className="margin-top-1 margin-bottom-1 text-base-dark line-height-sans-5">
               <Trans
                 i18nKey={mtoCommonMilestoneMiscT('allFieldsRequired')}
                 components={{
