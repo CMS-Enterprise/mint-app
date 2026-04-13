@@ -38,41 +38,6 @@ func MTOTemplateCategoryGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.
 	return returned, nil
 }
 
-type commonCategoryRow struct {
-	Name          string         `db:"name"`
-	SubCategories pq.StringArray `db:"sub_categories"`
-}
-
-// CommonCategoriesGetAll returns deduplicated, alphabetized common categories.
-func CommonCategoriesGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.CommonCategory, error) {
-	rows, err := sqlutils.SelectProcedure[commonCategoryRow](np, sqlqueries.MTOTemplateCategory.GetCategoryOptions, map[string]any{})
-	if err != nil {
-		return nil, err
-	}
-
-	options := make([]*models.CommonCategory, 0, len(rows))
-	for _, row := range rows {
-		if row == nil {
-			continue
-		}
-
-		options = append(options, &models.CommonCategory{
-			Name:          row.Name,
-			SubCategories: normalizeCommonCategorySubCategories(row.SubCategories),
-		})
-	}
-
-	return options, nil
-}
-
-func normalizeCommonCategorySubCategories(subCategories pq.StringArray) []string {
-	if len(subCategories) == 1 && subCategories[0] == "Uncategorized" {
-		return []string{}
-	}
-
-	return []string(subCategories)
-}
-
 // MTOTemplateSubCategoryGetByIDLoader returns template subcategories by ID
 func MTOTemplateSubCategoryGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOTemplateSubCategory, error) {
 	args := map[string]interface{}{

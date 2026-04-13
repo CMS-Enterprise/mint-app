@@ -1,6 +1,11 @@
 """
 MTOCommonMilestone represents a Milestone from the "Common Milestones" library
 """
+type CommonCategory {
+  name: String!
+  subCategories: [String!]!
+}
+
 type MTOCommonMilestone {
   # DB Fields
   id: UUID!
@@ -45,6 +50,11 @@ extend type Query {
   """
   mtoCommonMilestones: [MTOCommonMilestone!]!
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  """
+  Get a deduplicated, alphabetized category/subcategory list sourced from template categories
+  """
+  commonCategories: [CommonCategory!]! @hasRole(role: MINT_ASSESSMENT)
 }
 
 extend type Mutation {

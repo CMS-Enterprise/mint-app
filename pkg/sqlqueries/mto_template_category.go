@@ -11,20 +11,15 @@ var mtoTemplateCategoryGetByTemplateIDLoaderSQL string
 //go:embed SQL/mto/template/category/get_by_category_id_LOADER.sql
 var mtoTemplateCategoryGetByCategoryIDLoaderSQL string
 
-//go:embed SQL/mto/template/category/get_category_options.sql
-var mtoTemplateCategoryGetCategoryOptionsSQL string
-
 type mtoTemplateCategoryScripts struct {
 	GetByIDLoader            string
 	GetByTemplateIDLoader    string
 	GetByCategoryIDLoader    string
 	GetSubCategoryByIDLoader string
-	GetCategoryOptions       string
 }
 
 var MTOTemplateCategory = mtoTemplateCategoryScripts{
 	GetByIDLoader:         mtoTemplateCategoryGetByIDLoaderSQL,
 	GetByTemplateIDLoader: mtoTemplateCategoryGetByTemplateIDLoaderSQL,
 	GetByCategoryIDLoader: mtoTemplateCategoryGetByCategoryIDLoaderSQL,
-	GetCategoryOptions:    mtoTemplateCategoryGetCategoryOptionsSQL,
 }

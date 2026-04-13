@@ -9,9 +9,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-func (s *StoreTestSuite) TestCommonCategoriesGetAll() {
+func (s *StoreTestSuite) TestMTOCommonMilestoneGetCommonCategories() {
 	s.Run("returns deduplicated sorted options from seeded template data", func() {
-		options, err := CommonCategoriesGetAll(s.store, s.logger)
+		options, err := MTOCommonMilestoneGetCommonCategories(s.store, s.logger)
 		s.NoError(err)
 		s.NotEmpty(options)
 
@@ -94,7 +94,7 @@ func (s *StoreTestSuite) TestCommonCategoriesGetAll() {
 		err = insertTemplateCategoryTestCategory(tx, uuid.New(), templateID, "Uncategorized", &uncategorizedCategoryID, 0, actorID)
 		s.NoError(err)
 
-		options, err := CommonCategoriesGetAll(tx, s.logger)
+		options, err := MTOCommonMilestoneGetCommonCategories(tx, s.logger)
 		s.NoError(err)
 
 		emptyCategory := findCommonCategoryByName(options, "ZZZ Empty Category")
@@ -138,7 +138,7 @@ func insertTemplateCategoryTestTemplate(tx *sqlx.Tx, id uuid.UUID, actorID uuid.
 		 VALUES ($1, $2::MTO_TEMPLATE_KEY, $3, $4)`,
 		id,
 		string(models.MTOTemplateKeyStandardCategories),
-		"ZZZ Template Category Options Test",
+		"ZZZ Common Milestone Categories Test",
 		actorID,
 	)
 	return err

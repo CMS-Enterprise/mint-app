@@ -68,11 +68,6 @@ type MTOTemplateSubCategory {
   modifiedDts: Time
 }
 
-type CommonCategory {
-  name: String!
-  subCategories: [String!]!
-}
-
 type MTOTemplateMilestone {
   id: UUID!
   name: String!
@@ -121,10 +116,6 @@ extend type Query {
 
   # Get a single template by id or key
   mtoTemplate(id: UUID, key: MTOTemplateKey): MTOTemplate
-
-  # Get a deduplicated, alphabetized category/subcategory list from template categories
-  commonCategories: [CommonCategory!]!
-    @hasRole(role: MINT_ASSESSMENT)
 }
 
 extend type Mutation {
