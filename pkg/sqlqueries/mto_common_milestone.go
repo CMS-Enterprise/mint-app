@@ -11,15 +11,25 @@ var mtoCommonMilestoneGetByIDLoaderSQL string
 //go:embed SQL/mto/common_milestone/archive.sql
 var mtoCommonMilestoneArchiveSQL string
 
+//go:embed SQL/mto/common_milestone/delete_template_milestones.sql
+var mtoCommonMilestoneDeleteTemplateMilestonesSQL string
+
+//go:embed SQL/mto/common_milestone/delete_solution_links.sql
+var mtoCommonMilestoneDeleteSolutionLinksSQL string
+
 type mtoCommonMilestoneScripts struct {
-	GetByModelPlanIDLoader string
-	GetByIDLoader          string
-	Archive                string
+	GetByModelPlanIDLoader   string
+	GetByIDLoader            string
+	Archive                  string
+	DeleteTemplateMilestones string
+	DeleteSolutionLinks      string
 }
 
 // MTOCommonMilestone contains all the SQL queries for the MTO common milestone
 var MTOCommonMilestone = mtoCommonMilestoneScripts{
-	GetByModelPlanIDLoader: mtoCommonMilestoneGetByModelPlanIDLoaderSQL,
-	GetByIDLoader:          mtoCommonMilestoneGetByIDLoaderSQL,
-	Archive:                mtoCommonMilestoneArchiveSQL,
+	GetByModelPlanIDLoader:   mtoCommonMilestoneGetByModelPlanIDLoaderSQL,
+	GetByIDLoader:            mtoCommonMilestoneGetByIDLoaderSQL,
+	Archive:                  mtoCommonMilestoneArchiveSQL,
+	DeleteTemplateMilestones: mtoCommonMilestoneDeleteTemplateMilestonesSQL,
+	DeleteSolutionLinks:      mtoCommonMilestoneDeleteSolutionLinksSQL,
 }
