@@ -19,7 +19,13 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneGetByIDLoaderAndArchiveReturnFaci
 	commonMilestoneID := uuid.New()
 	facilitatedByOther := "Cross-team support"
 
-	err = insertTestMTOCommonMilestone(tx, commonMilestoneID, actorUserID, &facilitatedByOther)
+	err = insertTestMTOCommonMilestone(
+		tx,
+		commonMilestoneID,
+		actorUserID,
+		models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther},
+		&facilitatedByOther,
+	)
 	s.Require().NoError(err)
 
 	loaded, err := MTOCommonMilestoneGetByIDLoader(tx, s.logger, []uuid.UUID{commonMilestoneID})
@@ -36,10 +42,31 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneGetByIDLoaderAndArchiveReturnFaci
 	s.Equal(facilitatedByOther, *archived.FacilitatedByOther)
 }
 
+func (s *StoreTestSuite) TestMTOCommonMilestoneFacilitatedByOtherConstraint() {
+	actorUserID := s.principal.Account().ID
+	tx, err := s.store.Beginx()
+	s.Require().NoError(err)
+	defer tx.Rollback()
+
+	commonMilestoneID := uuid.New()
+	facilitatedByOther := "Cross-team support"
+
+	err = insertTestMTOCommonMilestone(
+		tx,
+		commonMilestoneID,
+		actorUserID,
+		models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorModelTeam},
+		&facilitatedByOther,
+	)
+	s.Require().Error(err)
+	s.Contains(err.Error(), "mto_common_milestone_check_facilitated_by_other_only_if_other")
+}
+
 func insertTestMTOCommonMilestone(
 	tx *sqlx.Tx,
 	id uuid.UUID,
 	actorUserID uuid.UUID,
+	facilitatedByRole models.EnumArray[models.MTOFacilitator],
 	facilitatedByOther *string,
 ) error {
 	_, err := tx.Exec(`
@@ -64,7 +91,7 @@ func insertTestMTOCommonMilestone(
 		"Used to verify common milestone facilitatedByOther reads.",
 		"Operations",
 		"Archive tests",
-		models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther},
+		facilitatedByRole,
 		facilitatedByOther,
 		models.TLSBasics,
 		"plan_basics",
