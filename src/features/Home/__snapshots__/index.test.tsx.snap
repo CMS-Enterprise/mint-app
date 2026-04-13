@@ -194,7 +194,7 @@ exports[`The home page > matches setting snapshot 1`] = `
           <h2
             class="margin-top-0"
           >
-            All Model Plans
+            All models
           </h2>
           <div
             class="model-plan-table"
@@ -220,7 +220,7 @@ exports[`The home page > matches setting snapshot 1`] = `
                     class="usa-input"
                     data-testid="textInput"
                     id="model-plans-search"
-                    name="Model plans Search"
+                    name="Models Search"
                     role="searchbox"
                     type="search"
                     value=""
@@ -642,10 +642,10 @@ exports[`The home page > matches setting snapshot 1`] = `
           <h2
             class="margin-top-0 margin-bottom-2"
           >
-            My Model Plans
+            My models
           </h2>
           <p>
-            You have been added as a team member to the model plans below.
+            You have been added as a team member to the models below.
           </p>
           <div
             class="model-plan-table"

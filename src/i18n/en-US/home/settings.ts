@@ -7,14 +7,14 @@ export type HomepageSettingsType = Record<
 
 const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
-    heading: 'My Model Plans',
+    heading: 'My models',
     description:
-      'This section displays all of the Model Plans that you’re a team member of. Model links go to the Task List.'
+      'This section displays all of the models that you’re a team member of. Model links go to the Task List.'
   },
   [ViewCustomizationType.ALL_MODEL_PLANS]: {
-    heading: 'All Model Plans',
+    heading: 'All models',
     description:
-      'This searchable table displays all Model Plans (like the one on the Models tab).'
+      'This searchable table displays all models (like the one on the Models tab).'
   },
   [ViewCustomizationType.FOLLOWED_MODELS]: {
     heading: 'Models I’m following',
