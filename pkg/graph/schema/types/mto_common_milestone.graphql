@@ -14,6 +14,7 @@ type MTOCommonMilestone {
   categoryName: String!
   subCategoryName: String
   facilitatedByRole: [MTOFacilitator!]!
+  facilitatedByOther: String
   """
   Specifies the Task List Section that corresponds to suggesting this common milestone
   """
@@ -41,6 +42,7 @@ input MTOCommonMilestoneChanges @goModel(model: "map[string]interface{}") {
   categoryName: String
   subCategoryName: String
   facilitatedByRole: [MTOFacilitator!]
+  facilitatedByOther: String
   mtoCommonSolutionKeys: [MTOCommonSolutionKey!]
 }
 
@@ -64,6 +66,7 @@ extend type Mutation {
     categoryName: String!
     subCategoryName: String
     facilitatedByRole: [MTOFacilitator!]!
+    facilitatedByOther: String
     mtoCommonSolutionKeys: [MTOCommonSolutionKey!]!
   ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
 
