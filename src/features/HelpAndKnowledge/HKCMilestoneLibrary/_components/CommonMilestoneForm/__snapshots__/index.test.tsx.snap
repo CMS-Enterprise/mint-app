@@ -1,0 +1,439 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Manage Common Milestone form > should matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="margin-top-8"
+  >
+    <div
+      class="padding-x-8 padding-y-6 maxw-tablet"
+    >
+      <form
+        class="usa-form maxw-none"
+        data-testid="form"
+        id="common-milestone-form"
+      >
+        <h2
+          class="margin-y-0 line-height-serif-2"
+        >
+          Add a common milestone
+        </h2>
+        <p
+          class="margin-top-1 margin-bottom-1 text-base-dark line-height-sans-5"
+        >
+          Fields marked with an asterisk ( 
+          <span
+            class="text-secondary-dark"
+          >
+            *
+          </span>
+           ) are required.
+        </p>
+        <fieldset
+          class="usa-fieldset margin-bottom-8"
+          data-testid="fieldset"
+        >
+          <div
+            class="usa-form-group margin-bottom-3"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="name"
+            >
+              Milestone title 
+              <abbr
+                class="usa-hint usa-hint--required"
+                title="required"
+              >
+                *
+              </abbr>
+            </label>
+            <input
+              class="usa-input"
+              data-testid="textInput"
+              id="name"
+              name="name"
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="usa-form-group margin-top-0 margin-bottom-3"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label maxw-none text-bold"
+              data-testid="label"
+              for="description"
+            >
+              Milestone description 
+              <abbr
+                class="usa-hint usa-hint--required"
+                title="required"
+              >
+                *
+              </abbr>
+            </label>
+            <textarea
+              aria-labelledby="label-description hint-description"
+              class="height-card usa-textarea"
+              id="description"
+              name="description"
+            />
+          </div>
+          <div
+            class="usa-form-group margin-top-0 margin-bottom-3"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label maxw-none text-bold"
+              data-testid="label"
+              for="category-name"
+            >
+              Category 
+              <abbr
+                class="usa-hint usa-hint--required"
+                title="required"
+              >
+                *
+              </abbr>
+            </label>
+            <div
+              class="mint-help-text margin-top-05"
+            >
+              Choose the primary category that best fits this milestone. IT Leads adding this milestone to their MTO will be able to update this if necessary.
+            </div>
+            <select
+              class="usa-select"
+              data-testid="Select"
+              id="category-name"
+              name="categoryName"
+            >
+              <option
+                value="default"
+              >
+                - Select - 
+              </option>
+              <option
+                value="Beneficiaries"
+              >
+                Beneficiaries
+              </option>
+              <option
+                value="Evaluation"
+              >
+                Evaluation
+              </option>
+              <option
+                value="Learning"
+              >
+                Learning
+              </option>
+              <option
+                value="Legal"
+              >
+                Legal
+              </option>
+              <option
+                value="Model closeout or extension"
+              >
+                Model closeout or extension
+              </option>
+              <option
+                value="Operations"
+              >
+                Operations
+              </option>
+              <option
+                value="Participants"
+              >
+                Participants
+              </option>
+              <option
+                value="Payers"
+              >
+                Payers
+              </option>
+              <option
+                value="Payment"
+              >
+                Payment
+              </option>
+              <option
+                value="Quality"
+              >
+                Quality
+              </option>
+            </select>
+          </div>
+          <div
+            class="usa-form-group margin-top-0 margin-bottom-3"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label maxw-none text-bold"
+              data-testid="label"
+              for="sub-category-name"
+            >
+              Sub-category 
+              <abbr
+                class="usa-hint usa-hint--required"
+                title="required"
+              >
+                *
+              </abbr>
+            </label>
+            <div
+              class="mint-help-text margin-top-05"
+            >
+              Choose the sub-category that best fits this milestone. IT Leads adding this milestone to their MTO will be able to update this if necessary.
+            </div>
+            <select
+              class="usa-select"
+              data-testid="Select"
+              disabled=""
+              id="sub-category-name"
+              name="subCategoryName"
+            >
+              <option
+                value="default"
+              >
+                - Select - 
+              </option>
+              <option
+                value="Uncategorized"
+              >
+                Uncategorized
+              </option>
+            </select>
+          </div>
+          <div
+            class="usa-form-group margin-0 margin-bottom-3"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="facilitated-by-role"
+            >
+              Facilitated by 
+              <abbr
+                class="usa-hint usa-hint--required"
+                title="required"
+              >
+                *
+              </abbr>
+            </label>
+            <div
+              class="mint-help-text margin-top-1"
+            >
+              Choose the role(s) or group(s) most often responsible for this work. Select all that apply. IT Leads adding this milestone to their MTO will be able to update this if necessary.
+            </div>
+            <div>
+              <div
+                class="easi-multiselect usa-combo-box margin-top-1 css-b62m3t-container"
+                id="facilitated-by-role"
+              >
+                <span
+                  class="css-1f43avz-a11yText-A11yText"
+                  id="react-select-4-live-region"
+                />
+                <span
+                  aria-atomic="false"
+                  aria-live="polite"
+                  aria-relevant="additions text"
+                  class="css-1f43avz-a11yText-A11yText"
+                  role="log"
+                />
+                <div
+                  class="css-1vl89cy-control"
+                >
+                  <div
+                    class="css-hlgwow"
+                  >
+                    <div
+                      class="css-1jqq78o-placeholder"
+                      id="react-select-4-placeholder"
+                    >
+                      0 selected
+                    </div>
+                    <div
+                      class="css-19bb58m"
+                      data-value=""
+                    >
+                      <input
+                        aria-activedescendant=""
+                        aria-autocomplete="list"
+                        aria-describedby="react-select-4-placeholder"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        aria-label="Facilitated by"
+                        aria-labelledby="Facilitated by"
+                        autocapitalize="none"
+                        autocomplete="off"
+                        autocorrect="off"
+                        class=""
+                        id="facilitated-by-role"
+                        role="combobox"
+                        spellcheck="false"
+                        style="color: inherit; background: 0px; opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                        tabindex="0"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="css-1wy0on6"
+                  >
+                    <span
+                      class="css-16b81-indicatorSeparator"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="css-gjng1h-indicatorContainer"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="css-tj5bde-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                      >
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <input
+                    name="facilitatedByRole"
+                    type="hidden"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-0 margin-bottom-7"
+            data-testid="formGroup"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="common-solutions"
+            >
+              Commonly used solutions 
+              <abbr
+                class="usa-hint usa-hint--required"
+                title="required"
+              >
+                *
+              </abbr>
+            </label>
+            <div
+              class="mint-help-text margin-top-1"
+            >
+              Choose the solution(s) that are often used to implement this milestone. Select all that apply. IT Leads adding this milestone to their MTO will be able to update this if necessary.
+            </div>
+            <div>
+              <div
+                class="easi-multiselect usa-combo-box margin-top-1 grouped-options css-b62m3t-container"
+                id="common-solutions"
+              >
+                <span
+                  class="css-1f43avz-a11yText-A11yText"
+                  id="react-select-5-live-region"
+                />
+                <span
+                  aria-atomic="false"
+                  aria-live="polite"
+                  aria-relevant="additions text"
+                  class="css-1f43avz-a11yText-A11yText"
+                  role="log"
+                />
+                <div
+                  class="css-1vl89cy-control"
+                >
+                  <div
+                    class="css-hlgwow"
+                  >
+                    <div
+                      class="css-1jqq78o-placeholder"
+                      id="react-select-5-placeholder"
+                    >
+                      0 selected
+                    </div>
+                    <div
+                      class="css-19bb58m"
+                      data-value=""
+                    >
+                      <input
+                        aria-activedescendant=""
+                        aria-autocomplete="list"
+                        aria-describedby="react-select-5-placeholder"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        aria-label="Commonly used solutions"
+                        aria-labelledby="Commonly used solutions"
+                        autocapitalize="none"
+                        autocomplete="off"
+                        autocorrect="off"
+                        class=""
+                        id="common-solutions"
+                        role="combobox"
+                        spellcheck="false"
+                        style="color: inherit; background: 0px; opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                        tabindex="0"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="css-1wy0on6"
+                  >
+                    <span
+                      class="css-16b81-indicatorSeparator"
+                    />
+                    <div
+                      aria-hidden="true"
+                      class="css-gjng1h-indicatorContainer"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        class="css-tj5bde-Svg"
+                        focusable="false"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        width="20"
+                      >
+                        <path
+                          d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <input
+                    name="commonSolutions"
+                    type="hidden"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</DocumentFragment>
+`;

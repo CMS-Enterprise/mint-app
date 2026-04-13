@@ -1036,6 +1036,7 @@ export type MtoCommonMilestone = {
   categoryName: Scalars['String']['output'];
   commonSolutions: Array<MtoCommonSolution>;
   description: Scalars['String']['output'];
+  facilitatedByOther?: Maybe<Scalars['String']['output']>;
   facilitatedByRole: Array<MtoFacilitator>;
   id: Scalars['UUID']['output'];
   /**
@@ -1065,10 +1066,23 @@ export type MtoCommonMilestoneSuggestedArgs = {
 export type MtoCommonMilestoneChanges = {
   categoryName?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
+  facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
   facilitatedByRole?: InputMaybe<Array<MtoFacilitator>>;
   mtoCommonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
   name?: InputMaybe<Scalars['String']['input']>;
   subCategoryName?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Represents MTO Common Milestone translation data */
+export type MtoCommonMilestoneTranslation = {
+  __typename: 'MTOCommonMilestoneTranslation';
+  categoryName: TranslationField;
+  commonSolutions: TranslationFieldWithOptions;
+  description: TranslationField;
+  facilitatedByOther: TranslationField;
+  facilitatedByRole: TranslationFieldWithOptions;
+  name: TranslationField;
+  subCategoryName: TranslationField;
 };
 
 export type MtoCommonSolution = {
@@ -2256,6 +2270,7 @@ export type MutationCreateMtoCategoryArgs = {
 export type MutationCreateMtoCommonMilestoneArgs = {
   categoryName: Scalars['String']['input'];
   description: Scalars['String']['input'];
+  facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
   facilitatedByRole: Array<MtoFacilitator>;
   mtoCommonSolutionKeys: Array<MtoCommonSolutionKey>;
   name: Scalars['String']['input'];
