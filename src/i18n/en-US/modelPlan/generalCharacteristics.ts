@@ -1150,7 +1150,7 @@ export const generalCharacteristics: TranslationGeneralCharacteristics = {
     isOtherType: true,
     otherParentField: 'waiversRequired',
     options: {
-      FRAUD_ABUSE: 'Fraud and Abuse',
+      FRAUD_ABUSE: 'Anti-Kickback Statute (AKS) safe harbor or other exception',
       MEDICAID: 'Medicaid',
       PROGRAM_PAYMENT: 'Program/payment'
     },

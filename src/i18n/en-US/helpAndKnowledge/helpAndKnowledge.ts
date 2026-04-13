@@ -80,9 +80,8 @@ export const solutionCategories: Record<
       'Learn about the solutions available for Medicare Advantage and Part D.'
   },
   [MtoCommonSolutionSubject.MEDICARE_FEE_FOR_SERVICE]: {
-    header: 'Medicare Fee-for-Service',
-    description:
-      'Learn about the solutions available for Medicare Fee-for-Service.'
+    header: 'Original Medicare',
+    description: 'Learn about the solutions available for Original Medicare.'
   },
   [MtoCommonSolutionSubject.PAYMENTS_AND_FINANCIALS]: {
     header: 'Payments and financials',
