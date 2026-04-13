@@ -38,34 +38,34 @@ func MTOTemplateCategoryGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.
 	return returned, nil
 }
 
-type mtoTemplateCategoryOptionRow struct {
+type commonCategoryRow struct {
 	Name          string         `db:"name"`
 	SubCategories pq.StringArray `db:"sub_categories"`
 }
 
-// MTOTemplateCategoriesGetAll returns deduplicated, alphabetized template category options.
-func MTOTemplateCategoriesGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.MTOTemplateCategoryOption, error) {
-	rows, err := sqlutils.SelectProcedure[mtoTemplateCategoryOptionRow](np, sqlqueries.MTOTemplateCategory.GetCategoryOptions, map[string]any{})
+// CommonCategoriesGetAll returns deduplicated, alphabetized common categories.
+func CommonCategoriesGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.CommonCategory, error) {
+	rows, err := sqlutils.SelectProcedure[commonCategoryRow](np, sqlqueries.MTOTemplateCategory.GetCategoryOptions, map[string]any{})
 	if err != nil {
 		return nil, err
 	}
 
-	options := make([]*models.MTOTemplateCategoryOption, 0, len(rows))
+	options := make([]*models.CommonCategory, 0, len(rows))
 	for _, row := range rows {
 		if row == nil {
 			continue
 		}
 
-		options = append(options, &models.MTOTemplateCategoryOption{
+		options = append(options, &models.CommonCategory{
 			Name:          row.Name,
-			SubCategories: normalizeTemplateCategoryOptionSubCategories(row.SubCategories),
+			SubCategories: normalizeCommonCategorySubCategories(row.SubCategories),
 		})
 	}
 
 	return options, nil
 }
 
-func normalizeTemplateCategoryOptionSubCategories(subCategories pq.StringArray) []string {
+func normalizeCommonCategorySubCategories(subCategories pq.StringArray) []string {
 	if len(subCategories) == 1 && subCategories[0] == "Uncategorized" {
 		return []string{}
 	}

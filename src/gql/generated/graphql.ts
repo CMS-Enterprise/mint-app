@@ -294,6 +294,12 @@ export enum ClaimsBasedPayType {
   TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE = 'TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE'
 }
 
+export type CommonCategory = {
+  __typename: 'CommonCategory';
+  name: Scalars['String']['output'];
+  subCategories: Array<Scalars['String']['output']>;
+};
+
 export enum ComplexityCalculationLevelType {
   HIGH = 'HIGH',
   LOW = 'LOW',
@@ -1665,12 +1671,6 @@ export type MtoTemplateCategory = {
   order: Scalars['Int']['output'];
   subCategories: Array<MtoTemplateSubCategory>;
   templateID: Scalars['UUID']['output'];
-};
-
-export type MtoTemplateCategoryOption = {
-  __typename: 'MTOTemplateCategoryOption';
-  name: Scalars['String']['output'];
-  subCategories: Array<Scalars['String']['output']>;
 };
 
 export enum MtoTemplateKey {
@@ -4733,6 +4733,7 @@ export type Query = {
   analytics: AnalyticsSummary;
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
+  commonCategories: Array<CommonCategory>;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
@@ -4757,7 +4758,6 @@ export type Query = {
   mtoMilestone: MtoMilestone;
   mtoSolution: MtoSolution;
   mtoTemplate?: Maybe<MtoTemplate>;
-  mtoTemplateCategories: Array<MtoTemplateCategoryOption>;
   mtoTemplates: Array<MtoTemplate>;
   ndaInfo: NdaInfo;
   planCR: PlanCr;

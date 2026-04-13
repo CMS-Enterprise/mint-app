@@ -68,7 +68,7 @@ type MTOTemplateSubCategory {
   modifiedDts: Time
 }
 
-type MTOTemplateCategoryOption {
+type CommonCategory {
   name: String!
   subCategories: [String!]!
 }
@@ -123,7 +123,7 @@ extend type Query {
   mtoTemplate(id: UUID, key: MTOTemplateKey): MTOTemplate
 
   # Get a deduplicated, alphabetized category/subcategory list from template categories
-  mtoTemplateCategories: [MTOTemplateCategoryOption!]!
+  commonCategories: [CommonCategory!]!
     @hasRole(role: MINT_ASSESSMENT)
 }
 

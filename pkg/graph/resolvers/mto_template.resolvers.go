@@ -7,13 +7,12 @@ package resolvers
 import (
 	"context"
 
-	"github.com/google/uuid"
-
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/google/uuid"
 )
 
 // Categories is the resolver for the categories field.
@@ -86,10 +85,10 @@ func (r *queryResolver) MtoTemplate(ctx context.Context, id *uuid.UUID, key *mod
 	return MTOTemplateGetByIDOrKeyLOADER(ctx, id, key)
 }
 
-// MtoTemplateCategories is the resolver for the mtoTemplateCategories field.
-func (r *queryResolver) MtoTemplateCategories(ctx context.Context) ([]*models.MTOTemplateCategoryOption, error) {
+// CommonCategories is the resolver for the commonCategories field.
+func (r *queryResolver) CommonCategories(ctx context.Context) ([]*models.CommonCategory, error) {
 	logger := appcontext.ZLogger(ctx)
-	return storage.MTOTemplateCategoriesGetAll(r.store, logger)
+	return storage.CommonCategoriesGetAll(r.store, logger)
 }
 
 // MTOTemplate returns generated.MTOTemplateResolver implementation.

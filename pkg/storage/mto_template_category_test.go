@@ -9,9 +9,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-func (s *StoreTestSuite) TestMTOTemplateCategoriesGetAll() {
+func (s *StoreTestSuite) TestCommonCategoriesGetAll() {
 	s.Run("returns deduplicated sorted options from seeded template data", func() {
-		options, err := MTOTemplateCategoriesGetAll(s.store, s.logger)
+		options, err := CommonCategoriesGetAll(s.store, s.logger)
 		s.NoError(err)
 		s.NotEmpty(options)
 
@@ -39,21 +39,21 @@ func (s *StoreTestSuite) TestMTOTemplateCategoriesGetAll() {
 
 		s.True(sort.StringsAreSorted(categoryNames))
 
-		operations := findTemplateCategoryOptionByName(options, "Operations")
+		operations := findCommonCategoryByName(options, "Operations")
 		s.Require().NotNil(operations)
 		s.Contains(operations.SubCategories, "Internal functions")
 		s.Contains(operations.SubCategories, "Set up operations")
 
-		participants := findTemplateCategoryOptionByName(options, "Participants")
+		participants := findCommonCategoryByName(options, "Participants")
 		s.Require().NotNil(participants)
 		s.Contains(participants.SubCategories, "Application, review, and selection")
 		s.Contains(participants.SubCategories, "Participant support")
 
-		evaluation := findTemplateCategoryOptionByName(options, "Evaluation")
+		evaluation := findCommonCategoryByName(options, "Evaluation")
 		s.Require().NotNil(evaluation)
 		s.Empty(evaluation.SubCategories)
 
-		learning := findTemplateCategoryOptionByName(options, "Learning")
+		learning := findCommonCategoryByName(options, "Learning")
 		s.Require().NotNil(learning)
 		s.Empty(learning.SubCategories)
 	})
@@ -94,18 +94,18 @@ func (s *StoreTestSuite) TestMTOTemplateCategoriesGetAll() {
 		err = insertTemplateCategoryTestCategory(tx, uuid.New(), templateID, "Uncategorized", &uncategorizedCategoryID, 0, actorID)
 		s.NoError(err)
 
-		options, err := MTOTemplateCategoriesGetAll(tx, s.logger)
+		options, err := CommonCategoriesGetAll(tx, s.logger)
 		s.NoError(err)
 
-		emptyCategory := findTemplateCategoryOptionByName(options, "ZZZ Empty Category")
+		emptyCategory := findCommonCategoryByName(options, "ZZZ Empty Category")
 		s.Require().NotNil(emptyCategory)
 		s.Empty(emptyCategory.SubCategories)
 
-		uncategorizedCategory := findTemplateCategoryOptionByName(options, "ZZZ Uncategorized Category")
+		uncategorizedCategory := findCommonCategoryByName(options, "ZZZ Uncategorized Category")
 		s.Require().NotNil(uncategorizedCategory)
 		s.Empty(uncategorizedCategory.SubCategories)
 
-		operations := findTemplateCategoryOptionByName(options, "Operations")
+		operations := findCommonCategoryByName(options, "Operations")
 		s.Require().NotNil(operations)
 		s.True(sort.StringsAreSorted(operations.SubCategories))
 		s.Contains(operations.SubCategories, "ZZZ Added Child")
@@ -113,7 +113,7 @@ func (s *StoreTestSuite) TestMTOTemplateCategoriesGetAll() {
 	})
 }
 
-func findTemplateCategoryOptionByName(options []*models.MTOTemplateCategoryOption, name string) *models.MTOTemplateCategoryOption {
+func findCommonCategoryByName(options []*models.CommonCategory, name string) *models.CommonCategory {
 	for _, option := range options {
 		if option != nil && option.Name == name {
 			return option
