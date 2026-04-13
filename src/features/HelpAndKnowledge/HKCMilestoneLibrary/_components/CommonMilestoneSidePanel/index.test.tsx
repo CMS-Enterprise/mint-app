@@ -47,7 +47,7 @@ describe('CommonMilestoneSidePanel', () => {
   });
 
   it('matches snapshot', async () => {
-    const { getByTestId, baseElement } = render(
+    const { getByTestId, getByRole, baseElement } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <RouterProvider router={routerConfig(true)} />
       </MockedProvider>
@@ -55,6 +55,7 @@ describe('CommonMilestoneSidePanel', () => {
 
     await waitFor(() => {
       expect(getByTestId('common-milestone-side-panel')).toBeInTheDocument();
+      expect(getByRole('button', { name: /Add milestone/i })).toBeDisabled();
     });
 
     expect(baseElement).toMatchSnapshot();
