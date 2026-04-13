@@ -225,8 +225,8 @@ describe('The home page', () => {
 
     const settingsHeaders = getByTestId('homepage').querySelectorAll('h2');
     expect(settingsHeaders.length).toEqual(2);
-    expect(settingsHeaders[0].textContent).toEqual('All Model Plans');
-    expect(settingsHeaders[1].textContent).toEqual('My Model Plans');
+    expect(settingsHeaders[0].textContent).toEqual('All models');
+    expect(settingsHeaders[1].textContent).toEqual('My models');
   });
 
   it('matches setting snapshot', async () => {
