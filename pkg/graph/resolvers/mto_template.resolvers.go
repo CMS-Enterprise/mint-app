@@ -86,10 +86,10 @@ func (r *queryResolver) MtoTemplate(ctx context.Context, id *uuid.UUID, key *mod
 	return MTOTemplateGetByIDOrKeyLOADER(ctx, id, key)
 }
 
-// MtoTemplateCategoryOptions is the resolver for the mtoTemplateCategoryOptions field.
-func (r *queryResolver) MtoTemplateCategoryOptions(ctx context.Context) ([]*models.MTOTemplateCategoryOption, error) {
+// MtoTemplateCategories is the resolver for the mtoTemplateCategories field.
+func (r *queryResolver) MtoTemplateCategories(ctx context.Context) ([]*models.MTOTemplateCategoryOption, error) {
 	logger := appcontext.ZLogger(ctx)
-	return storage.MTOTemplateCategoryOptionsGetAll(r.store, logger)
+	return storage.MTOTemplateCategoriesGetAll(r.store, logger)
 }
 
 // MTOTemplate returns generated.MTOTemplateResolver implementation.

@@ -1,5 +1,5 @@
 meta {
-  name: Get MTO Template Category Options
+  name: Get MTO Template Categories
   type: graphql
   seq: 4
 }
@@ -11,8 +11,8 @@ post {
 }
 
 body:graphql {
-  query GetMtoTemplateCategoryOptions {
-    mtoTemplateCategoryOptions {
+  query GetMtoTemplateCategories {
+    mtoTemplateCategories {
       name
       subCategories
     }

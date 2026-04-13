@@ -123,7 +123,7 @@ extend type Query {
   mtoTemplate(id: UUID, key: MTOTemplateKey): MTOTemplate
 
   # Get a deduplicated, alphabetized category/subcategory list from template categories
-  mtoTemplateCategoryOptions: [MTOTemplateCategoryOption!]!
+  mtoTemplateCategories: [MTOTemplateCategoryOption!]!
     @hasRole(role: MINT_ASSESSMENT)
 }
 

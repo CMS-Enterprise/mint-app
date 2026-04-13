@@ -9,9 +9,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-func (s *StoreTestSuite) TestMTOTemplateCategoryOptionsGetAll() {
+func (s *StoreTestSuite) TestMTOTemplateCategoriesGetAll() {
 	s.Run("returns deduplicated sorted options from seeded template data", func() {
-		options, err := MTOTemplateCategoryOptionsGetAll(s.store, s.logger)
+		options, err := MTOTemplateCategoriesGetAll(s.store, s.logger)
 		s.NoError(err)
 		s.NotEmpty(options)
 
@@ -48,9 +48,17 @@ func (s *StoreTestSuite) TestMTOTemplateCategoryOptionsGetAll() {
 		s.Require().NotNil(participants)
 		s.Contains(participants.SubCategories, "Application, review, and selection")
 		s.Contains(participants.SubCategories, "Participant support")
+
+		evaluation := findTemplateCategoryOptionByName(options, "Evaluation")
+		s.Require().NotNil(evaluation)
+		s.Empty(evaluation.SubCategories)
+
+		learning := findTemplateCategoryOptionByName(options, "Learning")
+		s.Require().NotNil(learning)
+		s.Empty(learning.SubCategories)
 	})
 
-	s.Run("includes empty top level categories and deduplicates duplicate child names", func() {
+	s.Run("includes empty top level categories, collapses lone Uncategorized, and deduplicates duplicate child names", func() {
 		tx, err := s.store.Beginx()
 		s.NoError(err)
 		s.Require().NotNil(tx)
@@ -59,6 +67,7 @@ func (s *StoreTestSuite) TestMTOTemplateCategoryOptionsGetAll() {
 		templateID := uuid.New()
 		operationsCategoryID := uuid.New()
 		emptyCategoryID := uuid.New()
+		uncategorizedCategoryID := uuid.New()
 		actorID := s.principal.Account().ID
 
 		err = insertTemplateCategoryTestTemplate(tx, templateID, actorID)
@@ -70,6 +79,9 @@ func (s *StoreTestSuite) TestMTOTemplateCategoryOptionsGetAll() {
 		err = insertTemplateCategoryTestCategory(tx, emptyCategoryID, templateID, "ZZZ Empty Category", nil, 1, actorID)
 		s.NoError(err)
 
+		err = insertTemplateCategoryTestCategory(tx, uncategorizedCategoryID, templateID, "ZZZ Uncategorized Category", nil, 2, actorID)
+		s.NoError(err)
+
 		err = insertTemplateCategoryTestCategory(tx, uuid.New(), templateID, "ZZZ Added Child", &operationsCategoryID, 0, actorID)
 		s.NoError(err)
 
@@ -79,12 +91,19 @@ func (s *StoreTestSuite) TestMTOTemplateCategoryOptionsGetAll() {
 		err = insertTemplateCategoryTestCategory(tx, uuid.New(), templateID, "Internal functions", &operationsCategoryID, 2, actorID)
 		s.NoError(err)
 
-		options, err := MTOTemplateCategoryOptionsGetAll(tx, s.logger)
+		err = insertTemplateCategoryTestCategory(tx, uuid.New(), templateID, "Uncategorized", &uncategorizedCategoryID, 0, actorID)
+		s.NoError(err)
+
+		options, err := MTOTemplateCategoriesGetAll(tx, s.logger)
 		s.NoError(err)
 
 		emptyCategory := findTemplateCategoryOptionByName(options, "ZZZ Empty Category")
 		s.Require().NotNil(emptyCategory)
 		s.Empty(emptyCategory.SubCategories)
+
+		uncategorizedCategory := findTemplateCategoryOptionByName(options, "ZZZ Uncategorized Category")
+		s.Require().NotNil(uncategorizedCategory)
+		s.Empty(uncategorizedCategory.SubCategories)
 
 		operations := findTemplateCategoryOptionByName(options, "Operations")
 		s.Require().NotNil(operations)

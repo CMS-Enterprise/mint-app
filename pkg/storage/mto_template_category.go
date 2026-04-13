@@ -43,8 +43,8 @@ type mtoTemplateCategoryOptionRow struct {
 	SubCategories pq.StringArray `db:"sub_categories"`
 }
 
-// MTOTemplateCategoryOptionsGetAll returns deduplicated, alphabetized template category options.
-func MTOTemplateCategoryOptionsGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.MTOTemplateCategoryOption, error) {
+// MTOTemplateCategoriesGetAll returns deduplicated, alphabetized template category options.
+func MTOTemplateCategoriesGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.MTOTemplateCategoryOption, error) {
 	rows, err := sqlutils.SelectProcedure[mtoTemplateCategoryOptionRow](np, sqlqueries.MTOTemplateCategory.GetCategoryOptions, map[string]any{})
 	if err != nil {
 		return nil, err
@@ -58,11 +58,19 @@ func MTOTemplateCategoryOptionsGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) 
 
 		options = append(options, &models.MTOTemplateCategoryOption{
 			Name:          row.Name,
-			SubCategories: []string(row.SubCategories),
+			SubCategories: normalizeTemplateCategoryOptionSubCategories(row.SubCategories),
 		})
 	}
 
 	return options, nil
+}
+
+func normalizeTemplateCategoryOptionSubCategories(subCategories pq.StringArray) []string {
+	if len(subCategories) == 1 && subCategories[0] == "Uncategorized" {
+		return []string{}
+	}
+
+	return []string(subCategories)
 }
 
 // MTOTemplateSubCategoryGetByIDLoader returns template subcategories by ID

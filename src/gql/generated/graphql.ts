@@ -4757,7 +4757,7 @@ export type Query = {
   mtoMilestone: MtoMilestone;
   mtoSolution: MtoSolution;
   mtoTemplate?: Maybe<MtoTemplate>;
-  mtoTemplateCategoryOptions: Array<MtoTemplateCategoryOption>;
+  mtoTemplateCategories: Array<MtoTemplateCategoryOption>;
   mtoTemplates: Array<MtoTemplate>;
   ndaInfo: NdaInfo;
   planCR: PlanCr;
