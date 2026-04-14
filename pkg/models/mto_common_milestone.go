@@ -2,6 +2,13 @@ package models
 
 import "github.com/google/uuid"
 
+// CommonCategory represents a deduplicated top-level category
+// and its deduplicated, alphabetized subcategory names.
+type CommonCategory struct {
+	Name          string   `json:"name"`
+	SubCategories []string `json:"subCategories"`
+}
+
 type MTOCommonMilestone struct {
 	ID                uuid.UUID                 `json:"id" db:"id"`
 	Name              string                    `json:"name" db:"name"`
