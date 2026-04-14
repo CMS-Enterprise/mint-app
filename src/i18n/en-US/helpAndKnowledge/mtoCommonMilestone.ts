@@ -177,6 +177,7 @@ export const mtoCommonMilestoneMisc = {
     heading: 'Edit milestone',
     cta: 'Save changes'
   },
+  removeCommonMilestone: 'Remove milestone',
   validation: {
     fillOut: 'Please fill out the required field.'
   },
@@ -186,15 +187,18 @@ export const mtoCommonMilestoneMisc = {
   confirmationModal: {
     editCommonMilestone: {
       heading: 'Are you sure you want to save changes?',
-      text: 'If you have made title and description changes, they will be updated for all models using this common milestone. All other changes will only be applied when this common milestone is added to an MTO after you save changes.',
+      text: 'If you have made title and description changes, they will be updated for all models using this common milestone. All other changes will only be applied when this common milestone is added to an MTO after you save changes. These changes will also be made in any template that includes this milestone.',
       cta: 'Save changes'
     },
-    archiveCommonMilestone: {
-      heading: 'Are you sure you want to archive this common milestone?',
-      text: 'This action cannot be undone. Any models using this in their model-to-operations matrix (MTO) will automatically have their milestone converted to a custom milestone to retain the data.',
-      cta: 'Archive milestone'
+    removeCommonMilestone: {
+      heading: 'Are you sure you want to remove this common milestone?',
+      text: 'This action cannot be undone. This action will also remove this milestone from any templates. Any models using this in their model-to-operations matrix (MTO) will still have the milestone in their MTO, but may choose to manually remove it.',
+      cta: 'Remove milestone'
     }
   },
+  unsavedChanges: '{{count}} unsaved change',
+  unsavedChanges_other: '{{count}} unsaved changes',
+  save: 'Save',
   saveChanges: 'Save changes',
   cancel: 'Cancel'
 };

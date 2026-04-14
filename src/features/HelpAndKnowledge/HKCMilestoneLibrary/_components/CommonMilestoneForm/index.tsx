@@ -7,13 +7,16 @@ import {
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
+  Button,
   Fieldset,
   Form,
   FormGroup,
+  Icon,
   Label,
   Select,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
   GetGlobalMtoCommonSolutionsQuery,
@@ -196,19 +199,25 @@ const CommonMilestoneForm = ({
   }, []);
 
   // Set default values for form
-  const formValues = useMemo(
-    () => ({
+  const formValues = useMemo(() => {
+    let subCategoryDefault = 'default';
+    if (commonMilestone?.subCategoryName) {
+      subCategoryDefault = commonMilestone.subCategoryName;
+    } else if (commonMilestone?.categoryName) {
+      subCategoryDefault = 'Uncategorized';
+    }
+
+    return {
       name: commonMilestone?.name || '',
       description: commonMilestone?.description || '',
       categoryName: commonMilestone?.categoryName || 'default',
-      subCategoryName: commonMilestone?.subCategoryName || 'default',
+      subCategoryName: subCategoryDefault,
       facilitatedByRole: commonMilestone?.facilitatedByRole || [],
-      facilitatedByOther: commonMilestone?.facilitatedByOther || '',
+      facilitatedByOther: 'commonMilestone?.facilitatedByOther || ',
       commonSolutions:
         commonMilestone?.commonSolutions?.map(solution => solution.key) || []
-    }),
-    [commonMilestone]
-  );
+    };
+  }, [commonMilestone]);
 
   const methods = useForm<CommonMilestoneFormValues>({
     defaultValues: formValues,
@@ -251,24 +260,23 @@ const CommonMilestoneForm = ({
       Object.keys(rest).length;
 
     setUnsavedChanges(totalChanges);
-  }, [
-    dirtyFields,
-    formValues,
-    values.facilitatedByRole,
-    values.commonSolutions
-  ]);
+  }, [dirtyFields, formValues, values]);
 
   // Sets dirty state based on changes in form to render the leave confirmation modal
   useEffect(() => {
+    if (unsavedChanges) {
+      setIsDirty(true);
+    } else {
+      setIsDirty(false);
+    }
+
     if (
       (isAddMode && isValid) ||
       (isEditMode && unsavedChanges) ||
       isSubmitting
     ) {
-      setIsDirty(true);
       setDisableButton(false);
     } else {
-      setIsDirty(false);
       setDisableButton(true);
     }
   }, [
@@ -306,6 +314,32 @@ const CommonMilestoneForm = ({
   return (
     <div className="margin-top-8">
       <div className="padding-x-8 padding-y-6 maxw-tablet">
+        {isEditMode && unsavedChanges > 0 && (
+          <div className={classNames('save-tag')}>
+            <div className="bg-warning-lighter padding-y-05 padding-x-1">
+              <Icon.Warning
+                className="margin-right-1 top-2px text-warning"
+                aria-label="warning"
+              />
+              <p className="margin-0 display-inline margin-right-1">
+                {mtoCommonMilestoneMiscT('unsavedChanges', {
+                  count: unsavedChanges
+                })}
+              </p>
+              -
+              <Button
+                type="button"
+                onClick={handleSubmit(onSubmit)}
+                disabled={isSubmitting || !unsavedChanges}
+                className="margin-x-1"
+                unstyled
+              >
+                {mtoCommonMilestoneMiscT('save')}
+              </Button>
+            </div>
+          </div>
+        )}
+
         <FormProvider {...methods}>
           <Form
             className="maxw-none"

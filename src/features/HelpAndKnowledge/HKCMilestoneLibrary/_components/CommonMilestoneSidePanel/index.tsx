@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
-import { MtoCommonMilestone } from 'gql/generated/graphql';
+import { GetMtoAllCommonMilestonesQuery } from 'gql/generated/graphql';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
@@ -13,16 +13,8 @@ export type CommonMilestoneModalModeType =
   | 'addCommonMilestone'
   | 'editCommonMilestone';
 
-export type CommonMilestoneType = Pick<
-  MtoCommonMilestone,
-  | 'name'
-  | 'description'
-  | 'categoryName'
-  | 'subCategoryName'
-  | 'facilitatedByRole'
-  | 'facilitatedByOther'
-  | 'commonSolutions'
->;
+export type CommonMilestoneType =
+  GetMtoAllCommonMilestonesQuery['mtoCommonMilestones'][0];
 
 const CommonMilestoneSidePanel = ({
   isPanelOpen,
@@ -86,12 +78,23 @@ const CommonMilestoneSidePanel = ({
         ariaLabel={mtoCommonMilestoneMiscT(`${mode}.heading`)}
         modalHeading={mtoCommonMilestoneMiscT(`${mode}.heading`)}
         footer={footer}
+        backButton={mode === 'editCommonMilestone'}
         fixed
         noScrollable
       >
         {mode === 'addCommonMilestone' && (
           <CommonMilestoneForm
             mode={mode}
+            closeModal={closeModal}
+            setDisableButton={setDisableSubmitBtn}
+            setIsDirty={setIsDirty}
+          />
+        )}
+
+        {mode === 'editCommonMilestone' && (
+          <CommonMilestoneForm
+            mode={mode}
+            commonMilestone={commonMilestone}
             closeModal={closeModal}
             setDisableButton={setDisableSubmitBtn}
             setIsDirty={setIsDirty}

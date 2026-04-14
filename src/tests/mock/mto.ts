@@ -1,4 +1,5 @@
 import { MockedResponse } from '@apollo/client/testing';
+import { CommonMilestoneType } from 'features/HelpAndKnowledge/HKCMilestoneLibrary/_components/CommonMilestoneSidePanel';
 import {
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
@@ -354,6 +355,32 @@ export const commonSolutionsMock: MockedResponse<
   }
 ];
 
+export const commonMilestonesMockData: CommonMilestoneType[] = [
+  {
+    __typename: 'MTOCommonMilestone',
+    id: '123456',
+    name: 'Test Milestone',
+    isArchived: false,
+    isAdded: false,
+    suggested: {
+      __typename: 'MilestoneSuggestionReasons',
+      isSuggested: true,
+      count: 0,
+      reasons: []
+    },
+    categoryName: 'Test Category',
+    subCategoryName: 'Test SubCategory',
+    facilitatedByRole: [MtoFacilitator.MODEL_TEAM],
+    description: 'Description 1',
+    commonSolutions: [
+      {
+        __typename: 'MTOCommonSolution',
+        key: MtoCommonSolutionKey.BCDA
+      }
+    ]
+  }
+];
+
 export const commonMilestonesLibraryMock: MockedResponse<
   GetMtoAllCommonMilestonesQuery,
   GetMtoAllCommonMilestonesQueryVariables
@@ -365,31 +392,7 @@ export const commonMilestonesLibraryMock: MockedResponse<
     result: {
       data: {
         __typename: 'Query',
-        mtoCommonMilestones: [
-          {
-            __typename: 'MTOCommonMilestone',
-            id: '123456',
-            name: 'Test Milestone',
-            isArchived: false,
-            isAdded: false,
-            suggested: {
-              __typename: 'MilestoneSuggestionReasons',
-              isSuggested: true,
-              count: 0,
-              reasons: []
-            },
-            categoryName: 'Test Category',
-            subCategoryName: 'Test SubCategory',
-            facilitatedByRole: [],
-            description: 'Description 1',
-            commonSolutions: [
-              {
-                __typename: 'MTOCommonSolution',
-                key: MtoCommonSolutionKey.BCDA
-              }
-            ]
-          }
-        ]
+        mtoCommonMilestones: commonMilestonesMockData
       }
     }
   }

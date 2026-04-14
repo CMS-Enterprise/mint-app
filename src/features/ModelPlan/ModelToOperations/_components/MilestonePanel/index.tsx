@@ -1,10 +1,16 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import CommonMilestoneSidePanel from 'features/HelpAndKnowledge/HKCMilestoneLibrary/_components/CommonMilestoneSidePanel';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
 import i18next from 'i18next';
+import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
+
+import { isAssessment } from 'utils/user';
 
 import { SolutionCard } from '../SolutionCard';
 
@@ -16,7 +22,13 @@ type MilestonePanelProps = {
 };
 
 const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
-  const { t } = useTranslation('modelToOperationsMisc');
+  const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
+  const { t: mtoCommonMilestoneMiscT } = useTranslation(
+    'mtoCommonMilestoneMisc'
+  );
+  const { groups } = useSelector((state: AppState) => state.auth);
+  const flags = useFlags();
+  const isAssessmentTeam = isAssessment(groups, flags);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,6 +37,13 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
     () => new URLSearchParams(location.search),
     [location.search]
   );
+
+  const editParam = params.get('edit');
+
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+  const isHKCMilestoneLibrary = mode === 'hkcMilestoneLibrary';
+  const isMtoMilestoneLibrary = mode === 'mtoMilestoneLibrary';
 
   // Map the common solutions to the FE help solutions
   const mappedSolutions = milestone.commonSolutions.map(solution => {
@@ -36,44 +55,85 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
     .map(role => i18next.t(`mtoMilestone:facilitatedBy.options.${role}`))
     .join(', ');
 
+  useEffect(() => {
+    if (editParam === 'true') {
+      setIsPanelOpen(true);
+    }
+  }, [editParam]);
+
   return (
     <>
+      <CommonMilestoneSidePanel
+        isPanelOpen={isPanelOpen}
+        mode="editCommonMilestone"
+        commonMilestone={milestone}
+        closeModal={() => {
+          params.delete('edit');
+          navigate({ search: params.toString() }, { replace: true });
+          setIsPanelOpen(false);
+        }}
+      />
+
       <GridContainer className="padding-8">
         <Grid row>
           <Grid col={12}>
-            {milestone.suggested.isSuggested && (
-              <div className="margin-bottom-4">
-                <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
-                  <Icon.LightbulbOutline
-                    className="margin-left-1"
-                    style={{ top: '2px' }}
-                    aria-label="lightbulb"
-                  />{' '}
-                  {t('milestoneLibrary.suggested')}
-                </span>
-              </div>
-            )}
+            <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
+              {milestone.suggested.isSuggested && (
+                <div className="margin-bottom-4">
+                  <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
+                    <Icon.LightbulbOutline
+                      className="margin-left-1"
+                      style={{ top: '2px' }}
+                      aria-label="lightbulb"
+                    />{' '}
+                    {modelToOperationsMiscT('milestoneLibrary.suggested')}
+                  </span>
+                </div>
+              )}
 
-            <h2 className="margin-y-2 line-height-large">{milestone.name}</h2>
+              <h2 className="margin-y-2 line-height-large">{milestone.name}</h2>
 
-            <p className="text-base-dark margin-top-0 margin-bottom-2">
-              {t('milestoneLibrary.category', {
-                category: milestone.categoryName
-              })}{' '}
-              {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
-            </p>
+              <p className="text-base-dark margin-top-0 margin-bottom-2">
+                {modelToOperationsMiscT('milestoneLibrary.category', {
+                  category: milestone.categoryName
+                })}{' '}
+                {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
+              </p>
 
-            <p style={{ whiteSpace: 'pre-line' }}>{milestone.description}</p>
+              <p style={{ whiteSpace: 'pre-line' }}>{milestone.description}</p>
 
-            <p className="text-base-dark margin-top-0 margin-bottom-4">
-              {t('milestoneLibrary.facilitatedByArray', {
-                facilitatedBy: facilitatedByUsers
-              })}
-            </p>
+              <p className="text-base-dark margin-y-0">
+                {modelToOperationsMiscT('milestoneLibrary.facilitatedByArray', {
+                  facilitatedBy: facilitatedByUsers
+                })}
+              </p>
 
-            {mode === 'mtoMilestoneLibrary' && (
-              <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
-                {!milestone.isAdded ? (
+              {isHKCMilestoneLibrary && isAssessmentTeam && (
+                <div className="margin-top-3">
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--outline margin-right-2"
+                    onClick={() => {
+                      params.set('edit', 'true');
+                      navigate({ search: params.toString() });
+                      setIsPanelOpen(true);
+                    }}
+                  >
+                    {mtoCommonMilestoneMiscT('editCommonMilestone.heading')}
+                  </Button>
+                  <Button
+                    type="button"
+                    className="text-error-dark deep-underline"
+                    unstyled
+                    onClick={() => {}}
+                  >
+                    {mtoCommonMilestoneMiscT('removeCommonMilestone')}
+                  </Button>
+                </div>
+              )}
+
+              {isMtoMilestoneLibrary &&
+                (!milestone.isAdded ? (
                   <Button
                     type="button"
                     outline
@@ -86,7 +146,7 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
                       );
                     }}
                   >
-                    {t('milestoneLibrary.addToMatrix')}
+                    {modelToOperationsMiscT('milestoneLibrary.addToMatrix')}
                   </Button>
                 ) : (
                   <Button
@@ -95,14 +155,13 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
                     className="margin-right-2 model-to-operations__milestone-added text-normal"
                   >
                     <Icon.Check aria-label="check" />
-                    {t('milestoneLibrary.added')}
+                    {modelToOperationsMiscT('milestoneLibrary.added')}
                   </Button>
-                )}
-              </div>
-            )}
+                ))}
+            </div>
 
             <h3 className="margin-y-2">
-              {t('milestoneLibrary.commonSolutions')}
+              {modelToOperationsMiscT('milestoneLibrary.commonSolutions')}
             </h3>
 
             {mappedSolutions.map(solution =>
