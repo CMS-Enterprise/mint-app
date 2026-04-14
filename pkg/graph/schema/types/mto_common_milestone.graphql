@@ -1,11 +1,14 @@
 """
-MTOCommonMilestone represents a Milestone from the "Common Milestones" library
+CommonCategory represents a common category and its subcategories
 """
 type CommonCategory {
   name: String!
   subCategories: [String!]!
 }
 
+"""
+MTOCommonMilestone represents a Milestone from the "Common Milestones" library
+"""
 type MTOCommonMilestone {
   # DB Fields
   id: UUID!
