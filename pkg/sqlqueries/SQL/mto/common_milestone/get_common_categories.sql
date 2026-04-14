@@ -10,10 +10,7 @@ WITH parent_categories AS (
 
 SELECT
     parent.name,
-    COALESCE(
-        ARRAY_REMOVE(ARRAY_AGG(DISTINCT child.name ORDER BY child.name), NULL),
-        CAST(ARRAY[] AS TEXT[])
-    ) AS sub_categories
+    ARRAY_REMOVE(ARRAY_AGG(DISTINCT child.name ORDER BY child.name), NULL) AS sub_categories
 FROM parent_categories parent
 LEFT JOIN mto_template_category child
     ON
