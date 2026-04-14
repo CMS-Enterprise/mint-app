@@ -294,6 +294,13 @@ export enum ClaimsBasedPayType {
   TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE = 'TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE'
 }
 
+/** CommonCategory represents a common category and its subcategories */
+export type CommonCategory = {
+  __typename: 'CommonCategory';
+  name: Scalars['String']['output'];
+  subCategories: Array<Scalars['String']['output']>;
+};
+
 export enum ComplexityCalculationLevelType {
   HIGH = 'HIGH',
   LOW = 'LOW',
@@ -4742,6 +4749,8 @@ export type Query = {
   analytics: AnalyticsSummary;
   analyzedAudits: Array<AnalyzedAudit>;
   auditChanges: Array<AuditChange>;
+  /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
+  commonCategories: Array<CommonCategory>;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;

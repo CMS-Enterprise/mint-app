@@ -41,6 +41,42 @@ func MTOCommonMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, i
 
 }
 
+type commonCategoryRow struct {
+	Name          string         `db:"name"`
+	SubCategories pq.StringArray `db:"sub_categories"`
+}
+
+// MTOCommonMilestoneGetCommonCategories returns deduplicated, alphabetized common categories.
+// The source data currently comes from the mto_template_category table hierarchy.
+func MTOCommonMilestoneGetCommonCategories(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.CommonCategory, error) {
+	rows, err := sqlutils.SelectProcedure[commonCategoryRow](np, sqlqueries.MTOCommonMilestone.GetCommonCategories, map[string]any{})
+	if err != nil {
+		return nil, err
+	}
+
+	options := make([]*models.CommonCategory, 0, len(rows))
+	for _, row := range rows {
+		if row == nil {
+			continue
+		}
+
+		options = append(options, &models.CommonCategory{
+			Name:          row.Name,
+			SubCategories: normalizeCommonCategorySubCategories(row.SubCategories),
+		})
+	}
+
+	return options, nil
+}
+
+func normalizeCommonCategorySubCategories(subCategories pq.StringArray) []string {
+	if len(subCategories) == 1 && subCategories[0] == "Uncategorized" {
+		return []string{}
+	}
+
+	return []string(subCategories)
+}
+
 // MTOCommonMilestoneArchive marks a common milestone as archived and updates audit fields.
 func MTOCommonMilestoneArchive(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID, actorUserID uuid.UUID) (*models.MTOCommonMilestone, error) {
 	args := map[string]any{

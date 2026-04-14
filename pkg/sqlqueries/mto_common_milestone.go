@@ -11,10 +11,14 @@ var mtoCommonMilestoneGetByIDLoaderSQL string
 //go:embed SQL/mto/common_milestone/archive.sql
 var mtoCommonMilestoneArchiveSQL string
 
+//go:embed SQL/mto/common_milestone/get_common_categories.sql
+var mtoCommonMilestoneGetCommonCategoriesSQL string
+
 type mtoCommonMilestoneScripts struct {
 	GetByModelPlanIDLoader string
 	GetByIDLoader          string
 	Archive                string
+	GetCommonCategories    string
 }
 
 // MTOCommonMilestone contains all the SQL queries for the MTO common milestone
@@ -22,4 +26,5 @@ var MTOCommonMilestone = mtoCommonMilestoneScripts{
 	GetByModelPlanIDLoader: mtoCommonMilestoneGetByModelPlanIDLoaderSQL,
 	GetByIDLoader:          mtoCommonMilestoneGetByIDLoaderSQL,
 	Archive:                mtoCommonMilestoneArchiveSQL,
+	GetCommonCategories:    mtoCommonMilestoneGetCommonCategoriesSQL,
 }
