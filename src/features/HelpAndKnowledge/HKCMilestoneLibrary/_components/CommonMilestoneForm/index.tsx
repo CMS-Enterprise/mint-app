@@ -157,7 +157,7 @@ const CommonMilestoneForm = ({
       categoryName: commonMilestone?.categoryName || 'default',
       subCategoryName: subCategoryDefault,
       facilitatedByRole: commonMilestone?.facilitatedByRole || [],
-      facilitatedByOther: commonMilestone?.facilitatedByOther || '',
+      facilitatedByOther: 'commonMilestone?.facilitatedByOther || ',
       commonSolutions:
         commonMilestone?.commonSolutions?.map(solution => solution.key) || []
     };
