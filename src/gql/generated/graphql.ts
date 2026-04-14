@@ -294,7 +294,7 @@ export enum ClaimsBasedPayType {
   TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE = 'TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE'
 }
 
-/** MTOCommonMilestone represents a Milestone from the "Common Milestones" library */
+/** CommonCategory represents a common category and its subcategories */
 export type CommonCategory = {
   __typename: 'CommonCategory';
   name: Scalars['String']['output'];
@@ -1037,6 +1037,7 @@ export type MtoCategoryTranslation = {
   position: TranslationField;
 };
 
+/** MTOCommonMilestone represents a Milestone from the "Common Milestones" library */
 export type MtoCommonMilestone = {
   __typename: 'MTOCommonMilestone';
   categoryName: Scalars['String']['output'];
@@ -1064,6 +1065,7 @@ export type MtoCommonMilestone = {
 };
 
 
+/** MTOCommonMilestone represents a Milestone from the "Common Milestones" library */
 export type MtoCommonMilestoneSuggestedArgs = {
   modelPlanID?: InputMaybe<Scalars['UUID']['input']>;
 };
