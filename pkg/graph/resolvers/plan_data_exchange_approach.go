@@ -101,7 +101,7 @@ func PlanDataExchangeApproachUpdate(
 
 			// DATA_EXCHANGE task progression: when approach is started, mark DATA_EXCHANGE task IN_PROGRESS
 			if deaChangedToInProgress {
-				updErr := updateDataExchangeTaskInProgress(tx, logger, existing.ModelPlanID, principal, store)
+				updErr := UpdatePlanTaskStatusOnDataExchangeApproachStarted(tx, logger, existing.ModelPlanID, principal, store)
 				if updErr != nil {
 					return nil, updErr
 				}
@@ -109,7 +109,7 @@ func PlanDataExchangeApproachUpdate(
 
 			// DATA_EXCHANGE task progression: when approach is marked COMPLETE, mark DATA_EXCHANGE task COMPLETE
 			if deaChangedToComplete {
-				updErr := updateDataExchangeTaskComplete(tx, logger, existing.ModelPlanID, principal, store)
+				updErr := UpdatePlanTaskStatusOnDataExchangeApproachComplete(tx, logger, existing.ModelPlanID, principal, store)
 				if updErr != nil {
 					return nil, updErr
 				}
