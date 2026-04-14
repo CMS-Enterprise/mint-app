@@ -1,5 +1,4 @@
 import { MockedResponse } from '@apollo/client/testing';
-import { CommonMilestoneType } from 'features/HelpAndKnowledge/HKCMilestoneLibrary/_components/CommonMilestoneSidePanel';
 import {
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
@@ -354,6 +353,9 @@ export const commonSolutionsMock: MockedResponse<
     }
   }
 ];
+
+type CommonMilestoneType =
+  GetMtoAllCommonMilestonesQuery['mtoCommonMilestones'][0];
 
 export const commonMilestonesMockData: CommonMilestoneType[] = [
   {

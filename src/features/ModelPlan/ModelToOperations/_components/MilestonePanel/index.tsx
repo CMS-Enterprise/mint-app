@@ -56,10 +56,14 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
     .join(', ');
 
   useEffect(() => {
-    if (editParam === 'true') {
+    if (isAssessmentTeam && editParam === 'true') {
       setIsPanelOpen(true);
+    } else {
+      params.delete('edit');
+      navigate({ search: params.toString() }, { replace: true });
+      setIsPanelOpen(false);
     }
-  }, [editParam]);
+  }, [editParam, isAssessmentTeam, navigate, params]);
 
   return (
     <>
