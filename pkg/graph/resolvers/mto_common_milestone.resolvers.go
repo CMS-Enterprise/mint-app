@@ -23,11 +23,6 @@ func (r *mTOCommonMilestoneResolver) FacilitatedByRole(ctx context.Context, obj 
 	return obj.FacilitatedByRole, nil
 }
 
-// FacilitatedByOther is the resolver for the facilitatedByOther field.
-func (r *mTOCommonMilestoneResolver) FacilitatedByOther(ctx context.Context, obj *models.MTOCommonMilestone) (*string, error) {
-	panic(fmt.Errorf("not implemented: FacilitatedByOther - facilitatedByOther"))
-}
-
 // Suggested is the resolver for the suggested field.
 func (r *mTOCommonMilestoneResolver) Suggested(ctx context.Context, obj *models.MTOCommonMilestone, modelPlanID *uuid.UUID) (*model.MilestoneSuggestionReasons, error) {
 	// Resolve the effective model plan ID: prefer the explicit argument, fall back to context from loader
