@@ -13,6 +13,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
+const (
+	adminCreatedMTOCommonMilestoneSection      = models.TLSBasics
+	adminCreatedMTOCommonMilestoneTriggerTable = "admin_created_mto_common_milestone"
+)
+
 // MTOCommonMilestoneGetByModelPlanIDLoader returns all common milestones, with the context of the model plan id to determine if it was added or not
 // if model plan id is null, contextual data will show up as false (is_added, is_suggested)
 func MTOCommonMilestoneGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOCommonMilestone, error) {
@@ -38,6 +43,81 @@ func MTOCommonMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, i
 	if err != nil {
 		return nil, err
 	}
+	return returned, nil
+}
+
+// MTOCommonMilestoneCreate creates a common milestone library row and its common solution links.
+func MTOCommonMilestoneCreate(
+	np sqlutils.TransactionPreparer,
+	logger *zap.Logger,
+	name string,
+	description string,
+	categoryName string,
+	subCategoryName *string,
+	facilitatedByRole []models.MTOFacilitator,
+	facilitatedByOther *string,
+	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	return sqlutils.WithTransaction(np, func(tx *sqlx.Tx) (*models.MTOCommonMilestone, error) {
+		return createMTOCommonMilestone(
+			tx,
+			logger,
+			name,
+			description,
+			categoryName,
+			subCategoryName,
+			facilitatedByRole,
+			facilitatedByOther,
+			mtoCommonSolutionKeys,
+			actorUserID,
+		)
+	})
+}
+
+func createMTOCommonMilestone(
+	tx *sqlx.Tx,
+	_ *zap.Logger,
+	name string,
+	description string,
+	categoryName string,
+	subCategoryName *string,
+	facilitatedByRole []models.MTOFacilitator,
+	facilitatedByOther *string,
+	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	err := setCurrentSessionUserVariable(tx, actorUserID)
+	if err != nil {
+		return nil, err
+	}
+
+	args := map[string]any{
+		"id":                       uuid.New(),
+		"name":                     name,
+		"description":              description,
+		"category_name":            categoryName,
+		"sub_category_name":        subCategoryName,
+		"facilitated_by_role":      models.EnumArray[models.MTOFacilitator](facilitatedByRole),
+		"facilitated_by_other":     facilitatedByOther,
+		"section":                  adminCreatedMTOCommonMilestoneSection,
+		"trigger_table":            adminCreatedMTOCommonMilestoneTriggerTable,
+		"trigger_col":              pq.Array([]string{}),
+		"trigger_vals":             pq.Array([]string{}),
+		"created_by":               actorUserID,
+		"mto_common_solution_keys": pq.Array(mtoCommonSolutionKeys),
+	}
+
+	returned, err := sqlutils.GetProcedure[models.MTOCommonMilestone](tx, sqlqueries.MTOCommonMilestone.Create, args)
+	if err != nil {
+		return nil, fmt.Errorf("issue creating MTOCommonMilestone object: %w", err)
+	}
+
+	err = sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonMilestone.CreateSolutionLinks, args)
+	if err != nil {
+		return nil, fmt.Errorf("issue creating MTOCommonMilestone solution links: %w", err)
+	}
+
 	return returned, nil
 }
 

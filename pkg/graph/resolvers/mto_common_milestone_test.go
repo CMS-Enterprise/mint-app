@@ -1,25 +1,83 @@
 package resolvers
 
 import (
-	"fmt"
-
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
+func (suite *ResolverSuite) TestCreateMTOCommonMilestone() {
+	actorUserID := suite.testConfigs.Principal.UserAccount.ID
+	subCategoryName := "Resolver create tests"
+	facilitatedByOther := "Cross-team support"
+
+	createdMilestone, err := CreateMTOCommonMilestone(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		"Resolver create common milestone test",
+		"Temporary common milestone used for resolver create testing.",
+		"Operations",
+		&subCategoryName,
+		[]models.MTOFacilitator{models.MTOFacilitatorOther},
+		&facilitatedByOther,
+		[]models.MTOCommonSolutionKey{
+			models.MTOCSKInnovation,
+			models.MTOCSKInnovation,
+			models.MTOCSKAcoOs,
+		},
+		actorUserID,
+	)
+	suite.NoError(err)
+	suite.Require().NotNil(createdMilestone)
+	suite.T().Cleanup(func() {
+		suite.NoError(deleteTestMTOCommonMilestone(
+			suite.testConfigs.Store,
+			createdMilestone.ID,
+		))
+	})
+
+	suite.NotEqual(uuid.Nil, createdMilestone.ID)
+	suite.Equal("Resolver create common milestone test", createdMilestone.Name)
+	suite.Equal("Temporary common milestone used for resolver create testing.", createdMilestone.Description)
+	suite.Equal("Operations", createdMilestone.CategoryName)
+	suite.Require().NotNil(createdMilestone.SubCategoryName)
+	suite.Equal(subCategoryName, *createdMilestone.SubCategoryName)
+	suite.Equal(models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther}, createdMilestone.FacilitatedByRole)
+	suite.Require().NotNil(createdMilestone.FacilitatedByOther)
+	suite.Equal(facilitatedByOther, *createdMilestone.FacilitatedByOther)
+	suite.False(createdMilestone.IsArchived)
+	suite.False(createdMilestone.IsAdded)
+
+	commonSolutions, err := storage.MTOCommonSolutionGetByCommonMilestoneIDLoader(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		[]uuid.UUID{createdMilestone.ID},
+	)
+	suite.NoError(err)
+	suite.Len(commonSolutions, 2)
+}
+
 func (suite *ResolverSuite) TestArchiveMTOCommonMilestone() {
 	actorUserID := suite.testConfigs.Principal.UserAccount.ID
-	commonMilestoneID := uuid.New()
 
-	suite.Require().NoError(insertTestMTOCommonMilestone(
+	subCategoryName := "Archive tests"
+	createdMilestone, err := CreateMTOCommonMilestone(
+		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
-		commonMilestoneID,
+		"Archive resolver test milestone",
+		"Temporary common milestone used for resolver archive testing.",
+		"Operations",
+		&subCategoryName,
+		[]models.MTOFacilitator{models.MTOFacilitatorITLead},
+		nil,
+		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
 		actorUserID,
-	))
+	)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(createdMilestone)
+	commonMilestoneID := createdMilestone.ID
 	suite.T().Cleanup(func() {
 		suite.NoError(deleteTestMTOCommonMilestone(
 			suite.testConfigs.Store,
@@ -50,60 +108,18 @@ func (suite *ResolverSuite) TestArchiveMTOCommonMilestone() {
 	}
 }
 
-func insertTestMTOCommonMilestone(
-	np sqlutils.NamedPreparer,
-	id uuid.UUID,
-	actorUserID uuid.UUID,
-) error {
-	return sqlutils.ExecProcedure(
+func deleteTestMTOCommonMilestone(np sqlutils.NamedPreparer, id uuid.UUID) error {
+	err := sqlutils.ExecProcedure(
 		np,
-		`
-			INSERT INTO mto_common_milestone (
-				id,
-				name,
-				description,
-				category_name,
-				sub_category_name,
-				facilitated_by_role,
-				section,
-				trigger_table,
-				trigger_col,
-				trigger_vals,
-				created_by
-			)
-			VALUES (
-				:id,
-				:name,
-				:description,
-				:category_name,
-				:sub_category_name,
-				:facilitated_by_role,
-				:section,
-				:trigger_table,
-				:trigger_col,
-				:trigger_vals,
-				:created_by
-			)
-		`,
+		`DELETE FROM mto_common_milestone_solution_link WHERE mto_common_milestone_id = :id`,
 		map[string]any{
-			"id":                id,
-			"name":              fmt.Sprintf("Archive resolver test milestone %s", id.String()),
-			"description":       "Temporary common milestone used for resolver archive testing.",
-			"category_name":     "Operations",
-			"sub_category_name": "Archive tests",
-			"facilitated_by_role": models.EnumArray[models.MTOFacilitator]{
-				models.MTOFacilitatorITLead,
-			},
-			"section":       models.TLSBasics,
-			"trigger_table": "plan_basics",
-			"trigger_col":   pq.Array([]string{"status"}),
-			"trigger_vals":  pq.Array([]string{"PLAN_DRAFT"}),
-			"created_by":    actorUserID,
+			"id": id,
 		},
 	)
-}
+	if err != nil {
+		return err
+	}
 
-func deleteTestMTOCommonMilestone(np sqlutils.NamedPreparer, id uuid.UUID) error {
 	return sqlutils.ExecProcedure(
 		np,
 		`DELETE FROM mto_common_milestone WHERE id = :id`,
