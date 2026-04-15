@@ -7,7 +7,6 @@ import (
 	"github.com/google/uuid"
 
 	_ "github.com/lib/pq" // required for postgres driver in sql
-	"github.com/stretchr/testify/assert"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
@@ -21,13 +20,13 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	plan := suite.createModelPlan("Test Plan")
 
 	taggedContent, err := models.NewTaggedContentFromString("This is a test comment")
-	taggedContent.Tags = []*models.Tag{}
 	suite.NoError(err)
+	taggedContent.Tags = []*models.Tag{}
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
 		Content:             models.TaggedHTML(taggedContent),
-		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
-		UserRoleDescription: models.StringPointer("test role"),
+		UserRole:            new(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: new("test role"),
 	}
 
 	result, err := CreatePlanDiscussion(
@@ -53,13 +52,13 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	plan := suite.createModelPlan("Test Plan")
 
 	taggedContent, err := models.NewTaggedContentFromString("This is a test comment")
-	taggedContent.Tags = []*models.Tag{}
 	suite.NoError(err)
+	taggedContent.Tags = []*models.Tag{}
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
 		Content:             models.TaggedHTML(taggedContent),
-		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
-		UserRoleDescription: models.StringPointer("test role"),
+		UserRole:            new(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: new("test role"),
 	}
 
 	regularUserPrincipal := suite.testConfigs.Principal
@@ -173,61 +172,19 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 	suite.Error(err)
 }
 
-func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
-	plan := suite.createModelPlan("Test Plan")
-	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	taggedContent, err := models.NewTaggedContentFromString("This is now updated! Thanks for looking at my test")
-	suite.NoError(err)
-
-	changes := map[string]interface{}{
-		"content": models.TaggedHTML(taggedContent),
-	}
-	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
-
-	suite.NoError(err)
-	suite.EqualValues(discussion.ID, result.ID)
-	suite.EqualValues(changes["content"], result.Content)
-	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, result.CreatedBy)
-	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *result.ModifiedBy)
-}
-
-func (suite *ResolverSuite) TestDeletePlanDiscussion() {
-	plan := suite.createModelPlan("Test Plan")
-	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-
-	result, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
-	suite.NoError(err)
-	suite.EqualValues(discussion.ID, result.ID)
-
-	// Check that there's no plans for this user
-	discussions, err := PlanDiscussionGetByModelPlanIDLOADER(suite.testConfigs.Context, discussion.ID)
-	suite.NoError(err)
-	suite.Len(discussions, 0)
-}
-
-func (suite *ResolverSuite) TestDeletePlanDiscussionWithReply() {
-	plan := suite.createModelPlan("Test Plan")
-	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	_ = suite.createDiscussionReply(discussion, "This is a test reply")
-
-	_, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
-	suite.Error(err)
-	suite.Contains(err.Error(), "violates foreign key constraint") // maybe a weak check, and should be a custom error type, but works for now
-}
-
 func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	taggedContent, err := models.NewTaggedContentFromString("This is a test reply")
-	taggedContent.Tags = []*models.Tag{}
 	suite.NoError(err)
+	taggedContent.Tags = []*models.Tag{}
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
 		Content:             models.TaggedHTML(taggedContent),
-		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
-		UserRoleDescription: models.StringPointer("this is a test"),
+		UserRole:            new(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: new("this is a test"),
 	}
 
 	result, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, suite.testConfigs.Principal, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
@@ -243,14 +200,14 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	taggedContent, err := models.NewTaggedContentFromString("This is a test reply")
-	taggedContent.Tags = []*models.Tag{}
 	suite.NoError(err)
+	taggedContent.Tags = []*models.Tag{}
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
 		Content:             models.TaggedHTML(taggedContent),
-		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
-		UserRoleDescription: models.StringPointer("this is a test"),
+		UserRole:            new(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: new("this is a test"),
 	}
 
 	regularUserPrincipal := suite.testConfigs.Principal
@@ -264,34 +221,13 @@ func (suite *ResolverSuite) TestCreateDiscussionReplyAsRegularUser() {
 	suite.False(result.IsAssessment)
 }
 
-func (suite *ResolverSuite) TestUpdateDiscussionReply() {
-	plan := suite.createModelPlan("Test Plan")
-	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	reply := suite.createDiscussionReply(discussion, "This is a test reply")
-	assert.Nil(suite.T(), reply.ModifiedBy)
-	assert.Nil(suite.T(), reply.ModifiedDts)
-	taggedContent, err := models.NewTaggedContentFromString("This is now updated! Thanks for looking at my test")
-	suite.NoError(err)
-
-	changes := map[string]interface{}{
-		"content": models.TaggedHTML(taggedContent),
-	}
-
-	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
-
-	suite.NoError(err)
-	suite.EqualValues(changes["content"], result.Content)
-	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, result.CreatedBy)
-	suite.EqualValues(suite.testConfigs.Principal.UserAccount.ID, *result.ModifiedBy)
-}
-
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 	_ = suite.createDiscussionReply(discussion, "This is a test reply")
 	_ = suite.createDiscussionReply(discussion, "This is another test reply")
 
-	result, err := DiscussionReplyCollectionByDiscusionIDLOADER(suite.testConfigs.Context, discussion.ID)
+	result, err := DiscussionReplyCollectionByDiscussionIDLOADER(suite.testConfigs.Context, discussion.ID)
 	suite.NoError(err)
 	suite.Len(result, 2)
 
@@ -302,7 +238,7 @@ func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 	_ = suite.createDiscussionReply(discussionTwo, "This is a third test reply")
 
 	// Assert the count on the _first_ discussion is still 2
-	result, err = DiscussionReplyCollectionByDiscusionIDLOADER(suite.testConfigs.Context, discussion.ID)
+	result, err = DiscussionReplyCollectionByDiscussionIDLOADER(suite.testConfigs.Context, discussion.ID)
 	suite.NoError(err)
 	suite.Len(result, 2)
 }
@@ -327,21 +263,6 @@ func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 	result, err = PlanDiscussionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(result, 2)
-}
-
-func (suite *ResolverSuite) TestDeleteDiscussionReply() {
-	plan := suite.createModelPlan("Test Plan")
-	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
-	reply := suite.createDiscussionReply(discussion, "This is a test reply")
-	_ = suite.createDiscussionReply(discussion, "This is another test reply")
-
-	_, err := DeleteDiscussionReply(suite.testConfigs.Logger, reply.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
-	suite.NoError(err)
-
-	// Should only have 1 left now
-	result, err := DiscussionReplyCollectionByDiscusionIDLOADER(suite.testConfigs.Context, discussion.ID)
-	suite.NoError(err)
-	suite.Len(result, 1)
 }
 
 func (suite *ResolverSuite) TestPlanDiscussionDataLoader() { //TODO update for discussion
@@ -402,7 +323,7 @@ func (suite *ResolverSuite) TestDiscussionReplyDataLoader() {
 }
 func verifyDiscussionReplyLoader(ctx context.Context, discussionID uuid.UUID) error {
 
-	discRs, err := DiscussionReplyCollectionByDiscusionIDLOADER(ctx, discussionID)
+	discRs, err := DiscussionReplyCollectionByDiscussionIDLOADER(ctx, discussionID)
 	if err != nil {
 		return err
 	}

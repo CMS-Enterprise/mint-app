@@ -10,7 +10,6 @@ import (
 	"golang.org/x/exp/maps"
 
 	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 
@@ -529,16 +528,16 @@ func ModelPlanShare(
 	var shareSectionRoute *string
 	var shareSectionHumanized *string
 	if viewFilter != nil {
-		humanizedViewFilter = models.StringPointer(
+		humanizedViewFilter = new(
 			models.ModelViewFilterHumanized[*viewFilter])
 
-		lowercasedViewFilter = models.StringPointer(
+		lowercasedViewFilter = new(
 			strings.ToLower(string(*viewFilter)))
 	}
 
 	if shareSection != nil {
-		shareSectionRoute = helpers.PointerTo(models.ModelShareSectionToRouteTranslation[*shareSection])
-		shareSectionHumanized = helpers.PointerTo(models.ModelShareSectionHumanized[*shareSection])
+		shareSectionRoute = new(models.ModelShareSectionToRouteTranslation[*shareSection])
+		shareSectionHumanized = new(models.ModelShareSectionHumanized[*shareSection])
 	}
 
 	bodyContent := email.ModelPlanShareBodyContent{

@@ -9,7 +9,6 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -40,12 +39,12 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 			if idNumberChange.Old == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field Old. A value was expected", idNumField)
 			}
-			idNumber = models.StringPointer(fmt.Sprint(idNumberChange.Old))
+			idNumber = new(fmt.Sprint(idNumberChange.Old))
 		} else {
 			if idNumberChange.New == nil {
 				return nil, nil, fmt.Errorf("%s was nil in the change field New. A value was expected", idNumField)
 			}
-			idNumber = models.StringPointer(fmt.Sprint(idNumberChange.New))
+			idNumber = new(fmt.Sprint(idNumberChange.New))
 		}
 	} else {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
@@ -192,9 +191,9 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 
 	if nameFieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			name = models.StringPointer(fmt.Sprint(nameChange.Old))
+			name = new(fmt.Sprint(nameChange.Old))
 		} else {
-			name = models.StringPointer(fmt.Sprint(nameChange.New))
+			name = new(fmt.Sprint(nameChange.New))
 		}
 
 	} else if commonMilestoneIDChangeFieldPresent {
@@ -311,9 +310,9 @@ func MTOSolutionMetaDataGet(ctx context.Context, store *storage.Store, solutionI
 	keyChange, keyFieldPresent := changesFields["mto_common_solution_key"]
 	if fieldPresent {
 		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-			name = models.StringPointer(fmt.Sprint(nameChange.Old))
+			name = new(fmt.Sprint(nameChange.Old))
 		} else {
-			name = models.StringPointer(fmt.Sprint(nameChange.New))
+			name = new(fmt.Sprint(nameChange.New))
 		}
 
 	} else if keyFieldPresent {
@@ -397,9 +396,9 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 	if nameFieldPresent {
 		if nameFieldPresent {
 			if operation == models.DBOpDelete || operation == models.DBOpTruncate {
-				categoryName = models.StringPointer(fmt.Sprint(nameChange.Old))
+				categoryName = new(fmt.Sprint(nameChange.Old))
 			} else {
-				categoryName = models.StringPointer(fmt.Sprint(nameChange.New))
+				categoryName = new(fmt.Sprint(nameChange.New))
 			}
 
 		}
@@ -415,7 +414,7 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 		}
 
 		if category != nil {
-			categoryName = helpers.PointerTo(category.Name)
+			categoryName = new(category.Name)
 		}
 	}
 

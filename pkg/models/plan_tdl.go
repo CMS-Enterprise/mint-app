@@ -4,8 +4,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 )
 
 // PlanTDL represents TDLs (Technical Direction Letters) related to a model plan
@@ -30,7 +28,7 @@ func (tdl *PlanTDL) ToEchimpTDL(associatedModelUids *uuid.UUID) *EChimpTDL {
 	// get initiation date
 	var initiationDate *string
 	if tdl.DateInitiated != nil {
-		initiationDate = helpers.PointerTo(tdl.DateInitiated.Format(time.DateOnly))
+		initiationDate = new(tdl.DateInitiated.Format(time.DateOnly))
 	}
 
 	return &EChimpTDL{

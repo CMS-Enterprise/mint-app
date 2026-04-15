@@ -51,7 +51,7 @@ func TranslateAuditJobByID[T any](ctx context.Context, store *storage.Store, log
 			logger.Warn("duplicate entry found for this translated audit", zap.Error(err))
 			return nil, err
 		}
-		queueEntry.Note = models.StringPointer("A translation already exists for this change.")
+		queueEntry.Note = new("A translation already exists for this change.")
 	}
 	queueEntry.Status = models.TPSProcessed
 	_, err = TranslatedAuditQueueUpdate(store, logger, queueEntry, constants.GetSystemAccountUUID())

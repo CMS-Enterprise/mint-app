@@ -4,7 +4,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -242,7 +241,7 @@ func (suite *ResolverSuite) TestMTOCategoryReorderToPositionZero() {
 	suite.Equal(0, plan2CatSub.Position)
 
 	// Move cat2 to position 0 and verify reordering
-	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2.ID, helpers.PointerTo[int](0), nil)
+	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2.ID, new(0), nil)
 	suite.NoError(err)
 
 	// Verify positions after reordering
@@ -303,7 +302,7 @@ func (suite *ResolverSuite) TestMTOCategoryReorderToPositionTwo() {
 	suite.Equal(0, plan2CatSub.Position)
 
 	// Move cat0 to position 2 and verify reordering
-	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat0.ID, helpers.PointerTo[int](2), nil)
+	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat0.ID, new(2), nil)
 	suite.NoError(err)
 
 	// Verify positions after reordering
@@ -366,7 +365,7 @@ func (suite *ResolverSuite) TestMTOSubCategoryReorderToPositionTwo() {
 
 	// reorder the subcategory
 	// Move cat2Sub0 to position 2 and verify reordering
-	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2Sub0.ID, helpers.PointerTo[int](2), nil)
+	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2Sub0.ID, new(2), nil)
 	suite.NoError(err)
 
 	retSubcategories, err := MTOSubcategoryGetByParentIDLoader(suite.testConfigs.Context, plan.ID, cat2.ID)
@@ -430,7 +429,7 @@ func (suite *ResolverSuite) TestMTOSubCategoryReorderToPositionZero() {
 
 	// reorder the subcategory
 	// Move cat2Sub0 to position 2 and verify reordering
-	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2Sub2.ID, helpers.PointerTo[int](0), nil)
+	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2Sub2.ID, new(0), nil)
 	suite.NoError(err)
 
 	retSubcategories, err := MTOSubcategoryGetByParentIDLoader(suite.testConfigs.Context, plan.ID, cat2.ID)
@@ -498,7 +497,7 @@ func (suite *ResolverSuite) TestMTOSubCategoryReorderToPositionZeroOfNewParent()
 
 	// reorder the subcategory
 	// Move cat2Sub0 to position 0 of cat0 and verify reordering
-	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2Sub0.ID, helpers.PointerTo[int](0), &cat0.ID)
+	_, err := MTOCategoryReorder(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, cat2Sub0.ID, new(0), &cat0.ID)
 	suite.NoError(err)
 
 	// validate the position of subcategories of old parent

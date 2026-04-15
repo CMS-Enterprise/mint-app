@@ -8,7 +8,6 @@ import (
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
@@ -74,7 +73,7 @@ func IDDOCQuestionnaireUpdate(
 				if _, hasCompletedBy := changes["completedBy"]; !hasCompletedBy {
 					existing.CompletedBy = &principal.Account().ID
 				}
-				existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
+				existing.CompletedDts = new(time.Now().UTC())
 			}
 		} else {
 			// Setting to incomplete

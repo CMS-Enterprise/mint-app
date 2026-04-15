@@ -7,7 +7,6 @@ import (
 	"github.com/guregu/null/zero"
 	"github.com/jmoiron/sqlx"
 
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -167,8 +166,8 @@ func (suite *TAuditSuite) createMTOSolution(modelPlanID uuid.UUID, name string, 
 	neededBy := time.Now()
 	otherType := models.MTOSolutionTypeOther
 	solToCreate := models.NewMTOSolution(modelPlanID, nil, &name, &otherType, &neededBy, suite.testConfigs.Principal.UserAccount.ID)
-	solToCreate.PocName = helpers.PointerTo("Test POC")
-	solToCreate.PocEmail = helpers.PointerTo("testPOC@fake.fake")
+	solToCreate.PocName = new("Test POC")
+	solToCreate.PocEmail = new("testPOC@fake.fake")
 	solToCreate.Name = &name
 	for _, preHook := range preHooks {
 		preHook(solToCreate)

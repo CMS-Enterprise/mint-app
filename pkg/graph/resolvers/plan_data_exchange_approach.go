@@ -7,7 +7,6 @@ import (
 
 	"github.com/jmoiron/sqlx"
 
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
@@ -72,7 +71,7 @@ func PlanDataExchangeApproachUpdate(
 				if existing.MarkedCompleteDts == nil && isSettingToComplete {
 					deaChangedToComplete = true
 					existing.MarkedCompleteBy = &principal.Account().ID
-					existing.MarkedCompleteDts = helpers.PointerTo(time.Now().UTC())
+					existing.MarkedCompleteDts = new(time.Now().UTC())
 					existing.Status = models.DataExchangeApproachStatusComplete
 				} else if !isSettingToComplete {
 					existing.MarkedCompleteBy = nil

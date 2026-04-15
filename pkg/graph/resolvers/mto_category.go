@@ -9,7 +9,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -286,7 +285,7 @@ func MTOCategoryGetByID(ctx context.Context, id uuid.UUID) (*models.MTOCategory,
 func MTOCategoriesGetByID(ctx context.Context, id *uuid.UUID, modelPlanID uuid.UUID) (*models.MTOCategories, error) {
 	Categories := &models.MTOCategories{
 		Category:    models.MTOUncategorized(modelPlanID, nil, 0),
-		SubCategory: models.MTOUncategorizedSubcategory(modelPlanID, helpers.PointerTo(uuid.Nil), 0),
+		SubCategory: models.MTOUncategorizedSubcategory(modelPlanID, new(uuid.Nil), 0),
 	}
 	if id == nil {
 		return Categories, nil

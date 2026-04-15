@@ -63,12 +63,10 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 	// Step 2. Iterate through all model plans, and generate analyzed audit data
 	for _, mp := range modelPlans {
 		_, err2 := resolvers.AnalyzeModelPlanForAnalyzedAudit(s.Config.Context, s.Config.Store, s.Config.ZapLogger, dayToAnalyze, mp.ID)
-		// Notice:  that this will create an error if you run this a second time, because there is already an analyzed audit record.
+		// Notice: that this will create an error if you run this a second time, because there is already an analyzed audit record.
 		// For simplicity, we check if it is that error, and if so just continue.
 		if err2 != nil {
-			var pqErr *pq.Error
-			if errors.As(err2, &pqErr) {
-
+			if pqErr, ok := errors.AsType[*pq.Error](err2); ok {
 				if pqErr.Code.Name() == "unique_violation" {
 					continue
 				}

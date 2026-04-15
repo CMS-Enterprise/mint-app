@@ -17,7 +17,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -230,7 +229,7 @@ func (s *Seeder) SeedData() {
 
 			"additionalDataExchangeConsiderationsDescription": "consider not using google forms once bossman quits",
 
-			"isDataExchangeApproachComplete": helpers.PointerTo(true),
+			"isDataExchangeApproachComplete": new(true),
 		},
 	)
 

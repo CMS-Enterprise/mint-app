@@ -72,7 +72,7 @@ func PlanGeneralCharacteristicsGetExistingModelName(ctx context.Context, planGen
 			return nil, err
 		}
 
-		return models.StringPointer(existingModel.ModelName), nil
+		return new(existingModel.ModelName), nil
 	}
 
 	if planGeneralCharacteristics.CurrentModelPlanID != nil {
@@ -81,7 +81,7 @@ func PlanGeneralCharacteristicsGetExistingModelName(ctx context.Context, planGen
 			return nil, err
 		}
 
-		return models.StringPointer(currentModel.ModelName), nil
+		return new(currentModel.ModelName), nil
 	}
 
 	return nil, nil

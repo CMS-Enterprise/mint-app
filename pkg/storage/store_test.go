@@ -91,7 +91,7 @@ func getTestPrincipal(store *Store, userName string) (*authentication.Applicatio
 	}
 	// we mock a user account to the DB directly here
 	userAccount = &authentication.UserAccount{
-		Username:    models.StringPointer(userName),
+		Username:    new(userName),
 		IsEUAID:     true,
 		CommonName:  "testTestTest",
 		Locale:      "testTestTest",

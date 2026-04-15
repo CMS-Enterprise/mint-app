@@ -81,8 +81,8 @@ func (suite *WorkerSuite) createPlanDiscussion(mp *models.ModelPlan, content str
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         mp.ID,
 		Content:             models.TaggedHTML(taggedContent),
-		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
-		UserRoleDescription: models.StringPointer("test role"),
+		UserRole:            new(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: new("test role"),
 	}
 	pd, err := resolvers.CreatePlanDiscussion(
 		suite.testConfigs.Context,

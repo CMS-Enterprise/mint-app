@@ -39,7 +39,7 @@ func (r *planDiscussionResolver) Content(ctx context.Context, obj *models.PlanDi
 
 // Replies is the resolver for the replies field.
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
-	return DiscussionReplyCollectionByDiscusionIDLOADER(ctx, obj.ID)
+	return DiscussionReplyCollectionByDiscussionIDLOADER(ctx, obj.ID)
 }
 
 // PlanDiscussion returns generated.PlanDiscussionResolver implementation.

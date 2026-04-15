@@ -4,8 +4,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 )
 
 // PlanCR represents CRs (Change Requests) related to a model plan
@@ -31,7 +29,7 @@ func (cr *PlanCR) ToEchimpCR(associatedModelUids *uuid.UUID) *EChimpCR {
 	// get imp date
 	var implementationDate *string
 	if cr.DateImplemented != nil {
-		implementationDate = helpers.PointerTo(cr.DateImplemented.Format(time.DateOnly))
+		implementationDate = new(cr.DateImplemented.Format(time.DateOnly))
 	}
 
 	// get cr summary from cr note

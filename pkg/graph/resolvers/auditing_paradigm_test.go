@@ -24,8 +24,8 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID:        discussion.ID,
 		Content:             models.TaggedHTML(taggedContent),
-		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
-		UserRoleDescription: models.StringPointer("this is a test"),
+		UserRole:            new(models.DiscussionRoleNoneOfTheAbove),
+		UserRoleDescription: new("this is a test"),
 	}
 
 	/* Create 4 discussion replies, with different principals*/
@@ -80,12 +80,18 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 
 }
 func deleteDiscussionReply(suite *ResolverSuite, discussionReply *models.DiscussionReply, principal authentication.Principal) error {
-	_, err := DeleteDiscussionReply(suite.testConfigs.Logger, discussionReply.ID, principal, suite.testConfigs.Store)
+	existingReply, err := suite.testConfigs.Store.DiscussionReplyByID(suite.testConfigs.Logger, discussionReply.ID)
 	if err != nil {
 		return err
 	}
-	return nil
 
+	err = BaseStructPreDelete(suite.testConfigs.Logger, existingReply, principal, suite.testConfigs.Store, true)
+	if err != nil {
+		return err
+	}
+
+	_, err = suite.testConfigs.Store.DiscussionReplyDelete(suite.testConfigs.Logger, discussionReply.ID, principal.Account().ID)
+	return err
 }
 
 func verifyDeleteAuditChange(suite *ResolverSuite, discussionReply *models.DiscussionReply) error {

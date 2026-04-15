@@ -375,41 +375,6 @@ func sendPlanDiscussionCreatedEmail(
 	return nil
 }
 
-// UpdatePlanDiscussion implements resolver logic to update a plan Discussion object
-// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
-func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
-
-	// Get existing discussion
-	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
-	if err != nil {
-		return nil, err
-	}
-
-	err = BaseStructPreUpdate(logger, existingDiscussion, changes, principal, store, true, false)
-	if err != nil {
-		return nil, err
-	}
-
-	result, err := store.PlanDiscussionUpdate(logger, existingDiscussion)
-	return result, err
-}
-
-// DeletePlanDiscussion implements resolver logic to Delete a plan Discussion object
-// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
-func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
-
-	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
-	if err != nil {
-		return nil, err
-	}
-	err = BaseStructPreDelete(logger, existingDiscussion, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
-	result, err := store.PlanDiscussionDelete(logger, id, principal.Account().ID)
-	return result, err
-}
-
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
 func CreateDiscussionReply(
 	ctx context.Context,
@@ -538,41 +503,8 @@ func CreateDiscussionReply(
 	return newReply, err
 }
 
-// UpdateDiscussionReply implements resolver logic to update a Discussion reply object
-// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
-func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	// Get existing reply
-	existingReply, err := store.DiscussionReplyByID(logger, id)
-	if err != nil {
-		return nil, err
-	}
-	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store, true, false)
-	if err != nil {
-		return nil, err
-	}
-
-	result, err := store.DiscussionReplyUpdate(logger, existingReply)
-	return result, err
-}
-
-// DeleteDiscussionReply implements resolver logic to Delete a Discussion reply object
-// Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
-func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	existingReply, err := store.DiscussionReplyByID(logger, id)
-	if err != nil {
-		return nil, err
-	}
-	err = BaseStructPreDelete(logger, existingReply, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
-	result, err := store.DiscussionReplyDelete(logger, id, principal.Account().ID)
-
-	return result, err
-}
-
-// DiscussionReplyCollectionByDiscusionIDLOADER implements resolver logic to get Discussion Reply by a model plan ID using a data loader
-func DiscussionReplyCollectionByDiscusionIDLOADER(ctx context.Context, discussionID uuid.UUID) ([]*models.DiscussionReply, error) {
+// DiscussionReplyCollectionByDiscussionIDLOADER implements resolver logic to get Discussion Reply by a model plan ID using a data loader
+func DiscussionReplyCollectionByDiscussionIDLOADER(ctx context.Context, discussionID uuid.UUID) ([]*models.DiscussionReply, error) {
 	allLoaders, err := loaders.Loaders(ctx)
 	if err != nil {
 		return nil, err

@@ -7,7 +7,6 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
@@ -17,7 +16,7 @@ func sendMTOSolutionSelectedTestEmail(
 ) {
 	solutionName := "CBOSC"
 	solutionStatus := "Backlog"
-	milestoneNames := helpers.PointerTo("Helpdesk support")
+	milestoneNames := new("Helpdesk support")
 	modelName := "Transformation in Maternal Health"
 	modelShortName := "TMaH"
 	modelStatus := "CMS clearance"

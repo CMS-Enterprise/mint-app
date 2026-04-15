@@ -144,7 +144,7 @@ func sendPlanDiscussionCreatedTestEmail(
 		uuid.Nil,
 		models.TaggedHTML(taggedContent),
 		&discussionUserRole,
-		models.StringPointer("Test User Role Description"),
+		new("Test User Role Description"),
 	)
 
 	err = sendPlanDiscussionCreatedEmail(
@@ -245,7 +245,7 @@ func sendModelPlanShareTest(
 	// Mocked data
 	modelPlanID := uuid.New()
 	receiverEmails := []string{"test1@example.com", "test2@example.com"}
-	optionalMessage := models.StringPointer("This is an optional message.")
+	optionalMessage := new("This is an optional message.")
 
 	// Mocked model plan and related data
 	modelPlan := models.NewModelPlan(
@@ -266,8 +266,8 @@ func sendModelPlanShareTest(
 		"Prescription Drug",
 	}
 
-	humanizedViewFilter := models.StringPointer("Chronic Conditions Warehouse")
-	lowercaseViewFilter := models.StringPointer("ccw")
+	humanizedViewFilter := new("Chronic Conditions Warehouse")
+	lowercaseViewFilter := new("ccw")
 
 	// Mocking data for modelLeads
 	modelLeads := []string{"Lead 1", "Lead 2"}
@@ -429,18 +429,16 @@ func sendFeedbackEmail(
 		},
 	}
 
-	satisfaction := model.SatisfactionLevelVerySatisfied
-	easeOfUse := model.EaseOfUseAgree
 	input := model.SendFeedbackEmailInput{
 		IsAnonymousSubmission: false,
-		AllowContact:          models.BoolPointer(true),
-		CmsRole:               models.StringPointer("Inspector General"),
+		AllowContact:          new(true),
+		CmsRole:               new("Inspector General"),
 		MintUsedFor:           []model.MintUses{model.MintUsesOther, model.MintUsesEditModel},
 		MintUsedForOther:      nil,
-		SystemEasyToUse:       &easeOfUse,
-		SystemEasyToUseOther:  models.StringPointer("I agree"),
-		HowSatisfied:          &satisfaction,
-		HowCanWeImprove:       models.StringPointer("Please send me a pizza after every model I submit"),
+		SystemEasyToUse:       new(model.EaseOfUseAgree),
+		SystemEasyToUseOther:  new("I agree"),
+		HowSatisfied:          new(model.SatisfactionLevelVerySatisfied),
+		HowCanWeImprove:       new("Please send me a pizza after every model I submit"),
 	}
 
 	_, err := resolvers.SendFeedbackEmail(emailService, addressBook, &princ, input)
@@ -457,17 +455,15 @@ func reportAProblemEmail(
 			Email:      "testReporterEmail@fake.com",
 		},
 	}
-	section := model.ReportAProblemSectionOther
-	severity := model.ReportAProblemSeverityOther
 	input := model.ReportAProblemInput{
 		IsAnonymousSubmission: false,
-		AllowContact:          models.BoolPointer(true),
-		Section:               &section,
-		SectionOther:          models.StringPointer("The Landing page"),
-		WhatDoing:             models.StringPointer("I was trying to log in"),
-		WhatWentWrong:         models.StringPointer("I wasn't able to log in"),
-		Severity:              &severity,
-		SeverityOther:         models.StringPointer(" I couldn't log in for a week "),
+		AllowContact:          new(true),
+		Section:               new(model.ReportAProblemSectionOther),
+		SectionOther:          new("The Landing page"),
+		WhatDoing:             new("I was trying to log in"),
+		WhatWentWrong:         new("I wasn't able to log in"),
+		Severity:              new(model.ReportAProblemSeverityOther),
+		SeverityOther:         new(" I couldn't log in for a week "),
 	}
 
 	_, err := resolvers.ReportAProblem(emailService, addressBook, &princ, input)
