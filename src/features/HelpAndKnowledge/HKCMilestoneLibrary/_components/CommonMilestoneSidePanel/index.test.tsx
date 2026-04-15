@@ -4,7 +4,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 import configureMockStore from 'redux-mock-store';
-import { allCommonSolutionsMock } from 'tests/mock/general';
+import { commonSolutionsAndCategoriesMock } from 'tests/mock/general';
 import { commonMilestonesMockData } from 'tests/mock/mto';
 
 import { ASSESSMENT } from 'constants/jobCodes';
@@ -12,7 +12,7 @@ import MessageProvider from 'contexts/MessageContext';
 
 import CommonMilestoneSidePanel from '.';
 
-const mocks = [...allCommonSolutionsMock];
+const mocks = [...commonSolutionsAndCategoriesMock];
 
 const mockAuthAssessment = {
   isUserSet: true,

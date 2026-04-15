@@ -2,14 +2,14 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { allCommonSolutionsMock } from 'tests/mock/general';
+import { commonSolutionsAndCategoriesMock } from 'tests/mock/general';
 import { commonMilestonesMockData } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
 import CommonMilestoneForm from './index';
 
-const mocks = [...allCommonSolutionsMock];
+const mocks = [...commonSolutionsAndCategoriesMock];
 
 describe('Manage Common Milestone form', () => {
   it('should render add common milestone mode accordingly', async () => {

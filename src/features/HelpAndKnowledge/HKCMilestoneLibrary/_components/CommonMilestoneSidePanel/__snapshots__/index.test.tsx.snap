@@ -183,54 +183,14 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                           - Select - 
                         </option>
                         <option
-                          value="Beneficiaries"
+                          value="Category 1"
                         >
-                          Beneficiaries
+                          Category 1
                         </option>
                         <option
-                          value="Evaluation"
+                          value="Category 2"
                         >
-                          Evaluation
-                        </option>
-                        <option
-                          value="Learning"
-                        >
-                          Learning
-                        </option>
-                        <option
-                          value="Legal"
-                        >
-                          Legal
-                        </option>
-                        <option
-                          value="Model closeout or extension"
-                        >
-                          Model closeout or extension
-                        </option>
-                        <option
-                          value="Operations"
-                        >
-                          Operations
-                        </option>
-                        <option
-                          value="Participants"
-                        >
-                          Participants
-                        </option>
-                        <option
-                          value="Payers"
-                        >
-                          Payers
-                        </option>
-                        <option
-                          value="Payment"
-                        >
-                          Payment
-                        </option>
-                        <option
-                          value="Quality"
-                        >
-                          Quality
+                          Category 2
                         </option>
                       </select>
                     </div>

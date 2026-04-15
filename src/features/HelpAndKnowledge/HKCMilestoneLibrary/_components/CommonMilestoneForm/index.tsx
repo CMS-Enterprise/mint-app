@@ -19,10 +19,10 @@ import {
 import classNames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
-  GetGlobalMtoCommonSolutionsQuery,
+  GetCommonSolutionsAndCategoriesQuery,
   MtoCommonSolutionKey,
   MtoFacilitator,
-  useGetGlobalMtoCommonSolutionsQuery
+  useGetCommonSolutionsAndCategoriesQuery
 } from 'gql/generated/graphql';
 
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
@@ -45,7 +45,7 @@ import {
 } from '../CommonMilestoneSidePanel';
 
 export type CommonSolution =
-  GetGlobalMtoCommonSolutionsQuery['mtoCommonSolutions'][0];
+  GetCommonSolutionsAndCategoriesQuery['mtoCommonSolutions'][0];
 
 type CommonMilestoneFormValues = {
   name: string;
@@ -64,63 +64,6 @@ type CommonMilestoneFormProps = {
   setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
   setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
 };
-
-// TODO: TEST DATA - to be removed when query is ready
-const TEST_CATEGORIES_DATA = [
-  {
-    name: 'Beneficiaries',
-    subCategories: []
-  },
-  {
-    name: 'Evaluation',
-    subCategories: []
-  },
-  {
-    name: 'Learning',
-    subCategories: []
-  },
-  {
-    name: 'Legal',
-    subCategories: [
-      'Agreements',
-      'Beneficiary engagement and incentives',
-      'Benefit enhancements'
-    ]
-  },
-  {
-    name: 'Model closeout or extension',
-    subCategories: []
-  },
-  {
-    name: 'Operations',
-    subCategories: [
-      'Benchmarks',
-      'Collect data',
-      'Fee-for-service (FFS)',
-      'Internal functions',
-      'Monitoring',
-      'Participant and beneficiary tracking/alignment',
-      'Send data to participants',
-      'Set up operations'
-    ]
-  },
-  {
-    name: 'Participants',
-    subCategories: ['Application, review, and selection', 'Participant support']
-  },
-  {
-    name: 'Payers',
-    subCategories: []
-  },
-  {
-    name: 'Payment',
-    subCategories: ['Claims-based', 'Non-claims based']
-  },
-  {
-    name: 'Quality',
-    subCategories: []
-  }
-];
 
 const CommonMilestoneForm = ({
   mode,
@@ -145,26 +88,10 @@ const CommonMilestoneForm = ({
   const isEditMode = mode === 'editCommonMilestone';
 
   const {
-    data: allCommonSolutionsData,
-    loading: allCommonSolutionsLoading,
-    error: allCommonSolutionsError
-  } = useGetGlobalMtoCommonSolutionsQuery();
-
-  const groupedCommonSolutionOptions = useMemo(
-    () => [
-      {
-        options: sortedSelectOptions(
-          (allCommonSolutionsData?.mtoCommonSolutions || []).map(solution => {
-            return {
-              label: solution.name || '',
-              value: solution.key
-            };
-          })
-        )
-      }
-    ],
-    [allCommonSolutionsData]
-  );
+    data: commonSolutionsAndCategoriesData,
+    loading: commonSolutionsAndCategoriesLoading,
+    error: commonSolutionsAndCategoriesError
+  } = useGetCommonSolutionsAndCategoriesQuery();
 
   const defaultCategoryOption = {
     value: 'default',
@@ -176,27 +103,44 @@ const CommonMilestoneForm = ({
     label: mtoCommonMilestoneMiscT('unCategories')
   };
 
-  const { categoryOptions, subCategoryOptions } = useMemo(() => {
-    const subCategories: Record<string, { value: string; label: string }[]> =
-      {};
+  const { groupedCommonSolutionOptions, categoryOptions, subCategoryOptions } =
+    useMemo(() => {
+      const commonSolutionsOptions = [
+        {
+          options: sortedSelectOptions(
+            (commonSolutionsAndCategoriesData?.mtoCommonSolutions || []).map(
+              solution => ({
+                label: solution.name || '',
+                value: solution.key
+              })
+            )
+          )
+        }
+      ];
 
-    const categories = TEST_CATEGORIES_DATA.map(category => {
-      subCategories[category.name] = category.subCategories.map(sub => ({
-        value: sub,
-        label: sub
-      }));
+      const subCategories: Record<string, { value: string; label: string }[]> =
+        {};
+
+      const categories = (
+        commonSolutionsAndCategoriesData?.commonCategories || []
+      ).map(category => {
+        subCategories[category.name] = category.subCategories.map(sub => ({
+          value: sub,
+          label: sub
+        }));
+
+        return {
+          value: category.name,
+          label: category.name
+        };
+      });
 
       return {
-        value: category.name,
-        label: category.name
+        groupedCommonSolutionOptions: commonSolutionsOptions,
+        categoryOptions: categories,
+        subCategoryOptions: subCategories
       };
-    });
-
-    return {
-      categoryOptions: categories,
-      subCategoryOptions: subCategories
-    };
-  }, []);
+    }, [commonSolutionsAndCategoriesData]);
 
   // Set default values for form
   const formValues = useMemo(() => {
@@ -213,7 +157,7 @@ const CommonMilestoneForm = ({
       categoryName: commonMilestone?.categoryName || 'default',
       subCategoryName: subCategoryDefault,
       facilitatedByRole: commonMilestone?.facilitatedByRole || [],
-      facilitatedByOther: 'commonMilestone?.facilitatedByOther || ',
+      facilitatedByOther: commonMilestone?.facilitatedByOther || '',
       commonSolutions:
         commonMilestone?.commonSolutions?.map(solution => solution.key) || []
     };
@@ -303,11 +247,13 @@ const CommonMilestoneForm = ({
     [closeModal, formValues]
   );
 
-  if ((isEditMode && !commonMilestone) || allCommonSolutionsError) {
-    return <NotFound errorMessage={allCommonSolutionsError?.message} />;
+  if ((isEditMode && !commonMilestone) || commonSolutionsAndCategoriesError) {
+    return (
+      <NotFound errorMessage={commonSolutionsAndCategoriesError?.message} />
+    );
   }
 
-  if (isAddMode && allCommonSolutionsLoading) {
+  if (isAddMode && commonSolutionsAndCategoriesLoading) {
     return <PageLoading />;
   }
 

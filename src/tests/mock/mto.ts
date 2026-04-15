@@ -373,6 +373,7 @@ export const commonMilestonesMockData: CommonMilestoneType[] = [
     categoryName: 'Test Category',
     subCategoryName: 'Test SubCategory',
     facilitatedByRole: [MtoFacilitator.MODEL_TEAM],
+    facilitatedByOther: '',
     description: 'Description 1',
     commonSolutions: [
       {
