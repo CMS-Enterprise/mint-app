@@ -1,0 +1,24 @@
+meta {
+  name: Get Common Categories
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query GetCommonCategories {
+    commonCategories {
+      name
+      subCategories
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}

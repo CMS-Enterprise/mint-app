@@ -8,7 +8,7 @@ This is a comprehensive analysis of the CMS MINT (Model Innovation Tool) applica
 
 ### Tech Stack
 
-- **Backend**: Go 1.24.4 with GraphQL (gqlgen) + REST APIs
+- **Backend**: Go 1.26.2 with GraphQL (gqlgen) + REST APIs
 - **Frontend**: React 19.1.0 with TypeScript, Vite, Apollo Client
 - **Database**: PostgreSQL with Flyway migrations
 - **Authentication**: Okta integration

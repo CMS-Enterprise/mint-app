@@ -11,6 +11,7 @@ RETURNING
     category_name,
     sub_category_name,
     facilitated_by_role,
+    facilitated_by_other,
     section,
     is_archived,
     CAST(NULL AS UUID) AS model_plan_id,

@@ -1,0 +1,651 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  Controller,
+  FormProvider,
+  SubmitHandler,
+  useForm
+} from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
+import {
+  Fieldset,
+  Form,
+  FormGroup,
+  Label,
+  Select,
+  TextInput
+} from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
+import {
+  GetGlobalMtoCommonSolutionsQuery,
+  MtoCommonSolutionKey,
+  MtoFacilitator,
+  useGetGlobalMtoCommonSolutionsQuery
+} from 'gql/generated/graphql';
+
+import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import FieldErrorMsg from 'components/FieldErrorMsg';
+import HelpText from 'components/HelpText';
+import MultiSelect from 'components/MultiSelect';
+import PageLoading from 'components/PageLoading';
+import TextAreaField from 'components/TextAreaField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import dirtyInput, { symmetricDifference } from 'utils/formUtil';
+import {
+  composeMultiSelectOptions,
+  convertCamelCaseToKebabCase,
+  sortedSelectOptions
+} from 'utils/modelPlan';
+
+import {
+  CommonMilestoneModalModeType,
+  CommonMilestoneType
+} from '../CommonMilestoneSidePanel';
+
+export type CommonSolution =
+  GetGlobalMtoCommonSolutionsQuery['mtoCommonSolutions'][0];
+
+type CommonMilestoneFormValues = {
+  name: string;
+  description: string;
+  categoryName: string;
+  subCategoryName: string;
+  facilitatedByRole: MtoFacilitator[];
+  facilitatedByOther?: string;
+  commonSolutions: MtoCommonSolutionKey[];
+};
+
+type CommonMilestoneFormProps = {
+  mode: CommonMilestoneModalModeType;
+  closeModal: () => void;
+  commonMilestone?: CommonMilestoneType;
+  setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDirty: (isDirty: boolean) => void; // Set dirty state of form so parent can render modal for leaving with unsaved changes
+};
+
+// TODO: TEST DATA - to be removed when query is ready
+const TEST_CATEGORIES_DATA = [
+  {
+    name: 'Beneficiaries',
+    subCategories: []
+  },
+  {
+    name: 'Evaluation',
+    subCategories: []
+  },
+  {
+    name: 'Learning',
+    subCategories: []
+  },
+  {
+    name: 'Legal',
+    subCategories: [
+      'Agreements',
+      'Beneficiary engagement and incentives',
+      'Benefit enhancements'
+    ]
+  },
+  {
+    name: 'Model closeout or extension',
+    subCategories: []
+  },
+  {
+    name: 'Operations',
+    subCategories: [
+      'Benchmarks',
+      'Collect data',
+      'Fee-for-service (FFS)',
+      'Internal functions',
+      'Monitoring',
+      'Participant and beneficiary tracking/alignment',
+      'Send data to participants',
+      'Set up operations'
+    ]
+  },
+  {
+    name: 'Participants',
+    subCategories: ['Application, review, and selection', 'Participant support']
+  },
+  {
+    name: 'Payers',
+    subCategories: []
+  },
+  {
+    name: 'Payment',
+    subCategories: ['Claims-based', 'Non-claims based']
+  },
+  {
+    name: 'Quality',
+    subCategories: []
+  }
+];
+
+const CommonMilestoneForm = ({
+  mode,
+  closeModal,
+  setDisableButton,
+  commonMilestone,
+  setIsDirty
+}: CommonMilestoneFormProps) => {
+  const { t: mtoCommonMilestoneT } = useTranslation('mtoCommonMilestone');
+  const { t: mtoCommonMilestoneMiscT } = useTranslation(
+    'mtoCommonMilestoneMisc'
+  );
+
+  const {
+    facilitatedByRole: facilitatedByRoleConfig,
+    commonSolutions: commonSolutionsConfig
+  } = usePlanTranslation('mtoCommonMilestone');
+
+  const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
+
+  const isAddMode = mode === 'addCommonMilestone';
+  const isEditMode = mode === 'editCommonMilestone';
+
+  const {
+    data: allCommonSolutionsData,
+    loading: allCommonSolutionsLoading,
+    error: allCommonSolutionsError
+  } = useGetGlobalMtoCommonSolutionsQuery();
+
+  const groupedCommonSolutionOptions = useMemo(
+    () => [
+      {
+        options: sortedSelectOptions(
+          (allCommonSolutionsData?.mtoCommonSolutions || []).map(solution => {
+            return {
+              label: solution.name || '',
+              value: solution.key
+            };
+          })
+        )
+      }
+    ],
+    [allCommonSolutionsData]
+  );
+
+  const defaultCategoryOption = {
+    value: 'default',
+    label: mtoCommonMilestoneMiscT('defaultSelectOptions')
+  };
+
+  const uncategorizedOption = {
+    value: 'Uncategorized',
+    label: mtoCommonMilestoneMiscT('unCategories')
+  };
+
+  const { categoryOptions, subCategoryOptions } = useMemo(() => {
+    const subCategories: Record<string, { value: string; label: string }[]> =
+      {};
+
+    const categories = TEST_CATEGORIES_DATA.map(category => {
+      subCategories[category.name] = category.subCategories.map(sub => ({
+        value: sub,
+        label: sub
+      }));
+
+      return {
+        value: category.name,
+        label: category.name
+      };
+    });
+
+    return {
+      categoryOptions: categories,
+      subCategoryOptions: subCategories
+    };
+  }, []);
+
+  // Set default values for form
+  const formValues = useMemo(
+    () => ({
+      name: commonMilestone?.name || '',
+      description: commonMilestone?.description || '',
+      categoryName: commonMilestone?.categoryName || 'default',
+      subCategoryName: commonMilestone?.subCategoryName || 'default',
+      facilitatedByRole: commonMilestone?.facilitatedByRole || [],
+      facilitatedByOther: commonMilestone?.facilitatedByOther || '',
+      commonSolutions:
+        commonMilestone?.commonSolutions?.map(solution => solution.key) || []
+    }),
+    [commonMilestone]
+  );
+
+  const methods = useForm<CommonMilestoneFormValues>({
+    defaultValues: formValues,
+    values: formValues,
+    mode: 'onChange'
+  });
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { isSubmitting, dirtyFields, isValid }
+  } = methods;
+
+  const values = watch();
+
+  useEffect(() => {
+    const { facilitatedByRole, commonSolutions, ...rest } = dirtyFields;
+
+    let facilitatedByChangeCount: number = 0;
+    if (facilitatedByRole) {
+      facilitatedByChangeCount = symmetricDifference(
+        values.facilitatedByRole || [],
+        formValues.facilitatedByRole
+      ).length;
+    }
+
+    let solutionsChangeCount: number = 0;
+    if (commonSolutions) {
+      solutionsChangeCount = symmetricDifference(
+        values.commonSolutions || [],
+        formValues.commonSolutions
+      ).length;
+    }
+
+    const totalChanges =
+      facilitatedByChangeCount +
+      solutionsChangeCount +
+      Object.keys(rest).length;
+
+    setUnsavedChanges(totalChanges);
+  }, [
+    dirtyFields,
+    formValues,
+    values.facilitatedByRole,
+    values.commonSolutions
+  ]);
+
+  // Sets dirty state based on changes in form to render the leave confirmation modal
+  useEffect(() => {
+    if (
+      (isAddMode && isValid) ||
+      (isEditMode && unsavedChanges) ||
+      isSubmitting
+    ) {
+      setIsDirty(true);
+      setDisableButton(false);
+    } else {
+      setIsDirty(false);
+      setDisableButton(true);
+    }
+  }, [
+    isSubmitting,
+    unsavedChanges,
+    setIsDirty,
+    setDisableButton,
+    isAddMode,
+    isEditMode,
+    values,
+    isValid
+  ]);
+
+  const onSubmit = useCallback<SubmitHandler<CommonMilestoneFormValues>>(
+    formData => {
+      const formChanges = dirtyInput(formValues, formData);
+
+      if (!formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)) {
+        formChanges.facilitatedByOther = null;
+      }
+
+      closeModal();
+    },
+    [closeModal, formValues]
+  );
+
+  if ((isEditMode && !commonMilestone) || allCommonSolutionsError) {
+    return <NotFound errorMessage={allCommonSolutionsError?.message} />;
+  }
+
+  if (isAddMode && allCommonSolutionsLoading) {
+    return <PageLoading />;
+  }
+
+  return (
+    <div className="margin-top-8">
+      <div className="padding-x-8 padding-y-6 maxw-tablet">
+        <FormProvider {...methods}>
+          <Form
+            className="maxw-none"
+            id="common-milestone-form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <ConfirmLeaveRHF />
+
+            <h2 className="margin-y-0 line-height-serif-2">
+              {isAddMode && mtoCommonMilestoneMiscT(`${mode}.heading`)}
+              {commonMilestone?.name}
+            </h2>
+
+            <p className="margin-top-1 margin-bottom-1 text-base-dark line-height-sans-5">
+              <Trans
+                i18nKey={mtoCommonMilestoneMiscT('allFieldsRequired')}
+                components={{
+                  s: <span className="text-secondary-dark" />
+                }}
+              />
+            </p>
+
+            <Fieldset className="margin-bottom-8">
+              <Controller
+                name="name"
+                control={control}
+                rules={{
+                  required: mtoCommonMilestoneMiscT('validation.fillOut'),
+                  validate: value => value !== ''
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup className="margin-bottom-3" error={!!error}>
+                    <Label
+                      requiredMarker
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                    >
+                      {mtoCommonMilestoneT('name.label')}
+                    </Label>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+
+                    <TextInput
+                      {...field}
+                      ref={null}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      type="text"
+                    />
+                  </FormGroup>
+                )}
+              />
+
+              <Controller
+                name="description"
+                control={control}
+                rules={{
+                  required: mtoCommonMilestoneMiscT('validation.fillOut'),
+                  validate: value => value !== ''
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {mtoCommonMilestoneT('description.label')}
+                    </Label>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+
+                    <TextAreaField
+                      {...field}
+                      value={field.value || ''}
+                      className="height-card"
+                      id={convertCamelCaseToKebabCase(field.name)}
+                    />
+                  </FormGroup>
+                )}
+              />
+
+              <Controller
+                name="categoryName"
+                control={control}
+                rules={{
+                  required: mtoCommonMilestoneMiscT('validation.fillOut'),
+                  validate: value =>
+                    value !== 'default' ||
+                    mtoCommonMilestoneMiscT('validation.fillOut')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {mtoCommonMilestoneT('categoryName.label')}
+                    </Label>
+
+                    <HelpText className="margin-top-05">
+                      {mtoCommonMilestoneT('categoryName.sublabel')}
+                    </HelpText>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+
+                    <Select
+                      {...field}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      value={field.value || 'default'}
+                      defaultValue="default"
+                      onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                        field.onChange(e);
+                        // Reset subcategory when category changes
+                        setValue('subCategoryName', 'default');
+                      }}
+                    >
+                      {[defaultCategoryOption, ...categoryOptions].map(
+                        option => {
+                          return (
+                            <option key={option.value} value={option.value}>
+                              {option.label}
+                            </option>
+                          );
+                        }
+                      )}
+                    </Select>
+                  </FormGroup>
+                )}
+              />
+
+              <Controller
+                name="subCategoryName"
+                control={control}
+                rules={{
+                  required: mtoCommonMilestoneMiscT('validation.fillOut'),
+                  validate: value =>
+                    value !== 'default' ||
+                    mtoCommonMilestoneMiscT('validation.fillOut')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {mtoCommonMilestoneT('subCategoryName.label')}
+                    </Label>
+
+                    <HelpText className="margin-top-05">
+                      {mtoCommonMilestoneT('subCategoryName.sublabel')}
+                    </HelpText>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+
+                    <Select
+                      {...field}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      value={field.value || 'default'}
+                      defaultValue="default"
+                      disabled={watch('categoryName') === 'default'}
+                    >
+                      {[
+                        defaultCategoryOption,
+                        ...(subCategoryOptions[watch('categoryName')] || []),
+                        uncategorizedOption
+                      ].map((option: { value: string; label: string }) => {
+                        return (
+                          <option key={option.value} value={option.value}>
+                            {option.label}
+                          </option>
+                        );
+                      })}
+                    </Select>
+                  </FormGroup>
+                )}
+              />
+
+              <Controller
+                name="facilitatedByRole"
+                control={control}
+                rules={{
+                  required: mtoCommonMilestoneMiscT('validation.fillOut'),
+                  validate: value => value.length > 0
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup className="margin-0 margin-bottom-3">
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      requiredMarker
+                    >
+                      {facilitatedByRoleConfig.label}
+                    </Label>
+
+                    <HelpText className="margin-top-1">
+                      {facilitatedByRoleConfig.sublabel}
+                    </HelpText>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+
+                    <MultiSelect
+                      {...field}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      inputId={convertCamelCaseToKebabCase(field.name)}
+                      ariaLabel={facilitatedByRoleConfig.label}
+                      ariaLabelText={facilitatedByRoleConfig.label}
+                      options={composeMultiSelectOptions(
+                        facilitatedByRoleConfig.options
+                      )}
+                      selectedLabel={
+                        facilitatedByRoleConfig.multiSelectLabel || ''
+                      }
+                      initialValues={watch('facilitatedByRole')}
+                    />
+                  </FormGroup>
+                )}
+              />
+
+              {watch('facilitatedByRole')?.includes(MtoFacilitator.OTHER) && (
+                <Controller
+                  name="facilitatedByOther"
+                  control={control}
+                  rules={{
+                    required: mtoCommonMilestoneMiscT('validation.fillOut')
+                  }}
+                  render={({
+                    field: { ref, ...field },
+                    fieldState: { error }
+                  }) => (
+                    <FormGroup
+                      className="margin-0 margin-bottom-3"
+                      error={!!error}
+                    >
+                      <Label
+                        htmlFor={convertCamelCaseToKebabCase(field.name)}
+                        requiredMarker
+                        className="text-normal"
+                      >
+                        {mtoCommonMilestoneT('facilitatedByOther.label')}
+                      </Label>
+
+                      {!!error && (
+                        <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                      )}
+
+                      <HelpText className="margin-top-1">
+                        {mtoCommonMilestoneT('facilitatedByOther.sublabel')}
+                      </HelpText>
+
+                      <TextInput
+                        {...field}
+                        ref={null}
+                        id={convertCamelCaseToKebabCase(field.name)}
+                        type="text"
+                        maxLength={75}
+                      />
+
+                      <HelpText className="margin-top-1">
+                        {mtoCommonMilestoneMiscT('charactersAllowed')}
+                      </HelpText>
+                    </FormGroup>
+                  )}
+                />
+              )}
+
+              <Controller
+                name="commonSolutions"
+                control={control}
+                rules={{
+                  required: mtoCommonMilestoneMiscT('validation.fillOut'),
+                  validate: value => value.length > 0
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    className="margin-0 margin-bottom-7"
+                    error={!!error}
+                  >
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(field.name)}
+                      requiredMarker
+                    >
+                      {commonSolutionsConfig.label}
+                    </Label>
+
+                    <HelpText className="margin-top-1">
+                      {commonSolutionsConfig.sublabel}
+                    </HelpText>
+
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+
+                    <MultiSelect
+                      {...field}
+                      id={convertCamelCaseToKebabCase(field.name)}
+                      inputId={convertCamelCaseToKebabCase(field.name)}
+                      name={field.name}
+                      ariaLabel={commonSolutionsConfig.label}
+                      ariaLabelText={commonSolutionsConfig.label}
+                      options={[]}
+                      groupedOptions={groupedCommonSolutionOptions}
+                      selectedLabel={
+                        commonSolutionsConfig.multiSelectLabel || ''
+                      }
+                      initialValues={watch('commonSolutions')}
+                    />
+                  </FormGroup>
+                )}
+              />
+            </Fieldset>
+          </Form>
+        </FormProvider>
+      </div>
+    </div>
+  );
+};
+
+export default CommonMilestoneForm;

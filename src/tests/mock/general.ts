@@ -24,6 +24,9 @@ import {
   GetFavoritesDocument,
   GetFavoritesQuery,
   GetFavoritesQueryVariables,
+  GetGlobalMtoCommonSolutionsDocument,
+  GetGlobalMtoCommonSolutionsQuery,
+  GetGlobalMtoCommonSolutionsQueryVariables,
   GetModelPlanBaseDocument,
   GetModelPlanBaseQuery,
   GetModelPlanBaseQueryVariables,
@@ -852,6 +855,23 @@ export const keyContactsMock: MockedResponse<
       data: {
         __typename: 'Query',
         keyContacts: keyContactsMockData
+      }
+    }
+  }
+];
+
+export const allCommonSolutionsMock: MockedResponse<
+  GetGlobalMtoCommonSolutionsQuery,
+  GetGlobalMtoCommonSolutionsQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetGlobalMtoCommonSolutionsDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        mtoCommonSolutions: []
       }
     }
   }

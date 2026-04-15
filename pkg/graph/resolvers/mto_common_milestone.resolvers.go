@@ -15,6 +15,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // FacilitatedByRole is the resolver for the facilitatedByRole field.
@@ -70,8 +71,8 @@ func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *m
 }
 
 // CreateMTOCommonMilestone is the resolver for the createMTOCommonMilestone field.
-func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName *string, facilitatedByRole []models.MTOFacilitator, mtoCommonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
-	panic("not implemented: CreateMTOCommonMilestone - createMTOCommonMilestone")
+func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName *string, facilitatedByRole []models.MTOFacilitator, facilitatedByOther *string, mtoCommonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
+	panic(fmt.Errorf("not implemented: CreateMTOCommonMilestone - createMTOCommonMilestone"))
 }
 
 // UpdateMTOCommonMilestone is the resolver for the updateMTOCommonMilestone field.
@@ -94,6 +95,12 @@ func (r *mutationResolver) ArchiveMTOCommonMilestone(ctx context.Context, id uui
 // MtoCommonMilestones is the resolver for the mtoCommonMilestones field.
 func (r *queryResolver) MtoCommonMilestones(ctx context.Context) ([]*models.MTOCommonMilestone, error) {
 	return MTOCommonMilestoneGetByModelPlanIDLOADER(ctx, nil)
+}
+
+// CommonCategories is the resolver for the commonCategories field.
+func (r *queryResolver) CommonCategories(ctx context.Context) ([]*models.CommonCategory, error) {
+	logger := appcontext.ZLogger(ctx)
+	return storage.MTOCommonMilestoneGetCommonCategories(r.store, logger)
 }
 
 // MTOCommonMilestone returns generated.MTOCommonMilestoneResolver implementation.
