@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
@@ -38,7 +39,53 @@ func MTOCommonMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, i
 		return nil, err
 	}
 	return returned, nil
+}
 
+// MTOCommonMilestoneArchive marks a common milestone as archived, removes its library/template references,
+// and preserves already-applied model plan milestones.
+func MTOCommonMilestoneArchive(
+	np sqlutils.TransactionPreparer,
+	logger *zap.Logger,
+	id uuid.UUID,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	return sqlutils.WithTransaction(np, func(tx *sqlx.Tx) (*models.MTOCommonMilestone, error) {
+		return archiveMTOCommonMilestone(tx, logger, id, actorUserID)
+	})
+}
+
+func archiveMTOCommonMilestone(
+	tx *sqlx.Tx,
+	_ *zap.Logger,
+	id uuid.UUID,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	err := setCurrentSessionUserVariable(tx, actorUserID)
+	if err != nil {
+		return nil, err
+	}
+
+	args := map[string]any{
+		"id":          id,
+		"modified_by": actorUserID,
+	}
+
+	returned, err := sqlutils.GetProcedure[models.MTOCommonMilestone](tx, sqlqueries.MTOCommonMilestone.Archive, args)
+	if err != nil {
+		return nil, fmt.Errorf("issue archiving MTOCommonMilestone object: %w", err)
+	}
+
+	err = sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonMilestone.DeleteTemplateMilestones, args)
+	if err != nil {
+		return nil, fmt.Errorf("issue deleting template milestones for archived MTOCommonMilestone: %w", err)
+	}
+
+	err = sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonMilestone.DeleteSolutionLinks, args)
+	if err != nil {
+		return nil, fmt.Errorf("issue deleting common milestone solution links for archived MTOCommonMilestone: %w", err)
+	}
+
+	return returned, nil
 }
 
 type commonCategoryRow struct {
@@ -75,19 +122,4 @@ func normalizeCommonCategorySubCategories(subCategories pq.StringArray) []string
 	}
 
 	return []string(subCategories)
-}
-
-// MTOCommonMilestoneArchive marks a common milestone as archived and updates audit fields.
-func MTOCommonMilestoneArchive(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID, actorUserID uuid.UUID) (*models.MTOCommonMilestone, error) {
-	args := map[string]any{
-		"id":          id,
-		"modified_by": actorUserID,
-	}
-
-	returned, err := sqlutils.GetProcedure[models.MTOCommonMilestone](np, sqlqueries.MTOCommonMilestone.Archive, args)
-	if err != nil {
-		return nil, fmt.Errorf("issue archiving MTOCommonMilestone object: %w", err)
-	}
-
-	return returned, nil
 }
