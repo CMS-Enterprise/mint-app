@@ -24,7 +24,13 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneArchiveRemovesTemplateReferencesB
 	templateSolutionID := uuid.New()
 	templateMilestoneSolutionLinkID := uuid.New()
 
-	err = insertTestMTOCommonMilestone(tx, commonMilestoneID, actorUserID, nil, new(""))
+	err = insertTestMTOCommonMilestone(
+		tx,
+		commonMilestoneID,
+		actorUserID,
+		models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorModelTeam},
+		nil,
+	)
 	s.Require().NoError(err)
 
 	commonSolutions, err := MTOCommonSolutionGetByKeyLoader(tx, s.logger, []models.MTOCommonSolutionKey{models.MTOCSKInnovation})
@@ -344,6 +350,25 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneFacilitatedByOtherConstraint() {
 		)
 		s.Require().Error(err)
 		s.Contains(err.Error(), "mto_common_milestone_check_other_requires_facilitated_by_other")
+	})
+
+	s.Run("rejects empty facilitated_by_other", func() {
+		tx, err := s.store.Beginx()
+		s.Require().NoError(err)
+		defer tx.Rollback()
+
+		commonMilestoneID := uuid.New()
+		facilitatedByOther := ""
+
+		err = insertTestMTOCommonMilestone(
+			tx,
+			commonMilestoneID,
+			actorUserID,
+			models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther},
+			&facilitatedByOther,
+		)
+		s.Require().Error(err)
+		s.Contains(err.Error(), "zero_string_check")
 	})
 }
 
