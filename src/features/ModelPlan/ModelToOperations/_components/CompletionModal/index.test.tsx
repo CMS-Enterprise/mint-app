@@ -36,6 +36,10 @@ describe('CompletionModal Component', () => {
     return render(<RouterProvider router={router} />);
   };
 
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('renders correctly when milestone is on track', () => {
     const { getByText, queryByText, getByRole } = setup();
 
@@ -51,7 +55,7 @@ describe('CompletionModal Component', () => {
     const okayBtn = getByRole('button', { name: 'Okay' });
     fireEvent.click(okayBtn);
 
-    expect(defaultProps.closeModal).toHaveBeenCalled();
+    expect(defaultProps.closeModal).toHaveBeenCalledTimes(1);
   });
 
   it('renders correctly when milestone has a risk indicator', () => {
@@ -69,7 +73,7 @@ describe('CompletionModal Component', () => {
 
     const removeBtn = getByRole('button', { name: 'Remove risk indicator' });
     fireEvent.click(removeBtn);
-    expect(defaultProps.handleRemoveRiskIndicator).toHaveBeenCalled();
+    expect(defaultProps.handleRemoveRiskIndicator).toHaveBeenCalledTimes(1);
   });
 
   it('closes the modal when clicking "Don’t remove indicator"', () => {
@@ -83,7 +87,7 @@ describe('CompletionModal Component', () => {
     });
     fireEvent.click(cancelBtn);
 
-    expect(defaultProps.closeModal).toHaveBeenCalled();
+    expect(defaultProps.closeModal).toHaveBeenCalledTimes(1);
   });
 
   it('matches the snapshot for On Track state', () => {
