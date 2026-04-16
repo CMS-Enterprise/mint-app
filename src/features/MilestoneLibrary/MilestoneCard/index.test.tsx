@@ -7,7 +7,9 @@ import { suggestedMilestonesMock } from 'tests/mock/mto';
 
 import MessageProvider from 'contexts/MessageContext';
 
-import MilestoneCard, { MilestoneCardType } from './index';
+import { MilestoneCardType } from '../MilestoneCardGroup';
+
+import MilestoneCard from './index';
 
 describe('MilestoneCard Component', () => {
   const mockMilestone: MilestoneCardType = {

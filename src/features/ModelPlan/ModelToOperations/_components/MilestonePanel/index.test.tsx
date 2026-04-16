@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
-import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
+import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCardGroup';
 import { MtoCommonSolutionKey, MtoFacilitator } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 import { possibleSolutionsMock } from 'tests/mock/mto';

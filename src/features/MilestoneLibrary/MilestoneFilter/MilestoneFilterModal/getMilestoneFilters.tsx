@@ -1,4 +1,4 @@
-import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
+import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCardGroup';
 import { MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
 

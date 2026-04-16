@@ -12,19 +12,13 @@ import {
 import classNames from 'classnames';
 import AddSolutionToMilestoneForm from 'features/ModelPlan/ModelToOperations/_components/AddCommonMilestoneForm';
 import SuggestedMilestoneToggle from 'features/ModelPlan/ModelToOperations/_components/SuggestedMilestoneToggle';
-import {
-  GetMtoAllCommonMilestonesQuery,
-  GetMtoMilestonesQuery
-} from 'gql/generated/graphql';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 
-import '../index.scss';
+import { MilestoneCardType } from '../MilestoneCardGroup';
 
-export type MilestoneCardType =
-  | GetMtoMilestonesQuery['modelPlan']['mtoMatrix']['commonMilestones'][0]
-  | GetMtoAllCommonMilestonesQuery['mtoCommonMilestones'][0];
+import '../index.scss';
 
 const MilestoneCard = ({
   className,

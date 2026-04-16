@@ -10,7 +10,10 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import MilestonePanel from 'features/ModelPlan/ModelToOperations/_components/MilestonePanel';
-import { GetMtoMilestonesQuery } from 'gql/generated/graphql';
+import {
+  GetMtoAllCommonMilestonesQuery,
+  GetMtoMilestonesQuery
+} from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
@@ -47,7 +50,8 @@ const searchMilestones = (
 type MilestoneViewType = 'suggested' | 'all';
 
 export type MilestoneCardType =
-  GetMtoMilestonesQuery['modelPlan']['mtoMatrix']['commonMilestones'][0];
+  | GetMtoMilestonesQuery['modelPlan']['mtoMatrix']['commonMilestones'][0]
+  | GetMtoAllCommonMilestonesQuery['mtoCommonMilestones'][0];
 
 const MilestoneCardGroup = ({
   milestones,

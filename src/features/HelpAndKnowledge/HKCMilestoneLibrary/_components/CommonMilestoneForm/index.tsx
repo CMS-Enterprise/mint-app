@@ -1,10 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  Controller,
-  FormProvider,
-  SubmitHandler,
-  useForm
-} from 'react-hook-form';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
@@ -39,6 +34,7 @@ import {
   sortedSelectOptions
 } from 'utils/modelPlan';
 
+import CommonMilestoneConfirmationModal from '../CommonMilestoneConfirmationModal';
 import {
   CommonMilestoneModalModeType,
   CommonMilestoneType
@@ -83,6 +79,9 @@ const CommonMilestoneForm = ({
   } = usePlanTranslation('mtoCommonMilestone');
 
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
+
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+    useState<boolean>(false);
 
   const isAddMode = mode === 'addCommonMilestone';
   const isEditMode = mode === 'editCommonMilestone';
@@ -217,7 +216,8 @@ const CommonMilestoneForm = ({
     if (
       (isAddMode && isValid) ||
       (isEditMode && unsavedChanges) ||
-      isSubmitting
+      isSubmitting ||
+      isConfirmationModalOpen
     ) {
       setDisableButton(false);
     } else {
@@ -231,21 +231,24 @@ const CommonMilestoneForm = ({
     isAddMode,
     isEditMode,
     values,
-    isValid
+    isValid,
+    isConfirmationModalOpen
   ]);
 
-  const onSubmit = useCallback<SubmitHandler<CommonMilestoneFormValues>>(
-    formData => {
-      const formChanges = dirtyInput(formValues, formData);
+  const handleEditClick = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsConfirmationModalOpen(true);
+  };
 
-      if (!formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)) {
-        formChanges.facilitatedByOther = null;
-      }
+  const onSubmit = (formData: CommonMilestoneFormValues) => {
+    const formChanges = dirtyInput(formValues, formData);
 
-      closeModal();
-    },
-    [closeModal, formValues]
-  );
+    if (!formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)) {
+      formChanges.facilitatedByOther = null;
+    }
+
+    closeModal();
+  };
 
   if ((isEditMode && !commonMilestone) || commonSolutionsAndCategoriesError) {
     return (
@@ -259,6 +262,15 @@ const CommonMilestoneForm = ({
 
   return (
     <div className="margin-top-8">
+      {isEditMode && (
+        <CommonMilestoneConfirmationModal
+          isModalOpen={isConfirmationModalOpen}
+          closeModal={() => setIsConfirmationModalOpen(false)}
+          actionType="edit"
+          onConfirmClick={handleSubmit(onSubmit)}
+        />
+      )}
+
       <div className="padding-x-8 padding-y-6 maxw-tablet">
         {isEditMode && unsavedChanges > 0 && (
           <div className={classNames('save-tag')}>
@@ -275,8 +287,8 @@ const CommonMilestoneForm = ({
               -
               <Button
                 type="button"
-                onClick={handleSubmit(onSubmit)}
-                disabled={isSubmitting || !unsavedChanges}
+                onClick={() => setIsConfirmationModalOpen(true)}
+                disabled={isSubmitting || isConfirmationModalOpen}
                 className="margin-x-1"
                 unstyled
               >
@@ -290,7 +302,7 @@ const CommonMilestoneForm = ({
           <Form
             className="maxw-none"
             id="common-milestone-form"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={isAddMode ? handleSubmit(onSubmit) : handleEditClick}
           >
             <ConfirmLeaveRHF />
 

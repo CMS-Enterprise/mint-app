@@ -2,8 +2,9 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
-import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
-import MilestoneCardGroup from 'features/MilestoneLibrary/MilestoneCardGroup';
+import MilestoneCardGroup, {
+  MilestoneCardType
+} from 'features/MilestoneLibrary/MilestoneCardGroup';
 import NotFound from 'features/NotFound';
 import { useGetMtoMilestonesQuery } from 'gql/generated/graphql';
 

@@ -185,12 +185,12 @@ export const mtoCommonMilestoneMisc = {
   unCategories: 'Uncategorized',
   charactersAllowed: '75 characters allowed',
   confirmationModal: {
-    editCommonMilestone: {
+    edit: {
       heading: 'Are you sure you want to save changes?',
       text: 'If you have made title and description changes, they will be updated for all models using this common milestone. All other changes will only be applied when this common milestone is added to an MTO after you save changes. These changes will also be made in any template that includes this milestone.',
       cta: 'Save changes'
     },
-    removeCommonMilestone: {
+    remove: {
       heading: 'Are you sure you want to remove this common milestone?',
       text: 'This action cannot be undone. This action will also remove this milestone from any templates. Any models using this in their model-to-operations matrix (MTO) will still have the milestone in their MTO, but may choose to manually remove it.',
       cta: 'Remove milestone'

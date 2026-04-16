@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
-import CommonMilestoneSidePanel from 'features/HelpAndKnowledge/HKCMilestoneLibrary/_components/CommonMilestoneSidePanel';
+import CommonMilestoneActions from 'features/HelpAndKnowledge/HKCMilestoneLibrary/_components/CommonMilestoneActions';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
-import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
+import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCardGroup';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
@@ -23,9 +23,7 @@ type MilestonePanelProps = {
 
 const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
   const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
-  const { t: mtoCommonMilestoneMiscT } = useTranslation(
-    'mtoCommonMilestoneMisc'
-  );
+
   const { groups } = useSelector((state: AppState) => state.auth);
   const flags = useFlags();
   const isAssessmentTeam = isAssessment(groups, flags);
@@ -37,10 +35,6 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
     () => new URLSearchParams(location.search),
     [location.search]
   );
-
-  const editParam = params.get('edit');
-
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   const isHKCMilestoneLibrary = mode === 'hkcMilestoneLibrary';
   const isMtoMilestoneLibrary = mode === 'mtoMilestoneLibrary';
@@ -55,29 +49,8 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
     .map(role => i18next.t(`mtoMilestone:facilitatedBy.options.${role}`))
     .join(', ');
 
-  useEffect(() => {
-    if (isAssessmentTeam && editParam === 'true') {
-      setIsPanelOpen(true);
-    } else {
-      params.delete('edit');
-      navigate({ search: params.toString() }, { replace: true });
-      setIsPanelOpen(false);
-    }
-  }, [editParam, isAssessmentTeam, navigate, params]);
-
   return (
     <>
-      <CommonMilestoneSidePanel
-        isPanelOpen={isPanelOpen}
-        mode="editCommonMilestone"
-        commonMilestone={milestone}
-        closeModal={() => {
-          params.delete('edit');
-          navigate({ search: params.toString() }, { replace: true });
-          setIsPanelOpen(false);
-        }}
-      />
-
       <div className="padding-8 maxw-tablet">
         <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
           {milestone.suggested.isSuggested && (
@@ -111,27 +84,7 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
           </p>
 
           {isHKCMilestoneLibrary && isAssessmentTeam && (
-            <div>
-              <Button
-                type="button"
-                className="usa-button usa-button--outline margin-right-2"
-                onClick={() => {
-                  params.set('edit', 'true');
-                  navigate({ search: params.toString() });
-                  setIsPanelOpen(true);
-                }}
-              >
-                {mtoCommonMilestoneMiscT('editCommonMilestone.heading')}
-              </Button>
-              <Button
-                type="button"
-                className="text-error-dark deep-underline"
-                unstyled
-                onClick={() => {}}
-              >
-                {mtoCommonMilestoneMiscT('removeCommonMilestone')}
-              </Button>
-            </div>
+            <CommonMilestoneActions milestone={milestone} />
           )}
 
           {isMtoMilestoneLibrary &&
