@@ -463,12 +463,9 @@ export const modelToOperationsMisc: Record<string, any> = {
           'If needed, please update the status of any selected solutions by navigating to the <solutionTabLink>Solutions and IT systems tab</solutionTabLink> of your MTO to update their details.'
       },
       riskText: {
-        milestone: `There is a risk indicator for this milestone. Would you like to remove it?
-          <br />
-          <br />
-          Risk indicator: {{-riskIndicator}}`
+        milestone:
+          'There is a risk indicator for this milestone. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}'
       },
-      riskIndicator: 'Risk indicator: {{-riskIndicator}}',
       riskInfoAlert: {
         milestone:
           'If needed, please update the status of any selected solutions by navigating to the “Solutions and IT systems” tab of your MTO to update their details.'

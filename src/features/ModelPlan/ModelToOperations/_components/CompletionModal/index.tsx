@@ -34,7 +34,7 @@ const CompletionModal = ({
       closeModal={closeModal}
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
-      testId="remove-contact-modal"
+      testId="completion-modal"
     >
       <div className="padding-bottom-8">
         <PageHeading headingLevel="h3" className="margin-y-0">
@@ -63,7 +63,7 @@ const CompletionModal = ({
 
             <div className="margin-top-2 display-flex mint-modal__footer">
               <Button
-                type="submit"
+                type="button"
                 className="margin-right-3 margin-top-0"
                 onClick={closeModal}
               >
@@ -95,7 +95,7 @@ const CompletionModal = ({
 
             <div className="margin-top-2 display-flex mint-modal__footer">
               <Button
-                type="submit"
+                type="button"
                 className="margin-right-3 margin-top-0"
                 onClick={handleRemoveRiskIndicator}
               >

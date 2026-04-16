@@ -24,7 +24,7 @@ exports[`CompletionModal Component > matches the snapshot for On Track state 1`]
       <div
         aria-modal="true"
         class="ReactModal__Content mint-modal__content tablet:width-mobile-lg mint-body-normal overflow-y-visible"
-        data-testid="remove-contact-modal"
+        data-testid="completion-modal"
         role="dialog"
         tabindex="-1"
       >
@@ -85,7 +85,7 @@ exports[`CompletionModal Component > matches the snapshot for On Track state 1`]
                 <button
                   class="usa-button margin-right-3 margin-top-0"
                   data-testid="button"
-                  type="submit"
+                  type="button"
                 >
                   Okay
                 </button>
