@@ -46,6 +46,7 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneCreate() {
 	s.Equal(models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther}, createdCommonMilestone.FacilitatedByRole)
 	s.Require().NotNil(createdCommonMilestone.FacilitatedByOther)
 	s.Equal(facilitatedByOther, *createdCommonMilestone.FacilitatedByOther)
+	s.Nil(createdCommonMilestone.Section)
 	s.False(createdCommonMilestone.IsArchived)
 	s.False(createdCommonMilestone.IsAdded)
 

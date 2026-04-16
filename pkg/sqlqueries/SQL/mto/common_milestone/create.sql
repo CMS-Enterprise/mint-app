@@ -6,8 +6,6 @@ INSERT INTO mto_common_milestone (
     sub_category_name,
     facilitated_by_role,
     facilitated_by_other,
-    section,
-    trigger_table,
     trigger_col,
     trigger_vals,
     created_by
@@ -20,8 +18,6 @@ VALUES (
     :sub_category_name,
     :facilitated_by_role,
     :facilitated_by_other,
-    :section,
-    :trigger_table,
     :trigger_col,
     :trigger_vals,
     :created_by
