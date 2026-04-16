@@ -30,7 +30,7 @@ func MTOSolutionUpdate(
 	principal authentication.Principal,
 	store *storage.Store,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 	milestoneLinks *model.MTOMilestoneLinks,
 ) (*models.MTOSolution, error) {
 	principalAccount := principal.Account()

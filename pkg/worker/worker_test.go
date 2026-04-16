@@ -244,9 +244,9 @@ func (suite *WorkerSuite) getTestPrincipal(store *storage.Store, userName string
 func (suite *WorkerSuite) ExecuteWithLoaders(
 	perf faktory_worker.PerformExecutor,
 	job *faktory.Job,
-	fn func(ctx context.Context, args ...interface{}) error,
+	fn func(ctx context.Context, args ...any) error,
 ) error {
-	return perf.Execute(job, func(ctx context.Context, args ...interface{}) error {
+	return perf.Execute(job, func(ctx context.Context, args ...any) error {
 		ctxWithLoaders := loaders.CTXWithLoaders(ctx, loaders.NewDataLoaders(suite.testConfigs.Store))
 		return fn(ctxWithLoaders, args...)
 	})

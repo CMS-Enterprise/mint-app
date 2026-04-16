@@ -136,7 +136,7 @@ func CreateKeyContactMailbox(ctx context.Context, logger *zap.Logger, principal 
 // Only subjectCategoryID, subjectArea, and mailboxTitle fields can be changed. Returns the updated contact.
 func UpdateKeyContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 ) (*models.KeyContact, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {

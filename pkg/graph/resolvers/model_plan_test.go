@@ -42,7 +42,7 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 func (suite *ResolverSuite) TestModelPlanUpdate() {
 	plan := suite.createModelPlan("Test Plan")
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"modelName":    "NEW_AND_IMPROVED",
 		"abbreviation": "some model abbreviation",
 		"status":       models.ModelStatusIcipComplete,
@@ -129,7 +129,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 		planTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceTomorrow.ID)
 		suite.NoError(err)
 
-		changes := map[string]interface{}{
+		changes := map[string]any{
 			"clearanceStarts": time.Now().AddDate(0, 0, 1),
 		}
 		_, err = UpdatePlanTimeline(
@@ -149,7 +149,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 		planTimelineSeven, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceSixMonthsPlusDay.ID)
 		suite.NoError(err)
 
-		changes = map[string]interface{}{
+		changes = map[string]any{
 			"clearanceStarts": time.Now().AddDate(0, 6, 1),
 		}
 		_, err = UpdatePlanTimeline(
@@ -169,7 +169,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 		planTimelineYesterday, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceYesterday.ID)
 		suite.NoError(err)
 
-		changes = map[string]interface{}{
+		changes = map[string]any{
 			"clearanceStarts": time.Now().AddDate(0, 0, -1),
 		}
 		_, err = UpdatePlanTimeline(
@@ -197,7 +197,7 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 		planTimelineSix, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, planApproachingClearanceSixMonths.ID)
 		suite.NoError(err)
 
-		changes = map[string]interface{}{
+		changes = map[string]any{
 			"clearanceStarts": time.Now().AddDate(0, 0, 1),
 		}
 		_, err = UpdatePlanTimeline(
@@ -233,7 +233,7 @@ func (suite *ResolverSuite) TestModelPlanNameHistory() {
 	plan := suite.createModelPlan(modelNames[0])
 
 	for i := 1; i < len(modelNames); i++ {
-		changes := map[string]interface{}{
+		changes := map[string]any{
 			"modelName": modelNames[i],
 		}
 		_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -369,7 +369,7 @@ func (suite *ResolverSuite) TestModelPlansGetByFavoritedWithArchival() {
 	)
 	suite.NoError(err)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"archived": true,
 	}
 	_, err = ModelPlanUpdate(

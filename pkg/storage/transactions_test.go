@@ -12,7 +12,7 @@ import (
 func (s *StoreTestSuite) TestWithTransaction() {
 
 	s.Run("No errors will commit a transaction", func() {
-		plan, err := sqlutils.WithTransaction[models.ModelPlan](s.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+		plan, err := sqlutils.WithTransaction(s.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 			modelName := "testing transactions"
 			plan := models.NewModelPlan(s.principal.Account().ID, modelName)
 			createdPlan, err := s.store.ModelPlanCreate(tx, s.logger, plan)
@@ -31,7 +31,7 @@ func (s *StoreTestSuite) TestWithTransaction() {
 	})
 
 	s.Run("Errors will rollback a transaction", func() {
-		plan, err := sqlutils.WithTransaction[models.ModelPlan](s.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+		plan, err := sqlutils.WithTransaction(s.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 			modelName := "testing transactions rollback"
 			plan := models.NewModelPlan(s.principal.Account().ID, modelName)
 			createdPlan, err := s.store.ModelPlanCreate(tx, s.logger, plan)
@@ -48,7 +48,7 @@ func (s *StoreTestSuite) TestWithTransaction() {
 	s.Run("With Transaction can also perform discrete db actions not directly part of the transaction", func() {
 		modelName := "testing discrete actions don't rollback"
 		var planGlobal *models.ModelPlan
-		plan, err := sqlutils.WithTransaction[models.ModelPlan](s.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+		plan, err := sqlutils.WithTransaction(s.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 
 			plan := models.NewModelPlan(s.principal.Account().ID, modelName)
 			createdPlan, err := s.store.ModelPlanCreate(s.store, s.logger, plan) //Call the method on the store itself, so it is automatically created

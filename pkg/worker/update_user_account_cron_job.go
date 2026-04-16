@@ -36,11 +36,11 @@ var updateUserAccountFromOkta = func(
 	logger *FaktoryLogger,
 	username string,
 ) error {
-	return resolvers.UpdateUserAccountFromOkta[*FaktoryLogger](ctx, store, oktaClient, logger, username)
+	return resolvers.UpdateUserAccountFromOkta(ctx, store, oktaClient, logger, username)
 }
 
 // UpdateUserAccountCronJob is the cron-triggered entry point that pushes the batch job
-func (w *Worker) UpdateUserAccountCronJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) UpdateUserAccountCronJob(ctx context.Context, args ...any) error {
 	helper := faktory_worker.HelperFor(ctx)
 
 	return helper.With(func(cl *faktory.Client) error {
@@ -52,7 +52,7 @@ func (w *Worker) UpdateUserAccountCronJob(ctx context.Context, args ...interface
 }
 
 // UpdateUserAccountBatchJob fetches all user accounts and enqueues one UpdateUserAccountJob per user
-func (w *Worker) UpdateUserAccountBatchJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) UpdateUserAccountBatchJob(ctx context.Context, args ...any) error {
 	helper := faktory_worker.HelperFor(ctx)
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("getting collection of user accounts to update")
@@ -83,7 +83,7 @@ func (w *Worker) UpdateUserAccountBatchJob(ctx context.Context, args ...interfac
 
 // UpdateUserAccountJob fetches updated user info from Okta and persists it for a single user
 // args[0] username (string)
-func (w *Worker) UpdateUserAccountJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) UpdateUserAccountJob(ctx context.Context, args ...any) error {
 	logger := FaktoryLoggerFromContext(ctx)
 
 	if len(args) < 1 {

@@ -16,7 +16,7 @@ import (
 // MTOMilestoneGetByIDLoader returns all milestones by the provided ids
 func MTOMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOMilestone, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.GetByIDLoader, args)
@@ -30,7 +30,7 @@ func MTOMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []u
 // MTOMilestoneGetByModelPlanIDLoader returns all top level categories for a slice of model plan ids
 func MTOMilestoneGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOMilestone, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.GetByModelPlanIDLoader, args)
@@ -49,7 +49,7 @@ func MTOMilestoneGetByModelPlanIDAndCategoryIDLoader(np sqlutils.NamedPreparer, 
 		return nil, err
 	}
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": jsonParam,
 	}
 
@@ -116,7 +116,7 @@ func MTOMilestoneDelete(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, miles
 
 	// Delete the milestone!
 	// `ON CASCADE` functionality will delete any Milestone<->Solution links, if present
-	arg := map[string]interface{}{"id": milestoneID}
+	arg := map[string]any{"id": milestoneID}
 	procErr := sqlutils.ExecProcedure(tx, sqlqueries.MTOMilestone.Delete, arg)
 	if procErr != nil {
 		return fmt.Errorf("issue deleting MTOMilestone object: %w", procErr)
@@ -127,7 +127,7 @@ func MTOMilestoneDelete(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, miles
 // MTOMilestoneGetByID returns an existing MTOMilestone from the database
 func MTOMilestoneGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOMilestone, error) {
 
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 
 	returned, procErr := sqlutils.GetProcedure[models.MTOMilestone](np, sqlqueries.MTOMilestone.GetByID, arg)
 	if procErr != nil {
@@ -139,7 +139,7 @@ func MTOMilestoneGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID)
 
 func MTOMilestoneGetBySolutionIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, solutionIDs []uuid.UUID) ([]*models.MTOMilestoneWithSolutionID, error) {
 
-	arg := map[string]interface{}{"solution_ids": pq.Array(solutionIDs)}
+	arg := map[string]any{"solution_ids": pq.Array(solutionIDs)}
 
 	returned, err := sqlutils.SelectProcedure[models.MTOMilestoneWithSolutionID](np, sqlqueries.MTOMilestone.GetBySolutionIDLoader, arg)
 	if err != nil {
@@ -151,7 +151,7 @@ func MTOMilestoneGetBySolutionIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 // MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader returns all milestones by a model plan ID that are not linked to a solution
 func MTOMilestoneGetByModelPlanIDNoLinkedSolutionLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOMilestone, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 

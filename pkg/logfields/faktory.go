@@ -61,6 +61,6 @@ func TranslatedAuditQueueID(translatedAuditQueueID uuid.UUID) zapcore.Field {
 }
 
 // AuditQueueAttempts provides the zap field for the number of attempts
-func AuditQueueAttempts(attempts interface{}) zapcore.Field {
+func AuditQueueAttempts(attempts any) zapcore.Field {
 	return zap.Any(auditQueueAttemptsKey, attempts)
 }

@@ -44,7 +44,7 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 
 	planBasics := models.NewPlanBasics(taskList)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"modelType": []models.ModelType{models.MTVoluntary},
 		"goal":      "Some goal",
 	}

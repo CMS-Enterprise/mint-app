@@ -103,7 +103,7 @@ func (suite *TAuditSuite) TestParseInterfaceToUUID() {
 	})
 
 	suite.Run("Unparsable anything returns an error", func() {
-		val := map[string]interface{}{}
+		val := map[string]any{}
 		retUUID, err := parseInterfaceToUUID(val)
 		suite.Error(err)
 		suite.EqualValues(uuid.Nil, retUUID)

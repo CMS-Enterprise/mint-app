@@ -34,7 +34,7 @@ func PlanDataExchangeApproachGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, i
 
 // PlanDataExchangeApproachGetByModelPlanIDLoader returns the plan date exchange approach for a slice of model plan ids
 func PlanDataExchangeApproachGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.PlanDataExchangeApproach, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 

@@ -37,13 +37,13 @@ func (m *MockPubSub) EXPECT() *MockPubSubMockRecorder {
 }
 
 // Publish mocks base method.
-func (m *MockPubSub) Publish(arg0 uuid.UUID, arg1 pubsub.EventType, arg2 interface{}) {
+func (m *MockPubSub) Publish(arg0 uuid.UUID, arg1 pubsub.EventType, arg2 any) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Publish", arg0, arg1, arg2)
 }
 
 // Publish indicates an expected call of Publish.
-func (mr *MockPubSubMockRecorder) Publish(arg0, arg1, arg2 interface{}) *gomock.Call {
+func (mr *MockPubSubMockRecorder) Publish(arg0, arg1, arg2 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Publish", reflect.TypeOf((*MockPubSub)(nil).Publish), arg0, arg1, arg2)
 }
@@ -55,7 +55,7 @@ func (m *MockPubSub) Subscribe(arg0 uuid.UUID, arg1 pubsub.EventType, arg2 pubsu
 }
 
 // Subscribe indicates an expected call of Subscribe.
-func (mr *MockPubSubMockRecorder) Subscribe(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
+func (mr *MockPubSubMockRecorder) Subscribe(arg0, arg1, arg2, arg3 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Subscribe", reflect.TypeOf((*MockPubSub)(nil).Subscribe), arg0, arg1, arg2, arg3)
 }
@@ -67,7 +67,7 @@ func (m *MockPubSub) Unsubscribe(arg0 uuid.UUID, arg1 pubsub.EventType, arg2 str
 }
 
 // Unsubscribe indicates an expected call of Unsubscribe.
-func (mr *MockPubSubMockRecorder) Unsubscribe(arg0, arg1, arg2 interface{}) *gomock.Call {
+func (mr *MockPubSubMockRecorder) Unsubscribe(arg0, arg1, arg2 any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Unsubscribe", reflect.TypeOf((*MockPubSub)(nil).Unsubscribe), arg0, arg1, arg2)
 }

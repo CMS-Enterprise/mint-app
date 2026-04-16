@@ -44,7 +44,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	b, err := PlanBeneficiariesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"treatDualElligibleDifferent":              "YES",
 		"beneficiariesOther":                       "The Gumdrop Kids",
 		"beneficiarySelectionMethod":               []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()},

@@ -40,7 +40,7 @@ type HTMLMention struct {
 	InnerHTML   string
 	EntityUUID  *uuid.UUID
 	EntityIntID *int
-	EntityDB    interface{}   // This is for marshaling to the template
+	EntityDB    any           // This is for marshaling to the template
 	Entity      *TaggedEntity // this is used to store a reference to the tagged entity
 }
 
@@ -64,7 +64,7 @@ func (th TaggedHTML) ToTaggedContent() TaggedContent {
 }
 
 // UnmarshalGQLContext unmarshals the data from graphql to the TaggedHTML type
-func (th *TaggedHTML) UnmarshalGQLContext(_ context.Context, v interface{}) error {
+func (th *TaggedHTML) UnmarshalGQLContext(_ context.Context, v any) error {
 	rawHTML, ok := v.(string)
 	if !ok {
 		return errors.New("invalid TaggedHTML")
@@ -279,7 +279,7 @@ func TagArrayFromHTMLMentions(taggedField string, taggedTable string, taggedCont
 }
 
 // Scan is used by sql.scan to read the values from the DB
-func (th *TaggedContent) Scan(src interface{}) error {
+func (th *TaggedContent) Scan(src any) error {
 
 	switch src := src.(type) {
 	case string:
@@ -310,7 +310,7 @@ func (th TaggedContent) Value() (driver.Value, error) {
 }
 
 // Scan is used by sql.scan to read the values from the DB
-func (th *TaggedHTML) Scan(src interface{}) error {
+func (th *TaggedHTML) Scan(src any) error {
 
 	switch src := src.(type) {
 	case string:

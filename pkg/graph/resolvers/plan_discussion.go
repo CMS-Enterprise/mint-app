@@ -44,7 +44,7 @@ func CreatePlanDiscussion(
 		input.UserRoleDescription,
 	)
 
-	newDiscussion, err := sqlutils.WithTransaction[models.PlanDiscussion](store, func(tx *sqlx.Tx) (*models.PlanDiscussion, error) {
+	newDiscussion, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanDiscussion, error) {
 		err := BaseStructPreCreate(logger, planDiscussion, principal, store, false)
 		if err != nil {
 			return nil, err
@@ -394,7 +394,7 @@ func CreateDiscussionReply(
 		input.UserRole,
 		input.UserRoleDescription,
 	)
-	newReply, err := sqlutils.WithTransaction[models.DiscussionReply](store, func(tx *sqlx.Tx) (*models.DiscussionReply, error) {
+	newReply, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.DiscussionReply, error) {
 		err := BaseStructPreCreate(logger, discussionReply, principal, store, false)
 		if err != nil {
 			return nil, err

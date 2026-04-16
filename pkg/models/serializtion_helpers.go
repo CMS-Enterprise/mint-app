@@ -8,7 +8,7 @@ import (
 
 // GenericScan wraps common struct scanning methodology that is common to most structs.
 // Scan is used to satisfy the db scanner interface, which populates data in a struct based on a SQL row.
-func GenericScan[memberType any](src interface{}, destination *memberType) error {
+func GenericScan[memberType any](src any, destination *memberType) error {
 
 	if src == nil {
 		return nil

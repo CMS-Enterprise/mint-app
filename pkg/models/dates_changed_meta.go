@@ -66,6 +66,6 @@ func (d DatesChangedActivityMeta) Value() (driver.Value, error) {
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (d *DatesChangedActivityMeta) Scan(src interface{}) error {
+func (d *DatesChangedActivityMeta) Scan(src any) error {
 	return GenericScan(src, d)
 }

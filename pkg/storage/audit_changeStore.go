@@ -40,7 +40,7 @@ func (s *Store) AuditChangeCollectionByIDAndTable(
 	defer stmt.Close()
 
 	//Add support for secondary key perhaps
-	arg := map[string]interface{}{"primary_key": primaryKey,
+	arg := map[string]any{"primary_key": primaryKey,
 		"table_name": tableName,
 	}
 
@@ -80,7 +80,7 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{"primary_key": primaryKey,
+	arg := map[string]any{"primary_key": primaryKey,
 		"table_name": tableName,
 		"field_name": fieldName,
 	}
@@ -119,7 +119,7 @@ func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"primary_key": primaryKey,
 		"foreign_key": foreignKey,
 		"start_date":  dayToAnalyze.Format("2006-01-02"),
@@ -147,7 +147,7 @@ func AuditChangeCollectionGetByModelPlanIDandTimeRange(
 	timeEnd time.Time,
 ) ([]*models.AuditChange, error) {
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_id": modelPlanID,
 		"time_start":    timeStart,
 		"time_end":      timeEnd,
@@ -167,7 +167,7 @@ func AuditChangeWithModelPlanGetByID(
 	auditID int,
 ) (*models.AuditChangeWithModelPlanID, error) {
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"id": auditID,
 	}
 

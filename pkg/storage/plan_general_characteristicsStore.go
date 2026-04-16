@@ -98,7 +98,7 @@ func (s *Store) PlanGeneralCharacteristicsGetByModelPlanIDLOADER(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 

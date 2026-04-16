@@ -93,7 +93,7 @@ func createUserAccountAndPreferences(txPrep sqlutils.TransactionPreparer, np sql
 	if isTX {
 		return createUserAccountAndPreferencesTransaction(tx, userAccount)
 	}
-	createdAccount, err := sqlutils.WithTransaction[authentication.UserAccount](txPrep, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
+	createdAccount, err := sqlutils.WithTransaction(txPrep, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
 		return createUserAccountAndPreferencesTransaction(tx, userAccount)
 	})
 	return createdAccount, err
@@ -192,6 +192,9 @@ func GetOktaAccountInfo(ctx context.Context, _ string) (*OktaAccountInfo, error)
 	if err != nil {
 		return nil, err
 	}
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	jsonDataFromHTTP, err := io.ReadAll(resp.Body)
 	if err != nil {

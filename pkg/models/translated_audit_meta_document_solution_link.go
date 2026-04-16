@@ -75,7 +75,7 @@ func (tam TranslatedAuditMetaDocumentSolutionLink) Value() (driver.Value, error)
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (tam *TranslatedAuditMetaDocumentSolutionLink) Scan(src interface{}) error {
+func (tam *TranslatedAuditMetaDocumentSolutionLink) Scan(src any) error {
 	if src == nil {
 		return nil
 	}

@@ -32,7 +32,7 @@ func IDDOCQuestionnaireUpdate(
 	ctx context.Context,
 	logger *zap.Logger,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 	principal authentication.Principal,
 	store *storage.Store,
 	emailService oddmail.EmailService,

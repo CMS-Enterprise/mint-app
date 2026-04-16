@@ -31,7 +31,7 @@ func KeyContactCategoryCreate(np sqlutils.NamedPreparer, _ *zap.Logger, keyConta
 
 // KeyContactCategoryDelete deletes a key contact category
 func KeyContactCategoryDelete(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.KeyContactCategory, error) {
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 	returned, err := sqlutils.GetProcedure[models.KeyContactCategory](np, sqlqueries.KeyContactCategory.Delete, arg)
 	if err != nil {
 		return nil, fmt.Errorf("issue deleting KeyContactCategory object: %w", err)
@@ -57,7 +57,7 @@ func KeyContactCategoryUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, keyConta
 
 // KeyContactCategoryGetByID gets a key contact category by ID
 func KeyContactCategoryGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.KeyContactCategory, error) {
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 	returned, err := sqlutils.GetProcedure[models.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetByID, arg)
 	if err != nil {
 		return nil, fmt.Errorf("issue getting KeyContactCategory object by ID: %w", err)
@@ -67,7 +67,7 @@ func KeyContactCategoryGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid
 
 // KeyContactCategoryGetAll gets all key contact categories
 func KeyContactCategoryGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.KeyContactCategory, error) {
-	returned, err := sqlutils.SelectProcedure[models.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetAll, map[string]interface{}{})
+	returned, err := sqlutils.SelectProcedure[models.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetAll, map[string]any{})
 	if err != nil {
 		return nil, fmt.Errorf("issue getting all KeyContactCategory objects: %w", err)
 	}
@@ -76,7 +76,7 @@ func KeyContactCategoryGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*mode
 
 // KeyContactCategoryGetByIDsLoader returns key contact categories by IDs
 func KeyContactCategoryGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.KeyContactCategory, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 
@@ -89,7 +89,7 @@ func KeyContactCategoryGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, 
 
 // KeyContactCategoryGetAllLoader returns all key contact categories
 func KeyContactCategoryGetAllLoader(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.KeyContactCategory, error) {
-	returned, err := sqlutils.SelectProcedure[models.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetAll, map[string]interface{}{})
+	returned, err := sqlutils.SelectProcedure[models.KeyContactCategory](np, sqlqueries.KeyContactCategory.GetAll, map[string]any{})
 	if err != nil {
 		return nil, fmt.Errorf("issue getting all KeyContactCategory objects: %w", err)
 	}

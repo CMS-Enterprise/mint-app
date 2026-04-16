@@ -250,7 +250,7 @@ func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMileston
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		sol.ID,
-		map[string]interface{}{},
+		map[string]any{},
 		milestoneLinks,
 	)
 	suite.NoError(err)
@@ -272,7 +272,7 @@ func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMileston
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		sol.ID,
-		map[string]interface{}{},
+		map[string]any{},
 		milestoneLinks,
 	)
 	suite.NoError(err)

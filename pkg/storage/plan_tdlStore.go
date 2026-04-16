@@ -77,7 +77,7 @@ func (s *Store) PlanTDLDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*m
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"id": id,
 	}
 
@@ -103,7 +103,7 @@ func (s *Store) PlanTDLGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanTDL, er
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"id": id,
 	}
 
@@ -130,7 +130,7 @@ func (s *Store) PlanTDLsGetByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) (
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_id": modelPlanID,
 	}
 

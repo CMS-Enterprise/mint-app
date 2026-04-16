@@ -14,7 +14,7 @@ import (
 // TranslatedAuditQueueGetByID returns a translatedAuditQueue for a given id
 func TranslatedAuditQueueGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*models.TranslatedAuditQueue, error) {
 
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 
 	translatedAuditQueue, procErr := sqlutils.GetProcedure[models.TranslatedAuditQueue](np, sqlqueries.TranslatedAuditQueue.GetByID, arg)
 	if procErr != nil {
@@ -25,7 +25,7 @@ func TranslatedAuditQueueGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*mode
 
 // TranslatedAuditQueueGetEntriesToQueue returns a translatedAuditQueue entries that are ready to be queued (the record was created by the audit trigger)
 func TranslatedAuditQueueGetEntriesToQueue(np sqlutils.NamedPreparer) ([]*models.TranslatedAuditQueue, error) {
-	arg := map[string]interface{}{}
+	arg := map[string]any{}
 	translatedAuditQueue, procErr := sqlutils.SelectProcedure[models.TranslatedAuditQueue](np, sqlqueries.TranslatedAuditQueue.GetEntriesToQueue, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting translated audit queue objects that are ready to queue  : %w", procErr)
@@ -36,7 +36,7 @@ func TranslatedAuditQueueGetEntriesToQueue(np sqlutils.NamedPreparer) ([]*models
 // TranslatedAuditQueueGetQueued returns a translatedAuditQueue entries that are already queued
 func TranslatedAuditQueueGetQueued(np sqlutils.NamedPreparer) ([]*models.TranslatedAuditQueue, error) {
 
-	arg := map[string]interface{}{}
+	arg := map[string]any{}
 	translatedAuditQueue, procErr := sqlutils.SelectProcedure[models.TranslatedAuditQueue](np, sqlqueries.TranslatedAuditQueue.GetQueuedEntries, arg)
 	if procErr != nil {
 		return nil, fmt.Errorf("issue getting translated audit queue objects that are already  queued  : %w", procErr)

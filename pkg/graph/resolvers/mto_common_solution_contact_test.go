@@ -173,7 +173,7 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionContact() {
 		nil,
 		email.AddressBook{},
 		contact.ID,
-		map[string]interface{}{
+		map[string]any{
 			"mailboxTitle":  updatedTitle,
 			"receiveEmails": updatedReceiveEmails,
 		},

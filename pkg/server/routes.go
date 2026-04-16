@@ -240,7 +240,7 @@ func (s *Server) routes(
 	)
 
 	gqlDirectives := generated.DirectiveRoot{
-		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
+		HasRole: func(ctx context.Context, obj any, next graphql.Resolver, role model.Role) (res any, err error) {
 			hasRole, err := services.HasRole(ctx, role)
 			if err != nil {
 				return nil, err
@@ -251,7 +251,7 @@ func (s *Server) routes(
 			return next(ctx)
 
 		},
-		HasAnyRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, roles []model.Role) (res interface{}, err error) {
+		HasAnyRole: func(ctx context.Context, obj any, next graphql.Resolver, roles []model.Role) (res any, err error) {
 			hasRole, err := services.HasAnyRole(ctx, roles)
 			if err != nil {
 				return nil, err

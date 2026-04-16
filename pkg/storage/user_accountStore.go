@@ -21,7 +21,7 @@ func UserAccountCollectionGet(np sqlutils.NamedPreparer) ([]*authentication.User
 	return sqlutils.SelectProcedure[authentication.UserAccount](
 		np,
 		sqlqueries.UserAccount.CollectionGet,
-		map[string]interface{}{},
+		map[string]any{},
 	)
 }
 
@@ -35,7 +35,7 @@ func UserAccountGetByUsername(np sqlutils.NamedPreparer, username string) (*auth
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"username": username,
 	}
 
@@ -60,7 +60,7 @@ func UserAccountGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*authenticatio
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"id": id,
 	}
 
@@ -86,7 +86,7 @@ func (s *Store) UserAccountGetByIDLOADER(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 
@@ -114,7 +114,7 @@ func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.Named
 	}
 	defer stmt.Close()
 
-	err = stmt.Select(&results, map[string]interface{}{})
+	err = stmt.Select(&results, map[string]any{})
 	if err != nil {
 		return nil, err
 	}
@@ -250,7 +250,7 @@ func UserAccountGetNotificationPreferencesForMTOReadyForReview(
 
 // UserAccountGetLeadModelPlanCount returns the count of model plans where the user is a lead.
 func UserAccountGetLeadModelPlanCount(np sqlutils.NamedPreparer, userID uuid.UUID) (int, error) {
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"user_id": userID,
 	}
 	count, err := sqlutils.GetProcedure[int](np, sqlqueries.UserAccount.GetLeadModelPlanCount, arg)

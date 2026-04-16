@@ -13,7 +13,7 @@ import (
 
 // GetMTOSolutionSelectedDetails queries the database to return information that is useful
 func GetMTOSolutionSelectedDetails(np sqlutils.NamedPreparer, solutionID uuid.UUID) (*email.MTOSolutionSelectedDB, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"id": solutionID,
 	}
 	return sqlutils.GetProcedure[email.MTOSolutionSelectedDB](np, sqlqueries.Email.MTOSolutionSelectedDetailsGet, args)
@@ -32,7 +32,7 @@ func (s *Store) GetDiscussionReplyDetailsForEmail(discussionID uuid.UUID) ([]*em
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"disc_id": discussionID,
 	}
 

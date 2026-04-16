@@ -37,7 +37,7 @@ func (suite *ResolverSuite) TestPlanTDLUpdate() {
 	dateInitiatedNew := dateInitiated.Add(time.Hour * 48).UTC()
 	tdl := suite.createPlanTDL(plan, "123-456", dateInitiated, "My TDL", "My comments")
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"title":         "My new title",
 		"idNumber":      "654-321",
 		"note":          "new comments",

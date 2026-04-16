@@ -152,7 +152,7 @@ func NewEmailTemplate(
 	}
 }
 
-func (e *EmailTemplate) executeHTMLTemplate(tpl *htmlTemplate.Template, data interface{}) (string, error) {
+func (e *EmailTemplate) executeHTMLTemplate(tpl *htmlTemplate.Template, data any) (string, error) {
 	var buffer bytes.Buffer
 	err := tpl.Execute(&buffer, data)
 	if err != nil {
@@ -162,7 +162,7 @@ func (e *EmailTemplate) executeHTMLTemplate(tpl *htmlTemplate.Template, data int
 	return buffer.String(), nil
 }
 
-func (e *EmailTemplate) executeTextTemplate(tpl *textTemplate.Template, data interface{}) (string, error) {
+func (e *EmailTemplate) executeTextTemplate(tpl *textTemplate.Template, data any) (string, error) {
 	var buffer bytes.Buffer
 	err := tpl.Execute(&buffer, data)
 	if err != nil {
@@ -173,7 +173,7 @@ func (e *EmailTemplate) executeTextTemplate(tpl *textTemplate.Template, data int
 }
 
 // GetExecutedSubject gets the subject portion of an email template executed with the data provided
-func (e *EmailTemplate) GetExecutedSubject(data interface{}) (string, error) {
+func (e *EmailTemplate) GetExecutedSubject(data any) (string, error) {
 	subjectTemplate, err := e.templateCache.GetTextTemplate(e.subjectTemplateName)
 	if err != nil {
 		return "", err
@@ -188,7 +188,7 @@ func (e *EmailTemplate) GetExecutedSubject(data interface{}) (string, error) {
 }
 
 // GetExecutedBody gets the body portion of an email template executed with the data provided
-func (e *EmailTemplate) GetExecutedBody(data interface{}) (string, error) {
+func (e *EmailTemplate) GetExecutedBody(data any) (string, error) {
 	bodyTemplate, err := e.templateCache.GetHTMLTemplate(e.bodyTemplateName)
 	if err != nil {
 		return "", err

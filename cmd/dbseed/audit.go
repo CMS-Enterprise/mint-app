@@ -96,7 +96,7 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 
 func (s *Seeder) queueAllTranslatedAuditChanges() {
 
-	arg := map[string]interface{}{}
+	arg := map[string]any{}
 
 	queued, _ := sqlutils.SelectProcedure[models.TranslatedAuditQueue](s.Config.Store, sqlqueries.TranslatedAuditQueue.DANGEROUSQueueAllEntries, arg)
 	fmt.Printf("queued %d entries \r\n", len(queued))

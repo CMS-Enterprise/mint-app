@@ -72,7 +72,7 @@ func (m NewDiscussionAddedActivityMeta) Value() (driver.Value, error) {
 }
 
 // Scan loads the meta from the database (JSONB)
-func (m *NewDiscussionAddedActivityMeta) Scan(src interface{}) error {
+func (m *NewDiscussionAddedActivityMeta) Scan(src any) error {
 	if src == nil {
 		return nil
 	}

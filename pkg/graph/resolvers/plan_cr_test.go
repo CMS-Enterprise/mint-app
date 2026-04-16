@@ -42,7 +42,7 @@ func (suite *ResolverSuite) TestPlanCRUpdate() {
 	dateImplementedNew := dateImplemented.Add(time.Hour * 48).UTC()
 	cr := suite.createPlanCR(plan, "123-456", dateInitiated, dateImplemented, "My CR", "My comments")
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"title":           "My new title",
 		"idNumber":        "654-321",
 		"note":            "new comments",

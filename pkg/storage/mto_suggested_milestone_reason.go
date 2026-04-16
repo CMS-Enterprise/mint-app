@@ -17,7 +17,7 @@ func MTOSuggestedMilestoneReasonGetByMTOSuggestedMilestoneIDLoader(
 	_ *zap.Logger,
 	ids []uuid.UUID,
 ) ([]*models.MTOSuggestedMilestoneReason, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 	return sqlutils.SelectProcedure[models.MTOSuggestedMilestoneReason](

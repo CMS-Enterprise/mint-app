@@ -33,7 +33,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	plan := suite.createModelPlan("Test Plan")
 
 	// Update Plan
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"modelName": "New Name",
 		"status":    models.ModelStatusOmbAsrfClearance,
 		"archived":  true,
@@ -89,7 +89,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	dea, _ := resolvers.PlanDataExchangeApproachGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 
 	// Update sections for ReadyForClearance
-	clearanceChanges := map[string]interface{}{
+	clearanceChanges := map[string]any{
 		"status": "READY_FOR_CLEARANCE",
 	}
 	_, basicsErr := resolvers.UpdatePlanBasics(
@@ -107,7 +107,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(partErr)
 
 	// Update sections for ReadyForReview
-	reviewChanges := map[string]interface{}{
+	reviewChanges := map[string]any{
 		"status": "READY_FOR_REVIEW",
 	}
 	_, benErr := resolvers.PlanBeneficiariesUpdate(suite.testConfigs.Logger, beneficiary.ID, reviewChanges, suite.testConfigs.Principal, worker.Store)
@@ -140,7 +140,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		dea.ID,
-		map[string]interface{}{"isDataExchangeApproachComplete": new(true)},
+		map[string]any{"isDataExchangeApproachComplete": new(true)},
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		mockEmailService,

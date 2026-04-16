@@ -48,7 +48,7 @@ func (cm AddedAsCollaboratorMeta) Value() (driver.Value, error) {
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (cm *AddedAsCollaboratorMeta) Scan(src interface{}) error {
+func (cm *AddedAsCollaboratorMeta) Scan(src any) error {
 	if src == nil {
 		return nil
 	}

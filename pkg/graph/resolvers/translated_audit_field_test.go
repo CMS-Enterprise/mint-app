@@ -12,7 +12,7 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 	//Note This could potentially be combined with the audit change test, but duplicating some logic here instead for clarity
 	plan := suite.createModelPlan("test plan for changes")
 
-	planChanges := map[string]interface{}{
+	planChanges := map[string]any{
 		"modelName":    "NEW_AND_IMPROVED",
 		"abbreviation": "some model abbreviation",
 		"status":       models.ModelStatusIcipComplete,
@@ -25,7 +25,7 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	opsEvalChanges := map[string]interface{}{
+	opsEvalChanges := map[string]any{
 		"stakeholdersNote":                   "These stakeholders might change",
 		"helpdeskUse":                        false,
 		"dataSharingFrequencyContinually":    "some test value for data sharing frequency",
@@ -39,7 +39,7 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	ppChanges := map[string]interface{}{
+	ppChanges := map[string]any{
 		"confidenceNote":                       "This is a confidence note",
 		"recruitmentNote":                      "This is a recruitment note",
 		"estimateConfidence":                   string(models.ConfidenceSlightly),

@@ -14,7 +14,7 @@ import (
 
 // ModelPlanMTOTemplateLinkGetByIDLoader returns model plan MTO template links by ID
 func ModelPlanMTOTemplateLinkGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.ModelPlanMTOTemplateLink, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 
@@ -28,7 +28,7 @@ func ModelPlanMTOTemplateLinkGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Log
 
 // ModelPlanMTOTemplateLinkGetByModelPlanIDLoader returns model plan MTO template links by model plan ID
 func ModelPlanMTOTemplateLinkGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.ModelPlanMTOTemplateLink, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 
@@ -42,7 +42,7 @@ func ModelPlanMTOTemplateLinkGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _
 
 // ModelPlanMTOTemplateLinkGetByTemplateIDLoader returns model plan MTO template links by template ID
 func ModelPlanMTOTemplateLinkGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, templateIDs []uuid.UUID) ([]*models.ModelPlanMTOTemplateLink, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"template_ids": pq.Array(templateIDs),
 	}
 

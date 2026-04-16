@@ -12,7 +12,7 @@ import (
 
 // MTOTemplateMilestoneSolutionLinkGetByTemplateIDLoader returns milestone-solution links by template ID
 func MTOTemplateMilestoneSolutionLinkGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, templateIDs []uuid.UUID) ([]*models.MTOTemplateMilestoneSolutionLink, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"template_ids": pq.Array(templateIDs),
 	}
 

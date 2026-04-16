@@ -30,7 +30,7 @@ const (
 
 // TranslateAuditBatchJob batches all the TranslateAuditJobs. When all are complete it will fire a callback
 // args are not currently being used.
-func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...any) error {
 	helper := faktory_worker.HelperFor(ctx)
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Debug("queue entries to create jobs for fetched")
@@ -52,7 +52,7 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 func QueueTranslatedAuditJob[T logging.ChainableErrorOrWarnLogger[T]](w *Worker, logger T, batch *faktory.Batch, queueObj *models.TranslatedAuditQueue) (*models.TranslatedAuditQueue, error) {
 	// Wrap everything in a transaction, so if the job doesn't push, the queue entry doesn't get updated, (so it will be picked up in another job)
 	logger = logger.With(logfields.TranslatedAuditQueueID(queueObj.ID), logfields.AuditChangeID(queueObj.ChangeID), logfields.AuditQueueAttempts(queueObj.Attempts))
-	return sqlutils.WithTransaction[models.TranslatedAuditQueue](w.Store, func(tx *sqlx.Tx) (*models.TranslatedAuditQueue, error) {
+	return sqlutils.WithTransaction(w.Store, func(tx *sqlx.Tx) (*models.TranslatedAuditQueue, error) {
 		queueObj.Status = models.TPSQueued
 		logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
@@ -111,7 +111,7 @@ func CreateTranslatedAuditBatch[T logging.ChainableErrorOrWarnLogger[T]](w *Work
 }
 
 // TranslateAuditBatchJobSuccess is the call back that gets called when the TranslatedAuditBatchJob Completes
-func (w *Worker) TranslateAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
+func (w *Worker) TranslateAuditBatchJobSuccess(ctx context.Context, args ...any) error {
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("Translate Audit Batch Job Succeeded")
 	//  Add notification here if wanted in the future

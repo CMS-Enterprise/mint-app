@@ -50,7 +50,7 @@ func (d TaggedInPlanDiscussionActivityMeta) Value() (driver.Value, error) {
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (d *TaggedInPlanDiscussionActivityMeta) Scan(src interface{}) error {
+func (d *TaggedInPlanDiscussionActivityMeta) Scan(src any) error {
 	if src == nil {
 		return nil
 	}

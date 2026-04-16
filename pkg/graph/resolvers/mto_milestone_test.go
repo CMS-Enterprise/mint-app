@@ -195,7 +195,7 @@ func (suite *ResolverSuite) TestMTOMilestoneDescription() {
 
 	// Update the milestone to add a description
 	description := "This is a test description for the milestone"
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"description": description,
 	}
 	updatedMilestone, err := MTOMilestoneUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{}, milestone.ID, changes, nil)
@@ -415,7 +415,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddBySolutionI
 		suite.testConfigs.Store,
 		nil, email.AddressBook{},
 		milestone.ID,
-		map[string]interface{}{},
+		map[string]any{},
 		solutionLinks,
 	)
 	suite.NoError(err)
@@ -447,7 +447,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddByCommonKey
 		suite.testConfigs.Store,
 		nil, email.AddressBook{},
 		milestone.ID,
-		map[string]interface{}{},
+		map[string]any{},
 		solutionLinks,
 	)
 	suite.NoError(err)
@@ -502,7 +502,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySoluti
 		suite.testConfigs.Store,
 		nil, email.AddressBook{},
 		milestone.ID,
-		map[string]interface{}{},
+		map[string]any{},
 		solutionLinks,
 	)
 	suite.NoError(err)
@@ -518,7 +518,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySoluti
 		suite.testConfigs.Store,
 		nil, email.AddressBook{},
 		milestone.ID,
-		map[string]interface{}{},
+		map[string]any{},
 		solutionLinksEmpty,
 	)
 	suite.NoError(err)
@@ -549,7 +549,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommon
 		suite.testConfigs.Store,
 		nil, email.AddressBook{},
 		milestone.ID,
-		map[string]interface{}{},
+		map[string]any{},
 		solutionLinks,
 	)
 	suite.NoError(err)
@@ -565,7 +565,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkByCommon
 		suite.testConfigs.Store,
 		nil, email.AddressBook{},
 		milestone.ID,
-		map[string]interface{}{},
+		map[string]any{},
 		solutionLinksEmpty,
 	)
 	suite.NoError(err)
@@ -636,7 +636,7 @@ func (suite *ResolverSuite) TestMTOMilestoneAssignedTo() {
 	suite.NotNil(milestone)
 	suite.Nil(milestone.AssignedTo)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"assignedTo": assignedTo,
 	}
 	updatedMilestone, err := MTOMilestoneUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{}, milestone.ID, changes, nil)

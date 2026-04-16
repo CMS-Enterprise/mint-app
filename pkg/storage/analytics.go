@@ -26,7 +26,7 @@ func genericAnalyticsLoader[T AnalyticsType](np sqlutils.NamedPreparer, query st
 
 	// Check if we can cast to a transaction that has Select method
 	if tx, ok := np.(interface {
-		Select(dest interface{}, query string, args ...interface{}) error
+		Select(dest any, query string, args ...any) error
 	}); ok {
 		if err := tx.Select(&results, query); err != nil {
 			return nil, err
@@ -35,7 +35,7 @@ func genericAnalyticsLoader[T AnalyticsType](np sqlutils.NamedPreparer, query st
 	}
 
 	// Fallback to SelectProcedure with empty map
-	returned, err := sqlutils.SelectProcedure[T](np, query, map[string]interface{}{})
+	returned, err := sqlutils.SelectProcedure[T](np, query, map[string]any{})
 	if err != nil {
 		return nil, err
 	}

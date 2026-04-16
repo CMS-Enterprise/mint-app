@@ -58,7 +58,7 @@ func (s *Store) PlanTimelineGetByModelPlanID(modelPlanID uuid.UUID) (*models.Pla
 // PlanTimelineGetByModelPlanIDLoader returns the planTimeline for a slice of model plan ids
 func PlanTimelineGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.PlanTimeline, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 

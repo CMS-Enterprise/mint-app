@@ -30,14 +30,14 @@ type datePlanTimelineFieldData struct {
 
 // PlanTimelineDateProcessor is a struct that processes date changes
 type PlanTimelineDateProcessor struct {
-	changes      map[string]interface{}
-	existing     map[string]interface{}
+	changes      map[string]any
+	existing     map[string]any
 	FieldDataMap map[string]datePlanTimelineFieldData
 }
 
 // NewPlanTimelineDateProcessor is a constructor for PlanTimelineDateProcessor
-func NewPlanTimelineDateProcessor(changes map[string]interface{}, existing *models.PlanTimeline) (*PlanTimelineDateProcessor, error) {
-	var existingMap map[string]interface{}
+func NewPlanTimelineDateProcessor(changes map[string]any, existing *models.PlanTimeline) (*PlanTimelineDateProcessor, error) {
+	var existingMap map[string]any
 	decoderConfig := &mapstructure.DecoderConfig{
 		Result:           &existingMap,
 		TagName:          "json",
@@ -336,7 +336,7 @@ func processPlanTimelineChangedDates(
 	logger *zap.Logger,
 	store *storage.Store,
 	principal authentication.Principal,
-	changes map[string]interface{},
+	changes map[string]any,
 	existing *models.PlanTimeline,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
@@ -370,7 +370,7 @@ func processPlanTimelineChangedDates(
 	}
 	return nil
 }
-func extractPlanTimelineChangedDates(changes map[string]interface{}, existing *models.PlanTimeline) (
+func extractPlanTimelineChangedDates(changes map[string]any, existing *models.PlanTimeline) (
 	map[string]email.DateChange,
 	error,
 ) {

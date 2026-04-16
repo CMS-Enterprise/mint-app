@@ -78,7 +78,7 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 	existing.Name = name
 
 	// Just check access, don't apply changes here
-	err = BaseStructPreUpdate(logger, existing, map[string]interface{}{}, principal, store, false, true)
+	err = BaseStructPreUpdate(logger, existing, map[string]any{}, principal, store, false, true)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	}
 
 	// Just check access, don't apply changes here
-	err = BaseStructPreUpdate(logger, existing, map[string]interface{}{}, principal, store, false, true)
+	err = BaseStructPreUpdate(logger, existing, map[string]any{}, principal, store, false, true)
 	if err != nil {
 		return nil, err
 	}

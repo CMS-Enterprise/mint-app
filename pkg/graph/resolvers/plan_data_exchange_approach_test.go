@@ -37,7 +37,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachGetByModelPlanIDLoader()
 
 	}
 
-	loaders.VerifyLoaders[uuid.UUID, *models.PlanDataExchangeApproach, uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.PlanDataExchangeApproach.ByModelPlanID,
+	loaders.VerifyLoaders(suite.testConfigs.Context, &suite.Suite, loaders.PlanDataExchangeApproach.ByModelPlanID,
 		expectedResults, verifyFunc)
 
 }
@@ -82,7 +82,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	multipayerAvailableExpected := true
 	doesNeedToMakeMultiPayerDataAvailableNoteExpected := "yes yes yes, make available"
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"doesNeedToMakeMultiPayerDataAvailable":     multipayerAvailableExpected,
 		"doesNeedToMakeMultiPayerDataAvailableNote": doesNeedToMakeMultiPayerDataAvailableNoteExpected,
 	}
@@ -120,7 +120,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	suite.Nil(retApproach.NewDataExchangeMethodsNote)
 	suite.Nil(retApproach.AdditionalDataExchangeConsiderationsDescription)
 
-	changesComplete := map[string]interface{}{
+	changesComplete := map[string]any{
 		"isDataExchangeApproachComplete": new(true),
 	}
 	// Update and verify that it gets set to completed
@@ -149,7 +149,7 @@ func (suite *ResolverSuite) TestPlanDataExchangeApproachUpdate() {
 	}
 	suite.NotNil(completeApproach.MarkedCompleteDts)
 
-	changesUnComplete := map[string]interface{}{
+	changesUnComplete := map[string]any{
 		"isDataExchangeApproachComplete": new(false),
 	}
 

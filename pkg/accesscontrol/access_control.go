@@ -15,7 +15,7 @@ import (
 )
 
 // ErrorIfNotCollaborator returns an error if the user is not a collaborator. It wraps checks to see if it has a model plan, or Discussion relation, with priority given to ModelPlan
-func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authentication.Principal, store *storage.Store) error {
+func ErrorIfNotCollaborator(obj any, logger *zap.Logger, principal authentication.Principal, store *storage.Store) error {
 
 	modelPlanRelation, hasModelPlanRelation := obj.(models.IModelPlanRelation)
 	discussionRelation, hasDiscussionRelation := obj.(models.IDiscussionRelation)

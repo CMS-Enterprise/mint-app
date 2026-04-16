@@ -21,7 +21,10 @@ func (s *IntegrationTestSuite) TestCatchAllRoute() {
 
 		resp, err := client.Do(req)
 
-		s.NoError(err)
+		s.Require().NoError(err)
+		defer func() {
+			s.NoError(resp.Body.Close())
+		}()
 		s.Equal(http.StatusNotFound, resp.StatusCode)
 	})
 
@@ -35,7 +38,10 @@ func (s *IntegrationTestSuite) TestCatchAllRoute() {
 
 		resp, err := client.Do(req)
 
-		s.NoError(err)
+		s.Require().NoError(err)
+		defer func() {
+			s.NoError(resp.Body.Close())
+		}()
 		s.Equal(http.StatusNotFound, resp.StatusCode)
 	})
 }

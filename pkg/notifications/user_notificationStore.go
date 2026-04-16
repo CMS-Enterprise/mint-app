@@ -14,7 +14,7 @@ import (
 // It will return the notifications in order from  newest to oldest
 func (s *notificationStore) CollectionGetByUserID(np sqlutils.NamedPreparer, userAccountID uuid.UUID) ([]*models.UserNotification, error) {
 
-	arg := map[string]interface{}{"user_id": userAccountID}
+	arg := map[string]any{"user_id": userAccountID}
 
 	notifCollection, procErr := sqlutils.SelectProcedure[models.UserNotification](np, sqlqueries.UserNotification.CollectionGetByUserID, arg)
 	if procErr != nil {
@@ -48,7 +48,7 @@ func (s *notificationStore) MarkRead(
 	// the uuid of the user account that owns the notification
 	userAccountID uuid.UUID) (*models.UserNotification, error) {
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"id":          notificationID,
 		"modified_by": userAccountID,
 	}
@@ -67,7 +67,7 @@ func (s *notificationStore) MarkAllAsRead(
 	// the uuid of the user account that owns the notification
 	userAccountID uuid.UUID) ([]*models.UserNotification, error) {
 
-	arg := map[string]interface{}{"modified_by": userAccountID}
+	arg := map[string]any{"modified_by": userAccountID}
 
 	notifCollection, procErr := sqlutils.SelectProcedure[models.UserNotification](np, sqlqueries.UserNotification.MarkCollectionAsReadByUserID, arg)
 	if procErr != nil {

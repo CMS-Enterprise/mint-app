@@ -14,7 +14,7 @@ const (
 )
 
 // TranslateAuditCronJob is the job the cron schedule calls
-func (w *Worker) TranslateAuditCronJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) TranslateAuditCronJob(ctx context.Context, args ...any) error {
 
 	// Call TranslateAuditBatchJob
 	helper := faktory_worker.HelperFor(ctx)

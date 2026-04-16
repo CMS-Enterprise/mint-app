@@ -20,7 +20,7 @@ const (
 // TranslateAuditJob is the job to translate an individual audit into an analyzed audit, and note that the translation is done in the processing table
 // args[0] the id of the audit change (int, but float in faktory)
 // args[0] the id of the queue (UUID)
-func (w *Worker) TranslateAuditJob(ctx context.Context, args ...interface{}) (returnedError error) {
+func (w *Worker) TranslateAuditJob(ctx context.Context, args ...any) (returnedError error) {
 	/*
 		// Future Enhancement: the job is wrapped in panic protection when it is registered, BUT it won't update the queue on a panic. If desired we can also defer the panic here, and try to enable the recover on the parent function to update the queue item
 		// defer apperrors.RecoverPanicAsErrorFunction(&returnedError)

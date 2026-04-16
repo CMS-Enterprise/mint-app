@@ -227,7 +227,7 @@ func MTOMilestoneUpdate(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 	solutionLinks *model.MTOSolutionLinks,
 ) (*models.MTOMilestone, error) {
 	principalAccount := principal.Account()

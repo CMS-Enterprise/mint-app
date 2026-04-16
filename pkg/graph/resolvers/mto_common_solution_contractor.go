@@ -91,7 +91,7 @@ func CreateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 func UpdateMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, addressBook email.AddressBook,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 ) (*models.MTOCommonSolutionContractor, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {

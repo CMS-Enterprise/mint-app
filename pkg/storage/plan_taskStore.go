@@ -18,7 +18,7 @@ func PlanTaskGetByModelPlanIDLOADER(
 	_ *zap.Logger,
 	modelPlanIDs []uuid.UUID,
 ) ([]*models.PlanTask, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 
@@ -31,7 +31,7 @@ func PlanTaskGetByIDLoader(
 	_ *zap.Logger,
 	ids []uuid.UUID,
 ) ([]*models.PlanTask, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 

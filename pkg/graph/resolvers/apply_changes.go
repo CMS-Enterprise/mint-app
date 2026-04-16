@@ -15,7 +15,7 @@ import (
 // Currently, these include:
 // - Empty strings are converted to nil
 // - Empty slices are converted to nil
-func sanitizeChanges(changes map[string]interface{}) {
+func sanitizeChanges(changes map[string]any) {
 	for key, value := range changes {
 		// Get the reflect value for type comparisons
 		reflectValue := reflect.ValueOf(value)
@@ -31,7 +31,7 @@ func sanitizeChanges(changes map[string]interface{}) {
 			}
 		}
 
-		// Empty slices don't play well with mapstructure, as they enter as []interface{}
+		// Empty slices don't play well with mapstructure, as they enter as []any
 		// which promptly gets ignored by mapstructure.
 		// In order to get around this, we'll convert empty slices to a real "nil" value
 		if reflectValue.Kind() == reflect.Slice && reflectValue.IsNil() {
@@ -43,7 +43,7 @@ func sanitizeChanges(changes map[string]interface{}) {
 // ApplyChanges applies arbitrary changes from a map to a struct
 // Code largely copied from GQLGen's docs on changesets
 // https://gqlgen.com/reference/changesets/
-func ApplyChanges(changes map[string]interface{}, to interface{}) error {
+func ApplyChanges(changes map[string]any, to any) error {
 	sanitizeChanges(changes)
 
 	// Set up the decoder. This is almost exactly ripped from https://gqlgen.com/reference/changesets/
@@ -54,15 +54,15 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 		ZeroFields:  true,
 		Squash:      true,
 		// This is needed to get mapstructure to call the gqlgen unmarshaler func for custom scalars (eg Date)
-		DecodeHook: func(a reflect.Type, b reflect.Type, v interface{}) (interface{}, error) {
+		DecodeHook: func(a reflect.Type, b reflect.Type, v any) (any, error) {
 			// If the destination is a time.Time and we need to parse it from a string
-			if b == reflect.TypeOf(time.Time{}) && a == reflect.TypeOf("") {
+			if b == reflect.TypeFor[time.Time]() && a == reflect.TypeFor[string]() {
 				t, err := time.Parse(time.RFC3339Nano, v.(string))
 				return t, err
 			}
 
 			// If the destination is a uuid and we need to parse it from a string
-			if b == reflect.TypeOf(uuid.UUID{}) && a == reflect.TypeOf("") {
+			if b == reflect.TypeFor[uuid.UUID]() && a == reflect.TypeFor[string]() {
 				if v == nil || v == "" {
 					return nil, nil
 				}
@@ -71,7 +71,7 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 			}
 
 			// If the destination implements graphql.Unmarshaler
-			if reflect.PointerTo(b).Implements(reflect.TypeOf((*graphql.Unmarshaler)(nil)).Elem()) {
+			if reflect.PointerTo(b).Implements(reflect.TypeFor[graphql.Unmarshaler]()) {
 				resultType := reflect.New(b)
 				result := resultType.MethodByName("UnmarshalGQL").Call([]reflect.Value{reflect.ValueOf(v)})
 				err, _ := result[0].Interface().(error)
@@ -79,7 +79,7 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 			}
 
 			// If the destination is a pointer to string and the value is an empty string, return nil
-			if b.Kind() == reflect.Ptr && b.Elem().Kind() == reflect.String && (a.Kind() == reflect.String || a.Kind() == reflect.Ptr && a.Elem().Kind() == reflect.String) {
+			if b.Kind() == reflect.Pointer && b.Elem().Kind() == reflect.String && (a.Kind() == reflect.String || a.Kind() == reflect.Pointer && a.Elem().Kind() == reflect.String) {
 				// Handle both empty string and pointer to empty string
 				if v == "" {
 					return nil, nil

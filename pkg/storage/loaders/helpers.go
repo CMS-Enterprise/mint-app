@@ -39,7 +39,7 @@ func oneToManyWithCustomKeyDataLoader[K comparable, V any, mapKey comparable, ma
 	return helpers.OneToManyWithCustomKey(keys, values, getKey, getRes, transformToDataLoaderResultAllowNils)
 }
 func oneToManyDataLoader[K comparable, V any](keys []K, values []V, getKey func(V) K) []*dataloader.Result[[]V] {
-	return helpers.OneToMany[K, V, V](keys, values, getKey, transformToDataLoaderResultAllowNils)
+	return helpers.OneToMany(keys, values, getKey, transformToDataLoaderResultAllowNils)
 }
 
 func errorPerEachKey[K comparable, V any](keys []K, err error) []*dataloader.Result[V] {

@@ -12,8 +12,8 @@ import (
 const tagDBName = "db"
 
 // StructToMap converts a struct to a Map  string interface
-func StructToMap(source interface{}) (map[string]interface{}, error) {
-	retVal := map[string]interface{}{}
+func StructToMap(source any) (map[string]any, error) {
+	retVal := map[string]any{}
 	bytes, err := json.Marshal(source)
 	if err != nil {
 		return nil, err
@@ -27,7 +27,7 @@ func StructToMap(source interface{}) (map[string]interface{}, error) {
 }
 
 // StructToTypedMap converts a struct to a Map  string generic type
-func StructToTypedMap[MapType any](source interface{}) (map[string]MapType, error) {
+func StructToTypedMap[MapType any](source any) (map[string]MapType, error) {
 	retVal := map[string]MapType{}
 	bytes, err := json.Marshal(source)
 	if err != nil {
@@ -42,12 +42,12 @@ func StructToTypedMap[MapType any](source interface{}) (map[string]MapType, erro
 }
 
 // StructToTranslationMap converts a struct to a Map  string translation type
-func StructToTranslationMap(source interface{}) (map[string]ITranslationField, error) {
+func StructToTranslationMap(source any) (map[string]ITranslationField, error) {
 	return structToTypedMapByTag[ITranslationField](source, "db")
 }
 
-// StructToMapDBTag converts a struct to a map[string]interface{}, using the db tag on the struct.
-func StructToMapDBTag(source interface{}) (map[string]interface{}, error) {
+// StructToMapDBTag converts a struct to a map[string]any, using the db tag on the struct.
+func StructToMapDBTag(source any) (map[string]any, error) {
 	//TODO (ChChCh Changes!) Consider expanding this to translate an underlying struct type, eg a pointer to a struct
 
 	// Get the type & value of the object
@@ -58,7 +58,7 @@ func StructToMapDBTag(source interface{}) (map[string]interface{}, error) {
 	if t.Kind() != reflect.Struct {
 		return nil, fmt.Errorf("%s is not a struct", t)
 	}
-	retVal := map[string]interface{}{}
+	retVal := map[string]any{}
 
 	// Iterate over all available fields
 	for i := 0; i < t.NumField(); i++ {
@@ -80,7 +80,7 @@ func StructToMapDBTag(source interface{}) (map[string]interface{}, error) {
 }
 
 // structToTypedMapByTag converts a struct to a map[string]Type{}, using the db tag on the struct.
-func structToTypedMapByTag[MapType any](source interface{}, tagKey string) (map[string]MapType, error) {
+func structToTypedMapByTag[MapType any](source any, tagKey string) (map[string]MapType, error) {
 
 	// Get the type & value of the object
 	v := reflect.ValueOf(source)
@@ -117,8 +117,8 @@ func structToTypedMapByTag[MapType any](source interface{}, tagKey string) (map[
 }
 
 // StructArrayToMapArray converts an array of structs to an array of Maps
-func StructArrayToMapArray[StructType any](structArray []StructType) ([]map[string]interface{}, error) {
-	mapSlice := []map[string]interface{}{}
+func StructArrayToMapArray[StructType any](structArray []StructType) ([]map[string]any, error) {
+	mapSlice := []map[string]any{}
 	for _, strct := range structArray {
 		sMap, err := StructToMap(strct)
 		mapSlice = append(mapSlice, sMap)
@@ -132,7 +132,7 @@ func StructArrayToMapArray[StructType any](structArray []StructType) ([]map[stri
 }
 
 // MapArrayToJSONArray converts an array of maps to a JSON array
-func MapArrayToJSONArray(mapSlice []map[string]interface{}) (string, error) {
+func MapArrayToJSONArray(mapSlice []map[string]any) (string, error) {
 	byteArr, err := json.Marshal(mapSlice)
 	if err != nil {
 		return "", err
@@ -185,7 +185,7 @@ WITH QUERIED_IDS AS (
 */
 // note, that JSON_TO_RECORDSET will parse the JSON from this function, providing the expected type and and field name from the JSON
 func StructArrayToJSONArray[StructType any](structArray []StructType) (string, error) {
-	mapSlice, err := StructArrayToMapArray[StructType](structArray)
+	mapSlice, err := StructArrayToMapArray(structArray)
 	if err != nil {
 		return "", err
 	}
@@ -195,11 +195,11 @@ func StructArrayToJSONArray[StructType any](structArray []StructType) (string, e
 }
 
 // UUIDArrayToMapArray converts an array of UUIDs to a map array with the UUID being called whatever you name it
-func UUIDArrayToMapArray(uuidArray []uuid.UUID, propertyName string) []map[string]interface{} {
-	mapSlice := []map[string]interface{}{}
+func UUIDArrayToMapArray(uuidArray []uuid.UUID, propertyName string) []map[string]any {
+	mapSlice := []map[string]any{}
 
 	for _, uuid := range uuidArray {
-		uMap := map[string]interface{}{
+		uMap := map[string]any{
 			propertyName: uuid.String(),
 		}
 		mapSlice = append(mapSlice, uMap)

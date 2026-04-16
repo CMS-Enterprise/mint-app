@@ -9,13 +9,13 @@ import (
 
 // KeyArgs implements the DataLoader Key interface
 type KeyArgs struct {
-	Args map[string]interface{}
+	Args map[string]any
 }
 
 // NewKeyArgs instantiates a compound key
 func NewKeyArgs() KeyArgs {
 	return KeyArgs{
-		Args: map[string]interface{}{},
+		Args: map[string]any{},
 	}
 }
 
@@ -25,7 +25,7 @@ type KeyArgsArray []KeyArgs
 // ToJSONArray converts CompoundKeys to JSON array notation
 func (ck KeyArgsArray) ToJSONArray() (string, *error) {
 
-	mapSlice := []map[string]interface{}{}
+	mapSlice := []map[string]any{}
 	for _, v := range ck {
 		mapSlice = append(mapSlice, v.Args)
 	}
@@ -90,4 +90,4 @@ func CovertToJSONArray(Keys dataloader.Keys) (string, error) {
 func (k KeyArgs) String() string { return fmt.Sprint(k.Args) }
 
 // Raw is an identity method. Used to implement Key Raw
-func (k KeyArgs) Raw() interface{} { return k }
+func (k KeyArgs) Raw() any { return k }

@@ -10,7 +10,7 @@ import (
 type ActivityMetaData interface {
 	isActivityMetaData()
 	Value() (driver.Value, error)
-	Scan(src interface{}) error
+	Scan(src any) error
 }
 
 // ActivityMetaBaseStruct represents the shared data in common betwen all models
@@ -37,7 +37,7 @@ func (amb ActivityMetaBaseStruct) Value() (driver.Value, error) {
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (amb *ActivityMetaBaseStruct) Scan(src interface{}) error {
+func (amb *ActivityMetaBaseStruct) Scan(src any) error {
 	if src == nil {
 		return nil
 	}
@@ -53,6 +53,6 @@ func (amb *ActivityMetaBaseStruct) Scan(src interface{}) error {
 	return nil
 }
 
-// func GenericScan(src interface{}) error {
+// func GenericScan(src any) error {
 
 // }

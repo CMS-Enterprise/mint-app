@@ -27,7 +27,7 @@ func (s *activityStore) Create(np sqlutils.NamedPreparer, activity *models.Activ
 // GetByID returns an existing activity from the database
 func (s *activityStore) GetByID(np sqlutils.NamedPreparer, activityID uuid.UUID) (*models.Activity, error) {
 
-	arg := map[string]interface{}{"id": activityID}
+	arg := map[string]any{"id": activityID}
 
 	retActivity, procErr := sqlutils.GetProcedure[models.Activity](np, sqlqueries.Activity.GetByID, arg)
 	if procErr != nil {
@@ -44,7 +44,7 @@ func (s *activityStore) GetByID(np sqlutils.NamedPreparer, activityID uuid.UUID)
 
 // GetByIDLoader returns a collection of existing activity from the database
 func (s *activityStore) GetByIDLoader(np sqlutils.NamedPreparer, paramTableJSON string) ([]*models.Activity, error) {
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 
@@ -61,7 +61,7 @@ func (s *activityStore) CountByMetadata(np sqlutils.NamedPreparer, activity *mod
 	activity.MetaDataRaw = activity.MetaData
 	metaData := activity.MetaDataRaw
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"meta_data": metaData,
 	}
 

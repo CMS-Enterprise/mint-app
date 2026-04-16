@@ -28,7 +28,7 @@ func (s *Store) GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 
@@ -55,7 +55,7 @@ func (s *Store) ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 
@@ -88,7 +88,7 @@ func (s *Store) ExistingModelLinksUpdate(
 
 	currentModelPlanIDsArray := convertToStringArray(currentModelPlanIDs)
 	existingModelIDsArray := convertIntToPQStringArray(existingModelIDs)
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_id":          modelPlanID,
 		"field_name":             fieldName,
 		"current_model_plan_ids": currentModelPlanIDsArray,

@@ -14,7 +14,7 @@ import (
 )
 
 func MTOMilestoneNoteGetByMilestoneIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, milestoneIDs []uuid.UUID) ([]*models.MTOMilestoneNote, error) {
-	returned, err := sqlutils.SelectProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.GetByMilestoneIDLoader, map[string]interface{}{"milestone_ids": pq.Array(milestoneIDs)})
+	returned, err := sqlutils.SelectProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.GetByMilestoneIDLoader, map[string]any{"milestone_ids": pq.Array(milestoneIDs)})
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +23,7 @@ func MTOMilestoneNoteGetByMilestoneIDLoader(np sqlutils.NamedPreparer, _ *zap.Lo
 
 // MTOMilestoneNoteGetByIDLoader returns all milestone notes by the provided ids
 func MTOMilestoneNoteGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOMilestoneNote, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOMilestoneNote](np, sqlqueries.MTOMilestoneNote.GetByIDLoader, args)
@@ -56,7 +56,7 @@ func MTOMilestoneNoteDelete(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, m
 		return err
 	}
 
-	arg := map[string]interface{}{"id": milestoneNoteID}
+	arg := map[string]any{"id": milestoneNoteID}
 	procErr := sqlutils.ExecProcedure(tx, sqlqueries.MTOMilestoneNote.Delete, arg)
 	if procErr != nil {
 		return fmt.Errorf("issue deleting MTOMilestoneNote object: %w", procErr)

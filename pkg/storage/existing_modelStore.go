@@ -25,7 +25,7 @@ func (s *Store) ExistingModelGetByIDLOADER(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 
@@ -48,7 +48,7 @@ func (s *Store) ExistingModelCollectionGet(_ *zap.Logger) ([]*models.ExistingMod
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{}
+	arg := map[string]any{}
 
 	err = stmt.Select(&existingModels, arg)
 	if err != nil {
@@ -65,7 +65,7 @@ func ExistingModelGetByID(
 	id int,
 ) (*models.ExistingModel, error) {
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"id": id,
 	}
 	existingModel, err := sqlutils.GetProcedure[models.ExistingModel](np, sqlqueries.ExistingModel.GetByID, arg)

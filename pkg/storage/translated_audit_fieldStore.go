@@ -42,7 +42,7 @@ func TranslatedAuditFieldCreateCollection(np sqlutils.NamedPreparer, translatedA
 // TranslatedAuditFieldCollectionGetByTranslatedAuditIDLoader returns all TranslatedAuditFields for a translated audit id
 func TranslatedAuditFieldCollectionGetByTranslatedAuditIDLoader(np sqlutils.NamedPreparer, paramTableJSON string) ([]*models.TranslatedAuditField, error) {
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 

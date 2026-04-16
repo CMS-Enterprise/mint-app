@@ -17,7 +17,7 @@ func checkIfDocumentIsRestricted(tAuditFields []*models.TranslatedAuditField, op
 	if !fieldFound {
 		return true, fmt.Errorf("couldn't find the field to say if this document is restricted or not")
 	}
-	var restrictedValue interface{}
+	var restrictedValue any
 	if operation == models.DBOpDelete || operation == models.DBOpTruncate {
 		restrictedValue = restrictedField.Old
 	} else {

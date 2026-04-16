@@ -29,7 +29,7 @@ func PlanTDLCreate(logger *zap.Logger, input *model.PlanTDLCreateInput, principa
 }
 
 // PlanTDLUpdate updates a plan_cr_tdl record in the database
-func PlanTDLUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanTDL, error) {
+func PlanTDLUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]any, principal authentication.Principal, store *storage.Store) (*models.PlanTDL, error) {
 	// Get PlanCrTdl
 	existingPlanTDL, err := store.PlanTDLGetByID(logger, id)
 	if err != nil {

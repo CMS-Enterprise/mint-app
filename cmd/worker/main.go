@@ -33,7 +33,7 @@ var pushJobCmd = &cobra.Command{
 
 		// Faktory job arguments are JSON-serializable values. For the dev helper we treat
 		// CLI args as strings; job handlers typically accept strings via fmt.Sprint.
-		interfaces := make([]interface{}, 0, len(jobArgs))
+		interfaces := make([]any, 0, len(jobArgs))
 		for _, a := range jobArgs {
 			interfaces = append(interfaces, a)
 		}
@@ -46,7 +46,7 @@ var pushJobCmd = &cobra.Command{
 		// To keep dev pushing simple, ensure `args` exists even when the user doesn't
 		// provide any job args.
 		if len(jobArgs) == 0 {
-			interfaces = []interface{}{""}
+			interfaces = []any{""}
 		}
 
 		if len(jobArgs) > 0 {

@@ -38,7 +38,7 @@ func TranslatedAuditCreate(np sqlutils.NamedPreparer, translatedAudit *models.Tr
 func TranslatedAuditCollectionGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID, tablesToInclude []models.TableName, hasRestrictedAccess bool, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
 
 	// Note, if limit or offset are nill, they are disregarded
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_id":     modelPlanID,
 		"table_names":       pq.Array(tablesToInclude),
 		"restricted_access": hasRestrictedAccess,
@@ -61,7 +61,7 @@ func TranslatedAuditMostRecentGetByModelPlanIDAndTableNamesLoader(np sqlutils.Na
 	if err != nil {
 		return nil, err
 	}
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": jsonParam,
 	}
 	translatedAuditCollection, procErr := sqlutils.SelectProcedure[models.TranslatedAuditWithFilteredView](np, sqlqueries.TranslatedAudit.MostRecentByModelPlanIDAndTableFiltersLOADER, arg)

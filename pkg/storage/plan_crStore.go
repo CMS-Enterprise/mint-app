@@ -77,7 +77,7 @@ func (s *Store) PlanCRDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*mo
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"id": id,
 	}
 
@@ -103,7 +103,7 @@ func (s *Store) PlanCRGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanCR, erro
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"id": id,
 	}
 
@@ -130,7 +130,7 @@ func (s *Store) PlanCRsGetByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) ([
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_id": modelPlanID,
 	}
 

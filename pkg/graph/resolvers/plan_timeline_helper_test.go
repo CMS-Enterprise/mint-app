@@ -32,21 +32,21 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 
 	testCases := []struct {
 		name     string
-		changes  map[string]interface{}
+		changes  map[string]any
 		existing *models.PlanTimeline
 		expected map[string]email.DateChange
 	}{
 		// No fields changed
 		{
 			name:     "No fields changed",
-			changes:  map[string]interface{}{},
+			changes:  map[string]any{},
 			existing: defaultExisting,
 			expected: map[string]email.DateChange{},
 		},
 		// Single field changed
 		{
 			name: "Single field changed",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"performancePeriodStarts": t2.Format(time.RFC3339),
 			},
 			existing: defaultExisting,
@@ -91,7 +91,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Incorrect field name
 		{
 			name: "Incorrect field name",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"wrongField": t2.Format(time.RFC3339),
 			},
 			existing: defaultExisting,
@@ -100,7 +100,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// All fields changed
 		{
 			name: "All fields changed",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"completeICIP":            t2.Format(time.RFC3339),
 				"clearanceStarts":         t2.Format(time.RFC3339),
 				"clearanceEnds":           t2.Format(time.RFC3339),
@@ -163,7 +163,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Field was nil initially
 		{
 			name: "Field was nil initially",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"wrapUpEnds": t1.Format(time.RFC3339),
 			},
 			existing: &models.PlanTimeline{
@@ -214,7 +214,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Single date field from nil to non-nil
 		{
 			name: "Single date field from nil to non-nil",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"announced": t2.Format(time.RFC3339),
 			},
 			existing: &models.PlanTimeline{},
@@ -247,7 +247,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Single date field from non-nil to nil
 		{
 			name: "Single date field from non-nil to nil",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"announced": nil,
 			},
 			existing: defaultExisting,
@@ -288,7 +288,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Range begin date from nil to non-nil
 		{
 			name: "Range begin date from nil to non-nil",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"applicationsStart": t2.Format(time.RFC3339),
 			},
 			existing: &models.PlanTimeline{},
@@ -321,7 +321,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Range end date from nil to non-nil
 		{
 			name: "Range end date from nil to non-nil",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"applicationsEnd": t2.Format(time.RFC3339),
 			},
 			existing: &models.PlanTimeline{},
@@ -354,7 +354,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Range begin date from non-nil to nil
 		{
 			name: "Range begin date from non-nil to nil",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"applicationsStart": nil,
 			},
 			existing: defaultExisting,
@@ -396,7 +396,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Range end date from non-nil to nil
 		{
 			name: "Range end date from non-nil to nil",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"applicationsEnd": nil,
 			},
 			existing: defaultExisting,
@@ -438,7 +438,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Range both dates from nil to non-nil
 		{
 			name: "Range both dates from nil to non-nil",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"applicationsStart": t2.Format(time.RFC3339),
 				"applicationsEnd":   t2.Format(time.RFC3339),
 			},
@@ -473,7 +473,7 @@ func (suite *ResolverSuite) TestPlanTimelineDateProcessorExtractChangedDates() {
 		// Range both dates from non-nil to nil
 		{
 			name: "Range both dates from non-nil to nil",
-			changes: map[string]interface{}{
+			changes: map[string]any{
 				"applicationsStart": nil,
 				"applicationsEnd":   nil,
 			},

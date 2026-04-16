@@ -22,7 +22,7 @@ func (suite *ResolverSuite) TestUserNotificationPreferencesUpdate() {
 	suite.NoError(err)
 	suite.NotNil(pref)
 	inAppOnly := models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp}
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"dailyDigestComplete":     inAppOnly,
 		"addedAsCollaborator":     inAppOnly,
 		"taggedInDiscussion":      inAppOnly,

@@ -33,7 +33,7 @@ func PlanOpsEvalAndLearningGetByModelPlanIDLOADER(ctx context.Context, modelPlan
 }
 
 // PlanOpsEvalAndLearningUpdate updates a PlanOpsEvalAndLearning buisness object
-func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanOpsEvalAndLearning, error) {
+func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]any, principal authentication.Principal, store *storage.Store) (*models.PlanOpsEvalAndLearning, error) {
 	//Get existing  PlanOpsEvalAndLearning
 	existing, err := store.PlanOpsEvalAndLearningGetByID(logger, id)
 	if err != nil {

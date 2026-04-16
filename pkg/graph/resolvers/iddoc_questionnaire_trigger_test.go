@@ -25,7 +25,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnOEL() {
 	suite.NotNil(oel)
 
 	// Update iddoc_support to true - this should trigger the IDDOC questionnaire needed field to become true
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"iddocSupport": true,
 	}
 
@@ -41,7 +41,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnOEL() {
 	suite.Equal(models.IDDOCQuestionnaireReady, iddocQuestionnaire.Status, "Status should remain models.IDDOCQuestionnaireReady (not affected by trigger)")
 
 	// Update iddoc_support to false - this should trigger the IDDOC questionnaire needed field to become false
-	changes = map[string]interface{}{
+	changes = map[string]any{
 		"iddocSupport": false,
 	}
 
@@ -192,7 +192,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerMultipleCondition
 	suite.NotNil(oel)
 
 	// Set iddoc_support to true
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"iddocSupport": true,
 	}
 	_, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oel.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -229,7 +229,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerMultipleCondition
 	suite.Equal(models.IDDOCQuestionnaireReady, iddocQuestionnaire.Status, "Status should remain models.IDDOCQuestionnaireReady")
 
 	// Set iddoc_support to false - now IDDOC questionnaire should not be needed
-	changes = map[string]interface{}{
+	changes = map[string]any{
 		"iddocSupport": false,
 	}
 	_, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oel.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)

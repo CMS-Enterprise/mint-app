@@ -17,7 +17,7 @@ const (
 
 // ModelStatusUpdateJob is the job to check if a model should be updated, and if so, it will send an email
 // args[0] model_plan_id (UUID)
-func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...interface{}) (returnedError error) {
+func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...any) (returnedError error) {
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("model status update job reached.")
 

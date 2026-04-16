@@ -66,13 +66,13 @@ func (mr *MockSubscriberMockRecorder) GetPrincipal() *gomock.Call {
 }
 
 // Notify mocks base method.
-func (m *MockSubscriber) Notify(payload interface{}) {
+func (m *MockSubscriber) Notify(payload any) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Notify", payload)
 }
 
 // Notify indicates an expected call of Notify.
-func (mr *MockSubscriberMockRecorder) Notify(payload interface{}) *gomock.Call {
+func (mr *MockSubscriberMockRecorder) Notify(payload any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Notify", reflect.TypeOf((*MockSubscriber)(nil).Notify), payload)
 }
@@ -84,7 +84,7 @@ func (m *MockSubscriber) NotifyUnsubscribed(ps *pubsub.ServicePubSub, sessionID 
 }
 
 // NotifyUnsubscribed indicates an expected call of NotifyUnsubscribed.
-func (mr *MockSubscriberMockRecorder) NotifyUnsubscribed(ps, sessionID interface{}) *gomock.Call {
+func (mr *MockSubscriberMockRecorder) NotifyUnsubscribed(ps, sessionID any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NotifyUnsubscribed", reflect.TypeOf((*MockSubscriber)(nil).NotifyUnsubscribed), ps, sessionID)
 }

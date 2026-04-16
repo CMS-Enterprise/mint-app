@@ -46,7 +46,7 @@ func (t *LockableSectionLockChangedSubscriber) GetPrincipal() authentication.Pri
 }
 
 // Notify will be called by the PubSub service when an event this Subscriber is registered for is dispatched
-func (t *LockableSectionLockChangedSubscriber) Notify(payload interface{}) {
+func (t *LockableSectionLockChangedSubscriber) Notify(payload any) {
 	typedPayload := payload.(model.LockableSectionLockStatusChanged)
 	t.Channel <- &typedPayload
 }

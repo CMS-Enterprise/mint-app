@@ -78,7 +78,7 @@ func ModelPlanCreate(
 
 	var newModelPlanEmailPrefs []*models.UserAccountAndNotificationPreferences
 
-	newPlan, err := sqlutils.WithTransaction[models.ModelPlan](store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+	newPlan, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		plan := models.NewModelPlan(principal.Account().ID, modelName)
 		if id != nil {
 			plan.ID = *id
@@ -313,7 +313,7 @@ func sendModelPlanCreatedEmail(
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
-func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]any, principal authentication.Principal, store *storage.Store) (*models.ModelPlan, error) {
 	// Get existing plan
 	existingPlan, err := store.ModelPlanGetByID(store, logger, id)
 	if err != nil {

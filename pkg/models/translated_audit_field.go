@@ -11,7 +11,7 @@ import (
 type TranslatedAuditFieldMetaData interface {
 	isAuditMetaData()
 	Value() (driver.Value, error)
-	Scan(src interface{}) error
+	Scan(src any) error
 }
 
 // AuditFieldChangeType is an enum that represents the possible types of changes that could happen to an audited field
@@ -55,10 +55,10 @@ type TranslatedAuditField struct {
 	// Currently, the conversion is handled on the frontend. See TranslatedAuditField Loader note https://github.com/CMS-Enterprise/mint-app/blob/cfdbc9bc694badf2ff42b0e3772106ecddc91016/pkg/storage/loaders/translated_audit_field_loader.go#L38
 	// This is stored correctly in the database, it is just how it is returned from the database, and to graphql in turn.
 
-	Old           interface{} `json:"old" db:"old"`
-	OldTranslated interface{} `json:"oldTranslated" db:"old_translated"`
-	New           interface{} `json:"new" db:"new"`
-	NewTranslated interface{} `json:"newTranslated" db:"new_translated"`
+	Old           any `json:"old" db:"old"`
+	OldTranslated any `json:"oldTranslated" db:"old_translated"`
+	New           any `json:"new" db:"new"`
+	NewTranslated any `json:"newTranslated" db:"new_translated"`
 }
 
 // NewTranslatedAuditField creates a new TranslatedAuditField
@@ -67,10 +67,10 @@ func NewTranslatedAuditField(
 	fieldName string,
 	fieldNameTranslated string,
 	fieldOrder float64,
-	old interface{},
-	oldTranslated interface{},
-	new interface{},
-	newTranslated interface{},
+	old any,
+	oldTranslated any,
+	new any,
+	newTranslated any,
 	dataType TranslationDataType,
 	formType TranslationFormType,
 ) TranslatedAuditField {

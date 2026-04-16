@@ -49,7 +49,7 @@ func TagCollectionCreate(np sqlutils.NamedPreparer, _ *zap.Logger, tags []*model
 	}
 	defer stmt.Close()
 
-	mapSlice := []map[string]interface{}{}
+	mapSlice := []map[string]any{}
 	for _, tag := range tags {
 		tag.ID = utilityuuid.ValueOrNewUUID(tag.ID) //Note, there are helper functions to do most of this, but converting manually let's us set ID and created by here as well.
 		tag.CreatedBy = createdBy
@@ -65,7 +65,7 @@ func TagCollectionCreate(np sqlutils.NamedPreparer, _ *zap.Logger, tags []*model
 		return nil, fmt.Errorf(" error converting tagArray to json: %w", err)
 	}
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": jsonTag,
 	}
 	err = stmt.Select(&retTags, arg)
@@ -87,7 +87,7 @@ func (s *Store) TagCollectionGetByContentIDAndField(_ *zap.Logger, taggedTable s
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"tagged_content_table": taggedTable,
 		"tagged_field":         taggedField,
 		"tagged_content_id":    taggedContentID,

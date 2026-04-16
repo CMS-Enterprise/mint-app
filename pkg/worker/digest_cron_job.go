@@ -13,7 +13,7 @@ const (
 )
 
 // DigestCronJob is the job the cron schedule calls
-func (w *Worker) DigestCronJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) DigestCronJob(ctx context.Context, args ...any) error {
 	dayToAnalyze := time.Now().AddDate(0, 0, -1).UTC().Format("2006-01-02")
 
 	// Call AnalyzedAuditBatchJob

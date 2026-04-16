@@ -15,7 +15,7 @@ import (
 
 // MTOCommonSolutionContactGetByCommonSolutionKeyLoader returns a list of common solution contacts associated with
 func MTOCommonSolutionContactGetByCommonSolutionKeyLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonSolutionKey) ([]*models.MTOCommonSolutionContact, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"keys": pq.Array(keys),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.GetByCommonSolutionKey, args)
@@ -26,7 +26,7 @@ func MTOCommonSolutionContactGetByCommonSolutionKeyLoader(np sqlutils.NamedPrepa
 }
 
 func MTOCommonSolutionContactGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCommonSolutionContact, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.GetByIDs, args)
@@ -53,7 +53,7 @@ func MTOCommonSolutionCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MT
 }
 
 func MTOCommonSolutionGetContactByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContact, error) {
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 
 	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContact](np, sqlqueries.MTOCommonSolutionContact.GetByID, arg)
 	if err != nil {
@@ -65,7 +65,7 @@ func MTOCommonSolutionGetContactByID(np sqlutils.NamedPreparer, _ *zap.Logger, i
 
 // MTOCommonSolutionContactUnsetPrimaryContactByKey unsets the primary contact for a given common solution key.
 func MTOCommonSolutionContactUnsetPrimaryContactByKey(np sqlutils.NamedPreparer, _ *zap.Logger, existingContact *models.MTOCommonSolutionContact) error {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"key":         existingContact.Key,
 		"id":          existingContact.ID,
 		"modified_by": existingContact.ModifiedBy,
@@ -89,7 +89,7 @@ func MTOCommonSolutionDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *z
 		return nil, err
 	}
 
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 	returnedContact, err := sqlutils.GetProcedure[models.MTOCommonSolutionContact](tx, sqlqueries.MTOCommonSolutionContact.DeleteByID, arg)
 	if err != nil {
 		return nil, err

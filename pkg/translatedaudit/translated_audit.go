@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"regexp"
+	"slices"
 	"strings"
 
 	"github.com/jmoiron/sqlx"
@@ -53,12 +54,7 @@ var unTranslatedTables = []models.TableName{
 
 // Returns true in the table name is in the list of provided Table Names
 func tableListContains(tableName models.TableName, tableNameList []models.TableName) bool {
-	for _, tableNameListItem := range tableNameList {
-		if tableName == tableNameListItem {
-			return true
-		}
-	}
-	return false
+	return slices.Contains(tableNameList, tableName)
 }
 
 // TranslateAudit translates a single audit to a translated audit and stores it in the translated audit table in the database.
@@ -149,7 +145,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *m
 }
 
 // setEmptyStringsToNil checks if a value is an empty string, and if so, t
-func setEmptyStringsToNil(value interface{}) interface{} {
+func setEmptyStringsToNil(value any) any {
 	if value == "" {
 		return nil
 	}
@@ -219,7 +215,7 @@ func translateField(
 
 	options, hasOptions := translationInterface.GetOptions()
 	tableReference, hasTableReference := translationInterface.GetTableReference()
-	var translatedOld, translatedNew interface{}
+	var translatedOld, translatedNew any
 	if hasOptions {
 		translatedOld = translateValue(old, options)
 		translatedNew = translateValue(new, options)
@@ -266,7 +262,7 @@ func translateField(
 }
 
 // getChangeType interprets the change that happened on a field to characterize it as an AuditFieldChangeType
-func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType {
+func getChangeType(old any, new any) models.AuditFieldChangeType {
 	if new == nil || new == "{}" {
 		if old == nil || old == "{}" {
 			//This is left because is is possible from the interface types, though in practice this shouldn't occur unless data is being submitted incorrectly
@@ -280,7 +276,7 @@ func getChangeType(old interface{}, new interface{}) models.AuditFieldChangeType
 	return models.AFCUpdated
 }
 
-func translateStrSlice(strSlice []string, options map[string]interface{}) pq.StringArray {
+func translateStrSlice(strSlice []string, options map[string]any) pq.StringArray {
 	transArray := pq.StringArray{}
 	for _, str := range strSlice {
 		translated := translateValueSingle(str, options)
@@ -293,7 +289,7 @@ func translateStrSlice(strSlice []string, options map[string]interface{}) pq.Str
 
 // translateValue takes a given value and maps it to a human readable value.
 // It checks in the value is an array, and if so it translates each value to a human readable form
-func translateValue(value interface{}, options map[string]interface{}) interface{} {
+func translateValue(value any, options map[string]any) any {
 
 	if value == nil {
 		return nil
@@ -317,7 +313,7 @@ func translateValue(value interface{}, options map[string]interface{}) interface
 }
 
 // translateValueSingle translates a single audit value to a human readable string value
-func translateValueSingle(value string, options map[string]interface{}) string {
+func translateValueSingle(value string, options map[string]any) string {
 	translated, ok := options[value]
 	if ok {
 		return fmt.Sprint(translated) // Translations are always string representations
@@ -366,7 +362,7 @@ func extractArrayValues(str string) pq.StringArray {
 
 // saveTranslatedAuditAndFields is a helper method to save a change with it's related fields at the same time
 func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAudit *models.TranslatedAuditWithTranslatedFields) (*models.TranslatedAuditWithTranslatedFields, error) {
-	retTranslated, err := sqlutils.WithTransaction[models.TranslatedAuditWithTranslatedFields](tp, func(tx *sqlx.Tx) (*models.TranslatedAuditWithTranslatedFields, error) {
+	retTranslated, err := sqlutils.WithTransaction(tp, func(tx *sqlx.Tx) (*models.TranslatedAuditWithTranslatedFields, error) {
 
 		change, err := storage.TranslatedAuditCreate(tx, &translatedAudit.TranslatedAudit)
 		if err != nil {
@@ -400,7 +396,7 @@ func saveTranslatedAuditAndFields(tp sqlutils.TransactionPreparer, translatedAud
 }
 
 // sanitizeAuditBoolValue sanitizes raw audit data and does some preliminary translation data, ex translating a t or f character to true or false
-func sanitizeAuditBoolValue(value interface{}) interface{} {
+func sanitizeAuditBoolValue(value any) any {
 	if value == "t" {
 		return "true"
 	}

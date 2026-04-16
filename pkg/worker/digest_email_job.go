@@ -30,7 +30,7 @@ const (
 
 // DigestEmailBatchJob is the batch job for DigestEmailJobs
 // args[0] date
-func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...any) error {
 	logger := FaktoryLoggerFromContext(ctx)
 
 	if len(args) < 1 {
@@ -83,7 +83,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 
 // DigestEmailBatchJobSuccess is the callback function forDigestEmailBatchJob
 // args[0] date
-func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interface{}) error {
+func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...any) error {
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("Digest Email Batch Job Succeeded")
 	// TODO: Add notification here if wanted in the future
@@ -92,7 +92,7 @@ func (w *Worker) DigestEmailBatchJobSuccess(ctx context.Context, args ...interfa
 
 // DigestEmailJob will generate and send an email based on a users favorited Models.
 // args[0] date, args[1] userID
-func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) DigestEmailJob(ctx context.Context, args ...any) error {
 	logger := FaktoryLoggerFromContext(ctx)
 
 	if len(args) < 2 {
@@ -137,7 +137,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 }
 
 // AggregatedDigestEmailJob will generate and send an email based on all models changed in the audit period
-func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...any) error {
 	logger := FaktoryLoggerFromContext(ctx)
 
 	if len(args) < 1 {

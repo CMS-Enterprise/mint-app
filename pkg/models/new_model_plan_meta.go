@@ -46,7 +46,7 @@ func (cm NewModelPlanActivityMeta) Value() (driver.Value, error) {
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (cm *NewModelPlanActivityMeta) Scan(src interface{}) error {
+func (cm *NewModelPlanActivityMeta) Scan(src any) error {
 	if src == nil {
 		return nil
 	}

@@ -15,7 +15,7 @@ import (
 
 // MTOCommonSolutionContractorGetByCommonSolutionKeyLoader returns a list of contractors associated with the given keys.
 func MTOCommonSolutionContractorGetByCommonSolutionKeyLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonSolutionKey) ([]*models.MTOCommonSolutionContractor, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"keys": pq.Array(keys),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutionContractor.GetByCommonSolutionKey, args)
@@ -43,7 +43,7 @@ func MTOCommonSolutionCreateContractor(np sqlutils.NamedPreparer, _ *zap.Logger,
 
 // MTOCommonSolutionGetContractorByID fetches a contractor by its ID.
 func MTOCommonSolutionGetContractorByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionContractor, error) {
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 
 	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutionContractor.GetByID, arg)
 	if err != nil {
@@ -54,7 +54,7 @@ func MTOCommonSolutionGetContractorByID(np sqlutils.NamedPreparer, _ *zap.Logger
 
 // MTOCommonSolutionContractorGetByIDLoader returns a list of contractors associated with the given keys.
 func MTOCommonSolutionContractorGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCommonSolutionContractor, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionContractor](np, sqlqueries.MTOCommonSolutionContractor.GetByIDs, args)
@@ -81,7 +81,7 @@ func MTOCommonSolutionDeleteContractorByID(tx *sqlx.Tx, actorUserID uuid.UUID, _
 		return nil, err
 	}
 
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 	returnedContractor, err := sqlutils.GetProcedure[models.MTOCommonSolutionContractor](tx, sqlqueries.MTOCommonSolutionContractor.DeleteByID, arg)
 	if err != nil {
 		return nil, err

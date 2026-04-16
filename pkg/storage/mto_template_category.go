@@ -12,7 +12,7 @@ import (
 
 // MTOTemplateCategoryGetByIDLoader returns template categories by ID
 func MTOTemplateCategoryGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOTemplateCategory, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 
@@ -26,7 +26,7 @@ func MTOTemplateCategoryGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, 
 
 // MTOTemplateCategoryGetByTemplateIDLoader returns template categories by template ID
 func MTOTemplateCategoryGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, templateIDs []uuid.UUID) ([]*models.MTOTemplateCategory, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"template_ids": pq.Array(templateIDs),
 	}
 
@@ -40,7 +40,7 @@ func MTOTemplateCategoryGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.
 
 // MTOTemplateSubCategoryGetByIDLoader returns template subcategories by ID
 func MTOTemplateSubCategoryGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOTemplateSubCategory, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 
@@ -53,7 +53,7 @@ func MTOTemplateSubCategoryGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logge
 
 // MTOTemplateSubCategoryGetByCategoryIDLoader returns template subcategories by category ID
 func MTOTemplateSubCategoryGetByCategoryIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, categoryIDs []uuid.UUID) ([]*models.MTOTemplateSubCategory, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"category_ids": pq.Array(categoryIDs),
 	}
 
@@ -65,7 +65,7 @@ func MTOTemplateSubCategoryGetByCategoryIDLoader(np sqlutils.NamedPreparer, _ *z
 }
 
 func MTOTemplateSubCategoryGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, templateIDs []uuid.UUID) ([]*models.MTOTemplateSubCategory, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"template_ids": pq.Array(templateIDs),
 	}
 

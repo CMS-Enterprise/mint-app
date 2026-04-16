@@ -46,7 +46,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		planTimeline.ID,
-		map[string]interface{}{
+		map[string]any{
 			"clearanceStarts": time.Now().Add(time.Hour * 24 * 21).Format(time.RFC3339), // 21 days from now
 		},
 		suite.testConfigs.Principal,
@@ -68,7 +68,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		planTimeline.ID,
-		map[string]interface{}{
+		map[string]any{
 			"clearanceStarts": time.Now().Add(time.Hour * 24 * 15).Format(time.RFC3339), // 15 days from now
 		},
 		suite.testConfigs.Principal,
@@ -90,7 +90,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		planTimeline.ID,
-		map[string]interface{}{
+		map[string]any{
 			"status": model.TaskStatusInputReadyForClearance,
 		},
 		suite.testConfigs.Principal,
@@ -116,7 +116,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		basics.ID,
-		map[string]interface{}{
+		map[string]any{
 			"status": model.TaskStatusInputReadyForClearance,
 		},
 		suite.testConfigs.Principal,
@@ -134,7 +134,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	// Update the general characteristics to be marked ready for clearance
 	genChar, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, genChar.ID, map[string]interface{}{
+	_, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, genChar.ID, map[string]any{
 		"status": model.TaskStatusInputReadyForClearance,
 	}, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -149,7 +149,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	// Update the participants and providers to be marked ready for clearance
 	participants, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, participants.ID, map[string]interface{}{
+	_, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, participants.ID, map[string]any{
 		"status": model.TaskStatusInputReadyForClearance,
 	}, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -164,7 +164,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	// Update the participants and providers to be marked ready for clearance
 	benes, err := PlanBeneficiariesGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = PlanBeneficiariesUpdate(suite.testConfigs.Logger, benes.ID, map[string]interface{}{
+	_, err = PlanBeneficiariesUpdate(suite.testConfigs.Logger, benes.ID, map[string]any{
 		"status": model.TaskStatusInputReadyForClearance,
 	}, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -179,7 +179,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	// Update the ops, eval, & learning to be marked ready for clearance
 	opsEvalLearning, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, opsEvalLearning.ID, map[string]interface{}{
+	_, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, opsEvalLearning.ID, map[string]any{
 		"status": model.TaskStatusInputReadyForClearance,
 	}, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -195,7 +195,7 @@ func (suite *ResolverSuite) TestReadyForClearanceRead() {
 	// NOTE: This is the final section, so we expect the status to change!
 	payments, err := PlanPaymentsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	_, err = PlanPaymentsUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, payments.ID, map[string]interface{}{
+	_, err = PlanPaymentsUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, payments.ID, map[string]any{
 		"status": model.TaskStatusInputReadyForClearance,
 	}, suite.testConfigs.Principal)
 	suite.NoError(err)

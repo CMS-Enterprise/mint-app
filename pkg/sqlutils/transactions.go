@@ -39,7 +39,7 @@ func WithTransaction[T any](txPrep TransactionPreparer, txFunc TransactionFunc[T
 
 // WithTransactionNoReturn is used for transactions that are execution only (i.e., no return value) and only returns an error
 func WithTransactionNoReturn(txPrep TransactionPreparer, txFunc func(*sqlx.Tx) error) error {
-	_, err := WithTransaction[any](txPrep, func(tx *sqlx.Tx) (*any, error) {
+	_, err := WithTransaction(txPrep, func(tx *sqlx.Tx) (*any, error) {
 		return nil, txFunc(tx)
 	})
 

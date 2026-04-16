@@ -30,7 +30,7 @@ func PlanCRCreate(logger *zap.Logger, input *model.PlanCRCreateInput, principal 
 }
 
 // PlanCRUpdate updates a plan_cr_tdl record in the database
-func PlanCRUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanCR, error) {
+func PlanCRUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]any, principal authentication.Principal, store *storage.Store) (*models.PlanCR, error) {
 	// Get PlanCrTdl
 	existingPlanCR, err := store.PlanCRGetByID(logger, id)
 	if err != nil {

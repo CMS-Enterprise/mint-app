@@ -102,7 +102,7 @@ func getTestPrincipal(store *Store, userName string) (*authentication.Applicatio
 		HasLoggedIn: true,
 	}
 
-	newAccount, newErr := sqlutils.WithTransaction[authentication.UserAccount](store, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
+	newAccount, newErr := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*authentication.UserAccount, error) {
 		newAccount, newErr := UserAccountInsertByUsername(tx, userAccount)
 		if newErr != nil {
 			return nil, newErr

@@ -47,7 +47,7 @@ func PlanPaymentsUpdate(
 	logger *zap.Logger,
 	store *storage.Store,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 	principal authentication.Principal,
 ) (*models.PlanPayments, error) {
 

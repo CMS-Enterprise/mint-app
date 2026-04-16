@@ -73,7 +73,7 @@ func (suite *ResolverSuite) TestMTOToggleReadyForReview_SendsNotification() {
 
 	// The test principal is already a collaborator; set their preference to MY_MODELS in-app
 	notifType := models.MTOReadyForReviewNotificationTypeMyModels
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"mtoReadyForReview":                 []models.UserNotificationPreferenceFlag{models.UserNotificationPreferenceInApp},
 		"mtoReadyForReviewNotificationType": &notifType,
 	}
@@ -115,7 +115,7 @@ func (suite *ResolverSuite) TestMTOToggleReadyForReview_NoNotificationOnUnset() 
 	plan := suite.createModelPlan("plan for no-notification test")
 
 	notifType := models.MTOReadyForReviewNotificationTypeMyModels
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"mtoReadyForReview":                 []models.UserNotificationPreferenceFlag{models.UserNotificationPreferenceInApp},
 		"mtoReadyForReviewNotificationType": &notifType,
 	}

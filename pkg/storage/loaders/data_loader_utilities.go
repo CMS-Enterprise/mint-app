@@ -7,7 +7,7 @@ import "github.com/graph-gophers/dataloader"
 func createErrorOutput(err error, count int) []*dataloader.Result {
 	output := []*dataloader.Result{}
 
-	for i := 0; i < count; i++ {
+	for i := range count {
 		output[i] = &dataloader.Result{
 			Data:  nil,
 			Error: err,

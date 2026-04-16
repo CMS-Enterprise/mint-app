@@ -50,7 +50,7 @@ func (mr *MockEmailServiceMockRecorder) GetConfig() *gomock.Call {
 // Send mocks base method.
 func (m *MockEmailService) Send(from string, toAddresses, ccAddresses []string, subject, contentType, body string, opts ...EmailOption) error {
 	m.ctrl.T.Helper()
-	varargs := []interface{}{from, toAddresses, ccAddresses, subject, contentType, body}
+	varargs := []any{from, toAddresses, ccAddresses, subject, contentType, body}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
@@ -60,8 +60,8 @@ func (m *MockEmailService) Send(from string, toAddresses, ccAddresses []string, 
 }
 
 // Send indicates an expected call of Send.
-func (mr *MockEmailServiceMockRecorder) Send(from, toAddresses, ccAddresses, subject, contentType, body interface{}, opts ...interface{}) *gomock.Call {
+func (mr *MockEmailServiceMockRecorder) Send(from, toAddresses, ccAddresses, subject, contentType, body any, opts ...any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	varargs := append([]interface{}{from, toAddresses, ccAddresses, subject, contentType, body}, opts...)
+	varargs := append([]any{from, toAddresses, ccAddresses, subject, contentType, body}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Send", reflect.TypeOf((*MockEmailService)(nil).Send), varargs...)
 }

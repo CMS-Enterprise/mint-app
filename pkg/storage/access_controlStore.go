@@ -20,7 +20,7 @@ func (s *Store) CheckIfCollaborator(_ *zap.Logger, principalID uuid.UUID, modelP
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_id": modelPlanID,
 		"user_id":       principalID,
 	}
@@ -48,7 +48,7 @@ func (s *Store) CheckIfCollaboratorByDiscussionID(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"discussion_id": discussionID,
 		"user_id":       principalID,
 	}

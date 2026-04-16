@@ -72,7 +72,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"modelType":      []models.ModelType{models.MTVoluntary},
 		"modelTypeOther": "Some model type other note",
 		"goal":           "Some goal",

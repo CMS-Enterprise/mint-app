@@ -145,7 +145,7 @@ func TestTranslateField(t *testing.T) {
 }
 
 func TestGetChangeType(t *testing.T) {
-	var old interface{}
+	var old any
 	new := "{}"
 	ct := getChangeType(old, new)
 	assert.EqualValues(t, models.AFCUnchanged, ct)
@@ -160,7 +160,7 @@ func TestGetChangeType(t *testing.T) {
 	assert.EqualValues(t, models.AFCUpdated, ct)
 
 	old = "hello again"
-	var nilNew interface{}
+	var nilNew any
 	ct = getChangeType(old, nilNew)
 	assert.EqualValues(t, models.AFCRemoved, ct)
 }

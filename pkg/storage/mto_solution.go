@@ -15,7 +15,7 @@ import (
 
 // MTOSolutionGetByIDLoader returns solutions by ID
 func MTOSolutionGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOSolution, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 
@@ -31,7 +31,7 @@ func MTOSolutionGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uu
 // if model plan id is null, contextual data will show up as false (is_added, is_suggested)
 func MTOSolutionGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOSolution, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOSolution](np, sqlqueries.MTOSolution.GetByModelPlanIDLoader, args)
@@ -49,7 +49,7 @@ func MTOSolutionGetByModelPlanIDAndFilterViewLoader(np sqlutils.NamedPreparer, _
 		return nil, err
 	}
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": jsonParam,
 	}
 
@@ -63,7 +63,7 @@ func MTOSolutionGetByModelPlanIDAndFilterViewLoader(np sqlutils.NamedPreparer, _
 // MTOSolutionGetByKeyLoader returns all solutions associated by a list of keys
 func MTOSolutionGetByKeyLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonSolutionKey) ([]*models.MTOSolution, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"keys": pq.Array(keys),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOSolution](np, sqlqueries.MTOCommonSolution.GetByKeyLoader, args)
@@ -81,7 +81,7 @@ func MTOSolutionGetByCommonMilestoneIDLoader(
 	mtoCommonMilestoneIDs []uuid.UUID,
 ) ([]*models.MTOCommonSolution, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"mto_common_milestone_ids": pq.Array(mtoCommonMilestoneIDs),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolution](np, sqlqueries.MTOCommonSolution.GetByCommonMilestoneIDLoader, args)
@@ -118,7 +118,7 @@ func MTOSolutionCreateCommonAllowConflictsSQL(
 	createdBy uuid.UUID,
 ) ([]*models.MTOSolutionWithNewlyInsertedStatus, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_id":        modelPlanID,
 		"common_solution_keys": pq.Array(commonSolutionKeys),
 		"created_by":           createdBy,
@@ -148,7 +148,7 @@ func MTOSolutionGetByMilestoneIDLoader(
 	_ *zap.Logger,
 	milestoneIDs []uuid.UUID,
 ) ([]*models.MTOSolutionWithMilestoneID, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"milestone_ids": pq.Array(milestoneIDs),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOSolutionWithMilestoneID](np, sqlqueries.MTOSolution.GetByMilestoneIDLoader, args)
@@ -166,7 +166,7 @@ func MTOSolutionDelete(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logger, milest
 	}
 	// Delete the milestone!
 	// `ON CASCADE` functionality will delete any Milestone<->Solution links, if present
-	arg := map[string]interface{}{"id": milestoneID}
+	arg := map[string]any{"id": milestoneID}
 	procErr := sqlutils.ExecProcedure(tx, sqlqueries.MTOSolution.Delete, arg)
 	if procErr != nil {
 		return fmt.Errorf("issue deleting MTOMilestone object: %w", procErr)

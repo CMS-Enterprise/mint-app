@@ -52,7 +52,7 @@ type Activity struct {
 	EntityID     uuid.UUID    `json:"entityID" db:"entity_id"`
 	ActivityType ActivityType `json:"activityType" db:"activity_type"`
 
-	MetaDataRaw interface{} `db:"meta_data"`
+	MetaDataRaw any `db:"meta_data"`
 	// this is conditional data that is returned. It deserializes to data specific the activity type
 	MetaData ActivityMetaData `json:"metaData"`
 }

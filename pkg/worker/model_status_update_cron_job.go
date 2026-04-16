@@ -13,7 +13,7 @@ const (
 )
 
 // ModelStatusUpdateCronJob is the job the cron schedule calls to check if models
-func (w *Worker) ModelStatusUpdateCronJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) ModelStatusUpdateCronJob(ctx context.Context, args ...any) error {
 
 	// Call ModelStatusUpdateBatchJob
 	helper := faktory_worker.HelperFor(ctx)

@@ -23,12 +23,12 @@ const (
 )
 
 // AuditChangeID provides the zap field for an audit change id
-func AuditChangeID(changeID interface{}) zapcore.Field {
+func AuditChangeID(changeID any) zapcore.Field {
 	return zap.Any(auditChangeKey, changeID)
 }
 
 // Date provides the zap field for the date
-func Date(date interface{}) zapcore.Field {
+func Date(date any) zapcore.Field {
 	return zap.Any(dateKey, date)
 }
 

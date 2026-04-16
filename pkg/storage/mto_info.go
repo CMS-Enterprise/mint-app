@@ -15,7 +15,7 @@ import (
 // MTOInfoGetByModelPlanIDLoader returns all mto info records for a slice of model plan ids
 func MTOInfoGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOInfo, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOInfo](np, sqlqueries.MTOInfo.GetByModelPlanIDLoader, args)

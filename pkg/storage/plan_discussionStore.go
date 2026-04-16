@@ -48,7 +48,7 @@ func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 
@@ -66,7 +66,7 @@ func PlanDiscussionGetByModelPlanIDLOADER(
 	_ *zap.Logger,
 	modelPlanIDs []uuid.UUID,
 ) ([]*models.PlanDiscussion, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 
@@ -223,7 +223,7 @@ func (s *Store) PlanDiscussionByID(_ *zap.Logger, id uuid.UUID) (*models.PlanDis
 
 // PlanDiscussionByIDWithNumberOfReplies retrieves the plan discussion for a given id, and also returns the number of replies the discussion has
 func PlanDiscussionByIDWithNumberOfReplies(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID, timeToCheck time.Time) (*models.PlanDiscussionWithNumberOfReplies, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"id":            id,
 		"time_to_check": timeToCheck,
 	}
@@ -240,7 +240,7 @@ func PlanDiscussionByIDWithNumberOfReplies(np sqlutils.NamedPreparer, _ *zap.Log
 func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.DiscussionReply, error) {
 	tx := s.db.MustBegin()
 	defer tx.Rollback()
-	args := map[string]interface{}{
+	args := map[string]any{
 		"id": id,
 	}
 
@@ -301,7 +301,7 @@ func (s *Store) GetMostRecentDiscussionRoleSelection(
 
 	var selection models.DiscussionRoleSelection
 
-	err = stmt.Get(&selection, map[string]interface{}{"user_id": userID})
+	err = stmt.Get(&selection, map[string]any{"user_id": userID})
 	if err == nil {
 		return &selection, nil
 	}

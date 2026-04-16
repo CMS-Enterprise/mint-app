@@ -49,7 +49,7 @@ func (s *Seeder) createModelPlan(
 // updateModelPlan is a wrapper for resolvers.ModelPlanUpdate
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the model plan with the principal value of the Model Plan's "createdBy"
-func (s *Seeder) updateModelPlan(mp *models.ModelPlan, changes map[string]interface{}) *models.ModelPlan {
+func (s *Seeder) updateModelPlan(mp *models.ModelPlan, changes map[string]any) *models.ModelPlan {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 	updated, err := resolvers.ModelPlanUpdate(s.Config.Logger, mp.ID, changes, princ, s.Config.Store)
 	if err != nil {
@@ -66,7 +66,7 @@ func (s *Seeder) updatePlanTimeline(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	mp *models.ModelPlan,
-	changes map[string]interface{},
+	changes map[string]any,
 ) *models.PlanTimeline {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
@@ -97,7 +97,7 @@ func (s *Seeder) updatePlanTimeline(
 func (s *Seeder) updatePlanBasics(
 	ctx context.Context,
 	mp *models.ModelPlan,
-	changes map[string]interface{},
+	changes map[string]any,
 ) *models.PlanBasics {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
@@ -126,7 +126,7 @@ func (s *Seeder) updatePlanBasics(
 func (s *Seeder) updatePlanDataExchangeApproach(
 	ctx context.Context,
 	mp *models.ModelPlan,
-	changes map[string]interface{},
+	changes map[string]any,
 ) *models.PlanDataExchangeApproach {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
@@ -159,7 +159,7 @@ func (s *Seeder) updatePlanDataExchangeApproach(
 func (s *Seeder) updateIDDOCQuestionnaire(
 	ctx context.Context,
 	mp *models.ModelPlan,
-	changes map[string]interface{},
+	changes map[string]any,
 ) *models.IDDOCQuestionnaire {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
@@ -348,7 +348,7 @@ func (s *Seeder) existingModelLinkCreate(
 }
 
 // updateUserView is a wrapper that allows to set default user views for a user
-func (s *Seeder) updateUserView(principal authentication.Principal, changes map[string]interface{}) *models.UserViewCustomization {
+func (s *Seeder) updateUserView(principal authentication.Principal, changes map[string]any) *models.UserViewCustomization {
 
 	view, err := resolvers.UserViewCustomizationUpdate(
 		s.Config.Logger,

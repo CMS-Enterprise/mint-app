@@ -22,7 +22,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 
 	patientProtectionString := "hello PATIENT_PROTECTION_AFFORDABLE_CARE_ACT A"
 	patientProtectionRString := "hello PATIENT_PROTECTION_AFFORDABLE_CARE_ACT A"
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"fundingSource":                          []string{"OTHER"},
 		"fundingSourcePatientProtectionInfo":     patientProtectionString,
 		"fundingSourceRPatientProtectionInfo":    patientProtectionRString,

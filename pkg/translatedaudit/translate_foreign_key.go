@@ -19,7 +19,7 @@ const DataNotAvailableMessage = "Data not available"
 
 //Future Enhancement: allow faktory workers to take a dataloader
 
-func translateForeignKey(ctx context.Context, store *storage.Store, value interface{}, tableReference models.TableName) (interface{}, error) {
+func translateForeignKey(ctx context.Context, store *storage.Store, value any, tableReference models.TableName) (any, error) {
 	if value == nil && tableReference != models.TNMTOCategory {
 		return nil, nil
 	}
@@ -86,7 +86,7 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value interf
 	}
 }
 
-func getUserAccountForeignKeyTranslation(store *storage.Store, key interface{}) (string, error) {
+func getUserAccountForeignKeyTranslation(store *storage.Store, key any) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -103,7 +103,7 @@ func getUserAccountForeignKeyTranslation(store *storage.Store, key interface{}) 
 
 }
 
-func parseInterfaceToEnum[E ~string](val interface{}) (E, error) {
+func parseInterfaceToEnum[E ~string](val any) (E, error) {
 	enumKey, isEnum := val.(E)
 	if isEnum {
 		return enumKey, nil
@@ -119,7 +119,7 @@ func parseInterfaceToEnum[E ~string](val interface{}) (E, error) {
 // parseInterfaceToUUID is a utility value to try and cast an interface to a UUID
 // it first attempts to parse the value directly to a UUID, and then while try to parse a string to UUID
 // If neither is possible, it will return uuid.Nil and an error
-func parseInterfaceToUUID(val interface{}) (uuid.UUID, error) {
+func parseInterfaceToUUID(val any) (uuid.UUID, error) {
 	uuidKey, isUUID := val.(uuid.UUID)
 	if isUUID {
 		return uuidKey, nil
@@ -141,7 +141,7 @@ func parseInterfaceToUUID(val interface{}) (uuid.UUID, error) {
 // parseInterfaceToInt is a utility value to try and cast an interface to an int
 // it first attempts to parse the value directly to a int, and then while try to parse a string to int
 // If neither is possible, it will return -1 and an error
-func parseInterfaceToInt(val interface{}) (int, error) {
+func parseInterfaceToInt(val any) (int, error) {
 	intKey, isInt := val.(int)
 	if isInt {
 		return intKey, nil
@@ -160,7 +160,7 @@ func parseInterfaceToInt(val interface{}) (int, error) {
 
 }
 
-func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 	// handle the special case when the key is nil, and return Uncategorized (Uncategorized)
 	if key == nil {
 		return formatCategoryTranslation(models.UncategorizedMTOName, nil), nil
@@ -205,7 +205,7 @@ func getMTOCategoryForeignKeyReference(ctx context.Context, store *storage.Store
 	name := formatCategoryTranslation(category.Name, parentCategoryName)
 	return name, nil
 }
-func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 	commonMilestoneID, err := parseInterfaceToUUID(key)
 	if err != nil {
 		return "", fmt.Errorf("unable to convert the provided key to a UUID to get the mto common milestone reference. err %w", err)
@@ -223,7 +223,7 @@ func getMTOCommonMilestoneForeignKeyReference(ctx context.Context, store *storag
 	return commonMilestone.Name, nil
 }
 
-func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 	// cast interface to UUID
 	enumKey, err := parseInterfaceToEnum[models.MTOCommonSolutionKey](key)
 	if err != nil {
@@ -241,7 +241,7 @@ func getMTOCommonSolutionForeignKeyReference(ctx context.Context, store *storage
 	}
 	return commonSolution.Name, nil
 }
-func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 
 	// cast interface to key
 	uuidKey, err := parseInterfaceToUUID(key)
@@ -265,7 +265,7 @@ func getMTOMilestoneForeignKeyReference(ctx context.Context, store *storage.Stor
 	return *milestone.Name, nil
 }
 
-func getMTOMilestoneNoteForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getMTOMilestoneNoteForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 
 	// cast interface to key
 	uuidKey, err := parseInterfaceToUUID(key)
@@ -289,7 +289,7 @@ func getMTOMilestoneNoteForeignKeyReference(ctx context.Context, store *storage.
 	return milestoneNote.Content, nil
 }
 
-func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -312,7 +312,7 @@ func getMTOSolutionForeignKeyReference(ctx context.Context, store *storage.Store
 	return *solution.Name, nil
 }
 
-func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (*string, error) {
+func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Store, key any) (*string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -336,7 +336,7 @@ func getPlanDocumentForeignKeyReference(ctx context.Context, store *storage.Stor
 
 	return &document.FileName, nil
 }
-func getModelPlanForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getModelPlanForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -358,7 +358,7 @@ func getModelPlanForeignKeyReference(ctx context.Context, store *storage.Store, 
 	return plan.ModelName, nil
 }
 
-func getExistingModelForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getExistingModelForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 	// cast interface to int
 	id, err := parseInterfaceToInt(key)
 	if err != nil {
@@ -382,7 +382,7 @@ func getExistingModelForeignKeyReference(ctx context.Context, store *storage.Sto
 }
 
 // getModelPlanMTOTemplateLinkForeignKeyReference returns a translation for a model plan MTO template link foreign key reference
-func getModelPlanMTOTemplateLinkForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getModelPlanMTOTemplateLinkForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -430,7 +430,7 @@ func getModelPlanMTOTemplateLinkForeignKeyReference(ctx context.Context, store *
 	return fmt.Sprintf("Template '%s' applied to '%s'", template.Name, modelPlan.ModelName), nil
 }
 
-func getMTOTemplateForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getMTOTemplateForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {
@@ -454,7 +454,7 @@ func getMTOTemplateForeignKeyReference(ctx context.Context, store *storage.Store
 }
 
 // getPlanCollaboratorForeignKeyReference returns the common name of the user associated with the plan collaborator
-func getPlanCollaboratorForeignKeyReference(ctx context.Context, store *storage.Store, key interface{}) (string, error) {
+func getPlanCollaboratorForeignKeyReference(ctx context.Context, store *storage.Store, key any) (string, error) {
 	// cast interface to UUID
 	uuidKey, err := parseInterfaceToUUID(key)
 	if err != nil {

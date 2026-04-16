@@ -15,7 +15,7 @@ const tagName = "statusWeight"
 // - The only parameter to this function must be a struct. If it is not, an error will be returned.
 // - If the struct has `statusWeight` tags, they MUST be placed on pointer types only
 // - If the `statusWeight` tag is not a valid integer
-func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
+func GenericallyCalculateStatus(obj any) (TaskStatus, error) {
 	currentWeight := 0
 	totalWeight := 0
 	filledOut := false
@@ -44,7 +44,7 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 
 		// Check for valid field type, and if the data is filled
 		switch field.Type.Kind() {
-		case reflect.Ptr:
+		case reflect.Pointer:
 			filledOut = !value.IsNil()
 		case reflect.Slice:
 			filledOut = value.Len() > 0

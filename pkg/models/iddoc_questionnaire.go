@@ -60,7 +60,7 @@ func (a IDDOCFileTypeArray) Value() (driver.Value, error) {
 }
 
 // Scan converts a database value to IDDOCFileTypeArray
-func (a *IDDOCFileTypeArray) Scan(src interface{}) error {
+func (a *IDDOCFileTypeArray) Scan(src any) error {
 	var stringArray pq.StringArray
 	if err := stringArray.Scan(src); err != nil {
 		return err

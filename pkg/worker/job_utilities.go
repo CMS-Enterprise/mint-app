@@ -31,7 +31,7 @@ func RecoverFaktoryJobPanicAndLogError(ctx context.Context, returnedError *error
 
 // JobWithPanicProtection wraps a faktory Job in a wrapper function that will return an error instead of stopping the application.
 func JobWithPanicProtection(jobFunc faktory_worker.Perform) faktory_worker.Perform {
-	return func(ctx context.Context, args ...interface{}) (returnedError error) {
+	return func(ctx context.Context, args ...any) (returnedError error) {
 		defer RecoverFaktoryJobPanicAndLogError(ctx, &returnedError)
 		jobErr := jobFunc(ctx, args...)
 		if jobErr != nil {

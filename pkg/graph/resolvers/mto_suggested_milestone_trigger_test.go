@@ -21,7 +21,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsSuggestions() {
 	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"managePartCDEnrollment": false, // Milestone 1, MANAGE_CD
 		// "collectPlanBids":        true, // Milestone 2, MANAGE_CD
 		// "planContractUpdated":        false, // Milestone 3 UPDATE_CONTRACT
@@ -41,7 +41,7 @@ func (suite *ResolverSuite) TestGeneralCharacteristicsSuggestions() {
 	suite.assertCommonMilestoneSuggestion(commonMilestones, "Update the plan’s contract", false)
 	suite.assertCommonMilestoneSuggestion(commonMilestones, "Review and collect plan bids", false)
 
-	changes = map[string]interface{}{
+	changes = map[string]any{
 		"managePartCDEnrollment": true,  // Milestone 1, MANAGE_CD
 		"collectPlanBids":        false, // Milestone 2, MANAGE_CD
 		"planContractUpdated":    false, // Milestone 3 UPDATE_CONTRACT
@@ -66,7 +66,7 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	suite.NoError(err)
 	suite.NotNil(oelExisting)
 
-	changes := map[string]interface{}{ // Milestone 13, PROCESS_PART_APPEALS
+	changes := map[string]any{ // Milestone 13, PROCESS_PART_APPEALS
 
 		"appealNote": "we are testing appeal statements",
 	}
@@ -81,7 +81,7 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	suite.assertNumCommonMilestonesSuggested(commonMilestones, 0)
 	suite.assertCommonMilestoneSuggestion(commonMilestones, "Process participant appeals", false) // Un-Answered, so the milestone is not suggested
 
-	changes = map[string]interface{}{
+	changes = map[string]any{
 		"appealFeedback": true,
 		// "appealPayments": false,
 		// "appealOther":    false,
@@ -99,7 +99,7 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	suite.assertCommonMilestoneSuggestion(commonMilestones, "Process participant appeals", true) // true for any {appeal_performance,appeal_feedback,appeal_payments,appeal_other}
 
 	// Change some other appeal-related answers, but still leaving the `appealFeedback` and `appealPerformance` answered (as true -- so this shouldn't undo the suggestion yet!)
-	changes = map[string]interface{}{
+	changes = map[string]any{
 		// "appealFeedback": true,
 		"appealPayments": false,
 		"appealOther":    false,
@@ -116,7 +116,7 @@ func (suite *ResolverSuite) TestCompositeColumnSuggestionTrigger() {
 	suite.assertCommonMilestoneSuggestion(commonMilestones, "Process participant appeals", true) // Still suggested because the other appeal values are set to true, even though the only changed columsn are false
 
 	// Finally, undo the initial answers that suggested this milestone in the first place
-	changes = map[string]interface{}{
+	changes = map[string]any{
 		"appealFeedback": false,
 		// "appealPayments": false,
 		// "appealOther":    false,
@@ -139,7 +139,7 @@ func (suite *ResolverSuite) TestSelectionTypeSuggestionTrigger() {
 	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"confidenceNote":     "This is a confidence note",
 		"recruitmentNote":    "This is a recruitment note",
 		"estimateConfidence": string(models.ConfidenceSlightly),
@@ -216,7 +216,7 @@ func (suite *ResolverSuite) TestSuggestedMilestoneReasons() {
 	suite.NoError(err)
 
 	_, err = UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID,
-		map[string]interface{}{"managePartCDEnrollment": true},
+		map[string]any{"managePartCDEnrollment": true},
 		suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
@@ -243,7 +243,7 @@ func (suite *ResolverSuite) TestSuggestedMilestoneReasons() {
 	suite.NoError(err)
 
 	_, err = PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID,
-		map[string]interface{}{"providerOverlap": string(models.OverlapYesNeedPolicies)},
+		map[string]any{"providerOverlap": string(models.OverlapYesNeedPolicies)},
 		suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
@@ -270,7 +270,7 @@ func (suite *ResolverSuite) TestSuggestedMilestoneReasons() {
 	suite.NoError(err)
 
 	_, err = PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oel.ID,
-		map[string]interface{}{"appealFeedback": true, "appealPerformance": true},
+		map[string]any{"appealFeedback": true, "appealPerformance": true},
 		suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 

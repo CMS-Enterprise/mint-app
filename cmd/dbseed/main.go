@@ -158,7 +158,7 @@ func (s *Seeder) SeedData() {
 
 	// Seed an empty plan
 	emptyPlan := s.createModelPlan("Empty Plan", "MINT", nil)
-	s.updateModelPlan(emptyPlan, map[string]interface{}{
+	s.updateModelPlan(emptyPlan, map[string]any{
 		"abbreviation": "emptyPlan",
 		"status":       models.ModelStatusCanceled,
 	})
@@ -168,7 +168,7 @@ func (s *Seeder) SeedData() {
 	s.updatePlanBasics(
 		s.Config.Context,
 		planWithBasics,
-		map[string]interface{}{
+		map[string]any{
 			"modelType":  []models.ModelType{models.MTVoluntary},
 			"goal":       "Some goal",
 			"cmsCenters": []string{"CMMI"},
@@ -176,7 +176,7 @@ func (s *Seeder) SeedData() {
 		},
 	)
 	s.existingModelLinkCreate(planWithBasics, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, []int{links[3].ID, links[4].ID}, nil)
-	s.updateModelPlan(planWithBasics, map[string]interface{}{
+	s.updateModelPlan(planWithBasics, map[string]any{
 		"abbreviation": "basics",
 		"status":       models.ModelStatusActive,
 	})
@@ -188,13 +188,13 @@ func (s *Seeder) SeedData() {
 		nil,
 		email.AddressBook{},
 		planWithTimeline,
-		map[string]interface{}{
+		map[string]any{
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"clearanceStarts": now.AddDate(0, 0, 10),
 			"highLevelNote":   "Some high level note",
 		},
 	)
-	s.updateModelPlan(planWithTimeline, map[string]interface{}{
+	s.updateModelPlan(planWithTimeline, map[string]any{
 		"abbreviation": "timeline",
 		"status":       models.ModelStatusActive,
 	})
@@ -204,7 +204,7 @@ func (s *Seeder) SeedData() {
 	s.updatePlanDataExchangeApproach(
 		s.Config.Context,
 		planWithDataExchange,
-		map[string]interface{}{
+		map[string]any{
 			"dataToCollectFromParticipants":               []models.DataToCollectFromParticipants{models.DataToCollectFromParticipantsBankingInformationToMakeNonClaimsBasedPayments, models.DataToCollectFromParticipantsOther},
 			"dataToCollectFromParticipantsReportsDetails": "collecting data from participants is hard",
 			"dataToCollectFromParticipantsOther":          "some other way of collecting participant data",
@@ -238,7 +238,7 @@ func (s *Seeder) SeedData() {
 	s.updateIDDOCQuestionnaire(
 		s.Config.Context,
 		planWithIDDOC,
-		map[string]interface{}{
+		map[string]any{
 			"technicalContactsIdentified":    true,
 			"captureParticipantInfo":         true,
 			"icdOwner":                       "John Smith from IDDOC team",
@@ -270,7 +270,7 @@ func (s *Seeder) SeedData() {
 			TeamRoles:   []models.TeamRole{models.TeamRoleLeadership},
 		})
 
-	s.updateModelPlan(planWithCollaborators, map[string]interface{}{
+	s.updateModelPlan(planWithCollaborators, map[string]any{
 		"abbreviation": "collab",
 		"status":       models.ModelStatusEnded,
 	})
@@ -302,14 +302,14 @@ func (s *Seeder) SeedData() {
 	})
 	s.existingModelLinkCreate(planWithCrTDLs, models.EMLFTGeneralCharacteristicsResemblesExistingModelWhich, nil, []uuid.UUID{planWithCollaborators.ID, planWithBasics.ID})
 
-	s.updateModelPlan(planWithCrTDLs, map[string]interface{}{
+	s.updateModelPlan(planWithCrTDLs, map[string]any{
 		"abbreviation": "crTDLPlan",
 		"status":       models.ModelStatusAnnounced,
 	})
 
 	// Seed a plan that is already archived
 	archivedPlan := s.createModelPlan("Archived Plan", "MINT", nil)
-	s.updateModelPlan(archivedPlan, map[string]interface{}{
+	s.updateModelPlan(archivedPlan, map[string]any{
 		"archived":     true,
 		"abbreviation": "arch",
 		"status":       models.ModelStatusPaused,
@@ -344,7 +344,7 @@ func (s *Seeder) SeedData() {
 	s.updatePlanBasics(
 		s.Config.Context,
 		sampleModelPlan,
-		map[string]interface{}{
+		map[string]any{
 			"amsModelID": "123",
 			"demoCode":   "1",
 			"modelType":  []models.ModelType{models.MTVoluntary},
@@ -356,7 +356,7 @@ func (s *Seeder) SeedData() {
 
 	// Seed a plan that is has a clearance start date 3 months from today
 	planApproachingClearance := s.createModelPlan("Plan Approaching Clearance in 3 months", "MINT", nil)
-	s.updateModelPlan(planApproachingClearance, map[string]interface{}{
+	s.updateModelPlan(planApproachingClearance, map[string]any{
 		"abbreviation": "Clearance",
 		"status":       models.ModelStatusPaused,
 	})
@@ -366,7 +366,7 @@ func (s *Seeder) SeedData() {
 		nil,
 		email.AddressBook{},
 		planApproachingClearance,
-		map[string]interface{}{
+		map[string]any{
 			"completeICIP":    "2020-05-13T20:47:50.12Z",
 			"clearanceStarts": now.AddDate(0, 3, 0),
 			"highLevelNote":   "Some high level note",
@@ -415,7 +415,7 @@ func (s *Seeder) SeedData() {
 
 func (s *Seeder) SetDefaultUserViews() {
 	mintPrinc := s.getTestPrincipalByUsername("MINT")
-	s.updateUserView(mintPrinc, map[string]interface{}{
+	s.updateUserView(mintPrinc, map[string]any{
 		"viewCustomization": []models.ViewCustomizationType{models.ViewCustomizationTypeModelsBySolution, models.ViewCustomizationTypeFollowedModels, models.ViewCustomizationTypeAllModelPlans},
 		"solutions":         []models.MTOCommonSolutionKey{models.MTOCSKInnovation, models.MTOCSKAcoOs},
 		"componentGroups":   []models.ComponentGroup{models.ComponentGroupCcmiPmg},

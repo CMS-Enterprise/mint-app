@@ -12,7 +12,7 @@ func (suite *ResolverSuite) TestUserViewCustomizationUpdate() {
 	uvc, err := UserViewCustomizationGetByUserID(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal)
 	suite.NoError(err)
 	suite.NotNil(uvc)
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"viewCustomization": []string{string(models.ViewCustomizationTypeMyModelPlans)},
 	}
 	updatedUVC, err := UserViewCustomizationUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, suite.testConfigs.Principal, changes)

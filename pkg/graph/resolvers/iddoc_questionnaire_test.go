@@ -24,7 +24,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireUpdate_BasicFields() {
 	// Update some fields
 	uatNeeds := "Some UAT requirements"
 	stcNeeds := "Some STC needs"
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"uatNeeds": &uatNeeds,
 		"stcNeeds": &stcNeeds,
 	}
@@ -56,7 +56,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireUpdate_Complete() {
 	suite.NoError(err)
 
 	isComplete := true
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"isComplete": &isComplete,
 	}
 
@@ -86,7 +86,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireUpdate_Incomplete() {
 
 	// First mark as complete
 	isComplete := true
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"isComplete": &isComplete,
 	}
 	completed, err := IDDOCQuestionnaireUpdate(
@@ -103,7 +103,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireUpdate_Incomplete() {
 
 	// Now mark as incomplete
 	isIncomplete := false
-	changes = map[string]interface{}{
+	changes = map[string]any{
 		"isComplete": &isIncomplete,
 	}
 	result, err := IDDOCQuestionnaireUpdate(
@@ -132,7 +132,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireUpdate_BooleanFields() {
 
 	technicalContacts := true
 	eftSetUp := false
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"technicalContactsIdentified": &technicalContacts,
 		"eftSetUp":                    &eftSetUp,
 	}
@@ -162,7 +162,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireUpdate_DateFields() {
 	suite.NoError(err)
 
 	dueDate := time.Date(2026, 6, 15, 0, 0, 0, 0, time.UTC)
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"draftIcdDueDate": &dueDate,
 	}
 
@@ -189,7 +189,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireUpdate_EnumFields() {
 	suite.NoError(err)
 
 	fullTimeType := models.IDDOCFullTimeOrIncrementalTypeFullTime
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"dataFullTimeOrIncremental": &fullTimeType,
 	}
 
@@ -245,7 +245,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaire_IsComplete() {
 
 	// Mark as complete
 	isComplete := true
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"isComplete": &isComplete,
 	}
 	result, err := IDDOCQuestionnaireUpdate(

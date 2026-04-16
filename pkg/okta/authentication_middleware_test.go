@@ -63,7 +63,7 @@ func TestAuthenticationMiddlewareTestSuite(t *testing.T) {
 
 func validJwt() *jwtverifier.Jwt {
 	return &jwtverifier.Jwt{
-		Claims: map[string]interface{}{
+		Claims: map[string]any{
 			"mint-groups": []string{},
 			"sub":         "EASI",
 			"iss":         "www.fake.com",
@@ -181,7 +181,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 			return nil, errors.New("invalid token")
 		})
 		jwt := validJwt()
-		jwt.Claims["mint-groups"] = []interface{}{"MINT_ASSESSMENT_NONPROD"}
+		jwt.Claims["mint-groups"] = []any{"MINT_ASSESSMENT_NONPROD"}
 
 		eJwt := authentication.EnhancedJwt{
 			JWT:       jwt,
@@ -201,7 +201,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 			return nil, errors.New("invalid token")
 		})
 		jwt := validJwt()
-		jwt.Claims["mint-groups"] = []interface{}{"MINT_NON_CMS_NONPROD"}
+		jwt.Claims["mint-groups"] = []any{"MINT_NON_CMS_NONPROD"}
 
 		eJwt := authentication.EnhancedJwt{
 			JWT:       jwt,
@@ -221,7 +221,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 			return nil, errors.New("invalid token")
 		})
 		jwt := validJwt()
-		jwt.Claims["mint-groups"] = []interface{}{"MINT_USER_NONPROD"}
+		jwt.Claims["mint-groups"] = []any{"MINT_USER_NONPROD"}
 
 		eJwt := authentication.EnhancedJwt{
 			JWT:       jwt,
@@ -239,7 +239,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 			return nil, errors.New("invalid token")
 		})
 		jwt := validJwt()
-		jwt.Claims["mint-groups"] = []interface{}{"MINT MAC Users"}
+		jwt.Claims["mint-groups"] = []any{"MINT MAC Users"}
 
 		eJwt := authentication.EnhancedJwt{
 			JWT:       jwt,
@@ -257,7 +257,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestNewPrincipal() {
 			return nil, errors.New("invalid token")
 		})
 		jwt := validJwt()
-		jwt.Claims["mint-groups"] = []interface{}{"MINT_CTR_FFS_NONPROD"}
+		jwt.Claims["mint-groups"] = []any{"MINT_CTR_FFS_NONPROD"}
 
 		eJwt := authentication.EnhancedJwt{
 			JWT:       jwt,
@@ -283,7 +283,7 @@ func TestJobCodes(t *testing.T) {
 		]
 	}
 	`
-	claims := map[string]interface{}{}
+	claims := map[string]any{}
 	if err := json.Unmarshal([]byte(payload), &claims); err != nil {
 		t.Fatalf("incorrect data: %v\n", err)
 	}

@@ -9,7 +9,7 @@ import (
 
 // checkChildConditionals will check if changes to a question make any questions non applicable
 // if so, return an array of the question label.
-func checkChildConditionals(old interface{}, new interface{}, childrenMap map[string][]models.TranslationField) *pq.StringArray {
+func checkChildConditionals(old any, new any, childrenMap map[string][]models.TranslationField) *pq.StringArray {
 
 	if old == nil {
 		return nil

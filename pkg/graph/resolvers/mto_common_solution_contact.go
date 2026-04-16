@@ -265,7 +265,7 @@ func CreateMTOCommonSolutionContactMailbox(ctx context.Context, logger *zap.Logg
 func UpdateMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, addressBook email.AddressBook,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 ) (*models.MTOCommonSolutionContact, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {

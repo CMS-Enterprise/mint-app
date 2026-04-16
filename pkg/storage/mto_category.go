@@ -17,7 +17,7 @@ import (
 // MTOCategoryGetByIDLoader returns all categories by the provided
 func MTOCategoryGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCategory, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.GetByIDLoader, args)
@@ -31,7 +31,7 @@ func MTOCategoryGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uu
 // MTOCategoryGetByModelPlanIDLoader returns all top level categories for a slice of model plan ids
 func MTOCategoryGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOCategory, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.GetByModelPlanIDLoader, args)
@@ -45,7 +45,7 @@ func MTOCategoryGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 // MTOCategoryAndSubCategoriesGetByModelPlanIDLoader returns all mto categories for a slice of model plan ids
 func MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.MTOCategory, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.AndSubCategoriesGetByModelPlanIDLoader, args)
@@ -60,7 +60,7 @@ func MTOCategoryAndSubCategoriesGetByModelPlanIDLoader(np sqlutils.NamedPreparer
 // Note, this returns the object as a subcategory, but it is the same table
 func MTOSubcategoryGetByParentIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, parentIDs []uuid.UUID) ([]*models.MTOSubcategory, error) {
 
-	args := map[string]interface{}{
+	args := map[string]any{
 		"parent_ids": pq.Array(parentIDs),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOSubcategory](np, sqlqueries.MTOCategory.GetByParentIDLoader, args)
@@ -95,7 +95,7 @@ func MTOCategoryDelete(tx *sqlx.Tx, actorUserID uuid.UUID, id uuid.UUID) error {
 	// Delete the MTOCategory
 	// Note: Child subcategories are deleted by the database. If this category is assigned, the reference will be set
 	// to the parent category or NULL if this is a top-level category
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 
 	_, procErr := sqlutils.GetProcedure[models.MTOCategory](tx, sqlqueries.MTOCategory.Delete, arg)
 	if procErr != nil {
@@ -131,7 +131,7 @@ func MTOCategoryUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCategory *mo
 // MTOCategoryGetByID returns an existing MTOCategory from the database
 func MTOCategoryGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCategory, error) {
 
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 
 	returned, procErr := sqlutils.GetProcedure[models.MTOCategory](np, sqlqueries.MTOCategory.GetByID, arg)
 	if procErr != nil {

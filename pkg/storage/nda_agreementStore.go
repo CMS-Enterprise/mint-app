@@ -25,7 +25,7 @@ func (s *Store) NDAAgreementGetByUserID(_ *zap.Logger, userID uuid.UUID) (*model
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"user_id": userID,
 	}
 

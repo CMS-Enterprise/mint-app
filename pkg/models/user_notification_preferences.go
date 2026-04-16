@@ -143,7 +143,7 @@ func (unp UserNotificationPreferenceFlags) SendEmail() bool {
 }
 
 // Scan is used by sql.scan to read the values from the DB
-func (unp *UserNotificationPreferenceFlags) Scan(src interface{}) error {
+func (unp *UserNotificationPreferenceFlags) Scan(src any) error {
 	return serialization.GenericStringArrayScan(src, unp)
 }
 

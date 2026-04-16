@@ -32,7 +32,7 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 
 	plan3Basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan3.ID)
 	suite.NoError(err)
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"goal": "This is a test goal",
 	}
 	_, err = UpdatePlanBasics(
@@ -103,7 +103,7 @@ func (suite *ResolverSuite) TestTranslatedAuditCollectionGetByModelPlanID() {
 
 	suite.dangerousQueueAndTranslateAllAudits()
 
-	planChanges := map[string]interface{}{
+	planChanges := map[string]any{
 		"modelName":    "NEW_AND_IMPROVED",
 		"abbreviation": "some model abbreviation",
 		"status":       models.ModelStatusIcipComplete,
@@ -158,7 +158,7 @@ func (suite *ResolverSuite) TestTranslateAudit() {
 	//This method comes from the translatedaudit package. However, we are testing it for an integration test.
 	plan := suite.createModelPlan("test plan for changes")
 
-	planChanges := map[string]interface{}{
+	planChanges := map[string]any{
 		"modelName":    "NEW_AND_IMPROVED",
 		"abbreviation": "some model abbreviation",
 		"status":       models.ModelStatusIcipComplete,
@@ -171,7 +171,7 @@ func (suite *ResolverSuite) TestTranslateAudit() {
 	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	opsEvalChanges := map[string]interface{}{
+	opsEvalChanges := map[string]any{
 		"stakeholdersNote":                   "These stakeholders might change",
 		"helpdeskUse":                        false,
 		"dataSharingFrequencyContinually":    "some test value for data sharing frequency",
@@ -185,7 +185,7 @@ func (suite *ResolverSuite) TestTranslateAudit() {
 	pp, err := PlanParticipantsAndProvidersGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	ppChanges := map[string]interface{}{
+	ppChanges := map[string]any{
 		"confidenceNote":                       "This is a confidence note",
 		"recruitmentNote":                      "This is a recruitment note",
 		"estimateConfidence":                   string(models.ConfidenceSlightly),
@@ -220,7 +220,7 @@ func (suite *ResolverSuite) TestTranslateAuditCRAndTDLWorksWhenDataIsUnreadable(
 	tdlNote := "tdl note"
 
 	cr := suite.createPlanCR(plan, crID, dateInitiated, dateImplemented, crTitle, crNote)
-	sharedChanges := map[string]interface{}{
+	sharedChanges := map[string]any{
 		"note": " hello",
 	}
 	_, err := PlanCRUpdate(suite.testConfigs.Logger, cr.ID, sharedChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -273,7 +273,7 @@ func (suite *ResolverSuite) TestTranslateAuditCollaboratorWorksWhenDataIsUnreada
 }
 
 func (suite *ResolverSuite) dangerousAuditTranslationQueueAllItems() {
-	arg := map[string]interface{}{}
+	arg := map[string]any{}
 
 	queued, err := sqlutils.SelectProcedure[models.TranslatedAuditQueue](suite.testConfigs.Store, sqlqueries.TranslatedAuditQueue.DANGEROUSQueueAllEntries, arg)
 	suite.NoError(err)

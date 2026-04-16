@@ -10,7 +10,7 @@ func (suite *ResolverSuite) TestCreateMTOCommonSolutionSystemOwner() {
 	ownerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
 	cmsComponent := models.MTOCommonSolutionCMSComponent("OFFICE_OF_LEGISLATION")
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"ownerType":    &ownerType,    // Pass as a pointer
 		"cmsComponent": &cmsComponent, // Pass as a pointer
 	}
@@ -35,7 +35,7 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionSystemOwner() {
 	ownerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
 	cmsComponent := models.MTOCommonSolutionCMSComponent("OFFICE_OF_LEGISLATION")
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"ownerType":    &ownerType,    // Pass as a pointer
 		"cmsComponent": &cmsComponent, // Pass as a pointer
 	}
@@ -56,7 +56,7 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionSystemOwner() {
 	updatedOwnerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
 	updatedCmsComponent := models.MTOCommonSolutionCMSComponent("CENTER_FOR_MEDICARE_CM")
 
-	updatedChanges := map[string]interface{}{
+	updatedChanges := map[string]any{
 		"ownerType":    &updatedOwnerType,    // Pass as a pointer
 		"cmsComponent": &updatedCmsComponent, // Pass as a pointer
 	}
@@ -81,7 +81,7 @@ func (suite *ResolverSuite) TestGetMTOCommonSolutionSystemOwner() {
 	ownerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
 	cmsComponent := models.MTOCommonSolutionCMSComponent("OFFICE_OF_LEGISLATION")
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"ownerType":    &ownerType,    // Pass as a pointer
 		"cmsComponent": &cmsComponent, // Pass as a pointer
 	}
@@ -119,7 +119,7 @@ func (suite *ResolverSuite) TestDeleteMTOCommonSolutionSystemOwner() {
 	ownerType := models.MTOCommonSolutionOwnerType("BUSINESS_OWNER")
 	cmsComponent := models.MTOCommonSolutionCMSComponent("OFFICE_OF_LEGISLATION")
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"ownerType":    &ownerType,    // Pass as a pointer
 		"cmsComponent": &cmsComponent, // Pass as a pointer
 	}

@@ -17,7 +17,7 @@ import (
 
 func TestJobWithPanicProtection(t *testing.T) {
 	panicMessage := "panic Time!"
-	panicFunc := func(ctx context.Context, args ...interface{}) (returnedError error) {
+	panicFunc := func(ctx context.Context, args ...any) (returnedError error) {
 		panic(panicMessage)
 	}
 
@@ -51,7 +51,7 @@ func TestJobWithPanicProtection(t *testing.T) {
 
 		// Get log output and verify error was logged
 		logOutput := writeSyncer.GetBufferString()
-		logMessage := map[string]interface{}{}
+		logMessage := map[string]any{}
 		jsonErr := json.Unmarshal([]byte(logOutput), &logMessage)
 		assert.NoError(t, jsonErr)
 
@@ -85,7 +85,7 @@ func TestDecorateFaktoryLoggerStandardFields(t *testing.T) {
 
 	// Capture the fields from the decorated logger
 	logOutput := writeSyncer.GetBufferString()
-	logMessage := map[string]interface{}{}
+	logMessage := map[string]any{}
 	err := json.Unmarshal([]byte(logOutput), &logMessage)
 	assert.NoError(err)
 
@@ -172,7 +172,7 @@ func TestFaktoryLoggerMiddleware(t *testing.T) {
 			Failure: &faktory.Failure{
 				RetryCount: retryCount,
 			},
-			Custom: map[string]interface{}{
+			Custom: map[string]any{
 				"bid": batchID,
 			},
 		}
@@ -202,7 +202,7 @@ func TestFaktoryLoggerMiddleware(t *testing.T) {
 
 		// Verify log output
 		logOutput := writeSyncer.GetBufferString()
-		logMessage := map[string]interface{}{}
+		logMessage := map[string]any{}
 		jsonErr := json.Unmarshal([]byte(logOutput), &logMessage)
 		assert.NoError(t, jsonErr)
 		assert.Equal(t, jid, logMessage[logfields.JobIDKey])
@@ -218,7 +218,7 @@ func TestFaktoryLoggerMiddleware(t *testing.T) {
 			Jid:    "test-jid-no-batch",
 			Type:   "TestJob",
 			Queue:  "default",
-			Custom: map[string]interface{}{},
+			Custom: map[string]any{},
 		}
 
 		middleware := FaktoryLoggerMiddleware()
@@ -238,7 +238,7 @@ func TestFaktoryLoggerMiddleware(t *testing.T) {
 
 		// Verify BatchID is not in log output
 		logOutput := writeSyncer.GetBufferString()
-		logMessage := map[string]interface{}{}
+		logMessage := map[string]any{}
 		jsonErr := json.Unmarshal([]byte(logOutput), &logMessage)
 		assert.NoError(t, jsonErr)
 		_, hasBatchID := logMessage[logfields.BatchIDKey]
@@ -253,7 +253,7 @@ func TestFaktoryLoggerMiddleware(t *testing.T) {
 			Jid:   "test-jid",
 			Type:  "TestJob",
 			Queue: "default",
-			Custom: map[string]interface{}{
+			Custom: map[string]any{
 				"bid": "",
 			},
 		}

@@ -28,7 +28,7 @@ const (
 
 // AnalyzedAuditJob analyzes the given model and model relations on the specified date
 // args[0] date, args[1] modelPlanID
-func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...any) error {
 	logger := FaktoryLoggerFromContext(ctx)
 
 	if len(args) < 2 {
@@ -74,7 +74,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 
 // AnalyzedAuditBatchJob batches all the daily AnalyzedAuditJobs. When all are complete it will fire a callback
 // args[0] date
-func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...any) error {
 	helper := faktory_worker.HelperFor(ctx)
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("starting analyzed audit batch job")
@@ -120,7 +120,7 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 
 // AnalyzedAuditBatchJobSuccess is the callback function for AnalyzedAuditBatchJob
 // args[0] date
-func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...interface{}) error {
+func (w *Worker) AnalyzedAuditBatchJobSuccess(ctx context.Context, args ...any) error {
 	logger := FaktoryLoggerFromContext(ctx)
 
 	if len(args) < 1 {

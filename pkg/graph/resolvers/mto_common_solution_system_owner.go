@@ -33,7 +33,7 @@ func MTOCommonSolutionSystemOwnersGetByKeyLOADER(ctx context.Context, key models
 func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, addressBook email.AddressBook,
 	key models.MTOCommonSolutionKey,
-	changes map[string]interface{},
+	changes map[string]any,
 ) (*models.MTOCommonSolutionSystemOwner, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -102,7 +102,7 @@ func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 func UpdateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
 	emailService oddmail.EmailService, addressBook email.AddressBook,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 ) (*models.MTOCommonSolutionSystemOwner, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {

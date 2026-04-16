@@ -33,7 +33,7 @@ func PlanParticipantsAndProvidersGetByModelPlanIDLOADER(ctx context.Context, mod
 }
 
 // PlanParticipantsAndProvidersUpdate updates a plan ProvidersAndParticipants buisness object
-func PlanParticipantsAndProvidersUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanParticipantsAndProviders, error) {
+func PlanParticipantsAndProvidersUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]any, principal authentication.Principal, store *storage.Store) (*models.PlanParticipantsAndProviders, error) {
 	//Get existing plan ProvidersAndParticipants
 	existing, err := store.PlanParticipantsAndProvidersGetByID(logger, id)
 	if err != nil {

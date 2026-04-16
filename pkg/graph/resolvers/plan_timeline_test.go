@@ -42,7 +42,7 @@ func (suite *ResolverSuite) TestPlanTimelineGetByModelPlanID() {
 		return false
 	}
 
-	loaders.VerifyLoaders[uuid.UUID, *models.PlanTimeline, uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.PlanTimeline.ByModelPlanID,
+	loaders.VerifyLoaders(suite.testConfigs.Context, &suite.Suite, loaders.PlanTimeline.ByModelPlanID,
 		expectedResults, verifyFunc)
 }
 
@@ -52,7 +52,7 @@ func (suite *ResolverSuite) TestUpdatePlanTimeline() {
 	planTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"completeICIP":  "2020-05-13T20:47:50.12Z",
 		"highLevelNote": "Some high level note",
 	}

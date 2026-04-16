@@ -12,7 +12,7 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 	oelExisting, err := PlanOpsEvalAndLearningGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"stakeholdersNote":                   "These stakeholders might change",
 		"helpdeskUse":                        false,
 		"dataSharingFrequencyContinually":    "some test value for data sharing frequency",

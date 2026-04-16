@@ -9,7 +9,7 @@ import (
 )
 
 // BaseTaskListSectionPreUpdate applies incoming changes from to a TaskList Section, and validates it's status
-func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSection, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) error {
+func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSection, changes map[string]any, principal authentication.Principal, store *storage.Store) error {
 	// section := tls.GetBaseTaskListSection()
 	oldStatus := tls.GetStatus()
 

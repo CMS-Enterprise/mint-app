@@ -17,7 +17,7 @@ func UpdatePlanBasics(
 	ctx context.Context,
 	logger *zap.Logger,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 	principal authentication.Principal,
 	store *storage.Store,
 ) (*models.PlanBasics, error) {

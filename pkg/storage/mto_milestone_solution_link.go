@@ -43,7 +43,7 @@ func MTOMilestoneSolutionLinkGetByMilestoneID(
 	milestoneID uuid.UUID,
 ) ([]*models.MTOMilestoneSolutionLink, error) {
 
-	arg := map[string]interface{}{"milestone_id": milestoneID}
+	arg := map[string]any{"milestone_id": milestoneID}
 
 	returned, procErr := sqlutils.SelectProcedure[models.MTOMilestoneSolutionLink](
 		np,
@@ -72,7 +72,7 @@ func MTOMilestoneSolutionLinkMergeSolutionsToMilestones(
 	if err != nil {
 		return nil, err
 	}
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"milestone_id": milestoneID,
 		"solution_ids": pq.Array(solutionIDs),
 		"created_by":   actorID,
@@ -106,7 +106,7 @@ func MTOMilestoneSolutionLinkMilestonesToSolution(
 	}
 
 	// Prepare query arguments
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"solution_id":   solutionID,
 		"milestone_ids": pq.Array(milestoneIDs),
 		"created_by":    actorID,

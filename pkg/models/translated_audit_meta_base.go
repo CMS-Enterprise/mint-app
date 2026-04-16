@@ -11,7 +11,7 @@ import (
 type TranslatedAuditMetaData interface {
 	isAuditMetaData()
 	Value() (driver.Value, error)
-	Scan(src interface{}) error
+	Scan(src any) error
 }
 
 // TranslatedAuditMetaBaseStruct represents the shared data in common between all HumanizedAuditChanges
@@ -39,7 +39,7 @@ func (hmb TranslatedAuditMetaBaseStruct) Value() (driver.Value, error) {
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (hmb *TranslatedAuditMetaBaseStruct) Scan(src interface{}) error {
+func (hmb *TranslatedAuditMetaBaseStruct) Scan(src any) error {
 	if src == nil {
 		return nil
 	}
@@ -56,7 +56,7 @@ func (hmb *TranslatedAuditMetaBaseStruct) Scan(src interface{}) error {
 }
 
 // parseRawTranslatedAuditMetaData conditionally parses meta data from JSON to a specific meta data type
-func parseRawTranslatedAuditMetaData(metaDataType *TranslatedAuditMetaDataType, rawMetaDataJSON interface{}) (TranslatedAuditMetaData, error) {
+func parseRawTranslatedAuditMetaData(metaDataType *TranslatedAuditMetaDataType, rawMetaDataJSON any) (TranslatedAuditMetaData, error) {
 
 	if metaDataType == nil {
 		return nil, nil

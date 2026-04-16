@@ -33,7 +33,7 @@ func PlanBeneficiariesGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uu
 }
 
 // PlanBeneficiariesUpdate updates a plan Beneficiary buisness object
-func PlanBeneficiariesUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanBeneficiaries, error) {
+func PlanBeneficiariesUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]any, principal authentication.Principal, store *storage.Store) (*models.PlanBeneficiaries, error) {
 	// Get existing plan beneficiaries
 	existing, err := store.PlanBeneficiariesGetByID(logger, id)
 	if err != nil {

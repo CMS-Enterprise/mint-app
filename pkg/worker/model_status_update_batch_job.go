@@ -22,7 +22,7 @@ const (
 
 // ModelStatusUpdateBatchJob is the job the cron job initiates to check if models need a status update.
 // It will batch all child jobs, and when complete it will fire a callback
-func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...any) error {
 	helper := faktory_worker.HelperFor(ctx)
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("Getting collection of model plans that require status checking")
@@ -83,7 +83,7 @@ func CreateModelStatusJobInBatch[T logging.ChainableErrorOrWarnLogger[T]](logger
 }
 
 // ModelStatusUpdateBatchJobSuccess is called when the model status update job has completed.
-func (w *Worker) ModelStatusUpdateBatchJobSuccess(ctx context.Context, args ...interface{}) error {
+func (w *Worker) ModelStatusUpdateBatchJobSuccess(ctx context.Context, args ...any) error {
 	//TODO: verify if the BID is available
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("Model Status update job completed successfully")

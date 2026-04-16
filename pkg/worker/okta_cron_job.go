@@ -11,7 +11,7 @@ const (
 )
 
 // RefreshOktaCronJob is the job the cron schedule to refresh okta token every 15 days
-func (w *Worker) RefreshOktaCronJob(ctx context.Context, args ...interface{}) error {
+func (w *Worker) RefreshOktaCronJob(ctx context.Context, args ...any) error {
 	logger := FaktoryLoggerFromContext(ctx)
 
 	_, err := w.OktaAPIClient.SearchByName(ctx, "MINT")

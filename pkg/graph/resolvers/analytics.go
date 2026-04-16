@@ -19,7 +19,7 @@ models by status, number of followers per model, total number of models, and num
 */
 func Analytics(ctx context.Context, store *storage.Store, logger *zap.Logger) (*models.AnalyticsSummary, error) {
 
-	analyticsSummary, err := sqlutils.WithTransaction[models.AnalyticsSummary](
+	analyticsSummary, err := sqlutils.WithTransaction(
 		store,
 		func(tx *sqlx.Tx) (*models.AnalyticsSummary, error) {
 

@@ -61,7 +61,7 @@ func (suite *ResolverSuite) TestUpdateMTOCommonSolutionContractor() {
 		nil,
 		email.AddressBook{},
 		contractor.ID,
-		map[string]interface{}{
+		map[string]any{
 			"contractTitle":  updatedTitle,
 			"contractorName": updatedName,
 		},

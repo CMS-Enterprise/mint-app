@@ -34,7 +34,7 @@ func IDDOCQuestionnaireUpdate(np sqlutils.NamedPreparer, logger *zap.Logger, que
 
 // IDDOCQuestionnaireGetByIDLoader returns the IDDOC questionnaires for a slice of ids
 func IDDOCQuestionnaireGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.IDDOCQuestionnaire, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 
@@ -47,7 +47,7 @@ func IDDOCQuestionnaireGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, i
 
 // IDDOCQuestionnaireGetByModelPlanIDLoader returns the IDDOC questionnaire for a slice of model plan ids
 func IDDOCQuestionnaireGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.IDDOCQuestionnaire, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 

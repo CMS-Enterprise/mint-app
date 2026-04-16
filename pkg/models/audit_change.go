@@ -46,8 +46,8 @@ type AuditFields map[string]AuditField
 
 // AuditField us a way to represent the old and new values of data from the database.
 type AuditField struct {
-	Old interface{} `json:"old" db:"old"`
-	New interface{} `json:"new" db:"new"`
+	Old any `json:"old" db:"old"`
+	New any `json:"new" db:"new"`
 }
 
 // Value let's the SQL driver transform the data to the AuditFields type
@@ -57,9 +57,9 @@ func (a AuditFields) Value() (driver.Value, error) {
 	return j, err
 }
 
-// ToInterface returns the audit fields as a generic map[string]interface{}
-func (a *AuditFields) ToInterface() (map[string]interface{}, error) {
-	retVal := map[string]interface{}{}
+// ToInterface returns the audit fields as a generic map[string]any
+func (a *AuditFields) ToInterface() (map[string]any, error) {
+	retVal := map[string]any{}
 
 	bytes, err := json.Marshal(a)
 	if err != nil {
@@ -73,7 +73,7 @@ func (a *AuditFields) ToInterface() (map[string]interface{}, error) {
 }
 
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
-func (a *AuditFields) Scan(src interface{}) error {
+func (a *AuditFields) Scan(src any) error {
 	if src == nil {
 		return nil //TODO fix this
 	}

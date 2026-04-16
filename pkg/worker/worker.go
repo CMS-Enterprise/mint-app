@@ -33,7 +33,7 @@ type Worker struct {
 
 type JobWrapper struct {
 	Name string
-	Job  func(context.Context, ...interface{}) error
+	Job  func(context.Context, ...any) error
 }
 
 func (w *Worker) getJobWrappers(ctx context.Context) []JobWrapper {

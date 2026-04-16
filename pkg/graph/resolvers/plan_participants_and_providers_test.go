@@ -74,7 +74,7 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 	suite.NoError(err)
 	isNewTypeOfProvidersOrSuppliersExpected := true
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"confidenceNote":                       "This is a confidence note",
 		"recruitmentNote":                      "This is a recruitment note",
 		"estimateConfidence":                   string(models.ConfidenceSlightly),

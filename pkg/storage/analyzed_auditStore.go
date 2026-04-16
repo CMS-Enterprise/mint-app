@@ -64,7 +64,7 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_id": modelPlanID,
 		"date":          date.Format("2006-01-02"),
 	}
@@ -93,7 +93,7 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 		"date":           date.Format("2006-01-02"),
 	}
@@ -117,7 +117,7 @@ func (s *Store) AnalyzedAuditGetByDate(_ logging.ILogger, date time.Time) ([]*mo
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"date": date.Format("2006-01-02"),
 	}
 
@@ -135,7 +135,7 @@ func AnalyzedAuditGetByModelPlanIDsAndDateLoader(
 	paramTableJSON string,
 ) ([]*models.AnalyzedAudit, error) {
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 

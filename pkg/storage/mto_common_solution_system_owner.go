@@ -15,7 +15,7 @@ import (
 
 // MTOCommonSolutionSystemOwnerGetByCommonSolutionKeyLoader returns a list of system owners associated with the given keys.
 func MTOCommonSolutionSystemOwnerGetByCommonSolutionKeyLoader(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonSolutionKey) ([]*models.MTOCommonSolutionSystemOwner, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"keys": pq.Array(keys),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionSystemOwner](np, sqlqueries.MTOCommonSolutionSystemOwner.GetByCommonSolutionKey, args)
@@ -43,7 +43,7 @@ func MTOCommonSolutionCreateSystemOwner(np sqlutils.NamedPreparer, _ *zap.Logger
 
 // MTOCommonSolutionSystemOwnerGetByID fetches a system owner by its ID.
 func MTOCommonSolutionSystemOwnerGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.MTOCommonSolutionSystemOwner, error) {
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 
 	returned, err := sqlutils.GetProcedure[models.MTOCommonSolutionSystemOwner](np, sqlqueries.MTOCommonSolutionSystemOwner.GetByID, arg)
 	if err != nil {
@@ -54,7 +54,7 @@ func MTOCommonSolutionSystemOwnerGetByID(np sqlutils.NamedPreparer, _ *zap.Logge
 
 // MTOCommonSolutionSystemOwnerGetByIDLoader returns a list of system owners associated with the given IDs.
 func MTOCommonSolutionSystemOwnerGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOCommonSolutionSystemOwner, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 	returned, err := sqlutils.SelectProcedure[models.MTOCommonSolutionSystemOwner](np, sqlqueries.MTOCommonSolutionSystemOwner.GetByIDs, args)
@@ -81,7 +81,7 @@ func MTOCommonSolutionSystemOwnerDeleteByID(tx *sqlx.Tx, actorUserID uuid.UUID, 
 		return nil, err
 	}
 
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 	returnedSystemOwner, err := sqlutils.GetProcedure[models.MTOCommonSolutionSystemOwner](tx, sqlqueries.MTOCommonSolutionSystemOwner.DeleteByID, arg)
 	if err != nil {
 		return nil, err

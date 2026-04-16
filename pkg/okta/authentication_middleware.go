@@ -133,8 +133,8 @@ func jwtGroupsContainsJobCode(jwt *jwtverifier.Jwt, jobCode string) bool {
 		return false
 	}
 
-	// json arrays decode to `[]interface{}`
-	codes, ok := list.([]interface{})
+	// json arrays decode to `[]any`
+	codes, ok := list.([]any)
 	if !ok {
 		return false
 	}

@@ -11,7 +11,7 @@ func (suite *ResolverSuite) TestAuditChangeCollectionByIDAndTable() {
 	suite.Len(auditChanges, 1)
 
 	for i := 1; i < len(modelNames); i++ {
-		changes := map[string]interface{}{
+		changes := map[string]any{
 			"modelName": modelNames[i],
 		}
 		_, err = ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)

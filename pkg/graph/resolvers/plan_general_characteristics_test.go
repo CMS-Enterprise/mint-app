@@ -118,7 +118,7 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 
-	changes := map[string]interface{}{
+	changes := map[string]any{
 		"hasComponentsOrTracks":           true,
 		"hasComponentsOrTracksDiffer":     "One track does something one way, the other does it another way",
 		"hasComponentsOrTracksNote":       "Look at the tracks carefully",

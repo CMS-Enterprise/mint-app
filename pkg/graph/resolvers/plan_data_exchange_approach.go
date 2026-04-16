@@ -31,13 +31,13 @@ func PlanDataExchangeApproachUpdate(
 	ctx context.Context,
 	logger *zap.Logger,
 	id uuid.UUID,
-	changes map[string]interface{},
+	changes map[string]any,
 	principal authentication.Principal,
 	store *storage.Store,
 	emailService oddmail.EmailService,
 	emailAddressBook email.AddressBook,
 ) (*models.PlanDataExchangeApproach, error) {
-	updatedDataExchangeApproach, err := sqlutils.WithTransaction[models.PlanDataExchangeApproach](
+	updatedDataExchangeApproach, err := sqlutils.WithTransaction(
 		store,
 		func(tx *sqlx.Tx) (*models.PlanDataExchangeApproach, error) {
 			// Get existing plan data exchange approach

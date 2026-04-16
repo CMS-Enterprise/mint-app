@@ -26,7 +26,7 @@ func UserViewCustomizationGetByUserID(
 		return nil, err
 	}
 
-	retVal, err := sqlutils.WithTransaction[models.UserViewCustomization](
+	retVal, err := sqlutils.WithTransaction(
 		store,
 		func(tx *sqlx.Tx) (*models.UserViewCustomization, error) {
 			uvc, err := storage.UserViewCustomizationGetByUserID(tx, account.ID)
@@ -136,7 +136,7 @@ func UserViewCustomizationUpdate(
 	logger *zap.Logger,
 	store *storage.Store,
 	principal authentication.Principal,
-	changes map[string]interface{},
+	changes map[string]any,
 ) (*models.UserViewCustomization, error) {
 	// Ensure the principal has an account, throw an error otherwise.
 	// This function relies on the account ID for many of its functions

@@ -19,7 +19,7 @@ func TestTranslationFieldInterface(t *testing.T) {
 
 }
 
-func testIfImplementsITranslationField(t *testing.T, interfaceValue interface{}) {
+func testIfImplementsITranslationField(t *testing.T, interfaceValue any) {
 	_, ok := interfaceValue.(ITranslationField)
 	assert.True(t, ok, "%T does not implement ITranslationField", interfaceValue)
 }
@@ -203,7 +203,7 @@ func TestGetOptions(t *testing.T) {
 			ParentReferencesLabel: nil,
 		},
 		translationOptionRelation: translationOptionRelation{
-			Options: map[string]interface{}{
+			Options: map[string]any{
 				field1Key: field1Value,
 				field2Key: field2Value,
 			},
@@ -220,7 +220,7 @@ func TestGetOptions(t *testing.T) {
 
 	field1ValueExport := "ExportOption"
 	// Add export options and assert they are retrieved
-	TranslationField.ExportOptions = map[string]interface{}{
+	TranslationField.ExportOptions = map[string]any{
 		field1Key: field1ValueExport,
 	}
 	options2, hasOptions2 := TranslationField.GetOptions()

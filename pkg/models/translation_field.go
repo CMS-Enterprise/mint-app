@@ -151,7 +151,7 @@ type ITranslationField interface {
 
 	HasOptions() bool
 	// Returns options if a translationField has options
-	GetOptions() (map[string]interface{}, bool)
+	GetOptions() (map[string]any, bool)
 
 	HasParent() bool
 	GetParent() (ITranslationParent, bool)
@@ -206,10 +206,10 @@ type TranslationFieldWithParent struct {
 
 // translationOptionRelation is struct that is mean to be embedded in other Translation types to expose options, and functionality of options
 type translationOptionRelation struct {
-	Options map[string]interface{} `json:"options"`
+	Options map[string]any `json:"options"`
 
 	// ExportOptions is the optional values of options when it should differ from regular viewable options
-	ExportOptions map[string]interface{} `json:"exportOptions"` // This is optional, but GQL doesn't allow a map pointer
+	ExportOptions map[string]any `json:"exportOptions"` // This is optional, but GQL doesn't allow a map pointer
 }
 
 // HasOptions specifies if a translation field has options or not
@@ -218,7 +218,7 @@ func (tor translationOptionRelation) HasOptions() bool {
 }
 
 // GetOptions returns options for a translation
-func (tor translationOptionRelation) GetOptions() (map[string]interface{}, bool) {
+func (tor translationOptionRelation) GetOptions() (map[string]any, bool) {
 	if len(tor.ExportOptions) > 0 {
 		return tor.ExportOptions, tor.HasOptions()
 	}
@@ -235,7 +235,7 @@ func (tor translationNoOptionRelation) HasOptions() bool {
 }
 
 // GetOptions returns options for a translation
-func (tor translationNoOptionRelation) GetOptions() (map[string]interface{}, bool) {
+func (tor translationNoOptionRelation) GetOptions() (map[string]any, bool) {
 	return nil, tor.HasOptions()
 }
 

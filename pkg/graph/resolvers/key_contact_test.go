@@ -162,7 +162,7 @@ func (suite *ResolverSuite) TestKeyContactsGetByCategoryIDLOADER() {
 	}
 
 	// Call the helper method to validate all results
-	loaders.VerifyLoaders[uuid.UUID, []*models.KeyContact, map[uuid.UUID]*models.KeyContact](
+	loaders.VerifyLoaders(
 		suite.testConfigs.Context,
 		&suite.Suite,
 		loaders.KeyContact.ByCategoryID,
@@ -222,7 +222,7 @@ func (suite *ResolverSuite) TestGetKeyContactByIDLOADER() {
 	}
 
 	// Call the helper method to validate all results
-	loaders.VerifyLoaders[uuid.UUID, *models.KeyContact, *models.KeyContact](
+	loaders.VerifyLoaders(
 		suite.testConfigs.Context,
 		&suite.Suite,
 		loaders.KeyContact.ByID,
@@ -274,7 +274,7 @@ func (suite *ResolverSuite) TestGetAllKeyContactsLoader() {
 	}
 
 	// Call the helper method to validate all results
-	loaders.VerifyLoaders[*uuid.UUID, []*models.KeyContact, int](
+	loaders.VerifyLoaders(
 		suite.testConfigs.Context,
 		&suite.Suite,
 		loaders.KeyContact.GetAll,
@@ -324,7 +324,7 @@ func (suite *ResolverSuite) TestUpdateKeyContact() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		contact.ID,
-		map[string]interface{}{
+		map[string]any{
 			"subjectArea": newSubjectArea,
 		},
 	)

@@ -12,7 +12,7 @@ import (
 
 // MTOTemplateMilestoneGetByIDLoader returns template milestones by ID
 func MTOTemplateMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.MTOTemplateMilestone, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 
@@ -26,7 +26,7 @@ func MTOTemplateMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger,
 
 // MTOTemplateMilestoneGetByTemplateIDLoader returns template milestones by template ID
 func MTOTemplateMilestoneGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, templateIDs []uuid.UUID) ([]*models.MTOTemplateMilestone, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"template_ids": pq.Array(templateIDs),
 	}
 
@@ -40,7 +40,7 @@ func MTOTemplateMilestoneGetByTemplateIDLoader(np sqlutils.NamedPreparer, _ *zap
 
 // MTOTemplateMilestoneGetByCategoryIDLoader returns template milestones by category ID
 func MTOTemplateMilestoneGetByCategoryIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, categoryIDs []uuid.UUID) ([]*models.MTOTemplateMilestone, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"category_ids": pq.Array(categoryIDs),
 	}
 
@@ -54,7 +54,7 @@ func MTOTemplateMilestoneGetByCategoryIDLoader(np sqlutils.NamedPreparer, _ *zap
 
 // MTOTemplateMilestoneGetBySolutionIDLoader returns template milestones by solution ID
 func MTOTemplateMilestoneGetBySolutionIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, solutionIDs []uuid.UUID) ([]*models.MTOTemplateMilestone, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"solution_ids": pq.Array(solutionIDs),
 	}
 

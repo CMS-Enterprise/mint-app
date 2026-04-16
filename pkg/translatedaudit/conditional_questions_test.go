@@ -13,8 +13,8 @@ import (
 func TestCheckChildConditionals(t *testing.T) {
 	childMap := testChildMap()
 
-	var old interface{}
-	var new interface{}
+	var old any
+	var new any
 	t.Run("Nil old means no conditionals", func(t *testing.T) {
 		conditionals := checkChildConditionals(old, new, childMap)
 		assert.Nil(t, conditionals)

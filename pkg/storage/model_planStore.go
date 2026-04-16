@@ -22,7 +22,7 @@ import (
 )
 
 func ModelPlansGetByModePlanIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.ModelPlan, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 	//TODO: see if we can more natively handle an array of UUIDs, the uuids type still doesn't cast directly
@@ -44,7 +44,7 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"paramTableJSON": paramTableJSON,
 	}
 
@@ -132,7 +132,7 @@ func (s *Store) ModelPlanGetByID(np sqlutils.NamedPreparer, logger logging.ILogg
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 
 	err = stmt.Get(&plan, arg)
 
@@ -169,7 +169,7 @@ func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*model
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{"model_name": modelName}
+	arg := map[string]any{"model_name": modelName}
 
 	err = stmt.Get(&plan, arg)
 	if err != nil {
@@ -199,7 +199,7 @@ func (s *Store) ModelPlanCollection(logger logging.ILogger, archived bool) ([]*m
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"archived": archived,
 	}
 
@@ -235,7 +235,7 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"archived": archived,
 		"user_id":  userID,
 	}
@@ -267,7 +267,7 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"archived": archived,
 	}
 
@@ -288,7 +288,7 @@ func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool)
 }
 func ModelPlanCollectionApproachingClearance(np sqlutils.NamedPreparer, logger *zap.Logger) ([]*models.ModelPlan, error) {
 	logger.Info("fetching model plans approaching clearance")
-	args := map[string]interface{}{}
+	args := map[string]any{}
 
 	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.CollectionApproachingClearance, args)
 	if err != nil {
@@ -313,7 +313,7 @@ func ModelPlanCollectionApproachingClearance(np sqlutils.NamedPreparer, logger *
 func (s *Store) ModelPlanCollectionNewlyCreated(logger *zap.Logger) ([]*models.ModelPlan, error) {
 	logger.Info("fetching model plans created within the last 6 months")
 
-	args := map[string]interface{}{}
+	args := map[string]any{}
 	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereNewlyCreated, args)
 	if err != nil {
 		if sqlutils.IsNoRowsResult(err) {
@@ -340,7 +340,7 @@ func (s *Store) ModelPlanCollectionFavorited(
 	userID uuid.UUID,
 ) ([]*models.ModelPlan, error) {
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"archived": archived,
 		"user_id":  userID,
 	}
@@ -369,7 +369,7 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_id": id,
 	}
 
@@ -382,7 +382,7 @@ func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Resul
 
 }
 func ModelPlanGetByMTOSolutionKeyLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"mto_common_solution_keys": pq.Array(keys),
 	}
 	res, err := sqlutils.SelectProcedure[models.ModelPlanAndMTOCommonSolution](np, sqlqueries.ModelPlan.GetByMTOSolutionKeyLoader, args)
@@ -394,7 +394,7 @@ func ModelPlanGetByMTOSolutionKeyLOADER(np sqlutils.NamedPreparer, _ *zap.Logger
 
 // ModelPlanGetByComponentGroupLoader returns model plans for multiple component group keys using a batched loader query
 func (s *Store) ModelPlanGetByComponentGroupLoader(logger *zap.Logger, componentGroups []models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"component_group_keys": pq.Array(componentGroups),
 	}
 	res, err := sqlutils.SelectProcedure[models.ModelPlanAndGroup](s.db, sqlqueries.ModelPlan.GetByComponentGroupLoader, args)
@@ -405,7 +405,7 @@ func (s *Store) ModelPlanGetByComponentGroupLoader(logger *zap.Logger, component
 }
 
 func (s *Store) ModelPlanGetTaskListStatus(logger *zap.Logger, modelPlanID uuid.UUID) (models.TaskStatus, error) {
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"model_plan_id": modelPlanID,
 	}
 
@@ -424,7 +424,7 @@ func (s *Store) ModelPlanGetTaskListStatus(logger *zap.Logger, modelPlanID uuid.
 }
 
 func ModelPlanGetByStatuses(np sqlutils.NamedPreparer, logger *zap.Logger, statuses []models.ModelStatus) ([]*models.ModelPlan, error) {
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"statuses": pq.Array(statuses),
 	}
 

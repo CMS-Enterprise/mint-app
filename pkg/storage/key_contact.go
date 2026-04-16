@@ -14,7 +14,7 @@ import (
 )
 
 func KeyContactGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.KeyContact, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"ids": pq.Array(ids),
 	}
 	returned, err := sqlutils.SelectProcedure[models.KeyContact](np, sqlqueries.KeyContact.GetByIDs, args)
@@ -55,7 +55,7 @@ func KeyContactDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logg
 		return nil, err
 	}
 
-	arg := map[string]interface{}{"id": id}
+	arg := map[string]any{"id": id}
 	returnedContact, err := sqlutils.GetProcedure[models.KeyContact](tx, sqlqueries.KeyContact.DeleteByID, arg)
 	if err != nil {
 		return nil, err
@@ -65,7 +65,7 @@ func KeyContactDeleteContactByID(tx *sqlx.Tx, actorUserID uuid.UUID, _ *zap.Logg
 
 // KeyContactGetByCategoryIDsLoader returns all key contacts for the given subject category IDs
 func KeyContactGetByCategoryIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uuid.UUID) ([]*models.KeyContact, error) {
-	args := map[string]interface{}{
+	args := map[string]any{
 		"category_ids": pq.Array(ids),
 	}
 	returned, err := sqlutils.SelectProcedure[models.KeyContact](np, sqlqueries.KeyContact.GetByCategoryIDs, args)

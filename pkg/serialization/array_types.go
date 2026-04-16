@@ -11,7 +11,7 @@ import (
 // Note: functionality initially explored in EASI-1982/generic_type_array_serialization
 
 // GenericStringArrayScan provides functionality
-func GenericStringArrayScan[ArrayType ~[]memberType, memberType ~string](src interface{}, array *ArrayType) error {
+func GenericStringArrayScan[ArrayType ~[]memberType, memberType ~string](src any, array *ArrayType) error {
 	switch src := src.(type) {
 	case []byte:
 		return scanStringArrayBytes(src, array)

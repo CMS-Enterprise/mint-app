@@ -79,7 +79,7 @@ func (suite *ResolverSuite) TestMTOCategoryGetByModelPlanIDLOADER() {
 		}
 		return false
 	}
-	loaders.VerifyLoaders[uuid.UUID, []*models.MTOCategory, uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOCategory.ByModelPlanID,
+	loaders.VerifyLoaders(suite.testConfigs.Context, &suite.Suite, loaders.MTOCategory.ByModelPlanID,
 		expectedResults, verifyFunc)
 
 }
@@ -680,7 +680,7 @@ func (suite *ResolverSuite) TestMTOCreateStandardCategories() {
 	// 3) assert we have +3 categories, since the resolver will create an entirely new "Participants", PLUS the 2 new subcategories to go under it
 
 	// 1) Find and rename
-	participantsCategory, found := lo.Find[*models.MTOCategory](updatedCategories, func(item *models.MTOCategory) bool {
+	participantsCategory, found := lo.Find(updatedCategories, func(item *models.MTOCategory) bool {
 		return item.Name == mtoCatParticipants
 	})
 	suite.True(found)

@@ -67,7 +67,7 @@ func (s *Store) PlanFavoriteDelete(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"user_id":       userAccountID,
 		"model_plan_id": planID,
 	}
@@ -98,7 +98,7 @@ func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"user_id":       userAccountID,
 		"model_plan_id": modelPlanID,
 	}
@@ -127,7 +127,7 @@ func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{}
+	arg := map[string]any{}
 
 	err = stmt.Select(&userIDs, arg)
 	if err != nil {
@@ -152,7 +152,7 @@ func PlanFavoriteGetCollectionByUserID(
 	}
 	defer stmt.Close()
 
-	arg := map[string]interface{}{
+	arg := map[string]any{
 		"user_id": userAccountID,
 	}
 

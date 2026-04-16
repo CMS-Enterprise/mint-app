@@ -38,7 +38,7 @@ func UserViewCustomizationGetByUserID(
 	np sqlutils.NamedPreparer,
 	userID uuid.UUID,
 ) (*models.UserViewCustomization, error) {
-	arg := map[string]interface{}{"user_id": userID}
+	arg := map[string]any{"user_id": userID}
 
 	retUserViewCustomization, procErr := sqlutils.GetProcedure[models.UserViewCustomization](
 		np,

@@ -69,7 +69,7 @@ type TranslatedAudit struct {
 	ActorName string `json:"actorName" db:"actor_name"`
 	ChangeID  int    `json:"changeID" db:"change_id"`
 
-	MetaDataRaw  interface{}                  `db:"meta_data"`
+	MetaDataRaw  any                          `db:"meta_data"`
 	MetaDataType *TranslatedAuditMetaDataType `db:"meta_data_type"`
 	MetaData     TranslatedAuditMetaData      `json:"metaData"`
 }

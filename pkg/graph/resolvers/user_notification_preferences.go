@@ -19,7 +19,7 @@ func UserNotificationPreferencesGetByUserID(ctx context.Context, userID uuid.UUI
 
 // UserNotificationPreferencesUpdate updates a user notification preferences object for a user
 // Notice: The specific UserNotificationPreference is inferred from the principal object. It will only update the notification preference for the current user.
-func UserNotificationPreferencesUpdate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, changes map[string]interface{}) (*models.UserNotificationPreferences, error) {
+func UserNotificationPreferencesUpdate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, changes map[string]any) (*models.UserNotificationPreferences, error) {
 	existingPreferences, err := UserNotificationPreferencesGetByUserID(ctx, principal.Account().ID)
 	if err != nil {
 		return nil, err
