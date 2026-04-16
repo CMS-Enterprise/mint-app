@@ -294,12 +294,22 @@ const CommonMilestoneForm = ({
           >
             <ConfirmLeaveRHF />
 
-            <h2 className="margin-y-0 line-height-serif-2">
-              {isAddMode && mtoCommonMilestoneMiscT(`${mode}.heading`)}
-              {commonMilestone?.name}
-            </h2>
+            {isAddMode ? (
+              <h2 className="margin-y-0 line-height-serif-2">
+                {mtoCommonMilestoneMiscT(`${mode}.heading`)}
+              </h2>
+            ) : (
+              <h2 className="margin-y-2 margin-bottom-4 padding-bottom-3 line-height-large border-bottom-1px border-base-lighter">
+                {commonMilestone?.name}
+              </h2>
+            )}
 
-            <p className="margin-top-1 margin-bottom-1 text-base-dark line-height-sans-5">
+            <p
+              className={classNames('text-base-dark line-height-sans-5', {
+                'margin-y-1': isAddMode,
+                'margin-y-0': isEditMode
+              })}
+            >
               <Trans
                 i18nKey={mtoCommonMilestoneMiscT('allFieldsRequired')}
                 components={{

@@ -19,7 +19,7 @@ exports[`Manage Common Milestone form > should matches snapshot 1`] = `
           Add a common milestone
         </h2>
         <p
-          class="margin-top-1 margin-bottom-1 text-base-dark line-height-sans-5"
+          class="text-base-dark line-height-sans-5 margin-y-1"
         >
           Fields marked with an asterisk ( 
           <span
