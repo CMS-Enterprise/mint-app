@@ -52,6 +52,7 @@ const CompletionModal = ({
                   solutionTabLink: (
                     <UswdsReactLink
                       to={`/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&page=1`}
+                      onClick={closeModal}
                     >
                       {' '}
                     </UswdsReactLink>
