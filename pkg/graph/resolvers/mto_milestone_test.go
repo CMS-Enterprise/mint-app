@@ -163,7 +163,6 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonPreservesFacilitatedByOt
 	facilitatedByOther := "Cross-team support"
 
 	commonMilestone, err := CreateMTOCommonMilestone(
-		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
 		"Facilitated by other common milestone test "+uuid.New().String(),
 		"Temporary common milestone used to verify facilitated by other is copied.",

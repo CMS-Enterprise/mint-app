@@ -44,7 +44,6 @@ func MTOCommonMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, i
 // MTOCommonMilestoneCreate creates a common milestone library row and its common solution links.
 func MTOCommonMilestoneCreate(
 	np sqlutils.TransactionPreparer,
-	logger *zap.Logger,
 	name string,
 	description string,
 	categoryName string,
@@ -57,7 +56,6 @@ func MTOCommonMilestoneCreate(
 	return sqlutils.WithTransaction(np, func(tx *sqlx.Tx) (*models.MTOCommonMilestone, error) {
 		return createMTOCommonMilestone(
 			tx,
-			logger,
 			name,
 			description,
 			categoryName,
@@ -72,7 +70,6 @@ func MTOCommonMilestoneCreate(
 
 func createMTOCommonMilestone(
 	tx *sqlx.Tx,
-	_ *zap.Logger,
 	name string,
 	description string,
 	categoryName string,

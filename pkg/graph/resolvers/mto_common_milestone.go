@@ -36,7 +36,6 @@ func MTOSuggestedMilestoneReasonGetByIDLOADER(ctx context.Context, id uuid.UUID)
 
 // CreateMTOCommonMilestone creates a common milestone in the library.
 func CreateMTOCommonMilestone(
-	logger *zap.Logger,
 	store *storage.Store,
 	name string,
 	description string,
@@ -49,7 +48,6 @@ func CreateMTOCommonMilestone(
 ) (*models.MTOCommonMilestone, error) {
 	return storage.MTOCommonMilestoneCreate(
 		store,
-		logger,
 		name,
 		description,
 		categoryName,

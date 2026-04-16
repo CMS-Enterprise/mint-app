@@ -22,7 +22,6 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneCreate() {
 
 	createdCommonMilestone, err := createMTOCommonMilestone(
 		tx,
-		s.logger,
 		fmt.Sprintf("Create common milestone test %s", uuid.New().String()),
 		"Used to verify common milestone create behavior.",
 		"Operations",
@@ -76,7 +75,6 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneArchiveRemovesTemplateReferencesB
 
 	createdCommonMilestone, err := createMTOCommonMilestone(
 		tx,
-		s.logger,
 		fmt.Sprintf("Archive cascade test common milestone %s", uuid.New().String()),
 		"Used to verify archiving removes template/library references while preserving applied milestones.",
 		"Operations",
@@ -323,7 +321,6 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneGetByIDLoaderAndArchiveReturnFaci
 
 	createdCommonMilestone, err := createMTOCommonMilestone(
 		tx,
-		s.logger,
 		fmt.Sprintf("Facilitated by other test %s", uuid.New().String()),
 		"Used to verify common milestone facilitatedByOther reads.",
 		"Operations",
@@ -362,7 +359,6 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneFacilitatedByOtherConstraint() {
 
 		_, err = createMTOCommonMilestone(
 			tx,
-			s.logger,
 			fmt.Sprintf("Invalid facilitated by other test %s", uuid.New().String()),
 			"Used to verify common milestone facilitatedByOther constraints.",
 			"Operations",
@@ -383,7 +379,6 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneFacilitatedByOtherConstraint() {
 
 		_, err = createMTOCommonMilestone(
 			tx,
-			s.logger,
 			fmt.Sprintf("Invalid other without detail test %s", uuid.New().String()),
 			"Used to verify common milestone facilitatedByOther constraints.",
 			"Operations",
@@ -406,7 +401,6 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneFacilitatedByOtherConstraint() {
 
 		_, err = createMTOCommonMilestone(
 			tx,
-			s.logger,
 			fmt.Sprintf("Invalid empty other detail test %s", uuid.New().String()),
 			"Used to verify common milestone facilitatedByOther constraints.",
 			"Operations",

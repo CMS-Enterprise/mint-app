@@ -14,7 +14,6 @@ func (suite *ResolverSuite) TestCreateMTOCommonMilestone() {
 	facilitatedByOther := "Cross-team support"
 
 	createdMilestone, err := CreateMTOCommonMilestone(
-		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
 		"Resolver create common milestone test",
 		"Temporary common milestone used for resolver create testing.",
@@ -64,7 +63,6 @@ func (suite *ResolverSuite) TestArchiveMTOCommonMilestone() {
 
 	subCategoryName := "Archive tests"
 	createdMilestone, err := CreateMTOCommonMilestone(
-		suite.testConfigs.Logger,
 		suite.testConfigs.Store,
 		"Archive resolver test milestone",
 		"Temporary common milestone used for resolver archive testing.",
