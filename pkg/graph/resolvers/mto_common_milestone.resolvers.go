@@ -72,7 +72,23 @@ func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *m
 
 // CreateMTOCommonMilestone is the resolver for the createMTOCommonMilestone field.
 func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName *string, facilitatedByRole []models.MTOFacilitator, facilitatedByOther *string, mtoCommonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
-	panic(fmt.Errorf("not implemented: CreateMTOCommonMilestone - createMTOCommonMilestone"))
+	principal := appcontext.Principal(ctx)
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	return CreateMTOCommonMilestone(
+		r.store,
+		name,
+		description,
+		categoryName,
+		subCategoryName,
+		facilitatedByRole,
+		facilitatedByOther,
+		mtoCommonSolutionKeys,
+		principalAccount.ID,
+	)
 }
 
 // UpdateMTOCommonMilestone is the resolver for the updateMTOCommonMilestone field.

@@ -41,6 +41,75 @@ func MTOCommonMilestoneGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, i
 	return returned, nil
 }
 
+// MTOCommonMilestoneCreate creates a common milestone library row and its common solution links.
+func MTOCommonMilestoneCreate(
+	np sqlutils.TransactionPreparer,
+	name string,
+	description string,
+	categoryName string,
+	subCategoryName *string,
+	facilitatedByRole []models.MTOFacilitator,
+	facilitatedByOther *string,
+	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	return sqlutils.WithTransaction(np, func(tx *sqlx.Tx) (*models.MTOCommonMilestone, error) {
+		if err := setCurrentSessionUserVariable(tx, actorUserID); err != nil {
+			return nil, fmt.Errorf("problem setting current session for user when creating common milestone: %w", err)
+		}
+
+		created, err := createMTOCommonMilestone(tx, name, description, categoryName, subCategoryName, facilitatedByRole, facilitatedByOther, actorUserID)
+		if err != nil {
+			return nil, fmt.Errorf("problem creating common milestone: %w", err)
+		}
+
+		if err := createMTOCommonMilestoneSolutionLinks(tx, created.ID, mtoCommonSolutionKeys); err != nil {
+			return nil, fmt.Errorf("problem creating solution links when creating MTO common milestone: %w", err)
+		}
+
+		return created, nil
+	})
+}
+
+func createMTOCommonMilestone(
+	tx *sqlx.Tx,
+	name string,
+	description string,
+	categoryName string,
+	subCategoryName *string,
+	facilitatedByRole []models.MTOFacilitator,
+	facilitatedByOther *string,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	args := map[string]any{
+		"id":                   uuid.New(),
+		"name":                 name,
+		"description":          description,
+		"category_name":        categoryName,
+		"sub_category_name":    subCategoryName,
+		"facilitated_by_role":  models.EnumArray[models.MTOFacilitator](facilitatedByRole),
+		"facilitated_by_other": facilitatedByOther,
+		"trigger_col":          pq.Array([]string{}),
+		"trigger_vals":         pq.Array([]string{}),
+		"created_by":           actorUserID,
+	}
+
+	return sqlutils.GetProcedure[models.MTOCommonMilestone](tx, sqlqueries.MTOCommonMilestone.Create, args)
+}
+
+func createMTOCommonMilestoneSolutionLinks(
+	tx *sqlx.Tx,
+	mtoCommonMilestoneID uuid.UUID,
+	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+) error {
+	args := map[string]any{
+		"id":                       mtoCommonMilestoneID,
+		"mto_common_solution_keys": pq.Array(mtoCommonSolutionKeys),
+	}
+
+	return sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonMilestone.CreateSolutionLinks, args)
+}
+
 // MTOCommonMilestoneArchive marks a common milestone as archived, removes its library/template references,
 // and preserves already-applied model plan milestones.
 func MTOCommonMilestoneArchive(

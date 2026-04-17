@@ -6,10 +6,134 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
-	"github.com/lib/pq"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+func (s *StoreTestSuite) TestMTOCommonMilestoneCreate() {
+	actorUserID := s.principal.Account().ID
+
+	subCategoryName := "Create tests"
+	facilitatedByOther := "Cross-team support"
+
+	createdCommonMilestone, err := MTOCommonMilestoneCreate(
+		s.store,
+		fmt.Sprintf("Create common milestone test %s", uuid.New().String()),
+		"Used to verify common milestone create behavior.",
+		"Operations",
+		&subCategoryName,
+		[]models.MTOFacilitator{models.MTOFacilitatorOther},
+		&facilitatedByOther,
+		[]models.MTOCommonSolutionKey{
+			models.MTOCSKInnovation,
+			models.MTOCSKInnovation,
+			models.MTOCSKAcoOs,
+		},
+		actorUserID,
+	)
+	s.Require().NoError(err)
+	s.Require().NotNil(createdCommonMilestone)
+	s.NotEqual(uuid.Nil, createdCommonMilestone.ID)
+	s.Equal("Used to verify common milestone create behavior.", createdCommonMilestone.Description)
+	s.Equal("Operations", createdCommonMilestone.CategoryName)
+	s.Require().NotNil(createdCommonMilestone.SubCategoryName)
+	s.Equal(subCategoryName, *createdCommonMilestone.SubCategoryName)
+	s.Equal(models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther}, createdCommonMilestone.FacilitatedByRole)
+	s.Require().NotNil(createdCommonMilestone.FacilitatedByOther)
+	s.Equal(facilitatedByOther, *createdCommonMilestone.FacilitatedByOther)
+	s.Nil(createdCommonMilestone.Section)
+	s.False(createdCommonMilestone.IsArchived)
+	s.False(createdCommonMilestone.IsAdded)
+
+	commonSolutions, err := MTOCommonSolutionGetByCommonMilestoneIDLoader(
+		s.store,
+		s.logger,
+		[]uuid.UUID{createdCommonMilestone.ID},
+	)
+	s.Require().NoError(err)
+	s.Require().Len(commonSolutions, 2)
+
+	s.Equal(1, countCommonMilestoneSolutionLinks(s, s.db, createdCommonMilestone.ID, models.MTOCSKInnovation))
+	s.Equal(1, countCommonMilestoneSolutionLinks(s, s.db, createdCommonMilestone.ID, models.MTOCSKAcoOs))
+}
+
+func (s *StoreTestSuite) TestCreateMTOCommonMilestoneCreatesOnlyMilestoneRow() {
+	actorUserID := s.principal.Account().ID
+
+	tx, err := s.store.Beginx()
+	s.Require().NoError(err)
+	defer tx.Rollback()
+
+	err = setCurrentSessionUserVariable(tx, actorUserID)
+	s.Require().NoError(err)
+
+	createdCommonMilestone, err := createMTOCommonMilestone(
+		tx,
+		fmt.Sprintf("Create common milestone row-only test %s", uuid.New().String()),
+		"Used to verify common milestone row-only create behavior.",
+		"Operations",
+		models.StringPointer("Create tests"),
+		[]models.MTOFacilitator{models.MTOFacilitatorModelTeam},
+		nil,
+		actorUserID,
+	)
+	s.Require().NoError(err)
+	s.Require().NotNil(createdCommonMilestone)
+	s.NotEqual(uuid.Nil, createdCommonMilestone.ID)
+
+	commonSolutions, err := MTOCommonSolutionGetByCommonMilestoneIDLoader(
+		tx,
+		s.logger,
+		[]uuid.UUID{createdCommonMilestone.ID},
+	)
+	s.Require().NoError(err)
+	s.Empty(commonSolutions)
+}
+
+func (s *StoreTestSuite) TestCreateMTOCommonMilestoneSolutionLinks() {
+	actorUserID := s.principal.Account().ID
+
+	tx, err := s.store.Beginx()
+	s.Require().NoError(err)
+	defer tx.Rollback()
+
+	err = setCurrentSessionUserVariable(tx, actorUserID)
+	s.Require().NoError(err)
+
+	createdCommonMilestone, err := createMTOCommonMilestone(
+		tx,
+		fmt.Sprintf("Create common milestone solution links test %s", uuid.New().String()),
+		"Used to verify common milestone solution link creation.",
+		"Operations",
+		models.StringPointer("Create tests"),
+		[]models.MTOFacilitator{models.MTOFacilitatorModelTeam},
+		nil,
+		actorUserID,
+	)
+	s.Require().NoError(err)
+
+	err = createMTOCommonMilestoneSolutionLinks(
+		tx,
+		createdCommonMilestone.ID,
+		[]models.MTOCommonSolutionKey{
+			models.MTOCSKInnovation,
+			models.MTOCSKInnovation,
+			models.MTOCSKAcoOs,
+		},
+	)
+	s.Require().NoError(err)
+
+	commonSolutions, err := MTOCommonSolutionGetByCommonMilestoneIDLoader(
+		tx,
+		s.logger,
+		[]uuid.UUID{createdCommonMilestone.ID},
+	)
+	s.Require().NoError(err)
+	s.Require().Len(commonSolutions, 2)
+
+	s.Equal(1, countCommonMilestoneSolutionLinks(s, tx, createdCommonMilestone.ID, models.MTOCSKInnovation))
+	s.Equal(1, countCommonMilestoneSolutionLinks(s, tx, createdCommonMilestone.ID, models.MTOCSKAcoOs))
+}
 
 func (s *StoreTestSuite) TestMTOCommonMilestoneArchiveRemovesTemplateReferencesButPreservesAppliedMilestones() {
 	actorUserID := s.principal.Account().ID
@@ -18,19 +142,29 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneArchiveRemovesTemplateReferencesB
 	s.Require().NoError(err)
 	defer tx.Rollback()
 
-	commonMilestoneID := uuid.New()
 	templateID := uuid.New()
 	templateMilestoneID := uuid.New()
 	templateSolutionID := uuid.New()
 	templateMilestoneSolutionLinkID := uuid.New()
 
-	err = insertTestMTOCommonMilestone(
+	err = setCurrentSessionUserVariable(tx, actorUserID)
+	s.Require().NoError(err)
+
+	createdCommonMilestone, err := createMTOCommonMilestone(
 		tx,
-		commonMilestoneID,
-		actorUserID,
-		models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorModelTeam},
+		fmt.Sprintf("Archive cascade test common milestone %s", uuid.New().String()),
+		"Used to verify archiving removes template/library references while preserving applied milestones.",
+		"Operations",
+		models.StringPointer("Archive tests"),
+		[]models.MTOFacilitator{models.MTOFacilitatorModelTeam},
 		nil,
+		actorUserID,
 	)
+	s.Require().NoError(err)
+	s.Require().NotNil(createdCommonMilestone)
+	commonMilestoneID := createdCommonMilestone.ID
+
+	err = createMTOCommonMilestoneSolutionLinks(tx, commonMilestoneID, []models.MTOCommonSolutionKey{models.MTOCSKInnovation})
 	s.Require().NoError(err)
 
 	commonSolutions, err := MTOCommonSolutionGetByKeyLoader(tx, s.logger, []models.MTOCommonSolutionKey{models.MTOCSKInnovation})
@@ -56,9 +190,6 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneArchiveRemovesTemplateReferencesB
 		templateMilestoneID,
 		actorUserID,
 	)
-	s.Require().NoError(err)
-
-	err = insertTestMTOCommonMilestoneSolutionLink(tx, commonMilestoneID, commonSolution.Key)
 	s.Require().NoError(err)
 
 	modelPlan := models.NewModelPlan(actorUserID, "Archive cascade milestone test")
@@ -214,33 +345,15 @@ func insertTestMTOTemplateMilestoneSolutionLink(
 	return nil
 }
 
-func insertTestMTOCommonMilestoneSolutionLink(
-	tx *sqlx.Tx,
-	commonMilestoneID uuid.UUID,
-	commonSolutionKey models.MTOCommonSolutionKey,
-) error {
-	_, err := tx.Exec(`
-		INSERT INTO mto_common_milestone_solution_link (
-			mto_common_milestone_id,
-			mto_common_solution_key
-		)
-		VALUES ($1, $2)
-	`,
-		commonMilestoneID,
-		commonSolutionKey,
-	)
-	if err != nil {
-		return fmt.Errorf("insert test common milestone solution link: %w", err)
-	}
-
-	return nil
+type sqlGetter interface {
+	Get(dest interface{}, query string, args ...interface{}) error
 }
 
-func countRowsByID(s *StoreTestSuite, tx *sqlx.Tx, tableName string, id uuid.UUID) int {
+func countRowsByID(s *StoreTestSuite, db sqlGetter, tableName string, id uuid.UUID) int {
 	s.T().Helper()
 
 	var count int
-	err := tx.Get(&count, fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE id = $1", tableName), id)
+	err := db.Get(&count, fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE id = $1", tableName), id)
 	s.Require().NoError(err)
 
 	return count
@@ -248,14 +361,14 @@ func countRowsByID(s *StoreTestSuite, tx *sqlx.Tx, tableName string, id uuid.UUI
 
 func countCommonMilestoneSolutionLinks(
 	s *StoreTestSuite,
-	tx *sqlx.Tx,
+	db sqlGetter,
 	commonMilestoneID uuid.UUID,
 	commonSolutionKey models.MTOCommonSolutionKey,
 ) int {
 	s.T().Helper()
 
 	var count int
-	err := tx.Get(
+	err := db.Get(
 		&count,
 		`
 			SELECT COUNT(*)
@@ -271,11 +384,11 @@ func countCommonMilestoneSolutionLinks(
 	return count
 }
 
-func commonMilestoneIsArchived(s *StoreTestSuite, tx *sqlx.Tx, commonMilestoneID uuid.UUID) bool {
+func commonMilestoneIsArchived(s *StoreTestSuite, db sqlGetter, commonMilestoneID uuid.UUID) bool {
 	s.T().Helper()
 
 	var isArchived bool
-	err := tx.Get(&isArchived, "SELECT is_archived FROM mto_common_milestone WHERE id = $1", commonMilestoneID)
+	err := db.Get(&isArchived, "SELECT is_archived FROM mto_common_milestone WHERE id = $1", commonMilestoneID)
 	s.Require().NoError(err)
 
 	return isArchived
@@ -287,17 +400,24 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneGetByIDLoaderAndArchiveReturnFaci
 	s.Require().NoError(err)
 	defer tx.Rollback()
 
-	commonMilestoneID := uuid.New()
 	facilitatedByOther := "Cross-team support"
 
-	err = insertTestMTOCommonMilestone(
+	err = setCurrentSessionUserVariable(tx, actorUserID)
+	s.Require().NoError(err)
+
+	createdCommonMilestone, err := createMTOCommonMilestone(
 		tx,
-		commonMilestoneID,
-		actorUserID,
-		models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther},
+		fmt.Sprintf("Facilitated by other test %s", uuid.New().String()),
+		"Used to verify common milestone facilitatedByOther reads.",
+		"Operations",
+		models.StringPointer("Archive tests"),
+		[]models.MTOFacilitator{models.MTOFacilitatorOther},
 		&facilitatedByOther,
+		actorUserID,
 	)
 	s.Require().NoError(err)
+	s.Require().NotNil(createdCommonMilestone)
+	commonMilestoneID := createdCommonMilestone.ID
 
 	loaded, err := MTOCommonMilestoneGetByIDLoader(tx, s.logger, []uuid.UUID{commonMilestoneID})
 	s.Require().NoError(err)
@@ -320,15 +440,20 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneFacilitatedByOtherConstraint() {
 		s.Require().NoError(err)
 		defer tx.Rollback()
 
-		commonMilestoneID := uuid.New()
 		facilitatedByOther := "Cross-team support"
 
-		err = insertTestMTOCommonMilestone(
+		err = setCurrentSessionUserVariable(tx, actorUserID)
+		s.Require().NoError(err)
+
+		_, err = createMTOCommonMilestone(
 			tx,
-			commonMilestoneID,
-			actorUserID,
-			models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorModelTeam},
+			fmt.Sprintf("Invalid facilitated by other test %s", uuid.New().String()),
+			"Used to verify common milestone facilitatedByOther constraints.",
+			"Operations",
+			models.StringPointer("Archive tests"),
+			[]models.MTOFacilitator{models.MTOFacilitatorModelTeam},
 			&facilitatedByOther,
+			actorUserID,
 		)
 		s.Require().Error(err)
 		s.Contains(err.Error(), "mto_common_milestone_check_facilitated_by_other_only_if_other")
@@ -339,14 +464,18 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneFacilitatedByOtherConstraint() {
 		s.Require().NoError(err)
 		defer tx.Rollback()
 
-		commonMilestoneID := uuid.New()
+		err = setCurrentSessionUserVariable(tx, actorUserID)
+		s.Require().NoError(err)
 
-		err = insertTestMTOCommonMilestone(
+		_, err = createMTOCommonMilestone(
 			tx,
-			commonMilestoneID,
-			actorUserID,
-			models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther},
+			fmt.Sprintf("Invalid other without detail test %s", uuid.New().String()),
+			"Used to verify common milestone facilitatedByOther constraints.",
+			"Operations",
+			models.StringPointer("Archive tests"),
+			[]models.MTOFacilitator{models.MTOFacilitatorOther},
 			nil,
+			actorUserID,
 		)
 		s.Require().Error(err)
 		s.Contains(err.Error(), "mto_common_milestone_check_other_requires_facilitated_by_other")
@@ -357,64 +486,26 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneFacilitatedByOtherConstraint() {
 		s.Require().NoError(err)
 		defer tx.Rollback()
 
-		commonMilestoneID := uuid.New()
 		facilitatedByOther := ""
 
-		err = insertTestMTOCommonMilestone(
+		err = setCurrentSessionUserVariable(tx, actorUserID)
+		s.Require().NoError(err)
+
+		_, err = createMTOCommonMilestone(
 			tx,
-			commonMilestoneID,
-			actorUserID,
-			models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther},
+			fmt.Sprintf("Invalid empty other detail test %s", uuid.New().String()),
+			"Used to verify common milestone facilitatedByOther constraints.",
+			"Operations",
+			models.StringPointer("Archive tests"),
+			[]models.MTOFacilitator{models.MTOFacilitatorOther},
 			&facilitatedByOther,
+			actorUserID,
 		)
 		s.Require().Error(err)
 		s.Contains(err.Error(), "zero_string_check")
 	})
 }
 
-func insertTestMTOCommonMilestone(
-	tx *sqlx.Tx,
-	id uuid.UUID,
-	actorUserID uuid.UUID,
-	facilitatedByRole models.EnumArray[models.MTOFacilitator],
-	facilitatedByOther *string,
-) error {
-	_, err := tx.Exec(`
-		INSERT INTO mto_common_milestone (
-			id,
-			name,
-			description,
-			category_name,
-			sub_category_name,
-			facilitated_by_role,
-			facilitated_by_other,
-			section,
-			trigger_table,
-			trigger_col,
-			trigger_vals,
-			created_by
-		)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-	`,
-		id,
-		fmt.Sprintf("Facilitated by other test %s", id.String()),
-		"Used to verify common milestone facilitatedByOther reads.",
-		"Operations",
-		"Archive tests",
-		facilitatedByRole,
-		facilitatedByOther,
-		models.TLSBasics,
-		"plan_basics",
-		pq.Array([]string{"status"}),
-		pq.Array([]string{"PLAN_DRAFT"}),
-		actorUserID,
-	)
-	if err != nil {
-		return fmt.Errorf("insert test common milestone: %w", err)
-	}
-
-	return nil
-}
 func (s *StoreTestSuite) TestMTOCommonMilestoneGetCommonCategories() {
 	s.Run("returns deduplicated sorted options from seeded template data", func() {
 		options, err := MTOCommonMilestoneGetCommonCategories(s.store, s.logger)

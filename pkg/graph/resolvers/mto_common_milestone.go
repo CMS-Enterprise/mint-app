@@ -34,6 +34,31 @@ func MTOSuggestedMilestoneReasonGetByIDLOADER(ctx context.Context, id uuid.UUID)
 	return loaders.MTOSuggestedMilestoneReason.ByMTOSuggestedMilestoneID.Load(ctx, id)
 }
 
+// CreateMTOCommonMilestone creates a common milestone in the library.
+func CreateMTOCommonMilestone(
+	store *storage.Store,
+	name string,
+	description string,
+	categoryName string,
+	subCategoryName *string,
+	facilitatedByRole []models.MTOFacilitator,
+	facilitatedByOther *string,
+	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	return storage.MTOCommonMilestoneCreate(
+		store,
+		name,
+		description,
+		categoryName,
+		subCategoryName,
+		facilitatedByRole,
+		facilitatedByOther,
+		mtoCommonSolutionKeys,
+		actorUserID,
+	)
+}
+
 // ArchiveMTOCommonMilestone marks a common milestone as archived.
 func ArchiveMTOCommonMilestone(
 	logger *zap.Logger,
