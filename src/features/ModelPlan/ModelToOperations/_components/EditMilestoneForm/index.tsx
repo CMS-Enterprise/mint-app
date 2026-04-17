@@ -77,6 +77,7 @@ import {
 } from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import CompletionModal from '../CompletionModal';
 import LinkSolutionForm from '../LinkSolutionForm';
 import MilestoneNotes from '../MilestoneNotes';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
@@ -154,6 +155,9 @@ const EditMilestoneForm = ({
   const editMilestoneID = params.get('edit-milestone');
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const [isCompletionModalOpen, setIsCompletionModalOpen] =
+    useState<boolean>(false);
 
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
 
@@ -637,7 +641,13 @@ const EditMilestoneForm = ({
           // eslint-disable-next-line no-param-reassign
           submitted.current = true;
           setIsDirty(false);
-          closeModal();
+
+          if (formChanges.status === MtoMilestoneStatus.COMPLETED) {
+            setIsCompletionModalOpen(true);
+          } else {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }
         }
       });
 
@@ -725,6 +735,40 @@ const EditMilestoneForm = ({
         );
         closeModal();
         setIsModalOpen(false);
+      }
+    });
+  };
+
+  const handleRemoveRiskIndicator = () => {
+    setErrorMeta({
+      overrideMessage: modelToOperationsMiscT(
+        'modal.editMilestone.errorUpdated'
+      )
+    });
+
+    updateMilestone({
+      variables: {
+        id: editMilestoneID || '',
+        changes: {
+          riskIndicator: MtoRiskIndicator.ON_TRACK
+        }
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={modelToOperationsMiscT(
+              'modal.editMilestone.successUpdated'
+            )}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+            values={{ milestone: milestone?.name }}
+          />
+        );
+
+        setIsCompletionModalOpen(false);
+        closeModal();
       }
     });
   };
@@ -880,6 +924,20 @@ const EditMilestoneForm = ({
           {modelToOperationsMiscT('modal.editMilestone.goBack')}
         </Button>
       </Modal>
+
+      {milestone && isCompletionModalOpen && (
+        <CompletionModal
+          isModalOpen={isCompletionModalOpen}
+          closeModal={() => {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }}
+          mode="milestone"
+          modelID={modelID}
+          riskIndicator={milestone.riskIndicator}
+          handleRemoveRiskIndicator={handleRemoveRiskIndicator}
+        />
+      )}
 
       {milestone && (
         <>
