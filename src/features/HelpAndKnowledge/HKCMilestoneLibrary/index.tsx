@@ -46,7 +46,9 @@ const HKCMilestoneLibrary = () => {
 
   const milestones = useMemo(
     () =>
-      allCommonMilestones?.mtoCommonMilestones || ([] as MilestoneCardType[]),
+      allCommonMilestones?.mtoCommonMilestones.filter(
+        commonMilestone => !commonMilestone.isArchived
+      ) || ([] as MilestoneCardType[]),
     [allCommonMilestones?.mtoCommonMilestones]
   );
 
