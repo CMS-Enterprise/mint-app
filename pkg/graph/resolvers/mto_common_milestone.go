@@ -45,7 +45,7 @@ func CreateMTOCommonMilestone(
 	subCategoryName *string,
 	facilitatedByRole []models.MTOFacilitator,
 	facilitatedByOther *string,
-	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+	commonSolutions []models.MTOCommonSolutionKey,
 	actorUserID uuid.UUID,
 ) (*models.MTOCommonMilestone, error) {
 	return storage.MTOCommonMilestoneCreate(
@@ -56,7 +56,7 @@ func CreateMTOCommonMilestone(
 		subCategoryName,
 		facilitatedByRole,
 		facilitatedByOther,
-		mtoCommonSolutionKeys,
+		commonSolutions,
 		actorUserID,
 	)
 }
@@ -68,7 +68,7 @@ func UpdateMTOCommonMilestone(
 	store *storage.Store,
 	id uuid.UUID,
 	changes map[string]any,
-	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+	commonSolutions []models.MTOCommonSolutionKey,
 ) (*models.MTOCommonMilestone, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -88,7 +88,7 @@ func UpdateMTOCommonMilestone(
 		return nil, err
 	}
 
-	return storage.MTOCommonMilestoneUpdate(store, existingMilestone, mtoCommonSolutionKeys, principalAccount.ID)
+	return storage.MTOCommonMilestoneUpdate(store, existingMilestone, commonSolutions, principalAccount.ID)
 }
 
 // ArchiveMTOCommonMilestone marks a common milestone as archived.

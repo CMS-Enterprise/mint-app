@@ -14,12 +14,12 @@ body:graphql {
   mutation UpdateMTOCommonMilestone(
     $id: UUID!
     $changes: MTOCommonMilestoneChanges!
-    $mtoCommonSolutionKeys: [MTOCommonSolutionKey!]
+    $commonSolutions: [MTOCommonSolutionKey!]
   ) {
     updateMTOCommonMilestone(
       id: $id
       changes: $changes
-      mtoCommonSolutionKeys: $mtoCommonSolutionKeys
+      commonSolutions: $commonSolutions
     ) {
       id
       name
@@ -51,7 +51,7 @@ body:graphql:vars {
       "facilitatedByRole": ["MODEL_TEAM"],
       "facilitatedByOther": null
     },
-    "mtoCommonSolutionKeys": ["ACO_OS"]
+    "commonSolutions": ["ACO_OS"]
   }
 }
 

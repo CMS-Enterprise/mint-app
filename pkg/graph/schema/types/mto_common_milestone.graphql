@@ -69,13 +69,13 @@ extend type Mutation {
     subCategoryName: String
     facilitatedByRole: [MTOFacilitator!]!
     facilitatedByOther: String
-    mtoCommonSolutionKeys: [MTOCommonSolutionKey!]!
+    commonSolutions: [MTOCommonSolutionKey!]!
   ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
 
   updateMTOCommonMilestone(
     id: UUID!
     changes: MTOCommonMilestoneChanges!
-    mtoCommonSolutionKeys: [MTOCommonSolutionKey!]
+    commonSolutions: [MTOCommonSolutionKey!]
   ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
 
   archiveMTOCommonMilestone(id: UUID!): MTOCommonMilestone!

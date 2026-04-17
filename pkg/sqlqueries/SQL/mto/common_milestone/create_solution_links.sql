@@ -8,5 +8,5 @@ SELECT
 FROM (
     SELECT DISTINCT
         mto_common_solution_key
-    FROM UNNEST(CAST(:mto_common_solution_keys AS MTO_COMMON_SOLUTION_KEY[])) AS keys(mto_common_solution_key)
+    FROM UNNEST(CAST(:common_solutions AS MTO_COMMON_SOLUTION_KEY[])) AS keys(mto_common_solution_key)
 ) solution_keys;
