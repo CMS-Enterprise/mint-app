@@ -82,7 +82,7 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                     Add a common milestone
                   </h2>
                   <p
-                    class="margin-top-1 margin-bottom-1 text-base-dark line-height-sans-5"
+                    class="text-base-dark line-height-sans-5 margin-y-1"
                   >
                     Fields marked with an asterisk ( 
                     <span
@@ -183,54 +183,14 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                           - Select - 
                         </option>
                         <option
-                          value="Beneficiaries"
+                          value="Category 1"
                         >
-                          Beneficiaries
+                          Category 1
                         </option>
                         <option
-                          value="Evaluation"
+                          value="Category 2"
                         >
-                          Evaluation
-                        </option>
-                        <option
-                          value="Learning"
-                        >
-                          Learning
-                        </option>
-                        <option
-                          value="Legal"
-                        >
-                          Legal
-                        </option>
-                        <option
-                          value="Model closeout or extension"
-                        >
-                          Model closeout or extension
-                        </option>
-                        <option
-                          value="Operations"
-                        >
-                          Operations
-                        </option>
-                        <option
-                          value="Participants"
-                        >
-                          Participants
-                        </option>
-                        <option
-                          value="Payers"
-                        >
-                          Payers
-                        </option>
-                        <option
-                          value="Payment"
-                        >
-                          Payment
-                        </option>
-                        <option
-                          value="Quality"
-                        >
-                          Quality
+                          Category 2
                         </option>
                       </select>
                     </div>
@@ -306,7 +266,7 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                         >
                           <span
                             class="css-1f43avz-a11yText-A11yText"
-                            id="react-select-4-live-region"
+                            id="react-select-6-live-region"
                           />
                           <span
                             aria-atomic="false"
@@ -323,7 +283,7 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                             >
                               <div
                                 class="css-1jqq78o-placeholder"
-                                id="react-select-4-placeholder"
+                                id="react-select-6-placeholder"
                               >
                                 0 selected
                               </div>
@@ -334,7 +294,7 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                                 <input
                                   aria-activedescendant=""
                                   aria-autocomplete="list"
-                                  aria-describedby="react-select-4-placeholder"
+                                  aria-describedby="react-select-6-placeholder"
                                   aria-expanded="false"
                                   aria-haspopup="true"
                                   aria-label="Facilitated by"
@@ -418,7 +378,7 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                         >
                           <span
                             class="css-1f43avz-a11yText-A11yText"
-                            id="react-select-5-live-region"
+                            id="react-select-7-live-region"
                           />
                           <span
                             aria-atomic="false"
@@ -435,7 +395,7 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                             >
                               <div
                                 class="css-1jqq78o-placeholder"
-                                id="react-select-5-placeholder"
+                                id="react-select-7-placeholder"
                               >
                                 0 selected
                               </div>
@@ -446,7 +406,7 @@ exports[`CommonMilestoneSidePanel > matches snapshot 1`] = `
                                 <input
                                   aria-activedescendant=""
                                   aria-autocomplete="list"
-                                  aria-describedby="react-select-5-placeholder"
+                                  aria-describedby="react-select-7-placeholder"
                                   aria-expanded="false"
                                   aria-haspopup="true"
                                   aria-label="Commonly used solutions"
