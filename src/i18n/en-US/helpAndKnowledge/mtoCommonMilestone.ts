@@ -171,11 +171,19 @@ export const mtoCommonMilestoneMisc = {
     'Fields marked with an asterisk ( <s>*</s> ) are required.',
   addCommonMilestone: {
     heading: 'Add a common milestone',
-    cta: 'Add milestone'
+    cta: 'Add milestone',
+    error:
+      'There was an error adding your milestone. Please try again. If the error persists, please try again another time.',
+    success:
+      'You have added a new milestone (<bold>{{-milestoneName}}</bold>) to the model milestone library.'
   },
   editCommonMilestone: {
     heading: 'Edit milestone',
-    cta: 'Save changes'
+    cta: 'Save changes',
+    error:
+      'There was an error saving your changes. Please try again. If the error persists, please try again another time.',
+    success:
+      'Your changes for a milestone (<bold>{{-milestoneName}}</bold>) have been saved.'
   },
   removeCommonMilestone: 'Remove milestone',
   validation: {

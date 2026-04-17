@@ -15,8 +15,10 @@ import classNames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
   GetCommonSolutionsAndCategoriesQuery,
+  GetMtoAllCommonMilestonesDocument,
   MtoCommonSolutionKey,
   MtoFacilitator,
+  useCreateMtoCommonMilestoneMutation,
   useGetCommonSolutionsAndCategoriesQuery
 } from 'gql/generated/graphql';
 
@@ -26,6 +28,8 @@ import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
 import TextAreaField from 'components/TextAreaField';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 import {
@@ -83,8 +87,18 @@ const CommonMilestoneForm = ({
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
     useState<boolean>(false);
 
+  const { setErrorMeta } = useErrorMessage();
+
   const isAddMode = mode === 'addCommonMilestone';
   const isEditMode = mode === 'editCommonMilestone';
+
+  const [createMTOCommonMilestone] = useCreateMtoCommonMilestoneMutation({
+    refetchQueries: [
+      {
+        query: GetMtoAllCommonMilestonesDocument
+      }
+    ]
+  });
 
   const {
     data: commonSolutionsAndCategoriesData,
@@ -247,7 +261,39 @@ const CommonMilestoneForm = ({
       formChanges.facilitatedByOther = null;
     }
 
-    closeModal();
+    if (isAddMode) {
+      setErrorMeta({
+        overrideMessage: mtoCommonMilestoneMiscT(`${mode}.error`)
+      });
+
+      createMTOCommonMilestone({
+        variables: {
+          ...formData,
+          facilitatedByOther: formData.facilitatedByRole?.includes(
+            MtoFacilitator.OTHER
+          )
+            ? formData.facilitatedByOther
+            : null,
+          mtoCommonSolutionKeys: formData.commonSolutions
+        }
+      }).then(response => {
+        if (!response?.errors) {
+          toastSuccess(
+            <Trans
+              i18nKey={`mtoCommonMilestoneMisc:${mode}.success`}
+              values={{
+                milestoneName: formData.name
+              }}
+              components={{
+                bold: <span className="text-bold" />
+              }}
+            />
+          );
+
+          closeModal();
+        }
+      });
+    }
   };
 
   if ((isEditMode && !commonMilestone) || commonSolutionsAndCategoriesError) {

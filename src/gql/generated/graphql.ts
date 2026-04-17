@@ -6211,6 +6211,19 @@ export type UpdatePlanGeneralCharacteristicsMutationVariables = Exact<{
 
 export type UpdatePlanGeneralCharacteristicsMutation = { __typename: 'Mutation', updatePlanGeneralCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID } };
 
+export type CreateMtoCommonMilestoneMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+  categoryName: Scalars['String']['input'];
+  subCategoryName?: InputMaybe<Scalars['String']['input']>;
+  facilitatedByRole: Array<MtoFacilitator> | MtoFacilitator;
+  facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
+  mtoCommonSolutionKeys: Array<MtoCommonSolutionKey> | MtoCommonSolutionKey;
+}>;
+
+
+export type CreateMtoCommonMilestoneMutation = { __typename: 'Mutation', createMTOCommonMilestone: { __typename: 'MTOCommonMilestone', id: UUID, name: string, description: string, categoryName: string, subCategoryName?: string | null, facilitatedByRole: Array<MtoFacilitator>, facilitatedByOther?: string | null, commonSolutions: Array<{ __typename: 'MTOCommonSolution', key: MtoCommonSolutionKey }> } };
+
 export type GetCommonSolutionsAndCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -9941,6 +9954,62 @@ export function useUpdatePlanGeneralCharacteristicsMutation(baseOptions?: Apollo
 export type UpdatePlanGeneralCharacteristicsMutationHookResult = ReturnType<typeof useUpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationResult = Apollo.MutationResult<UpdatePlanGeneralCharacteristicsMutation>;
 export type UpdatePlanGeneralCharacteristicsMutationOptions = Apollo.BaseMutationOptions<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
+export const CreateMtoCommonMilestoneDocument = gql`
+    mutation createMTOCommonMilestone($name: String!, $description: String!, $categoryName: String!, $subCategoryName: String, $facilitatedByRole: [MTOFacilitator!]!, $facilitatedByOther: String, $mtoCommonSolutionKeys: [MTOCommonSolutionKey!]!) {
+  createMTOCommonMilestone(
+    name: $name
+    description: $description
+    categoryName: $categoryName
+    subCategoryName: $subCategoryName
+    facilitatedByRole: $facilitatedByRole
+    facilitatedByOther: $facilitatedByOther
+    mtoCommonSolutionKeys: $mtoCommonSolutionKeys
+  ) {
+    id
+    name
+    description
+    categoryName
+    subCategoryName
+    facilitatedByRole
+    facilitatedByOther
+    commonSolutions {
+      key
+    }
+  }
+}
+    `;
+export type CreateMtoCommonMilestoneMutationFn = Apollo.MutationFunction<CreateMtoCommonMilestoneMutation, CreateMtoCommonMilestoneMutationVariables>;
+
+/**
+ * __useCreateMtoCommonMilestoneMutation__
+ *
+ * To run a mutation, you first call `useCreateMtoCommonMilestoneMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMtoCommonMilestoneMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMtoCommonMilestoneMutation, { data, loading, error }] = useCreateMtoCommonMilestoneMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      description: // value for 'description'
+ *      categoryName: // value for 'categoryName'
+ *      subCategoryName: // value for 'subCategoryName'
+ *      facilitatedByRole: // value for 'facilitatedByRole'
+ *      facilitatedByOther: // value for 'facilitatedByOther'
+ *      mtoCommonSolutionKeys: // value for 'mtoCommonSolutionKeys'
+ *   },
+ * });
+ */
+export function useCreateMtoCommonMilestoneMutation(baseOptions?: Apollo.MutationHookOptions<CreateMtoCommonMilestoneMutation, CreateMtoCommonMilestoneMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMtoCommonMilestoneMutation, CreateMtoCommonMilestoneMutationVariables>(CreateMtoCommonMilestoneDocument, options);
+      }
+export type CreateMtoCommonMilestoneMutationHookResult = ReturnType<typeof useCreateMtoCommonMilestoneMutation>;
+export type CreateMtoCommonMilestoneMutationResult = Apollo.MutationResult<CreateMtoCommonMilestoneMutation>;
+export type CreateMtoCommonMilestoneMutationOptions = Apollo.BaseMutationOptions<CreateMtoCommonMilestoneMutation, CreateMtoCommonMilestoneMutationVariables>;
 export const GetCommonSolutionsAndCategoriesDocument = gql`
     query GetCommonSolutionsAndCategories {
   mtoCommonSolutions {
@@ -18421,6 +18490,7 @@ export const TypedGetKeyCharacteristicsDocument = {"kind":"Document","definition
 export const TypedGetTargetsAndOptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTargetsAndOptions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargeted"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesStatesAndTerritories"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesRegionTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedTo"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedToOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedNote"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptions"}},{"kind":"Field","name":{"kind":"Name","value":"participationOptionsNote"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypes"}},{"kind":"Field","name":{"kind":"Name","value":"agreementTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"multiplePatricipationAgreementsNeededNote"}}]}}]}}]}}]} as unknown as DocumentNode<GetTargetsAndOptionsQuery, GetTargetsAndOptionsQueryVariables>;
 export const TypedUpdateExistingModelLinksDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateExistingModelLinks"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fieldName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ExisitingModelLinkFieldType"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"existingModelIDs"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"currentModelPlanIDs"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateExistingModelLinks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"fieldName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fieldName"}}},{"kind":"Argument","name":{"kind":"Name","value":"existingModelIDs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"existingModelIDs"}}},{"kind":"Argument","name":{"kind":"Name","value":"currentModelPlanIDs"},"value":{"kind":"Variable","name":{"kind":"Name","value":"currentModelPlanIDs"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"links"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"existingModelID"}},{"kind":"Field","name":{"kind":"Name","value":"model"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ExistingModel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"stage"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfParticipants"}},{"kind":"Field","name":{"kind":"Name","value":"keywords"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlan"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateExistingModelLinksMutation, UpdateExistingModelLinksMutationVariables>;
 export const TypedUpdatePlanGeneralCharacteristicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePlanGeneralCharacteristics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanGeneralCharacteristicsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanGeneralCharacteristics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdatePlanGeneralCharacteristicsMutation, UpdatePlanGeneralCharacteristicsMutationVariables>;
+export const TypedcreateMtoCommonMilestoneDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"createMTOCommonMilestone"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"description"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"categoryName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"subCategoryName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"facilitatedByRole"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOFacilitator"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"facilitatedByOther"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"mtoCommonSolutionKeys"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"MTOCommonSolutionKey"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createMTOCommonMilestone"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"description"},"value":{"kind":"Variable","name":{"kind":"Name","value":"description"}}},{"kind":"Argument","name":{"kind":"Name","value":"categoryName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"categoryName"}}},{"kind":"Argument","name":{"kind":"Name","value":"subCategoryName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"subCategoryName"}}},{"kind":"Argument","name":{"kind":"Name","value":"facilitatedByRole"},"value":{"kind":"Variable","name":{"kind":"Name","value":"facilitatedByRole"}}},{"kind":"Argument","name":{"kind":"Name","value":"facilitatedByOther"},"value":{"kind":"Variable","name":{"kind":"Name","value":"facilitatedByOther"}}},{"kind":"Argument","name":{"kind":"Name","value":"mtoCommonSolutionKeys"},"value":{"kind":"Variable","name":{"kind":"Name","value":"mtoCommonSolutionKeys"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}},{"kind":"Field","name":{"kind":"Name","value":"subCategoryName"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByRole"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"commonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"key"}}]}}]}}]}}]} as unknown as DocumentNode<CreateMtoCommonMilestoneMutation, CreateMtoCommonMilestoneMutationVariables>;
 export const TypedGetCommonSolutionsAndCategoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCommonSolutionsAndCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mtoCommonSolutions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"key"}}]}},{"kind":"Field","name":{"kind":"Name","value":"commonCategories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"subCategories"}}]}}]}}]} as unknown as DocumentNode<GetCommonSolutionsAndCategoriesQuery, GetCommonSolutionsAndCategoriesQueryVariables>;
 export const TypedGetHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomepageSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userViewCustomization"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"viewCustomization"}},{"kind":"Field","name":{"kind":"Name","value":"solutions"}},{"kind":"Field","name":{"kind":"Name","value":"componentGroups"}}]}}]}}]} as unknown as DocumentNode<GetHomepageSettingsQuery, GetHomepageSettingsQueryVariables>;
 export const TypedUpdateHomepageSettingsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateHomepageSettings"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserViewCustomizationChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUserViewCustomization"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateHomepageSettingsMutation, UpdateHomepageSettingsMutationVariables>;
