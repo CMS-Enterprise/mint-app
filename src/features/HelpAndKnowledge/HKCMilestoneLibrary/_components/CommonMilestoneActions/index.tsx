@@ -4,9 +4,13 @@ import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCardGroup';
+import { useDeleteCommonMilestoneMutation } from 'gql/generated/graphql';
+import GetMTOAllCommonMilestones from 'gql/operations/ModelToOperations/GetMTOAllCommonMilestones';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
 
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { isAssessment } from 'utils/user';
 
 import CommonMilestoneConfirmationModal from '../CommonMilestoneConfirmationModal';
@@ -28,16 +32,23 @@ const CommonMilestoneActions = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
-    useState<boolean>(false);
-
   const params = useMemo(
     () => new URLSearchParams(location.search),
     [location.search]
   );
 
   const editParam = params.get('edit');
+
+  const [deleteCommonMilestone] = useDeleteCommonMilestoneMutation({
+    refetchQueries: [{ query: GetMTOAllCommonMilestones }]
+  });
+
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+    useState<boolean>(false);
+
+  const { setErrorMeta } = useErrorMessage();
 
   useEffect(() => {
     if (isAssessmentTeam && editParam === 'true') {
@@ -50,7 +61,21 @@ const CommonMilestoneActions = ({
   }, [editParam, isAssessmentTeam, navigate, params]);
 
   const removeCommonMilestone = (id: string) => {
-    setIsConfirmationModalOpen(false);
+    setErrorMeta({
+      overrideMessage: mtoCommonMilestoneMiscT('confirmationModal.remove.error')
+    });
+
+    deleteCommonMilestone({ variables: { id } }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          mtoCommonMilestoneMiscT('confirmationModal.remove.success')
+        );
+
+        params.delete('milestone');
+        navigate({ search: params.toString() }, { replace: true });
+        setIsConfirmationModalOpen(false);
+      }
+    });
   };
 
   return (

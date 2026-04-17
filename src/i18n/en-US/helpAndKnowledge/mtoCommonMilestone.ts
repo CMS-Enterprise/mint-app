@@ -201,7 +201,11 @@ export const mtoCommonMilestoneMisc = {
     remove: {
       heading: 'Are you sure you want to remove this common milestone?',
       text: 'This action cannot be undone. This action will also remove this milestone from any templates. Any models using this in their model-to-operations matrix (MTO) will still have the milestone in their MTO, but may choose to manually remove it.',
-      cta: 'Remove milestone'
+      cta: 'Remove milestone',
+      error:
+        'There was an error removing a milestone. Please try again. If the error persists, please try again another time.',
+      success:
+        'Your have removed a milestone from the library. It is no longer available for use.'
     }
   },
   unsavedChanges: '{{count}} unsaved change',

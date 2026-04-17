@@ -15,12 +15,12 @@ import classNames from 'classnames';
 import NotFound from 'features/NotFound';
 import {
   GetCommonSolutionsAndCategoriesQuery,
-  GetMtoAllCommonMilestonesDocument,
   MtoCommonSolutionKey,
   MtoFacilitator,
   useCreateMtoCommonMilestoneMutation,
   useGetCommonSolutionsAndCategoriesQuery
 } from 'gql/generated/graphql';
+import GetMTOAllCommonMilestones from 'gql/operations/ModelToOperations/GetMTOAllCommonMilestones';
 
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import FieldErrorMsg from 'components/FieldErrorMsg';
@@ -95,7 +95,7 @@ const CommonMilestoneForm = ({
   const [createMTOCommonMilestone] = useCreateMtoCommonMilestoneMutation({
     refetchQueries: [
       {
-        query: GetMtoAllCommonMilestonesDocument
+        query: GetMTOAllCommonMilestones
       }
     ]
   });
