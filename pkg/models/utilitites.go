@@ -61,7 +61,7 @@ func StructToMapDBTag(source any) (map[string]any, error) {
 	retVal := map[string]any{}
 
 	// Iterate over all available fields
-	for i := 0; i < t.NumField(); i++ {
+	for i := range t.NumField() {
 		// Get the field
 		field := t.Field(i)
 		value := v.Field(i)
@@ -93,7 +93,7 @@ func structToTypedMapByTag[MapType any](source any, tagKey string) (map[string]M
 	retVal := map[string]MapType{}
 
 	// Iterate over all available fields
-	for i := 0; i < t.NumField(); i++ {
+	for i := range t.NumField() {
 		// Get the field
 		field := t.Field(i)
 		value := v.Field(i)

@@ -40,11 +40,11 @@ func (loaders *DataLoaders) analyzedAuditGetByModelPlanIDAndDateBatch(_ context.
 	// then MAP by model_plan_id
 
 	for _, anAudit := range audits {
-		dateKey := string(anAudit.UTCDate())
+		dateKey := anAudit.UTCDate()
 		if _, ok := auditsByID[dateKey]; !ok {
 			auditsByID[dateKey] = map[uuid.UUID]*models.AnalyzedAudit{}
 		}
-		auditsByID[string(anAudit.UTCDate())][anAudit.ModelPlanID] = anAudit
+		auditsByID[dateKey][anAudit.ModelPlanID] = anAudit
 
 	}
 

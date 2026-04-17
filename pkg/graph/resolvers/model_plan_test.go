@@ -246,7 +246,7 @@ func (suite *ResolverSuite) TestModelPlanNameHistory() {
 
 	//Reverse the order of the strings
 	last := len(modelNames) - 1
-	for i := 0; i < len(modelNames)/2; i++ {
+	for i := range len(modelNames) / 2 {
 		modelNames[i], modelNames[last-i] = modelNames[last-i], modelNames[i]
 	}
 

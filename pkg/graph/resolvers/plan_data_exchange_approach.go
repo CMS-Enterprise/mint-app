@@ -2,7 +2,7 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -63,7 +63,7 @@ func PlanDataExchangeApproachUpdate(
 			if isDataExchangeApproachComplete, ok := changes["isDataExchangeApproachComplete"]; ok {
 				isSettingToCompletePointer, ok := isDataExchangeApproachComplete.(*bool)
 				if !ok || isSettingToCompletePointer == nil {
-					return nil, fmt.Errorf("unable to update plan data exchange approach, isDataExchangeApproachComplete is not a bool")
+					return nil, errors.New("unable to update plan data exchange approach, isDataExchangeApproachComplete is not a bool")
 				}
 				isSettingToComplete := *isSettingToCompletePointer
 

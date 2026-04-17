@@ -2,6 +2,7 @@ package notifications
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -23,7 +24,7 @@ func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPrep
 	// Notice:  We will fail early if any part of this fails
 	for _, mention := range discussionContent.UniqueMentions() { // Get only unique mentions so we don't send multiple emails if someone is tagged in the same content twice
 		if mention.Entity == nil {
-			err := fmt.Errorf("there is no entity in this mention. Unable to generate a notification")
+			err := errors.New("there is no entity in this mention. Unable to generate a notification")
 
 			// if there isn't an entity, don't try to write a notification
 			return nil, err
@@ -33,7 +34,7 @@ func ActivityTaggedInDiscussionCreate(ctx context.Context, np sqlutils.NamedPrep
 		case models.TagTypeUserAccount:
 
 			if mention.EntityUUID == nil {
-				err := fmt.Errorf("this html mention entity UUID is nil. Unable to create a notification")
+				err := errors.New("this html mention entity UUID is nil. Unable to create a notification")
 				return nil, err
 
 			}

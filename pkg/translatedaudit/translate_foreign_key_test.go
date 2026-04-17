@@ -1,7 +1,7 @@
 package translatedaudit
 
 import (
-	"fmt"
+	"strconv"
 
 	"github.com/google/uuid"
 
@@ -22,7 +22,7 @@ func (suite *TAuditSuite) TestTranslateForeignKey() {
 		existingID := 100001
 		existingName := "Advance Payment ACO Model"
 
-		translatedExisting, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, fmt.Sprint(existingID), models.TNExistingModel)
+		translatedExisting, err := translateForeignKey(suite.testConfigs.Context, suite.testConfigs.Store, strconv.Itoa(existingID), models.TNExistingModel)
 		suite.NoError(err)
 		suite.EqualValues(existingName, translatedExisting)
 

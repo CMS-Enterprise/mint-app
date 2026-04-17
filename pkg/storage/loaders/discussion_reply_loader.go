@@ -28,13 +28,14 @@ func (loaders *DataLoaders) GetDiscussionReplyByModelPlanID(ctx context.Context,
 	discRs, _ := dr.Store.DiscussionReplyGetByDiscussionIDLOADER(logger, marshaledParams)
 	discRByID := map[string][]*models.DiscussionReply{}
 	for _, discR := range discRs {
-		slice, ok := discRByID[string(discR.DiscussionID.String())]
+		discussionID := discR.DiscussionID.String()
+		slice, ok := discRByID[discussionID]
 		if ok {
 			slice = append(slice, discR) //Add to existing slice
-			discRByID[string(discR.DiscussionID.String())] = slice
+			discRByID[discussionID] = slice
 			continue
 		}
-		discRByID[string(discR.DiscussionID.String())] = []*models.DiscussionReply{discR}
+		discRByID[discussionID] = []*models.DiscussionReply{discR}
 
 	}
 

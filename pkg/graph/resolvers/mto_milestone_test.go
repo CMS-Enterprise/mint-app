@@ -367,7 +367,7 @@ func (suite *ResolverSuite) TestMTOMilestoneGetBySolutionIDLoader() {
 		return suite.ElementsMatch(dataIDs, expected)
 	}
 	// Call the helper method to validate all results
-	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](
+	loaders.VerifyLoaders(
 		suite.testConfigs.Context,
 		&suite.Suite,
 		loaders.MTOMilestone.BySolutionID,
@@ -611,7 +611,7 @@ func (suite *ResolverSuite) TestMTOMilestoneNoLinkedSolutions_MultiplePlans() {
 	}
 
 	// Call the helper method to validate all results
-	loaders.VerifyLoaders[uuid.UUID, []*models.MTOMilestone, []uuid.UUID](
+	loaders.VerifyLoaders(
 		suite.testConfigs.Context,
 		&suite.Suite,
 		loaders.MTOMilestone.ByModelPlanIDNoLinkedSolution,

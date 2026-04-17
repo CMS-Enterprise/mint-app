@@ -1,9 +1,5 @@
 package resolvers
 
-import (
-	"time"
-)
-
 // NDAAgreementGetByUserID returns an NDA agreement by userID
 func (suite *ResolverSuite) TestNDAAgreementGetByUserID() {
 	princ := suite.getTestPrincipal(suite.testConfigs.Store, suite.testConfigs.UserInfo.Username) //write to the user table
@@ -37,7 +33,7 @@ func (suite *ResolverSuite) TestNDAAgreementUpdateOrCreate() {
 	suite.EqualValues(nda.Agreed, true)
 	suite.NotNil(nda.AgreedDts)
 
-	agreedDTS := time.Time(*nda.AgreedDts)
+	agreedDTS := *nda.AgreedDts
 
 	//3. Try to agree to NDA again, verify that agreeDTS wasn't updated
 	nda, err = NDAAgreementUpdateOrCreate(suite.testConfigs.Logger, true, princ, suite.testConfigs.Store)

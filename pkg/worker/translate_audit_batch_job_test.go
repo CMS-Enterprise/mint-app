@@ -46,7 +46,7 @@ func (suite *WorkerSuite) TestTranslateAuditBatchJob() {
 		err = cl.Ack(job1.Jid)
 		suite.NoError(err)
 
-		for i := uint64(0); i < translationJobCount-1; i++ {
+		for range translationJobCount - 1 {
 			currentJob, err3 := cl.Fetch(auditTranslateQueue)
 			suite.NoError(err3)
 			suite.NotNil(currentJob)

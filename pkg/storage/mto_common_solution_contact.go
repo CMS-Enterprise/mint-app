@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -39,7 +39,7 @@ func MTOCommonSolutionContactGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Lo
 // MTOCommonSolutionCreateContact creates a new MTOCommonSolutionContact in the database.
 func MTOCommonSolutionCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, MTOCommonSolutionContact *models.MTOCommonSolutionContact) (*models.MTOCommonSolutionContact, error) {
 	if MTOCommonSolutionContact == nil {
-		return nil, fmt.Errorf("MTOCommonSolutionContact cannot be nil")
+		return nil, errors.New("MTOCommonSolutionContact cannot be nil")
 	}
 	if MTOCommonSolutionContact.ID == uuid.Nil {
 		MTOCommonSolutionContact.ID = uuid.New()

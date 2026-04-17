@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -28,7 +28,7 @@ func MTOCommonSolutionSystemOwnerGetByCommonSolutionKeyLoader(np sqlutils.NamedP
 // MTOCommonSolutionCreateSystemOwner creates a new MTOCommonSolutionSystemOwner in the database.
 func MTOCommonSolutionCreateSystemOwner(np sqlutils.NamedPreparer, _ *zap.Logger, systemOwner *models.MTOCommonSolutionSystemOwner) (*models.MTOCommonSolutionSystemOwner, error) {
 	if systemOwner == nil {
-		return nil, fmt.Errorf("system owner cannot be nil")
+		return nil, errors.New("system owner cannot be nil")
 	}
 	if systemOwner.ID == uuid.Nil {
 		systemOwner.ID = uuid.New()

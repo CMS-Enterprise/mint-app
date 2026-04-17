@@ -2,6 +2,7 @@ package worker
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
@@ -22,7 +23,7 @@ func (w *Worker) ModelStatusUpdateJob(ctx context.Context, args ...any) (returne
 	logger.Info("model status update job reached.")
 
 	if len(args) < 1 {
-		err := fmt.Errorf("no arguments were provided for this job")
+		err := errors.New("no arguments were provided for this job")
 		logger.Error(err.Error(), zap.Error(err))
 	}
 	arg1String := fmt.Sprint(args[0])

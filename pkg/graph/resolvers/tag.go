@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 
@@ -99,7 +100,7 @@ func UpdateTaggedHTMLMentionsAndRawContent(ctx context.Context, store *storage.S
 
 		// This tag type is no longer supported return an error if TagType is POSSIBLE_SOLUTION
 		case models.TagTypePossibleSolution:
-			return fmt.Errorf("possible operational solution tag type is no longer supported. Please use MTO common solution instead")
+			return errors.New("possible operational solution tag type is no longer supported. Please use MTO common solution instead")
 		}
 
 		// Update the raw representation in the Tagged HTML and in the individual mention

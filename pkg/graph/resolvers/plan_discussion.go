@@ -244,7 +244,7 @@ func sendPlanDiscussionTagEmails(
 		}
 	}
 	if len(errs) > 1 {
-		return fmt.Errorf("error sending plan_discussion tag emails. First error: %v", errs[0])
+		return fmt.Errorf("error sending plan_discussion tag emails. First error: %w", errs[0])
 	}
 
 	return nil

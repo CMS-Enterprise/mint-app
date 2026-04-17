@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"errors"
 
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -41,7 +41,7 @@ func newDefaultSeeder(viperConfig *viper.Viper) *Seeder {
 
 	emailService, err := emailtestconfigs.InitializeOddMailService()
 	if err != nil {
-		panic(fmt.Errorf("issue creating the email service"))
+		panic(errors.New("issue creating the email service"))
 	}
 	addressBook := emailtestconfigs.InitializeAddressBook()
 

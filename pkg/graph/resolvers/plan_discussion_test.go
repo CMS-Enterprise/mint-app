@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -291,7 +292,7 @@ func verifyPlanDiscussionLoader(ctx context.Context, modelPlanID uuid.UUID) erro
 	}
 	if len(discussions) < 1 {
 
-		return fmt.Errorf("plan Discussion check didn't return any dicussions")
+		return errors.New("plan Discussion check didn't return any dicussions")
 	}
 
 	if modelPlanID != discussions[0].ModelPlanID {

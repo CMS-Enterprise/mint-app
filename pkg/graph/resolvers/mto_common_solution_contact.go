@@ -361,7 +361,7 @@ func DeleteMTOCommonSolutionContact(ctx context.Context, logger *zap.Logger, pri
 		// Check permissions
 		err = BaseStructPreDelete(logger, existing, principal, store, false)
 		if err != nil {
-			return nil, fmt.Errorf("error deleting contact. user doesn't have permissions. %s", err)
+			return nil, fmt.Errorf("error deleting contact. user doesn't have permissions. %w", err)
 		}
 
 		// Finally, delete the contact

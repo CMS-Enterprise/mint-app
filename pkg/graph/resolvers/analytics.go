@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
@@ -67,7 +68,7 @@ func Analytics(ctx context.Context, store *storage.Store, logger *zap.Logger) (*
 
 			// Check if we have results before accessing the first element
 			if len(totalNumberOfModels) == 0 {
-				return nil, fmt.Errorf("no total number of models data available")
+				return nil, errors.New("no total number of models data available")
 			}
 
 			// Create analytics summary

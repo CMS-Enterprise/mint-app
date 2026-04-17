@@ -29,7 +29,7 @@ func GenericallyCalculateStatus(obj any) (TaskStatus, error) {
 	}
 
 	// Iterate over all available fields
-	for i := 0; i < t.NumField(); i++ {
+	for i := range t.NumField() {
 		// Get the field
 		field := t.Field(i)
 		value := v.Field(i)

@@ -34,7 +34,7 @@ func TestAuthorizationTestSuite(t *testing.T) {
 
 func (s *AuthorizationTestSuite) TestAllowsAuthenticatedRequests() {
 	principal := authentication.ApplicationPrincipal{Username: "QQQQ"}
-	req := httptest.NewRequest("GET", "/", nil)
+	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	req = req.WithContext(appcontext.WithPrincipal(req.Context(), &principal))
 
 	rr := httptest.NewRecorder()
@@ -50,7 +50,7 @@ func (s *AuthorizationTestSuite) TestAllowsAuthenticatedRequests() {
 }
 
 func (s *AuthorizationTestSuite) TestRejectsAnonymousRequests() {
-	req := httptest.NewRequest("GET", "/", nil)
+	req := httptest.NewRequest(http.MethodGet, "/", nil)
 
 	rr := httptest.NewRecorder()
 	handlerRun := false

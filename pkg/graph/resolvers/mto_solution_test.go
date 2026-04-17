@@ -85,7 +85,7 @@ func (suite *ResolverSuite) TestMTOSolutionGetByMilestoneIDLOADER() {
 		return suite.ElementsMatch(dataIDs, expected)
 	}
 	// Call the helper method to validate all results
-	loaders.VerifyLoaders[uuid.UUID, []*models.MTOSolution, []uuid.UUID](suite.testConfigs.Context, &suite.Suite, loaders.MTOSolution.ByMilestoneID,
+	loaders.VerifyLoaders(suite.testConfigs.Context, &suite.Suite, loaders.MTOSolution.ByMilestoneID,
 		expectedResults, verifyFunc)
 }
 

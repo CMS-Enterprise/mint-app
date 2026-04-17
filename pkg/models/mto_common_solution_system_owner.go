@@ -1,7 +1,7 @@
 package models
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/google/uuid"
 )
@@ -53,7 +53,7 @@ type MTOCommonSolutionSystemOwnerInformation struct {
 
 func (mtoCSSOI *MTOCommonSolutionSystemOwnerInformation) SystemOwnersList() ([]*MTOCommonSolutionSystemOwner, error) {
 	if mtoCSSOI == nil {
-		return nil, fmt.Errorf("system owner information is not populated as expected")
+		return nil, errors.New("system owner information is not populated as expected")
 	}
 	return mtoCSSOI.SystemOwners, nil
 }

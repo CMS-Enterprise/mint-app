@@ -2,7 +2,7 @@ package storage
 
 import (
 	_ "embed"
-	"fmt"
+	"errors"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
@@ -258,7 +258,7 @@ func UserAccountGetLeadModelPlanCount(np sqlutils.NamedPreparer, userID uuid.UUI
 		return 0, err
 	}
 	if count == nil {
-		return 0, fmt.Errorf("unexpected nil pointer for count")
+		return 0, errors.New("unexpected nil pointer for count")
 	}
 	return *count, nil
 }

@@ -62,7 +62,7 @@ func NewKeyContactAddedBodyContent(
 		ClientAddress: clientAddress,
 		ContactName:   contact.Name,
 		IsTeam:        contact.MailboxAddress != nil,
-		SubjectArea:   string(contact.SubjectArea),
+		SubjectArea:   contact.SubjectArea,
 		CategoryName:  category.Name,
 	}
 }

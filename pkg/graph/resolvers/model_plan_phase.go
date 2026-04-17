@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/samber/lo"
@@ -257,7 +258,7 @@ func ConstructPhaseSuggestionEmailTemplates[T logging.ChainableErrorOrWarnLogger
 ) (emailSubject string, emailBody string, err error) {
 
 	if phaseSuggestion == nil {
-		return "", "", fmt.Errorf("phase suggestion is nil")
+		return "", "", errors.New("phase suggestion is nil")
 	}
 
 	// Construct the email subject and body

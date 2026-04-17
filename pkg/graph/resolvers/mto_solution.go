@@ -262,12 +262,12 @@ func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authen
 		// First, fetch the existing solution so we can check permissions
 		existing, err := MTOSolutionGetByIDLOADER(ctx, id)
 		if err != nil {
-			return fmt.Errorf("error fetching mto solution during deletion: %s", err)
+			return fmt.Errorf("error fetching mto solution during deletion: %w", err)
 		}
 
 		// Check permissions
 		if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
-			return fmt.Errorf("error deleting mto solution. user doesnt have permissions. %s", err)
+			return fmt.Errorf("error deleting mto solution. user doesnt have permissions. %w", err)
 		}
 
 		// Finally, delete the solution

@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -129,7 +130,7 @@ func (dp *PlanTimelineDateProcessor) ExtractPlanTimelineChangedDates() (map[stri
 				}
 
 				if fieldData.CommonKey == "" {
-					return nil, fmt.Errorf("CommonKey cannot be empty for range fields")
+					return nil, errors.New("CommonKey cannot be empty for range fields")
 				}
 
 				dateChanges[fieldData.CommonKey] = *dateChangeValue

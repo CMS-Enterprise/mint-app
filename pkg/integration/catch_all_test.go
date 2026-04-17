@@ -16,7 +16,7 @@ func (s *IntegrationTestSuite) TestCatchAllRoute() {
 		notPath, err := url.Parse(apiURL.String())
 		s.NoError(err, "failed to parse URL")
 		notPath.Path = path.Join(notPath.Path, "/notapath")
-		req, err := http.NewRequest("GET", notPath.String(), nil)
+		req, err := http.NewRequest(http.MethodGet, notPath.String(), nil)
 		s.NoError(err)
 
 		resp, err := client.Do(req)
@@ -33,7 +33,7 @@ func (s *IntegrationTestSuite) TestCatchAllRoute() {
 		notPath, err := url.Parse(apiURL.String())
 		s.NoError(err, "failed to parse URL")
 		notPath.Path = path.Join(notPath.Path, "/notapath")
-		req, err := http.NewRequest("GET", notPath.String(), nil)
+		req, err := http.NewRequest(http.MethodGet, notPath.String(), nil)
 		s.NoError(err)
 
 		resp, err := client.Do(req)

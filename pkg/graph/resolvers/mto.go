@@ -2,7 +2,7 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"time"
 
 	"github.com/google/uuid"
@@ -132,7 +132,7 @@ func MTOToggleReadyForReview(
 		// Only set it ready for review if it wasn't already marked ready for review
 		if mtoInfo.ReadyForReviewBy == nil {
 			if principal.Account() == nil {
-				return nil, fmt.Errorf("principal was nil")
+				return nil, errors.New("principal was nil")
 			}
 			userID := principal.Account().ID
 			now := time.Now()

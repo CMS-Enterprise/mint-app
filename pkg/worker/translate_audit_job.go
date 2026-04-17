@@ -2,6 +2,7 @@ package worker
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strconv"
 
@@ -30,7 +31,7 @@ func (w *Worker) TranslateAuditJob(ctx context.Context, args ...any) (returnedEr
 	logger := FaktoryLoggerFromContext(ctx)
 	logger.Info("translating job reached")
 	if len(args) < 2 {
-		return fmt.Errorf("no arguments were provided for this translateAuditJob")
+		return errors.New("no arguments were provided for this translateAuditJob")
 	}
 
 	arg1String := fmt.Sprint(args[0])

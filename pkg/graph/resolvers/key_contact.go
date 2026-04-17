@@ -246,7 +246,7 @@ func sendKeyContactWelcomeEmail(
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ContactName:   contact.Name,
 		IsTeam:        contact.MailboxAddress != nil,
-		SubjectArea:   string(contact.SubjectArea),
+		SubjectArea:   contact.SubjectArea,
 		CategoryName:  category.Name,
 	}
 

@@ -11,7 +11,7 @@ import (
 type html string
 
 // HTML sanitizes a string and returns hTML
-func HTML(htmlString string) html { //nolint:all // it is desirable that hTML is not exported, so we can enforce sanitization
+func HTML(htmlString string) html {
 	sanitized := sanitization.SanitizeHTML(htmlString)
 	return html(sanitized)
 }
@@ -22,8 +22,9 @@ func (h *html) ToTemplate() template.HTML {
 		return template.HTML("")
 	}
 	sanitizedHTML := sanitization.SanitizeHTML(*h)
-	return template.HTML(sanitizedHTML) //nolint //the html is sanitized again on the previous line so we can ignore the warning about
+	return template.HTML(sanitizedHTML) //nolint:gosec // Sanitized with bluemonday before marking as trusted HTML.
 }
+
 func (h *html) InnerHTML() string {
 	if h == nil {
 		return ""

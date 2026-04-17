@@ -1,7 +1,7 @@
 package models
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/google/uuid"
 )
@@ -13,7 +13,7 @@ type MTOCommonSolutionContractorInformation struct {
 
 func (mtoCSCI *MTOCommonSolutionContractorInformation) ContractorsList() ([]*MTOCommonSolutionContractor, error) {
 	if mtoCSCI == nil {
-		return nil, fmt.Errorf("contractor information is not populated as expected")
+		return nil, errors.New("contractor information is not populated as expected")
 	}
 	return mtoCSCI.Contractors, nil
 }

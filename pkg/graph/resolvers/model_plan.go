@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"strings"
 
@@ -402,9 +403,9 @@ func ModelPlanNameHistory(logger *zap.Logger, modelPlanID uuid.UUID, sortDir mod
 
 	changes, err := store.AuditChangeCollectionByIDAndTableAndField(logger, "model_plan", modelPlanID, fieldName, sortDir)
 	nameHistory := make([]string, len(changes)) // more efficient than appending
-	for i := 0; i < len(changes); i++ {
+	for i, change := range changes {
 
-		nameField := changes[i].Fields[fieldName]
+		nameField := change.Fields[fieldName]
 		name := fmt.Sprintf("%s", nameField.New)
 
 		nameHistory[i] = name
@@ -513,7 +514,7 @@ func ModelPlanShare(
 			if role == string(models.TeamRoleModelLead) {
 				collabAccount, accountErr := collaborator.UserAccount(ctx)
 				if accountErr != nil {
-					return false, fmt.Errorf("failed to get model lead collaborator user account for model_plan_share")
+					return false, errors.New("failed to get model lead collaborator user account for model_plan_share")
 				}
 				modelLeads = append(modelLeads, collabAccount.CommonName)
 				break

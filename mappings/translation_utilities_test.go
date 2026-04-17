@@ -83,7 +83,7 @@ func assertTranslationFields(t *testing.T, translation Translation) {
 	dbTagSeen := map[string]string{}
 
 	// Iterate over all available fields
-	for i := 0; i < typ.NumField(); i++ {
+	for i := range typ.NumField() {
 		// Get the field
 		field := typ.Field(i)
 		value := v.Field(i)
@@ -429,7 +429,7 @@ func assertTranslationStructCoverage(t *testing.T, translationMap map[string]mod
 func iterateTranslationFieldCoverage(t *testing.T, translationMap map[string]models.ITranslationField, v reflect.Value, excludeFields map[string]bool) {
 	typ := v.Type()
 
-	for i := 0; i < typ.NumField(); i++ {
+	for i := range typ.NumField() {
 		field := typ.Field(i)
 		value := v.Field(i)
 

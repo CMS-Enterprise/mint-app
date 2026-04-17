@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -28,7 +28,7 @@ func MTOCommonSolutionContractorGetByCommonSolutionKeyLoader(np sqlutils.NamedPr
 // MTOCommonSolutionCreateContractor creates a new MTOCommonSolutionContractor in the database.
 func MTOCommonSolutionCreateContractor(np sqlutils.NamedPreparer, _ *zap.Logger, contractor *models.MTOCommonSolutionContractor) (*models.MTOCommonSolutionContractor, error) {
 	if contractor == nil {
-		return nil, fmt.Errorf("contractor cannot be nil")
+		return nil, errors.New("contractor cannot be nil")
 	}
 	if contractor.ID == uuid.Nil {
 		contractor.ID = uuid.New()

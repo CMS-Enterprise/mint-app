@@ -3,6 +3,7 @@ package serialization
 import (
 	"bytes"
 	"database/sql/driver"
+	"errors"
 	"strings"
 
 	"fmt"
@@ -190,7 +191,7 @@ Close:
 	if err == nil {
 		for _, d := range dims {
 			if (len(elems) % d) != 0 {
-				err = fmt.Errorf(" multidimensional arrays must have elements with matching dimensions")
+				err = errors.New(" multidimensional arrays must have elements with matching dimensions")
 			}
 		}
 	}

@@ -171,7 +171,7 @@ func DeleteMTOCommonSolutionContractor(ctx context.Context, logger *zap.Logger, 
 		// Check permissions
 		err = BaseStructPreDelete(logger, existing, principal, store, false)
 		if err != nil {
-			return nil, fmt.Errorf("error deleting mto solution. user doesnt have permissions. %s", err)
+			return nil, fmt.Errorf("error deleting mto solution. user doesnt have permissions. %w", err)
 		}
 
 		// Finally, delete the contractor

@@ -96,7 +96,7 @@ func (suite *ResolverSuite) TestMTOMCommonSolutionContactLoader() {
 	// Role must be nil for mailbox contacts
 	var role *string = nil
 
-	for i := 0; i < 5; i++ {
+	for i := range 5 {
 		mailboxAddress := fmt.Sprintf("support%d@example.com", i) // Ensure unique mailboxAddress
 		_, err := CreateMTOCommonSolutionContactMailbox(
 			suite.testConfigs.Context,
@@ -126,7 +126,7 @@ func (suite *ResolverSuite) TestMTOMCommonSolutionContactLoader() {
 	}
 
 	// Call the helper method to validate all results
-	loaders.VerifyLoaders[models.MTOCommonSolutionKey, []*models.MTOCommonSolutionContact, int](
+	loaders.VerifyLoaders(
 		suite.testConfigs.Context,
 		&suite.Suite,
 		loaders.MTOCommonSolutionContact.ByCommonSolutionKey,

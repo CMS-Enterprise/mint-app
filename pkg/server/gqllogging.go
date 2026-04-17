@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -62,8 +63,7 @@ func TypedErrorList(List *gqlerror.List) []apperrors.ITypedError {
 	typedErrorList := []apperrors.ITypedError{}
 	for _, gqlError := range *List {
 		err := gqlError.Unwrap()
-		typedError, isTypedError := err.(apperrors.ITypedError)
-		if isTypedError {
+		if typedError, ok := errors.AsType[apperrors.ITypedError](err); ok {
 			typedErrorList = append(typedErrorList, typedError)
 			// TODO: potenially write the gql.Error extension to provide more information
 		}

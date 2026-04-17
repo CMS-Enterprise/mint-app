@@ -337,12 +337,12 @@ func MTOMilestoneDelete(ctx context.Context, logger *zap.Logger, principal authe
 		// First, fetch the existing milestone so we can check permissions
 		existing, err := storage.MTOMilestoneGetByID(tx, logger, id)
 		if err != nil {
-			return fmt.Errorf("error fetching mto milestone during deletion: %s", err)
+			return fmt.Errorf("error fetching mto milestone during deletion: %w", err)
 		}
 
 		// Check permissions
 		if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
-			return fmt.Errorf("error deleting mto milestone. user doesnt have permissions. %s", err)
+			return fmt.Errorf("error deleting mto milestone. user doesnt have permissions. %w", err)
 		}
 
 		// Finally, delete the milestone

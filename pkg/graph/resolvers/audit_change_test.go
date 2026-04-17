@@ -22,10 +22,10 @@ func (suite *ResolverSuite) TestAuditChangeCollectionByIDAndTable() {
 	suite.NoError(err)
 	suite.Len(auditChanges, len(modelNames)) // one record for insert, plus the number of updates
 
-	for i := 0; i < len(modelNames); i++ {
+	for i, modelName := range modelNames {
 		field := auditChanges[i].Fields["model_name"]
 
-		suite.EqualValues(modelNames[i], field.New) //check that the new value is what the change was in the expected order
+		suite.EqualValues(modelName, field.New) //check that the new value is what the change was in the expected order
 		if i == 0 {
 			suite.EqualValues(nil, field.Old)
 

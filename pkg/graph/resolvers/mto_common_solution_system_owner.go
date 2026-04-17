@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -22,7 +23,7 @@ import (
 func MTOCommonSolutionSystemOwnersGetByKeyLOADER(ctx context.Context, key models.MTOCommonSolutionKey) ([]*models.MTOCommonSolutionSystemOwner, error) {
 	owners, err := loaders.MTOCommonSolutionSystemOwner.ByCommonSolutionKey.Load(ctx, key)
 	if err != nil {
-		return nil, nil // Don't want to error if the system owner is not found on a common solution
+		return nil, nil //nolint:nilerr // Missing system owners are optional for common solutions.
 	}
 
 	return owners, nil
@@ -43,13 +44,13 @@ func CreateMTOCommonSolutionSystemOwner(ctx context.Context, logger *zap.Logger,
 	// Explicitly convert ownerType to models.MTOCommonSolutionOwnerType
 	ownerType, ok := changes["ownerType"].(*models.MTOCommonSolutionOwnerType)
 	if !ok {
-		return nil, fmt.Errorf("ownerType must be a valid enum value")
+		return nil, errors.New("ownerType must be a valid enum value")
 	}
 
 	// Explicitly convert cmsComponent to models.MTOCommonSolutionOwnerType
 	cmsComponent, ok := changes["cmsComponent"].(*models.MTOCommonSolutionCMSComponent)
 	if !ok {
-		return nil, fmt.Errorf("cmsComponent must be a valid enum value")
+		return nil, errors.New("cmsComponent must be a valid enum value")
 	}
 
 	systemOwner := models.NewMTOCommonSolutionSystemOwner(

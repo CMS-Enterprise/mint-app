@@ -33,7 +33,7 @@ type SystemIntakeMetricsHandler struct {
 func (h SystemIntakeMetricsHandler) Handle() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
-		case "GET":
+		case http.MethodGet:
 			// get our time params
 			startTimeParam, ok := r.URL.Query()["startTime"]
 			valErr := apperrors.NewValidationError(

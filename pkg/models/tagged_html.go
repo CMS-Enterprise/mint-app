@@ -250,7 +250,7 @@ func (hm HTMLMention) ToTag(taggedField string, taggedTable string, taggedConten
 }
 
 // ToHTML converts an HTMLMention to an HTMLString
-func (hm HTMLMention) ToHTML() (html, error) { //nolint:all // it is desirable that hTML is not exported, so we can enforce sanitization
+func (hm HTMLMention) ToHTML() (html, error) {
 	// Create a new template and parse the template string
 	t, err := template.New("webpage").Parse(mentionTagTemplate)
 	if err != nil {
@@ -283,7 +283,7 @@ func (th *TaggedContent) Scan(src any) error {
 
 	switch src := src.(type) {
 	case string:
-		rawContent := string(src)
+		rawContent := src
 		tagHTML, err := NewTaggedContentFromString(rawContent)
 		if err != nil {
 			return err
@@ -314,7 +314,7 @@ func (th *TaggedHTML) Scan(src any) error {
 
 	switch src := src.(type) {
 	case string:
-		rawContent := string(src)
+		rawContent := src
 		tagHTML, err := NewTaggedContentFromString(rawContent)
 		if err != nil {
 			return err

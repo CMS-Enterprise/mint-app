@@ -2,7 +2,7 @@ package storage
 
 import (
 	_ "embed"
-	"fmt"
+	"strconv"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 
@@ -40,7 +40,7 @@ func convertIntToPQStringArray(intArray []int) pq.StringArray {
 
 	for i := range intArray {
 
-		stringArray = append(stringArray, fmt.Sprint(intArray[i]))
+		stringArray = append(stringArray, strconv.Itoa(intArray[i]))
 	}
 	return stringArray
 

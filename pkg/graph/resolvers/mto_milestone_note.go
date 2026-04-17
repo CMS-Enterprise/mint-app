@@ -20,14 +20,14 @@ import (
 
 func GetMTOMilestoneNoteByIDLOADER(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) (*models.MTOMilestoneNote, error) {
 	if principal == nil {
-		return nil, fmt.Errorf("principal is nil")
+		return nil, errors.New("principal is nil")
 	}
 	return loaders.MTOMilestoneNote.ByID.Load(ctx, id)
 }
 
 func GetMTOMilestoneNotesByMilestoneIDLOADER(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, milestoneID uuid.UUID) ([]*models.MTOMilestoneNote, error) {
 	if principal == nil {
-		return nil, fmt.Errorf("principal is nil")
+		return nil, errors.New("principal is nil")
 	}
 	notes, err := loaders.MTOMilestoneNote.ByMilestoneID.Load(ctx, milestoneID)
 	if err != nil {
@@ -65,7 +65,7 @@ func UpdateMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal a
 
 	// Only the note's author or an ASSESSMENT user can update it
 	if principalAccount.ID != note.CreatedBy && !principal.AllowASSESSMENT() {
-		return nil, fmt.Errorf("user does not have permission to update this note")
+		return nil, errors.New("user does not have permission to update this note")
 	}
 
 	note.Content = input.Content
@@ -89,14 +89,14 @@ func DeleteMTOMilestoneNote(ctx context.Context, logger *zap.Logger, principal a
 		if err != nil {
 			if errors.Is(err, loaders.ErrRecordNotFoundForKey) ||
 				strings.Contains(err.Error(), "record not found for given key") {
-				return fmt.Errorf("unable to delete MTO milestone note")
+				return errors.New("unable to delete MTO milestone note")
 			}
-			return fmt.Errorf("error fetching mto milestone note during deletion: %s", err)
+			return fmt.Errorf("error fetching mto milestone note during deletion: %w", err)
 		}
 
 		// Only the note's author or an ASSESSMENT user can delete it
 		if principalAccount.ID != existing.CreatedBy && !principal.AllowASSESSMENT() {
-			return fmt.Errorf("user does not have permission to delete this note")
+			return errors.New("user does not have permission to delete this note")
 		}
 
 		// Finally, delete the milestone note

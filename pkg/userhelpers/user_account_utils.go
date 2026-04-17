@@ -181,7 +181,7 @@ func GetOktaAccountInfo(ctx context.Context, _ string) (*OktaAccountInfo, error)
 	}
 	url := *oktaBaseURL + userEndpoint
 	authorization := authPrefix + enhancedJWT.AuthToken
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -202,7 +202,7 @@ func GetOktaAccountInfo(ctx context.Context, _ string) (*OktaAccountInfo, error)
 	}
 
 	ret := OktaAccountInfo{}
-	err = json.Unmarshal([]byte(jsonDataFromHTTP), &ret)
+	err = json.Unmarshal(jsonDataFromHTTP, &ret)
 	return &ret, err
 }
 

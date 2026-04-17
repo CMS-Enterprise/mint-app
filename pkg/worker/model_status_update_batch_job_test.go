@@ -44,7 +44,7 @@ func (suite *WorkerSuite) TestModelStatusUpdateBatchJob() {
 		// suite.NoError(err)
 		var batchID string
 
-		for i := uint64(0); i < modelStatusJobCount; i++ {
+		for range modelStatusJobCount {
 			currentJob, err3 := cl.Fetch(criticalQueue)
 			suite.NoError(err3)
 			suite.NotNil(currentJob)

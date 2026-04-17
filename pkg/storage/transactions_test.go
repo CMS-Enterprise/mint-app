@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/jmoiron/sqlx"
 
@@ -38,7 +38,7 @@ func (s *StoreTestSuite) TestWithTransaction() {
 			if err != nil {
 				return nil, err
 			}
-			return createdPlan, fmt.Errorf("this is an artificial error to ensure that the transaction rolls back")
+			return createdPlan, errors.New("this is an artificial error to ensure that the transaction rolls back")
 
 		})
 		s.Error(err)
@@ -56,7 +56,7 @@ func (s *StoreTestSuite) TestWithTransaction() {
 				return nil, err
 			}
 			planGlobal = createdPlan
-			return createdPlan, fmt.Errorf("this is an artificial error to ensure that the transaction rolls back")
+			return createdPlan, errors.New("this is an artificial error to ensure that the transaction rolls back")
 
 		})
 		s.Error(err)

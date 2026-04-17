@@ -121,7 +121,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 			return validJwt(), nil
 		})
 
-		req := httptest.NewRequest("GET", "/systems/", nil).WithContext(s.Context)
+		req := httptest.NewRequest(http.MethodGet, "/systems/", nil).WithContext(s.Context)
 		req.Header.Set("AUTHORIZATION", "Bearer abcdefg")
 		rr := httptest.NewRecorder()
 
@@ -144,7 +144,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 			return nil, errors.New("invalid token")
 		})
 
-		req := httptest.NewRequest("GET", "/systems/", nil).WithContext(s.Context)
+		req := httptest.NewRequest(http.MethodGet, "/systems/", nil).WithContext(s.Context)
 		req.Header.Set("AUTHORIZATION", "Bearer isNotABear")
 		rr := httptest.NewRecorder()
 
@@ -161,7 +161,7 @@ func (s *AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 			return nil, nil
 		})
 
-		req := httptest.NewRequest("GET", "/systems/", nil).WithContext(s.Context)
+		req := httptest.NewRequest(http.MethodGet, "/systems/", nil).WithContext(s.Context)
 		rr := httptest.NewRecorder()
 
 		handlerRun := false

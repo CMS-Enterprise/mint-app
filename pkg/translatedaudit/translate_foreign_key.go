@@ -24,7 +24,7 @@ func translateForeignKey(ctx context.Context, store *storage.Store, value any, t
 		return nil, nil
 	}
 	if store == nil {
-		return nil, fmt.Errorf("the store was nil, but is required to translate foreign key fields ")
+		return nil, errors.New("the store was nil, but is required to translate foreign key fields ")
 	}
 
 	switch tableReference {
@@ -423,7 +423,7 @@ func getModelPlanMTOTemplateLinkForeignKeyReference(ctx context.Context, store *
 	modelPlan, err := store.ModelPlanGetByID(store, logger, templateLink.ModelPlanID)
 	if err != nil {
 		// If we can't get the model plan, just return the template name
-		return fmt.Sprintf("Template: %s", template.Name), nil
+		return fmt.Sprintf("Template: %s", template.Name), nil //nolint:nilerr // Translation can fall back to template-only context.
 	}
 
 	// Return a descriptive string showing the template applied to the model plan

@@ -190,7 +190,7 @@ func (suite *ResolverSuite) TestGetKeyContactByIDLOADER() {
 
 	expectedResults := []loaders.KeyAndExpected[uuid.UUID, *models.KeyContact]{}
 
-	for i := 0; i < 4; i++ {
+	for i := range 4 {
 		mailboxAddress := fmt.Sprintf("support%d@example.com", i) // Ensure unique mailboxAddress
 		keyContact, err = CreateKeyContactMailbox(
 			suite.testConfigs.Context,
@@ -247,7 +247,7 @@ func (suite *ResolverSuite) TestGetAllKeyContactsLoader() {
 	subjectArea := "Healthcare"
 	subjectCategoryID := newCategory.ID
 
-	for i := 0; i < 5; i++ {
+	for i := range 5 {
 		mailboxAddress := fmt.Sprintf("support%d@example.com", i) // Ensure unique mailboxAddress
 		_, err := CreateKeyContactMailbox(
 			suite.testConfigs.Context,

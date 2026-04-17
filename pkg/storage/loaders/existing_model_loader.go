@@ -3,6 +3,7 @@ package loaders
 import (
 	"context"
 	"fmt"
+	"strconv"
 
 	"github.com/graph-gophers/dataloader"
 	"github.com/samber/lo"
@@ -28,7 +29,7 @@ func (loaders *DataLoaders) GetExistingModelByModelPlanID(ctx context.Context, k
 
 	eMs, _ := dr.Store.ExistingModelGetByIDLOADER(logger, marshaledParams)
 	eMByID := lo.Associate(eMs, func(gc *models.ExistingModel) (string, *models.ExistingModel) {
-		return fmt.Sprint(gc.ID), gc
+		return strconv.Itoa(gc.ID), gc
 	})
 
 	// RETURN IN THE SAME ORDER REQUESTED

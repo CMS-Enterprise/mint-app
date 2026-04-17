@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -15,16 +16,16 @@ type MTOCommonSolutionContactInformation struct {
 
 func (mtoCSC *MTOCommonSolutionContactInformation) PrimaryContact() (*MTOCommonSolutionContact, error) {
 	if mtoCSC == nil {
-		return nil, fmt.Errorf("contact information is not populated as expected")
+		return nil, errors.New("contact information is not populated as expected")
 	}
 	if len(mtoCSC.PointsOfContact) < 1 {
-		return nil, fmt.Errorf("points of contact are not listed for this solution")
+		return nil, errors.New("points of contact are not listed for this solution")
 	}
 	contact, found := lo.Find(mtoCSC.PointsOfContact, func(contact *MTOCommonSolutionContact) bool {
 		return contact.IsPrimary
 	})
 	if !found {
-		return nil, fmt.Errorf("there was no primary contact found for this point of contact")
+		return nil, errors.New("there was no primary contact found for this point of contact")
 	}
 	return contact, nil
 
@@ -33,7 +34,7 @@ func (mtoCSC *MTOCommonSolutionContactInformation) PrimaryContact() (*MTOCommonS
 func (mtoCSC *MTOCommonSolutionContactInformation) EmailAddresses(sendToTaggedPOCs bool, devTeamEmail string) ([]string, error) {
 	var pocEmailAddress []string
 	if mtoCSC == nil {
-		return nil, fmt.Errorf("contact information is not populated as expected")
+		return nil, errors.New("contact information is not populated as expected")
 	}
 	pocs := mtoCSC.PointsOfContact
 	if sendToTaggedPOCs { //send to the pocs

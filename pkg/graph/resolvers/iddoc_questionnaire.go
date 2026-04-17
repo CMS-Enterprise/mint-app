@@ -2,7 +2,7 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"time"
 
 	"github.com/samber/lo"
@@ -58,7 +58,7 @@ func IDDOCQuestionnaireUpdate(
 	if isCompleteValue, ok := changes["isComplete"]; ok {
 		isCompletePointer, ok := isCompleteValue.(*bool)
 		if !ok || isCompletePointer == nil {
-			return nil, fmt.Errorf("unable to update IDDOC questionnaire, isComplete is not a bool")
+			return nil, errors.New("unable to update IDDOC questionnaire, isComplete is not a bool")
 		}
 		isComplete := *isCompletePointer
 

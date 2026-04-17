@@ -59,7 +59,7 @@ func ErrorIfNotCollaborator(obj any, logger *zap.Logger, principal authenticatio
 			}
 		}
 	} else {
-		return fmt.Errorf("desired access control is not configured")
+		return errors.New("desired access control is not configured")
 	}
 
 	return nil

@@ -1,7 +1,7 @@
 package translatedaudit
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/samber/lo"
 
@@ -15,7 +15,7 @@ func checkIfDocumentIsRestricted(tAuditFields []*models.TranslatedAuditField, op
 		return field.FieldName == "restricted"
 	})
 	if !fieldFound {
-		return true, fmt.Errorf("couldn't find the field to say if this document is restricted or not")
+		return true, errors.New("couldn't find the field to say if this document is restricted or not")
 	}
 	var restrictedValue any
 	if operation == models.DBOpDelete || operation == models.DBOpTruncate {
@@ -33,7 +33,7 @@ func checkIfDocumentIsRestricted(tAuditFields []*models.TranslatedAuditField, op
 func checkIfDocumentLinkIsRestricted(metaData *models.TranslatedAuditMetaDocumentSolutionLink) (bool, error) {
 
 	if metaData == nil {
-		return false, fmt.Errorf("meta data is nil for document solution link. Unable to check restriction level")
+		return false, errors.New("meta data is nil for document solution link. Unable to check restriction level")
 	}
 
 	// default to not restricted (zero state of bool)

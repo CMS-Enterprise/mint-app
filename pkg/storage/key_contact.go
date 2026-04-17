@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -27,7 +27,7 @@ func KeyContactGetByIDsLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []uu
 // KeyContactCreateContact creates a new KeyContact in the database.
 func KeyContactCreateContact(np sqlutils.NamedPreparer, _ *zap.Logger, KeyContact *models.KeyContact) (*models.KeyContact, error) {
 	if KeyContact == nil {
-		return nil, fmt.Errorf("key contact cannot be nil")
+		return nil, errors.New("key contact cannot be nil")
 	}
 	if KeyContact.ID == uuid.Nil {
 		KeyContact.ID = uuid.New()

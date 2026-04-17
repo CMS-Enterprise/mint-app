@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
 	"go.uber.org/zap"
@@ -39,7 +40,7 @@ func NewInvokeGeneratePDF(config Config, client *lambda.Client, functionName str
 
 		appcontext.ZLogger(ctx).Info("response from lambda", zap.Int32("statusCode", result.StatusCode), zap.String("version", *result.ExecutedVersion), zap.Int("payloadLength", len(result.Payload)))
 
-		if result.StatusCode != 200 {
+		if result.StatusCode != http.StatusOK {
 			return nil, fmt.Errorf("error invoking lambda: %v", result.Payload)
 		}
 

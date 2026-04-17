@@ -2,6 +2,7 @@ package worker
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	faktory "github.com/contribsys/faktory/client"
@@ -70,7 +71,7 @@ func QueueTranslatedAuditJob[T logging.ChainableErrorOrWarnLogger[T]](w *Worker,
 		job.Retry = &translatedAuditJobMaxRetry
 		err = batch.Push(job)
 		if err != nil {
-			err := fmt.Errorf("issue pushing translated audit job to batch")
+			err := errors.New("issue pushing translated audit job to batch")
 			logger.Error(err.Error(), zap.Error(err))
 			return nil, err
 		}

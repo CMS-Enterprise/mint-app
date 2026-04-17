@@ -2,7 +2,7 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
+	"errors"
 
 	"go.uber.org/zap"
 
@@ -34,7 +34,7 @@ func UpdateUserAccountFromOkta[T logging.ChainableErrorOrWarnLogger[T]](
 	}
 	if existingUser == nil {
 		logger.ErrorOrWarn("user account not found for username")
-		return fmt.Errorf("user account not found for username")
+		return errors.New("user account not found for username")
 	}
 
 	logger = logger.With(logfields.UserID(existingUser.ID))

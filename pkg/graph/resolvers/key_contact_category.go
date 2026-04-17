@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -28,7 +29,7 @@ func CreateKeyContactCategory(logger *zap.Logger, principal authentication.Princ
 	// Sanitize and validate category name
 	sanitizedCategory := sanitization.SanitizeString(name)
 	if sanitizedCategory == "" {
-		return nil, fmt.Errorf("category name cannot be empty or whitespace-only")
+		return nil, errors.New("category name cannot be empty or whitespace-only")
 	}
 
 	newCategory := models.NewKeyContactCategory(principalAccount.ID, sanitizedCategory)
@@ -62,7 +63,7 @@ func UpdateKeyContactCategory(ctx context.Context, logger *zap.Logger, principal
 	// Sanitize and validate category name
 	sanitizedName := sanitization.SanitizeString(name)
 	if sanitizedName == "" {
-		return nil, fmt.Errorf("category name cannot be empty or whitespace-only")
+		return nil, errors.New("category name cannot be empty or whitespace-only")
 	}
 
 	existingCategory.Name = sanitizedName

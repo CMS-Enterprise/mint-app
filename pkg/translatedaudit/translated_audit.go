@@ -126,7 +126,7 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *m
 		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, &audit.AuditChange, operation, translationMap)
 
 		if tErr != nil {
-			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, audit.ModelPlanID, err)
+			return nil, fmt.Errorf("issue translating field (%s) for plan %s . Err: %w ", fieldName, audit.ModelPlanID, tErr)
 		}
 		if !wasTranslated {
 			//If this doesn't have a translation, don't append this to the translated field list (and don't save it)

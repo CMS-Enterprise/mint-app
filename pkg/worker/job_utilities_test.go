@@ -3,6 +3,7 @@ package worker
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"regexp"
 	"testing"
@@ -329,7 +330,7 @@ func TestFaktoryLoggerMiddleware(t *testing.T) {
 			Queue: "default",
 		}
 
-		expectedErr := fmt.Errorf("job execution failed")
+		expectedErr := errors.New("job execution failed")
 		middleware := FaktoryLoggerMiddleware()
 		nextFunc := func(ctx context.Context) error {
 			return expectedErr

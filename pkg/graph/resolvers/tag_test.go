@@ -62,7 +62,7 @@ func (suite *ResolverSuite) TestTaggedEntityGet() {
 	suite.Nil(retSolEnt, "possible solution is a deprecated tag type. We no longer return this entity")
 
 	// Get MTO Common Solution
-	mtoSol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCommonSolutionKey(models.MTOCSKConnect))
+	mtoSol, err := MTOCommonSolutionGetByKeyLOADER(suite.testConfigs.Context, models.MTOCSKConnect)
 	suite.NoError(err)
 	suite.NotNil(mtoSol)
 

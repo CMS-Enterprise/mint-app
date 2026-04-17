@@ -67,7 +67,10 @@ func fetchOktaAccessToken(
 		"username": username,
 		"password": password,
 	}
-	postJSONValues, _ := json.Marshal(postValues)
+	postJSONValues, err := json.Marshal(postValues)
+	if err != nil {
+		return "", fmt.Errorf("could not marshal authentication request: %w", err)
+	}
 	/* #nosec */
 	resp, err := http.Post(requestURI, "application/json", bytes.NewReader(postJSONValues))
 	if err != nil {
@@ -104,7 +107,10 @@ func fetchOktaAccessToken(
 		"passCode":   passCode,
 		"stateToken": authn.StateToken,
 	}
-	postJSONValues, _ = json.Marshal(postValues)
+	postJSONValues, err = json.Marshal(postValues)
+	if err != nil {
+		return "", fmt.Errorf("could not marshal MFA request: %w", err)
+	}
 	/* #nosec */
 	factorResp, err := http.Post(factorURI, "application/json", bytes.NewReader(postJSONValues))
 	if err != nil {

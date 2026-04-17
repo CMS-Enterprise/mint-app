@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -92,7 +93,7 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	parentID *uuid.UUID,
 ) (*models.MTOCategory, error) {
 	if order == nil && parentID == nil {
-		return nil, fmt.Errorf(" either order or parentID must be provided for MTOCategoryReorder")
+		return nil, errors.New(" either order or parentID must be provided for MTOCategoryReorder")
 	}
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -109,7 +110,7 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	}
 	if parentID != nil {
 		if existing.ParentID == nil {
-			return nil, fmt.Errorf("you cannot provide a parent id for a parent category")
+			return nil, errors.New("you cannot provide a parent id for a parent category")
 		}
 		// If the changing parents, update here
 		if existing.ParentID != parentID {

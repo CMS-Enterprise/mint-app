@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"sort"
 	"time"
@@ -78,7 +79,7 @@ func MTOTemplateGetByIDOrKeyLOADER(ctx context.Context, id *uuid.UUID, key *mode
 	if key != nil {
 		return loaders.MTOTemplate.ByKey.Load(ctx, *key)
 	}
-	return nil, fmt.Errorf("either id or key must be provided")
+	return nil, errors.New("either id or key must be provided")
 }
 
 // MTOTemplateMilestoneGetBySolutionIDLOADER implements resolver logic to get all MTO template milestones by a solution ID using a data loader
