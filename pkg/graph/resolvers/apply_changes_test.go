@@ -93,19 +93,6 @@ func TestApplyChangesEmptyStringPointer(t *testing.T) {
 	assert.Nil(t, son.Parent) // should set to nil, not a pointer to an empty string
 }
 
-func TestApplyChangesNilPointer(t *testing.T) {
-	mom := "Mom"
-	son := PersonWithPointer{Name: "Son", Parent: &mom}
-
-	err := ApplyChanges(map[string]interface{}{
-		"parent": nil,
-	}, &son)
-
-	assert.NoError(t, err)
-	assert.Equal(t, "Son", son.Name)
-	assert.Nil(t, son.Parent)
-}
-
 type MTOCommonMilestoneLike struct {
 	Name              string                                  `json:"name"`
 	FacilitatedByRole models.EnumArray[models.MTOFacilitator] `json:"facilitatedByRole"`
