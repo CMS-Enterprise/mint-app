@@ -1075,7 +1075,6 @@ export type MtoCommonMilestoneChanges = {
   description?: InputMaybe<Scalars['String']['input']>;
   facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
   facilitatedByRole?: InputMaybe<Array<MtoFacilitator>>;
-  mtoCommonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
   name?: InputMaybe<Scalars['String']['input']>;
   subCategoryName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -2615,6 +2614,7 @@ export type MutationUpdateKeyContactCategoryArgs = {
 export type MutationUpdateMtoCommonMilestoneArgs = {
   changes: MtoCommonMilestoneChanges;
   id: Scalars['UUID']['input'];
+  mtoCommonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
 };
 
 

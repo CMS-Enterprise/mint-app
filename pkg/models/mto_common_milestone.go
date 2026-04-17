@@ -10,7 +10,8 @@ type CommonCategory struct {
 }
 
 type MTOCommonMilestone struct {
-	ID                 uuid.UUID                 `json:"id" db:"id"`
+	baseStruct
+
 	Name               string                    `json:"name" db:"name"`
 	Description        string                    `json:"description" db:"description"`
 	CategoryName       string                    `json:"categoryName" db:"category_name"`

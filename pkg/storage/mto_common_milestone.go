@@ -110,6 +110,72 @@ func createMTOCommonMilestoneSolutionLinks(
 	return sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonMilestone.CreateSolutionLinks, args)
 }
 
+// MTOCommonMilestoneUpdate updates a common milestone library row and optionally replaces its common solution links.
+func MTOCommonMilestoneUpdate(
+	np sqlutils.TransactionPreparer,
+	commonMilestone *models.MTOCommonMilestone,
+	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	if commonMilestone == nil {
+		return nil, fmt.Errorf("common milestone is required for update")
+	}
+
+	return sqlutils.WithTransaction(np, func(tx *sqlx.Tx) (*models.MTOCommonMilestone, error) {
+		if err := setCurrentSessionUserVariable(tx, actorUserID); err != nil {
+			return nil, fmt.Errorf("problem setting current session for user when updating common milestone: %w", err)
+		}
+
+		updated, err := updateMTOCommonMilestone(tx, commonMilestone, actorUserID)
+		if err != nil {
+			return nil, fmt.Errorf("problem updating common milestone: %w", err)
+		}
+
+		if mtoCommonSolutionKeys != nil {
+			if err := replaceMTOCommonMilestoneSolutionLinks(tx, commonMilestone.ID, mtoCommonSolutionKeys); err != nil {
+				return nil, fmt.Errorf("problem replacing solution links when updating MTO common milestone: %w", err)
+			}
+		}
+
+		return updated, nil
+	})
+}
+
+func updateMTOCommonMilestone(
+	tx *sqlx.Tx,
+	commonMilestone *models.MTOCommonMilestone,
+	actorUserID uuid.UUID,
+) (*models.MTOCommonMilestone, error) {
+	args := map[string]any{
+		"id":                   commonMilestone.ID,
+		"name":                 commonMilestone.Name,
+		"description":          commonMilestone.Description,
+		"category_name":        commonMilestone.CategoryName,
+		"sub_category_name":    commonMilestone.SubCategoryName,
+		"facilitated_by_role":  commonMilestone.FacilitatedByRole,
+		"facilitated_by_other": commonMilestone.FacilitatedByOther,
+		"modified_by":          actorUserID,
+	}
+
+	return sqlutils.GetProcedure[models.MTOCommonMilestone](tx, sqlqueries.MTOCommonMilestone.Update, args)
+}
+
+func replaceMTOCommonMilestoneSolutionLinks(
+	tx *sqlx.Tx,
+	mtoCommonMilestoneID uuid.UUID,
+	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+) error {
+	args := map[string]any{
+		"id": mtoCommonMilestoneID,
+	}
+
+	if err := sqlutils.ExecProcedure(tx, sqlqueries.MTOCommonMilestone.DeleteSolutionLinks, args); err != nil {
+		return err
+	}
+
+	return createMTOCommonMilestoneSolutionLinks(tx, mtoCommonMilestoneID, mtoCommonSolutionKeys)
+}
+
 // MTOCommonMilestoneArchive marks a common milestone as archived, removes its library/template references,
 // and preserves already-applied model plan milestones.
 func MTOCommonMilestoneArchive(

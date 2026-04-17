@@ -17,6 +17,10 @@ import (
 // - Empty slices are converted to nil
 func sanitizeChanges(changes map[string]interface{}) {
 	for key, value := range changes {
+		if value == nil {
+			continue
+		}
+
 		// Get the reflect value for type comparisons
 		reflectValue := reflect.ValueOf(value)
 

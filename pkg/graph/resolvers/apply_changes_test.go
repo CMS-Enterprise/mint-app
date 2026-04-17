@@ -7,6 +7,8 @@ import (
 	"github.com/google/uuid"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
+
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 type Person struct {
@@ -89,6 +91,45 @@ func TestApplyChangesEmptyStringPointer(t *testing.T) {
 	}
 	assert.Equal(t, "Son", son.Name)
 	assert.Nil(t, son.Parent) // should set to nil, not a pointer to an empty string
+}
+
+func TestApplyChangesNilPointer(t *testing.T) {
+	mom := "Mom"
+	son := PersonWithPointer{Name: "Son", Parent: &mom}
+
+	err := ApplyChanges(map[string]interface{}{
+		"parent": nil,
+	}, &son)
+
+	assert.NoError(t, err)
+	assert.Equal(t, "Son", son.Name)
+	assert.Nil(t, son.Parent)
+}
+
+type MTOCommonMilestoneLike struct {
+	Name              string                                  `json:"name"`
+	FacilitatedByRole models.EnumArray[models.MTOFacilitator] `json:"facilitatedByRole"`
+}
+
+func TestApplyChangesMTOCommonMilestoneLike(t *testing.T) {
+	name := "Updated milestone"
+	milestone := MTOCommonMilestoneLike{
+		Name:              "Original milestone",
+		FacilitatedByRole: models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorModelTeam},
+	}
+
+	err := ApplyChanges(map[string]interface{}{
+		"name":              &name,
+		"facilitatedByRole": []models.MTOFacilitator{models.MTOFacilitatorOther},
+	}, &milestone)
+
+	assert.NoError(t, err)
+	assert.Equal(t, name, milestone.Name)
+	assert.Equal(
+		t,
+		models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther},
+		milestone.FacilitatedByRole,
+	)
 }
 
 type AwkwardFirstDate struct {

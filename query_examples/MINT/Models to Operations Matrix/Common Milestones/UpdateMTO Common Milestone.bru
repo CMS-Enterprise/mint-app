@@ -1,0 +1,61 @@
+meta {
+  name: UpdateMTO Common Milestone
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation UpdateMTOCommonMilestone(
+    $id: UUID!
+    $changes: MTOCommonMilestoneChanges!
+    $mtoCommonSolutionKeys: [MTOCommonSolutionKey!]
+  ) {
+    updateMTOCommonMilestone(
+      id: $id
+      changes: $changes
+      mtoCommonSolutionKeys: $mtoCommonSolutionKeys
+    ) {
+      id
+      name
+      description
+      categoryName
+      subCategoryName
+      facilitatedByRole
+      facilitatedByOther
+      section
+      isArchived
+      isAdded
+      commonSolutions {
+        key
+        name
+        type
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{mtoCommonMilestoneID}}",
+    "changes": {
+      "name": "Updated test common milestone",
+      "description": "Temporary common milestone updated from Bruno.",
+      "categoryName": "Operations",
+      "subCategoryName": "Set up operations",
+      "facilitatedByRole": ["MODEL_TEAM"],
+      "facilitatedByOther": null
+    },
+    "mtoCommonSolutionKeys": ["ACO_OS"]
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.updateMTOCommonMilestone;
+  bru.setVar("mtoCommonMilestoneID", responseData.id);
+}

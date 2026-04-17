@@ -34,6 +34,10 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneCreate() {
 	s.Require().NoError(err)
 	s.Require().NotNil(createdCommonMilestone)
 	s.NotEqual(uuid.Nil, createdCommonMilestone.ID)
+	s.Equal(actorUserID, createdCommonMilestone.CreatedBy)
+	s.False(createdCommonMilestone.CreatedDts.IsZero())
+	s.Nil(createdCommonMilestone.ModifiedBy)
+	s.Nil(createdCommonMilestone.ModifiedDts)
 	s.Equal("Used to verify common milestone create behavior.", createdCommonMilestone.Description)
 	s.Equal("Operations", createdCommonMilestone.CategoryName)
 	s.Require().NotNil(createdCommonMilestone.SubCategoryName)
@@ -80,6 +84,10 @@ func (s *StoreTestSuite) TestCreateMTOCommonMilestoneCreatesOnlyMilestoneRow() {
 	s.Require().NoError(err)
 	s.Require().NotNil(createdCommonMilestone)
 	s.NotEqual(uuid.Nil, createdCommonMilestone.ID)
+	s.Equal(actorUserID, createdCommonMilestone.CreatedBy)
+	s.False(createdCommonMilestone.CreatedDts.IsZero())
+	s.Nil(createdCommonMilestone.ModifiedBy)
+	s.Nil(createdCommonMilestone.ModifiedDts)
 
 	commonSolutions, err := MTOCommonSolutionGetByCommonMilestoneIDLoader(
 		tx,
@@ -133,6 +141,151 @@ func (s *StoreTestSuite) TestCreateMTOCommonMilestoneSolutionLinks() {
 
 	s.Equal(1, countCommonMilestoneSolutionLinks(s, tx, createdCommonMilestone.ID, models.MTOCSKInnovation))
 	s.Equal(1, countCommonMilestoneSolutionLinks(s, tx, createdCommonMilestone.ID, models.MTOCSKAcoOs))
+}
+
+func (s *StoreTestSuite) TestMTOCommonMilestoneUpdate() {
+	actorUserID := s.principal.Account().ID
+	subCategoryName := "Update tests"
+
+	createdCommonMilestone, err := MTOCommonMilestoneCreate(
+		s.store,
+		fmt.Sprintf("Update common milestone test %s", uuid.New().String()),
+		"Used to verify common milestone update behavior.",
+		"Operations",
+		&subCategoryName,
+		[]models.MTOFacilitator{models.MTOFacilitatorModelTeam},
+		nil,
+		[]models.MTOCommonSolutionKey{
+			models.MTOCSKInnovation,
+			models.MTOCSKAcoOs,
+		},
+		actorUserID,
+	)
+	s.Require().NoError(err)
+	s.Require().NotNil(createdCommonMilestone)
+
+	updatedName := fmt.Sprintf("Updated common milestone test %s", uuid.New().String())
+	updatedDescription := "Updated common milestone description."
+	updatedCategoryName := "Participants"
+	updatedSubCategoryName := "Updated subcategory"
+	updatedFacilitatedByOther := "Updated cross-team support"
+	updatedSolutionKeys := []models.MTOCommonSolutionKey{
+		models.MTOCSKAcoOs,
+		models.MTOCSKAcoOs,
+	}
+
+	createdCommonMilestone.Name = updatedName
+	createdCommonMilestone.Description = updatedDescription
+	createdCommonMilestone.CategoryName = updatedCategoryName
+	createdCommonMilestone.SubCategoryName = &updatedSubCategoryName
+	createdCommonMilestone.FacilitatedByRole = models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther}
+	createdCommonMilestone.FacilitatedByOther = &updatedFacilitatedByOther
+	createdCommonMilestone.ModifiedBy = &actorUserID
+
+	updatedCommonMilestone, err := MTOCommonMilestoneUpdate(
+		s.store,
+		createdCommonMilestone,
+		updatedSolutionKeys,
+		actorUserID,
+	)
+	s.Require().NoError(err)
+	s.Require().NotNil(updatedCommonMilestone)
+	s.Equal(createdCommonMilestone.ID, updatedCommonMilestone.ID)
+	s.Equal(actorUserID, updatedCommonMilestone.CreatedBy)
+	s.False(updatedCommonMilestone.CreatedDts.IsZero())
+	s.Require().NotNil(updatedCommonMilestone.ModifiedBy)
+	s.Equal(actorUserID, *updatedCommonMilestone.ModifiedBy)
+	s.Require().NotNil(updatedCommonMilestone.ModifiedDts)
+	s.Equal(updatedName, updatedCommonMilestone.Name)
+	s.Equal(updatedDescription, updatedCommonMilestone.Description)
+	s.Equal(updatedCategoryName, updatedCommonMilestone.CategoryName)
+	s.Require().NotNil(updatedCommonMilestone.SubCategoryName)
+	s.Equal(updatedSubCategoryName, *updatedCommonMilestone.SubCategoryName)
+	s.Equal(models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorOther}, updatedCommonMilestone.FacilitatedByRole)
+	s.Require().NotNil(updatedCommonMilestone.FacilitatedByOther)
+	s.Equal(updatedFacilitatedByOther, *updatedCommonMilestone.FacilitatedByOther)
+
+	s.Equal(0, countCommonMilestoneSolutionLinks(s, s.db, createdCommonMilestone.ID, models.MTOCSKInnovation))
+	s.Equal(1, countCommonMilestoneSolutionLinks(s, s.db, createdCommonMilestone.ID, models.MTOCSKAcoOs))
+}
+
+func (s *StoreTestSuite) TestMTOCommonMilestoneUpdatePreservesOmittedFieldsAndLinks() {
+	actorUserID := s.principal.Account().ID
+	subCategoryName := "Update preserve tests"
+
+	createdCommonMilestone, err := MTOCommonMilestoneCreate(
+		s.store,
+		fmt.Sprintf("Update preserve common milestone test %s", uuid.New().String()),
+		"Original description for preserve update behavior.",
+		"Operations",
+		&subCategoryName,
+		[]models.MTOFacilitator{models.MTOFacilitatorModelTeam},
+		nil,
+		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
+		actorUserID,
+	)
+	s.Require().NoError(err)
+	s.Require().NotNil(createdCommonMilestone)
+
+	updatedName := fmt.Sprintf("Updated preserve common milestone test %s", uuid.New().String())
+	createdCommonMilestone.Name = updatedName
+	createdCommonMilestone.ModifiedBy = &actorUserID
+
+	updatedCommonMilestone, err := MTOCommonMilestoneUpdate(
+		s.store,
+		createdCommonMilestone,
+		nil,
+		actorUserID,
+	)
+	s.Require().NoError(err)
+	s.Require().NotNil(updatedCommonMilestone)
+	s.Equal(updatedName, updatedCommonMilestone.Name)
+	s.Equal(createdCommonMilestone.Description, updatedCommonMilestone.Description)
+	s.Equal(createdCommonMilestone.CategoryName, updatedCommonMilestone.CategoryName)
+	s.Require().NotNil(updatedCommonMilestone.SubCategoryName)
+	s.Equal(subCategoryName, *updatedCommonMilestone.SubCategoryName)
+	s.Equal(createdCommonMilestone.FacilitatedByRole, updatedCommonMilestone.FacilitatedByRole)
+	s.Nil(updatedCommonMilestone.FacilitatedByOther)
+	s.Equal(1, countCommonMilestoneSolutionLinks(s, s.db, createdCommonMilestone.ID, models.MTOCSKInnovation))
+}
+
+func (s *StoreTestSuite) TestMTOCommonMilestoneUpdateClearsNullableFieldsAndSolutionLinks() {
+	actorUserID := s.principal.Account().ID
+	subCategoryName := "Update clear tests"
+	facilitatedByOther := "Cross-team support"
+
+	createdCommonMilestone, err := MTOCommonMilestoneCreate(
+		s.store,
+		fmt.Sprintf("Update clear common milestone test %s", uuid.New().String()),
+		"Used to verify common milestone update clearing behavior.",
+		"Operations",
+		&subCategoryName,
+		[]models.MTOFacilitator{models.MTOFacilitatorOther},
+		&facilitatedByOther,
+		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
+		actorUserID,
+	)
+	s.Require().NoError(err)
+	s.Require().NotNil(createdCommonMilestone)
+
+	updatedSolutionKeys := []models.MTOCommonSolutionKey{}
+	createdCommonMilestone.SubCategoryName = nil
+	createdCommonMilestone.FacilitatedByRole = models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorModelTeam}
+	createdCommonMilestone.FacilitatedByOther = nil
+	createdCommonMilestone.ModifiedBy = &actorUserID
+
+	updatedCommonMilestone, err := MTOCommonMilestoneUpdate(
+		s.store,
+		createdCommonMilestone,
+		updatedSolutionKeys,
+		actorUserID,
+	)
+	s.Require().NoError(err)
+	s.Require().NotNil(updatedCommonMilestone)
+	s.Nil(updatedCommonMilestone.SubCategoryName)
+	s.Equal(models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorModelTeam}, updatedCommonMilestone.FacilitatedByRole)
+	s.Nil(updatedCommonMilestone.FacilitatedByOther)
+	s.Equal(0, countCommonMilestoneSolutionLinks(s, s.db, createdCommonMilestone.ID, models.MTOCSKInnovation))
 }
 
 func (s *StoreTestSuite) TestMTOCommonMilestoneArchiveRemovesTemplateReferencesButPreservesAppliedMilestones() {
@@ -422,12 +575,19 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneGetByIDLoaderAndArchiveReturnFaci
 	loaded, err := MTOCommonMilestoneGetByIDLoader(tx, s.logger, []uuid.UUID{commonMilestoneID})
 	s.Require().NoError(err)
 	s.Require().Len(loaded, 1)
+	s.Equal(actorUserID, loaded[0].CreatedBy)
+	s.False(loaded[0].CreatedDts.IsZero())
 	s.Require().NotNil(loaded[0].FacilitatedByOther)
 	s.Equal(facilitatedByOther, *loaded[0].FacilitatedByOther)
 
 	archived, err := archiveMTOCommonMilestone(tx, s.logger, commonMilestoneID, actorUserID)
 	s.Require().NoError(err)
 	s.Require().NotNil(archived)
+	s.Equal(actorUserID, archived.CreatedBy)
+	s.False(archived.CreatedDts.IsZero())
+	s.Require().NotNil(archived.ModifiedBy)
+	s.Equal(actorUserID, *archived.ModifiedBy)
+	s.Require().NotNil(archived.ModifiedDts)
 	s.True(archived.IsArchived)
 	s.Require().NotNil(archived.FacilitatedByOther)
 	s.Equal(facilitatedByOther, *archived.FacilitatedByOther)

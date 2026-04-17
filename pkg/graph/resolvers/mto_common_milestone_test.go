@@ -58,6 +58,70 @@ func (suite *ResolverSuite) TestCreateMTOCommonMilestone() {
 	suite.Len(commonSolutions, 2)
 }
 
+func (suite *ResolverSuite) TestUpdateMTOCommonMilestone() {
+	actorUserID := suite.testConfigs.Principal.UserAccount.ID
+	subCategoryName := "Resolver update tests"
+	facilitatedByOther := "Cross-team support"
+
+	createdMilestone, err := CreateMTOCommonMilestone(
+		suite.testConfigs.Store,
+		"Resolver update common milestone test",
+		"Temporary common milestone used for resolver update testing.",
+		"Operations",
+		&subCategoryName,
+		[]models.MTOFacilitator{models.MTOFacilitatorOther},
+		&facilitatedByOther,
+		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
+		actorUserID,
+	)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(createdMilestone)
+	suite.T().Cleanup(func() {
+		suite.NoError(deleteTestMTOCommonMilestone(
+			suite.testConfigs.Store,
+			createdMilestone.ID,
+		))
+	})
+
+	updatedName := "Resolver updated common milestone test"
+	updatedDescription := "Updated common milestone from resolver test."
+	updatedCategoryName := "Participants"
+
+	updatedMilestone, err := UpdateMTOCommonMilestone(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		createdMilestone.ID,
+		map[string]any{
+			"name":               updatedName,
+			"description":        updatedDescription,
+			"categoryName":       updatedCategoryName,
+			"subCategoryName":    nil,
+			"facilitatedByRole":  []models.MTOFacilitator{models.MTOFacilitatorModelTeam},
+			"facilitatedByOther": nil,
+		},
+		[]models.MTOCommonSolutionKey{models.MTOCSKAcoOs, models.MTOCSKAcoOs},
+	)
+	suite.NoError(err)
+	suite.Require().NotNil(updatedMilestone)
+	suite.Equal(createdMilestone.ID, updatedMilestone.ID)
+	suite.Equal(updatedName, updatedMilestone.Name)
+	suite.Equal(updatedDescription, updatedMilestone.Description)
+	suite.Equal(updatedCategoryName, updatedMilestone.CategoryName)
+	suite.Nil(updatedMilestone.SubCategoryName)
+	suite.Equal(models.EnumArray[models.MTOFacilitator]{models.MTOFacilitatorModelTeam}, updatedMilestone.FacilitatedByRole)
+	suite.Nil(updatedMilestone.FacilitatedByOther)
+
+	commonSolutions, err := storage.MTOCommonSolutionGetByCommonMilestoneIDLoader(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		[]uuid.UUID{createdMilestone.ID},
+	)
+	suite.NoError(err)
+	suite.Require().Len(commonSolutions, 1)
+	suite.Equal(models.MTOCSKAcoOs, commonSolutions[0].Key)
+}
+
 func (suite *ResolverSuite) TestArchiveMTOCommonMilestone() {
 	actorUserID := suite.testConfigs.Principal.UserAccount.ID
 
