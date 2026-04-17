@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -118,7 +119,7 @@ func MTOCommonMilestoneUpdate(
 	actorUserID uuid.UUID,
 ) (*models.MTOCommonMilestone, error) {
 	if commonMilestone == nil {
-		return nil, fmt.Errorf("common milestone is required for update")
+		return nil, errors.New("common milestone is required for update")
 	}
 
 	return sqlutils.WithTransaction(np, func(tx *sqlx.Tx) (*models.MTOCommonMilestone, error) {
