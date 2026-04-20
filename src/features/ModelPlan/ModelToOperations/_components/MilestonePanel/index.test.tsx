@@ -1,14 +1,33 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCard';
 import { MtoCommonSolutionKey, MtoFacilitator } from 'gql/generated/graphql';
+import configureMockStore from 'redux-mock-store';
 import { possibleSolutionsMock } from 'tests/mock/mto';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
 import MilestonePanel from './index';
+
+const mockAuthAssessment = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockAuthNotAssessment = {
+  isUserSet: true,
+  groups: [],
+  euaId: 'EFGH'
+};
+
+const mockStore = configureMockStore();
+const store1 = mockStore({ auth: mockAuthAssessment });
+const store2 = mockStore({ auth: mockAuthNotAssessment });
 
 describe('MilestonePanel Component', () => {
   const mockMilestone: MilestoneCardType = {
@@ -57,7 +76,9 @@ describe('MilestonePanel Component', () => {
 
     const { asFragment, getByText } = render(
       <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
-        <RouterProvider router={router} />
+        <Provider store={store2}>
+          <RouterProvider router={router} />
+        </Provider>
       </MockedProvider>
     );
 
@@ -73,5 +94,46 @@ describe('MilestonePanel Component', () => {
 
     // Match the snapshot
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders correctly in different modes', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <MessageProvider>
+              <MilestonePanel
+                milestone={mockMilestone}
+                mode="hkcMilestoneLibrary"
+              />
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByText, getByRole } = render(
+      <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
+        <Provider store={store1}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
+    );
+
+    // Check if the component renders props data
+    expect(getByText('Test Milestone')).toBeInTheDocument();
+    expect(
+      getByText('Category: Test Category (Test SubCategory)')
+    ).toBeInTheDocument();
+    expect(
+      getByText('Facilitated by: Application support contractor')
+    ).toBeInTheDocument();
+    expect(
+      getByRole('button', { name: /Edit Milestone/i })
+    ).toBeInTheDocument();
   });
 });

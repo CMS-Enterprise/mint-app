@@ -1,17 +1,30 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
-import { allCommonSolutionsMock } from 'tests/mock/general';
+import configureMockStore from 'redux-mock-store';
+import { commonSolutionsAndCategoriesMock } from 'tests/mock/general';
+import { commonMilestonesMockData } from 'tests/mock/mto';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
 import CommonMilestoneSidePanel from '.';
 
-const mocks = [...allCommonSolutionsMock];
+const mocks = [...commonSolutionsAndCategoriesMock];
+
+const mockAuthAssessment = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthAssessment });
 
 describe('CommonMilestoneSidePanel', () => {
-  const routerConfig = (isPanelOpen: boolean) =>
+  const addRouterConfig = (isPanelOpen: boolean) =>
     createMemoryRouter(
       [
         {
@@ -32,10 +45,36 @@ describe('CommonMilestoneSidePanel', () => {
       }
     );
 
+  const editRouterConfig = (isPanelOpen: boolean) =>
+    createMemoryRouter(
+      [
+        {
+          path: '/help-and-knowledge/milestone-library',
+          element: (
+            <MessageProvider>
+              <CommonMilestoneSidePanel
+                isPanelOpen={isPanelOpen}
+                commonMilestone={commonMilestonesMockData[0]}
+                closeModal={() => {}}
+                mode="editCommonMilestone"
+              />
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/help-and-knowledge/milestone-library?page=1&milestone=123456&edit=true'
+        ]
+      }
+    );
+
   it('should render side panel in add mode accordingly', async () => {
     const { getByText, getByTestId } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={routerConfig(true)} />
+        <Provider store={store}>
+          <RouterProvider router={addRouterConfig(true)} />
+        </Provider>
       </MockedProvider>
     );
 
@@ -46,10 +85,28 @@ describe('CommonMilestoneSidePanel', () => {
     });
   });
 
+  it('should render side panel in edit mode accordingly', async () => {
+    const { getByText, getByTestId } = render(
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Provider store={store}>
+          <RouterProvider router={editRouterConfig(true)} />
+        </Provider>
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(getByText('Edit milestone')).toBeInTheDocument();
+
+      expect(getByTestId('common-milestone-side-panel')).toBeInTheDocument();
+    });
+  });
+
   it('matches snapshot', async () => {
     const { getByTestId, getByRole, baseElement } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <RouterProvider router={routerConfig(true)} />
+        <Provider store={store}>
+          <RouterProvider router={addRouterConfig(true)} />
+        </Provider>
       </MockedProvider>
     );
 

@@ -18,15 +18,15 @@ import {
   GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   GetCollaborationAreaQueryVariables,
+  GetCommonSolutionsAndCategoriesDocument,
+  GetCommonSolutionsAndCategoriesQuery,
+  GetCommonSolutionsAndCategoriesQueryVariables,
   GetEchimpCrandTdlDocument,
   GetEchimpCrandTdlQuery,
   GetEchimpCrandTdlQueryVariables,
   GetFavoritesDocument,
   GetFavoritesQuery,
   GetFavoritesQueryVariables,
-  GetGlobalMtoCommonSolutionsDocument,
-  GetGlobalMtoCommonSolutionsQuery,
-  GetGlobalMtoCommonSolutionsQueryVariables,
   GetModelPlanBaseDocument,
   GetModelPlanBaseQuery,
   GetModelPlanBaseQueryVariables,
@@ -860,18 +860,30 @@ export const keyContactsMock: MockedResponse<
   }
 ];
 
-export const allCommonSolutionsMock: MockedResponse<
-  GetGlobalMtoCommonSolutionsQuery,
-  GetGlobalMtoCommonSolutionsQueryVariables
+export const commonSolutionsAndCategoriesMock: MockedResponse<
+  GetCommonSolutionsAndCategoriesQuery,
+  GetCommonSolutionsAndCategoriesQueryVariables
 >[] = [
   {
     request: {
-      query: GetGlobalMtoCommonSolutionsDocument
+      query: GetCommonSolutionsAndCategoriesDocument
     },
     result: {
       data: {
         __typename: 'Query',
-        mtoCommonSolutions: []
+        mtoCommonSolutions: [],
+        commonCategories: [
+          {
+            __typename: 'CommonCategory',
+            name: 'Category 1',
+            subCategories: ['Subcategory 1', 'Subcategory 2']
+          },
+          {
+            __typename: 'CommonCategory',
+            name: 'Category 2',
+            subCategories: []
+          }
+        ]
       }
     }
   }
