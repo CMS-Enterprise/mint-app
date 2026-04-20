@@ -299,6 +299,11 @@ func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authen
 		if err := storage.MTOSolutionDelete(tx, principalAccount.ID, logger, id); err != nil {
 			return fmt.Errorf("unable to delete mto solution. Err %w", err)
 		}
+
+		// MTO task regression: recalculate task after deleting MTO data.
+		if err := UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+			return fmt.Errorf("unable to recalculate MTO task after deleting solution. Err %w", err)
+		}
 		return nil
 	})
 }

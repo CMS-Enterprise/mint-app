@@ -177,6 +177,38 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
 	})
 
+	suite.Run("deleting last MTO data recalculates MTO task to TO_DO", func() {
+		planForMTODeleteRegression := suite.createModelPlan("Plan For MTO Delete Regression")
+
+		category, err := MTOCategoryCreate(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			"Category To Delete",
+			planForMTODeleteRegression.ID,
+			nil,
+		)
+		suite.NoError(err)
+		suite.NotNil(category)
+
+		mtoTask := suite.getPlanTaskByKey(planForMTODeleteRegression.ID, models.PlanTaskKeyMto)
+		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+
+		err = MTOCategoryDelete(
+			suite.testConfigs.Logger,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			category.ID,
+		)
+		suite.NoError(err)
+
+		mtoTask = suite.getPlanTaskByKey(planForMTODeleteRegression.ID, models.PlanTaskKeyMto)
+		suite.Equal(models.PlanTaskStatusToDo, mtoTask.Status)
+		suite.Nil(mtoTask.CompletedBy)
+		suite.Nil(mtoTask.CompletedDts)
+	})
+
 	suite.Run("starting data exchange approach marks DATA_EXCHANGE task IN_PROGRESS", func() {
 		dea, err := PlanDataExchangeApproachGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
 		suite.NoError(err)
@@ -224,6 +256,93 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NotNil(task.CompletedDts)
 	})
 
+	suite.Run("unmarking data exchange approach complete regresses DATA_EXCHANGE to IN_PROGRESS when model is not CLEARED", func() {
+		planForDEARegression := suite.createModelPlan("Plan For DEA Uncomplete Regression")
+
+		dea, err := PlanDataExchangeApproachGetByModelPlanIDLoader(suite.testConfigs.Context, planForDEARegression.ID)
+		suite.NoError(err)
+		suite.NotNil(dea)
+
+		isComplete := true
+		_, err = PlanDataExchangeApproachUpdate(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			dea.ID,
+			map[string]interface{}{"isDataExchangeApproachComplete": &isComplete},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		isComplete = false
+		_, err = PlanDataExchangeApproachUpdate(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			dea.ID,
+			map[string]interface{}{"isDataExchangeApproachComplete": &isComplete},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		task := suite.getPlanTaskByKey(planForDEARegression.ID, models.PlanTaskKeyDataExchange)
+		suite.Equal(models.PlanTaskStatusInProgress, task.Status)
+		suite.Nil(task.CompletedBy)
+		suite.Nil(task.CompletedDts)
+	})
+
+	suite.Run("unmarking data exchange approach complete keeps DATA_EXCHANGE complete when model is CLEARED", func() {
+		planForDEACleared := suite.createModelPlan("Plan For DEA Uncomplete While Cleared")
+
+		dea, err := PlanDataExchangeApproachGetByModelPlanIDLoader(suite.testConfigs.Context, planForDEACleared.ID)
+		suite.NoError(err)
+		suite.NotNil(dea)
+
+		isComplete := true
+		_, err = PlanDataExchangeApproachUpdate(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			dea.ID,
+			map[string]interface{}{"isDataExchangeApproachComplete": &isComplete},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		_, err = ModelPlanUpdate(
+			suite.testConfigs.Logger,
+			planForDEACleared.ID,
+			map[string]interface{}{"status": models.ModelStatusCleared},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+		)
+		suite.NoError(err)
+
+		isComplete = false
+		_, err = PlanDataExchangeApproachUpdate(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			dea.ID,
+			map[string]interface{}{"isDataExchangeApproachComplete": &isComplete},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		task := suite.getPlanTaskByKey(planForDEACleared.ID, models.PlanTaskKeyDataExchange)
+		suite.Equal(models.PlanTaskStatusComplete, task.Status)
+		suite.NotNil(task.CompletedBy)
+		suite.NotNil(task.CompletedDts)
+	})
+
 	suite.Run("status transitions on model plan update set appropriate tasks COMPLETE", func() {
 		// When model status changes to CLEARED: MODEL_PLAN and DATA_EXCHANGE tasks COMPLETE
 		_, err := ModelPlanUpdate(
@@ -244,6 +363,26 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NotNil(dataExchangeTask.CompletedBy)
 		suite.NotNil(dataExchangeTask.CompletedDts)
 
+		// When model status regresses from CLEARED to an earlier status:
+		// MODEL_PLAN should return to TO_DO, while DATA_EXCHANGE remains COMPLETE if DEA is still COMPLETE.
+		_, err = ModelPlanUpdate(
+			suite.testConfigs.Logger,
+			plan.ID,
+			map[string]interface{}{"status": models.ModelStatusInternalCmmiClearance},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+		)
+		suite.NoError(err)
+
+		modelPlanTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan)
+		dataExchangeTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDataExchange)
+		suite.Equal(models.PlanTaskStatusInProgress, modelPlanTask.Status)
+		suite.Nil(modelPlanTask.CompletedBy)
+		suite.Nil(modelPlanTask.CompletedDts)
+		suite.Equal(models.PlanTaskStatusComplete, dataExchangeTask.Status)
+		suite.NotNil(dataExchangeTask.CompletedBy)
+		suite.NotNil(dataExchangeTask.CompletedDts)
+
 		// When model status changes to ACTIVE: MTO task COMPLETE
 		_, err = ModelPlanUpdate(
 			suite.testConfigs.Logger,
@@ -258,6 +397,80 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.Equal(models.PlanTaskStatusComplete, mtoTask.Status)
 		suite.NotNil(mtoTask.CompletedBy)
 		suite.NotNil(mtoTask.CompletedDts)
+
+		// When model status regresses from ACTIVE to an earlier status:
+		// MTO task should return to IN_PROGRESS if MTO data exists.
+		_, err = ModelPlanUpdate(
+			suite.testConfigs.Logger,
+			plan.ID,
+			map[string]interface{}{"status": models.ModelStatusAnnounced},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+		)
+		suite.NoError(err)
+
+		mtoTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyMto)
+		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+		suite.Nil(mtoTask.CompletedBy)
+		suite.Nil(mtoTask.CompletedDts)
+	})
+
+	suite.Run("regressing from ACTIVE returns MTO to TO_DO when no MTO data exists", func() {
+		planWithoutMTOData := suite.createModelPlan("Plan For Active Regression Without MTO Data")
+
+		_, err := ModelPlanUpdate(
+			suite.testConfigs.Logger,
+			planWithoutMTOData.ID,
+			map[string]interface{}{"status": models.ModelStatusActive},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+		)
+		suite.NoError(err)
+
+		_, err = ModelPlanUpdate(
+			suite.testConfigs.Logger,
+			planWithoutMTOData.ID,
+			map[string]interface{}{"status": models.ModelStatusAnnounced},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+		)
+		suite.NoError(err)
+
+		mtoTask := suite.getPlanTaskByKey(planWithoutMTOData.ID, models.PlanTaskKeyMto)
+		suite.Equal(models.PlanTaskStatusToDo, mtoTask.Status)
+		suite.Nil(mtoTask.CompletedBy)
+		suite.Nil(mtoTask.CompletedDts)
+	})
+
+	suite.Run("regressing from CLEARED downgrades DATA_EXCHANGE when DEA is not COMPLETE", func() {
+		planForRegression := suite.createModelPlan("Plan For DEA Regression")
+
+		_, err := ModelPlanUpdate(
+			suite.testConfigs.Logger,
+			planForRegression.ID,
+			map[string]interface{}{"status": models.ModelStatusCleared},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+		)
+		suite.NoError(err)
+
+		_, err = ModelPlanUpdate(
+			suite.testConfigs.Logger,
+			planForRegression.ID,
+			map[string]interface{}{"status": models.ModelStatusInternalCmmiClearance},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+		)
+		suite.NoError(err)
+
+		modelPlanTask := suite.getPlanTaskByKey(planForRegression.ID, models.PlanTaskKeyModelPlan)
+		dataExchangeTask := suite.getPlanTaskByKey(planForRegression.ID, models.PlanTaskKeyDataExchange)
+		suite.Equal(models.PlanTaskStatusToDo, modelPlanTask.Status)
+		suite.Nil(modelPlanTask.CompletedBy)
+		suite.Nil(modelPlanTask.CompletedDts)
+		suite.Equal(models.PlanTaskStatusToDo, dataExchangeTask.Status)
+		suite.Nil(dataExchangeTask.CompletedBy)
+		suite.Nil(dataExchangeTask.CompletedDts)
 	})
 }
 

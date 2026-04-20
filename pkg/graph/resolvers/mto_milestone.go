@@ -386,6 +386,11 @@ func MTOMilestoneDelete(ctx context.Context, logger *zap.Logger, principal authe
 		if err := storage.MTOMilestoneDelete(tx, principalAccount.ID, logger, id); err != nil {
 			return fmt.Errorf("unable to delete mto milestone. Err %w", err)
 		}
+
+		// MTO task regression: recalculate task after deleting MTO data.
+		if err := UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+			return fmt.Errorf("unable to recalculate MTO task after deleting milestone. Err %w", err)
+		}
 		return nil
 	})
 }

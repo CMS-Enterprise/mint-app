@@ -69,6 +69,11 @@ func MTOCategoryDelete(logger *zap.Logger, principal authentication.Principal, s
 			return fmt.Errorf("unable to delete MTO category. Err %w", err)
 		}
 
+		// MTO task regression: recalculate task after deleting MTO data.
+		if err = UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+			return fmt.Errorf("unable to recalculate MTO task after deleting category. Err %w", err)
+		}
+
 		return nil
 	})
 }
