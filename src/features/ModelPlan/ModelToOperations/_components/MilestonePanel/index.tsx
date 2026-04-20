@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import i18next from 'i18next';
 
@@ -40,81 +40,72 @@ const MilestonePanel = ({ milestone }: MilestonePanelProps) => {
 
   return (
     <>
-      <GridContainer className="padding-8">
-        <Grid row>
-          <Grid col={12}>
-            {milestone.suggested.isSuggested && (
-              <div className="margin-bottom-4">
-                <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
-                  <Icon.LightbulbOutline
-                    className="margin-left-1"
-                    style={{ top: '2px' }}
-                    aria-label="lightbulb"
-                  />{' '}
-                  {t('milestoneLibrary.suggested')}
-                </span>
-              </div>
+      <div className="padding-8 maxw-tablet">
+        {milestone.suggested.isSuggested && (
+          <div className="margin-bottom-4">
+            <span className="padding-right-1 model-to-operations__milestone-tag padding-y-05">
+              <Icon.LightbulbOutline
+                className="margin-left-1"
+                style={{ top: '2px' }}
+                aria-label="lightbulb"
+              />{' '}
+              {t('milestoneLibrary.suggested')}
+            </span>
+          </div>
+        )}
+
+        <h2 className="margin-y-2 line-height-large">{milestone.name}</h2>
+
+        <p className="text-base-dark margin-top-0 margin-bottom-2">
+          {t('milestoneLibrary.category', {
+            category: milestone.categoryName
+          })}{' '}
+          {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
+        </p>
+
+        <p style={{ whiteSpace: 'pre-line' }}>{milestone.description}</p>
+
+        <p className="text-base-dark margin-top-0 margin-bottom-4">
+          {t('milestoneLibrary.facilitatedByArray', {
+            facilitatedBy: facilitatedByUsers
+          })}
+        </p>
+
+        {!isHkcMilestoneLibrary && (
+          <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
+            {!milestone.isAdded ? (
+              <Button
+                type="button"
+                outline
+                className="margin-right-2"
+                onClick={() => {
+                  params.set('add-milestone', milestone.id);
+                  navigate({ search: params.toString() }, { replace: true });
+                }}
+              >
+                {t('milestoneLibrary.addToMatrix')}
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                disabled
+                className="margin-right-2 model-to-operations__milestone-added text-normal"
+              >
+                <Icon.Check aria-label="check" />
+                {t('milestoneLibrary.added')}
+              </Button>
             )}
+          </div>
+        )}
 
-            <h2 className="margin-y-2 line-height-large">{milestone.name}</h2>
+        <h3 className="margin-y-2">{t('milestoneLibrary.commonSolutions')}</h3>
 
-            <p className="text-base-dark margin-top-0 margin-bottom-2">
-              {t('milestoneLibrary.category', {
-                category: milestone.categoryName
-              })}{' '}
-              {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
-            </p>
-
-            <p style={{ whiteSpace: 'pre-line' }}>{milestone.description}</p>
-
-            <p className="text-base-dark margin-top-0 margin-bottom-4">
-              {t('milestoneLibrary.facilitatedByArray', {
-                facilitatedBy: facilitatedByUsers
-              })}
-            </p>
-
-            {!isHkcMilestoneLibrary && (
-              <div className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
-                {!milestone.isAdded ? (
-                  <Button
-                    type="button"
-                    outline
-                    className="margin-right-2"
-                    onClick={() => {
-                      params.set('add-milestone', milestone.id);
-                      navigate(
-                        { search: params.toString() },
-                        { replace: true }
-                      );
-                    }}
-                  >
-                    {t('milestoneLibrary.addToMatrix')}
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    disabled
-                    className="margin-right-2 model-to-operations__milestone-added text-normal"
-                  >
-                    <Icon.Check aria-label="check" />
-                    {t('milestoneLibrary.added')}
-                  </Button>
-                )}
-              </div>
-            )}
-
-            <h3 className="margin-y-2">
-              {t('milestoneLibrary.commonSolutions')}
-            </h3>
-
-            {mappedSolutions.map(solution =>
-              solution ? (
-                <SolutionCard key={solution.key} solution={solution} />
-              ) : null
-            )}
-          </Grid>
-        </Grid>
-      </GridContainer>
+        {mappedSolutions.map(solution =>
+          solution ? (
+            <SolutionCard key={solution.key} solution={solution} />
+          ) : null
+        )}
+      </div>
     </>
   );
 };
