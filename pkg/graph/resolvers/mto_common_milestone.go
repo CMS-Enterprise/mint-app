@@ -71,43 +71,45 @@ func CreateMTOCommonMilestone(
 		return nil, err
 	}
 
-	if emailService != nil {
+	if emailService == nil {
+		return createdMilestone, nil
+	}
+
+	go func() {
 		commonSolutionRecords, err := storage.MTOCommonSolutionGetByKeyLoader(store, logger, commonSolutions)
 		if err != nil {
 			logger.Error("failed to fetch common solutions for common milestone created email", zap.Error(err))
 		}
 
-		go func() {
-			emailSubject, emailBody, err := email.MTO.CommonMilestone.Added.GetContent(
-				email.MTOCommonMilestoneCreatedSubjectContent{},
-				email.MTOCommonMilestoneCreatedBodyContent{
-					UserName:       actorUserName,
-					MilestoneTitle: createdMilestone.Name,
-					Description:    createdMilestone.Description,
-					CategoryAndSub: formatMTOCommonMilestoneCategory(createdMilestone.CategoryName, createdMilestone.SubCategoryName),
-					Roles:          formatMTOCommonMilestoneFacilitators(createdMilestone.FacilitatedByRole, createdMilestone.FacilitatedByOther),
-					Solutions:      formatMTOCommonMilestoneSolutions(commonSolutionRecords),
-					ClientAddress:  emailService.GetConfig().GetClientAddress(),
-				},
-			)
-			if err != nil {
-				logger.Error("failed to render common milestone created email", zap.Error(err))
-				return
-			}
+		emailSubject, emailBody, err := email.MTO.CommonMilestone.Added.GetContent(
+			email.MTOCommonMilestoneCreatedSubjectContent{},
+			email.MTOCommonMilestoneCreatedBodyContent{
+				UserName:       actorUserName,
+				MilestoneTitle: createdMilestone.Name,
+				Description:    createdMilestone.Description,
+				CategoryAndSub: formatMTOCommonMilestoneCategory(createdMilestone.CategoryName, createdMilestone.SubCategoryName),
+				Roles:          formatMTOCommonMilestoneFacilitators(createdMilestone.FacilitatedByRole, createdMilestone.FacilitatedByOther),
+				Solutions:      formatMTOCommonMilestoneSolutions(commonSolutionRecords),
+				ClientAddress:  emailService.GetConfig().GetClientAddress(),
+			},
+		)
+		if err != nil {
+			logger.Error("failed to render common milestone created email", zap.Error(err))
+			return
+		}
 
-			err = emailService.Send(
-				addressBook.DefaultSender,
-				[]string{addressBook.MINTTeamEmail},
-				nil,
-				emailSubject,
-				"text/html",
-				emailBody,
-			)
-			if err != nil {
-				logger.Error("failed to send common milestone created email", zap.Error(err))
-			}
-		}()
-	}
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			[]string{addressBook.MINTTeamEmail},
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+		)
+		if err != nil {
+			logger.Error("failed to send common milestone created email", zap.Error(err))
+		}
+	}()
 
 	return createdMilestone, nil
 }
@@ -139,11 +141,14 @@ func UpdateMTOCommonMilestone(
 	existingMilestone := existingMilestones[0]
 	previousMilestone := *existingMilestone
 
+	sendUpdateEmail := emailService != nil
 	var previousCommonSolutionRecords []*models.MTOCommonSolution
-	if emailService != nil {
+	if sendUpdateEmail {
+		// Updating can replace solution links, so capture the previous values before the update mutation.
 		previousCommonSolutionRecords, err = storage.MTOCommonSolutionGetByCommonMilestoneIDLoader(store, logger, []uuid.UUID{id})
 		if err != nil {
 			logger.Error("failed to fetch previous common solutions for common milestone updated email", zap.Error(err))
+			sendUpdateEmail = false
 		}
 	}
 
@@ -156,52 +161,55 @@ func UpdateMTOCommonMilestone(
 		return nil, err
 	}
 
-	if emailService != nil {
+	if !sendUpdateEmail {
+		return updatedMilestone, nil
+	}
+
+	go func() {
 		updatedCommonSolutionRecords := previousCommonSolutionRecords
 		if commonSolutions != nil {
+			var err error
 			updatedCommonSolutionRecords, err = storage.MTOCommonSolutionGetByKeyLoader(store, logger, commonSolutions)
 			if err != nil {
 				logger.Error("failed to fetch updated common solutions for common milestone updated email", zap.Error(err))
-				updatedCommonSolutionRecords = nil
+				return
 			}
 		}
 
-		go func() {
-			emailSubject, emailBody, err := email.MTO.CommonMilestone.Updated.GetContent(
-				email.MTOCommonMilestoneUpdatedSubjectContent{},
-				email.MTOCommonMilestoneUpdatedBodyContent{
-					UserName:               principalAccount.CommonName,
-					PreviousTitle:          previousMilestone.Name,
-					PreviousDescription:    previousMilestone.Description,
-					PreviousCategoryAndSub: formatMTOCommonMilestoneCategory(previousMilestone.CategoryName, previousMilestone.SubCategoryName),
-					PreviousRoles:          formatMTOCommonMilestoneFacilitators(previousMilestone.FacilitatedByRole, previousMilestone.FacilitatedByOther),
-					PreviousSolutions:      formatMTOCommonMilestoneSolutions(previousCommonSolutionRecords),
-					NewTitle:               updatedMilestone.Name,
-					NewDescription:         updatedMilestone.Description,
-					NewCategoryAndSub:      formatMTOCommonMilestoneCategory(updatedMilestone.CategoryName, updatedMilestone.SubCategoryName),
-					NewRoles:               formatMTOCommonMilestoneFacilitators(updatedMilestone.FacilitatedByRole, updatedMilestone.FacilitatedByOther),
-					NewSolutions:           formatMTOCommonMilestoneSolutions(updatedCommonSolutionRecords),
-					ClientAddress:          emailService.GetConfig().GetClientAddress(),
-				},
-			)
-			if err != nil {
-				logger.Error("failed to render common milestone updated email", zap.Error(err))
-				return
-			}
+		emailSubject, emailBody, err := email.MTO.CommonMilestone.Updated.GetContent(
+			email.MTOCommonMilestoneUpdatedSubjectContent{},
+			email.MTOCommonMilestoneUpdatedBodyContent{
+				UserName:               principalAccount.CommonName,
+				PreviousTitle:          previousMilestone.Name,
+				PreviousDescription:    previousMilestone.Description,
+				PreviousCategoryAndSub: formatMTOCommonMilestoneCategory(previousMilestone.CategoryName, previousMilestone.SubCategoryName),
+				PreviousRoles:          formatMTOCommonMilestoneFacilitators(previousMilestone.FacilitatedByRole, previousMilestone.FacilitatedByOther),
+				PreviousSolutions:      formatMTOCommonMilestoneSolutions(previousCommonSolutionRecords),
+				NewTitle:               updatedMilestone.Name,
+				NewDescription:         updatedMilestone.Description,
+				NewCategoryAndSub:      formatMTOCommonMilestoneCategory(updatedMilestone.CategoryName, updatedMilestone.SubCategoryName),
+				NewRoles:               formatMTOCommonMilestoneFacilitators(updatedMilestone.FacilitatedByRole, updatedMilestone.FacilitatedByOther),
+				NewSolutions:           formatMTOCommonMilestoneSolutions(updatedCommonSolutionRecords),
+				ClientAddress:          emailService.GetConfig().GetClientAddress(),
+			},
+		)
+		if err != nil {
+			logger.Error("failed to render common milestone updated email", zap.Error(err))
+			return
+		}
 
-			err = emailService.Send(
-				addressBook.DefaultSender,
-				[]string{addressBook.MINTTeamEmail},
-				nil,
-				emailSubject,
-				"text/html",
-				emailBody,
-			)
-			if err != nil {
-				logger.Error("failed to send common milestone updated email", zap.Error(err))
-			}
-		}()
-	}
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			[]string{addressBook.MINTTeamEmail},
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+		)
+		if err != nil {
+			logger.Error("failed to send common milestone updated email", zap.Error(err))
+		}
+	}()
 
 	return updatedMilestone, nil
 }
@@ -216,13 +224,14 @@ func ArchiveMTOCommonMilestone(
 	actorUserID uuid.UUID,
 	actorUserName string,
 ) (*models.MTOCommonMilestone, error) {
-	var commonSolutionRecords []*models.MTOCommonSolution
-	if emailService != nil {
-		var err error
-		commonSolutionRecords, err = storage.MTOCommonSolutionGetByCommonMilestoneIDLoader(store, logger, []uuid.UUID{id})
-		if err != nil {
-			logger.Error("failed to fetch common solutions for common milestone removed email", zap.Error(err))
-		}
+	if emailService == nil {
+		return storage.MTOCommonMilestoneArchive(store, logger, id, actorUserID)
+	}
+
+	// Archiving removes common milestone solution links, so capture them before the archive mutation.
+	commonSolutionRecords, err := storage.MTOCommonSolutionGetByCommonMilestoneIDLoader(store, logger, []uuid.UUID{id})
+	if err != nil {
+		logger.Error("failed to fetch common solutions for common milestone removed email", zap.Error(err))
 	}
 
 	archivedMilestone, err := storage.MTOCommonMilestoneArchive(store, logger, id, actorUserID)
@@ -230,38 +239,36 @@ func ArchiveMTOCommonMilestone(
 		return nil, err
 	}
 
-	if emailService != nil {
-		go func() {
-			emailSubject, emailBody, err := email.MTO.CommonMilestone.Removed.GetContent(
-				email.MTOCommonMilestoneRemovedSubjectContent{},
-				email.MTOCommonMilestoneRemovedBodyContent{
-					UserName:       actorUserName,
-					MilestoneTitle: archivedMilestone.Name,
-					Description:    archivedMilestone.Description,
-					CategoryAndSub: formatMTOCommonMilestoneCategory(archivedMilestone.CategoryName, archivedMilestone.SubCategoryName),
-					Roles:          formatMTOCommonMilestoneFacilitators(archivedMilestone.FacilitatedByRole, archivedMilestone.FacilitatedByOther),
-					Solutions:      formatMTOCommonMilestoneSolutions(commonSolutionRecords),
-					ClientAddress:  emailService.GetConfig().GetClientAddress(),
-				},
-			)
-			if err != nil {
-				logger.Error("failed to render common milestone removed email", zap.Error(err))
-				return
-			}
+	go func() {
+		emailSubject, emailBody, err := email.MTO.CommonMilestone.Removed.GetContent(
+			email.MTOCommonMilestoneRemovedSubjectContent{},
+			email.MTOCommonMilestoneRemovedBodyContent{
+				UserName:       actorUserName,
+				MilestoneTitle: archivedMilestone.Name,
+				Description:    archivedMilestone.Description,
+				CategoryAndSub: formatMTOCommonMilestoneCategory(archivedMilestone.CategoryName, archivedMilestone.SubCategoryName),
+				Roles:          formatMTOCommonMilestoneFacilitators(archivedMilestone.FacilitatedByRole, archivedMilestone.FacilitatedByOther),
+				Solutions:      formatMTOCommonMilestoneSolutions(commonSolutionRecords),
+				ClientAddress:  emailService.GetConfig().GetClientAddress(),
+			},
+		)
+		if err != nil {
+			logger.Error("failed to render common milestone removed email", zap.Error(err))
+			return
+		}
 
-			err = emailService.Send(
-				addressBook.DefaultSender,
-				[]string{addressBook.MINTTeamEmail},
-				nil,
-				emailSubject,
-				"text/html",
-				emailBody,
-			)
-			if err != nil {
-				logger.Error("failed to send common milestone removed email", zap.Error(err))
-			}
-		}()
-	}
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			[]string{addressBook.MINTTeamEmail},
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+		)
+		if err != nil {
+			logger.Error("failed to send common milestone removed email", zap.Error(err))
+		}
+	}()
 
 	return archivedMilestone, nil
 }
