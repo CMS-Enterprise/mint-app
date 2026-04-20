@@ -456,6 +456,26 @@ export const modelToOperationsMisc: Record<string, any> = {
       milestoneInfo:
         'To view more information about the milestones using this solution, navigate to the <link1>“Milestones” tab</link1> in your MTO. From there you may edit details about the milestones, including the status.'
     },
+    completionModal: {
+      heading: { milestone: 'You marked this milestone as complete!' },
+      noRiskText: {
+        milestone:
+          'If needed, please update the status of any selected solutions by navigating to the <solutionTabLink>Solutions and IT systems tab</solutionTabLink> of your MTO to update their details.'
+      },
+      riskText: {
+        milestone:
+          'There is a risk indicator for this milestone. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}'
+      },
+      riskInfoAlert: {
+        milestone:
+          'If needed, please update the status of any selected solutions by navigating to the “Solutions and IT systems” tab of your MTO to update their details.'
+      },
+      cta: {
+        okay: 'Okay',
+        removeRiskIndicator: 'Remove risk indicator',
+        dontRemoveRiskIndicator: 'Don’t remove indicator'
+      }
+    },
     solution: {
       title: 'Add a new solution',
       label: {
