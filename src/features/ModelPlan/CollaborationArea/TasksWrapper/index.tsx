@@ -92,35 +92,40 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
 
       <div className="display-flex flex-align-center flex-justify">
         <div className="display-flex flex-align-center">
-          <Button
-            type="button"
-            unstyled
-            disabled={currentIndex === 0}
-            onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
-            className="usa-button--unstyled"
-          >
-            <Icon.NavigateBefore
-              aria-label={tableAndPaginationT('pagination.previous')}
-            />
-            {tableAndPaginationT('pagination.previous')}
-          </Button>
-          <span className="margin-x-3 text-base">|</span>
-          <Button
-            type="button"
-            unstyled
-            disabled={currentIndex === orderedTasks.length - 1}
-            onClick={() =>
-              setCurrentIndex(prev =>
-                Math.min(orderedTasks.length - 1, prev + 1)
-              )
-            }
-            className="usa-button--unstyled"
-          >
-            {tableAndPaginationT('pagination.next')}
-            <Icon.NavigateNext
-              aria-label={tableAndPaginationT('pagination.next')}
-            />
-          </Button>
+          {/* Only show previous and next buttons if there are more than 1 task */}
+          {orderedTasks.length > 1 && (
+            <>
+              <Button
+                type="button"
+                unstyled
+                disabled={currentIndex === 0}
+                onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
+                className="usa-button--unstyled"
+              >
+                <Icon.NavigateBefore
+                  aria-label={tableAndPaginationT('pagination.previous')}
+                />
+                {tableAndPaginationT('pagination.previous')}
+              </Button>
+              <span className="margin-x-3 text-base">|</span>
+              <Button
+                type="button"
+                unstyled
+                disabled={currentIndex === orderedTasks.length - 1}
+                onClick={() =>
+                  setCurrentIndex(prev =>
+                    Math.min(orderedTasks.length - 1, prev + 1)
+                  )
+                }
+                className="usa-button--unstyled"
+              >
+                {tableAndPaginationT('pagination.next')}
+                <Icon.NavigateNext
+                  aria-label={tableAndPaginationT('pagination.next')}
+                />
+              </Button>
+            </>
+          )}
         </div>
         <div className="display-flex flex-align-center margin-left-auto">
           <Button

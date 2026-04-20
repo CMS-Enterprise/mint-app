@@ -16,6 +16,8 @@ import {
   PlanTaskStatus
 } from 'gql/generated/graphql';
 
+import UswdsReactLink from 'components/LinkWrapper';
+
 import LastModifiedSection from '../../_components/LastModifiedSection';
 import {
   getLastEditSectionForTask,
@@ -111,13 +113,15 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
         >
           {t(`${baseKey}.primaryAction`)}
         </Button>
-        <Button
-          type="button"
-          outline
-          onClick={() => navigate(t(`${key}.secondaryPath`))}
+        <UswdsReactLink
+          to={t(`${key}.secondaryPath`)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="usa-button usa-button--outline"
+          variant="unstyled"
         >
           {t(`${key}.secondaryAction`)}
-        </Button>
+        </UswdsReactLink>
       </CardFooter>
     </Card>
   );
