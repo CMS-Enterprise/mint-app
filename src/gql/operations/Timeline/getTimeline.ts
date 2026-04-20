@@ -5,6 +5,11 @@ export default gql(/* GraphQL */ `
     modelPlan(id: $id) {
       id
       modelName
+      basics {
+        id
+        modelType
+        modelTypeOther
+      }
       timeline {
         id
         completeICIP
