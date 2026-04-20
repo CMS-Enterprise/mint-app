@@ -73,13 +73,17 @@ func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *m
 // CreateMTOCommonMilestone is the resolver for the createMTOCommonMilestone field.
 func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName *string, facilitatedByRole []models.MTOFacilitator, facilitatedByOther *string, commonSolutions []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
 	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
 	return CreateMTOCommonMilestone(
+		logger,
 		r.store,
+		r.emailService,
+		r.addressBook,
 		name,
 		description,
 		categoryName,
@@ -88,6 +92,7 @@ func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name st
 		facilitatedByOther,
 		commonSolutions,
 		principalAccount.ID,
+		principalAccount.CommonName,
 	)
 }
 
@@ -100,7 +105,7 @@ func (r *mutationResolver) UpdateMTOCommonMilestone(ctx context.Context, id uuid
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	return UpdateMTOCommonMilestone(logger, principal, r.store, id, changes, commonSolutions)
+	return UpdateMTOCommonMilestone(logger, principal, r.store, r.emailService, r.addressBook, id, changes, commonSolutions)
 }
 
 // ArchiveMTOCommonMilestone is the resolver for the archiveMTOCommonMilestone field.
@@ -112,7 +117,7 @@ func (r *mutationResolver) ArchiveMTOCommonMilestone(ctx context.Context, id uui
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
 
-	return ArchiveMTOCommonMilestone(logger, r.store, id, principalAccount.ID)
+	return ArchiveMTOCommonMilestone(logger, r.store, r.emailService, r.addressBook, id, principalAccount.ID, principalAccount.CommonName)
 }
 
 // MtoCommonMilestones is the resolver for the mtoCommonMilestones field.
