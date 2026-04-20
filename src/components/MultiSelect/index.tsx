@@ -1,4 +1,5 @@
 import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
+import { RefCallBack } from 'react-hook-form';
 import Select, {
   ClearIndicatorProps,
   components,
@@ -226,7 +227,8 @@ const MultiSelect = ({
   tagOrder,
   disabled,
   disabledOption,
-  disabledLabel
+  disabledLabel,
+  inputRef
 }: {
   id?: string;
   children?: React.ReactNode;
@@ -244,6 +246,7 @@ const MultiSelect = ({
   disabled?: boolean;
   disabledOption?: boolean;
   disabledLabel?: string;
+  inputRef?: RefCallBack;
 }) => {
   const condensedOptions = useMemo(() => {
     if (groupedOptions) {
@@ -333,6 +336,7 @@ const MultiSelect = ({
         aria-labelledby={ariaLabel}
         aria-label={ariaLabelText}
         isDisabled={disabled}
+        ref={inputRef}
       />
 
       {children}
