@@ -20,4 +20,5 @@ type MTOCommonMilestoneRemovedBodyContent struct {
 	CategoryAndSub string
 	Roles          string // comma-separated
 	Solutions      string // comma-separated
+	ClientAddress  string
 }

@@ -21,4 +21,5 @@ type MTOCommonMilestoneCreatedBodyContent struct {
 	Roles          string // comma-separated
 	Solutions      string // comma-separated
 	Link           string
+	ClientAddress  string
 }
