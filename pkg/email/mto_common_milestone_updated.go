@@ -26,6 +26,5 @@ type MTOCommonMilestoneUpdatedBodyContent struct {
 	NewCategoryAndSub      string
 	NewRoles               string // comma-separated
 	NewSolutions           string // comma-separated
-	Link                   string
 	ClientAddress          string
 }

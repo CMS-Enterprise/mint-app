@@ -17,9 +17,9 @@ type MTOCommonMilestoneCreatedSubjectContent struct{}
 type MTOCommonMilestoneCreatedBodyContent struct {
 	UserName       string
 	MilestoneTitle string
+	Description    string
 	CategoryAndSub string
 	Roles          string // comma-separated
 	Solutions      string // comma-separated
-	Link           string
 	ClientAddress  string
 }

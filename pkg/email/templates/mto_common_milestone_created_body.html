@@ -1,3 +1,31 @@
 {{template "shared_header.html"}}
 {{template "shared_mint_mailbox_header.html" .}}
+
+<hr/>
+
+<p>{{.UserName}} added a new common milestone to the MINT milestone library.</p>
+
+<br/>
+<br/>
+
+<p><strong><u>New milestone</u></strong></p>
+<p><strong>Title:</strong> {{.MilestoneTitle}}</p>
+<p><strong>Description:</strong> {{.Description}}</p>
+<p><strong>Category:</strong> {{.CategoryAndSub}}</p>
+<p><strong>Facilitated by:</strong> {{.Roles}}</p>
+<p><strong>Commonly used solution(s):</strong> {{.Solutions}}</p>
+
+
+<br/>
+<br/>
+
+<p><a href="{{.ClientAddress}}/help-and-knowledge/milestone-library">Go to milestone library</a></p>
+
+<br/>
+
+<hr/>
+
+<br/>
+
+{{template "shared_mint_mailbox_footer.html"}}
 {{template "shared_footer.html"}}
