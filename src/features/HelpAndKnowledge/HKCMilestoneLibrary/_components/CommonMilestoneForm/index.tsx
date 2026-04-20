@@ -18,7 +18,8 @@ import {
   MtoCommonSolutionKey,
   MtoFacilitator,
   useCreateMtoCommonMilestoneMutation,
-  useGetCommonSolutionsAndCategoriesQuery
+  useGetCommonSolutionsAndCategoriesQuery,
+  useUpdateMtoCommonMilestoneMutation
 } from 'gql/generated/graphql';
 import GetMTOAllCommonMilestones from 'gql/operations/ModelToOperations/GetMTOAllCommonMilestones';
 
@@ -29,7 +30,8 @@ import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
-import { useErrorMessage } from 'contexts/ErrorContext';
+import { getStatusAlertBody } from 'contexts/ErrorContext';
+import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 import {
@@ -87,12 +89,18 @@ const CommonMilestoneForm = ({
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
     useState<boolean>(false);
 
-  const { setErrorMeta } = useErrorMessage();
-
   const isAddMode = mode === 'addCommonMilestone';
   const isEditMode = mode === 'editCommonMilestone';
 
   const [createMTOCommonMilestone] = useCreateMtoCommonMilestoneMutation({
+    refetchQueries: [
+      {
+        query: GetMTOAllCommonMilestones
+      }
+    ]
+  });
+
+  const [updateMTOCommonMilestone] = useUpdateMtoCommonMilestoneMutation({
     refetchQueries: [
       {
         query: GetMTOAllCommonMilestones
@@ -229,7 +237,7 @@ const CommonMilestoneForm = ({
 
     if (
       (isAddMode && isValid) ||
-      (isEditMode && unsavedChanges) ||
+      (unsavedChanges && isValid) ||
       isSubmitting ||
       isConfirmationModalOpen
     ) {
@@ -255,45 +263,61 @@ const CommonMilestoneForm = ({
   };
 
   const onSubmit = (formData: CommonMilestoneFormValues) => {
+    setIsConfirmationModalOpen(false);
+
     const formChanges = dirtyInput(formValues, formData);
+    const {
+      commonSolutions: commonSolutionsChanges,
+      ...commonMilestoneChanges
+    } = formChanges;
 
     if (!formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)) {
       formChanges.facilitatedByOther = null;
     }
 
-    if (isAddMode) {
-      setErrorMeta({
-        overrideMessage: mtoCommonMilestoneMiscT(`${mode}.error`)
-      });
+    setCurrentErrorMeta({
+      overrideMessage: getStatusAlertBody({
+        type: 'error',
+        message: mtoCommonMilestoneMiscT(`${mode}.error`)
+      })
+    });
 
-      createMTOCommonMilestone({
-        variables: {
-          ...formData,
-          facilitatedByOther: formData.facilitatedByRole?.includes(
-            MtoFacilitator.OTHER
-          )
-            ? formData.facilitatedByOther
-            : null,
-          mtoCommonSolutionKeys: formData.commonSolutions
-        }
-      }).then(response => {
-        if (!response?.errors) {
-          toastSuccess(
-            <Trans
-              i18nKey={`mtoCommonMilestoneMisc:${mode}.success`}
-              values={{
-                milestoneName: formData.name
-              }}
-              components={{
-                bold: <span className="text-bold" />
-              }}
-            />
-          );
+    const promise = commonMilestone
+      ? updateMTOCommonMilestone({
+          variables: {
+            id: commonMilestone.id,
+            changes: commonMilestoneChanges,
+            commonSolutions: commonSolutionsChanges
+          }
+        })
+      : createMTOCommonMilestone({
+          variables: {
+            ...formData,
+            facilitatedByOther: formData.facilitatedByRole?.includes(
+              MtoFacilitator.OTHER
+            )
+              ? formData.facilitatedByOther
+              : null
+          }
+        });
 
-          closeModal();
-        }
-      });
-    }
+    promise.then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={`mtoCommonMilestoneMisc:${mode}.success`}
+            values={{
+              milestoneName: formData.name
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
+        );
+
+        closeModal();
+      }
+    });
   };
 
   if ((isEditMode && !commonMilestone) || commonSolutionsAndCategoriesError) {
@@ -333,7 +357,9 @@ const CommonMilestoneForm = ({
               -
               <Button
                 type="button"
-                onClick={() => setIsConfirmationModalOpen(true)}
+                onClick={() => {
+                  setIsConfirmationModalOpen(true);
+                }}
                 disabled={isSubmitting || isConfirmationModalOpen}
                 className="margin-x-1"
                 unstyled

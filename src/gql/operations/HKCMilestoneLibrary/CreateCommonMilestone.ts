@@ -8,7 +8,7 @@ export default gql(/* GraphQL */ `
     $subCategoryName: String
     $facilitatedByRole: [MTOFacilitator!]!
     $facilitatedByOther: String
-    $mtoCommonSolutionKeys: [MTOCommonSolutionKey!]!
+    $commonSolutions: [MTOCommonSolutionKey!]!
   ) {
     createMTOCommonMilestone(
       name: $name
@@ -17,7 +17,7 @@ export default gql(/* GraphQL */ `
       subCategoryName: $subCategoryName
       facilitatedByRole: $facilitatedByRole
       facilitatedByOther: $facilitatedByOther
-      mtoCommonSolutionKeys: $mtoCommonSolutionKeys
+      commonSolutions: $commonSolutions
     ) {
       id
       name
