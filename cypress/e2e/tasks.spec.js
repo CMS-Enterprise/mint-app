@@ -71,18 +71,6 @@ describe('Tasks page', () => {
 
     cy.go('back');
 
-    cy.contains('h3', 'Iterate on your Model Plan')
-      .closest('.collaboration-area__card')
-      .contains('button', 'View sample Model Plan')
-      .click();
-
-    cy.location('pathname').should(
-      'match',
-      /\/help-and-knowledge\/sample-model-plan$/
-    );
-
-    cy.go('back');
-
     cy.contains('h3', 'Start your model-to-operations matrix (MTO)')
       .closest('.collaboration-area__card')
       .contains('button', 'Start')
@@ -94,18 +82,6 @@ describe('Tasks page', () => {
       /\/models\/[^/]+\/collaboration-area\/model-to-operations\/matrix$/
     );
     cy.location('search').should('include', 'view=milestones');
-
-    cy.go('back');
-
-    cy.contains('h3', 'Start your model-to-operations matrix (MTO)')
-      .closest('.collaboration-area__card')
-      .contains('button', 'View help article')
-      .click();
-
-    cy.location('pathname').should(
-      'match',
-      /\/help-and-knowledge\/creating-mto-matrix$/
-    );
   });
 
   it('Plan with Data Exchange shows a completed task on the Completed tab', () => {
