@@ -17,7 +17,7 @@ const CommonMilestoneConfirmationModal = ({
   isModalOpen: boolean;
   closeModal: () => void;
   actionType: ActionType;
-  onConfirmClick: () => void;
+  onConfirmClick: () => void | Promise<void>;
 }) => {
   const { t: mtoCommonMilestoneMiscT } = useTranslation(
     'mtoCommonMilestoneMisc'
@@ -29,7 +29,7 @@ const CommonMilestoneConfirmationModal = ({
       closeModal={closeModal}
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
-      testId="remove-contact-modal"
+      testId={`${actionType}-common-milestone-confirmation-modal`}
     >
       <div className="padding-bottom-8">
         <PageHeading headingLevel="h3" className="margin-y-0">
@@ -42,7 +42,7 @@ const CommonMilestoneConfirmationModal = ({
 
         <div className="margin-top-2 display-flex mint-modal__footer">
           <Button
-            type="submit"
+            type="button"
             className={classNames('margin-right-3 margin-top-0', {
               'bg-error': actionType === 'remove'
             })}

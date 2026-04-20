@@ -266,14 +266,18 @@ const CommonMilestoneForm = ({
     setIsConfirmationModalOpen(false);
 
     const formChanges = dirtyInput(formValues, formData);
+
+    if (
+      'facilitatedByRole' in formChanges &&
+      !formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)
+    ) {
+      formChanges.facilitatedByOther = null;
+    }
+
     const {
       commonSolutions: commonSolutionsChanges,
       ...commonMilestoneChanges
     } = formChanges;
-
-    if (!formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)) {
-      formChanges.facilitatedByOther = null;
-    }
 
     setCurrentErrorMeta({
       overrideMessage: getStatusAlertBody({

@@ -205,7 +205,7 @@ export const mtoCommonMilestoneMisc = {
       error:
         'There was an error removing a milestone. Please try again. If the error persists, please try again another time.',
       success:
-        'Your have removed a milestone from the library. It is no longer available for use.'
+        'You have removed a milestone from the library. It is no longer available for use.'
     }
   },
   unsavedChanges: '{{count}} unsaved change',

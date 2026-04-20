@@ -27,7 +27,7 @@ const MilestoneLibrary = () => {
 
   const milestones = useMemo(
     () =>
-      data?.modelPlan?.mtoMatrix?.commonMilestones.filter(
+      data?.modelPlan?.mtoMatrix?.commonMilestones?.filter(
         commonMilestone => !commonMilestone.isArchived
       ) || ([] as MilestoneCardType[]),
     [data?.modelPlan?.mtoMatrix?.commonMilestones]
