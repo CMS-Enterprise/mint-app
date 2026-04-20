@@ -46,7 +46,6 @@ input MTOCommonMilestoneChanges @goModel(model: "map[string]interface{}") {
   subCategoryName: String
   facilitatedByRole: [MTOFacilitator!]
   facilitatedByOther: String
-  mtoCommonSolutionKeys: [MTOCommonSolutionKey!]
 }
 
 extend type Query {
@@ -70,12 +69,13 @@ extend type Mutation {
     subCategoryName: String
     facilitatedByRole: [MTOFacilitator!]!
     facilitatedByOther: String
-    mtoCommonSolutionKeys: [MTOCommonSolutionKey!]!
+    commonSolutions: [MTOCommonSolutionKey!]!
   ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
 
   updateMTOCommonMilestone(
     id: UUID!
     changes: MTOCommonMilestoneChanges!
+    commonSolutions: [MTOCommonSolutionKey!]
   ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
 
   archiveMTOCommonMilestone(id: UUID!): MTOCommonMilestone!

@@ -2,10 +2,12 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -43,7 +45,7 @@ func CreateMTOCommonMilestone(
 	subCategoryName *string,
 	facilitatedByRole []models.MTOFacilitator,
 	facilitatedByOther *string,
-	mtoCommonSolutionKeys []models.MTOCommonSolutionKey,
+	commonSolutions []models.MTOCommonSolutionKey,
 	actorUserID uuid.UUID,
 ) (*models.MTOCommonMilestone, error) {
 	return storage.MTOCommonMilestoneCreate(
@@ -54,9 +56,39 @@ func CreateMTOCommonMilestone(
 		subCategoryName,
 		facilitatedByRole,
 		facilitatedByOther,
-		mtoCommonSolutionKeys,
+		commonSolutions,
 		actorUserID,
 	)
+}
+
+// UpdateMTOCommonMilestone updates a common milestone in the library.
+func UpdateMTOCommonMilestone(
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
+	id uuid.UUID,
+	changes map[string]any,
+	commonSolutions []models.MTOCommonSolutionKey,
+) (*models.MTOCommonMilestone, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	existingMilestones, err := storage.MTOCommonMilestoneGetByIDLoader(store, logger, []uuid.UUID{id})
+	if err != nil {
+		return nil, err
+	}
+	if len(existingMilestones) < 1 {
+		return nil, fmt.Errorf("no common milestone found for id %s", id)
+	}
+
+	existingMilestone := existingMilestones[0]
+	if err := BaseStructPreUpdate(logger, existingMilestone, changes, principal, store, true, false); err != nil {
+		return nil, err
+	}
+
+	return storage.MTOCommonMilestoneUpdate(store, existingMilestone, commonSolutions, principalAccount.ID)
 }
 
 // ArchiveMTOCommonMilestone marks a common milestone as archived.

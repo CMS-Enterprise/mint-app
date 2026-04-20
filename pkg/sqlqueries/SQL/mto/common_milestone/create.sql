@@ -24,6 +24,10 @@ VALUES (
 )
 RETURNING
     id,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts,
     name,
     description,
     category_name,

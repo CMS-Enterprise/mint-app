@@ -1075,7 +1075,6 @@ export type MtoCommonMilestoneChanges = {
   description?: InputMaybe<Scalars['String']['input']>;
   facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
   facilitatedByRole?: InputMaybe<Array<MtoFacilitator>>;
-  mtoCommonSolutionKeys?: InputMaybe<Array<MtoCommonSolutionKey>>;
   name?: InputMaybe<Scalars['String']['input']>;
   subCategoryName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -2276,10 +2275,10 @@ export type MutationCreateMtoCategoryArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateMtoCommonMilestoneArgs = {
   categoryName: Scalars['String']['input'];
+  commonSolutions: Array<MtoCommonSolutionKey>;
   description: Scalars['String']['input'];
   facilitatedByOther?: InputMaybe<Scalars['String']['input']>;
   facilitatedByRole: Array<MtoFacilitator>;
-  mtoCommonSolutionKeys: Array<MtoCommonSolutionKey>;
   name: Scalars['String']['input'];
   subCategoryName?: InputMaybe<Scalars['String']['input']>;
 };
@@ -2614,6 +2613,7 @@ export type MutationUpdateKeyContactCategoryArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateMtoCommonMilestoneArgs = {
   changes: MtoCommonMilestoneChanges;
+  commonSolutions?: InputMaybe<Array<MtoCommonSolutionKey>>;
   id: Scalars['UUID']['input'];
 };
 

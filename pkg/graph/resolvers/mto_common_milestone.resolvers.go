@@ -71,7 +71,7 @@ func (r *mTOCommonMilestoneResolver) CommonSolutions(ctx context.Context, obj *m
 }
 
 // CreateMTOCommonMilestone is the resolver for the createMTOCommonMilestone field.
-func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName *string, facilitatedByRole []models.MTOFacilitator, facilitatedByOther *string, mtoCommonSolutionKeys []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
+func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name string, description string, categoryName string, subCategoryName *string, facilitatedByRole []models.MTOFacilitator, facilitatedByOther *string, commonSolutions []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
 	principal := appcontext.Principal(ctx)
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -86,14 +86,21 @@ func (r *mutationResolver) CreateMTOCommonMilestone(ctx context.Context, name st
 		subCategoryName,
 		facilitatedByRole,
 		facilitatedByOther,
-		mtoCommonSolutionKeys,
+		commonSolutions,
 		principalAccount.ID,
 	)
 }
 
 // UpdateMTOCommonMilestone is the resolver for the updateMTOCommonMilestone field.
-func (r *mutationResolver) UpdateMTOCommonMilestone(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.MTOCommonMilestone, error) {
-	panic("not implemented: UpdateMTOCommonMilestone - updateMTOCommonMilestone")
+func (r *mutationResolver) UpdateMTOCommonMilestone(ctx context.Context, id uuid.UUID, changes map[string]any, commonSolutions []models.MTOCommonSolutionKey) (*models.MTOCommonMilestone, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	return UpdateMTOCommonMilestone(logger, principal, r.store, id, changes, commonSolutions)
 }
 
 // ArchiveMTOCommonMilestone is the resolver for the archiveMTOCommonMilestone field.

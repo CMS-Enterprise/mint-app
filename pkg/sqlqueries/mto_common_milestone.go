@@ -14,6 +14,9 @@ var mtoCommonMilestoneCreateSQL string
 //go:embed SQL/mto/common_milestone/create_solution_links.sql
 var mtoCommonMilestoneCreateSolutionLinksSQL string
 
+//go:embed SQL/mto/common_milestone/update.sql
+var mtoCommonMilestoneUpdateSQL string
+
 //go:embed SQL/mto/common_milestone/archive.sql
 var mtoCommonMilestoneArchiveSQL string
 
@@ -31,6 +34,7 @@ type mtoCommonMilestoneScripts struct {
 	GetByIDLoader            string
 	Create                   string
 	CreateSolutionLinks      string
+	Update                   string
 	Archive                  string
 	DeleteTemplateMilestones string
 	DeleteSolutionLinks      string
@@ -43,6 +47,7 @@ var MTOCommonMilestone = mtoCommonMilestoneScripts{
 	GetByIDLoader:            mtoCommonMilestoneGetByIDLoaderSQL,
 	Create:                   mtoCommonMilestoneCreateSQL,
 	CreateSolutionLinks:      mtoCommonMilestoneCreateSolutionLinksSQL,
+	Update:                   mtoCommonMilestoneUpdateSQL,
 	Archive:                  mtoCommonMilestoneArchiveSQL,
 	DeleteTemplateMilestones: mtoCommonMilestoneDeleteTemplateMilestonesSQL,
 	DeleteSolutionLinks:      mtoCommonMilestoneDeleteSolutionLinksSQL,

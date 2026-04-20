@@ -18,7 +18,7 @@ body:graphql {
     $subCategoryName: String
     $facilitatedByRole: [MTOFacilitator!]!
     $facilitatedByOther: String
-    $mtoCommonSolutionKeys: [MTOCommonSolutionKey!]!
+    $commonSolutions: [MTOCommonSolutionKey!]!
   ) {
     createMTOCommonMilestone(
       name: $name
@@ -27,7 +27,7 @@ body:graphql {
       subCategoryName: $subCategoryName
       facilitatedByRole: $facilitatedByRole
       facilitatedByOther: $facilitatedByOther
-      mtoCommonSolutionKeys: $mtoCommonSolutionKeys
+      commonSolutions: $commonSolutions
     ) {
       id
       name
@@ -56,7 +56,7 @@ body:graphql:vars {
     "subCategoryName": "Set up operations",
     "facilitatedByRole": ["OTHER"],
     "facilitatedByOther": "Cross-team support",
-    "mtoCommonSolutionKeys": ["INNOVATION", "ACO_OS"]
+    "commonSolutions": ["INNOVATION", "ACO_OS"]
   }
 }
 
