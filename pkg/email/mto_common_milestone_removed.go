@@ -17,6 +17,7 @@ type MTOCommonMilestoneRemovedSubjectContent struct{}
 type MTOCommonMilestoneRemovedBodyContent struct {
 	UserName       string
 	MilestoneTitle string
+	Description    string
 	CategoryAndSub string
 	Roles          string // comma-separated
 	Solutions      string // comma-separated
