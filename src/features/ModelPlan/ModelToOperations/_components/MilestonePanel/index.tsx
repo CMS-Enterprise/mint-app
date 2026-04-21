@@ -6,6 +6,7 @@ import { Button, Icon } from '@trussworks/react-uswds';
 import CommonMilestoneActions from 'features/HelpAndKnowledge/HKCMilestoneLibrary/_components/CommonMilestoneActions';
 import { helpSolutions } from 'features/HelpAndKnowledge/SolutionsHelp/solutionsMap';
 import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCardGroup';
+import { MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
@@ -49,6 +50,10 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
     .map(role => i18next.t(`mtoMilestone:facilitatedBy.options.${role}`))
     .join(', ');
 
+  const showFacilitatedByOther = milestone.facilitatedByRole.includes(
+    MtoFacilitator.OTHER
+  );
+
   return (
     <>
       <div className="padding-8 maxw-tablet">
@@ -71,7 +76,7 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
           <p className="text-base-dark margin-top-0 margin-bottom-2">
             {modelToOperationsMiscT('milestoneLibrary.category', {
               category: milestone.categoryName
-            })}{' '}
+            })}
             {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
           </p>
 
@@ -81,6 +86,7 @@ const MilestonePanel = ({ milestone, mode }: MilestonePanelProps) => {
             {modelToOperationsMiscT('milestoneLibrary.facilitatedByArray', {
               facilitatedBy: facilitatedByUsers
             })}
+            {showFacilitatedByOther && ` (${milestone.facilitatedByOther})`}
           </p>
 
           {isHKCMilestoneLibrary && isAssessmentTeam && (
