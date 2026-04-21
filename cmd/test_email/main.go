@@ -59,6 +59,11 @@ func main() {
 	sendMTOCommonSolutionSystemOwnerEditedTestEmail(emailService, addressBook)
 	sendMTOCommonSolutionSystemOwnerRemovedTestEmail(emailService, addressBook)
 
+	// MTO Common Milestone library emails
+	sendMTOCommonMilestoneCreatedTestEmail(emailService, addressBook)
+	sendMTOCommonMilestoneUpdatedTestEmail(emailService, addressBook)
+	sendMTOCommonMilestoneRemovedTestEmail(emailService, addressBook)
+
 	// Model Plan Suggested Phase Emails
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(emailService, addressBook)
 	sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(emailService, addressBook)
