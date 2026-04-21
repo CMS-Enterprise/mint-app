@@ -39,7 +39,7 @@ require (
 	github.com/contribsys/faktory v1.9.3
 	github.com/launchdarkly/go-sdk-common/v3 v3.4.0
 	github.com/launchdarkly/go-server-sdk/v6 v6.2.1
-	github.com/parquet-go/parquet-go v0.25.1
+	github.com/parquet-go/parquet-go v0.29.0
 	golang.org/x/net v0.50.0
 )
 
@@ -61,13 +61,17 @@ require (
 	github.com/charmbracelet/colorprofile v0.2.3-0.20250311203215-f60798e515dc // indirect
 	github.com/charmbracelet/x/cellbuf v0.0.13-0.20250311204145-2c3ea96c31dd // indirect
 	github.com/go-viper/mapstructure/v2 v2.4.0 // indirect
+	github.com/parquet-go/bitpack v1.0.0 // indirect
+	github.com/parquet-go/jsonlite v1.0.0 // indirect
 	github.com/sosodev/duration v1.3.1 // indirect
+	github.com/twpayne/go-geom v1.6.1 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
+	google.golang.org/protobuf v1.36.6 // indirect
 )
 
 require (
-	github.com/andybalholm/brotli v1.1.0 // indirect
+	github.com/andybalholm/brotli v1.1.1 // indirect
 	github.com/charmbracelet/x/ansi v0.9.3 // indirect
 	github.com/charmbracelet/x/term v0.2.1 // indirect
 	github.com/erikgeiser/coninput v0.0.0-20211004153227-1c3628e74d0f // indirect
