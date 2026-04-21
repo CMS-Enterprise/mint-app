@@ -112,7 +112,9 @@ const MilestoneCard = ({
             {t('milestoneLibrary.category', {
               category: milestone.categoryName
             })}{' '}
-            {milestone.subCategoryName && ` (${milestone.subCategoryName})`}
+            {milestone.subCategoryName &&
+              milestone.subCategoryName !== 'Uncategorized' &&
+              ` (${milestone.subCategoryName})`}
           </div>
 
           {milestone.suggested.isSuggested && (
