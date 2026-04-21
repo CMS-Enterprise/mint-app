@@ -96,7 +96,7 @@ const Timeline = () => {
   /** Comma-separated list of model types */
   const modelTypeString = modelType
     .map((type: ModelType) =>
-      type === ModelType.OTHER
+      type === ModelType.OTHER && modelTypeOther
         ? `${basicsT('modelType.options.OTHER')}: ${modelTypeOther}`
         : basicsT(`modelType.options.${type}`)
     )
@@ -379,7 +379,7 @@ const Timeline = () => {
                                   />
                                 </p>
                                 <h4 className="margin-bottom-0 margin-top-2">
-                                  {timelineMiscT('modelType')}
+                                  {basicsT('modelType.label')}
                                 </h4>
                                 <p
                                   className={classNames('margin-0', {

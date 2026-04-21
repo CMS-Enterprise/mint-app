@@ -1,6 +1,6 @@
 import React, { Fragment, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Fieldset,
@@ -24,6 +24,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
+import HelpText from 'components/HelpText';
 import MainContent from 'components/MainContent';
 import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -179,7 +180,18 @@ const Overview = () => {
                       <Label htmlFor="modelType">
                         {basicsT('modelType.label')}
                       </Label>
-
+                      <HelpText id="modelTypeHelpText" className="margin-y-05">
+                        <Trans
+                          i18nKey="basicsMisc:modelTypeHelpText"
+                          components={{
+                            link1: (
+                              <Link
+                                to={`/models/${modelID}/collaboration-area/model-timeline`}
+                              />
+                            )
+                          }}
+                        />
+                      </HelpText>
                       <Fieldset>
                         {getKeys(modelTypeConfig.options).map(key => (
                           <Fragment key={key}>
@@ -190,6 +202,7 @@ const Overview = () => {
                               label={modelTypeConfig.options[key]}
                               value={key}
                               checked={values.modelType.includes(key)}
+                              aria-describedby="modelTypeHelpText"
                             />
                           </Fragment>
                         ))}
@@ -202,6 +215,7 @@ const Overview = () => {
                               id="ModelType-Other"
                               data-testid="ModelType-Other"
                               name="modelTypeOther"
+                              aria-describedby="modelTypeHelpText"
                             />
                           </div>
                         )}

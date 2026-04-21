@@ -137,7 +137,7 @@ describe('exportTranslation Util', () => {
         gqlField: 'modelType',
         goField: 'ModelType',
         dbField: 'model_type',
-        label: 'Model Type',
+        label: 'Model type',
         dataType: 'ENUM',
         formType: 'CHECKBOX',
         order: 2.01,

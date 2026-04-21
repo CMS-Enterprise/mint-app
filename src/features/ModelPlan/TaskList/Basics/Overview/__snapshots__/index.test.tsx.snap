@@ -241,8 +241,21 @@ exports[`Basics overview page > renders without errors and matches snapshot 1`] 
               data-testid="label"
               for="modelType"
             >
-              Model Type
+              Model type
             </label>
+            <div
+              class="mint-help-text margin-y-05"
+              id="modelTypeHelpText"
+            >
+              Updating your answer to this question may change or remove the application period dates in your 
+              <a
+                data-discover="true"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-timeline"
+              >
+                model timeline
+              </a>
+              .
+            </div>
             <fieldset
               class="usa-fieldset"
               data-testid="fieldset"
