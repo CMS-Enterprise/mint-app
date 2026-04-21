@@ -9,7 +9,7 @@ import {
   Link
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import MilestonePanel from 'features/ModelPlan/ModelToOperations/_components/MilestonePanel';
+import MilestonePanel from 'features/MilestoneLibrary/MilestonePanel';
 import {
   GetMtoAllCommonMilestonesQuery,
   GetMtoMilestonesQuery

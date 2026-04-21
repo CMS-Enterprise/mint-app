@@ -13,9 +13,9 @@ import { AppState } from 'stores/reducers/rootReducer';
 
 import { isAssessment } from 'utils/user';
 
-import { SolutionCard } from '../SolutionCard';
+import { SolutionCard } from '../../ModelPlan/ModelToOperations/_components/SolutionCard';
 
-import '../../index.scss';
+import '../../ModelPlan/ModelToOperations/index.scss';
 
 type MilestonePanelProps = {
   milestone: MilestoneCardType;
