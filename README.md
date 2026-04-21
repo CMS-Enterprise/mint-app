@@ -7,6 +7,7 @@ This application has the following main components:
 - A Go backend that provides REST and GraphQL APIs.
 - A Postgres database.
 - A few lambda functions for PDF generation and file upload virus scanning.
+- An MCP (Model Context Protocol) server for AI assistant integration (POC) - see [`mcp/`](./mcp/README.md)
 
 ## Documentation
 
@@ -39,6 +40,7 @@ This repository has several major subfolders:
 - `config/tls` contains certificates that need to be trusted by the MINT backend.
 - `cypress` contains end-to-end/functional tests using [Cypress][https://www.cypress.io/], as well as necessary configuration.
 - `docs` contains general documentation for the MINT application; the `docs/adr` subfolder contains records of architectural decisions, while `docs/operations` contains information on operational procedures such as deploying the application.
+- `mcp` contains the Python-based MCP (Model Context Protocol) server POC for AI assistant integration. See [mcp/GETTING_STARTED.md](./mcp/GETTING_STARTED.md) for details.
 - `migrations` contains SQL files that together define the database schema; these are deployed using [Flyway](https://flywaydb.org/).
 - `pkg` contains the Go source code for the application's backend.
 - `public` contains static assets for the frontend.

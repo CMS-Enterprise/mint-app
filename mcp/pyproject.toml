@@ -1,0 +1,53 @@
+[project]
+name = "mint-mcp-server"
+version = "0.1.0"
+description = "Model Context Protocol server for MINT"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastmcp>=0.1.0",
+    "httpx>=0.28.1",
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.10.6",
+    "uvicorn>=0.34.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.4",
+    "pytest-asyncio>=0.25.2",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.8.4",
+    "pyright>=1.1.398",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mcpserver"]
+
+[tool.pytest.ini_options]
+addopts = ["--cov=mcpserver", "--cov-report=html", "--cov-report=term", "--cov-report=xml"]
+asyncio_default_fixture_loop_scope = "function"
+asyncio_mode = "auto"
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "ANN", "ASYNC", "S", "B", "A", "C4", "DTZ", "T10", "EM", "ISC", "ICN", "G", "PIE", "T20", "PT", "Q", "RSE", "RET", "SIM", "TID", "ARG", "PTH", "PD", "PGH", "PL", "TRY", "NPY", "RUF"]
+ignore = ["ANN101", "ANN102", "ANN401", "S101", "PLR0913", "TRY003"]
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "basic"
+reportMissingImports = true
+reportMissingTypeStubs = false
