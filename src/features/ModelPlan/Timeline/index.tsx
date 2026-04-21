@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -12,10 +12,12 @@ import {
   ProcessListHeading,
   ProcessListItem
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
 import { Formik, FormikProps } from 'formik';
 import {
   GetTimelineQuery,
+  ModelType,
   TypedUpdateTimelineDocument,
   useGetTimelineQuery
 } from 'gql/generated/graphql';
@@ -51,6 +53,7 @@ type InitialValueType = Omit<
 
 const Timeline = () => {
   const { t: timelineT } = useTranslation('timeline');
+  const { t: basicsT } = useTranslation('basics');
   const { t: timelineMiscT } = useTranslation('timelineMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
@@ -83,6 +86,21 @@ const Timeline = () => {
     readyForReviewDts,
     status
   } = (data?.modelPlan?.timeline || {}) as TimelineFormType;
+
+  const modelType = data?.modelPlan?.basics?.modelType || [];
+  const modelTypeOther = data?.modelPlan?.basics?.modelTypeOther;
+  const isModelTypeMandatory =
+    modelType.includes(ModelType.MANDATORY_NATIONAL) ||
+    modelType.includes(ModelType.MANDATORY_REGIONAL_OR_STATE);
+
+  /** Comma-separated list of model types */
+  const modelTypeString = modelType
+    .map((type: ModelType) =>
+      type === ModelType.OTHER
+        ? `${basicsT('modelType.options.OTHER')}: ${modelTypeOther}`
+        : basicsT(`modelType.options.${type}`)
+    )
+    .join(', ');
 
   const { mutationError } = useHandleMutation(TypedUpdateTimelineDocument, {
     id,
@@ -340,10 +358,40 @@ const Timeline = () => {
                                 type="h5"
                                 className="font-body-sm line-height-sans-4 text-normal"
                               >
-                                <legend className="usa-label margin-bottom-neg-2">
+                                <legend className="usa-label">
                                   {timelineMiscT('applicationPeriod')}
                                 </legend>
                               </ProcessListHeading>
+
+                              <div className="bg-base-lightest padding-y-1 padding-x-105">
+                                <p className="text-italic margin-0">
+                                  <Trans
+                                    i18nKey="timelineMisc:applicationPeriodHelpText"
+                                    components={{
+                                      link1: (
+                                        <Link
+                                          to={`/models/${modelID}/collaboration-area/model-plan`}
+                                        >
+                                          Model Plan
+                                        </Link>
+                                      )
+                                    }}
+                                  />
+                                </p>
+                                <h4 className="margin-bottom-0 margin-top-2">
+                                  {timelineMiscT('modelType')}
+                                </h4>
+                                <p
+                                  className={classNames('margin-0', {
+                                    'text-italic': !modelTypeString
+                                  })}
+                                  data-testid="model-type-text"
+                                >
+                                  {!modelTypeString
+                                    ? miscellaneousT('na')
+                                    : modelTypeString}
+                                </p>
+                              </div>
 
                               <div className="datepicker__wrapper">
                                 <MINTDatePicker
@@ -360,6 +408,7 @@ const Timeline = () => {
                                     values.applicationsStart
                                   }
                                   warning={false}
+                                  disabled={isModelTypeMandatory}
                                 />
 
                                 <MINTDatePicker
@@ -376,6 +425,7 @@ const Timeline = () => {
                                     values.applicationsEnd
                                   }
                                   warning={false}
+                                  disabled={isModelTypeMandatory}
                                 />
                               </div>
 
