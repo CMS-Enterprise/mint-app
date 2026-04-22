@@ -25,6 +25,7 @@ import downloadAnalytics, {
   UsedAnalyticsSummaryKey
 } from 'features/ReportsAndAnalytics/util';
 import {
+  ModelShareSection,
   TableName,
   useGetAnalyticsSummaryQuery,
   useGetMtoMilestoneSummaryQuery
@@ -214,7 +215,7 @@ const ReportsAndAnalytics = () => {
                               'MINT-MTO_Milestone_Summary.xlsx'
                             );
                           } else if (reportKey === 'allModels') {
-                            fetchAllData();
+                            fetchAllData(ModelShareSection.ALL);
                           }
                         }}
                       >

@@ -1,5 +1,3 @@
-import { OverlapType } from 'gql/generated/graphql';
-
 import basics from 'i18n/en-US/modelPlan/basics';
 import beneficiaries from 'i18n/en-US/modelPlan/beneficiaries';
 import generalCharacteristics from 'i18n/en-US/modelPlan/generalCharacteristics';
@@ -11,12 +9,12 @@ import payments from 'i18n/en-US/modelPlan/payments';
 import {
   dataFormatter,
   headerFormatter,
-  removedUnneededData,
   selectFilteredFields
 } from '../useFetchCSVData';
 
 describe('fetch csv utils', () => {
   const allPlanTranslation = {
+    generalCharacteristics,
     payments,
     participantsAndProviders
   };
@@ -39,6 +37,22 @@ describe('fetch csv utils', () => {
     expect(dataFormatter(data, allPlanTranslation)).toEqual(returnData);
   });
 
+  it('translates unconfigured boolean values', () => {
+    const data = {
+      discussionReply: {
+        isAssessment: false
+      }
+    };
+
+    const returnData = {
+      discussionReply: {
+        isAssessment: 'No'
+      }
+    };
+
+    expect(dataFormatter(data, allPlanTranslation)).toEqual(returnData);
+  });
+
   it('translates date values', () => {
     const data = {
       payments: {
@@ -51,6 +65,34 @@ describe('fetch csv utils', () => {
         paymentStartDate: '05/12/2029'
       }
     };
+    expect(dataFormatter(data, allPlanTranslation)).toEqual(returnData);
+  });
+
+  it('formats export timestamp values without translation metadata', () => {
+    const data = {
+      prepareForClearance: {
+        latestClearanceDts: '2029-05-12T15:01:39.190679Z'
+      },
+      modelToOperations: {
+        readyForReviewDTS: '2029-05-12T15:01:39.190679Z'
+      },
+      basics: {
+        readyForClearanceDts: '2029-05-12T15:01:39.190679Z'
+      }
+    };
+
+    const returnData = {
+      prepareForClearance: {
+        latestClearanceDts: '05/12/2029'
+      },
+      modelToOperations: {
+        readyForReviewDTS: '05/12/2029'
+      },
+      basics: {
+        readyForClearanceDts: '05/12/2029'
+      }
+    };
+
     expect(dataFormatter(data, allPlanTranslation)).toEqual(returnData);
   });
 
@@ -102,10 +144,34 @@ describe('fetch csv utils', () => {
 
     const returnData = {
       generalCharacteristics: {
+        resemblesExistingModelWhich:
+          'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) , Accountable Health Communities Model (AHC), Advance Payment ACO Model, Bundled Payment for Care Improvement Advanced (BPCI-A)'
+      }
+    };
+
+    expect(dataFormatter(data, allPlanTranslation)).toEqual(returnData);
+  });
+
+  it('adds Other to existing model links when the other option is selected', () => {
+    const data = {
+      generalCharacteristics: {
         resemblesExistingModelWhich: {
-          names:
-            'Accountable Care Organization Realizing Equity, Access, and Community Health Model (ACO REACH) , Accountable Health Communities Model (AHC), Advance Payment ACO Model, Bundled Payment for Care Improvement Advanced (BPCI-A)'
-        }
+          names: ['Existing model']
+        },
+        resemblesExistingModelOtherSelected: true,
+        participationInModelPreconditionWhich: {
+          names: ['Precondition model']
+        },
+        participationInModelPreconditionOtherSelected: true
+      }
+    };
+
+    const returnData = {
+      generalCharacteristics: {
+        resemblesExistingModelWhich: 'Existing model, Other',
+        resemblesExistingModelOtherSelected: 'Yes',
+        participationInModelPreconditionWhich: 'Precondition model, Other',
+        participationInModelPreconditionOtherSelected: 'Yes'
       }
     };
 
@@ -118,25 +184,6 @@ describe('fetch csv utils', () => {
     const returnData = 'Who will you pay?';
 
     expect(headerFormatter(data, allPlanTranslation)).toEqual(returnData);
-  });
-
-  it('removes unneeded data/conditional data', () => {
-    const dataFields = [
-      'participantsAndProviders.providerOverlap',
-      'participantsAndProviders.providerOverlapHierarchy'
-    ];
-
-    const data = {
-      participantsAndProviders: {
-        providerOverlap: [OverlapType.NO]
-      }
-    };
-
-    const returnData = ['participantsAndProviders.providerOverlap'];
-
-    expect(removedUnneededData(data, allPlanTranslation, dataFields)).toEqual(
-      returnData
-    );
   });
 
   it('filtered the header columns on the presence of a filter group', () => {

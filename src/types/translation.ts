@@ -327,6 +327,7 @@ export type TranslationModelPlan = {
   abbreviation: TranslationFieldProperties;
   archived: TranslationFieldPropertiesWithOptions<Bool>;
   status: TranslationFieldPropertiesWithOptions<ModelStatus>;
+  taskListStatus: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
 // Basics
