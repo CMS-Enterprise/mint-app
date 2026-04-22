@@ -237,7 +237,7 @@ const CommonMilestoneForm = ({
 
     if (
       (isAddMode && isValid) ||
-      (unsavedChanges && isValid) ||
+      (isEditMode && unsavedChanges) ||
       isSubmitting ||
       isConfirmationModalOpen
     ) {
@@ -257,8 +257,7 @@ const CommonMilestoneForm = ({
     isConfirmationModalOpen
   ]);
 
-  const handleEditClick = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleEditClick = () => {
     setIsConfirmationModalOpen(true);
   };
 
@@ -360,10 +359,9 @@ const CommonMilestoneForm = ({
               </p>
               -
               <Button
-                type="button"
-                onClick={() => {
-                  setIsConfirmationModalOpen(true);
-                }}
+                type="submit"
+                form="common-milestone-form"
+                onSubmit={handleSubmit(handleEditClick)}
                 disabled={isSubmitting || isConfirmationModalOpen}
                 className="margin-x-1"
                 unstyled
@@ -378,7 +376,7 @@ const CommonMilestoneForm = ({
           <Form
             className="maxw-none"
             id="common-milestone-form"
-            onSubmit={isAddMode ? handleSubmit(onSubmit) : handleEditClick}
+            onSubmit={handleSubmit(isAddMode ? onSubmit : handleEditClick)}
           >
             <ConfirmLeaveRHF />
 
