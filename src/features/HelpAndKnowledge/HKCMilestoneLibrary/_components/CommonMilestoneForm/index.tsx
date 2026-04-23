@@ -428,7 +428,7 @@ const CommonMilestoneForm = ({
 
                     <TextInput
                       {...field}
-                      ref={null}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       type="text"
                     />
@@ -463,6 +463,7 @@ const CommonMilestoneForm = ({
 
                     <TextAreaField
                       {...field}
+                      inputRef={ref}
                       value={field.value || ''}
                       className="height-card"
                       id={convertCamelCaseToKebabCase(field.name)}
@@ -504,6 +505,7 @@ const CommonMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || 'default'}
                       defaultValue="default"
@@ -560,6 +562,7 @@ const CommonMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || 'default'}
                       defaultValue="default"
@@ -608,6 +611,7 @@ const CommonMilestoneForm = ({
 
                     <MultiSelect
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       inputId={convertCamelCaseToKebabCase(field.name)}
                       ariaLabel={facilitatedByRoleConfig.label}
@@ -657,7 +661,7 @@ const CommonMilestoneForm = ({
 
                       <TextInput
                         {...field}
-                        ref={null}
+                        inputRef={ref}
                         id={convertCamelCaseToKebabCase(field.name)}
                         type="text"
                         maxLength={75}
@@ -701,6 +705,7 @@ const CommonMilestoneForm = ({
 
                     <MultiSelect
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       inputId={convertCamelCaseToKebabCase(field.name)}
                       name={field.name}
