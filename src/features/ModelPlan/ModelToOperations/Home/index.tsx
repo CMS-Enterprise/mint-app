@@ -62,7 +62,7 @@ const MTOHome = () => {
   const dataAvalilable: boolean = !loading || !!modelToOperationsMatrix;
 
   const suggestedMilestones =
-    modelToOperationsMatrix?.commonMilestones.filter(
+    modelToOperationsMatrix?.commonMilestones?.filter(
       obj => obj.suggested.isSuggested && !obj.isAdded
     ) || [];
 

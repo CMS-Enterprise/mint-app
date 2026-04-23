@@ -1,10 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  Controller,
-  FormProvider,
-  SubmitHandler,
-  useForm
-} from 'react-hook-form';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
@@ -22,8 +17,11 @@ import {
   GetCommonSolutionsAndCategoriesQuery,
   MtoCommonSolutionKey,
   MtoFacilitator,
-  useGetCommonSolutionsAndCategoriesQuery
+  useCreateMtoCommonMilestoneMutation,
+  useGetCommonSolutionsAndCategoriesQuery,
+  useUpdateMtoCommonMilestoneMutation
 } from 'gql/generated/graphql';
+import GetMTOAllCommonMilestones from 'gql/operations/ModelToOperations/GetMTOAllCommonMilestones';
 
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import FieldErrorMsg from 'components/FieldErrorMsg';
@@ -31,6 +29,9 @@ import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
 import PageLoading from 'components/PageLoading';
 import TextAreaField from 'components/TextAreaField';
+import toastSuccess from 'components/ToastSuccess';
+import { getStatusAlertBody } from 'contexts/ErrorContext';
+import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 import {
@@ -39,6 +40,7 @@ import {
   sortedSelectOptions
 } from 'utils/modelPlan';
 
+import CommonMilestoneConfirmationModal from '../CommonMilestoneConfirmationModal';
 import {
   CommonMilestoneModalModeType,
   CommonMilestoneType
@@ -84,8 +86,27 @@ const CommonMilestoneForm = ({
 
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
 
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+    useState<boolean>(false);
+
   const isAddMode = mode === 'addCommonMilestone';
   const isEditMode = mode === 'editCommonMilestone';
+
+  const [createMTOCommonMilestone] = useCreateMtoCommonMilestoneMutation({
+    refetchQueries: [
+      {
+        query: GetMTOAllCommonMilestones
+      }
+    ]
+  });
+
+  const [updateMTOCommonMilestone] = useUpdateMtoCommonMilestoneMutation({
+    refetchQueries: [
+      {
+        query: GetMTOAllCommonMilestones
+      }
+    ]
+  });
 
   const {
     data: commonSolutionsAndCategoriesData,
@@ -217,7 +238,8 @@ const CommonMilestoneForm = ({
     if (
       (isAddMode && isValid) ||
       (isEditMode && unsavedChanges) ||
-      isSubmitting
+      isSubmitting ||
+      isConfirmationModalOpen
     ) {
       setDisableButton(false);
     } else {
@@ -231,21 +253,75 @@ const CommonMilestoneForm = ({
     isAddMode,
     isEditMode,
     values,
-    isValid
+    isValid,
+    isConfirmationModalOpen
   ]);
 
-  const onSubmit = useCallback<SubmitHandler<CommonMilestoneFormValues>>(
-    formData => {
-      const formChanges = dirtyInput(formValues, formData);
+  const handleEditClick = () => {
+    setIsConfirmationModalOpen(true);
+  };
 
-      if (!formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)) {
-        formChanges.facilitatedByOther = null;
+  const onSubmit = (formData: CommonMilestoneFormValues) => {
+    setIsConfirmationModalOpen(false);
+
+    const formChanges = dirtyInput(formValues, formData);
+
+    if (
+      'facilitatedByRole' in formChanges &&
+      !formChanges.facilitatedByRole?.includes(MtoFacilitator.OTHER)
+    ) {
+      formChanges.facilitatedByOther = null;
+    }
+
+    const {
+      commonSolutions: commonSolutionsChanges,
+      ...commonMilestoneChanges
+    } = formChanges;
+
+    setCurrentErrorMeta({
+      overrideMessage: getStatusAlertBody({
+        type: 'error',
+        message: mtoCommonMilestoneMiscT(`${mode}.error`)
+      })
+    });
+
+    const promise = commonMilestone
+      ? updateMTOCommonMilestone({
+          variables: {
+            id: commonMilestone.id,
+            changes: commonMilestoneChanges,
+            commonSolutions: commonSolutionsChanges
+          }
+        })
+      : createMTOCommonMilestone({
+          variables: {
+            ...formData,
+            facilitatedByOther: formData.facilitatedByRole?.includes(
+              MtoFacilitator.OTHER
+            )
+              ? formData.facilitatedByOther
+              : null
+          }
+        });
+
+    promise.then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={`mtoCommonMilestoneMisc:${mode}.success`}
+            values={{
+              milestoneName: formData.name
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
+        );
+
+        closeModal();
       }
-
-      closeModal();
-    },
-    [closeModal, formValues]
-  );
+    });
+  };
 
   if ((isEditMode && !commonMilestone) || commonSolutionsAndCategoriesError) {
     return (
@@ -259,6 +335,15 @@ const CommonMilestoneForm = ({
 
   return (
     <div className="margin-top-8">
+      {isEditMode && (
+        <CommonMilestoneConfirmationModal
+          isModalOpen={isConfirmationModalOpen}
+          closeModal={() => setIsConfirmationModalOpen(false)}
+          actionType="edit"
+          onConfirmClick={handleSubmit(onSubmit)}
+        />
+      )}
+
       <div className="padding-x-8 padding-y-6 maxw-tablet">
         {isEditMode && unsavedChanges > 0 && (
           <div className={classNames('save-tag')}>
@@ -274,9 +359,10 @@ const CommonMilestoneForm = ({
               </p>
               -
               <Button
-                type="button"
-                onClick={handleSubmit(onSubmit)}
-                disabled={isSubmitting || !unsavedChanges}
+                type="submit"
+                form="common-milestone-form"
+                onSubmit={handleSubmit(handleEditClick)}
+                disabled={isSubmitting || isConfirmationModalOpen}
                 className="margin-x-1"
                 unstyled
               >
@@ -290,7 +376,7 @@ const CommonMilestoneForm = ({
           <Form
             className="maxw-none"
             id="common-milestone-form"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(isAddMode ? onSubmit : handleEditClick)}
           >
             <ConfirmLeaveRHF />
 
@@ -342,7 +428,7 @@ const CommonMilestoneForm = ({
 
                     <TextInput
                       {...field}
-                      ref={null}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       type="text"
                     />
@@ -377,6 +463,7 @@ const CommonMilestoneForm = ({
 
                     <TextAreaField
                       {...field}
+                      inputRef={ref}
                       value={field.value || ''}
                       className="height-card"
                       id={convertCamelCaseToKebabCase(field.name)}
@@ -418,6 +505,7 @@ const CommonMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || 'default'}
                       defaultValue="default"
@@ -474,6 +562,7 @@ const CommonMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || 'default'}
                       defaultValue="default"
@@ -522,6 +611,7 @@ const CommonMilestoneForm = ({
 
                     <MultiSelect
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       inputId={convertCamelCaseToKebabCase(field.name)}
                       ariaLabel={facilitatedByRoleConfig.label}
@@ -571,7 +661,7 @@ const CommonMilestoneForm = ({
 
                       <TextInput
                         {...field}
-                        ref={null}
+                        inputRef={ref}
                         id={convertCamelCaseToKebabCase(field.name)}
                         type="text"
                         maxLength={75}
@@ -615,6 +705,7 @@ const CommonMilestoneForm = ({
 
                     <MultiSelect
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       inputId={convertCamelCaseToKebabCase(field.name)}
                       name={field.name}
