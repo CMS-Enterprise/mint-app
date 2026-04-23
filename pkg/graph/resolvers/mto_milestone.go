@@ -291,8 +291,8 @@ func MTOMilestoneUpdate(
 	// Detect change using the PRE-update value vs POST-update value
 	assignedToChanged := !helpers.UUIDPointerEqual(oldAssignedTo, updatedMilestone.AssignedTo)
 
-	// Send email notification if assignedTo changed and there's a new assignee
-	if assignedToChanged && updatedMilestone.AssignedTo != nil {
+	// Send email notification if assignedTo changed, there's a new assignee, and email is configured.
+	if assignedToChanged && updatedMilestone.AssignedTo != nil && emailService != nil {
 		go func() {
 			modelPlan, modelPlanErr := loaders.ModelPlan.GetByID.Load(ctx, updatedMilestone.ModelPlanID)
 			if modelPlanErr != nil {

@@ -471,8 +471,8 @@ func CreateDiscussionReply(
 		}
 
 		_, err = notifications.ActivityNewDiscussionRepliedCreate(ctx, tx, reply.CreatedBy, discussion.ModelPlanID, discussion.ID, discussion.CreatedBy, reply.ID, reply.Content, discussionCreatorPref)
-		if notificationErr != nil {
-			return nil, fmt.Errorf("unable to generate notifications, %w", notificationErr)
+		if err != nil {
+			return nil, fmt.Errorf("unable to create new discussion activity, %w", err)
 		}
 
 		go func() {
