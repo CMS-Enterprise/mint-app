@@ -1,6 +1,7 @@
 import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 import {
   Button,
   Fieldset,
@@ -13,9 +14,13 @@ import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
   GetOverviewQuery,
+  GetTimelineDocument,
+  GetTimelineQuery,
   ModelType,
   TypedUpdateBasicsDocument,
-  useGetOverviewQuery
+  TypedUpdateTimelineDocument,
+  useGetOverviewQuery,
+  useGetTimelineQuery
 } from 'gql/generated/graphql';
 
 import AddNote from 'components/AddNote';
@@ -82,6 +87,42 @@ const Overview = () => {
     formikRef: formikRef as any
   });
 
+  const { data: timelineData } = useGetTimelineQuery({
+    variables: {
+      id: modelID
+    }
+  });
+
+  const { id: timelineId = '' } = (timelineData?.modelPlan?.timeline ||
+    {}) as GetTimelineQuery['modelPlan']['timeline'];
+
+  const [updateTimeline] = useMutation(TypedUpdateTimelineDocument, {
+    refetchQueries: [
+      { query: GetTimelineDocument, variables: { id: timelineId } }
+    ]
+  });
+
+  /** Clears timeline application dates for mandatory model types. */
+  const clearApplicationDatesIfMandatory = async (values: InitialValueType) => {
+    const isModelTypeMandatory =
+      values.modelType.includes(ModelType.MANDATORY_NATIONAL) ||
+      values.modelType.includes(ModelType.MANDATORY_REGIONAL_OR_STATE);
+
+    if (!isModelTypeMandatory || !id) {
+      return;
+    }
+
+    await updateTimeline({
+      variables: {
+        id: timelineId,
+        changes: {
+          applicationsStart: null,
+          applicationsEnd: null
+        }
+      }
+    });
+  };
+
   const initialValues: InitialValueType = {
     __typename: 'PlanBasics',
     id: id ?? '',
@@ -143,7 +184,9 @@ const Overview = () => {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={() => {
+          onSubmit={async values => {
+            await clearApplicationDatesIfMandatory(values);
+
             navigate(
               `/models/${modelID}/collaboration-area/model-plan/characteristics`
             );
