@@ -138,6 +138,7 @@ export const discussionsMisc: Record<string, string | NestedTranslation> = {
   },
   discussionCSV: {
     content: 'Discussion content',
+    isAssessment: 'Discussion created by MINT Team',
     createdBy: 'Discussion created by',
     createdAt: 'Discussion created at',
     userRole: 'User role',
@@ -145,6 +146,7 @@ export const discussionsMisc: Record<string, string | NestedTranslation> = {
   },
   replyCSV: {
     content: 'Reply content',
+    isAssessment: 'Reply created by MINT Team',
     createdBy: 'Reply created by',
     createdAt: 'Reply created at',
     userRole: 'User role',

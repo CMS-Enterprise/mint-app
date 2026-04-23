@@ -2,6 +2,7 @@ import { TranslationModelPlan } from 'types/translation';
 
 import {
   ModelViewFilter,
+  TaskStatus,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
@@ -92,6 +93,21 @@ export const modelPlan: TranslationModelPlan = {
       PAUSED: 'Paused',
       CANCELED: 'Canceled'
     }
+  },
+  taskListStatus: {
+    gqlField: 'taskListStatus',
+    goField: 'TaskListStatus',
+    dbField: 'task_list_status',
+    label: 'Model Plan task list status',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    order: 1.07,
+    options: {
+      [TaskStatus.READY]: 'Ready to start',
+      [TaskStatus.IN_PROGRESS]: 'In progress',
+      [TaskStatus.READY_FOR_REVIEW]: 'Ready for review',
+      [TaskStatus.READY_FOR_CLEARANCE]: 'Ready for clearance'
+    }
   }
 };
 
@@ -102,6 +118,8 @@ export const modelPlanMisc: Record<string, string> = {
   createdAt: 'Created at',
   readyForReviewBy: 'Ready for review by',
   readyForReviewAt: 'Ready for review at',
+  readyForClearanceBy: 'Ready for clearance by',
+  readyForClearanceAt: 'Ready for clearance at',
   breadcrumb: 'Add a new model to MINT',
   modelName: 'What is the name of your model?',
   modelNameInfo:

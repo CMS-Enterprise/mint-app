@@ -179,7 +179,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     goField: 'FacilitatedByOther',
     dbField: 'facilitated_by_other',
     label: 'Please describe',
-    exportLabel: 'Milestone facilitated by (other)',
+    exportLabel: 'Solution facilitated by (other)',
     sublabel:
       'Because you selected “Other” above, please provide a role or title.',
     dataType: TranslationDataType.STRING,
