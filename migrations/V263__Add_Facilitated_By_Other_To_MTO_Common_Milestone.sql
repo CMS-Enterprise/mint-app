@@ -4,6 +4,12 @@ ADD COLUMN facilitated_by_other ZERO_STRING;
 COMMENT ON COLUMN mto_common_milestone.facilitated_by_other IS
 'Optional free-text detail used when the facilitated_by_role array includes OTHER.';
 
+UPDATE mto_common_milestone
+SET facilitated_by_other = 'Other'
+WHERE
+    COALESCE(facilitated_by_role @> ARRAY['OTHER']::MTO_FACILITATOR[], FALSE)
+    AND facilitated_by_other IS NULL;
+
 ALTER TABLE mto_common_milestone
 ADD CONSTRAINT mto_common_milestone_check_facilitated_by_other_only_if_other
 CHECK (
