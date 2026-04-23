@@ -14,9 +14,15 @@ export default gql(/* GraphQL */ `
       }
       createdDts
       status
+      taskListStatus
+      prepareForClearance {
+        status
+        latestClearanceDts
+      }
       basics {
         id
         modelCategory
+        additionalModelCategories
         amsModelID
         demoCode
         cmsCenters
@@ -31,6 +37,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         readyForReviewDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
+        readyForClearanceDts
         status
       }
       generalCharacteristics {
@@ -53,12 +63,14 @@ export default gql(/* GraphQL */ `
         resemblesExistingModelWhich {
           names
         }
+        resemblesExistingModelOtherSelected
         resemblesExistingModelOtherSpecify
         resemblesExistingModelOtherOption
         participationInModelPrecondition
         participationInModelPreconditionWhich {
           names
         }
+        participationInModelPreconditionOtherSelected
         participationInModelPreconditionOtherSpecify
         participationInModelPreconditionOtherOption
         participationInModelPreconditionWhyHow
@@ -109,6 +121,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         readyForReviewDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
+        readyForClearanceDts
         status
       }
       participantsAndProviders {
@@ -182,11 +198,16 @@ export default gql(/* GraphQL */ `
           commonName
         }
         readyForReviewDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
+        readyForClearanceDts
         status
       }
       beneficiaries {
         id
         beneficiaries
+        diseaseSpecificGroup
         beneficiariesNote
         beneficiariesOther
         beneficiaryOverlap
@@ -219,6 +240,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         readyForReviewDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
+        readyForClearanceDts
         status
       }
       opsEvalAndLearning {
@@ -300,6 +325,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         readyForReviewDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
+        readyForClearanceDts
         status
       }
       payments {
@@ -359,6 +388,7 @@ export default gql(/* GraphQL */ `
         payTypeNote
         nonClaimsPayments
         nonClaimsPaymentOther
+        nonClaimsPaymentsNote
         paymentCalculationOwner
         numberPaymentsPerPayCycle
         numberPaymentsPerPayCycleNote
@@ -384,6 +414,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         readyForReviewDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
+        readyForClearanceDts
         status
       }
       timeline {
@@ -403,6 +437,11 @@ export default gql(/* GraphQL */ `
           commonName
         }
         readyForReviewDts
+        readyForClearanceByUserAccount {
+          id
+          commonName
+        }
+        readyForClearanceDts
         status
       }
       questionnaires {
@@ -438,6 +477,7 @@ export default gql(/* GraphQL */ `
         }
         iddocQuestionnaire {
           id
+          needed
           technicalContactsIdentified
           technicalContactsIdentifiedDetail
           technicalContactsIdentifiedNote
@@ -469,10 +509,12 @@ export default gql(/* GraphQL */ `
           completedDts
           modifiedDts
           createdDts
+          status
           taskListStatus
         }
       }
       mtoMatrix {
+        status
         info {
           id
           readyForReviewByUserAccount {
@@ -480,6 +522,18 @@ export default gql(/* GraphQL */ `
             commonName
           }
           readyForReviewDTS
+        }
+        categories {
+          id
+          name
+          position
+          isUncategorized
+          subCategories {
+            id
+            name
+            position
+            isUncategorized
+          }
         }
         milestones {
           id
@@ -489,6 +543,15 @@ export default gql(/* GraphQL */ `
           responsibleComponent
           facilitatedBy
           facilitatedByOther
+          addedFromMilestoneLibrary
+          assignedToPlanCollaborator {
+            id
+            userAccount {
+              id
+              commonName
+              email
+            }
+          }
           needBy
           status
           riskIndicator
@@ -514,11 +577,16 @@ export default gql(/* GraphQL */ `
         solutions {
           id
           name
+          solutionType: type
+          key
+          pocName
+          pocEmail
           facilitatedBy
           facilitatedByOther
           neededBy
           status
           riskIndicator
+          addedFromSolutionLibrary
           milestones {
             id
             name
@@ -540,6 +608,7 @@ export default gql(/* GraphQL */ `
       }
       discussions {
         id
+        isAssessment
         content {
           rawContent
         }
@@ -552,6 +621,7 @@ export default gql(/* GraphQL */ `
         replies {
           id
           discussionID
+          isAssessment
           content {
             rawContent
           }
