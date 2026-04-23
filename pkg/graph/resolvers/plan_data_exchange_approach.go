@@ -93,6 +93,17 @@ func PlanDataExchangeApproachUpdate(
 
 			// Update the plan data exchange approach
 			retDataExchangeApproach, err := storage.PlanDataExchangeApproachUpdate(tx, logger, existing)
+			if err != nil {
+				return nil, err
+			}
+
+			// DATA_EXCHANGE task progression: when approach is marked COMPLETE, mark DATA_EXCHANGE task COMPLETE
+			if deaChangedToComplete {
+				updErr := updatePlanTaskStatusByKey(tx, logger, existing.ModelPlanID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusComplete, principal, store)
+				if updErr != nil {
+					return nil, updErr
+				}
+			}
 
 			if deaChangedToComplete {
 				TrySendDataExchangeApproachNotifications(
@@ -106,7 +117,7 @@ func PlanDataExchangeApproachUpdate(
 				)
 			}
 
-			return retDataExchangeApproach, err
+			return retDataExchangeApproach, nil
 		},
 	)
 

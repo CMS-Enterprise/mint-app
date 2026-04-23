@@ -4,8 +4,7 @@ const TaskListSectionKeys: string[] = [
   'participantsAndProviders',
   'beneficiaries',
   'opsEvalAndLearning',
-  'payments',
-  'operationalNeeds'
+  'payments'
 ];
 
 export default TaskListSectionKeys;

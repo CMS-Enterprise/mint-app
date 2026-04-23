@@ -33,6 +33,7 @@ import ModelPlanCard from './Cards/ModelPlanCard';
 import MTOCard from './Cards/MTOCard';
 import TeamCard from './Cards/TeamCard';
 import TimelineCard from './Cards/TimelineCard';
+import TasksWrapper from './TasksWrapper';
 
 import './index.scss';
 
@@ -45,7 +46,7 @@ export type StatusMessageType = {
 
 const CollaborationArea = () => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
-
+  const { t: tasksT } = useTranslation('tasks');
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const [statusMessage, setStatusMessage] = useState<StatusMessageType | null>(
@@ -74,7 +75,8 @@ const CollaborationArea = () => {
     suggestedPhase,
     mtoMatrix,
     mostRecentEdit,
-    createdDts
+    createdDts,
+    tasks
   } = modelPlan;
 
   // Gets the sessions storage variable for statusChecked of modelPlan
@@ -212,7 +214,7 @@ const CollaborationArea = () => {
           </StickyModelNameWrapper>
 
           <GridContainer>
-            <Grid desktop={{ col: 12 }}>
+            <Grid desktop={{ col: 12 }} className="margin-bottom-6">
               <CollaborationStatusBanner
                 modelID={modelID}
                 status={status}
@@ -221,9 +223,12 @@ const CollaborationArea = () => {
               />
             </Grid>
 
-            <Divider className="margin-y-6" />
-
             <Grid row gap>
+              <Grid col={12}>
+                <h2 className="margin-top-0">{tasksT('heading')}</h2>
+                <TasksWrapper modelPlan={modelPlan} tasks={tasks} />
+              </Grid>
+              <Divider className="margin-y-6" />
               <Grid col={12}>
                 <h2 className="margin-top-0">{collaborationAreaT('areas')}</h2>
                 <CardGroup>

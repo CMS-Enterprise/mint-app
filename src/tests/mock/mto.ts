@@ -1,5 +1,6 @@
 import { MockedResponse } from '@apollo/client/testing';
 import {
+  GetCollaborationAreaQuery,
   GetMilestoneSuggestedAnswerDocument,
   GetModelToOperationsMatrixDocument,
   GetModelToOperationsMatrixQuery,
@@ -49,12 +50,79 @@ import {
   MtoSolutionStatus,
   MtoSolutionType,
   MtoStatus,
-  MtoTemplateKey
+  MtoTemplateKey,
+  PlanTaskKey,
+  PlanTaskState,
+  PlanTaskStatus
 } from 'gql/generated/graphql';
 
 import { MtoTemplateType } from 'contexts/MTOModalContext';
 
 export const modelID = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
+
+export type PlanTaskEntry =
+  GetCollaborationAreaQuery['modelPlan']['tasks'][number];
+
+const PLAN_TASK_KEYS_ORDER = [
+  PlanTaskKey.MODEL_PLAN,
+  PlanTaskKey.MTO,
+  PlanTaskKey.DATA_EXCHANGE
+] as const;
+
+const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
+  [PlanTaskKey.MODEL_PLAN]: '2022-01-01T00:00:00Z',
+  [PlanTaskKey.MTO]: '2022-01-02T00:00:00Z',
+  [PlanTaskKey.DATA_EXCHANGE]: '2022-01-03T00:00:00Z'
+};
+
+export function makePlanTasks(
+  overrides?: Partial<
+    Record<
+      PlanTaskKey,
+      Partial<Pick<PlanTaskEntry, 'state' | 'status' | 'completedDts'>>
+    >
+  >
+): PlanTaskEntry[] {
+  return PLAN_TASK_KEYS_ORDER.map(key => {
+    const resolvedState =
+      overrides?.[key]?.state !== undefined
+        ? overrides[key].state
+        : PlanTaskState.TO_DO;
+
+    const resolvedStatus =
+      overrides?.[key]?.status !== undefined
+        ? overrides[key].status
+        : PlanTaskStatus.TO_DO;
+
+    return {
+      __typename: 'PlanTask' as const,
+      key,
+      state: resolvedState,
+      status: resolvedStatus,
+      completedDts:
+        overrides?.[key]?.completedDts ??
+        (resolvedState === PlanTaskState.COMPLETE ||
+        resolvedStatus === PlanTaskStatus.COMPLETE
+          ? DEFAULT_COMPLETED_DTS_BY_KEY[key]
+          : null),
+      ...overrides?.[key]
+    };
+  });
+}
+
+export const planTasksAllToDo = makePlanTasks();
+export const planTasksWithModelPlanComplete = makePlanTasks({
+  [PlanTaskKey.MODEL_PLAN]: {
+    state: PlanTaskState.COMPLETE,
+    status: PlanTaskStatus.COMPLETE
+  }
+});
+export const planTasksWithModelPlanInProgress = makePlanTasks({
+  [PlanTaskKey.MODEL_PLAN]: {
+    state: PlanTaskState.TO_DO,
+    status: PlanTaskStatus.IN_PROGRESS
+  }
+});
 
 export const pointsOfContact = [
   {
