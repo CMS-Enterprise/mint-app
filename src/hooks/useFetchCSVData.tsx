@@ -3,14 +3,13 @@ Hook used to fetch all data for either a single model plan or all model plans
 Then processes the data into CSV format as well as initiates a download
 */
 
-import { useCallback, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { Parser } from '@json2csv/plainjs';
 import { unwind } from '@json2csv/transforms';
 import {
   FilterGroup,
   filterGroupKey
 } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
-import { isHiddenByParentCondition } from 'features/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
 import {
   GetAllModelDataQuery,
   GetAllModelDataQueryHookResult,
@@ -37,6 +36,7 @@ type SingleModelPlanType = GetAllSingleModelDataQuery['modelPlan'];
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
 type FilterGroupType = keyof typeof filterGroupKey;
+type ExportSection = FilterGroup | ModelShareSection;
 
 const isFilterGroup = (
   exportSection: any
@@ -90,6 +90,12 @@ const getUserHeaderLabel = (fieldName: string, dataField: string): string => {
   if (fieldName === 'readyForReviewDts') {
     return i18next.t('modelPlanMisc:readyForReviewAt');
   }
+  if (fieldName === 'readyForClearanceByUserAccount.commonName') {
+    return i18next.t('modelPlanMisc:readyForClearanceBy');
+  }
+  if (fieldName === 'readyForClearanceDts') {
+    return i18next.t('modelPlanMisc:readyForClearanceAt');
+  }
   if (fieldName === 'markedCompleteByUserAccount.commonName') {
     return i18next.t('dataExchangeApproach:markedCompleteBy.label');
   }
@@ -133,7 +139,18 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
   return translation;
 };
 
-const parentFieldsToTranslate: string[] = ['archived', 'status'];
+const parentFieldsToTranslate: string[] = [
+  'archived',
+  'status',
+  'taskListStatus'
+];
+const utcDateFieldsToFormat: string[] = [
+  'createdDts',
+  'readyForReviewDts',
+  'readyForClearanceDts',
+  'readyForReviewDTS',
+  'latestClearanceDts'
+];
 const unwindSections: string[] = ['collaborators'];
 
 /**
@@ -161,8 +178,8 @@ export const dataFormatter = (
         allPlanTranslation?.modelPlan?.[key]?.options?.[transformObj[key]];
     }
 
-    // Used to map any general date/createdDts to a human readable date
-    if (key === 'createdDts' || key === 'readyForReviewDts') {
+    // Used to map timestamp values to a human readable date
+    if (utcDateFieldsToFormat.includes(key)) {
       mappedObj[key] = transformObj[key]
         ? formatDateUtc(transformObj[key], 'MM/dd/yyyy')
         : transformObj[key];
@@ -180,7 +197,10 @@ export const dataFormatter = (
     }
 
     // Translates any enum values - either single value or an array
-    else if (allPlanTranslation?.[key]?.options) {
+    else if (
+      allPlanTranslation?.[key]?.options &&
+      !allPlanTranslation?.[key]?.isModelLinks
+    ) {
       if (Array.isArray(transformObj[key])) {
         mappedObj[key] = transformObj[key]
           .map((field: any) => allPlanTranslation[key].options[field])
@@ -190,12 +210,24 @@ export const dataFormatter = (
       }
     }
 
+    // Prepare for clearance is a model-level section that is not part of the shared plan translation map
+    else if (parentKey === 'prepareForClearance' && key === 'status') {
+      mappedObj[key] = transformObj[key]
+        ? i18next.t(`modelPlanTaskList:taskListStatus.${transformObj[key]}`)
+        : transformObj[key];
+    }
+
     // Translates and predefined/custom date field to human readable date
     else if (
       allPlanTranslation?.[key]?.dataType === TranslationDataType.DATE &&
       transformObj[key]
     ) {
       mappedObj[key] = formatDateLocal(transformObj[key], 'MM/dd/yyyy');
+    }
+
+    // Translates unconfigured boolean fields to readable CSV values
+    else if (typeof transformObj[key] === 'boolean') {
+      mappedObj[key] = formatCSVBoolean(transformObj[key]);
     }
 
     // If parent is an array - ex: Collaborators, Discussions etc
@@ -229,7 +261,11 @@ export const dataFormatter = (
 
     // Translates the Existing Model Links names
     else if (allPlanTranslation?.[key]?.isModelLinks && transformObj[key]) {
-      mappedObj[key] = transformObj[key].names.join(', ');
+      mappedObj[key] = formatExistingModelLinkNames(
+        key,
+        transformObj[key],
+        transformObj
+      );
     }
 
     // Strip html tags from TipTap RTE rawContent value
@@ -292,33 +328,6 @@ export const selectFilteredFields = (
   return selectedFields;
 };
 
-// Remove export data that is conditional/not needed
-// Determined by the parent/child relationship configuration in translation files
-export const removedUnneededData = (
-  data: any,
-  allPlanTranslation: any,
-  dataFields: any
-) => {
-  const filteredDataFields = dataFields.filter((dataField: any) => {
-    if (typeof dataField === 'string') {
-      const { section, fieldName } = getSectionAndFieldName(dataField);
-
-      if (
-        allPlanTranslation[section][fieldName] &&
-        isHiddenByParentCondition(
-          allPlanTranslation[section][fieldName],
-          data[section]
-        )
-      ) {
-        return false;
-      }
-      return true;
-    }
-    return true;
-  });
-  return filteredDataFields;
-};
-
 // Initiates the downloading of the formatted csv data
 export const downloadFile = (data: string, filename: string) => {
   const element = document.createElement('a');
@@ -331,6 +340,83 @@ export const downloadFile = (data: string, filename: string) => {
   element.click();
 };
 
+const formatCSVBoolean = (value?: boolean | null) => {
+  if (typeof value !== 'boolean') {
+    return value;
+  }
+
+  return i18next.t(value ? 'general:yes' : 'general:no');
+};
+
+const formatExistingModelLinkNames = (
+  fieldName: string,
+  modelLinks: { names?: string[] },
+  sectionData: any
+) => {
+  const names = [...(modelLinks.names || [])];
+
+  if (
+    fieldName === 'resemblesExistingModelWhich' &&
+    sectionData.resemblesExistingModelOtherSelected
+  ) {
+    names.push('Other');
+  }
+
+  if (
+    fieldName === 'participationInModelPreconditionWhich' &&
+    sectionData.participationInModelPreconditionOtherSelected
+  ) {
+    names.push('Other');
+  }
+
+  return names.join(', ');
+};
+
+const formatMTOStatus = (status?: string | null) => {
+  return status
+    ? i18next.t(`modelPlanTaskList:taskListStatus.${status}`)
+    : status;
+};
+
+const formatMTOCategories = (categories: any[] = []) => {
+  return {
+    primaryCategories: categories
+      .map(category => category.name)
+      .filter(Boolean)
+      .join(', '),
+    primaryCategoryPositions: categories
+      .map(category =>
+        category.name && category.position !== undefined
+          ? `${category.name}: ${category.position}`
+          : undefined
+      )
+      .filter(Boolean)
+      .join(', '),
+    subCategories: categories
+      .flatMap(category =>
+        (category.subCategories || []).map((subCategory: any) =>
+          category.name && subCategory.name
+            ? `${category.name}: ${subCategory.name}`
+            : subCategory.name
+        )
+      )
+      .filter(Boolean)
+      .join(', '),
+    subCategoryPositions: categories
+      .flatMap(category =>
+        (category.subCategories || []).map((subCategory: any) =>
+          category.name &&
+          subCategory.name &&
+          subCategory.position !== undefined
+            ? `${category.name}: ${subCategory.name}: ${subCategory.position}`
+            : undefined
+        )
+      )
+      .filter(Boolean)
+      .join(', ')
+  };
+};
+
 // Flattens the Questionnaire and MTO data to be in a single row for each model plan, rather than all nested
 const flattenMTOData = (data: CSVModelPlanType[]) => {
   const flattenedData: any = [...data];
@@ -340,10 +426,23 @@ const flattenMTOData = (data: CSVModelPlanType[]) => {
 
     dataObj.dataExchangeApproach = plan.questionnaires.dataExchangeApproach;
     dataObj.iddocQuestionnaire = plan.questionnaires.iddocQuestionnaire;
-    dataObj.mtoMilestone = plan.mtoMatrix.milestones;
-    dataObj.mtoSolution = plan.mtoMatrix.solutions;
-    dataObj.mtoCategory = plan.mtoMatrix.categories;
-    dataObj.modelToOperations = plan.mtoMatrix.info;
+    dataObj.mtoMilestone = plan.mtoMatrix.milestones.map((milestone: any) => ({
+      ...milestone,
+      addedFromMilestoneLibrary: formatCSVBoolean(
+        milestone.addedFromMilestoneLibrary
+      )
+    }));
+    dataObj.mtoSolution = plan.mtoMatrix.solutions.map((solution: any) => ({
+      ...solution,
+      addedFromSolutionLibrary: formatCSVBoolean(
+        solution.addedFromSolutionLibrary
+      )
+    }));
+    dataObj.mtoCategory = formatMTOCategories(plan.mtoMatrix.categories);
+    dataObj.modelToOperations = {
+      ...plan.mtoMatrix.info,
+      status: formatMTOStatus(plan.mtoMatrix.status)
+    };
     flattenedData[index] = dataObj;
   });
 
@@ -362,11 +461,7 @@ const csvFormatter = (
 
     const selectedCSVFields = isFilterGroup(exportSection)
       ? selectFilteredFields(allPlanTranslation, exportSection)
-      : removedUnneededData(
-          csvData[0],
-          allPlanTranslation,
-          csvFields(i18next.t)[exportSection]
-        );
+      : csvFields(i18next.t)[exportSection];
 
     const modelName = csvData.length > 1 ? 'All models' : csvData[0].modelName;
 
@@ -406,17 +501,22 @@ const csvFormatter = (
 
 type UseFetchCSVData = {
   fetchSingleData: (
-    input: string
+    input: string,
+    exportSection?: ExportSection
   ) => Promise<GetAllSingleModelDataQueryHookResult>;
-  fetchAllData: () => Promise<GetAllModelDataQueryHookResult>;
-  setExportSection: (exportSection: FilterGroup | ModelShareSection) => void;
+  fetchAllData: (
+    exportSection?: ExportSection
+  ) => Promise<GetAllModelDataQueryHookResult>;
+  setExportSection: (exportSection: ExportSection) => void;
 };
 
 const useFetchCSVData = (): UseFetchCSVData => {
-  const [exportSection, setExportSection] = useState<
-    FilterGroup | ModelShareSection
-  >(ModelShareSection.MODEL_PLAN);
+  const exportSectionRef = useRef<ExportSection>(ModelShareSection.MODEL_PLAN);
   const allPlanTranslation = usePlanTranslation();
+
+  const setExportSection = useCallback((exportSection: ExportSection) => {
+    exportSectionRef.current = exportSection;
+  }, []);
 
   // Get data for a single model plan
   const [fetchSingleData] = useGetAllSingleModelDataLazyQuery({
@@ -424,7 +524,7 @@ const useFetchCSVData = (): UseFetchCSVData => {
       csvFormatter(
         data.modelPlan ? [data.modelPlan] : [],
         allPlanTranslation,
-        exportSection
+        exportSectionRef.current
       );
     }
   });
@@ -435,17 +535,26 @@ const useFetchCSVData = (): UseFetchCSVData => {
       csvFormatter(
         data.modelPlanCollection || [],
         allPlanTranslation,
-        exportSection
+        exportSectionRef.current
       );
     }
   });
 
   return {
     fetchSingleData: useCallback(
-      async id => fetchSingleData({ variables: { id } }),
-      [fetchSingleData]
+      async (id, exportSection) => {
+        if (exportSection) setExportSection(exportSection);
+        return fetchSingleData({ variables: { id } });
+      },
+      [fetchSingleData, setExportSection]
     ),
-    fetchAllData: useCallback(async () => fetchAllData(), [fetchAllData]),
+    fetchAllData: useCallback(
+      async exportSection => {
+        if (exportSection) setExportSection(exportSection);
+        return fetchAllData();
+      },
+      [fetchAllData, setExportSection]
+    ),
     setExportSection
   };
 };

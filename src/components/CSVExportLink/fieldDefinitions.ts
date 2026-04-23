@@ -33,10 +33,26 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
     value: 'createdDts'
   },
   'status',
+  {
+    label: 'Model Plan task list status',
+    value: 'taskListStatus'
+  },
+  {
+    label: 'Prepare for clearance status',
+    value: 'prepareForClearance.status'
+  },
+  {
+    label: 'Prepare for clearance latest clearance date',
+    value: 'prepareForClearance.latestClearanceDts'
+  },
 
   // Basics
   'basics.modelCategory',
-  'basics.amsModelID',
+  'basics.additionalModelCategories',
+  {
+    label: 'AMS Model ID',
+    value: 'basics.amsModelID'
+  },
   'basics.demoCode',
   'basics.cmsCenters', // array
   'basics.cmmiGroups', // array
@@ -48,6 +64,8 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'basics.note',
   'basics.readyForReviewByUserAccount.commonName',
   'basics.readyForReviewDts',
+  'basics.readyForClearanceByUserAccount.commonName',
+  'basics.readyForClearanceDts',
   'basics.status',
 
   // General Characteristics
@@ -119,6 +137,8 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'generalCharacteristics.multiplePatricipationAgreementsNeededNote',
   'generalCharacteristics.readyForReviewByUserAccount.commonName',
   'generalCharacteristics.readyForReviewDts',
+  'generalCharacteristics.readyForClearanceByUserAccount.commonName',
+  'generalCharacteristics.readyForClearanceDts',
   'generalCharacteristics.status',
 
   // Participants and Providers
@@ -189,10 +209,13 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'participantsAndProviders.providerOverlapNote',
   'participantsAndProviders.readyForReviewByUserAccount.commonName',
   'participantsAndProviders.readyForReviewDts',
+  'participantsAndProviders.readyForClearanceByUserAccount.commonName',
+  'participantsAndProviders.readyForClearanceDts',
   'participantsAndProviders.status',
 
   // Beneficiaries
   'beneficiaries.beneficiaries', // array
+  'beneficiaries.diseaseSpecificGroup',
   'beneficiaries.beneficiariesNote',
   'beneficiaries.beneficiariesOther',
   'beneficiaries.beneficiaryOverlap',
@@ -223,6 +246,8 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'beneficiaries.confidenceNote',
   'beneficiaries.readyForReviewByUserAccount.commonName',
   'beneficiaries.readyForReviewDts',
+  'beneficiaries.readyForClearanceByUserAccount.commonName',
+  'beneficiaries.readyForClearanceDts',
   'beneficiaries.status',
 
   // Ops and Eval Learning
@@ -241,6 +266,7 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'opsEvalAndLearning.developNewQualityMeasures',
   'opsEvalAndLearning.developNewQualityMeasuresNote',
   'opsEvalAndLearning.qualityPerformanceImpactsPayment',
+  'opsEvalAndLearning.qualityPerformanceImpactsPaymentOther',
   'opsEvalAndLearning.qualityPerformanceImpactsPaymentNote',
   'opsEvalAndLearning.dataSharingStarts',
   'opsEvalAndLearning.dataSharingStartsOther',
@@ -300,6 +326,8 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'opsEvalAndLearning.appealNote',
   'opsEvalAndLearning.readyForReviewByUserAccount.commonName',
   'opsEvalAndLearning.readyForReviewDts',
+  'opsEvalAndLearning.readyForClearanceByUserAccount.commonName',
+  'opsEvalAndLearning.readyForClearanceDts',
   'opsEvalAndLearning.status',
 
   // Payments
@@ -358,6 +386,7 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'payments.payRecipientsNote',
   'payments.nonClaimsPayments', // array
   'payments.nonClaimsPaymentOther',
+  'payments.nonClaimsPaymentsNote',
   'payments.paymentCalculationOwner',
   'payments.numberPaymentsPerPayCycle',
   'payments.numberPaymentsPerPayCycleNote',
@@ -381,6 +410,8 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'payments.paymentStartDateNote',
   'payments.readyForReviewByUserAccount.commonName',
   'payments.readyForReviewDts',
+  'payments.readyForClearanceByUserAccount.commonName',
+  'payments.readyForClearanceDts',
   'payments.status',
 
   // Data Exchange Approach
@@ -408,6 +439,7 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'dataExchangeApproach.status',
 
   // IDDOC Questionnaire
+  'iddocQuestionnaire.needed',
   'iddocQuestionnaire.technicalContactsIdentified',
   'iddocQuestionnaire.technicalContactsIdentifiedDetail',
   'iddocQuestionnaire.technicalContactsIdentifiedNote',
@@ -434,6 +466,7 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   'iddocQuestionnaire.isComplete',
   'iddocQuestionnaire.completedByUserAccount.commonName',
   'iddocQuestionnaire.completedDts',
+  'iddocQuestionnaire.status',
   'iddocQuestionnaire.taskListStatus',
 
   // Collaborators
@@ -452,6 +485,12 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   {
     label: `${t<string, {}, string>(
       'collaboratorsMisc:csvTitle'
+    )} ${t<string, {}, string>('collaboratorsMisc:email')}`,
+    value: 'collaborators.userAccount.email'
+  },
+  {
+    label: `${t<string, {}, string>(
+      'collaboratorsMisc:csvTitle'
     )} ${t<string, {}, string>('collaborators:teamRoles.label')}`,
     value: 'collaborators.teamRoles'
   },
@@ -460,6 +499,10 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   {
     label: t<string, {}, string>('discussionsMisc:discussionCSV.content'),
     value: 'discussions.content.rawContent'
+  },
+  {
+    label: t<string, {}, string>('discussionsMisc:discussionCSV.isAssessment'),
+    value: 'discussions.isAssessment'
   },
   {
     label: t<string, {}, string>('discussionsMisc:discussionCSV.createdBy'),
@@ -486,6 +529,10 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
     value: 'discussions.replies.content.rawContent'
   },
   {
+    label: t<string, {}, string>('discussionsMisc:replyCSV.isAssessment'),
+    value: 'discussions.replies.isAssessment'
+  },
+  {
     label: t<string, {}, string>('discussionsMisc:replyCSV.createdBy'),
     value: 'discussions.replies.createdByUserAccount.commonName'
   },
@@ -505,7 +552,7 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   }
 ];
 
-const csvFieldsModeTimeline = (t: TFunction): (CSVLabel | string)[] => [
+const csvFieldsModeTimeline = (): (CSVLabel | string)[] => [
   'timeline.completeICIP',
   'timeline.clearanceStarts',
   'timeline.clearanceEnds',
@@ -518,12 +565,18 @@ const csvFieldsModeTimeline = (t: TFunction): (CSVLabel | string)[] => [
   'timeline.wrapUpEnds',
   'timeline.readyForReviewByUserAccount.commonName',
   'timeline.readyForReviewDts',
+  'timeline.readyForClearanceByUserAccount.commonName',
+  'timeline.readyForClearanceDts',
   'timeline.status'
 ];
 
 const csvFieldsMTOMilestone = (t: TFunction): (CSVLabel | string)[] => [
   'mtoMilestone.name',
   'mtoMilestone.isDraft',
+  {
+    label: 'Milestone added from milestone library',
+    value: 'mtoMilestone.addedFromMilestoneLibrary'
+  },
   {
     label: t('modelToOperationsMisc:modal.milestone.milestoneCategory.label'),
     value: 'mtoMilestone.categories.category.name'
@@ -538,6 +591,14 @@ const csvFieldsMTOMilestone = (t: TFunction): (CSVLabel | string)[] => [
   'mtoMilestone.responsibleComponent',
   'mtoMilestone.facilitatedBy',
   'mtoMilestone.facilitatedByOther',
+  {
+    label: t<string, {}, string>('mtoMilestone:assignedTo.exportLabel'),
+    value: 'mtoMilestone.assignedToPlanCollaborator.userAccount.commonName'
+  },
+  {
+    label: 'Milestone assigned to email',
+    value: 'mtoMilestone.assignedToPlanCollaborator.userAccount.email'
+  },
   'mtoMilestone.needBy',
   'mtoMilestone.status',
   'mtoMilestone.riskIndicator',
@@ -545,8 +606,19 @@ const csvFieldsMTOMilestone = (t: TFunction): (CSVLabel | string)[] => [
   'mtoMilestone.solutions'
 ];
 
-const csvFieldsMTOSolution = (t: TFunction): (CSVLabel | string)[] => [
+const csvFieldsMTOSolution = (): (CSVLabel | string)[] => [
   'mtoSolution.name',
+  'mtoSolution.solutionType',
+  {
+    label: 'Solution library key',
+    value: 'mtoSolution.key'
+  },
+  'mtoSolution.pocName',
+  'mtoSolution.pocEmail',
+  {
+    label: 'Solution added from solution library',
+    value: 'mtoSolution.addedFromSolutionLibrary'
+  },
   'mtoSolution.facilitatedBy',
   'mtoSolution.facilitatedByOther',
   'mtoSolution.neededBy',
@@ -556,8 +628,28 @@ const csvFieldsMTOSolution = (t: TFunction): (CSVLabel | string)[] => [
 ];
 
 const csvFieldsMTO = (t: TFunction): (CSVLabel | string)[] => [
+  {
+    label: 'MTO status',
+    value: 'modelToOperations.status'
+  },
+  {
+    label: 'MTO categories',
+    value: 'mtoCategory.primaryCategories'
+  },
+  {
+    label: 'MTO subcategories',
+    value: 'mtoCategory.subCategories'
+  },
+  {
+    label: 'MTO category positions',
+    value: 'mtoCategory.primaryCategoryPositions'
+  },
+  {
+    label: 'MTO subcategory positions',
+    value: 'mtoCategory.subCategoryPositions'
+  },
   ...csvFieldsMTOMilestone(t),
-  ...csvFieldsMTOSolution(t),
+  ...csvFieldsMTOSolution(),
   'modelToOperations.readyForReviewByUserAccount.commonName',
   'modelToOperations.readyForReviewDTS'
 ];
@@ -566,12 +658,16 @@ const csvFields = (
   t: TFunction
 ): Record<ModelShareSection, (CSVLabel | string)[]> => {
   return {
-    ALL: [...csvFieldsModelPlan(t), ...csvFieldsMTO(t)],
+    ALL: [
+      ...csvFieldsModelPlan(t),
+      ...csvFieldsModeTimeline(),
+      ...csvFieldsMTO(t)
+    ],
     [ModelShareSection.MODEL_PLAN]: csvFieldsModelPlan(t),
-    [ModelShareSection.TIMELINE]: csvFieldsModeTimeline(t),
+    [ModelShareSection.TIMELINE]: csvFieldsModeTimeline(),
     [ModelShareSection.MTO_ALL]: csvFieldsMTO(t),
     [ModelShareSection.MTO_MILESTONES]: csvFieldsMTOMilestone(t),
-    [ModelShareSection.MTO_SOLUTIONS]: csvFieldsMTOSolution(t)
+    [ModelShareSection.MTO_SOLUTIONS]: csvFieldsMTOSolution()
   };
 };
 
