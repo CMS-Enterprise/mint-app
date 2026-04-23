@@ -116,8 +116,8 @@ func PlanDataExchangeApproachUpdate(
 					return nil, updErr
 				}
 			}
-			// DATA_EXCHANGE task regression: when approach is un-marked COMPLETE, return task to TO_DO
-			// unless model status is CLEARED.
+			// DATA_EXCHANGE task regression: when approach is un-marked COMPLETE, recalculate task status;
+			// typically IN_PROGRESS unless model status is CLEARED.
 			if deaChangedFromComplete {
 				updErr := UpdatePlanTaskStatusOnDataExchangeApproachNoLongerComplete(tx, logger, existing.ModelPlanID, principal, store)
 				if updErr != nil {

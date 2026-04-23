@@ -17,7 +17,7 @@ import (
 // Task status logic:
 //
 //	MODEL_PLAN
-//    - IN_PROGRESS — any model plan section is IN_PROGRESS.
+//    - IN_PROGRESS — any model plan section status is not READY.
 //    - COMPLETE — model plan status is CLEARED.
 //	DATA_EXCHANGE
 //    - IN_PROGRESS — DEA status is IN_PROGRESS.

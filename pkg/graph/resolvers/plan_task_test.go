@@ -364,7 +364,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NotNil(dataExchangeTask.CompletedDts)
 
 		// When model status regresses from CLEARED to an earlier status:
-		// MODEL_PLAN should return to TO_DO, while DATA_EXCHANGE remains COMPLETE if DEA is still COMPLETE.
+		// MODEL_PLAN should return to IN_PROGRESS, while DATA_EXCHANGE remains COMPLETE if DEA is still COMPLETE.
 		_, err = ModelPlanUpdate(
 			suite.testConfigs.Logger,
 			plan.ID,
