@@ -16,6 +16,25 @@ This is a proof-of-concept MCP server that provides tools for AI assistants to q
 └─────────────────┘         └──────────────────┘         └─────────────────┘
 ```
 
+## Project Structure
+
+```
+mcpserver/
+├── __init__.py           # Package initialization
+├── server.py             # Main MCP server with tools and resources
+├── config.py             # Environment configuration
+├── mint_client.py        # GraphQL client for MINT API
+└── queries/              # GraphQL queries (validated against schema)
+    ├── __init__.py       # Query exports
+    ├── model_plans.py    # Model plan queries
+    └── analytics.py      # Analytics queries
+tests/
+├── test_server.py        # Server tests
+└── test_mint_client.py   # Client tests
+```
+
+See [GRAPHQL_VALIDATION.md](GRAPHQL_VALIDATION.md) for details on query organization and schema validation.
+
 ## Setup
 
 ### Prerequisites
@@ -37,6 +56,40 @@ Copy `.env.example` to `.env` and configure:
 ```bash
 cp .env.example .env
 ```
+
+#### Authentication
+
+The MCP server supports two authentication modes, mirroring the frontend's authentication pattern:
+
+**Local Development (Default)**
+
+For local development, the server uses the same local auth format as the MINT frontend:
+
+```bash
+LOCAL_AUTH_ENABLED=True
+LOCAL_AUTH_EUA_ID=PSTM  # Your EUA ID
+LOCAL_AUTH_JOB_CODES=MINT_ASSESSMENT_NONPROD,MINT_USER_NONPROD
+```
+
+This sends an Authorization header like:
+```
+Authorization: Local {"EUAID":"PSTM","jobCodes":["MINT_ASSESSMENT_NONPROD","MINT_USER_NONPROD"],"favorLocalAuth":true}
+```
+
+The backend (`pkg/local/authentication_middleware.go`) parses this and creates a dev user context.
+
+**Production/Deployed Environments**
+
+For deployed environments, disable local auth and provide JWT Bearer tokens:
+
+```bash
+LOCAL_AUTH_ENABLED=False
+AUTH_SERVER_URL=https://test.idp.idm.cms.gov
+JWT_ISSUER=https://test.idp.idm.cms.gov
+JWT_AUDIENCE=urn:gov:cms:mint:dev
+```
+
+Bearer tokens can be passed to individual tool calls when needed.
 
 ### Running Locally
 

@@ -39,15 +39,24 @@ Edit `mcp/.env` with your settings:
 
 ```bash
 # Point to your local MINT instance
-MINT_GRAPHQL_URL=http://localhost:8080/api/graph/query
+MINT_GRAPHQL_URL=http://localhost:8085/api/graph/query
 
-# Or point to a deployed environment
+# Local Development Authentication (default - mirrors frontend)
+LOCAL_AUTH_ENABLED=True
+LOCAL_AUTH_EUA_ID=PSTM
+LOCAL_AUTH_JOB_CODES=MINT_ASSESSMENT_NONPROD,MINT_USER_NONPROD
+
+# Or point to a deployed environment with JWT auth
+# LOCAL_AUTH_ENABLED=False
 # MINT_GRAPHQL_URL=https://mint-dev.cms.gov/api/graph/query
+# AUTH_SERVER_URL=https://test.idp.idm.cms.gov
+# JWT_ISSUER=https://test.idp.idm.cms.gov
+# JWT_AUDIENCE=urn:gov:cms:mint:dev
+```
 
-# Authentication (for production use)
-AUTH_SERVER_URL=https://test.idp.idm.cms.gov
-JWT_ISSUER=https://test.idp.idm.cms.gov
-JWT_AUDIENCE=urn:gov:cms:mint:dev
+**Authentication Modes:**
+- **Local Auth** (default): Mirrors the frontend's local dev auth. The server sends `Authorization: Local {...}` headers that the MINT backend recognizes.
+- **JWT Auth**: For production environments. Disable local auth and provide JWT tokens.
 ```
 
 ### Running the Server

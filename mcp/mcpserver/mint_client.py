@@ -1,10 +1,17 @@
 """Client for communicating with MINT GraphQL API."""
 
 import httpx
+import json
 from typing import Any, Dict, Optional
 import logging
+from graphql import print_ast
 
-from mcpserver.config import MINT_GRAPHQL_URL
+from mcpserver.config import (
+    MINT_GRAPHQL_URL,
+    LOCAL_AUTH_ENABLED,
+    LOCAL_AUTH_EUA_ID,
+    LOCAL_AUTH_JOB_CODES,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -15,11 +22,38 @@ class MintGraphQLClient:
     def __init__(self, graphql_url: str = MINT_GRAPHQL_URL):
         """Initialize the MINT GraphQL client."""
         self.graphql_url = graphql_url
-        self.client = httpx.AsyncClient(timeout=30.0)
+        self.httpx_client = httpx.AsyncClient(timeout=30.0)
+
+    def _get_auth_header(self, auth_token: Optional[str] = None) -> Optional[str]:
+        """
+        Generate the appropriate Authorization header.
+        
+        Mimics the frontend's getAuthHeader() logic:
+        1. Prefer local auth if enabled
+        2. Fall back to Bearer token if provided
+        
+        Returns:
+            Authorization header value or None
+        """
+        # Prefer local auth for development (mirrors frontend pattern)
+        if LOCAL_AUTH_ENABLED:
+            job_codes = [code.strip() for code in LOCAL_AUTH_JOB_CODES.split(",")]
+            local_auth_config = {
+                "EUAID": LOCAL_AUTH_EUA_ID,
+                "jobCodes": job_codes,
+                "favorLocalAuth": True,
+            }
+            return f"Local {json.dumps(local_auth_config)}"
+        
+        # Fall back to Bearer token if provided
+        if auth_token:
+            return f"Bearer {auth_token}"
+        
+        return None
 
     async def query(
         self,
-        query: str,
+        query: Any,  # Can be str or gql.GraphQLRequest
         variables: Optional[Dict[str, Any]] = None,
         auth_token: Optional[str] = None,
     ) -> Dict[str, Any]:
@@ -27,9 +61,9 @@ class MintGraphQLClient:
         Execute a GraphQL query against MINT API.
 
         Args:
-            query: The GraphQL query string
+            query: The GraphQL query string or gql GraphQLRequest object
             variables: Optional variables for the query
-            auth_token: Optional JWT token for authentication
+            auth_token: Optional JWT token for authentication (only used if LOCAL_AUTH_ENABLED=False)
 
         Returns:
             The GraphQL response data
@@ -37,17 +71,27 @@ class MintGraphQLClient:
         Raises:
             httpx.HTTPError: If the request fails
         """
-        headers = {"Content-Type": "application/json"}
-        
-        if auth_token:
-            headers["Authorization"] = f"Bearer {auth_token}"
-
-        payload: Dict[str, Any] = {"query": query}
-        if variables:
-            payload["variables"] = variables
-
         try:
-            response = await self.client.post(
+            # Convert GraphQLRequest to string if needed
+            # GraphQLRequest has a .document attribute containing the DocumentNode
+            if hasattr(query, 'document'):
+                # It's a GraphQLRequest object from gql()
+                query_str = print_ast(query.document)
+            else:
+                query_str = str(query)
+            
+            headers = {"Content-Type": "application/json"}
+            
+            # Get auth header (local auth or Bearer token)
+            auth_header = self._get_auth_header(auth_token)
+            if auth_header:
+                headers["Authorization"] = auth_header
+
+            payload: Dict[str, Any] = {"query": query_str}
+            if variables:
+                payload["variables"] = variables
+
+            response = await self.httpx_client.post(
                 self.graphql_url,
                 json=payload,
                 headers=headers,
@@ -70,7 +114,7 @@ class MintGraphQLClient:
 
     async def close(self) -> None:
         """Close the HTTP client."""
-        await self.client.aclose()
+        await self.httpx_client.aclose()
 
 
 # Singleton instance

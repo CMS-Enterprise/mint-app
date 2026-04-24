@@ -29,6 +29,15 @@ JWT_ISSUER = os.getenv("JWT_ISSUER", "https://test.idp.idm.cms.gov")
 JWT_AUDIENCE = os.getenv("JWT_AUDIENCE", "urn:gov:cms:mint:dev")
 JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "RS256")
 
+# Local Development Authentication
+# When LOCAL_AUTH_ENABLED is true, uses local auth header instead of Okta JWT
+LOCAL_AUTH_ENABLED = str2bool(os.getenv("LOCAL_AUTH_ENABLED", "True"))
+LOCAL_AUTH_EUA_ID = os.getenv("LOCAL_AUTH_EUA_ID", "PSTM")
+LOCAL_AUTH_JOB_CODES = os.getenv(
+    "LOCAL_AUTH_JOB_CODES", 
+    "MINT_ASSESSMENT_NONPROD,MINT_USER_NONPROD"
+)
+
 # MINT Integration
 MINT_GRAPHQL_URL = os.getenv("MINT_GRAPHQL_URL", "http://localhost:8080/api/graph/query")
 

@@ -1,0 +1,19 @@
+{
+  "schema": [
+    "../pkg/graph/schema/**/*.graphql"
+  ],
+  "documents": [
+    "mcpserver/**/*.py"
+  ],
+  "exclude": [
+    "**/__tests__/**",
+    "**/*.test.*",
+    "**/.venv/**",
+    "**/node_modules/**"
+  ],
+  "extensions": {
+    "languageService": {
+      "useSchemaFileDefinitions": true
+    }
+  }
+}

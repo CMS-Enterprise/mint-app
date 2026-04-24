@@ -10,6 +10,7 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "pydantic>=2.10.6",
     "uvicorn>=0.34.0",
+    "gql[all]>=3.5.0",
 ]
 
 [project.optional-dependencies]

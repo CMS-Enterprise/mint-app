@@ -16,6 +16,7 @@ from mcpserver.config import (
     LOG_LEVEL,
 )
 from mcpserver.mint_client import get_mint_client
+from mcpserver import queries  # Import validated queries
 
 # Configure logging
 DETAILED_FORMAT = "%(asctime)s | %(levelname)-8s | %(process)d | %(name)s:%(funcName)s:%(lineno)d - %(message)s"
@@ -84,22 +85,11 @@ async def get_model_plan_details(
     try:
         client = get_mint_client()
 
-        query = """
-        query GetModelPlan($id: UUID!) {
-            modelPlan(id: $id) {
-                id
-                modelName
-                abbreviation
-                status
-                createdBy
-                createdDts
-                modifiedBy
-                modifiedDts
-            }
-        }
-        """
-
-        result = await client.query(query, variables={"id": model_plan_id})
+        # Use validated query from queries module
+        result = await client.query(
+            queries.GET_MODEL_PLAN_DETAILS,  # type: ignore[arg-type]
+            variables={"id": model_plan_id}
+        )
 
         if "error" in result:
             return {"error": f"Failed to fetch model plan: {result['error']}"}
@@ -130,26 +120,11 @@ async def get_model_plan_timeline(
     try:
         client = get_mint_client()
 
-        query = """
-        query GetPlanTimeline($id: UUID!) {
-            modelPlan(id: $id) {
-                id
-                basics {
-                    completeICIP
-                    clearanceStarts
-                    clearanceEnds
-                    announced
-                    applicationsStart
-                    applicationsEnd
-                    performancePeriodStarts
-                    performancePeriodEnds
-                    wrapUpEnds
-                }
-            }
-        }
-        """
-
-        result = await client.query(query, variables={"id": model_plan_id})
+        # Use validated query from queries module
+        result = await client.query(
+            queries.GET_MODEL_PLAN_TIMELINE,  # type: ignore[arg-type]
+            variables={"id": model_plan_id}
+        )
 
         if "error" in result:
             return {"error": f"Failed to fetch timeline: {result['error']}"}
@@ -180,26 +155,11 @@ async def list_model_collaborators(
     try:
         client = get_mint_client()
 
-        query = """
-        query GetCollaborators($id: UUID!) {
-            modelPlan(id: $id) {
-                id
-                collaborators {
-                    id
-                    userID
-                    teamRoles
-                    userAccount {
-                        id
-                        username
-                        commonName
-                        email
-                    }
-                }
-            }
-        }
-        """
-
-        result = await client.query(query, variables={"id": model_plan_id})
+        # Use validated query from queries module
+        result = await client.query(
+            queries.GET_MODEL_COLLABORATORS,  # type: ignore[arg-type]
+            variables={"id": model_plan_id}
+        )
 
         if "error" in result:
             return [{"error": f"Failed to fetch collaborators: {result['error']}"}]
@@ -239,22 +199,11 @@ async def search_model_plans(
         # Clamp limit between 1 and 50
         limit = max(1, min(limit, 50))
 
-        # For POC, we'll do a simple query and filter client-side
-        # In production, you'd want the GraphQL API to support filtering
-        query = """
-        query ListModelPlans {
-            modelPlanCollection {
-                id
-                modelName
-                abbreviation
-                status
-                createdDts
-                modifiedDts
-            }
-        }
-        """
-
-        result = await client.query(query)
+        # Use validated query from queries module
+        result = await client.query(
+            queries.LIST_MODEL_PLANS,  # type: ignore[arg-type]
+            variables={"filter": "INCLUDE_ALL"}
+        )
 
         if "error" in result:
             return [{"error": f"Failed to search model plans: {result['error']}"}]
@@ -262,7 +211,7 @@ async def search_model_plans(
         plans = result.get("modelPlanCollection", [])
 
         # Apply status filter if provided
-        if status_filter:
+        if status_filter and isinstance(status_filter, str):
             plans = [p for p in plans if p.get("status") == status_filter.upper()]
 
         # Apply limit
@@ -290,20 +239,11 @@ async def list_model_plans_resource() -> str:
     try:
         client = get_mint_client()
         
-        query = """
-        query ListModelPlans {
-            modelPlanCollection {
-                id
-                modelName
-                abbreviation
-                status
-                createdDts
-                modifiedDts
-            }
-        }
-        """
-        
-        result = await client.query(query)
+        # Use validated query from queries module
+        result = await client.query(
+            queries.LIST_MODEL_PLANS,  # type: ignore[arg-type]
+            variables={"filter": "INCLUDE_ALL"}
+        )
         
         if "error" in result:
             return f"Error: {result['error']}"
@@ -345,39 +285,11 @@ async def get_model_plan_resource(model_plan_id: str) -> str:
     try:
         client = get_mint_client()
         
-        query = """
-        query GetModelPlan($id: UUID!) {
-            modelPlan(id: $id) {
-                id
-                modelName
-                abbreviation
-                status
-                createdDts
-                modifiedDts
-                basics {
-                    goal
-                    performancePeriodStarts
-                    performancePeriodEnds
-                    wrapUpEnds
-                    completeICIP
-                    clearanceStarts
-                    clearanceEnds
-                    announced
-                    applicationsStart
-                    applicationsEnd
-                }
-                collaborators {
-                    userAccount {
-                        commonName
-                        email
-                    }
-                    teamRoles
-                }
-            }
-        }
-        """
-        
-        result = await client.query(query, variables={"id": model_plan_id})
+        # Use validated query from queries module
+        result = await client.query(
+            queries.GET_MODEL_PLAN_RESOURCE,  # type: ignore[arg-type]
+            variables={"id": model_plan_id}
+        )
         
         if "error" in result:
             return f"Error: {result['error']}"
