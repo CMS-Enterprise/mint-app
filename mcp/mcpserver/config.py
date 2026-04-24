@@ -20,9 +20,8 @@ APP_RELOAD = str2bool(os.getenv("APP_RELOAD", "False"))
 APP_WORKERS = int(os.getenv("APP_WORKERS", "1"))
 
 # Logging Configuration
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
-if LOG_LEVEL not in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]:
-    LOG_LEVEL = "INFO"
+_log_level = os.getenv("LOG_LEVEL", "INFO").upper()
+LOG_LEVEL = _log_level if _log_level in ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] else "INFO"
 
 # Authentication Configuration
 AUTH_SERVER_URL = os.getenv("AUTH_SERVER_URL", "https://test.idp.idm.cms.gov")

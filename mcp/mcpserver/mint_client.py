@@ -42,7 +42,7 @@ class MintGraphQLClient:
         if auth_token:
             headers["Authorization"] = f"Bearer {auth_token}"
 
-        payload = {"query": query}
+        payload: Dict[str, Any] = {"query": query}
         if variables:
             payload["variables"] = variables
 
