@@ -12,7 +12,11 @@ GET_MODEL_PLAN_RESOURCE = gql("""
             createdDts
             modifiedDts
             basics {
+                id
                 goal
+            }
+            timeline {
+                id
                 performancePeriodStarts
                 performancePeriodEnds
                 wrapUpEnds

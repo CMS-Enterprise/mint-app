@@ -14,6 +14,9 @@ GET_MODEL_PLAN_DETAILS = gql("""
             basics {
                 id
                 goal
+            }
+            timeline {
+                id
                 performancePeriodStarts
                 performancePeriodEnds
                 wrapUpEnds
@@ -32,7 +35,8 @@ GET_MODEL_PLAN_TIMELINE = gql("""
     query GetModelPlanTimeline($id: UUID!) {
         modelPlan(id: $id) {
             id
-            basics {
+            timeline {
+                id
                 performancePeriodStarts
                 performancePeriodEnds
                 wrapUpEnds

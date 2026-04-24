@@ -129,7 +129,7 @@ async def get_model_plan_timeline(
         if "error" in result:
             return {"error": f"Failed to fetch timeline: {result['error']}"}
 
-        return result.get("modelPlan", {}).get("basics", {"error": "Timeline not found"})
+        return result.get("modelPlan", {}).get("timeline", {"error": "Timeline not found"})
 
     except Exception as e:
         logger.error(f"Error fetching timeline for model plan {model_plan_id}: {e}")
@@ -300,6 +300,7 @@ async def get_model_plan_resource(model_plan_id: str) -> str:
             return f"Model plan {model_plan_id} not found."
         
         basics = plan.get("basics", {})
+        timeline = plan.get("timeline", {})
         collaborators = plan.get("collaborators", [])
         
         # Format as readable text
@@ -312,10 +313,10 @@ async def get_model_plan_resource(model_plan_id: str) -> str:
         output += f"{basics.get('goal', 'No goal specified')}\n\n"
         
         output += "## Timeline\n"
-        output += f"- **Performance Period**: {basics.get('performancePeriodStarts', 'N/A')} to {basics.get('performancePeriodEnds', 'N/A')}\n"
-        output += f"- **Applications**: {basics.get('applicationsStart', 'N/A')} to {basics.get('applicationsEnd', 'N/A')}\n"
-        output += f"- **Announced**: {basics.get('announced', 'N/A')}\n"
-        output += f"- **Wrap Up Ends**: {basics.get('wrapUpEnds', 'N/A')}\n\n"
+        output += f"- **Performance Period**: {timeline.get('performancePeriodStarts', 'N/A')} to {timeline.get('performancePeriodEnds', 'N/A')}\n"
+        output += f"- **Applications**: {timeline.get('applicationsStart', 'N/A')} to {timeline.get('applicationsEnd', 'N/A')}\n"
+        output += f"- **Announced**: {timeline.get('announced', 'N/A')}\n"
+        output += f"- **Wrap Up Ends**: {timeline.get('wrapUpEnds', 'N/A')}\n\n"
         
         if collaborators:
             output += "## Collaborators\n"
