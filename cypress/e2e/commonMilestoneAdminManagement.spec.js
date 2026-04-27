@@ -6,7 +6,7 @@ describe('Common Milestone Admin Management', () => {
     });
 
     it('does not allow non-assessment users to see action buttons', () => {
-      cy.get('h2', { name: 'Admin actions' }).should('not.exist');
+      cy.contains('h2', 'Admin actions').should('not.exist');
 
       cy.visit('/help-and-knowledge/milestone-library');
       cy.get('button').contains('Add a milestone').should('not.exist');
@@ -14,16 +14,13 @@ describe('Common Milestone Admin Management', () => {
   });
 
   describe('Assessment User Tests', () => {
-    const milestoneName = 'A Test Milestone';
-    const updatedMilestoneName = 'A New Test Milestone';
-
     beforeEach(() => {
       cy.localLogin({ name: 'JTTC', role: 'MINT_ASSESSMENT_NONPROD' });
       cy.visit('/');
     });
 
     it('creates a new milestone with multi-selects and conditional fields', () => {
-      cy.get('h2', { name: 'Admin actions' }).should('exist');
+      cy.contains('h2', 'Admin actions').should('exist');
       cy.get('[data-testid="to-view-common-milestones"]').click();
 
       cy.url().should('include', '/help-and-knowledge/milestone-library');
@@ -32,10 +29,10 @@ describe('Common Milestone Admin Management', () => {
 
       // Fill out the form
       cy.get('[data-testid="common-milestone-side-panel"]')
-        .find('button[type="submit"]')
+        .find('button[type="submit"],[name="Add milestone"]')
         .should('be.disabled');
 
-      cy.get('input[name="name"]').type(milestoneName);
+      cy.get('input[name="name"]').type('A Test Milestone');
       cy.get('textarea[name="description"]').type(
         'System-generated description.'
       );
@@ -62,15 +59,15 @@ describe('Common Milestone Admin Management', () => {
       cy.get('label[for="common-solutions"]').click();
 
       cy.get('[data-testid="common-milestone-side-panel"]')
-        .find('button[type="submit"]')
+        .find('button[type="submit"],[name="Add milestone"]')
         .click();
 
       cy.get('[data-testid="toast-success"]').contains(
-        `You have added a new milestone (${milestoneName}) to the model milestone library.`
+        `You have added a new milestone (A Test Milestone) to the model milestone library.`
       );
 
       cy.get('[data-testid="CardGroup"]')
-        .contains(milestoneName)
+        .contains('A Test Milestone')
         .should('be.visible');
     });
 
@@ -78,10 +75,10 @@ describe('Common Milestone Admin Management', () => {
       cy.visit('/help-and-knowledge/milestone-library');
 
       cy.get('[data-testid="CardGroup"]')
-        .contains(milestoneName)
+        .contains('Acquire a learning contractor')
         .parents('.usa-card')
         .within(() => {
-          cy.contains('Category: Beneficiaries').should('be.visible');
+          cy.contains('Category: Learning').should('be.visible');
           cy.get('button').contains('Learn about this milestone').click();
         });
 
@@ -92,13 +89,13 @@ describe('Common Milestone Admin Management', () => {
 
       cy.get('input[name="name"]')
         .clear({ force: true })
-        .type(updatedMilestoneName, { force: true, delay: 50 }); // Slight delay mimics human typing;
+        .type('Acquire a new learning contractor', { force: true, delay: 50 }); // Slight delay mimics human typing;
 
-      cy.get('[aria-label="Remove Model Lead"]').click();
+      cy.get('[aria-label="Remove IT Lead"]').click();
 
       cy.get('#facilitated-by-role').within(() => {
         cy.get("input[type='text']").click();
-        cy.get('[data-testid="option-IT_LEAD"]').click({
+        cy.get('[data-testid="option-MODEL_LEAD"]').click({
           force: true
         });
       });
@@ -106,7 +103,8 @@ describe('Common Milestone Admin Management', () => {
       cy.get('label[for="facilitated-by-role"]').click();
 
       cy.get('[data-testid="common-milestone-side-panel"]')
-        .find('button[type="submit"]')
+        .find('button')
+        .contains(/save changes/i)
         .should('not.be.disabled')
         .click();
 
@@ -117,7 +115,7 @@ describe('Common Milestone Admin Management', () => {
       );
 
       cy.get('[data-testid="toast-success"]').contains(
-        `Your changes for a milestone (${updatedMilestoneName}) have been saved.`
+        `Your changes for a milestone (Acquire a new learning contractor) have been saved.`
       );
 
       cy.get('[data-testid="common-milestone-side-panel"]').should('not.exist');
@@ -126,11 +124,11 @@ describe('Common Milestone Admin Management', () => {
       cy.clickOutside();
 
       cy.get('[data-testid="CardGroup"]')
-        .contains(updatedMilestoneName)
+        .contains('Acquire a new learning contractor')
         .should('be.visible');
 
       cy.get('[data-testid="CardGroup"]')
-        .contains(`${milestoneName}`)
+        .contains('Acquire a learning contractor')
         .should('not.exist');
     });
 
@@ -138,7 +136,7 @@ describe('Common Milestone Admin Management', () => {
       cy.visit('/help-and-knowledge/milestone-library');
 
       cy.get('[data-testid="CardGroup"]')
-        .contains(updatedMilestoneName)
+        .contains('Acquire a quality measures development contractor')
         .parents('.usa-card')
         .within(() => {
           cy.get('button').contains('Learn about this milestone').click();
@@ -157,7 +155,7 @@ describe('Common Milestone Admin Management', () => {
       );
 
       cy.get('[data-testid="CardGroup"]')
-        .contains(updatedMilestoneName)
+        .contains('Acquire a quality measures development contractor')
         .should('not.exist');
     });
   });
