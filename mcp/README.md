@@ -2,6 +2,8 @@
 
 Model Context Protocol (MCP) server for MINT - enables AI assistants to interact with MINT data and operations.
 
+> **Quick Reference:** See [QUICKSTART.md](QUICKSTART.md) for a command cheat sheet
+
 ## Overview
 
 This is a proof-of-concept MCP server that provides tools for AI assistants to query and interact with MINT model plans, timelines, and collaborators.
@@ -35,26 +37,48 @@ tests/
 
 See [GRAPHQL_VALIDATION.md](GRAPHQL_VALIDATION.md) for details on query organization and schema validation.
 
+## Quick Start
+
+```bash
+cd mcp
+make install    # Install dependencies and setup .env
+make start      # Run on host for development
+# OR
+make docker     # Run in Docker
+# OR
+make webui      # Run with Open WebUI
+```
+
+See `make help` for all available commands.
+
 ## Setup
 
 ### Prerequisites
 
 - Python 3.12+
-- UV package manager
+- UV package manager (installed automatically by `make install`)
+- Docker (optional, for containerized deployment)
 
 ### Installation
 
 ```bash
 cd mcp
-uv sync
+make install
 ```
+
+This will:
+- Install UV if not present
+- Install Python dependencies
+- Create `.env` from `.env.example`
 
 ### Configuration
 
-Copy `.env.example` to `.env` and configure:
+Edit `.env` to configure your settings:
 
 ```bash
-cp .env.example .env
+# Created automatically by 'make install'
+# Edit to customize settings
+vim .env
 ```
 
 #### Authentication
@@ -91,14 +115,37 @@ JWT_AUDIENCE=urn:gov:cms:mint:dev
 
 Bearer tokens can be passed to individual tool calls when needed.
 
-### Running Locally
+### Running the Server
 
+**Development (on host):**
 ```bash
-cd mcp
-uv run python -m mcpserver.server
+make start      # or 'make dev'
+```
+
+**Docker (MCP server only):**
+```bash
+make docker     # or 'make start-docker'
+```
+
+**Docker with Open WebUI:**
+```bash
+make webui      # or 'make start-openwebui'
 ```
 
 The server will start on `http://localhost:5554/mcp`
+
+### Useful Commands
+
+```bash
+make help              # Show all available commands
+make inspector         # Open MCP Inspector for testing
+make logs              # View server logs
+make status            # Check server status
+make stop              # Stop running containers
+make stop-all          # Stop everything (Docker + host)
+make restart           # Restart the server
+make clean             # Clean up containers
+```
 
 ## Available Tools
 
@@ -110,17 +157,28 @@ The server will start on `http://localhost:5554/mcp`
 
 ### Search Tools
 - `search_model_plans` - Search and filter model plans
-
-## Development
-
-### Running Tests
+Test your server with the MCP Inspector:
 
 ```bash
-uv run pytest
+make inspector
 ```
 
-### Linting
+This opens a web UI for testing MCP tools and resources.
 
+## Docker
+
+The Makefile handles Docker commands, but you can also run manually:
+
+```bash
+# Build
+docker build -f mcp/Dockerfile -t mint-mcp-server .
+
+# Run
+docker run -p 5554:5554 --env-file mcp/.env mint-mcp-server
+
+# Or use docker compose (recommended)
+make docker        # Start just MCP server
+make webui         # Start MCP server + Open WebUI
 ```bash
 uv run ruff check .
 ```

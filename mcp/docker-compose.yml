@@ -1,0 +1,50 @@
+services:
+  # MINT MCP Server
+  mcp-server:
+    build:
+      context: ..
+      dockerfile: mcp/Dockerfile
+    container_name: mint-mcp-server
+    ports:
+      - "5554:5554"
+    environment:
+      - APP_HOST=0.0.0.0
+      - APP_PORT=5554
+      - LOG_LEVEL=INFO
+      - LOCAL_AUTH_ENABLED=True
+      - LOCAL_AUTH_EUA_ID=PSTM
+      - LOCAL_AUTH_JOB_CODES=MINT_ASSESSMENT_NONPROD,MINT_USER_NONPROD
+      # Update this to point to your actual MINT GraphQL endpoint
+      - MINT_GRAPHQL_URL=${MINT_GRAPHQL_URL:-http://host.docker.internal:8085/api/graph/query}
+    networks:
+      - mint-mcp-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Open WebUI
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports:
+      - "3000:8080"
+    volumes:
+      - open-webui:/app/backend/data
+    environment:
+      # Disable authentication for local testing
+      - WEBUI_AUTH=false
+      - ENABLE_SIGNUP=false
+      - ENABLE_ADMIN_EXPORT=true
+    networks:
+      - mint-mcp-network
+    depends_on:
+      - mcp-server
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  mint-mcp-network:
+    driver: bridge
+
+volumes:
+  open-webui:
+    driver: local

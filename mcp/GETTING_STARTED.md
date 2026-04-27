@@ -17,21 +17,24 @@ This POC demonstrates how MINT can expose tools for AI assistants to:
 ### Prerequisites
 
 1. **Python 3.12+** - Check with `python3 --version`
-2. **UV Package Manager** - Will be installed automatically by quickstart script
+2. **UV Package Manager** - Will be installed automatically
 3. **MINT Backend Running** - The MCP server needs to talk to the MINT GraphQL API
+4. **Make** - Standard on macOS/Linux
 
 ### Installation
 
 From the `mint-app/mcp` directory:
 
 ```bash
-./quickstart.sh
+make install
 ```
 
 This will:
 - Install UV if needed
 - Install Python dependencies
 - Create a `.env` file from `.env.example`
+
+> **Note:** For a complete quick reference, see [QUICKSTART.md](QUICKSTART.md)
 
 ### Configuration
 
@@ -61,19 +64,59 @@ LOCAL_AUTH_JOB_CODES=MINT_ASSESSMENT_NONPROD,MINT_USER_NONPROD
 
 ### Running the Server
 
+**Option 1: Run on Host (Development)**
 ```bash
-cd mcp
-./start.sh
+make start
+# or: make dev
 ```
 
-Or manually:
-
+**Option 2: Run in Docker**
 ```bash
-cd mcp
-uv run python -m mcpserver.server
+make docker
 ```
 
-The server will start on `http://localhost:5554/mcp`
+**Option 3: Run with Open WebUI**
+```bash
+make webui
+# Then visit http://localhost:3000
+```
+Quick Connection Test
+
+```bash
+make check
+# or: make test-connection
+```
+
+### MCP Inspector (Recommended)
+
+The easiest way to test your server is with the MCP Inspector:
+
+```bash
+make inspector
+```
+
+This opens a web UI where you can:
+- See all available tools
+- Test tool calls with sample inputs
+- View responses in real-time
+
+### Manual Testing with curl
+
+Test that the server is running:
+
+```bash
+curl http://localhost:5554/mcp
+```
+
+## Useful Commands
+
+```bash
+make help        # Show all available commands
+make logs        # View server logs
+make status      # Check if server is running
+make inspector   # Open MCP Inspector for testing
+make stop        # Stop the server
+```
 
 ## Testing the Server
 

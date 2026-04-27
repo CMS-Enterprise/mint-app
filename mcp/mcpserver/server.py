@@ -3,7 +3,7 @@
 import logging
 import os
 import sys
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional
 
 from fastmcp import FastMCP
 from pydantic import Field
@@ -211,7 +211,7 @@ async def search_model_plans(
         plans = result.get("modelPlanCollection", [])
 
         # Apply status filter if provided
-        if status_filter and isinstance(status_filter, str):
+        if status_filter:
             plans = [p for p in plans if p.get("status") == status_filter.upper()]
 
         # Apply limit
@@ -339,17 +339,41 @@ async def get_model_plan_resource(model_plan_id: str) -> str:
 
 def main() -> None:
     """Run the MCP server."""
-    # Check if we should use STDIO or SSE transport
-    use_stdio = os.getenv("MCP_TRANSPORT", "sse").lower() == "stdio"
+    # Get transport mode from environment
+    # FastMCP supports: "stdio", "http", "sse", "streamable-http"
+    transport_str = os.getenv("MCP_TRANSPORT", "streamable-http").lower()
     
-    if use_stdio:
+    # Normalize underscores to hyphens for consistency
+    transport_str = transport_str.replace("_", "-")
+    
+    # Validate transport type
+    valid_transports: tuple[Literal["stdio", "http", "sse", "streamable-http"], ...] = ("stdio", "http", "sse", "streamable-http")
+    if transport_str not in valid_transports:
+        logger.warning(f"Invalid transport '{transport_str}', defaulting to 'streamable-http'. Valid options: {valid_transports}")
+        transport_str = "streamable-http"
+    
+    # Type is now narrowed to the valid literal types
+    transport = transport_str
+    
+    if transport == "stdio":
         logger.info("Starting MINT MCP Server with STDIO transport")
-        mcp.run(transport="stdio")
+        mcp.run(transport=transport)
     else:
+        # Run with HTTP-based transport (http, sse, or streamable-http)
         logger.info(f"Starting MINT MCP Server on {APP_HOST}:{APP_PORT}")
-        logger.info(f"Connect with: http://localhost:{APP_PORT}/sse")
+        logger.info(f"Transport: {transport}")
+        
+        # Log the appropriate endpoints based on transport
+        if transport == "sse":
+            logger.info(f"SSE endpoint: http://localhost:{APP_PORT}/sse")
+        elif transport == "streamable-http":
+            logger.info(f"Streamable HTTP endpoint: http://localhost:{APP_PORT}")
+            logger.info("Connect clients directly to base URL (no /sse path needed)")
+        elif transport == "http":
+            logger.info(f"HTTP messages endpoint: http://localhost:{APP_PORT}/messages")
+        
         mcp.run(
-            transport="sse",
+            transport=transport,
             host=APP_HOST,
             port=APP_PORT,
         )
