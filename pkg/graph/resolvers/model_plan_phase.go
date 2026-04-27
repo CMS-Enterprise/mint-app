@@ -323,16 +323,6 @@ func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogge
 	if phaseSuggestion == nil {
 		logger.Info("there is no suggested phase suggestion, not sending notification", zap.Any("modelPlanID", modelPlanID))
 		return nil
-
-	}
-
-	if emailService == nil {
-		return nil
-	}
-
-	emailRecipients, err := GetEmailsForModelStatusAlert(ctx, logger, store, modelPlan.ID)
-	if err != nil {
-		return err
 	}
 
 	notificationRecipients, err := GetCollaboratorUUIDsForModelStatusAlert(ctx, logger, store, modelPlan.ID)
@@ -352,6 +342,15 @@ func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogge
 	if err != nil {
 		err = fmt.Errorf("unable to send in-app notification for suggested status for model plan id %s. Err %w", modelPlan.ID, err)
 		logger.Error(err.Error(), zap.Error(err))
+	}
+
+	if emailService == nil {
+		return nil
+	}
+
+	emailRecipients, err := GetEmailsForModelStatusAlert(ctx, logger, store, modelPlan.ID)
+	if err != nil {
+		return err
 	}
 
 	return TrySendEmailForPhaseSuggestion(
