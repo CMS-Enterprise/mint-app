@@ -274,7 +274,7 @@ func ArchiveMTOCommonMilestone(
 }
 
 func formatMTOCommonMilestoneCategory(categoryName string, subCategoryName *string) string {
-	if subCategoryName == nil || strings.TrimSpace(*subCategoryName) == "Uncategorized" {
+	if subCategoryName == nil || strings.TrimSpace(*subCategoryName) == "" || strings.TrimSpace(*subCategoryName) == "Uncategorized" {
 		return categoryName
 	}
 
