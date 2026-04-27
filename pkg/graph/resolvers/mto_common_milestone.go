@@ -82,7 +82,7 @@ func CreateMTOCommonMilestone(
 		}
 
 		emailSubject, emailBody, err := email.MTO.CommonMilestone.Added.GetContent(
-			email.MTOCommonMilestoneCreatedSubjectContent{},
+			email.MTOCommonMilestoneCreatedSubjectContent{MilestoneTitle: createdMilestone.Name},
 			email.MTOCommonMilestoneCreatedBodyContent{
 				UserName:       actorUserName,
 				MilestoneTitle: createdMilestone.Name,
@@ -177,7 +177,7 @@ func UpdateMTOCommonMilestone(
 		}
 
 		emailSubject, emailBody, err := email.MTO.CommonMilestone.Updated.GetContent(
-			email.MTOCommonMilestoneUpdatedSubjectContent{},
+			email.MTOCommonMilestoneUpdatedSubjectContent{MilestoneTitle: updatedMilestone.Name},
 			email.MTOCommonMilestoneUpdatedBodyContent{
 				UserName:               principalAccount.CommonName,
 				PreviousTitle:          previousMilestone.Name,
@@ -241,7 +241,7 @@ func ArchiveMTOCommonMilestone(
 
 	go func() {
 		emailSubject, emailBody, err := email.MTO.CommonMilestone.Removed.GetContent(
-			email.MTOCommonMilestoneRemovedSubjectContent{},
+			email.MTOCommonMilestoneRemovedSubjectContent{MilestoneTitle: archivedMilestone.Name},
 			email.MTOCommonMilestoneRemovedBodyContent{
 				UserName:       actorUserName,
 				MilestoneTitle: archivedMilestone.Name,
@@ -274,7 +274,7 @@ func ArchiveMTOCommonMilestone(
 }
 
 func formatMTOCommonMilestoneCategory(categoryName string, subCategoryName *string) string {
-	if subCategoryName == nil || strings.TrimSpace(*subCategoryName) == "" {
+	if subCategoryName == nil || strings.TrimSpace(*subCategoryName) == "Uncategorized" {
 		return categoryName
 	}
 

@@ -12,7 +12,7 @@ var MTOCommonMilestoneCreatedSubjectTemplate string
 //go:embed templates/mto_common_milestone_created_body.html
 var MTOCommonMilestoneCreatedBodyTemplate string
 
-type MTOCommonMilestoneCreatedSubjectContent struct{}
+type MTOCommonMilestoneCreatedSubjectContent struct{ MilestoneTitle string }
 
 type MTOCommonMilestoneCreatedBodyContent struct {
 	UserName       string
