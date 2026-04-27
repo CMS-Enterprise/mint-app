@@ -61,12 +61,8 @@ func MTOSolutionUpdate(
 			return nil, fmt.Errorf("failed to update solution: %w", err)
 		}
 
-		// MTO/DATA_EXCHANGE task progression: when MTO is started, mark tasks IN_PROGRESS
-		err = updatePlanTaskStatusByKey(tx, logger, updatedSolution.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
-		if err != nil {
-			return nil, err
-		}
-		err = updatePlanTaskStatusByKey(tx, logger, updatedSolution.ModelPlanID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusInProgress, principal, store)
+		// MTO task progression: when MTO is started, mark task IN_PROGRESS
+		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, updatedSolution.ModelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -123,7 +119,20 @@ func MTOSolutionCreateCustom(
 		return nil, err
 	}
 
-	return storage.MTOSolutionCreate(store, logger, mtoSolution)
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOSolution, error) {
+		createdSolution, err := storage.MTOSolutionCreate(tx, logger, mtoSolution)
+		if err != nil {
+			return nil, err
+		}
+
+		// MTO task progression: creating solution data counts as starting the MTO
+		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		if err != nil {
+			return nil, err
+		}
+
+		return createdSolution, nil
+	})
 }
 
 func MTOSolutionCreateCommon(
@@ -172,6 +181,12 @@ func MTOSolutionCreateCommon(
 			if err != nil {
 				return nil, fmt.Errorf("failed to link milestones to solution: %w", err)
 			}
+		}
+
+		// MTO task progression: creating solution data counts as starting the MTO
+		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		if err != nil {
+			return nil, err
 		}
 
 		return solution, nil
@@ -283,6 +298,11 @@ func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authen
 		// Finally, delete the solution
 		if err := storage.MTOSolutionDelete(tx, principalAccount.ID, logger, id); err != nil {
 			return fmt.Errorf("unable to delete mto solution. Err %w", err)
+		}
+
+		// MTO task regression: recalculate task after deleting MTO data.
+		if err := UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+			return fmt.Errorf("unable to recalculate MTO task after deleting solution. Err %w", err)
 		}
 		return nil
 	})

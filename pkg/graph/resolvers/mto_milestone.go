@@ -41,7 +41,21 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOMilestoneCreate(store, logger, milestone)
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOMilestone, error) {
+		createdMilestone, err := storage.MTOMilestoneCreate(tx, logger, milestone)
+		if err != nil {
+			return nil, err
+		}
+
+		// MTO task progression: creating milestone data counts as starting the MTO
+		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		if err != nil {
+			return nil, err
+		}
+
+		return createdMilestone, nil
+	})
 }
 
 // MTOMilestoneCreateCommon uses the provided information to create a new Custom MTO Milestone
@@ -124,6 +138,12 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		)
 		if err != nil {
 			logger.Error("failed to create solution when creating common milestone", zap.Error(err))
+			return nil, err
+		}
+
+		// MTO task progression: creating milestone data counts as starting the MTO
+		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		if err != nil {
 			return nil, err
 		}
 
@@ -215,6 +235,12 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 		return nil, err
 	}
 
+	// MTO task progression: creating milestone data counts as starting the MTO
+	err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+	if err != nil {
+		return nil, err
+	}
+
 	return createdMilestone, err
 }
 
@@ -280,12 +306,8 @@ func MTOMilestoneUpdate(
 			return nil, updateErr
 		}
 
-		// MTO/DATA_EXCHANGE task progression: when MTO is started, mark tasks IN_PROGRESS
-		err := updatePlanTaskStatusByKey(tx, logger, updated.ModelPlanID, models.PlanTaskKeyMto, models.PlanTaskStatusInProgress, principal, store)
-		if err != nil {
-			return nil, err
-		}
-		err = updatePlanTaskStatusByKey(tx, logger, updated.ModelPlanID, models.PlanTaskKeyDataExchange, models.PlanTaskStatusInProgress, principal, store)
+		// MTO task progression: when MTO is started, mark task IN_PROGRESS
+		err := UpdatePlanTaskStatusOnMTOStarted(tx, logger, updated.ModelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -363,6 +385,11 @@ func MTOMilestoneDelete(ctx context.Context, logger *zap.Logger, principal authe
 		// Finally, delete the milestone
 		if err := storage.MTOMilestoneDelete(tx, principalAccount.ID, logger, id); err != nil {
 			return fmt.Errorf("unable to delete mto milestone. Err %w", err)
+		}
+
+		// MTO task regression: recalculate task after deleting MTO data.
+		if err := UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+			return fmt.Errorf("unable to recalculate MTO task after deleting milestone. Err %w", err)
 		}
 		return nil
 	})
@@ -472,6 +499,13 @@ func MTOMilestoneUpdateLinkedSolutions(
 			return err
 		}
 		retSolutions = currentLinkedSolutions
+
+		// MTO task progression: if linking creates MTO data, mark task IN_PROGRESS
+		updErr := UpdatePlanTaskStatusOnMTOStarted(tx, logger, milestone.ModelPlanID, principal, store)
+		if updErr != nil {
+			return updErr
+		}
+
 		// Future Enhancement, return the solutions from in the transaction instead of setting the variable
 		return nil
 

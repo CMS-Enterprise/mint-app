@@ -51,6 +51,15 @@ func updatePlanTaskStatusByKey(
 		return fmt.Errorf("plan task not found for modelPlanID %s and key %s", modelPlanID, key)
 	}
 
+	// Ensure completion metadata matches the target status before treating an update as a no-op.
+	isCompletionMetadataConsistent := (newStatus == models.PlanTaskStatusComplete && task.CompletedBy != nil && task.CompletedDts != nil) ||
+		(newStatus != models.PlanTaskStatusComplete && task.CompletedBy == nil && task.CompletedDts == nil)
+
+	// Skip writes when status + completion metadata are already correct.
+	if task.Status == newStatus && isCompletionMetadataConsistent {
+		return nil
+	}
+
 	task.Status = newStatus
 
 	if newStatus == models.PlanTaskStatusComplete {
