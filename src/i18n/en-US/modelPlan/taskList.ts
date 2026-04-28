@@ -160,7 +160,8 @@ const modelPlanTaskList = {
     update: 'Update',
     updateStatuses: 'Update statuses'
   },
-  lastUpdated: 'Last updated:',
+  mostRecentEdit: 'Most recent edit on {{-date}}',
+  mostRecentEditBy: 'Most recent edit on {{-date}} by ',
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',
   locked:

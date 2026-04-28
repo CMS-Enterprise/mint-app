@@ -31,6 +31,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
+import { Avatar } from 'components/Avatar';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Divider from 'components/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
@@ -326,19 +327,17 @@ const TaskList = () => {
                   className="margin-top-6 margin-bottom-0 padding-left-0"
                 >
                   {Object.keys(taskListSections).map((key: string) => {
+                    const lastEditI18Key =
+                      taskListSections[key].__typename === 'PrepareForClearance'
+                        ? 'mostRecentEdit'
+                        : 'mostRecentEditBy';
+
                     return (
                       <Fragment key={key}>
                         <TaskListItem
                           key={key}
                           testId={`task-list-intake-form-${key}`}
                           heading={t(`numberedList.${key}.heading`)}
-                          lastUpdated={
-                            taskListSections[key].modifiedDts &&
-                            formatDateLocal(
-                              taskListSections[key].modifiedDts!,
-                              'MM/dd/yyyy'
-                            )
-                          }
                           status={taskListSections[key].status}
                         >
                           <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
@@ -348,6 +347,32 @@ const TaskList = () => {
                               </p>
                             </TaskListDescription>
                           </div>
+
+                          {taskListSections[key].modifiedDts && (
+                            <div className="display-inline tablet:display-flex flex-align-center margin-top-1 margin-bottom-2">
+                              <span className="text-base margin-right-1">
+                                {t(lastEditI18Key, {
+                                  date: formatDateLocal(
+                                    taskListSections[key].modifiedDts!,
+                                    'MM/dd/yyyy'
+                                  )
+                                })}
+                              </span>
+
+                              {taskListSections[key].__typename !==
+                                'PrepareForClearance' &&
+                                taskListSections[key].modifiedByUserAccount && (
+                                  <Avatar
+                                    className="text-base-darkest"
+                                    user={
+                                      taskListSections[key]
+                                        .modifiedByUserAccount.commonName
+                                    }
+                                  />
+                                )}
+                            </div>
+                          )}
+
                           <TaskListButton
                             ariaLabel={t(`numberedList.${key}.heading`)}
                             path={t(`numberedList.${key}.path`)}

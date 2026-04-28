@@ -101,18 +101,14 @@ type TaskListItemProps = {
   heading: string;
   status: TaskStatus | PrepareForClearanceStatus;
   testId: string;
-  lastUpdated?: string | null;
 };
 
 const TaskListItem = ({
   children,
   heading,
   status,
-  testId,
-  lastUpdated
+  testId
 }: TaskListItemProps) => {
-  const { t } = useTranslation('modelPlanTaskList');
-
   return (
     <li className="display-flex padding-bottom-4" data-testid={testId}>
       <div className="width-full">
@@ -120,10 +116,6 @@ const TaskListItem = ({
           <h3 className="margin-top-0 margin-bottom-1">{heading}</h3>
           <span className="display-flex flex-column flex-align-end">
             <TaskListStatusTag status={status} />
-            <div className="model-plan-task-list__last-updated-status line-height-body-4 text-base">
-              {lastUpdated && <p className="margin-y-0">{t('lastUpdated')}</p>}
-              <p className="margin-y-0">{lastUpdated}</p>
-            </div>
           </span>
         </div>
         {children}
