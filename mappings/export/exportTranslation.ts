@@ -7,6 +7,7 @@ import * as fs from 'fs';
 
 import keyContact from '../../src/i18n/en-US/helpAndKnowledge/keyContact';
 import keyContactCategory from '../../src/i18n/en-US/helpAndKnowledge/keyContactCategory';
+import mtoCommonMilestone from '../../src/i18n/en-US/helpAndKnowledge/mtoCommonMilestone';
 import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
 import collaborators from '../../src/i18n/en-US/modelPlan/collaborators';
@@ -68,6 +69,7 @@ export const translationSections = {
   mto_milestone: mtoMilestone,
   mto_solution: mtoSolution,
   mto_milestone_solution_link: mtoMilestoneSolutionLink,
+  mto_common_milestone: mtoCommonMilestone,
   mto_common_solution_contact: mtoCommonSolutionContact,
   mto_common_solution_contractor: mtoCommonSolutionContractor,
   mto_category: mtoCategory,

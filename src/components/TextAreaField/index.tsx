@@ -1,4 +1,5 @@
 import React from 'react';
+import { RefCallBack } from 'react-hook-form';
 import classnames from 'classnames';
 
 import FieldErrorMsg from 'components/FieldErrorMsg';
@@ -14,6 +15,7 @@ type TextAreaFieldProps = {
   onBlur: () => void;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   value: string;
+  inputRef?: RefCallBack;
 } & React.ComponentProps<'textarea'>;
 
 const TextAreaField = ({
@@ -27,6 +29,7 @@ const TextAreaField = ({
   onBlur,
   onChange,
   value,
+  inputRef,
   ...props
 }: TextAreaFieldProps) => {
   const textAreaClasses = classnames(className, 'usa-textarea', {
@@ -57,6 +60,7 @@ const TextAreaField = ({
         value={value}
         maxLength={maxLength}
         aria-labelledby={`label-${id} hint-${id}`}
+        ref={inputRef}
         {...props}
       />
     </>

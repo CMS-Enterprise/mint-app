@@ -1,0 +1,80 @@
+import React from 'react';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
+import { render } from '@testing-library/react';
+import { MtoCommonSolutionKey, MtoFacilitator } from 'gql/generated/graphql';
+import { suggestedMilestonesMock } from 'tests/mock/mto';
+
+import MessageProvider from 'contexts/MessageContext';
+
+import { MilestoneCardType } from '../MilestoneCardGroup';
+
+import MilestoneCard from './index';
+
+describe('MilestoneCard Component', () => {
+  const mockMilestone: MilestoneCardType = {
+    __typename: 'MTOCommonMilestone',
+    id: '123456',
+    name: 'Test Milestone',
+    description: 'Description 1',
+    categoryName: 'Test Category',
+    subCategoryName: 'Test SubCategory',
+    isArchived: false,
+    isAdded: false,
+    suggested: {
+      __typename: 'MilestoneSuggestionReasons' as const,
+      isSuggested: true,
+      count: 0,
+      reasons: []
+    },
+    facilitatedByRole: [MtoFacilitator.APPLICATION_SUPPORT_CONTRACTOR],
+    commonSolutions: [
+      {
+        __typename: 'MTOCommonSolution',
+        key: MtoCommonSolutionKey.ACO_OS
+      }
+    ]
+  };
+
+  it('renders correctly and matches snapshot', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
+          element: (
+            <MessageProvider>
+              <MilestoneCard
+                milestone={mockMilestone}
+                setIsSidepanelOpen={() => null}
+                showFilters={false}
+              />
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/milestone-library'
+        ]
+      }
+    );
+
+    const { asFragment, getByText } = render(
+      <MockedProvider mocks={suggestedMilestonesMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    // Check if the component renders the milestone name
+    expect(getByText('Test Milestone')).toBeInTheDocument();
+    // Check if the component renders the category and subcategory
+    expect(
+      getByText('Category: Test Category (Test SubCategory)')
+    ).toBeInTheDocument();
+    // Check if the component renders the suggested tag
+    expect(getByText('Suggested')).toBeInTheDocument();
+
+    // Match the snapshot
+    expect(asFragment()).toMatchSnapshot();
+  });
+});

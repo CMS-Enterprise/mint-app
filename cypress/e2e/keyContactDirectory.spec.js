@@ -1,7 +1,7 @@
 describe('Key Contact Directory', () => {
   beforeEach(() => {
     cy.localLogin({ name: 'MINT', role: 'MINT_ASSESSMENT_NONPROD' });
-    cy.visit('/help-and-knowledge?page=1');
+    cy.visit('/help-and-knowledge');
     cy.once('uncaught:exception', () => false);
     cy.contains('Contact directory').click();
   });

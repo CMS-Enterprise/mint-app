@@ -1,5 +1,5 @@
 import { MockedResponse } from '@apollo/client/testing';
-import { KeyContactCategoryType } from 'features/HelpAndKnowledge/_components/KeyContactDirectory/_components/CategoryModal';
+import { KeyContactCategoryType } from 'features/HelpAndKnowledge/KeyContactDirectory/_components/CategoryModal';
 import { QuestionnairesType } from 'features/ModelPlan/CollaborationArea/Cards/AdditionalQuestionnairesCard';
 import {
   DataExchangeApproachStatus,
@@ -18,6 +18,9 @@ import {
   GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   GetCollaborationAreaQueryVariables,
+  GetCommonSolutionsAndCategoriesDocument,
+  GetCommonSolutionsAndCategoriesQuery,
+  GetCommonSolutionsAndCategoriesQueryVariables,
   GetEchimpCrandTdlDocument,
   GetEchimpCrandTdlQuery,
   GetEchimpCrandTdlQueryVariables,
@@ -852,6 +855,35 @@ export const keyContactsMock: MockedResponse<
       data: {
         __typename: 'Query',
         keyContacts: keyContactsMockData
+      }
+    }
+  }
+];
+
+export const commonSolutionsAndCategoriesMock: MockedResponse<
+  GetCommonSolutionsAndCategoriesQuery,
+  GetCommonSolutionsAndCategoriesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetCommonSolutionsAndCategoriesDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        mtoCommonSolutions: [],
+        commonCategories: [
+          {
+            __typename: 'CommonCategory',
+            name: 'Category 1',
+            subCategories: ['Subcategory 1', 'Subcategory 2']
+          },
+          {
+            __typename: 'CommonCategory',
+            name: 'Category 2',
+            subCategories: []
+          }
+        ]
       }
     }
   }

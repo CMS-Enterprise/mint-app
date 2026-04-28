@@ -86,6 +86,38 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 }
 
 func removeNonSystemAccounts(s *Store) error {
+	scriptCommonMilestone := `UPDATE mto_common_milestone
+               SET
+                   created_by = (
+                       SELECT id
+                       FROM user_account
+                       WHERE username = 'MINT_SYSTEM'
+                       LIMIT 1
+                   ),
+                   modified_by = CASE
+                       WHEN modified_by IN (
+                           SELECT id
+                           FROM user_account
+                           WHERE username NOT IN %[1]s
+                       ) THEN (
+                           SELECT id
+                           FROM user_account
+                           WHERE username = 'MINT_SYSTEM'
+                           LIMIT 1
+                       )
+                       ELSE modified_by
+                   END
+               WHERE
+                   created_by IN (
+                       SELECT id
+                       FROM user_account
+                       WHERE username NOT IN %[1]s
+                   )
+                   OR modified_by IN (
+                       SELECT id
+                       FROM user_account
+                       WHERE username NOT IN %[1]s
+                   );`
 
 	scriptPreferences := `DELETE FROM user_notification_preferences
                WHERE user_id IN (
@@ -97,9 +129,14 @@ func removeNonSystemAccounts(s *Store) error {
 	scriptUser := `DELETE FROM user_account
 					WHERE username NOT IN %s;`
 
-	systemAccounts := "( 'UNKNOWN_USER','MINT_SYSTEM')"
+	systemAccounts := "('UNKNOWN_USER','MINT_SYSTEM')"
 
-	_, err := s.db.Exec(fmt.Sprintf(scriptPreferences, systemAccounts))
+	_, err := s.db.Exec(fmt.Sprintf(scriptCommonMilestone, systemAccounts))
+	if err != nil {
+		return err
+	}
+
+	_, err = s.db.Exec(fmt.Sprintf(scriptPreferences, systemAccounts))
 	if err != nil {
 		return err
 	}

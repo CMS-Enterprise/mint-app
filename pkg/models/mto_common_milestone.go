@@ -2,16 +2,26 @@ package models
 
 import "github.com/google/uuid"
 
-type MTOCommonMilestone struct {
-	ID                uuid.UUID                 `json:"id" db:"id"`
-	Name              string                    `json:"name" db:"name"`
-	Description       string                    `json:"description" db:"description"`
-	CategoryName      string                    `json:"categoryName" db:"category_name"`
-	SubCategoryName   *string                   `json:"subCategoryName" db:"sub_category_name"`
-	FacilitatedByRole EnumArray[MTOFacilitator] `json:"facilitatedByRole" db:"facilitated_by_role"`
+// CommonCategory represents a deduplicated top-level category
+// and its deduplicated, alphabetized subcategory names.
+type CommonCategory struct {
+	Name          string   `json:"name"`
+	SubCategories []string `json:"subCategories"`
+}
 
-	// Section specifies the Task List Section that corresponds to suggesting this common milestone
-	Section TaskListSection `json:"section" db:"section"`
+type MTOCommonMilestone struct {
+	baseStruct
+
+	Name               string                    `json:"name" db:"name"`
+	Description        string                    `json:"description" db:"description"`
+	CategoryName       string                    `json:"categoryName" db:"category_name"`
+	SubCategoryName    *string                   `json:"subCategoryName" db:"sub_category_name"`
+	FacilitatedByRole  EnumArray[MTOFacilitator] `json:"facilitatedByRole" db:"facilitated_by_role"`
+	FacilitatedByOther *string                   `json:"facilitatedByOther" db:"facilitated_by_other"`
+
+	// Section specifies the Task List Section that corresponds to suggesting this common milestone.
+	// It is nil for manually-created milestones that are not auto-suggested.
+	Section *TaskListSection `json:"section" db:"section"`
 	// These fields facilitate queries but are not actual columns on the mto_common_milestone table.
 	// They are populated via JOINs when querying in the context of a model plan.
 	ModelPlanID *uuid.UUID `json:"modelPlanID" db:"model_plan_id"`

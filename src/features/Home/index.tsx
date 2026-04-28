@@ -30,6 +30,7 @@ import useFavoritePlan from 'hooks/useFavoritePlan';
 import useMessage from 'hooks/useMessage';
 import { isAssessment, isMAC } from 'utils/user';
 
+import AdminActions from './components/AdminActions';
 import ModelsApproachingClearance from './components/ModelsApproachingClearance';
 import ModelsByGroup from './components/ModelsByGroup';
 import ModelsBySolutions from './components/ModelsBySolution';
@@ -304,9 +305,8 @@ const Home = () => {
                   </Card>
                 </Grid>
               </Grid>
-
               {!isMAC(userGroups) && (
-                <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3">
+                <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-bottom-6">
                   <p className="margin-0 margin-bottom-1">
                     {t('newModelSummaryBox.copy')}
                   </p>
@@ -320,6 +320,8 @@ const Home = () => {
                   </UswdsReactLink>
                 </SummaryBox>
               )}
+
+              {isAssessment(userGroups, flags) && <AdminActions />}
 
               {!loading &&
                 data?.userViewCustomization.viewCustomization.length === 0 && (
@@ -336,7 +338,6 @@ const Home = () => {
                     </div>
                   </Alert>
                 )}
-
               {loading ? (
                 <PageLoading />
               ) : (
@@ -357,7 +358,6 @@ const Home = () => {
                   }
                 )
               )}
-
               <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-6">
                 <p className="margin-0 margin-bottom-1">
                   {t('allModels.copy')}
