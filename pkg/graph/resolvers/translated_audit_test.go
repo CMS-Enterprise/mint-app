@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
@@ -303,4 +304,80 @@ func (suite *ResolverSuite) dangerousTranslateAllQueuedTranslatedAudits() []*mod
 func (suite *ResolverSuite) dangerousQueueAndTranslateAllAudits() []*models.TranslatedAuditWithTranslatedFields {
 	suite.dangerousAuditTranslationQueueAllItems()
 	return suite.dangerousTranslateAllQueuedTranslatedAudits()
+}
+
+// TestTranslateAuditMilestoneSolutionLinkDeletedWhenMilestoneDeleted verifies that translating the audit
+// for a cascade-deleted mto_milestone_solution_link succeeds when its parent milestone is deleted.
+// Regression test for MINT-3415: the link's audit record must resolve model_plan_id via the
+// secondary_foreign_key (solution_id → mto_solution) when the primary path (milestone_id → mto_milestone)
+// is unavailable because the milestone has already been deleted.
+func (suite *ResolverSuite) TestTranslateAuditMilestoneSolutionLinkDeletedWhenMilestoneDeleted() {
+	plan := suite.createModelPlan("plan for audit translation - milestone deleted with linked solution")
+	commonMilestone := suite.getMTOCommonMilestoneByName("Acquire an application support contractor")
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{
+		models.MTOCSKCcw,
+	})
+
+	// Clear the audit queue so subsequent translations only include the deletion events.
+	suite.dangerousQueueAndTranslateAllAudits()
+
+	links, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, milestone.ID)
+	suite.NoError(err)
+	suite.Len(links, 1, "expected 1 milestone-solution link before deletion")
+
+	// Deleting the milestone cascade-deletes the link, producing two audit records:
+	// one for mto_milestone (DELETE) and one for mto_milestone_solution_link (DELETE).
+	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, milestone.ID)
+	suite.NoError(err)
+
+	// dangerousTranslateAllQueuedTranslatedAudits calls suite.NoError internally, so any
+	// FK constraint violation ("translated_audit_model_plan_id_fkey") will fail the test here.
+	translatedAudits := suite.dangerousQueueAndTranslateAllAudits()
+
+	suite.GreaterOrEqual(len(translatedAudits), 2, "expected translated audits for both the milestone and the cascade-deleted link")
+
+	for _, ta := range translatedAudits {
+		suite.NotEqual(uuid.Nil, ta.ModelPlanID,
+			"translated audit for table %s must have a valid model_plan_id, not uuid nil", ta.TableName)
+		suite.Equal(plan.ID, ta.ModelPlanID,
+			"translated audit for table %s must reference the correct model plan", ta.TableName)
+	}
+}
+
+// TestTranslateAuditMilestoneSolutionLinkDeletedWhenSolutionDeleted verifies that translating the audit
+// for a cascade-deleted mto_milestone_solution_link succeeds when the linked solution is deleted.
+// In this case the primary path (milestone_id → mto_milestone) is still available, so the translation
+// should succeed without needing the secondary foreign key fallback.
+func (suite *ResolverSuite) TestTranslateAuditMilestoneSolutionLinkDeletedWhenSolutionDeleted() {
+	plan := suite.createModelPlan("plan for audit translation - solution deleted with linked milestone")
+	commonMilestone := suite.getMTOCommonMilestoneByName("Acquire an application support contractor")
+	milestone := suite.createMilestoneCommon(plan.ID, commonMilestone.ID, []models.MTOCommonSolutionKey{
+		models.MTOCSKCcw,
+	})
+
+	suite.dangerousQueueAndTranslateAllAudits()
+
+	solutions, err := MTOSolutionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.Len(solutions, 1, "expected 1 solution before deletion")
+
+	links, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(suite.testConfigs.Store, suite.testConfigs.Logger, milestone.ID)
+	suite.NoError(err)
+	suite.Len(links, 1, "expected 1 milestone-solution link before deletion")
+
+	// Deleting the solution cascade-deletes the link; the milestone still exists so the primary
+	// foreign key path (milestone_id → mto_milestone → model_plan_id) should resolve correctly.
+	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, solutions[0].ID)
+	suite.NoError(err)
+
+	translatedAudits := suite.dangerousQueueAndTranslateAllAudits()
+
+	suite.GreaterOrEqual(len(translatedAudits), 2, "expected translated audits for both the solution and the cascade-deleted link")
+
+	for _, ta := range translatedAudits {
+		suite.NotEqual(uuid.Nil, ta.ModelPlanID,
+			"translated audit for table %s must have a valid model_plan_id, not uuid nil", ta.TableName)
+		suite.Equal(plan.ID, ta.ModelPlanID,
+			"translated audit for table %s must reference the correct model plan", ta.TableName)
+	}
 }
