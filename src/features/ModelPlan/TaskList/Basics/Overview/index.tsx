@@ -305,11 +305,13 @@ const Overview = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() =>
+                        onClick={async () => {
+                          await clearApplicationDatesIfMandatory(values);
+
                           navigate(
                             `/models/${modelID}/collaboration-area/model-plan/basics`
-                          )
-                        }
+                          );
+                        }}
                       >
                         {miscellaneousT('back')}
                       </Button>
@@ -326,11 +328,13 @@ const Overview = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() =>
+                      onClick={async () => {
+                        await clearApplicationDatesIfMandatory(values);
+
                         navigate(
                           `/models/${modelID}/collaboration-area/model-plan`
-                        )
-                      }
+                        );
+                      }}
                     >
                       <Icon.ArrowBack
                         className="margin-right-1"
