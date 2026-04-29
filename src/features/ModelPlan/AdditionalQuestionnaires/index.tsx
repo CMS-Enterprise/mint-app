@@ -11,6 +11,7 @@ import {
 } from 'gql/generated/graphql';
 import { AppState } from 'stores/reducers/rootReducer';
 
+import { Avatar } from 'components/Avatar';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -152,15 +153,30 @@ const AdditionalQuestionnaires = () => {
                       description={additionalQuestionnairesT(
                         `questionnairesList.${key}.description`
                       )}
-                      lastUpdated={
-                        questionnaireSections[key].modifiedDts &&
-                        formatDateLocal(
-                          questionnaireSections[key].modifiedDts!,
-                          'MM/dd/yyyy'
-                        )
-                      }
                       status={getQuestionnaireStatus(key)}
                     >
+                      {questionnaireSections[key].modifiedDts &&
+                        questionnaireSections[key].modifiedByUserAccount && (
+                          <div className="display-inline tablet:display-flex flex-align-center margin-top-1 margin-bottom-2">
+                            <span className="text-base margin-right-1">
+                              {additionalQuestionnairesT('mostRecentEdit', {
+                                date: formatDateLocal(
+                                  questionnaireSections[key].modifiedDts,
+                                  'MM/dd/yyyy'
+                                )
+                              })}
+                            </span>
+
+                            <Avatar
+                              className="text-base-darkest"
+                              user={
+                                questionnaireSections[key].modifiedByUserAccount
+                                  .commonName
+                              }
+                            />
+                          </div>
+                        )}
+
                       <QuestionnaireListButton
                         ariaLabel={additionalQuestionnairesT(
                           `questionnairesList.${key}.heading`
