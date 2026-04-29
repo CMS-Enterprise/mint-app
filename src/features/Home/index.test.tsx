@@ -26,6 +26,7 @@ import configureMockStore from 'redux-mock-store';
 import { modelPlanCollectionMock } from 'tests/mock/general';
 import VerboseMockedProvider from 'tests/MockedProvider';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import MessageProvider from 'contexts/MessageContext';
 
 import HomeNew from '.';
@@ -137,7 +138,14 @@ describe('The home page', () => {
     groups: []
   };
 
+  const mockAuthAssessment = {
+    isUserSet: true,
+    groups: [ASSESSMENT],
+    euaId: 'ABCD'
+  };
+
   const store = mockStore({ auth: mockAuthReducer });
+  const store2 = mockStore({ auth: mockAuthAssessment });
 
   it('renders empty message for no settings selected', async () => {
     const router = createMemoryRouter(
@@ -227,6 +235,100 @@ describe('The home page', () => {
     expect(settingsHeaders.length).toEqual(2);
     expect(settingsHeaders[0].textContent).toEqual('All models');
     expect(settingsHeaders[1].textContent).toEqual('My models');
+  });
+
+  it('renders admin actions for assessment users', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <Provider store={store2}>
+              <MessageProvider>
+                <HomeNew />
+              </MessageProvider>
+            </Provider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByText, getByTestId, getByRole } = render(
+      <VerboseMockedProvider
+        mocks={[
+          ...settingsMock,
+          ...favoritesMock,
+          ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
+          ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
+        ]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
+    );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
+    expect(getByText('Admin actions')).toBeInTheDocument();
+
+    const commonMilestoneLink = getByRole('link', {
+      name: /View common milestones/
+    });
+    expect(commonMilestoneLink).toHaveAttribute(
+      'href',
+      '/help-and-knowledge/milestone-library'
+    );
+
+    const keyContactLink = getByRole('link', {
+      name: /View SME contact directory/
+    });
+    expect(keyContactLink).toHaveAttribute(
+      'href',
+      '/help-and-knowledge#contact-directory'
+    );
+  });
+
+  it('does not render admin actions for non-assessment users', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <Provider store={store}>
+              <MessageProvider>
+                <HomeNew />
+              </MessageProvider>
+            </Provider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByTestId, queryByText } = render(
+      <VerboseMockedProvider
+        mocks={[
+          ...settingsMock,
+          ...favoritesMock,
+          ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
+          ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
+        ]}
+        addTypename={false}
+      >
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
+    );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
+    expect(queryByText('Admin actions')).not.toBeInTheDocument();
+    expect(queryByText(/View common milestones/i)).not.toBeInTheDocument();
+    expect(queryByText(/View SME contact directory/i)).not.toBeInTheDocument();
   });
 
   it('matches setting snapshot', async () => {

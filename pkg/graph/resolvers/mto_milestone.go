@@ -98,6 +98,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			&finalCategoryID,
 		)
 		milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
+		milestone.FacilitatedByOther = commonMilestone.FacilitatedByOther
 
 		if err := BaseStructPreCreate(logger, milestone, principal, store, true); err != nil {
 			return nil, err
@@ -189,6 +190,7 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 		&finalCategoryID,
 	)
 	milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
+	milestone.FacilitatedByOther = commonMilestone.FacilitatedByOther
 
 	createdMilestone, err := storage.MTOMilestoneCreateAllowConflicts(tx, logger, milestone)
 	if err != nil {

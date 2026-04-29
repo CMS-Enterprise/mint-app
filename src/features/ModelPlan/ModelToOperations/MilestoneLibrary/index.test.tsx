@@ -1,18 +1,43 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 import { commonMilestonesMock, suggestedMilestonesMock } from 'tests/mock/mto';
+
+import { ASSESSMENT } from 'constants/jobCodes';
+import { MessageProvider } from 'hooks/useMessage';
 
 import MilestoneLibrary from '.';
 
-describe('MilestoneCardGroup Component', () => {
+const mockAuthAssessment = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockAuthNotAssessment = {
+  isUserSet: true,
+  groups: [],
+  euaId: 'EFGH'
+};
+
+const mockStore = configureMockStore();
+const store1 = mockStore({ auth: mockAuthAssessment });
+const store2 = mockStore({ auth: mockAuthNotAssessment });
+
+describe('Milestone library Component', () => {
   it('renders correctly and matches snapshot', () => {
     const router = createMemoryRouter(
       [
         {
           path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
-          element: <MilestoneLibrary />
+          element: (
+            <MessageProvider>
+              <MilestoneLibrary />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -27,7 +52,9 @@ describe('MilestoneCardGroup Component', () => {
         mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
         addTypename={false}
       >
-        <RouterProvider router={router} />
+        <Provider store={store2}>
+          <RouterProvider router={router} />
+        </Provider>
       </MockedProvider>
     );
 
@@ -40,7 +67,11 @@ describe('MilestoneCardGroup Component', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
-          element: <MilestoneLibrary />
+          element: (
+            <MessageProvider>
+              <MilestoneLibrary />
+            </MessageProvider>
+          )
         }
       ],
       {
@@ -55,12 +86,47 @@ describe('MilestoneCardGroup Component', () => {
         mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
         addTypename={false}
       >
-        <RouterProvider router={router} />
+        <Provider store={store2}>
+          <RouterProvider router={router} />
+        </Provider>
       </MockedProvider>
     );
 
     expect(
       screen.queryByRole('button', { name: /filter/i })
     ).not.toBeInTheDocument();
+  });
+
+  it('does not render the admin section in the MTO milestone library', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-to-operations/milestone-library',
+          element: (
+            <MessageProvider>
+              <MilestoneLibrary />
+            </MessageProvider>
+          )
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/milestone-library'
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider
+        mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
+        addTypename={false}
+      >
+        <Provider store={store1}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
+    );
+
+    expect(screen.queryByText(/Admin actions/i)).not.toBeInTheDocument();
   });
 });

@@ -2642,6 +2642,7 @@ const helpAndKnowledge = {
     description:
       'The milestones in this library are common milestones that MINT suggests to teams, allowing them to select from a set of often-used milestones to more quickly fill in the model-to-operations matrix (MTO) for their model. Each common milestone has a common category, description, list of roles often responsible for completing the work, and a set of solutions and/or IT systems often used to implement the work for the milestone.',
     returnToHkc: 'Return to Help and Knowledge Center',
+    returnToHome: 'Return to MINT home',
     learnAboutThisMilestone: 'Learn about this milestone',
     filters: {
       primaryCategory: 'primary category',
@@ -2652,6 +2653,15 @@ const helpAndKnowledge = {
     noResults: {
       heading: 'There are no results that match your filters.',
       body: 'Try changing or clearing your filters to see more milestones.'
+    },
+    adminActions: {
+      title: 'Admin actions',
+      manageCommonMilestones: {
+        header: 'Manage common milestones',
+        description:
+          'Add, edit, and remove milestones from the common milestone library. This will apply to all MINT users and will affect the common milestones that model teams and IT Leads have access to when completing their MTO.',
+        cta: 'Add a milestone'
+      }
     }
   },
   operationalSolutions: 'Operational solutions',

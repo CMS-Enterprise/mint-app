@@ -1,4 +1,12 @@
 """
+CommonCategory represents a common category and its subcategories
+"""
+type CommonCategory {
+  name: String!
+  subCategories: [String!]!
+}
+
+"""
 MTOCommonMilestone represents a Milestone from the "Common Milestones" library
 """
 type MTOCommonMilestone {
@@ -9,6 +17,7 @@ type MTOCommonMilestone {
   categoryName: String!
   subCategoryName: String
   facilitatedByRole: [MTOFacilitator!]!
+  facilitatedByOther: String
   """
   Specifies the Task List Section that corresponds to suggesting this common milestone
   """
@@ -30,10 +39,45 @@ type MTOCommonMilestone {
   commonSolutions: [MTOCommonSolution!]!
 }
 
+input MTOCommonMilestoneChanges @goModel(model: "map[string]interface{}") {
+  name: String
+  description: String
+  categoryName: String
+  subCategoryName: String
+  facilitatedByRole: [MTOFacilitator!]
+  facilitatedByOther: String
+}
+
 extend type Query {
   """
   Fetch all Common Milestones available in the library
   """
   mtoCommonMilestones: [MTOCommonMilestone!]!
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  """
+  Get a deduplicated, alphabetized category/subcategory list sourced from template categories
+  """
+  commonCategories: [CommonCategory!]! @hasRole(role: MINT_ASSESSMENT)
+}
+
+extend type Mutation {
+  createMTOCommonMilestone(
+    name: String!
+    description: String!
+    categoryName: String!
+    subCategoryName: String
+    facilitatedByRole: [MTOFacilitator!]!
+    facilitatedByOther: String
+    commonSolutions: [MTOCommonSolutionKey!]!
+  ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
+
+  updateMTOCommonMilestone(
+    id: UUID!
+    changes: MTOCommonMilestoneChanges!
+    commonSolutions: [MTOCommonSolutionKey!]
+  ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
+
+  archiveMTOCommonMilestone(id: UUID!): MTOCommonMilestone!
+    @hasRole(role: MINT_ASSESSMENT)
 }

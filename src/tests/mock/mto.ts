@@ -4,6 +4,9 @@ import {
   GetModelToOperationsMatrixDocument,
   GetModelToOperationsMatrixQuery,
   GetModelToOperationsMatrixQueryVariables,
+  GetMtoAllCommonMilestonesDocument,
+  GetMtoAllCommonMilestonesQuery,
+  GetMtoAllCommonMilestonesQueryVariables,
   GetMtoAllMilestonesDocument,
   GetMtoAllMilestonesQuery,
   GetMtoAllMilestonesQueryVariables,
@@ -346,6 +349,53 @@ export const commonSolutionsMock: MockedResponse<
             ]
           }
         }
+      }
+    }
+  }
+];
+
+type CommonMilestoneType =
+  GetMtoAllCommonMilestonesQuery['mtoCommonMilestones'][0];
+
+export const commonMilestonesMockData: CommonMilestoneType[] = [
+  {
+    __typename: 'MTOCommonMilestone',
+    id: '123456',
+    name: 'Test Milestone',
+    isArchived: false,
+    isAdded: false,
+    suggested: {
+      __typename: 'MilestoneSuggestionReasons',
+      isSuggested: true,
+      count: 0,
+      reasons: []
+    },
+    categoryName: 'Test Category',
+    subCategoryName: 'Test SubCategory',
+    facilitatedByRole: [MtoFacilitator.MODEL_TEAM],
+    facilitatedByOther: '',
+    description: 'Description 1',
+    commonSolutions: [
+      {
+        __typename: 'MTOCommonSolution',
+        key: MtoCommonSolutionKey.BCDA
+      }
+    ]
+  }
+];
+
+export const commonMilestonesLibraryMock: MockedResponse<
+  GetMtoAllCommonMilestonesQuery,
+  GetMtoAllCommonMilestonesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetMtoAllCommonMilestonesDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        mtoCommonMilestones: commonMilestonesMockData
       }
     }
   }
