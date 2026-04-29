@@ -15,12 +15,10 @@ import { Field, Formik, FormikProps } from 'formik';
 import {
   GetOverviewQuery,
   GetTimelineDocument,
-  GetTimelineQuery,
   ModelType,
   TypedUpdateBasicsDocument,
   TypedUpdateTimelineDocument,
-  useGetOverviewQuery,
-  useGetTimelineQuery
+  useGetOverviewQuery
 } from 'gql/generated/graphql';
 
 import AddNote from 'components/AddNote';
@@ -87,14 +85,7 @@ const Overview = () => {
     formikRef: formikRef as any
   });
 
-  const { data: timelineData } = useGetTimelineQuery({
-    variables: {
-      id: modelID
-    }
-  });
-
-  const { id: timelineId = '' } = (timelineData?.modelPlan?.timeline ||
-    {}) as GetTimelineQuery['modelPlan']['timeline'];
+  const timelineId = data?.modelPlan?.timeline?.id || '';
 
   const [updateTimeline] = useMutation(TypedUpdateTimelineDocument, {
     refetchQueries: [
