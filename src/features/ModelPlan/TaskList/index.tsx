@@ -349,7 +349,10 @@ const TaskList = () => {
                           </div>
 
                           {taskListSections[key].modifiedDts && (
-                            <div className="display-inline tablet:display-flex flex-align-center margin-top-1 margin-bottom-2">
+                            <div
+                              data-testid="most-recent-edit"
+                              className="display-inline tablet:display-flex flex-align-center margin-top-1 margin-bottom-2"
+                            >
                               <span className="text-base margin-right-1">
                                 {t(lastEditI18Key, {
                                   date: formatDateLocal(
