@@ -36,6 +36,7 @@ import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useStickyHeader from 'hooks/useStickyHeader';
@@ -60,6 +61,7 @@ const Overview = () => {
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const navigate = useNavigate();
+  const { setErrorMeta } = useErrorMessage();
   const { headerRef: overviewRef, modelName, abbreviation } = useStickyHeader();
   const { data, loading, error } = useGetOverviewQuery({
     variables: {
@@ -100,10 +102,14 @@ const Overview = () => {
       values.modelType.includes(ModelType.MANDATORY_REGIONAL_OR_STATE);
 
     if (!isModelTypeMandatory || !id) {
-      return;
+      return null;
     }
 
-    await updateTimeline({
+    setErrorMeta({
+      overrideMessage: basicsMiscT('timelineApplicationDatesUpdateError')
+    });
+
+    return updateTimeline({
       variables: {
         id: timelineId,
         changes: {
@@ -176,11 +182,13 @@ const Overview = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={async values => {
-            await clearApplicationDatesIfMandatory(values);
-
-            navigate(
-              `/models/${modelID}/collaboration-area/model-plan/characteristics`
-            );
+            clearApplicationDatesIfMandatory(values).then(response => {
+              if (!response?.errors) {
+                navigate(
+                  `/models/${modelID}/collaboration-area/model-plan/characteristics`
+                );
+              }
+            });
           }}
           enableReinitialize
           validateOnBlur={false}
@@ -306,10 +314,14 @@ const Overview = () => {
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={async () => {
-                          await clearApplicationDatesIfMandatory(values);
-
-                          navigate(
-                            `/models/${modelID}/collaboration-area/model-plan/basics`
+                          clearApplicationDatesIfMandatory(values).then(
+                            response => {
+                              if (!response?.errors) {
+                                navigate(
+                                  `/models/${modelID}/collaboration-area/model-plan/basics`
+                                );
+                              }
+                            }
                           );
                         }}
                       >
@@ -329,10 +341,14 @@ const Overview = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={async () => {
-                        await clearApplicationDatesIfMandatory(values);
-
-                        navigate(
-                          `/models/${modelID}/collaboration-area/model-plan`
+                        clearApplicationDatesIfMandatory(values).then(
+                          response => {
+                            if (!response?.errors) {
+                              navigate(
+                                `/models/${modelID}/collaboration-area/model-plan`
+                              );
+                            }
+                          }
                         );
                       }}
                     >
