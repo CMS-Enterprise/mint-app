@@ -5,6 +5,7 @@ import (
 
 	"github.com/golang/mock/gomock"
 
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
@@ -181,4 +182,120 @@ func (suite *ResolverSuite) TestEvaluateSuggestedPhaseForClearance() {
 	suite.NoError(err)
 	suite.NotNil(phaseSuggestion)
 	suite.EqualValues(models.ModelPhaseInClearance, phaseSuggestion.Phase)
+}
+
+// setUpPlanWithPastICIPDate creates a model plan whose ICIP complete date is in the past,
+// ensuring EvaluateSuggestedStatus returns a non-nil phase suggestion.
+// It also saves the plan with ModifiedBy set so that TrySendEmailForPhaseSuggestion can
+// call ModelPlanUpdate (the audit trigger requires a non-null modified_by column).
+func (suite *ResolverSuite) setUpPlanWithPastICIPDate(planName string) *models.ModelPlan {
+	plan := suite.createModelPlan(planName)
+
+	planTimeline, err := suite.testConfigs.Store.PlanTimelineGetByModelPlanID(plan.ID)
+	suite.NoError(err)
+
+	yesterday := time.Now().Add(-24 * time.Hour)
+	timeNow := time.Now()
+	userID := suite.testConfigs.Principal.Account().ID
+
+	planTimeline.CompleteICIP = &yesterday
+	planTimeline.ModifiedBy = &userID
+	planTimeline.ModifiedDts = &timeNow
+	_, err = suite.testConfigs.Store.PlanTimelineUpdate(suite.testConfigs.Store, suite.testConfigs.Logger, planTimeline)
+	suite.NoError(err)
+
+	plan.ModifiedBy = &userID
+	plan.ModifiedDts = &timeNow
+	plan, err = suite.testConfigs.Store.ModelPlanUpdate(suite.testConfigs.Logger, plan)
+	suite.NoError(err)
+
+	return plan
+}
+
+// TestTryNotificationSendIncorrectModelStatus_NilEmailService is the regression test for MINT-3415-adjacent
+// behavior: when the email service is nil, in-app notifications must still be delivered to model leads.
+// Previously the function returned early at the emailService == nil check, before ever calling
+// sendInAppNotificationForPhaseSuggestion.
+func (suite *ResolverSuite) TestTryNotificationSendIncorrectModelStatus_NilEmailService() {
+	plan := suite.setUpPlanWithPastICIPDate("plan for nil-email-service notification test")
+
+	// The model plan creator is automatically added as a model lead collaborator.
+	// Confirm the lead is present before proceeding.
+	collaborators, err := suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
+	suite.NoError(err)
+	suite.NotEmpty(collaborators)
+
+	err = TryNotificationSendIncorrectModelStatus(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.ZapLogger,
+		nil, // emailService is nil — bug: previously this skipped all notifications
+		email.AddressBook{},
+		plan.ID,
+	)
+	suite.NoError(err)
+
+	// The model lead must receive an in-app notification even with no email service.
+	nots, err := notifications.UserNotificationCollectionGetByUser(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+	)
+	suite.NoError(err)
+	suite.GreaterOrEqual(nots.NumUnreadNotifications(), 1,
+		"model lead should receive an in-app notification even when emailService is nil")
+}
+
+// TestTryNotificationSendIncorrectModelStatus_WithEmailService verifies the full notification
+// path: both in-app notification and email are sent when a model lead's plan has an incorrect status.
+func (suite *ResolverSuite) TestTryNotificationSendIncorrectModelStatus_WithEmailService() {
+	plan := suite.setUpPlanWithPastICIPDate("plan for full notification test")
+
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+
+	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
+		ClientAddress: "http://localhost:3005",
+	}
+	mockEmailService.EXPECT().GetConfig().Return(emailServiceConfig).AnyTimes()
+	mockEmailService.EXPECT().Send(
+		gomock.Any(),
+		gomock.Any(),
+		gomock.Nil(),
+		gomock.Any(),
+		gomock.Eq("text/html"),
+		gomock.Any(),
+		gomock.Any(),
+	).Times(1)
+
+	err := TryNotificationSendIncorrectModelStatus(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.ZapLogger,
+		mockEmailService,
+		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+		plan.ID,
+	)
+	suite.NoError(err)
+
+	nots, err := notifications.UserNotificationCollectionGetByUser(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Principal,
+	)
+	suite.NoError(err)
+	suite.GreaterOrEqual(nots.NumUnreadNotifications(), 1,
+		"model lead should receive an in-app notification")
+
+	// A second call with the same phase suggestion must not send another email
+	// (PreviousSuggestedPhase now matches) but must not error.
+	err = TryNotificationSendIncorrectModelStatus(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.ZapLogger,
+		mockEmailService,
+		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+		plan.ID,
+	)
+	suite.NoError(err)
 }
