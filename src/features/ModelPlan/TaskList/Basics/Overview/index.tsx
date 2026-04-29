@@ -1,6 +1,7 @@
 import React, { Fragment, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 import {
   Button,
   Fieldset,
@@ -13,8 +14,10 @@ import { NotFoundPartial } from 'features/NotFound';
 import { Field, Formik, FormikProps } from 'formik';
 import {
   GetOverviewQuery,
+  GetTimelineDocument,
   ModelType,
   TypedUpdateBasicsDocument,
+  TypedUpdateTimelineDocument,
   useGetOverviewQuery
 } from 'gql/generated/graphql';
 
@@ -24,6 +27,7 @@ import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeave from 'components/ConfirmLeave';
 import FieldGroup from 'components/FieldGroup';
+import HelpText from 'components/HelpText';
 import MainContent from 'components/MainContent';
 import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -32,6 +36,7 @@ import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import TextAreaField from 'components/TextAreaField';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import useStickyHeader from 'hooks/useStickyHeader';
@@ -56,6 +61,7 @@ const Overview = () => {
 
   const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const navigate = useNavigate();
+  const { setErrorMeta } = useErrorMessage();
   const { headerRef: overviewRef, modelName, abbreviation } = useStickyHeader();
   const { data, loading, error } = useGetOverviewQuery({
     variables: {
@@ -80,6 +86,39 @@ const Overview = () => {
     id,
     formikRef: formikRef as any
   });
+
+  const timelineId = data?.modelPlan?.timeline?.id || '';
+
+  const [updateTimeline] = useMutation(TypedUpdateTimelineDocument, {
+    refetchQueries: [
+      { query: GetTimelineDocument, variables: { id: timelineId } }
+    ]
+  });
+
+  /** Clears timeline application dates for mandatory model types. */
+  const clearApplicationDatesIfMandatory = async (values: InitialValueType) => {
+    const isModelTypeMandatory =
+      values.modelType.includes(ModelType.MANDATORY_NATIONAL) ||
+      values.modelType.includes(ModelType.MANDATORY_REGIONAL_OR_STATE);
+
+    if (!isModelTypeMandatory || !id) {
+      return null;
+    }
+
+    setErrorMeta({
+      overrideMessage: basicsMiscT('timelineApplicationDatesUpdateError')
+    });
+
+    return updateTimeline({
+      variables: {
+        id: timelineId,
+        changes: {
+          applicationsStart: null,
+          applicationsEnd: null
+        }
+      }
+    });
+  };
 
   const initialValues: InitialValueType = {
     __typename: 'PlanBasics',
@@ -142,10 +181,14 @@ const Overview = () => {
 
         <Formik
           initialValues={initialValues}
-          onSubmit={() => {
-            navigate(
-              `/models/${modelID}/collaboration-area/model-plan/characteristics`
-            );
+          onSubmit={async values => {
+            clearApplicationDatesIfMandatory(values).then(response => {
+              if (!response?.errors) {
+                navigate(
+                  `/models/${modelID}/collaboration-area/model-plan/characteristics`
+                );
+              }
+            });
           }}
           enableReinitialize
           validateOnBlur={false}
@@ -179,7 +222,18 @@ const Overview = () => {
                       <Label htmlFor="modelType">
                         {basicsT('modelType.label')}
                       </Label>
-
+                      <HelpText id="modelTypeHelpText" className="margin-y-05">
+                        <Trans
+                          i18nKey="basicsMisc:modelTypeHelpText"
+                          components={{
+                            link1: (
+                              <Link
+                                to={`/models/${modelID}/collaboration-area/model-timeline`}
+                              />
+                            )
+                          }}
+                        />
+                      </HelpText>
                       <Fieldset>
                         {getKeys(modelTypeConfig.options).map(key => (
                           <Fragment key={key}>
@@ -190,6 +244,7 @@ const Overview = () => {
                               label={modelTypeConfig.options[key]}
                               value={key}
                               checked={values.modelType.includes(key)}
+                              aria-describedby="modelTypeHelpText"
                             />
                           </Fragment>
                         ))}
@@ -202,6 +257,7 @@ const Overview = () => {
                               id="ModelType-Other"
                               data-testid="ModelType-Other"
                               name="modelTypeOther"
+                              aria-describedby="modelTypeHelpText"
                             />
                           </div>
                         )}
@@ -257,11 +313,17 @@ const Overview = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() =>
-                          navigate(
-                            `/models/${modelID}/collaboration-area/model-plan/basics`
-                          )
-                        }
+                        onClick={async () => {
+                          clearApplicationDatesIfMandatory(values).then(
+                            response => {
+                              if (!response?.errors) {
+                                navigate(
+                                  `/models/${modelID}/collaboration-area/model-plan/basics`
+                                );
+                              }
+                            }
+                          );
+                        }}
                       >
                         {miscellaneousT('back')}
                       </Button>
@@ -278,11 +340,17 @@ const Overview = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() =>
-                        navigate(
-                          `/models/${modelID}/collaboration-area/model-plan`
-                        )
-                      }
+                      onClick={async () => {
+                        clearApplicationDatesIfMandatory(values).then(
+                          response => {
+                            if (!response?.errors) {
+                              navigate(
+                                `/models/${modelID}/collaboration-area/model-plan`
+                              );
+                            }
+                          }
+                        );
+                      }}
                     >
                       <Icon.ArrowBack
                         className="margin-right-1"

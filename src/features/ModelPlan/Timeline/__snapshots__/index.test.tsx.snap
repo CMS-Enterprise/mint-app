@@ -497,11 +497,38 @@ exports[`Model Timeline page > renders without errors and matches snapshot 1`] =
                       data-testid="processListHeading"
                     >
                       <legend
-                        class="usa-label margin-bottom-neg-2"
+                        class="usa-label"
                       >
                         Application period
                       </legend>
                     </h5>
+                    <div
+                      class="bg-base-lightest padding-y-1 padding-x-105"
+                    >
+                      <p
+                        class="text-italic margin-0"
+                      >
+                        Some models, such as mandatory models, will not have application period dates. You can update the information displayed below about your model by editing your 
+                        <a
+                          data-discover="true"
+                          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan"
+                        >
+                          Model Plan
+                        </a>
+                        .
+                      </p>
+                      <h4
+                        class="margin-bottom-0 margin-top-2"
+                      >
+                        Model type
+                      </h4>
+                      <p
+                        class="margin-0"
+                        data-testid="model-type-text"
+                      >
+                        Voluntary, Other: Other model type
+                      </p>
+                    </div>
                     <div
                       class="datepicker__wrapper"
                     >

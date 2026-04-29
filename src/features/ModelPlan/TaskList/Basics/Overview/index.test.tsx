@@ -51,6 +51,10 @@ const mocks = [
           __typename: 'ModelPlan',
           id: modelID,
           modelName: 'My excellent plan that I just initiated',
+          timeline: {
+            __typename: 'PlanTimeline',
+            id: 'f80f6d7f-1932-4479-bf95-e5f30745774b'
+          },
           basics: overviewMockData
         }
       }

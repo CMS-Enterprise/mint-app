@@ -222,6 +222,8 @@ export const timelineMisc: Record<string, string> = {
   clearanceInfo:
     'When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance',
   applicationPeriod: 'Application period',
+  applicationPeriodHelpText:
+    'Some models, such as mandatory models, will not have application period dates. You can update the information displayed below about your model by editing your <link1>Model Plan</link1>.',
   demonstrationPerformance: 'Performance period',
   demonstrationPerformanceInfo:
     'When the model will be active beginning with the go-live date',
