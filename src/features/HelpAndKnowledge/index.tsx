@@ -1,6 +1,5 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import MilestoneLibrary from 'features/ModelPlan/ModelToOperations/MilestoneLibrary';
 
 import ProtectedRoute from 'components/ProtectedRoute';
 
@@ -27,6 +26,7 @@ import UsingSolutionLibrary from './Articles/UsingSolutionLibrary';
 import UsingSolutionsAndITSystemsTable from './Articles/UsingSolutionsAndITSystemsTable';
 import UsingTableActions from './Articles/UsingTableActions';
 import UtilizingSolutions from './Articles/UtilizingSolutions';
+import HKCMilestoneLibrary from './HKCMilestoneLibrary';
 import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
 
@@ -45,7 +45,7 @@ export const helpAndKnowledgeRoutes = {
     { path: '', element: <HelpAndKnowledgeHome /> },
     { path: 'articles', element: <AllArticles /> },
     { path: 'model-plan-overview', element: <ModelPlanOverview /> },
-    { path: 'milestone-library', element: <MilestoneLibrary /> },
+    { path: 'milestone-library', element: <HKCMilestoneLibrary /> },
     { path: 'operational-solutions', element: <SolutionsHelp /> },
     { path: 'high-level-project-plan', element: <HighLevelProjectPlan /> },
     {

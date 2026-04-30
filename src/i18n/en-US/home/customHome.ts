@@ -13,17 +13,16 @@ export type HomepageSettingsType = Record<
 
 const settings: HomepageSettingsType = {
   [ViewCustomizationType.MY_MODEL_PLANS]: {
-    heading: 'My Model Plans',
-    description:
-      'You have been added as a team member to the model plans below.',
-    noResultsHeading: 'You haven’t been added to any Model Plans yet.',
+    heading: 'My models',
+    description: 'You have been added as a team member to the models below.',
+    noResultsHeading: 'You haven’t been added to any models yet.',
     noResultsDescription:
-      'Once you create one or are added as a team member to an existing plan, it will appear here.'
+      'Once you create one or are added as a team member to an existing model, it will appear here.'
   },
   [ViewCustomizationType.ALL_MODEL_PLANS]: {
-    heading: 'All Model Plans',
-    noResultsHeading: 'There are no model plans in MINT yet.',
-    noResultsDescription: 'Once a plan is created, it will appear here.'
+    heading: 'All models',
+    noResultsHeading: 'There are no models in MINT yet.',
+    noResultsDescription: 'Once a model is created, it will appear here.'
   },
   [ViewCustomizationType.FOLLOWED_MODELS]: {
     heading: 'Models you’re following',
@@ -77,10 +76,9 @@ const settings: HomepageSettingsType = {
     heading: 'Models with FFS CRs or TDLs',
     description:
       'View all of the models that contain Fee-for-Service (FFS) Change Requests (CRs) and Technical Direction Letters (TDLs).',
-    noResultsHeading:
-      'There are no model plans in FFS CRs or TDLs in MINT yet.',
+    noResultsHeading: 'There are no models in FFS CRs or TDLs in MINT yet.',
     noResultsDescription:
-      'Once a FFS CR or TDL plan is created, it will appear here.'
+      'Once a FFS CR or TDL model is created, it will appear here.'
   },
   [ViewCustomizationType.MODELS_APPROACHING_CLEARANCE]: {
     heading: 'Models approaching clearance',
@@ -149,17 +147,17 @@ const customHome = {
         'Double check your search for typos or try a different search.'
     }
   },
-  yourModels: 'You have been added as a team member to the model plans below.',
-  fetchError: 'There was an error fetching models plans.  Please try again.',
-  downloadAllCSV: 'Download all plans as CSV',
-  downloadSingleCSV: 'Download this Model Plan (CSV)',
+  yourModels: 'You have been added as a team member to the models below.',
+  fetchError: 'There was an error fetching models. Please try again.',
+  downloadAllCSV: 'Download all models as CSV',
+  downloadSingleCSV: 'Download this model (CSV)',
   downloadMTOMilestoneSummary: 'Download MTO milestone summary',
   requestsTable: {
     id: 'model-plans',
-    title: 'Model plans',
+    title: 'Models',
     empty: {
-      heading: 'You haven’t been added to any Model Plans yet.',
-      body: 'Once you create one or are added as a team member to an existing plan, it will appear here.'
+      heading: 'You haven’t been added to any models yet.',
+      body: 'Once you create one or are added as a team member to an existing model, it will appear here.'
     },
     caption:
       'Below is a list of governance requests that are in draft or submitted.',

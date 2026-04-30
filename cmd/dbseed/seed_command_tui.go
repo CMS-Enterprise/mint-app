@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"strings"
 
@@ -108,10 +109,9 @@ func (tm seedCommandTuiModel) Init() tea.Cmd {
 }
 
 func (tm seedCommandTuiModel) View() string {
-	physicalWidth, _, _ := term.GetSize(int(os.Stdout.Fd()))
-	doc := strings.Builder{}
+	width := safeStdoutWidth() - 4
 
-	width := physicalWidth - 4
+	doc := strings.Builder{}
 	doc.WriteString(tm.RenderTabs(width))
 	// doc.WriteString(backgroundFillStyle.Render(tm.RenderTabs(width)))
 	doc.WriteString("\n\n")
@@ -285,7 +285,7 @@ func (tm *seedCommandTuiModel) RenderCommandCommandsView() string {
 
 	// tab.Render(s)
 	if tm.lastCmd != "" {
-		doc.WriteString(fmt.Sprintf("%s\n\n", tm.lastCmd))
+		fmt.Fprintf(&doc, "%s\n\n", tm.lastCmd)
 	}
 	body := strings.Builder{}
 	// Iterate over our options
@@ -309,7 +309,7 @@ func (tm *seedCommandTuiModel) RenderCommandCommandsView() string {
 		}
 
 		// Render the row
-		body.WriteString(fmt.Sprintf("%s [%s] %s\n", cursor, checked, optionText))
+		fmt.Fprintf(&body, "%s [%s] %s\n", cursor, checked, optionText)
 	}
 	doc.WriteString(fullBorderStyle.Render(body.String()))
 	return doc.String()
@@ -324,4 +324,24 @@ func RunSeedCommandTuiModel() {
 		os.Exit(1)
 	}
 
+}
+
+// defaultTUIWidth is a safe fallback, taking into consideration a general baseline terminal width
+const defaultTUIWidth = 80
+
+// safeStdoutWidth prevents an overflow from converting `uint` to `int` via direct cast
+func safeStdoutWidth() int {
+	fd := os.Stdout.Fd()
+
+	// prefer `math.MaxInt` to determine machine's maxInt (32 vs 64) instead of determining manually through bit manipulation
+	if fd > uintptr(math.MaxInt) {
+		return defaultTUIWidth
+	}
+
+	width, _, err := term.GetSize(int(fd))
+	if err != nil || width <= 0 {
+		return defaultTUIWidth
+	}
+
+	return width
 }

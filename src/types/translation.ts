@@ -51,6 +51,7 @@ import {
   ModelType,
   ModelViewFilter,
   MtoCategoryTranslation,
+  MtoCommonMilestoneTranslation,
   MtoCommonSolutionCmsComponent,
   MtoCommonSolutionContactTranslation,
   MtoCommonSolutionContractorTranslation,
@@ -327,6 +328,7 @@ export type TranslationModelPlan = {
   abbreviation: TranslationFieldProperties;
   archived: TranslationFieldPropertiesWithOptions<Bool>;
   status: TranslationFieldPropertiesWithOptions<ModelStatus>;
+  taskListStatus: TranslationFieldPropertiesWithOptions<TaskStatus>;
 };
 
 // Basics
@@ -1313,6 +1315,30 @@ export type TranslationMTOMilestoneSolutionLinkCustom = {
   [K in keyof TranslationMTOMilestoneSolutionLinkCustomGQL]: TranslationMTOMilestoneSolutionLinkCustomForm[K]; // FE form type
 };
 
+// MTO Common Milestone - Change History purposes only
+export type TranslationMTOCommonMilestoneCustomForm = {
+  name: TranslationFieldProperties;
+  description: TranslationFieldProperties;
+  categoryName: TranslationFieldProperties;
+  subCategoryName: TranslationFieldProperties;
+  facilitatedByRole: TranslationFieldPropertiesWithOptions<MtoFacilitator>;
+  facilitatedByOther: TranslationFieldProperties;
+  commonSolutions: TranslationFieldPropertiesWithOptions<MtoCommonSolutionKey>;
+};
+
+type TranslationMTOCommonMilestoneCustomGQL = Omit<
+  MtoCommonMilestoneTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationMTOCommonMilestoneCustom = {
+  [K in keyof TranslationMTOCommonMilestoneCustomGQL]: TranslationMTOCommonMilestoneCustomForm[K]; // FE form type
+};
+
 // MTO Milestone - Change History purposes only
 export type TranslationMTOMilestoneCustomForm = {
   name: TranslationFieldProperties;
@@ -1498,6 +1524,7 @@ export type TranslationPlan = {
   mtoSolution: TranslationMTOSolutionCustom;
   mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCustom;
   mtoMilestoneNote: TranslationMTOMilestoneNoteCustom;
+  mtoCommonMilestone: TranslationMTOCommonMilestoneCustom;
 };
 
 export type TranslationPlanSection =
@@ -1536,7 +1563,8 @@ export enum PlanSection {
   MTO_MILESTONE = 'mtoMilestone',
   MTO_SOLUTION = 'mtoSolution',
   MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner',
-  MTO_MILESTONE_NOTE = 'mtoMilestoneNote'
+  MTO_MILESTONE_NOTE = 'mtoMilestoneNote',
+  MTO_COMMON_MILESTONE = 'mtoCommonMilestone'
 }
 
 // Model Plan MTO Template Link - Change History purposes only

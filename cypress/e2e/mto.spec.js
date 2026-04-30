@@ -270,14 +270,14 @@ describe('Model-to-Operations Matrix', () => {
         .not('[value="default"]')
         .first()
         .then($option => {
-          cy.get('#primary-category').select($option.text());
+          cy.get('#primary-category').select($option.val());
         });
       cy.get('#subcategory')
         .find('option')
         .not('[value="default"]')
         .first()
         .then($option => {
-          cy.get('#subcategory').select($option.text());
+          cy.get('#subcategory').select($option.val());
         });
 
       cy.get('#name').should('be.not.disabled').type('Custom Milestone');

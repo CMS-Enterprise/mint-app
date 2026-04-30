@@ -61,6 +61,7 @@ SELECT
     retVal.description,
     retVal.responsible_component,
     retVal.facilitated_by,
+    retVal.facilitated_by_other,
     retVal.need_by,
     retVal.status,
     retVal.risk_indicator,

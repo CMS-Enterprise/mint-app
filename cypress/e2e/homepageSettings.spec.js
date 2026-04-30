@@ -60,7 +60,7 @@ describe('Homepage Settings', () => {
     // Go to next page to select order
     cy.get('[data-testid="next-settings"]').click();
 
-    cy.get('[data-testid="MY_MODEL_PLANS-0"]').contains('My Model Plans');
+    cy.get('[data-testid="MY_MODEL_PLANS-0"]').contains('My models');
 
     // Up button disabled on first card
     cy.get('[data-testid="move-0-up"]').should(
@@ -77,7 +77,7 @@ describe('Homepage Settings', () => {
     cy.get('[data-testid="move-0-down"]').click();
 
     // Check to see if the index of MY_MODEL_PLANS was changed from 0 to 1
-    cy.get('[data-testid="MY_MODEL_PLANS-1"]').contains('My Model Plans');
+    cy.get('[data-testid="MY_MODEL_PLANS-1"]').contains('My models');
 
     // Save settings
     cy.get('[data-testid="save-settings-order"]').click();

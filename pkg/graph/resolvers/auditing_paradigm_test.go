@@ -35,13 +35,17 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 	testPR4 := suite.getTestPrincipal(suite.testConfigs.Store, "TestDR4")
 
 	dr1, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, testPR1, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
-	suite.NoError(err)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(dr1)
 	dr2, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, testPR2, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
-	suite.NoError(err)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(dr2)
 	dr3, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, testPR3, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
-	suite.NoError(err)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(dr3)
 	dr4, err := CreateDiscussionReply(suite.testConfigs.Context, suite.testConfigs.Logger, nil, email.AddressBook{}, input, testPR4, suite.testConfigs.Store, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
-	suite.NoError(err)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(dr4)
 
 	/* Delete DRs async to simulate a race condition */
 	deleteGroup, _ := errgroup.WithContext(suite.testConfigs.Context)
@@ -80,6 +84,10 @@ func (suite *ResolverSuite) TestDeletionActorAccuracy() {
 
 }
 func deleteDiscussionReply(suite *ResolverSuite, discussionReply *models.DiscussionReply, principal authentication.Principal) error {
+	if discussionReply == nil {
+		return fmt.Errorf("discussion reply was nil")
+	}
+
 	_, err := DeleteDiscussionReply(suite.testConfigs.Logger, discussionReply.ID, principal, suite.testConfigs.Store)
 	if err != nil {
 		return err
@@ -89,6 +97,9 @@ func deleteDiscussionReply(suite *ResolverSuite, discussionReply *models.Discuss
 }
 
 func verifyDeleteAuditChange(suite *ResolverSuite, discussionReply *models.DiscussionReply) error {
+	if discussionReply == nil {
+		return fmt.Errorf("discussion reply was nil")
+	}
 
 	auditChanges, err := AuditChangeCollectionByIDAndTable(suite.testConfigs.Logger, "discussion_reply", discussionReply.ID, suite.testConfigs.Store)
 	if err != nil {

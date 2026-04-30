@@ -92,9 +92,6 @@ func sendMTOSolutionSelectedForUseByModelEmail(
 	if err != nil {
 		return err
 	}
-	if err != nil {
-		return err
-	}
 
 	return nil
 }

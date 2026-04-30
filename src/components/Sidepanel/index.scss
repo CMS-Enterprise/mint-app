@@ -37,4 +37,9 @@
       cursor: pointer;
     }
   }
+
+  &__overlay {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
 }

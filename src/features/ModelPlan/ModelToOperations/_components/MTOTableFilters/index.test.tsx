@@ -102,11 +102,11 @@ describe('MTOTableFilters', () => {
     expect(nextParams.get('hide-category-rows')).toBe('false');
   });
 
-  it('disables and forces unchecked when a time window filter is selected', () => {
+  it('disables and forces checked when a time window filter is selected', () => {
     renderWithRouter('/matrix?needed-within-days=60&hide-category-rows=true');
 
     expect(screen.getByTestId('mto-hide-category-rows')).toBeDisabled();
-    expect(screen.getByTestId('mto-hide-category-rows')).not.toBeChecked();
+    expect(screen.getByTestId('mto-hide-category-rows')).toBeChecked();
   });
 
   it('defaults to All when no filter params are present', () => {
@@ -135,12 +135,14 @@ describe('MTOTableFilters', () => {
     const { search } = mockNavigate.mock.calls[0][0] as { search: string };
     const nextParams = new URLSearchParams(search);
     expect(nextParams.get('needed-within-days')).toBe('30');
-    expect(nextParams.get('hide-category-rows')).toBe('false');
+    expect(nextParams.get('hide-category-rows')).toBe('true');
     expect(nextParams.get('page')).toBe('1');
   });
 
   it('selecting All removes filter params and resets page', () => {
-    renderWithRouter('/matrix?page=2&needed-within-days=90');
+    renderWithRouter(
+      '/matrix?page=2&needed-within-days=90&hide-category-rows=true'
+    );
 
     fireEvent.change(getSelect(), { target: { value: 'all' } });
 
@@ -151,7 +153,9 @@ describe('MTOTableFilters', () => {
   });
 
   it('selecting All clears legacy thirty-days param', () => {
-    renderWithRouter('/matrix?needed-within-thirty-days=true');
+    renderWithRouter(
+      '/matrix?needed-within-thirty-days=true&hide-category-rows=true'
+    );
 
     fireEvent.change(getSelect(), { target: { value: 'all' } });
 

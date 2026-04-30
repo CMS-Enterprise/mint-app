@@ -125,6 +125,17 @@ type MTOCategoryTranslation struct {
 	ParentID models.TranslationField `json:"parentID" db:"parent_id"`
 }
 
+// Represents MTO Common Milestone translation data
+type MTOCommonMilestoneTranslation struct {
+	Name               models.TranslationField            `json:"name" db:"name"`
+	Description        models.TranslationField            `json:"description" db:"description"`
+	CategoryName       models.TranslationField            `json:"categoryName" db:"category_name"`
+	SubCategoryName    models.TranslationField            `json:"subCategoryName" db:"sub_category_name"`
+	FacilitatedByRole  models.TranslationFieldWithOptions `json:"facilitatedByRole" db:"facilitated_by_role"`
+	FacilitatedByOther models.TranslationField            `json:"facilitatedByOther" db:"facilitated_by_other"`
+	CommonSolutions    models.TranslationFieldWithOptions `json:"commonSolutions"`
+}
+
 // Represents a translation of a contact for a common solution
 type MTOCommonSolutionContactTranslation struct {
 	Key            models.TranslationField            `json:"key" db:"mto_common_solution_key"`

@@ -77,6 +77,7 @@ import {
 } from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import CompletionModal from '../CompletionModal';
 import LinkSolutionForm from '../LinkSolutionForm';
 import MilestoneNotes from '../MilestoneNotes';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
@@ -154,6 +155,9 @@ const EditMilestoneForm = ({
   const editMilestoneID = params.get('edit-milestone');
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const [isCompletionModalOpen, setIsCompletionModalOpen] =
+    useState<boolean>(false);
 
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
 
@@ -637,7 +641,13 @@ const EditMilestoneForm = ({
           // eslint-disable-next-line no-param-reassign
           submitted.current = true;
           setIsDirty(false);
-          closeModal();
+
+          if (formChanges.status === MtoMilestoneStatus.COMPLETED) {
+            setIsCompletionModalOpen(true);
+          } else {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }
         }
       });
 
@@ -725,6 +735,40 @@ const EditMilestoneForm = ({
         );
         closeModal();
         setIsModalOpen(false);
+      }
+    });
+  };
+
+  const handleRemoveRiskIndicator = () => {
+    setErrorMeta({
+      overrideMessage: modelToOperationsMiscT(
+        'modal.editMilestone.errorUpdated'
+      )
+    });
+
+    updateMilestone({
+      variables: {
+        id: editMilestoneID || '',
+        changes: {
+          riskIndicator: MtoRiskIndicator.ON_TRACK
+        }
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={modelToOperationsMiscT(
+              'modal.editMilestone.successUpdated'
+            )}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+            values={{ milestone: milestone?.name }}
+          />
+        );
+
+        setIsCompletionModalOpen(false);
+        closeModal();
       }
     });
   };
@@ -881,6 +925,20 @@ const EditMilestoneForm = ({
         </Button>
       </Modal>
 
+      {milestone && isCompletionModalOpen && (
+        <CompletionModal
+          isModalOpen={isCompletionModalOpen}
+          closeModal={() => {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }}
+          mode="milestone"
+          modelID={modelID}
+          riskIndicator={milestone.riskIndicator}
+          handleRemoveRiskIndicator={handleRemoveRiskIndicator}
+        />
+      )}
+
       {milestone && (
         <>
           <Sidepanel
@@ -999,7 +1057,7 @@ const EditMilestoneForm = ({
                     field: { ref, ...field },
                     fieldState: { error }
                   }) => (
-                    <FormGroup className="margin-bottom-3">
+                    <FormGroup className="margin-bottom-3" error={!!error}>
                       <Label requiredMarker htmlFor="name">
                         {mtoMilestoneT('name.label')}
                       </Label>
@@ -1008,7 +1066,12 @@ const EditMilestoneForm = ({
                         <FieldErrorMsg>{error.message}</FieldErrorMsg>
                       )}
 
-                      <TextInput {...field} ref={null} id="name" type="text" />
+                      <TextInput
+                        {...field}
+                        inputRef={ref}
+                        id="name"
+                        type="text"
+                      />
                     </FormGroup>
                   )}
                 />
@@ -1046,6 +1109,7 @@ const EditMilestoneForm = ({
                         value={formField.value || ''}
                         className="height-card"
                         id="description"
+                        ref={ref}
                       />
                     </FormGroup>
                   )}
@@ -1064,6 +1128,7 @@ const EditMilestoneForm = ({
                       checked={field.value}
                       label={mtoMilestoneT('isDraft.label')}
                       subLabel={mtoMilestoneT('isDraft.sublabel')}
+                      inputProps={{ ref }}
                     />
                   </FormGroup>
                 )}
@@ -1106,6 +1171,7 @@ const EditMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || 'default'}
                       defaultValue="default"
@@ -1164,6 +1230,7 @@ const EditMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || 'default'}
                       defaultValue="default"
@@ -1229,6 +1296,7 @@ const EditMilestoneForm = ({
                         responsibleComponentConfig.multiSelectLabel || ''
                       }
                       initialValues={watch('responsibleComponent')}
+                      inputRef={ref}
                     />
                   </FormGroup>
                 )}
@@ -1262,6 +1330,7 @@ const EditMilestoneForm = ({
                       )}
                       selectedLabel={facilitatedByConfig.multiSelectLabel || ''}
                       initialValues={watch('facilitatedBy')}
+                      inputRef={ref}
                     />
                   </FormGroup>
                 )}
@@ -1302,7 +1371,7 @@ const EditMilestoneForm = ({
 
                       <TextInput
                         {...field}
-                        ref={null}
+                        inputRef={ref}
                         id={convertCamelCaseToKebabCase('facilitatedByOther')}
                         type="text"
                         maxLength={75}
@@ -1342,6 +1411,7 @@ const EditMilestoneForm = ({
                         }}
                         defaultValue={milestone.assignedTo || ''}
                         options={modelCollaboratorsOptions}
+                        inputProps={{ ref }}
                       />
                     </FormGroup>
                   );
@@ -1382,6 +1452,7 @@ const EditMilestoneForm = ({
                     <div className="position-relative">
                       <DatePickerFormatted
                         {...field}
+                        ref={ref}
                         aria-labelledby={convertCamelCaseToKebabCase('needBy')}
                         id="milestone-need-by"
                         suppressMilliseconds
@@ -1425,6 +1496,7 @@ const EditMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || ''}
                     >

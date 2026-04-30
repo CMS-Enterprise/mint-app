@@ -95,8 +95,8 @@ Now you will need to start the Docker service: run Spotlight and type in
 Install the latest version of Go with `brew install go`.
 
 **Windows+WSL:**
-- Download the `.tar.gz` file for the latest version of Go for Linux from [the official Go site](https://golang.org/doc/install), making sure to save it to the Ubuntu filesystem. The easiest way to do this is to copy the download link, then use `wget` to download it on the command line, i.e. `wget https://golang.org/dl/go1.17.3.linux-amd64.tar.gz`. This will download the `.tar.gz` to the current directory.
-- From the directory containing the `.tar.gz` file, extract it to `/usr/local/go`, i.e. with `sudo tar -C /usr/local -xzf go1.17.3.linux-amd64.tar.gz`.
+- Download the `.tar.gz` file for the Go version used by this repo from [the official Go site](https://go.dev/dl/), making sure to save it to the Ubuntu filesystem. The easiest way to do this is to copy the download link, then use `wget` to download it on the command line, i.e. `wget https://go.dev/dl/go1.26.2.linux-amd64.tar.gz`. This will download the `.tar.gz` to the current directory.
+- From the directory containing the `.tar.gz` file, extract it to `/usr/local/go`, i.e. with `sudo tar -C /usr/local -xzf go1.26.2.linux-amd64.tar.gz`.
 - Add `/usr/local/go/bin` to your `PATH`. The easiest way to do this is to add the following to your `~/.bashrc` file:
 
 ```bash

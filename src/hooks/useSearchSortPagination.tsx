@@ -14,6 +14,7 @@ type SearchSortPaginationProps<T, K> = {
   filterFunction: (query: string, items: T[]) => T[];
   sortFunction: (items: T[], sort: K) => T[];
   defaultItemsPerPage?: number;
+  skipSync?: boolean; // homeItems should skip syncing with URL parameters
 } & React.HTMLAttributes<HTMLDivElement>;
 
 /**
@@ -44,7 +45,8 @@ const useSearchSortPagination = <T, K extends string>({
   sortOptions,
   filterFunction,
   sortFunction,
-  defaultItemsPerPage = 9
+  defaultItemsPerPage = 9,
+  skipSync = false
 }: SearchSortPaginationProps<T, K>) => {
   const navigate = useNavigate();
 
@@ -92,6 +94,8 @@ const useSearchSortPagination = <T, K extends string>({
 
   //  If no query, return all solutions, otherwise, matching query solutions
   useEffect(() => {
+    if (skipSync) return;
+
     if (query.trim()) {
       const filteredAudits = searchChanges(query, sortedItems);
 
@@ -154,19 +158,31 @@ const useSearchSortPagination = <T, K extends string>({
 
   // Reset pagination if itemsPerPage changes and the current page is greater than the new page count or if items per page is set to "show all"
   useEffect(() => {
+    if (skipSync) return;
+
     // Only reset page if we're not already on page 1
     if ((pageCount === 1 && currentPage !== 1) || currentPage > pageCount) {
       params.set('page', '1');
       navigate({ search: params.toString() });
       setCurrentPage(1);
     }
-  }, [pageCount, currentPage, params, navigate]);
+  }, [pageCount, currentPage, params, navigate, skipSync]);
 
   // Sort the changes when the sort option changes.
   useEffect(() => {
     setSearchAndSortedItems(sortFunction(searchAndSortedItems, sort));
     setSortedItems(sortFunction(sortedItems, sort));
   }, [sort]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (skipSync) return;
+
+    const urlCurrentPage = Number(params.get('page')) || 1;
+
+    if (urlCurrentPage !== currentPage) {
+      setCurrentPage(urlCurrentPage);
+    }
+  }, [currentPage, params, skipSync]);
 
   const handleNext = () => {
     const nextPage = currentPage + 1;

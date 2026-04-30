@@ -12,14 +12,15 @@ type mtoCommonSolutionEmails struct {
 
 // mtoEmails contains all MTO-related email templates
 type mtoEmails struct {
-	// CommonSolution emails for MTO
-	CommonSolution mtoCommonSolutionEmails
-	Milestone      mtoMilestoneEmails
-	Solution       mtoSolutionEmails
+	CommonMilestone mtoCommonMilestoneEmails
+	CommonSolution  mtoCommonSolutionEmails
+	Milestone       mtoMilestoneEmails
+	Solution        mtoSolutionEmails
 }
 
 // MTO is the collection of all MTO-related email templates
 var MTO = mtoEmails{
+	CommonMilestone: mtoCommonMilestone,
 	CommonSolution: mtoCommonSolutionEmails{
 		SystemOwner: mtoCommonSolutionSystemOwner,
 		POC:         mtoCommonSolutionPOC,

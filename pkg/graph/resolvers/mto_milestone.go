@@ -112,6 +112,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			&finalCategoryID,
 		)
 		milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
+		milestone.FacilitatedByOther = commonMilestone.FacilitatedByOther
 
 		if err := BaseStructPreCreate(logger, milestone, principal, store, true); err != nil {
 			return nil, err
@@ -209,6 +210,7 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 		&finalCategoryID,
 	)
 	milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
+	milestone.FacilitatedByOther = commonMilestone.FacilitatedByOther
 
 	createdMilestone, err := storage.MTOMilestoneCreateAllowConflicts(tx, logger, milestone)
 	if err != nil {
@@ -326,8 +328,8 @@ func MTOMilestoneUpdate(
 	// Detect change using the PRE-update value vs POST-update value
 	assignedToChanged := !helpers.UUIDPointerEqual(oldAssignedTo, updatedMilestone.AssignedTo)
 
-	// Send email notification if assignedTo changed and there's a new assignee
-	if assignedToChanged && updatedMilestone.AssignedTo != nil {
+	// Send email notification if assignedTo changed, there's a new assignee, and email is configured.
+	if assignedToChanged && updatedMilestone.AssignedTo != nil && emailService != nil {
 		go func() {
 			modelPlan, modelPlanErr := loaders.ModelPlan.GetByID.Load(ctx, updatedMilestone.ModelPlanID)
 			if modelPlanErr != nil {

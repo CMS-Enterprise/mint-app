@@ -55,6 +55,7 @@ module.exports = {
       'MTOInfoTranslation',
       'EnumTranslation',
       'MTOCategoryTranslation',
+      'MTOCommonMilestoneTranslation',
       'MTOMilestoneTranslation',
       'MTOMilestoneSolutionLinkTranslation',
       'MTOSolutionTranslation',
