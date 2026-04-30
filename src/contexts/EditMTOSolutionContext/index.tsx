@@ -75,16 +75,19 @@ const EditMTOSolutionProvider = ({
         });
         setCloseDestination(null);
       } else {
-        params.delete('edit-solution');
-        params.delete('scroll-to-bottom');
-        params.delete('select-milestones');
-        setParams(params);
+        setParams(prevParams => {
+          const nextParams = new URLSearchParams(prevParams);
+          nextParams.delete('edit-solution');
+          nextParams.delete('scroll-to-bottom');
+          nextParams.delete('select-milestones');
+          return nextParams;
+        });
       }
       setLeavePage(false);
       setIsModalOpen(false);
       submitted.current = false;
     }
-  }, [isDirty, submitted, params, closeDestination, navigate, setParams]);
+  }, [isDirty, submitted, closeDestination, navigate, setParams]);
 
   useEffect(() => {
     if (closeDestination) {
@@ -99,13 +102,18 @@ const EditMTOSolutionProvider = ({
     selectedSolutionID: string;
     scrollToBottom?: boolean;
   }) => {
-    params.set('edit-solution', selectedSolutionID);
+    setParams(prevParams => {
+      const nextParams = new URLSearchParams(prevParams);
+      nextParams.set('edit-solution', selectedSolutionID);
 
-    if (scrollToBottom) {
-      params.set('scroll-to-bottom', 'true');
-    }
+      if (scrollToBottom) {
+        nextParams.set('scroll-to-bottom', 'true');
+      } else {
+        nextParams.delete('scroll-to-bottom');
+      }
 
-    setParams(params);
+      return nextParams;
+    });
     setIsModalOpen(true);
   };
 
@@ -163,8 +171,14 @@ const EditMTOSolutionProvider = ({
               if (closeDestination) {
                 navigate(closeDestination);
               } else {
-                params.delete('edit-solution');
-                navigate({ search: params.toString() }, { replace: true });
+                setParams(
+                  prevParams => {
+                    const nextParams = new URLSearchParams(prevParams);
+                    nextParams.delete('edit-solution');
+                    return nextParams;
+                  },
+                  { replace: true }
+                );
               }
               setIsModalOpen(false);
               setIsDirty(false);

@@ -73,15 +73,18 @@ const EditMTOMilestoneProvider = ({
         });
         setCloseDestination(null);
       } else {
-        params.delete('edit-milestone');
-        params.delete('select-solutions');
-        navigate({ search: params.toString() });
+        setParams(prevParams => {
+          const nextParams = new URLSearchParams(prevParams);
+          nextParams.delete('edit-milestone');
+          nextParams.delete('select-solutions');
+          return nextParams;
+        });
       }
       setLeavePage(false);
       setIsModalOpen(false);
       submitted.current = false;
     }
-  }, [isDirty, submitted, closeDestination, params, navigate]);
+  }, [isDirty, submitted, closeDestination, navigate, setParams]);
 
   useEffect(() => {
     if (closeDestination) {
@@ -90,8 +93,11 @@ const EditMTOMilestoneProvider = ({
   }, [closeDestination, closeModal]);
 
   const openEditMilestoneModal = (id: string) => {
-    params.set('edit-milestone', id);
-    setParams(params);
+    setParams(prevParams => {
+      const nextParams = new URLSearchParams(prevParams);
+      nextParams.set('edit-milestone', id);
+      return nextParams;
+    });
     setIsModalOpen(true);
   };
 
@@ -152,8 +158,14 @@ const EditMTOMilestoneProvider = ({
               if (closeDestination) {
                 navigate(closeDestination);
               } else {
-                params.delete('edit-milestone');
-                navigate({ search: params.toString() }, { replace: true });
+                setParams(
+                  prevParams => {
+                    const nextParams = new URLSearchParams(prevParams);
+                    nextParams.delete('edit-milestone');
+                    return nextParams;
+                  },
+                  { replace: true }
+                );
               }
               setIsModalOpen(false);
               setIsDirty(false);

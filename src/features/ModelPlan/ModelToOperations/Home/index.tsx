@@ -251,8 +251,8 @@ const MTOHome = () => {
             </div>
           )}
 
-          <EditMTOMilestoneProvider>
-            <EditMTOSolutionProvider>
+          <EditMTOSolutionProvider>
+            <EditMTOMilestoneProvider>
               {currentView === 'milestones' && (
                 <>
                   {!dataAvalilable ? (
@@ -297,8 +297,8 @@ const MTOHome = () => {
                   )}
                 </>
               )}
-            </EditMTOSolutionProvider>
-          </EditMTOMilestoneProvider>
+            </EditMTOMilestoneProvider>
+          </EditMTOSolutionProvider>
         </div>
       </GridContainer>
     </>

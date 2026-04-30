@@ -353,6 +353,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       noSolutionsTable:
         'There are no solutions or IT systems selected to implement this milestone.',
       solution: 'Solution',
+      editSolution: 'Edit solution',
       status: 'Status',
       selectedSolutionCount_other: '{{count}} selected solutions',
       selectedSolutionCount: '{{count}} selected solution',

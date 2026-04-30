@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import {
   Controller,
   FormProvider,
@@ -64,6 +70,7 @@ import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
+import { EditMTOSolutionContext } from 'contexts/EditMTOSolutionContext';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -177,6 +184,10 @@ const EditMilestoneForm = ({
   const [notesToUpdate, setNotesToUpdate] = useState<MilestoneNoteType[]>([]);
 
   const { setErrorMeta } = useErrorMessage();
+
+  const { openEditSolutionModal, setSolutionID } = useContext(
+    EditMTOSolutionContext
+  );
 
   const {
     data,
@@ -792,7 +803,28 @@ const EditMilestoneForm = ({
     () => [
       {
         Header: modelToOperationsMiscT('modal.editMilestone.solution'),
-        accessor: 'name'
+        accessor: 'name',
+        Cell: ({ row }: { row: Row<SolutionType> }) => {
+          return (
+            <>
+              <span className="display-block">{row.original.name}</span>
+              <Button
+                type="button"
+                unstyled
+                className="margin-top-0"
+                onClick={() => {
+                  setSolutionID(row.original.id);
+                  openEditSolutionModal({
+                    selectedSolutionID: row.original.id
+                  });
+                }}
+              >
+                {modelToOperationsMiscT('modal.editMilestone.editSolution')}
+                <Icon.ArrowForward aria-hidden />
+              </Button>
+            </>
+          );
+        }
       },
       {
         Header: modelToOperationsMiscT('modal.editMilestone.status'),
@@ -827,7 +859,7 @@ const EditMilestoneForm = ({
         }
       }
     ],
-    [modelToOperationsMiscT]
+    [modelToOperationsMiscT, openEditSolutionModal, setSolutionID]
   );
 
   const {
