@@ -33,7 +33,18 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOCategoryCreate(store, logger, category)
+	created, err := storage.MTOCategoryCreate(store, logger, category)
+	if err != nil {
+		return nil, err
+	}
+
+	// MTO task progression: creating MTO data counts as starting the MTO
+	err = UpdatePlanTaskStatusOnMTOStarted(store, logger, modelPlanID, principal, store)
+	if err != nil {
+		return nil, err
+	}
+
+	return created, nil
 }
 
 // MTOCategoryDelete removes an MTOCategory or SubCategory
@@ -56,6 +67,11 @@ func MTOCategoryDelete(logger *zap.Logger, principal authentication.Principal, s
 
 		if err = storage.MTOCategoryDelete(tx, principalAccount.ID, id); err != nil {
 			return fmt.Errorf("unable to delete MTO category. Err %w", err)
+		}
+
+		// MTO task regression: recalculate task after deleting MTO data.
+		if err = UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+			return fmt.Errorf("unable to recalculate MTO task after deleting category. Err %w", err)
 		}
 
 		return nil
@@ -83,7 +99,17 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOCategoryUpdate(store, logger, existing)
+	updated, err := storage.MTOCategoryUpdate(store, logger, existing)
+	if err != nil {
+		return nil, err
+	}
+
+	// MTO task progression: editing category data counts as starting the MTO
+	err = UpdatePlanTaskStatusOnMTOStarted(store, logger, updated.ModelPlanID, principal, store)
+	if err != nil {
+		return nil, err
+	}
+	return updated, nil
 }
 
 // MTOCategoryReorder updates the position of an MTOCategory or SubCategory
@@ -132,7 +158,17 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	if err != nil {
 		return nil, err
 	}
-	return storage.MTOCategoryUpdate(store, logger, existing)
+	updated, err := storage.MTOCategoryUpdate(store, logger, existing)
+	if err != nil {
+		return nil, err
+	}
+
+	// MTO task progression: editing category data counts as starting the MTO
+	err = UpdatePlanTaskStatusOnMTOStarted(store, logger, updated.ModelPlanID, principal, store)
+	if err != nil {
+		return nil, err
+	}
+	return updated, nil
 }
 
 type mtoStandardCategory struct {
@@ -234,6 +270,12 @@ func MTOCreateStandardCategories(ctx context.Context, logger *zap.Logger, princi
 					return err
 				}
 			}
+		}
+
+		// MTO task progression: creating standard category data counts as starting the MTO
+		err := UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		if err != nil {
+			return err
 		}
 
 		return nil
