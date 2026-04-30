@@ -45,6 +45,7 @@ import opsEvalAndLearningRoutes from 'features/ModelPlan/TaskList/OpsEvalAndLear
 import participantsAndProvidersRoutes from 'features/ModelPlan/TaskList/ParticipantsAndProviders';
 import paymentRoutes from 'features/ModelPlan/TaskList/Payment';
 import { prepareForClearanceRoutes } from 'features/ModelPlan/TaskList/PrepareForClearance';
+import Tasks from 'features/ModelPlan/Tasks';
 import Timeline from 'features/ModelPlan/Timeline';
 import Unfollow from 'features/ModelPlan/Unfollow';
 import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
@@ -278,6 +279,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <CollaborationArea />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/tasks',
+        element: (
+          <ProtectedRoute>
+            <Tasks />
           </ProtectedRoute>
         )
       },

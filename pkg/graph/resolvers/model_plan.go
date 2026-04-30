@@ -97,6 +97,19 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		// Create default tasks for the model plan
+		for _, key := range []models.PlanTaskKey{
+			models.PlanTaskKeyModelPlan,
+			models.PlanTaskKeyMto,
+			models.PlanTaskKeyDataExchange,
+		} {
+			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, key, models.PlanTaskStatusToDo)
+			_, err = storage.PlanTaskCreate(tx, logger, task)
+			if err != nil {
+				return nil, err
+			}
+		}
+
 		baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
 
 		// Create a default plan basics object
@@ -321,6 +334,8 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
+	oldStatus := existingPlan.Status
+
 	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
@@ -330,6 +345,40 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 	if err != nil {
 		return nil, err
 	}
+
+	// Plan tasks: CLEARED model status completes MODEL_PLAN and DATA_EXCHANGE tasks
+	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
+		updErr := UpdatePlanTaskStatusOnModelCleared(store, logger, retPlan.ID, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+	}
+
+	// Plan tasks: Regress DATA_EXCHANGE and MODEL_PLAN tasks if model status moves backwards from CLEARED
+	if oldStatus == models.ModelStatusCleared &&
+		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) {
+		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(store, logger, retPlan.ID, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+	}
+
+	// Plan tasks: ACTIVE model status completes MTO task
+	if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
+		updErr := UpdatePlanTaskStatusOnModelActive(store, logger, retPlan.ID, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+	}
+	// Plan tasks: Regress MTO task if model status moves backwards from ACTIVE
+	if oldStatus == models.ModelStatusActive &&
+		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusActive) {
+		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(store, logger, retPlan.ID, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+	}
+
 	return retPlan, err
 
 }
