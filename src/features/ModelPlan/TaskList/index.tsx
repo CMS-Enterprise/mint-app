@@ -351,7 +351,7 @@ const TaskList = () => {
                           {taskListSections[key].modifiedDts && (
                             <div
                               data-testid="most-recent-edit"
-                              className="display-inline tablet:display-flex flex-align-center margin-top-1 margin-bottom-2"
+                              className="display-flex flex-align-center margin-top-1 margin-bottom-2"
                             >
                               <span className="text-base margin-right-1">
                                 {t(lastEditI18Key, {
@@ -361,7 +361,6 @@ const TaskList = () => {
                                   )
                                 })}
                               </span>
-
                               {taskListSections[key].__typename !==
                                 'PrepareForClearance' &&
                                 taskListSections[key].modifiedByUserAccount && (

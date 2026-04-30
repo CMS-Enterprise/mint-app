@@ -157,7 +157,10 @@ const AdditionalQuestionnaires = () => {
                     >
                       {questionnaireSections[key].modifiedDts &&
                         questionnaireSections[key].modifiedByUserAccount && (
-                          <div className="display-inline tablet:display-flex flex-align-center margin-top-1 margin-bottom-2">
+                          <div
+                            data-testid="most-recent-edit"
+                            className="display-flex flex-align-center margin-top-1 margin-bottom-2"
+                          >
                             <span className="text-base margin-right-1">
                               {additionalQuestionnairesT('mostRecentEdit', {
                                 date: formatDateLocal(

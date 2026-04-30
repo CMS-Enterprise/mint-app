@@ -122,8 +122,12 @@ export const questionnairesMockData: QuestionnairesType = {
     __typename: 'PlanDataExchangeApproach',
     id: '123',
     status: DataExchangeApproachStatus.IN_PROGRESS,
-    modifiedDts: null,
-    modifiedByUserAccount: null
+    modifiedDts: '2026-03-30T18:22:08.557193Z',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      id: '123',
+      commonName: 'Test Mint'
+    }
   },
   iddocQuestionnaire: {
     __typename: 'IDDOCQuestionnaire',
