@@ -38,7 +38,6 @@ import {
   MtoMilestoneResponsibleComponent,
   MtoMilestoneStatus,
   MtoRiskIndicator,
-  MtoSolution,
   MtoSolutionStatus,
   useCreateMtoMilestoneNoteMutation,
   useDeleteMtoMilestoneMutation,
@@ -114,6 +113,7 @@ type FormValues = {
 
 type TableSolutionType = {
   name: string;
+  id: string;
   status: MtoSolutionStatus;
   riskIndicator: MtoRiskIndicator;
 };
@@ -223,31 +223,11 @@ const EditMilestoneForm = ({
 
   // Extracts all solutions from the query
   const allSolutions = useMemo(() => {
-    return (
-      allSolutionData?.modelPlan.mtoMatrix || {
-        __typename: 'ModelsToOperationMatrix',
-        commonSolutions: [],
-        solutions: []
-      }
-    );
+    const { commonSolutions = [], solutions = [] } =
+      allSolutionData?.modelPlan.mtoMatrix || {};
+
+    return { commonSolutions, solutions };
   }, [allSolutionData]);
-
-  // Combine all solutions from both custom and common solutions
-  const combinedSolutions = useMemo(
-    () => [
-      ...allSolutions?.solutions,
-      ...(allSolutions?.commonSolutions as MtoSolution[])
-    ],
-    [allSolutions]
-  );
-
-  // Checks to see if a solution is a custom solution by its ID
-  const isCustomSolution = useCallback(
-    (id: string) => {
-      return combinedSolutions.find(solution => solution.id === id);
-    },
-    [combinedSolutions]
-  );
 
   // Format solution for table from either a MtoCommonSolutionKey or an UUID or SolutionType
   const formatSolutionForTable = useCallback(
@@ -255,30 +235,30 @@ const EditMilestoneForm = ({
       solution: SolutionType | MtoCommonSolutionKey | string
     ): TableSolutionType => {
       if (typeof solution === 'string') {
+        const isCommonSolution = solution in MtoCommonSolutionKey;
+
+        // If common solution, find by key, otherwise find by id
+        const solutionData = allSolutions.solutions.find(({ key, id }) =>
+          isCommonSolution ? key === solution : id === solution
+        );
+
         return {
-          name: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)?.name || ''
-            : combinedSolutions.find(sol => sol.key === solution)?.name || '',
-          status: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)?.status ||
-              MtoSolutionStatus.NOT_STARTED
-            : combinedSolutions.find(sol => sol.key === solution)?.status ||
-              MtoSolutionStatus.NOT_STARTED,
-          riskIndicator: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)
-                ?.riskIndicator || MtoRiskIndicator.ON_TRACK
-            : combinedSolutions.find(sol => sol.key === solution)
-                ?.riskIndicator || MtoRiskIndicator.ON_TRACK
+          name: solutionData?.name || '',
+          id: solutionData?.id || '',
+          status: solutionData?.status || MtoSolutionStatus.NOT_STARTED,
+          riskIndicator:
+            solutionData?.riskIndicator || MtoRiskIndicator.ON_TRACK
         };
       }
 
       return {
         name: solution.name || '',
+        id: solution.id,
         status: solution.status,
         riskIndicator: solution.riskIndicator || MtoRiskIndicator.ON_TRACK
       };
     },
-    [combinedSolutions, isCustomSolution]
+    [allSolutions]
   );
 
   // Common solution state
