@@ -9,6 +9,34 @@ type CSVLabel = {
   value: string;
 };
 
+const csvFieldsBasicModelInfo = (t: TFunction): (CSVLabel | string)[] => [
+  'modelName',
+  {
+    label: `${t<string, {}, string>('modelPlanMisc:csvTitleAbbreviation')}`,
+    value: 'abbreviation'
+  },
+  {
+    label: `${t<string, {}, string>('collaboratorsMisc:modelLeadCsvTitle')}`,
+    value: 'collaborators.userAccount.commonName'
+  },
+  {
+    label: `${t<string, {}, string>('modelPlanMisc:csvTitleCmsCmmi')}`,
+    value: 'basics.cmsCmmi'
+  },
+  {
+    label: `${t<string, {}, string>('modelPlanMisc:csvTitleStatus')}`,
+    value: 'status'
+  },
+  {
+    label: `${t<string, {}, string>('modelPlanMisc:csvTitleStartDate')}`,
+    value: 'timeline.performancePeriodStarts'
+  },
+  {
+    label: `${t<string, {}, string>('modelPlanMisc:csvTitleEndDate')}`,
+    value: 'timeline.performancePeriodEnds'
+  }
+];
+
 const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
   {
     label: t<string, {}, string>('modelPlanMisc:modelID'),
@@ -656,13 +684,14 @@ const csvFieldsMTO = (t: TFunction): (CSVLabel | string)[] => [
 
 const csvFields = (
   t: TFunction
-): Record<ModelShareSection, (CSVLabel | string)[]> => {
+): Record<ModelShareSection | 'basicModelInfo', (CSVLabel | string)[]> => {
   return {
     ALL: [
       ...csvFieldsModelPlan(t),
       ...csvFieldsModeTimeline(),
       ...csvFieldsMTO(t)
     ],
+    basicModelInfo: csvFieldsBasicModelInfo(t),
     [ModelShareSection.MODEL_PLAN]: csvFieldsModelPlan(t),
     [ModelShareSection.TIMELINE]: csvFieldsModeTimeline(),
     [ModelShareSection.MTO_ALL]: csvFieldsMTO(t),

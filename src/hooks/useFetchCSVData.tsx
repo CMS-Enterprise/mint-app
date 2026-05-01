@@ -16,6 +16,8 @@ import {
   GetAllSingleModelDataQuery,
   GetAllSingleModelDataQueryHookResult,
   ModelShareSection,
+  ModelStatus,
+  TeamRole,
   TranslationDataType,
   useGetAllModelDataLazyQuery,
   useGetAllSingleModelDataLazyQuery
@@ -449,28 +451,68 @@ const flattenMTOData = (data: CSVModelPlanType[]) => {
   return flattenedData;
 };
 
+// Used for basic model plan report
+// Filters out none active model plans, collaborators that's not model leads, and combine components with cmmi groups
+const filterBasicModelPlanData = (data: CSVModelPlanType[]) => {
+  const activeModelPlans = data.filter(
+    modelPlan =>
+      modelPlan.status !== ModelStatus.PAUSED &&
+      modelPlan.status !== ModelStatus.CANCELED &&
+      modelPlan.status !== ModelStatus.ENDED
+  );
+
+  return activeModelPlans.map(modelPlan => {
+    const teamLeads = modelPlan.collaborators.filter(collaborator =>
+      collaborator.teamRoles.includes(TeamRole.MODEL_LEAD)
+    );
+
+    return {
+      ...modelPlan,
+      basics: {
+        ...modelPlan.basics,
+        cmsCmmi: [
+          ...modelPlan.basics.cmsCenters,
+          ...modelPlan.basics.cmmiGroups
+        ]
+      },
+      collaborators: teamLeads
+    };
+  });
+};
+
 const csvFormatter = (
   csvData: CSVModelPlanType[],
   allPlanTranslation: any,
-  exportSection: FilterGroupType | ModelShareSection
+  exportSection: FilterGroupType | ModelShareSection | 'basicModelInfo'
 ) => {
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
+    const isBasicModelInfo = exportSection === 'basicModelInfo';
 
-    const flattenedData = flattenMTOData(csvData);
+    const flattenedData = isBasicModelInfo
+      ? filterBasicModelPlanData(csvData)
+      : flattenMTOData(csvData);
 
     const selectedCSVFields = isFilterGroup(exportSection)
       ? selectFilteredFields(allPlanTranslation, exportSection)
       : csvFields(i18next.t)[exportSection];
 
-    const modelName = csvData.length > 1 ? 'All models' : csvData[0].modelName;
+    let modelName: string;
+
+    if (csvData.length > 1) {
+      modelName = isBasicModelInfo ? 'Basic model information' : 'All models';
+    } else {
+      modelName = csvData[0].modelName;
+    }
 
     const modelNameFormatted = modelName.replace(/ /g, '_');
 
     const exportSectionFormatted =
       csvData.length > 1 ? '' : `-${exportSection.toUpperCase()}`;
 
-    const exportFileName = `MINT-${modelNameFormatted}${exportSectionFormatted}.csv`;
+    const exportFileName = isBasicModelInfo
+      ? `MINT-${modelNameFormatted}.csv`
+      : `MINT-${modelNameFormatted}${exportSectionFormatted}.csv`;
 
     const parser = new Parser({
       fields: selectedCSVFields,
