@@ -138,7 +138,6 @@ type QuestionnaireListItemProps = {
   description: string;
   status: QuestionnaireListStatusType;
   testId: string;
-  lastUpdated?: string | null;
 };
 
 const QuestionnaireListItem = ({
@@ -146,13 +145,8 @@ const QuestionnaireListItem = ({
   heading,
   description,
   status,
-  testId,
-  lastUpdated
+  testId
 }: QuestionnaireListItemProps) => {
-  const { t: additionalQuestionnairesT } = useTranslation(
-    'additionalQuestionnaires'
-  );
-
   return (
     <li className="display-flex padding-bottom-4" data-testid={testId}>
       <div className="width-full">
@@ -160,14 +154,6 @@ const QuestionnaireListItem = ({
           <h3 className="margin-top-0 margin-bottom-1">{heading}</h3>
           <span className="display-flex flex-column flex-align-end">
             <QuestionnaireListStatusTag status={status} />
-            <div className="additional-questionnaires-list__last-updated-status line-height-body-4 text-base">
-              {lastUpdated && (
-                <p className="margin-y-0">
-                  {additionalQuestionnairesT('lastUpdated')}
-                </p>
-              )}
-              <p className="margin-y-0">{lastUpdated}</p>
-            </div>
           </span>
         </div>
 

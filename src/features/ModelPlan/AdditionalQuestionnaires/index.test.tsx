@@ -56,6 +56,12 @@ describe('AdditionalQuestionnaires', () => {
     expect(
       screen.getByTestId('data-exchange-approach-button')
     ).toBeInTheDocument();
+    expect(screen.getByTestId('most-recent-edit')).toHaveTextContent(
+      /Most recent edit on 03\/30\/2026 by/
+    );
+    expect(screen.getByTestId('most-recent-edit')).toHaveTextContent(
+      /Test Mint/i
+    );
   });
 
   it('match snapshot', async () => {
