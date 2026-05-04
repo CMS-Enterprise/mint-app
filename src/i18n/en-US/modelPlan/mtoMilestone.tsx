@@ -141,7 +141,7 @@ export const mtoMilestone: TranslationMTOMilestoneCustom = {
     label: 'Please describe',
     exportLabel: 'Milestone facilitated by (other)',
     sublabel:
-      'Because you selected “Other” above, please provide a role or title.',
+      'Because you selected “Other” above, please provide a role or group.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.045
