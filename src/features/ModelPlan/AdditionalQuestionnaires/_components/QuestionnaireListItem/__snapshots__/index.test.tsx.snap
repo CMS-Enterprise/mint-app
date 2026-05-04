@@ -28,13 +28,6 @@ exports[`QuestionnaireListItem > match snapshot 1`] = `
               Ready to start
             </span>
           </div>
-          <div
-            class="additional-questionnaires-list__last-updated-status line-height-body-4 text-base"
-          >
-            <p
-              class="margin-y-0"
-            />
-          </div>
         </span>
       </div>
       <div

@@ -5,6 +5,7 @@
   &__task-row {
     @media screen and (max-width: $mobile) {
       @include u-flex('column');
+      margin-bottom: 1rem !important;
     }
   }
 

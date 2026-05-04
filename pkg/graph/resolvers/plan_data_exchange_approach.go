@@ -48,8 +48,10 @@ func PlanDataExchangeApproachUpdate(
 			}
 
 			// If (and only if) we're in the "Ready" status should we should (at least) update to "In Progress"
+			deaChangedToInProgress := false
 			if existing.Status == models.DataExchangeApproachStatusReady {
 				existing.Status = models.DataExchangeApproachStatusInProgress
+				deaChangedToInProgress = true
 			}
 
 			// Variable to track whether or not this update mutation caused the DEA Section
@@ -58,6 +60,7 @@ func PlanDataExchangeApproachUpdate(
 			// in "Complete" and pass isDataExchangeApproachComplete: true, we don't want to set this var
 			// to true)
 			deaChangedToComplete := false
+			deaChangedFromComplete := false
 
 			// Check if the 'changes' map contains the 'isDataExchangeApproachComplete' key and that the
 			// 'isDataExchangeApproachComplete' is different from the existing value
@@ -74,7 +77,8 @@ func PlanDataExchangeApproachUpdate(
 					existing.MarkedCompleteBy = &principal.Account().ID
 					existing.MarkedCompleteDts = helpers.PointerTo(time.Now().UTC())
 					existing.Status = models.DataExchangeApproachStatusComplete
-				} else if !isSettingToComplete {
+				} else if existing.MarkedCompleteDts != nil && !isSettingToComplete {
+					deaChangedFromComplete = true
 					existing.MarkedCompleteBy = nil
 					existing.MarkedCompleteDts = nil
 					existing.Status = models.DataExchangeApproachStatusInProgress
@@ -93,6 +97,33 @@ func PlanDataExchangeApproachUpdate(
 
 			// Update the plan data exchange approach
 			retDataExchangeApproach, err := storage.PlanDataExchangeApproachUpdate(tx, logger, existing)
+			if err != nil {
+				return nil, err
+			}
+
+			// DATA_EXCHANGE task progression: when approach is started, mark DATA_EXCHANGE task IN_PROGRESS
+			if deaChangedToInProgress {
+				updErr := UpdatePlanTaskStatusOnDataExchangeApproachStarted(tx, logger, existing.ModelPlanID, principal, store)
+				if updErr != nil {
+					return nil, updErr
+				}
+			}
+
+			// DATA_EXCHANGE task progression: when approach is marked COMPLETE, mark DATA_EXCHANGE task COMPLETE
+			if deaChangedToComplete {
+				updErr := UpdatePlanTaskStatusOnDataExchangeApproachComplete(tx, logger, existing.ModelPlanID, principal, store)
+				if updErr != nil {
+					return nil, updErr
+				}
+			}
+			// DATA_EXCHANGE task regression: when approach is un-marked COMPLETE, recalculate task status;
+			// typically IN_PROGRESS unless model status is CLEARED.
+			if deaChangedFromComplete {
+				updErr := UpdatePlanTaskStatusOnDataExchangeApproachNoLongerComplete(tx, logger, existing.ModelPlanID, principal, store)
+				if updErr != nil {
+					return nil, updErr
+				}
+			}
 
 			if deaChangedToComplete {
 				TrySendDataExchangeApproachNotifications(
@@ -106,7 +137,7 @@ func PlanDataExchangeApproachUpdate(
 				)
 			}
 
-			return retDataExchangeApproach, err
+			return retDataExchangeApproach, nil
 		},
 	)
 

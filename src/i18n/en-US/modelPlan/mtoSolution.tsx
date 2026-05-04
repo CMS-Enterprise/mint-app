@@ -181,7 +181,7 @@ export const mtoSolution: TranslationMTOSolutionCustom = {
     label: 'Please describe',
     exportLabel: 'Solution facilitated by (other)',
     sublabel:
-      'Because you selected “Other” above, please provide a role or title.',
+      'Because you selected “Other” above, please provide a role or group.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.85

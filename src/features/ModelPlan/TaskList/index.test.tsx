@@ -86,7 +86,11 @@ describe('The Model Plan Task List', () => {
     basics: {
       __typename: 'PlanBasics',
       id: '123',
-      modifiedDts: null,
+      modifiedDts: '2026-04-30T18:22:08.557193Z',
+      modifiedByUserAccount: {
+        __typename: 'UserAccount',
+        commonName: 'MINT Doe'
+      },
       readyForClearanceDts: '2022-05-12T15:01:39.190679Z',
       status: 'READY'
     },
@@ -433,7 +437,7 @@ describe('The Model Plan Task List', () => {
   });
 
   describe('Statuses', () => {
-    it('renders proper buttons for Model Basics', async () => {
+    it('renders proper buttons and moset recent edit for Model Basics', async () => {
       const router = createMemoryRouter(
         [
           {
@@ -468,6 +472,14 @@ describe('The Model Plan Task List', () => {
       await waitFor(() => {
         expect(screen.getAllByTestId('tasklist-tag')[0]).toHaveClass(
           'bg-info-light'
+        );
+
+        expect(screen.getByTestId('most-recent-edit')).toHaveTextContent(
+          /Most recent edit on 04\/30\/2026 by/
+        );
+
+        expect(screen.getByTestId('most-recent-edit')).toHaveTextContent(
+          /mint doe/i
         );
       });
     });

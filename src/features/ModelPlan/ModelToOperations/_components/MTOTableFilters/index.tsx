@@ -103,6 +103,9 @@ const MTOTableFilters = ({
           ))}
         </Select>
       </div>
+
+      <div className="border-left-2px border-base-light margin-x-1 height-3" />
+
       <Checkbox
         id="mto-hide-category-rows"
         className="margin-bottom-1"
