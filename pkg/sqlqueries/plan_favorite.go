@@ -17,12 +17,16 @@ var planFavoriteGetCollectionByUserIDSQL string
 //go:embed SQL/plan_favorite/get_unique_user_id.sql
 var planFavoriteGetUniqueUserIDsSQL string
 
+//go:embed SQL/plan_favorite/get_LOADER.sql
+var planFavoriteGetLOADERSQL string
+
 type planFavoriteScripts struct {
 	Create                string
 	Delete                string
 	Get                   string
 	GetCollectionByUserID string
 	GetUniqueUserIDs      string
+	GetLOADER             string
 }
 
 // PlanFavorite houses all the sql for getting data for plan favorite from the database
@@ -32,4 +36,5 @@ var PlanFavorite = planFavoriteScripts{
 	Get:                   planFavoriteGetSQL,
 	GetCollectionByUserID: planFavoriteGetCollectionByUserIDSQL,
 	GetUniqueUserIDs:      planFavoriteGetUniqueUserIDsSQL,
+	GetLOADER:             planFavoriteGetLOADERSQL,
 }
