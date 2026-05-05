@@ -55,7 +55,7 @@ type NestedTranslation = Record<string, string | string[]>;
 
 export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
   csvTitle: 'Collaborator',
-  modelLeadCsvTitle: 'Model lead(s)',
+  modelLeadCsvTitle: 'Model Lead(s)',
   EUAID: 'EUA ID',
   email: 'Email',
   roles: 'Role(s)',

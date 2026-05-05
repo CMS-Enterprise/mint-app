@@ -19,10 +19,8 @@ const csvFieldsBasicModelInfo = (t: TFunction): (CSVLabel | string)[] => [
     label: `${t<string, {}, string>('collaboratorsMisc:modelLeadCsvTitle')}`,
     value: 'collaborators.userAccount.commonName'
   },
-  {
-    label: `${t<string, {}, string>('modelPlanMisc:csvTitleCmsCmmi')}`,
-    value: 'basics.cmsCmmi'
-  },
+  'basics.cmsCenters',
+  'basics.cmmiGroups',
   {
     label: `${t<string, {}, string>('modelPlanMisc:csvTitleStatus')}`,
     value: 'status'

@@ -129,7 +129,6 @@ export const modelPlanMisc: Record<string, string> = {
   updateButton: 'Update status',
   return: 'Don’t update status and return to model collaboration area',
   csvTitleAbbreviation: 'Model short name',
-  csvTitleCmsCmmi: 'Component and CMMI group',
   csvTitleStatus: 'Model status',
   csvTitleStartDate: 'Model start date',
   csvTitleEndDate: 'Model end date'

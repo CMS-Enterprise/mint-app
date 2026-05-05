@@ -134,7 +134,7 @@ export const headerFormatter = (dataField: string, allPlanTranslation: any) => {
 
   // js2on@csv does not like commas in the header, and instead parses them into a new column, offsetting data
   translation = translation.replace(
-    /[^?/.a-zA-Z ]/g, // TODO:  figure out why comma sanitization of string is needed to render some headers correctly
+    /[^?/.a-zA-Z ()]/g, // TODO:  figure out why comma sanitization of string is needed to render some headers correctly
     ''
   );
 
@@ -452,7 +452,7 @@ const flattenMTOData = (data: CSVModelPlanType[]) => {
 };
 
 // Used for basic model plan report
-// Filters out none active model plans, collaborators that's not model leads, and combine components with cmmi groups
+// Filters out none active model plans, collaborators that's not model leads
 const filterBasicModelPlanData = (data: CSVModelPlanType[]) => {
   const activeModelPlans = data.filter(
     modelPlan =>
@@ -468,13 +468,6 @@ const filterBasicModelPlanData = (data: CSVModelPlanType[]) => {
 
     return {
       ...modelPlan,
-      basics: {
-        ...modelPlan.basics,
-        cmsCmmi: [
-          ...modelPlan.basics.cmsCenters,
-          ...modelPlan.basics.cmmiGroups
-        ]
-      },
       collaborators: teamLeads
     };
   });
@@ -533,6 +526,7 @@ const csvFormatter = (
         }
       }
     });
+
     const csv = parser.parse(flattenedData);
     downloadFile(csv, exportFileName);
   } catch (err) {
