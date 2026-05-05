@@ -38,7 +38,7 @@ type SingleModelPlanType = GetAllSingleModelDataQuery['modelPlan'];
 interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
 
 type FilterGroupType = keyof typeof filterGroupKey;
-type ExportSection = FilterGroup | ModelShareSection;
+type ExportSection = FilterGroup | ModelShareSection | 'basicModelInfo';
 
 const isFilterGroup = (
   exportSection: any
@@ -476,7 +476,7 @@ const filterBasicModelPlanData = (data: CSVModelPlanType[]) => {
 const csvFormatter = (
   csvData: CSVModelPlanType[],
   allPlanTranslation: any,
-  exportSection: FilterGroupType | ModelShareSection | 'basicModelInfo'
+  exportSection: ExportSection
 ) => {
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
