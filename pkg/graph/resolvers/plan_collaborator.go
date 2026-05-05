@@ -14,6 +14,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -167,8 +168,12 @@ func PlanCollaboratorGetByID(ctx context.Context, id uuid.UUID) (*models.PlanCol
 	return loaders.PlanCollaborators.ByID.Load(ctx, id)
 }
 
-// IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.
-func IsPlanCollaborator(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
-	// Future Enhancement: Consider making this a dataloader.
-	return store.CheckIfCollaborator(logger, principal.Account().ID, modelPlanID)
+// IsPlanCollaborator checks if the current principal is a collaborator on a model plan using a DataLoader.
+func IsPlanCollaborator(ctx context.Context, modelPlanID uuid.UUID) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	key := storage.IsCollaboratorKey{
+		ModelPlanID: modelPlanID,
+		UserID:      principal.Account().ID,
+	}
+	return loaders.AccessControl.IsCollaborator.Load(ctx, key)
 }

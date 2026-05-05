@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -307,7 +308,9 @@ func (suite *ResolverSuite) TestPlanCollaboratorDeleteLastModelLead() {
 func (suite *ResolverSuite) TestIsPlanCollaborator() {
 
 	plan := suite.createModelPlan("Plan For Milestones")
-	isCollab, err := IsPlanCollaborator(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, plan.ID)
+
+	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
+	isCollab, err := IsPlanCollaborator(ctx, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(true, isCollab)
 
@@ -315,9 +318,36 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 	assessment.JobCodeASSESSMENT = true
 	assessment.JobCodeUSER = true
 
-	isCollabFalseCase, err := IsPlanCollaborator(suite.testConfigs.Logger, assessment, suite.testConfigs.Store, plan.ID)
+	assessmentCtx := appcontext.WithPrincipal(suite.testConfigs.Context, assessment)
+	isCollabFalseCase, err := IsPlanCollaborator(assessmentCtx, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(false, isCollabFalseCase)
+}
+
+func (suite *ResolverSuite) TestIsPlanCollaboratorDataLoader() {
+	plan1 := suite.createModelPlan("Plan For Collab Check 1")
+	plan2 := suite.createModelPlan("Plan For Collab Check 2")
+
+	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
+	g, ctx := errgroup.WithContext(ctx)
+	g.Go(func() error {
+		return verifyIsPlanCollaboratorLoader(ctx, plan1.ID, true)
+	})
+	g.Go(func() error {
+		return verifyIsPlanCollaboratorLoader(ctx, plan2.ID, true)
+	})
+	suite.NoError(g.Wait())
+}
+
+func verifyIsPlanCollaboratorLoader(ctx context.Context, modelPlanID uuid.UUID, expected bool) error {
+	isCollab, err := IsPlanCollaborator(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+	if isCollab != expected {
+		return fmt.Errorf("IsCollaborator for model plan %s: got %v, expected %v", modelPlanID, isCollab, expected)
+	}
+	return nil
 }
 
 func (suite *ResolverSuite) TestPlanCollaboratorGetByModelPlanIDDataLoader() {

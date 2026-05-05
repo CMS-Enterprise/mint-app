@@ -93,10 +93,7 @@ func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPla
 
 // IsCollaborator is the resolver for the isCollaborator field.
 func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return IsPlanCollaborator(logger, principal, r.store, obj.ID)
+	return IsPlanCollaborator(ctx, obj.ID)
 }
 
 // Crs is the resolver for the crs field.
