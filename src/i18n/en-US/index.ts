@@ -88,6 +88,7 @@ import prepareForClearance from './modelPlan/prepareForClearance';
 import replies from './modelPlan/replies';
 import solutions from './modelPlan/solutions';
 import modelPlanTaskList from './modelPlan/taskList';
+import tasks from './modelPlan/tasks';
 import tdls from './modelPlan/tdls';
 import { timeline, timelineMisc } from './modelPlan/timeline';
 import filterView from './readOnly/filterView';
@@ -223,7 +224,8 @@ const enUS = {
   tableAndPagination,
   termsAndConditions,
   externalLinkModal,
-  analytics
+  analytics,
+  tasks
 };
 
 export default enUS;

@@ -122,8 +122,12 @@ export const questionnairesMockData: QuestionnairesType = {
     __typename: 'PlanDataExchangeApproach',
     id: '123',
     status: DataExchangeApproachStatus.IN_PROGRESS,
-    modifiedDts: null,
-    modifiedByUserAccount: null
+    modifiedDts: '2026-03-30T18:22:08.557193Z',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      id: '123',
+      commonName: 'Test Mint'
+    }
   },
   iddocQuestionnaire: {
     __typename: 'IDDOCQuestionnaire',
@@ -185,6 +189,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
   id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
   status: ModelStatus.PLAN_DRAFT,
   taskListStatus: TaskStatus.IN_PROGRESS,
+  tasks: [],
   modelName: 'Test',
   createdDts: '2022-05-12T15:01:39.190679Z',
   mostRecentEdit: {

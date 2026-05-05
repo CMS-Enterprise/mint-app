@@ -58,7 +58,7 @@ const additionalQuestionnaires = {
     continue: 'Continue',
     edit: 'Edit'
   },
-  lastUpdated: 'Last updated',
+  mostRecentEdit: 'Most recent edit on {{-date}} by ',
   saveAndReturnToQuestionnaires: 'Save and return to questionnaires'
 };
 
