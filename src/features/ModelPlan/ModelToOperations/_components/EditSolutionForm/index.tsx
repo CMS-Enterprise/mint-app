@@ -128,6 +128,7 @@ const EditSolutionForm = ({
   const params = new URLSearchParams(location.search);
 
   const editSolutionID = params.get('edit-solution');
+  const sourceParam = params.get('source');
 
   const shouldScrollToBottom = params.get('scroll-to-bottom') === 'true';
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -417,16 +418,20 @@ const EditSolutionForm = ({
           disabled={(isSubmitting || !isDirty) && !unsavedSolutionChanges}
           className="margin-bottom-2"
         >
-          {modelToOperationsMiscT('modal.editSolution.saveChanges')}
+          {modelToOperationsMiscT('modal.editSolution.saveChanges', {
+            context: sourceParam || ''
+          })}
         </Button>
-        <Button
-          type="button"
-          disabled={isSubmitting}
-          className="bg-error"
-          onClick={() => setIsModalOpen(true)}
-        >
-          {modelToOperationsMiscT('modal.editSolution.removeSolution')}
-        </Button>
+        {!sourceParam && (
+          <Button
+            type="button"
+            disabled={isSubmitting}
+            className="bg-error"
+            onClick={() => setIsModalOpen(true)}
+          >
+            {modelToOperationsMiscT('modal.editSolution.removeSolution')}
+          </Button>
+        )}
       </div>
     );
   }, [
@@ -436,7 +441,8 @@ const EditSolutionForm = ({
     handleSubmit,
     setFooter,
     onSubmit,
-    modelToOperationsMiscT
+    modelToOperationsMiscT,
+    sourceParam
   ]);
 
   const columns: Column<MilestoneType>[] = useMemo(
@@ -661,6 +667,17 @@ const EditSolutionForm = ({
               )}
             </div>
 
+            {milestoneIDs.length > 1 && (
+              <Alert type="warning" className="margin-y-4" slim>
+                {modelToOperationsMiscT(
+                  'modal.editSolution.editMultipleMilestonesAlert',
+                  {
+                    count: milestoneIDs.length
+                  }
+                )}
+              </Alert>
+            )}
+
             <Fieldset disabled={loading} className="margin-bottom-8">
               <p className="margin-top-0 margin-bottom-3 text-base">
                 <Trans
@@ -770,11 +787,22 @@ const EditSolutionForm = ({
                   <Controller
                     name="pocName"
                     control={control}
+                    rules={{
+                      required: modelToOperationsMiscT('validation.fillOut'),
+                      validate: value => {
+                        const trimmedValue = value.trim();
+                        if (!trimmedValue) {
+                          return modelToOperationsMiscT('validation.fillOut');
+                        }
+                        return true;
+                      }
+                    }}
                     render={({ field: { ref, ...field } }) => (
                       <FormGroup className="margin-top-0 margin-bottom-2">
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="mint-body-normal maxw-none margin-bottom-1"
+                          className="mint-body-normal maxw-none"
+                          requiredMarker
                         >
                           {modelToOperationsMiscT(
                             'modal.solution.label.pocName'
@@ -800,6 +828,14 @@ const EditSolutionForm = ({
                     name="pocEmail"
                     control={control}
                     rules={{
+                      required: modelToOperationsMiscT('validation.fillOut'),
+                      validate: value => {
+                        const trimmedValue = value.trim();
+                        if (!trimmedValue) {
+                          return modelToOperationsMiscT('validation.fillOut');
+                        }
+                        return true;
+                      },
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: `${modelToOperationsMiscT('modal.solution.label.emailError')}`
@@ -809,7 +845,8 @@ const EditSolutionForm = ({
                       <FormGroup className="margin-top-0 margin-bottom-2">
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="mint-body-normal maxw-none margin-bottom-1"
+                          className="mint-body-normal maxw-none"
+                          requiredMarker
                         >
                           {modelToOperationsMiscT(
                             'modal.solution.label.pocEmail'

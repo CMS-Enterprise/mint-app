@@ -8,6 +8,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import EditSolutionForm from 'features/ModelPlan/ModelToOperations/_components/EditSolutionForm';
 
 import Modal from 'components/Modal';
@@ -17,10 +18,12 @@ import Sidepanel from 'components/Sidepanel';
 interface EditMTOSolutionContextType {
   openEditSolutionModal: ({
     selectedSolutionID,
-    scrollToBottom
+    scrollToBottom,
+    source
   }: {
     selectedSolutionID: string;
     scrollToBottom?: boolean;
+    source?: 'milestone';
   }) => void;
   setSolutionID: (solutionID: string) => void;
 }
@@ -42,6 +45,7 @@ const EditMTOSolutionProvider = ({
   const [params, setParams] = useSearchParams();
 
   const solutionParam = params.get('edit-solution');
+  const sourceParam = params.get('source');
 
   const [isModalOpen, setIsModalOpen] = useState(!!solutionParam);
 
@@ -78,6 +82,7 @@ const EditMTOSolutionProvider = ({
         setParams(prevParams => {
           const nextParams = new URLSearchParams(prevParams);
           nextParams.delete('edit-solution');
+          nextParams.delete('source');
           nextParams.delete('scroll-to-bottom');
           nextParams.delete('select-milestones');
           return nextParams;
@@ -97,10 +102,12 @@ const EditMTOSolutionProvider = ({
 
   const openEditSolutionModal = ({
     selectedSolutionID,
-    scrollToBottom = false
+    scrollToBottom = false,
+    source
   }: {
     selectedSolutionID: string;
     scrollToBottom?: boolean;
+    source?: 'milestone';
   }) => {
     setParams(prevParams => {
       const nextParams = new URLSearchParams(prevParams);
@@ -110,6 +117,12 @@ const EditMTOSolutionProvider = ({
         nextParams.set('scroll-to-bottom', 'true');
       } else {
         nextParams.delete('scroll-to-bottom');
+      }
+
+      if (source) {
+        nextParams.set('source', source);
+      } else {
+        nextParams.delete('source');
       }
 
       return nextParams;
@@ -128,14 +141,20 @@ const EditMTOSolutionProvider = ({
         <Sidepanel
           isOpen={isModalOpen}
           closeModal={closeModal}
-          ariaLabel={modelToOperationsMiscT('modal.editSolution.solutionTitle')}
+          ariaLabel={modelToOperationsMiscT('modal.editSolution.heading', {
+            context: sourceParam || ''
+          })}
           testid="edit-solution-sidepanel"
-          modalHeading={modelToOperationsMiscT(
-            'modal.editSolution.solutionTitle'
-          )}
+          modalHeading={modelToOperationsMiscT('modal.editSolution.heading', {
+            context: sourceParam || ''
+          })}
           noScrollable
           fixed
           footer={footer}
+          overlayClassName={classNames({
+            'z-500 bg-transparent': sourceParam
+          })}
+          backButton={!!sourceParam}
         >
           <EditSolutionForm
             closeModal={closeModal}
@@ -150,17 +169,20 @@ const EditMTOSolutionProvider = ({
           isOpen={leavePage && !submitted.current}
           closeModal={() => setLeavePage(false)}
           className="confirmation-modal"
+          zTop
         >
           <PageHeading
             headingLevel="h3"
             className="margin-top-neg-2 margin-bottom-1"
           >
-            {modelToOperationsMiscT('modal.editSolution.leaveConfim.heading')}
+            {modelToOperationsMiscT('modal.editSolution.leaveConfirm.heading', {
+              context: sourceParam || ''
+            })}
           </PageHeading>
 
           <p className="margin-top-2 margin-bottom-3">
             {modelToOperationsMiscT(
-              'modal.editSolution.leaveConfim.description'
+              'modal.editSolution.leaveConfirm.description'
             )}
           </p>
 
@@ -175,6 +197,7 @@ const EditMTOSolutionProvider = ({
                   prevParams => {
                     const nextParams = new URLSearchParams(prevParams);
                     nextParams.delete('edit-solution');
+                    nextParams.delete('source');
                     return nextParams;
                   },
                   { replace: true }
@@ -185,7 +208,7 @@ const EditMTOSolutionProvider = ({
               setLeavePage(false);
             }}
           >
-            {modelToOperationsMiscT('modal.editSolution.leaveConfim.confirm')}
+            {modelToOperationsMiscT('modal.editSolution.leaveConfirm.confirm')}
           </Button>
 
           <Button
@@ -195,7 +218,9 @@ const EditMTOSolutionProvider = ({
               setLeavePage(false);
             }}
           >
-            {modelToOperationsMiscT('modal.editSolution.leaveConfim.dontLeave')}
+            {modelToOperationsMiscT(
+              'modal.editSolution.leaveConfirm.dontLeave'
+            )}
           </Button>
         </Modal>
       </>

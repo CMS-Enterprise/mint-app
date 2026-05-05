@@ -815,7 +815,8 @@ const EditMilestoneForm = ({
                 onClick={() => {
                   setSolutionID(row.original.id);
                   openEditSolutionModal({
-                    selectedSolutionID: row.original.id
+                    selectedSolutionID: row.original.id,
+                    source: 'milestone'
                   });
                 }}
               >

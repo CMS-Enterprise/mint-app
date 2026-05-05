@@ -142,12 +142,12 @@ const EditMTOMilestoneProvider = ({
             headingLevel="h3"
             className="margin-top-neg-2 margin-bottom-1"
           >
-            {modelToOperationsMiscT('modal.editMilestone.leaveConfim.heading')}
+            {modelToOperationsMiscT('modal.editMilestone.leaveConfirm.heading')}
           </PageHeading>
 
           <p className="margin-top-2 margin-bottom-3">
             {modelToOperationsMiscT(
-              'modal.editMilestone.leaveConfim.description'
+              'modal.editMilestone.leaveConfirm.description'
             )}
           </p>
 
@@ -172,7 +172,7 @@ const EditMTOMilestoneProvider = ({
               setLeavePage(false);
             }}
           >
-            {modelToOperationsMiscT('modal.editMilestone.leaveConfim.confirm')}
+            {modelToOperationsMiscT('modal.editMilestone.leaveConfirm.confirm')}
           </Button>
 
           <Button
@@ -184,7 +184,7 @@ const EditMTOMilestoneProvider = ({
             }}
           >
             {modelToOperationsMiscT(
-              'modal.editMilestone.leaveConfim.dontLeave'
+              'modal.editMilestone.leaveConfirm.dontLeave'
             )}
           </Button>
         </Modal>
