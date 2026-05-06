@@ -1614,7 +1614,9 @@ const EditMilestoneForm = ({
                   unstyled
                   className="margin-0 display-flex"
                 >
-                  {modelToOperationsMiscT('modal.editMilestone.editSolutions')}
+                  {modelToOperationsMiscT(
+                    'modal.editMilestone.updateSelectedSolutions'
+                  )}
                   <Icon.ArrowForward className="top-2px" aria-label="forward" />
                 </Button>
 
