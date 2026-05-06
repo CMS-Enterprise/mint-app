@@ -10,7 +10,6 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -309,8 +308,7 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 
 	plan := suite.createModelPlan("Plan For Milestones")
 
-	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
-	isCollab, err := IsPlanCollaborator(ctx, plan.ID)
+	isCollab, err := IsPlanCollaborator(suite.testConfigs.Context, suite.testConfigs.Principal.Account().ID, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(true, isCollab)
 
@@ -318,8 +316,7 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 	assessment.JobCodeASSESSMENT = true
 	assessment.JobCodeUSER = true
 
-	assessmentCtx := appcontext.WithPrincipal(suite.testConfigs.Context, assessment)
-	isCollabFalseCase, err := IsPlanCollaborator(assessmentCtx, plan.ID)
+	isCollabFalseCase, err := IsPlanCollaborator(suite.testConfigs.Context, assessment.Account().ID, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(false, isCollabFalseCase)
 }
@@ -328,19 +325,19 @@ func (suite *ResolverSuite) TestIsPlanCollaboratorDataLoader() {
 	plan1 := suite.createModelPlan("Plan For Collab Check 1")
 	plan2 := suite.createModelPlan("Plan For Collab Check 2")
 
-	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
-	g, ctx := errgroup.WithContext(ctx)
+	userID := suite.testConfigs.Principal.Account().ID
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
 	g.Go(func() error {
-		return verifyIsPlanCollaboratorLoader(ctx, plan1.ID, true)
+		return verifyIsPlanCollaboratorLoader(ctx, userID, plan1.ID, true)
 	})
 	g.Go(func() error {
-		return verifyIsPlanCollaboratorLoader(ctx, plan2.ID, true)
+		return verifyIsPlanCollaboratorLoader(ctx, userID, plan2.ID, true)
 	})
 	suite.NoError(g.Wait())
 }
 
-func verifyIsPlanCollaboratorLoader(ctx context.Context, modelPlanID uuid.UUID, expected bool) error {
-	isCollab, err := IsPlanCollaborator(ctx, modelPlanID)
+func verifyIsPlanCollaboratorLoader(ctx context.Context, userID uuid.UUID, modelPlanID uuid.UUID, expected bool) error {
+	isCollab, err := IsPlanCollaborator(ctx, userID, modelPlanID)
 	if err != nil {
 		return err
 	}
