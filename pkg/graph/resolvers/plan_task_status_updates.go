@@ -11,8 +11,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-// Plan task status updates: MODEL_PLAN, DATA_EXCHANGE, and MTO rows in plan_task are updated from
-// multiple resolvers. This file is the source of truth for *when* each UpdatePlanTaskStatusOn* runs.
+// Plan task status updates: MODEL_PLAN, DATA_EXCHANGE, MTO, and WAIVER_ASSESSMENT_SURVEY rows in
+// plan_task are updated from multiple resolvers. This file is the source of truth for *when* each
+// UpdatePlanTaskStatusOn* runs.
 //
 // Task status logic:
 //
@@ -25,6 +26,9 @@ import (
 //	MTO
 //    - IN_PROGRESS — MTO-related data is created or updated.
 //    - COMPLETE — model plan status is ACTIVE.
+//	WAIVER_ASSESSMENT_SURVEY
+//    - IN_PROGRESS — waiver assessment survey status is IN_PROGRESS.
+//    - COMPLETE — waiver assessment survey status is COMPLETE.
 
 // UpdatePlanTaskStatusOnModelPlanStarted runs when a model plan section goes from READY to IN_PROGRESS.
 func UpdatePlanTaskStatusOnModelPlanStarted(
@@ -351,5 +355,32 @@ func calculateMTOTaskStatus(
 		return models.PlanTaskStatusInProgress, nil
 	}
 
+	return models.PlanTaskStatusToDo, nil
+}
+
+// UpdatePlanTaskStatusOnWaiverAssessmentStarted runs when the waiver assessment survey status changes.
+func UpdatePlanTaskStatusOnWaiverAssessmentStarted(
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	principal authentication.Principal,
+	store *storage.Store,
+) error {
+	status, err := calculateWaiverAssessmentTaskStatus(np, logger, modelPlanID, store)
+	if err != nil {
+		return err
+	}
+	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyWaiverAssessmentSurvey, status, principal, store)
+}
+
+// calculateWaiverAssessmentTaskStatus derives the WAIVER_ASSESSMENT_SURVEY task status from the
+// waiver_assessment_survey section status. Mirrors the DATA_EXCHANGE pattern.
+// TODO: implement once the waiver_assessment_survey section is built.
+func calculateWaiverAssessmentTaskStatus(
+	_ sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	_ uuid.UUID,
+	_ *storage.Store,
+) (models.PlanTaskStatus, error) {
 	return models.PlanTaskStatusToDo, nil
 }

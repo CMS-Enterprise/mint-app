@@ -102,6 +102,7 @@ func ModelPlanCreate(
 			models.PlanTaskKeyModelPlan,
 			models.PlanTaskKeyMto,
 			models.PlanTaskKeyDataExchange,
+			models.PlanTaskKeyWaiverAssessmentSurvey,
 		} {
 			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, key, models.PlanTaskStatusToDo)
 			_, err = storage.PlanTaskCreate(tx, logger, task)

@@ -17,9 +17,10 @@ type PlanTaskKey string
 
 // These constants represent the possible values of a PlanTaskKey
 const (
-	PlanTaskKeyModelPlan    PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMto          PlanTaskKey = "MTO"
-	PlanTaskKeyDataExchange PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyModelPlan              PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto                    PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange           PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyWaiverAssessmentSurvey PlanTaskKey = "WAIVER_ASSESSMENT_SURVEY"
 )
 
 // PlanTaskStatus is an enum representing the lifecycle status of a task
