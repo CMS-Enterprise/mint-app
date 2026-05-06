@@ -10,6 +10,16 @@
     border-bottom: 1px solid #E6E6E6;
   }
 
+  .usa-button--outline {
+    box-shadow: none !important; 
+    border: 2px solid #005ea2 !important; 
+
+    &:visited {
+      color: #54278f !important;     
+      border-color: #54278f !important;
+    }
+  }
+
   @media (min-width: $tablet) {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: minmax(1fr, 133px) minmax(1fr, 133px);
@@ -33,4 +43,5 @@
       border-bottom: 0;
     }
   }
+  
 }
