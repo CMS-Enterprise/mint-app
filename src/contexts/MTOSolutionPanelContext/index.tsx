@@ -62,11 +62,9 @@ const MTOSolutionPanelProvider = ({
         <Sidepanel
           isOpen={isModalOpen}
           closeModal={closeModal}
-          ariaLabel={modelToOperationsMiscT('modal.editSolution.solutionTitle')}
+          ariaLabel={modelToOperationsMiscT('modal.editSolution.heading')}
           testid="view-solution-sidepanel"
-          modalHeading={modelToOperationsMiscT(
-            'modal.editSolution.solutionTitle'
-          )}
+          modalHeading={modelToOperationsMiscT('modal.editSolution.heading')}
           noScrollable
         >
           <SolutionPanel closeModal={closeModal} />

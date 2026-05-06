@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import {
   Controller,
   FormProvider,
@@ -38,7 +44,6 @@ import {
   MtoMilestoneResponsibleComponent,
   MtoMilestoneStatus,
   MtoRiskIndicator,
-  MtoSolution,
   MtoSolutionStatus,
   useCreateMtoMilestoneNoteMutation,
   useDeleteMtoMilestoneMutation,
@@ -65,6 +70,7 @@ import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
+import { EditMTOSolutionContext } from 'contexts/EditMTOSolutionContext';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -114,6 +120,7 @@ type FormValues = {
 
 type TableSolutionType = {
   name: string;
+  id: string;
   status: MtoSolutionStatus;
   riskIndicator: MtoRiskIndicator;
 };
@@ -178,6 +185,10 @@ const EditMilestoneForm = ({
 
   const { setErrorMeta } = useErrorMessage();
 
+  const { openEditSolutionModal, setSolutionID } = useContext(
+    EditMTOSolutionContext
+  );
+
   const {
     data,
     loading,
@@ -223,31 +234,11 @@ const EditMilestoneForm = ({
 
   // Extracts all solutions from the query
   const allSolutions = useMemo(() => {
-    return (
-      allSolutionData?.modelPlan.mtoMatrix || {
-        __typename: 'ModelsToOperationMatrix',
-        commonSolutions: [],
-        solutions: []
-      }
-    );
+    const { commonSolutions = [], solutions = [] } =
+      allSolutionData?.modelPlan.mtoMatrix || {};
+
+    return { commonSolutions, solutions };
   }, [allSolutionData]);
-
-  // Combine all solutions from both custom and common solutions
-  const combinedSolutions = useMemo(
-    () => [
-      ...allSolutions?.solutions,
-      ...(allSolutions?.commonSolutions as MtoSolution[])
-    ],
-    [allSolutions]
-  );
-
-  // Checks to see if a solution is a custom solution by its ID
-  const isCustomSolution = useCallback(
-    (id: string) => {
-      return combinedSolutions.find(solution => solution.id === id);
-    },
-    [combinedSolutions]
-  );
 
   // Format solution for table from either a MtoCommonSolutionKey or an UUID or SolutionType
   const formatSolutionForTable = useCallback(
@@ -255,30 +246,30 @@ const EditMilestoneForm = ({
       solution: SolutionType | MtoCommonSolutionKey | string
     ): TableSolutionType => {
       if (typeof solution === 'string') {
+        const isCommonSolution = solution in MtoCommonSolutionKey;
+
+        // If common solution, find by key, otherwise find by id
+        const solutionData = allSolutions.solutions.find(({ key, id }) =>
+          isCommonSolution ? key === solution : id === solution
+        );
+
         return {
-          name: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)?.name || ''
-            : combinedSolutions.find(sol => sol.key === solution)?.name || '',
-          status: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)?.status ||
-              MtoSolutionStatus.NOT_STARTED
-            : combinedSolutions.find(sol => sol.key === solution)?.status ||
-              MtoSolutionStatus.NOT_STARTED,
-          riskIndicator: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)
-                ?.riskIndicator || MtoRiskIndicator.ON_TRACK
-            : combinedSolutions.find(sol => sol.key === solution)
-                ?.riskIndicator || MtoRiskIndicator.ON_TRACK
+          name: solutionData?.name || '',
+          id: solutionData?.id || '',
+          status: solutionData?.status || MtoSolutionStatus.NOT_STARTED,
+          riskIndicator:
+            solutionData?.riskIndicator || MtoRiskIndicator.ON_TRACK
         };
       }
 
       return {
         name: solution.name || '',
+        id: solution.id,
         status: solution.status,
         riskIndicator: solution.riskIndicator || MtoRiskIndicator.ON_TRACK
       };
     },
-    [combinedSolutions, isCustomSolution]
+    [allSolutions]
   );
 
   // Common solution state
@@ -812,7 +803,29 @@ const EditMilestoneForm = ({
     () => [
       {
         Header: modelToOperationsMiscT('modal.editMilestone.solution'),
-        accessor: 'name'
+        accessor: 'name',
+        Cell: ({ row }: { row: Row<SolutionType> }) => {
+          return (
+            <>
+              <span className="display-block">{row.original.name}</span>
+              <Button
+                type="button"
+                unstyled
+                className="margin-top-0"
+                onClick={() => {
+                  setSolutionID(row.original.id);
+                  openEditSolutionModal({
+                    selectedSolutionID: row.original.id,
+                    source: 'milestone'
+                  });
+                }}
+              >
+                {modelToOperationsMiscT('modal.editMilestone.editSolution')}
+                <Icon.ArrowForward aria-hidden />
+              </Button>
+            </>
+          );
+        }
       },
       {
         Header: modelToOperationsMiscT('modal.editMilestone.status'),
@@ -847,7 +860,7 @@ const EditMilestoneForm = ({
         }
       }
     ],
-    [modelToOperationsMiscT]
+    [modelToOperationsMiscT, openEditSolutionModal, setSolutionID]
   );
 
   const {
@@ -1601,7 +1614,9 @@ const EditMilestoneForm = ({
                   unstyled
                   className="margin-0 display-flex"
                 >
-                  {modelToOperationsMiscT('modal.editMilestone.editSolutions')}
+                  {modelToOperationsMiscT(
+                    'modal.editMilestone.updateSelectedSolutions'
+                  )}
                   <Icon.ArrowForward className="top-2px" aria-label="forward" />
                 </Button>
 
