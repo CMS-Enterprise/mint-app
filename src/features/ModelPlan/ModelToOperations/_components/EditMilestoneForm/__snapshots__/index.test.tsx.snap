@@ -829,7 +829,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
               data-testid="button"
               type="button"
             >
-              Edit solutions
+              Edit selected solutions
               <svg
                 aria-label="forward"
                 class="usa-icon top-2px"

@@ -77,7 +77,10 @@ describe('EditSolutionForm Component', () => {
   // eslint-disable-next-line
   console.error = vi.fn();
 
-  const renderForm = (hasMultipleMilestones: boolean = false) => {
+  const renderForm = (
+    hasMultipleMilestones: boolean = false,
+    params: string = ''
+  ) => {
     const solutionResponse = solutionMock(
       hasMultipleMilestones
         ? [
@@ -118,7 +121,7 @@ describe('EditSolutionForm Component', () => {
       ],
       {
         initialEntries: [
-          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&hide-milestones-without-solutions=false&type=all&edit-solution=1`
+          `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&hide-milestones-without-solutions=false&type=all&edit-solution=1${params}`
         ]
       }
     );
@@ -143,6 +146,11 @@ describe('EditSolutionForm Component', () => {
       expect(screen.getByText('Milestone 1')).toBeInTheDocument();
     });
 
+    // Renders related milestones table
+    expect(
+      await screen.findByRole('heading', { name: 'Related milestones' })
+    ).toBeInTheDocument();
+
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -154,5 +162,13 @@ describe('EditSolutionForm Component', () => {
         'This solution is selected for 2 milestones. Updating the status and information here will also update it for the other milestones.'
       )
     ).toBeInTheDocument();
+  });
+
+  it('hides related milestones table when editing a solution from a milestone', async () => {
+    renderForm(false, '&source=milestone');
+
+    expect(
+      screen.queryByRole('heading', { name: 'Related milestones' })
+    ).toBeNull();
   });
 });
