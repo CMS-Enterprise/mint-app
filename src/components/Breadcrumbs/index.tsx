@@ -40,6 +40,7 @@ export enum BreadcrumbItemOptions {
   TIMELINE = 'TIMELINE',
   ADDITIONAL_QUESTIONNAIRES = 'ADDITIONAL_QUESTIONNAIRES',
   IDDOC_QUESTIONNAIRE = 'IDDOC_QUESTIONNAIRE',
+  WAIVER_ASSESSMENT_SURVEY = 'WAIVER_ASSESSMENT_SURVEY',
   ANALYTICS = 'ANALYTICS'
 }
 
@@ -149,6 +150,10 @@ export const commonBreadCrumbs = (
   IDDOC_QUESTIONNAIRE: {
     text: 'iddocQuestionnaireMisc:heading',
     url: `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/operations`
+  },
+  WAIVER_ASSESSMENT_SURVEY: {
+    text: 'waiverAssessmentSurveyMisc:heading',
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about`
   },
   ANALYTICS: {
     text: 'analytics:heading',
