@@ -1,0 +1,195 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AboutWaiverAssessmentSurvey > renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mint-body-normal"
+  >
+    <div
+      class="margin-bottom-2 line-height-normal"
+    >
+      <h2
+        class="margin-0 margin-right-2 display-inline"
+      >
+        About completing the waiver assessment survey
+      </h2>
+      <div
+        class="mint-body-large text-base display-inline"
+      >
+        (Page 1 of 7)
+      </div>
+    </div>
+    <p
+      class="margin-top-0"
+    >
+      This survey will help determine which specific waivers are most appropriate for your model, ensure proper justification for waiver selections, and identify any instances where standard CMS authorities may be sufficient without additional waiver flexibility.
+    </p>
+    <div
+      class="margin-bottom-3"
+    >
+      <button
+        aria-controls="complete-survey-why"
+        aria-expanded="false"
+        class="usa-button usa-button--unstyled mint-no-print"
+        data-testid="complete-survey-why"
+        type="button"
+      >
+        <svg
+          aria-label="next"
+          class="usa-icon margin-right-05"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+          />
+        </svg>
+        Why do I need to complete this survey?
+      </button>
+    </div>
+    <h3
+      class="margin-top-0 margin-bottom-1"
+    >
+      Who’s involved
+    </h3>
+    <p
+      class="margin-top-0 margin-bottom-1"
+    >
+      Model Leads (with the assistance of other model team members as necessary), will work to complete this survey and help determine which waivers are needed for this model. This will help the Front Office, group leadership, and other MINT users understand which waivers you are utilizing and understands the reasons why you are not using other available waivers. If you have any questions, please contact Grace Goodhew or Megan Hyde in LDG, or email the MINT Team.
+    </p>
+    <a
+      aria-label="Email the MINT Team"
+      class="usa-link"
+      href="mailto:MINTTeam@cms.hhs.gov"
+      target="_blank"
+    >
+      Email the MINT Team
+      <svg
+        aria-label="mail"
+        class="usa-icon margin-left-1 text-tbottom"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+        />
+      </svg>
+    </a>
+    <div
+      class="grid-row grid-gap margin-y-3"
+      data-testid="grid"
+    >
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <h4
+          class="margin-top-0 margin-bottom-1"
+        >
+          Model team
+        </h4>
+        <p
+          class="margin-top-0"
+        >
+          Model leads or model team members responsible for data-centric activities should work with the IT Lead or Solution Architect to complete the questions in this approach.
+        </p>
+      </div>
+      <div
+        class="tablet:grid-col-6 desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <h4
+          class="margin-top-0 margin-bottom-1"
+        >
+          Model Lead
+        </h4>
+        <div
+          class="display-flex margin-y-2 flex-align-start"
+        >
+          <div
+            class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-yellow-5 margin-right-1"
+            data-testid="avatar--basic"
+          >
+            LS
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            <span
+              class=""
+            >
+              Luke Skywalker
+            </span>
+            <p
+              class="font-body-2xs margin-y-0"
+            >
+              Model Lead
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3
+      class="margin-top-0 margin-bottom-1"
+    >
+      What happens next
+    </h3>
+    <p
+      class="margin-top-0 margin-bottom-6"
+    >
+      Your model will be automatically added to a list outlining all of the waivers used across all CMMI models. The CMMI Front Office (FO), group leadership, and other users will have access to which waivers you are utilizing, as well as your answers where you are not using waivers. 
+    </p>
+    <div
+      class="margin-top-0 margin-bottom-3"
+    >
+      <button
+        class="usa-button"
+        data-testid="button"
+        type="button"
+      >
+        Next
+      </button>
+    </div>
+    <button
+      class="usa-button usa-button usa-button--unstyled"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        aria-label="back"
+        class="usa-icon margin-right-1"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+        />
+      </svg>
+      Return to model collaboration area
+    </button>
+    <div
+      class="mint-page-number margin-y-6"
+      data-testid="page-num"
+    >
+      <span
+        class="mint-page-number__page-num"
+      >
+        Page 1 of 7
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
