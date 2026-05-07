@@ -15,10 +15,11 @@ import useStickyHeader from 'hooks/useStickyHeader';
 import QuestionnaireBanner from '../_components/Banner';
 
 import AboutWaiverAssessmentSurvey from './AboutWaiverAssessmentSurvey';
+import ModelPlanQuestions from './ModelPlanQuestions';
 
 const WaiverAssessmentSurvey = () => {
-  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
-    'waiverAssessmentSurveyMisc'
+  const { t: waiverAssessmentSurveyT } = useTranslation(
+    'waiverAssessmentSurvey'
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
@@ -34,9 +35,7 @@ const WaiverAssessmentSurvey = () => {
 
   return (
     <MainContent data-testid="waiver-assessment-survey">
-      <QuestionnaireBanner
-        bannerText={waiverAssessmentSurveyMiscT('bannerText')}
-      />
+      <QuestionnaireBanner bannerText={waiverAssessmentSurveyT('bannerText')} />
 
       <GridContainer>
         <Breadcrumbs
@@ -51,7 +50,7 @@ const WaiverAssessmentSurvey = () => {
 
       <StickyModelNameWrapper
         triggerRef={headerRef}
-        sectionHeading={waiverAssessmentSurveyMiscT('heading')}
+        sectionHeading={waiverAssessmentSurveyT('heading')}
         modelName={modelName}
         abbreviation={abbreviation || undefined}
       />
@@ -61,7 +60,7 @@ const WaiverAssessmentSurvey = () => {
           className="margin-bottom-0 margin-top-4 line-height-large"
           ref={headerRef}
         >
-          {waiverAssessmentSurveyMiscT('heading')}
+          {waiverAssessmentSurveyT('heading')}
         </h1>
 
         <p
@@ -72,7 +71,7 @@ const WaiverAssessmentSurvey = () => {
         </p>
 
         <p className="mint-body-medium">
-          {waiverAssessmentSurveyMiscT('description')}
+          {waiverAssessmentSurveyT('description')}
         </p>
 
         <AskAQuestion
@@ -100,8 +99,8 @@ export const waiverAssessmentSurveyRoutes = {
       element: <AboutWaiverAssessmentSurvey />
     },
     {
-      path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/model-plan-questions'
-      //       element: <WaiverAssessmentSurveyModelPlanQuestions />
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/model-plan-questions',
+      element: <ModelPlanQuestions />
     }
   ]
 };

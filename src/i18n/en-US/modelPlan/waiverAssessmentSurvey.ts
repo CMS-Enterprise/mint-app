@@ -1,6 +1,4 @@
-const waiverAssessmentSurvey = {};
-
-export const waiverAssessmentSurveyMisc = {
+const waiverAssessmentSurvey = {
   heading: 'Waiver Assessment Survey',
   bannerText:
     'Your waiver assessment survey can only be accessed by one person at a time. If you are not actively editing or reviewing this section, please exit out of it so others can access it.',
@@ -29,6 +27,13 @@ export const waiverAssessmentSurveyMisc = {
     whatHappenNext: 'What happens next',
     whatHappenNextDescription:
       'Your model will be automatically added to a list outlining all of the waivers used across all CMMI models. The CMMI Front Office (FO), group leadership, and other users will have access to which waivers you are utilizing, as well as your answers where you are not using waivers. '
+  },
+  modelPlanQuestions: {
+    heading: 'Model Plan questions',
+    description:
+      'The following questions are included in your Model Plan and will help verify which waivers may be required for your model. Please check any answers entered and update any that are not accurate.',
+    infoAlert:
+      'Any answers updated as a part of this survey will also be updated in the Model Plan.'
   }
 };
 
