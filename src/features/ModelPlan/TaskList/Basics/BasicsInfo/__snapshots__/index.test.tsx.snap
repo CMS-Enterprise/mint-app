@@ -1334,7 +1334,7 @@ exports[`Model Plan Basics page > matches snapshot 1`] = `
                     data-testid="label"
                     for="new-plan-cmmiGroup"
                   >
-                    CMMI Group
+                    CMMI group
                   </label>
                   <p
                     class="text-base margin-bottom-1 margin-top-1"
