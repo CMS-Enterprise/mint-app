@@ -6,6 +6,7 @@ import { TeamRole, useGetModelCollaboratorsQuery } from 'gql/generated/graphql';
 
 import { Avatar } from 'components/Avatar';
 import CollapsableLink from 'components/CollapsableLink';
+import FormHeader from 'components/FormHeader';
 import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
 import { tArray } from 'utils/translation';
@@ -40,9 +41,17 @@ const AboutWaiverAssessmentSurvey = () => {
 
   return (
     <div className="mint-body-normal">
-      <h2 className="margin-bottom-2 margin-top-6">
+      <FormHeader
+        header={waiverAssessmentSurveyMiscT(
+          'aboutWaiverAssessmentSurvey.heading'
+        )}
+        currentPage={1}
+        totalPages={7}
+      />
+
+      {/* <h2 className="margin-bottom-2 margin-top-6">
         {waiverAssessmentSurveyMiscT('aboutWaiverAssessmentSurvey.heading')}
-      </h2>
+      </h2> */}
 
       <p className="margin-top-0">
         {waiverAssessmentSurveyMiscT('aboutWaiverAssessmentSurvey.description')}

@@ -77,7 +77,7 @@ const WaiverAssessmentSurvey = () => {
 
         <AskAQuestion
           modelID={modelID}
-          className="margin-y-3"
+          className="margin-top-3 margin-bottom-6"
           renderTextFor="waiverAssessmentSurvey"
         />
 
