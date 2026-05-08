@@ -127,7 +127,11 @@ export const modelPlanMisc: Record<string, string> = {
   headingStatus: 'Update status',
   copy: 'As you iterate on your Model Plan, update the status of your model so others known what stage it’s at in the design and clearance process.',
   updateButton: 'Update status',
-  return: 'Don’t update status and return to model collaboration area'
+  return: 'Don’t update status and return to model collaboration area',
+  csvTitleAbbreviation: 'Model short name',
+  csvTitleStatus: 'Model status',
+  csvTitleStartDate: 'Model start date',
+  csvTitleEndDate: 'Model end date'
 };
 
 export default modelPlan;
