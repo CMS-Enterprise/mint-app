@@ -7,7 +7,6 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -15,12 +14,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-// IsPlanFavorited checks if the current principal has favorited a model plan using a DataLoader.
-func IsPlanFavorited(ctx context.Context, modelPlanID uuid.UUID) (bool, error) {
-	principal := appcontext.Principal(ctx)
+// IsPlanFavorited checks if a user has favorited a model plan using a DataLoader.
+func IsPlanFavorited(ctx context.Context, userID uuid.UUID, modelPlanID uuid.UUID) (bool, error) {
 	key := storage.IsFavoriteKey{
 		ModelPlanID: modelPlanID,
-		UserID:      principal.Account().ID,
+		UserID:      userID,
 	}
 	return loaders.PlanFavorites.IsFavorited.Load(ctx, key)
 }
