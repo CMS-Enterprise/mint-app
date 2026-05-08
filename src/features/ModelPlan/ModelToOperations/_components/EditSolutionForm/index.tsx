@@ -128,6 +128,7 @@ const EditSolutionForm = ({
   const params = new URLSearchParams(location.search);
 
   const editSolutionID = params.get('edit-solution');
+  const sourceParam = params.get('source');
 
   const shouldScrollToBottom = params.get('scroll-to-bottom') === 'true';
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -417,16 +418,20 @@ const EditSolutionForm = ({
           disabled={(isSubmitting || !isDirty) && !unsavedSolutionChanges}
           className="margin-bottom-2"
         >
-          {modelToOperationsMiscT('modal.editSolution.saveChanges')}
+          {modelToOperationsMiscT('modal.editSolution.saveChanges', {
+            context: sourceParam || ''
+          })}
         </Button>
-        <Button
-          type="button"
-          disabled={isSubmitting}
-          className="bg-error"
-          onClick={() => setIsModalOpen(true)}
-        >
-          {modelToOperationsMiscT('modal.editSolution.removeSolution')}
-        </Button>
+        {!sourceParam && (
+          <Button
+            type="button"
+            disabled={isSubmitting}
+            className="bg-error"
+            onClick={() => setIsModalOpen(true)}
+          >
+            {modelToOperationsMiscT('modal.editSolution.removeSolution')}
+          </Button>
+        )}
       </div>
     );
   }, [
@@ -436,7 +441,8 @@ const EditSolutionForm = ({
     handleSubmit,
     setFooter,
     onSubmit,
-    modelToOperationsMiscT
+    modelToOperationsMiscT,
+    sourceParam
   ]);
 
   const columns: Column<MilestoneType>[] = useMemo(
@@ -661,6 +667,17 @@ const EditSolutionForm = ({
               )}
             </div>
 
+            {milestoneIDs.length > 1 && (
+              <Alert type="warning" className="margin-y-4" slim>
+                {modelToOperationsMiscT(
+                  'modal.editSolution.editMultipleMilestonesAlert',
+                  {
+                    count: milestoneIDs.length
+                  }
+                )}
+              </Alert>
+            )}
+
             <Fieldset disabled={loading} className="margin-bottom-8">
               <p className="margin-top-0 margin-bottom-3 text-base">
                 <Trans
@@ -770,11 +787,22 @@ const EditSolutionForm = ({
                   <Controller
                     name="pocName"
                     control={control}
+                    rules={{
+                      required: modelToOperationsMiscT('validation.fillOut'),
+                      validate: value => {
+                        const trimmedValue = value.trim();
+                        if (!trimmedValue) {
+                          return modelToOperationsMiscT('validation.fillOut');
+                        }
+                        return true;
+                      }
+                    }}
                     render={({ field: { ref, ...field } }) => (
                       <FormGroup className="margin-top-0 margin-bottom-2">
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="mint-body-normal maxw-none margin-bottom-1"
+                          className="mint-body-normal maxw-none"
+                          requiredMarker
                         >
                           {modelToOperationsMiscT(
                             'modal.solution.label.pocName'
@@ -800,6 +828,14 @@ const EditSolutionForm = ({
                     name="pocEmail"
                     control={control}
                     rules={{
+                      required: modelToOperationsMiscT('validation.fillOut'),
+                      validate: value => {
+                        const trimmedValue = value.trim();
+                        if (!trimmedValue) {
+                          return modelToOperationsMiscT('validation.fillOut');
+                        }
+                        return true;
+                      },
                       pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: `${modelToOperationsMiscT('modal.solution.label.emailError')}`
@@ -809,7 +845,8 @@ const EditSolutionForm = ({
                       <FormGroup className="margin-top-0 margin-bottom-2">
                         <Label
                           htmlFor={convertCamelCaseToKebabCase(field.name)}
-                          className="mint-body-normal maxw-none margin-bottom-1"
+                          className="mint-body-normal maxw-none"
+                          requiredMarker
                         >
                           {modelToOperationsMiscT(
                             'modal.solution.label.pocEmail'
@@ -1053,148 +1090,160 @@ const EditSolutionForm = ({
                   </FormGroup>
                 )}
               />
+              {sourceParam !== 'milestone' && (
+                <div className="border-top-1px border-base-lighter padding-y-4">
+                  <h3 className="margin-0 margin-bottom-1">
+                    {modelToOperationsMiscT(
+                      'modal.editSolution.selectedMilestones'
+                    )}
+                  </h3>
 
-              <div className="border-top-1px border-base-lighter padding-y-4">
-                <h3 className="margin-0 margin-bottom-1">
-                  {modelToOperationsMiscT(
-                    'modal.editSolution.selectedMilestones'
-                  )}
-                </h3>
+                  <p className="margin-0 margin-bottom-1">
+                    {modelToOperationsMiscT(
+                      'modal.editSolution.selectedMilestonesCount',
+                      {
+                        count: tableMilestones?.length || 0
+                      }
+                    )}
+                  </p>
 
-                <p className="margin-0 margin-bottom-1">
-                  {modelToOperationsMiscT(
-                    'modal.editSolution.selectedMilestonesCount',
-                    {
-                      count: tableMilestones?.length || 0
-                    }
-                  )}
-                </p>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setEditMilestonesOpen(true);
+                    }}
+                    unstyled
+                    className="margin-0 display-flex"
+                  >
+                    {modelToOperationsMiscT(
+                      'modal.editSolution.editMilestones'
+                    )}
+                    <Icon.ArrowForward
+                      className="top-2px"
+                      aria-label="forward"
+                    />
+                  </Button>
 
-                <Button
-                  type="button"
-                  onClick={() => {
-                    setEditMilestonesOpen(true);
-                  }}
-                  unstyled
-                  className="margin-0 display-flex"
-                >
-                  {modelToOperationsMiscT('modal.editSolution.editMilestones')}
-                  <Icon.ArrowForward className="top-2px" aria-label="forward" />
-                </Button>
+                  {tableMilestones.length === 0 ? (
+                    <Alert type="info" slim>
+                      {modelToOperationsMiscT(
+                        'modal.editSolution.noMilestones'
+                      )}
+                    </Alert>
+                  ) : (
+                    <div ref={scrollRef}>
+                      <UswdsTable
+                        bordered={false}
+                        {...getTableProps()}
+                        className="margin-top-0"
+                        fullWidth
+                      >
+                        <thead>
+                          {headerGroups.map(headerGroup => (
+                            <tr
+                              {...headerGroup.getHeaderGroupProps()}
+                              key={{ ...headerGroup.getHeaderGroupProps() }.key}
+                            >
+                              {headerGroup.headers.map(column => (
+                                <th
+                                  {...column.getHeaderProps()}
+                                  scope="col"
+                                  key={column.id}
+                                  className="padding-left-0 padding-bottom-0"
+                                  style={{
+                                    width: column.width
+                                  }}
+                                >
+                                  <button
+                                    className="usa-button usa-button--unstyled position-relative"
+                                    type="button"
+                                    {...column.getSortByToggleProps()}
+                                  >
+                                    {
+                                      column.render(
+                                        'Header'
+                                      ) as React.ReactElement
+                                    }
+                                    {column.canSort &&
+                                      getHeaderSortIcon(column, false)}
+                                  </button>
+                                </th>
+                              ))}
+                            </tr>
+                          ))}
+                        </thead>
+                        <tbody {...getTableBodyProps()}>
+                          {page.map((row, i) => {
+                            const { getRowProps, cells, id } = { ...row };
 
-                {tableMilestones.length === 0 ? (
-                  <Alert type="info" slim>
-                    {modelToOperationsMiscT('modal.editSolution.noMilestones')}
-                  </Alert>
-                ) : (
-                  <div ref={scrollRef}>
-                    <UswdsTable
-                      bordered={false}
-                      {...getTableProps()}
-                      className="margin-top-0"
-                      fullWidth
-                    >
-                      <thead>
-                        {headerGroups.map(headerGroup => (
-                          <tr
-                            {...headerGroup.getHeaderGroupProps()}
-                            key={{ ...headerGroup.getHeaderGroupProps() }.key}
-                          >
-                            {headerGroup.headers.map(column => (
-                              <th
-                                {...column.getHeaderProps()}
-                                scope="col"
-                                key={column.id}
-                                className="padding-left-0 padding-bottom-0"
-                                style={{
-                                  width: column.width
+                            prepareRow(row);
+                            return (
+                              <tr {...getRowProps()} key={id}>
+                                {cells.map(cell => {
+                                  return (
+                                    <td
+                                      {...cell.getCellProps()}
+                                      key={cell.getCellProps().key}
+                                      className="padding-left-0"
+                                    >
+                                      {
+                                        cell.render(
+                                          'Cell'
+                                        ) as React.ReactElement
+                                      }
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </UswdsTable>
+
+                      {tableMilestones.length > 5 && (
+                        <TablePagination
+                          className="flex-justify-start margin-left-neg-05"
+                          gotoPage={gotoPage}
+                          previousPage={previousPage}
+                          nextPage={nextPage}
+                          canNextPage={canNextPage}
+                          pageIndex={state.pageIndex}
+                          pageOptions={pageOptions}
+                          canPreviousPage={canPreviousPage}
+                          pageCount={pageCount}
+                          pageSize={state.pageSize}
+                          setPageSize={setPageSize}
+                          page={[]}
+                        />
+                      )}
+
+                      <Alert type="info" slim className="margin-top-3">
+                        <Trans
+                          i18nKey={modelToOperationsMiscT(
+                            'modal.editSolution.milestoneInfo'
+                          )}
+                          components={{
+                            link1: (
+                              <Button
+                                type="button"
+                                unstyled
+                                className="usa-button--unstyled margin-0"
+                                onClick={() => {
+                                  setCloseDestination(
+                                    `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
+                                  );
                                 }}
                               >
-                                <button
-                                  className="usa-button usa-button--unstyled position-relative"
-                                  type="button"
-                                  {...column.getSortByToggleProps()}
-                                >
-                                  {
-                                    column.render(
-                                      'Header'
-                                    ) as React.ReactElement
-                                  }
-                                  {column.canSort &&
-                                    getHeaderSortIcon(column, false)}
-                                </button>
-                              </th>
-                            ))}
-                          </tr>
-                        ))}
-                      </thead>
-                      <tbody {...getTableBodyProps()}>
-                        {page.map((row, i) => {
-                          const { getRowProps, cells, id } = { ...row };
-
-                          prepareRow(row);
-                          return (
-                            <tr {...getRowProps()} key={id}>
-                              {cells.map(cell => {
-                                return (
-                                  <td
-                                    {...cell.getCellProps()}
-                                    key={cell.getCellProps().key}
-                                    className="padding-left-0"
-                                  >
-                                    {cell.render('Cell') as React.ReactElement}
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </UswdsTable>
-
-                    {tableMilestones.length > 5 && (
-                      <TablePagination
-                        className="flex-justify-start margin-left-neg-05"
-                        gotoPage={gotoPage}
-                        previousPage={previousPage}
-                        nextPage={nextPage}
-                        canNextPage={canNextPage}
-                        pageIndex={state.pageIndex}
-                        pageOptions={pageOptions}
-                        canPreviousPage={canPreviousPage}
-                        pageCount={pageCount}
-                        pageSize={state.pageSize}
-                        setPageSize={setPageSize}
-                        page={[]}
-                      />
-                    )}
-
-                    <Alert type="info" slim className="margin-top-3">
-                      <Trans
-                        i18nKey={modelToOperationsMiscT(
-                          'modal.editSolution.milestoneInfo'
-                        )}
-                        components={{
-                          link1: (
-                            <Button
-                              type="button"
-                              unstyled
-                              className="usa-button--unstyled margin-0"
-                              onClick={() => {
-                                setCloseDestination(
-                                  `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones`
-                                );
-                              }}
-                            >
-                              {' '}
-                            </Button>
-                          )
-                        }}
-                      />
-                    </Alert>
-                  </div>
-                )}
-              </div>
+                                {' '}
+                              </Button>
+                            )
+                          }}
+                        />
+                      </Alert>
+                    </div>
+                  )}
+                </div>
+              )}
             </Fieldset>
           </Form>
         </FormProvider>
