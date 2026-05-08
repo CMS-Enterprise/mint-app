@@ -39,6 +39,19 @@ func (s *Store) PlanTimelineUpdate(np sqlutils.NamedPreparer, logger *zap.Logger
 	return returned, nil
 }
 
+// PlanTimelineClearApplicationDatesByModelPlanID sets application period dates to NULL for the timeline row for modelPlanID.
+func (s *Store) PlanTimelineClearApplicationDatesByModelPlanID(np sqlutils.NamedPreparer, logger *zap.Logger, modelPlanID uuid.UUID, modifiedBy uuid.UUID) (*models.PlanTimeline, error) {
+	arg := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+		"modified_by":   modifiedBy,
+	}
+	returned, procErr := sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.PlanTimeline.ClearApplicationDatesByModelPlanID, arg)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue clearing plan timeline application dates: %w", procErr)
+	}
+	return returned, nil
+}
+
 // PlanTimelineGetByID returns the planTimeline for a given id
 func (s *Store) PlanTimelineGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.PlanTimeline, error) {
 	return sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.PlanTimeline.GetByID, utilitysql.CreateIDQueryMap(id))

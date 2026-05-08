@@ -19,6 +19,22 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
+// validateMandatoryTimelineNoApplicationDates ensures mandatory model types do not keep application open/close dates on the timeline.
+func validateMandatoryTimelineNoApplicationDates(basics *models.PlanBasics, merged *models.PlanTimeline) error {
+	if basics == nil || merged == nil {
+		return nil
+	}
+	if !models.ModelTypeListIncludesMandatory(basics.ModelType) {
+		return nil
+	}
+	if merged.ApplicationsStart != nil || merged.ApplicationsEnd != nil {
+		return fmt.Errorf(
+			"application period dates cannot be set when the model type is mandatory",
+		)
+	}
+	return nil
+}
+
 func UpdatePlanTimeline(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -32,6 +48,19 @@ func UpdatePlanTimeline(
 	// Get existing planTimeline
 	existing, err := store.PlanTimelineGetByID(store, logger, id)
 	if err != nil {
+		return nil, err
+	}
+
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, existing.ModelPlanID)
+	if err != nil {
+		return nil, fmt.Errorf("unable to load plan basics for timeline update: %w", err)
+	}
+
+	previewTimeline := *existing
+	if err := ApplyChanges(changes, &previewTimeline); err != nil {
+		return nil, err
+	}
+	if err := validateMandatoryTimelineNoApplicationDates(basics, &previewTimeline); err != nil {
 		return nil, err
 	}
 

@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -40,10 +41,29 @@ func (s *Store) PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, 
 	return basics, nil
 }
 
-// PlanBasicsUpdate updates the plan basics for a given id
+// PlanBasicsUpdate updates the plan basics for a given id. When the saved model type includes
+// MANDATORY_NATIONAL or MANDATORY_REGIONAL_OR_STATE, timeline application period dates are cleared in the same transaction.
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
+	return sqlutils.WithTransaction(s, func(tx *sqlx.Tx) (*models.PlanBasics, error) {
+		updated, err := s.updatePlanBasics(tx, logger, plan)
+		if err != nil {
+			return nil, err
+		}
+		if models.ModelTypeListIncludesMandatory(updated.ModelType) {
+			if updated.ModifiedBy == nil {
+				return nil, fmt.Errorf("plan basics modified_by is nil after update")
+			}
+			_, err = s.PlanTimelineClearApplicationDatesByModelPlanID(tx, logger, updated.ModelPlanID, *updated.ModifiedBy)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return updated, nil
+	})
+}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBasics.Update)
+func (s *Store) updatePlanBasics(np sqlutils.NamedPreparer, logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
+	stmt, err := np.PrepareNamed(sqlqueries.PlanBasics.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
 	}
