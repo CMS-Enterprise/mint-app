@@ -44,8 +44,11 @@ import './index.scss';
 type AllModelPlansType = GetModelPlansQuery['modelPlanCollection'][0];
 type CollaboratorsType =
   GetModelPlansQuery['modelPlanCollection'][0]['collaborators'][0];
-type EchimpCrAndTdlsType =
-  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
+type EchimpCrAndTdlsType = GetEchimpCrandTdlQuery['modelPlan'] extends {
+  echimpCRsAndTDLs: Array<infer T>;
+}
+  ? T
+  : never;
 
 type HomeTableTypes =
   | ViewCustomizationType.ALL_MODEL_PLANS

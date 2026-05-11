@@ -285,7 +285,7 @@ const CollaborationArea = () => {
 
             <DocumentsCard documents={documents} modelID={modelID} />
 
-            <CRTDLCard crtdls={echimpCRsAndTDLs} modelID={modelID} />
+            <CRTDLCard crtdls={echimpCRsAndTDLs || []} modelID={modelID} />
           </CardGroup>
         </GridContainer>
       </div>

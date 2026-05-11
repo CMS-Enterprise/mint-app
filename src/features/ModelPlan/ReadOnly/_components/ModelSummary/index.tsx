@@ -20,7 +20,9 @@ type CharacteristicsType =
   GetModelSummaryQuery['modelPlan']['generalCharacteristics'];
 
 type EchimpCrAndTdlsType =
-  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'] extends (infer T)[]
+    ? T
+    : never;
 
 type ModelSummaryProps = {
   characteristics: CharacteristicsType;
