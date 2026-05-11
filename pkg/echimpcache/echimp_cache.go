@@ -9,6 +9,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
+	"github.com/cms-enterprise/mint-app/pkg/logfields"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/parquet"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
@@ -22,9 +23,11 @@ func GetECHIMPCrAndTDLCache(client *s3.S3Client, viperConfig *viper.Viper, logge
 	if CRAndTDLCache == nil {
 		CRAndTDLCache = &crAndTDLCache{}
 	}
+	logger = logger.With(logfields.EchimpCacheAppSection)
 	if CRAndTDLCache.IsOld(viperConfig) {
 		err := CRAndTDLCache.refreshCache(client, viperConfig, logger)
 		if err != nil {
+			logger.Error("error refreshing ECHIMP CR and TDL cache", zap.Error(err))
 			return nil, err
 		}
 	}
