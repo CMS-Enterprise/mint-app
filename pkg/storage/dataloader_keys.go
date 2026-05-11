@@ -41,3 +41,9 @@ type MTOSolutionByModelPlanIDAndFilterViewKey struct {
 	// FilterView is the filter view to be applied
 	FilterView models.ModelViewFilter `json:"filter_view"`
 }
+
+// IsFavoriteKey is a composite key for batch-checking if a user has favorited a model plan
+type IsFavoriteKey struct {
+	ModelPlanID uuid.UUID `json:"model_plan_id"`
+	UserID      uuid.UUID `json:"user_id"`
+}

@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -9,19 +11,16 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-// IsPlanFavorited checks if a model plan is a favorite.
-func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
-
-	favorite, err := PlanFavoriteGet(logger, principal, store, modelPlanID)
-	if err != nil {
-		return false, err
+// IsPlanFavorited checks if a user has favorited a model plan using a DataLoader.
+func IsPlanFavorited(ctx context.Context, userID uuid.UUID, modelPlanID uuid.UUID) (bool, error) {
+	key := storage.IsFavoriteKey{
+		ModelPlanID: modelPlanID,
+		UserID:      userID,
 	}
-	isFavorite := (favorite != nil)
-
-	return isFavorite, nil
-
+	return loaders.PlanFavorites.IsFavorited.Load(ctx, key)
 }
 
 // PlanFavoriteCreate creates a new plan favorite record in the database
