@@ -53,10 +53,9 @@ type GetModelPlansType = GetModelPlansQuery['modelPlanCollection'];
 type GetModelPlansByStatusGroupType =
   GetModelPlansByStatusGroupQuery['modelPlansByStatusGroup'];
 
-export type EchimpCrAndTdlsType =
-  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'] extends Array<infer T>
-    ? T
-    : never;
+export type EchimpCrAndTdlsType = NonNullable<
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs']
+>[number];
 
 export const modelID: string = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
