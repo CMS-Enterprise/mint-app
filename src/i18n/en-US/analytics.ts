@@ -15,6 +15,12 @@ export const reports: Record<
     description:
       'This report downloads a csv of information about all models in MINT including Model Plan details and more.',
     formatExcel: 'Format: CSV'
+  },
+  basicModelInfo: {
+    heading: 'Basic model information',
+    description:
+      'This report downloads a csv of basic model details, including: model name, Model Lead, CMMI group, and start and end dates.',
+    formatExcel: 'Format: CSV'
   }
 };
 

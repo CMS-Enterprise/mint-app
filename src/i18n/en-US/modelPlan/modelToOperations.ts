@@ -335,7 +335,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       successRemoved: 'Your milestone ({{milestone}}) has been removed.',
       errorRemoved:
         'There was an error removing your milestone. Please try again. If the error persists, please try again another time.',
-      leaveConfim: {
+      leaveConfirm: {
         heading: 'Are you sure you want to leave?',
         description:
           'You have made changes that will not be saved if you navigate away from this view.',
@@ -347,12 +347,13 @@ export const modelToOperationsMisc: Record<string, any> = {
         '{{count}} solutions associated with this milestone',
       selectedSolutionsCount_other:
         '{{count}} solution associated with this milestone',
-      editSolutions: 'Edit solutions',
+      updateSelectedSolutions: 'Update selected solutions',
       noSolutions:
         'You haven’t selected any solutions or IT systems to implement this milestone.',
       noSolutionsTable:
         'There are no solutions or IT systems selected to implement this milestone.',
       solution: 'Solution',
+      editSolution: 'Edit solution',
       status: 'Status',
       selectedSolutionCount_other: '{{count}} selected solutions',
       selectedSolutionCount: '{{count}} selected solution',
@@ -373,8 +374,11 @@ export const modelToOperationsMisc: Record<string, any> = {
         'To view more information about the solutions associated with this milestone, navigate to the <link1>“Solutions and IT systems” tab</link1> in your MTO. From there you may edit details about the solutions, including the status.'
     },
     editSolution: {
-      solutionTitle: 'Solution details',
+      heading: 'Solution details',
+      heading_milestone: 'Back to milestone details',
       learnMore: 'Learn more about this solution',
+      editMultipleMilestonesAlert:
+        'This solution is selected for {{count}} milestones. Updating the status and information here will also update it for the other milestones.',
       label: {
         solutionTitle: 'Solution title',
         solutionType: 'Solution type'
@@ -394,6 +398,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         'As opposed to common operational solutions and IT systems available in the MINT solution library, custom solutions were created by this IT Lead and model team specifically for this model. This could be because they are existing systems or solutions that are not yet available in the MINT solution library, or because they are completely custom implementation solutions for this model.',
       custom: 'Custom',
       saveChanges: 'Save changes',
+      saveChanges_milestone: 'Save and return to milestone details',
       save: 'Save',
       unsavedChanges: '{{count}} unsaved change',
       unsavedChanges_other: '{{count}} unsaved changes',
@@ -420,10 +425,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       successRemoved: 'Your solution ({{solution}}) has been removed.',
       errorRemoved:
         'There was an error removing your solution. Please try again. If the error persists, please try again another time.',
-      leaveConfim: {
+      leaveConfirm: {
         heading: 'Are you sure you want to leave?',
+        heading_milestone:
+          'Are you sure you want to return to milestone details?',
         description:
-          'You have made changes that will not be saved if you navigate away from this view.',
+          'You have made changes to this solution that will not be saved if you navigate away from this view.',
         confirm: 'Leave without saving',
         dontLeave: 'Don’t leave'
       },
