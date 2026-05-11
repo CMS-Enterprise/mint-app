@@ -28,7 +28,7 @@ func GetECHIMPCrAndTDLCache(client *s3.S3Client, viperConfig *viper.Viper, logge
 		err := CRAndTDLCache.refreshCache(client, viperConfig, logger)
 		if err != nil {
 			logger.Error("error refreshing ECHIMP CR and TDL cache", zap.Error(err))
-			return nil, err
+			return &crAndTDLCache{}, err
 		}
 	}
 	return CRAndTDLCache, nil
