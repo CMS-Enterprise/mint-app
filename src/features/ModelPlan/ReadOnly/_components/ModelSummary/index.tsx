@@ -25,7 +25,7 @@ type EchimpCrAndTdlsType = NonNullable<
 
 type ModelSummaryProps = {
   characteristics: CharacteristicsType;
-  crTdls: EchimpCrAndTdlsType[] | null;
+  crTdls?: EchimpCrAndTdlsType[];
   goal: string;
   loading: boolean;
   modelLeads: CollaboratorsType[];
