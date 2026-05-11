@@ -307,7 +307,8 @@ func (suite *ResolverSuite) TestPlanCollaboratorDeleteLastModelLead() {
 func (suite *ResolverSuite) TestIsPlanCollaborator() {
 
 	plan := suite.createModelPlan("Plan For Milestones")
-	isCollab, err := IsPlanCollaborator(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, plan.ID)
+
+	isCollab, err := IsPlanCollaborator(suite.testConfigs.Context, suite.testConfigs.Principal.Account().ID, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(true, isCollab)
 
@@ -315,9 +316,35 @@ func (suite *ResolverSuite) TestIsPlanCollaborator() {
 	assessment.JobCodeASSESSMENT = true
 	assessment.JobCodeUSER = true
 
-	isCollabFalseCase, err := IsPlanCollaborator(suite.testConfigs.Logger, assessment, suite.testConfigs.Store, plan.ID)
+	isCollabFalseCase, err := IsPlanCollaborator(suite.testConfigs.Context, assessment.Account().ID, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(false, isCollabFalseCase)
+}
+
+func (suite *ResolverSuite) TestIsPlanCollaboratorDataLoader() {
+	plan1 := suite.createModelPlan("Plan For Collab Check 1")
+	plan2 := suite.createModelPlan("Plan For Collab Check 2")
+
+	userID := suite.testConfigs.Principal.Account().ID
+	g, ctx := errgroup.WithContext(suite.testConfigs.Context)
+	g.Go(func() error {
+		return verifyIsPlanCollaboratorLoader(ctx, userID, plan1.ID, true)
+	})
+	g.Go(func() error {
+		return verifyIsPlanCollaboratorLoader(ctx, userID, plan2.ID, true)
+	})
+	suite.NoError(g.Wait())
+}
+
+func verifyIsPlanCollaboratorLoader(ctx context.Context, userID uuid.UUID, modelPlanID uuid.UUID, expected bool) error {
+	isCollab, err := IsPlanCollaborator(ctx, userID, modelPlanID)
+	if err != nil {
+		return err
+	}
+	if isCollab != expected {
+		return fmt.Errorf("IsCollaborator for model plan %s: got %v, expected %v", modelPlanID, isCollab, expected)
+	}
+	return nil
 }
 
 func (suite *ResolverSuite) TestPlanCollaboratorGetByModelPlanIDDataLoader() {
