@@ -52,17 +52,18 @@ func (suite *ResolverSuite) TestModelPlanTasksResolver() {
 	}
 }
 
-func (suite *ResolverSuite) TestModelPlanCreateCreatesThreeTasks() {
+func (suite *ResolverSuite) TestModelPlanCreateCreatesFourTasks() {
 	plan := suite.createModelPlan("Plan With Default Tasks")
 
 	tasks, err := PlanTaskGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Len(tasks, 3)
+	suite.Len(tasks, 4)
 
 	taskByKey := planTasksByKey(tasks)
 	suite.NotNil(taskByKey[models.PlanTaskKeyModelPlan])
 	suite.NotNil(taskByKey[models.PlanTaskKeyMto])
 	suite.NotNil(taskByKey[models.PlanTaskKeyDataExchange])
+	suite.NotNil(taskByKey[models.PlanTaskKeyWaiverAssessmentSurvey])
 
 	for _, t := range tasks {
 		suite.Equal(plan.ID, t.ModelPlanID)

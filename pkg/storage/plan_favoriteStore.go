@@ -15,6 +15,29 @@ import (
 	_ "embed"
 )
 
+// IsFavoriteResult holds the result of a batch favorite existence check
+type IsFavoriteResult struct {
+	ModelPlanID uuid.UUID `json:"model_plan_id" db:"model_plan_id"`
+	UserID      uuid.UUID `json:"user_id" db:"user_id"`
+	IsFavorite  bool      `json:"is_favorite" db:"is_favorite"`
+}
+
+// PlanFavoriteIsFavoritedLOADER batch-checks if users have favorited model plans
+func PlanFavoriteIsFavoritedLOADER(np sqlutils.NamedPreparer, keys []IsFavoriteKey) ([]*IsFavoriteResult, error) {
+	jsonParam, err := models.StructArrayToJSONArray(keys)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"paramTableJSON": jsonParam,
+	}
+	results, err := sqlutils.SelectProcedure[IsFavoriteResult](np, sqlqueries.PlanFavorite.GetLOADER, arg)
+	if err != nil {
+		return nil, fmt.Errorf("issue batch-checking favorite status: %w", err)
+	}
+	return results, nil
+}
+
 // PlanFavoriteCreate creates and returns a plan favorite object
 func (s *Store) PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
