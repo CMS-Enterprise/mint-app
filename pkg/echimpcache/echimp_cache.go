@@ -17,7 +17,8 @@ import (
 )
 
 var CRAndTDLCache *crAndTDLCache
-var readCRAndTDLsFromS3Fn = readCRAndTDLsFromS3
+
+type crAndTDLReader func(client *s3.S3Client, crKey string, tdlKey string) ([]*models.EChimpCRRaw, []*models.EChimpTDLRaw, error)
 
 // GetECHIMPCrAndTDLCache returns a cached of data for CR and TDLs from an echimp s3 bucket.
 // If the time since it was last updated has elapsed, it will fetch the data again
@@ -66,10 +67,14 @@ func (c *crAndTDLCache) IsOld(viperConfig *viper.Viper) bool {
 }
 
 func (c *crAndTDLCache) refreshCache(client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) error {
+	return c.refreshCacheWithReader(client, viperConfig, logger, readCRAndTDLsFromS3)
+}
+
+func (c *crAndTDLCache) refreshCacheWithReader(client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, readFromS3 crAndTDLReader) error {
 	CRKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
 	TDLKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
 
-	crsRaw, tdlsRaw, err := readCRAndTDLsFromS3Fn(client, CRKey, TDLKey)
+	crsRaw, tdlsRaw, err := readFromS3(client, CRKey, TDLKey)
 	if err != nil {
 		if s3.S3ErrorHasExpiredCredentials(err) {
 			logger.Warn("ECHIMP cache refresh hit expired AWS credentials; rebuilding S3 client and retrying once", zap.Error(err))
@@ -79,7 +84,7 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client, viperConfig *viper.Vip
 				return refreshErr
 			}
 
-			crsRaw, tdlsRaw, err = readCRAndTDLsFromS3Fn(client, CRKey, TDLKey)
+			crsRaw, tdlsRaw, err = readFromS3(client, CRKey, TDLKey)
 		}
 	}
 	if err != nil {

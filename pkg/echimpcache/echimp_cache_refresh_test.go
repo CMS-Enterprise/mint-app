@@ -30,8 +30,7 @@ func TestRefreshCacheRetriesOnceAfterExpiredCredentials(t *testing.T) {
 	modelID := uuid.New()
 	readCalls := 0
 
-	originalReadFn := readCRAndTDLsFromS3Fn
-	readCRAndTDLsFromS3Fn = func(_ *s3.S3Client, crKey string, tdlKey string) ([]*models.EChimpCRRaw, []*models.EChimpTDLRaw, error) {
+	readFn := func(_ *s3.S3Client, crKey string, tdlKey string) ([]*models.EChimpCRRaw, []*models.EChimpTDLRaw, error) {
 		readCalls++
 		if readCalls == 1 {
 			return nil, nil, &smithy.GenericAPIError{Code: "ExpiredToken", Message: "expired"}
@@ -56,9 +55,6 @@ func TestRefreshCacheRetriesOnceAfterExpiredCredentials(t *testing.T) {
 				},
 			}, nil
 	}
-	t.Cleanup(func() {
-		readCRAndTDLsFromS3Fn = originalReadFn
-	})
 
 	viperConfig := viper.New()
 	viperConfig.Set(appconfig.AWSS3ECHIMPCRFileName, "cr-file.parquet")
@@ -67,7 +63,7 @@ func TestRefreshCacheRetriesOnceAfterExpiredCredentials(t *testing.T) {
 	cache := &crAndTDLCache{}
 	before := time.Now()
 
-	err := cache.refreshCache(&client, viperConfig, zap.NewNop())
+	err := cache.refreshCacheWithReader(&client, viperConfig, zap.NewNop(), readFn)
 
 	require.NoError(t, err)
 	assert.Equal(t, 2, readCalls)
