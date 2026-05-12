@@ -1,6 +1,7 @@
 package echimpcache
 
 import (
+	"context"
 	"time"
 
 	"github.com/google/uuid"
@@ -16,6 +17,7 @@ import (
 )
 
 var CRAndTDLCache *crAndTDLCache
+var readCRAndTDLsFromS3Fn = readCRAndTDLsFromS3
 
 // GetECHIMPCrAndTDLCache returns a cached of data for CR and TDLs from an echimp s3 bucket.
 // If the time since it was last updated has elapsed, it will fetch the data again
@@ -67,28 +69,33 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client, viperConfig *viper.Vip
 	CRKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
 	TDLKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
 
-	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](client, CRKey)
+	crsRaw, tdlsRaw, err := readCRAndTDLsFromS3Fn(client, CRKey, TDLKey)
+	if err != nil {
+		if s3.S3ErrorHasExpiredCredentials(err) {
+			logger.Warn("ECHIMP cache refresh hit expired AWS credentials; rebuilding S3 client and retrying once", zap.Error(err))
+
+			refreshErr := client.Refresh(context.TODO())
+			if refreshErr != nil {
+				return refreshErr
+			}
+
+			crsRaw, tdlsRaw, err = readCRAndTDLsFromS3Fn(client, CRKey, TDLKey)
+		}
+	}
 	if err != nil {
 		if s3.S3ErrorIsKeyNotFound(err) {
-			logger.Error("file not found for ECHIMP CR data", zap.Error(err))
+			logger.Error("file not found for ECHIMP cache data", zap.Error(err))
 			return nil
 		}
 		return err
 	}
+
 	sanitizedCRS, err := models.ConvertRawCRSToParsed(crsRaw)
 	if err != nil {
 		return err
 	}
 	c.CRs = sanitizedCRS
 
-	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](client, TDLKey)
-	if err != nil {
-		if s3.S3ErrorIsKeyNotFound(err) {
-			logger.Error("file not found for ECHIMP TDL data", zap.Error(err))
-			return nil
-		}
-		return err
-	}
 	sanitizedTDLS, err := models.ConvertRawTDLSToParsed(tdlsRaw)
 	if err != nil {
 		return err
@@ -108,6 +115,20 @@ func (c *crAndTDLCache) refreshCache(client *s3.S3Client, viperConfig *viper.Vip
 	c.lastChecked = time.Now()
 	return nil
 
+}
+
+func readCRAndTDLsFromS3(client *s3.S3Client, crKey string, tdlKey string) ([]*models.EChimpCRRaw, []*models.EChimpTDLRaw, error) {
+	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](client, crKey)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](client, tdlKey)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return crsRaw, tdlsRaw, nil
 }
 
 func (c *crAndTDLCache) aggregateAllCrsAndTDLS() []models.EChimpCRAndTDLS {
