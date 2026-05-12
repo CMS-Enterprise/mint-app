@@ -33,7 +33,9 @@ const waiverAssessmentSurvey = {
     description:
       'The following questions are included in your Model Plan and will help verify which waivers may be required for your model. Please check any answers entered and update any that are not accurate.',
     infoAlert:
-      'Any answers updated as a part of this survey will also be updated in the Model Plan.'
+      'Any answers updated as a part of this survey will also be updated in the Model Plan.',
+    updateAnswers: 'Update answers (show questions)',
+    hideQuestions: 'Hide questions'
   }
 };
 
