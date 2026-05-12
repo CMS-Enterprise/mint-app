@@ -132,7 +132,7 @@ export const basics: TranslationBasics = {
     gqlField: 'cmmiGroups',
     goField: 'CMMIGroups',
     dbField: 'cmmi_groups',
-    label: 'CMMI Group',
+    label: 'CMMI group',
     sublabel:
       'You only need to select the CMMI group if CMMI is selected as the main CMS component.',
     dataType: TranslationDataType.ENUM,

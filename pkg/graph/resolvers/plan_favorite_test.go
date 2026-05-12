@@ -26,8 +26,8 @@ func (suite *ResolverSuite) TestIsPlanFavorited() {
 
 	suite.NoError(err)
 
-	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
-	favorited, err := IsPlanFavorited(ctx, plan.ID)
+	userID := suite.testConfigs.Principal.Account().ID
+	favorited, err := IsPlanFavorited(suite.testConfigs.Context, userID, plan.ID)
 	suite.NoError(err)
 	suite.EqualValues(favorited, true)
 
@@ -37,19 +37,20 @@ func (suite *ResolverSuite) TestIsPlanFavoritedDataLoader() {
 	plan1 := suite.createModelPlan("Favorite DataLoader Plan 1")
 	plan2 := suite.createModelPlan("Favorite DataLoader Plan 2")
 
-	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
+	userID := suite.testConfigs.Principal.Account().ID
+	ctx := suite.testConfigs.Context
 	g, ctx := errgroup.WithContext(ctx)
 	g.Go(func() error {
-		return verifyIsPlanFavoritedLoader(ctx, plan1.ID, true)
+		return verifyIsPlanFavoritedLoader(ctx, userID, plan1.ID, true)
 	})
 	g.Go(func() error {
-		return verifyIsPlanFavoritedLoader(ctx, plan2.ID, true)
+		return verifyIsPlanFavoritedLoader(ctx, userID, plan2.ID, true)
 	})
 	suite.NoError(g.Wait())
 }
 
-func verifyIsPlanFavoritedLoader(ctx context.Context, modelPlanID uuid.UUID, expected bool) error {
-	isFavorite, err := IsPlanFavorited(ctx, modelPlanID)
+func verifyIsPlanFavoritedLoader(ctx context.Context, userID uuid.UUID, modelPlanID uuid.UUID, expected bool) error {
+	isFavorite, err := IsPlanFavorited(ctx, userID, modelPlanID)
 	if err != nil {
 		return err
 	}

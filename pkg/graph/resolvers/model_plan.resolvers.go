@@ -84,15 +84,14 @@ func (r *modelPlanResolver) SuggestedPhase(ctx context.Context, obj *models.Mode
 
 // IsFavorite is the resolver for the isFavorite field.
 func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
-	return IsPlanFavorited(ctx, obj.ID)
+	principal := appcontext.Principal(ctx)
+	return IsPlanFavorited(ctx, principal.Account().ID, obj.ID)
 }
 
 // IsCollaborator is the resolver for the isCollaborator field.
 func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error) {
 	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return IsPlanCollaborator(logger, principal, r.store, obj.ID)
+	return IsPlanCollaborator(ctx, principal.Account().ID, obj.ID)
 }
 
 // Crs is the resolver for the crs field.
