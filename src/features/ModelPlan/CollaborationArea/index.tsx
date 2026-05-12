@@ -54,6 +54,7 @@ const CollaborationArea = () => {
   );
 
   const { data, loading, error, refetch } = useGetCollaborationAreaQuery({
+    errorPolicy: 'all',
     variables: {
       id: modelID
     }
@@ -137,7 +138,9 @@ const CollaborationArea = () => {
           <ErrorAlert
             testId="formik-validation-errors"
             classNames="margin-top-3"
-            heading={collaborationAreaT('errorHeading')}
+            heading={collaborationAreaT(
+              data ? 'partialErrorHeading' : 'errorHeading'
+            )}
           >
             <ErrorAlertMessage
               errorKey="error-document"
@@ -285,7 +288,7 @@ const CollaborationArea = () => {
 
             <DocumentsCard documents={documents} modelID={modelID} />
 
-            <CRTDLCard crtdls={echimpCRsAndTDLs} modelID={modelID} />
+            <CRTDLCard crtdls={echimpCRsAndTDLs || []} modelID={modelID} />
           </CardGroup>
         </GridContainer>
       </div>

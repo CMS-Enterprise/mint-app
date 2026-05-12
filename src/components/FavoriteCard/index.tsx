@@ -48,7 +48,7 @@ const FavoriteCard = ({
   const filteredList = nameHistory.slice(1);
   const firstThreeNames = filteredList.slice(0, 3).join(', ');
 
-  const crtdlIDs = echimpCRsAndTDLs.map(crtdl => crtdl.id);
+  const crtdlIDs = echimpCRsAndTDLs?.map(crtdl => crtdl.id) ?? [];
   const firstThreeCRTDLs = crtdlIDs.slice(0, 3);
   const remainingCRTDLs: number = crtdlIDs.length - firstThreeCRTDLs.length;
 
