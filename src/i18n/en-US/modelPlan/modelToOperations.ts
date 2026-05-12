@@ -289,7 +289,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     },
     editMilestone: {
-      milestoneTitle: 'Milestone details',
+      heading: 'Milestone details',
+      heading_solution: 'Back to solution details',
       readviewDescription:
         'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.',
       alert: {
@@ -308,6 +309,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       ],
       custom: 'Custom',
       saveChanges: 'Save changes',
+      saveChanges_solution: 'Save and return to solution details',
       save: 'Save',
       unsavedChanges: '{{count}} unsaved change',
       unsavedChanges_other: '{{count}} unsaved changes',
@@ -337,6 +339,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         'There was an error removing your milestone. Please try again. If the error persists, please try again another time.',
       leaveConfirm: {
         heading: 'Are you sure you want to leave?',
+        heading_solution:
+          'Are you sure you want to return to solution details?',
         description:
           'You have made changes that will not be saved if you navigate away from this view.',
         confirm: 'Leave without saving',
@@ -439,7 +443,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         '{{count}} milestone associated with this solution',
       selectedMilestonesCount_other:
         '{{count}} milestones associated with this solution',
-      editMilestones: 'Edit related milestones',
+      updateMilestones: 'Update related milestones',
+      editMilestone: 'Edit milestone',
       noMilestones:
         'You haven’t identified any specific milestones that this solution will help implement.',
       milestone: 'Milestone',

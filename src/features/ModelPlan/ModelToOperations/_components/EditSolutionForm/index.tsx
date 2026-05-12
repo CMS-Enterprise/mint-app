@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -62,6 +63,7 @@ import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
 import toastSuccess from 'components/ToastSuccess';
+import { EditMTOMilestoneContext } from 'contexts/EditMTOMilestoneContext';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -143,6 +145,10 @@ const EditSolutionForm = ({
     useState<number>(0);
 
   const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
+
+  const { openEditMilestoneModal, setMilestoneID } = useContext(
+    EditMTOMilestoneContext
+  );
 
   const {
     data,
@@ -450,7 +456,29 @@ const EditSolutionForm = ({
       {
         Header: modelToOperationsMiscT('modal.editSolution.milestone'),
         accessor: 'name',
-        width: 300
+        width: 300,
+        Cell: ({ row }: { row: Row<MilestoneType> }) => {
+          return (
+            <>
+              <span className="display-block">{row.original.name}</span>
+              <Button
+                type="button"
+                unstyled
+                className="margin-top-0"
+                onClick={() => {
+                  setMilestoneID(row.original.id);
+                  openEditMilestoneModal({
+                    selectedMilestoneID: row.original.id,
+                    source: 'solution'
+                  });
+                }}
+              >
+                {modelToOperationsMiscT('modal.editSolution.editMilestone')}
+                <Icon.ArrowForward aria-hidden />
+              </Button>
+            </>
+          );
+        }
       },
       {
         Header: modelToOperationsMiscT('modal.editSolution.status'),
@@ -485,7 +513,7 @@ const EditSolutionForm = ({
         }
       }
     ],
-    [modelToOperationsMiscT]
+    [modelToOperationsMiscT, openEditMilestoneModal, setMilestoneID]
   );
 
   const {
@@ -1116,7 +1144,7 @@ const EditSolutionForm = ({
                     className="margin-0 display-flex"
                   >
                     {modelToOperationsMiscT(
-                      'modal.editSolution.editMilestones'
+                      'modal.editSolution.updateMilestones'
                     )}
                     <Icon.ArrowForward
                       className="top-2px"

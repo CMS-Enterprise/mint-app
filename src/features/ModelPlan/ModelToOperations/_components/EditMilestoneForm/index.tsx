@@ -160,6 +160,7 @@ const EditMilestoneForm = ({
   const params = new URLSearchParams(location.search);
 
   const editMilestoneID = params.get('edit-milestone');
+  const sourceParam = params.get('source');
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -776,17 +777,21 @@ const EditMilestoneForm = ({
           }
           className="margin-bottom-2 margin-top-0"
         >
-          {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
+          {modelToOperationsMiscT('modal.editMilestone.saveChanges', {
+            context: sourceParam || ''
+          })}
         </Button>
 
-        <Button
-          type="button"
-          disabled={isSubmitting}
-          className="bg-error margin-top-0"
-          onClick={() => setIsModalOpen(true)}
-        >
-          {modelToOperationsMiscT('modal.editMilestone.removeMilestone')}
-        </Button>
+        {!sourceParam && (
+          <Button
+            type="button"
+            disabled={isSubmitting}
+            className="bg-error margin-top-0"
+            onClick={() => setIsModalOpen(true)}
+          >
+            {modelToOperationsMiscT('modal.editMilestone.removeMilestone')}
+          </Button>
+        )}
       </div>
     );
   }, [
@@ -796,7 +801,8 @@ const EditMilestoneForm = ({
     setFooter,
     onSubmit,
     modelToOperationsMiscT,
-    unsavedChanges
+    unsavedChanges,
+    sourceParam
   ]);
 
   const columns: Column<SolutionType>[] = useMemo(
@@ -1590,150 +1596,161 @@ const EditMilestoneForm = ({
                 )}
               />
 
-              <div className="border-top-1px border-base-lighter padding-y-4">
-                <h3 className="margin-0 margin-bottom-1">
-                  {modelToOperationsMiscT(
-                    'modal.editMilestone.selectedSolutions'
-                  )}
-                </h3>
+              {sourceParam !== 'solution' && (
+                <div className="border-top-1px border-base-lighter padding-y-4">
+                  <h3 className="margin-0 margin-bottom-1">
+                    {modelToOperationsMiscT(
+                      'modal.editMilestone.selectedSolutions'
+                    )}
+                  </h3>
 
-                <p className="margin-0 margin-bottom-1">
-                  {modelToOperationsMiscT(
-                    'modal.editMilestone.selectedSolutionsCount',
-                    {
-                      count: selectedSolutions?.length || 0
-                    }
-                  )}
-                </p>
+                  <p className="margin-0 margin-bottom-1">
+                    {modelToOperationsMiscT(
+                      'modal.editMilestone.selectedSolutionsCount',
+                      {
+                        count: selectedSolutions?.length || 0
+                      }
+                    )}
+                  </p>
 
-                <Button
-                  type="button"
-                  onClick={() => {
-                    setEditSolutionsOpen(true);
-                  }}
-                  unstyled
-                  className="margin-0 display-flex"
-                >
-                  {modelToOperationsMiscT(
-                    'modal.editMilestone.updateSelectedSolutions'
-                  )}
-                  <Icon.ArrowForward className="top-2px" aria-label="forward" />
-                </Button>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setEditSolutionsOpen(true);
+                    }}
+                    unstyled
+                    className="margin-0 display-flex"
+                  >
+                    {modelToOperationsMiscT(
+                      'modal.editMilestone.updateSelectedSolutions'
+                    )}
+                    <Icon.ArrowForward
+                      className="top-2px"
+                      aria-label="forward"
+                    />
+                  </Button>
 
-                {selectedSolutions.length === 0 ? (
-                  <Alert type="info" slim>
-                    {modelToOperationsMiscT('modal.editMilestone.noSolutions')}
-                  </Alert>
-                ) : (
-                  <>
-                    <UswdsTable
-                      bordered={false}
-                      {...getTableProps()}
-                      className="margin-top-0"
-                      fullWidth
-                    >
-                      <thead>
-                        {headerGroups.map(headerGroup => (
-                          <tr
-                            {...headerGroup.getHeaderGroupProps()}
-                            key={{ ...headerGroup.getHeaderGroupProps() }.key}
-                          >
-                            {headerGroup.headers.map(column => (
-                              <th
-                                {...column.getHeaderProps()}
-                                scope="col"
-                                key={column.id}
-                                className="padding-left-0 padding-bottom-0"
-                                style={{
-                                  width:
-                                    column.id === 'status' ? '150px' : 'auto'
+                  {selectedSolutions.length === 0 ? (
+                    <Alert type="info" slim>
+                      {modelToOperationsMiscT(
+                        'modal.editMilestone.noSolutions'
+                      )}
+                    </Alert>
+                  ) : (
+                    <>
+                      <UswdsTable
+                        bordered={false}
+                        {...getTableProps()}
+                        className="margin-top-0"
+                        fullWidth
+                      >
+                        <thead>
+                          {headerGroups.map(headerGroup => (
+                            <tr
+                              {...headerGroup.getHeaderGroupProps()}
+                              key={{ ...headerGroup.getHeaderGroupProps() }.key}
+                            >
+                              {headerGroup.headers.map(column => (
+                                <th
+                                  {...column.getHeaderProps()}
+                                  scope="col"
+                                  key={column.id}
+                                  className="padding-left-0 padding-bottom-0"
+                                  style={{
+                                    width:
+                                      column.id === 'status' ? '150px' : 'auto'
+                                  }}
+                                >
+                                  <button
+                                    className="usa-button usa-button--unstyled position-relative"
+                                    type="button"
+                                    {...column.getSortByToggleProps()}
+                                  >
+                                    {
+                                      column.render(
+                                        'Header'
+                                      ) as React.ReactElement
+                                    }
+                                    {column.canSort &&
+                                      getHeaderSortIcon(column, false)}
+                                  </button>
+                                </th>
+                              ))}
+                            </tr>
+                          ))}
+                        </thead>
+                        <tbody {...getTableBodyProps()}>
+                          {page.map((row, i) => {
+                            const { getRowProps, cells, id } = { ...row };
+
+                            prepareRow(row);
+                            return (
+                              <tr {...getRowProps()} key={id}>
+                                {cells.map(cell => {
+                                  return (
+                                    <td
+                                      {...cell.getCellProps()}
+                                      key={cell.getCellProps().key}
+                                      className="padding-left-0"
+                                    >
+                                      {
+                                        cell.render(
+                                          'Cell'
+                                        ) as React.ReactElement
+                                      }
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </UswdsTable>
+
+                      {selectedSolutions.length > 5 && (
+                        <TablePagination
+                          className="flex-justify-start margin-left-neg-05"
+                          gotoPage={gotoPage}
+                          previousPage={previousPage}
+                          nextPage={nextPage}
+                          canNextPage={canNextPage}
+                          pageIndex={state.pageIndex}
+                          pageOptions={pageOptions}
+                          canPreviousPage={canPreviousPage}
+                          pageCount={pageCount}
+                          pageSize={state.pageSize}
+                          setPageSize={setPageSize}
+                          page={[]}
+                        />
+                      )}
+
+                      <Alert type="info" slim className="margin-top-4">
+                        <Trans
+                          i18nKey={modelToOperationsMiscT(
+                            'modal.editMilestone.solutionInfo'
+                          )}
+                          components={{
+                            link1: (
+                              <Button
+                                type="button"
+                                unstyled
+                                className="usa-button--unstyled margin-0"
+                                onClick={() => {
+                                  setCloseDestination(
+                                    `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
+                                  );
                                 }}
                               >
-                                <button
-                                  className="usa-button usa-button--unstyled position-relative"
-                                  type="button"
-                                  {...column.getSortByToggleProps()}
-                                >
-                                  {
-                                    column.render(
-                                      'Header'
-                                    ) as React.ReactElement
-                                  }
-                                  {column.canSort &&
-                                    getHeaderSortIcon(column, false)}
-                                </button>
-                              </th>
-                            ))}
-                          </tr>
-                        ))}
-                      </thead>
-                      <tbody {...getTableBodyProps()}>
-                        {page.map((row, i) => {
-                          const { getRowProps, cells, id } = { ...row };
-
-                          prepareRow(row);
-                          return (
-                            <tr {...getRowProps()} key={id}>
-                              {cells.map(cell => {
-                                return (
-                                  <td
-                                    {...cell.getCellProps()}
-                                    key={cell.getCellProps().key}
-                                    className="padding-left-0"
-                                  >
-                                    {cell.render('Cell') as React.ReactElement}
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </UswdsTable>
-
-                    {selectedSolutions.length > 5 && (
-                      <TablePagination
-                        className="flex-justify-start margin-left-neg-05"
-                        gotoPage={gotoPage}
-                        previousPage={previousPage}
-                        nextPage={nextPage}
-                        canNextPage={canNextPage}
-                        pageIndex={state.pageIndex}
-                        pageOptions={pageOptions}
-                        canPreviousPage={canPreviousPage}
-                        pageCount={pageCount}
-                        pageSize={state.pageSize}
-                        setPageSize={setPageSize}
-                        page={[]}
-                      />
-                    )}
-
-                    <Alert type="info" slim className="margin-top-4">
-                      <Trans
-                        i18nKey={modelToOperationsMiscT(
-                          'modal.editMilestone.solutionInfo'
-                        )}
-                        components={{
-                          link1: (
-                            <Button
-                              type="button"
-                              unstyled
-                              className="usa-button--unstyled margin-0"
-                              onClick={() => {
-                                setCloseDestination(
-                                  `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
-                                );
-                              }}
-                            >
-                              {' '}
-                            </Button>
-                          )
-                        }}
-                      />
-                    </Alert>
-                  </>
-                )}
-              </div>
+                                {' '}
+                              </Button>
+                            )
+                          }}
+                        />
+                      </Alert>
+                    </>
+                  )}
+                </div>
+              )}
 
               <div className="border-top-1px border-base-lighter padding-y-4">
                 <MilestoneNotes

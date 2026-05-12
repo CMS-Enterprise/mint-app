@@ -234,7 +234,7 @@ const ActionMenu = ({
         unstyled
         onClick={() => {
           setMilestoneID(milestoneID);
-          openEditMilestoneModal(milestoneID);
+          openEditMilestoneModal({ selectedMilestoneID: milestoneID });
         }}
       >
         {i18next.t('modelToOperationsMisc:table.editDetails')}

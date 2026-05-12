@@ -8,6 +8,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import EditMilestoneForm from 'features/ModelPlan/ModelToOperations/_components/EditMilestoneForm';
 
 import Modal from 'components/Modal';
@@ -15,7 +16,13 @@ import PageHeading from 'components/PageHeading';
 import Sidepanel from 'components/Sidepanel';
 
 interface EditMTOMilestoneContextType {
-  openEditMilestoneModal: (milestoneID: string) => void;
+  openEditMilestoneModal: ({
+    selectedMilestoneID,
+    source
+  }: {
+    selectedMilestoneID: string;
+    source?: 'solution';
+  }) => void;
   setMilestoneID: (milestoneID: string) => void;
 }
 
@@ -36,6 +43,7 @@ const EditMTOMilestoneProvider = ({
   const [params, setParams] = useSearchParams();
 
   const milestoneParam = params.get('edit-milestone');
+  const sourceParam = params.get('source');
 
   const [isModalOpen, setIsModalOpen] = useState(!!milestoneParam);
 
@@ -62,9 +70,9 @@ const EditMTOMilestoneProvider = ({
       setLeavePage(true);
     } else if (!isDirty || submitted.current) {
       if (closeDestination) {
-        const url = new URL(closeDestination, window.location.origin); // Parse the URL
-        const baseRoute = url.pathname; // Extract the base route
-        const queryParams = url.search; // Extract the query parameters (if needed)
+        const url = new URL(closeDestination, window.location.origin);
+        const baseRoute = url.pathname;
+        const queryParams = url.search;
 
         navigate(baseRoute + queryParams, {
           state: {
@@ -76,6 +84,7 @@ const EditMTOMilestoneProvider = ({
         setParams(prevParams => {
           const nextParams = new URLSearchParams(prevParams);
           nextParams.delete('edit-milestone');
+          nextParams.delete('source');
           nextParams.delete('select-solutions');
           return nextParams;
         });
@@ -92,10 +101,23 @@ const EditMTOMilestoneProvider = ({
     }
   }, [closeDestination, closeModal]);
 
-  const openEditMilestoneModal = (id: string) => {
+  const openEditMilestoneModal = ({
+    selectedMilestoneID,
+    source
+  }: {
+    selectedMilestoneID: string;
+    source?: 'solution';
+  }) => {
     setParams(prevParams => {
       const nextParams = new URLSearchParams(prevParams);
-      nextParams.set('edit-milestone', id);
+      nextParams.set('edit-milestone', selectedMilestoneID);
+
+      if (source) {
+        nextParams.set('source', source);
+      } else {
+        nextParams.delete('source');
+      }
+
       return nextParams;
     });
     setIsModalOpen(true);
@@ -112,16 +134,20 @@ const EditMTOMilestoneProvider = ({
         <Sidepanel
           isOpen={isModalOpen}
           closeModal={closeModal}
-          ariaLabel={modelToOperationsMiscT(
-            'milestoneLibrary.milestoneDetails'
-          )}
+          ariaLabel={modelToOperationsMiscT('modal.editMilestone.heading', {
+            context: sourceParam || ''
+          })}
           testid="edit-milestone-sidepanel"
-          modalHeading={modelToOperationsMiscT(
-            'milestoneLibrary.milestoneDetails'
-          )}
+          modalHeading={modelToOperationsMiscT('modal.editMilestone.heading', {
+            context: sourceParam || ''
+          })}
           fixed
           footer={footer}
           noScrollable
+          overlayClassName={classNames({
+            'z-500 bg-transparent': sourceParam
+          })}
+          backButton={!!sourceParam}
         >
           <EditMilestoneForm
             closeModal={closeModal}
@@ -142,7 +168,12 @@ const EditMTOMilestoneProvider = ({
             headingLevel="h3"
             className="margin-top-neg-2 margin-bottom-1"
           >
-            {modelToOperationsMiscT('modal.editMilestone.leaveConfirm.heading')}
+            {modelToOperationsMiscT(
+              'modal.editMilestone.leaveConfirm.heading',
+              {
+                context: sourceParam || ''
+              }
+            )}
           </PageHeading>
 
           <p className="margin-top-2 margin-bottom-3">
@@ -162,6 +193,7 @@ const EditMTOMilestoneProvider = ({
                   prevParams => {
                     const nextParams = new URLSearchParams(prevParams);
                     nextParams.delete('edit-milestone');
+                    nextParams.delete('source');
                     return nextParams;
                   },
                   { replace: true }

@@ -264,9 +264,9 @@ const MilestoneCardGroup = ({
           navigate({ search: params.toString() }, { replace: true });
           setIsSidepanelOpen(false);
         }}
-        ariaLabel={t('modal.editMilestone.milestoneTitle')}
+        ariaLabel={t('modal.editMilestone.heading')}
         testid="milestone-sidepanel"
-        modalHeading={t('modal.editMilestone.milestoneTitle')}
+        modalHeading={t('modal.editMilestone.heading')}
         noScrollable
       >
         {selectedMilestone && (
