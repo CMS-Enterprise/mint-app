@@ -464,19 +464,20 @@ export const modelToOperationsMisc: Record<string, any> = {
         'To view more information about the milestones using this solution, navigate to the <link1>“Milestones” tab</link1> in your MTO. From there you may edit details about the milestones, including the status.'
     },
     completionModal: {
-      heading: { milestone: 'You marked this milestone as complete!' },
-      noRiskText: {
-        milestone:
-          'If needed, please update the status of any selected solutions by navigating to the <solutionTabLink>Solutions and IT systems tab</solutionTabLink> of your MTO to update their details.'
-      },
-      riskText: {
-        milestone:
-          'There is a risk indicator for this milestone. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}'
-      },
-      riskInfoAlert: {
-        milestone:
-          'If needed, please update the status of any selected solutions by navigating to the “Solutions and IT systems” tab of your MTO to update their details.'
-      },
+      heading_milestone: 'You marked this milestone as complete!',
+      heading_solution: 'You marked this solution as complete!',
+      noRiskText_milestone:
+        'If needed, please update the status of any selected solutions by navigating to the <solutionTabLink>Solutions and IT systems tab</solutionTabLink> of your MTO to update their details or mark them as complete from within the milestone details panel.',
+      noRiskText_solution:
+        'If needed, please update the status of any selected milestones by navigating to the <milestoneTabLink>Milestones tab</milestoneTabLink> of your MTO to update their details or mark them as complete from within the solution details panel.',
+      riskText_milestone:
+        'There is a risk indicator for this milestone. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}',
+      riskText_solution:
+        'There is a risk indicator for this solution. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}',
+      riskInfoAlert_milestone:
+        'If needed, please update the status of any selected solutions by navigating to the “Solutions and IT systems” tab of your MTO to update their details or mark them as complete from within the milestone details panel..',
+      riskInfoAlert_solution:
+        'If needed, please update the status of any selected milestones by navigating to the “Milestones” tab of your MTO to update their details or mark them as complete from within the solution details panel.',
       cta: {
         okay: 'Okay',
         removeRiskIndicator: 'Remove risk indicator',
