@@ -401,12 +401,42 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 		return "", false
 	})
 
+	// Intentionally inspect the full audit slice here instead of filteredAudits.
+	// We only want waiver survey activity to surface as the explicit completion
+	// bullet in the digest, not as a generic section update like "Updates to ...".
+	// Keeping waiver_assessment_survey out of the shared section filter avoids it
+	// being added to Updated/ReadyFor* while still letting us detect COMPLETE.
+	waiverAssessmentSurveyMarkedComplete := lo.FilterMap(audits, func(audit *models.AuditChange, index int) (models.TableName, bool) {
+		if audit == nil || audit.Fields == nil {
+			logger.Warn("audit or audit.Fields is nil in audit entry", zap.Int("index", index))
+			return "", false
+		}
+
+		// Many audited tables have a status field, so narrow this check to the
+		// waiver table before treating a COMPLETE transition as waiver-specific.
+		if audit.TableName != models.TNWaiverAssessmentSurvey {
+			return "", false
+		}
+
+		keys := lo.Keys(audit.Fields)
+		if lo.Contains(keys, "status") {
+			statusField, hasStatus := audit.Fields["status"]
+			if hasStatus && statusField.New != nil {
+				if statusStr, ok := statusField.New.(string); ok && statusStr == string(models.WaiverAssessmentSurveyStatusComplete) {
+					return audit.TableName, true
+				}
+			}
+		}
+		return "", false
+	})
+
 	analyzedPlanSections := models.AnalyzedPlanSections{
-		Updated:                            updatedSections,
-		ReadyForReview:                     readyForReview,
-		ReadyForClearance:                  readyForClearance,
-		DataExchangeApproachMarkedComplete: len(dataExchangeApproachMarkedComplete) > 0,
-		IDDOCQuestionnaireMarkedComplete:   len(iddocQuestionnaireMarkedComplete) > 0,
+		Updated:                              updatedSections,
+		ReadyForReview:                       readyForReview,
+		ReadyForClearance:                    readyForClearance,
+		DataExchangeApproachMarkedComplete:   len(dataExchangeApproachMarkedComplete) > 0,
+		IDDOCQuestionnaireMarkedComplete:     len(iddocQuestionnaireMarkedComplete) > 0,
+		WaiverAssessmentSurveyMarkedComplete: len(waiverAssessmentSurveyMarkedComplete) > 0,
 	}
 
 	if analyzedPlanSections.IsEmpty() {
