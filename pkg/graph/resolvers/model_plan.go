@@ -414,6 +414,9 @@ func ModelPlansWithEchimpCRAndTDLS(echimpS3Client *s3.S3Client, viperConfig *vip
 	if err != nil {
 		return nil, err
 	}
+	if data == nil {
+		return nil, nil
+	}
 
 	modelPlanIDs := maps.Keys(data.CrsAndTDLsByModelPlanID)
 
