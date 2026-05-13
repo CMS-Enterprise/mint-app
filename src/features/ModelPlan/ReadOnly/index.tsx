@@ -467,7 +467,7 @@ const ReadOnly = ({ isHelpArticle }: { isHelpArticle?: boolean }) => {
                   modelLeads={collaborators?.filter(c =>
                     c.teamRoles.includes(TeamRole.MODEL_LEAD)
                   )}
-                  crTdls={echimpCRsAndTDLs}
+                  crTdls={echimpCRsAndTDLs ?? []}
                 />
               </div>
             )}

@@ -41,3 +41,15 @@ type MTOSolutionByModelPlanIDAndFilterViewKey struct {
 	// FilterView is the filter view to be applied
 	FilterView models.ModelViewFilter `json:"filter_view"`
 }
+
+// IsCollaboratorKey is a composite key for batch-checking if a user is a collaborator on a model plan
+type IsCollaboratorKey struct {
+	ModelPlanID uuid.UUID `json:"model_plan_id"`
+	UserID      uuid.UUID `json:"user_id"`
+}
+
+// IsFavoriteKey is a composite key for batch-checking if a user has favorited a model plan
+type IsFavoriteKey struct {
+	ModelPlanID uuid.UUID `json:"model_plan_id"`
+	UserID      uuid.UUID `json:"user_id"`
+}

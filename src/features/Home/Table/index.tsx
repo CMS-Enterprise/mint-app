@@ -44,8 +44,10 @@ import './index.scss';
 type AllModelPlansType = GetModelPlansQuery['modelPlanCollection'][0];
 type CollaboratorsType =
   GetModelPlansQuery['modelPlanCollection'][0]['collaborators'][0];
-type EchimpCrAndTdlsType =
-  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
+
+type EchimpCrAndTdlsType = NonNullable<
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs']
+>[number];
 
 type HomeTableTypes =
   | ViewCustomizationType.ALL_MODEL_PLANS
@@ -88,6 +90,7 @@ const ModelPlansTable = ({
     loading,
     error
   } = useGetModelPlansQuery({
+    errorPolicy: 'all',
     variables: {
       filter: queryType,
       isMAC: type === ViewCustomizationType.MODELS_WITH_CR_TDL
@@ -454,12 +457,10 @@ const ModelPlansTable = ({
     return <PageLoading testId={id} />;
   }
 
-  if (error) {
-    return <Alert type="error">{homeT('fetchError')}</Alert>;
-  }
-
   if (data.length === 0) {
-    return (
+    return error ? (
+      <Alert type="error">{homeT('fetchError')}</Alert>
+    ) : (
       <Alert type="info" heading={homeT(`settings.${type}.noResultsHeading`)}>
         {homeT(`settings.${type}.noResultsDescription`)}
       </Alert>

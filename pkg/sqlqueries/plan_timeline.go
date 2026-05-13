@@ -17,12 +17,16 @@ var planTimelineGetByModelPlanIDLoaderSQL string
 //go:embed SQL/plan_timeline/get_by_model_plan_id.sql
 var planTimelineGetByModelPlanIDSQL string
 
+//go:embed SQL/plan_timeline/clear_application_dates_by_model_plan_id.sql
+var planTimelineClearApplicationDatesByModelPlanIDSQL string
+
 type planTimelineScripts struct {
-	Create                 string
-	Update                 string
-	GetByID                string
-	GetByModelPlanIDLoader string
-	GetByModelPlanID       string
+	Create                             string
+	Update                             string
+	GetByID                            string
+	GetByModelPlanIDLoader             string
+	GetByModelPlanID                   string
+	ClearApplicationDatesByModelPlanID string
 }
 
 // PlanTimeline houses all the sql for getting data for planTimeline from the database
@@ -32,5 +36,6 @@ var PlanTimeline = planTimelineScripts{
 	GetByID:                planTimelineGetByIDSQL,
 	GetByModelPlanIDLoader: planTimelineGetByModelPlanIDLoaderSQL,
 
-	GetByModelPlanID: planTimelineGetByModelPlanIDSQL,
+	GetByModelPlanID:                   planTimelineGetByModelPlanIDSQL,
+	ClearApplicationDatesByModelPlanID: planTimelineClearApplicationDatesByModelPlanIDSQL,
 }

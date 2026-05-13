@@ -14,8 +14,9 @@ import { ECHIMP_URL_SSO } from 'constants/echimp';
 
 import '../../index.scss';
 
-export type CRTDLType =
-  GetCollaborationAreaQuery['modelPlan']['echimpCRsAndTDLs'][0];
+export type CRTDLType = NonNullable<
+  GetCollaborationAreaQuery['modelPlan']['echimpCRsAndTDLs']
+>[0];
 
 type CRTDLCardType = {
   crtdls: CRTDLType[];
@@ -25,9 +26,11 @@ type CRTDLCardType = {
 const CRTDLCard = ({ crtdls = [], modelID }: CRTDLCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
-  const firstFiveCRTDLs = crtdls.slice(0, 5);
+  const firstFiveCRTDLs = crtdls?.length > 0 ? crtdls.slice(0, 5) : [];
 
-  const remainingCRTDLs: number = crtdls.length - firstFiveCRTDLs.length;
+  const remainingCRTDLs: number = crtdls?.length
+    ? crtdls.length - firstFiveCRTDLs.length
+    : 0;
 
   return (
     <Card
