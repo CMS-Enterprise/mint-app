@@ -61,6 +61,14 @@ const CompletionModal = ({
                     >
                       {' '}
                     </UswdsReactLink>
+                  ),
+                  milestoneTabLink: (
+                    <UswdsReactLink
+                      to={`/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones&page=1`}
+                      onClick={closeModal}
+                    >
+                      {' '}
+                    </UswdsReactLink>
                   )
                 }}
               />
