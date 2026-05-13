@@ -33,7 +33,8 @@ func sendTestDailyDigestEmail(
 					models.TNPlanOpsEvalAndLearning,
 					models.TNMTOSolution,
 				},
-				IDDOCQuestionnaireMarkedComplete: true,
+				IDDOCQuestionnaireMarkedComplete:     true,
+				WaiverAssessmentSurveyMarkedComplete: true,
 			},
 		},
 	}
@@ -83,7 +84,8 @@ func sendTestDailyDigestEmailAggregated(
 					models.TNPlanOpsEvalAndLearning,
 					models.TNMTOSolution,
 				},
-				IDDOCQuestionnaireMarkedComplete: true,
+				IDDOCQuestionnaireMarkedComplete:     true,
+				WaiverAssessmentSurveyMarkedComplete: true,
 			},
 		},
 	}
@@ -107,7 +109,8 @@ func sendTestDailyDigestEmailAggregated(
 					models.TNPlanOpsEvalAndLearning,
 					models.TNMTOSolution,
 				},
-				IDDOCQuestionnaireMarkedComplete: true,
+				IDDOCQuestionnaireMarkedComplete:     true,
+				WaiverAssessmentSurveyMarkedComplete: true,
 			},
 		},
 	}
