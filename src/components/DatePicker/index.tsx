@@ -25,6 +25,7 @@ interface ITSolutionsFormComponentType {
   warning?: boolean;
   shouldShowWarning?: boolean;
   half?: boolean;
+  disabled?: boolean;
 }
 
 export const MINTDatePicker = ({
@@ -41,7 +42,8 @@ export const MINTDatePicker = ({
   error,
   warning = true, // Used to show warning message below the date picker if inline with 2 dates (one will have warning the other wont), otherwise will default to true
   shouldShowWarning = true, // Used to determine if the date is touched/changed on the current form, otherwise don't display warning
-  half
+  half,
+  disabled = false
 }: ITSolutionsFormComponentType) => {
   const { t: h } = useTranslation('general');
 
@@ -86,6 +88,7 @@ export const MINTDatePicker = ({
             onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
               handleOnBlur(e, fieldName);
             }}
+            disabled={disabled}
           />
           {shouldShowWarning && isDateInPast(formikValue) && (
             <DatePickerWarning label={h('dateWarning')} />

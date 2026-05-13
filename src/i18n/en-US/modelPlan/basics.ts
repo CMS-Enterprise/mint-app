@@ -156,7 +156,7 @@ export const basics: TranslationBasics = {
     gqlField: 'modelType',
     goField: 'ModelType',
     dbField: 'model_type',
-    label: 'Model Type',
+    label: 'Model type',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 2.01,
@@ -322,7 +322,9 @@ export const basicsMisc: Record<string, string> = {
   otherIdentifiersInfo3:
     ' Skip these fields until your model has been added to AMS. Not all models will have demo codes.',
   otherIdentifiersInfo_noEditAccess:
-    ' They will be blank until the model is added to AMS. Not all models will have demo codes.'
+    ' They will be blank until the model is added to AMS. Not all models will have demo codes.',
+  modelTypeHelpText:
+    'Updating your answer to this question may change or remove the application period dates in your <link1>model timeline</link1>.'
 };
 
 export default basics;
