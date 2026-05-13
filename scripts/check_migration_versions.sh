@@ -30,6 +30,14 @@ debug_log() {
     fi
 }
 
+count_nonempty_lines() {
+    if [ -z "$1" ]; then
+        echo 0
+    else
+        printf '%s\n' "$1" | grep -c '.'
+    fi
+}
+
 echo "🔍 Validating migration version numbers..."
 debug_log "EVENT_TYPE=$EVENT_TYPE BASE_BRANCH=$BASE_BRANCH"
 
@@ -114,7 +122,7 @@ if [ "$EVENT_TYPE" = "pull_request" ] || [ "$EVENT_TYPE" = "merge_group" ]; then
     # Include: A=Added, C=Copied, R=Renamed (in case files were duplicated)
     ALL_NEW_FILES=$(git diff --name-only --diff-filter=ACR origin/"$BASE_BRANCH"...HEAD 2>/dev/null | grep --color=never "^${MIGRATIONS_DIR}/" || true)
     
-    debug_log "Found $(echo "$ALL_NEW_FILES" | grep -c '^' || echo 0) new files in migrations/ directory"
+    debug_log "Found $(count_nonempty_lines "$ALL_NEW_FILES") new files in migrations/ directory"
     
     if [ -z "$ALL_NEW_FILES" ]; then
         echo -e "${GREEN}✅ No new migrations added in this PR${NC}"
@@ -238,7 +246,7 @@ else
     # Note: --color=never on grep is CRITICAL to prevent ANSI color codes from breaking regex matching
     ALL_STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACR --no-color 2>/dev/null | grep --color=never "^${MIGRATIONS_DIR}/" || true)
     
-    debug_log "Found $(echo "$ALL_STAGED_FILES" | grep -c '^' || echo 0) staged files in migrations/ directory"
+    debug_log "Found $(count_nonempty_lines "$ALL_STAGED_FILES") staged files in migrations/ directory"
     
     if [ "$DEBUG" = true ]; then
         echo ""
@@ -332,8 +340,26 @@ else
         fi
     fi
     
+    # Get the old paths for staged migration renames so they do not inflate
+    # the HEAD baseline when a commit only renumbers branch-local migrations.
+    STAGED_RENAMED_FROM=$(git diff --cached --name-status --diff-filter=R --no-color 2>/dev/null | while IFS=$'\t' read -r _ old_path _; do
+        if [ -n "$old_path" ] && [[ $old_path =~ ^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$ ]]; then
+            echo "$old_path"
+        fi
+    done)
+
     # Get the highest existing version number (excluding staged files)
     EXISTING_MIGRATIONS=$(git ls-tree -r --name-only HEAD "$MIGRATIONS_DIR" 2>/dev/null | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
+
+    if [ -n "$STAGED_RENAMED_FROM" ] && [ -n "$EXISTING_MIGRATIONS" ]; then
+        FILTERED_EXISTING_MIGRATIONS=""
+        while IFS= read -r file; do
+            if ! printf '%s\n' "$STAGED_RENAMED_FROM" | grep -Fxq "$file"; then
+                FILTERED_EXISTING_MIGRATIONS="${FILTERED_EXISTING_MIGRATIONS}${file}"$'\n'
+            fi
+        done <<< "$EXISTING_MIGRATIONS"
+        EXISTING_MIGRATIONS=${FILTERED_EXISTING_MIGRATIONS%$'\n'}
+    fi
     
     if [ -z "$EXISTING_MIGRATIONS" ]; then
         # This is the first migration
@@ -398,4 +424,3 @@ fi
 echo ""
 echo -e "${GREEN}✅ All migration validations passed!${NC}"
 exit 0
-
