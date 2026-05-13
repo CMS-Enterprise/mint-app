@@ -43,3 +43,14 @@ const (
 	MTMandatoryNational        ModelType = "MANDATORY_NATIONAL"
 	MTOther                    ModelType = "OTHER"
 )
+
+// ModelTypeListIncludesMandatory reports whether modelType includes MANDATORY_NATIONAL or MANDATORY_REGIONAL_OR_STATE.
+func ModelTypeListIncludesMandatory(modelType pq.StringArray) bool {
+	for _, t := range modelType {
+		mt := ModelType(t)
+		if mt == MTMandatoryNational || mt == MTMandatoryRegionalOrState {
+			return true
+		}
+	}
+	return false
+}
