@@ -21,6 +21,9 @@ func GetEchimpCRAndTdlsByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *v
 	if err != nil {
 		return nil, err
 	}
+	if data == nil {
+		return nil, nil
+	}
 
 	return data.CrsAndTDLsByModelPlanID[modelPlanID], nil
 }
