@@ -186,9 +186,7 @@ const EditMilestoneForm = ({
 
   const { setErrorMeta } = useErrorMessage();
 
-  const { openEditSolutionModal, setSolutionID } = useContext(
-    EditMTOSolutionContext
-  );
+  const { openEditSolutionModal } = useContext(EditMTOSolutionContext);
 
   const {
     data,
@@ -819,7 +817,6 @@ const EditMilestoneForm = ({
                 unstyled
                 className="margin-top-0"
                 onClick={() => {
-                  setSolutionID(row.original.id);
                   openEditSolutionModal({
                     selectedSolutionID: row.original.id,
                     source: 'milestone'
@@ -866,7 +863,7 @@ const EditMilestoneForm = ({
         }
       }
     ],
-    [modelToOperationsMiscT, openEditSolutionModal, setSolutionID]
+    [modelToOperationsMiscT, openEditSolutionModal]
   );
 
   const {

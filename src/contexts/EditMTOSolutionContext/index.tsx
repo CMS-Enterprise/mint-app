@@ -8,7 +8,6 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import EditSolutionForm from 'features/ModelPlan/ModelToOperations/_components/EditSolutionForm';
 
 import Modal from 'components/Modal';
@@ -25,12 +24,10 @@ interface EditMTOSolutionContextType {
     scrollToBottom?: boolean;
     source?: 'milestone';
   }) => void;
-  setSolutionID: (solutionID: string) => void;
 }
 
 const EditMTOSolutionContext = createContext<EditMTOSolutionContextType>({
-  openEditSolutionModal: () => {},
-  setSolutionID: () => {}
+  openEditSolutionModal: () => {}
 });
 
 const EditMTOSolutionProvider = ({
@@ -47,15 +44,8 @@ const EditMTOSolutionProvider = ({
   const solutionParam = params.get('edit-solution');
   const sourceParam = params.get('source');
 
-  const [isModalOpen, setIsModalOpen] = useState(!!solutionParam);
-
-  const [solutionID, setSolutionID] = useState<string>('');
-
-  useEffect(() => {
-    if (solutionParam === solutionID) {
-      setIsModalOpen(true);
-    }
-  }, [solutionParam, solutionID, setIsModalOpen]);
+  // The modal is open whenever `edit-solution` is present in the query string.
+  const isModalOpen = !!solutionParam;
 
   const submitted = useRef<boolean>(false);
 
@@ -89,7 +79,6 @@ const EditMTOSolutionProvider = ({
         });
       }
       setLeavePage(false);
-      setIsModalOpen(false);
       submitted.current = false;
     }
   }, [isDirty, submitted, closeDestination, navigate, setParams]);
@@ -127,14 +116,12 @@ const EditMTOSolutionProvider = ({
 
       return nextParams;
     });
-    setIsModalOpen(true);
   };
 
   return (
     <EditMTOSolutionContext.Provider
       value={{
-        openEditSolutionModal,
-        setSolutionID
+        openEditSolutionModal
       }}
     >
       <>
@@ -151,9 +138,6 @@ const EditMTOSolutionProvider = ({
           noScrollable
           fixed
           footer={footer}
-          overlayClassName={classNames({
-            'z-500 bg-transparent': sourceParam
-          })}
           backButton={!!sourceParam}
         >
           <EditSolutionForm
@@ -203,7 +187,6 @@ const EditMTOSolutionProvider = ({
                   { replace: true }
                 );
               }
-              setIsModalOpen(false);
               setIsDirty(false);
               setLeavePage(false);
             }}

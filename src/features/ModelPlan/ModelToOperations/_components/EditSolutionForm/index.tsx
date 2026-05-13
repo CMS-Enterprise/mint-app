@@ -1,6 +1,5 @@
 import React, {
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -13,7 +12,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -63,7 +62,6 @@ import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
 import toastSuccess from 'components/ToastSuccess';
-import { EditMTOMilestoneContext } from 'contexts/EditMTOMilestoneContext';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getKeys } from 'types/translation';
@@ -146,9 +144,11 @@ const EditSolutionForm = ({
 
   const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
 
-  const { openEditMilestoneModal, setMilestoneID } = useContext(
-    EditMTOMilestoneContext
-  );
+  // Used to write `edit-milestone` and `source` directly to the URL so the
+  // EditMTOMilestoneProvider can react and open its sidepanel on top of this
+  // one. The milestone context is not available from inside this component
+  // because its provider is a sibling rather than an ancestor.
+  const [, setParams] = useSearchParams();
 
   const {
     data,
@@ -466,10 +466,11 @@ const EditSolutionForm = ({
                 unstyled
                 className="margin-top-0"
                 onClick={() => {
-                  setMilestoneID(row.original.id);
-                  openEditMilestoneModal({
-                    selectedMilestoneID: row.original.id,
-                    source: 'solution'
+                  setParams(prev => {
+                    const next = new URLSearchParams(prev);
+                    next.set('edit-milestone', row.original.id);
+                    next.set('source', 'solution');
+                    return next;
                   });
                 }}
               >
@@ -513,7 +514,7 @@ const EditSolutionForm = ({
         }
       }
     ],
-    [modelToOperationsMiscT, openEditMilestoneModal, setMilestoneID]
+    [modelToOperationsMiscT, setParams]
   );
 
   const {

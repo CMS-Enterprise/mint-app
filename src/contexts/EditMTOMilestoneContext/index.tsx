@@ -23,12 +23,10 @@ interface EditMTOMilestoneContextType {
     selectedMilestoneID: string;
     source?: 'solution';
   }) => void;
-  setMilestoneID: (milestoneID: string) => void;
 }
 
 const EditMTOMilestoneContext = createContext<EditMTOMilestoneContextType>({
-  openEditMilestoneModal: () => {},
-  setMilestoneID: () => {}
+  openEditMilestoneModal: () => {}
 });
 
 const EditMTOMilestoneProvider = ({
@@ -45,15 +43,8 @@ const EditMTOMilestoneProvider = ({
   const milestoneParam = params.get('edit-milestone');
   const sourceParam = params.get('source');
 
-  const [isModalOpen, setIsModalOpen] = useState(!!milestoneParam);
-
-  const [milestoneID, setMilestoneID] = useState<string>('');
-
-  useEffect(() => {
-    if (milestoneParam === milestoneID) {
-      setIsModalOpen(true);
-    }
-  }, [milestoneParam, milestoneID, setIsModalOpen]);
+  // The modal is open whenever `edit-milestone` is present in the query string.
+  const isModalOpen = !!milestoneParam;
 
   const submitted = useRef<boolean>(false);
 
@@ -90,7 +81,6 @@ const EditMTOMilestoneProvider = ({
         });
       }
       setLeavePage(false);
-      setIsModalOpen(false);
       submitted.current = false;
     }
   }, [isDirty, submitted, closeDestination, navigate, setParams]);
@@ -120,14 +110,12 @@ const EditMTOMilestoneProvider = ({
 
       return nextParams;
     });
-    setIsModalOpen(true);
   };
 
   return (
     <EditMTOMilestoneContext.Provider
       value={{
-        openEditMilestoneModal,
-        setMilestoneID
+        openEditMilestoneModal
       }}
     >
       <>
@@ -199,7 +187,6 @@ const EditMTOMilestoneProvider = ({
                   { replace: true }
                 );
               }
-              setIsModalOpen(false);
               setIsDirty(false);
               setLeavePage(false);
             }}
