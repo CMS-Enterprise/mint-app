@@ -293,6 +293,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       heading_solution: 'Back to solution details',
       readviewDescription:
         'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.',
+      editMultipleSolutionsAlert:
+        'This milestone is related to {{count}} solutions. Updating the status and information here will also update it for the other solutions.',
       alert: {
         info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
         success:

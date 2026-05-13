@@ -1052,6 +1052,17 @@ const EditMilestoneForm = ({
               {milestone.name}
             </h2>
 
+            {milestone.solutions.length > 1 && (
+              <Alert type="warning" className="margin-y-4" slim>
+                {modelToOperationsMiscT(
+                  'modal.editMilestone.editMultipleSolutionsAlert',
+                  {
+                    count: milestone.solutions.length
+                  }
+                )}
+              </Alert>
+            )}
+
             <Fieldset disabled={loading} className="margin-bottom-8">
               <p className="margin-top-0 margin-bottom-3 text-base">
                 <Trans
