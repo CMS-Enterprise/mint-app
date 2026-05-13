@@ -1,0 +1,83 @@
+meta {
+  name: Update Waiver Assessment Survey
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updateWaiverAssessmentSurvey($id: UUID!, $changes: WaiverAssessmentSurveyChanges!) {
+    updateWaiverAssessmentSurvey(id: $id, changes: $changes) {
+      id
+      modelPlanID
+      status
+      isComplete
+  
+      # Page 3 - Medicare payment waivers
+      modifiesMedicareSavingsPrograms
+      modifiesMedicareSavingsProgramsExample
+      modifiesMedicareSavingsProgramsNote
+      bundlesPayments
+      bundlesPaymentsExample
+      bundlesPaymentsNote
+      offersRiskSharingArrangements
+      offersRiskSharingArrangementsExample
+      offersRiskSharingArrangementsNote
+  
+      # Page 4 - Program waivers (Medicare BEs)
+      impactsSiteOfCarePayments
+      impactsSiteOfCarePaymentsExample
+      impactsSiteOfCarePaymentsNote
+      modifiesCareTeamScopeOfPractice
+      modifiesCareTeamScopeOfPracticeExample
+      modifiesCareTeamScopeOfPracticeNote
+      modifiesCareDeliveryWithClaimsBasedPayments
+      modifiesCareDeliveryWithClaimsBasedPaymentsExample
+      modifiesCareDeliveryWithClaimsBasedPaymentsNote
+      modifiesQualityMeasurementsOrPaymentsViaWaivers
+      modifiesQualityMeasurementsOrPaymentsViaWaiversExample
+      modifiesQualityMeasurementsOrPaymentsViaWaiversNote
+  
+      # Page 5 - Medicaid payment waivers
+      impactsMedicaidOnlyBeneficiaries
+      impactsMedicaidOnlyBeneficiariesExample
+      impactsMedicaidOnlyBeneficiariesNote
+      impactsHomeCommunityBasedServicePayments
+      impactsHomeCommunityBasedServicePaymentsExample
+      impactsHomeCommunityBasedServicePaymentsNote
+      impactsManagedCareWaivers
+      impactsManagedCareWaiversExample
+      impactsManagedCareWaiversNote
+      additionalMedicaidSpecificWaivers
+  
+      createdBy
+      createdDts
+      modifiedBy
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{waiverAssessmentSurveyID}}",
+    "changes": {
+      "modifiesMedicareSavingsPrograms": true,
+      "modifiesMedicareSavingsProgramsExample": "Example text here",
+      "bundlesPayments": false,
+      "bundlesPaymentsNote": "Not applicable to this model",
+      "isComplete": false
+    }
+  }
+}
