@@ -270,6 +270,22 @@ export enum CmsCenter {
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'
 }
 
+/**
+ * This is a place holder struct that could change. It's purpose it hold
+ * a request for CTAT assistance
+ */
+export type CtatRequest = {
+  __typename: 'CTATRequest';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  humanReadableID: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
 export enum CcmInvolvmentType {
   NO = 'NO',
   OTHER = 'OTHER',
@@ -4743,6 +4759,8 @@ export type Query = {
   auditChanges: Array<AuditChange>;
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
+  ctatRequest?: Maybe<CtatRequest>;
+  ctatRequests?: Maybe<Array<CtatRequest>>;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
@@ -4798,6 +4816,12 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
+};
+
+
+/** Query definition for the schema */
+export type QueryCtatRequestArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 

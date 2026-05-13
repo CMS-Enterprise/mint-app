@@ -25,6 +25,19 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
+// This is a place holder struct that could change. It's purpose it hold
+// a request for CTAT assistance
+type CTATRequest struct {
+	ID                    uuid.UUID                   `json:"id"`
+	HumanReadableID       string                      `json:"humanReadableID"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`

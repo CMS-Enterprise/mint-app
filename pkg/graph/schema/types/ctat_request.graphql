@@ -1,0 +1,20 @@
+"""
+This is a place holder struct that could change. It's purpose it hold
+a request for CTAT assistance
+"""
+type CTATRequest {
+  id: UUID!
+  humanReadableID: String!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  ctatRequest(id: UUID!): CTATRequest
+  ctatRequests: [CTATRequest!]
+}
