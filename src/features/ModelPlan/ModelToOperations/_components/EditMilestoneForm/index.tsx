@@ -1760,15 +1760,17 @@ const EditMilestoneForm = ({
                 </div>
               )}
 
-              <div className="border-top-1px border-base-lighter padding-y-4">
-                <MilestoneNotes
-                  milestoneID={editMilestoneID || ''}
-                  milestoneNotes={milestoneNotes}
-                  setMilestoneNotes={setMilestoneNotes}
-                  selectedMilestoneNote={selectedMilestoneNote}
-                  setSelectedMilestoneNote={setSelectedMilestoneNote}
-                />
-              </div>
+              {!sourceParam && (
+                <div className="border-top-1px border-base-lighter padding-y-4">
+                  <MilestoneNotes
+                    milestoneID={editMilestoneID || ''}
+                    milestoneNotes={milestoneNotes}
+                    setMilestoneNotes={setMilestoneNotes}
+                    selectedMilestoneNote={selectedMilestoneNote}
+                    setSelectedMilestoneNote={setSelectedMilestoneNote}
+                  />
+                </div>
+              )}
             </Fieldset>
           </Form>
         </FormProvider>
