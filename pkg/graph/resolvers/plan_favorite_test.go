@@ -6,8 +6,6 @@ import (
 
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
-
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 )
 
 // IsPlanFavorited checks if a model plan is a favorite.

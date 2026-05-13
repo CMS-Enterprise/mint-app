@@ -5,14 +5,16 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   DataExchangeApproachStatus,
-  IddocQuestionnaireTaskListStatus
+  IddocQuestionnaireTaskListStatus,
+  WaiverAssessmentSurveyStatus
 } from 'gql/generated/graphql';
 
 import '../../index.scss';
 
 type QuestionnaireListStatusType =
   | DataExchangeApproachStatus
-  | IddocQuestionnaireTaskListStatus;
+  | IddocQuestionnaireTaskListStatus
+  | WaiverAssessmentSurveyStatus;
 
 const QuestionnaireListStatusTag = ({
   status,

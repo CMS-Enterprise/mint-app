@@ -1,0 +1,192 @@
+"""
+WaiverAssessmentSurveyStatus represents the work completion status of a waiver assessment survey.
+"""
+enum WaiverAssessmentSurveyStatus {
+  READY
+  IN_PROGRESS
+  COMPLETE
+}
+
+"""
+WaiverAssessmentSurvey represents the waiver assessment questionnaire for a model plan.
+"""
+type WaiverAssessmentSurvey {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 3 - Medicare payment waivers
+  modifiesMedicareSavingsPrograms: Boolean
+  modifiesMedicareSavingsProgramsExample: String
+  modifiesMedicareSavingsProgramsNote: String
+  bundlesPayments: Boolean
+  bundlesPaymentsExample: String
+  bundlesPaymentsNote: String
+  offersRiskSharingArrangements: Boolean
+  offersRiskSharingArrangementsExample: String
+  offersRiskSharingArrangementsNote: String
+
+  # Page 4 - Program waivers (Medicare Benefit Enhancements)
+  impactsSiteOfCarePayments: Boolean
+  impactsSiteOfCarePaymentsExample: String
+  impactsSiteOfCarePaymentsNote: String
+  modifiesCareTeamScopeOfPractice: Boolean
+  modifiesCareTeamScopeOfPracticeExample: String
+  modifiesCareTeamScopeOfPracticeNote: String
+  modifiesCareDeliveryWithClaimsBasedPayments: Boolean
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: String
+  modifiesCareDeliveryWithClaimsBasedPaymentsNote: String
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
+  modifiesQualityMeasurementsOrPaymentsViaWaiversNote: String
+
+  # Page 5 - Medicaid payment waivers
+  impactsMedicaidOnlyBeneficiaries: Boolean
+  impactsMedicaidOnlyBeneficiariesExample: String
+  impactsMedicaidOnlyBeneficiariesNote: String
+  impactsHomeCommunityBasedServicePayments: Boolean
+  impactsHomeCommunityBasedServicePaymentsExample: String
+  impactsHomeCommunityBasedServicePaymentsNote: String
+  impactsManagedCareWaivers: Boolean
+  impactsManagedCareWaiversExample: String
+  impactsManagedCareWaiversNote: String
+  additionalMedicaidSpecificWaivers: String
+
+  # Page 6 - Waiver selections for this model plan
+  waivers: [Waiver!]! @goField(forceResolver: true)
+
+  # Waivers MINT has determined are likely needed based on survey answers
+  suggestedWaivers: [SuggestedWaiver!]! @goField(forceResolver: true)
+
+  """
+  Convenience field indicating whether the survey has been marked as complete.
+  Computed from status: true when status is COMPLETE.
+  """
+  isComplete: Boolean!
+
+  """
+  The work completion status of the waiver assessment survey.
+  """
+  status: WaiverAssessmentSurveyStatus!
+
+  # Model Metadata
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+CommonWaiver represents a waiver type in the CMMI waiver library.
+"""
+type CommonWaiver {
+  id: UUID!
+  name: String!
+  description: String
+  participationAgreementLanguageLink: String
+  cmmiWaiverPointOfContact: String
+  waiverType: String
+  waiverFocus: String
+  whatIsWaived: String
+  hasStandardizationEffort: Boolean
+  hasClaimsDataOrRREGAnalysis: String
+  isUsedInActiveModels: Boolean
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+Waiver represents a model plan's decision on whether to use a specific waiver.
+"""
+type Waiver {
+  id: UUID!
+  modelPlanID: UUID!
+  commonWaiverID: UUID!
+  commonWaiver: CommonWaiver! @goField(forceResolver: true)
+  willUseWaiver: Boolean
+  notUsingReason: String
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+SuggestedWaiver represents a waiver MINT has determined is likely needed for a model plan
+based on answers to the waiver assessment survey.
+"""
+type SuggestedWaiver {
+  id: UUID!
+  modelPlanID: UUID!
+  commonWaiverID: UUID!
+  commonWaiver: CommonWaiver! @goField(forceResolver: true)
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input WaiverAssessmentSurveyChanges @goModel(model: "map[string]interface{}") {
+  # Page 3 - Medicare payment waivers
+  modifiesMedicareSavingsPrograms: Boolean
+  modifiesMedicareSavingsProgramsExample: String
+  modifiesMedicareSavingsProgramsNote: String
+  bundlesPayments: Boolean
+  bundlesPaymentsExample: String
+  bundlesPaymentsNote: String
+  offersRiskSharingArrangements: Boolean
+  offersRiskSharingArrangementsExample: String
+  offersRiskSharingArrangementsNote: String
+
+  # Page 4 - Program waivers (Medicare Benefit Enhancements)
+  impactsSiteOfCarePayments: Boolean
+  impactsSiteOfCarePaymentsExample: String
+  impactsSiteOfCarePaymentsNote: String
+  modifiesCareTeamScopeOfPractice: Boolean
+  modifiesCareTeamScopeOfPracticeExample: String
+  modifiesCareTeamScopeOfPracticeNote: String
+  modifiesCareDeliveryWithClaimsBasedPayments: Boolean
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: String
+  modifiesCareDeliveryWithClaimsBasedPaymentsNote: String
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
+  modifiesQualityMeasurementsOrPaymentsViaWaiversNote: String
+
+  # Page 5 - Medicaid payment waivers
+  impactsMedicaidOnlyBeneficiaries: Boolean
+  impactsMedicaidOnlyBeneficiariesExample: String
+  impactsMedicaidOnlyBeneficiariesNote: String
+  impactsHomeCommunityBasedServicePayments: Boolean
+  impactsHomeCommunityBasedServicePaymentsExample: String
+  impactsHomeCommunityBasedServicePaymentsNote: String
+  impactsManagedCareWaivers: Boolean
+  impactsManagedCareWaiversExample: String
+  impactsManagedCareWaiversNote: String
+  additionalMedicaidSpecificWaivers: String
+
+  isComplete: Boolean
+}
+
+input WaiverChanges @goModel(model: "map[string]interface{}") {
+  willUseWaiver: Boolean
+  notUsingReason: String
+}
+
+extend type Mutation {
+  updateWaiverAssessmentSurvey(
+    id: UUID!
+    changes: WaiverAssessmentSurveyChanges!
+  ): WaiverAssessmentSurvey! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  updateWaiver(id: UUID!, changes: WaiverChanges!): Waiver!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}

@@ -13,7 +13,8 @@ import classNames from 'classnames';
 import {
   DataExchangeApproachStatus,
   GetCollaborationAreaQuery,
-  IddocQuestionnaireTaskListStatus
+  IddocQuestionnaireTaskListStatus,
+  WaiverAssessmentSurveyStatus
 } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -30,7 +31,8 @@ export type AdditionalQuestionnairesCardType = {
 
 export type QuestionnairesStatusType =
   | DataExchangeApproachStatus
-  | IddocQuestionnaireTaskListStatus;
+  | IddocQuestionnaireTaskListStatus
+  | WaiverAssessmentSurveyStatus;
 
 const REQUIRED_QUESTIONNAIRES = ['dataExchangeApproach'];
 
