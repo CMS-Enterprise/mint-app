@@ -144,10 +144,6 @@ const EditSolutionForm = ({
 
   const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
 
-  // Used to write `edit-milestone` and `source` directly to the URL so the
-  // EditMTOMilestoneProvider can react and open its sidepanel on top of this
-  // one. The milestone context is not available from inside this component
-  // because its provider is a sibling rather than an ancestor.
   const [, setParams] = useSearchParams();
 
   const {

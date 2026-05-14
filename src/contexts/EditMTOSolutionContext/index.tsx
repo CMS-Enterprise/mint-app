@@ -8,6 +8,7 @@ import React, {
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import EditSolutionForm from 'features/ModelPlan/ModelToOperations/_components/EditSolutionForm';
 
 import Modal from 'components/Modal';
@@ -42,6 +43,7 @@ const EditMTOSolutionProvider = ({
   const [params, setParams] = useSearchParams();
 
   const solutionParam = params.get('edit-solution');
+  const milestoneParam = params.get('edit-milestone');
   const sourceParam = params.get('source');
 
   // The modal is open whenever `edit-solution` is present in the query string.
@@ -139,6 +141,9 @@ const EditMTOSolutionProvider = ({
           fixed
           footer={footer}
           backButton={!!sourceParam}
+          overlayClassName={classNames({
+            'z-500': sourceParam === 'milestone' && !!milestoneParam
+          })}
         >
           <EditSolutionForm
             closeModal={closeModal}

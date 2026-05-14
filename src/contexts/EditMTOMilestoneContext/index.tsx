@@ -41,6 +41,7 @@ const EditMTOMilestoneProvider = ({
   const [params, setParams] = useSearchParams();
 
   const milestoneParam = params.get('edit-milestone');
+  const solutionParam = params.get('edit-solution');
   const sourceParam = params.get('source');
 
   // The modal is open whenever `edit-milestone` is present in the query string.
@@ -133,7 +134,8 @@ const EditMTOMilestoneProvider = ({
           footer={footer}
           noScrollable
           overlayClassName={classNames({
-            'z-500 bg-transparent': sourceParam
+            'bg-transparent': !!sourceParam,
+            'z-500': sourceParam === 'solution' && !!solutionParam
           })}
           backButton={!!sourceParam}
         >
