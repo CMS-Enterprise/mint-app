@@ -20,6 +20,15 @@ SELECT audit.AUDIT_TABLE(
     '{*,id,model_plan_id,common_waiver_id}'::TEXT[]
 );
 
+SELECT audit.AUDIT_TABLE(
+    'public',
+    'suggested_waiver',
+    'id',
+    'model_plan_id',
+    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
+    '{*,id,model_plan_id,common_waiver_id}'::TEXT[]
+);
+
 -- Part 1: Backfill waiver_assessment_survey for every model plan that doesn't already have one
 ALTER TABLE waiver_assessment_survey
 DISABLE TRIGGER audit_trigger;

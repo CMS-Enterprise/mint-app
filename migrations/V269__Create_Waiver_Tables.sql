@@ -2,6 +2,7 @@
 ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'waiver_assessment_survey';
 ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'waiver';
 ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'common_waiver';
+ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'suggested_waiver';
 
 -- Create enum for waiver assessment survey work status
 CREATE TYPE WAIVER_ASSESSMENT_SURVEY_STATUS AS ENUM (
@@ -110,6 +111,24 @@ CREATE TABLE waiver (
 );
 
 COMMENT ON TABLE waiver IS 'A model plan''s decision on whether to use a specific common waiver.';
+
+-- Create the suggested_waiver table
+CREATE TABLE suggested_waiver (
+    id UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
+    model_plan_id UUID NOT NULL REFERENCES model_plan(id),
+    common_waiver_id UUID NOT NULL REFERENCES common_waiver(id),
+
+    -- Standard audit fields
+    created_by UUID REFERENCES public.user_account(id) MATCH SIMPLE NOT NULL,
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by UUID REFERENCES public.user_account(id) MATCH SIMPLE,
+    modified_dts TIMESTAMP WITH TIME ZONE,
+
+    -- A model plan can only have one suggested row per common waiver
+    UNIQUE(model_plan_id, common_waiver_id)
+);
+
+COMMENT ON TABLE suggested_waiver IS 'Waivers MINT has determined are likely needed for a model plan based on waiver assessment survey answers.';
 
 -- Seed fake common_waiver data (5 per waiver type, 15 total)
 INSERT INTO common_waiver (name, waiver_type, created_by)
