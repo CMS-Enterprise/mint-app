@@ -2,7 +2,6 @@ package s3
 
 import (
 	"errors"
-	"strings"
 
 	"github.com/aws/smithy-go"
 )
@@ -45,10 +44,5 @@ func S3ErrorHasExpiredCredentials(err error) bool {
 		}
 	}
 
-	lowerErr := strings.ToLower(err.Error())
-	return strings.Contains(lowerErr, "expiredtoken") ||
-		strings.Contains(lowerErr, "expired token") ||
-		strings.Contains(lowerErr, "requestexpired") ||
-		strings.Contains(lowerErr, "invalidtoken") ||
-		strings.Contains(lowerErr, "invalid access key id")
+	return false
 }

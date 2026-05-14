@@ -33,14 +33,15 @@ type Config struct {
 
 // S3Client is an MINT s3 client wrapper
 type S3Client struct {
-	client    *s3New.Client
-	config    Config
-	clientMu  sync.RWMutex
-	refreshMu sync.Mutex
+	client        *s3New.Client
+	config        Config
+	clientMu      sync.RWMutex
+	refreshMu     sync.Mutex
+	lastRefreshAt time.Time
 }
 
 // NewS3Client creates a new s3 service client
-func NewS3Client(ctx context.Context, s3Config Config) S3Client {
+func NewS3Client(ctx context.Context, s3Config Config) *S3Client {
 	s3Client, err := buildClient(ctx, s3Config)
 	if err != nil {
 		panic(fmt.Errorf("problem creating s3 client: %w", err))
@@ -51,8 +52,8 @@ func NewS3Client(ctx context.Context, s3Config Config) S3Client {
 
 // NewS3ClientUsingClient creates a new s3 wrapper using the specified s3 client
 // This is most useful for testing where the s3 client needs to be mocked out.
-func NewS3ClientUsingClient(s3Client *s3New.Client, config Config) S3Client {
-	return S3Client{
+func NewS3ClientUsingClient(s3Client *s3New.Client, config Config) *S3Client {
+	return &S3Client{
 		client: s3Client,
 		config: config,
 	}

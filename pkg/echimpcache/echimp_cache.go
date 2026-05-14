@@ -22,13 +22,13 @@ type crAndTDLReader func(client *s3.S3Client, crKey string, tdlKey string) ([]*m
 
 // GetECHIMPCrAndTDLCache returns a cached of data for CR and TDLs from an echimp s3 bucket.
 // If the time since it was last updated has elapsed, it will fetch the data again
-func GetECHIMPCrAndTDLCache(client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) (*crAndTDLCache, error) {
+func GetECHIMPCrAndTDLCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) (*crAndTDLCache, error) {
 	if CRAndTDLCache == nil {
 		CRAndTDLCache = &crAndTDLCache{}
 	}
 	logger = logger.With(logfields.EchimpCacheAppSection)
 	if CRAndTDLCache.IsOld(viperConfig) {
-		err := CRAndTDLCache.refreshCache(client, viperConfig, logger)
+		err := CRAndTDLCache.refreshCache(ctx, client, viperConfig, logger)
 		if err != nil {
 			logger.Error("error refreshing ECHIMP CR and TDL cache", zap.Error(err))
 			return CRAndTDLCache, err
@@ -66,11 +66,11 @@ func (c *crAndTDLCache) IsOld(viperConfig *viper.Viper) bool {
 
 }
 
-func (c *crAndTDLCache) refreshCache(client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) error {
-	return c.refreshCacheWithReader(client, viperConfig, logger, readCRAndTDLsFromS3)
+func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) error {
+	return c.refreshCacheWithReader(ctx, client, viperConfig, logger, readCRAndTDLsFromS3)
 }
 
-func (c *crAndTDLCache) refreshCacheWithReader(client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, readFromS3 crAndTDLReader) error {
+func (c *crAndTDLCache) refreshCacheWithReader(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, readFromS3 crAndTDLReader) error {
 	CRKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
 	TDLKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
 
@@ -79,7 +79,7 @@ func (c *crAndTDLCache) refreshCacheWithReader(client *s3.S3Client, viperConfig 
 		if s3.S3ErrorHasExpiredCredentials(err) {
 			logger.Warn("ECHIMP cache refresh hit expired AWS credentials; rebuilding S3 client and retrying once", zap.Error(err))
 
-			refreshErr := client.Refresh(context.TODO())
+			refreshErr := client.Refresh(ctx)
 			if refreshErr != nil {
 				return refreshErr
 			}

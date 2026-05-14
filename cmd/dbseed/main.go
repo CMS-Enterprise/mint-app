@@ -135,7 +135,7 @@ func getResolverDependencies(config *viper.Viper) (
 	s3MINTFileClient := s3.NewS3Client(context.TODO(), s3MintFileCfg)
 	s3ECHIMPFileClient := s3.NewS3Client(context.TODO(), s3ECHIMPFileCfg)
 
-	return store, logger, &s3MINTFileClient, &s3ECHIMPFileClient
+	return store, logger, s3MINTFileClient, s3ECHIMPFileClient
 }
 
 // SeedData uses seeder to seed data in the database

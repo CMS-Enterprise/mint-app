@@ -1,6 +1,7 @@
 package echimpcache
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -63,7 +64,7 @@ func TestRefreshCacheRetriesOnceAfterExpiredCredentials(t *testing.T) {
 	cache := &crAndTDLCache{}
 	before := time.Now()
 
-	err := cache.refreshCacheWithReader(&client, viperConfig, zap.NewNop(), readFn)
+	err := cache.refreshCacheWithReader(context.Background(), client, viperConfig, zap.NewNop(), readFn)
 
 	require.NoError(t, err)
 	assert.Equal(t, 2, readCalls)

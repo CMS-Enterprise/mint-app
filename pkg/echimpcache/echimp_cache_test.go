@@ -1,6 +1,7 @@
 package echimpcache
 
 import (
+	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -20,7 +21,7 @@ func TestGetECHIMPCrAndTDLCache(t *testing.T) {
 	err := echimptestdata.SeedEChimpTestData(config.EChimpS3Client, viperConf)
 	assert.NoError(err)
 
-	cache, err := GetECHIMPCrAndTDLCache(config.EChimpS3Client, viperConf, config.Logger)
+	cache, err := GetECHIMPCrAndTDLCache(context.Background(), config.EChimpS3Client, viperConf, config.Logger)
 	assert.NotNil(cache)
 	assert.NoError(err)
 
