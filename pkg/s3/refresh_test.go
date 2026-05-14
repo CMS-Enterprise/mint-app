@@ -15,6 +15,8 @@ import (
 )
 
 func TestRefreshRebuildsClient(t *testing.T) {
+	// This test intentionally does not run in parallel because it mutates
+	// process-wide env vars that the AWS default config chain reads.
 	t.Setenv(appconfig.LocalMinioAddressKey, "http://localhost:9000")
 	t.Setenv(appconfig.LocalMinioS3AccessKey, "test-access-key")
 	t.Setenv(appconfig.LocalMinioS3SecretKey, "test-secret-key")

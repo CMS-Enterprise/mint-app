@@ -18,8 +18,6 @@ import (
 
 var CRAndTDLCache *crAndTDLCache
 
-type crAndTDLReader func(client *s3.S3Client, crKey string, tdlKey string) ([]*models.EChimpCRRaw, []*models.EChimpTDLRaw, error)
-
 // GetECHIMPCrAndTDLCache returns a cached of data for CR and TDLs from an echimp s3 bucket.
 // If the time since it was last updated has elapsed, it will fetch the data again
 func GetECHIMPCrAndTDLCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) (*crAndTDLCache, error) {
@@ -67,29 +65,33 @@ func (c *crAndTDLCache) IsOld(viperConfig *viper.Viper) bool {
 }
 
 func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) error {
-	return c.refreshCacheWithReader(ctx, client, viperConfig, logger, readCRAndTDLsFromS3)
+	return c.refreshCacheWithReaders(ctx, client, viperConfig, logger, readCRsFromS3, readTDLsFromS3)
 }
 
-func (c *crAndTDLCache) refreshCacheWithReader(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, readFromS3 crAndTDLReader) error {
+func (c *crAndTDLCache) refreshCacheWithReaders(
+	ctx context.Context,
+	client *s3.S3Client,
+	viperConfig *viper.Viper,
+	logger *zap.Logger,
+	readCRs func(context.Context, *s3.S3Client, string) ([]*models.EChimpCRRaw, error),
+	readTDLs func(context.Context, *s3.S3Client, string) ([]*models.EChimpTDLRaw, error),
+) error {
 	CRKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
 	TDLKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
 
-	crsRaw, tdlsRaw, err := readFromS3(client, CRKey, TDLKey)
-	if err != nil {
-		if s3.S3ErrorHasExpiredCredentials(err) {
-			logger.Warn("ECHIMP cache refresh hit expired AWS credentials; rebuilding S3 client and retrying once", zap.Error(err))
-
-			refreshErr := client.Refresh(ctx)
-			if refreshErr != nil {
-				return refreshErr
-			}
-
-			crsRaw, tdlsRaw, err = readFromS3(client, CRKey, TDLKey)
-		}
-	}
+	crsRaw, err := readCRs(ctx, client, CRKey)
 	if err != nil {
 		if s3.S3ErrorIsKeyNotFound(err) {
-			logger.Error("file not found for ECHIMP cache data", zap.Error(err))
+			logger.Error("file not found for ECHIMP CR data", zap.String("key", CRKey), zap.Error(err))
+			return nil
+		}
+		return err
+	}
+
+	tdlsRaw, err := readTDLs(ctx, client, TDLKey)
+	if err != nil {
+		if s3.S3ErrorIsKeyNotFound(err) {
+			logger.Error("file not found for ECHIMP TDL data", zap.String("key", TDLKey), zap.Error(err))
 			return nil
 		}
 		return err
@@ -122,18 +124,12 @@ func (c *crAndTDLCache) refreshCacheWithReader(ctx context.Context, client *s3.S
 
 }
 
-func readCRAndTDLsFromS3(client *s3.S3Client, crKey string, tdlKey string) ([]*models.EChimpCRRaw, []*models.EChimpTDLRaw, error) {
-	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](client, crKey)
-	if err != nil {
-		return nil, nil, err
-	}
+func readCRsFromS3(ctx context.Context, client *s3.S3Client, key string) ([]*models.EChimpCRRaw, error) {
+	return parquet.ReadFromS3[*models.EChimpCRRaw](ctx, client, key)
+}
 
-	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](client, tdlKey)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return crsRaw, tdlsRaw, nil
+func readTDLsFromS3(ctx context.Context, client *s3.S3Client, key string) ([]*models.EChimpTDLRaw, error) {
+	return parquet.ReadFromS3[*models.EChimpTDLRaw](ctx, client, key)
 }
 
 func (c *crAndTDLCache) aggregateAllCrsAndTDLS() []models.EChimpCRAndTDLS {

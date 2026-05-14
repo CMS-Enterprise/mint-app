@@ -10,6 +10,7 @@ import (
 	"sync"
 	"time"
 
+	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	s3New "github.com/aws/aws-sdk-go-v2/service/s3"
@@ -66,8 +67,10 @@ func (c *S3Client) NewGetPresignedURL(ctx context.Context, key string) (*string,
 		Key:    &key,
 	}
 
-	req, err := s3New.NewPresignClient(c.currentClient()).PresignGetObject(ctx, objectInput, func(options *s3New.PresignOptions) {
-		options.Expires = PresignedKeyDuration
+	req, err := withCredentialRefresh(ctx, c, func(client *s3New.Client) (*v4.PresignedHTTPRequest, error) {
+		return s3New.NewPresignClient(client).PresignGetObject(ctx, objectInput, func(options *s3New.PresignOptions) {
+			options.Expires = PresignedKeyDuration
+		})
 	})
 	if err != nil {
 		return nil, err
@@ -88,7 +91,9 @@ func (c *S3Client) TagValueForKey(ctx context.Context, key string, tagName strin
 		Bucket: &c.config.Bucket,
 		Key:    &key,
 	}
-	tagging, taggingErr := c.currentClient().GetObjectTagging(ctx, input)
+	tagging, taggingErr := withCredentialRefresh(ctx, c, func(client *s3New.Client) (*s3New.GetObjectTaggingOutput, error) {
+		return client.GetObjectTagging(ctx, input)
+	})
 	if taggingErr != nil {
 		return "", taggingErr
 	}
@@ -115,7 +120,10 @@ func (c *S3Client) SetTagValueForKey(ctx context.Context, key string, tagName st
 			},
 		},
 	}
-	_, taggingErr := c.currentClient().PutObjectTagging(ctx, input)
+	_, taggingErr := withCredentialRefresh(ctx, c, func(client *s3New.Client) (struct{}, error) {
+		_, err := client.PutObjectTagging(ctx, input)
+		return struct{}{}, err
+	})
 	if taggingErr != nil {
 		return taggingErr
 	}
@@ -133,13 +141,33 @@ func (c *S3Client) ExpectNoBucket() bool {
 	return c.config.ExpectNoBucket
 }
 
-// UploadFile uploads a io.Reader to the bucket configured in the S3Client
+// UploadFile uploads a io.Reader to the bucket configured in the S3Client.
+// Seekable readers are retried once after a credential refresh when AWS reports
+// expired credentials; non-seekable readers are uploaded once without retry.
 func (c *S3Client) UploadFile(ctx context.Context, file io.Reader, key string) error {
-	_, err := c.currentClient().PutObject(ctx, &s3New.PutObjectInput{
-		Bucket: &c.config.Bucket,
-		Key:    &key,
-		Body:   file,
-	})
+	upload := func(client *s3New.Client, body io.Reader) (struct{}, error) {
+		_, err := client.PutObject(ctx, &s3New.PutObjectInput{
+			Bucket: &c.config.Bucket,
+			Key:    &key,
+			Body:   body,
+		})
+		return struct{}{}, err
+	}
+
+	return c.uploadFileWithBuilder(ctx, file, buildClient, upload)
+}
+
+func (c *S3Client) uploadFileWithBuilder(ctx context.Context, file io.Reader, builder clientBuilder, upload func(*s3New.Client, io.Reader) (struct{}, error)) error {
+	if seekableFile, ok := file.(io.ReadSeeker); ok {
+		_, err := withCredentialRefreshAndRewind(ctx, c, builder, seekableFile, upload)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}
+
+	_, err := upload(c.currentClient(), file)
 	if err != nil {
 		return err
 	}
