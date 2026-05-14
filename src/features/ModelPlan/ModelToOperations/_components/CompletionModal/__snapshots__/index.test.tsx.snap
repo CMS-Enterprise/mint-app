@@ -19,7 +19,7 @@ exports[`CompletionModal Component > matches the snapshot for On Track state 1`]
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay mint-modal__overlay"
+      class="ReactModal__Overlay mint-modal__overlay z-top"
     >
       <div
         aria-modal="true"

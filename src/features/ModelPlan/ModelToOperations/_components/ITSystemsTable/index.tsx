@@ -80,9 +80,7 @@ const ITSystemsTable = ({
     [location.search]
   );
 
-  const { openEditSolutionModal, setSolutionID } = useContext(
-    EditMTOSolutionContext
-  );
+  const { openEditSolutionModal } = useContext(EditMTOSolutionContext);
 
   const paramType = readView ? 'type' : 'view';
 
@@ -226,9 +224,7 @@ const ITSystemsTable = ({
         accessor: 'name',
         width: 300,
         Cell: ({ row }: any) => {
-          const { openViewSolutionModal, setViewSolutionID } = useContext(
-            MTOSolutionPanelContext
-          );
+          const { openViewSolutionModal } = useContext(MTOSolutionPanelContext);
 
           if (row.original.__typename === 'MTOMilestone') {
             if (readView) {
@@ -267,7 +263,6 @@ const ITSystemsTable = ({
                 className="mint-print-link mint-body-normal"
                 onClick={() => {
                   openViewSolutionModal(row.original.id);
-                  setViewSolutionID(row.original.id);
                 }}
               >
                 {row.original.name}
@@ -298,13 +293,11 @@ const ITSystemsTable = ({
         width: 350,
         accessor: 'milestones',
         Cell: ({ row }: any) => {
-          const { openEditMilestoneModal, setMilestoneID } = useContext(
+          const { openEditMilestoneModal } = useContext(
             MTOMilestonePanelContext
           );
 
-          const { openViewSolutionModal, setViewSolutionID } = useContext(
-            MTOSolutionPanelContext
-          );
+          const { openViewSolutionModal } = useContext(MTOSolutionPanelContext);
 
           if (row.original.__typename === 'MTOMilestone') {
             if (!readView) {
@@ -318,7 +311,6 @@ const ITSystemsTable = ({
                 className="mint-print-link mint-body-normal"
                 onClick={() => {
                   openEditMilestoneModal(row.original.id);
-                  setMilestoneID(row.original.id);
                 }}
               >
                 {row.original.name}
@@ -344,7 +336,6 @@ const ITSystemsTable = ({
                   className="mint-print-link mint-body-normal"
                   onClick={() => {
                     openEditMilestoneModal(milestones[0].id);
-                    setMilestoneID(milestones[0].id);
                   }}
                 >
                   {milestones[0].name}
@@ -360,9 +351,7 @@ const ITSystemsTable = ({
                   onClick={() => {
                     if (readView) {
                       openViewSolutionModal(row.original.id);
-                      setViewSolutionID(row.original.id);
                     } else {
-                      setSolutionID(row.original.id);
                       openEditSolutionModal({
                         selectedSolutionID: row.original.id,
                         scrollToBottom: true
@@ -449,7 +438,6 @@ const ITSystemsTable = ({
                 unstyled
                 className="margin-right-2"
                 onClick={() => {
-                  setSolutionID(row.original.id);
                   openEditSolutionModal({
                     selectedSolutionID: row.original.id
                   });
@@ -470,7 +458,6 @@ const ITSystemsTable = ({
     location.pathname,
     location.search,
     openEditSolutionModal,
-    setSolutionID,
     mtoSolutionT,
     readView
   ]);

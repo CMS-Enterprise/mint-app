@@ -35,6 +35,7 @@ const CompletionModal = ({
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
       testId="completion-modal"
+      zTop
     >
       <div className="padding-bottom-8">
         <PageHeading headingLevel="h3" className="margin-y-0">
