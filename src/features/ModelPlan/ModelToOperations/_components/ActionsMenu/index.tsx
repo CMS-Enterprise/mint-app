@@ -35,9 +35,7 @@ const ActionMenu = ({
 
   const { setMTOModalOpen, setMTOModalState } = useContext(MTOModalContext);
 
-  const { openEditMilestoneModal, setMilestoneID } = useContext(
-    EditMTOMilestoneContext
-  );
+  const { openEditMilestoneModal } = useContext(EditMTOMilestoneContext);
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
 
@@ -233,8 +231,7 @@ const ActionMenu = ({
         type="button"
         unstyled
         onClick={() => {
-          setMilestoneID(milestoneID);
-          openEditMilestoneModal(milestoneID);
+          openEditMilestoneModal({ selectedMilestoneID: milestoneID });
         }}
       >
         {i18next.t('modelToOperationsMisc:table.editDetails')}
