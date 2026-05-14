@@ -46,7 +46,16 @@ func WaiverAssessmentSurveyUpdate(ctx context.Context, id uuid.UUID, changes map
 		return nil, err
 	}
 
-	return storage.WaiverAssessmentSurveyUpdate(store, logger, existing)
+	updated, err := storage.WaiverAssessmentSurveyUpdate(store, logger, existing)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := UpdatePlanTaskStatusOnWaiverAssessmentStarted(store, logger, updated.ModelPlanID, principal, store); err != nil {
+		return nil, err
+	}
+
+	return updated, nil
 }
 
 // WaiversGetByModelPlanID returns all waivers associated with a model plan via dataloader

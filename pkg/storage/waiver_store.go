@@ -16,7 +16,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-// WaiverCreate creates a new waiver row
+// WaiverCreate creates a new waiver row.
+// TODO (MINT-3718): Call this when creating waivers from suggested waivers once that logic is implemented.
 func WaiverCreate(np sqlutils.NamedPreparer, _ *zap.Logger, waiver *models.Waiver) (*models.Waiver, error) {
 	waiver.ID = utilityuuid.ValueOrNewUUID(waiver.ID)
 	return sqlutils.GetProcedure[models.Waiver](np, sqlqueries.Waiver.Create, waiver)

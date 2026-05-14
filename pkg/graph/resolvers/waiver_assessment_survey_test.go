@@ -59,25 +59,12 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	suite.Equal(suite.testConfigs.Principal.Account().ID, *updated.ModifiedBy)
 }
 
-// TestWaiversCreatedWithModelPlan verifies that waiver rows are created (one per common_waiver)
-// whenever a model plan is created.
-func (suite *ResolverSuite) TestWaiversCreatedWithModelPlan() {
-	plan := suite.createModelPlan("Test Waivers Created With Model Plan")
+// TestWaiversNotPreCreatedWithModelPlan verifies that no waiver rows are pre-created when a
+// model plan is created. Waivers will be created on demand from suggested waivers (MINT-3718).
+func (suite *ResolverSuite) TestWaiversNotPreCreatedWithModelPlan() {
+	plan := suite.createModelPlan("Test Waivers Not Pre-Created With Model Plan")
 
 	waivers, err := WaiversGetByModelPlanID(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.NotEmpty(waivers)
-
-	// Each waiver should be linked to the right model plan, have a non-nil common_waiver_id,
-	// and start with will_use_waiver = nil and not_using_reason = nil.
-	commonWaiverIDs := map[string]struct{}{}
-	for _, w := range waivers {
-		suite.EqualValues(plan.ID, w.ModelPlanID)
-		suite.NotEqualValues("00000000-0000-0000-0000-000000000000", w.CommonWaiverID.String())
-		suite.Nil(w.WillUseWaiver)
-		suite.Nil(w.NotUsingReason)
-		commonWaiverIDs[w.CommonWaiverID.String()] = struct{}{}
-	}
-	// Sanity: at least the 15 seeded common_waivers should be associated.
-	suite.GreaterOrEqual(len(commonWaiverIDs), 15)
+	suite.Empty(waivers)
 }
