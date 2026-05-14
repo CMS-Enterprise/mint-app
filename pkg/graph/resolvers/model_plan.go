@@ -191,17 +191,8 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		// Create a waiver row for the model plan for every common_waiver in the library
-		allCommonWaivers, err := storage.CommonWaiverGetAll(store, logger)
-		if err != nil {
-			return nil, err
-		}
-		for _, cw := range allCommonWaivers {
-			w := models.NewWaiver(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID, cw.ID)
-			if _, err = storage.WaiverCreate(tx, logger, w); err != nil {
-				return nil, err
-			}
-		}
+		// TODO (MINT-3718): Create waiver rows only for waivers suggested by the survey,
+		// once suggestedWaivers logic is implemented.
 
 		// Create a default planTimeline object
 		planTimeline := models.NewPlanTimeline(baseTaskListUser)

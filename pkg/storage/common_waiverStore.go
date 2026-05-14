@@ -26,14 +26,3 @@ func CommonWaiverGetByIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, ids []u
 	}
 	return res, nil
 }
-
-// CommonWaiverGetAll returns all common waivers ordered by waiver_type and name
-func CommonWaiverGetAll(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.CommonWaiver, error) {
-	args := map[string]interface{}{}
-
-	res, err := sqlutils.SelectProcedure[models.CommonWaiver](np, sqlqueries.CommonWaiver.GetAll, args)
-	if err != nil {
-		return nil, err
-	}
-	return res, nil
-}
