@@ -22,15 +22,27 @@ const ModelPlanQuestions = () => {
     });
 
   const flattenedData = useMemo(() => {
-    if (!modelPlanQuestionsData || !modelPlanQuestionsData.modelPlan) {
+    if (!modelPlanQuestionsData?.modelPlan) {
       return null;
     }
+
+    const { basics, generalCharacteristics } = modelPlanQuestionsData.modelPlan;
+
+    const { id: basicsId, __typename: basicsTypename, ...restBasics } = basics;
+
+    const {
+      id: generalCharacteristicsId,
+      __typename: generalCharacteristicsTypename,
+      ...restGeneralCharacteristics
+    } = generalCharacteristics;
+
     return {
-      ...modelPlanQuestionsData.modelPlan.basics,
-      ...modelPlanQuestionsData.modelPlan.generalCharacteristics,
-      id: modelID
+      ...restBasics,
+      ...restGeneralCharacteristics,
+      basicsId,
+      generalCharacteristicsId
     };
-  }, [modelPlanQuestionsData, modelID]);
+  }, [modelPlanQuestionsData]);
 
   if (modelPlanQuestionsLoading) {
     return (

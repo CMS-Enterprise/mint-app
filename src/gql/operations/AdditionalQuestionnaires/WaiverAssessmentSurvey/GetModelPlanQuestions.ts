@@ -20,7 +20,6 @@ export default gql(/* GraphQL */ `
         resemblesExistingModel
         resemblesExistingModelWhyHow
         resemblesExistingModelHow
-        resemblesExistingModelNote
         resemblesExistingModelWhich {
           links {
             id
@@ -43,10 +42,11 @@ export default gql(/* GraphQL */ `
         participationInModelPreconditionOtherSelected
         participationInModelPreconditionOtherOption
         participationInModelPreconditionWhyHow
-        participationInModelPreconditionNote
         keyCharacteristics
         keyCharacteristicsOther
-        keyCharacteristicsNote
+        collectPlanBids
+        managePartCDEnrollment
+        planContractUpdated
         geographiesTargeted
         geographiesTargetedTypes
         geographiesStatesAndTerritories
@@ -54,11 +54,19 @@ export default gql(/* GraphQL */ `
         geographiesTargetedTypesOther
         geographiesTargetedAppliedTo
         geographiesTargetedAppliedToOther
-        geographiesTargetedNote
         waiversRequired
         waiversRequiredTypes
-        waiversRequiredNote
       }
+    }
+
+    modelPlanCollection(filter: INCLUDE_ALL) {
+      id
+      modelName
+    }
+
+    existingModelCollection {
+      id
+      modelName
     }
   }
 `);

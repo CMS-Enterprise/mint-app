@@ -1,41 +1,27 @@
 import React, { useState } from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  ComboBox,
-  FormGroup,
-  Icon,
-  Label,
-  Radio,
-  TextInput
-} from '@trussworks/react-uswds';
+import { useBlocker, useNavigate, useParams } from 'react-router-dom';
+import { Form } from '@trussworks/react-uswds';
 import { isEmpty } from 'features/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
 import {
-  CmsCenter,
   ExistingModelLink,
   GetModelPlanQuestionsQuery,
-  TranslationFormType
+  useUpdateModelPlanQuestionsMutation
 } from 'gql/generated/graphql';
 
-import CheckboxField from 'components/CheckboxField';
 import FormFooter from 'components/FormFooter';
-import MultiSelect from 'components/MultiSelect';
-import TextAreaField from 'components/TextAreaField';
-import Tooltip from 'components/Tooltip';
+import MutationErrorModal from 'components/MutationErrorModal';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import {
-  getKeys,
-  isTranslationFieldPropertiesWithOptions,
-  isTranslationFieldPropertiesWithOptionsAndChildren,
   TranslationBasics,
   TranslationGeneralCharacteristics
 } from 'types/translation';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
-import {
-  composeMultiSelectOptions,
-  convertCamelCaseToKebabCase
-} from 'utils/modelPlan';
+
+import { formattedValue, getChildrenQuestions, getFormDiffs } from '../../util';
+import ExpandableSection from '../ExpandableSection';
 
 import '../../ModelPlanQuestions/index.scss';
 
@@ -44,13 +30,14 @@ type BasicsType = GetModelPlanQuestionsQuery['modelPlan']['basics'];
 type GeneralCharacteristicsType =
   GetModelPlanQuestionsQuery['modelPlan']['generalCharacteristics'];
 
-export type ModelPlanQuestionsDataType = { id: string } & Omit<
-  BasicsType,
-  'id' | '__typename'
-> &
-  Omit<GeneralCharacteristicsType, 'id' | '__typename'>;
+export type ModelPlanQuestionsDataType = Omit<BasicsType, 'id' | '__typename'> &
+  Omit<GeneralCharacteristicsType, 'id' | '__typename'> & {
+    basicsId: string;
+    generalCharacteristicsId: string;
+  };
 
-type CombinedConfigType = TranslationBasics & TranslationGeneralCharacteristics;
+export type CombinedConfigType = TranslationBasics &
+  TranslationGeneralCharacteristics;
 
 type BasicQuestionKey = Extract<
   keyof TranslationBasics,
@@ -62,34 +49,109 @@ type GeneralQuestionKey = Extract<
   keyof ModelPlanQuestionsDataType
 >;
 
-const MODEL_PLAN_QUESTIONS: (BasicQuestionKey | GeneralQuestionKey)[][] = [
-  ['modelCategory', 'additionalModelCategories'],
-  ['cmsCenters'],
-  ['isNewModel'],
-  ['resemblesExistingModel'],
-  ['participationInModelPrecondition'],
-  ['keyCharacteristics'],
-  ['geographiesTargeted'],
-  ['waiversRequired']
+export type QuestionFieldType = BasicQuestionKey | GeneralQuestionKey;
+
+export type QuestionType = {
+  field: QuestionFieldType;
+  childRelation?: QuestionType[];
+};
+
+const MODEL_PLAN_QUESTIONS: QuestionType[][] = [
+  [
+    { field: 'modelCategory' },
+    {
+      field: 'additionalModelCategories'
+    }
+  ],
+  [
+    {
+      field: 'cmsCenters',
+      childRelation: [{ field: 'cmmiGroups' }]
+    }
+  ],
+  [
+    {
+      field: 'isNewModel',
+      childRelation: [
+        {
+          field: 'existingModel'
+        }
+      ]
+    }
+  ],
+  [
+    {
+      field: 'resemblesExistingModel',
+      childRelation: [
+        {
+          field: 'resemblesExistingModelWhyHow'
+        },
+        {
+          field: 'resemblesExistingModelWhich'
+        },
+        {
+          field: 'resemblesExistingModelHow'
+        },
+        {
+          field: 'resemblesExistingModelOtherSpecify'
+        }
+      ]
+    }
+  ],
+  [
+    {
+      field: 'participationInModelPrecondition',
+      childRelation: [
+        { field: 'participationInModelPreconditionWhich' },
+        { field: 'participationInModelPreconditionWhyHow' },
+        { field: 'participationInModelPreconditionOtherSpecify' }
+      ]
+    }
+  ],
+  [
+    {
+      field: 'keyCharacteristics',
+      childRelation: [
+        { field: 'collectPlanBids' },
+        { field: 'managePartCDEnrollment' },
+        { field: 'planContractUpdated' },
+        { field: 'keyCharacteristicsOther' }
+      ]
+    }
+  ],
+  [
+    {
+      field: 'geographiesTargeted',
+      childRelation: [
+        { field: 'geographiesTargetedTypes' },
+        { field: 'geographiesTargetedAppliedTo' }
+      ]
+    }
+  ],
+  [
+    {
+      field: 'waiversRequired',
+      childRelation: [{ field: 'waiversRequiredTypes' }]
+    }
+  ]
 ];
 
-const defaulFormValues: ModelPlanQuestionsDataType = {
-  id: '',
-
+const defaultFormValues: ModelPlanQuestionsDataType = {
   // --- Plan Basics ---
+  basicsId: '',
   modelCategory: null,
   additionalModelCategories: [],
   cmsCenters: [],
   cmmiGroups: [],
 
   // --- General Characteristics ---
+  generalCharacteristicsId: '',
   isNewModel: null,
   currentModelPlanID: null,
   existingModelID: null,
   resemblesExistingModel: null,
   resemblesExistingModelWhyHow: '',
   resemblesExistingModelHow: '',
-  resemblesExistingModelNote: '',
   resemblesExistingModelOtherSpecify: '',
   resemblesExistingModelOtherSelected: false,
   resemblesExistingModelOtherOption: '',
@@ -98,10 +160,11 @@ const defaulFormValues: ModelPlanQuestionsDataType = {
   participationInModelPreconditionOtherSelected: false,
   participationInModelPreconditionOtherOption: '',
   participationInModelPreconditionWhyHow: '',
-  participationInModelPreconditionNote: '',
   keyCharacteristics: [],
   keyCharacteristicsOther: '',
-  keyCharacteristicsNote: '',
+  collectPlanBids: null,
+  managePartCDEnrollment: null,
+  planContractUpdated: null,
   geographiesTargeted: null,
   geographiesTargetedTypes: [],
   geographiesStatesAndTerritories: [],
@@ -109,10 +172,8 @@ const defaulFormValues: ModelPlanQuestionsDataType = {
   geographiesTargetedTypesOther: '',
   geographiesTargetedAppliedTo: [],
   geographiesTargetedAppliedToOther: '',
-  geographiesTargetedNote: '',
   waiversRequired: null,
   waiversRequiredTypes: [],
-  waiversRequiredNote: '',
   resemblesExistingModelWhich: {
     __typename: 'ExistingModelLinks',
     links: [] as ExistingModelLink[]
@@ -132,383 +193,204 @@ const ModelPlanQuestionsForm = ({
     'additionalQuestionnaires'
   );
 
-  const { t: miscellaneousT } = useTranslation('miscellaneous');
-
   const combinedConfig: CombinedConfigType = {
     ...usePlanTranslation('basics'),
     ...usePlanTranslation('generalCharacteristics')
   };
 
+  const { modelID = '' } = useParams<{ modelID: string }>();
+
+  const navigate = useNavigate();
+
+  const [destinationURL, setDestinationURL] = useState<string>('');
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
+
+  const [updateModelPlanQuestions, { loading: submitting }] =
+    useUpdateModelPlanQuestionsMutation();
+
   const formData = mapDefaultFormValues<ModelPlanQuestionsDataType>(
     modelPlanQuestionsData,
-    defaulFormValues
+    defaultFormValues
   );
 
-  const { id, ...defaultValues } = formData;
-
   const methods = useForm<ModelPlanQuestionsDataType>({
-    defaultValues,
+    defaultValues: formData,
     mode: 'onChange'
   });
 
   const {
     control,
-    // handleSubmit,
-    // formState: { touchedFields },
-    watch
-    // setValue,
-    // reset
+    handleSubmit,
+    watch,
+    getValues,
+    setValue,
+    formState: { defaultValues, isDirty }
   } = methods;
 
   const liveFormData = watch();
 
-  const formattedValue = (
-    key: keyof typeof combinedConfig,
-    rawValue: unknown
-  ) => {
-    const config = combinedConfig[key];
+  useErrorMessage('skip', true);
 
-    if (isTranslationFieldPropertiesWithOptions(config)) {
-      if (Array.isArray(rawValue)) {
-        return rawValue
-          .map(value => config.options[value as keyof typeof config.options])
-          .join(', ');
-      }
-      return config.options[rawValue as keyof typeof config.options];
+  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
+    if (
+      isErrorModalOpen ||
+      nextLocation.pathname === currentLocation.pathname
+    ) {
+      return false;
     }
-    return String(rawValue);
-  };
+
+    if (!isDirty) {
+      return false;
+    }
+
+    const currentValues = getValues();
+
+    const { basicsId, generalCharacteristicsId } =
+      defaultValues as ModelPlanQuestionsDataType;
+
+    const {
+      basicsChanges,
+      withBasics,
+      generalCharacteristicsChanges,
+      withGeneralCharacteristics
+    } = getFormDiffs(
+      defaultValues as ModelPlanQuestionsDataType,
+      currentValues
+    );
+
+    // ONLY block and save if there is an actual diff to send
+    if (withBasics || withGeneralCharacteristics) {
+      updateModelPlanQuestions({
+        variables: {
+          modelPlanID: modelID,
+          basicsId,
+          basicsChanges: withBasics ? basicsChanges : {},
+          withBasics,
+          generalCharacteristicsId,
+          generalCharacteristicsChanges: withGeneralCharacteristics
+            ? generalCharacteristicsChanges
+            : {},
+          withGeneralCharacteristics,
+          withParticipationLinks: false,
+          withResemblesLinks: false
+        }
+      })
+        .then(response => {
+          if (!response?.errors) {
+            setDestinationURL(nextLocation.pathname);
+            blocker?.proceed?.();
+          } else {
+            setDestinationURL(nextLocation.pathname);
+            setIsErrorModalOpen(true);
+          }
+        })
+        .catch(() => {
+          setDestinationURL(nextLocation.pathname);
+          setIsErrorModalOpen(true);
+        });
+    }
+
+    return false;
+  });
 
   return (
     <FormProvider {...methods}>
-      <div className="display-flex bg-base-lightest padding-3 flex-column">
-        {MODEL_PLAN_QUESTIONS.map((questionGroup, index) => (
-          <div
-            key={questionGroup.join(',')}
-            className={`${index === MODEL_PLAN_QUESTIONS.length - 1 ? 'margin-bottom-0' : 'margin-bottom-4'}`}
-          >
-            {questionGroup.map(question => (
-              <div key={question} className="margin-bottom-2">
-                <span className="text-bold margin-y-0 mint-text-normal">
-                  {combinedConfig[question].label}
-                </span>
+      {isErrorModalOpen && (
+        <MutationErrorModal
+          isOpen={isErrorModalOpen}
+          closeModal={() => setIsErrorModalOpen(false)}
+          url={destinationURL}
+        />
+      )}
 
-                <div className="margin-y-0 mint-text-medium text-light text-pre-line text-overflow-wrap-break-word">
-                  {isEmpty(liveFormData[question]) ? (
-                    <em>{miscellaneousT('na')}</em>
-                  ) : (
-                    formattedValue(question, liveFormData[question])
-                  )}
-                </div>
-              </div>
-            ))}
-
-            <ExpandableSection
-              questionGroup={questionGroup}
-              config={combinedConfig}
-              control={control}
-            />
-          </div>
-        ))}
-      </div>
-
-      <FormFooter
+      <Form
         id="waiver-assessment-survey-model-plan-questions-form"
-        homeArea={additionalQuestionnairesT('saveAndReturnToQuestionnaires')}
-        homeRoute={`/models/${modelPlanQuestionsData.id}/collaboration-area/additional-questionnaires`}
-        backPage={`/models/${modelPlanQuestionsData.id}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about`}
-        nextPage
-        disabled={false}
-      />
+        data-testid="waiver-assessment-survey-model-plan-questions-form"
+        className="maxw-none"
+        onSubmit={handleSubmit(() =>
+          navigate(
+            `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about`
+          )
+        )}
+      >
+        <div className="display-flex bg-base-lightest padding-3 flex-column">
+          {MODEL_PLAN_QUESTIONS.map((questionGroup, index) => (
+            <div
+              key={questionGroup.map(q => q.field).join(',')}
+              className={`${index === MODEL_PLAN_QUESTIONS.length - 1 ? 'margin-bottom-0' : 'margin-bottom-4'}`}
+            >
+              {questionGroup.map(questionConfig => {
+                const question = questionConfig.field;
+
+                const childrenQuestions = getChildrenQuestions(
+                  questionConfig,
+                  liveFormData
+                );
+
+                return (
+                  <div key={question}>
+                    <QuestionBody
+                      label={combinedConfig[question].label}
+                      answer={formattedValue(
+                        combinedConfig,
+                        question,
+                        liveFormData[question]
+                      )}
+                    />
+
+                    {childrenQuestions.length > 0 && (
+                      <>
+                        {childrenQuestions.map(childQuestion => (
+                          <QuestionBody
+                            key={childQuestion}
+                            label={combinedConfig[childQuestion].label}
+                            answer={formattedValue(
+                              combinedConfig,
+                              childQuestion,
+                              liveFormData[childQuestion]
+                            )}
+                          />
+                        ))}
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+
+              <ExpandableSection
+                questionGroup={questionGroup}
+                config={combinedConfig}
+                setValue={setValue}
+                control={control}
+              />
+            </div>
+          ))}
+        </div>
+
+        <FormFooter
+          id="waiver-assessment-survey-model-plan-questions-form"
+          homeArea={additionalQuestionnairesT('saveAndReturnToQuestionnaires')}
+          homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+          backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about`}
+          nextPage
+          disabled={submitting}
+        />
+      </Form>
     </FormProvider>
   );
 };
 
-const ExpandableSection = ({
-  questionGroup,
-  config,
-  control
-}: {
-  questionGroup: (BasicQuestionKey | GeneralQuestionKey)[];
-  config: CombinedConfigType;
-  control: ReturnType<typeof useForm<ModelPlanQuestionsDataType>>['control'];
-}) => {
-  const { t: waiverAssessmentSurveyT } = useTranslation(
-    'waiverAssessmentSurvey'
-  );
-
-  const [isExpanded, setIsExpanded] = useState(false);
+const QuestionBody = ({ label, answer }: { label: string; answer: string }) => {
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   return (
-    <div>
-      <Button
-        type="button"
-        unstyled
-        className="display-flex flex-align-center deep_underline margin-bottom-2"
-        onClick={() => setIsExpanded(prev => !prev)}
-      >
-        <span>
-          {waiverAssessmentSurveyT(
-            `modelPlanQuestions.${isExpanded ? 'hideQuestions' : 'updateAnswers'}`
-          )}
-        </span>
+    <div className="margin-bottom-2">
+      <span className="text-bold margin-y-0 mint-text-normal">{label}</span>
 
-        {!isExpanded ? (
-          <Icon.ExpandMore aria-hidden aria-label="expand" />
-        ) : (
-          <Icon.ExpandLess aria-hidden aria-label="collapse" />
-        )}
-      </Button>
-
-      {isExpanded &&
-        questionGroup.map(question => (
-          <ModelPlanQuestionItem
-            key={question}
-            question={question}
-            config={config}
-            control={control}
-          />
-        ))}
+      <div className="margin-y-0 mint-text-medium text-light text-pre-line text-overflow-wrap-break-word">
+        {isEmpty(answer) ? <em>{miscellaneousT('na')}</em> : answer}
+      </div>
     </div>
-  );
-};
-
-const ModelPlanQuestionItem = ({
-  question,
-  control,
-  config
-}: {
-  question: BasicQuestionKey | GeneralQuestionKey;
-  config: CombinedConfigType;
-  control: ReturnType<typeof useForm<ModelPlanQuestionsDataType>>['control'];
-}) => {
-  const currentConfig = config[question];
-  const hasOptions = isTranslationFieldPropertiesWithOptions(currentConfig);
-  const hasOptionsAndChildren =
-    isTranslationFieldPropertiesWithOptionsAndChildren(currentConfig);
-
-  if (!currentConfig) return null;
-
-  return (
-    <Controller
-      name={question}
-      key={question}
-      control={control}
-      render={({ field: { ref, ...field } }) => {
-        const fieldValueArray = (
-          Array.isArray(field.value) ? field.value : []
-        ) as unknown[];
-
-        const fieldValueString =
-          field.value !== null &&
-          field.value !== undefined &&
-          !Array.isArray(field.value)
-            ? String(field.value)
-            : '';
-
-        const childrenRelation =
-          hasOptionsAndChildren &&
-          fieldValueString &&
-          currentConfig.childRelation
-            ? currentConfig.childRelation[
-                field.value as keyof typeof currentConfig.childRelation
-              ]
-            : null;
-
-        const optionsRelatedInfo =
-          hasOptions && fieldValueString && currentConfig.optionsRelatedInfo
-            ? currentConfig.optionsRelatedInfo[
-                fieldValueString as keyof typeof currentConfig.optionsRelatedInfo
-              ]
-            : null;
-
-        const kebabName = convertCamelCaseToKebabCase(field.name);
-
-        return (
-          <FormGroup className="margin-top-4">
-            <Label htmlFor={kebabName} className="text-normal">
-              {currentConfig.label}
-            </Label>
-
-            {currentConfig.sublabel && (
-              <span className="usa-hint display-block text-normal">
-                {currentConfig.sublabel}
-              </span>
-            )}
-
-            {/* Beginning of original question */}
-            {hasOptions && (
-              <>
-                {currentConfig.formType === TranslationFormType.RADIO &&
-                  getKeys(currentConfig.options).map(option => (
-                    <div className="display-flex" key={option}>
-                      <Radio
-                        {...field}
-                        id={`${kebabName}-${option}`}
-                        data-testid={`${kebabName}-${option}`}
-                        value={option}
-                        label={
-                          <span
-                            className="display-flex flex-align-center"
-                            style={{ gap: '4px' }}
-                          >
-                            {
-                              currentConfig.options[
-                                option as keyof typeof currentConfig.options
-                              ]
-                            }
-                            {currentConfig.tooltips?.[option] && (
-                              <Tooltip
-                                label={currentConfig.tooltips[option]}
-                                position="right"
-                              >
-                                <Icon.Info
-                                  className="text-base-light"
-                                  aria-label="info"
-                                />
-                              </Tooltip>
-                            )}
-                          </span>
-                        }
-                        checked={field.value === option}
-                        className="margin-right-1"
-                      />
-                    </div>
-                  ))}
-
-                {currentConfig.formType === TranslationFormType.CHECKBOX &&
-                  getKeys(currentConfig.options).map(option => (
-                    <CheckboxField
-                      {...field}
-                      key={option}
-                      id={`${kebabName}-${option}`}
-                      testid={`${kebabName}-${option}`}
-                      label={
-                        currentConfig.options[
-                          option as keyof typeof currentConfig.options
-                        ]
-                      }
-                      checked={fieldValueArray.includes(option)}
-                      value={option}
-                      onBlur={field.onBlur}
-                      onChange={e => {
-                        const newValue = e.target.checked
-                          ? [...fieldValueArray, option]
-                          : fieldValueArray.filter(v => v !== option);
-                        field.onChange(newValue);
-                      }}
-                      icon={
-                        currentConfig.tooltips?.[option] ? (
-                          <Tooltip
-                            label={currentConfig.tooltips[option]}
-                            position="right"
-                            className="margin-left-05"
-                          >
-                            <Icon.Info
-                              className="text-base-light"
-                              aria-label="info"
-                            />
-                          </Tooltip>
-                        ) : undefined
-                      }
-                    />
-                  ))}
-
-                {currentConfig.formType === TranslationFormType.SELECT && (
-                  <ComboBox
-                    {...field}
-                    id={kebabName}
-                    data-testid={kebabName}
-                    options={getKeys(currentConfig.options).map(option => ({
-                      value: option,
-                      label:
-                        currentConfig.options[
-                          option as keyof typeof currentConfig.options
-                        ]
-                    }))}
-                    onChange={val => field.onChange(val || null)}
-                    defaultValue={fieldValueString}
-                  />
-                )}
-
-                {currentConfig.formType === TranslationFormType.MULTISELECT && (
-                  <MultiSelect
-                    {...field}
-                    id={kebabName}
-                    inputId={kebabName}
-                    ariaLabel={currentConfig.label}
-                    options={composeMultiSelectOptions(currentConfig.options)}
-                    selectedLabel={currentConfig.multiSelectLabel || ''}
-                    initialValues={fieldValueArray as string[]}
-                    onChange={field.onChange}
-                  />
-                )}
-              </>
-            )}
-
-            {currentConfig.formType === TranslationFormType.TEXT && (
-              <TextInput
-                {...field}
-                id={kebabName}
-                data-testid={kebabName}
-                type="text"
-                value={fieldValueString}
-              />
-            )}
-
-            {currentConfig.formType === TranslationFormType.TEXTAREA && (
-              <TextAreaField
-                {...field}
-                id={kebabName}
-                data-testid={kebabName}
-                value={fieldValueString}
-              />
-            )}
-            {/* End of original question */}
-
-            {/* CMS question */}
-            {question === 'cmsCenters' &&
-              fieldValueArray.includes(CmsCenter.CMMI) && (
-                <ModelPlanQuestionItem
-                  question="cmmiGroups"
-                  control={control}
-                  config={config}
-                />
-              )}
-
-            {/* Beginning of children questions */}
-            {childrenRelation &&
-              childrenRelation.map(childQuestion => {
-                const childConfig = childQuestion();
-                const childKey = childConfig.gqlField as
-                  | BasicQuestionKey
-                  | GeneralQuestionKey;
-
-                return (
-                  <ModelPlanQuestionItem
-                    key={childKey}
-                    question={childKey}
-                    control={control}
-                    config={config}
-                  />
-                );
-              })}
-
-            {/* handle Other option */}
-            {optionsRelatedInfo && (
-              <ModelPlanQuestionItem
-                key={optionsRelatedInfo}
-                question={
-                  optionsRelatedInfo as BasicQuestionKey | GeneralQuestionKey
-                }
-                control={control}
-                config={config}
-              />
-            )}
-          </FormGroup>
-        );
-      }}
-    />
   );
 };
 
