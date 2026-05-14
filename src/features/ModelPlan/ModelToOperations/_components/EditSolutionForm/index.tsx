@@ -12,7 +12,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -143,6 +143,8 @@ const EditSolutionForm = ({
     useState<number>(0);
 
   const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
+
+  const [, setParams] = useSearchParams();
 
   const {
     data,
@@ -450,7 +452,30 @@ const EditSolutionForm = ({
       {
         Header: modelToOperationsMiscT('modal.editSolution.milestone'),
         accessor: 'name',
-        width: 300
+        width: 300,
+        Cell: ({ row }: { row: Row<MilestoneType> }) => {
+          return (
+            <>
+              <span className="display-block">{row.original.name}</span>
+              <Button
+                type="button"
+                unstyled
+                className="margin-top-0"
+                onClick={() => {
+                  setParams(prev => {
+                    const next = new URLSearchParams(prev);
+                    next.set('edit-milestone', row.original.id);
+                    next.set('source', 'solution');
+                    return next;
+                  });
+                }}
+              >
+                {modelToOperationsMiscT('modal.editSolution.editMilestone')}
+                <Icon.ArrowForward aria-hidden />
+              </Button>
+            </>
+          );
+        }
       },
       {
         Header: modelToOperationsMiscT('modal.editSolution.status'),
@@ -485,7 +510,7 @@ const EditSolutionForm = ({
         }
       }
     ],
-    [modelToOperationsMiscT]
+    [modelToOperationsMiscT, setParams]
   );
 
   const {
@@ -667,7 +692,7 @@ const EditSolutionForm = ({
               )}
             </div>
 
-            {milestoneIDs.length > 1 && (
+            {sourceParam === 'milestone' && milestoneIDs.length > 1 && (
               <Alert type="warning" className="margin-y-4" slim>
                 {modelToOperationsMiscT(
                   'modal.editSolution.editMultipleMilestonesAlert',
@@ -1116,7 +1141,7 @@ const EditSolutionForm = ({
                     className="margin-0 display-flex"
                   >
                     {modelToOperationsMiscT(
-                      'modal.editSolution.editMilestones'
+                      'modal.editSolution.updateMilestones'
                     )}
                     <Icon.ArrowForward
                       className="top-2px"

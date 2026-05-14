@@ -154,8 +154,8 @@ describe('EditSolutionForm Component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders warning when editing a solution from multiple milestones', async () => {
-    renderForm(true);
+  it('renders warning when editing a solution from a milestone and it applies to multiple milestones', async () => {
+    renderForm(true, '&source=milestone');
 
     expect(
       await screen.findByText(
