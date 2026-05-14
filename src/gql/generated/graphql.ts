@@ -5973,7 +5973,6 @@ export type WaiverAssessmentSurveyChanges = {
   impactsSiteOfCarePayments?: InputMaybe<Scalars['Boolean']['input']>;
   impactsSiteOfCarePaymentsExample?: InputMaybe<Scalars['String']['input']>;
   impactsSiteOfCarePaymentsNote?: InputMaybe<Scalars['String']['input']>;
-  isComplete?: InputMaybe<Scalars['Boolean']['input']>;
   modifiesCareDeliveryWithClaimsBasedPayments?: InputMaybe<Scalars['Boolean']['input']>;
   modifiesCareDeliveryWithClaimsBasedPaymentsExample?: InputMaybe<Scalars['String']['input']>;
   modifiesCareDeliveryWithClaimsBasedPaymentsNote?: InputMaybe<Scalars['String']['input']>;
@@ -5989,6 +5988,7 @@ export type WaiverAssessmentSurveyChanges = {
   offersRiskSharingArrangements?: InputMaybe<Scalars['Boolean']['input']>;
   offersRiskSharingArrangementsExample?: InputMaybe<Scalars['String']['input']>;
   offersRiskSharingArrangementsNote?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<WaiverAssessmentSurveyStatus>;
 };
 
 /** WaiverAssessmentSurveyStatus represents the work completion status of a waiver assessment survey. */

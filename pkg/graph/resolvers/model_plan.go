@@ -183,6 +183,26 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		// Create default Waiver Assessment Survey object
+		waiverAssessmentSurvey := models.NewWaiverAssessmentSurvey(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
+
+		_, err = storage.WaiverAssessmentSurveyCreate(tx, logger, waiverAssessmentSurvey)
+		if err != nil {
+			return nil, err
+		}
+
+		// Create a waiver row for the model plan for every common_waiver in the library
+		allCommonWaivers, err := storage.CommonWaiverGetAll(store, logger)
+		if err != nil {
+			return nil, err
+		}
+		for _, cw := range allCommonWaivers {
+			w := models.NewWaiver(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID, cw.ID)
+			if _, err = storage.WaiverCreate(tx, logger, w); err != nil {
+				return nil, err
+			}
+		}
+
 		// Create a default planTimeline object
 		planTimeline := models.NewPlanTimeline(baseTaskListUser)
 

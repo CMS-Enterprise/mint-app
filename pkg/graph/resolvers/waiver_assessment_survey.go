@@ -2,67 +2,98 @@ package resolvers
 
 import (
 	"context"
-	"time"
 
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-// WaiverAssessmentSurveyGetByModelPlanID returns a stub WaiverAssessmentSurvey for a model plan.
-// TODO: replace with dataloader once waiver_assessment_survey DB table is built.
+// WaiverAssessmentSurveyGetByModelPlanID returns the waiver assessment survey associated with a model plan via dataloader
 func WaiverAssessmentSurveyGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) (*models.WaiverAssessmentSurvey, error) {
-	principal := appcontext.Principal(ctx)
-	survey := models.NewWaiverAssessmentSurvey(principal.Account().ID, modelPlanID)
-	survey.CreatedDts = time.Now()
-	return survey, nil
+	return loaders.WaiverAssessmentSurvey.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
-// WaiverAssessmentSurveyUpdate updates a waiver assessment survey.
-// TODO: implement once waiver_assessment_survey DB table is built.
+// WaiverAssessmentSurveyGetByID returns a waiver assessment survey by ID using the store from the loaders
+func WaiverAssessmentSurveyGetByID(ctx context.Context, id uuid.UUID) (*models.WaiverAssessmentSurvey, error) {
+	logger := appcontext.ZLogger(ctx)
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return storage.WaiverAssessmentSurveyGetByID(allLoaders.DataReader.Store, logger, id)
+}
+
+// WaiverAssessmentSurveyUpdate applies changes to a waiver assessment survey and persists them
 func WaiverAssessmentSurveyUpdate(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.WaiverAssessmentSurvey, error) {
+	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	stub := models.NewWaiverAssessmentSurvey(principal.Account().ID, uuid.Nil)
-	stub.ID = id
-	stub.CreatedDts = time.Now()
-	return stub, nil
+
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
+	store := allLoaders.DataReader.Store
+
+	existing, err := storage.WaiverAssessmentSurveyGetByID(store, logger, id)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, false); err != nil {
+		return nil, err
+	}
+
+	return storage.WaiverAssessmentSurveyUpdate(store, logger, existing)
 }
 
-// WaiverGetByID returns a stub Waiver.
-// TODO: implement once waiver DB table is built.
+// WaiversGetByModelPlanID returns all waivers associated with a model plan via dataloader
+func WaiversGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) ([]*models.Waiver, error) {
+	return loaders.Waiver.ByModelPlanID.Load(ctx, modelPlanID)
+}
+
+// WaiverGetByID returns a waiver by ID via the store
 func WaiverGetByID(ctx context.Context, id uuid.UUID) (*models.Waiver, error) {
-	principal := appcontext.Principal(ctx)
-	stub := models.NewWaiver(principal.Account().ID, uuid.Nil, uuid.Nil)
-	stub.ID = id
-	stub.CreatedDts = time.Now()
-	return stub, nil
+	logger := appcontext.ZLogger(ctx)
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return storage.WaiverGetByID(allLoaders.DataReader.Store, logger, id)
 }
 
-// WaiverUpdate updates a waiver.
-// TODO: implement once waiver DB table is built.
+// WaiverUpdate applies changes to a waiver row and persists them
 func WaiverUpdate(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.Waiver, error) {
-	return WaiverGetByID(ctx, id)
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	allLoaders, err := loaders.Loaders(ctx)
+	if err != nil {
+		return nil, err
+	}
+	store := allLoaders.DataReader.Store
+
+	existing, err := storage.WaiverGetByID(store, logger, id)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, false); err != nil {
+		return nil, err
+	}
+
+	return storage.WaiverUpdate(store, logger, existing)
 }
 
-// WaiversGetByModelPlanID returns stub waivers for a model plan.
-// TODO: implement once waiver DB table is built.
-func WaiversGetByModelPlanID(_ context.Context, _ uuid.UUID) ([]*models.Waiver, error) {
-	return []*models.Waiver{}, nil
-}
-
-// SuggestedWaiversGetByModelPlanID returns stub suggested waivers for a model plan.
-// TODO: implement once suggested_waiver DB table is built.
+// SuggestedWaiversGetByModelPlanID returns suggested waivers for a model plan.
+// Currently no suggested_waiver DB table exists yet; returns an empty slice.
 func SuggestedWaiversGetByModelPlanID(_ context.Context, _ uuid.UUID) ([]*models.SuggestedWaiver, error) {
 	return []*models.SuggestedWaiver{}, nil
 }
 
-// CommonWaiverGetByID returns a stub CommonWaiver.
-// TODO: implement once common_waiver DB table is built.
+// CommonWaiverGetByID returns a common waiver by ID via dataloader
 func CommonWaiverGetByID(ctx context.Context, id uuid.UUID) (*models.CommonWaiver, error) {
-	principal := appcontext.Principal(ctx)
-	stub := models.NewCommonWaiver(principal.Account().ID, "")
-	stub.ID = id
-	stub.CreatedDts = time.Now()
-	return stub, nil
+	return loaders.CommonWaiver.ByID.Load(ctx, id)
 }
