@@ -1052,7 +1052,7 @@ const EditMilestoneForm = ({
               {milestone.name}
             </h2>
 
-            {milestone.solutions.length > 1 && (
+            {sourceParam === 'solution' && milestone.solutions.length > 1 && (
               <Alert type="warning" className="margin-y-4" slim>
                 {modelToOperationsMiscT(
                   'modal.editMilestone.editMultipleSolutionsAlert',
