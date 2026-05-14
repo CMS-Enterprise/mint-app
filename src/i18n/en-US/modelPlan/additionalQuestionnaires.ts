@@ -51,6 +51,13 @@ const additionalQuestionnaires = {
       description:
         'As you work to complete your Model Plan and model-to-operations matrix (MTO), some of your responses may indicate the need to fill out additional, more-detailed questions about how you plan to implement and operationalize your model. As those questions become required, additional questionnaires will be unlocked in this section of the model collaboration area.',
       path: 'iddoc-questionnaire/operations'
+    },
+    waiverAssessmentSurvey: {
+      heading: 'Waiver assessment survey',
+      description:
+        'This survey will help determine which specific waivers are most appropriate for your model, ensure proper justification for waiver selections, and identify any instances where standard CMS authorities may be sufficient without additional waiver flexibility.',
+      // TODO: Update path
+      path: ''
     }
   },
   questionnaireButton: {
