@@ -77,6 +77,12 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 		return err
 	}
 
+	sanitizedCRS, err := models.ConvertRawCRSToParsed(crsRaw)
+	if err != nil {
+		return err
+	}
+	c.CRs = sanitizedCRS
+
 	tdlsRaw, err := readTDLsFromS3(ctx, client, TDLKey)
 	if err != nil {
 		if s3.S3ErrorIsKeyNotFound(err) {
@@ -85,12 +91,6 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 		}
 		return err
 	}
-
-	sanitizedCRS, err := models.ConvertRawCRSToParsed(crsRaw)
-	if err != nil {
-		return err
-	}
-	c.CRs = sanitizedCRS
 
 	sanitizedTDLS, err := models.ConvertRawTDLSToParsed(tdlsRaw)
 	if err != nil {
