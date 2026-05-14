@@ -65,21 +65,10 @@ func (c *crAndTDLCache) IsOld(viperConfig *viper.Viper) bool {
 }
 
 func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) error {
-	return c.refreshCacheWithReaders(ctx, client, viperConfig, logger, readCRsFromS3, readTDLsFromS3)
-}
-
-func (c *crAndTDLCache) refreshCacheWithReaders(
-	ctx context.Context,
-	client *s3.S3Client,
-	viperConfig *viper.Viper,
-	logger *zap.Logger,
-	readCRs func(context.Context, *s3.S3Client, string) ([]*models.EChimpCRRaw, error),
-	readTDLs func(context.Context, *s3.S3Client, string) ([]*models.EChimpTDLRaw, error),
-) error {
 	CRKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
 	TDLKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
 
-	crsRaw, err := readCRs(ctx, client, CRKey)
+	crsRaw, err := readCRsFromS3(ctx, client, CRKey)
 	if err != nil {
 		if s3.S3ErrorIsKeyNotFound(err) {
 			logger.Error("file not found for ECHIMP CR data", zap.String("key", CRKey), zap.Error(err))
@@ -88,7 +77,7 @@ func (c *crAndTDLCache) refreshCacheWithReaders(
 		return err
 	}
 
-	tdlsRaw, err := readTDLs(ctx, client, TDLKey)
+	tdlsRaw, err := readTDLsFromS3(ctx, client, TDLKey)
 	if err != nil {
 		if s3.S3ErrorIsKeyNotFound(err) {
 			logger.Error("file not found for ECHIMP TDL data", zap.String("key", TDLKey), zap.Error(err))
