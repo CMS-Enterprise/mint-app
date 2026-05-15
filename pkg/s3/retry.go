@@ -18,11 +18,11 @@ func withCredentialRefreshAndBuilder[T any](ctx context.Context, client *S3Clien
 	if err == nil {
 		return result, nil
 	}
-	if !S3ErrorHasExpiredCredentials(err) {
-		return result, err
-	}
 
 	var zero T
+	if !S3ErrorHasExpiredCredentials(err) {
+		return zero, err
+	}
 
 	if refreshErr := client.refreshWithBuilder(ctx, builder, initialClient); refreshErr != nil {
 		return zero, fmt.Errorf("failed to refresh S3 client after expired credentials: %w", refreshErr)
@@ -46,11 +46,12 @@ func withCredentialRefreshAndRewind[T any](ctx context.Context, client *S3Client
 	if err == nil {
 		return result, nil
 	}
-	if !S3ErrorHasExpiredCredentials(err) {
-		return result, err
-	}
 
 	var zero T
+	if !S3ErrorHasExpiredCredentials(err) {
+		return zero, err
+	}
+
 	// A failed offset capture does not block the first upload attempt; it only
 	// becomes fatal once we know we need to rewind for a retry.
 	if startOffsetErr != nil {
