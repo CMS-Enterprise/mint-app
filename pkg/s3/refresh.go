@@ -47,7 +47,7 @@ func (c *S3Client) refreshWithBuilder(ctx context.Context, builder clientBuilder
 	c.client = client
 	c.clientMu.Unlock()
 
-	// refresh lock already held, so we can safely set refresh here
+	// refreshMu is already held, so it is safe to update lastRefreshAt here.
 	c.lastRefreshAt = time.Now()
 
 	return nil
