@@ -12,7 +12,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import {
   Column,
   Row,
@@ -73,6 +73,7 @@ import {
 } from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import CompletionModal from '../CompletionModal';
 import LinkMilestoneForm from '../LinkMilestoneForm';
 import { MilestoneType } from '../MatrixTable/columns';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
@@ -137,12 +138,17 @@ const EditSolutionForm = ({
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  const [isCompletionModalOpen, setIsCompletionModalOpen] =
+    useState<boolean>(false);
+
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
 
   const [unsavedSolutionChanges, setUnsavedSolutionChanges] =
     useState<number>(0);
 
   const [editMilestonesOpen, setEditMilestonesOpen] = useState<boolean>(false);
+
+  const [, setParams] = useSearchParams();
 
   const {
     data,
@@ -360,7 +366,13 @@ const EditSolutionForm = ({
           // eslint-disable-next-line no-param-reassign
           submitted.current = true;
           setIsDirty(false);
-          closeModal();
+
+          if (formChanges.status === MtoSolutionStatus.COMPLETED) {
+            setIsCompletionModalOpen(true);
+          } else {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }
         }
       });
     },
@@ -408,6 +420,38 @@ const EditSolutionForm = ({
     });
   };
 
+  const handleRemoveRiskIndicator = () => {
+    setErrorMeta({
+      overrideMessage: modelToOperationsMiscT('modal.editSolution.errorUpdated')
+    });
+
+    updateSolution({
+      variables: {
+        id: editSolutionID || '',
+        changes: {
+          riskIndicator: MtoRiskIndicator.ON_TRACK
+        }
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={modelToOperationsMiscT(
+              'modal.editSolution.successUpdated'
+            )}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+            values={{ solution: solution?.name }}
+          />
+        );
+
+        setIsCompletionModalOpen(false);
+        closeModal();
+      }
+    });
+  };
+
   // Set the footer of the modal to be rendered in the parent Sidepanel to allow for sticky bottom
   useEffect(() => {
     setFooter(
@@ -450,7 +494,30 @@ const EditSolutionForm = ({
       {
         Header: modelToOperationsMiscT('modal.editSolution.milestone'),
         accessor: 'name',
-        width: 300
+        width: 300,
+        Cell: ({ row }: { row: Row<MilestoneType> }) => {
+          return (
+            <>
+              <span className="display-block">{row.original.name}</span>
+              <Button
+                type="button"
+                unstyled
+                className="margin-top-0"
+                onClick={() => {
+                  setParams(prev => {
+                    const next = new URLSearchParams(prev);
+                    next.set('edit-milestone', row.original.id);
+                    next.set('source', 'solution');
+                    return next;
+                  });
+                }}
+              >
+                {modelToOperationsMiscT('modal.editSolution.editMilestone')}
+                <Icon.ArrowForward aria-hidden />
+              </Button>
+            </>
+          );
+        }
       },
       {
         Header: modelToOperationsMiscT('modal.editSolution.status'),
@@ -485,7 +552,7 @@ const EditSolutionForm = ({
         }
       }
     ],
-    [modelToOperationsMiscT]
+    [modelToOperationsMiscT, setParams]
   );
 
   const {
@@ -562,6 +629,20 @@ const EditSolutionForm = ({
           {modelToOperationsMiscT('modal.editSolution.goBack')}
         </Button>
       </Modal>
+
+      {solution && isCompletionModalOpen && (
+        <CompletionModal
+          isModalOpen={isCompletionModalOpen}
+          closeModal={() => {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }}
+          mode="solution"
+          modelID={modelID}
+          riskIndicator={solution.riskIndicator ?? MtoRiskIndicator.ON_TRACK}
+          handleRemoveRiskIndicator={handleRemoveRiskIndicator}
+        />
+      )}
 
       {solution && (
         <Sidepanel
@@ -667,7 +748,7 @@ const EditSolutionForm = ({
               )}
             </div>
 
-            {milestoneIDs.length > 1 && (
+            {sourceParam === 'milestone' && milestoneIDs.length > 1 && (
               <Alert type="warning" className="margin-y-4" slim>
                 {modelToOperationsMiscT(
                   'modal.editSolution.editMultipleMilestonesAlert',
@@ -1116,7 +1197,7 @@ const EditSolutionForm = ({
                     className="margin-0 display-flex"
                   >
                     {modelToOperationsMiscT(
-                      'modal.editSolution.editMilestones'
+                      'modal.editSolution.updateMilestones'
                     )}
                     <Icon.ArrowForward
                       className="top-2px"
