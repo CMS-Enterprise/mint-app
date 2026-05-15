@@ -27,6 +27,7 @@ func sendTestDailyDigestEmail(
 					models.TNModelPlan,
 					models.TNMTOCategory,
 					models.TNMTOMilestone,
+					models.TNWaiverAssessmentSurvey,
 				},
 				ReadyForReview: []models.TableName{
 					models.TNPlanTimeline,
@@ -78,6 +79,7 @@ func sendTestDailyDigestEmailAggregated(
 					models.TNModelPlan,
 					models.TNMTOCategory,
 					models.TNMTOMilestone,
+					models.TNWaiverAssessmentSurvey,
 				},
 				ReadyForReview: []models.TableName{
 					models.TNPlanTimeline,
@@ -103,6 +105,7 @@ func sendTestDailyDigestEmailAggregated(
 					models.TNModelPlan,
 					models.TNMTOCategory,
 					models.TNMTOMilestone,
+					models.TNWaiverAssessmentSurvey,
 				},
 				ReadyForReview: []models.TableName{
 					models.TNPlanTimeline,

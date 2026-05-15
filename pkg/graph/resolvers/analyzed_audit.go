@@ -317,6 +317,7 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 		models.TNPlanPayments,
 		models.TNPlanDataExchangeApproach,
 		models.TNPlanTimeline,
+		models.TNWaiverAssessmentSurvey,
 	}
 
 	sections = append(sections, models.MTOTables...)
@@ -401,12 +402,11 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 		return "", false
 	})
 
-	// Intentionally inspect the full audit slice here instead of filteredAudits.
-	// We only want waiver survey activity to surface as the explicit completion
-	// bullet in the digest, not as a generic section update like "Updates to ...".
-	// Keeping waiver_assessment_survey out of the shared section filter avoids it
-	// being added to Updated/ReadyFor* while still letting us detect COMPLETE.
-	waiverAssessmentSurveyMarkedComplete := lo.FilterMap(audits, func(audit *models.AuditChange, index int) (models.TableName, bool) {
+	// Waiver survey updates are now included in the shared section filter so they
+	// appear in the combined "Updates to ..." digest line. Keep the explicit
+	// waiver completion check as well so COMPLETE transitions still get their
+	// own bullet alongside the aggregated update entry.
+	waiverAssessmentSurveyMarkedComplete := lo.FilterMap(filteredAudits, func(audit *models.AuditChange, index int) (models.TableName, bool) {
 		if audit == nil || audit.Fields == nil {
 			logger.Warn("audit or audit.Fields is nil in audit entry", zap.Int("index", index))
 			return "", false
