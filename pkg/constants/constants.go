@@ -33,6 +33,7 @@ const (
 	PlanTdl                      = "plan_tdl"
 	PlanDataExchangeApproach     = "plan_data_exchange_approach"
 	PlanTimeline                 = "plan_timeline"
+	WaiverAssessmentSurvey       = "waiver_assessment_survey"
 	TNMTOCategory                = "mto_category"
 	TNMTOMilestone               = "mto_milestone"
 	TNMTOSolution                = "mto_solution"
@@ -68,6 +69,7 @@ var humanizedTableNames = map[string]string{
 	PlanTdl:                      "TDL",
 	PlanDataExchangeApproach:     "Data exchange approach",
 	PlanTimeline:                 "Model timeline",
+	WaiverAssessmentSurvey:       "Waiver assessment survey",
 	// Since MTO is more a group of tables we just specify model-to-operations matrix (MTO) for humanized name
 	TNMTOCategory:              MTOHumanizedName,
 	TNMTOMilestone:             MTOHumanizedName,

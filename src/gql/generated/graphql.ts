@@ -5240,7 +5240,8 @@ export enum TableName {
   USER_ACCOUNT = 'user_account',
   USER_NOTIFICATION = 'user_notification',
   USER_NOTIFICATION_PREFERENCES = 'user_notification_preferences',
-  USER_VIEW_CUSTOMIZATION = 'user_view_customization'
+  USER_VIEW_CUSTOMIZATION = 'user_view_customization',
+  WAIVER_ASSESSMENT_SURVEY = 'waiver_assessment_survey'
 }
 
 /** Tag represents an entity tagged in the database */

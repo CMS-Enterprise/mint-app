@@ -153,6 +153,9 @@
   "plan_timeline": {
     "generalName": "Timeline"
   },
+  "waiver_assessment_survey": {
+    "generalName": "Waiver assessment survey"
+  },
   "mto_milestone_note": {
     "generalName": "MTO milestone note"
   },

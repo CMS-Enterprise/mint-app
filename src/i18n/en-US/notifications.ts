@@ -116,6 +116,7 @@ const notifications = {
         plan_basics: 'Model Basics',
         plan_data_exchange_approach: 'Data exchange approach',
         plan_timeline: 'Model timeline',
+        waiver_assessment_survey: 'Waiver assessment survey',
         mto_category: 'Model-to-operations matrix (MTO)',
         mto_common_milestones: 'Model-to-operations matrix (MTO)',
         mto_common_solutions: 'Model-to-operations matrix (MTO)',

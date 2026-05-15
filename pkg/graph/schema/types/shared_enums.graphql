@@ -215,6 +215,7 @@ enum TableName {
   possible_operational_need
   possible_operational_solution
   possible_operational_solution_contact
+  waiver_assessment_survey
   tag
   plan_timeline
   translated_audit
