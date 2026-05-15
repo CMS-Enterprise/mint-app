@@ -150,182 +150,209 @@ const ModelPlanQuestionItem = ({
         key={question}
         control={control}
         render={({ field: { ref, ...field } }) => {
+          const { formType } = currentConfig;
+          const isDataBoolean =
+            currentConfig.dataType === TranslationDataType.BOOLEAN;
+
           return (
             <>
               {hasOptions && (
-                <Fieldset>
-                  {currentConfig.formType === TranslationFormType.RADIO &&
-                    currentConfig.dataType !== TranslationDataType.BOOLEAN &&
-                    getKeys(currentConfig.options).map(option => {
-                      const relatedField = optionsRelatedQuestionFields.find(
-                        otherQuestion =>
-                          otherQuestion ===
-                          currentConfig.optionsRelatedInfo?.[
-                            option as keyof typeof currentConfig.optionsRelatedInfo
-                          ]
-                      );
+                <>
+                  <Fieldset>
+                    {formType === TranslationFormType.RADIO &&
+                      !isDataBoolean &&
+                      getKeys(currentConfig.options).map(option => {
+                        const relatedField = optionsRelatedQuestionFields.find(
+                          otherQuestion =>
+                            otherQuestion ===
+                            currentConfig.optionsRelatedInfo?.[
+                              option as keyof typeof currentConfig.optionsRelatedInfo
+                            ]
+                        );
 
-                      return (
-                        <div className="display-flex flex-column" key={option}>
-                          <div className="display-flex flex-align-center">
-                            <Radio
-                              {...field}
-                              id={`${kebabName}-${option}`}
-                              data-testid={`${kebabName}-${option}`}
-                              className="margin-right-1"
-                              value={option}
-                              label={
-                                <span
-                                  className="display-flex flex-align-center"
-                                  style={{ gap: '4px' }}
-                                >
-                                  {
-                                    currentConfig.options[
-                                      option as keyof typeof currentConfig.options
-                                    ]
-                                  }
-                                  {currentConfig.tooltips?.[option] && (
-                                    <Tooltip
-                                      label={currentConfig.tooltips[option]}
-                                      position="right"
-                                    >
-                                      <Icon.Info
-                                        className="text-base-light"
-                                        aria-label="info"
-                                      />
-                                    </Tooltip>
-                                  )}
-                                </span>
-                              }
-                              checked={field.value === option}
-                            />
-                          </div>
-
-                          {relatedField && (
-                            <div className="margin-left-4 margin-top-neg-3">
-                              <ModelPlanQuestionItem
-                                question={relatedField}
-                                config={config}
-                                control={control}
-                                setValue={setValue}
+                        return (
+                          <div
+                            className="display-flex flex-column"
+                            key={option}
+                          >
+                            <div className="display-flex flex-align-center">
+                              <Radio
+                                {...field}
+                                id={`${kebabName}-${option}`}
+                                data-testid={`${kebabName}-${option}`}
+                                className="margin-right-1"
+                                value={option}
+                                label={
+                                  <span
+                                    className="display-flex flex-align-center"
+                                    style={{ gap: '4px' }}
+                                  >
+                                    {
+                                      currentConfig.options[
+                                        option as keyof typeof currentConfig.options
+                                      ]
+                                    }
+                                    {currentConfig.tooltips?.[option] && (
+                                      <Tooltip
+                                        label={currentConfig.tooltips[option]}
+                                        position="right"
+                                      >
+                                        <Icon.Info
+                                          className="text-base-light"
+                                          aria-label="info"
+                                        />
+                                      </Tooltip>
+                                    )}
+                                  </span>
+                                }
+                                checked={field.value === option}
                               />
                             </div>
-                          )}
-                        </div>
-                      );
-                    })}
 
-                  {currentConfig.formType === TranslationFormType.RADIO &&
-                    currentConfig.dataType === TranslationDataType.BOOLEAN && (
-                      <div className="display-flex">
-                        <BooleanRadioRHF
-                          {...field}
-                          field={field.name}
-                          value={field.value as unknown as boolean}
-                          options={
-                            currentConfig.options as unknown as Record<
-                              Bool,
-                              string
-                            >
-                          }
-                          setValue={setValue}
-                          className="margin-right-1"
-                        />
-                      </div>
-                    )}
-
-                  {currentConfig.formType === TranslationFormType.CHECKBOX &&
-                    getKeys(currentConfig.options).map(option => {
-                      const relatedField = optionsRelatedQuestionFields.find(
-                        otherQuestion =>
-                          otherQuestion ===
-                          currentConfig.optionsRelatedInfo?.[
-                            option as keyof typeof currentConfig.optionsRelatedInfo
-                          ]
-                      );
-
-                      const childFields = childQuestionFields.filter(cq => {
-                        if (
-                          isTranslationFieldPropertiesWithOptionsAndChildren(
-                            currentConfig
-                          )
-                        ) {
-                          const relations =
-                            currentConfig.childRelation?.[option];
-                          return relations?.some(
-                            (fn: any) => fn().gqlField === cq
-                          );
-                        }
-                        return false;
-                      });
-
-                      return (
-                        <div className="display-flex flex-column" key={option}>
-                          <div className="display-flex flex-align-center">
-                            <CheckboxField
-                              {...field}
-                              key={option}
-                              id={`${kebabName}-${option}`}
-                              testid={`${kebabName}-${option}`}
-                              label={
-                                currentConfig.options[
-                                  option as keyof typeof currentConfig.options
-                                ]
-                              }
-                              checked={fieldValueArray.includes(option)}
-                              value={option}
-                              onBlur={field.onBlur}
-                              onChange={e => {
-                                const newValue = e.target.checked
-                                  ? [...fieldValueArray, option]
-                                  : fieldValueArray.filter(v => v !== option);
-                                field.onChange(newValue);
-                              }}
-                              icon={
-                                currentConfig.tooltips?.[option] ? (
-                                  <Tooltip
-                                    label={currentConfig.tooltips[option]}
-                                    position="right"
-                                    className="margin-left-05"
-                                  >
-                                    <Icon.Info
-                                      className="text-base-light"
-                                      aria-label="info"
-                                    />
-                                  </Tooltip>
-                                ) : undefined
-                              }
-                            />
-                          </div>
-
-                          {(childFields.length > 0 || relatedField) && (
-                            <div className="margin-left-4 margin-top-neg-4">
-                              {childFields.length > 0 &&
-                                childFields.map(subField => (
-                                  <ModelPlanQuestionItem
-                                    key={subField}
-                                    question={subField}
-                                    config={config}
-                                    control={control}
-                                    setValue={setValue}
-                                  />
-                                ))}
-
-                              {relatedField && (
+                            {relatedField && (
+                              <div className="margin-left-4 margin-top-neg-3">
                                 <ModelPlanQuestionItem
                                   question={relatedField}
                                   config={config}
                                   control={control}
                                   setValue={setValue}
                                 />
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
 
-                  {currentConfig.formType === TranslationFormType.SELECT && (
+                    {formType === TranslationFormType.RADIO &&
+                      isDataBoolean && (
+                        <div className="display-flex">
+                          <BooleanRadioRHF
+                            {...field}
+                            field={field.name}
+                            value={field.value as unknown as boolean}
+                            options={
+                              currentConfig.options as unknown as Record<
+                                Bool,
+                                string
+                              >
+                            }
+                            setValue={setValue}
+                            className="margin-right-1"
+                          />
+                        </div>
+                      )}
+
+                    {formType === TranslationFormType.CHECKBOX &&
+                      getKeys(currentConfig.options).map(option => {
+                        const relatedField = optionsRelatedQuestionFields.find(
+                          otherQuestion =>
+                            otherQuestion ===
+                            currentConfig.optionsRelatedInfo?.[
+                              option as keyof typeof currentConfig.optionsRelatedInfo
+                            ]
+                        );
+
+                        const childFields = childQuestionFields.filter(cq => {
+                          if (
+                            isTranslationFieldPropertiesWithOptionsAndChildren(
+                              currentConfig
+                            )
+                          ) {
+                            const relations =
+                              currentConfig.childRelation?.[option];
+                            return relations?.some(
+                              (fn: any) => fn().gqlField === cq
+                            );
+                          }
+                          return false;
+                        });
+
+                        return (
+                          <div
+                            className="display-flex flex-column"
+                            key={option}
+                          >
+                            <div className="display-flex flex-align-center">
+                              <CheckboxField
+                                {...field}
+                                key={option}
+                                id={`${kebabName}-${option}`}
+                                testid={`${kebabName}-${option}`}
+                                label={
+                                  currentConfig.options[
+                                    option as keyof typeof currentConfig.options
+                                  ]
+                                }
+                                checked={fieldValueArray.includes(option)}
+                                value={option}
+                                onBlur={field.onBlur}
+                                onChange={e => {
+                                  const newValue = e.target.checked
+                                    ? [...fieldValueArray, option]
+                                    : fieldValueArray.filter(v => v !== option);
+                                  field.onChange(newValue);
+                                }}
+                                icon={
+                                  currentConfig.tooltips?.[option] ? (
+                                    <Tooltip
+                                      label={currentConfig.tooltips[option]}
+                                      position="right"
+                                      className="margin-left-05"
+                                    >
+                                      <Icon.Info
+                                        className="text-base-light"
+                                        aria-label="info"
+                                      />
+                                    </Tooltip>
+                                  ) : undefined
+                                }
+                              />
+                            </div>
+
+                            {(childFields.length > 0 || relatedField) && (
+                              <div className="margin-left-4 margin-top-neg-4">
+                                {childFields.length > 0 &&
+                                  childFields.map(subField => (
+                                    <ModelPlanQuestionItem
+                                      key={subField}
+                                      question={subField}
+                                      config={config}
+                                      control={control}
+                                      setValue={setValue}
+                                    />
+                                  ))}
+
+                                {relatedField && (
+                                  <ModelPlanQuestionItem
+                                    question={relatedField}
+                                    config={config}
+                                    control={control}
+                                    setValue={setValue}
+                                  />
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+
+                    {formType === TranslationFormType.MULTISELECT && (
+                      <MultiSelect
+                        {...field}
+                        id={kebabName}
+                        inputId={kebabName}
+                        ariaLabel={currentConfig.label}
+                        options={composeMultiSelectOptions(
+                          currentConfig.options
+                        )}
+                        selectedLabel={currentConfig.multiSelectLabel || ''}
+                        initialValues={fieldValueArray as string[]}
+                        onChange={field.onChange}
+                      />
+                    )}
+                  </Fieldset>
+
+                  {formType === TranslationFormType.SELECT && (
                     <ComboBox
                       {...field}
                       id={kebabName}
@@ -341,46 +368,31 @@ const ModelPlanQuestionItem = ({
                       defaultValue={fieldValueString}
                     />
                   )}
-
-                  {currentConfig.formType ===
-                    TranslationFormType.MULTISELECT && (
-                    <MultiSelect
-                      {...field}
-                      id={kebabName}
-                      inputId={kebabName}
-                      ariaLabel={currentConfig.label}
-                      options={composeMultiSelectOptions(currentConfig.options)}
-                      selectedLabel={currentConfig.multiSelectLabel || ''}
-                      initialValues={fieldValueArray as string[]}
-                      onChange={field.onChange}
-                    />
-                  )}
-                </Fieldset>
+                </>
               )}
 
-              {!hasOptions &&
-                currentConfig.formType === TranslationFormType.SELECT && (
-                  <ComboBox
-                    {...field}
-                    id={kebabName}
-                    data-testid={kebabName}
-                    options={comboOptions}
-                    onChange={val => field.onChange(val || '')}
-                    defaultValue={fieldValueString}
-                  />
-                )}
+              {!hasOptions && formType === TranslationFormType.SELECT && (
+                <ComboBox
+                  {...field}
+                  id={kebabName}
+                  data-testid={kebabName}
+                  options={comboOptions}
+                  onChange={val => field.onChange(val || '')}
+                  defaultValue={fieldValueString}
+                />
+              )}
 
-              {currentConfig.formType === TranslationFormType.TEXT && (
+              {formType === TranslationFormType.TEXT && (
                 <TextInput
                   {...field}
                   id={kebabName}
                   data-testid={kebabName}
                   type="text"
-                  value={fieldValueString}
+                  value={(field.value as string) || ''}
                 />
               )}
 
-              {currentConfig.formType === TranslationFormType.TEXTAREA && (
+              {formType === TranslationFormType.TEXTAREA && (
                 <TextAreaField
                   {...field}
                   id={kebabName}
