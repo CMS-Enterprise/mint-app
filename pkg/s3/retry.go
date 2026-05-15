@@ -13,8 +13,8 @@ func withCredentialRefresh[T any](ctx context.Context, client *S3Client, operati
 }
 
 func withCredentialRefreshAndBuilder[T any](ctx context.Context, client *S3Client, builder clientBuilder, operation func(*s3New.Client) (T, error)) (T, error) {
-	failedClient := client.currentClient()
-	result, err := operation(failedClient)
+	initialClient := client.currentClient()
+	result, err := operation(initialClient)
 	if err == nil {
 		return result, nil
 	}
@@ -24,7 +24,7 @@ func withCredentialRefreshAndBuilder[T any](ctx context.Context, client *S3Clien
 
 	var zero T
 
-	if refreshErr := client.refreshWithBuilder(ctx, builder, failedClient); refreshErr != nil {
+	if refreshErr := client.refreshWithBuilder(ctx, builder, initialClient); refreshErr != nil {
 		return zero, fmt.Errorf("failed to refresh S3 client after expired credentials: %w", refreshErr)
 	}
 
@@ -43,8 +43,8 @@ func withCredentialRefreshAndRewind[T any](ctx context.Context, client *S3Client
 		return zero, fmt.Errorf("failed to capture upload reader position: %w", err)
 	}
 
-	failedClient := client.currentClient()
-	result, err := operation(failedClient, body)
+	initialClient := client.currentClient()
+	result, err := operation(initialClient, body)
 	if err == nil {
 		return result, nil
 	}
@@ -54,7 +54,7 @@ func withCredentialRefreshAndRewind[T any](ctx context.Context, client *S3Client
 
 	var zero T
 
-	if refreshErr := client.refreshWithBuilder(ctx, builder, failedClient); refreshErr != nil {
+	if refreshErr := client.refreshWithBuilder(ctx, builder, initialClient); refreshErr != nil {
 		return zero, fmt.Errorf("failed to refresh S3 client after expired credentials: %w", refreshErr)
 	}
 

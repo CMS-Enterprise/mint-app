@@ -23,7 +23,7 @@ import (
 func TestGetECHIMPCrAndTDLCache(t *testing.T) {
 	resetECHIMPCache(t)
 
-	client := newECHIMPTestClient()
+	client := newECHIMPTestClient(t)
 	viperConf := newECHIMPTestConfig(t)
 
 	err := echimptestdata.SeedEChimpTestData(client, viperConf)
@@ -57,23 +57,33 @@ func uniqueECHIMPKey(t *testing.T, prefix string) string {
 	return fmt.Sprintf("testdata/%s-%s-%s.parquet", testName, prefix, uuid.NewString())
 }
 
-func newECHIMPTestClient() *s3.S3Client {
-	viperConfig := viper.New()
-	viperConfig.Set(appconfig.AWSRegion, envOrDefault(appconfig.AWSRegion, "us-west-2"))
-	viperConfig.Set(appconfig.AWSS3ECHIMPBucket, envOrDefault(appconfig.AWSS3ECHIMPBucket, "mint-app-echimp-uploads"))
-	viperConfig.Set(appconfig.LocalMinioAddressKey, envOrDefault(appconfig.LocalMinioAddressKey, "http://localhost:9005"))
-	viperConfig.Set(appconfig.LocalMinioS3AccessKey, envOrDefault(appconfig.LocalMinioS3AccessKey, "minioadmin"))
-	viperConfig.Set(appconfig.LocalMinioS3SecretKey, envOrDefault(appconfig.LocalMinioS3SecretKey, "minioadmin"))
+func newECHIMPTestClient(t *testing.T) *s3.S3Client {
+	t.Helper()
 
-	return s3testconfigs.S3TestECHIMPClient(viperConfig)
-}
-
-func envOrDefault(key string, fallback string) string {
-	if value := os.Getenv(key); value != "" {
-		return value
+	requiredEnvKeys := []string{
+		appconfig.AWSRegion,
+		appconfig.AWSS3ECHIMPBucket,
+		appconfig.LocalMinioAddressKey,
+		appconfig.LocalMinioS3AccessKey,
+		appconfig.LocalMinioS3SecretKey,
 	}
 
-	return fallback
+	missingEnvKeys := make([]string, 0, len(requiredEnvKeys))
+	viperConfig := viper.New()
+	for _, key := range requiredEnvKeys {
+		value, exists := os.LookupEnv(key)
+		if !exists || value == "" {
+			missingEnvKeys = append(missingEnvKeys, key)
+			continue
+		}
+		viperConfig.Set(key, value)
+	}
+
+	if len(missingEnvKeys) > 0 {
+		t.Skipf("skipping ECHIMP integration test; missing env: %s", strings.Join(missingEnvKeys, ", "))
+	}
+
+	return s3testconfigs.S3TestECHIMPClient(viperConfig)
 }
 
 func resetECHIMPCache(t *testing.T) {

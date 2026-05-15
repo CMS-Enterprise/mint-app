@@ -81,7 +81,6 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 	if err != nil {
 		return err
 	}
-	c.CRs = sanitizedCRS
 
 	tdlsRaw, err := readTDLsFromS3(ctx, client, TDLKey)
 	if err != nil {
@@ -96,17 +95,21 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 	if err != nil {
 		return err
 	}
+	allCrsAndTDLs := aggregateAllCrsAndTDLS(sanitizedCRS, sanitizedTDLS)
+	crsByModelPlanID := mapCRsByRelatedModelUUIDS(sanitizedCRS)
+	tdlsByModelPlanID := mapTDLSByRelatedModelUUIDS(sanitizedTDLS)
+	crsAndTDLsByModelPlanID := mapCRAndTDLsByModelPlanID(crsByModelPlanID, tdlsByModelPlanID)
+	crByCRNumber := mapCRsByCRNumber(sanitizedCRS)
+	tdlsByTDLNumber := mapTDLsByTDLNumber(sanitizedTDLS)
+
 	c.CRs = sanitizedCRS
 	c.TDls = sanitizedTDLS
-	c.AllCrsAndTDLs = c.aggregateAllCrsAndTDLS()
-
-	c.CRsByModelPlanID = c.mapCRsByRelatedModelUUIDS()
-	c.TDLsByModelPlanID = c.mapTDLSByRelatedModelUUIDS()
-	c.CrsAndTDLsByModelPlanID = c.mapCRAndTDLsByModelPlanID()
-
-	c.CRByCRNumber = c.mapCRsByCRNumber()
-
-	c.TDLsByTDLNumber = c.mapTDLsByTDLNumber()
+	c.AllCrsAndTDLs = allCrsAndTDLs
+	c.CRsByModelPlanID = crsByModelPlanID
+	c.TDLsByModelPlanID = tdlsByModelPlanID
+	c.CrsAndTDLsByModelPlanID = crsAndTDLsByModelPlanID
+	c.CRByCRNumber = crByCRNumber
+	c.TDLsByTDLNumber = tdlsByTDLNumber
 
 	c.lastChecked = time.Now()
 	return nil
@@ -121,13 +124,13 @@ func readTDLsFromS3(ctx context.Context, client *s3.S3Client, key string) ([]*mo
 	return parquet.ReadFromS3[*models.EChimpTDLRaw](ctx, client, key)
 }
 
-func (c *crAndTDLCache) aggregateAllCrsAndTDLS() []models.EChimpCRAndTDLS {
+func aggregateAllCrsAndTDLS(crs []*models.EChimpCR, tdls []*models.EChimpTDL) []models.EChimpCRAndTDLS {
 	allData := []models.EChimpCRAndTDLS{}
-	for _, cr := range c.CRs {
+	for _, cr := range crs {
 		allData = append(allData, cr)
 
 	}
-	for _, tdl := range c.TDls {
+	for _, tdl := range tdls {
 		allData = append(allData, tdl)
 
 	}
@@ -135,9 +138,9 @@ func (c *crAndTDLCache) aggregateAllCrsAndTDLS() []models.EChimpCRAndTDLS {
 
 }
 
-func (c *crAndTDLCache) mapCRsByRelatedModelUUIDS() map[uuid.UUID][]*models.EChimpCR {
+func mapCRsByRelatedModelUUIDS(crs []*models.EChimpCR) map[uuid.UUID][]*models.EChimpCR {
 	allData := map[uuid.UUID][]*models.EChimpCR{}
-	for _, cr := range c.CRs {
+	for _, cr := range crs {
 		if cr.AssociatedModelUids == nil {
 			continue
 		}
@@ -155,20 +158,20 @@ func (c *crAndTDLCache) mapCRsByRelatedModelUUIDS() map[uuid.UUID][]*models.EChi
 	return allData
 }
 
-func (c *crAndTDLCache) mapCRsByCRNumber() map[string]*models.EChimpCR {
-	return lo.Associate(c.CRs, func(cr *models.EChimpCR) (string, *models.EChimpCR) {
+func mapCRsByCRNumber(crs []*models.EChimpCR) map[string]*models.EChimpCR {
+	return lo.Associate(crs, func(cr *models.EChimpCR) (string, *models.EChimpCR) {
 		return cr.CrNumber, cr
 	})
 }
-func (c *crAndTDLCache) mapTDLsByTDLNumber() map[string]*models.EChimpTDL {
-	return lo.Associate(c.TDls, func(tdl *models.EChimpTDL) (string, *models.EChimpTDL) {
+func mapTDLsByTDLNumber(tdls []*models.EChimpTDL) map[string]*models.EChimpTDL {
+	return lo.Associate(tdls, func(tdl *models.EChimpTDL) (string, *models.EChimpTDL) {
 		return tdl.TdlNumber, tdl
 	})
 }
 
-func (c *crAndTDLCache) mapTDLSByRelatedModelUUIDS() map[uuid.UUID][]*models.EChimpTDL {
+func mapTDLSByRelatedModelUUIDS(tdls []*models.EChimpTDL) map[uuid.UUID][]*models.EChimpTDL {
 	allData := map[uuid.UUID][]*models.EChimpTDL{}
-	for _, tdl := range c.TDls {
+	for _, tdl := range tdls {
 		if tdl.AssociatedModelUids == nil {
 			continue
 		}
@@ -186,11 +189,11 @@ func (c *crAndTDLCache) mapTDLSByRelatedModelUUIDS() map[uuid.UUID][]*models.ECh
 	return allData
 }
 
-func (c *crAndTDLCache) mapCRAndTDLsByModelPlanID() map[uuid.UUID][]models.EChimpCRAndTDLS {
+func mapCRAndTDLsByModelPlanID(crsByModelPlanID map[uuid.UUID][]*models.EChimpCR, tdlsByModelPlanID map[uuid.UUID][]*models.EChimpTDL) map[uuid.UUID][]models.EChimpCRAndTDLS {
 
 	allData := map[uuid.UUID][]models.EChimpCRAndTDLS{}
 
-	for modelPlanID, crs := range c.CRsByModelPlanID {
+	for modelPlanID, crs := range crsByModelPlanID {
 		converted := []models.EChimpCRAndTDLS{}
 		for _, cr := range crs {
 			converted = append(converted, cr)
@@ -200,7 +203,7 @@ func (c *crAndTDLCache) mapCRAndTDLsByModelPlanID() map[uuid.UUID][]models.EChim
 		allData[modelPlanID] = converted
 	}
 
-	for modelPlanID, tdls := range c.TDLsByModelPlanID {
+	for modelPlanID, tdls := range tdlsByModelPlanID {
 		converted := []models.EChimpCRAndTDLS{}
 		for _, tdl := range tdls {
 			converted = append(converted, tdl)
