@@ -1,9 +1,13 @@
-import { isTranslationFieldPropertiesWithOptions } from 'types/translation';
+import {
+  isTranslationFieldPropertiesWithOptions,
+  isTranslationFieldPropertiesWithOptionsAndChildren
+} from 'types/translation';
 import dirtyInput from 'utils/formUtil';
 
 import {
   CombinedConfigType,
   ModelPlanQuestionsDataType,
+  QuestionFieldType,
   QuestionType
 } from './_components/ModelPlanQuestionsForm';
 
@@ -126,4 +130,66 @@ export const getFormDiffs = (
     withGeneralCharacteristics:
       Object.keys(generalCharacteristicsChanges).length > 0
   };
+};
+
+function isValidQuestionField(
+  field: string,
+  config: CombinedConfigType
+): field is QuestionFieldType {
+  return field in config;
+}
+
+export const getSubQuestions = (
+  question: QuestionFieldType,
+  value: unknown,
+  config: CombinedConfigType
+): {
+  childQuestions: QuestionFieldType[];
+  optionsRelatedQuestions: QuestionFieldType[];
+} => {
+  const currentConfig = config[question];
+
+  if (!currentConfig)
+    return { childQuestions: [], optionsRelatedQuestions: [] };
+
+  const childQuestions: QuestionFieldType[] = [];
+  const optionsRelatedQuestions: QuestionFieldType[] = [];
+
+  const valueArray = Array.isArray(value) ? value : [value];
+
+  valueArray.forEach(val => {
+    if (val == null || val === '') return;
+    const valueString = String(val);
+
+    // Child Relations (Nested questions)
+    if (isTranslationFieldPropertiesWithOptionsAndChildren(currentConfig)) {
+      const children =
+        currentConfig.childRelation?.[
+          valueString as keyof typeof currentConfig.childRelation
+        ];
+
+      children?.forEach(fn => {
+        const childConfig = fn();
+        const { gqlField } = childConfig;
+
+        if (gqlField && isValidQuestionField(gqlField, config)) {
+          childQuestions.push(gqlField as QuestionFieldType);
+        }
+      });
+    }
+
+    // Options Related Info ("Other" fields)
+    if (isTranslationFieldPropertiesWithOptions(currentConfig)) {
+      const otherQuestion =
+        currentConfig.optionsRelatedInfo?.[
+          valueString as keyof typeof currentConfig.optionsRelatedInfo
+        ];
+
+      if (otherQuestion) {
+        optionsRelatedQuestions.push(otherQuestion as QuestionFieldType);
+      }
+    }
+  });
+
+  return { childQuestions, optionsRelatedQuestions };
 };
