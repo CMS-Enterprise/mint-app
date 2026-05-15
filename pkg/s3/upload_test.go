@@ -93,30 +93,6 @@ func TestUploadFileWithBuilderRetriesSeekableReaderAfterExpiredCredentials(t *te
 	assert.Equal(t, 2, uploadCalls)
 }
 
-func TestUploadFileWithBuilderDoesNotRetryNonSeekableReader(t *testing.T) {
-	t.Parallel()
-
-	client := NewS3ClientUsingClient(&s3New.Client{}, Config{})
-	reader := bytes.NewBufferString("payload")
-	uploadCalls := 0
-	expectedErr := &smithy.GenericAPIError{Code: "ExpiredToken", Message: "expired"}
-
-	err := client.uploadFileWithBuilder(context.Background(), reader, func(context.Context, Config) (*s3New.Client, error) {
-		t.Fatal("refresh builder should not be called for non-seekable readers")
-		return nil, nil
-	}, func(current *s3New.Client, body io.Reader) (struct{}, error) {
-		uploadCalls++
-		require.NotNil(t, current)
-		data, readErr := io.ReadAll(body)
-		require.NoError(t, readErr)
-		assert.Equal(t, "payload", string(data))
-		return struct{}{}, expectedErr
-	})
-
-	require.ErrorIs(t, err, expectedErr)
-	assert.Equal(t, 1, uploadCalls)
-}
-
 func TestUploadFileWithBuilderDoesNotRefreshSeekableReaderForNonCredentialErrors(t *testing.T) {
 	t.Parallel()
 

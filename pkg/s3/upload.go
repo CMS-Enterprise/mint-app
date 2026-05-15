@@ -34,10 +34,11 @@ type Config struct {
 
 // S3Client is an MINT s3 client wrapper
 type S3Client struct {
-	client        *s3New.Client
-	config        Config
-	clientMu      sync.RWMutex
-	refreshMu     sync.Mutex
+	client    *s3New.Client
+	config    Config
+	clientMu  sync.RWMutex
+	refreshMu sync.Mutex
+	// lastRefreshAt is guarded by refreshMu and records the last successful client rebuild.
 	lastRefreshAt time.Time
 }
 
@@ -141,10 +142,10 @@ func (c *S3Client) ExpectNoBucket() bool {
 	return c.config.ExpectNoBucket
 }
 
-// UploadFile uploads a io.Reader to the bucket configured in the S3Client.
-// Seekable readers are retried once after a credential refresh when AWS reports
-// expired credentials; non-seekable readers are uploaded once without retry.
-func (c *S3Client) UploadFile(ctx context.Context, file io.Reader, key string) error {
+// UploadFile uploads a io.ReadSeeker to the bucket configured in the S3Client.
+// Uploads are retried once after a credential refresh when AWS reports expired
+// credentials by rewinding the reader to its original offset.
+func (c *S3Client) UploadFile(ctx context.Context, file io.ReadSeeker, key string) error {
 	upload := func(client *s3New.Client, body io.Reader) (struct{}, error) {
 		_, err := client.PutObject(ctx, &s3New.PutObjectInput{
 			Bucket: &c.config.Bucket,
@@ -157,17 +158,8 @@ func (c *S3Client) UploadFile(ctx context.Context, file io.Reader, key string) e
 	return c.uploadFileWithBuilder(ctx, file, buildClient, upload)
 }
 
-func (c *S3Client) uploadFileWithBuilder(ctx context.Context, file io.Reader, builder clientBuilder, upload func(*s3New.Client, io.Reader) (struct{}, error)) error {
-	if seekableFile, ok := file.(io.ReadSeeker); ok {
-		_, err := withCredentialRefreshAndRewind(ctx, c, builder, seekableFile, upload)
-		if err != nil {
-			return err
-		}
-
-		return nil
-	}
-
-	_, err := upload(c.currentClient(), file)
+func (c *S3Client) uploadFileWithBuilder(ctx context.Context, file io.ReadSeeker, builder clientBuilder, upload func(*s3New.Client, io.Reader) (struct{}, error)) error {
+	_, err := withCredentialRefreshAndRewind(ctx, c, builder, file, upload)
 	if err != nil {
 		return err
 	}

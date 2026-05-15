@@ -20,14 +20,20 @@ func (c *S3Client) currentClient() *s3New.Client {
 
 // Refresh rebuilds the underlying AWS client using the S3 client's stored config.
 func (c *S3Client) Refresh(ctx context.Context) error {
-	return c.refreshWithBuilder(ctx, buildClient)
+	return c.refreshWithBuilder(ctx, buildClient, nil)
 }
 
-func (c *S3Client) refreshWithBuilder(ctx context.Context, builder clientBuilder) error {
+func (c *S3Client) refreshWithBuilder(ctx context.Context, builder clientBuilder, failedClient *s3New.Client) error {
 	c.refreshMu.Lock()
 	defer c.refreshMu.Unlock()
 
-	if c.currentClient() != nil && !c.lastRefreshAt.IsZero() && time.Since(c.lastRefreshAt) < refreshCoalesceWindow {
+	currentClient := c.currentClient()
+	// Coalesce only when a recent refresh already swapped in a different client.
+	// If the client that just failed is still current, we must rebuild again.
+	if currentClient != nil &&
+		!c.lastRefreshAt.IsZero() &&
+		time.Since(c.lastRefreshAt) < refreshCoalesceWindow &&
+		currentClient != failedClient {
 		return nil
 	}
 
@@ -36,9 +42,12 @@ func (c *S3Client) refreshWithBuilder(ctx context.Context, builder clientBuilder
 		return err
 	}
 
+	// grab client lock to set client
 	c.clientMu.Lock()
 	c.client = client
 	c.clientMu.Unlock()
+
+	// refresh lock already held, so we can safely set refresh here
 	c.lastRefreshAt = time.Now()
 
 	return nil

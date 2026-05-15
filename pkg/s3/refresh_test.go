@@ -48,11 +48,11 @@ func TestRefreshSkipsRecentSuccessfulRefresh(t *testing.T) {
 		return secondClient, nil
 	}
 
-	require.NoError(t, client.refreshWithBuilder(context.Background(), builder))
+	require.NoError(t, client.refreshWithBuilder(context.Background(), builder, nil))
 	require.Same(t, firstClient, client.currentClient())
 	require.Equal(t, 1, buildCalls)
 
-	require.NoError(t, client.refreshWithBuilder(context.Background(), builder))
+	require.NoError(t, client.refreshWithBuilder(context.Background(), builder, nil))
 	assert.Same(t, firstClient, client.currentClient())
 	assert.Equal(t, 1, buildCalls)
 }
@@ -64,6 +64,7 @@ func TestS3ErrorHasExpiredCredentials(t *testing.T) {
 	assert.True(t, S3ErrorHasExpiredCredentials(&smithy.GenericAPIError{Code: "InvalidToken", Message: "invalid token"}))
 	assert.True(t, S3ErrorHasExpiredCredentials(fmt.Errorf("request failed: %w", &smithy.GenericAPIError{Code: "ExpiredToken", Message: "expired"})))
 	assert.True(t, S3ErrorHasExpiredCredentials(&smithy.GenericAPIError{Code: "TokenRefreshRequired", Message: "refresh required"}))
+	assert.False(t, S3ErrorHasExpiredCredentials(&smithy.GenericAPIError{Code: "InvalidAccessKeyId", Message: "bad access key"}))
 	assert.False(t, S3ErrorHasExpiredCredentials(errors.New("ExpiredToken: security token included in the request is expired")))
 	assert.False(t, S3ErrorHasExpiredCredentials(&smithy.GenericAPIError{Code: "AccessDenied", Message: "denied"}))
 }

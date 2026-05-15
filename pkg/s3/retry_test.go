@@ -6,6 +6,7 @@ import (
 	"errors"
 	"io"
 	"testing"
+	"time"
 
 	s3New "github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/smithy-go"
@@ -60,6 +61,97 @@ func TestWithCredentialRefreshDoesNotRefreshForNonCredentialErrors(t *testing.T)
 
 	require.ErrorIs(t, err, expectedErr)
 	assert.Empty(t, result)
+}
+
+func TestWithCredentialRefreshDoesNotRefreshForInvalidAccessKeyID(t *testing.T) {
+	t.Parallel()
+
+	client := NewS3ClientUsingClient(&s3New.Client{}, Config{})
+	expectedErr := &smithy.GenericAPIError{Code: "InvalidAccessKeyId", Message: "bad access key"}
+
+	result, err := withCredentialRefreshAndBuilder(context.Background(), client, func(context.Context, Config) (*s3New.Client, error) {
+		t.Fatal("refresh builder should not be called for InvalidAccessKeyId")
+		return nil, nil
+	}, func(current *s3New.Client) (string, error) {
+		require.NotNil(t, current)
+		return "", expectedErr
+	})
+
+	require.ErrorIs(t, err, expectedErr)
+	assert.Empty(t, result)
+}
+
+func TestWithCredentialRefreshRebuildsWhenFailedClientIsStillCurrent(t *testing.T) {
+	t.Parallel()
+
+	initialClient := &s3New.Client{}
+	refreshedClient := &s3New.Client{}
+	client := NewS3ClientUsingClient(initialClient, Config{})
+	client.lastRefreshAt = time.Now()
+
+	buildCalls := 0
+	opCalls := 0
+
+	builder := func(context.Context, Config) (*s3New.Client, error) {
+		buildCalls++
+		return refreshedClient, nil
+	}
+
+	result, err := withCredentialRefreshAndBuilder(context.Background(), client, builder, func(current *s3New.Client) (string, error) {
+		opCalls++
+		if opCalls == 1 {
+			require.Same(t, initialClient, current)
+			return "", &smithy.GenericAPIError{Code: "ExpiredToken", Message: "expired"}
+		}
+
+		require.Same(t, refreshedClient, current)
+		return "ok", nil
+	})
+
+	require.NoError(t, err)
+	assert.Equal(t, "ok", result)
+	assert.Equal(t, 1, buildCalls)
+	assert.Equal(t, 2, opCalls)
+	assert.Same(t, refreshedClient, client.currentClient())
+}
+
+func TestWithCredentialRefreshUsesNewerInstalledClientWithoutRebuilding(t *testing.T) {
+	t.Parallel()
+
+	initialClient := &s3New.Client{}
+	newerClient := &s3New.Client{}
+	client := NewS3ClientUsingClient(initialClient, Config{})
+
+	buildCalls := 0
+	opCalls := 0
+
+	builder := func(context.Context, Config) (*s3New.Client, error) {
+		buildCalls++
+		return &s3New.Client{}, nil
+	}
+
+	result, err := withCredentialRefreshAndBuilder(context.Background(), client, builder, func(current *s3New.Client) (string, error) {
+		opCalls++
+		if opCalls == 1 {
+			require.Same(t, initialClient, current)
+
+			client.clientMu.Lock()
+			client.client = newerClient
+			client.clientMu.Unlock()
+			client.lastRefreshAt = time.Now()
+
+			return "", &smithy.GenericAPIError{Code: "ExpiredToken", Message: "expired"}
+		}
+
+		require.Same(t, newerClient, current)
+		return "ok", nil
+	})
+
+	require.NoError(t, err)
+	assert.Equal(t, "ok", result)
+	assert.Equal(t, 0, buildCalls)
+	assert.Equal(t, 2, opCalls)
+	assert.Same(t, newerClient, client.currentClient())
 }
 
 func TestWithCredentialRefreshAndRewindRetriesSeekableReaderOnce(t *testing.T) {
