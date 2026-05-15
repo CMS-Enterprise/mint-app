@@ -68,7 +68,7 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 	CRKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
 	TDLKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
 
-	crsRaw, err := readCRsFromS3(ctx, client, CRKey)
+	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](ctx, client, CRKey)
 	if err != nil {
 		if s3.S3ErrorIsKeyNotFound(err) {
 			logger.Error("file not found for ECHIMP CR data", zap.String("key", CRKey), zap.Error(err))
@@ -82,7 +82,7 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 		return err
 	}
 
-	tdlsRaw, err := readTDLsFromS3(ctx, client, TDLKey)
+	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](ctx, client, TDLKey)
 	if err != nil {
 		if s3.S3ErrorIsKeyNotFound(err) {
 			logger.Error("file not found for ECHIMP TDL data", zap.String("key", TDLKey), zap.Error(err))
@@ -114,14 +114,6 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 	c.lastChecked = time.Now()
 	return nil
 
-}
-
-func readCRsFromS3(ctx context.Context, client *s3.S3Client, key string) ([]*models.EChimpCRRaw, error) {
-	return parquet.ReadFromS3[*models.EChimpCRRaw](ctx, client, key)
-}
-
-func readTDLsFromS3(ctx context.Context, client *s3.S3Client, key string) ([]*models.EChimpTDLRaw, error) {
-	return parquet.ReadFromS3[*models.EChimpTDLRaw](ctx, client, key)
 }
 
 func aggregateAllCrsAndTDLS(crs []*models.EChimpCR, tdls []*models.EChimpTDL) []models.EChimpCRAndTDLS {
