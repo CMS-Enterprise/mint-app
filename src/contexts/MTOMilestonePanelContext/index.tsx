@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MilestonePanel from 'features/ModelPlan/ReadOnly/MTOMilestones/MilestonePanel';
@@ -7,12 +7,10 @@ import Sidepanel from 'components/Sidepanel';
 
 interface MTOMilestonePanelContextType {
   openEditMilestoneModal: (milestoneID: string) => void;
-  setMilestoneID: (milestoneID: string) => void;
 }
 
 const MTOMilestonePanelContext = createContext<MTOMilestonePanelContextType>({
-  openEditMilestoneModal: () => {},
-  setMilestoneID: () => {}
+  openEditMilestoneModal: () => {}
 });
 
 const MTOMilestonePanelProvider = ({
@@ -31,14 +29,6 @@ const MTOMilestonePanelProvider = ({
 
   const [isModalOpen, setIsModalOpen] = useState(!!milestoneParam);
 
-  const [milestoneID, setMilestoneID] = useState<string>('');
-
-  useEffect(() => {
-    if (milestoneParam === milestoneID) {
-      setIsModalOpen(true);
-    }
-  }, [milestoneParam, milestoneID, setIsModalOpen]);
-
   const closeModal = () => {
     params.delete('view-milestone');
     navigate({ search: params.toString() });
@@ -54,21 +44,16 @@ const MTOMilestonePanelProvider = ({
   return (
     <MTOMilestonePanelContext.Provider
       value={{
-        openEditMilestoneModal,
-        setMilestoneID
+        openEditMilestoneModal
       }}
     >
       <>
         <Sidepanel
           isOpen={isModalOpen}
           closeModal={closeModal}
-          ariaLabel={modelToOperationsMiscT(
-            'modal.editMilestone.milestoneTitle'
-          )}
+          ariaLabel={modelToOperationsMiscT('modal.editMilestone.heading')}
           testid="view-milestone-sidepanel"
-          modalHeading={modelToOperationsMiscT(
-            'modal.editMilestone.milestoneTitle'
-          )}
+          modalHeading={modelToOperationsMiscT('modal.editMilestone.heading')}
           noScrollable
         >
           <MilestonePanel closeModal={closeModal} />

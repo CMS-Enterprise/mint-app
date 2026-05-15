@@ -289,9 +289,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     },
     editMilestone: {
-      milestoneTitle: 'Milestone details',
+      heading: 'Milestone details',
+      heading_solution: 'Back to solution details',
       readviewDescription:
         'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.',
+      editMultipleSolutionsAlert:
+        'This milestone is related to {{count}} solutions. Updating the status and information here will also update it for the other solutions.',
       alert: {
         info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
         success:
@@ -308,6 +311,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       ],
       custom: 'Custom',
       saveChanges: 'Save changes',
+      saveChanges_solution: 'Save and return to solution details',
       save: 'Save',
       unsavedChanges: '{{count}} unsaved change',
       unsavedChanges_other: '{{count}} unsaved changes',
@@ -337,6 +341,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         'There was an error removing your milestone. Please try again. If the error persists, please try again another time.',
       leaveConfirm: {
         heading: 'Are you sure you want to leave?',
+        heading_solution:
+          'Are you sure you want to return to solution details?',
         description:
           'You have made changes that will not be saved if you navigate away from this view.',
         confirm: 'Leave without saving',
@@ -439,7 +445,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         '{{count}} milestone associated with this solution',
       selectedMilestonesCount_other:
         '{{count}} milestones associated with this solution',
-      editMilestones: 'Edit related milestones',
+      updateMilestones: 'Update related milestones',
+      editMilestone: 'Edit milestone',
       noMilestones:
         'You haven’t identified any specific milestones that this solution will help implement.',
       milestone: 'Milestone',
@@ -464,19 +471,20 @@ export const modelToOperationsMisc: Record<string, any> = {
         'To view more information about the milestones using this solution, navigate to the <link1>“Milestones” tab</link1> in your MTO. From there you may edit details about the milestones, including the status.'
     },
     completionModal: {
-      heading: { milestone: 'You marked this milestone as complete!' },
-      noRiskText: {
-        milestone:
-          'If needed, please update the status of any selected solutions by navigating to the <solutionTabLink>Solutions and IT systems tab</solutionTabLink> of your MTO to update their details.'
-      },
-      riskText: {
-        milestone:
-          'There is a risk indicator for this milestone. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}'
-      },
-      riskInfoAlert: {
-        milestone:
-          'If needed, please update the status of any selected solutions by navigating to the “Solutions and IT systems” tab of your MTO to update their details.'
-      },
+      heading_milestone: 'You marked this milestone as complete!',
+      heading_solution: 'You marked this solution as complete!',
+      noRiskText_milestone:
+        'If needed, please update the status of any selected solutions by navigating to the <solutionTabLink>Solutions and IT systems tab</solutionTabLink> of your MTO to update their details or mark them as complete from within the milestone details panel.',
+      noRiskText_solution:
+        'If needed, please update the status of any selected milestones by navigating to the <milestoneTabLink>Milestones tab</milestoneTabLink> of your MTO to update their details or mark them as complete from within the solution details panel.',
+      riskText_milestone:
+        'There is a risk indicator for this milestone. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}',
+      riskText_solution:
+        'There is a risk indicator for this solution. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}',
+      riskInfoAlert_milestone:
+        'If needed, please update the status of any selected solutions by navigating to the “Solutions and IT systems” tab of your MTO to update their details or mark them as complete from within the milestone details panel..',
+      riskInfoAlert_solution:
+        'If needed, please update the status of any selected milestones by navigating to the “Milestones” tab of your MTO to update their details or mark them as complete from within the solution details panel.',
       cta: {
         okay: 'Okay',
         removeRiskIndicator: 'Remove risk indicator',
