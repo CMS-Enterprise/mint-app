@@ -73,6 +73,7 @@ import {
 } from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import CompletionModal from '../CompletionModal';
 import LinkMilestoneForm from '../LinkMilestoneForm';
 import { MilestoneType } from '../MatrixTable/columns';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
@@ -136,6 +137,9 @@ const EditSolutionForm = ({
   const { setErrorMeta } = useErrorMessage();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const [isCompletionModalOpen, setIsCompletionModalOpen] =
+    useState<boolean>(false);
 
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
 
@@ -362,7 +366,13 @@ const EditSolutionForm = ({
           // eslint-disable-next-line no-param-reassign
           submitted.current = true;
           setIsDirty(false);
-          closeModal();
+
+          if (formChanges.status === MtoSolutionStatus.COMPLETED) {
+            setIsCompletionModalOpen(true);
+          } else {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }
         }
       });
     },
@@ -406,6 +416,38 @@ const EditSolutionForm = ({
         setIsDirty(false);
         closeModal();
         setIsModalOpen(false);
+      }
+    });
+  };
+
+  const handleRemoveRiskIndicator = () => {
+    setErrorMeta({
+      overrideMessage: modelToOperationsMiscT('modal.editSolution.errorUpdated')
+    });
+
+    updateSolution({
+      variables: {
+        id: editSolutionID || '',
+        changes: {
+          riskIndicator: MtoRiskIndicator.ON_TRACK
+        }
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={modelToOperationsMiscT(
+              'modal.editSolution.successUpdated'
+            )}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+            values={{ solution: solution?.name }}
+          />
+        );
+
+        setIsCompletionModalOpen(false);
+        closeModal();
       }
     });
   };
@@ -587,6 +629,20 @@ const EditSolutionForm = ({
           {modelToOperationsMiscT('modal.editSolution.goBack')}
         </Button>
       </Modal>
+
+      {solution && isCompletionModalOpen && (
+        <CompletionModal
+          isModalOpen={isCompletionModalOpen}
+          closeModal={() => {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }}
+          mode="solution"
+          modelID={modelID}
+          riskIndicator={solution.riskIndicator ?? MtoRiskIndicator.ON_TRACK}
+          handleRemoveRiskIndicator={handleRemoveRiskIndicator}
+        />
+      )}
 
       {solution && (
         <Sidepanel
