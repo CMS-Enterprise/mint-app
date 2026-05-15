@@ -96,10 +96,9 @@ func WaiverUpdate(ctx context.Context, id uuid.UUID, changes map[string]interfac
 	return storage.WaiverUpdate(store, logger, existing)
 }
 
-// SuggestedWaiversGetByModelPlanID returns suggested waivers for a model plan.
-// Currently no suggested_waiver DB table exists yet; returns an empty slice.
-func SuggestedWaiversGetByModelPlanID(_ context.Context, _ uuid.UUID) ([]*models.SuggestedWaiver, error) {
-	return []*models.SuggestedWaiver{}, nil
+// SuggestedWaiversGetByModelPlanID returns suggested waivers for a model plan via dataloader
+func SuggestedWaiversGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) ([]*models.SuggestedWaiver, error) {
+	return loaders.SuggestedWaiver.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
 // CommonWaiverGetByID returns a common waiver by ID via dataloader
