@@ -139,21 +139,21 @@ function isValidQuestionField(
   return field in config;
 }
 
-export const getSubQuestions = (
+export const getSubQuestionFields = (
   question: QuestionFieldType,
   value: unknown,
   config: CombinedConfigType
 ): {
-  childQuestions: QuestionFieldType[];
-  optionsRelatedQuestions: QuestionFieldType[];
+  childQuestionFields: QuestionFieldType[];
+  optionsRelatedQuestionFields: QuestionFieldType[];
 } => {
   const currentConfig = config[question];
 
   if (!currentConfig)
-    return { childQuestions: [], optionsRelatedQuestions: [] };
+    return { childQuestionFields: [], optionsRelatedQuestionFields: [] };
 
-  const childQuestions: QuestionFieldType[] = [];
-  const optionsRelatedQuestions: QuestionFieldType[] = [];
+  const childQuestionFields: QuestionFieldType[] = [];
+  const optionsRelatedQuestionFields: QuestionFieldType[] = [];
 
   const valueArray = Array.isArray(value) ? value : [value];
 
@@ -173,7 +173,7 @@ export const getSubQuestions = (
         const { gqlField } = childConfig;
 
         if (gqlField && isValidQuestionField(gqlField, config)) {
-          childQuestions.push(gqlField as QuestionFieldType);
+          childQuestionFields.push(gqlField as QuestionFieldType);
         }
       });
     }
@@ -186,10 +186,10 @@ export const getSubQuestions = (
         ];
 
       if (otherQuestion) {
-        optionsRelatedQuestions.push(otherQuestion as QuestionFieldType);
+        optionsRelatedQuestionFields.push(otherQuestion as QuestionFieldType);
       }
     }
   });
 
-  return { childQuestions, optionsRelatedQuestions };
+  return { childQuestionFields, optionsRelatedQuestionFields };
 };

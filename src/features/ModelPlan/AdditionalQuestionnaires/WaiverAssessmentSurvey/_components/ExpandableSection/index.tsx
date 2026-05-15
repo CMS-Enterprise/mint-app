@@ -33,7 +33,7 @@ import {
   convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
 
-import { getSubQuestions } from '../../util';
+import { getSubQuestionFields } from '../../util';
 import {
   CombinedConfigType,
   ModelPlanQuestionsDataType,
@@ -130,11 +130,8 @@ const ModelPlanQuestionItem = ({
 
   const kebabName = convertCamelCaseToKebabCase(question);
 
-  const { childQuestions, optionsRelatedQuestions } = getSubQuestions(
-    question,
-    fieldValue,
-    config
-  );
+  const { childQuestionFields, optionsRelatedQuestionFields } =
+    getSubQuestionFields(question, fieldValue, config);
 
   return (
     <FormGroup className="margin-top-4">
@@ -160,7 +157,7 @@ const ModelPlanQuestionItem = ({
                   {currentConfig.formType === TranslationFormType.RADIO &&
                     currentConfig.dataType !== TranslationDataType.BOOLEAN &&
                     getKeys(currentConfig.options).map(option => {
-                      const relatedField = optionsRelatedQuestions.find(
+                      const relatedField = optionsRelatedQuestionFields.find(
                         otherQuestion =>
                           otherQuestion ===
                           currentConfig.optionsRelatedInfo?.[
@@ -239,7 +236,7 @@ const ModelPlanQuestionItem = ({
 
                   {currentConfig.formType === TranslationFormType.CHECKBOX &&
                     getKeys(currentConfig.options).map(option => {
-                      const relatedField = optionsRelatedQuestions.find(
+                      const relatedField = optionsRelatedQuestionFields.find(
                         otherQuestion =>
                           otherQuestion ===
                           currentConfig.optionsRelatedInfo?.[
@@ -247,7 +244,7 @@ const ModelPlanQuestionItem = ({
                           ]
                       );
 
-                      const childFields = childQuestions.filter(cq => {
+                      const childFields = childQuestionFields.filter(cq => {
                         if (
                           isTranslationFieldPropertiesWithOptionsAndChildren(
                             currentConfig
@@ -406,9 +403,9 @@ const ModelPlanQuestionItem = ({
           />
         )}
 
-      {childQuestions.length > 0 &&
+      {childQuestionFields.length > 0 &&
         currentConfig.formType !== TranslationFormType.CHECKBOX &&
-        childQuestions.map(subField => (
+        childQuestionFields.map(subField => (
           <ModelPlanQuestionItem
             key={subField}
             question={subField}
@@ -418,13 +415,13 @@ const ModelPlanQuestionItem = ({
           />
         ))}
 
-      {optionsRelatedQuestions.length > 0 &&
+      {optionsRelatedQuestionFields.length > 0 &&
         currentConfig.formType !== TranslationFormType.CHECKBOX &&
         !(
           currentConfig.formType === TranslationFormType.RADIO &&
           currentConfig.dataType !== TranslationDataType.BOOLEAN
         ) &&
-        optionsRelatedQuestions.map(otherQuestion => (
+        optionsRelatedQuestionFields.map(otherQuestion => (
           <ModelPlanQuestionItem
             key={otherQuestion}
             question={otherQuestion}
