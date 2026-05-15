@@ -7,7 +7,12 @@ import (
 	s3New "github.com/aws/aws-sdk-go-v2/service/s3"
 )
 
-const refreshCoalesceWindow = time.Second * 10
+// refreshCoalesceWindow bounds how often refresh requests are collapsed after a
+// successful client rebuild. Ten seconds is intentionally long enough to absorb
+// a burst of failures from concurrent callers after credentials rotate, while
+// still allowing an immediate rebuild when the failing client is still the
+// current client (see refreshWithBuilder below).
+const refreshCoalesceWindow = 10 * time.Second
 
 type clientBuilder func(context.Context, Config) (*s3New.Client, error)
 
