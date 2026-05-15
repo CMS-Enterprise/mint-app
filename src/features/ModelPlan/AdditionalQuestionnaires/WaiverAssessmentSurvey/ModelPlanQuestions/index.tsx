@@ -44,6 +44,26 @@ const ModelPlanQuestions = () => {
     };
   }, [modelPlanQuestionsData]);
 
+  // Combined MINT models with existing models from DB.  Sorts them alphabetically and returns options for Select/MultiSelect
+  const modelPlanOptions = useMemo(() => {
+    if (
+      !modelPlanQuestionsData?.modelPlanCollection ||
+      !modelPlanQuestionsData?.existingModelCollection
+    ) {
+      return [];
+    }
+
+    const combinedModels = [
+      ...modelPlanQuestionsData.modelPlanCollection,
+      ...modelPlanQuestionsData.existingModelCollection
+    ].sort((a, b) => (a.modelName || '').localeCompare(b.modelName || ''));
+
+    return combinedModels.map(model => ({
+      label: model.modelName || '',
+      value: String(model.id) ?? ''
+    }));
+  }, [modelPlanQuestionsData]);
+
   if (modelPlanQuestionsLoading) {
     return (
       <div className="display-flex flex-justify-center margin-top-4">
@@ -71,7 +91,10 @@ const ModelPlanQuestions = () => {
         </Alert>
 
         {flattenedData && (
-          <ModelPlanQuestionsForm modelPlanQuestionsData={flattenedData} />
+          <ModelPlanQuestionsForm
+            modelPlanQuestionsData={flattenedData}
+            modelPlanOptions={modelPlanOptions}
+          />
         )}
       </div>
     </div>

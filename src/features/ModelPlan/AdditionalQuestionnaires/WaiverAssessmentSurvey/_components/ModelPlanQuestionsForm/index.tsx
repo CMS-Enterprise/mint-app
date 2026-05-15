@@ -149,6 +149,7 @@ const defaultFormValues: ModelPlanQuestionsDataType = {
   isNewModel: null,
   currentModelPlanID: null,
   existingModelID: null,
+  existingModel: null,
   resemblesExistingModel: null,
   resemblesExistingModelWhyHow: '',
   resemblesExistingModelHow: '',
@@ -185,9 +186,11 @@ const defaultFormValues: ModelPlanQuestionsDataType = {
 };
 
 const ModelPlanQuestionsForm = ({
-  modelPlanQuestionsData
+  modelPlanQuestionsData,
+  modelPlanOptions
 }: {
   modelPlanQuestionsData: ModelPlanQuestionsDataType;
+  modelPlanOptions: { label: string; value: string }[];
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -331,11 +334,12 @@ const ModelPlanQuestionsForm = ({
                   <div key={question}>
                     <QuestionBody
                       label={combinedConfig[question].label}
-                      answer={formattedValue(
+                      answer={formattedValue({
                         combinedConfig,
-                        question,
-                        liveFormData[question]
-                      )}
+                        key: question,
+                        rawValue: liveFormData[question],
+                        comboOptions: modelPlanOptions
+                      })}
                     />
 
                     {childrenQuestions.length > 0 && (
@@ -344,11 +348,12 @@ const ModelPlanQuestionsForm = ({
                           <QuestionBody
                             key={childQuestion}
                             label={combinedConfig[childQuestion].label}
-                            answer={formattedValue(
+                            answer={formattedValue({
                               combinedConfig,
-                              childQuestion,
-                              liveFormData[childQuestion]
-                            )}
+                              key: childQuestion,
+                              rawValue: liveFormData[childQuestion],
+                              comboOptions: modelPlanOptions
+                            })}
                           />
                         ))}
                       </>
@@ -362,6 +367,7 @@ const ModelPlanQuestionsForm = ({
                 config={combinedConfig}
                 setValue={setValue}
                 control={control}
+                comboOptions={modelPlanOptions}
               />
             </div>
           ))}

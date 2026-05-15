@@ -45,12 +45,14 @@ const ExpandableSection = ({
   questionGroup,
   config,
   setValue,
-  control
+  control,
+  comboOptions = []
 }: {
   questionGroup: QuestionType[];
   config: CombinedConfigType;
   setValue: ReturnType<typeof useForm<ModelPlanQuestionsDataType>>['setValue'];
   control: ReturnType<typeof useForm<ModelPlanQuestionsDataType>>['control'];
+  comboOptions?: { value: string; label: string }[];
 }) => {
   const { t: waiverAssessmentSurveyT } = useTranslation(
     'waiverAssessmentSurvey'
@@ -87,6 +89,7 @@ const ExpandableSection = ({
             config={config}
             setValue={setValue}
             control={control}
+            comboOptions={comboOptions}
           />
         ))}
     </div>
@@ -132,6 +135,11 @@ const ModelPlanQuestionItem = ({
 
   const { childQuestionFields, optionsRelatedQuestionFields } =
     getSubQuestionFields(question, fieldValue, config);
+
+  const shouldUseComboOptions =
+    question === 'existingModel' ||
+    question === 'resemblesExistingModelWhich' ||
+    question === 'participationInModelPreconditionWhich';
 
   return (
     <FormGroup className="margin-top-4">
@@ -342,43 +350,41 @@ const ModelPlanQuestionItem = ({
                         id={kebabName}
                         inputId={kebabName}
                         ariaLabel={currentConfig.label}
-                        options={composeMultiSelectOptions(
-                          currentConfig.options
-                        )}
+                        options={
+                          shouldUseComboOptions
+                            ? [
+                                ...comboOptions,
+                                ...composeMultiSelectOptions(
+                                  currentConfig.options
+                                )
+                              ]
+                            : composeMultiSelectOptions(currentConfig.options)
+                        }
                         selectedLabel={currentConfig.multiSelectLabel || ''}
                         initialValues={fieldValueArray as string[]}
                         onChange={field.onChange}
                       />
                     )}
                   </Fieldset>
-
-                  {formType === TranslationFormType.SELECT && (
-                    <ComboBox
-                      {...field}
-                      id={kebabName}
-                      data-testid={kebabName}
-                      options={getKeys(currentConfig.options).map(option => ({
-                        value: option,
-                        label:
-                          currentConfig.options[
-                            option as keyof typeof currentConfig.options
-                          ]
-                      }))}
-                      onChange={val => field.onChange(val || '')}
-                      defaultValue={fieldValueString}
-                    />
-                  )}
                 </>
               )}
 
-              {!hasOptions && formType === TranslationFormType.SELECT && (
+              {formType === TranslationFormType.SELECT && (
                 <ComboBox
                   {...field}
                   id={kebabName}
                   data-testid={kebabName}
-                  options={comboOptions}
-                  onChange={val => field.onChange(val || '')}
-                  defaultValue={fieldValueString}
+                  options={
+                    hasOptions && !shouldUseComboOptions
+                      ? getKeys(currentConfig.options).map(option => ({
+                          value: option,
+                          label:
+                            currentConfig.options[
+                              option as keyof typeof currentConfig.options
+                            ]
+                        }))
+                      : comboOptions
+                  }
                 />
               )}
 
@@ -424,6 +430,7 @@ const ModelPlanQuestionItem = ({
             config={config}
             control={control}
             setValue={setValue}
+            comboOptions={comboOptions}
           />
         ))}
 
@@ -440,6 +447,7 @@ const ModelPlanQuestionItem = ({
             config={config}
             control={control}
             setValue={setValue}
+            comboOptions={comboOptions}
           />
         ))}
     </FormGroup>

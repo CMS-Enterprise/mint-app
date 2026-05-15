@@ -1,3 +1,5 @@
+import { ExistingModelLink } from 'gql/generated/graphql';
+
 import {
   isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren
@@ -11,26 +13,68 @@ import {
   QuestionType
 } from './_components/ModelPlanQuestionsForm';
 
-export const formattedValue = (
-  combinedConfig: CombinedConfigType,
-  key: keyof typeof combinedConfig,
-  rawValue: unknown
-) => {
+export const formattedValue = ({
+  combinedConfig,
+  key,
+  rawValue,
+  comboOptions
+}: {
+  combinedConfig: CombinedConfigType;
+  key: keyof typeof combinedConfig;
+  rawValue: unknown;
+  comboOptions: { label: string; value: string }[];
+}) => {
   if (rawValue === null || rawValue === undefined) {
     return '';
   }
 
+  if (Array.isArray(rawValue) && rawValue.length === 0) return '';
+
+  const isLinkKey =
+    key === 'resemblesExistingModelWhich' ||
+    key === 'participationInModelPreconditionWhich';
+
+  let valueInArray: any[];
+
+  if (isLinkKey && typeof rawValue === 'object') {
+    const linkData = rawValue as { links: ExistingModelLink[] };
+
+    valueInArray = linkData.links.map(
+      (link: ExistingModelLink) =>
+        link.existingModelID || link.currentModelPlanID
+    );
+  } else {
+    valueInArray = Array.isArray(rawValue) ? rawValue : [rawValue];
+  }
+
   const config = combinedConfig[key];
 
-  if (isTranslationFieldPropertiesWithOptions(config)) {
-    if (Array.isArray(rawValue)) {
-      return rawValue
-        .map(value => config.options[value as keyof typeof config.options])
-        .join(', ');
+  const labels = valueInArray.map(val => {
+    const valueString = String(val);
+
+    const comboMatch = comboOptions.find(
+      option => option.value === valueString
+    );
+
+    if (comboMatch) {
+      return comboMatch.label;
     }
-    return config.options[rawValue as keyof typeof config.options];
-  }
-  return String(rawValue);
+
+    if (isTranslationFieldPropertiesWithOptions(config)) {
+      const staticLabel =
+        config.options[valueString as keyof typeof config.options];
+
+      if (staticLabel) {
+        return staticLabel;
+      }
+    }
+
+    return valueString;
+  });
+
+  return labels
+    .filter(label => label !== undefined && label !== null && label !== '')
+    .join(', ');
 };
 
 export const getChildrenQuestions = (
