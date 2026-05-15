@@ -10,13 +10,14 @@ import (
 )
 
 // GetS3ObjectReaderAt returns an io.ReaderAt from an S3 object
-func (c S3Client) GetS3ObjectReaderAt(key string) (io.ReaderAt, int64, error) {
+func (c *S3Client) GetS3ObjectReaderAt(ctx context.Context, key string) (io.ReaderAt, int64, error) {
 	// Get the S3 object
-	resp, err := c.client.GetObject(context.TODO(), &s3.GetObjectInput{
-		Bucket: &c.config.Bucket,
-		Key:    &key,
+	resp, err := withCredentialRefresh(ctx, c, func(client *s3.Client) (*s3.GetObjectOutput, error) {
+		return client.GetObject(ctx, &s3.GetObjectInput{
+			Bucket: &c.config.Bucket,
+			Key:    &key,
+		})
 	})
-
 	if err != nil {
 		return nil, 0, fmt.Errorf("failed to get S3 object: %w", err)
 	}

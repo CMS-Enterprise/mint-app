@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -11,13 +13,13 @@ import (
 )
 
 // GetEchimpCRAndTdlsByModelPlanID returns a union of EChimp CR and TDLs from the cache for a given model plan
-func GetEchimpCRAndTdlsByModelPlanID(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, modelPlanID uuid.UUID) ([]models.EChimpCRAndTDLS, error) {
+func GetEchimpCRAndTdlsByModelPlanID(ctx context.Context, echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, modelPlanID uuid.UUID) ([]models.EChimpCRAndTDLS, error) {
 
 	if echimpS3Client.ExpectNoBucket() {
 		return nil, nil // In dev, we don't expect a bucket to exist, so return nil
 	}
 
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(ctx, echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
 	}
