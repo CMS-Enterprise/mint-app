@@ -33,9 +33,10 @@ func (c *S3Client) refreshWithBuilder(ctx context.Context, builder clientBuilder
 	defer c.refreshMu.Unlock()
 
 	currentClient := c.currentClient()
-	// Coalesce only when a recent refresh already swapped in a different client.
-	// If the client that just failed is still current, we must rebuild again.
-	if currentClient != nil &&
+	// Coalesce only for retry-driven refreshes that know which concrete client
+	// failed. A direct Refresh call should always force a rebuild.
+	if failedClient != nil &&
+		currentClient != nil &&
 		!c.lastRefreshAt.IsZero() &&
 		time.Since(c.lastRefreshAt) < refreshCoalesceWindow &&
 		currentClient != failedClient {

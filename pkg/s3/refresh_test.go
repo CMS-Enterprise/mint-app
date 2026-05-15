@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"testing"
+	"time"
 
 	s3New "github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/aws/smithy-go"
@@ -32,29 +33,45 @@ func TestRefreshRebuildsClient(t *testing.T) {
 	assert.NotNil(t, client.currentClient())
 }
 
-func TestRefreshSkipsRecentSuccessfulRefresh(t *testing.T) {
+func TestRefreshForcesRebuildEvenAfterRecentSuccessfulRefresh(t *testing.T) {
 	t.Parallel()
 
 	firstClient := &s3New.Client{}
 	secondClient := &s3New.Client{}
-	client := NewS3ClientUsingClient(nil, Config{})
+	client := NewS3ClientUsingClient(firstClient, Config{})
 	buildCalls := 0
 
 	builder := func(context.Context, Config) (*s3New.Client, error) {
 		buildCalls++
-		if buildCalls == 1 {
-			return firstClient, nil
-		}
 		return secondClient, nil
 	}
 
-	require.NoError(t, client.refreshWithBuilder(context.Background(), builder, nil))
-	require.Same(t, firstClient, client.currentClient())
-	require.Equal(t, 1, buildCalls)
+	seedRefreshState(client, firstClient, time.Now())
 
 	require.NoError(t, client.refreshWithBuilder(context.Background(), builder, nil))
-	assert.Same(t, firstClient, client.currentClient())
+	assert.Same(t, secondClient, client.currentClient())
 	assert.Equal(t, 1, buildCalls)
+}
+
+func TestRefreshSkipsRecentSuccessfulRetryRefresh(t *testing.T) {
+	t.Parallel()
+
+	firstClient := &s3New.Client{}
+	secondClient := &s3New.Client{}
+	failedClient := &s3New.Client{}
+	client := NewS3ClientUsingClient(firstClient, Config{})
+	buildCalls := 0
+
+	builder := func(context.Context, Config) (*s3New.Client, error) {
+		buildCalls++
+		return secondClient, nil
+	}
+
+	seedRefreshState(client, firstClient, time.Now())
+
+	require.NoError(t, client.refreshWithBuilder(context.Background(), builder, failedClient))
+	assert.Same(t, firstClient, client.currentClient())
+	assert.Equal(t, 0, buildCalls)
 }
 
 func TestS3ErrorHasExpiredCredentials(t *testing.T) {
@@ -62,6 +79,7 @@ func TestS3ErrorHasExpiredCredentials(t *testing.T) {
 
 	assert.False(t, S3ErrorHasExpiredCredentials(nil))
 	assert.True(t, S3ErrorHasExpiredCredentials(&smithy.GenericAPIError{Code: "InvalidToken", Message: "invalid token"}))
+	assert.True(t, S3ErrorHasExpiredCredentials(&smithy.GenericAPIError{Code: "InvalidClientTokenId", Message: "invalid client token id"}))
 	assert.True(t, S3ErrorHasExpiredCredentials(fmt.Errorf("request failed: %w", &smithy.GenericAPIError{Code: "ExpiredToken", Message: "expired"})))
 	assert.True(t, S3ErrorHasExpiredCredentials(&smithy.GenericAPIError{Code: "TokenRefreshRequired", Message: "refresh required"}))
 	assert.False(t, S3ErrorHasExpiredCredentials(&smithy.GenericAPIError{Code: "InvalidAccessKeyId", Message: "bad access key"}))

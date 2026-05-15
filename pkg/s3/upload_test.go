@@ -58,7 +58,7 @@ func (r *failingReadSeeker) Seek(offset int64, whence int) (int64, error) {
 	return r.pos, nil
 }
 
-func TestUploadFileWithBuilderRetriesSeekableReaderAfterExpiredCredentials(t *testing.T) {
+func TestWithCredentialRefreshAndRewindRetriesSeekableReaderForUpload(t *testing.T) {
 	t.Parallel()
 
 	initialClient := &s3New.Client{}
@@ -76,7 +76,7 @@ func TestUploadFileWithBuilderRetriesSeekableReaderAfterExpiredCredentials(t *te
 		return refreshedClient, nil
 	}
 
-	err = client.uploadFileWithBuilder(context.Background(), reader, builder, func(current *s3New.Client, body io.Reader) (struct{}, error) {
+	_, err = withCredentialRefreshAndRewind(context.Background(), client, builder, reader, func(current *s3New.Client, body io.Reader) (struct{}, error) {
 		uploadCalls++
 		data, readErr := io.ReadAll(body)
 		require.NoError(t, readErr)
@@ -97,7 +97,7 @@ func TestUploadFileWithBuilderRetriesSeekableReaderAfterExpiredCredentials(t *te
 	assert.Equal(t, 2, uploadCalls)
 }
 
-func TestUploadFileWithBuilderDoesNotRefreshSeekableReaderForNonCredentialErrors(t *testing.T) {
+func TestWithCredentialRefreshAndRewindDoesNotRefreshUploadForNonCredentialErrors(t *testing.T) {
 	t.Parallel()
 
 	client := NewS3ClientUsingClient(&s3New.Client{}, Config{})
@@ -105,10 +105,10 @@ func TestUploadFileWithBuilderDoesNotRefreshSeekableReaderForNonCredentialErrors
 	uploadCalls := 0
 	expectedErr := errors.New("boom")
 
-	err := client.uploadFileWithBuilder(context.Background(), reader, func(context.Context, Config) (*s3New.Client, error) {
+	_, err := withCredentialRefreshAndRewind(context.Background(), client, func(context.Context, Config) (*s3New.Client, error) {
 		t.Fatal("refresh builder should not be called for non-credential errors")
 		return nil, nil
-	}, func(current *s3New.Client, body io.Reader) (struct{}, error) {
+	}, reader, func(current *s3New.Client, body io.Reader) (struct{}, error) {
 		uploadCalls++
 		require.NotNil(t, current)
 		data, readErr := io.ReadAll(body)
@@ -121,7 +121,7 @@ func TestUploadFileWithBuilderDoesNotRefreshSeekableReaderForNonCredentialErrors
 	assert.Equal(t, 1, uploadCalls)
 }
 
-func TestUploadFileWithBuilderReturnsRefreshErrorForSeekableReader(t *testing.T) {
+func TestWithCredentialRefreshAndRewindReturnsRefreshErrorForUpload(t *testing.T) {
 	t.Parallel()
 
 	client := NewS3ClientUsingClient(&s3New.Client{}, Config{})
@@ -129,9 +129,9 @@ func TestUploadFileWithBuilderReturnsRefreshErrorForSeekableReader(t *testing.T)
 	uploadCalls := 0
 	expectedErr := errors.New("refresh failed")
 
-	err := client.uploadFileWithBuilder(context.Background(), reader, func(context.Context, Config) (*s3New.Client, error) {
+	_, err := withCredentialRefreshAndRewind(context.Background(), client, func(context.Context, Config) (*s3New.Client, error) {
 		return nil, expectedErr
-	}, func(current *s3New.Client, body io.Reader) (struct{}, error) {
+	}, reader, func(current *s3New.Client, body io.Reader) (struct{}, error) {
 		uploadCalls++
 		require.NotNil(t, current)
 		data, readErr := io.ReadAll(body)
@@ -145,7 +145,7 @@ func TestUploadFileWithBuilderReturnsRefreshErrorForSeekableReader(t *testing.T)
 	assert.Equal(t, 1, uploadCalls)
 }
 
-func TestUploadFileWithBuilderReturnsRewindErrorForSeekableReader(t *testing.T) {
+func TestWithCredentialRefreshAndRewindReturnsRewindErrorForUpload(t *testing.T) {
 	t.Parallel()
 
 	initialClient := &s3New.Client{}
@@ -163,7 +163,7 @@ func TestUploadFileWithBuilderReturnsRewindErrorForSeekableReader(t *testing.T) 
 		return refreshedClient, nil
 	}
 
-	err := client.uploadFileWithBuilder(context.Background(), reader, builder, func(current *s3New.Client, body io.Reader) (struct{}, error) {
+	_, err := withCredentialRefreshAndRewind(context.Background(), client, builder, reader, func(current *s3New.Client, body io.Reader) (struct{}, error) {
 		uploadCalls++
 		require.NotNil(t, current)
 		data, readErr := io.ReadAll(body)

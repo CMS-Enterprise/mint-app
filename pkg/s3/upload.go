@@ -142,9 +142,10 @@ func (c *S3Client) ExpectNoBucket() bool {
 	return c.config.ExpectNoBucket
 }
 
-// UploadFile uploads a io.ReadSeeker to the bucket configured in the S3Client.
-// Uploads are retried once after a credential refresh when AWS reports expired
-// credentials by rewinding the reader to its original offset.
+// UploadFile uploads a rewindable body to the bucket configured in the
+// S3Client.
+// The body must implement io.ReadSeeker because the expired-credential retry
+// path rewinds it back to the caller's original offset before retrying.
 func (c *S3Client) UploadFile(ctx context.Context, file io.ReadSeeker, key string) error {
 	upload := func(client *s3New.Client, body io.Reader) (struct{}, error) {
 		_, err := client.PutObject(ctx, &s3New.PutObjectInput{
@@ -155,16 +156,8 @@ func (c *S3Client) UploadFile(ctx context.Context, file io.ReadSeeker, key strin
 		return struct{}{}, err
 	}
 
-	return c.uploadFileWithBuilder(ctx, file, buildClient, upload)
-}
-
-func (c *S3Client) uploadFileWithBuilder(ctx context.Context, file io.ReadSeeker, builder clientBuilder, upload func(*s3New.Client, io.Reader) (struct{}, error)) error {
-	_, err := withCredentialRefreshAndRewind(ctx, c, builder, file, upload)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	_, err := withCredentialRefreshAndRewind(ctx, c, buildClient, file, upload)
+	return err
 }
 
 func buildClient(ctx context.Context, s3Config Config) (*s3New.Client, error) {

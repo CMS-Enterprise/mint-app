@@ -11,6 +11,7 @@ const noSuchKeyErrCode = "NoSuchKey"
 var expiredCredentialErrCodes = map[string]struct{}{
 	"ExpiredToken":          {},
 	"ExpiredTokenException": {},
+	"InvalidClientTokenId":  {},
 	"InvalidToken":          {},
 	"RequestExpired":        {},
 	"TokenRefreshRequired":  {},
