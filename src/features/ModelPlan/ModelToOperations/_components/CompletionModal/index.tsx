@@ -35,10 +35,13 @@ const CompletionModal = ({
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
       testId="completion-modal"
+      zTop
     >
       <div className="padding-bottom-8">
         <PageHeading headingLevel="h3" className="margin-y-0">
-          {modelToOperationsMiscT(`modal.completionModal.heading.${mode}`)}
+          {modelToOperationsMiscT('modal.completionModal.heading', {
+            context: mode
+          })}
         </PageHeading>
 
         {riskIndicator === MtoRiskIndicator.ON_TRACK && (
@@ -46,12 +49,23 @@ const CompletionModal = ({
             <p className="margin-bottom-0">
               <Trans
                 i18nKey={modelToOperationsMiscT(
-                  `modal.completionModal.noRiskText.${mode}`
+                  'modal.completionModal.noRiskText',
+                  {
+                    context: mode
+                  }
                 )}
                 components={{
                   solutionTabLink: (
                     <UswdsReactLink
                       to={`/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions&page=1`}
+                      onClick={closeModal}
+                    >
+                      {' '}
+                    </UswdsReactLink>
+                  ),
+                  milestoneTabLink: (
+                    <UswdsReactLink
+                      to={`/models/${modelID}/collaboration-area/model-to-operations/matrix?view=milestones&page=1`}
                       onClick={closeModal}
                     >
                       {' '}
@@ -79,7 +93,10 @@ const CompletionModal = ({
               <p>
                 <Trans
                   i18nKey={modelToOperationsMiscT(
-                    `modal.completionModal.riskText.${mode}`
+                    'modal.completionModal.riskText',
+                    {
+                      context: mode
+                    }
                   )}
                   values={{
                     riskIndicator: riskIndicatorConfig.options[riskIndicator]
@@ -87,9 +104,9 @@ const CompletionModal = ({
                 />
               </p>
               <Alert type="info" slim>
-                {modelToOperationsMiscT(
-                  `modal.completionModal.riskInfoAlert.${mode}`
-                )}
+                {modelToOperationsMiscT('modal.completionModal.riskInfoAlert', {
+                  context: mode
+                })}
               </Alert>
             </div>
 

@@ -110,7 +110,7 @@ func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]
 func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
+	return GetEchimpCRAndTdlsByModelPlanID(ctx, r.echimpS3Client, r.viperConfig, logger, obj.ID)
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.
@@ -215,7 +215,7 @@ func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.Mo
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return ModelPlanCollection(r.echimpS3Client, r.viperConfig, logger, principal, r.store, filter)
+	return ModelPlanCollection(ctx, r.echimpS3Client, r.viperConfig, logger, principal, r.store, filter)
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.

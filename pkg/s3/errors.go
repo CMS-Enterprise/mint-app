@@ -8,12 +8,19 @@ import (
 
 const noSuchKeyErrCode = "NoSuchKey"
 
+var expiredCredentialErrCodes = map[string]struct{}{
+	"ExpiredToken":          {},
+	"ExpiredTokenException": {},
+	"InvalidClientTokenId":  {},
+	"InvalidToken":          {},
+	"RequestExpired":        {},
+	"TokenRefreshRequired":  {},
+}
+
 // S3ErrorIsKeyNotFound parses an S3 error, and returns true if it is because the file doesn't exist
 func S3ErrorIsKeyNotFound(err error) bool {
-	var reqErr smithy.APIError
-
 	// Unwrap the error and check if it is a RequestFailure
-	if errors.As(err, &reqErr) {
+	if reqErr, ok := errors.AsType[smithy.APIError](err); ok {
 		// Check if the error has a 404 status code (key does not exist)
 		if reqErr.ErrorCode() == noSuchKeyErrCode {
 			return true
@@ -22,4 +29,20 @@ func S3ErrorIsKeyNotFound(err error) bool {
 	}
 	return false
 
+}
+
+// S3ErrorHasExpiredCredentials returns true when an S3 request failed because
+// the request was signed with expired or otherwise invalid temporary credentials.
+func S3ErrorHasExpiredCredentials(err error) bool {
+	if err == nil {
+		return false
+	}
+
+	if reqErr, ok := errors.AsType[smithy.APIError](err); ok {
+		if _, exists := expiredCredentialErrCodes[reqErr.ErrorCode()]; exists {
+			return true
+		}
+	}
+
+	return false
 }
