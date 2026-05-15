@@ -87,7 +87,7 @@ func TestWithCredentialRefreshRebuildsWhenFailedClientIsStillCurrent(t *testing.
 	initialClient := &s3New.Client{}
 	refreshedClient := &s3New.Client{}
 	client := NewS3ClientUsingClient(initialClient, Config{})
-	client.lastRefreshAt = time.Now()
+	seedRefreshState(client, initialClient, time.Now())
 
 	buildCalls := 0
 	opCalls := 0
@@ -134,11 +134,7 @@ func TestWithCredentialRefreshUsesNewerInstalledClientWithoutRebuilding(t *testi
 		opCalls++
 		if opCalls == 1 {
 			require.Same(t, initialClient, current)
-
-			client.clientMu.Lock()
-			client.client = newerClient
-			client.clientMu.Unlock()
-			client.lastRefreshAt = time.Now()
+			seedRefreshState(client, newerClient, time.Now())
 
 			return "", &smithy.GenericAPIError{Code: "ExpiredToken", Message: "expired"}
 		}
@@ -269,4 +265,15 @@ func TestWithCredentialRefreshAndRewindReturnsCaptureErrorOnlyWhenRetryNeeded(t 
 	assert.ErrorContains(t, err, "failed to capture upload reader position for retry")
 	assert.Empty(t, result)
 	assert.Equal(t, 1, opCalls)
+}
+
+func seedRefreshState(client *S3Client, currentClient *s3New.Client, lastRefreshAt time.Time) {
+	client.refreshMu.Lock()
+	defer client.refreshMu.Unlock()
+
+	client.clientMu.Lock()
+	client.client = currentClient
+	client.clientMu.Unlock()
+
+	client.lastRefreshAt = lastRefreshAt
 }
