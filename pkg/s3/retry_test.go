@@ -215,3 +215,58 @@ func TestWithCredentialRefreshAndRewindDoesNotRefreshForNonCredentialErrors(t *t
 	require.ErrorIs(t, err, expectedErr)
 	assert.Empty(t, result)
 }
+
+func TestWithCredentialRefreshAndRewindAllowsInitialUploadWhenOffsetCaptureFails(t *testing.T) {
+	t.Parallel()
+
+	client := NewS3ClientUsingClient(&s3New.Client{}, Config{})
+	reader := &failingReadSeeker{
+		data:        []byte("payload"),
+		failCurrent: true,
+	}
+	opCalls := 0
+
+	result, err := withCredentialRefreshAndRewind(context.Background(), client, func(context.Context, Config) (*s3New.Client, error) {
+		t.Fatal("refresh builder should not be called when the first upload succeeds")
+		return nil, nil
+	}, reader, func(current *s3New.Client, body io.Reader) (string, error) {
+		opCalls++
+		require.NotNil(t, current)
+		data, readErr := io.ReadAll(body)
+		require.NoError(t, readErr)
+		assert.Equal(t, "payload", string(data))
+		return "ok", nil
+	})
+
+	require.NoError(t, err)
+	assert.Equal(t, "ok", result)
+	assert.Equal(t, 1, opCalls)
+}
+
+func TestWithCredentialRefreshAndRewindReturnsCaptureErrorOnlyWhenRetryNeeded(t *testing.T) {
+	t.Parallel()
+
+	client := NewS3ClientUsingClient(&s3New.Client{}, Config{})
+	reader := &failingReadSeeker{
+		data:        []byte("payload"),
+		failCurrent: true,
+	}
+	opCalls := 0
+
+	result, err := withCredentialRefreshAndRewind(context.Background(), client, func(context.Context, Config) (*s3New.Client, error) {
+		t.Fatal("refresh builder should not be called when the retry cannot rewind")
+		return nil, nil
+	}, reader, func(current *s3New.Client, body io.Reader) (string, error) {
+		opCalls++
+		require.NotNil(t, current)
+		data, readErr := io.ReadAll(body)
+		require.NoError(t, readErr)
+		assert.Equal(t, "payload", string(data))
+		return "", &smithy.GenericAPIError{Code: "ExpiredToken", Message: "expired"}
+	})
+
+	require.Error(t, err)
+	assert.ErrorContains(t, err, "failed to capture upload reader position for retry")
+	assert.Empty(t, result)
+	assert.Equal(t, 1, opCalls)
+}

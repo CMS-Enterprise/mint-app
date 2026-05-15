@@ -14,9 +14,10 @@ import (
 )
 
 type failingReadSeeker struct {
-	data       []byte
-	pos        int64
-	failRewind bool
+	data        []byte
+	pos         int64
+	failCurrent bool
+	failRewind  bool
 }
 
 func (r *failingReadSeeker) Read(p []byte) (int, error) {
@@ -45,6 +46,9 @@ func (r *failingReadSeeker) Seek(offset int64, whence int) (int64, error) {
 
 	if next < 0 {
 		return 0, errors.New("negative position")
+	}
+	if r.failCurrent && whence == io.SeekCurrent {
+		return 0, errors.New("capture failed")
 	}
 	if r.failRewind && whence == io.SeekStart {
 		return 0, errors.New("rewind failed")

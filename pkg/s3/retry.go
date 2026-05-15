@@ -37,11 +37,9 @@ func withCredentialRefreshAndBuilder[T any](ctx context.Context, client *S3Clien
 }
 
 func withCredentialRefreshAndRewind[T any](ctx context.Context, client *S3Client, builder clientBuilder, body io.ReadSeeker, operation func(*s3New.Client, io.Reader) (T, error)) (T, error) {
-	startOffset, err := body.Seek(0, io.SeekCurrent)
-	if err != nil {
-		var zero T
-		return zero, fmt.Errorf("failed to capture upload reader position: %w", err)
-	}
+	// Capture the starting offset before the first attempt so we can rewind to
+	// the caller's original position if we need a credential-refresh retry.
+	startOffset, startOffsetErr := body.Seek(0, io.SeekCurrent)
 
 	initialClient := client.currentClient()
 	result, err := operation(initialClient, body)
@@ -53,6 +51,11 @@ func withCredentialRefreshAndRewind[T any](ctx context.Context, client *S3Client
 	}
 
 	var zero T
+	// A failed offset capture does not block the first upload attempt; it only
+	// becomes fatal once we know we need to rewind for a retry.
+	if startOffsetErr != nil {
+		return zero, fmt.Errorf("failed to capture upload reader position for retry: %w", startOffsetErr)
+	}
 
 	if refreshErr := client.refreshWithBuilder(ctx, builder, initialClient); refreshErr != nil {
 		return zero, fmt.Errorf("failed to refresh S3 client after expired credentials: %w", refreshErr)
