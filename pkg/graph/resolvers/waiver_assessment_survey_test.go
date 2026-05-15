@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -42,7 +43,8 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 		"status":                                 models.WaiverAssessmentSurveyStatusInProgress,
 	}
 
-	updated, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, survey.ID, changes)
+	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
+	updated, err := WaiverAssessmentSurveyUpdate(ctx, survey.ID, changes)
 	suite.NoError(err)
 	suite.NotNil(updated)
 
