@@ -44,6 +44,14 @@ const ModelPlanQuestions = () => {
     };
   }, [modelPlanQuestionsData]);
 
+  const mintPlansData = useMemo(() => {
+    return modelPlanQuestionsData?.modelPlanCollection || [];
+  }, [modelPlanQuestionsData?.modelPlanCollection]);
+
+  const existingPlansData = useMemo(() => {
+    return modelPlanQuestionsData?.existingModelCollection || [];
+  }, [modelPlanQuestionsData?.existingModelCollection]);
+
   // Combined MINT models with existing models from DB.  Sorts them alphabetically and returns options for Select/MultiSelect
   const modelPlanOptions = useMemo(() => {
     if (
@@ -90,12 +98,16 @@ const ModelPlanQuestions = () => {
           {waiverAssessmentSurveyT('modelPlanQuestions.infoAlert')}
         </Alert>
 
-        {flattenedData && (
-          <ModelPlanQuestionsForm
-            modelPlanQuestionsData={flattenedData}
-            modelPlanOptions={modelPlanOptions}
-          />
-        )}
+        {flattenedData &&
+          mintPlansData.length > 0 &&
+          existingPlansData.length > 0 && (
+            <ModelPlanQuestionsForm
+              modelPlanQuestionsData={flattenedData}
+              modelPlanOptions={modelPlanOptions}
+              mintModelPlanCollection={mintPlansData}
+              existingModelCollection={existingPlansData}
+            />
+          )}
       </div>
     </div>
   );

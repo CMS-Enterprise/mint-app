@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useBlocker, useNavigate, useParams } from 'react-router-dom';
 import { Form } from '@trussworks/react-uswds';
 import { isEmpty } from 'features/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
 import {
-  ExistingModelLink,
+  ExistingModelLinks,
   GetModelPlanQuestionsQuery,
   useUpdateModelPlanQuestionsMutation
 } from 'gql/generated/graphql';
@@ -20,8 +20,16 @@ import {
 } from 'types/translation';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 
-import { formattedValue, getChildrenQuestions, getFormDiffs } from '../../util';
+import {
+  formattedLabel,
+  formattedValue,
+  getChildrenQuestions,
+  getFormDiffs,
+  separateLinksByType
+} from '../../util';
 import ExpandableSection from '../ExpandableSection';
+
+import MODEL_PLAN_QUESTIONS from './questionMap';
 
 import '../../ModelPlanQuestions/index.scss';
 
@@ -36,107 +44,23 @@ export type ModelPlanQuestionsDataType = Omit<BasicsType, 'id' | '__typename'> &
     generalCharacteristicsId: string;
   };
 
+export type ModelPlanQuestionsFormTypeWithLinks = Omit<
+  ModelPlanQuestionsDataType,
+  | 'currentModelPlanID'
+  | 'existingModelID'
+  | 'existingModel'
+  | 'resemblesExistingModelWhich'
+  | 'participationInModelPreconditionWhich'
+> & {
+  resemblesExistingModelLinks: string[];
+  participationInModelPreconditionLinks: string[];
+  existingModel: string | number | null;
+};
+
 export type CombinedConfigType = TranslationBasics &
   TranslationGeneralCharacteristics;
 
-type BasicQuestionKey = Extract<
-  keyof TranslationBasics,
-  keyof ModelPlanQuestionsDataType
->;
-
-type GeneralQuestionKey = Extract<
-  keyof TranslationGeneralCharacteristics,
-  keyof ModelPlanQuestionsDataType
->;
-
-export type QuestionFieldType = BasicQuestionKey | GeneralQuestionKey;
-
-export type QuestionType = {
-  field: QuestionFieldType;
-  childRelation?: QuestionType[];
-};
-
-const MODEL_PLAN_QUESTIONS: QuestionType[][] = [
-  [
-    { field: 'modelCategory' },
-    {
-      field: 'additionalModelCategories'
-    }
-  ],
-  [
-    {
-      field: 'cmsCenters',
-      childRelation: [{ field: 'cmmiGroups' }]
-    }
-  ],
-  [
-    {
-      field: 'isNewModel',
-      childRelation: [
-        {
-          field: 'existingModel'
-        }
-      ]
-    }
-  ],
-  [
-    {
-      field: 'resemblesExistingModel',
-      childRelation: [
-        {
-          field: 'resemblesExistingModelWhyHow'
-        },
-        {
-          field: 'resemblesExistingModelWhich'
-        },
-        {
-          field: 'resemblesExistingModelHow'
-        },
-        {
-          field: 'resemblesExistingModelOtherSpecify'
-        }
-      ]
-    }
-  ],
-  [
-    {
-      field: 'participationInModelPrecondition',
-      childRelation: [
-        { field: 'participationInModelPreconditionWhich' },
-        { field: 'participationInModelPreconditionWhyHow' },
-        { field: 'participationInModelPreconditionOtherSpecify' }
-      ]
-    }
-  ],
-  [
-    {
-      field: 'keyCharacteristics',
-      childRelation: [
-        { field: 'collectPlanBids' },
-        { field: 'managePartCDEnrollment' },
-        { field: 'planContractUpdated' },
-        { field: 'keyCharacteristicsOther' }
-      ]
-    }
-  ],
-  [
-    {
-      field: 'geographiesTargeted',
-      childRelation: [
-        { field: 'geographiesTargetedTypes' },
-        { field: 'geographiesTargetedAppliedTo' }
-      ]
-    }
-  ],
-  [
-    {
-      field: 'waiversRequired',
-      childRelation: [{ field: 'waiversRequiredTypes' }]
-    }
-  ]
-];
-
-const defaultFormValues: ModelPlanQuestionsDataType = {
+const defaultFormValues: ModelPlanQuestionsFormTypeWithLinks = {
   // --- Plan Basics ---
   basicsId: '',
   modelCategory: null,
@@ -147,16 +71,16 @@ const defaultFormValues: ModelPlanQuestionsDataType = {
   // --- General Characteristics ---
   generalCharacteristicsId: '',
   isNewModel: null,
-  currentModelPlanID: null,
-  existingModelID: null,
   existingModel: null,
   resemblesExistingModel: null,
   resemblesExistingModelWhyHow: '',
   resemblesExistingModelHow: '',
+  resemblesExistingModelLinks: [],
   resemblesExistingModelOtherSpecify: '',
   resemblesExistingModelOtherSelected: false,
   resemblesExistingModelOtherOption: '',
   participationInModelPrecondition: null,
+  participationInModelPreconditionLinks: [],
   participationInModelPreconditionOtherSpecify: '',
   participationInModelPreconditionOtherSelected: false,
   participationInModelPreconditionOtherOption: '',
@@ -174,23 +98,19 @@ const defaultFormValues: ModelPlanQuestionsDataType = {
   geographiesTargetedAppliedTo: [],
   geographiesTargetedAppliedToOther: '',
   waiversRequired: null,
-  waiversRequiredTypes: [],
-  resemblesExistingModelWhich: {
-    __typename: 'ExistingModelLinks',
-    links: [] as ExistingModelLink[]
-  },
-  participationInModelPreconditionWhich: {
-    __typename: 'ExistingModelLinks',
-    links: [] as ExistingModelLink[]
-  }
+  waiversRequiredTypes: []
 };
 
 const ModelPlanQuestionsForm = ({
   modelPlanQuestionsData,
-  modelPlanOptions
+  modelPlanOptions,
+  mintModelPlanCollection,
+  existingModelCollection
 }: {
   modelPlanQuestionsData: ModelPlanQuestionsDataType;
   modelPlanOptions: { label: string; value: string }[];
+  mintModelPlanCollection: GetModelPlanQuestionsQuery['modelPlanCollection'];
+  existingModelCollection: GetModelPlanQuestionsQuery['existingModelCollection'];
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -211,12 +131,78 @@ const ModelPlanQuestionsForm = ({
   const [updateModelPlanQuestions, { loading: submitting }] =
     useUpdateModelPlanQuestionsMutation();
 
-  const formData = mapDefaultFormValues<ModelPlanQuestionsDataType>(
-    modelPlanQuestionsData,
+  const existingModel =
+    modelPlanQuestionsData.currentModelPlanID ||
+    modelPlanQuestionsData.existingModelID ||
+    null;
+
+  // Formats query data of existing links to feed into multiselect
+  // Checks if Other field is selected, if so append Other to the list of existing models
+  const formatExistingLinkData = useCallback(
+    (
+      existingLinks: ExistingModelLinks | undefined | null,
+      isOtherSelected: boolean | undefined | null
+    ): string[] => {
+      if (!existingLinks) return [];
+
+      const formattedLinks =
+        existingLinks.links?.map(
+          link => String(link.existingModelID || link.currentModelPlanID)!
+        ) || [];
+
+      // Checking if Other was persisted to db, if so add it as an resemblesExistingModelLinks value
+      if (isOtherSelected) {
+        formattedLinks.push('Other');
+      }
+
+      return formattedLinks;
+    },
+    []
+  );
+
+  const resemblesExistingModelLinks: string[] = useMemo(() => {
+    return formatExistingLinkData(
+      modelPlanQuestionsData.resemblesExistingModelWhich as ExistingModelLinks,
+      modelPlanQuestionsData.resemblesExistingModelOtherSelected
+    );
+  }, [
+    modelPlanQuestionsData.resemblesExistingModelWhich,
+    modelPlanQuestionsData.resemblesExistingModelOtherSelected,
+    formatExistingLinkData
+  ]);
+
+  const participationInModelPreconditionLinks: string[] = useMemo(() => {
+    return formatExistingLinkData(
+      modelPlanQuestionsData.participationInModelPreconditionWhich as ExistingModelLinks,
+      modelPlanQuestionsData.participationInModelPreconditionOtherSelected
+    );
+  }, [
+    modelPlanQuestionsData.participationInModelPreconditionWhich,
+    modelPlanQuestionsData.participationInModelPreconditionOtherSelected,
+    formatExistingLinkData
+  ]);
+
+  const {
+    currentModelPlanID,
+    existingModelID,
+    resemblesExistingModelWhich,
+    participationInModelPreconditionWhich,
+    ...remainingQuestionsData
+  } = modelPlanQuestionsData;
+
+  const modelQuestionsDataWithLinks: ModelPlanQuestionsFormTypeWithLinks = {
+    ...remainingQuestionsData,
+    resemblesExistingModelLinks,
+    participationInModelPreconditionLinks,
+    existingModel
+  };
+
+  const formData = mapDefaultFormValues<ModelPlanQuestionsFormTypeWithLinks>(
+    modelQuestionsDataWithLinks,
     defaultFormValues
   );
 
-  const methods = useForm<ModelPlanQuestionsDataType>({
+  const methods = useForm<ModelPlanQuestionsFormTypeWithLinks>({
     defaultValues: formData,
     mode: 'onChange'
   });
@@ -249,33 +235,81 @@ const ModelPlanQuestionsForm = ({
     const currentValues = getValues();
 
     const { basicsId, generalCharacteristicsId } =
-      defaultValues as ModelPlanQuestionsDataType;
+      defaultValues as ModelPlanQuestionsFormTypeWithLinks;
 
     const {
       basicsChanges,
       withBasics,
       generalCharacteristicsChanges,
-      withGeneralCharacteristics
+      withGeneralCharacteristics,
+      withResemblesLinks,
+      withParticipationLinks
     } = getFormDiffs(
-      defaultValues as ModelPlanQuestionsDataType,
+      defaultValues as ModelPlanQuestionsFormTypeWithLinks,
       currentValues
     );
 
+    let resemblesExistingModelIDs: number[] = [];
+    let resemblesCurrentModelPlanIDs: string[] = [];
+
+    let participationExistingModelIDs: number[] = [];
+    let participationCurrentModelPlanIDs: string[] = [];
+
+    if (withResemblesLinks) {
+      const resemblesSplit = separateLinksByType(
+        currentValues.resemblesExistingModelLinks,
+        existingModelCollection,
+        mintModelPlanCollection
+      );
+      resemblesExistingModelIDs = resemblesSplit.existingModelIDs;
+      resemblesCurrentModelPlanIDs = resemblesSplit.currentModelPlanIDs;
+    }
+
+    if (withParticipationLinks) {
+      const participationSplit = separateLinksByType(
+        currentValues.participationInModelPreconditionLinks,
+        existingModelCollection,
+        mintModelPlanCollection
+      );
+      participationExistingModelIDs = participationSplit.existingModelIDs;
+      participationCurrentModelPlanIDs = participationSplit.currentModelPlanIDs;
+    }
+
     // ONLY block and save if there is an actual diff to send
-    if (withBasics || withGeneralCharacteristics) {
+    if (
+      withBasics ||
+      withGeneralCharacteristics ||
+      withResemblesLinks ||
+      withParticipationLinks
+    ) {
       updateModelPlanQuestions({
         variables: {
           modelPlanID: modelID,
           basicsId,
           basicsChanges: withBasics ? basicsChanges : {},
           withBasics,
+
           generalCharacteristicsId,
           generalCharacteristicsChanges: withGeneralCharacteristics
             ? generalCharacteristicsChanges
             : {},
           withGeneralCharacteristics,
-          withParticipationLinks: false,
-          withResemblesLinks: false
+
+          withResemblesLinks,
+          resemblesExistingModelIDs: withResemblesLinks
+            ? resemblesExistingModelIDs
+            : [],
+          resemblesCurrentModelPlanIDs: withResemblesLinks
+            ? resemblesCurrentModelPlanIDs
+            : [],
+
+          withParticipationLinks,
+          participationExistingModelIDs: withParticipationLinks
+            ? participationExistingModelIDs
+            : [],
+          participationCurrentModelPlanIDs: withParticipationLinks
+            ? participationCurrentModelPlanIDs
+            : []
         }
       })
         .then(response => {
@@ -333,11 +367,14 @@ const ModelPlanQuestionsForm = ({
                 return (
                   <div key={question}>
                     <QuestionBody
-                      label={combinedConfig[question].label}
+                      label={formattedLabel({ combinedConfig, key: question })}
                       answer={formattedValue({
                         combinedConfig,
                         key: question,
-                        rawValue: liveFormData[question],
+                        rawValue:
+                          liveFormData[
+                            question as keyof ModelPlanQuestionsFormTypeWithLinks
+                          ],
                         comboOptions: modelPlanOptions
                       })}
                     />
@@ -347,11 +384,17 @@ const ModelPlanQuestionsForm = ({
                         {childrenQuestions.map(childQuestion => (
                           <QuestionBody
                             key={childQuestion}
-                            label={combinedConfig[childQuestion].label}
+                            label={formattedLabel({
+                              combinedConfig,
+                              key: childQuestion
+                            })}
                             answer={formattedValue({
                               combinedConfig,
                               key: childQuestion,
-                              rawValue: liveFormData[childQuestion],
+                              rawValue:
+                                liveFormData[
+                                  childQuestion as keyof ModelPlanQuestionsFormTypeWithLinks
+                                ],
                               comboOptions: modelPlanOptions
                             })}
                           />

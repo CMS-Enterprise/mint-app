@@ -1,15 +1,59 @@
+import { GetModelPlanQuestionsQuery } from 'gql/generated/graphql';
+
 import {
   isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren
 } from 'types/translation';
-import dirtyInput from 'utils/formUtil';
+import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 
 import {
   CombinedConfigType,
-  ModelPlanQuestionsDataType,
+  ModelPlanQuestionsFormTypeWithLinks
+} from './_components/ModelPlanQuestionsForm';
+import {
   QuestionFieldType,
   QuestionType
-} from './_components/ModelPlanQuestionsForm';
+} from './_components/ModelPlanQuestionsForm/questionMap';
+
+/**
+ * Maps translation config field
+ */
+export const getTranslationKey = (key: string): keyof CombinedConfigType => {
+  if (key === 'resemblesExistingModelLinks') {
+    return 'resemblesExistingModelWhich' as keyof CombinedConfigType;
+  }
+  if (key === 'participationInModelPreconditionLinks') {
+    return 'participationInModelPreconditionWhich' as keyof CombinedConfigType;
+  }
+  return key as keyof CombinedConfigType;
+};
+
+/**
+ * Maps form field
+ */
+export const getFormStateKey = (
+  key: string
+): keyof ModelPlanQuestionsFormTypeWithLinks => {
+  if (key === 'resemblesExistingModelWhich') {
+    return 'resemblesExistingModelLinks' as keyof ModelPlanQuestionsFormTypeWithLinks;
+  }
+  if (key === 'participationInModelPreconditionWhich') {
+    return 'participationInModelPreconditionLinks' as keyof ModelPlanQuestionsFormTypeWithLinks;
+  }
+  return key as keyof ModelPlanQuestionsFormTypeWithLinks;
+};
+
+export const formattedLabel = ({
+  combinedConfig,
+  key
+}: {
+  combinedConfig: CombinedConfigType;
+  key: string;
+}) => {
+  const translationKey = getTranslationKey(key);
+
+  return combinedConfig[translationKey]?.label || '';
+};
 
 export const formattedValue = ({
   combinedConfig,
@@ -18,7 +62,7 @@ export const formattedValue = ({
   comboOptions
 }: {
   combinedConfig: CombinedConfigType;
-  key: keyof typeof combinedConfig;
+  key: string;
   rawValue: unknown;
   comboOptions: { label: string; value: string }[];
 }) => {
@@ -29,7 +73,10 @@ export const formattedValue = ({
   if (Array.isArray(rawValue) && rawValue.length === 0) return '';
 
   const valueInArray = Array.isArray(rawValue) ? rawValue : [rawValue];
-  const config = combinedConfig[key];
+
+  const translationKey = getTranslationKey(key);
+
+  const config = combinedConfig[translationKey as keyof typeof combinedConfig];
 
   const labels = valueInArray.map(val => {
     const valueString = String(val);
@@ -61,18 +108,14 @@ export const formattedValue = ({
 
 export const getChildrenQuestions = (
   questionConfig: QuestionType,
-  liveFormData: ModelPlanQuestionsDataType
+  liveFormData: ModelPlanQuestionsFormTypeWithLinks
 ) => {
   const childrenQuestionsConfig = questionConfig.childRelation?.filter(
     childQuestion => {
-      if (
-        childQuestion.field === 'resemblesExistingModelWhich' ||
-        childQuestion.field === 'participationInModelPreconditionWhich'
-      ) {
-        return (liveFormData[childQuestion.field]?.links?.length ?? 0) > 0;
-      }
-
-      const value = liveFormData[childQuestion.field];
+      const value =
+        liveFormData[
+          childQuestion.field as keyof ModelPlanQuestionsFormTypeWithLinks
+        ];
 
       if (Array.isArray(value)) {
         return value.length > 0;
@@ -86,7 +129,7 @@ export const getChildrenQuestions = (
     : [];
 };
 
-const getBasicsFormData = (data: ModelPlanQuestionsDataType) => {
+const getBasicsFormData = (data: ModelPlanQuestionsFormTypeWithLinks) => {
   return {
     modelCategory: data.modelCategory,
     additionalModelCategories: data.additionalModelCategories,
@@ -96,7 +139,7 @@ const getBasicsFormData = (data: ModelPlanQuestionsDataType) => {
 };
 
 const getGeneralCharacteristicsFormData = (
-  data: ModelPlanQuestionsDataType
+  data: ModelPlanQuestionsFormTypeWithLinks
 ) => {
   const {
     modelCategory,
@@ -109,44 +152,42 @@ const getGeneralCharacteristicsFormData = (
 };
 
 export const getFormDiffs = (
-  initialValues: ModelPlanQuestionsDataType,
-  currentValues: ModelPlanQuestionsDataType
+  initialValues: ModelPlanQuestionsFormTypeWithLinks,
+  currentValues: ModelPlanQuestionsFormTypeWithLinks
 ) => {
-  const initialBasics = getBasicsFormData(initialValues);
-  const currentBasics = getBasicsFormData(currentValues);
-  const basicsChanges = dirtyInput(initialBasics, currentBasics);
-
-  const initialGeneral = getGeneralCharacteristicsFormData(initialValues);
-  const currentGeneral = getGeneralCharacteristicsFormData(currentValues);
-  const generalCharacteristicsChanges = dirtyInput(
-    initialGeneral,
-    currentGeneral
+  const basicsChanges = dirtyInput(
+    getBasicsFormData(initialValues),
+    getBasicsFormData(currentValues)
   );
 
+  const generalCharacteristicsChanges = dirtyInput(
+    getGeneralCharacteristicsFormData(initialValues),
+    getGeneralCharacteristicsFormData(currentValues)
+  );
+
+  const resemblesChangesArray =
+    generalCharacteristicsChanges.resemblesExistingModelLinks;
+  const participationChangesArray =
+    generalCharacteristicsChanges.participationInModelPreconditionLinks;
+
+  const withResemblesLinks =
+    resemblesChangesArray?.length > 0 ||
+    symmetricDifference(
+      initialValues.resemblesExistingModelLinks || [],
+      currentValues.resemblesExistingModelLinks || []
+    ).length > 0;
+
+  const withParticipationLinks =
+    participationChangesArray?.length > 0 ||
+    symmetricDifference(
+      initialValues.participationInModelPreconditionLinks || [],
+      currentValues.participationInModelPreconditionLinks || []
+    ).length > 0;
+
+  // delete frontend only fields, should not go to backend
   delete generalCharacteristicsChanges.existingModel;
-
-  // const allChangedFields = dirtyInput(initialValues, currentValues);
-
-  // Process Link Data
-  // const withResemblesLinks = 'resemblesExistingModelLinks' in allChangedFields;
-  // const withParticipationLinks =
-  //   'participationInModelPreconditionLinks' in allChangedFields;
-
-  // const resemblesLinks = withResemblesLinks
-  //   ? separateLinksByType(
-  //       currentValues.resemblesExistingModelLinks || [],
-  //       draftModelPlans,
-  //       existingModelPlans
-  //     )
-  //   : { existingModelIDs: [], currentModelPlanIDs: [] };
-
-  // const participationLinks = withParticipationLinks
-  //   ? separateLinksByType(
-  //       currentValues.participationInModelPreconditionLinks || [],
-  //       draftModelPlans,
-  //       existingModelPlans
-  //     )
-  //   : { existingModelIDs: [], currentModelPlanIDs: [] };
+  delete generalCharacteristicsChanges.resemblesExistingModelLinks;
+  delete generalCharacteristicsChanges.participationInModelPreconditionLinks;
 
   return {
     basicsChanges,
@@ -154,7 +195,38 @@ export const getFormDiffs = (
 
     generalCharacteristicsChanges,
     withGeneralCharacteristics:
-      Object.keys(generalCharacteristicsChanges).length > 0
+      Object.keys(generalCharacteristicsChanges).length > 0,
+
+    withResemblesLinks,
+    withParticipationLinks
+  };
+};
+
+type SeparateLinksType = {
+  existingModelIDs: number[];
+  currentModelPlanIDs: string[];
+};
+
+export const separateLinksByType = (
+  existingLinks: string[],
+  existingModelPlans: GetModelPlanQuestionsQuery['existingModelCollection'],
+  currentModelPlans: GetModelPlanQuestionsQuery['modelPlanCollection']
+): SeparateLinksType => {
+  // 1. Filter existing model plans based on existingModelID(INT)
+  const existingModelIDs = existingLinks
+    .filter(linkID =>
+      existingModelPlans.find(modelPlan => String(modelPlan.id) === linkID)
+    )
+    .map(Number); // Convert safely back to a number[] array for the backend mutation
+
+  // 2. Filter MINT model plans base on id(UUID)
+  const currentModelPlanIDs = existingLinks.filter(linkID =>
+    currentModelPlans.find(modelPlan => modelPlan.id === linkID)
+  );
+
+  return {
+    existingModelIDs,
+    currentModelPlanIDs
   };
 };
 
@@ -173,7 +245,9 @@ export const getSubQuestionFields = (
   childQuestionFields: QuestionFieldType[];
   optionsRelatedQuestionFields: QuestionFieldType[];
 } => {
-  const currentConfig = config[question];
+  const translationKey = getTranslationKey(question);
+
+  const currentConfig = config[translationKey as keyof CombinedConfigType];
 
   if (!currentConfig)
     return { childQuestionFields: [], optionsRelatedQuestionFields: [] };
@@ -199,7 +273,8 @@ export const getSubQuestionFields = (
         const { gqlField } = childConfig;
 
         if (gqlField && isValidQuestionField(gqlField, config)) {
-          childQuestionFields.push(gqlField as QuestionFieldType);
+          const activeFormKey = getFormStateKey(gqlField);
+          childQuestionFields.push(activeFormKey as QuestionFieldType);
         }
       });
     }
@@ -212,7 +287,8 @@ export const getSubQuestionFields = (
         ];
 
       if (otherQuestion) {
-        optionsRelatedQuestionFields.push(otherQuestion as QuestionFieldType);
+        const activeFormKey = getFormStateKey(otherQuestion);
+        optionsRelatedQuestionFields.push(activeFormKey as QuestionFieldType);
       }
     }
   });

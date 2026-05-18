@@ -33,13 +33,20 @@ import {
   convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
 
-import { getSubQuestionFields } from '../../util';
+import { getSubQuestionFields, getTranslationKey } from '../../util';
 import {
   CombinedConfigType,
-  ModelPlanQuestionsDataType,
+  ModelPlanQuestionsFormTypeWithLinks
+} from '../ModelPlanQuestionsForm';
+import {
   QuestionFieldType,
   QuestionType
-} from '../ModelPlanQuestionsForm';
+} from '../ModelPlanQuestionsForm/questionMap';
+
+type FormFieldType = Extract<
+  QuestionFieldType,
+  keyof ModelPlanQuestionsFormTypeWithLinks
+>;
 
 const ExpandableSection = ({
   questionGroup,
@@ -50,8 +57,12 @@ const ExpandableSection = ({
 }: {
   questionGroup: QuestionType[];
   config: CombinedConfigType;
-  setValue: ReturnType<typeof useForm<ModelPlanQuestionsDataType>>['setValue'];
-  control: ReturnType<typeof useForm<ModelPlanQuestionsDataType>>['control'];
+  setValue: ReturnType<
+    typeof useForm<ModelPlanQuestionsFormTypeWithLinks>
+  >['setValue'];
+  control: ReturnType<
+    typeof useForm<ModelPlanQuestionsFormTypeWithLinks>
+  >['control'];
   comboOptions?: { value: string; label: string }[];
 }) => {
   const { t: waiverAssessmentSurveyT } = useTranslation(
@@ -105,15 +116,20 @@ const ModelPlanQuestionItem = ({
 }: {
   question: QuestionFieldType;
   config: CombinedConfigType;
-  setValue: ReturnType<typeof useForm<ModelPlanQuestionsDataType>>['setValue'];
-  control: ReturnType<typeof useForm<ModelPlanQuestionsDataType>>['control'];
+  setValue: ReturnType<
+    typeof useForm<ModelPlanQuestionsFormTypeWithLinks>
+  >['setValue'];
+  control: ReturnType<
+    typeof useForm<ModelPlanQuestionsFormTypeWithLinks>
+  >['control'];
   comboOptions?: { value: string; label: string }[];
 }) => {
-  const currentConfig = config[question];
+  const translationKey = getTranslationKey(question);
+  const currentConfig = config[translationKey as keyof CombinedConfigType];
 
   const fieldValue = useWatch({
     control,
-    name: question
+    name: question as FormFieldType
   });
 
   if (!currentConfig) return null;
@@ -138,8 +154,8 @@ const ModelPlanQuestionItem = ({
 
   const shouldUseComboOptions =
     question === 'existingModel' ||
-    question === 'resemblesExistingModelWhich' ||
-    question === 'participationInModelPreconditionWhich';
+    question === 'resemblesExistingModelLinks' ||
+    question === 'participationInModelPreconditionLinks';
 
   return (
     <FormGroup className="margin-top-4">
@@ -154,7 +170,7 @@ const ModelPlanQuestionItem = ({
       )}
 
       <Controller
-        name={question}
+        name={question as FormFieldType}
         key={question}
         control={control}
         render={({ field: { ref, ...field } }) => {
@@ -361,7 +377,11 @@ const ModelPlanQuestionItem = ({
                             : composeMultiSelectOptions(currentConfig.options)
                         }
                         selectedLabel={currentConfig.multiSelectLabel || ''}
-                        initialValues={fieldValueArray as string[]}
+                        initialValues={
+                          (Array.isArray(field.value)
+                            ? field.value
+                            : []) as string[]
+                        }
                         onChange={field.onChange}
                       />
                     )}
@@ -385,6 +405,10 @@ const ModelPlanQuestionItem = ({
                         }))
                       : comboOptions
                   }
+                  defaultValue={field.value ? String(field.value) : ''}
+                  onChange={selectedValue => {
+                    field.onChange(selectedValue);
+                  }}
                 />
               )}
 
