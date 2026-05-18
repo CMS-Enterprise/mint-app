@@ -42,7 +42,7 @@ func WaiverAssessmentSurveyUpdate(ctx context.Context, id uuid.UUID, changes map
 		return nil, err
 	}
 
-	if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, false); err != nil {
+	if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, true); err != nil {
 		return nil, err
 	}
 
