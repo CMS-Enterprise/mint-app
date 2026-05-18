@@ -4,9 +4,11 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -26,7 +28,9 @@ func WaiverAssessmentSurveyGetByID(ctx context.Context, id uuid.UUID) (*models.W
 	return storage.WaiverAssessmentSurveyGetByID(allLoaders.DataReader.Store, logger, id)
 }
 
-// WaiverAssessmentSurveyUpdate applies changes to a waiver assessment survey and persists them
+// WaiverAssessmentSurveyUpdate applies changes to a waiver assessment survey and persists them.
+// The survey write and plan task status update are wrapped in a single transaction so they
+// cannot diverge if one succeeds and the other fails.
 func WaiverAssessmentSurveyUpdate(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.WaiverAssessmentSurvey, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
@@ -37,25 +41,37 @@ func WaiverAssessmentSurveyUpdate(ctx context.Context, id uuid.UUID, changes map
 	}
 	store := allLoaders.DataReader.Store
 
-	existing, err := storage.WaiverAssessmentSurveyGetByID(store, logger, id)
-	if err != nil {
-		return nil, err
-	}
+	return sqlutils.WithTransaction[models.WaiverAssessmentSurvey](
+		store,
+		func(tx *sqlx.Tx) (*models.WaiverAssessmentSurvey, error) {
+			existing, err := storage.WaiverAssessmentSurveyGetByID(tx, logger, id)
+			if err != nil {
+				return nil, err
+			}
 
-	if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, true); err != nil {
-		return nil, err
-	}
+			// Auto-transition from READY to IN_PROGRESS on first save, matching the
+			// DEA pattern. If the caller also sends an explicit status it will override
+			// this via ApplyChanges below.
+			if existing.Status == models.WaiverAssessmentSurveyStatusReady {
+				existing.Status = models.WaiverAssessmentSurveyStatusInProgress
+			}
 
-	updated, err := storage.WaiverAssessmentSurveyUpdate(store, logger, existing)
-	if err != nil {
-		return nil, err
-	}
+			if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, true); err != nil {
+				return nil, err
+			}
 
-	if err := UpdatePlanTaskStatusOnWaiverAssessmentStarted(store, logger, updated.ModelPlanID, principal, store); err != nil {
-		return nil, err
-	}
+			updated, err := storage.WaiverAssessmentSurveyUpdate(tx, logger, existing)
+			if err != nil {
+				return nil, err
+			}
 
-	return updated, nil
+			if err := UpdatePlanTaskStatusOnWaiverAssessmentStarted(tx, logger, updated.ModelPlanID, principal, store); err != nil {
+				return nil, err
+			}
+
+			return updated, nil
+		},
+	)
 }
 
 // WaiversGetByModelPlanID returns all waivers associated with a model plan via dataloader
@@ -89,7 +105,7 @@ func WaiverUpdate(ctx context.Context, id uuid.UUID, changes map[string]interfac
 		return nil, err
 	}
 
-	if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, false); err != nil {
+	if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, true); err != nil {
 		return nil, err
 	}
 

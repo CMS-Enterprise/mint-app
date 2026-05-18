@@ -37,17 +37,13 @@ INSERT INTO waiver_assessment_survey (
     id,
     model_plan_id,
     status,
-    created_by,
-    modified_by,
-    modified_dts
+    created_by
 )
 SELECT
     GEN_RANDOM_UUID() AS id,
     mp.id AS model_plan_id,
     'READY'::WAIVER_ASSESSMENT_SURVEY_STATUS AS status,
-    '00000001-0001-0001-0001-000000000001'::UUID AS created_by, -- MINT System Account
-    '00000001-0001-0001-0001-000000000001'::UUID AS modified_by, -- MINT System Account
-    CURRENT_TIMESTAMP AS modified_dts
+    '00000001-0001-0001-0001-000000000001'::UUID AS created_by -- MINT System Account
 FROM model_plan mp
 WHERE NOT EXISTS (
     SELECT 1

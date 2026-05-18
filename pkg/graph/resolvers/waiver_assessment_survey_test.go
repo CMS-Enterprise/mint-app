@@ -27,7 +27,8 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyCreate() {
 	suite.Nil(survey.AdditionalMedicaidSpecificWaivers)
 }
 
-// TestWaiverAssessmentSurveyUpdate verifies that updates to a waiver_assessment_survey persist.
+// TestWaiverAssessmentSurveyUpdate verifies that updates to a waiver_assessment_survey persist
+// and that the WAIVER_ASSESSMENT_SURVEY plan task status is kept in sync.
 func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	plan := suite.createModelPlan("Test Waiver Assessment Survey Update")
 
@@ -35,6 +36,9 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	suite.NoError(err)
 	suite.NotNil(survey)
 
+	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
+
+	// Update fields and transition to IN_PROGRESS
 	changes := map[string]interface{}{
 		"modifiesMedicareSavingsPrograms":        helpers.PointerTo(true),
 		"modifiesMedicareSavingsProgramsExample": helpers.PointerTo("Some example"),
@@ -43,7 +47,6 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 		"status":                                 models.WaiverAssessmentSurveyStatusInProgress,
 	}
 
-	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
 	updated, err := WaiverAssessmentSurveyUpdate(ctx, survey.ID, changes)
 	suite.NoError(err)
 	suite.NotNil(updated)
@@ -59,6 +62,41 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	suite.Equal(models.WaiverAssessmentSurveyStatusInProgress, updated.Status)
 	suite.NotNil(updated.ModifiedBy)
 	suite.Equal(suite.testConfigs.Principal.Account().ID, *updated.ModifiedBy)
+
+	// Plan task should now be IN_PROGRESS
+	task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
+	suite.Equal(models.PlanTaskStatusInProgress, task.Status)
+
+	// Transition to COMPLETE and verify the plan task follows
+	_, err = WaiverAssessmentSurveyUpdate(ctx, survey.ID, map[string]interface{}{
+		"status": models.WaiverAssessmentSurveyStatusComplete,
+	})
+	suite.NoError(err)
+
+	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
+	suite.Equal(models.PlanTaskStatusComplete, task.Status)
+}
+
+// TestWaiverAssessmentSurveyAutoTransition verifies that saving any answer without an explicit
+// status automatically moves the survey from READY to IN_PROGRESS.
+func (suite *ResolverSuite) TestWaiverAssessmentSurveyAutoTransition() {
+	plan := suite.createModelPlan("Test Waiver Assessment Survey Auto Transition")
+
+	survey, err := WaiverAssessmentSurveyGetByModelPlanID(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.Equal(models.WaiverAssessmentSurveyStatusReady, survey.Status)
+
+	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
+
+	// Save an answer without sending status
+	updated, err := WaiverAssessmentSurveyUpdate(ctx, survey.ID, map[string]interface{}{
+		"bundlesPayments": helpers.PointerTo(true),
+	})
+	suite.NoError(err)
+	suite.Equal(models.WaiverAssessmentSurveyStatusInProgress, updated.Status)
+
+	task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
+	suite.Equal(models.PlanTaskStatusInProgress, task.Status)
 }
 
 // TestWaiversNotPreCreatedWithModelPlan verifies that no waiver rows are pre-created when a
