@@ -12,7 +12,7 @@ import (
 )
 
 // S3TestClient returns an S3Test client for testing
-func S3TestClient(viperConfig *viper.Viper) s3.S3Client {
+func S3TestClient(viperConfig *viper.Viper) *s3.S3Client {
 
 	s3Cfg := s3.Config{
 		Bucket:  viperConfig.GetString(appconfig.AWSS3FileUploadBucket),
@@ -28,7 +28,7 @@ func S3TestClient(viperConfig *viper.Viper) s3.S3Client {
 }
 
 // S3TestECHIMPClient returns an ECHIMPClient client for testing
-func S3TestECHIMPClient(viperConf *viper.Viper) s3.S3Client {
+func S3TestECHIMPClient(viperConf *viper.Viper) *s3.S3Client {
 
 	s3Cfg := s3.Config{
 		Bucket:  viperConf.GetString(appconfig.AWSS3ECHIMPBucket),

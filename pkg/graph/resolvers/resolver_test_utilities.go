@@ -52,7 +52,7 @@ func GetDefaultTestConfigs() *TestConfigs {
 	return &tc
 }
 
-func createS3Client(viperConfig *viper.Viper) s3.S3Client {
+func createS3Client(viperConfig *viper.Viper) *s3.S3Client {
 
 	s3Cfg := s3.Config{
 		Bucket:  viperConfig.GetString(appconfig.AWSS3FileUploadBucket),
@@ -83,8 +83,8 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.ZapLogger = logging.NewZapLogger(logger)
 	tc.UserInfo = userInfo
 	tc.Store = store
-	tc.S3Client = &s3Client
-	tc.EChimpS3Client = &eChimpS3Client
+	tc.S3Client = s3Client
+	tc.EChimpS3Client = eChimpS3Client
 	tc.PubSub = ps
 	tc.viperConfig = viperConfig
 

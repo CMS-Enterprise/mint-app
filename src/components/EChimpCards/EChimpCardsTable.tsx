@@ -22,8 +22,9 @@ import usePagination from 'hooks/usePagination';
 
 import EChimpCard from './EChimpCard';
 
-export type EchimpCrAndTdlsType =
-  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
+export type EchimpCrAndTdlsType = NonNullable<
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs']
+>[number];
 
 // Typeguard to determine if the solution is a CR or TDL
 const isEChimpCR = (solution: EchimpCrAndTdlsType): solution is EChimpCr => {

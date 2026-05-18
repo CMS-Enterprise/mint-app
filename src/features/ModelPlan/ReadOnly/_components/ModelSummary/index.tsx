@@ -19,12 +19,13 @@ type CollaboratorsType = GetModelSummaryQuery['modelPlan']['collaborators'][0];
 type CharacteristicsType =
   GetModelSummaryQuery['modelPlan']['generalCharacteristics'];
 
-type EchimpCrAndTdlsType =
-  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
+type EchimpCrAndTdlsType = NonNullable<
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs']
+>[number];
 
 type ModelSummaryProps = {
   characteristics: CharacteristicsType;
-  crTdls: EchimpCrAndTdlsType[] | null;
+  crTdls?: EchimpCrAndTdlsType[];
   goal: string;
   loading: boolean;
   modelLeads: CollaboratorsType[];

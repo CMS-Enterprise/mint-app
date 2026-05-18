@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SolutionPanel from 'features/ModelPlan/ReadOnly/MTOSolutions/SolutionPanel';
@@ -7,12 +7,10 @@ import Sidepanel from 'components/Sidepanel';
 
 interface MTOSolutionPanelContextType {
   openViewSolutionModal: (solutionID: string) => void;
-  setViewSolutionID: (solutionID: string) => void;
 }
 
 const MTOSolutionPanelContext = createContext<MTOSolutionPanelContextType>({
-  openViewSolutionModal: () => {},
-  setViewSolutionID: () => {}
+  openViewSolutionModal: () => {}
 });
 
 const MTOSolutionPanelProvider = ({
@@ -31,14 +29,6 @@ const MTOSolutionPanelProvider = ({
 
   const [isModalOpen, setIsModalOpen] = useState(!!solutionParam);
 
-  const [solutionID, setViewSolutionID] = useState<string>('');
-
-  useEffect(() => {
-    if (solutionParam === solutionID) {
-      setIsModalOpen(true);
-    }
-  }, [solutionParam, solutionID, setIsModalOpen]);
-
   const closeModal = () => {
     params.delete('view-solution');
     navigate({ search: params.toString() });
@@ -54,8 +44,7 @@ const MTOSolutionPanelProvider = ({
   return (
     <MTOSolutionPanelContext.Provider
       value={{
-        openViewSolutionModal,
-        setViewSolutionID
+        openViewSolutionModal
       }}
     >
       <>

@@ -59,8 +59,8 @@ func (config *Base) GetDefaults(ctxCallbacks ...func(context.Context) context.Co
 	config.Logger = logger
 	config.UserInfo = userInfo
 	config.Store = store
-	config.S3Client = &s3Client
-	config.EChimpS3Client = &eChimpS3Client
+	config.S3Client = s3Client
+	config.EChimpS3Client = eChimpS3Client
 	config.PubSub = ps
 
 	config.Context = appcontext.WithLogger(context.Background(), config.Logger)

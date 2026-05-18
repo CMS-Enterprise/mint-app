@@ -84,19 +84,14 @@ func (r *modelPlanResolver) SuggestedPhase(ctx context.Context, obj *models.Mode
 
 // IsFavorite is the resolver for the isFavorite field.
 func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
-	// TODO: should this be a data loader?
 	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return IsPlanFavorited(logger, principal, r.store, obj.ID)
+	return IsPlanFavorited(ctx, principal.Account().ID, obj.ID)
 }
 
 // IsCollaborator is the resolver for the isCollaborator field.
 func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error) {
 	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return IsPlanCollaborator(logger, principal, r.store, obj.ID)
+	return IsPlanCollaborator(ctx, principal.Account().ID, obj.ID)
 }
 
 // Crs is the resolver for the crs field.
@@ -113,10 +108,9 @@ func (r *modelPlanResolver) Tdls(ctx context.Context, obj *models.ModelPlan) ([]
 
 // EchimpCRsAndTDLs is the resolver for the echimpCRsAndTDLs field.
 func (r *modelPlanResolver) EchimpCRsAndTDLs(ctx context.Context, obj *models.ModelPlan) ([]models.EChimpCRAndTDLS, error) {
-	// TODO Update to use flag value to conditionally use SQL/DB calls instead of S3 ECHIMP Cache
 	logger := appcontext.ZLogger(ctx)
 
-	return GetEchimpCRAndTdlsByModelPlanID(r.echimpS3Client, r.viperConfig, logger, obj.ID)
+	return GetEchimpCRAndTdlsByModelPlanID(ctx, r.echimpS3Client, r.viperConfig, logger, obj.ID)
 }
 
 // PrepareForClearance is the resolver for the prepareForClearance field.
@@ -221,7 +215,7 @@ func (r *queryResolver) ModelPlanCollection(ctx context.Context, filter model.Mo
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return ModelPlanCollection(r.echimpS3Client, r.viperConfig, logger, principal, r.store, filter)
+	return ModelPlanCollection(ctx, r.echimpS3Client, r.viperConfig, logger, principal, r.store, filter)
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.

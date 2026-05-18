@@ -24,6 +24,7 @@ const collaborationArea = {
   heading: 'Model collaboration area',
   modelPlan: 'for {{modelName}}',
   errorHeading: 'Failed to fetch model plan',
+  partialErrorHeading: 'Failed to fetch some data',
   errorMessage: 'Please try again',
   switchToReadView: 'Switch to the Read View for the model',
   updateStatus: 'Update model status',

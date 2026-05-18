@@ -119,7 +119,7 @@ type ModelPlan {
   isCollaborator: Boolean!
   crs: [PlanCR!]!
   tdls: [PlanTDL!]!
-  echimpCRsAndTDLs: [EChimpCRAndTDLS!]!
+  echimpCRsAndTDLs: [EChimpCRAndTDLS!]
   prepareForClearance: PrepareForClearance!
   nameHistory(sort: SortDirection! = DESC): [String!]!
   previousSuggestedPhase: ModelPhase

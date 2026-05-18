@@ -19,7 +19,7 @@ exports[`CompletionModal Component > matches the snapshot for On Track state 1`]
     class="ReactModalPortal"
   >
     <div
-      class="ReactModal__Overlay mint-modal__overlay"
+      class="ReactModal__Overlay mint-modal__overlay z-top"
     >
       <div
         aria-modal="true"
@@ -77,7 +77,7 @@ exports[`CompletionModal Component > matches the snapshot for On Track state 1`]
                 >
                   Solutions and IT systems tab
                 </a>
-                 of your MTO to update their details.
+                 of your MTO to update their details or mark them as complete from within the milestone details panel.
               </p>
               <div
                 class="margin-top-2 display-flex mint-modal__footer"

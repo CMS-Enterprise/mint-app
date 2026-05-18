@@ -273,9 +273,7 @@ export const columns: ColumnType[] = [
       readView,
       numberOfMilestones
     }: ExtendedRowProps) => {
-      const { openEditMilestoneModal, setMilestoneID } = useContext(
-        MTOMilestonePanelContext
-      );
+      const { openEditMilestoneModal } = useContext(MTOMilestonePanelContext);
 
       if (readView && rowType === 'milestone') {
         return (
@@ -285,7 +283,6 @@ export const columns: ColumnType[] = [
             className="mint-print-link line-height-normal"
             onClick={() => {
               openEditMilestoneModal(row.id);
-              setMilestoneID(row.id);
             }}
           >
             <span className="text-bold">{row.name} </span>
@@ -372,9 +369,7 @@ export const columns: ColumnType[] = [
       readView,
       numberOfMilestones
     }: ExtendedRowProps) => {
-      const { openViewSolutionModal, setViewSolutionID } = useContext(
-        MTOSolutionPanelContext
-      );
+      const { openViewSolutionModal } = useContext(MTOSolutionPanelContext);
 
       if (rowType !== 'milestone') return <></>;
       if (isMilestoneType(row)) {
@@ -426,7 +421,6 @@ export const columns: ColumnType[] = [
                     className="mint-print-link"
                     onClick={() => {
                       openViewSolutionModal(solution.id);
-                      setViewSolutionID(solution.id);
                     }}
                   >
                     <span className="margin-right-05">
