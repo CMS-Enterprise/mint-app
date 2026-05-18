@@ -106,4 +106,16 @@ const MODEL_PLAN_QUESTIONS: QuestionType[][] = [
   ]
 ];
 
+export const MULTI_SELECT_WITH_OTHER: Partial<
+  Record<
+    QuestionFieldType,
+    | 'resemblesExistingModelOtherSelected'
+    | 'participationInModelPreconditionOtherSelected'
+  >
+> = {
+  resemblesExistingModelLinks: 'resemblesExistingModelOtherSelected',
+  participationInModelPreconditionLinks:
+    'participationInModelPreconditionOtherSelected'
+};
+
 export default MODEL_PLAN_QUESTIONS;

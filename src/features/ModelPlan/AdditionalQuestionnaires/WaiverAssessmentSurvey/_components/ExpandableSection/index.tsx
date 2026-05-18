@@ -39,6 +39,7 @@ import {
   ModelPlanQuestionsFormTypeWithLinks
 } from '../ModelPlanQuestionsForm';
 import {
+  MULTI_SELECT_WITH_OTHER,
   QuestionFieldType,
   QuestionType
 } from '../ModelPlanQuestionsForm/questionMap';
@@ -382,7 +383,18 @@ const ModelPlanQuestionItem = ({
                             ? field.value
                             : []) as string[]
                         }
-                        onChange={field.onChange}
+                        onChange={values => {
+                          const hasSelectedOther = values.includes('Other');
+
+                          const otherField =
+                            MULTI_SELECT_WITH_OTHER[field.name];
+
+                          if (otherField) {
+                            setValue(otherField, hasSelectedOther);
+                          }
+
+                          field.onChange(values);
+                        }}
                       />
                     )}
                   </Fieldset>
