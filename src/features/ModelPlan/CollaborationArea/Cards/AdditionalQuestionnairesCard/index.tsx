@@ -10,22 +10,16 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import {
-  DataExchangeApproachStatus,
-  GetCollaborationAreaQuery,
-  IddocQuestionnaireTaskListStatus,
-  WaiverAssessmentSurveyStatus
-} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import {
+  Questionnaire,
+  QuestionnaireName,
+  QuestionnairesStatusType,
+  QuestionnairesType
+} from 'types/questionnaires';
 
 import '../cards.scss';
-
-export type QuestionnairesType =
-  GetCollaborationAreaQuery['modelPlan']['questionnaires'];
-
-type QuestionnaireName = keyof Omit<QuestionnairesType, '__typename'>;
-type Questionnaire = Omit<QuestionnairesType, '__typename'>[QuestionnaireName];
 
 type QuestionnaireRow = {
   name: QuestionnaireName;
@@ -36,11 +30,6 @@ export type AdditionalQuestionnairesCardType = {
   modelID: string;
   questionnairesData: QuestionnairesType;
 };
-
-export type QuestionnairesStatusType =
-  | DataExchangeApproachStatus
-  | IddocQuestionnaireTaskListStatus
-  | WaiverAssessmentSurveyStatus;
 
 const REQUIRED_QUESTIONNAIRES: QuestionnaireName[] = [
   'dataExchangeApproach',
