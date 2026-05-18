@@ -101,6 +101,26 @@ export const waiverAssessmentSurveyRoutes = {
     {
       path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/model-plan-questions',
       element: <ModelPlanQuestions />
+    },
+    {
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicare-payment-waivers',
+      element: <>Medicare payment waivers</>
+    },
+    {
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/program-waivers',
+      element: <>Program waivers - Medicare Benefit Enhancements (BEs)</>
+    },
+    {
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicaid-payment-waivers',
+      element: <>Medicaid payment waivers</>
+    },
+    {
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation',
+      element: <>Waiver selection and confirmation</>
+    },
+    {
+      path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/confirm-your-waiver-selections',
+      element: <>Confirm your waiver selections</>
     }
   ]
 };

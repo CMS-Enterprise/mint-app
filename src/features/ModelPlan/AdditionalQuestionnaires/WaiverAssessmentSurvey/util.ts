@@ -1,5 +1,3 @@
-import { ExistingModelLink } from 'gql/generated/graphql';
-
 import {
   isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren
@@ -30,23 +28,7 @@ export const formattedValue = ({
 
   if (Array.isArray(rawValue) && rawValue.length === 0) return '';
 
-  const isLinkKey =
-    key === 'resemblesExistingModelWhich' ||
-    key === 'participationInModelPreconditionWhich';
-
-  let valueInArray: any[];
-
-  if (isLinkKey && typeof rawValue === 'object') {
-    const linkData = rawValue as { links: ExistingModelLink[] };
-
-    valueInArray = linkData.links.map(
-      (link: ExistingModelLink) =>
-        link.existingModelID || link.currentModelPlanID
-    );
-  } else {
-    valueInArray = Array.isArray(rawValue) ? rawValue : [rawValue];
-  }
-
+  const valueInArray = Array.isArray(rawValue) ? rawValue : [rawValue];
   const config = combinedConfig[key];
 
   const labels = valueInArray.map(val => {
