@@ -20,7 +20,7 @@ exports[`AboutWaiverAssessmentSurvey > renders correctly and matches snapshot 1`
       </div>
     </div>
     <p
-      class="margin-top-0"
+      class="margin-top-neg-1"
     >
       This survey will help determine which specific waivers are most appropriate for your model, ensure proper justification for waiver selections, and identify any instances where standard CMS authorities may be sufficient without additional waiver flexibility.
     </p>
