@@ -71,7 +71,6 @@ const (
 	TNMTOMilestoneNote                 TableName = "mto_milestone_note"
 	TNKeyContact                       TableName = "key_contact"
 	TNKeyContactCategory               TableName = "key_contact_category"
-	TNWaiverAssessmentSurvey           TableName = "waiver_assessment_survey"
 	TNWaiver                           TableName = "waiver"
 	TNSuggestedWaiver                  TableName = "suggested_waiver"
 	TNCommonWaiver                     TableName = "common_waiver"
