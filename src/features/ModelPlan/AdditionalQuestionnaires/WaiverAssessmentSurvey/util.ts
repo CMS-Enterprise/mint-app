@@ -103,6 +103,7 @@ export const formattedValue = ({
 
   return labels
     .filter(label => label !== undefined && label !== null && label !== '')
+    .sort((a, b) => a.localeCompare(b))
     .join(', ');
 };
 
