@@ -1,7 +1,6 @@
 package resolvers
 
 import (
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -36,8 +35,6 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	suite.NoError(err)
 	suite.NotNil(survey)
 
-	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
-
 	// Update fields and transition to IN_PROGRESS
 	changes := map[string]interface{}{
 		"modifiesMedicareSavingsPrograms":        helpers.PointerTo(true),
@@ -47,7 +44,7 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 		"status":                                 models.WaiverAssessmentSurveyStatusInProgress,
 	}
 
-	updated, err := WaiverAssessmentSurveyUpdate(ctx, survey.ID, changes)
+	updated, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(updated)
 
@@ -68,9 +65,9 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	suite.Equal(models.PlanTaskStatusInProgress, task.Status)
 
 	// Transition to COMPLETE and verify the plan task follows
-	_, err = WaiverAssessmentSurveyUpdate(ctx, survey.ID, map[string]interface{}{
+	_, err = WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
 		"status": models.WaiverAssessmentSurveyStatusComplete,
-	})
+	}, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
@@ -86,12 +83,10 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyAutoTransition() {
 	suite.NoError(err)
 	suite.Equal(models.WaiverAssessmentSurveyStatusReady, survey.Status)
 
-	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
-
 	// Save an answer without sending status
-	updated, err := WaiverAssessmentSurveyUpdate(ctx, survey.ID, map[string]interface{}{
+	updated, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
 		"bundlesPayments": helpers.PointerTo(true),
-	})
+	}, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.Equal(models.WaiverAssessmentSurveyStatusInProgress, updated.Status)
 

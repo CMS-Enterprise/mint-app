@@ -5,8 +5,9 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
+	"go.uber.org/zap"
 
-	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -18,29 +19,22 @@ func WaiverAssessmentSurveyGetByModelPlanID(ctx context.Context, modelPlanID uui
 	return loaders.WaiverAssessmentSurvey.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
-// WaiverAssessmentSurveyGetByID returns a waiver assessment survey by ID using the store from the loaders
-func WaiverAssessmentSurveyGetByID(ctx context.Context, id uuid.UUID) (*models.WaiverAssessmentSurvey, error) {
-	logger := appcontext.ZLogger(ctx)
-	allLoaders, err := loaders.Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return storage.WaiverAssessmentSurveyGetByID(allLoaders.DataReader.Store, logger, id)
+// WaiverAssessmentSurveyGetByID returns a waiver assessment survey by ID
+func WaiverAssessmentSurveyGetByID(logger *zap.Logger, store *storage.Store, id uuid.UUID) (*models.WaiverAssessmentSurvey, error) {
+	return storage.WaiverAssessmentSurveyGetByID(store, logger, id)
 }
 
 // WaiverAssessmentSurveyUpdate applies changes to a waiver assessment survey and persists them.
 // The survey write and plan task status update are wrapped in a single transaction so they
 // cannot diverge if one succeeds and the other fails.
-func WaiverAssessmentSurveyUpdate(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.WaiverAssessmentSurvey, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
-
-	allLoaders, err := loaders.Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	store := allLoaders.DataReader.Store
-
+func WaiverAssessmentSurveyUpdate(
+	ctx context.Context,
+	logger *zap.Logger,
+	id uuid.UUID,
+	changes map[string]interface{},
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.WaiverAssessmentSurvey, error) {
 	return sqlutils.WithTransaction[models.WaiverAssessmentSurvey](
 		store,
 		func(tx *sqlx.Tx) (*models.WaiverAssessmentSurvey, error) {
@@ -79,27 +73,19 @@ func WaiversGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) ([]*mod
 	return loaders.Waiver.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
-// WaiverGetByID returns a waiver by ID via the store
-func WaiverGetByID(ctx context.Context, id uuid.UUID) (*models.Waiver, error) {
-	logger := appcontext.ZLogger(ctx)
-	allLoaders, err := loaders.Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	return storage.WaiverGetByID(allLoaders.DataReader.Store, logger, id)
+// WaiverGetByID returns a waiver by ID
+func WaiverGetByID(logger *zap.Logger, store *storage.Store, id uuid.UUID) (*models.Waiver, error) {
+	return storage.WaiverGetByID(store, logger, id)
 }
 
 // WaiverUpdate applies changes to a waiver row and persists them
-func WaiverUpdate(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.Waiver, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
-
-	allLoaders, err := loaders.Loaders(ctx)
-	if err != nil {
-		return nil, err
-	}
-	store := allLoaders.DataReader.Store
-
+func WaiverUpdate(
+	logger *zap.Logger,
+	id uuid.UUID,
+	changes map[string]interface{},
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.Waiver, error) {
 	existing, err := storage.WaiverGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
