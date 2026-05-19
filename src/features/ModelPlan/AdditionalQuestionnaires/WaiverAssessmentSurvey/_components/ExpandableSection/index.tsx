@@ -186,6 +186,35 @@ const ModelPlanQuestionItem = ({
     question === 'resemblesExistingModelLinks' ||
     question === 'participationInModelPreconditionLinks';
 
+  const handleCheckboxOnChange = ({
+    onChange,
+    option,
+    isChecked
+  }: {
+    onChange: (value: string[]) => void;
+    option: string;
+    isChecked: boolean;
+  }) => {
+    const newValue = isChecked
+      ? [...fieldValueArray, option]
+      : fieldValueArray.filter(v => v !== option);
+
+    onChange(newValue as unknown as string[]);
+
+    const isCmsCenters = question === 'cmsCenters';
+    const isCmmiOption = (option as CmsCenter) === CmsCenter.CMMI;
+
+    if (isCmsCenters && isCmmiOption && !isChecked) {
+      setValue('cmmiGroups', [], {
+        shouldDirty: true,
+        shouldValidate: true
+      });
+    }
+  };
+
+  /**
+   * Clean up all subfields values when a parent question value has changed.
+   */
   if (removedChildQuestionFields.length > 0) {
     removedChildQuestionFields.forEach(field => {
       setValue(
@@ -204,6 +233,8 @@ const ModelPlanQuestionItem = ({
     });
   }
 
+  /**
+   * Customize logic to clean up additionalModelCategories value base on primaryCategory */
   if (
     question === 'additionalModelCategories' &&
     primaryCategoryValue &&
@@ -213,10 +244,12 @@ const ModelPlanQuestionItem = ({
       value => value !== primaryCategoryValue
     );
 
-    setValue('additionalModelCategories', sanitizedCategories, {
-      shouldDirty: true,
-      shouldValidate: true
-    });
+    if (sanitizedCategories.length !== fieldValueArray.length) {
+      setValue('additionalModelCategories', sanitizedCategories, {
+        shouldDirty: true,
+        shouldValidate: true
+      });
+    }
   }
 
   if (!currentConfig) return null;
@@ -381,12 +414,13 @@ const ModelPlanQuestionItem = ({
                                 checked={fieldValueArray.includes(option)}
                                 value={option}
                                 onBlur={field.onBlur}
-                                onChange={e => {
-                                  const newValue = e.target.checked
-                                    ? [...fieldValueArray, option]
-                                    : fieldValueArray.filter(v => v !== option);
-                                  field.onChange(newValue);
-                                }}
+                                onChange={e =>
+                                  handleCheckboxOnChange({
+                                    onChange: field.onChange,
+                                    option,
+                                    isChecked: e.target.checked
+                                  })
+                                }
                                 icon={
                                   currentConfig.tooltips?.[option] ? (
                                     <Tooltip
