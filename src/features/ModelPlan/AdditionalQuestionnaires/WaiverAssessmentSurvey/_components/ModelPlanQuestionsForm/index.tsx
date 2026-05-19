@@ -60,7 +60,7 @@ export type ModelPlanQuestionsFormTypeWithLinks = Omit<
 export type CombinedConfigType = TranslationBasics &
   TranslationGeneralCharacteristics;
 
-const defaultFormValues: ModelPlanQuestionsFormTypeWithLinks = {
+export const defaultFormValues: ModelPlanQuestionsFormTypeWithLinks = {
   // --- Plan Basics ---
   basicsId: '',
   modelCategory: null,
@@ -77,12 +77,12 @@ const defaultFormValues: ModelPlanQuestionsFormTypeWithLinks = {
   resemblesExistingModelHow: '',
   resemblesExistingModelLinks: [],
   resemblesExistingModelOtherSpecify: '',
-  resemblesExistingModelOtherSelected: false,
+  resemblesExistingModelOtherSelected: null,
   resemblesExistingModelOtherOption: '',
   participationInModelPrecondition: null,
   participationInModelPreconditionLinks: [],
   participationInModelPreconditionOtherSpecify: '',
-  participationInModelPreconditionOtherSelected: false,
+  participationInModelPreconditionOtherSelected: null,
   participationInModelPreconditionOtherOption: '',
   participationInModelPreconditionWhyHow: '',
   keyCharacteristics: [],

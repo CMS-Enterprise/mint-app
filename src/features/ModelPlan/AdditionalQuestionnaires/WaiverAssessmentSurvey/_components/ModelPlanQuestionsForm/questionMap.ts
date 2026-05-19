@@ -1,25 +1,6 @@
-import {
-  TranslationBasics,
-  TranslationGeneralCharacteristics
-} from 'types/translation';
+import { ModelPlanQuestionsFormTypeWithLinks } from '.';
 
-import { ModelPlanQuestionsDataType } from '.';
-
-type BasicQuestionKey = Extract<
-  keyof TranslationBasics,
-  keyof ModelPlanQuestionsDataType
->;
-
-type GeneralQuestionKey = Extract<
-  keyof TranslationGeneralCharacteristics,
-  keyof ModelPlanQuestionsDataType
->;
-
-export type QuestionFieldType =
-  | BasicQuestionKey
-  | GeneralQuestionKey
-  | 'resemblesExistingModelLinks'
-  | 'participationInModelPreconditionLinks';
+export type QuestionFieldType = keyof ModelPlanQuestionsFormTypeWithLinks;
 
 export type QuestionType = {
   field: QuestionFieldType;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -36,6 +36,7 @@ import {
 import { getSubQuestionFields, getTranslationKey } from '../../util';
 import {
   CombinedConfigType,
+  defaultFormValues,
   ModelPlanQuestionsFormTypeWithLinks
 } from '../ModelPlanQuestionsForm';
 import {
@@ -133,8 +134,6 @@ const ModelPlanQuestionItem = ({
     name: question as FormFieldType
   });
 
-  if (!currentConfig) return null;
-
   const hasOptions = isTranslationFieldPropertiesWithOptions(currentConfig);
 
   const fieldValueArray = (
@@ -150,13 +149,47 @@ const ModelPlanQuestionItem = ({
 
   const kebabName = convertCamelCaseToKebabCase(question);
 
+  const subQuestionFields = getSubQuestionFields(question, fieldValue, config);
   const { childQuestionFields, optionsRelatedQuestionFields } =
-    getSubQuestionFields(question, fieldValue, config);
+    subQuestionFields;
+
+  const previousSubQuestionFields = useRef(subQuestionFields);
+
+  const removedChildQuestionFields =
+    previousSubQuestionFields.current.childQuestionFields.filter(
+      field => !childQuestionFields.includes(field)
+    );
+  const removedOptionsRelatedQuestionFields =
+    previousSubQuestionFields.current.optionsRelatedQuestionFields.filter(
+      field => !optionsRelatedQuestionFields.includes(field)
+    );
+
+  previousSubQuestionFields.current = subQuestionFields;
 
   const shouldUseComboOptions =
     question === 'existingModel' ||
     question === 'resemblesExistingModelLinks' ||
     question === 'participationInModelPreconditionLinks';
+
+  if (removedChildQuestionFields.length > 0) {
+    removedChildQuestionFields.forEach(field => {
+      setValue(
+        field,
+        defaultFormValues[field as keyof ModelPlanQuestionsFormTypeWithLinks]
+      );
+    });
+  }
+
+  if (removedOptionsRelatedQuestionFields.length > 0) {
+    removedOptionsRelatedQuestionFields.forEach(field => {
+      setValue(
+        field,
+        defaultFormValues[field as keyof ModelPlanQuestionsFormTypeWithLinks]
+      );
+    });
+  }
+
+  if (!currentConfig) return null;
 
   return (
     <FormGroup className="margin-top-4">
@@ -277,20 +310,22 @@ const ModelPlanQuestionItem = ({
                             ]
                         );
 
-                        const childFields = childQuestionFields.filter(cq => {
-                          if (
-                            isTranslationFieldPropertiesWithOptionsAndChildren(
-                              currentConfig
-                            )
-                          ) {
-                            const relations =
-                              currentConfig.childRelation?.[option];
-                            return relations?.some(
-                              (fn: any) => fn().gqlField === cq
-                            );
+                        const childFields = childQuestionFields.filter(
+                          child => {
+                            if (
+                              isTranslationFieldPropertiesWithOptionsAndChildren(
+                                currentConfig
+                              )
+                            ) {
+                              const relations =
+                                currentConfig.childRelation?.[option];
+                              return relations?.some(
+                                (fn: any) => fn().gqlField === child
+                              );
+                            }
+                            return false;
                           }
-                          return false;
-                        });
+                        );
 
                         return (
                           <div
