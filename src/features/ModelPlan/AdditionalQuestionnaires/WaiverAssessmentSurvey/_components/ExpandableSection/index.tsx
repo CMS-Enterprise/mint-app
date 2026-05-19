@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -189,42 +189,25 @@ const ModelPlanQuestionItem = ({
   /**
    * Clean up all subfields values when a parent question value has changed.
    */
-  if (removedChildQuestionFields.length > 0) {
-    removedChildQuestionFields.forEach(field => {
-      setValue(
-        field,
-        defaultFormValues[field as keyof ModelPlanQuestionsFormTypeWithLinks]
-      );
-    });
-  }
+  useEffect(() => {
+    const allRemovedFields = [
+      ...removedChildQuestionFields,
+      ...removedOptionsRelatedQuestionFields
+    ];
 
-  if (removedOptionsRelatedQuestionFields.length > 0) {
-    removedOptionsRelatedQuestionFields.forEach(field => {
-      setValue(
-        field,
-        defaultFormValues[field as keyof ModelPlanQuestionsFormTypeWithLinks]
-      );
-    });
-  }
-
-  /**
-   * Customize logic to clean up additionalModelCategories value base on primaryCategory */
-  if (
-    question === 'additionalModelCategories' &&
-    primaryCategoryValue &&
-    fieldValueArray.includes(primaryCategoryValue)
-  ) {
-    const sanitizedCategories = (fieldValueArray as ModelCategory[]).filter(
-      value => value !== primaryCategoryValue
-    );
-
-    if (sanitizedCategories.length !== fieldValueArray.length) {
-      setValue('additionalModelCategories', sanitizedCategories, {
-        shouldDirty: true,
-        shouldValidate: true
+    if (allRemovedFields.length > 0) {
+      allRemovedFields.forEach(field => {
+        setValue(
+          field,
+          defaultFormValues[field as keyof ModelPlanQuestionsFormTypeWithLinks]
+        );
       });
     }
-  }
+  }, [
+    removedChildQuestionFields,
+    removedOptionsRelatedQuestionFields,
+    setValue
+  ]);
 
   if (!currentConfig) return null;
 

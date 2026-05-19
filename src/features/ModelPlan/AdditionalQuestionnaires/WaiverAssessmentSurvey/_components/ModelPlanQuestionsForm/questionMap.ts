@@ -43,6 +43,7 @@ const MODEL_PLAN_QUESTIONS: QuestionType[][] = [
         {
           field: 'resemblesExistingModelLinks' // it is 'resemblesExistingModelWhich' in translation file
         },
+        { field: 'resemblesExistingModelOtherOption' },
         {
           field: 'resemblesExistingModelHow'
         },

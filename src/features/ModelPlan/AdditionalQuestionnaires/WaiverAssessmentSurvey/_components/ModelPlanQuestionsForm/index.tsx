@@ -11,6 +11,7 @@ import {
   useUpdateModelPlanQuestionsMutation
 } from 'gql/generated/graphql';
 
+import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import FormFooter from 'components/FormFooter';
 import MutationErrorModal from 'components/MutationErrorModal';
 import { useErrorMessage } from 'contexts/ErrorContext';
@@ -333,6 +334,35 @@ const ModelPlanQuestionsForm = ({
 
   /** Below useEffect handles manually sub field value clean up upon parent field change */
   useEffect(() => {
+    const primaryCategory = liveFormData?.modelCategory;
+    const additionalCategories = liveFormData?.additionalModelCategories || [];
+
+    if (primaryCategory && additionalCategories.includes(primaryCategory)) {
+      const sanitizedCategories = additionalCategories.filter(
+        category => category !== primaryCategory
+      );
+
+      setValue('additionalModelCategories', sanitizedCategories, {
+        shouldDirty: true,
+        shouldValidate: true
+      });
+    }
+  }, [
+    liveFormData?.modelCategory,
+    liveFormData?.additionalModelCategories,
+    setValue
+  ]);
+
+  useEffect(() => {
+    const cmsCenters = liveFormData?.cmsCenters || [];
+    const cmmiGroups = liveFormData?.cmmiGroups || [];
+
+    if (!cmsCenters.includes(CmsCenter.CMMI) && cmmiGroups.length > 0) {
+      setValue('cmmiGroups', [], { shouldDirty: true });
+    }
+  }, [liveFormData?.cmsCenters, liveFormData?.cmmiGroups, setValue]);
+
+  useEffect(() => {
     const geographiesTargeted = liveFormData?.geographiesTargeted;
 
     const hasTypes = liveFormData?.geographiesTargetedTypes?.length > 0;
@@ -359,16 +389,16 @@ const ModelPlanQuestionsForm = ({
       setValue('geographiesTargetedAppliedTo', [], { shouldDirty: true });
       setValue('geographiesTargetedAppliedToOther', '', { shouldDirty: true });
     }
-  }, [liveFormData, setValue]);
-
-  useEffect(() => {
-    const cmsCenters = liveFormData?.cmsCenters || [];
-    const cmmiGroups = liveFormData?.cmmiGroups || [];
-
-    if (!cmsCenters.includes(CmsCenter.CMMI) && cmmiGroups.length > 0) {
-      setValue('cmmiGroups', [], { shouldDirty: true });
-    }
-  }, [liveFormData, setValue]);
+  }, [
+    liveFormData?.geographiesTargeted,
+    liveFormData?.geographiesTargetedTypes,
+    liveFormData?.geographiesStatesAndTerritories,
+    liveFormData?.geographiesRegionTypes,
+    liveFormData?.geographiesTargetedTypesOther,
+    liveFormData?.geographiesTargetedAppliedTo,
+    liveFormData?.geographiesTargetedAppliedToOther,
+    setValue
+  ]);
 
   return (
     <FormProvider {...methods}>
@@ -390,6 +420,8 @@ const ModelPlanQuestionsForm = ({
           )
         )}
       >
+        <ConfirmLeaveRHF />
+
         <div className="display-flex bg-base-lightest padding-3 flex-column">
           {MODEL_PLAN_QUESTIONS.map((questionGroup, index) => (
             <div

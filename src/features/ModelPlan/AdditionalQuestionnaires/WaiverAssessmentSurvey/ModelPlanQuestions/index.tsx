@@ -5,6 +5,7 @@ import { useGetModelPlanQuestionsQuery } from 'gql/generated/graphql';
 
 import { Alert } from 'components/Alert';
 import FormHeader from 'components/FormHeader';
+import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
 
 import ModelPlanQuestionsForm from '../_components/ModelPlanQuestionsForm';
@@ -88,7 +89,7 @@ const ModelPlanQuestions = () => {
           currentPage={2}
           totalPages={7}
         />
-        <p className="margin-top-neg-1 margin-bottom-4">
+        <p className="margin-top-neg-1 margin-bottom-4 text-base-dark">
           {waiverAssessmentSurveyT('modelPlanQuestions.description')}
         </p>
       </div>
@@ -109,6 +110,8 @@ const ModelPlanQuestions = () => {
             />
           )}
       </div>
+
+      <PageNumber currentPage={2} totalPages={7} className="margin-y-6" />
     </div>
   );
 };

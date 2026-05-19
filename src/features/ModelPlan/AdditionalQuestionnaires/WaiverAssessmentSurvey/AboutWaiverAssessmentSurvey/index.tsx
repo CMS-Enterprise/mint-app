@@ -16,6 +16,9 @@ const AboutWaiverAssessmentSurvey = () => {
     'waiverAssessmentSurvey'
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -121,7 +124,7 @@ const AboutWaiverAssessmentSurvey = () => {
               <Avatar
                 user={collaborator.userAccount.commonName}
                 teamRoles={[TeamRole.MODEL_LEAD]}
-                className="margin-y-2"
+                className="margin-y-1"
                 key={collaborator.userAccount.id}
               />
             ))}
@@ -166,7 +169,7 @@ const AboutWaiverAssessmentSurvey = () => {
           aria-label="back"
         />
 
-        {miscellaneousT('returnToCollaborationArea')}
+        {additionalQuestionnairesT('returnToQuestionnaires')}
       </Button>
 
       <PageNumber currentPage={1} totalPages={7} className="margin-y-6" />

@@ -23,6 +23,10 @@ export default gql(/* GraphQL */ `
     updatePlanBasics(id: $basicsId, changes: $basicsChanges)
       @include(if: $withBasics) {
       id
+      modelCategory
+      additionalModelCategories
+      cmsCenters
+      cmmiGroups
     }
 
     updatePlanGeneralCharacteristics(
@@ -30,6 +34,23 @@ export default gql(/* GraphQL */ `
       changes: $generalCharacteristicsChanges
     ) @include(if: $withGeneralCharacteristics) {
       id
+      resemblesExistingModel
+      resemblesExistingModelOtherOption
+      resemblesExistingModelHow
+      resemblesExistingModelWhyHow
+      resemblesExistingModelOtherSpecify
+      participationInModelPrecondition
+      participationInModelPreconditionWhyHow
+      participationInModelPreconditionOtherOption
+      participationInModelPreconditionOtherSpecify
+      participationInModelPreconditionOtherSelected
+      geographiesTargeted
+      geographiesTargetedTypes
+      geographiesStatesAndTerritories
+      geographiesRegionTypes
+      geographiesTargetedTypesOther
+      geographiesTargetedAppliedTo
+      geographiesTargetedAppliedToOther
     }
 
     updateResemblesLinks: updateExistingModelLinks(

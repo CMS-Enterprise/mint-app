@@ -22,6 +22,7 @@ const iddocQuestionnaireStatus: Record<
 const additionalQuestionnaires = {
   heading: 'Additional questionnaires',
   returnToCollaboration: 'Return to model collaboration area',
+  returnToQuestionnaires: 'Return to questionnaires',
   sideNav: {
     relatedContent: 'Related content',
     articles: [
