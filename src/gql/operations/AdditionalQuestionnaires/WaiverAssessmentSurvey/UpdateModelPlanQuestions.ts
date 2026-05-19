@@ -36,6 +36,7 @@ export default gql(/* GraphQL */ `
       id
       resemblesExistingModel
       resemblesExistingModelOtherOption
+      resemblesExistingModelOtherSelected
       resemblesExistingModelHow
       resemblesExistingModelWhyHow
       resemblesExistingModelOtherSpecify

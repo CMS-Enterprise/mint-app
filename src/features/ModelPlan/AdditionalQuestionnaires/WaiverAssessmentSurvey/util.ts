@@ -11,6 +11,7 @@ import {
   ModelPlanQuestionsFormTypeWithLinks
 } from './_components/ModelPlanQuestionsForm';
 import {
+  MULTI_SELECT_WITH_OTHER,
   QuestionFieldType,
   QuestionType
 } from './_components/ModelPlanQuestionsForm/questionMap';
@@ -167,6 +168,17 @@ export const getFormDiffs = (
     getGeneralCharacteristicsFormData(currentValues)
   );
 
+  const { existingModel } = generalCharacteristicsChanges;
+
+  if (existingModel === null || existingModel === '') {
+    generalCharacteristicsChanges.currentModelPlanID = null;
+    generalCharacteristicsChanges.existingModelID = null;
+  } else if (existingModel.includes('-')) {
+    generalCharacteristicsChanges.currentModelPlanID = existingModel;
+  } else {
+    generalCharacteristicsChanges.existingModelID = Number(existingModel);
+  }
+
   const resemblesChangesArray =
     generalCharacteristicsChanges.resemblesExistingModelLinks;
   const participationChangesArray =
@@ -296,4 +308,57 @@ export const getSubQuestionFields = (
   });
 
   return { childQuestionFields, optionsRelatedQuestionFields };
+};
+
+export const getDeepChildFields = (
+  fields: QuestionFieldType[],
+  config: CombinedConfigType
+): QuestionFieldType[] => {
+  const deepFields: QuestionFieldType[] = [];
+
+  fields.forEach(field => {
+    const fieldTranslationKey = getTranslationKey(field);
+    const childConfig = config[fieldTranslationKey as keyof CombinedConfigType];
+
+    const managedOtherField =
+      MULTI_SELECT_WITH_OTHER[field as keyof typeof MULTI_SELECT_WITH_OTHER];
+    if (managedOtherField) {
+      deepFields.push(managedOtherField as QuestionFieldType);
+    }
+
+    if (childConfig && isTranslationFieldPropertiesWithOptions(childConfig)) {
+      if (childConfig.optionsRelatedInfo) {
+        Object.values(childConfig.optionsRelatedInfo).forEach(relField => {
+          if (relField) {
+            deepFields.push(relField as QuestionFieldType);
+
+            deepFields.push(
+              ...getDeepChildFields([relField as QuestionFieldType], config)
+            );
+          }
+        });
+      }
+    }
+
+    if (
+      childConfig &&
+      isTranslationFieldPropertiesWithOptionsAndChildren(childConfig) &&
+      childConfig.childRelation
+    ) {
+      Object.values(childConfig.childRelation).forEach(relationFunctions => {
+        if (Array.isArray(relationFunctions)) {
+          relationFunctions.forEach((fn: any) => {
+            const childField = fn().gqlField as QuestionFieldType;
+            if (childField) {
+              deepFields.push(childField);
+
+              deepFields.push(...getDeepChildFields([childField], config));
+            }
+          });
+        }
+      });
+    }
+  });
+
+  return deepFields;
 };

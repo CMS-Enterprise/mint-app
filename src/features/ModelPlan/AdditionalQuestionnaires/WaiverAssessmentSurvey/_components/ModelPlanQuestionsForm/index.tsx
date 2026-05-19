@@ -79,12 +79,12 @@ export const defaultFormValues: ModelPlanQuestionsFormTypeWithLinks = {
   resemblesExistingModelHow: '',
   resemblesExistingModelLinks: [],
   resemblesExistingModelOtherSpecify: '',
-  resemblesExistingModelOtherSelected: null,
+  resemblesExistingModelOtherSelected: false,
   resemblesExistingModelOtherOption: '',
   participationInModelPrecondition: null,
   participationInModelPreconditionLinks: [],
   participationInModelPreconditionOtherSpecify: '',
-  participationInModelPreconditionOtherSelected: null,
+  participationInModelPreconditionOtherSelected: false,
   participationInModelPreconditionOtherOption: '',
   participationInModelPreconditionWhyHow: '',
   keyCharacteristics: [],
@@ -361,44 +361,6 @@ const ModelPlanQuestionsForm = ({
       setValue('cmmiGroups', [], { shouldDirty: true });
     }
   }, [liveFormData?.cmsCenters, liveFormData?.cmmiGroups, setValue]);
-
-  useEffect(() => {
-    const geographiesTargeted = liveFormData?.geographiesTargeted;
-
-    const hasTypes = liveFormData?.geographiesTargetedTypes?.length > 0;
-    const hasStates = liveFormData?.geographiesStatesAndTerritories?.length > 0;
-    const hasRegions = liveFormData?.geographiesRegionTypes?.length > 0;
-    const hasTypesOther = liveFormData?.geographiesTargetedTypesOther !== '';
-    const hasApplied = liveFormData?.geographiesTargetedAppliedTo?.length > 0;
-    const hasAppliedOther =
-      liveFormData?.geographiesTargetedAppliedToOther !== '';
-
-    if (
-      geographiesTargeted === false &&
-      (hasTypes ||
-        hasStates ||
-        hasRegions ||
-        hasTypesOther ||
-        hasApplied ||
-        hasAppliedOther)
-    ) {
-      setValue('geographiesTargetedTypes', [], { shouldDirty: true });
-      setValue('geographiesStatesAndTerritories', [], { shouldDirty: true });
-      setValue('geographiesRegionTypes', [], { shouldDirty: true });
-      setValue('geographiesTargetedTypesOther', '', { shouldDirty: true });
-      setValue('geographiesTargetedAppliedTo', [], { shouldDirty: true });
-      setValue('geographiesTargetedAppliedToOther', '', { shouldDirty: true });
-    }
-  }, [
-    liveFormData?.geographiesTargeted,
-    liveFormData?.geographiesTargetedTypes,
-    liveFormData?.geographiesStatesAndTerritories,
-    liveFormData?.geographiesRegionTypes,
-    liveFormData?.geographiesTargetedTypesOther,
-    liveFormData?.geographiesTargetedAppliedTo,
-    liveFormData?.geographiesTargetedAppliedToOther,
-    setValue
-  ]);
 
   return (
     <FormProvider {...methods}>

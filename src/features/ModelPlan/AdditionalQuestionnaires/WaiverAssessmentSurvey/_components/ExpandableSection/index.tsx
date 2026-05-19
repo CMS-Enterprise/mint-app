@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -34,7 +34,11 @@ import {
   convertCamelCaseToKebabCase
 } from 'utils/modelPlan';
 
-import { getSubQuestionFields, getTranslationKey } from '../../util';
+import {
+  getDeepChildFields,
+  getSubQuestionFields,
+  getTranslationKey
+} from '../../util';
 import {
   CombinedConfigType,
   defaultFormValues,
@@ -170,14 +174,28 @@ const ModelPlanQuestionItem = ({
 
   const previousSubQuestionFields = useRef(subQuestionFields);
 
-  const removedChildQuestionFields =
-    previousSubQuestionFields.current.childQuestionFields.filter(
-      field => !childQuestionFields.includes(field)
-    );
-  const removedOptionsRelatedQuestionFields =
-    previousSubQuestionFields.current.optionsRelatedQuestionFields.filter(
-      field => !optionsRelatedQuestionFields.includes(field)
-    );
+  const { removedChildQuestionFields, removedOptionsRelatedQuestionFields } =
+    useMemo(() => {
+      const immediateRemovedChildren =
+        previousSubQuestionFields.current.childQuestionFields.filter(
+          field => !childQuestionFields.includes(field)
+        );
+      const immediateRemovedOptions =
+        previousSubQuestionFields.current.optionsRelatedQuestionFields.filter(
+          field => !optionsRelatedQuestionFields.includes(field)
+        );
+
+      return {
+        removedChildQuestionFields: [
+          ...immediateRemovedChildren,
+          ...getDeepChildFields(immediateRemovedChildren, config)
+        ],
+        removedOptionsRelatedQuestionFields: [
+          ...immediateRemovedOptions,
+          ...getDeepChildFields(immediateRemovedOptions, config)
+        ]
+      };
+    }, [childQuestionFields, optionsRelatedQuestionFields, config]);
 
   previousSubQuestionFields.current = subQuestionFields;
 
@@ -482,7 +500,7 @@ const ModelPlanQuestionItem = ({
                   }
                   defaultValue={field.value ? String(field.value) : ''}
                   onChange={selectedValue => {
-                    field.onChange(selectedValue);
+                    field.onChange(selectedValue ?? null);
                   }}
                 />
               )}
