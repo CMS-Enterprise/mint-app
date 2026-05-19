@@ -13,6 +13,7 @@ import {
 } from '@trussworks/react-uswds';
 import {
   CmsCenter,
+  ModelCategory,
   TranslationDataType,
   TranslationFormType
 } from 'gql/generated/graphql';
@@ -134,6 +135,11 @@ const ModelPlanQuestionItem = ({
     name: question as FormFieldType
   });
 
+  const primaryCategoryValue = useWatch({
+    control,
+    name: 'modelCategory'
+  });
+
   const hasOptions = isTranslationFieldPropertiesWithOptions(currentConfig);
 
   const fieldValueArray = (
@@ -148,6 +154,15 @@ const ModelPlanQuestionItem = ({
       : '';
 
   const kebabName = convertCamelCaseToKebabCase(question);
+
+  const filteredOptions = hasOptions
+    ? getKeys(currentConfig.options).filter(option =>
+        question === 'additionalModelCategories'
+          ? (option as unknown as ModelCategory) !==
+            ModelCategory.TO_BE_DETERMINED
+          : true
+      )
+    : [];
 
   const subQuestionFields = getSubQuestionFields(question, fieldValue, config);
   const { childQuestionFields, optionsRelatedQuestionFields } =
@@ -189,6 +204,21 @@ const ModelPlanQuestionItem = ({
     });
   }
 
+  if (
+    question === 'additionalModelCategories' &&
+    primaryCategoryValue &&
+    fieldValueArray.includes(primaryCategoryValue)
+  ) {
+    const sanitizedCategories = (fieldValueArray as ModelCategory[]).filter(
+      value => value !== primaryCategoryValue
+    );
+
+    setValue('additionalModelCategories', sanitizedCategories, {
+      shouldDirty: true,
+      shouldValidate: true
+    });
+  }
+
   if (!currentConfig) return null;
 
   return (
@@ -219,7 +249,7 @@ const ModelPlanQuestionItem = ({
                   <Fieldset>
                     {formType === TranslationFormType.RADIO &&
                       !isDataBoolean &&
-                      getKeys(currentConfig.options).map(option => {
+                      filteredOptions.map(option => {
                         const relatedField = optionsRelatedQuestionFields.find(
                           otherQuestion =>
                             otherQuestion ===
@@ -301,7 +331,7 @@ const ModelPlanQuestionItem = ({
                       )}
 
                     {formType === TranslationFormType.CHECKBOX &&
-                      getKeys(currentConfig.options).map(option => {
+                      filteredOptions.map(option => {
                         const relatedField = optionsRelatedQuestionFields.find(
                           otherQuestion =>
                             otherQuestion ===
@@ -326,6 +356,11 @@ const ModelPlanQuestionItem = ({
                             return false;
                           }
                         );
+
+                        const isOptionDisabled =
+                          question === 'additionalModelCategories' &&
+                          (option as unknown as ModelCategory) ===
+                            primaryCategoryValue;
 
                         return (
                           <div
@@ -366,6 +401,7 @@ const ModelPlanQuestionItem = ({
                                     </Tooltip>
                                   ) : undefined
                                 }
+                                disabled={isOptionDisabled}
                               />
                             </div>
 
@@ -443,7 +479,7 @@ const ModelPlanQuestionItem = ({
                   data-testid={kebabName}
                   options={
                     hasOptions && !shouldUseComboOptions
-                      ? getKeys(currentConfig.options).map(option => ({
+                      ? filteredOptions.map(option => ({
                           value: option,
                           label:
                             currentConfig.options[
