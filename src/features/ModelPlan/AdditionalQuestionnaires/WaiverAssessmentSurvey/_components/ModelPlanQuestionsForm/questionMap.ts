@@ -7,6 +7,9 @@ export type QuestionType = {
   childRelation?: QuestionType[];
 };
 
+/** childRelation is a combination of translation config's childRelation and optionsRelatedInfo.
+ * this flatten structure allows for easier value display
+ * */
 const MODEL_PLAN_QUESTIONS: QuestionType[][] = [
   [
     { field: 'modelCategory' },
@@ -54,6 +57,7 @@ const MODEL_PLAN_QUESTIONS: QuestionType[][] = [
       field: 'participationInModelPrecondition',
       childRelation: [
         { field: 'participationInModelPreconditionLinks' }, // it is 'participationInModelPreconditionWhich' in translation file
+        { field: 'participationInModelPreconditionOtherOption' },
         { field: 'participationInModelPreconditionWhyHow' },
         { field: 'participationInModelPreconditionOtherSpecify' }
       ]
@@ -75,7 +79,11 @@ const MODEL_PLAN_QUESTIONS: QuestionType[][] = [
       field: 'geographiesTargeted',
       childRelation: [
         { field: 'geographiesTargetedTypes' },
-        { field: 'geographiesTargetedAppliedTo' }
+        { field: 'geographiesStatesAndTerritories' },
+        { field: 'geographiesRegionTypes' },
+        { field: 'geographiesTargetedTypesOther' },
+        { field: 'geographiesTargetedAppliedTo' },
+        { field: 'geographiesTargetedAppliedToOther' }
       ]
     }
   ],

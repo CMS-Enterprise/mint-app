@@ -1,10 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useBlocker, useNavigate, useParams } from 'react-router-dom';
 import { Form } from '@trussworks/react-uswds';
 import { isEmpty } from 'features/ModelPlan/ReadOnly/_components/ReadOnlySection/util';
 import {
+  CmsCenter,
   ExistingModelLinks,
   GetModelPlanQuestionsQuery,
   useUpdateModelPlanQuestionsMutation
@@ -23,8 +24,8 @@ import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import {
   formattedLabel,
   formattedValue,
-  getChildrenQuestions,
   getFormDiffs,
+  getMapChildrenQuestions,
   separateLinksByType
 } from '../../util';
 import ExpandableSection from '../ExpandableSection';
@@ -249,18 +250,6 @@ const ModelPlanQuestionsForm = ({
       currentValues
     );
 
-    // Manually wipe out geographiesTargeted related grandchildren questions if select no
-    if (generalCharacteristicsChanges.geographiesTargeted === false) {
-      Object.assign(generalCharacteristicsChanges, {
-        geographiesTargetedTypes: [],
-        geographiesStatesAndTerritories: [],
-        geographiesRegionTypes: [],
-        geographiesTargetedTypesOther: '',
-        geographiesTargetedAppliedTo: [],
-        geographiesTargetedAppliedToOther: ''
-      });
-    }
-
     let resemblesExistingModelIDs: number[] = [];
     let resemblesCurrentModelPlanIDs: string[] = [];
 
@@ -342,6 +331,45 @@ const ModelPlanQuestionsForm = ({
     return false;
   });
 
+  /** Below useEffect handles manually sub field value clean up upon parent field change */
+  useEffect(() => {
+    const geographiesTargeted = liveFormData?.geographiesTargeted;
+
+    const hasTypes = liveFormData?.geographiesTargetedTypes?.length > 0;
+    const hasStates = liveFormData?.geographiesStatesAndTerritories?.length > 0;
+    const hasRegions = liveFormData?.geographiesRegionTypes?.length > 0;
+    const hasTypesOther = liveFormData?.geographiesTargetedTypesOther !== '';
+    const hasApplied = liveFormData?.geographiesTargetedAppliedTo?.length > 0;
+    const hasAppliedOther =
+      liveFormData?.geographiesTargetedAppliedToOther !== '';
+
+    if (
+      geographiesTargeted === false &&
+      (hasTypes ||
+        hasStates ||
+        hasRegions ||
+        hasTypesOther ||
+        hasApplied ||
+        hasAppliedOther)
+    ) {
+      setValue('geographiesTargetedTypes', [], { shouldDirty: true });
+      setValue('geographiesStatesAndTerritories', [], { shouldDirty: true });
+      setValue('geographiesRegionTypes', [], { shouldDirty: true });
+      setValue('geographiesTargetedTypesOther', '', { shouldDirty: true });
+      setValue('geographiesTargetedAppliedTo', [], { shouldDirty: true });
+      setValue('geographiesTargetedAppliedToOther', '', { shouldDirty: true });
+    }
+  }, [liveFormData, setValue]);
+
+  useEffect(() => {
+    const cmsCenters = liveFormData?.cmsCenters || [];
+    const cmmiGroups = liveFormData?.cmmiGroups || [];
+
+    if (!cmsCenters.includes(CmsCenter.CMMI) && cmmiGroups.length > 0) {
+      setValue('cmmiGroups', [], { shouldDirty: true });
+    }
+  }, [liveFormData, setValue]);
+
   return (
     <FormProvider {...methods}>
       {isErrorModalOpen && (
@@ -371,7 +399,7 @@ const ModelPlanQuestionsForm = ({
               {questionGroup.map(questionConfig => {
                 const question = questionConfig.field;
 
-                const childrenQuestions = getChildrenQuestions(
+                const childrenQuestions = getMapChildrenQuestions(
                   questionConfig,
                   liveFormData
                 );

@@ -107,7 +107,8 @@ export const formattedValue = ({
     .join(', ');
 };
 
-export const getChildrenQuestions = (
+// This function is used to get children question from questionMap, not translationConfig
+export const getMapChildrenQuestions = (
   questionConfig: QuestionType,
   liveFormData: ModelPlanQuestionsFormTypeWithLinks
 ) => {

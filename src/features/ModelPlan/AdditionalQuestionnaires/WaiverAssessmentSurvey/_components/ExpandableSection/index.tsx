@@ -186,32 +186,6 @@ const ModelPlanQuestionItem = ({
     question === 'resemblesExistingModelLinks' ||
     question === 'participationInModelPreconditionLinks';
 
-  const handleCheckboxOnChange = ({
-    onChange,
-    option,
-    isChecked
-  }: {
-    onChange: (value: string[]) => void;
-    option: string;
-    isChecked: boolean;
-  }) => {
-    const newValue = isChecked
-      ? [...fieldValueArray, option]
-      : fieldValueArray.filter(v => v !== option);
-
-    onChange(newValue as unknown as string[]);
-
-    const isCmsCenters = question === 'cmsCenters';
-    const isCmmiOption = (option as CmsCenter) === CmsCenter.CMMI;
-
-    if (isCmsCenters && isCmmiOption && !isChecked) {
-      setValue('cmmiGroups', [], {
-        shouldDirty: true,
-        shouldValidate: true
-      });
-    }
-  };
-
   /**
    * Clean up all subfields values when a parent question value has changed.
    */
@@ -414,13 +388,13 @@ const ModelPlanQuestionItem = ({
                                 checked={fieldValueArray.includes(option)}
                                 value={option}
                                 onBlur={field.onBlur}
-                                onChange={e =>
-                                  handleCheckboxOnChange({
-                                    onChange: field.onChange,
-                                    option,
-                                    isChecked: e.target.checked
-                                  })
-                                }
+                                onChange={e => {
+                                  const newValue = e.target.checked
+                                    ? [...fieldValueArray, option]
+                                    : fieldValueArray.filter(v => v !== option);
+
+                                  field.onChange(newValue);
+                                }}
                                 icon={
                                   currentConfig.tooltips?.[option] ? (
                                     <Tooltip
@@ -469,6 +443,7 @@ const ModelPlanQuestionItem = ({
                     {formType === TranslationFormType.MULTISELECT && (
                       <MultiSelect
                         {...field}
+                        key={`${kebabName}-${Array.isArray(field.value) ? field.value.length : 0}`}
                         id={kebabName}
                         inputId={kebabName}
                         ariaLabel={currentConfig.label}
