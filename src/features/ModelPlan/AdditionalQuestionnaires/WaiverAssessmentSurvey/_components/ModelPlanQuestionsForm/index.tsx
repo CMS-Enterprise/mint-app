@@ -249,6 +249,18 @@ const ModelPlanQuestionsForm = ({
       currentValues
     );
 
+    // Manually wipe out geographiesTargeted related grandchildren questions if select no
+    if (generalCharacteristicsChanges.geographiesTargeted === false) {
+      Object.assign(generalCharacteristicsChanges, {
+        geographiesTargetedTypes: [],
+        geographiesStatesAndTerritories: [],
+        geographiesRegionTypes: [],
+        geographiesTargetedTypesOther: '',
+        geographiesTargetedAppliedTo: [],
+        geographiesTargetedAppliedToOther: ''
+      });
+    }
+
     let resemblesExistingModelIDs: number[] = [];
     let resemblesCurrentModelPlanIDs: string[] = [];
 
