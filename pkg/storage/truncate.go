@@ -71,7 +71,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		// common_waiver is seed/reference data and is not truncated)
 		string(models.TNSuggestedWaiver),
 		string(models.TNWaiver),
-		string(models.TNWaiverAssessmentSurvey),
+		"waiver_assessment_survey",
 
 		"audit.change",
 	}
