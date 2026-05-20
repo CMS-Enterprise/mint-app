@@ -154,7 +154,6 @@ type CTATRequest {
 
 input CTATRequestDocumentInput {
   fileData: Upload!
-  documentType: DocumentType!
 }
 
 input CTATRequestInput {

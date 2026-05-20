@@ -60,8 +60,7 @@ type CTATRequestDocument struct {
 }
 
 type CTATRequestDocumentInput struct {
-	FileData     graphql.Upload      `json:"fileData"`
-	DocumentType models.DocumentType `json:"documentType"`
+	FileData graphql.Upload `json:"fileData"`
 }
 
 type CTATRequestInput struct {

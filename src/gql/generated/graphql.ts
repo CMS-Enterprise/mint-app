@@ -402,7 +402,6 @@ export type CtatRequestDocument = {
 };
 
 export type CtatRequestDocumentInput = {
-  documentType: DocumentType;
   fileData: Scalars['Upload']['input'];
 };
 
