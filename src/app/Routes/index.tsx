@@ -24,6 +24,7 @@ import Login from 'features/Login';
 import AdditionalQuestionnaires from 'features/ModelPlan/AdditionalQuestionnaires';
 import { dataExchangeApproachRoutes } from 'features/ModelPlan/AdditionalQuestionnaires/DataExchangeApproach';
 import { iddocQuestionnaireRoutes } from 'features/ModelPlan/AdditionalQuestionnaires/IddocQuestionnaire';
+import { waiverAssessmentSurveyRoutes } from 'features/ModelPlan/AdditionalQuestionnaires/WaiverAssessmentSurvey';
 import ChangeHistory from 'features/ModelPlan/ChangeHistory';
 import CollaborationArea from 'features/ModelPlan/CollaborationArea';
 import { collaboratorsRoutes } from 'features/ModelPlan/Collaborators';
@@ -346,6 +347,9 @@ const router = createBrowserRouter([
 
       // IDDOC Questionnaire Routes
       iddocQuestionnaireRoutes,
+
+      // Waiver Assessment Survey Routes
+      waiverAssessmentSurveyRoutes,
 
       // Model to Operations Routes
       modelToOperationsRoutes,
