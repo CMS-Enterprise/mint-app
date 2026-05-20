@@ -1,10 +1,10 @@
-import React, { Fragment, useContext, useMemo } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Grid, GridContainer, Icon } from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
 import {
-  GetAllQuestionnairesQuery,
   GetLockedModelPlanSectionsQuery,
   LockableSection,
   useGetAllQuestionnairesQuery
@@ -21,6 +21,7 @@ import PageLoading from 'components/PageLoading';
 import SectionLock from 'components/SectionLock';
 import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { SubscriptionContext } from 'contexts/PageLockContext';
+import { QuestionnaireName } from 'types/questionnaires';
 import { formatDateLocal } from 'utils/date';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
@@ -37,6 +38,11 @@ const questionnaireSectionMap: Partial<Record<string, LockableSection>> = {
   iddocQuestionnaire: LockableSection.IDDOC_QUESTIONNAIRE
 };
 
+const QUESTIONNAIRE_DISPLAY_ORDER = [
+  'dataExchangeApproach',
+  'iddocQuestionnaire'
+] as const satisfies QuestionnaireName[];
+
 const AdditionalQuestionnaires = () => {
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -51,23 +57,13 @@ const AdditionalQuestionnaires = () => {
 
   const { modelName } = useContext(ModelInfoContext);
 
-  const { data, loading } = useGetAllQuestionnairesQuery({
+  const { data, loading, error } = useGetAllQuestionnairesQuery({
     variables: {
       id: modelID
     }
   });
 
-  const questionnaireSections = useMemo(() => {
-    if (!data || !data.modelPlan) {
-      return {} as GetAllQuestionnairesQuery['modelPlan']['questionnaires'];
-    }
-    const { __typename, ...questionnaire } = data.modelPlan.questionnaires;
-    return questionnaire;
-  }, [data]);
-
-  const questionnaireNames = Object.keys(
-    questionnaireSections
-  ) as (keyof typeof questionnaireSections)[];
+  const questionnaireSections = data?.modelPlan?.questionnaires;
 
   const getQuestionnaireLockedStatus = (
     section: string
@@ -77,12 +73,16 @@ const AdditionalQuestionnaires = () => {
     );
   };
 
+  if (loading) {
+    return <PageLoading />;
+  }
+
+  if (error || !questionnaireSections) {
+    return <NotFound />;
+  }
+
   // Helper to get the correct status field based on questionnaire type
-  const getQuestionnaireStatus = <
-    Key extends keyof typeof questionnaireSections
-  >(
-    key: Key
-  ) => {
+  const getQuestionnaireStatus = (key: QuestionnaireName) => {
     const questionnaire = questionnaireSections[key];
     // iddocQuestionnaire uses taskListStatus to include needed, others use status
     if ('taskListStatus' in questionnaire) {
@@ -90,10 +90,6 @@ const AdditionalQuestionnaires = () => {
     }
     return questionnaire.status;
   };
-
-  if (loading) {
-    return <PageLoading />;
-  }
 
   return (
     <MainContent
@@ -139,20 +135,13 @@ const AdditionalQuestionnaires = () => {
               data-testid="questionnaire-list"
               className="margin-top-6 margin-bottom-0 padding-left-0"
             >
-              {questionnaireNames.map((key, index) => {
+              {QUESTIONNAIRE_DISPLAY_ORDER.map((key, index) => {
                 const lockedStatus = getQuestionnaireLockedStatus(key);
 
                 return (
                   <Fragment key={key}>
                     <QuestionnaireListItem
-                      key={key}
-                      testId={`questionnaire-list-intake-form-${key}`}
-                      heading={additionalQuestionnairesT(
-                        `questionnairesList.${key}.heading`
-                      )}
-                      description={additionalQuestionnairesT(
-                        `questionnairesList.${key}.description`
-                      )}
+                      questionnaireName={key}
                       status={getQuestionnaireStatus(key)}
                     >
                       {questionnaireSections[key].modifiedDts &&
@@ -199,7 +188,7 @@ const AdditionalQuestionnaires = () => {
                         <SectionLock section={questionnaireSectionMap[key]} />
                       )}
                     </QuestionnaireListItem>
-                    {index < questionnaireNames.length - 1 && (
+                    {index < QUESTIONNAIRE_DISPLAY_ORDER.length - 1 && (
                       <Divider className="margin-bottom-4" />
                     )}
                   </Fragment>
