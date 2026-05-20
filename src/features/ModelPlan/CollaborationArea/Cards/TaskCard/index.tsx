@@ -115,7 +115,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
           {t(`${baseKey}.primaryAction`)}
         </Button>
         <UswdsReactLink
-          to={t(`${key}.secondaryPath`)}
+          to={t(`${key}.secondaryPath`, { modelID })}
           target="_blank"
           rel="noopener noreferrer"
           className={classNames('display-flex flex-align-center', {
