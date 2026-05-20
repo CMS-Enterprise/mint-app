@@ -170,7 +170,11 @@ export const getFormDiffs = (
 
   const { existingModel } = generalCharacteristicsChanges;
 
-  if (existingModel === null || existingModel === '') {
+  if (
+    existingModel === undefined ||
+    existingModel === null ||
+    existingModel === ''
+  ) {
     generalCharacteristicsChanges.currentModelPlanID = null;
     generalCharacteristicsChanges.existingModelID = null;
   } else if (existingModel.includes('-')) {
