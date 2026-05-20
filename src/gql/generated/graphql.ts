@@ -395,6 +395,7 @@ export type CtatRequest = {
   typeOfHelpNeededOther?: Maybe<Scalars['String']['output']>;
 };
 
+/** A supporting document attached to a CTAT request. */
 export type CtatRequestDocument = {
   __typename: 'CTATRequestDocument';
   bucket: Scalars['String']['output'];
@@ -416,10 +417,12 @@ export type CtatRequestDocument = {
   virusScanned: Scalars['Boolean']['output'];
 };
 
+/** Input for uploading a supporting document for a CTAT request. */
 export type CtatRequestDocumentInput = {
   fileData: Scalars['Upload']['input'];
 };
 
+/** Input for creating a CTAT request. */
 export type CtatRequestInput = {
   cmmiDivision: CtatcmmiDivisionOption;
   cmmiDivisionOther?: InputMaybe<Scalars['String']['input']>;

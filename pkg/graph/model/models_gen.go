@@ -54,6 +54,7 @@ type CTATRequest struct {
 	ModifiedDts               *time.Time                       `json:"modifiedDts,omitempty"`
 }
 
+// A supporting document attached to a CTAT request.
 type CTATRequestDocument struct {
 	ID                    uuid.UUID                   `json:"id"`
 	CtatRequestID         uuid.UUID                   `json:"ctatRequestId"`
@@ -74,10 +75,12 @@ type CTATRequestDocument struct {
 	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
 }
 
+// Input for uploading a supporting document for a CTAT request.
 type CTATRequestDocumentInput struct {
 	FileData graphql.Upload `json:"fileData"`
 }
 
+// Input for creating a CTAT request.
 type CTATRequestInput struct {
 	CmmiGroup                 models.CTATCMMIGroupOption       `json:"cmmiGroup"`
 	CmmiDivision              models.CTATCMMIDivisionOption    `json:"cmmiDivision"`

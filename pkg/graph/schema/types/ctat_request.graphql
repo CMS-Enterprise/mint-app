@@ -112,6 +112,9 @@ enum CTATHelpNeededType {
   OTHER
 }
 
+"""
+A supporting document attached to a CTAT request.
+"""
 type CTATRequestDocument {
   id: UUID!
   ctatRequestId: UUID!
@@ -170,10 +173,16 @@ type CTATRequest {
   modifiedDts: Time
 }
 
+"""
+Input for uploading a supporting document for a CTAT request.
+"""
 input CTATRequestDocumentInput {
   fileData: Upload!
 }
 
+"""
+Input for creating a CTAT request.
+"""
 input CTATRequestInput {
   cmmiGroup: CTATCMMIGroupOption!
   cmmiDivision: CTATCMMIDivisionOption!
