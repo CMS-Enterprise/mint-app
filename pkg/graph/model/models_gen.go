@@ -55,8 +55,23 @@ type CTATRequest struct {
 }
 
 type CTATRequestDocument struct {
-	FileName string  `json:"fileName"`
-	URL      *string `json:"url,omitempty"`
+	ID                    uuid.UUID                   `json:"id"`
+	CtatRequestID         uuid.UUID                   `json:"ctatRequestId"`
+	URL                   *string                     `json:"url,omitempty"`
+	FileType              string                      `json:"fileType"`
+	Bucket                string                      `json:"bucket"`
+	FileKey               string                      `json:"fileKey"`
+	VirusScanned          bool                        `json:"virusScanned"`
+	VirusClean            bool                        `json:"virusClean"`
+	Restricted            bool                        `json:"restricted"`
+	FileName              string                      `json:"fileName"`
+	FileSize              int                         `json:"fileSize"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
 }
 
 type CTATRequestDocumentInput struct {

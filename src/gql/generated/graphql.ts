@@ -397,8 +397,23 @@ export type CtatRequest = {
 
 export type CtatRequestDocument = {
   __typename: 'CTATRequestDocument';
+  bucket: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  ctatRequestId: Scalars['UUID']['output'];
+  fileKey: Scalars['String']['output'];
   fileName: Scalars['String']['output'];
+  fileSize: Scalars['Int']['output'];
+  fileType: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  restricted: Scalars['Boolean']['output'];
   url?: Maybe<Scalars['String']['output']>;
+  virusClean: Scalars['Boolean']['output'];
+  virusScanned: Scalars['Boolean']['output'];
 };
 
 export type CtatRequestDocumentInput = {

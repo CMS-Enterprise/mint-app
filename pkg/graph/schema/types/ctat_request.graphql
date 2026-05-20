@@ -113,8 +113,26 @@ enum CTATHelpNeededType {
 }
 
 type CTATRequestDocument {
-  fileName: String!
+  id: UUID!
+  ctatRequestId: UUID!
+
   url: String
+
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  restricted: Boolean!
+  fileName: String!
+  fileSize: Int!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 
   # TODO: fully implement
 }
