@@ -22,10 +22,7 @@ const OperationalSolutionsHelp = ({
   return (
     <div
       id={convertToLowercaseAndDashes(t('operationalSolutionsAndITSystems'))}
-      className={classNames(
-        className,
-        'padding-y-4 padding-bottom-6 bg-primary-darker text-white'
-      )}
+      className={classNames(className, '')}
       style={{ scrollMarginTop: '3.5rem' }}
     >
       <GridContainer>
