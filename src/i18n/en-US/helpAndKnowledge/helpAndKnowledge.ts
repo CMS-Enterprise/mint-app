@@ -2615,7 +2615,8 @@ const helpAndKnowledge = {
     'Get help with creating your Model Plan, drafting your model-to-operations matrix (MTO), and implementing IT systems and solutions for your model. Browse help articles, links to external resources, information about operational solutions and IT systems, and more.',
   jumpTo: 'Jump to',
   helpResourcesAndLinks: 'Help resources and links',
-  operationalSolutionsAndITSystems: 'Operational solutions and IT systems',
+  operationalSolutionsAndITSystems:
+    'Library of operational solutions and IT systems',
   read: 'Read',
   all: 'All help resources',
   helpCategories,
@@ -2664,10 +2665,10 @@ const helpAndKnowledge = {
       }
     }
   },
-  operationalSolutions: 'Operational solutions',
+  operationalSolutions: 'Library of operational solutions and IT systems',
   operationalSolutionsInfo:
     'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model design, development, and implementation.',
-  viewAllButton: 'View all operational solutions',
+  viewAllButton: 'View soluion library',
   learnMore: 'Learn more',
   browseCategories: 'Browse solutions by category',
   contact: 'Point of contact',
