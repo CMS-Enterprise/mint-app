@@ -148,7 +148,7 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
   });
 
   it('returns to solution details when closing milestone panel opened from solution', () => {
-    cy.contains('Solutions and IT systems').click({ force: true });
+    cy.contains('button', 'Solutions and IT systems').click({ force: true });
     cy.get('table').within(() => {
       cy.get('td')
         .contains(solutionName)
