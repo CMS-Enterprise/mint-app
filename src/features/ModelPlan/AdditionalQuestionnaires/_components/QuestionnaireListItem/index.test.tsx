@@ -7,6 +7,7 @@ import configureMockStore from 'redux-mock-store';
 import { modelID } from 'tests/mock/general';
 
 import { ASSESSMENT } from 'constants/jobCodes';
+import { QuestionnaireName } from 'types/questionnaires';
 
 import QuestionnaireListItem from './index';
 
@@ -20,10 +21,8 @@ const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuthAssessment });
 
 const mockProps = {
-  heading: 'Sample Heading',
-  description: 'Sample Description',
-  status: DataExchangeApproachStatus.READY,
-  testId: 'questionnaire-list-item'
+  questionnaireName: 'dataExchangeApproach' as QuestionnaireName,
+  status: DataExchangeApproachStatus.READY
 };
 
 describe('QuestionnaireListItem', () => {

@@ -1014,7 +1014,8 @@ export enum LockableSection {
   PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
   PAYMENT = 'PAYMENT',
   PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE',
-  TIMELINE = 'TIMELINE'
+  TIMELINE = 'TIMELINE',
+  WAIVER_ASSESSMENT_SURVEY = 'WAIVER_ASSESSMENT_SURVEY'
 }
 
 export type LockableSectionLockStatus = {
@@ -5974,7 +5975,6 @@ export type WaiverAssessmentSurveyChanges = {
   impactsSiteOfCarePayments?: InputMaybe<Scalars['Boolean']['input']>;
   impactsSiteOfCarePaymentsExample?: InputMaybe<Scalars['String']['input']>;
   impactsSiteOfCarePaymentsNote?: InputMaybe<Scalars['String']['input']>;
-  isComplete?: InputMaybe<Scalars['Boolean']['input']>;
   modifiesCareDeliveryWithClaimsBasedPayments?: InputMaybe<Scalars['Boolean']['input']>;
   modifiesCareDeliveryWithClaimsBasedPaymentsExample?: InputMaybe<Scalars['String']['input']>;
   modifiesCareDeliveryWithClaimsBasedPaymentsNote?: InputMaybe<Scalars['String']['input']>;
@@ -5990,6 +5990,7 @@ export type WaiverAssessmentSurveyChanges = {
   offersRiskSharingArrangements?: InputMaybe<Scalars['Boolean']['input']>;
   offersRiskSharingArrangementsExample?: InputMaybe<Scalars['String']['input']>;
   offersRiskSharingArrangementsNote?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<WaiverAssessmentSurveyStatus>;
 };
 
 /** WaiverAssessmentSurveyStatus represents the work completion status of a waiver assessment survey. */

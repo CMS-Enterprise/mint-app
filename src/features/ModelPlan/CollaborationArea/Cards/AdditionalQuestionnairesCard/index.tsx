@@ -10,31 +10,31 @@ import {
   Icon
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import {
-  DataExchangeApproachStatus,
-  GetCollaborationAreaQuery,
-  IddocQuestionnaireTaskListStatus,
-  WaiverAssessmentSurveyStatus
-} from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import {
+  Questionnaire,
+  QuestionnaireName,
+  QuestionnairesStatusType,
+  QuestionnairesType
+} from 'types/questionnaires';
 
 import '../cards.scss';
 
-export type QuestionnairesType =
-  GetCollaborationAreaQuery['modelPlan']['questionnaires'];
+type QuestionnaireRow = {
+  name: QuestionnaireName;
+  questionnaire: Questionnaire;
+};
 
 export type AdditionalQuestionnairesCardType = {
   modelID: string;
   questionnairesData: QuestionnairesType;
 };
 
-export type QuestionnairesStatusType =
-  | DataExchangeApproachStatus
-  | IddocQuestionnaireTaskListStatus
-  | WaiverAssessmentSurveyStatus;
-
-const REQUIRED_QUESTIONNAIRES = ['dataExchangeApproach'];
+const REQUIRED_QUESTIONNAIRES: QuestionnaireName[] = [
+  'dataExchangeApproach',
+  'waiverAssessmentSurvey'
+];
 
 const QuestionnaireStatusPill = ({
   status
@@ -89,7 +89,7 @@ const QuestionnaireStatusPill = ({
 
 const AdditionalQuestionnairesCard = ({
   modelID,
-  questionnairesData
+  questionnairesData: { __typename, ...questionnaires }
 }: AdditionalQuestionnairesCardType) => {
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
   const { t: additionalQuestionnairesT } = useTranslation(
@@ -98,39 +98,37 @@ const AdditionalQuestionnairesCard = ({
 
   const navigate = useNavigate();
 
-  const { __typename, ...questionnaires } = questionnairesData;
-
-  const questionnaireNames = Object.keys(
-    questionnaires
-  ) as (keyof typeof questionnaires)[];
+  const questionnaireNames = Object.keys(questionnaires) as QuestionnaireName[];
 
   const allQuestionnaires = questionnaireNames.reduce<{
-    requiredQuestionnaires: (typeof questionnaires)[keyof typeof questionnaires][];
-    otherQuestionnaires: (typeof questionnaires)[keyof typeof questionnaires][];
+    requiredQuestionnaires: QuestionnaireRow[];
+    otherQuestionnaires: QuestionnaireRow[];
   }>(
     (groupedQuestionnaires, name) => {
       const questionnaire = questionnaires[name];
 
-      if (
+      const isRequired =
         REQUIRED_QUESTIONNAIRES.includes(name) ||
-        ('needed' in questionnaire && questionnaire.needed)
-      ) {
-        groupedQuestionnaires.requiredQuestionnaires.push(questionnaire);
+        ('needed' in questionnaire && questionnaire.needed);
+
+      if (isRequired) {
+        groupedQuestionnaires.requiredQuestionnaires.push({
+          name,
+          questionnaire
+        });
       } else {
-        groupedQuestionnaires.otherQuestionnaires.push(questionnaire);
+        groupedQuestionnaires.otherQuestionnaires.push({ name, questionnaire });
       }
+
       return groupedQuestionnaires;
     },
-    {
-      requiredQuestionnaires: [],
-      otherQuestionnaires: []
-    }
+    { requiredQuestionnaires: [], otherQuestionnaires: [] }
   );
 
-  const requiredQuestionnairesCount =
-    allQuestionnaires.requiredQuestionnaires.length;
+  const { requiredQuestionnaires, otherQuestionnaires } = allQuestionnaires;
 
-  const otherQuestionnairesCount = allQuestionnaires.otherQuestionnaires.length;
+  const requiredQuestionnairesCount = requiredQuestionnaires.length;
+  const otherQuestionnairesCount = otherQuestionnaires.length;
 
   return (
     <>
@@ -154,32 +152,26 @@ const AdditionalQuestionnairesCard = ({
 
           {/* questionnaires status */}
           <div className="margin-bottom-2">
-            {allQuestionnaires.requiredQuestionnaires.map(
-              requiredQuestionnaire => (
+            {requiredQuestionnaires.map(({ name, questionnaire }) => {
+              const status =
+                'taskListStatus' in questionnaire
+                  ? questionnaire.taskListStatus
+                  : questionnaire.status;
+
+              return (
                 <div
                   className="display-flex flex-align-center margin-bottom-1"
-                  key={requiredQuestionnaire.id}
+                  key={questionnaire.id}
                 >
-                  <QuestionnaireStatusPill
-                    status={
-                      'taskListStatus' in requiredQuestionnaire
-                        ? requiredQuestionnaire.taskListStatus
-                        : (requiredQuestionnaire as any).status
-                    }
-                  />
+                  <QuestionnaireStatusPill status={status} />
                   <p className="margin-y-0">
                     {additionalQuestionnairesT(
-                      `questionnairesList.${
-                        requiredQuestionnaire.__typename ===
-                        'PlanDataExchangeApproach'
-                          ? 'dataExchangeApproach'
-                          : 'iddocQuestionnaire'
-                      }.heading`
+                      `questionnairesList.${name}.heading`
                     )}
                   </p>
                 </div>
-              )
-            )}
+              );
+            })}
           </div>
 
           <UswdsReactLink
@@ -229,7 +221,6 @@ const AdditionalQuestionnairesCard = ({
                 `/models/${modelID}/collaboration-area/additional-questionnaires`
               )
             }
-            data-testid="to-data-exchange-approach"
           >
             {collaborationAreaT(
               'additionalQuestionnairesCard.goToQuestionnaires'

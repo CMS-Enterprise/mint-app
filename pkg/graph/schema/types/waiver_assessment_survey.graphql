@@ -173,7 +173,7 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]interface{}") {
   impactsManagedCareWaiversNote: String
   additionalMedicaidSpecificWaivers: String
 
-  isComplete: Boolean
+  status: WaiverAssessmentSurveyStatus
 }
 
 input WaiverChanges @goModel(model: "map[string]interface{}") {

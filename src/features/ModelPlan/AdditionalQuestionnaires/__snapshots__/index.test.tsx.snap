@@ -190,6 +190,74 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
             />
             <li
               class="display-flex padding-bottom-4"
+              data-testid="questionnaire-list-intake-form-waiverAssessmentSurvey"
+            >
+              <div
+                class="width-full"
+              >
+                <div
+                  class="additional-questionnaires-list__task-row display-flex flex-justify flex-align-start"
+                >
+                  <h3
+                    class="margin-top-0 margin-bottom-1"
+                  >
+                    Waiver assessment survey
+                  </h3>
+                  <span
+                    class="display-flex flex-column flex-align-end"
+                  >
+                    <div
+                      class="additional-questionnaires-list__task-tag line-height-body-1 text-bold bg-info-light "
+                      data-testid="questionnaireList-tag"
+                    >
+                      <span>
+                        Ready to start
+                      </span>
+                    </div>
+                  </span>
+                </div>
+                <div
+                  class="additional-questionnaires-list__task-description margin-right-auto line-height-body-5"
+                >
+                  <p
+                    class="margin-top-0"
+                  >
+                    This survey will help determine which specific waivers are most appropriate for your model, ensure proper justification for waiver selections, and identify any instances where standard CMS authorities may be sufficient without additional waiver flexibility.
+                  </p>
+                  <p
+                    class="margin-top-0 margin-bottom-0"
+                  >
+                    Your responses will:
+                  </p>
+                  <ul
+                    class="list-style-disc margin-top-0 margin-bottom-2 padding-left-3"
+                  >
+                    <li>
+                      Inform stakeholder engagement strategies
+                    </li>
+                    <li>
+                      Support operational planning and implementation timelines
+                    </li>
+                    <li>
+                      Ensure compliance with statutory and regulatory requirements
+                    </li>
+                  </ul>
+                </div>
+                <button
+                  aria-label="Start waiver assessment survey"
+                  class="usa-button usa-button margin-bottom-0 width-auto"
+                  data-testid="waiver-assessment-survey-button"
+                  type="button"
+                >
+                  Start
+                </button>
+              </div>
+            </li>
+            <div
+              class="mint-divider margin-bottom-4"
+            />
+            <li
+              class="display-flex padding-bottom-4"
               data-testid="questionnaire-list-intake-form-iddocQuestionnaire"
             >
               <div
@@ -225,56 +293,6 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                     As you work to complete your Model Plan and model-to-operations matrix (MTO), some of your responses may indicate the need to fill out additional, more-detailed questions about how you plan to implement and operationalize your model. As those questions become required, additional questionnaires will be unlocked in this section of the model collaboration area.
                   </p>
                 </div>
-              </div>
-            </li>
-            <div
-              class="mint-divider margin-bottom-4"
-            />
-            <li
-              class="display-flex padding-bottom-4"
-              data-testid="questionnaire-list-intake-form-waiverAssessmentSurvey"
-            >
-              <div
-                class="width-full"
-              >
-                <div
-                  class="additional-questionnaires-list__task-row display-flex flex-justify flex-align-start"
-                >
-                  <h3
-                    class="margin-top-0 margin-bottom-1"
-                  >
-                    questionnairesList.waiverAssessmentSurvey.heading
-                  </h3>
-                  <span
-                    class="display-flex flex-column flex-align-end"
-                  >
-                    <div
-                      class="additional-questionnaires-list__task-tag line-height-body-1 text-bold bg-info-light "
-                      data-testid="questionnaireList-tag"
-                    >
-                      <span>
-                        Ready to start
-                      </span>
-                    </div>
-                  </span>
-                </div>
-                <div
-                  class="additional-questionnaires-list__task-description margin-right-auto line-height-body-5"
-                >
-                  <p
-                    class="margin-top-0"
-                  >
-                    questionnairesList.waiverAssessmentSurvey.description
-                  </p>
-                </div>
-                <button
-                  aria-label="Start questionnaireslist.waiverassessmentsurvey.heading"
-                  class="usa-button usa-button margin-bottom-0 width-auto"
-                  data-testid="waiver-assessment-survey-button"
-                  type="button"
-                >
-                  Start
-                </button>
               </div>
             </li>
           </ol>

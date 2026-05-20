@@ -183,6 +183,17 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		// Create default Waiver Assessment Survey object
+		waiverAssessmentSurvey := models.NewWaiverAssessmentSurvey(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
+
+		_, err = storage.WaiverAssessmentSurveyCreate(tx, logger, waiverAssessmentSurvey)
+		if err != nil {
+			return nil, err
+		}
+
+		// TODO (MINT-3718): Create waiver rows only for waivers suggested by the survey,
+		// once suggestedWaivers logic is implemented.
+
 		// Create a default planTimeline object
 		planTimeline := models.NewPlanTimeline(baseTaskListUser)
 
