@@ -14,6 +14,7 @@ import HelpCardGroup from './Articles/_components/HelpCardGroup';
 import ResourcesByCategory from './Articles/_components/ResourcesByCategory';
 import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
 import { homeArticles } from './Articles';
+import ContractAssistanceSection from './ContractAssistanceSection';
 import KeyContactDirectory from './KeyContactDirectory';
 import MilestoneLibrarySection from './MilestoneLibrarySection';
 
@@ -144,6 +145,7 @@ export const HelpAndKnowledgeHome = () => {
         <ResourcesByCategory />
       </GridContainer>
 
+      <ContractAssistanceSection />
       <div className="bg-base-lightest padding-y-6 padding-bottom-8">
         <MilestoneLibrarySection />
         <GridContainer>
