@@ -20,6 +20,7 @@ import MilestoneLibrarySection from './MilestoneLibrarySection';
 
 const JUMP_TO_LINKS_I18NKEYS = [
   'helpResourcesAndLinks',
+  'contractAssistance.hkcJumpToLabel',
   'milestoneLibrary.hkcJumpToLabel',
   'operationalSolutionsAndITSystems',
   'keyContactDirectory.jumpToLabel'
@@ -108,24 +109,26 @@ export const HelpAndKnowledgeHome = () => {
             {t('description')}
           </div>
 
-          <div>
-            <p className="display-inline text-bold margin-right-2">
-              {t('jumpTo')}:
-            </p>
-            {JUMP_TO_LINKS_I18NKEYS.map((linkI18nkey, index) => (
-              <div className="display-inline" key={linkI18nkey}>
-                <UswdsReactLink
-                  key={linkI18nkey}
-                  to={`#${convertToLowercaseAndDashes(t(linkI18nkey))}`} // 👈 Just the hash for same-page jumping
-                  className="usa-link"
-                >
-                  {t(linkI18nkey)}
-                </UswdsReactLink>
-                {index < JUMP_TO_LINKS_I18NKEYS.length - 1 && (
-                  <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-                )}
-              </div>
-            ))}
+          <div className="display-flex">
+            <div className="flex-shrink-0 margin-right-2">
+              <p className="text-bold margin-0 text-no-wrap">{t('jumpTo')}:</p>
+            </div>
+            <div className="display-flex flex-wrap" style={{ rowGap: '12px' }}>
+              {JUMP_TO_LINKS_I18NKEYS.map((linkI18nkey, index) => (
+                <div key={linkI18nkey}>
+                  <UswdsReactLink
+                    key={linkI18nkey}
+                    to={`#${convertToLowercaseAndDashes(t(linkI18nkey))}`} // 👈 Just the hash for same-page jumping
+                    className="usa-link"
+                  >
+                    {t(linkI18nkey)}
+                  </UswdsReactLink>
+                  {index < JUMP_TO_LINKS_I18NKEYS.length - 1 && (
+                    <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </GridContainer>
       </SummaryBox>
@@ -146,6 +149,7 @@ export const HelpAndKnowledgeHome = () => {
       </GridContainer>
 
       <ContractAssistanceSection />
+
       <div className="bg-base-lightest padding-y-6 padding-bottom-8">
         <MilestoneLibrarySection />
         <GridContainer>

@@ -22,6 +22,7 @@ const ContractAssistanceSection = () => {
         </p>
 
         <UswdsReactLink
+          // TODO: change link when the page is created
           to="#"
           // to="/help-and-knowledge/contract-assistance?page=1"
           className="usa-button usa-button--outline bg-white text-primary-darker shadow-none"
