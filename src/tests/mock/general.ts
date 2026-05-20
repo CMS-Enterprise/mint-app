@@ -1,6 +1,5 @@
 import { MockedResponse } from '@apollo/client/testing';
 import { KeyContactCategoryType } from 'features/HelpAndKnowledge/KeyContactDirectory/_components/CategoryModal';
-import { QuestionnairesType } from 'features/ModelPlan/CollaborationArea/Cards/AdditionalQuestionnairesCard';
 import {
   DataExchangeApproachStatus,
   GetAllKeyContactCategoriesDocument,
@@ -47,6 +46,7 @@ import {
 } from 'gql/generated/graphql';
 
 import { GetModelPlanBaseModelPlan } from 'contexts/ModelInfoContext';
+import { QuestionnairesType } from 'types/questionnaires';
 
 type GetFavoritesType = GetFavoritesQuery['modelPlanCollection'];
 type GetModelPlansType = GetModelPlansQuery['modelPlanCollection'];
