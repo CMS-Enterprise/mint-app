@@ -199,6 +199,19 @@ const QuestionnaireListItem = ({
               </ul>
             );
           })}
+
+          <p
+            className={classNames('margin-top-0', {
+              'text-base-dark':
+                status === IddocQuestionnaireTaskListStatus.NOT_NEEDED
+            })}
+          >
+            {additionalQuestionnairesT('responsibleTeamMember', {
+              teamMember: additionalQuestionnairesT(
+                `questionnairesList.${questionnaireName}.responsibleTeamMember`
+              )
+            })}
+          </p>
         </div>
 
         {children}
