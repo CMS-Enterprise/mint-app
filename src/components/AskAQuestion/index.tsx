@@ -12,6 +12,7 @@ export type RenderQuestionTextType =
   | 'status'
   | 'dataExchangeApproach'
   | 'iddocQuestionnaire'
+  | 'waiverAssessmentSurvey'
   | 'modelToOperations'
   | 'timeline';
 
@@ -32,6 +33,9 @@ const AskAQuestion = ({
     'dataExchangeApproachMisc'
   );
   const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaireMisc');
+  const { t: waiverAssessmentSurveyT } = useTranslation(
+    'waiverAssessmentSurvey'
+  );
   const { t: modelToOperationsT } = useTranslation('modelToOperationsMisc');
   const { t: timelineMiscT } = useTranslation('timelineMisc');
 
@@ -51,6 +55,8 @@ const AskAQuestion = ({
         return timelineMiscT('needHelpDiscussion');
       case 'iddocQuestionnaire':
         return iddocQuestionnaireT('needHelpDiscussion');
+      case 'waiverAssessmentSurvey':
+        return waiverAssessmentSurveyT('needHelpDiscussion');
       case 'solution':
       default:
         return opSolutionsMiscT('helpChoosing');
