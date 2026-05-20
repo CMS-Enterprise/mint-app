@@ -9,18 +9,25 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // UpdateWaiverAssessmentSurvey is the resolver for the updateWaiverAssessmentSurvey field.
 func (r *mutationResolver) UpdateWaiverAssessmentSurvey(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.WaiverAssessmentSurvey, error) {
-	return WaiverAssessmentSurveyUpdate(ctx, id, changes)
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return WaiverAssessmentSurveyUpdate(ctx, logger, id, changes, principal, r.store)
 }
 
 // UpdateWaiver is the resolver for the updateWaiver field.
 func (r *mutationResolver) UpdateWaiver(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.Waiver, error) {
-	return WaiverUpdate(ctx, id, changes)
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return WaiverUpdate(logger, id, changes, principal, r.store)
 }
 
 // CommonWaiver is the resolver for the commonWaiver field.

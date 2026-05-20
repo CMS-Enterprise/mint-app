@@ -375,12 +375,28 @@ func UpdatePlanTaskStatusOnWaiverAssessmentStarted(
 
 // calculateWaiverAssessmentTaskStatus derives the WAIVER_ASSESSMENT_SURVEY task status from the
 // waiver_assessment_survey section status. Mirrors the DATA_EXCHANGE pattern.
-// TODO: implement once the waiver_assessment_survey section is built.
 func calculateWaiverAssessmentTaskStatus(
-	_ sqlutils.NamedPreparer,
-	_ *zap.Logger,
-	_ uuid.UUID,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
 	_ *storage.Store,
 ) (models.PlanTaskStatus, error) {
-	return models.PlanTaskStatusToDo, nil
+	surveys, err := storage.WaiverAssessmentSurveyGetByModelPlanIDLoader(np, logger, []uuid.UUID{modelPlanID})
+	if err != nil {
+		return "", err
+	}
+	// waiver_assessment_survey has UNIQUE(model_plan_id), so at most one row exists per plan.
+	if len(surveys) == 0 || surveys[0] == nil {
+		return models.PlanTaskStatusToDo, nil
+	}
+	survey := surveys[0]
+
+	switch survey.Status {
+	case models.WaiverAssessmentSurveyStatusComplete:
+		return models.PlanTaskStatusComplete, nil
+	case models.WaiverAssessmentSurveyStatusInProgress:
+		return models.PlanTaskStatusInProgress, nil
+	default:
+		return models.PlanTaskStatusToDo, nil
+	}
 }
