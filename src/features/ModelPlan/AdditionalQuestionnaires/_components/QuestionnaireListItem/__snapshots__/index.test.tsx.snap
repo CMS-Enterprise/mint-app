@@ -38,6 +38,11 @@ exports[`QuestionnaireListItem > match snapshot 1`] = `
         >
           After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you'll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.
         </p>
+        <p
+          class="margin-top-0"
+        >
+          Responsible team member: IT Lead (with assistance from other team members)
+        </p>
       </div>
     </div>
   </li>

@@ -145,6 +145,11 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                   >
                     After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you'll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.
                   </p>
+                  <p
+                    class="margin-top-0"
+                  >
+                    Responsible team member: IT Lead (with assistance from other team members)
+                  </p>
                 </div>
                 <div
                   class="display-flex flex-align-center margin-top-1 margin-bottom-2"
@@ -242,6 +247,11 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                       Ensure compliance with statutory and regulatory requirements
                     </li>
                   </ul>
+                  <p
+                    class="margin-top-0"
+                  >
+                    Responsible team member: Model Lead (with assistance from other team members)
+                  </p>
                 </div>
                 <button
                   aria-label="Start waiver assessment survey"
@@ -291,6 +301,11 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                     class="margin-top-0 text-base-dark"
                   >
                     As you work to complete your Model Plan and model-to-operations matrix (MTO), some of your responses may indicate the need to fill out additional, more-detailed questions about how you plan to implement and operationalize your model. As those questions become required, additional questionnaires will be unlocked in this section of the model collaboration area.
+                  </p>
+                  <p
+                    class="margin-top-0 text-base-dark"
+                  >
+                    Responsible team member: IT Lead
                   </p>
                 </div>
               </div>
