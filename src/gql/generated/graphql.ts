@@ -368,9 +368,10 @@ export enum CtatHelpNeededType {
 /** A request for CTAT assistance */
 export type CtatRequest = {
   __typename: 'CTATRequest';
-  cmmiDivision: CtatcmmiDivisionOption;
+  cmmiDivision?: Maybe<CtatcmmiDivisionOption>;
   cmmiDivisionOther?: Maybe<Scalars['String']['output']>;
   cmmiGroup: CtatcmmiGroupOption;
+  cmmiGroupOther?: Maybe<Scalars['String']['output']>;
   contractActivityType?: Maybe<CtatContractActivityType>;
   contractActivityTypeOther?: Maybe<Scalars['String']['output']>;
   contractName?: Maybe<Scalars['String']['output']>;
@@ -424,9 +425,10 @@ export type CtatRequestDocumentInput = {
 
 /** Input for creating a CTAT request. */
 export type CtatRequestInput = {
-  cmmiDivision: CtatcmmiDivisionOption;
+  cmmiDivision?: InputMaybe<CtatcmmiDivisionOption>;
   cmmiDivisionOther?: InputMaybe<Scalars['String']['input']>;
   cmmiGroup: CtatcmmiGroupOption;
+  cmmiGroupOther?: InputMaybe<Scalars['String']['input']>;
   contractActivityType?: InputMaybe<CtatContractActivityType>;
   contractActivityTypeOther?: InputMaybe<Scalars['String']['input']>;
   contractName?: InputMaybe<Scalars['String']['input']>;

@@ -25,56 +25,6 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
-// A request for CTAT assistance
-type CTATRequest struct {
-	ID                        uuid.UUID                        `json:"id"`
-	HumanReadableID           string                           `json:"humanReadableID"`
-	Requester                 uuid.UUID                        `json:"requester"`
-	CmmiGroup                 models.CTATCMMIGroupOption       `json:"cmmiGroup"`
-	CmmiDivision              models.CTATCMMIDivisionOption    `json:"cmmiDivision"`
-	CmmiDivisionOther         *string                          `json:"cmmiDivisionOther,omitempty"`
-	RelatedMINTModels         []uuid.UUID                      `json:"relatedMINTModels,omitempty"`
-	ContractActivityType      *models.CTATContractActivityType `json:"contractActivityType,omitempty"`
-	ContractActivityTypeOther *string                          `json:"contractActivityTypeOther,omitempty"`
-	ContractName              *string                          `json:"contractName,omitempty"`
-	ContractNumber            *string                          `json:"contractNumber,omitempty"`
-	ContractType              *models.CTATContractType         `json:"contractType,omitempty"`
-	ContractTypeOther         *string                          `json:"contractTypeOther,omitempty"`
-	TypeOfHelpNeeded          []models.CTATHelpNeededType      `json:"typeOfHelpNeeded"`
-	TypeOfHelpNeededOther     *string                          `json:"typeOfHelpNeededOther,omitempty"`
-	DescribeHelpNeeded        string                           `json:"describeHelpNeeded"`
-	RequestUrgency            models.CTATRequestUrgency        `json:"requestUrgency"`
-	DateAssistanceNeededBy    time.Time                        `json:"dateAssistanceNeededBy"`
-	SupportingDocuments       []*CTATRequestDocument           `json:"supportingDocuments,omitempty"`
-	CreatedBy                 uuid.UUID                        `json:"createdBy"`
-	CreatedByUserAccount      authentication.UserAccount       `json:"createdByUserAccount"`
-	CreatedDts                time.Time                        `json:"createdDts"`
-	ModifiedBy                *uuid.UUID                       `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount     *authentication.UserAccount      `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts               *time.Time                       `json:"modifiedDts,omitempty"`
-}
-
-// A supporting document attached to a CTAT request.
-type CTATRequestDocument struct {
-	ID                    uuid.UUID                   `json:"id"`
-	CtatRequestID         uuid.UUID                   `json:"ctatRequestId"`
-	URL                   *string                     `json:"url,omitempty"`
-	FileType              string                      `json:"fileType"`
-	Bucket                string                      `json:"bucket"`
-	FileKey               string                      `json:"fileKey"`
-	VirusScanned          bool                        `json:"virusScanned"`
-	VirusClean            bool                        `json:"virusClean"`
-	Restricted            bool                        `json:"restricted"`
-	FileName              string                      `json:"fileName"`
-	FileSize              int                         `json:"fileSize"`
-	CreatedBy             uuid.UUID                   `json:"createdBy"`
-	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
-	CreatedDts            time.Time                   `json:"createdDts"`
-	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
-}
-
 // Input for uploading a supporting document for a CTAT request.
 type CTATRequestDocumentInput struct {
 	FileData graphql.Upload `json:"fileData"`
@@ -83,7 +33,8 @@ type CTATRequestDocumentInput struct {
 // Input for creating a CTAT request.
 type CTATRequestInput struct {
 	CmmiGroup                 models.CTATCMMIGroupOption       `json:"cmmiGroup"`
-	CmmiDivision              models.CTATCMMIDivisionOption    `json:"cmmiDivision"`
+	CmmiGroupOther            *string                          `json:"cmmiGroupOther,omitempty"`
+	CmmiDivision              *models.CTATCMMIDivisionOption   `json:"cmmiDivision,omitempty"`
 	CmmiDivisionOther         *string                          `json:"cmmiDivisionOther,omitempty"`
 	RelatedMINTModels         []uuid.UUID                      `json:"relatedMINTModels,omitempty"`
 	ContractActivityType      *models.CTATContractActivityType `json:"contractActivityType,omitempty"`

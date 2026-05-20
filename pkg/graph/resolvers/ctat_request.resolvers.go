@@ -10,20 +10,32 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
+func (r *cTATRequestResolver) TypeOfHelpNeeded(ctx context.Context, obj *models.CTATRequest) ([]models.CTATHelpNeededType, error) {
+	return obj.TypeOfHelpNeeded, nil
+}
+
 // CreateCTATRequest is the resolver for the createCTATRequest field.
-func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input *model.CTATRequestInput) (*model.CTATRequest, error) {
+func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input *model.CTATRequestInput) (*models.CTATRequest, error) {
 	panic(fmt.Errorf("not implemented: CreateCTATRequest - createCTATRequest"))
 }
 
 // CtatRequest is the resolver for the ctatRequest field.
-func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*model.CTATRequest, error) {
+func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error) {
 	panic(fmt.Errorf("not implemented: CtatRequest - ctatRequest"))
 }
 
 // CtatRequests is the resolver for the ctatRequests field.
-func (r *queryResolver) CtatRequests(ctx context.Context) ([]*model.CTATRequest, error) {
+func (r *queryResolver) CtatRequests(ctx context.Context) ([]*models.CTATRequest, error) {
 	panic(fmt.Errorf("not implemented: CtatRequests - ctatRequests"))
 }
+
+// CTATRequest returns generated.CTATRequestResolver implementation.
+func (r *Resolver) CTATRequest() generated.CTATRequestResolver { return &cTATRequestResolver{r} }
+
+type cTATRequestResolver struct{ *Resolver }

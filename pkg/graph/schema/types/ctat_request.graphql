@@ -149,7 +149,8 @@ type CTATRequest {
   requester: UUID!
 
   cmmiGroup: CTATCMMIGroupOption!
-  cmmiDivision: CTATCMMIDivisionOption!
+  cmmiGroupOther: String
+  cmmiDivision: CTATCMMIDivisionOption
   cmmiDivisionOther: String
   relatedMINTModels: [UUID!]
   contractActivityType: CTATContractActivityType
@@ -185,7 +186,8 @@ Input for creating a CTAT request.
 """
 input CTATRequestInput {
   cmmiGroup: CTATCMMIGroupOption!
-  cmmiDivision: CTATCMMIDivisionOption!
+  cmmiGroupOther: String
+  cmmiDivision: CTATCMMIDivisionOption
   cmmiDivisionOther: String
   relatedMINTModels: [UUID!]
   contractActivityType: CTATContractActivityType
