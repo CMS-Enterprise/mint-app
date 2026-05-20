@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
 
+import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -143,9 +144,13 @@ export const HelpAndKnowledgeHome = () => {
         <ResourcesByCategory />
       </GridContainer>
 
-      <MilestoneLibrarySection />
-
-      <SolutionCategories />
+      <div className="bg-base-lightest padding-y-6 padding-bottom-8">
+        <MilestoneLibrarySection />
+        <GridContainer>
+          <Divider className="margin-top-5 margin-bottom-4" />
+        </GridContainer>
+        <SolutionCategories />
+      </div>
 
       <KeyContactDirectory />
     </MainContent>
