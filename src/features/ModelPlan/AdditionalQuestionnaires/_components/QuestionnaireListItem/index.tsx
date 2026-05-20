@@ -5,22 +5,21 @@ import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   DataExchangeApproachStatus,
-  IddocQuestionnaireTaskListStatus,
-  WaiverAssessmentSurveyStatus
+  IddocQuestionnaireTaskListStatus
 } from 'gql/generated/graphql';
 
-import '../../index.scss';
+import {
+  QuestionnaireName,
+  QuestionnairesStatusType
+} from 'types/questionnaires';
 
-type QuestionnaireListStatusType =
-  | DataExchangeApproachStatus
-  | IddocQuestionnaireTaskListStatus
-  | WaiverAssessmentSurveyStatus;
+import '../../index.scss';
 
 const QuestionnaireListStatusTag = ({
   status,
   classname
 }: {
-  status: QuestionnaireListStatusType;
+  status: QuestionnairesStatusType;
   classname?: string;
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
@@ -83,7 +82,7 @@ export const QuestionnaireListButton = ({
   testId?: string;
   path: string;
   disabled?: boolean;
-  status: QuestionnaireListStatusType;
+  status: QuestionnairesStatusType;
 }) => {
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -135,39 +134,71 @@ export const QuestionnaireListButton = ({
 };
 
 type QuestionnaireListItemProps = {
+  questionnaireName: QuestionnaireName;
   children?: React.ReactNode;
-  heading: string;
-  description: string;
-  status: QuestionnaireListStatusType;
-  testId: string;
+  status: QuestionnairesStatusType;
 };
 
 const QuestionnaireListItem = ({
+  questionnaireName,
   children,
-  heading,
-  description,
-  status,
-  testId
+  status
 }: QuestionnaireListItemProps) => {
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
+
+  const description = additionalQuestionnairesT(
+    `questionnairesList.${questionnaireName}.description`,
+    {
+      returnObjects: true
+    }
+  ) as (string | string[])[];
+
   return (
-    <li className="display-flex padding-bottom-4" data-testid={testId}>
+    <li
+      className="display-flex padding-bottom-4"
+      data-testid={`questionnaire-list-intake-form-${questionnaireName}`}
+    >
       <div className="width-full">
         <div className="additional-questionnaires-list__task-row display-flex flex-justify flex-align-start">
-          <h3 className="margin-top-0 margin-bottom-1">{heading}</h3>
+          <h3 className="margin-top-0 margin-bottom-1">
+            {additionalQuestionnairesT(
+              `questionnairesList.${questionnaireName}.heading`
+            )}
+          </h3>
           <span className="display-flex flex-column flex-align-end">
             <QuestionnaireListStatusTag status={status} />
           </span>
         </div>
 
         <div className="additional-questionnaires-list__task-description margin-right-auto line-height-body-5">
-          <p
-            className={classNames('margin-top-0', {
-              'text-base-dark':
-                status === IddocQuestionnaireTaskListStatus.NOT_NEEDED
-            })}
-          >
-            {description}
-          </p>
+          {description.map((item, index) => {
+            const nextItem =
+              index < description.length - 1 ? description[index + 1] : null;
+
+            if (typeof item === 'string') {
+              return (
+                <p
+                  className={classNames('margin-top-0', {
+                    'text-base-dark':
+                      status === IddocQuestionnaireTaskListStatus.NOT_NEEDED,
+                    'margin-bottom-0': nextItem && typeof nextItem !== 'string'
+                  })}
+                >
+                  {item}
+                </p>
+              );
+            }
+
+            return (
+              <ul className="list-style-disc margin-top-0 margin-bottom-2 padding-left-3">
+                {item.map(bullet => (
+                  <li key={bullet}>{bullet}</li>
+                ))}
+              </ul>
+            );
+          })}
         </div>
 
         {children}
