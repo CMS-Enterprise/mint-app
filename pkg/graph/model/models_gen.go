@@ -25,17 +25,62 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
-// This is a place holder struct that could change. It's purpose it hold
-// a request for CTAT assistance
+// A request for CTAT assistance
 type CTATRequest struct {
-	ID                    uuid.UUID                   `json:"id"`
-	HumanReadableID       string                      `json:"humanReadableID"`
-	CreatedBy             uuid.UUID                   `json:"createdBy"`
-	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
-	CreatedDts            time.Time                   `json:"createdDts"`
-	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
-	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
-	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+	ID                        uuid.UUID                        `json:"id"`
+	HumanReadableID           string                           `json:"humanReadableID"`
+	Requester                 uuid.UUID                        `json:"requester"`
+	CmmiGroup                 models.CTATCMMIGroupOption       `json:"cmmiGroup"`
+	CmmiDivision              models.CTATCMMIDivisionOption    `json:"cmmiDivision"`
+	CmmiDivisionOther         *string                          `json:"cmmiDivisionOther,omitempty"`
+	RelatedMINTModels         []uuid.UUID                      `json:"relatedMINTModels,omitempty"`
+	ContractActivityType      *models.CTATContractActivityType `json:"contractActivityType,omitempty"`
+	ContractActivityTypeOther *string                          `json:"contractActivityTypeOther,omitempty"`
+	ContractName              *string                          `json:"contractName,omitempty"`
+	ContractNumber            *string                          `json:"contractNumber,omitempty"`
+	ContractType              *models.CTATContractType         `json:"contractType,omitempty"`
+	ContractTypeOther         *string                          `json:"contractTypeOther,omitempty"`
+	TypeOfHelpNeeded          []models.CTATHelpNeededType      `json:"typeOfHelpNeeded"`
+	TypeOfHelpNeededOther     *string                          `json:"typeOfHelpNeededOther,omitempty"`
+	DescribeHelpNeeded        string                           `json:"describeHelpNeeded"`
+	RequestUrgency            models.CTATRequestUrgency        `json:"requestUrgency"`
+	DateAssistanceNeededBy    time.Time                        `json:"dateAssistanceNeededBy"`
+	SupportingDocuments       []*CTATRequestDocument           `json:"supportingDocuments,omitempty"`
+	CreatedBy                 uuid.UUID                        `json:"createdBy"`
+	CreatedByUserAccount      authentication.UserAccount       `json:"createdByUserAccount"`
+	CreatedDts                time.Time                        `json:"createdDts"`
+	ModifiedBy                *uuid.UUID                       `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount     *authentication.UserAccount      `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts               *time.Time                       `json:"modifiedDts,omitempty"`
+}
+
+type CTATRequestDocument struct {
+	FileName string  `json:"fileName"`
+	URL      *string `json:"url,omitempty"`
+}
+
+type CTATRequestDocumentInput struct {
+	FileData     graphql.Upload      `json:"fileData"`
+	DocumentType models.DocumentType `json:"documentType"`
+}
+
+type CTATRequestInput struct {
+	CmmiGroup                 models.CTATCMMIGroupOption       `json:"cmmiGroup"`
+	CmmiDivision              models.CTATCMMIDivisionOption    `json:"cmmiDivision"`
+	CmmiDivisionOther         *string                          `json:"cmmiDivisionOther,omitempty"`
+	RelatedMINTModels         []uuid.UUID                      `json:"relatedMINTModels,omitempty"`
+	ContractActivityType      *models.CTATContractActivityType `json:"contractActivityType,omitempty"`
+	ContractActivityTypeOther *string                          `json:"contractActivityTypeOther,omitempty"`
+	ContractName              *string                          `json:"contractName,omitempty"`
+	ContractNumber            *string                          `json:"contractNumber,omitempty"`
+	ContractType              *models.CTATContractType         `json:"contractType,omitempty"`
+	ContractTypeOther         *string                          `json:"contractTypeOther,omitempty"`
+	TypeOfHelpNeeded          []models.CTATHelpNeededType      `json:"typeOfHelpNeeded"`
+	TypeOfHelpNeededOther     *string                          `json:"typeOfHelpNeededOther,omitempty"`
+	DescribeHelpNeeded        string                           `json:"describeHelpNeeded"`
+	RequestUrgency            models.CTATRequestUrgency        `json:"requestUrgency"`
+	DateAssistanceNeededBy    time.Time                        `json:"dateAssistanceNeededBy"`
+	SupportingDocuments       []*CTATRequestDocumentInput      `json:"supportingDocuments,omitempty"`
 }
 
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply

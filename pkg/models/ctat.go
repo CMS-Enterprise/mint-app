@@ -35,88 +35,55 @@ const (
 	CTATRequestUrgencyLow    CTATRequestUrgency = "LOW"
 )
 
-// CTATBSGDivisionOption represents the possible BSG division values for a CTAT record.
-type CTATBSGDivisionOption string
+// CTATCMMIGroupOption represents the possible CMMI group values for a CTAT record.
+type CTATCMMIGroupOption string
 
-// Enum values for CTATBSGDivisionOption.
+// Enum values for CTATCMMIGroupOption.
 const (
-	CTATBSGDivisionOptionDBOM  CTATBSGDivisionOption = "DBOM"
-	CTATBSGDivisionOptionDCCS  CTATBSGDivisionOption = "DCCS"
-	CTATBSGDivisionOptionDSSOS CTATBSGDivisionOption = "DSSOS"
-	CTATBSGDivisionOptionDTS   CTATBSGDivisionOption = "DTS"
-	CTATBSGDivisionOptionOther CTATBSGDivisionOption = "OTHER"
+	CTATCMMIGroupOptionBSG   CTATCMMIGroupOption = "BSG"
+	CTATCMMIGroupOptionLDG   CTATCMMIGroupOption = "LDG"
+	CTATCMMIGroupOptionPCMG  CTATCMMIGroupOption = "PCMG"
+	CTATCMMIGroupOptionPPG   CTATCMMIGroupOption = "PPG"
+	CTATCMMIGroupOptionRREG  CTATCMMIGroupOption = "RREG"
+	CTATCMMIGroupOptionSCMG  CTATCMMIGroupOption = "SCMG"
+	CTATCMMIGroupOptionSPHG  CTATCMMIGroupOption = "SPHG"
+	CTATCMMIGroupOptionOther CTATCMMIGroupOption = "OTHER"
 )
 
-// CTATLDGDivisionOption represents the possible LDG division values for a CTAT record.
-type CTATLDGDivisionOption string
+// CTATCMMIDivisionOption represents the possible CMMI division values for a CTAT record.
+type CTATCMMIDivisionOption string
 
-// Enum values for CTATLDGDivisionOption.
+// Enum values for CTATCMMIDivisionOption.
 const (
-	CTATLDGDivisionOptionDMLS  CTATLDGDivisionOption = "DMLS"
-	CTATLDGDivisionOptionDAN   CTATLDGDivisionOption = "DAN"
-	CTATLDGDivisionOptionOther CTATLDGDivisionOption = "OTHER"
-)
-
-// CTATPCMGDivisionOption represents the possible PCMG division values for a CTAT record.
-type CTATPCMGDivisionOption string
-
-// Enum values for CTATPCMGDivisionOption.
-const (
-	CTATPCMGDivisionOptionDAPC  CTATPCMGDivisionOption = "DAPC"
-	CTATPCMGDivisionOptionDHCPM CTATPCMGDivisionOption = "DHCPM"
-	CTATPCMGDivisionOptionDSPM  CTATPCMGDivisionOption = "DSPM"
-	CTATPCMGDivisionOptionDAPM  CTATPCMGDivisionOption = "DAPM"
-	CTATPCMGDivisionOptionDPM   CTATPCMGDivisionOption = "DPM"
-	CTATPCMGDivisionOptionOther CTATPCMGDivisionOption = "OTHER"
-)
-
-// CTATPPGDivisionOption represents the possible PPG division values for a CTAT record.
-type CTATPPGDivisionOption string
-
-// Enum values for CTATPPGDivisionOption.
-const (
-	CTATPPGDivisionOptionDAPMI CTATPPGDivisionOption = "DAPMI"
-	CTATPPGDivisionOptionDDA   CTATPPGDivisionOption = "DDA"
-	CTATPPGDivisionOptionDESP  CTATPPGDivisionOption = "DESP"
-	CTATPPGDivisionOptionDPMS  CTATPPGDivisionOption = "DPMS"
-	CTATPPGDivisionOptionOther CTATPPGDivisionOption = "OTHER"
-)
-
-// CTATRREGDivisionOption represents the possible RREG division values for a CTAT record.
-type CTATRREGDivisionOption string
-
-// Enum values for CTATRREGDivisionOption.
-const (
-	CTATRREGDivisionOptionDHSR  CTATRREGDivisionOption = "DHSR"
-	CTATRREGDivisionOptionDPAR  CTATRREGDivisionOption = "DPAR"
-	CTATRREGDivisionOptionDSPR  CTATRREGDivisionOption = "DSPR"
-	CTATRREGDivisionOptionDRAM  CTATRREGDivisionOption = "DRAM"
-	CTATRREGDivisionOptionOther CTATRREGDivisionOption = "OTHER"
-)
-
-// CTATSCMGDivisionOption represents the possible SCMG division values for a CTAT record.
-type CTATSCMGDivisionOption string
-
-// Enum values for CTATSCMGDivisionOption.
-const (
-	CTATSCMGDivisionOptionDHPI  CTATSCMGDivisionOption = "DHPI"
-	CTATSCMGDivisionOptionDFR   CTATSCMGDivisionOption = "DFR"
-	CTATSCMGDivisionOptionDSI   CTATSCMGDivisionOption = "DSI"
-	CTATSCMGDivisionOptionDDI   CTATSCMGDivisionOption = "DDI"
-	CTATSCMGDivisionOptionOther CTATSCMGDivisionOption = "OTHER"
-)
-
-// CTATSPHGDivisionOption represents the possible SPHG division values for a CTAT record.
-type CTATSPHGDivisionOption string
-
-// Enum values for CTATSPHGDivisionOption.
-const (
-	CTATSPHGDivisionOptionDMPM  CTATSPHGDivisionOption = "DMPM"
-	CTATSPHGDivisionOptionDHII  CTATSPHGDivisionOption = "DHII"
-	CTATSPHGDivisionOptionDPHII CTATSPHGDivisionOption = "DPHII"
-	CTATSPHGDivisionOptionDHCD  CTATSPHGDivisionOption = "DHCD"
-	CTATSPHGDivisionOptionDSBI  CTATSPHGDivisionOption = "DSBI"
-	CTATSPHGDivisionOptionOther CTATSPHGDivisionOption = "OTHER"
+	CTATCMMIDivisionOptionBSGDBOM   CTATCMMIDivisionOption = "BSG_DBOM"
+	CTATCMMIDivisionOptionBSGDCCS   CTATCMMIDivisionOption = "BSG_DCCS"
+	CTATCMMIDivisionOptionBSGDSSOS  CTATCMMIDivisionOption = "BSG_DSSOS"
+	CTATCMMIDivisionOptionBSGDTS    CTATCMMIDivisionOption = "BSG_DTS"
+	CTATCMMIDivisionOptionLDGDMLS   CTATCMMIDivisionOption = "LDG_DMLS"
+	CTATCMMIDivisionOptionLDGDAN    CTATCMMIDivisionOption = "LDG_DAN"
+	CTATCMMIDivisionOptionPCMGDAPC  CTATCMMIDivisionOption = "PCMG_DAPC"
+	CTATCMMIDivisionOptionPCMGDHCPM CTATCMMIDivisionOption = "PCMG_DHCPM"
+	CTATCMMIDivisionOptionPCMGDSPM  CTATCMMIDivisionOption = "PCMG_DSPM"
+	CTATCMMIDivisionOptionPCMGDAPM  CTATCMMIDivisionOption = "PCMG_DAPM"
+	CTATCMMIDivisionOptionPCMGDPM   CTATCMMIDivisionOption = "PCMG_DPM"
+	CTATCMMIDivisionOptionPPGDAPMI  CTATCMMIDivisionOption = "PPG_DAPMI"
+	CTATCMMIDivisionOptionPPGDDA    CTATCMMIDivisionOption = "PPG_DDA"
+	CTATCMMIDivisionOptionPPGDESP   CTATCMMIDivisionOption = "PPG_DESP"
+	CTATCMMIDivisionOptionPPGDPMS   CTATCMMIDivisionOption = "PPG_DPMS"
+	CTATCMMIDivisionOptionRREGDHSR  CTATCMMIDivisionOption = "RREG_DHSR"
+	CTATCMMIDivisionOptionRREGDPAR  CTATCMMIDivisionOption = "RREG_DPAR"
+	CTATCMMIDivisionOptionRREGDSPR  CTATCMMIDivisionOption = "RREG_DSPR"
+	CTATCMMIDivisionOptionRREGDRAM  CTATCMMIDivisionOption = "RREG_DRAM"
+	CTATCMMIDivisionOptionSCMGDHPI  CTATCMMIDivisionOption = "SCMG_DHPI"
+	CTATCMMIDivisionOptionSCMGDFR   CTATCMMIDivisionOption = "SCMG_DFR"
+	CTATCMMIDivisionOptionSCMGDSI   CTATCMMIDivisionOption = "SCMG_DSI"
+	CTATCMMIDivisionOptionSCMGDDI   CTATCMMIDivisionOption = "SCMG_DDI"
+	CTATCMMIDivisionOptionSPHGDMPM  CTATCMMIDivisionOption = "SPHG_DMPM"
+	CTATCMMIDivisionOptionSPHGDHII  CTATCMMIDivisionOption = "SPHG_DHII"
+	CTATCMMIDivisionOptionSPHGDPHII CTATCMMIDivisionOption = "SPHG_DPHII"
+	CTATCMMIDivisionOptionSPHGDHCD  CTATCMMIDivisionOption = "SPHG_DHCD"
+	CTATCMMIDivisionOptionSPHGDSBI  CTATCMMIDivisionOption = "SPHG_DSBI"
+	CTATCMMIDivisionOptionOther     CTATCMMIDivisionOption = "OTHER"
 )
 
 // CTATHelpNeededType represents the possible types of help needed for a CTAT record.

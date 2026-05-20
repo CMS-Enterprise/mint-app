@@ -24,59 +24,46 @@ CREATE TYPE CTAT_REQUEST_URGENCY AS ENUM (
     'LOW'
 );
 
-CREATE TYPE CTAT_BSG_DIVISION_OPTION AS ENUM (
-    'DBOM',
-    'DCCS',
-    'DSSOS',
-    'DTS',
+CREATE TYPE CTAT_CMMI_GROUP_OPTION AS ENUM (
+    'BSG',
+    'LDG',
+    'PCMG',
+    'PPG',
+    'RREG',
+    'SCMG',
+    'SPHG',
     'OTHER'
 );
 
-CREATE TYPE CTAT_LDG_DIVISION_OPTION AS ENUM (
-    'DMLS',
-    'DAN',
-    'OTHER'
-);
-
-CREATE TYPE CTAT_PCMG_DIVISION_OPTION AS ENUM (
-    'DAPC',
-    'DHCPM',
-    'DSPM',
-    'DAPM',
-    'DPM',
-    'OTHER'
-);
-
-CREATE TYPE CTAT_PPG_DIVISION_OPTION AS ENUM (
-    'DAPMI',
-    'DDA',
-    'DESP',
-    'DPMS',
-    'OTHER'
-);
-
-CREATE TYPE CTAT_RREG_DIVISION_OPTION AS ENUM (
-    'DHSR',
-    'DPAR',
-    'DSPR',
-    'DRAM',
-    'OTHER'
-);
-
-CREATE TYPE CTAT_SCMG_DIVISION_OPTION AS ENUM (
-    'DHPI',
-    'DFR',
-    'DSI',
-    'DDI',
-    'OTHER'
-);
-
-CREATE TYPE CTAT_SPHG_DIVISION_OPTION AS ENUM (
-    'DMPM',
-    'DHII',
-    'DPHII',
-    'DHCD',
-    'DSBI',
+CREATE TYPE CTAT_CMMI_DIVISION_OPTION AS ENUM (
+    'BSG_DBOM',
+    'BSG_DCCS',
+    'BSG_DSSOS',
+    'BSG_DTS',
+    'LDG_DMLS',
+    'LDG_DAN',
+    'PCMG_DAPC',
+    'PCMG_DHCPM',
+    'PCMG_DSPM',
+    'PCMG_DAPM',
+    'PCMG_DPM',
+    'PPG_DAPMI',
+    'PPG_DDA',
+    'PPG_DESP',
+    'PPG_DPMS',
+    'RREG_DHSR',
+    'RREG_DPAR',
+    'RREG_DSPR',
+    'RREG_DRAM',
+    'SCMG_DHPI',
+    'SCMG_DFR',
+    'SCMG_DSI',
+    'SCMG_DDI',
+    'SPHG_DMPM',
+    'SPHG_DHII',
+    'SPHG_DPHII',
+    'SPHG_DHCD',
+    'SPHG_DSBI',
     'OTHER'
 );
 

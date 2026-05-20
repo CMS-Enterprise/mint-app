@@ -13,6 +13,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
 
+// CreateCTATRequest is the resolver for the createCTATRequest field.
+func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input *model.CTATRequestInput) (*model.CTATRequest, error) {
+	panic(fmt.Errorf("not implemented: CreateCTATRequest - createCTATRequest"))
+}
+
 // CtatRequest is the resolver for the ctatRequest field.
 func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*model.CTATRequest, error) {
 	panic(fmt.Errorf("not implemented: CtatRequest - ctatRequest"))

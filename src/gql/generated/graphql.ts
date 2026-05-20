@@ -270,13 +270,49 @@ export enum CmsCenter {
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'
 }
 
-/** The selected BSG division for a CTAT record. */
-export enum CtatbsgDivisionOption {
-  DBOM = 'DBOM',
-  DCCS = 'DCCS',
-  DSSOS = 'DSSOS',
-  DTS = 'DTS',
-  OTHER = 'OTHER'
+/** The selected CMMI division for a CTAT record. */
+export enum CtatcmmiDivisionOption {
+  BSG_DBOM = 'BSG_DBOM',
+  BSG_DCCS = 'BSG_DCCS',
+  BSG_DSSOS = 'BSG_DSSOS',
+  BSG_DTS = 'BSG_DTS',
+  LDG_DAN = 'LDG_DAN',
+  LDG_DMLS = 'LDG_DMLS',
+  OTHER = 'OTHER',
+  PCMG_DAPC = 'PCMG_DAPC',
+  PCMG_DAPM = 'PCMG_DAPM',
+  PCMG_DHCPM = 'PCMG_DHCPM',
+  PCMG_DPM = 'PCMG_DPM',
+  PCMG_DSPM = 'PCMG_DSPM',
+  PPG_DAPMI = 'PPG_DAPMI',
+  PPG_DDA = 'PPG_DDA',
+  PPG_DESP = 'PPG_DESP',
+  PPG_DPMS = 'PPG_DPMS',
+  RREG_DHSR = 'RREG_DHSR',
+  RREG_DPAR = 'RREG_DPAR',
+  RREG_DRAM = 'RREG_DRAM',
+  RREG_DSPR = 'RREG_DSPR',
+  SCMG_DDI = 'SCMG_DDI',
+  SCMG_DFR = 'SCMG_DFR',
+  SCMG_DHPI = 'SCMG_DHPI',
+  SCMG_DSI = 'SCMG_DSI',
+  SPHG_DHCD = 'SPHG_DHCD',
+  SPHG_DHII = 'SPHG_DHII',
+  SPHG_DMPM = 'SPHG_DMPM',
+  SPHG_DPHII = 'SPHG_DPHII',
+  SPHG_DSBI = 'SPHG_DSBI'
+}
+
+/** The selected CMMI group for a CTAT record. */
+export enum CtatcmmiGroupOption {
+  BSG = 'BSG',
+  LDG = 'LDG',
+  OTHER = 'OTHER',
+  PCMG = 'PCMG',
+  PPG = 'PPG',
+  RREG = 'RREG',
+  SCMG = 'SCMG',
+  SPHG = 'SPHG'
 }
 
 /** The contract activity type selected for a CTAT record. */
@@ -329,55 +365,64 @@ export enum CtatHelpNeededType {
   SOW_SOO_PWS_DEVELOPMENT = 'SOW_SOO_PWS_DEVELOPMENT'
 }
 
-/** The selected LDG division for a CTAT record. */
-export enum CtatldgDivisionOption {
-  DAN = 'DAN',
-  DMLS = 'DMLS',
-  OTHER = 'OTHER'
-}
-
-/** The selected PCMG division for a CTAT record. */
-export enum CtatpcmgDivisionOption {
-  DAPC = 'DAPC',
-  DAPM = 'DAPM',
-  DHCPM = 'DHCPM',
-  DPM = 'DPM',
-  DSPM = 'DSPM',
-  OTHER = 'OTHER'
-}
-
-/** The selected PPG division for a CTAT record. */
-export enum CtatppgDivisionOption {
-  DAPMI = 'DAPMI',
-  DDA = 'DDA',
-  DESP = 'DESP',
-  DPMS = 'DPMS',
-  OTHER = 'OTHER'
-}
-
-/** The selected RREG division for a CTAT record. */
-export enum CtatrregDivisionOption {
-  DHSR = 'DHSR',
-  DPAR = 'DPAR',
-  DRAM = 'DRAM',
-  DSPR = 'DSPR',
-  OTHER = 'OTHER'
-}
-
-/**
- * This is a place holder struct that could change. It's purpose it hold
- * a request for CTAT assistance
- */
+/** A request for CTAT assistance */
 export type CtatRequest = {
   __typename: 'CTATRequest';
+  cmmiDivision: CtatcmmiDivisionOption;
+  cmmiDivisionOther?: Maybe<Scalars['String']['output']>;
+  cmmiGroup: CtatcmmiGroupOption;
+  contractActivityType?: Maybe<CtatContractActivityType>;
+  contractActivityTypeOther?: Maybe<Scalars['String']['output']>;
+  contractName?: Maybe<Scalars['String']['output']>;
+  contractNumber?: Maybe<Scalars['String']['output']>;
+  contractType?: Maybe<CtatContractType>;
+  contractTypeOther?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  dateAssistanceNeededBy: Scalars['Time']['output'];
+  describeHelpNeeded: Scalars['String']['output'];
   humanReadableID: Scalars['String']['output'];
   id: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  relatedMINTModels?: Maybe<Array<Scalars['UUID']['output']>>;
+  requestUrgency: CtatRequestUrgency;
+  requester: Scalars['UUID']['output'];
+  supportingDocuments?: Maybe<Array<CtatRequestDocument>>;
+  typeOfHelpNeeded: Array<CtatHelpNeededType>;
+  typeOfHelpNeededOther?: Maybe<Scalars['String']['output']>;
+};
+
+export type CtatRequestDocument = {
+  __typename: 'CTATRequestDocument';
+  fileName: Scalars['String']['output'];
+  url?: Maybe<Scalars['String']['output']>;
+};
+
+export type CtatRequestDocumentInput = {
+  documentType: DocumentType;
+  fileData: Scalars['Upload']['input'];
+};
+
+export type CtatRequestInput = {
+  cmmiDivision: CtatcmmiDivisionOption;
+  cmmiDivisionOther?: InputMaybe<Scalars['String']['input']>;
+  cmmiGroup: CtatcmmiGroupOption;
+  contractActivityType?: InputMaybe<CtatContractActivityType>;
+  contractActivityTypeOther?: InputMaybe<Scalars['String']['input']>;
+  contractName?: InputMaybe<Scalars['String']['input']>;
+  contractNumber?: InputMaybe<Scalars['String']['input']>;
+  contractType?: InputMaybe<CtatContractType>;
+  contractTypeOther?: InputMaybe<Scalars['String']['input']>;
+  dateAssistanceNeededBy: Scalars['Time']['input'];
+  describeHelpNeeded: Scalars['String']['input'];
+  relatedMINTModels?: InputMaybe<Array<Scalars['UUID']['input']>>;
+  requestUrgency: CtatRequestUrgency;
+  supportingDocuments?: InputMaybe<Array<CtatRequestDocumentInput>>;
+  typeOfHelpNeeded: Array<CtatHelpNeededType>;
+  typeOfHelpNeededOther?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The urgency selected for a CTAT request. */
@@ -385,25 +430,6 @@ export enum CtatRequestUrgency {
   HIGH = 'HIGH',
   LOW = 'LOW',
   MEDIUM = 'MEDIUM'
-}
-
-/** The selected SCMG division for a CTAT record. */
-export enum CtatscmgDivisionOption {
-  DDI = 'DDI',
-  DFR = 'DFR',
-  DHPI = 'DHPI',
-  DSI = 'DSI',
-  OTHER = 'OTHER'
-}
-
-/** The selected SPHG division for a CTAT record. */
-export enum CtatsphgDivisionOption {
-  DHCD = 'DHCD',
-  DHII = 'DHII',
-  DMPM = 'DMPM',
-  DPHII = 'DPHII',
-  DSBI = 'DSBI',
-  OTHER = 'OTHER'
 }
 
 export enum CcmInvolvmentType {
@@ -2239,6 +2265,7 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   archiveMTOCommonMilestone: MtoCommonMilestone;
+  createCTATRequest?: Maybe<CtatRequest>;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2367,6 +2394,12 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationArchiveMtoCommonMilestoneArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateCtatRequestArgs = {
+  input?: InputMaybe<CtatRequestInput>;
 };
 
 
