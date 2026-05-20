@@ -829,7 +829,7 @@ export const iddocQuestionnaireMocks = [
   }
 ];
 
-export const modelPlanQuestionsData: GetModelPlanQuestionsQuery = {
+export const modelPlanQuestionsDataMocks: GetModelPlanQuestionsQuery = {
   __typename: 'Query',
   modelPlan: {
     __typename: 'ModelPlan',
@@ -876,7 +876,7 @@ export const modelPlanQuestionsMocks = [
       variables: { id: modelID }
     },
     result: {
-      data: modelPlanQuestionsData
+      data: modelPlanQuestionsDataMocks
     }
   }
 ];
