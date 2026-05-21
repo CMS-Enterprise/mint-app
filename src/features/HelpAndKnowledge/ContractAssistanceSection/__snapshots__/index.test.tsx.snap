@@ -17,7 +17,7 @@ exports[`ContractAssistanceSection > matches the snapshot 1`] = `
         Contract assistance
       </h2>
       <p
-        class="margin-top-1 margin-bottom-3 font-body-md line-height-sans-4"
+        class="margin-top-1 margin-bottom-3 font-body-md line-height-sans-4 text-light"
       >
         Need contract-related help for your model? Raise a ticket to get help from the Contract Technical Assistance Team (CTAT). CTAT can assist with a variety of contracting needs including requirements gathering, Independent Government Cost Estimate (IGCE) preparation, Requests for Proposal (RFPs), guidance on market research, and more.
       </p>
