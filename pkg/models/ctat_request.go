@@ -17,6 +17,7 @@ type CTATRequest struct {
 	Resolution *string    `json:"resolution,omitempty" db:"resolution"`
 
 	AssignedAdminID *uuid.UUID `json:"-" db:"assigned_admin"`
+	AssignedAdmin   *UserInfo  `json:"assignedAdmin,omitempty" db:"-"`
 
 	CmmiGroup         CTATCMMIGroupOption     `json:"cmmiGroup" db:"cmmi_group"`
 	CmmiGroupOther    *string                 `json:"cmmiGroupOther,omitempty" db:"cmmi_group_other"`

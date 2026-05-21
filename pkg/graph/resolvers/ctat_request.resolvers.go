@@ -15,11 +15,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// AssignedAdmin is the resolver for the assignedAdmin field.
-func (r *cTATRequestResolver) AssignedAdmin(ctx context.Context, obj *models.CTATRequest) (*models.UserInfo, error) {
-	panic(fmt.Errorf("not implemented: AssignedAdmin - assignedAdmin"))
-}
-
 // TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
 func (r *cTATRequestResolver) TypeOfHelpNeeded(ctx context.Context, obj *models.CTATRequest) ([]models.CTATHelpNeededType, error) {
 	return obj.TypeOfHelpNeeded, nil
