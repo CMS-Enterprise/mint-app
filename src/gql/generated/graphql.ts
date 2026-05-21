@@ -273,6 +273,7 @@ export enum CmsCenter {
 /** Input for an admin update to a CTAT request. */
 export type CtatAdminUpdateInput = {
   assignedAdmin?: InputMaybe<Scalars['UUID']['input']>;
+  id: Scalars['UUID']['input'];
   notes?: InputMaybe<Scalars['String']['input']>;
   resolution?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<CtatStatus>;

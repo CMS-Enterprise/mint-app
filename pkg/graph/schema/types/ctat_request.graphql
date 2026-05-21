@@ -223,6 +223,7 @@ input CTATRequestInput {
 Input for an admin update to a CTAT request.
 """
 input CTATAdminUpdateInput {
+  id: UUID!
   status: CTATStatus
   assignedAdmin: UUID
   notes: String
