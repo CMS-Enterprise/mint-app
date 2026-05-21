@@ -51,10 +51,6 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 		return PlanDataExchangeApproachTranslation()
 	case models.TNIddocQuestionnaire:
 		return IddocQuestionnaireTranslation()
-	case models.TNWaiverAssessmentSurvey:
-		return WaiverAssessmentSurveyTranslation()
-	case models.TNWaiver:
-		return WaiverTranslation()
 	// MTO TABLES
 	case models.TNMTOCategory:
 		return MTOCategoryTranslation()
