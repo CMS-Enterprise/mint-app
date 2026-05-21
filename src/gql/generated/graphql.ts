@@ -376,10 +376,10 @@ export enum CtatHelpNeededType {
 /** A request for CTAT assistance */
 export type CtatRequest = {
   __typename: 'CTATRequest';
-  assignedAdmin?: Maybe<UserInfo>;
+  assignedAdmin?: Maybe<UserAccount>;
   cmmiDivision?: Maybe<CtatcmmiDivisionOption>;
   cmmiDivisionOther?: Maybe<Scalars['String']['output']>;
-  cmmiGroup: CtatcmmiGroupOption;
+  cmmiGroup?: Maybe<CtatcmmiGroupOption>;
   cmmiGroupOther?: Maybe<Scalars['String']['output']>;
   contractActivityType?: Maybe<CtatContractActivityType>;
   contractActivityTypeOther?: Maybe<Scalars['String']['output']>;
@@ -390,20 +390,20 @@ export type CtatRequest = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  dateAssistanceNeededBy: Scalars['Time']['output'];
-  describeHelpNeeded: Scalars['String']['output'];
-  humanReadableID: Scalars['String']['output'];
+  dateAssistanceNeededBy?: Maybe<Scalars['Time']['output']>;
+  describeHelpNeeded?: Maybe<Scalars['String']['output']>;
+  humanReadableID?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   notes?: Maybe<Scalars['String']['output']>;
   relatedMINTModels?: Maybe<Array<Scalars['UUID']['output']>>;
-  requestUrgency: CtatRequestUrgency;
+  requestUrgency?: Maybe<CtatRequestUrgency>;
   requester: Scalars['UUID']['output'];
   resolution?: Maybe<Scalars['String']['output']>;
-  status: CtatStatus;
-  supportingDocuments?: Maybe<Array<CtatRequestDocument>>;
+  status?: Maybe<CtatStatus>;
+  supportingDocuments: Array<CtatRequestDocument>;
   typeOfHelpNeeded: Array<CtatHelpNeededType>;
   typeOfHelpNeededOther?: Maybe<Scalars['String']['output']>;
 };

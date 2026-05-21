@@ -155,15 +155,15 @@ A request for CTAT assistance
 """
 type CTATRequest {
   id: UUID!
-  humanReadableID: String!
+  humanReadableID: String
   requester: UUID!
 
-  status: CTATStatus!
-  assignedAdmin: UserInfo
+  status: CTATStatus
+  assignedAdmin: UserAccount
   notes: String
   resolution: String
 
-  cmmiGroup: CTATCMMIGroupOption!
+  cmmiGroup: CTATCMMIGroupOption
   cmmiGroupOther: String
   cmmiDivision: CTATCMMIDivisionOption
   cmmiDivisionOther: String
@@ -176,10 +176,10 @@ type CTATRequest {
   contractTypeOther: String
   typeOfHelpNeeded: [CTATHelpNeededType!]!
   typeOfHelpNeededOther: String
-  describeHelpNeeded: String!
-  requestUrgency: CTATRequestUrgency!
-  dateAssistanceNeededBy: Time!
-  supportingDocuments: [CTATRequestDocument!]
+  describeHelpNeeded: String
+  requestUrgency: CTATRequestUrgency
+  dateAssistanceNeededBy: Time
+  supportingDocuments: [CTATRequestDocument!]!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!

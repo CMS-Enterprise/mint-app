@@ -10,10 +10,16 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// AssignedAdmin is the resolver for the assignedAdmin field.
+func (r *cTATRequestResolver) AssignedAdmin(ctx context.Context, obj *models.CTATRequest) (*authentication.UserAccount, error) {
+	panic(fmt.Errorf("not implemented: AssignedAdmin - assignedAdmin"))
+}
 
 // TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
 func (r *cTATRequestResolver) TypeOfHelpNeeded(ctx context.Context, obj *models.CTATRequest) ([]models.CTATHelpNeededType, error) {
