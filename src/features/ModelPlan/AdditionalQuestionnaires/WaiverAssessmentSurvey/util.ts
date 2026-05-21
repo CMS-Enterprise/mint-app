@@ -168,19 +168,21 @@ export const getFormDiffs = (
     getGeneralCharacteristicsFormData(currentValues)
   );
 
-  const { existingModel } = generalCharacteristicsChanges;
+  if ('existingModel' in generalCharacteristicsChanges) {
+    const { existingModel } = generalCharacteristicsChanges;
 
-  if (
-    existingModel === undefined ||
-    existingModel === null ||
-    existingModel === ''
-  ) {
-    generalCharacteristicsChanges.currentModelPlanID = null;
-    generalCharacteristicsChanges.existingModelID = null;
-  } else if (existingModel.includes('-')) {
-    generalCharacteristicsChanges.currentModelPlanID = existingModel;
-  } else {
-    generalCharacteristicsChanges.existingModelID = Number(existingModel);
+    if (
+      existingModel === undefined ||
+      existingModel === null ||
+      existingModel === ''
+    ) {
+      generalCharacteristicsChanges.currentModelPlanID = null;
+      generalCharacteristicsChanges.existingModelID = null;
+    } else if (existingModel.includes('-')) {
+      generalCharacteristicsChanges.currentModelPlanID = existingModel;
+    } else {
+      generalCharacteristicsChanges.existingModelID = Number(existingModel);
+    }
   }
 
   const resemblesChangesArray =

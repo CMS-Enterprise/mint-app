@@ -50,8 +50,7 @@ const questionnairesList: Record<
         'Ensure compliance with statutory and regulatory requirements'
       ]
     ],
-    // TODO: Update path
-    path: '',
+    path: 'waiver-assessment-survey/about',
     responsibleTeamMember:
       'Model Lead (with assistance from other team members)'
   },
