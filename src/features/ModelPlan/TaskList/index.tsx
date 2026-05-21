@@ -380,20 +380,22 @@ const TaskList = () => {
                             </div>
                           )}
 
-                          <TaskListButton
-                            ariaLabel={t(`numberedList.${key}.heading`)}
-                            path={t(`numberedList.${key}.path`)}
-                            disabled={
-                              !!getTaskListLockedStatus(key) &&
-                              getTaskListLockedStatus(key)?.lockedByUserAccount
-                                .username !== euaId
-                            }
-                            status={taskListSections[key].status}
-                          />
+                          <div className="display-flex flex-align-center">
+                            <TaskListButton
+                              ariaLabel={t(`numberedList.${key}.heading`)}
+                              path={t(`numberedList.${key}.path`)}
+                              disabled={
+                                !!getTaskListLockedStatus(key) &&
+                                getTaskListLockedStatus(key)
+                                  ?.lockedByUserAccount.username !== euaId
+                              }
+                              status={taskListSections[key].status}
+                            />
 
-                          {taskListSectionMap[key] && (
-                            <SectionLock section={taskListSectionMap[key]} />
-                          )}
+                            {taskListSectionMap[key] && (
+                              <SectionLock section={taskListSectionMap[key]} />
+                            )}
+                          </div>
                         </TaskListItem>
                         {key !== 'prepareForClearance' && (
                           <Divider className="margin-bottom-4" />
