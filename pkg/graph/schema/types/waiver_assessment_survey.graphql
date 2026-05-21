@@ -8,6 +8,18 @@ enum WaiverAssessmentSurveyStatus {
 }
 
 """
+NotSelectedReason represents the reason a waiver assessment survey question was answered No.
+"""
+enum NotSelectedReason {
+  OUT_OF_SCOPE
+  OVERLAPS
+  NOT_TESTING
+  NOT_ENGAGED
+  FEEDBACK_AGAINST_USE
+  OTHER
+}
+
+"""
 WaiverAssessmentSurvey represents the waiver assessment questionnaire for a model plan.
 """
 type WaiverAssessmentSurvey {
@@ -17,38 +29,38 @@ type WaiverAssessmentSurvey {
   # Page 3 - Medicare payment waivers
   modifiesMedicareSavingsPrograms: Boolean
   modifiesMedicareSavingsProgramsExample: String
-  modifiesMedicareSavingsProgramsNote: String
+  modifiesMedicareSavingsProgramsWhyNot: NotSelectedReason
   bundlesPayments: Boolean
   bundlesPaymentsExample: String
-  bundlesPaymentsNote: String
+  bundlesPaymentsWhyNot: NotSelectedReason
   offersRiskSharingArrangements: Boolean
   offersRiskSharingArrangementsExample: String
-  offersRiskSharingArrangementsNote: String
+  offersRiskSharingArrangementsWhyNot: NotSelectedReason
 
   # Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: Boolean
   impactsSiteOfCarePaymentsExample: String
-  impactsSiteOfCarePaymentsNote: String
+  impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
   modifiesCareTeamScopeOfPractice: Boolean
   modifiesCareTeamScopeOfPracticeExample: String
-  modifiesCareTeamScopeOfPracticeNote: String
+  modifiesCareTeamScopeOfPracticeWhyNot: NotSelectedReason
   modifiesCareDeliveryWithClaimsBasedPayments: Boolean
   modifiesCareDeliveryWithClaimsBasedPaymentsExample: String
-  modifiesCareDeliveryWithClaimsBasedPaymentsNote: String
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: NotSelectedReason
   modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
-  modifiesQualityMeasurementsOrPaymentsViaWaiversNote: String
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
 
   # Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: Boolean
   impactsMedicaidOnlyBeneficiariesExample: String
-  impactsMedicaidOnlyBeneficiariesNote: String
+  impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
   impactsHomeCommunityBasedServicePayments: Boolean
   impactsHomeCommunityBasedServicePaymentsExample: String
-  impactsHomeCommunityBasedServicePaymentsNote: String
+  impactsHomeCommunityBasedServicePaymentsWhyNot: NotSelectedReason
   impactsManagedCareWaivers: Boolean
   impactsManagedCareWaiversExample: String
-  impactsManagedCareWaiversNote: String
+  impactsManagedCareWaiversWhyNot: NotSelectedReason
   additionalMedicaidSpecificWaivers: String
 
   # Page 6 - Waiver selections for this model plan
@@ -139,38 +151,38 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]interface{}") {
   # Page 3 - Medicare payment waivers
   modifiesMedicareSavingsPrograms: Boolean
   modifiesMedicareSavingsProgramsExample: String
-  modifiesMedicareSavingsProgramsNote: String
+  modifiesMedicareSavingsProgramsWhyNot: NotSelectedReason
   bundlesPayments: Boolean
   bundlesPaymentsExample: String
-  bundlesPaymentsNote: String
+  bundlesPaymentsWhyNot: NotSelectedReason
   offersRiskSharingArrangements: Boolean
   offersRiskSharingArrangementsExample: String
-  offersRiskSharingArrangementsNote: String
+  offersRiskSharingArrangementsWhyNot: NotSelectedReason
 
   # Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: Boolean
   impactsSiteOfCarePaymentsExample: String
-  impactsSiteOfCarePaymentsNote: String
+  impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
   modifiesCareTeamScopeOfPractice: Boolean
   modifiesCareTeamScopeOfPracticeExample: String
-  modifiesCareTeamScopeOfPracticeNote: String
+  modifiesCareTeamScopeOfPracticeWhyNot: NotSelectedReason
   modifiesCareDeliveryWithClaimsBasedPayments: Boolean
   modifiesCareDeliveryWithClaimsBasedPaymentsExample: String
-  modifiesCareDeliveryWithClaimsBasedPaymentsNote: String
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: NotSelectedReason
   modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
-  modifiesQualityMeasurementsOrPaymentsViaWaiversNote: String
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
 
   # Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: Boolean
   impactsMedicaidOnlyBeneficiariesExample: String
-  impactsMedicaidOnlyBeneficiariesNote: String
+  impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
   impactsHomeCommunityBasedServicePayments: Boolean
   impactsHomeCommunityBasedServicePaymentsExample: String
-  impactsHomeCommunityBasedServicePaymentsNote: String
+  impactsHomeCommunityBasedServicePaymentsWhyNot: NotSelectedReason
   impactsManagedCareWaivers: Boolean
   impactsManagedCareWaiversExample: String
-  impactsManagedCareWaiversNote: String
+  impactsManagedCareWaiversWhyNot: NotSelectedReason
   additionalMedicaidSpecificWaivers: String
 
   status: WaiverAssessmentSurveyStatus

@@ -2853,6 +2853,16 @@ export enum NonClaimsBasedPayType {
   SHARED_SAVINGS = 'SHARED_SAVINGS'
 }
 
+/** NotSelectedReason represents the reason a waiver assessment survey question was answered No. */
+export enum NotSelectedReason {
+  FEEDBACK_AGAINST_USE = 'FEEDBACK_AGAINST_USE',
+  NOT_ENGAGED = 'NOT_ENGAGED',
+  NOT_TESTING = 'NOT_TESTING',
+  OTHER = 'OTHER',
+  OUT_OF_SCOPE = 'OUT_OF_SCOPE',
+  OVERLAPS = 'OVERLAPS'
+}
+
 export enum OpSolutionStatus {
   AT_RISK = 'AT_RISK',
   BACKLOG = 'BACKLOG',
@@ -5911,23 +5921,23 @@ export type WaiverAssessmentSurvey = {
   additionalMedicaidSpecificWaivers?: Maybe<Scalars['String']['output']>;
   bundlesPayments?: Maybe<Scalars['Boolean']['output']>;
   bundlesPaymentsExample?: Maybe<Scalars['String']['output']>;
-  bundlesPaymentsNote?: Maybe<Scalars['String']['output']>;
+  bundlesPaymentsWhyNot?: Maybe<NotSelectedReason>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
   impactsHomeCommunityBasedServicePayments?: Maybe<Scalars['Boolean']['output']>;
   impactsHomeCommunityBasedServicePaymentsExample?: Maybe<Scalars['String']['output']>;
-  impactsHomeCommunityBasedServicePaymentsNote?: Maybe<Scalars['String']['output']>;
+  impactsHomeCommunityBasedServicePaymentsWhyNot?: Maybe<NotSelectedReason>;
   impactsManagedCareWaivers?: Maybe<Scalars['Boolean']['output']>;
   impactsManagedCareWaiversExample?: Maybe<Scalars['String']['output']>;
-  impactsManagedCareWaiversNote?: Maybe<Scalars['String']['output']>;
+  impactsManagedCareWaiversWhyNot?: Maybe<NotSelectedReason>;
   impactsMedicaidOnlyBeneficiaries?: Maybe<Scalars['Boolean']['output']>;
   impactsMedicaidOnlyBeneficiariesExample?: Maybe<Scalars['String']['output']>;
-  impactsMedicaidOnlyBeneficiariesNote?: Maybe<Scalars['String']['output']>;
+  impactsMedicaidOnlyBeneficiariesWhyNot?: Maybe<NotSelectedReason>;
   impactsSiteOfCarePayments?: Maybe<Scalars['Boolean']['output']>;
   impactsSiteOfCarePaymentsExample?: Maybe<Scalars['String']['output']>;
-  impactsSiteOfCarePaymentsNote?: Maybe<Scalars['String']['output']>;
+  impactsSiteOfCarePaymentsWhyNot?: Maybe<NotSelectedReason>;
   /**
    * Convenience field indicating whether the survey has been marked as complete.
    * Computed from status: true when status is COMPLETE.
@@ -5939,19 +5949,19 @@ export type WaiverAssessmentSurvey = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   modifiesCareDeliveryWithClaimsBasedPayments?: Maybe<Scalars['Boolean']['output']>;
   modifiesCareDeliveryWithClaimsBasedPaymentsExample?: Maybe<Scalars['String']['output']>;
-  modifiesCareDeliveryWithClaimsBasedPaymentsNote?: Maybe<Scalars['String']['output']>;
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot?: Maybe<NotSelectedReason>;
   modifiesCareTeamScopeOfPractice?: Maybe<Scalars['Boolean']['output']>;
   modifiesCareTeamScopeOfPracticeExample?: Maybe<Scalars['String']['output']>;
-  modifiesCareTeamScopeOfPracticeNote?: Maybe<Scalars['String']['output']>;
+  modifiesCareTeamScopeOfPracticeWhyNot?: Maybe<NotSelectedReason>;
   modifiesMedicareSavingsPrograms?: Maybe<Scalars['Boolean']['output']>;
   modifiesMedicareSavingsProgramsExample?: Maybe<Scalars['String']['output']>;
-  modifiesMedicareSavingsProgramsNote?: Maybe<Scalars['String']['output']>;
+  modifiesMedicareSavingsProgramsWhyNot?: Maybe<NotSelectedReason>;
   modifiesQualityMeasurementsOrPaymentsViaWaivers?: Maybe<Scalars['Boolean']['output']>;
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample?: Maybe<Scalars['String']['output']>;
-  modifiesQualityMeasurementsOrPaymentsViaWaiversNote?: Maybe<Scalars['String']['output']>;
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot?: Maybe<NotSelectedReason>;
   offersRiskSharingArrangements?: Maybe<Scalars['Boolean']['output']>;
   offersRiskSharingArrangementsExample?: Maybe<Scalars['String']['output']>;
-  offersRiskSharingArrangementsNote?: Maybe<Scalars['String']['output']>;
+  offersRiskSharingArrangementsWhyNot?: Maybe<NotSelectedReason>;
   /** The work completion status of the waiver assessment survey. */
   status: WaiverAssessmentSurveyStatus;
   suggestedWaivers: Array<SuggestedWaiver>;
@@ -5962,34 +5972,34 @@ export type WaiverAssessmentSurveyChanges = {
   additionalMedicaidSpecificWaivers?: InputMaybe<Scalars['String']['input']>;
   bundlesPayments?: InputMaybe<Scalars['Boolean']['input']>;
   bundlesPaymentsExample?: InputMaybe<Scalars['String']['input']>;
-  bundlesPaymentsNote?: InputMaybe<Scalars['String']['input']>;
+  bundlesPaymentsWhyNot?: InputMaybe<NotSelectedReason>;
   impactsHomeCommunityBasedServicePayments?: InputMaybe<Scalars['Boolean']['input']>;
   impactsHomeCommunityBasedServicePaymentsExample?: InputMaybe<Scalars['String']['input']>;
-  impactsHomeCommunityBasedServicePaymentsNote?: InputMaybe<Scalars['String']['input']>;
+  impactsHomeCommunityBasedServicePaymentsWhyNot?: InputMaybe<NotSelectedReason>;
   impactsManagedCareWaivers?: InputMaybe<Scalars['Boolean']['input']>;
   impactsManagedCareWaiversExample?: InputMaybe<Scalars['String']['input']>;
-  impactsManagedCareWaiversNote?: InputMaybe<Scalars['String']['input']>;
+  impactsManagedCareWaiversWhyNot?: InputMaybe<NotSelectedReason>;
   impactsMedicaidOnlyBeneficiaries?: InputMaybe<Scalars['Boolean']['input']>;
   impactsMedicaidOnlyBeneficiariesExample?: InputMaybe<Scalars['String']['input']>;
-  impactsMedicaidOnlyBeneficiariesNote?: InputMaybe<Scalars['String']['input']>;
+  impactsMedicaidOnlyBeneficiariesWhyNot?: InputMaybe<NotSelectedReason>;
   impactsSiteOfCarePayments?: InputMaybe<Scalars['Boolean']['input']>;
   impactsSiteOfCarePaymentsExample?: InputMaybe<Scalars['String']['input']>;
-  impactsSiteOfCarePaymentsNote?: InputMaybe<Scalars['String']['input']>;
+  impactsSiteOfCarePaymentsWhyNot?: InputMaybe<NotSelectedReason>;
   modifiesCareDeliveryWithClaimsBasedPayments?: InputMaybe<Scalars['Boolean']['input']>;
   modifiesCareDeliveryWithClaimsBasedPaymentsExample?: InputMaybe<Scalars['String']['input']>;
-  modifiesCareDeliveryWithClaimsBasedPaymentsNote?: InputMaybe<Scalars['String']['input']>;
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot?: InputMaybe<NotSelectedReason>;
   modifiesCareTeamScopeOfPractice?: InputMaybe<Scalars['Boolean']['input']>;
   modifiesCareTeamScopeOfPracticeExample?: InputMaybe<Scalars['String']['input']>;
-  modifiesCareTeamScopeOfPracticeNote?: InputMaybe<Scalars['String']['input']>;
+  modifiesCareTeamScopeOfPracticeWhyNot?: InputMaybe<NotSelectedReason>;
   modifiesMedicareSavingsPrograms?: InputMaybe<Scalars['Boolean']['input']>;
   modifiesMedicareSavingsProgramsExample?: InputMaybe<Scalars['String']['input']>;
-  modifiesMedicareSavingsProgramsNote?: InputMaybe<Scalars['String']['input']>;
+  modifiesMedicareSavingsProgramsWhyNot?: InputMaybe<NotSelectedReason>;
   modifiesQualityMeasurementsOrPaymentsViaWaivers?: InputMaybe<Scalars['Boolean']['input']>;
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample?: InputMaybe<Scalars['String']['input']>;
-  modifiesQualityMeasurementsOrPaymentsViaWaiversNote?: InputMaybe<Scalars['String']['input']>;
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot?: InputMaybe<NotSelectedReason>;
   offersRiskSharingArrangements?: InputMaybe<Scalars['Boolean']['input']>;
   offersRiskSharingArrangementsExample?: InputMaybe<Scalars['String']['input']>;
-  offersRiskSharingArrangementsNote?: InputMaybe<Scalars['String']['input']>;
+  offersRiskSharingArrangementsWhyNot?: InputMaybe<NotSelectedReason>;
   status?: InputMaybe<WaiverAssessmentSurveyStatus>;
 };
 
@@ -5999,6 +6009,42 @@ export enum WaiverAssessmentSurveyStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   READY = 'READY'
 }
+
+/** Represents the waiver assessment questionnaire translation data. */
+export type WaiverAssessmentSurveyTranslation = {
+  __typename: 'WaiverAssessmentSurveyTranslation';
+  additionalMedicaidSpecificWaivers: TranslationField;
+  bundlesPayments: TranslationFieldWithOptionsAndChildren;
+  bundlesPaymentsExample: TranslationField;
+  bundlesPaymentsWhyNot: TranslationFieldWithOptionsAndParent;
+  impactsHomeCommunityBasedServicePayments: TranslationFieldWithOptionsAndChildren;
+  impactsHomeCommunityBasedServicePaymentsExample: TranslationField;
+  impactsHomeCommunityBasedServicePaymentsWhyNot: TranslationFieldWithOptionsAndParent;
+  impactsManagedCareWaivers: TranslationFieldWithOptionsAndChildren;
+  impactsManagedCareWaiversExample: TranslationField;
+  impactsManagedCareWaiversWhyNot: TranslationFieldWithOptionsAndParent;
+  impactsMedicaidOnlyBeneficiaries: TranslationFieldWithOptionsAndChildren;
+  impactsMedicaidOnlyBeneficiariesExample: TranslationField;
+  impactsMedicaidOnlyBeneficiariesWhyNot: TranslationFieldWithOptionsAndParent;
+  impactsSiteOfCarePayments: TranslationFieldWithOptionsAndChildren;
+  impactsSiteOfCarePaymentsExample: TranslationField;
+  impactsSiteOfCarePaymentsWhyNot: TranslationFieldWithOptionsAndParent;
+  modifiesCareDeliveryWithClaimsBasedPayments: TranslationFieldWithOptionsAndChildren;
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: TranslationField;
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: TranslationFieldWithOptionsAndParent;
+  modifiesCareTeamScopeOfPractice: TranslationFieldWithOptionsAndChildren;
+  modifiesCareTeamScopeOfPracticeExample: TranslationField;
+  modifiesCareTeamScopeOfPracticeWhyNot: TranslationFieldWithOptionsAndParent;
+  modifiesMedicareSavingsPrograms: TranslationFieldWithOptionsAndChildren;
+  modifiesMedicareSavingsProgramsExample: TranslationField;
+  modifiesMedicareSavingsProgramsWhyNot: TranslationFieldWithOptionsAndParent;
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: TranslationFieldWithOptionsAndChildren;
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationField;
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: TranslationFieldWithOptionsAndParent;
+  offersRiskSharingArrangements: TranslationFieldWithOptionsAndChildren;
+  offersRiskSharingArrangementsExample: TranslationField;
+  offersRiskSharingArrangementsWhyNot: TranslationFieldWithOptionsAndParent;
+};
 
 export type WaiverChanges = {
   notUsingReason?: InputMaybe<Scalars['String']['input']>;
