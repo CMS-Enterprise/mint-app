@@ -3,8 +3,8 @@
 exports[`Solution Help Categories > matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="padding-y-4 padding-bottom-6 bg-primary-darker text-white"
-    id="operational-solutions-and-it-systems"
+    class=""
+    id="library-of-operational-solutions-and-it-systems"
     style="scroll-margin-top: 3.5rem;"
   >
     <div
@@ -14,7 +14,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
       <h2
         class="margin-0"
       >
-        Operational solutions
+        Library of operational solutions and IT systems
       </h2>
       <p
         class="margin-bottom-4 font-body-md"
@@ -34,7 +34,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -86,7 +86,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -138,7 +138,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -185,7 +185,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -232,7 +232,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -279,7 +279,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -326,7 +326,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -373,7 +373,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -420,7 +420,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -467,7 +467,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -514,7 +514,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -561,7 +561,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
             data-testid="Card"
           >
             <div
-              class="usa-card__container"
+              class="usa-card__container shadow-3"
             >
               <div
                 class="usa-card__header text-bold padding-y-0 flex-2"
@@ -605,7 +605,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
         data-discover="true"
         href="/help-and-knowledge/operational-solutions?page=1"
       >
-        View all operational solutions
+        View soluion library
       </a>
     </div>
   </div>
