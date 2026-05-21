@@ -36,6 +36,11 @@ const waiverAssessmentSurvey = {
       'Any answers updated as a part of this survey will also be updated in the Model Plan.',
     updateAnswers: 'Update answers (show questions)',
     hideQuestions: 'Hide questions'
+  },
+  medicarePaymentWaivers: {
+    heading: 'Medicare payment waivers',
+    description:
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
   }
 };
 
