@@ -71,6 +71,7 @@ import {
   MtoSolutionType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
+  NotSelectedReason,
   OperationalNeedKey,
   OperationalNeedTranslation,
   OperationalSolutionKey,
@@ -113,6 +114,8 @@ import {
   TranslationField,
   TranslationFieldWithOptions,
   TriStateAnswer,
+  WaiverAssessmentSurveyStatus,
+  WaiverAssessmentSurveyTranslation,
   WaiverType,
   YesNoOtherType,
   YesNoType
@@ -754,6 +757,63 @@ type TranslationOpsEvalAndLearningGQL = Omit<
 */
 export type TranslationOpsEvalAndLearning = {
   [K in keyof TranslationOpsEvalAndLearningGQL]: TranslationOpsEvalAndLearningForm[K]; // FE form type
+};
+
+// Waiver Assessment Survey
+
+export type TranslationWaiverAssessmentSurveyForm = {
+  status: TranslationFieldPropertiesWithOptions<WaiverAssessmentSurveyStatus>;
+  isComplete: TranslationFieldPropertiesWithOptions<Bool>;
+
+  // Page 3 - Medicare payment waivers
+  modifiesMedicareSavingsPrograms: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  modifiesMedicareSavingsProgramsExample: TranslationFieldProperties;
+  modifiesMedicareSavingsProgramsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  bundlesPayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  bundlesPaymentsExample: TranslationFieldProperties;
+  bundlesPaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  offersRiskSharingArrangements: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  offersRiskSharingArrangementsExample: TranslationFieldProperties;
+  offersRiskSharingArrangementsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+
+  // Page 4 - Program waivers (Medicare Benefit Enhancements)
+  impactsSiteOfCarePayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  impactsSiteOfCarePaymentsExample: TranslationFieldProperties;
+  impactsSiteOfCarePaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  modifiesCareTeamScopeOfPractice: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  modifiesCareTeamScopeOfPracticeExample: TranslationFieldProperties;
+  modifiesCareTeamScopeOfPracticeWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  modifiesCareDeliveryWithClaimsBasedPayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: TranslationFieldProperties;
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationFieldProperties;
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+
+  // Page 5 - Medicaid payment waivers
+  impactsMedicaidOnlyBeneficiaries: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  impactsMedicaidOnlyBeneficiariesExample: TranslationFieldProperties;
+  impactsMedicaidOnlyBeneficiariesWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  impactsHomeCommunityBasedServicePayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  impactsHomeCommunityBasedServicePaymentsExample: TranslationFieldProperties;
+  impactsHomeCommunityBasedServicePaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  impactsManagedCareWaivers: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  impactsManagedCareWaiversExample: TranslationFieldProperties;
+  impactsManagedCareWaiversWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  additionalMedicaidSpecificWaivers: TranslationFieldProperties;
+};
+
+type TranslationWaiverAssessmentSurveyGQL = Omit<
+  WaiverAssessmentSurveyTranslation,
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationWaiverAssessmentSurvey = {
+  [K in keyof TranslationWaiverAssessmentSurveyGQL]: TranslationWaiverAssessmentSurveyForm[K]; // FE form type
 };
 
 // IDDOC Questionnaire

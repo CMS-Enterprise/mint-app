@@ -2,6 +2,13 @@
 Represents the waiver assessment questionnaire translation data.
 """
 type WaiverAssessmentSurveyTranslation {
+  # General fields
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  """
+  IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
+  """
+  isComplete: TranslationFieldWithOptions!
+
   # Page 3 - Medicare payment waivers
   modifiesMedicareSavingsPrograms: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "modifies_medicare_savings_programs")

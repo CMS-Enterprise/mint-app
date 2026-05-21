@@ -6050,6 +6050,8 @@ export type WaiverAssessmentSurveyTranslation = {
   impactsSiteOfCarePayments: TranslationFieldWithOptionsAndChildren;
   impactsSiteOfCarePaymentsExample: TranslationField;
   impactsSiteOfCarePaymentsWhyNot: TranslationFieldWithOptionsAndParent;
+  /** IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database. */
+  isComplete: TranslationFieldWithOptions;
   modifiesCareDeliveryWithClaimsBasedPayments: TranslationFieldWithOptionsAndChildren;
   modifiesCareDeliveryWithClaimsBasedPaymentsExample: TranslationField;
   modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: TranslationFieldWithOptionsAndParent;
@@ -6065,6 +6067,7 @@ export type WaiverAssessmentSurveyTranslation = {
   offersRiskSharingArrangements: TranslationFieldWithOptionsAndChildren;
   offersRiskSharingArrangementsExample: TranslationField;
   offersRiskSharingArrangementsWhyNot: TranslationFieldWithOptionsAndParent;
+  status: TranslationFieldWithOptions;
 };
 
 export type WaiverChanges = {
