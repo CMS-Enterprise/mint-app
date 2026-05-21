@@ -23,6 +23,7 @@ import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { QuestionnaireName } from 'types/questionnaires';
 import { formatDateLocal } from 'utils/date';
+import { findEffectiveLock } from 'utils/lockableSectionLinking';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import QuestionnaireListItem, {
@@ -70,9 +71,13 @@ const AdditionalQuestionnaires = () => {
   const getQuestionnaireLockedStatus = (
     section: string
   ): QuestionnaireSectionLockStatus | undefined => {
-    return lockableSectionLocks.find(
-      sectionLock => sectionLock.section === questionnaireSectionMap[section]
-    );
+    const lockableSection = questionnaireSectionMap[section];
+
+    if (!lockableSection) {
+      return undefined;
+    }
+
+    return findEffectiveLock(lockableSectionLocks, lockableSection);
   };
 
   if (loading) {

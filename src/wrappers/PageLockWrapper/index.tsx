@@ -9,7 +9,6 @@ import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import {
-  GetLockedModelPlanSectionsQuery,
   LockableSection,
   useLockModelPlanSectionMutation,
   useUnlockModelPlanSectionMutation
@@ -18,21 +17,17 @@ import { AppState } from 'stores/reducers/rootReducer';
 
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { RouterContext } from 'contexts/RouterContext';
+import {
+  findLockedSection,
+  getLinkedSections,
+  LockSectionType,
+  LockStatus
+} from 'utils/lockableSectionLinking';
 import { isUUID } from 'utils/modelPlan';
-
-type LockSectionType =
-  GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 type SubscriptionHandlerProps = {
   children: React.ReactNode;
 };
-
-export enum LockStatus {
-  LOCKED = 'LOCKED',
-  UNLOCKED = 'UNLOCKED',
-  OCCUPYING = 'OCCUPYING',
-  CANT_LOCK = 'CANT_LOCK'
-}
 
 type LockableSectionMapType = {
   [key: string]: LockableSection;
@@ -51,32 +46,6 @@ export const modelPlanSectionMap: LockableSectionMapType = {
   'waiver-assessment-survey': LockableSection.WAIVER_ASSESSMENT_SURVEY,
   'model-to-operations': LockableSection.MODELS_TO_OPERATION_MATRIX,
   'model-timeline': LockableSection.TIMELINE
-};
-
-// Find lock and sets the LockStatus of the current task list section
-// Returns - LOCKED || UNLOCKED || OCCUPYING
-export const findLockedSection = (
-  locks: LockSectionType[],
-  route: LockableSection,
-  userEUA?: string
-): LockStatus => {
-  const foundLockedSection = locks.find(
-    (section: LockSectionType) => section.section === route
-  );
-
-  // If the locked section is not found, set to UNLOCKED, then send mutation to lock
-  if (!foundLockedSection) {
-    return LockStatus.UNLOCKED;
-  }
-  if (
-    foundLockedSection &&
-    foundLockedSection.lockedByUserAccount.username !== userEUA
-  ) {
-    // If the locked section is found - render locked screen
-    return LockStatus.LOCKED;
-  }
-  // user currently has the lock
-  return LockStatus.OCCUPYING;
 };
 
 // Parses task list route to map to modelPlanSectionMap
@@ -205,14 +174,19 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
     from && // from will be undefined or empty string if refreshed
     from !== to
   ) {
-    // Located section to be removed
-    const lockedSection = lockableSectionLocks.find(
-      (section: LockSectionType) =>
-        section.lockedByUserAccount.username === euaId &&
-        section.section === modelPlanSectionMap[lockedRouteParser(from)]
-    );
+    const fromSection = modelPlanSectionMap[lockedRouteParser(from)];
 
-    if (lockedSection) removeLockedSection(lockedSection);
+    if (fromSection) {
+      const sectionsToRelease = getLinkedSections(fromSection);
+
+      lockableSectionLocks
+        .filter(
+          (lock: LockSectionType) =>
+            lock.lockedByUserAccount.username === euaId &&
+            sectionsToRelease.includes(lock.section)
+        )
+        .forEach(removeLockedSection);
+    }
   }
 
   // Checks to see if section should be locked and calls mutation to add lock
@@ -225,23 +199,39 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
     !removeLockLoading &&
     !loading
   ) {
-    // Check if need to unlock previous section before adding new section
-    // i.e. end of task list section or any react-router redirect from one section directly to another
-    const prevLockedSection = lockableSectionLocks.find(
-      (section: LockSectionType) =>
-        section.lockedByUserAccount.username === euaId &&
-        modelPlanSectionMap[lockedRouteParser(from)] === section.section &&
-        modelPlanSectionMap[lockedRouteParser(to)] !== section.section &&
-        from !== to
-    );
+    // Unlock linked locks from the previous section when navigating to a different section
+    const fromSection = modelPlanSectionMap[lockedRouteParser(from)];
 
-    if (prevLockedSection) {
-      removeLockedSection(prevLockedSection);
+    if (
+      fromSection &&
+      modelPlanSection &&
+      fromSection !== modelPlanSection &&
+      from !== to
+    ) {
+      const sectionsToRelease = getLinkedSections(fromSection);
+
+      lockableSectionLocks
+        .filter(
+          (lock: LockSectionType) =>
+            lock.lockedByUserAccount.username === euaId &&
+            sectionsToRelease.includes(lock.section)
+        )
+        .forEach(removeLockedSection);
     }
 
-    if (lockState === LockStatus.UNLOCKED) {
-      addLockedSection(modelPlanSection);
-    }
+    const sectionsToLock = getLinkedSections(modelPlanSection);
+
+    sectionsToLock.forEach((section: LockableSection) => {
+      const userHoldsLock = lockableSectionLocks.some(
+        (lock: LockSectionType) =>
+          lock.section === section &&
+          lock.lockedByUserAccount.username === euaId
+      );
+
+      if (!userHoldsLock) {
+        addLockedSection(section);
+      }
+    });
   }
 
   return <div>{children}</div>;
