@@ -74,7 +74,21 @@ func (s *Seeder) seedModelPlanWithMTOData(
 		panic(err)
 	}
 	descCat0SubA := "Description for " + cat0SubAName
-	_, err = resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat0SubAName, &descCat0SubA, plan.ID, &category0SubA.ID)
+	milestoneCat0SubA, err := resolvers.MTOMilestoneCreateCustom(s.Config.Context, s.Config.Logger, princ, s.Config.Store, "Milestone"+cat0SubAName, &descCat0SubA, plan.ID, &category0SubA.ID)
+	if err != nil {
+		panic(err)
+	}
+	_, err = resolvers.MTOSolutionCreateCommon(
+		s.Config.Context,
+		s.Config.Logger,
+		princ,
+		s.Config.Store,
+		nil,
+		email.AddressBook{},
+		plan.ID,
+		models.MTOCSKInnovation,
+		[]uuid.UUID{milestoneCat0SubA.ID},
+	)
 	if err != nil {
 		panic(err)
 	}
