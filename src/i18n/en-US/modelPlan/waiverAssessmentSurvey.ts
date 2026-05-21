@@ -1,4 +1,6 @@
-const waiverAssessmentSurvey = {
+const waiverAssessmentSurvey = {};
+
+const waiverAssessmentSurveyMisc = {
   heading: 'Waiver Assessment Survey',
   bannerText:
     'Your waiver assessment survey can only be accessed by one person at a time. If you are not actively editing or reviewing this section, please exit out of it so others can access it.',
@@ -44,4 +46,4 @@ const waiverAssessmentSurvey = {
   }
 };
 
-export default waiverAssessmentSurvey;
+export { waiverAssessmentSurvey, waiverAssessmentSurveyMisc };

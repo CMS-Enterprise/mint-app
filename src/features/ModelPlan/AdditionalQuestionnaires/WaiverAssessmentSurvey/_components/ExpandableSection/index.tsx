@@ -72,8 +72,8 @@ const ExpandableSection = ({
   >['control'];
   comboOptions?: { value: string; label: string }[];
 }) => {
-  const { t: waiverAssessmentSurveyT } = useTranslation(
-    'waiverAssessmentSurvey'
+  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
+    'waiverAssessmentSurveyMisc'
   );
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -87,7 +87,7 @@ const ExpandableSection = ({
         onClick={() => setIsExpanded(prev => !prev)}
       >
         <span>
-          {waiverAssessmentSurveyT(
+          {waiverAssessmentSurveyMiscT(
             `modelPlanQuestions.${isExpanded ? 'hideQuestions' : 'updateAnswers'}`
           )}
         </span>

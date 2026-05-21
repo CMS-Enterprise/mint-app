@@ -11,8 +11,8 @@ import Spinner from 'components/Spinner';
 import ModelPlanQuestionsForm from '../_components/ModelPlanQuestionsForm';
 
 const ModelPlanQuestions = () => {
-  const { t: waiverAssessmentSurveyT } = useTranslation(
-    'waiverAssessmentSurvey'
+  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
+    'waiverAssessmentSurveyMisc'
   );
 
   const { modelID = '' } = useParams<{ modelID: string }>();
@@ -85,18 +85,18 @@ const ModelPlanQuestions = () => {
     <div className="mint-body-normal grid-row flex-column">
       <div>
         <FormHeader
-          header={waiverAssessmentSurveyT('modelPlanQuestions.heading')}
+          header={waiverAssessmentSurveyMiscT('modelPlanQuestions.heading')}
           currentPage={2}
           totalPages={7}
         />
         <p className="margin-top-neg-1 margin-bottom-4 text-base-dark">
-          {waiverAssessmentSurveyT('modelPlanQuestions.description')}
+          {waiverAssessmentSurveyMiscT('modelPlanQuestions.description')}
         </p>
       </div>
 
       <div className="tablet:grid-col-6">
         <Alert type="info" slim className="margin-bottom-4">
-          {waiverAssessmentSurveyT('modelPlanQuestions.infoAlert')}
+          {waiverAssessmentSurveyMiscT('modelPlanQuestions.infoAlert')}
         </Alert>
 
         {flattenedData &&

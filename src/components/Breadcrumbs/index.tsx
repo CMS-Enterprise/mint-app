@@ -152,7 +152,7 @@ export const commonBreadCrumbs = (
     url: `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/operations`
   },
   WAIVER_ASSESSMENT_SURVEY: {
-    text: 'waiverAssessmentSurvey:heading',
+    text: 'waiverAssessmentSurveyMisc:heading',
     url: `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about`
   },
   ANALYTICS: {

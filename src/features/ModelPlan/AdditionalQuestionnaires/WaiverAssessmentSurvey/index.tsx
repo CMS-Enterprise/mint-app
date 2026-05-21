@@ -19,8 +19,8 @@ import MedicarePaymentWaivers from './MedicarePaymentWaivers';
 import ModelPlanQuestions from './ModelPlanQuestions';
 
 const WaiverAssessmentSurvey = () => {
-  const { t: waiverAssessmentSurveyT } = useTranslation(
-    'waiverAssessmentSurvey'
+  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
+    'waiverAssessmentSurveyMisc'
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
@@ -36,7 +36,9 @@ const WaiverAssessmentSurvey = () => {
 
   return (
     <MainContent data-testid="waiver-assessment-survey">
-      <QuestionnaireBanner bannerText={waiverAssessmentSurveyT('bannerText')} />
+      <QuestionnaireBanner
+        bannerText={waiverAssessmentSurveyMiscT('bannerText')}
+      />
 
       <GridContainer>
         <Breadcrumbs
@@ -51,7 +53,7 @@ const WaiverAssessmentSurvey = () => {
 
       <StickyModelNameWrapper
         triggerRef={headerRef}
-        sectionHeading={waiverAssessmentSurveyT('heading')}
+        sectionHeading={waiverAssessmentSurveyMiscT('heading')}
         modelName={modelName}
         abbreviation={abbreviation || undefined}
       />
@@ -61,7 +63,7 @@ const WaiverAssessmentSurvey = () => {
           className="margin-bottom-0 margin-top-4 line-height-large"
           ref={headerRef}
         >
-          {waiverAssessmentSurveyT('heading')}
+          {waiverAssessmentSurveyMiscT('heading')}
         </h1>
 
         <p
@@ -72,7 +74,7 @@ const WaiverAssessmentSurvey = () => {
         </p>
 
         <p className="mint-body-medium">
-          {waiverAssessmentSurveyT('description')}
+          {waiverAssessmentSurveyMiscT('description')}
         </p>
 
         <AskAQuestion

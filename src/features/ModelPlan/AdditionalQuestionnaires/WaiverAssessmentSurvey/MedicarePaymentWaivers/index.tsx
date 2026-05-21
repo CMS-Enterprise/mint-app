@@ -9,8 +9,8 @@ import FormHeader from 'components/FormHeader';
 import PageNumber from 'components/PageNumber';
 
 const MedicarePaymentWaivers = () => {
-  const { t: waiverAssessmentSurveyT } = useTranslation(
-    'waiverAssessmentSurvey'
+  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
+    'waiverAssessmentSurveyMisc'
   );
   const { t: additionalQuestionnairesT } = useTranslation(
     'additionalQuestionnaires'
@@ -21,13 +21,13 @@ const MedicarePaymentWaivers = () => {
   return (
     <div className="mint-body-normal">
       <FormHeader
-        header={waiverAssessmentSurveyT('medicarePaymentWaivers.heading')}
+        header={waiverAssessmentSurveyMiscT('medicarePaymentWaivers.heading')}
         currentPage={3}
         totalPages={7}
       />
 
       <p className="margin-top-neg-1">
-        {waiverAssessmentSurveyT('medicarePaymentWaivers.description')}
+        {waiverAssessmentSurveyMiscT('medicarePaymentWaivers.description')}
       </p>
 
       <Form
