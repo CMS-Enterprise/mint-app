@@ -17,7 +17,7 @@ const ContractAssistanceSection = () => {
       <GridContainer>
         <h2 className="margin-0">{t('contractAssistance.hkcHeading')}</h2>
 
-        <p className="margin-top-1 margin-bottom-3 font-body-md line-height-sans-4">
+        <p className="margin-top-1 margin-bottom-3 font-body-md line-height-sans-4 text-light">
           {t('contractAssistance.hkcDescription')}
         </p>
 
