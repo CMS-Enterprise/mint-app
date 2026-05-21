@@ -13,6 +13,18 @@ CREATE TYPE WAIVER_ASSESSMENT_SURVEY_STATUS AS ENUM (
 
 COMMENT ON TYPE WAIVER_ASSESSMENT_SURVEY_STATUS IS 'Work completion status for waiver assessment survey: READY (not started), IN_PROGRESS (started), COMPLETE (finished).';
 
+-- Create enum for not selected reason on waiver questions
+CREATE TYPE NOT_SELECTED_REASON AS ENUM (
+    'OUT_OF_SCOPE',
+    'OVERLAPS',
+    'NOT_TESTING',
+    'NOT_ENGAGED',
+    'FEEDBACK_AGAINST_USE',
+    'OTHER'
+);
+
+COMMENT ON TYPE NOT_SELECTED_REASON IS 'Reason for selecting no on a waiver question.';
+
 -- Create the waiver_assessment_survey table
 CREATE TABLE waiver_assessment_survey (
     id UUID PRIMARY KEY NOT NULL,
@@ -21,38 +33,38 @@ CREATE TABLE waiver_assessment_survey (
     -- Page 3 - Medicare payment waivers
     modifies_medicare_savings_programs BOOLEAN,
     modifies_medicare_savings_programs_example TEXT,
-    modifies_medicare_savings_programs_note TEXT,
+    modifies_medicare_savings_programs_why_not NOT_SELECTED_REASON,
     bundles_payments BOOLEAN,
     bundles_payments_example TEXT,
-    bundles_payments_note TEXT,
+    bundles_payments_why_not NOT_SELECTED_REASON,
     offers_risk_sharing_arrangements BOOLEAN,
     offers_risk_sharing_arrangements_example TEXT,
-    offers_risk_sharing_arrangements_note TEXT,
+    offers_risk_sharing_arrangements_why_not NOT_SELECTED_REASON,
 
     -- Page 4 - Program waivers (Medicare Benefit Enhancements)
     impacts_site_of_care_payments BOOLEAN,
     impacts_site_of_care_payments_example TEXT,
-    impacts_site_of_care_payments_note TEXT,
+    impacts_site_of_care_payments_why_not NOT_SELECTED_REASON,
     modifies_care_team_scope_of_practice BOOLEAN,
     modifies_care_team_scope_of_practice_example TEXT,
-    modifies_care_team_scope_of_practice_note TEXT,
+    modifies_care_team_scope_of_practice_why_not NOT_SELECTED_REASON,
     modifies_care_delivery_with_claims_based_payments BOOLEAN,
     modifies_care_delivery_with_claims_based_payments_example TEXT,
-    modifies_care_delivery_with_claims_based_payments_note TEXT,
+    modifies_care_delivery_with_claims_based_payments_why_not NOT_SELECTED_REASON,
     modifies_quality_measurements_or_payments_via_waivers BOOLEAN,
     modifies_quality_measurements_or_payments_via_waivers_example TEXT,
-    modifies_quality_measurements_or_payments_via_waivers_note TEXT,
+    modifies_quality_measurements_or_payments_via_waivers_why_not NOT_SELECTED_REASON,
 
     -- Page 5 - Medicaid payment waivers
     impacts_medicaid_only_beneficiaries BOOLEAN,
     impacts_medicaid_only_beneficiaries_example TEXT,
-    impacts_medicaid_only_beneficiaries_note TEXT,
+    impacts_medicaid_only_beneficiaries_why_not NOT_SELECTED_REASON,
     impacts_home_community_based_service_payments BOOLEAN,
     impacts_home_community_based_service_payments_example TEXT,
-    impacts_home_community_based_service_payments_note TEXT,
+    impacts_home_community_based_service_payments_why_not NOT_SELECTED_REASON,
     impacts_managed_care_waivers BOOLEAN,
     impacts_managed_care_waivers_example TEXT,
-    impacts_managed_care_waivers_note TEXT,
+    impacts_managed_care_waivers_why_not NOT_SELECTED_REASON,
     additional_medicaid_specific_waivers TEXT,
 
     status WAIVER_ASSESSMENT_SURVEY_STATUS NOT NULL DEFAULT 'READY',
