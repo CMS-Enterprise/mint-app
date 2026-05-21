@@ -767,38 +767,38 @@ export type TranslationWaiverAssessmentSurveyForm = {
 
   // Page 3 - Medicare payment waivers
   modifiesMedicareSavingsPrograms: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  modifiesMedicareSavingsProgramsExample: TranslationFieldProperties;
+  modifiesMedicareSavingsProgramsExample: TranslationFieldPropertiesWithParent<Bool>;
   modifiesMedicareSavingsProgramsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   bundlesPayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  bundlesPaymentsExample: TranslationFieldProperties;
+  bundlesPaymentsExample: TranslationFieldPropertiesWithParent<Bool>;
   bundlesPaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   offersRiskSharingArrangements: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  offersRiskSharingArrangementsExample: TranslationFieldProperties;
+  offersRiskSharingArrangementsExample: TranslationFieldPropertiesWithParent<Bool>;
   offersRiskSharingArrangementsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
 
   // Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  impactsSiteOfCarePaymentsExample: TranslationFieldProperties;
+  impactsSiteOfCarePaymentsExample: TranslationFieldPropertiesWithParent<Bool>;
   impactsSiteOfCarePaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   modifiesCareTeamScopeOfPractice: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  modifiesCareTeamScopeOfPracticeExample: TranslationFieldProperties;
+  modifiesCareTeamScopeOfPracticeExample: TranslationFieldPropertiesWithParent<Bool>;
   modifiesCareTeamScopeOfPracticeWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   modifiesCareDeliveryWithClaimsBasedPayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  modifiesCareDeliveryWithClaimsBasedPaymentsExample: TranslationFieldProperties;
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: TranslationFieldPropertiesWithParent<Bool>;
   modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   modifiesQualityMeasurementsOrPaymentsViaWaivers: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationFieldProperties;
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationFieldPropertiesWithParent<Bool>;
   modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
 
   // Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  impactsMedicaidOnlyBeneficiariesExample: TranslationFieldProperties;
+  impactsMedicaidOnlyBeneficiariesExample: TranslationFieldPropertiesWithParent<Bool>;
   impactsMedicaidOnlyBeneficiariesWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   impactsHomeCommunityBasedServicePayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  impactsHomeCommunityBasedServicePaymentsExample: TranslationFieldProperties;
+  impactsHomeCommunityBasedServicePaymentsExample: TranslationFieldPropertiesWithParent<Bool>;
   impactsHomeCommunityBasedServicePaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   impactsManagedCareWaivers: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
-  impactsManagedCareWaiversExample: TranslationFieldProperties;
+  impactsManagedCareWaiversExample: TranslationFieldPropertiesWithParent<Bool>;
   impactsManagedCareWaiversWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   additionalMedicaidSpecificWaivers: TranslationFieldProperties;
 };

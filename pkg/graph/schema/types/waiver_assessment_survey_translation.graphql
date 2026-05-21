@@ -12,19 +12,19 @@ type WaiverAssessmentSurveyTranslation {
   # Page 3 - Medicare payment waivers
   modifiesMedicareSavingsPrograms: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "modifies_medicare_savings_programs")
-  modifiesMedicareSavingsProgramsExample: TranslationField!
+  modifiesMedicareSavingsProgramsExample: TranslationFieldWithParent!
     @goTag(key: "db", value: "modifies_medicare_savings_programs_example")
   modifiesMedicareSavingsProgramsWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "modifies_medicare_savings_programs_why_not")
   bundlesPayments: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "bundles_payments")
-  bundlesPaymentsExample: TranslationField!
+  bundlesPaymentsExample: TranslationFieldWithParent!
     @goTag(key: "db", value: "bundles_payments_example")
   bundlesPaymentsWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "bundles_payments_why_not")
   offersRiskSharingArrangements: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "offers_risk_sharing_arrangements")
-  offersRiskSharingArrangementsExample: TranslationField!
+  offersRiskSharingArrangementsExample: TranslationFieldWithParent!
     @goTag(key: "db", value: "offers_risk_sharing_arrangements_example")
   offersRiskSharingArrangementsWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "offers_risk_sharing_arrangements_why_not")
@@ -32,13 +32,13 @@ type WaiverAssessmentSurveyTranslation {
   # Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "impacts_site_of_care_payments")
-  impactsSiteOfCarePaymentsExample: TranslationField!
+  impactsSiteOfCarePaymentsExample: TranslationFieldWithParent!
     @goTag(key: "db", value: "impacts_site_of_care_payments_example")
   impactsSiteOfCarePaymentsWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "impacts_site_of_care_payments_why_not")
   modifiesCareTeamScopeOfPractice: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "modifies_care_team_scope_of_practice")
-  modifiesCareTeamScopeOfPracticeExample: TranslationField!
+  modifiesCareTeamScopeOfPracticeExample: TranslationFieldWithParent!
     @goTag(key: "db", value: "modifies_care_team_scope_of_practice_example")
   modifiesCareTeamScopeOfPracticeWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "modifies_care_team_scope_of_practice_why_not")
@@ -47,7 +47,7 @@ type WaiverAssessmentSurveyTranslation {
       key: "db"
       value: "modifies_care_delivery_with_claims_based_payments"
     )
-  modifiesCareDeliveryWithClaimsBasedPaymentsExample: TranslationField!
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: TranslationFieldWithParent!
     @goTag(
       key: "db"
       value: "modifies_care_delivery_with_claims_based_payments_example"
@@ -62,7 +62,7 @@ type WaiverAssessmentSurveyTranslation {
       key: "db"
       value: "modifies_quality_measurements_or_payments_via_waivers"
     )
-  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationField!
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationFieldWithParent!
     @goTag(
       key: "db"
       value: "modifies_quality_measurements_or_payments_via_waivers_example"
@@ -76,13 +76,13 @@ type WaiverAssessmentSurveyTranslation {
   # Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "impacts_medicaid_only_beneficiaries")
-  impactsMedicaidOnlyBeneficiariesExample: TranslationField!
+  impactsMedicaidOnlyBeneficiariesExample: TranslationFieldWithParent!
     @goTag(key: "db", value: "impacts_medicaid_only_beneficiaries_example")
   impactsMedicaidOnlyBeneficiariesWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "impacts_medicaid_only_beneficiaries_why_not")
   impactsHomeCommunityBasedServicePayments: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "impacts_home_community_based_service_payments")
-  impactsHomeCommunityBasedServicePaymentsExample: TranslationField!
+  impactsHomeCommunityBasedServicePaymentsExample: TranslationFieldWithParent!
     @goTag(
       key: "db"
       value: "impacts_home_community_based_service_payments_example"
@@ -94,7 +94,7 @@ type WaiverAssessmentSurveyTranslation {
     )
   impactsManagedCareWaivers: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "impacts_managed_care_waivers")
-  impactsManagedCareWaiversExample: TranslationField!
+  impactsManagedCareWaiversExample: TranslationFieldWithParent!
     @goTag(key: "db", value: "impacts_managed_care_waivers_example")
   impactsManagedCareWaiversWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "impacts_managed_care_waivers_why_not")

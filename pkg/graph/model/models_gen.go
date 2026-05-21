@@ -891,34 +891,34 @@ type WaiverAssessmentSurveyTranslation struct {
 	// IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
 	IsComplete                                             models.TranslationFieldWithOptions            `json:"isComplete"`
 	ModifiesMedicareSavingsPrograms                        models.TranslationFieldWithOptionsAndChildren `json:"modifiesMedicareSavingsPrograms" db:"modifies_medicare_savings_programs"`
-	ModifiesMedicareSavingsProgramsExample                 models.TranslationField                       `json:"modifiesMedicareSavingsProgramsExample" db:"modifies_medicare_savings_programs_example"`
+	ModifiesMedicareSavingsProgramsExample                 models.TranslationFieldWithParent             `json:"modifiesMedicareSavingsProgramsExample" db:"modifies_medicare_savings_programs_example"`
 	ModifiesMedicareSavingsProgramsWhyNot                  models.TranslationFieldWithOptionsAndParent   `json:"modifiesMedicareSavingsProgramsWhyNot" db:"modifies_medicare_savings_programs_why_not"`
 	BundlesPayments                                        models.TranslationFieldWithOptionsAndChildren `json:"bundlesPayments" db:"bundles_payments"`
-	BundlesPaymentsExample                                 models.TranslationField                       `json:"bundlesPaymentsExample" db:"bundles_payments_example"`
+	BundlesPaymentsExample                                 models.TranslationFieldWithParent             `json:"bundlesPaymentsExample" db:"bundles_payments_example"`
 	BundlesPaymentsWhyNot                                  models.TranslationFieldWithOptionsAndParent   `json:"bundlesPaymentsWhyNot" db:"bundles_payments_why_not"`
 	OffersRiskSharingArrangements                          models.TranslationFieldWithOptionsAndChildren `json:"offersRiskSharingArrangements" db:"offers_risk_sharing_arrangements"`
-	OffersRiskSharingArrangementsExample                   models.TranslationField                       `json:"offersRiskSharingArrangementsExample" db:"offers_risk_sharing_arrangements_example"`
+	OffersRiskSharingArrangementsExample                   models.TranslationFieldWithParent             `json:"offersRiskSharingArrangementsExample" db:"offers_risk_sharing_arrangements_example"`
 	OffersRiskSharingArrangementsWhyNot                    models.TranslationFieldWithOptionsAndParent   `json:"offersRiskSharingArrangementsWhyNot" db:"offers_risk_sharing_arrangements_why_not"`
 	ImpactsSiteOfCarePayments                              models.TranslationFieldWithOptionsAndChildren `json:"impactsSiteOfCarePayments" db:"impacts_site_of_care_payments"`
-	ImpactsSiteOfCarePaymentsExample                       models.TranslationField                       `json:"impactsSiteOfCarePaymentsExample" db:"impacts_site_of_care_payments_example"`
+	ImpactsSiteOfCarePaymentsExample                       models.TranslationFieldWithParent             `json:"impactsSiteOfCarePaymentsExample" db:"impacts_site_of_care_payments_example"`
 	ImpactsSiteOfCarePaymentsWhyNot                        models.TranslationFieldWithOptionsAndParent   `json:"impactsSiteOfCarePaymentsWhyNot" db:"impacts_site_of_care_payments_why_not"`
 	ModifiesCareTeamScopeOfPractice                        models.TranslationFieldWithOptionsAndChildren `json:"modifiesCareTeamScopeOfPractice" db:"modifies_care_team_scope_of_practice"`
-	ModifiesCareTeamScopeOfPracticeExample                 models.TranslationField                       `json:"modifiesCareTeamScopeOfPracticeExample" db:"modifies_care_team_scope_of_practice_example"`
+	ModifiesCareTeamScopeOfPracticeExample                 models.TranslationFieldWithParent             `json:"modifiesCareTeamScopeOfPracticeExample" db:"modifies_care_team_scope_of_practice_example"`
 	ModifiesCareTeamScopeOfPracticeWhyNot                  models.TranslationFieldWithOptionsAndParent   `json:"modifiesCareTeamScopeOfPracticeWhyNot" db:"modifies_care_team_scope_of_practice_why_not"`
 	ModifiesCareDeliveryWithClaimsBasedPayments            models.TranslationFieldWithOptionsAndChildren `json:"modifiesCareDeliveryWithClaimsBasedPayments" db:"modifies_care_delivery_with_claims_based_payments"`
-	ModifiesCareDeliveryWithClaimsBasedPaymentsExample     models.TranslationField                       `json:"modifiesCareDeliveryWithClaimsBasedPaymentsExample" db:"modifies_care_delivery_with_claims_based_payments_example"`
+	ModifiesCareDeliveryWithClaimsBasedPaymentsExample     models.TranslationFieldWithParent             `json:"modifiesCareDeliveryWithClaimsBasedPaymentsExample" db:"modifies_care_delivery_with_claims_based_payments_example"`
 	ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot      models.TranslationFieldWithOptionsAndParent   `json:"modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot" db:"modifies_care_delivery_with_claims_based_payments_why_not"`
 	ModifiesQualityMeasurementsOrPaymentsViaWaivers        models.TranslationFieldWithOptionsAndChildren `json:"modifiesQualityMeasurementsOrPaymentsViaWaivers" db:"modifies_quality_measurements_or_payments_via_waivers"`
-	ModifiesQualityMeasurementsOrPaymentsViaWaiversExample models.TranslationField                       `json:"modifiesQualityMeasurementsOrPaymentsViaWaiversExample" db:"modifies_quality_measurements_or_payments_via_waivers_example"`
+	ModifiesQualityMeasurementsOrPaymentsViaWaiversExample models.TranslationFieldWithParent             `json:"modifiesQualityMeasurementsOrPaymentsViaWaiversExample" db:"modifies_quality_measurements_or_payments_via_waivers_example"`
 	ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot  models.TranslationFieldWithOptionsAndParent   `json:"modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot" db:"modifies_quality_measurements_or_payments_via_waivers_why_not"`
 	ImpactsMedicaidOnlyBeneficiaries                       models.TranslationFieldWithOptionsAndChildren `json:"impactsMedicaidOnlyBeneficiaries" db:"impacts_medicaid_only_beneficiaries"`
-	ImpactsMedicaidOnlyBeneficiariesExample                models.TranslationField                       `json:"impactsMedicaidOnlyBeneficiariesExample" db:"impacts_medicaid_only_beneficiaries_example"`
+	ImpactsMedicaidOnlyBeneficiariesExample                models.TranslationFieldWithParent             `json:"impactsMedicaidOnlyBeneficiariesExample" db:"impacts_medicaid_only_beneficiaries_example"`
 	ImpactsMedicaidOnlyBeneficiariesWhyNot                 models.TranslationFieldWithOptionsAndParent   `json:"impactsMedicaidOnlyBeneficiariesWhyNot" db:"impacts_medicaid_only_beneficiaries_why_not"`
 	ImpactsHomeCommunityBasedServicePayments               models.TranslationFieldWithOptionsAndChildren `json:"impactsHomeCommunityBasedServicePayments" db:"impacts_home_community_based_service_payments"`
-	ImpactsHomeCommunityBasedServicePaymentsExample        models.TranslationField                       `json:"impactsHomeCommunityBasedServicePaymentsExample" db:"impacts_home_community_based_service_payments_example"`
+	ImpactsHomeCommunityBasedServicePaymentsExample        models.TranslationFieldWithParent             `json:"impactsHomeCommunityBasedServicePaymentsExample" db:"impacts_home_community_based_service_payments_example"`
 	ImpactsHomeCommunityBasedServicePaymentsWhyNot         models.TranslationFieldWithOptionsAndParent   `json:"impactsHomeCommunityBasedServicePaymentsWhyNot" db:"impacts_home_community_based_service_payments_why_not"`
 	ImpactsManagedCareWaivers                              models.TranslationFieldWithOptionsAndChildren `json:"impactsManagedCareWaivers" db:"impacts_managed_care_waivers"`
-	ImpactsManagedCareWaiversExample                       models.TranslationField                       `json:"impactsManagedCareWaiversExample" db:"impacts_managed_care_waivers_example"`
+	ImpactsManagedCareWaiversExample                       models.TranslationFieldWithParent             `json:"impactsManagedCareWaiversExample" db:"impacts_managed_care_waivers_example"`
 	ImpactsManagedCareWaiversWhyNot                        models.TranslationFieldWithOptionsAndParent   `json:"impactsManagedCareWaiversWhyNot" db:"impacts_managed_care_waivers_why_not"`
 	AdditionalMedicaidSpecificWaivers                      models.TranslationField                       `json:"additionalMedicaidSpecificWaivers" db:"additional_medicaid_specific_waivers"`
 }
