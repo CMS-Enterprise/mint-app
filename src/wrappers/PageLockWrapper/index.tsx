@@ -48,6 +48,7 @@ export const modelPlanSectionMap: LockableSectionMapType = {
   payment: LockableSection.PAYMENT,
   'data-exchange-approach': LockableSection.DATA_EXCHANGE_APPROACH,
   'iddoc-questionnaire': LockableSection.IDDOC_QUESTIONNAIRE,
+  'waiver-assessment-survey': LockableSection.WAIVER_ASSESSMENT_SURVEY,
   'model-to-operations': LockableSection.MODELS_TO_OPERATION_MATRIX,
   'model-timeline': LockableSection.TIMELINE
 };
