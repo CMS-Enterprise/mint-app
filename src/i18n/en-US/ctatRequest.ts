@@ -4,7 +4,8 @@ import {
   CtatContractActivityType,
   CtatContractType,
   CtatHelpNeededType,
-  CtatRequestUrgency
+  CtatRequestUrgency,
+  CtatStatus
 } from 'gql/generated/graphql';
 
 type CtatRealGroupOption =
@@ -157,6 +158,13 @@ export const requestUrgencies: Record<CtatRequestUrgency, string> = {
   [CtatRequestUrgency.LOW]: 'Low'
 };
 
+export const statuses: Record<CtatStatus, string> = {
+  [CtatStatus.IN_PROGRESS]: 'In Progress',
+  [CtatStatus.NEW]: 'New',
+  [CtatStatus.ASSIGNED]: 'Assigned',
+  [CtatStatus.CLOSED]: 'Closed'
+};
+
 export const divisionOptionsByGroup: Record<
   CtatRealGroupOption,
   CtatcmmiDivisionOption[]
@@ -212,6 +220,7 @@ const ctatRequest = {
   contractTypes,
   helpNeededTypes,
   requestUrgencies,
+  statuses,
   divisionOptionsByGroup
 };
 

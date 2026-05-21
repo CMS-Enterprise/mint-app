@@ -35,6 +35,17 @@ const (
 	CTATRequestUrgencyLow    CTATRequestUrgency = "LOW"
 )
 
+// CTATStatus represents the possible status values for a CTAT request.
+type CTATStatus string
+
+// Enum values for CTATStatus.
+const (
+	CTATStatusInProgress CTATStatus = "IN_PROGRESS"
+	CTATStatusNew        CTATStatus = "NEW"
+	CTATStatusAssigned   CTATStatus = "ASSIGNED"
+	CTATStatusClosed     CTATStatus = "CLOSED"
+)
+
 // CTATCMMIGroupOption represents the possible CMMI group values for a CTAT record.
 type CTATCMMIGroupOption string
 

@@ -11,7 +11,12 @@ import (
 type CTATRequest struct {
 	baseStruct
 
-	Requester uuid.UUID `json:"requester" db:"requester"`
+	Requester  uuid.UUID  `json:"requester" db:"requester"`
+	Status     CTATStatus `json:"status" db:"status"`
+	Notes      *string    `json:"notes,omitempty" db:"notes"`
+	Resolution *string    `json:"resolution,omitempty" db:"resolution"`
+
+	AssignedAdminID *uuid.UUID `json:"-" db:"assigned_admin"`
 
 	CmmiGroup         CTATCMMIGroupOption     `json:"cmmiGroup" db:"cmmi_group"`
 	CmmiGroupOther    *string                 `json:"cmmiGroupOther,omitempty" db:"cmmi_group_other"`

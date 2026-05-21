@@ -31,6 +31,16 @@ enum CTATRequestUrgency {
 }
 
 """
+The status assigned to a CTAT request.
+"""
+enum CTATStatus {
+  IN_PROGRESS
+  NEW
+  ASSIGNED
+  CLOSED
+}
+
+"""
 The selected CMMI group for a CTAT record.
 """
 enum CTATCMMIGroupOption {
@@ -148,6 +158,11 @@ type CTATRequest {
   humanReadableID: String!
   requester: UUID!
 
+  status: CTATStatus!
+  assignedAdmin: UserInfo
+  notes: String
+  resolution: String
+
   cmmiGroup: CTATCMMIGroupOption!
   cmmiGroupOther: String
   cmmiDivision: CTATCMMIDivisionOption
@@ -204,11 +219,22 @@ input CTATRequestInput {
   supportingDocuments: [CTATRequestDocumentInput!]
 }
 
+"""
+Input for an admin update to a CTAT request.
+"""
+input CTATAdminUpdateInput {
+  status: CTATStatus
+  assignedAdmin: UUID
+  notes: String
+  resolution: String
+}
+
 extend type Query {
-  ctatRequest(id: UUID!): CTATRequest
+  ctatRequest(id: UUID!): CTATRequest!
   ctatRequests: [CTATRequest!]
 }
 
 extend type Mutation {
-  createCTATRequest(input: CTATRequestInput): CTATRequest
+  createCTATRequest(input: CTATRequestInput!): CTATRequest!
+  adminUpdateCTATRequest(input: CTATAdminUpdateInput!): CTATRequest!
 }

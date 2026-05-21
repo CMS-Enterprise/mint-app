@@ -15,14 +15,24 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// AssignedAdmin is the resolver for the assignedAdmin field.
+func (r *cTATRequestResolver) AssignedAdmin(ctx context.Context, obj *models.CTATRequest) (*models.UserInfo, error) {
+	panic(fmt.Errorf("not implemented: AssignedAdmin - assignedAdmin"))
+}
+
 // TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
 func (r *cTATRequestResolver) TypeOfHelpNeeded(ctx context.Context, obj *models.CTATRequest) ([]models.CTATHelpNeededType, error) {
 	return obj.TypeOfHelpNeeded, nil
 }
 
 // CreateCTATRequest is the resolver for the createCTATRequest field.
-func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input *model.CTATRequestInput) (*models.CTATRequest, error) {
+func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error) {
 	panic(fmt.Errorf("not implemented: CreateCTATRequest - createCTATRequest"))
+}
+
+// AdminUpdateCTATRequest is the resolver for the adminUpdateCTATRequest field.
+func (r *mutationResolver) AdminUpdateCTATRequest(ctx context.Context, input model.CTATAdminUpdateInput) (*models.CTATRequest, error) {
+	panic(fmt.Errorf("not implemented: AdminUpdateCTATRequest - adminUpdateCTATRequest"))
 }
 
 // CtatRequest is the resolver for the ctatRequest field.

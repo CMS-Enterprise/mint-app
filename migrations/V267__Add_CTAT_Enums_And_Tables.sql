@@ -23,6 +23,13 @@ CREATE TYPE CTAT_REQUEST_URGENCY AS ENUM (
     'LOW'
 );
 
+CREATE TYPE CTAT_STATUS AS ENUM (
+    'IN_PROGRESS',
+    'NEW',
+    'ASSIGNED',
+    'CLOSED'
+);
+
 CREATE TYPE CTAT_CMMI_GROUP_OPTION AS ENUM (
     'BSG',
     'LDG',
@@ -151,6 +158,10 @@ CREATE TABLE ctat_request (
     human_readable_id_prefix ZERO_STRING NOT NULL DEFAULT 'CTAT',
     human_readable_id_number INTEGER NOT NULL CHECK (human_readable_id_number > 0),
     requester UUID NOT NULL REFERENCES public.user_account(id) MATCH SIMPLE,
+    status CTAT_STATUS NOT NULL DEFAULT 'NEW',
+    assigned_admin UUID REFERENCES public.user_account(id) MATCH SIMPLE,
+    notes ZERO_STRING,
+    resolution ZERO_STRING,
 
     cmmi_group CTAT_CMMI_GROUP_OPTION NOT NULL,
     cmmi_group_other ZERO_STRING,
@@ -293,6 +304,10 @@ COMMENT ON COLUMN ctat_request.id IS 'Unique identifier for the CTAT request.';
 COMMENT ON COLUMN ctat_request.human_readable_id_prefix IS 'Stored prefix portion of the CTAT human-readable ID.';
 COMMENT ON COLUMN ctat_request.human_readable_id_number IS 'Stored numeric portion of the CTAT human-readable ID.';
 COMMENT ON COLUMN ctat_request.requester IS 'The user who requested CTAT assistance.';
+COMMENT ON COLUMN ctat_request.status IS 'The workflow status assigned to the CTAT request.';
+COMMENT ON COLUMN ctat_request.assigned_admin IS 'The user account currently assigned to administer the CTAT request.';
+COMMENT ON COLUMN ctat_request.notes IS 'Internal notes associated with the CTAT request.';
+COMMENT ON COLUMN ctat_request.resolution IS 'Resolution details recorded when the CTAT request is completed.';
 COMMENT ON COLUMN ctat_request.cmmi_group IS 'The selected CMMI group for the request.';
 COMMENT ON COLUMN ctat_request.cmmi_group_other IS 'Free-text description when the selected CMMI group is Other.';
 COMMENT ON COLUMN ctat_request.cmmi_division IS 'The selected CMMI division for the request.';

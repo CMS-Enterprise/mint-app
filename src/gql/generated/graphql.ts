@@ -270,6 +270,14 @@ export enum CmsCenter {
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'
 }
 
+/** Input for an admin update to a CTAT request. */
+export type CtatAdminUpdateInput = {
+  assignedAdmin?: InputMaybe<Scalars['UUID']['input']>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  resolution?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<CtatStatus>;
+};
+
 /** The selected CMMI division for a CTAT record. */
 export enum CtatcmmiDivisionOption {
   BSG_DBOM = 'BSG_DBOM',
@@ -368,6 +376,7 @@ export enum CtatHelpNeededType {
 /** A request for CTAT assistance */
 export type CtatRequest = {
   __typename: 'CTATRequest';
+  assignedAdmin?: Maybe<UserInfo>;
   cmmiDivision?: Maybe<CtatcmmiDivisionOption>;
   cmmiDivisionOther?: Maybe<Scalars['String']['output']>;
   cmmiGroup: CtatcmmiGroupOption;
@@ -388,9 +397,12 @@ export type CtatRequest = {
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  notes?: Maybe<Scalars['String']['output']>;
   relatedMINTModels?: Maybe<Array<Scalars['UUID']['output']>>;
   requestUrgency: CtatRequestUrgency;
   requester: Scalars['UUID']['output'];
+  resolution?: Maybe<Scalars['String']['output']>;
+  status: CtatStatus;
   supportingDocuments?: Maybe<Array<CtatRequestDocument>>;
   typeOfHelpNeeded: Array<CtatHelpNeededType>;
   typeOfHelpNeededOther?: Maybe<Scalars['String']['output']>;
@@ -449,6 +461,14 @@ export enum CtatRequestUrgency {
   HIGH = 'HIGH',
   LOW = 'LOW',
   MEDIUM = 'MEDIUM'
+}
+
+/** The status assigned to a CTAT request. */
+export enum CtatStatus {
+  ASSIGNED = 'ASSIGNED',
+  CLOSED = 'CLOSED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NEW = 'NEW'
 }
 
 export enum CcmInvolvmentType {
@@ -2282,9 +2302,10 @@ export enum MultiSourceDataToCollect {
 export type Mutation = {
   __typename: 'Mutation';
   addPlanFavorite: PlanFavorite;
+  adminUpdateCTATRequest: CtatRequest;
   agreeToNDA: NdaInfo;
   archiveMTOCommonMilestone: MtoCommonMilestone;
-  createCTATRequest?: Maybe<CtatRequest>;
+  createCTATRequest: CtatRequest;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2405,6 +2426,12 @@ export type MutationAddPlanFavoriteArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationAdminUpdateCtatRequestArgs = {
+  input: CtatAdminUpdateInput;
+};
+
+
+/** Mutations definition for the schema */
 export type MutationAgreeToNdaArgs = {
   agree?: Scalars['Boolean']['input'];
 };
@@ -2418,7 +2445,7 @@ export type MutationArchiveMtoCommonMilestoneArgs = {
 
 /** Mutations definition for the schema */
 export type MutationCreateCtatRequestArgs = {
-  input?: InputMaybe<CtatRequestInput>;
+  input: CtatRequestInput;
 };
 
 
@@ -4931,7 +4958,7 @@ export type Query = {
   auditChanges: Array<AuditChange>;
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
-  ctatRequest?: Maybe<CtatRequest>;
+  ctatRequest: CtatRequest;
   ctatRequests?: Maybe<Array<CtatRequest>>;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
