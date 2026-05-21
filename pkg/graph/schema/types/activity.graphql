@@ -43,6 +43,7 @@ union ActivityMetaData =
   | IddocQuestionnaireCompletedActivityMeta
   | NewDiscussionAddedActivityMeta
   | IncorrectModelStatusActivityMeta
+  | WaiverAssessmentSurveyMarkedCompleteActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -80,6 +81,16 @@ type IddocQuestionnaireCompletedActivityMeta {
   type: ActivityType!
   modelPlanID: UUID!
   modelPlan: ModelPlan!
+}
+
+type WaiverAssessmentSurveyMarkedCompleteActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  waiverAssessmentSurveyID: UUID!
+  markedCompleteBy: UUID!
+  markedCompleteByUserAccount: UserAccount!
 }
 
 type ModelPlanSharedActivityMeta {

@@ -27,6 +27,12 @@ enum IDDOCQuestionnaireCompletedNotificationType {
   MY_MODELS
 }
 
+enum WaiverAssessmentSurveyMarkedCompleteNotificationType {
+  ALL_MODELS
+  FOLLOWED_MODELS
+  MY_MODELS
+}
+
 enum MTOReadyForReviewNotificationType {
   ALL_MODELS
   FOLLOWED_MODELS
@@ -64,6 +70,8 @@ type UserNotificationPreferences {
   newDiscussionAddedNotificationType: NewDiscussionAddedNotificationType
   iddocQuestionnaireComplete: [UserNotificationPreferenceFlag!]!
   iddocQuestionnaireCompletedNotificationType: IDDOCQuestionnaireCompletedNotificationType
+  waiverAssessmentSurveyMarkedComplete: [UserNotificationPreferenceFlag!]!
+  waiverAssessmentSurveyMarkedCompleteNotificationType: WaiverAssessmentSurveyMarkedCompleteNotificationType
   incorrectModelStatus: [UserNotificationPreferenceFlag!]!
   mtoReadyForReview: [UserNotificationPreferenceFlag!]!
   mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType
@@ -105,6 +113,8 @@ input UserNotificationPreferencesChanges
   newDiscussionAddedNotificationType: NewDiscussionAddedNotificationType
   iddocQuestionnaireComplete: [UserNotificationPreferenceFlag!]
   iddocQuestionnaireCompletedNotificationType: IDDOCQuestionnaireCompletedNotificationType
+  waiverAssessmentSurveyMarkedComplete: [UserNotificationPreferenceFlag!]
+  waiverAssessmentSurveyMarkedCompleteNotificationType: WaiverAssessmentSurveyMarkedCompleteNotificationType
   incorrectModelStatus: [UserNotificationPreferenceFlag!]
   mtoReadyForReview: [UserNotificationPreferenceFlag!]
   mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType

@@ -190,7 +190,9 @@ const activityI18nKeybases = {
   IddocQuestionnaireCompletedActivityMeta:
     'notifications:index.activityType.IDDOC_QUESTIONNAIRE_COMPLETED',
   MTOReadyForReviewActivityMeta:
-    'notifications:index.activityType.MTO_READY_FOR_REVIEW'
+    'notifications:index.activityType.MTO_READY_FOR_REVIEW',
+  WaiverAssessmentSurveyMarkedCompleteActivityMeta:
+    'notifications:index.activityType.WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE'
 };
 
 export const activityText = (data: ActivityMetaData) => {

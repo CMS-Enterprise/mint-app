@@ -191,8 +191,9 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		// TODO (MINT-3718): Create waiver rows only for waivers suggested by the survey,
-		// once suggestedWaivers logic is implemented.
+		if err := SeedSuggestedWaivers(tx, logger, baseTaskListUser.ModelPlanID, principal); err != nil {
+			return nil, err
+		}
 
 		// Create a default planTimeline object
 		planTimeline := models.NewPlanTimeline(baseTaskListUser)

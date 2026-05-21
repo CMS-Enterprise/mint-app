@@ -8,7 +8,9 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -34,6 +36,8 @@ func WaiverAssessmentSurveyUpdate(
 	changes map[string]interface{},
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	emailAddressBook email.AddressBook,
 ) (*models.WaiverAssessmentSurvey, error) {
 	return sqlutils.WithTransaction[models.WaiverAssessmentSurvey](
 		store,
@@ -61,6 +65,14 @@ func WaiverAssessmentSurveyUpdate(
 
 			if err := UpdatePlanTaskStatusOnWaiverAssessmentStarted(tx, logger, updated.ModelPlanID, principal, store); err != nil {
 				return nil, err
+			}
+
+			if err := RecalculateSuggestedWaivers(tx, logger, updated, principal); err != nil {
+				return nil, err
+			}
+
+			if updated.Status == models.WaiverAssessmentSurveyStatusComplete {
+				TrySendWaiverAssessmentSurveyNotifications(ctx, updated, logger, emailService, emailAddressBook, principal, tx)
 			}
 
 			return updated, nil

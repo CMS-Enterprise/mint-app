@@ -94,6 +94,7 @@ CREATE TABLE common_waiver (
     has_standardization_effort BOOLEAN,
     has_claims_data_or_rreg_analysis TEXT,
     is_used_in_active_models BOOLEAN,
+    survey_question_field TEXT,
 
     -- Standard audit fields
     created_by UUID REFERENCES public.user_account(id) MATCH SIMPLE NOT NULL,

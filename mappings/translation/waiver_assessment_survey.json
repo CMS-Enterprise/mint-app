@@ -1,0 +1,315 @@
+{
+  "modifiesMedicareSavingsPrograms": {
+    "gqlField": "modifiesMedicareSavingsPrograms",
+    "goField": "ModifiesMedicareSavingsPrograms",
+    "dbField": "modifies_medicare_savings_programs",
+    "label": "Does the model modify Medicare Savings Programs?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.01,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "modifiesMedicareSavingsProgramsExample": {
+    "gqlField": "modifiesMedicareSavingsProgramsExample",
+    "goField": "ModifiesMedicareSavingsProgramsExample",
+    "dbField": "modifies_medicare_savings_programs_example",
+    "label": "Example of Medicare Savings Program modification",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.02
+  },
+  "modifiesMedicareSavingsProgramsNote": {
+    "gqlField": "modifiesMedicareSavingsProgramsNote",
+    "goField": "ModifiesMedicareSavingsProgramsNote",
+    "dbField": "modifies_medicare_savings_programs_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.03,
+    "isNote": true
+  },
+  "bundlesPayments": {
+    "gqlField": "bundlesPayments",
+    "goField": "BundlesPayments",
+    "dbField": "bundles_payments",
+    "label": "Does the model bundle payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.04,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "bundlesPaymentsExample": {
+    "gqlField": "bundlesPaymentsExample",
+    "goField": "BundlesPaymentsExample",
+    "dbField": "bundles_payments_example",
+    "label": "Example of bundled payment",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.05
+  },
+  "bundlesPaymentsNote": {
+    "gqlField": "bundlesPaymentsNote",
+    "goField": "BundlesPaymentsNote",
+    "dbField": "bundles_payments_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.06,
+    "isNote": true
+  },
+  "offersRiskSharingArrangements": {
+    "gqlField": "offersRiskSharingArrangements",
+    "goField": "OffersRiskSharingArrangements",
+    "dbField": "offers_risk_sharing_arrangements",
+    "label": "Does the model offer risk-sharing arrangements?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1.07,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "offersRiskSharingArrangementsExample": {
+    "gqlField": "offersRiskSharingArrangementsExample",
+    "goField": "OffersRiskSharingArrangementsExample",
+    "dbField": "offers_risk_sharing_arrangements_example",
+    "label": "Example of risk-sharing arrangement",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.08
+  },
+  "offersRiskSharingArrangementsNote": {
+    "gqlField": "offersRiskSharingArrangementsNote",
+    "goField": "OffersRiskSharingArrangementsNote",
+    "dbField": "offers_risk_sharing_arrangements_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.09,
+    "isNote": true
+  },
+  "impactsSiteOfCarePayments": {
+    "gqlField": "impactsSiteOfCarePayments",
+    "goField": "ImpactsSiteOfCarePayments",
+    "dbField": "impacts_site_of_care_payments",
+    "label": "Does the model impact site-of-care payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 2.01,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "impactsSiteOfCarePaymentsExample": {
+    "gqlField": "impactsSiteOfCarePaymentsExample",
+    "goField": "ImpactsSiteOfCarePaymentsExample",
+    "dbField": "impacts_site_of_care_payments_example",
+    "label": "Example of site-of-care payment impact",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.02
+  },
+  "impactsSiteOfCarePaymentsNote": {
+    "gqlField": "impactsSiteOfCarePaymentsNote",
+    "goField": "ImpactsSiteOfCarePaymentsNote",
+    "dbField": "impacts_site_of_care_payments_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.03,
+    "isNote": true
+  },
+  "modifiesCareTeamScopeOfPractice": {
+    "gqlField": "modifiesCareTeamScopeOfPractice",
+    "goField": "ModifiesCareTeamScopeOfPractice",
+    "dbField": "modifies_care_team_scope_of_practice",
+    "label": "Does the model modify care team scope of practice?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 2.04,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "modifiesCareTeamScopeOfPracticeExample": {
+    "gqlField": "modifiesCareTeamScopeOfPracticeExample",
+    "goField": "ModifiesCareTeamScopeOfPracticeExample",
+    "dbField": "modifies_care_team_scope_of_practice_example",
+    "label": "Example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.05
+  },
+  "modifiesCareTeamScopeOfPracticeNote": {
+    "gqlField": "modifiesCareTeamScopeOfPracticeNote",
+    "goField": "ModifiesCareTeamScopeOfPracticeNote",
+    "dbField": "modifies_care_team_scope_of_practice_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.06,
+    "isNote": true
+  },
+  "modifiesCareDeliveryWithClaimsBasedPayments": {
+    "gqlField": "modifiesCareDeliveryWithClaimsBasedPayments",
+    "goField": "ModifiesCareDeliveryWithClaimsBasedPayments",
+    "dbField": "modifies_care_delivery_with_claims_based_payments",
+    "label": "Does the model modify care delivery with claims-based payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 2.07,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "modifiesCareDeliveryWithClaimsBasedPaymentsExample": {
+    "gqlField": "modifiesCareDeliveryWithClaimsBasedPaymentsExample",
+    "goField": "ModifiesCareDeliveryWithClaimsBasedPaymentsExample",
+    "dbField": "modifies_care_delivery_with_claims_based_payments_example",
+    "label": "Example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.08
+  },
+  "modifiesCareDeliveryWithClaimsBasedPaymentsNote": {
+    "gqlField": "modifiesCareDeliveryWithClaimsBasedPaymentsNote",
+    "goField": "ModifiesCareDeliveryWithClaimsBasedPaymentsNote",
+    "dbField": "modifies_care_delivery_with_claims_based_payments_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.09,
+    "isNote": true
+  },
+  "modifiesQualityMeasurementsOrPaymentsViaWaivers": {
+    "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaivers",
+    "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaivers",
+    "dbField": "modifies_quality_measurements_or_payments_via_waivers",
+    "label": "Does the model modify quality measurements or payments via waivers?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 2.10,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "modifiesQualityMeasurementsOrPaymentsViaWaiversExample": {
+    "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaiversExample",
+    "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaiversExample",
+    "dbField": "modifies_quality_measurements_or_payments_via_waivers_example",
+    "label": "Example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.11
+  },
+  "modifiesQualityMeasurementsOrPaymentsViaWaiversNote": {
+    "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaiversNote",
+    "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaiversNote",
+    "dbField": "modifies_quality_measurements_or_payments_via_waivers_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 2.12,
+    "isNote": true
+  },
+  "impactsMedicaidOnlyBeneficiaries": {
+    "gqlField": "impactsMedicaidOnlyBeneficiaries",
+    "goField": "ImpactsMedicaidOnlyBeneficiaries",
+    "dbField": "impacts_medicaid_only_beneficiaries",
+    "label": "Does the model impact Medicaid-only beneficiaries?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.01,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "impactsMedicaidOnlyBeneficiariesExample": {
+    "gqlField": "impactsMedicaidOnlyBeneficiariesExample",
+    "goField": "ImpactsMedicaidOnlyBeneficiariesExample",
+    "dbField": "impacts_medicaid_only_beneficiaries_example",
+    "label": "Example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.02
+  },
+  "impactsMedicaidOnlyBeneficiariesNote": {
+    "gqlField": "impactsMedicaidOnlyBeneficiariesNote",
+    "goField": "ImpactsMedicaidOnlyBeneficiariesNote",
+    "dbField": "impacts_medicaid_only_beneficiaries_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.03,
+    "isNote": true
+  },
+  "impactsHomeCommunityBasedServicePayments": {
+    "gqlField": "impactsHomeCommunityBasedServicePayments",
+    "goField": "ImpactsHomeCommunityBasedServicePayments",
+    "dbField": "impacts_home_community_based_service_payments",
+    "label": "Does the model impact home and community-based service payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.04,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "impactsHomeCommunityBasedServicePaymentsExample": {
+    "gqlField": "impactsHomeCommunityBasedServicePaymentsExample",
+    "goField": "ImpactsHomeCommunityBasedServicePaymentsExample",
+    "dbField": "impacts_home_community_based_service_payments_example",
+    "label": "Example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.05
+  },
+  "impactsHomeCommunityBasedServicePaymentsNote": {
+    "gqlField": "impactsHomeCommunityBasedServicePaymentsNote",
+    "goField": "ImpactsHomeCommunityBasedServicePaymentsNote",
+    "dbField": "impacts_home_community_based_service_payments_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.06,
+    "isNote": true
+  },
+  "impactsManagedCareWaivers": {
+    "gqlField": "impactsManagedCareWaivers",
+    "goField": "ImpactsManagedCareWaivers",
+    "dbField": "impacts_managed_care_waivers",
+    "label": "Does the model impact managed care waivers?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.07,
+    "options": { "true": "Yes", "false": "No" }
+  },
+  "impactsManagedCareWaiversExample": {
+    "gqlField": "impactsManagedCareWaiversExample",
+    "goField": "ImpactsManagedCareWaiversExample",
+    "dbField": "impacts_managed_care_waivers_example",
+    "label": "Example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.08
+  },
+  "impactsManagedCareWaiversNote": {
+    "gqlField": "impactsManagedCareWaiversNote",
+    "goField": "ImpactsManagedCareWaiversNote",
+    "dbField": "impacts_managed_care_waivers_note",
+    "label": "Note",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.09,
+    "isNote": true
+  },
+  "additionalMedicaidSpecificWaivers": {
+    "gqlField": "additionalMedicaidSpecificWaivers",
+    "goField": "AdditionalMedicaidSpecificWaivers",
+    "dbField": "additional_medicaid_specific_waivers",
+    "label": "Additional Medicaid-specific waivers",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.10
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Status",
+    "dataType": "ENUM",
+    "formType": "RADIO",
+    "order": 4.01,
+    "options": {
+      "READY": "Ready",
+      "IN_PROGRESS": "In progress",
+      "COMPLETE": "Complete"
+    }
+  }
+}

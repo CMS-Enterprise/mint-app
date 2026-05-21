@@ -16,6 +16,9 @@ type CommonWaiver struct {
 	HasStandardizationEffort           *bool   `json:"hasStandardizationEffort" db:"has_standardization_effort"`
 	HasClaimsDataOrRREGAnalysis        *string `json:"hasClaimsDataOrRREGAnalysis" db:"has_claims_data_or_rreg_analysis"`
 	IsUsedInActiveModels               *bool   `json:"isUsedInActiveModels" db:"is_used_in_active_models"`
+	// SurveyQuestionField is the waiver_assessment_survey DB column name that drives suggestion
+	// eligibility. Nil means always suggested. Set via migration when real waiver mapping arrives.
+	SurveyQuestionField *string `json:"surveyQuestionField" db:"survey_question_field"`
 }
 
 // NewCommonWaiver returns a new CommonWaiver object

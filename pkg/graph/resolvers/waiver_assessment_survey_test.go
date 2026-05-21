@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -44,7 +45,7 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 		"status":                                 models.WaiverAssessmentSurveyStatusInProgress,
 	}
 
-	updated, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	updated, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.NotNil(updated)
 
@@ -67,7 +68,7 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	// Transition to COMPLETE and verify the plan task follows
 	_, err = WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
 		"status": models.WaiverAssessmentSurveyStatusComplete,
-	}, suite.testConfigs.Principal, suite.testConfigs.Store)
+	}, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
@@ -86,7 +87,7 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyAutoTransition() {
 	// Save an answer without sending status
 	updated, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
 		"bundlesPayments": helpers.PointerTo(true),
-	}, suite.testConfigs.Principal, suite.testConfigs.Store)
+	}, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.Equal(models.WaiverAssessmentSurveyStatusInProgress, updated.Status)
 
