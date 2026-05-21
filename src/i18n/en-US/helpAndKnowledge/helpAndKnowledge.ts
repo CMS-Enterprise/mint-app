@@ -2639,7 +2639,9 @@ const helpAndKnowledge = {
     hkcDescription:
       'Need contract-related help for your model? Raise a ticket to get help from the Contract Technical Assistance Team (CTAT). CTAT can assist with a variety of contracting needs including requirements gathering, Independent Government Cost Estimate (IGCE) preparation, Requests for Proposal (RFPs), guidance on market research, and more.',
     hkcJumpToLabel: 'Contract assistance',
-    hkcViewCta: 'Create and manage help tickets'
+    hkcViewCta: 'Create and manage help tickets',
+    description:
+      'Use the button below to create a new contract assistance ticket. The Contract Technical Assistance Team (CTAT) can help with a variety of contract-related activities in pre-award and post-award timeframes.'
   },
   milestoneLibrary: {
     hkcHeading: 'Milestone library',
