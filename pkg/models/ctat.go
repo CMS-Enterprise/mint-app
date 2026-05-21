@@ -7,7 +7,7 @@ type CTATContractType string
 const (
 	CTATContractTypeCostPlusFixedFee  CTATContractType = "COST_PLUS_FIXED_FEE"
 	CTATContractTypeCostReimbursement CTATContractType = "COST_REIMBURSEMENT"
-	CTATContractTypeFirmFixedPrice    CTATContractType = "FIRM_FIXED_PRICE"
+	CTATContractTypeFirmFixedPrice    CTATContractType = "FIRMED_FIXED_PRICE"
 	CTATContractTypeIncentiveContract CTATContractType = "INCENTIVE_CONTRACT"
 	CTATContractTypeTimeAndMaterials  CTATContractType = "TIME_AND_MATERIALS"
 	CTATContractTypeOther             CTATContractType = "OTHER"
