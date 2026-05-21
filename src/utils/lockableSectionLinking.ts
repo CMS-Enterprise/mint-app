@@ -7,10 +7,9 @@ export type LockSectionType =
   GetLockedModelPlanSectionsQuery['lockableSectionLocks'][0];
 
 /**
- * Sections that are locked together. Used both to acquire/release locks on
- * navigation and to determine whether a section is blocked by another user's lock.
+ * Sections acquired/released on navigation.
  */
-const LINKED_SECTIONS: Partial<Record<LockableSection, LockableSection[]>> = {
+const SECTIONS_TO_LOCK: Partial<Record<LockableSection, LockableSection[]>> = {
   [LockableSection.WAIVER_ASSESSMENT_SURVEY]: [
     LockableSection.WAIVER_ASSESSMENT_SURVEY,
     LockableSection.BASICS,
@@ -26,11 +25,63 @@ const LINKED_SECTIONS: Partial<Record<LockableSection, LockableSection[]>> = {
   ]
 };
 
-/** Returns all sections linked with the given section (including itself). */
+/** Default sections blocked by a lock when held in isolation. */
+const SECTIONS_BLOCKED_BY_LOCK: Partial<
+  Record<LockableSection, LockableSection[]>
+> = {
+  [LockableSection.BASICS]: [
+    LockableSection.BASICS,
+    LockableSection.WAIVER_ASSESSMENT_SURVEY
+  ],
+  [LockableSection.GENERAL_CHARACTERISTICS]: [
+    LockableSection.GENERAL_CHARACTERISTICS,
+    LockableSection.WAIVER_ASSESSMENT_SURVEY
+  ]
+};
+
+/** Returns sections to acquire or release when entering/leaving a section. */
 export const getLinkedSections = (
   section: LockableSection
 ): LockableSection[] => {
-  return LINKED_SECTIONS[section] ?? [section];
+  return SECTIONS_TO_LOCK[section] ?? [section];
+};
+
+/**
+ * Returns sections blocked by a held lock. Waiver survey blocking extends to
+ * basics and/or characteristics only when the same user also holds those locks.
+ */
+export const getSectionsBlockedByLock = (
+  heldSection: LockableSection,
+  sectionsHeldBySameUser: LockableSection[] = []
+): LockableSection[] => {
+  if (heldSection === LockableSection.WAIVER_ASSESSMENT_SURVEY) {
+    const blocked: LockableSection[] = [
+      LockableSection.WAIVER_ASSESSMENT_SURVEY
+    ];
+
+    if (sectionsHeldBySameUser.includes(LockableSection.BASICS)) {
+      blocked.push(LockableSection.BASICS);
+    }
+
+    if (
+      sectionsHeldBySameUser.includes(LockableSection.GENERAL_CHARACTERISTICS)
+    ) {
+      blocked.push(LockableSection.GENERAL_CHARACTERISTICS);
+    }
+
+    return blocked;
+  }
+
+  return SECTIONS_BLOCKED_BY_LOCK[heldSection] ?? [heldSection];
+};
+
+const getSectionsHeldByUser = (
+  locks: LockSectionType[],
+  username: string
+): LockableSection[] => {
+  return locks
+    .filter(lock => lock.lockedByUserAccount.username === username)
+    .map(lock => lock.section);
 };
 
 /** Finds the first lock (direct or linked) that applies to the given section. */
@@ -38,9 +89,16 @@ export const findEffectiveLock = (
   locks: LockSectionType[] = [],
   section: LockableSection
 ): LockSectionType | undefined => {
-  const linkedSections = getLinkedSections(section);
+  return locks.find(lock => {
+    const sectionsHeld = getSectionsHeldByUser(
+      locks,
+      lock.lockedByUserAccount.username
+    );
 
-  return locks.find(lock => linkedSections.includes(lock.section));
+    return getSectionsBlockedByLock(lock.section, sectionsHeld).includes(
+      section
+    );
+  });
 };
 
 export enum LockStatus {

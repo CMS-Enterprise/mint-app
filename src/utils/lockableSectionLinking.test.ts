@@ -52,15 +52,26 @@ describe('lockableSectionLinking', () => {
     );
   });
 
-  it('returns waiver assessment survey as linked with basics', () => {
+  it('acquires basics and waiver assessment survey on the basics form', () => {
     expect(getLinkedSections(LockableSection.BASICS)).toEqual([
       LockableSection.BASICS,
       LockableSection.WAIVER_ASSESSMENT_SURVEY
     ]);
   });
 
-  it('treats basics as locked when waiver assessment survey is locked by another user', () => {
-    const locks = [otherUserLock(LockableSection.WAIVER_ASSESSMENT_SURVEY)];
+  it('acquires general characteristics and waiver assessment survey on that form', () => {
+    expect(getLinkedSections(LockableSection.GENERAL_CHARACTERISTICS)).toEqual([
+      LockableSection.GENERAL_CHARACTERISTICS,
+      LockableSection.WAIVER_ASSESSMENT_SURVEY
+    ]);
+  });
+
+  it('treats basics as locked when another user holds all waiver-related locks', () => {
+    const locks = [
+      otherUserLock(LockableSection.WAIVER_ASSESSMENT_SURVEY),
+      otherUserLock(LockableSection.BASICS),
+      otherUserLock(LockableSection.GENERAL_CHARACTERISTICS)
+    ];
 
     expect(findLockedSection(locks, LockableSection.BASICS, 'ME')).toEqual(
       LockStatus.LOCKED
@@ -84,13 +95,25 @@ describe('lockableSectionLinking', () => {
     expect(
       findLockedSection(locks, LockableSection.GENERAL_CHARACTERISTICS, 'ME')
     ).toEqual(LockStatus.UNLOCKED);
-    expect(
-      getLinkedSections(LockableSection.GENERAL_CHARACTERISTICS)
-    ).not.toContain(LockableSection.BASICS);
   });
 
-  it('treats general characteristics as locked when waiver assessment survey is locked', () => {
-    const locks = [otherUserLock(LockableSection.WAIVER_ASSESSMENT_SURVEY)];
+  it('does not block general characteristics when another user holds basics and waiver locks', () => {
+    const locks = [
+      otherUserLock(LockableSection.BASICS),
+      otherUserLock(LockableSection.WAIVER_ASSESSMENT_SURVEY)
+    ];
+
+    expect(
+      findLockedSection(locks, LockableSection.GENERAL_CHARACTERISTICS, 'ME')
+    ).toEqual(LockStatus.UNLOCKED);
+  });
+
+  it('treats general characteristics as locked when another user holds all waiver-related locks', () => {
+    const locks = [
+      otherUserLock(LockableSection.WAIVER_ASSESSMENT_SURVEY),
+      otherUserLock(LockableSection.BASICS),
+      otherUserLock(LockableSection.GENERAL_CHARACTERISTICS)
+    ];
 
     expect(
       findLockedSection(locks, LockableSection.GENERAL_CHARACTERISTICS, 'ME')
