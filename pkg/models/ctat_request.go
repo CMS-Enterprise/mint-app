@@ -41,15 +41,16 @@ type CTATRequest struct {
 
 	SupportingDocuments []*CTATRequestDocument `json:"supportingDocuments,omitempty" db:"-"`
 
-	HumanReadableIDPrefix string `json:"-" db:"human_readable_id_prefix"`
-	HumanReadableIDNumber int    `json:"-" db:"human_readable_id_number"`
+	HumanReadableIDNumber int `json:"-" db:"human_readable_id_number"`
 }
 
-// HumanReadableID composes the display ID from the stored prefix and numeric suffix.
+const ctatRequestHumanReadableIDPrefix = "CTAT"
+
+// HumanReadableID composes the display ID from the fixed CTAT prefix and stored numeric suffix.
 func (c *CTATRequest) HumanReadableID() string {
-	if c == nil || c.HumanReadableIDPrefix == "" || c.HumanReadableIDNumber == 0 {
+	if c == nil || c.HumanReadableIDNumber == 0 {
 		return ""
 	}
 
-	return fmt.Sprintf("%s-%d", c.HumanReadableIDPrefix, c.HumanReadableIDNumber)
+	return fmt.Sprintf("%s-%d", ctatRequestHumanReadableIDPrefix, c.HumanReadableIDNumber)
 }

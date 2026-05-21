@@ -55,7 +55,6 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNCTATRequestDocument),
 		string(models.TNCTATRequestModelPlanLink),
 		string(models.TNCTATRequest),
-		string(models.TNCTATRequestHumanIDCounter),
 
 		// Other dependent tables
 		string(models.TNExistingModelLink),

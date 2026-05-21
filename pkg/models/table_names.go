@@ -23,7 +23,6 @@ const (
 	TNDiscussionReply                  TableName = "discussion_reply"
 	TNCTATRequest                      TableName = "ctat_request"
 	TNCTATRequestDocument              TableName = "ctat_request_document"
-	TNCTATRequestHumanIDCounter        TableName = "ctat_request_human_id_counter"
 	TNCTATRequestModelPlanLink         TableName = "ctat_request_model_plan_link"
 	TNExistingModel                    TableName = "existing_model"
 	TNExistingModelLink                TableName = "existing_model_link"

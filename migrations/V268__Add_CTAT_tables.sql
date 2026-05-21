@@ -1,46 +1,6 @@
--- Stores the last assigned numeric suffix for each human-readable CTAT prefix.
--- This lets us support per-prefix numbering such as CTAT-1, CTAT-2, ABC-1, etc.
-CREATE TABLE ctat_request_human_id_counter (
-    prefix ZERO_STRING PRIMARY KEY,
-    last_number INTEGER NOT NULL CHECK (last_number > 0)
-);
-
-COMMENT ON TABLE ctat_request_human_id_counter IS 'Tracks the last assigned human-readable CTAT request number for each prefix.';
-COMMENT ON COLUMN ctat_request_human_id_counter.prefix IS 'The human-readable ID prefix, such as CTAT.';
-COMMENT ON COLUMN ctat_request_human_id_counter.last_number IS 'The most recently assigned numeric suffix for the prefix.';
-
--- Assigns the human-readable numeric suffix on insert.
--- If callers do not provide a prefix, we default to CTAT.
--- If callers do not provide a numeric suffix, we atomically create or increment the counter
--- row for that prefix and use the returned value. This keeps numbering unique per prefix.
-CREATE FUNCTION assign_ctat_request_human_readable_id() RETURNS TRIGGER AS $body$
-BEGIN
-    IF NEW.human_readable_id_prefix IS NULL THEN
-        NEW.human_readable_id_prefix := 'CTAT';
-    END IF;
-
-    IF NEW.human_readable_id_number IS NULL OR NEW.human_readable_id_number < 1 THEN
-        INSERT INTO ctat_request_human_id_counter AS counter (
-            prefix,
-            last_number
-        )
-        VALUES (
-            NEW.human_readable_id_prefix,
-            1
-        )
-        ON CONFLICT (prefix)
-        DO UPDATE SET last_number = counter.last_number + 1
-        RETURNING last_number INTO NEW.human_readable_id_number;
-    END IF;
-
-    RETURN NEW;
-END;
-$body$ LANGUAGE plpgsql;
-
 CREATE TABLE ctat_request (
     id UUID PRIMARY KEY NOT NULL,
-    human_readable_id_prefix ZERO_STRING NOT NULL DEFAULT 'CTAT',
-    human_readable_id_number INTEGER NOT NULL CHECK (human_readable_id_number > 0),
+    human_readable_id_number INTEGER GENERATED ALWAYS AS IDENTITY,
     requester UUID NOT NULL REFERENCES public.user_account(id) MATCH SIMPLE,
     status CTAT_STATUS NOT NULL DEFAULT 'NEW',
     assigned_admin UUID REFERENCES public.user_account(id) MATCH SIMPLE,
@@ -69,9 +29,9 @@ CREATE TABLE ctat_request (
     modified_by UUID REFERENCES public.user_account(id) MATCH SIMPLE,
     modified_dts TIMESTAMP WITH TIME ZONE,
 
-    -- The stored display ID is split into prefix + number so we can support future prefixes
-    -- without changing the GraphQL contract, which still exposes a single humanReadableID string.
-    CONSTRAINT ctat_request_human_readable_id_unique UNIQUE (human_readable_id_prefix, human_readable_id_number),
+    -- The GraphQL contract still exposes a single humanReadableID string, but the stored
+    -- numeric suffix is enough because every CTAT request currently uses the same CTAT prefix.
+    CONSTRAINT ctat_request_human_readable_id_unique UNIQUE (human_readable_id_number),
 
     -- When the group itself is OTHER, we require free text for the group and disallow division
     -- data entirely. For named groups, the inverse is true: group-other must stay null and a
@@ -176,17 +136,9 @@ CREATE TABLE ctat_request (
     )
 );
 
--- Runs only on insert so the generated display ID is assigned once. If a future backfill or
--- admin script needs to provide an explicit number, the trigger respects that value.
-CREATE TRIGGER ctat_request_human_readable_id_trigger
-BEFORE INSERT ON ctat_request
-FOR EACH ROW
-EXECUTE FUNCTION assign_ctat_request_human_readable_id();
-
 COMMENT ON TABLE ctat_request IS 'A request for CTAT assistance.';
 COMMENT ON COLUMN ctat_request.id IS 'Unique identifier for the CTAT request.';
-COMMENT ON COLUMN ctat_request.human_readable_id_prefix IS 'Stored prefix portion of the CTAT human-readable ID.';
-COMMENT ON COLUMN ctat_request.human_readable_id_number IS 'Stored numeric portion of the CTAT human-readable ID.';
+COMMENT ON COLUMN ctat_request.human_readable_id_number IS 'Stored numeric portion of the CTAT human-readable ID. The display value is formatted as CTAT-{number}.';
 COMMENT ON COLUMN ctat_request.requester IS 'The user who requested CTAT assistance.';
 COMMENT ON COLUMN ctat_request.status IS 'The workflow status assigned to the CTAT request.';
 COMMENT ON COLUMN ctat_request.assigned_admin IS 'The user account currently assigned to administer the CTAT request.';
