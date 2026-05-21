@@ -219,33 +219,3 @@ COMMENT ON COLUMN ctat_request_model_plan_link.created_by IS 'The user who creat
 COMMENT ON COLUMN ctat_request_model_plan_link.created_dts IS 'The timestamp when the CTAT request model plan link was created.';
 COMMENT ON COLUMN ctat_request_model_plan_link.modified_by IS 'The user who last modified the CTAT request model plan link.';
 COMMENT ON COLUMN ctat_request_model_plan_link.modified_dts IS 'The timestamp when the CTAT request model plan link was last modified.';
-
--- Register the CTAT tables with the existing audit pipeline so inserts/updates/deletes are
--- captured in audit.change and translated audit views. We explicitly include IDs/foreign keys in
--- insert_fields where helpful so initial create events retain enough context to be understandable.
-SELECT audit.AUDIT_TABLE(
-    'public',
-    'ctat_request',
-    'id',
-    NULL,
-    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
-    '{*,id}'::TEXT[]
-);
-
-SELECT audit.AUDIT_TABLE(
-    'public',
-    'ctat_request_document',
-    'id',
-    'ctat_request_id',
-    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
-    '{*,id,ctat_request_id}'::TEXT[]
-);
-
-SELECT audit.AUDIT_TABLE(
-    'public',
-    'ctat_request_model_plan_link',
-    'id',
-    'ctat_request_id',
-    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
-    '{*,id,ctat_request_id}'::TEXT[]
-);
