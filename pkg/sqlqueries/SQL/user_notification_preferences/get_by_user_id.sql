@@ -19,6 +19,8 @@ SELECT
     incorrect_model_status,
     mto_ready_for_review,
     mto_ready_for_review_notification_type,
+    waiver_assessment_survey_marked_complete,
+    waiver_assessment_survey_marked_complete_notification_type,
     created_by,
     created_dts,
     modified_by,

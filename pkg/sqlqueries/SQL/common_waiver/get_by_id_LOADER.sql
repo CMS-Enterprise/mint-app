@@ -15,6 +15,7 @@ SELECT
     cw.has_standardization_effort,
     cw.has_claims_data_or_rreg_analysis,
     cw.is_used_in_active_models,
+    cw.survey_question_field,
     cw.created_by,
     cw.created_dts,
     cw.modified_by,

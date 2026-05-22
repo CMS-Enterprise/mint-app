@@ -19,7 +19,7 @@ func (r *mutationResolver) UpdateWaiverAssessmentSurvey(ctx context.Context, id 
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return WaiverAssessmentSurveyUpdate(ctx, logger, id, changes, principal, r.store)
+	return WaiverAssessmentSurveyUpdate(ctx, logger, id, changes, principal, r.store, r.emailService, r.addressBook)
 }
 
 // UpdateWaiver is the resolver for the updateWaiver field.
