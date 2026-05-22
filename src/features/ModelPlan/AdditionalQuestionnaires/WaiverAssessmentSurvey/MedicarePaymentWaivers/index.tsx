@@ -1,17 +1,47 @@
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Form } from '@trussworks/react-uswds';
+import { Fieldset, Form, FormGroup, Label } from '@trussworks/react-uswds';
+import NotFoundPartial from 'features/NotFound/NotFoundPartial';
+import {
+  GetMedicarePaymentWaiversQuery,
+  TypedUpdateWaiverAssessmentSurveyDocument,
+  useGetMedicarePaymentWaiversQuery
+} from 'gql/generated/graphql';
 
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import FormFooter from 'components/FormFooter';
 import FormHeader from 'components/FormHeader';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
+import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import mapDefaultFormValues from 'utils/mapDefaultFormValues';
+import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import SelectedWaiversSection from '../_components/SelectedWaiversSection';
 import WaiverSurveyQuestion from '../_components/WaiverSurveyQuestion';
+
+type MedicarePaymentWaiversData =
+  GetMedicarePaymentWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
+
+export type MedicarePaymentWaiversForm = Omit<
+  MedicarePaymentWaiversData,
+  '__typename' | 'id'
+>;
+
+const defaultFormValues: MedicarePaymentWaiversForm = {
+  modifiesMedicareSavingsPrograms: null,
+  modifiesMedicareSavingsProgramsExample: '',
+  modifiesMedicareSavingsProgramsWhyNot: null,
+  bundlesPayments: null,
+  bundlesPaymentsExample: '',
+  bundlesPaymentsWhyNot: null,
+  offersRiskSharingArrangements: null,
+  offersRiskSharingArrangementsExample: '',
+  offersRiskSharingArrangementsWhyNot: null
+};
 
 const MedicarePaymentWaivers = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -37,12 +67,53 @@ const MedicarePaymentWaivers = () => {
 
   const navigate = useNavigate();
 
-  const methods = useForm<any>({
-    defaultValues: {},
+  const { data, loading, error } = useGetMedicarePaymentWaiversQuery({
+    variables: {
+      id: modelID
+    },
+    skip: !modelID
+  });
+
+  const {
+    __typename,
+    id: waiverID = '',
+    ...dataFormFields
+  } = data?.modelPlan?.questionnaires.waiverAssessmentSurvey || {};
+
+  const formData = mapDefaultFormValues<MedicarePaymentWaiversForm>(
+    dataFormFields,
+    defaultFormValues
+  );
+
+  const methods = useForm<MedicarePaymentWaiversForm>({
+    values: formData,
     mode: 'onChange'
   });
 
-  const { control, handleSubmit, setValue } = methods;
+  const { handleSubmit, watch, control } = methods;
+
+  const { mutationError, loading: isSubmitting } =
+    useHandleMutation<MedicarePaymentWaiversForm>(
+      TypedUpdateWaiverAssessmentSurveyDocument,
+      {
+        id: waiverID,
+        rhfRef: {
+          initialValues: formData,
+          values: watch()
+        }
+      }
+    );
+
+  if (loading) {
+    return <div>Loading...</div>; // Replace with your standard spinner/loading skeleton
+  }
+
+  if (
+    (!loading && error) ||
+    (!loading && !data?.modelPlan?.questionnaires.waiverAssessmentSurvey)
+  ) {
+    return <NotFoundPartial errorMessage={error?.message} />;
+  }
 
   return (
     <div className="mint-body-normal">
@@ -58,6 +129,12 @@ const MedicarePaymentWaivers = () => {
 
       <div className="tablet:grid-col-6">
         <FormProvider {...methods}>
+          <MutationErrorModal
+            isOpen={mutationError.isModalOpen}
+            closeModal={mutationError.closeModal}
+            url={mutationError.destinationURL}
+          />
+
           <Form
             id="waiver-assessment-survey-medicare-payment-waivers-form"
             data-testid="waiver-assessment-survey-medicare-payment-waivers-form"
@@ -68,31 +145,63 @@ const MedicarePaymentWaivers = () => {
               );
             })}
           >
-            <ConfirmLeaveRHF />
+            <Fieldset disabled={!!error || loading}>
+              <ConfirmLeaveRHF />
 
-            <div className="margin-bottom-6">
-              {questionConfigs.map(questionConfig => (
-                <WaiverSurveyQuestion
-                  key={questionConfig.gqlField}
-                  questionConfig={questionConfig}
-                  control={control}
-                  setValue={setValue}
-                />
-              ))}
-            </div>
+              <div className="margin-bottom-6">
+                {questionConfigs.map(questionConfig => (
+                  <FormGroup
+                    key={questionConfig.gqlField}
+                    className="margin-top-0 margin-bottom-2"
+                  >
+                    <Label
+                      htmlFor={convertCamelCaseToKebabCase(
+                        questionConfig.gqlField
+                      )}
+                      className="text-normal text-bold"
+                    >
+                      {questionConfig.label}
+                    </Label>
 
-            <SelectedWaiversSection allWaivers={[]} />
+                    {questionConfig.sublabel && (
+                      <p className="text-base margin-bottom-1 margin-top-1">
+                        {questionConfig.sublabel}
+                      </p>
+                    )}
 
-            <FormFooter
-              id="waiver-assessment-survey-medicare-payment-waivers-form"
-              homeArea={additionalQuestionnairesT(
-                'saveAndReturnToQuestionnaires'
-              )}
-              homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
-              backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/model-plan-questions`}
-              nextPage
-              // disabled={submitting}
-            />
+                    <Controller
+                      name={
+                        questionConfig.gqlField as keyof MedicarePaymentWaiversForm
+                      }
+                      control={control}
+                      render={({ field: { ref, ...field } }) => (
+                        <WaiverSurveyQuestion
+                          key={field.name}
+                          questionConfig={questionConfig}
+                          fieldName={field.name}
+                          value={field.value as boolean | null | undefined}
+                          methods={methods}
+                          inputRef={ref}
+                        />
+                      )}
+                    />
+                  </FormGroup>
+                ))}
+              </div>
+
+              <SelectedWaiversSection allWaivers={[]} />
+
+              <FormFooter
+                id="waiver-assessment-survey-medicare-payment-waivers-form"
+                homeArea={additionalQuestionnairesT(
+                  'saveAndReturnToQuestionnaires'
+                )}
+                homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+                backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/model-plan-questions`}
+                nextPage
+                disabled={isSubmitting}
+              />
+            </Fieldset>
           </Form>
         </FormProvider>
         <PageNumber currentPage={3} totalPages={7} className="margin-y-6" />

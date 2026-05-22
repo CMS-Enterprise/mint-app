@@ -18,169 +18,179 @@ import {
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 const WaiverSurveyQuestion = ({
+  fieldName,
   questionConfig,
-  control,
-  setValue
+  value,
+  methods,
+  inputRef
 }: {
+  fieldName: string;
   questionConfig: TranslationFieldPropertiesWithOptionsAndChildren<Bool, void>;
-  setValue: ReturnType<typeof useForm<any>>['setValue'];
-  control: ReturnType<typeof useForm<any>>['control'];
+  value: boolean | null | undefined;
+  methods: ReturnType<typeof useForm<any>>;
+  inputRef?: React.Ref<any>;
 }) => {
+  const { control, setValue, watch } = methods;
   const { gqlField, childRelation } = questionConfig;
 
   const kebabName = convertCamelCaseToKebabCase(gqlField);
 
+  const yesChildConfig = childRelation?.[Bool.true]?.[0]?.();
+  const yesChildName = yesChildConfig?.gqlField || '';
+
+  const noChildConfig = childRelation?.[Bool.false]?.[0]?.();
+  const noChildName = noChildConfig?.gqlField || '';
+
   return (
-    <FormGroup key={gqlField} className="margin-top-0 margin-bottom-2">
-      <Label htmlFor={kebabName} className="text-normal text-bold">
-        {questionConfig.label}
-      </Label>
+    <>
+      <div className="display-flex flex-column">
+        <Fieldset>
+          <Radio
+            id={`${kebabName}-true`}
+            data-testid={`${kebabName}-true`}
+            className="margin-top-0 margin-right-1"
+            name={fieldName}
+            inputRef={inputRef}
+            label={
+              <span
+                className="display-flex flex-align-center"
+                style={{ gap: '4px' }}
+              >
+                {questionConfig.options[Bool.true]}
+              </span>
+            }
+            value="TRUE"
+            checked={value === true}
+            onChange={() => {
+              setValue(gqlField, true, {
+                shouldValidate: true,
+                shouldDirty: true,
+                shouldTouch: true
+              });
 
-      {questionConfig.sublabel && (
-        <p className="text-base margin-bottom-1 margin-top-1">
-          {questionConfig.sublabel}
-        </p>
-      )}
+              if (noChildName && watch(noChildName) !== null) {
+                setValue(noChildName, null, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                  shouldTouch: true
+                });
+              }
+            }}
+          />
+        </Fieldset>
 
-      <Controller
-        name={gqlField}
-        control={control}
-        render={({
-          field: { ref, value: parentValue, onChange, ...field }
-        }) => (
-          <Fieldset>
-            {[Bool.true, Bool.false].map(enumOption => {
-              const isOptionChecked = parentValue === enumOption;
+        {watch(gqlField) && yesChildConfig && (
+          <FormGroup className="margin-left-4 margin-top-1">
+            <Label
+              htmlFor={convertCamelCaseToKebabCase(yesChildName)}
+              className="text-normal"
+            >
+              {yesChildConfig.label}
+            </Label>
 
-              const activeChildRelations = childRelation?.[enumOption];
-
-              const childConfig =
-                activeChildRelations?.length === 1
-                  ? activeChildRelations[0]()
-                  : null;
-
-              const childName = childConfig?.gqlField || '';
-
-              const childKebabName = childName
-                ? convertCamelCaseToKebabCase(childName)
-                : '';
-
-              return (
-                <div
-                  key={String(enumOption)}
-                  className="display-flex flex-column"
-                >
-                  <Radio
-                    {...field}
-                    id={`${kebabName}-${enumOption}`}
-                    data-testid={`${kebabName}-${enumOption}`}
-                    className="margin-top-0 margin-right-1"
-                    name={gqlField}
-                    label={
-                      <span
-                        className="display-flex flex-align-center"
-                        style={{ gap: '4px' }}
-                      >
-                        {questionConfig.options[enumOption]}
-                      </span>
-                    }
-                    value={enumOption}
-                    checked={isOptionChecked}
-                    onChange={() => {
-                      onChange(enumOption);
-
-                      const alternateKey =
-                        enumOption === Bool.true ? Bool.false : Bool.true;
-
-                      const alternateRelation =
-                        childRelation?.[alternateKey]?.[0]?.();
-
-                      if (alternateRelation?.gqlField) {
-                        setValue(alternateRelation.gqlField, '', {
-                          shouldValidate: true,
-                          shouldDirty: true,
-                          shouldTouch: true
-                        });
-                      }
-                    }}
-                  />
-
-                  {isOptionChecked && childConfig && childName && (
-                    <FormGroup className="margin-left-4 margin-top-1">
-                      <Label htmlFor={childKebabName} className="text-normal">
-                        {childConfig.label || childName}
-                      </Label>
-
-                      {enumOption === Bool.true && (
-                        <Controller
-                          name={childName}
-                          control={control}
-                          render={({
-                            field: { ref: childRef, ...childField }
-                          }) => (
-                            <TextAreaField
-                              {...childField}
-                              id={childKebabName}
-                              data-testid={childKebabName}
-                              maxLength={5000}
-                              className="height-card"
-                            />
-                          )}
-                        />
-                      )}
-
-                      {enumOption === Bool.false && (
-                        <Controller
-                          name={childName}
-                          control={control}
-                          render={({
-                            field: { ref: childRef, ...childField }
-                          }) => {
-                            const selectOptions =
-                              isTranslationFieldPropertiesWithOptions(
-                                childConfig
-                              )
-                                ? childConfig.options
-                                : {};
-
-                            return (
-                              <Select
-                                {...childField}
-                                id={childKebabName}
-                                value={childField.value || 'default'}
-                                onChange={e => {
-                                  const selectedVal = e.target.value;
-
-                                  childField.onChange(
-                                    selectedVal === 'default' ? '' : selectedVal
-                                  );
-                                }}
-                              >
-                                <option value="default">- Select -</option>
-                                {getKeys(selectOptions).map(option => {
-                                  return (
-                                    <option
-                                      key={`select-${convertCamelCaseToKebabCase(option)}`}
-                                      value={option}
-                                    >
-                                      {selectOptions[option]}
-                                    </option>
-                                  );
-                                })}
-                              </Select>
-                            );
-                          }}
-                        />
-                      )}
-                    </FormGroup>
-                  )}
-                </div>
-              );
-            })}
-          </Fieldset>
+            <Controller
+              name={yesChildName}
+              control={control}
+              render={({ field: { ref: childRef, ...childField } }) => (
+                <TextAreaField
+                  {...childField}
+                  id={convertCamelCaseToKebabCase(yesChildName)}
+                  data-testid={convertCamelCaseToKebabCase(yesChildName)}
+                  maxLength={5000}
+                  className="height-card"
+                />
+              )}
+            />
+          </FormGroup>
         )}
-      />
-    </FormGroup>
+      </div>
+
+      <div className="display-flex flex-column">
+        <Fieldset>
+          <Radio
+            id={`${kebabName}-false`}
+            data-testid={`${kebabName}-false`}
+            className="margin-top-0 margin-right-1"
+            name={fieldName}
+            label={
+              <span
+                className="display-flex flex-align-center"
+                style={{ gap: '4px' }}
+              >
+                {questionConfig.options[Bool.false]}
+              </span>
+            }
+            value="FALSE"
+            checked={value === false}
+            onChange={() => {
+              setValue(gqlField, false, {
+                shouldValidate: true,
+                shouldDirty: true,
+                shouldTouch: true
+              });
+
+              if (yesChildName && watch(yesChildName) !== '') {
+                setValue(yesChildName, '', {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                  shouldTouch: true
+                });
+              }
+            }}
+          />
+        </Fieldset>
+
+        {watch(gqlField) === false && noChildConfig && (
+          <FormGroup className="margin-left-4 margin-top-1">
+            <Label
+              htmlFor={convertCamelCaseToKebabCase(noChildName)}
+              className="text-normal"
+            >
+              {noChildConfig.label}
+            </Label>
+
+            <Controller
+              name={noChildName}
+              control={control}
+              render={({ field: { ref: childRef, ...childField } }) => {
+                const selectOptions = isTranslationFieldPropertiesWithOptions(
+                  noChildConfig
+                )
+                  ? noChildConfig.options
+                  : {};
+
+                return (
+                  <Select
+                    {...childField}
+                    id={convertCamelCaseToKebabCase(noChildName)}
+                    value={childField.value || 'default'}
+                    onChange={e => {
+                      const selectedVal = e.target.value;
+
+                      childField.onChange(
+                        selectedVal === 'default' ? '' : selectedVal
+                      );
+                    }}
+                  >
+                    <option value="default">- Select -</option>
+                    {getKeys(selectOptions).map(option => {
+                      return (
+                        <option
+                          key={`select-${convertCamelCaseToKebabCase(option)}`}
+                          value={option}
+                        >
+                          {selectOptions[option]}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                );
+              }}
+            />
+          </FormGroup>
+        )}
+      </div>
+    </>
   );
 };
 
