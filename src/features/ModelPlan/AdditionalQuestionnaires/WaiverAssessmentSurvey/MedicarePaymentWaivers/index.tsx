@@ -104,10 +104,6 @@ const MedicarePaymentWaivers = () => {
       }
     );
 
-  if (loading) {
-    return <div>Loading...</div>; // Replace with your standard spinner/loading skeleton
-  }
-
   if (
     (!loading && error) ||
     (!loading && !data?.modelPlan?.questionnaires.waiverAssessmentSurvey)

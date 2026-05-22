@@ -1,24 +1,44 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { modelID } from 'tests/mock/general';
+import { medicalPaymentWaiversMocks, modelID } from 'tests/mock/readonly';
 
 import MedicarePaymentWaivers from './index';
 
 describe('MedicarePaymentWaivers Component', () => {
-  it('renders components properly', async () => {
-    render(
-      <MemoryRouter
-        initialEntries={[
+  const setupRouter = () => {
+    return createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicare-payment-waivers',
+          element: <MedicarePaymentWaivers />
+        }
+      ],
+      {
+        initialEntries: [
           `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicare-payment-waivers`
-        ]}
-      >
-        <MedicarePaymentWaivers />
-      </MemoryRouter>
+        ]
+      }
+    );
+  };
+
+  it('renders components properly', async () => {
+    const user = userEvent.setup();
+
+    const router = setupRouter();
+
+    render(
+      <MockedProvider mocks={medicalPaymentWaiversMocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
-    expect(screen.getByText('Medicare payment waivers')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Medicare payment waivers')).toBeInTheDocument();
+    });
+
     expect(
       screen.getByText(
         'Does your model modify Medicare shared savings programs?'
@@ -26,33 +46,40 @@ describe('MedicarePaymentWaivers Component', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Selected waivers')).toBeInTheDocument();
 
-    expect(
-      screen.queryByText('Please provide an example')
-    ).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText('Please provide an example')).toBeInTheDocument();
+    });
 
-    const yesRadioOption = screen.getAllByLabelText('Yes')[0];
-    await userEvent.click(yesRadioOption);
+    const noRadioOption = screen.getAllByLabelText('No')[0];
+    await user.click(noRadioOption);
 
-    expect(screen.getByText('Please provide an example')).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.queryByText('Please provide an example')
+      ).not.toBeInTheDocument();
+    });
 
     const nextButton = screen.getByRole('button', { name: /next/i });
-    await userEvent.click(nextButton);
+    await user.click(nextButton);
 
     await waitFor(() => {
       expect(nextButton).toBeInTheDocument();
     });
   });
 
-  it('matches snapshot', () => {
+  it('matches snapshot', async () => {
+    const router = setupRouter();
+
     const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicare-payment-waivers`
-        ]}
-      >
-        <MedicarePaymentWaivers />
-      </MemoryRouter>
+      <MockedProvider mocks={medicalPaymentWaiversMocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
+
+    await waitFor(() => {
+      expect(screen.getByText('Medicare payment waivers')).toBeInTheDocument();
+    });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

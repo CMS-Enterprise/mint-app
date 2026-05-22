@@ -43,6 +43,8 @@ import {
   GetAllParticipantsAndProvidersQuery,
   GetAllPaymentsDocument,
   GetAllPaymentsQuery,
+  GetMedicarePaymentWaiversDocument,
+  GetMedicarePaymentWaiversQuery,
   GetModelCollaboratorsDocument,
   GetModelCollaboratorsQuery,
   GetModelPlanQuestionsDocument,
@@ -63,6 +65,7 @@ import {
   ModelType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
+  NotSelectedReason,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRequireFinancialGuaranteeType,
@@ -877,6 +880,42 @@ export const modelPlanQuestionsMocks = [
     },
     result: {
       data: modelPlanQuestionsDataMocks
+    }
+  }
+];
+
+const medicalPaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
+  __typename: 'Query',
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelID,
+    questionnaires: {
+      __typename: 'Questionnaires',
+      waiverAssessmentSurvey: {
+        id: '123',
+        __typename: 'WaiverAssessmentSurvey',
+        modifiesMedicareSavingsPrograms: true,
+        modifiesMedicareSavingsProgramsExample: 'Example',
+        modifiesMedicareSavingsProgramsWhyNot: null,
+        bundlesPayments: false,
+        bundlesPaymentsExample: '',
+        bundlesPaymentsWhyNot: NotSelectedReason.FEEDBACK_AGAINST_USE,
+        offersRiskSharingArrangements: null,
+        offersRiskSharingArrangementsExample: '',
+        offersRiskSharingArrangementsWhyNot: null
+      }
+    }
+  }
+};
+
+export const medicalPaymentWaiversMocks = [
+  {
+    request: {
+      query: GetMedicarePaymentWaiversDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: medicalPaymentWaiversDataMocks
     }
   }
 ];

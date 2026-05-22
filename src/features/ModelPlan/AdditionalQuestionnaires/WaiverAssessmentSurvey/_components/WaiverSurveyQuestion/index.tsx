@@ -79,7 +79,7 @@ const WaiverSurveyQuestion = ({
           />
         </Fieldset>
 
-        {watch(gqlField) && yesChildConfig && (
+        {value && yesChildConfig && (
           <FormGroup className="margin-left-4 margin-top-1">
             <Label
               htmlFor={convertCamelCaseToKebabCase(yesChildName)}
@@ -140,7 +140,7 @@ const WaiverSurveyQuestion = ({
           />
         </Fieldset>
 
-        {watch(gqlField) === false && noChildConfig && (
+        {value === false && noChildConfig && (
           <FormGroup className="margin-left-4 margin-top-1">
             <Label
               htmlFor={convertCamelCaseToKebabCase(noChildName)}
