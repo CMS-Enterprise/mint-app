@@ -25,15 +25,6 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
-// Input for an admin update to a CTAT request.
-type CTATAdminUpdateInput struct {
-	ID            uuid.UUID          `json:"id"`
-	Status        *models.CTATStatus `json:"status,omitempty"`
-	AssignedAdmin *uuid.UUID         `json:"assignedAdmin,omitempty"`
-	Notes         *string            `json:"notes,omitempty"`
-	Resolution    *string            `json:"resolution,omitempty"`
-}
-
 // Input for uploading a supporting document for a CTAT request.
 type CTATRequestDocumentInput struct {
 	FileData graphql.Upload `json:"fileData"`

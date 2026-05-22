@@ -272,7 +272,7 @@ export enum CmsCenter {
 
 /** Input for an admin update to a CTAT request. */
 export type CtatAdminUpdateInput = {
-  assignedAdmin?: InputMaybe<Scalars['UUID']['input']>;
+  assignedAdmin?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['UUID']['input'];
   notes?: InputMaybe<Scalars['String']['input']>;
   resolution?: InputMaybe<Scalars['String']['input']>;
@@ -4961,7 +4961,7 @@ export type Query = {
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
   ctatRequest: CtatRequest;
-  ctatRequests?: Maybe<Array<CtatRequest>>;
+  ctatRequests: Array<CtatRequest>;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
