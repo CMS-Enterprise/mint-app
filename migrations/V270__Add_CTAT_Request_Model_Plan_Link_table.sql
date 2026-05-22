@@ -1,7 +1,7 @@
 CREATE TABLE ctat_request_model_plan_link (
     id UUID PRIMARY KEY NOT NULL,
-    ctat_request_id UUID NOT NULL REFERENCES public.ctat_request(id) MATCH SIMPLE,
     model_plan_id UUID NOT NULL REFERENCES public.model_plan(id) MATCH SIMPLE,
+    ctat_request_id UUID NOT NULL REFERENCES public.ctat_request(id) MATCH SIMPLE,
     created_by UUID REFERENCES public.user_account(id) MATCH SIMPLE NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT current_timestamp,
     modified_by UUID REFERENCES public.user_account(id) MATCH SIMPLE,
@@ -18,3 +18,14 @@ COMMENT ON COLUMN ctat_request_model_plan_link.created_by IS 'The user who creat
 COMMENT ON COLUMN ctat_request_model_plan_link.created_dts IS 'The timestamp when the CTAT request model plan link was created.';
 COMMENT ON COLUMN ctat_request_model_plan_link.modified_by IS 'The user who last modified the CTAT request model plan link.';
 COMMENT ON COLUMN ctat_request_model_plan_link.modified_dts IS 'The timestamp when the CTAT request model plan link was last modified.';
+
+-- Register model-plan to CTAT links with raw audit tracking keyed to the parent request.
+SELECT audit.AUDIT_TABLE(
+    'public',
+    'ctat_request_model_plan_link',
+    'id',
+    'model_plan_id',
+    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
+    '{*,id,model_plan_id,ctat_request_id}'::TEXT[],
+    'ctat_request_id'
+);

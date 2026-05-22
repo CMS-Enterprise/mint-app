@@ -32,3 +32,13 @@ COMMENT ON COLUMN ctat_request_document.created_by IS 'The user who created the 
 COMMENT ON COLUMN ctat_request_document.created_dts IS 'The timestamp when the CTAT request document record was created.';
 COMMENT ON COLUMN ctat_request_document.modified_by IS 'The user who last modified the CTAT request document record.';
 COMMENT ON COLUMN ctat_request_document.modified_dts IS 'The timestamp when the CTAT request document record was last modified.';
+
+-- Register CTAT supporting documents with raw audit tracking keyed to their parent request.
+SELECT audit.AUDIT_TABLE(
+    'public',
+    'ctat_request_document',
+    'id',
+    'ctat_request_id',
+    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
+    '{*,id,ctat_request_id}'::TEXT[]
+);
