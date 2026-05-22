@@ -1,10 +1,14 @@
 package models
 
 import (
+	"context"
 	"fmt"
 	"time"
 
 	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 )
 
 // CTATRequest represents a request for CTAT assistance.
@@ -52,4 +56,30 @@ func (c *CTATRequest) HumanReadableID() string {
 	}
 
 	return fmt.Sprintf("%s-%d", ctatRequestHumanReadableIDPrefix, c.HumanReadableIDNumber)
+}
+
+func (c *CTATRequest) RequesterUserAccount(ctx context.Context) (*authentication.UserAccount, error) {
+	if c == nil || c.Requester == uuid.Nil {
+		return nil, nil
+	}
+
+	service, err := appcontext.UserAccountService(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return service(ctx, c.Requester)
+}
+
+func (c *CTATRequest) AssignedAdminUserAccount(ctx context.Context) (*authentication.UserAccount, error) {
+	if c == nil || c.AssignedAdmin == nil {
+		return nil, nil
+	}
+
+	service, err := appcontext.UserAccountService(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return service(ctx, *c.AssignedAdmin)
 }

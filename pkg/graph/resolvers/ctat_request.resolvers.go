@@ -10,29 +10,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
-
-// RequesterUserAccount is the resolver for the requesterUserAccount field.
-func (r *cTATRequestResolver) RequesterUserAccount(ctx context.Context, obj *models.CTATRequest) (*authentication.UserAccount, error) {
-	if obj == nil || obj.Requester == uuid.Nil {
-		return nil, nil
-	}
-
-	return UserAccountGetByIDLOADER(ctx, obj.Requester)
-}
-
-// AssignedAdmin is the resolver for the assignedAdmin field.
-func (r *cTATRequestResolver) AssignedAdminUserAccount(ctx context.Context, obj *models.CTATRequest) (*authentication.UserAccount, error) {
-	if obj == nil || obj.AssignedAdmin == nil {
-		return nil, nil
-	}
-
-	return UserAccountGetByIDLOADER(ctx, *obj.AssignedAdmin)
-}
 
 // TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
 func (r *cTATRequestResolver) TypeOfHelpNeeded(ctx context.Context, obj *models.CTATRequest) ([]models.CTATHelpNeededType, error) {
