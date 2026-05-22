@@ -50,7 +50,7 @@ export const getLinkedSections = (
  * Returns sections blocked by a held lock. Waiver survey blocking extends to
  * basics and/or characteristics only when the same user also holds those locks.
  */
-export const getSectionsBlockedByLock = (
+const getSectionsBlockedByLock = (
   heldSection: LockableSection,
   sectionsHeldBySameUser: LockableSection[] = []
 ): LockableSection[] => {
@@ -114,7 +114,7 @@ export enum LockStatus {
  * user holds the direct section lock, or UNLOCKED otherwise.
  */
 export const findLockedSection = (
-  locks: LockSectionType[],
+  locks: LockSectionType[] = [],
   section: LockableSection,
   userEUA?: string
 ): LockStatus => {
