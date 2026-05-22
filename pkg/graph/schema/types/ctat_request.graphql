@@ -155,7 +155,8 @@ A request for CTAT assistance
 """
 type CTATRequest {
   id: UUID!
-  humanReadableID: String
+  humanReadableID: String!
+  humanReadableIDNumber: Int!
   requester: UUID!
   requesterUserAccount: UserAccount!
 

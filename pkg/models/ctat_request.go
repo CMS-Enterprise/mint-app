@@ -44,18 +44,21 @@ type CTATRequest struct {
 
 	SupportingDocuments []*CTATRequestDocument `json:"supportingDocuments,omitempty" db:"-"`
 
-	HumanReadableIDNumber int `json:"-" db:"human_readable_id_number"`
+	HumanReadableIDNumber int `json:"humanReadableIDNumber" db:"human_readable_id_number"`
 }
 
+// ctatRequestHumanReadableIDPrefix is the only currently available prefix
 const ctatRequestHumanReadableIDPrefix = "CTAT"
 
 // HumanReadableID composes the display ID from the fixed CTAT prefix and stored numeric suffix.
 func (c *CTATRequest) HumanReadableID() string {
 	if c == nil || c.HumanReadableIDNumber == 0 {
-		return ""
+		// really shouldn't be possible with the data type in the DB, but will guard for safety
+		return "CTAT-000"
 	}
 
-	return fmt.Sprintf("%s-%d", ctatRequestHumanReadableIDPrefix, c.HumanReadableIDNumber)
+	// pad number to force number minimum width of 3 (i.e., `25` becomes `025`, but `1000` remains `1000`)
+	return fmt.Sprintf("%s-%03d", ctatRequestHumanReadableIDPrefix, c.HumanReadableIDNumber)
 }
 
 func (c *CTATRequest) RequesterUserAccount(ctx context.Context) (*authentication.UserAccount, error) {

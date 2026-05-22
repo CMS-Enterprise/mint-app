@@ -394,7 +394,8 @@ export type CtatRequest = {
   createdDts: Scalars['Time']['output'];
   dateAssistanceNeededBy?: Maybe<Scalars['Time']['output']>;
   describeHelpNeeded?: Maybe<Scalars['String']['output']>;
-  humanReadableID?: Maybe<Scalars['String']['output']>;
+  humanReadableID: Scalars['String']['output'];
+  humanReadableIDNumber: Scalars['Int']['output'];
   id: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
