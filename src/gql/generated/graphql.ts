@@ -403,6 +403,7 @@ export type CtatRequest = {
   relatedMINTModels?: Maybe<Array<Scalars['UUID']['output']>>;
   requestUrgency?: Maybe<CtatRequestUrgency>;
   requester: Scalars['UUID']['output'];
+  requesterUserAccount: UserAccount;
   resolution?: Maybe<Scalars['String']['output']>;
   status?: Maybe<CtatStatus>;
   supportingDocuments: Array<CtatRequestDocument>;

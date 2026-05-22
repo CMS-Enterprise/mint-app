@@ -157,6 +157,7 @@ type CTATRequest {
   id: UUID!
   humanReadableID: String
   requester: UUID!
+  requesterUserAccount: UserAccount!
 
   status: CTATStatus
   assignedAdmin: UUID
