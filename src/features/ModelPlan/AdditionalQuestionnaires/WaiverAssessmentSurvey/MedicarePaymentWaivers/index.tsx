@@ -10,6 +10,7 @@ import FormHeader from 'components/FormHeader';
 import PageNumber from 'components/PageNumber';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
+import SelectedWaiversSection from '../_components/SelectedWaiversSection';
 import WaiverSurveyQuestion from '../_components/WaiverSurveyQuestion';
 
 const MedicarePaymentWaivers = () => {
@@ -69,7 +70,7 @@ const MedicarePaymentWaivers = () => {
           >
             <ConfirmLeaveRHF />
 
-            <div>
+            <div className="margin-bottom-6">
               {questionConfigs.map(questionConfig => (
                 <WaiverSurveyQuestion
                   key={questionConfig.gqlField}
@@ -79,6 +80,8 @@ const MedicarePaymentWaivers = () => {
                 />
               ))}
             </div>
+
+            <SelectedWaiversSection allWaivers={[]} />
 
             <FormFooter
               id="waiver-assessment-survey-medicare-payment-waivers-form"
