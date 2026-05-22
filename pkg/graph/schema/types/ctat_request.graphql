@@ -159,7 +159,8 @@ type CTATRequest {
   requester: UUID!
 
   status: CTATStatus
-  assignedAdmin: UserAccount
+  assignedAdmin: UUID
+  assignedAdminUserAccount: UserAccount
   notes: String
   resolution: String
 

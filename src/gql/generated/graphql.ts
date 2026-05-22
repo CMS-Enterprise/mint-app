@@ -377,7 +377,8 @@ export enum CtatHelpNeededType {
 /** A request for CTAT assistance */
 export type CtatRequest = {
   __typename: 'CTATRequest';
-  assignedAdmin?: Maybe<UserAccount>;
+  assignedAdmin?: Maybe<Scalars['UUID']['output']>;
+  assignedAdminUserAccount?: Maybe<UserAccount>;
   cmmiDivision?: Maybe<CtatcmmiDivisionOption>;
   cmmiDivisionOther?: Maybe<Scalars['String']['output']>;
   cmmiGroup?: Maybe<CtatcmmiGroupOption>;

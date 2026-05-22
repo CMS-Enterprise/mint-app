@@ -17,8 +17,12 @@ import (
 )
 
 // AssignedAdmin is the resolver for the assignedAdmin field.
-func (r *cTATRequestResolver) AssignedAdmin(ctx context.Context, obj *models.CTATRequest) (*authentication.UserAccount, error) {
-	panic(fmt.Errorf("not implemented: AssignedAdmin - assignedAdmin"))
+func (r *cTATRequestResolver) AssignedAdminUserAccount(ctx context.Context, obj *models.CTATRequest) (*authentication.UserAccount, error) {
+	if obj == nil || obj.AssignedAdmin == nil {
+		return nil, nil
+	}
+
+	return UserAccountGetByIDLOADER(ctx, *obj.AssignedAdmin)
 }
 
 // TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
