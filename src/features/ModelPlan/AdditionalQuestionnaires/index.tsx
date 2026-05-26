@@ -23,6 +23,7 @@ import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { QuestionnaireName } from 'types/questionnaires';
 import { formatDateLocal } from 'utils/date';
+import { findEffectiveLock } from 'utils/lockableSectionLinking';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import QuestionnaireListItem, {
@@ -35,6 +36,7 @@ type QuestionnaireSectionLockStatus =
 
 const questionnaireSectionMap: Partial<Record<string, LockableSection>> = {
   dataExchangeApproach: LockableSection.DATA_EXCHANGE_APPROACH,
+  waiverAssessmentSurvey: LockableSection.WAIVER_ASSESSMENT_SURVEY,
   iddocQuestionnaire: LockableSection.IDDOC_QUESTIONNAIRE
 };
 
@@ -69,9 +71,13 @@ const AdditionalQuestionnaires = () => {
   const getQuestionnaireLockedStatus = (
     section: string
   ): QuestionnaireSectionLockStatus | undefined => {
-    return lockableSectionLocks.find(
-      sectionLock => sectionLock.section === questionnaireSectionMap[section]
-    );
+    const lockableSection = questionnaireSectionMap[section];
+
+    if (!lockableSection) {
+      return undefined;
+    }
+
+    return findEffectiveLock(lockableSectionLocks, lockableSection);
   };
 
   if (loading) {
@@ -170,24 +176,26 @@ const AdditionalQuestionnaires = () => {
                           </div>
                         )}
 
-                      <QuestionnaireListButton
-                        ariaLabel={additionalQuestionnairesT(
-                          `questionnairesList.${key}.heading`
-                        )}
-                        testId={`${convertCamelCaseToKebabCase(key)}-button`}
-                        path={additionalQuestionnairesT(
-                          `questionnairesList.${key}.path`
-                        )}
-                        disabled={
-                          lockedStatus !== undefined &&
-                          lockedStatus.lockedByUserAccount.username !== euaId
-                        }
-                        status={getQuestionnaireStatus(key)}
-                      />
+                      <div className="display-flex flex-align-center">
+                        <QuestionnaireListButton
+                          ariaLabel={additionalQuestionnairesT(
+                            `questionnairesList.${key}.heading`
+                          )}
+                          testId={`${convertCamelCaseToKebabCase(key)}-button`}
+                          path={additionalQuestionnairesT(
+                            `questionnairesList.${key}.path`
+                          )}
+                          disabled={
+                            lockedStatus !== undefined &&
+                            lockedStatus.lockedByUserAccount.username !== euaId
+                          }
+                          status={getQuestionnaireStatus(key)}
+                        />
 
-                      {questionnaireSectionMap[key] && (
-                        <SectionLock section={questionnaireSectionMap[key]} />
-                      )}
+                        {questionnaireSectionMap[key] && (
+                          <SectionLock section={questionnaireSectionMap[key]} />
+                        )}
+                      </div>
                     </QuestionnaireListItem>
                     {index < QUESTIONNAIRE_DISPLAY_ORDER.length - 1 && (
                       <Divider className="margin-bottom-4" />

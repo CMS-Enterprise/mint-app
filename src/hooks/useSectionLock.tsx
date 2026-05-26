@@ -5,6 +5,7 @@ import { AppState } from 'stores/reducers/rootReducer';
 
 import SectionLockComponent from 'components/SectionLock';
 import { SubscriptionContext } from 'contexts/PageLockContext';
+import { isSectionLockedByOtherUser } from 'utils/lockableSectionLinking';
 
 type SectionLockType = {
   section: LockableSection;
@@ -24,19 +25,14 @@ const useSectionLock = ({ section }: SectionLockType) => {
   // Get the lockable sections from the SubscriptionContext
   const { lockableSectionLocks } = useContext(SubscriptionContext);
 
-  // Find the lock for the specified section
-  const sectionLock = lockableSectionLocks?.find(
-    lock => lock.section === section
-  );
-
-  // Determine if the section is self-locked by the current user
-  const selfLocked = sectionLock?.lockedByUserAccount.username === euaId;
-
   const SectionLock = () => {
     return <SectionLockComponent section={section} />;
   };
 
-  return { SectionLock, isLocked: !!sectionLock && !selfLocked };
+  return {
+    SectionLock,
+    isLocked: isSectionLockedByOtherUser(lockableSectionLocks, section, euaId)
+  };
 };
 
 export default useSectionLock;

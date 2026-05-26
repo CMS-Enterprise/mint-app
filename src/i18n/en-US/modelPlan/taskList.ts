@@ -181,7 +181,10 @@ const modelPlanTaskList = {
     'ops-eval-and-learning': 'Operation, evaluation, and learning',
     'participants-and-providers': 'Participants and providers',
     payment: 'payment',
-    'model-timeline': 'Model timeline'
+    'model-timeline': 'Model timeline',
+    'waiver-assessment-survey': 'Waiver assessment survey',
+    'data-exchange-approach': 'Data exchange approach',
+    'iddoc-questionnaire': '4i and ACO-OS'
   },
   lockErrorHeading: 'Sorry, an has error occured.',
   lockErrorInfo: 'Please return to the task list and try again.',

@@ -180,14 +180,18 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                     </div>
                   </div>
                 </div>
-                <button
-                  aria-label="Continue data exchange approach"
-                  class="usa-button usa-button margin-bottom-0 width-auto"
-                  data-testid="data-exchange-approach-button"
-                  type="button"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Continue
-                </button>
+                  <button
+                    aria-label="Continue data exchange approach"
+                    class="usa-button usa-button margin-bottom-0 width-auto"
+                    data-testid="data-exchange-approach-button"
+                    type="button"
+                  >
+                    Continue
+                  </button>
+                </div>
               </div>
             </li>
             <div
@@ -253,14 +257,18 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                     Responsible team member: Model Lead (with assistance from other team members)
                   </p>
                 </div>
-                <button
-                  aria-label="Start waiver assessment survey"
-                  class="usa-button usa-button margin-bottom-0 width-auto"
-                  data-testid="waiver-assessment-survey-button"
-                  type="button"
+                <div
+                  class="display-flex flex-align-center"
                 >
-                  Start
-                </button>
+                  <button
+                    aria-label="Start waiver assessment survey"
+                    class="usa-button usa-button margin-bottom-0 width-auto"
+                    data-testid="waiver-assessment-survey-button"
+                    type="button"
+                  >
+                    Start
+                  </button>
+                </div>
               </div>
             </li>
             <div
@@ -308,6 +316,9 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                     Responsible team member: IT Lead
                   </p>
                 </div>
+                <div
+                  class="display-flex flex-align-center"
+                />
               </div>
             </li>
           </ol>
