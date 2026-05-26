@@ -37,6 +37,7 @@ import classNames from 'classnames';
 import {
   GetModelToOperationsMatrixDocument,
   GetMtoAllMilestonesQuery,
+  GetMtoAllSolutionsDocument,
   GetMtoSolutionsAndMilestonesDocument,
   MtoFacilitator,
   MtoRiskIndicator,
@@ -347,6 +348,7 @@ const EditSolutionForm = ({
         },
         refetchQueries: [
           GetModelToOperationsMatrixDocument,
+          GetMtoAllSolutionsDocument,
           GetMtoSolutionsAndMilestonesDocument
         ]
       }).then(response => {
