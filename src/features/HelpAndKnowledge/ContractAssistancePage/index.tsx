@@ -1,10 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { GridContainer, Icon } from '@trussworks/react-uswds';
+import {
+  Button,
+  ButtonGroup,
+  GridContainer,
+  Icon
+} from '@trussworks/react-uswds';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+
+import ContractAssistanceTicketsTable from './_components/ContractAssistanceTicketsTable';
 
 const ContractAssistancePage = () => {
   const { t: hkcT } = useTranslation('helpAndKnowledge');
@@ -32,6 +39,41 @@ const ContractAssistancePage = () => {
               {hkcT('milestoneLibrary.returnToHkc')}
             </span>
           </UswdsReactLink>
+        </div>
+        <div className="admin-section padding-3 bg-primary-lighter">
+          <div className="display-flex flex-justify flex-align-center">
+            <h2 className="margin-x-0 margin-top-0 margin-bottom-3">
+              {hkcT('contractAssistance.adminActions.title')}
+            </h2>
+            <Icon.LocalPolice size={4} className="text-primary-light" />
+          </div>
+          <ButtonGroup type="segmented" className="margin-bottom-2">
+            {/* TODO: Add logic to determine which button should be active */}
+            <Button type="button">
+              {hkcT('contractAssistance.adminActions.tabs.all', { count: 0 })}
+            </Button>
+            <Button type="button" outline>
+              {hkcT('contractAssistance.adminActions.tabs.open', {
+                count: 0
+              })}
+            </Button>
+            <Button type="button" outline>
+              {hkcT('contractAssistance.adminActions.tabs.unassigned', {
+                count: 0
+              })}
+            </Button>
+            <Button type="button" outline>
+              {hkcT('contractAssistance.adminActions.tabs.myTickets', {
+                count: 0
+              })}
+            </Button>
+            <Button type="button" outline>
+              {hkcT('contractAssistance.adminActions.tabs.closed', {
+                count: 0
+              })}
+            </Button>
+          </ButtonGroup>
+          <ContractAssistanceTicketsTable tickets={[]} />
         </div>
       </GridContainer>
     </MainContent>
