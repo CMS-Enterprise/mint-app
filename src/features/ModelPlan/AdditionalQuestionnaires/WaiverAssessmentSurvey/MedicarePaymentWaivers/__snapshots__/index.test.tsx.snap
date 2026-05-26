@@ -46,7 +46,7 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
               <label
                 class="usa-label text-normal text-bold"
                 data-testid="label"
-                for="modifies-medicare-savings-programs"
+                for="modifies-medicare-savings-programs-true"
               >
                 Does your model modify Medicare shared savings programs?
               </label>
@@ -146,7 +146,7 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
               <label
                 class="usa-label text-normal text-bold"
                 data-testid="label"
-                for="bundles-payments"
+                for="bundles-payments-true"
               >
                 Does your model bundle payments?
               </label>
@@ -278,7 +278,7 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
               <label
                 class="usa-label text-normal text-bold"
                 data-testid="label"
-                for="offers-risk-sharing-arrangements"
+                for="offers-risk-sharing-arrangements-true"
               >
                 Does your model offer risk sharing arrangements?
               </label>
@@ -364,31 +364,23 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
               There are 0 total available Medicare payment waivers. Based on your answers to the above questions, MINT has determined that the following 0 waivers are likely needed for your model:
             </p>
             <div
-              class="display-flex flex-row flex-wrap margin-bottom-2"
+              class="margin-bottom-2"
             >
               <ul
-                class="grid-col-6 margin-y-0 padding-x-3"
+                class="grid-row grid-gap-2 margin-y-0 padding-x-3"
               >
                 <li
-                  class="margin-y-0 padding-y-05"
+                  class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
                 >
                   super long survey name Waiver 1
                 </li>
-              </ul>
-              <ul
-                class="grid-col-6 margin-y-0 padding-x-3"
-              >
                 <li
-                  class="margin-y-0 padding-y-05"
+                  class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
                 >
                   short Waiver 2
                 </li>
-              </ul>
-              <ul
-                class="grid-col-6 margin-y-0 padding-x-3"
-              >
                 <li
-                  class="margin-y-0 padding-y-05"
+                  class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
                 >
                   Waiver 3
                 </li>
