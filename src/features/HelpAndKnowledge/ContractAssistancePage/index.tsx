@@ -40,7 +40,7 @@ const ContractAssistancePage = () => {
             </span>
           </UswdsReactLink>
         </div>
-        <div className="admin-section padding-3 bg-primary-lighter">
+        <div className="admin-section padding-3 bg-primary-lighter radius-md">
           <div className="display-flex flex-justify flex-align-center">
             <h2 className="margin-x-0 margin-top-0 margin-bottom-3">
               {hkcT('contractAssistance.adminActions.title')}
