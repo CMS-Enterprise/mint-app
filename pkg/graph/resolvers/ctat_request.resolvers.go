@@ -10,6 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -37,7 +38,16 @@ func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.
 
 // CtatRequestsRequester is the resolver for the ctatRequestsRequester field.
 func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATRequestsTableDataRequester, error) {
-	panic(fmt.Errorf("not implemented: CtatRequestsRequester - ctatRequestsRequester"))
+	principal := appcontext.Principal(ctx)
+
+	ctatRequests, err := CTATRequestLiteGetByRequesterIDLOADER(ctx, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.CTATRequestsTableDataRequester{
+		CtatRequests: ctatRequests,
+	}, nil
 }
 
 // CtatRequestsAdmin is the resolver for the ctatRequestsAdmin field.

@@ -9,7 +9,9 @@ import (
 
 // CTATRequestLite is a lite version of the full CTAT request that contains the required data for table population in the UI
 type CTATRequestLite struct {
-	ID                    uuid.UUID            `json:"id" db:"id"`
+	ID uuid.UUID `json:"id" db:"id"`
+	// Requester facilitates grouping for requester-scoped dataloaders and is not exposed in GraphQL.
+	Requester             uuid.UUID            `json:"-" db:"requester"`
 	HumanReadableIDNumber int                  `json:"humanReadableIDNumber" db:"human_readable_id_number"`
 	SubmissionDate        time.Time            `json:"submissionDate" db:"submission_date"`
 	ContractName          *string              `json:"contractName,omitempty" db:"contract_name"`
