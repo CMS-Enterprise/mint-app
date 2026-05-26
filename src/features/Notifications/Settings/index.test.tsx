@@ -60,7 +60,9 @@ const notificationPreferences: NotificationPerferenceType = {
   iddocQuestionnaireComplete: [UserNotificationPreferenceFlag.EMAIL],
   iddocQuestionnaireCompletedNotificationType: null,
   mtoReadyForReview: [],
-  mtoReadyForReviewNotificationType: null
+  mtoReadyForReviewNotificationType: null,
+  waiverAssessmentSurveyMarkedComplete: [],
+  waiverAssessmentSurveyMarkedCompleteNotificationType: null
 };
 
 const notificationsSettingsMock = [
