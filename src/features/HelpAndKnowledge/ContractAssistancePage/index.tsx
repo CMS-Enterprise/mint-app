@@ -73,8 +73,10 @@ const ContractAssistancePage = () => {
               })}
             </Button>
           </ButtonGroup>
-          <ContractAssistanceTicketsTable tickets={[]} />
+          {/* ADMIN SECTION */}
+          <ContractAssistanceTicketsTable tickets={[]} isAdmin />
         </div>
+        <ContractAssistanceTicketsTable tickets={[]} isAdmin={false} />
       </GridContainer>
     </MainContent>
   );

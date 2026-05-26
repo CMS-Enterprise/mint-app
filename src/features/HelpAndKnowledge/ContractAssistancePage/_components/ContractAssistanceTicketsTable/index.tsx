@@ -1,9 +1,15 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Column, useTable } from 'react-table';
+import { Column, useSortBy, useTable } from 'react-table';
 import { Table } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import { Alert } from 'components/Alert';
+import {
+  getColumnSortStatus,
+  getHeaderSortIcon,
+  sortColumnValues
+} from 'utils/tableSort';
 
 import './index.scss';
 
@@ -17,85 +23,143 @@ export type ContractAssistanceTicket = {
 
 type ContractAssistanceTicketsTableProps = {
   tickets: ContractAssistanceTicket[];
+  isAdmin: boolean;
 };
 
 const ContractAssistanceTicketsTable = ({
-  tickets
+  tickets,
+  isAdmin
 }: ContractAssistanceTicketsTableProps) => {
   const { t } = useTranslation('helpAndKnowledge');
+
+  const translationPrefix = isAdmin
+    ? 'contractAssistance.adminActions'
+    : 'contractAssistance.userSubmittedTickets';
 
   const columns: Column<ContractAssistanceTicket>[] = useMemo(
     () => [
       {
         id: 'ticketId',
         Header: t('contractAssistance.adminActions.table.ticketId'),
-        accessor: 'ticketId'
+        accessor: 'ticketId',
+        disableSortBy: isAdmin
       },
       {
         id: 'submissionDate',
         Header: t('contractAssistance.adminActions.table.submissionDate'),
-        accessor: 'submissionDate'
+        accessor: 'submissionDate',
+        disableSortBy: isAdmin
       },
       {
         id: 'contractName',
         Header: t('contractAssistance.adminActions.table.contractName'),
-        accessor: 'contractName'
+        accessor: 'contractName',
+        disableSortBy: isAdmin
       },
       {
         id: 'helpType',
         Header: t('contractAssistance.adminActions.table.helpType'),
-        accessor: 'helpType'
+        accessor: 'helpType',
+        disableSortBy: isAdmin
       },
       {
         id: 'status',
         Header: t('contractAssistance.adminActions.table.status'),
-        accessor: 'status'
+        accessor: 'status',
+        disableSortBy: isAdmin
       }
     ],
-    [t]
+    [t, isAdmin]
   );
 
-  const { getTableProps, getTableBodyProps, rows, prepareRow } = useTable({
-    columns: columns as Column<object>[],
-    data: tickets
-  });
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns: columns as Column<object>[],
+        data: tickets,
+        sortTypes: {
+          alphanumeric: (rowOne, rowTwo, columnName) => {
+            return sortColumnValues(
+              rowOne.values[columnName],
+              rowTwo.values[columnName]
+            );
+          }
+        },
+        autoResetSortBy: false
+      },
+      useSortBy
+    );
 
   return (
     <Table
       bordered={false}
       {...getTableProps()}
-      className="margin-top-0 margin-bottom-0"
+      className={classNames(
+        'contract-assistance-tickets-table margin-top-0 margin-bottom-0',
+        {
+          'contract-assistance-tickets-table--admin': isAdmin
+        }
+      )}
       fullWidth
     >
       <caption className="usa-sr-only">
-        {t('contractAssistance.adminActions.table.caption')}
+        {t(`${translationPrefix}.table.caption`)}
       </caption>
       <thead className="margin-bottom-2">
-        <tr className=" border-bottom-2px">
-          {columns.map(column => (
-            <th
-              scope="col"
-              key={column.id}
-              className="padding-left-0 padding-bottom-1 padding-top-1 text-black bg-primary-lighter text-bold"
-            >
-              {column.Header as string}
-            </th>
-          ))}
-        </tr>
+        {headerGroups.map(headerGroup => (
+          <tr
+            {...headerGroup.getHeaderGroupProps()}
+            className="border-bottom-2px"
+            key={{ ...headerGroup.getHeaderGroupProps() }.key}
+          >
+            {headerGroup.headers.map(column => (
+              <th
+                {...column.getHeaderProps()}
+                aria-sort={
+                  column.canSort ? getColumnSortStatus(column) : undefined
+                }
+                scope="col"
+                key={column.id}
+                className={classNames(
+                  'padding-left-0 padding-bottom-1 padding-top-1',
+                  {
+                    'text-black bg-primary-lighter text-bold': isAdmin,
+                    'table-header': !isAdmin
+                  }
+                )}
+              >
+                {column.canSort ? (
+                  <button
+                    className="usa-button usa-button--unstyled position-relative"
+                    type="button"
+                    {...column.getSortByToggleProps()}
+                  >
+                    {column.render('Header') as React.ReactNode}
+                    {getHeaderSortIcon(column, false)}
+                  </button>
+                ) : (
+                  column.render('Header')
+                )}
+              </th>
+            ))}
+          </tr>
+        ))}
       </thead>
       <tbody {...getTableBodyProps()}>
         {rows.length === 0 ? (
           <tr>
             <td
-              className="border-0 padding-0 bg-primary-lighter"
+              className={classNames('border-0 padding-0', {
+                'bg-primary-lighter': isAdmin
+              })}
               colSpan={columns.length}
             >
               <Alert
                 type="info"
-                heading={t('contractAssistance.adminActions.emptyState.title')}
+                heading={t(`${translationPrefix}.emptyState.title`)}
                 className="margin-top-2"
               >
-                {t('contractAssistance.adminActions.emptyState.copy')}
+                {t(`${translationPrefix}.emptyState.copy`)}
               </Alert>
             </td>
           </tr>

@@ -2664,7 +2664,15 @@ const helpAndKnowledge = {
         closed: 'Closed tickets ({{count}})'
       }
     },
-    userSubmittedTickets: {}
+    userSubmittedTickets: {
+      emptyState: {
+        title: 'You have not submitted any help tickets.',
+        copy: 'Use the button above to create a new ticket and request contract assistance from CTAT.'
+      },
+      table: {
+        caption: 'Your contract assistance help tickets'
+      }
+    }
   },
   milestoneLibrary: {
     hkcHeading: 'Milestone library',
