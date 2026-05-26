@@ -1,18 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryBoxHeading } from '@trussworks/react-uswds';
-import { Waiver } from 'gql/generated/graphql';
 
-// TODO: replace below with real waiver data once ready
-const MOCK_WAIVER_NAMES = [
-  'super long survey name Waiver 1',
-  'short Waiver 2',
-  'Waiver 3'
-];
+import { SuggestedWaivers } from '../../MedicarePaymentWaivers';
 
-const SelectedWaiversSection = ({ allWaivers }: { allWaivers: Waiver[] }) => {
+const SelectedWaiversSection = ({
+  allWaivers,
+  selectedWaivers
+}: {
+  allWaivers: SuggestedWaivers;
+  selectedWaivers: SuggestedWaivers;
+}) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
+  );
+
+  const generateAllWaiverList = allWaivers.map(
+    waiver => waiver.commonWaiver.name
   );
 
   return (
@@ -23,15 +27,14 @@ const SelectedWaiversSection = ({ allWaivers }: { allWaivers: Waiver[] }) => {
 
       <p className="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest">
         {waiverAssessmentSurveyMiscT('selectedWaivers.description', {
-          selectedWaiversCount: allWaivers.length,
-          // TODO: the logic here will change once data is ready
-          totalWaiversCount: allWaivers.length
+          totalWaiversCount: allWaivers.length,
+          selectedWaiversCount: selectedWaivers.length
         })}
       </p>
 
       <div className="margin-bottom-2">
         <ul className="grid-row grid-gap-2 margin-y-0 padding-x-3">
-          {MOCK_WAIVER_NAMES.map(waiverName => (
+          {generateAllWaiverList.map(waiverName => (
             <li
               key={waiverName}
               className="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"

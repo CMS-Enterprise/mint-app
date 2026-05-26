@@ -24,12 +24,14 @@ import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 import SelectedWaiversSection from '../_components/SelectedWaiversSection';
 import WaiverSurveyQuestion from '../_components/WaiverSurveyQuestion';
 
-type MedicarePaymentWaiversData =
+export type MedicarePaymentWaiversData =
   GetMedicarePaymentWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
+
+export type SuggestedWaivers = MedicarePaymentWaiversData['suggestedWaivers'];
 
 export type MedicarePaymentWaiversForm = Omit<
   MedicarePaymentWaiversData,
-  '__typename' | 'id'
+  '__typename' | 'id' | 'suggestedWaivers'
 >;
 
 const defaultFormValues: MedicarePaymentWaiversForm = {
@@ -76,13 +78,16 @@ const MedicarePaymentWaivers = () => {
   });
 
   const mappedFormData = mapDefaultFormValues<
-    MedicarePaymentWaiversForm & { id?: string }
+    MedicarePaymentWaiversForm & { id?: string } & {
+      suggestedWaivers?: SuggestedWaivers;
+    }
   >(data?.modelPlan?.questionnaires.waiverAssessmentSurvey, {
     ...defaultFormValues,
-    id: ''
+    id: '',
+    suggestedWaivers: []
   });
 
-  const { id: waiverID, ...formData } = mappedFormData;
+  const { id: waiverID, suggestedWaivers, ...formData } = mappedFormData;
 
   const methods = useForm<MedicarePaymentWaiversForm>({
     values: formData,
@@ -185,7 +190,10 @@ const MedicarePaymentWaivers = () => {
                 ))}
               </div>
 
-              <SelectedWaiversSection allWaivers={[]} />
+              <SelectedWaiversSection
+                allWaivers={suggestedWaivers || []}
+                selectedWaivers={suggestedWaivers || []} // TODO replace with actual selected waivers logic
+              />
 
               <FormFooter
                 id="waiver-assessment-survey-medicare-payment-waivers-form"

@@ -17,6 +17,12 @@ export default gql(/* GraphQL */ `
           offersRiskSharingArrangements
           offersRiskSharingArrangementsExample
           offersRiskSharingArrangementsWhyNot
+          suggestedWaivers {
+            id
+            commonWaiver {
+              name
+            }
+          }
         }
       }
     }

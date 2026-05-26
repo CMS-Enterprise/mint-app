@@ -368,23 +368,7 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
             >
               <ul
                 class="grid-row grid-gap-2 margin-y-0 padding-x-3"
-              >
-                <li
-                  class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
-                >
-                  super long survey name Waiver 1
-                </li>
-                <li
-                  class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
-                >
-                  short Waiver 2
-                </li>
-                <li
-                  class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
-                >
-                  Waiver 3
-                </li>
-              </ul>
+              />
             </div>
             <p
               class="line-height-sans-5 margin-y-0 text-base-darkest"

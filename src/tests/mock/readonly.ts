@@ -902,7 +902,8 @@ const medicalPaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
         bundlesPaymentsWhyNot: NotSelectedReason.FEEDBACK_AGAINST_USE,
         offersRiskSharingArrangements: null,
         offersRiskSharingArrangementsExample: '',
-        offersRiskSharingArrangementsWhyNot: null
+        offersRiskSharingArrangementsWhyNot: null,
+        suggestedWaivers: []
       }
     }
   }
