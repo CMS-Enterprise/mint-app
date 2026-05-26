@@ -89,7 +89,7 @@ const notifications = {
       },
       WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE: {
         text: ' marked the waiver assessment survey complete for {{-modelName}}.',
-        cta: 'View waiver assessment survey'
+        cta: 'View questionnaire'
       },
       MTO_READY_FOR_REVIEW: {
         text: ' marked the model-to-operations matrix (MTO) for {{-modelName}} as ready for review.',
