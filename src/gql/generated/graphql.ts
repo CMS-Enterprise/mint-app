@@ -460,12 +460,38 @@ export type CtatRequestInput = {
   typeOfHelpNeededOther?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** CTATRequestLite is a lite version of the full CTAT request that contains the required data for table population in the UI */
+export type CtatRequestLite = {
+  __typename: 'CTATRequestLite';
+  contractName?: Maybe<Scalars['String']['output']>;
+  humanReadableID: Scalars['String']['output'];
+  humanReadableIDNumber: Scalars['Int']['output'];
+  id: Scalars['UUID']['output'];
+  status?: Maybe<CtatStatus>;
+  submissionDate: Scalars['Time']['output'];
+  typeOfHelpNeeded: Array<CtatHelpNeededType>;
+  typeOfHelpNeededOther?: Maybe<Scalars['String']['output']>;
+};
+
 /** The urgency selected for a CTAT request. */
 export enum CtatRequestUrgency {
   HIGH = 'HIGH',
   LOW = 'LOW',
   MEDIUM = 'MEDIUM'
 }
+
+/** CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin */
+export type CtatRequestsTableDataAdmin = {
+  __typename: 'CTATRequestsTableDataAdmin';
+  count: Scalars['Int']['output'];
+  ctatRequests: Array<CtatRequestLite>;
+};
+
+/** CTATRequestsTableDataRequester contains the requests for the table information for a requester */
+export type CtatRequestsTableDataRequester = {
+  __typename: 'CTATRequestsTableDataRequester';
+  ctatRequests: Array<CtatRequestLite>;
+};
 
 /** The status assigned to a CTAT request. */
 export enum CtatStatus {
@@ -4963,7 +4989,8 @@ export type Query = {
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
   ctatRequest: CtatRequest;
-  ctatRequests: Array<CtatRequest>;
+  ctatRequestsAdmin: CtatRequestsTableDataAdmin;
+  ctatRequestsRequester: CtatRequestsTableDataRequester;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;

@@ -193,6 +193,35 @@ type CTATRequest {
 }
 
 """
+CTATRequestLite is a lite version of the full CTAT request that contains the required data for table population in the UI
+"""
+type CTATRequestLite {
+  id: UUID!
+  humanReadableID: String!
+  humanReadableIDNumber: Int!
+  submissionDate: Time!
+  contractName: String
+  typeOfHelpNeeded: [CTATHelpNeededType!]!
+  typeOfHelpNeededOther: String
+  status: CTATStatus
+}
+
+"""
+CTATRequestsTableDataRequester contains the requests for the table information for a requester
+"""
+type CTATRequestsTableDataRequester {
+  ctatRequests: [CTATRequestLite!]!
+}
+
+"""
+CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin
+"""
+type CTATRequestsTableDataAdmin {
+  ctatRequests: [CTATRequestLite!]!
+  count: Int!
+}
+
+"""
 Input for uploading a supporting document for a CTAT request.
 """
 input CTATRequestDocumentInput {
@@ -235,7 +264,8 @@ input CTATAdminUpdateInput @goModel(model: "map[string]interface{}") {
 
 extend type Query {
   ctatRequest(id: UUID!): CTATRequest!
-  ctatRequests: [CTATRequest!]!
+  ctatRequestsRequester: CTATRequestsTableDataRequester!
+  ctatRequestsAdmin: CTATRequestsTableDataAdmin!
 }
 
 extend type Mutation {

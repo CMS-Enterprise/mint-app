@@ -51,6 +51,29 @@ type CTATRequestInput struct {
 	SupportingDocuments       []*CTATRequestDocumentInput      `json:"supportingDocuments,omitempty"`
 }
 
+// CTATRequestLite is a lite version of the full CTAT request that contains the required data for table population in the UI
+type CTATRequestLite struct {
+	ID                    uuid.UUID                   `json:"id"`
+	HumanReadableID       string                      `json:"humanReadableID"`
+	HumanReadableIDNumber int                         `json:"humanReadableIDNumber"`
+	SubmissionDate        time.Time                   `json:"submissionDate"`
+	ContractName          *string                     `json:"contractName,omitempty"`
+	TypeOfHelpNeeded      []models.CTATHelpNeededType `json:"typeOfHelpNeeded"`
+	TypeOfHelpNeededOther *string                     `json:"typeOfHelpNeededOther,omitempty"`
+	Status                *models.CTATStatus          `json:"status,omitempty"`
+}
+
+// CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin
+type CTATRequestsTableDataAdmin struct {
+	CtatRequests []*CTATRequestLite `json:"ctatRequests"`
+	Count        int                `json:"count"`
+}
+
+// CTATRequestsTableDataRequester contains the requests for the table information for a requester
+type CTATRequestsTableDataRequester struct {
+	CtatRequests []*CTATRequestLite `json:"ctatRequests"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`

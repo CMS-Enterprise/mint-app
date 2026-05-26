@@ -35,9 +35,14 @@ func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.
 	panic(fmt.Errorf("not implemented: CtatRequest - ctatRequest"))
 }
 
-// CtatRequests is the resolver for the ctatRequests field.
-func (r *queryResolver) CtatRequests(ctx context.Context) ([]*models.CTATRequest, error) {
-	panic(fmt.Errorf("not implemented: CtatRequests - ctatRequests"))
+// CtatRequestsRequester is the resolver for the ctatRequestsRequester field.
+func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATRequestsTableDataRequester, error) {
+	panic(fmt.Errorf("not implemented: CtatRequestsRequester - ctatRequestsRequester"))
+}
+
+// CtatRequestsAdmin is the resolver for the ctatRequestsAdmin field.
+func (r *queryResolver) CtatRequestsAdmin(ctx context.Context) (*model.CTATRequestsTableDataAdmin, error) {
+	panic(fmt.Errorf("not implemented: CtatRequestsAdmin - ctatRequestsAdmin"))
 }
 
 // CTATRequest returns generated.CTATRequestResolver implementation.
