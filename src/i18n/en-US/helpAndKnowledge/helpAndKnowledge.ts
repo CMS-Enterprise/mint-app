@@ -2665,6 +2665,10 @@ const helpAndKnowledge = {
       }
     },
     userSubmittedTickets: {
+      title: 'My submitted help tickets',
+      description:
+        'Use the button below to start a new contract assistance ticket.',
+      button: 'Create a new ticket',
       emptyState: {
         title: 'You have not submitted any help tickets.',
         copy: 'Use the button above to create a new ticket and request contract assistance from CTAT.'
