@@ -1,5 +1,4 @@
 SELECT
-    ctat_request.requester,
     ctat_request.id,
     ctat_request.human_readable_id_number,
     ctat_request.created_dts AS submission_date,
@@ -8,5 +7,5 @@ SELECT
     ctat_request.type_of_help_needed_other,
     ctat_request.status
 FROM ctat_request
-WHERE ctat_request.requester = ANY(:requester_ids)
+WHERE ctat_request.requester = :requester_id
 ORDER BY ctat_request.created_dts DESC, ctat_request.human_readable_id_number DESC;
