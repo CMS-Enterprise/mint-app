@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Column, useTable } from 'react-table';
-import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { Table } from '@trussworks/react-uswds';
 
 import { Alert } from 'components/Alert';
 
@@ -61,7 +61,7 @@ const ContractAssistanceTicketsTable = ({
   });
 
   return (
-    <UswdsTable
+    <Table
       bordered={false}
       {...getTableProps()}
       className="margin-top-0 margin-bottom-0"
@@ -120,7 +120,7 @@ const ContractAssistanceTicketsTable = ({
           })
         )}
       </tbody>
-    </UswdsTable>
+    </Table>
   );
 };
 
