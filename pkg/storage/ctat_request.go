@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"github.com/lib/pq"
+
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -9,9 +11,9 @@ import (
 )
 
 // CTATRequestLiteGetByRequesterIDLOADER returns the lite CTAT requests for the supplied requester IDs.
-func CTATRequestLiteGetByRequesterIDLOADER(np sqlutils.NamedPreparer, requesterID uuid.UUID) ([]*models.CTATRequestLite, error) {
+func CTATRequestLiteGetByRequesterIDLOADER(np sqlutils.NamedPreparer, requesterIDs []uuid.UUID) ([]*models.CTATRequestLite, error) {
 	args := map[string]any{
-		"requester_id": requesterID,
+		"requester_ids": pq.Array(requesterIDs),
 	}
 
 	requestLiteCollection, err := sqlutils.SelectProcedure[models.CTATRequestLite](np, sqlqueries.CTATRequest.GetByRequesterID, args)

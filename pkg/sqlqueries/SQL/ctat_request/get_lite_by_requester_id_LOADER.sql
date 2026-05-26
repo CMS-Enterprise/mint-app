@@ -7,5 +7,5 @@ SELECT
     ctat_request.type_of_help_needed_other,
     ctat_request.status
 FROM ctat_request
-WHERE ctat_request.requester = :requester_id
+WHERE ctat_request.requester = ANY(:requester_ids)
 ORDER BY ctat_request.created_dts DESC, ctat_request.human_readable_id_number DESC;

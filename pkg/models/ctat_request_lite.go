@@ -9,13 +9,13 @@ import (
 
 // CTATRequestLite is a lite version of the full CTAT request that contains the required data for table population in the UI
 type CTATRequestLite struct {
-	ID                    uuid.UUID            `json:"id"`
-	HumanReadableIDNumber int                  `json:"humanReadableIDNumber"`
-	SubmissionDate        time.Time            `json:"submissionDate"`
-	ContractName          *string              `json:"contractName,omitempty"`
-	TypeOfHelpNeeded      []CTATHelpNeededType `json:"typeOfHelpNeeded"`
-	TypeOfHelpNeededOther *string              `json:"typeOfHelpNeededOther,omitempty"`
-	Status                *CTATStatus          `json:"status,omitempty"`
+	ID                    uuid.UUID            `json:"id" db:"id"`
+	HumanReadableIDNumber int                  `json:"humanReadableIDNumber" db:"human_readable_id_number"`
+	SubmissionDate        time.Time            `json:"submissionDate" db:"submission_date"`
+	ContractName          *string              `json:"contractName,omitempty" db:"contract_name"`
+	TypeOfHelpNeeded      []CTATHelpNeededType `json:"typeOfHelpNeeded" db:"type_of_help_needed"`
+	TypeOfHelpNeededOther *string              `json:"typeOfHelpNeededOther,omitempty" db:"type_of_help_needed_other"`
+	Status                *CTATStatus          `json:"status,omitempty" db:"status"`
 }
 
 // HumanReadableID composes the display ID from the fixed CTAT prefix and stored numeric suffix.
