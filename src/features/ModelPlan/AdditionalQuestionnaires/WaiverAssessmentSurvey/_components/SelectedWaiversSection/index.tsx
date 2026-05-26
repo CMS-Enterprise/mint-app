@@ -29,12 +29,17 @@ const SelectedWaiversSection = ({ allWaivers }: { allWaivers: Waiver[] }) => {
         })}
       </p>
 
-      <div className="display-flex flex-row flex-wrap margin-bottom-2">
-        {MOCK_WAIVER_NAMES.map(waiverName => (
-          <ul key={waiverName} className="grid-col-6 margin-y-0 padding-x-3">
-            <li className="margin-y-0 padding-y-05">{waiverName}</li>
-          </ul>
-        ))}
+      <div className="margin-bottom-2">
+        <ul className="grid-row grid-gap-2 margin-y-0 padding-x-3">
+          {MOCK_WAIVER_NAMES.map(waiverName => (
+            <li
+              key={waiverName}
+              className="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
+            >
+              {waiverName}
+            </li>
+          ))}
+        </ul>
       </div>
 
       <p className="line-height-sans-5 margin-y-0 text-base-darkest">

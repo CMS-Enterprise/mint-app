@@ -888,7 +888,7 @@ type UpcomingTimelineDate struct {
 // Represents the waiver assessment questionnaire translation data.
 type WaiverAssessmentSurveyTranslation struct {
 	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
-	// IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
+	// IsComplete is a convenience field calculated from completedBy fields. It isn't in the database.
 	IsComplete                                             models.TranslationFieldWithOptions            `json:"isComplete"`
 	ModifiesMedicareSavingsPrograms                        models.TranslationFieldWithOptionsAndChildren `json:"modifiesMedicareSavingsPrograms" db:"modifies_medicare_savings_programs"`
 	ModifiesMedicareSavingsProgramsExample                 models.TranslationFieldWithParent             `json:"modifiesMedicareSavingsProgramsExample" db:"modifies_medicare_savings_programs_example"`

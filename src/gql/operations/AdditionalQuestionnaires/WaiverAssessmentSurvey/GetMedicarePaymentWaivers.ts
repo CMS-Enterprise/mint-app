@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query getMedicarePaymentWaivers($id: UUID!) {
+  query GetMedicarePaymentWaivers($id: UUID!) {
     modelPlan(id: $id) {
       id
       questionnaires {

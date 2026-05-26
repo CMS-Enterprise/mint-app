@@ -5,7 +5,7 @@ type WaiverAssessmentSurveyTranslation {
   # General fields
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
   """
-  IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
+  IsComplete is a convenience field calculated from completedBy fields. It isn't in the database.
   """
   isComplete: TranslationFieldWithOptions!
 

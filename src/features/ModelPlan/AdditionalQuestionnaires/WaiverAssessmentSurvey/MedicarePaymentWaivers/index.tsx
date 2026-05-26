@@ -15,6 +15,7 @@ import FormFooter from 'components/FormFooter';
 import FormHeader from 'components/FormHeader';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
+import Spinner from 'components/Spinner';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
@@ -74,16 +75,14 @@ const MedicarePaymentWaivers = () => {
     skip: !modelID
   });
 
-  const {
-    __typename,
-    id: waiverID = '',
-    ...dataFormFields
-  } = data?.modelPlan?.questionnaires.waiverAssessmentSurvey || {};
+  const mappedFormData = mapDefaultFormValues<
+    MedicarePaymentWaiversForm & { id?: string }
+  >(data?.modelPlan?.questionnaires.waiverAssessmentSurvey, {
+    ...defaultFormValues,
+    id: ''
+  });
 
-  const formData = mapDefaultFormValues<MedicarePaymentWaiversForm>(
-    dataFormFields,
-    defaultFormValues
-  );
+  const { id: waiverID, ...formData } = mappedFormData;
 
   const methods = useForm<MedicarePaymentWaiversForm>({
     values: formData,
@@ -96,7 +95,7 @@ const MedicarePaymentWaivers = () => {
     useHandleMutation<MedicarePaymentWaiversForm>(
       TypedUpdateWaiverAssessmentSurveyDocument,
       {
-        id: waiverID,
+        id: waiverID || '',
         rhfRef: {
           initialValues: formData,
           values: watch()
@@ -104,10 +103,11 @@ const MedicarePaymentWaivers = () => {
       }
     );
 
-  if (
-    (!loading && error) ||
-    (!loading && !data?.modelPlan?.questionnaires.waiverAssessmentSurvey)
-  ) {
+  if (loading || !data) {
+    return <Spinner size="large" />;
+  }
+
+  if (error || !data.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id) {
     return <NotFoundPartial errorMessage={error?.message} />;
   }
 
@@ -151,9 +151,9 @@ const MedicarePaymentWaivers = () => {
                     className="margin-top-0 margin-bottom-2"
                   >
                     <Label
-                      htmlFor={convertCamelCaseToKebabCase(
+                      htmlFor={`${convertCamelCaseToKebabCase(
                         questionConfig.gqlField
-                      )}
+                      )}-true`}
                       className="text-normal text-bold"
                     >
                       {questionConfig.label}
