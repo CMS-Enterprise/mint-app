@@ -374,6 +374,8 @@ func (s *Seeder) SeedData() {
 		},
 	)
 
+	s.seedCTATRequests(now, planWithBasics, planWithDocuments, sampleModelPlan, planWithCrTDLs, planApproachingClearance)
+
 	s.seedModelPlanWithMTOData("Model Plan for MTO testing", "MINT", &mtoModelPlanUUID)
 
 	s.seedModelPlanWithMTOStandardCategories("Model Plan for with MTO categories", "MINT", &mtoModelPlanWithCategoriesUUID)

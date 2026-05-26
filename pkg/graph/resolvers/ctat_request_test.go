@@ -63,6 +63,40 @@ func (suite *ResolverSuite) TestCTATRequestLiteByRequesterIDLoader() {
 	)
 }
 
+func (suite *ResolverSuite) TestCtatRequestsAdmin() {
+	first := suite.insertCommittedCTATRequestLiteRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
+		"Admin contract 1",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusNew,
+	)
+	second := suite.insertCommittedCTATRequestLiteRow(
+		suite.getTestPrincipal(suite.testConfigs.Store, "CTATAdminView_"+uuid.NewString()).Account().ID,
+		time.Date(2026, 2, 10, 11, 0, 0, 0, time.UTC),
+		"Admin contract 2",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
+		models.CTATStatusAssigned,
+	)
+
+	resolver := &queryResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	resp, err := resolver.CtatRequestsAdmin(suite.testConfigs.Context)
+	suite.NoError(err)
+	suite.NotNil(resp)
+	suite.Len(resp.CtatRequests, 2)
+	suite.Equal(2, resp.Count)
+
+	returnedIDs := lo.Map(resp.CtatRequests, func(item *models.CTATRequestLite, _ int) uuid.UUID {
+		return item.ID
+	})
+	suite.ElementsMatch([]uuid.UUID{first.ID, second.ID}, returnedIDs)
+}
+
 func (suite *ResolverSuite) insertCommittedCTATRequestLiteRow(
 	requesterID uuid.UUID,
 	createdDts time.Time,

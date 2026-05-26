@@ -52,7 +52,15 @@ func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATR
 
 // CtatRequestsAdmin is the resolver for the ctatRequestsAdmin field.
 func (r *queryResolver) CtatRequestsAdmin(ctx context.Context) (*model.CTATRequestsTableDataAdmin, error) {
-	panic(fmt.Errorf("not implemented: CtatRequestsAdmin - ctatRequestsAdmin"))
+	ctatRequests, err := CTATRequestLiteCollectionGetForAdmin(ctx, r.store)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.CTATRequestsTableDataAdmin{
+		CtatRequests: ctatRequests,
+		Count:        len(ctatRequests),
+	}, nil
 }
 
 // CTATRequest returns generated.CTATRequestResolver implementation.
