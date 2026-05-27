@@ -52,6 +52,11 @@ func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATR
 
 // CtatRequestsAdmin is the resolver for the ctatRequestsAdmin field.
 func (r *queryResolver) CtatRequestsAdmin(ctx context.Context) (*model.CTATRequestsTableDataAdmin, error) {
+	principal := appcontext.Principal(ctx)
+	if !principal.AllowASSESSMENT() {
+		return nil, fmt.Errorf("user does not have permission to view admin CTAT requests")
+	}
+
 	ctatRequests, err := CTATRequestLiteCollectionGetForAdmin(ctx, r.store)
 	if err != nil {
 		return nil, err

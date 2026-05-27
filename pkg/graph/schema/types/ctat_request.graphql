@@ -265,7 +265,7 @@ input CTATAdminUpdateInput @goModel(model: "map[string]interface{}") {
 extend type Query {
   ctatRequest(id: UUID!): CTATRequest!
   ctatRequestsRequester: CTATRequestsTableDataRequester!
-  ctatRequestsAdmin: CTATRequestsTableDataAdmin!
+  ctatRequestsAdmin: CTATRequestsTableDataAdmin! @hasRole(role: MINT_ASSESSMENT)
 }
 
 extend type Mutation {
