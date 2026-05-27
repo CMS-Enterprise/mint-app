@@ -169,24 +169,26 @@ const AdditionalQuestionnaires = () => {
                           </div>
                         )}
 
-                      <QuestionnaireListButton
-                        ariaLabel={additionalQuestionnairesT(
-                          `questionnairesList.${key}.heading`
-                        )}
-                        testId={`${convertCamelCaseToKebabCase(key)}-button`}
-                        path={additionalQuestionnairesT(
-                          `questionnairesList.${key}.path`
-                        )}
-                        disabled={
-                          lockedStatus !== undefined &&
-                          lockedStatus.lockedByUserAccount.username !== euaId
-                        }
-                        status={getQuestionnaireStatus(key)}
-                      />
+                      <div className="display-flex flex-align-center">
+                        <QuestionnaireListButton
+                          ariaLabel={additionalQuestionnairesT(
+                            `questionnairesList.${key}.heading`
+                          )}
+                          testId={`${convertCamelCaseToKebabCase(key)}-button`}
+                          path={additionalQuestionnairesT(
+                            `questionnairesList.${key}.path`
+                          )}
+                          disabled={
+                            lockedStatus !== undefined &&
+                            lockedStatus.lockedByUserAccount.username !== euaId
+                          }
+                          status={getQuestionnaireStatus(key)}
+                        />
 
-                      {questionnaireSectionMap[key] && (
-                        <SectionLock section={questionnaireSectionMap[key]} />
-                      )}
+                        {questionnaireSectionMap[key] && (
+                          <SectionLock section={questionnaireSectionMap[key]} />
+                        )}
+                      </div>
                     </QuestionnaireListItem>
                     {index < QUESTIONNAIRE_DISPLAY_ORDER.length - 1 && (
                       <Divider className="margin-bottom-4" />
