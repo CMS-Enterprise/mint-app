@@ -65,8 +65,24 @@ func (s *Seeder) seedCTATRequests(
 	adminCTAT := s.getTestPrincipalByUsername("ADMI")
 
 	bsgDivision := models.CTATCMMIDivisionOptionBSGDCCS
+	bsgTechDivision := models.CTATCMMIDivisionOptionBSGDTS
+	ldgDivision := models.CTATCMMIDivisionOptionLDGDMLS
+	ldgAnalysisDivision := models.CTATCMMIDivisionOptionLDGDAN
+	pcmgDivision := models.CTATCMMIDivisionOptionPCMGDAPC
+	ppgDataDivision := models.CTATCMMIDivisionOptionPPGDDA
+	rregDivision := models.CTATCMMIDivisionOptionRREGDPAR
+	scmgDivision := models.CTATCMMIDivisionOptionSCMGDFR
+	scmgInfraDivision := models.CTATCMMIDivisionOptionSCMGDSI
+	sphgDivision := models.CTATCMMIDivisionOptionSPHGDHCD
 	technicalAssistance := models.CTATContractActivityTypeTechnicalAssistance
+	implementationActivity := models.CTATContractActivityTypeImplementation
+	evaluationActivity := models.CTATContractActivityTypeEvaluation
+	learningActivity := models.CTATContractActivityTypeLearning
 	timeAndMaterials := models.CTATContractTypeTimeAndMaterials
+	firmFixedPrice := models.CTATContractTypeFirmFixedPrice
+	costReimbursement := models.CTATContractTypeCostReimbursement
+	incentiveContract := models.CTATContractTypeIncentiveContract
+	costPlusFixedFee := models.CTATContractTypeCostPlusFixedFee
 
 	s.createCTATRequest(ctatRequestSeedInput{
 		Requester:              requesterBTAL,
@@ -84,6 +100,176 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 14),
 		CreatedDts:             now.AddDate(0, 0, -5),
 	})
+
+	btALAssignedNotes := "Assigned to CTAT admin for follow-up on acquisition package sequencing."
+	s.createCTATRequest(ctatRequestSeedInput{
+		Requester:              requesterBTAL,
+		AssignedAdmin:          adminCTAT,
+		Status:                 models.CTATStatusAssigned,
+		Notes:                  &btALAssignedNotes,
+		CMMIGroup:              models.CTATCMMIGroupOptionLDG,
+		CMMIDivision:           &ldgDivision,
+		RelatedModelPlanIDs:    []uuid.UUID{planWithDocuments.ID},
+		ContractActivityType:   &implementationActivity,
+		ContractName:           stringPtr("Learning Systems Implementation Support"),
+		ContractNumber:         stringPtr("75FCMC24F0003"),
+		ContractType:           &firmFixedPrice,
+		TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp, models.CTATHelpNeededTypeSowSooPwsDevelopment},
+		DescribeHelpNeeded:     "Need help reviewing the draft RFP package and refining the performance work statement before release.",
+		RequestUrgency:         models.CTATRequestUrgencyMedium,
+		DateAssistanceNeededBy: now.AddDate(0, 0, 21),
+		CreatedDts:             now.AddDate(0, 0, -4),
+	})
+
+	btALInProgressNotes := "CTAT is actively coordinating follow-up guidance with the requester."
+	s.createCTATRequest(ctatRequestSeedInput{
+		Requester:              requesterBTAL,
+		AssignedAdmin:          adminCTAT,
+		Status:                 models.CTATStatusInProgress,
+		Notes:                  &btALInProgressNotes,
+		CMMIGroup:              models.CTATCMMIGroupOptionSCMG,
+		CMMIDivision:           &scmgDivision,
+		RelatedModelPlanIDs:    []uuid.UUID{planApproachingClearance.ID},
+		ContractActivityType:   &evaluationActivity,
+		ContractName:           stringPtr("Seamless Care Financial Risk Advisory"),
+		ContractNumber:         stringPtr("75FCMC24F0004"),
+		ContractType:           &costReimbursement,
+		TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeDataUseAgreementDua, models.CTATHelpNeededTypeInvoiceProcessingPlatformIpp},
+		DescribeHelpNeeded:     "Looking for hands-on support with post-award administration questions and a related data use agreement workflow.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh,
+		DateAssistanceNeededBy: now.AddDate(0, 0, 10),
+		CreatedDts:             now.AddDate(0, 0, -2),
+	})
+
+	btALMoreRequests := []ctatRequestSeedInput{
+		{
+			Requester:              requesterBTAL,
+			Status:                 models.CTATStatusNew,
+			CMMIGroup:              models.CTATCMMIGroupOptionPCMG,
+			CMMIDivision:           &pcmgDivision,
+			RelatedModelPlanIDs:    []uuid.UUID{sampleModelPlan.ID},
+			ContractActivityType:   &implementationActivity,
+			ContractName:           stringPtr("Primary Care Analytics Support"),
+			ContractNumber:         stringPtr("75FCMC24F0005"),
+			ContractType:           &firmFixedPrice,
+			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRfq, models.CTATHelpNeededTypeIndependentGovernmentCostEstimateIgcePreparation},
+			DescribeHelpNeeded:     "Need help preparing an RFQ package and independent government cost estimate for a primary care-focused effort.",
+			RequestUrgency:         models.CTATRequestUrgencyLow,
+			DateAssistanceNeededBy: now.AddDate(0, 0, 28),
+			CreatedDts:             now.AddDate(0, 0, -12),
+		},
+		{
+			Requester:              requesterBTAL,
+			AssignedAdmin:          adminCTAT,
+			Status:                 models.CTATStatusAssigned,
+			Notes:                  stringPtr("Queued for admin review on the next CTAT intake cycle."),
+			CMMIGroup:              models.CTATCMMIGroupOptionPPG,
+			CMMIDivision:           &ppgDataDivision,
+			RelatedModelPlanIDs:    []uuid.UUID{planWithBasics.ID},
+			ContractActivityType:   &evaluationActivity,
+			ContractName:           stringPtr("Data Analytics Advisory BPA"),
+			ContractNumber:         stringPtr("75FCMC24F0006"),
+			ContractType:           &timeAndMaterials,
+			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeContractChangeRequestCcrProcessing, models.CTATHelpNeededTypeGuidanceOnMarketResearch},
+			DescribeHelpNeeded:     "Looking for guidance on market research and a contract change request tied to an analytics workstream.",
+			RequestUrgency:         models.CTATRequestUrgencyMedium,
+			DateAssistanceNeededBy: now.AddDate(0, 0, 24),
+			CreatedDts:             now.AddDate(0, 0, -11),
+		},
+		{
+			Requester:              requesterBTAL,
+			AssignedAdmin:          adminCTAT,
+			Status:                 models.CTATStatusInProgress,
+			Notes:                  stringPtr("Working session scheduled with CTAT to review administration questions."),
+			CMMIGroup:              models.CTATCMMIGroupOptionRREG,
+			CMMIDivision:           &rregDivision,
+			RelatedModelPlanIDs:    []uuid.UUID{planWithCrTDLs.ID},
+			ContractActivityType:   &learningActivity,
+			ContractName:           stringPtr("Payment Accountability Research Support"),
+			ContractNumber:         stringPtr("75FCMC24F0007"),
+			ContractType:           &costReimbursement,
+			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeCorTranscriptReview, models.CTATHelpNeededTypeDocumentingAndSubmittingCpars},
+			DescribeHelpNeeded:     "Need help reviewing COR documentation and documenting contractor performance for a research support contract.",
+			RequestUrgency:         models.CTATRequestUrgencyMedium,
+			DateAssistanceNeededBy: now.AddDate(0, 0, 20),
+			CreatedDts:             now.AddDate(0, 0, -10),
+		},
+		{
+			Requester:              requesterBTAL,
+			AssignedAdmin:          adminCTAT,
+			Status:                 models.CTATStatusClosed,
+			Notes:                  stringPtr("Closed after CTAT delivered closeout guidance."),
+			Resolution:             stringPtr("Provided written post-award guidance and resolved the request."),
+			CMMIGroup:              models.CTATCMMIGroupOptionSPHG,
+			CMMIDivision:           &sphgDivision,
+			RelatedModelPlanIDs:    []uuid.UUID{planApproachingClearance.ID},
+			ContractActivityType:   &technicalAssistance,
+			ContractName:           stringPtr("Health Care Delivery Advisory"),
+			ContractNumber:         stringPtr("75FCMC24F0008"),
+			ContractType:           &costPlusFixedFee,
+			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypePostAwardActionsPaaModification, models.CTATHelpNeededTypeMaintainingTheElectronicCorEcorFile},
+			DescribeHelpNeeded:     "Needed follow-up support on post-award actions and electronic COR documentation maintenance.",
+			RequestUrgency:         models.CTATRequestUrgencyLow,
+			DateAssistanceNeededBy: now.AddDate(0, 0, 18),
+			CreatedDts:             now.AddDate(0, 0, -9),
+		},
+		{
+			Requester:              requesterBTAL,
+			Status:                 models.CTATStatusNew,
+			CMMIGroup:              models.CTATCMMIGroupOptionSCMG,
+			CMMIDivision:           &scmgInfraDivision,
+			RelatedModelPlanIDs:    []uuid.UUID{planWithDocuments.ID},
+			ContractActivityType:   &implementationActivity,
+			ContractName:           stringPtr("Seamless Infrastructure Support"),
+			ContractNumber:         stringPtr("75FCMC24F0009"),
+			ContractType:           &incentiveContract,
+			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeCalmSystemRequisitionSupport, models.CTATHelpNeededTypeIdentityAndCredentialingToolIct},
+			DescribeHelpNeeded:     "Need intake support for a requisition and identity/credentialing setup guidance for a new support effort.",
+			RequestUrgency:         models.CTATRequestUrgencyHigh,
+			DateAssistanceNeededBy: now.AddDate(0, 0, 16),
+			CreatedDts:             now.AddDate(0, 0, -8),
+		},
+		{
+			Requester:              requesterBTAL,
+			AssignedAdmin:          adminCTAT,
+			Status:                 models.CTATStatusAssigned,
+			Notes:                  stringPtr("Pending requester confirmation on technical evaluation panel membership."),
+			CMMIGroup:              models.CTATCMMIGroupOptionBSG,
+			CMMIDivision:           &bsgTechDivision,
+			RelatedModelPlanIDs:    []uuid.UUID{planWithBasics.ID, planWithDocuments.ID},
+			ContractActivityType:   &evaluationActivity,
+			ContractName:           stringPtr("Technology Solutions Advisory"),
+			ContractNumber:         stringPtr("75FCMC24F0010"),
+			ContractType:           &firmFixedPrice,
+			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeGuidanceOnTepMembershipScoringReporting, models.CTATHelpNeededTypeGuidanceOnDeterminationsAndFindingsDf},
+			DescribeHelpNeeded:     "Requested CTAT guidance on technical evaluation panel setup and required determinations and findings documentation.",
+			RequestUrgency:         models.CTATRequestUrgencyMedium,
+			DateAssistanceNeededBy: now.AddDate(0, 0, 12),
+			CreatedDts:             now.AddDate(0, 0, -7),
+		},
+		{
+			Requester:              requesterBTAL,
+			AssignedAdmin:          adminCTAT,
+			Status:                 models.CTATStatusInProgress,
+			Notes:                  stringPtr("CTAT is refining draft language with the requester before package submission."),
+			CMMIGroup:              models.CTATCMMIGroupOptionLDG,
+			CMMIDivision:           &ldgAnalysisDivision,
+			RelatedModelPlanIDs:    []uuid.UUID{sampleModelPlan.ID, planApproachingClearance.ID},
+			ContractActivityType:   &learningActivity,
+			ContractName:           stringPtr("Analysis and Networks Advisory"),
+			ContractNumber:         stringPtr("75FCMC24F0011"),
+			ContractType:           &timeAndMaterials,
+			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForContractMemoRfc, models.CTATHelpNeededTypeDefiningAndDocumentingContractRequirements},
+			DescribeHelpNeeded:     "Need support refining contract requirements and drafting a request for contract memo for a learning support engagement.",
+			RequestUrgency:         models.CTATRequestUrgencyHigh,
+			DateAssistanceNeededBy: now.AddDate(0, 0, 9),
+			CreatedDts:             now.AddDate(0, 0, -6),
+		},
+	}
+
+	for _, request := range btALMoreRequests {
+		s.createCTATRequest(request)
+	}
 
 	ppgDivisionOther := "Division of Innovation Partnerships (PPG/DIP)"
 	ppgGroup := models.CTATCMMIGroupOptionPPG
@@ -129,8 +315,6 @@ func (s *Seeder) seedCTATRequests(
 	crossCmmiGroupOther := "Cross-CMMI Strategic Operations"
 	closedResolution := "Provided consultation, shared follow-up guidance, and closed the request after confirming the team had what it needed."
 	closedNotes := "Resolved during weekly CTAT office hours."
-	learningActivity := models.CTATContractActivityTypeLearning
-	costPlusFixedFee := models.CTATContractTypeCostPlusFixedFee
 
 	s.createCTATRequest(ctatRequestSeedInput{
 		Requester:              requesterBTMN,
