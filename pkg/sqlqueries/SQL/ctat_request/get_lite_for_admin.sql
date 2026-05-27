@@ -1,5 +1,6 @@
 SELECT
     ctat_request.id,
+    ctat_request.requester,
     ctat_request.human_readable_id_number,
     ctat_request.created_dts AS submission_date,
     ctat_request.contract_name,
