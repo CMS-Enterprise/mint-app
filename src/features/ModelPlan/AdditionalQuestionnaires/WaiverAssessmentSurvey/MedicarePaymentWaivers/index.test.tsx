@@ -3,7 +3,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { medicalPaymentWaiversMocks, modelID } from 'tests/mock/readonly';
+import { medicalPaymentWaiversMocks, modelID } from 'tests/mock/general';
 
 import MedicarePaymentWaivers from './index';
 

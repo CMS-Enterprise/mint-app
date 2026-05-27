@@ -8,7 +8,7 @@ import {
   ModelCategory,
   YesNoOtherType
 } from 'gql/generated/graphql';
-import { modelID, modelPlanQuestionsDataMocks } from 'tests/mock/readonly';
+import { modelID, modelPlanQuestionsDataMocks } from 'tests/mock/general';
 
 import ModelPlanQuestionsForm, { ModelPlanQuestionsDataType } from './index';
 

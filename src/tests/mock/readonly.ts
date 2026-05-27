@@ -43,12 +43,8 @@ import {
   GetAllParticipantsAndProvidersQuery,
   GetAllPaymentsDocument,
   GetAllPaymentsQuery,
-  GetMedicarePaymentWaiversDocument,
-  GetMedicarePaymentWaiversQuery,
   GetModelCollaboratorsDocument,
   GetModelCollaboratorsQuery,
-  GetModelPlanQuestionsDocument,
-  GetModelPlanQuestionsQuery,
   GetModelSummaryDocument,
   GetModelSummaryQuery,
   GetTimelineDocument,
@@ -65,7 +61,6 @@ import {
   ModelType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
-  NotSelectedReason,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRequireFinancialGuaranteeType,
@@ -828,95 +823,6 @@ export const iddocQuestionnaireMocks = [
           }
         }
       }
-    }
-  }
-];
-
-export const modelPlanQuestionsDataMocks: GetModelPlanQuestionsQuery = {
-  __typename: 'Query',
-  modelPlan: {
-    __typename: 'ModelPlan',
-    id: modelID,
-    basics: {
-      id: 'basics-123',
-      __typename: 'PlanBasics',
-      additionalModelCategories: [],
-      cmsCenters: [],
-      cmmiGroups: []
-    },
-    generalCharacteristics: {
-      id: 'char-456',
-      __typename: 'PlanGeneralCharacteristics',
-      existingModel: '12',
-      keyCharacteristics: [],
-      geographiesTargetedTypes: [],
-      geographiesStatesAndTerritories: [],
-      geographiesRegionTypes: [],
-      geographiesTargetedAppliedTo: [],
-      waiversRequiredTypes: []
-    }
-  },
-  modelPlanCollection: [
-    {
-      id: 'uuid-mint-1',
-      modelName: 'B. MINT Model Plan',
-      __typename: 'ModelPlan'
-    }
-  ],
-  existingModelCollection: [
-    {
-      id: 12,
-      modelName: 'A. Existing Model Plan',
-      __typename: 'ExistingModel'
-    }
-  ]
-};
-
-export const modelPlanQuestionsMocks = [
-  {
-    request: {
-      query: GetModelPlanQuestionsDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: modelPlanQuestionsDataMocks
-    }
-  }
-];
-
-const medicalPaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
-  __typename: 'Query',
-  modelPlan: {
-    __typename: 'ModelPlan',
-    id: modelID,
-    questionnaires: {
-      __typename: 'Questionnaires',
-      waiverAssessmentSurvey: {
-        id: '123',
-        __typename: 'WaiverAssessmentSurvey',
-        modifiesMedicareSavingsPrograms: true,
-        modifiesMedicareSavingsProgramsExample: 'Example',
-        modifiesMedicareSavingsProgramsWhyNot: null,
-        bundlesPayments: false,
-        bundlesPaymentsExample: '',
-        bundlesPaymentsWhyNot: NotSelectedReason.FEEDBACK_AGAINST_USE,
-        offersRiskSharingArrangements: null,
-        offersRiskSharingArrangementsExample: '',
-        offersRiskSharingArrangementsWhyNot: null,
-        suggestedWaivers: []
-      }
-    }
-  }
-};
-
-export const medicalPaymentWaiversMocks = [
-  {
-    request: {
-      query: GetMedicarePaymentWaiversDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: medicalPaymentWaiversDataMocks
     }
   }
 ];
