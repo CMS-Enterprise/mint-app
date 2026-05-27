@@ -99,6 +99,7 @@ import accessibilityStatement from './accessibilityStatement';
 import analytics from './analytics';
 import auth from './auth';
 import cookies from './cookies';
+import ctatRequest from './ctatRequest';
 import error from './error';
 import externalLinkModal from './externalLinkModal';
 import feedback from './feedback';
@@ -121,6 +122,7 @@ const enUS = {
   changeHistory,
   adminActions,
   customHome,
+  ctatRequest,
   error,
   filterView,
   footer,

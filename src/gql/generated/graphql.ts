@@ -270,21 +270,210 @@ export enum CmsCenter {
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'
 }
 
-/**
- * This is a place holder struct that could change. It's purpose it hold
- * a request for CTAT assistance
- */
+/** Input for an admin update to a CTAT request. */
+export type CtatAdminUpdateInput = {
+  assignedAdmin?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['UUID']['input'];
+  notes?: InputMaybe<Scalars['String']['input']>;
+  resolution?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<CtatStatus>;
+};
+
+/** The selected CMMI division for a CTAT record. */
+export enum CtatcmmiDivisionOption {
+  BSG_DBOM = 'BSG_DBOM',
+  BSG_DCCS = 'BSG_DCCS',
+  BSG_DSSOS = 'BSG_DSSOS',
+  BSG_DTS = 'BSG_DTS',
+  LDG_DAN = 'LDG_DAN',
+  LDG_DMLS = 'LDG_DMLS',
+  OTHER = 'OTHER',
+  PCMG_DAPC = 'PCMG_DAPC',
+  PCMG_DAPM = 'PCMG_DAPM',
+  PCMG_DHCPM = 'PCMG_DHCPM',
+  PCMG_DPM = 'PCMG_DPM',
+  PCMG_DSPM = 'PCMG_DSPM',
+  PPG_DAPMI = 'PPG_DAPMI',
+  PPG_DDA = 'PPG_DDA',
+  PPG_DESP = 'PPG_DESP',
+  PPG_DPMS = 'PPG_DPMS',
+  RREG_DHSR = 'RREG_DHSR',
+  RREG_DPAR = 'RREG_DPAR',
+  RREG_DRAM = 'RREG_DRAM',
+  RREG_DSPR = 'RREG_DSPR',
+  SCMG_DDI = 'SCMG_DDI',
+  SCMG_DFR = 'SCMG_DFR',
+  SCMG_DHPI = 'SCMG_DHPI',
+  SCMG_DSI = 'SCMG_DSI',
+  SPHG_DHCD = 'SPHG_DHCD',
+  SPHG_DHII = 'SPHG_DHII',
+  SPHG_DMPM = 'SPHG_DMPM',
+  SPHG_DPHII = 'SPHG_DPHII',
+  SPHG_DSBI = 'SPHG_DSBI'
+}
+
+/** The selected CMMI group for a CTAT record. */
+export enum CtatcmmiGroupOption {
+  BSG = 'BSG',
+  LDG = 'LDG',
+  OTHER = 'OTHER',
+  PCMG = 'PCMG',
+  PPG = 'PPG',
+  RREG = 'RREG',
+  SCMG = 'SCMG',
+  SPHG = 'SPHG'
+}
+
+/** The contract activity type selected for a CTAT record. */
+export enum CtatContractActivityType {
+  EVALUATION = 'EVALUATION',
+  IMPLEMENTATION = 'IMPLEMENTATION',
+  LEARNING = 'LEARNING',
+  OTHER = 'OTHER',
+  TECHNICAL_ASSISTANCE = 'TECHNICAL_ASSISTANCE'
+}
+
+/** The contract type selected for a CTAT record. */
+export enum CtatContractType {
+  COST_PLUS_FIXED_FEE = 'COST_PLUS_FIXED_FEE',
+  COST_REIMBURSEMENT = 'COST_REIMBURSEMENT',
+  FIRMED_FIXED_PRICE = 'FIRMED_FIXED_PRICE',
+  INCENTIVE_CONTRACT = 'INCENTIVE_CONTRACT',
+  OTHER = 'OTHER',
+  TIME_AND_MATERIALS = 'TIME_AND_MATERIALS'
+}
+
+/** The selected type of help needed for a CTAT record. */
+export enum CtatHelpNeededType {
+  CALM_SYSTEM_REQUISITION_SUPPORT = 'CALM_SYSTEM_REQUISITION_SUPPORT',
+  CONTRACTOR_PERFORMANCE_MANAGEMENT = 'CONTRACTOR_PERFORMANCE_MANAGEMENT',
+  CONTRACT_CHANGE_REQUEST_CCR_PROCESSING = 'CONTRACT_CHANGE_REQUEST_CCR_PROCESSING',
+  COR_TRANSCRIPT_REVIEW = 'COR_TRANSCRIPT_REVIEW',
+  DATA_USE_AGREEMENT_DUA = 'DATA_USE_AGREEMENT_DUA',
+  DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS = 'DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS',
+  DELIVERABLE_EVALUATION_REVIEW_DER = 'DELIVERABLE_EVALUATION_REVIEW_DER',
+  DELIVERABLE_EVALUATION_REVIEW_DER_MODIFICATION = 'DELIVERABLE_EVALUATION_REVIEW_DER_MODIFICATION',
+  DOCUMENTING_AND_SUBMITTING_CPARS = 'DOCUMENTING_AND_SUBMITTING_CPARS',
+  ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES = 'ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES',
+  FOREIGN_NATIONAL_MANAGEMENT_SYSTEM_FNMS = 'FOREIGN_NATIONAL_MANAGEMENT_SYSTEM_FNMS',
+  GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF = 'GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF',
+  GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA = 'GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA',
+  GUIDANCE_ON_MARKET_RESEARCH = 'GUIDANCE_ON_MARKET_RESEARCH',
+  GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING = 'GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING',
+  IDENTITY_AND_CREDENTIALING_TOOL_ICT = 'IDENTITY_AND_CREDENTIALING_TOOL_ICT',
+  INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION = 'INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION',
+  INVOICE_PROCESSING_PLATFORM_IPP = 'INVOICE_PROCESSING_PLATFORM_IPP',
+  MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE = 'MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE',
+  OTHER = 'OTHER',
+  POST_AWARD_ACTIONS_PAA = 'POST_AWARD_ACTIONS_PAA',
+  POST_AWARD_ACTIONS_PAA_MODIFICATION = 'POST_AWARD_ACTIONS_PAA_MODIFICATION',
+  REQUEST_FOR_CONTRACT_MEMO_RFC = 'REQUEST_FOR_CONTRACT_MEMO_RFC',
+  REQUEST_FOR_INFORMATION_RFI = 'REQUEST_FOR_INFORMATION_RFI',
+  REQUEST_FOR_PROPOSAL_RFP = 'REQUEST_FOR_PROPOSAL_RFP',
+  REQUEST_FOR_QUOTATION_RFQ = 'REQUEST_FOR_QUOTATION_RFQ',
+  SOW_SOO_PWS_DEVELOPMENT = 'SOW_SOO_PWS_DEVELOPMENT'
+}
+
+/** A request for CTAT assistance */
 export type CtatRequest = {
   __typename: 'CTATRequest';
+  assignedAdmin?: Maybe<Scalars['UUID']['output']>;
+  assignedAdminUserAccount?: Maybe<UserAccount>;
+  cmmiDivision?: Maybe<CtatcmmiDivisionOption>;
+  cmmiDivisionOther?: Maybe<Scalars['String']['output']>;
+  cmmiGroup?: Maybe<CtatcmmiGroupOption>;
+  cmmiGroupOther?: Maybe<Scalars['String']['output']>;
+  contractActivityType?: Maybe<CtatContractActivityType>;
+  contractActivityTypeOther?: Maybe<Scalars['String']['output']>;
+  contractName?: Maybe<Scalars['String']['output']>;
+  contractNumber?: Maybe<Scalars['String']['output']>;
+  contractType?: Maybe<CtatContractType>;
+  contractTypeOther?: Maybe<Scalars['String']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  dateAssistanceNeededBy?: Maybe<Scalars['Time']['output']>;
+  describeHelpNeeded?: Maybe<Scalars['String']['output']>;
   humanReadableID: Scalars['String']['output'];
+  humanReadableIDNumber: Scalars['Int']['output'];
   id: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
+  notes?: Maybe<Scalars['String']['output']>;
+  relatedMINTModels?: Maybe<Array<Scalars['UUID']['output']>>;
+  requestUrgency?: Maybe<CtatRequestUrgency>;
+  requester: Scalars['UUID']['output'];
+  requesterUserAccount: UserAccount;
+  resolution?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<CtatStatus>;
+  supportingDocuments: Array<CtatRequestDocument>;
+  typeOfHelpNeeded: Array<CtatHelpNeededType>;
+  typeOfHelpNeededOther?: Maybe<Scalars['String']['output']>;
 };
+
+/** A supporting document attached to a CTAT request. */
+export type CtatRequestDocument = {
+  __typename: 'CTATRequestDocument';
+  bucket: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  ctatRequestId: Scalars['UUID']['output'];
+  fileKey: Scalars['String']['output'];
+  fileName: Scalars['String']['output'];
+  fileSize: Scalars['Int']['output'];
+  fileType: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  restricted: Scalars['Boolean']['output'];
+  url?: Maybe<Scalars['String']['output']>;
+  virusClean: Scalars['Boolean']['output'];
+  virusScanned: Scalars['Boolean']['output'];
+};
+
+/** Input for uploading a supporting document for a CTAT request. */
+export type CtatRequestDocumentInput = {
+  fileData: Scalars['Upload']['input'];
+};
+
+/** Input for creating a CTAT request. */
+export type CtatRequestInput = {
+  cmmiDivision?: InputMaybe<CtatcmmiDivisionOption>;
+  cmmiDivisionOther?: InputMaybe<Scalars['String']['input']>;
+  cmmiGroup: CtatcmmiGroupOption;
+  cmmiGroupOther?: InputMaybe<Scalars['String']['input']>;
+  contractActivityType?: InputMaybe<CtatContractActivityType>;
+  contractActivityTypeOther?: InputMaybe<Scalars['String']['input']>;
+  contractName?: InputMaybe<Scalars['String']['input']>;
+  contractNumber?: InputMaybe<Scalars['String']['input']>;
+  contractType?: InputMaybe<CtatContractType>;
+  contractTypeOther?: InputMaybe<Scalars['String']['input']>;
+  dateAssistanceNeededBy: Scalars['Time']['input'];
+  describeHelpNeeded: Scalars['String']['input'];
+  relatedMINTModels?: InputMaybe<Array<Scalars['UUID']['input']>>;
+  requestUrgency: CtatRequestUrgency;
+  supportingDocuments?: InputMaybe<Array<CtatRequestDocumentInput>>;
+  typeOfHelpNeeded: Array<CtatHelpNeededType>;
+  typeOfHelpNeededOther?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The urgency selected for a CTAT request. */
+export enum CtatRequestUrgency {
+  HIGH = 'HIGH',
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM'
+}
+
+/** The status assigned to a CTAT request. */
+export enum CtatStatus {
+  ASSIGNED = 'ASSIGNED',
+  CLOSED = 'CLOSED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NEW = 'NEW'
+}
 
 export enum CcmInvolvmentType {
   NO = 'NO',
@@ -2117,8 +2306,10 @@ export enum MultiSourceDataToCollect {
 export type Mutation = {
   __typename: 'Mutation';
   addPlanFavorite: PlanFavorite;
+  adminUpdateCTATRequest: CtatRequest;
   agreeToNDA: NdaInfo;
   archiveMTOCommonMilestone: MtoCommonMilestone;
+  createCTATRequest: CtatRequest;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2239,6 +2430,12 @@ export type MutationAddPlanFavoriteArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationAdminUpdateCtatRequestArgs = {
+  input: CtatAdminUpdateInput;
+};
+
+
+/** Mutations definition for the schema */
 export type MutationAgreeToNdaArgs = {
   agree?: Scalars['Boolean']['input'];
 };
@@ -2247,6 +2444,12 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationArchiveMtoCommonMilestoneArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateCtatRequestArgs = {
+  input: CtatRequestInput;
 };
 
 
@@ -4759,8 +4962,8 @@ export type Query = {
   auditChanges: Array<AuditChange>;
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
-  ctatRequest?: Maybe<CtatRequest>;
-  ctatRequests?: Maybe<Array<CtatRequest>>;
+  ctatRequest: CtatRequest;
+  ctatRequests: Array<CtatRequest>;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
