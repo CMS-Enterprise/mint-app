@@ -9,6 +9,7 @@ import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
 
 import ModelPlanQuestionsForm from '../_components/ModelPlanQuestionsForm';
+import WaiverInfoPanel from '../_components/WaiverInfoPanel';
 
 const ModelPlanQuestions = () => {
   const { t: waiverAssessmentSurveyT } = useTranslation(
@@ -83,6 +84,27 @@ const ModelPlanQuestions = () => {
 
   return (
     <div className="mint-body-normal grid-row flex-column">
+      <WaiverInfoPanel
+        isOpen
+        closeModal={() => {}}
+        waiverInfo={{
+          willUseWaiver: false,
+          notUsingReason: '',
+          commonWaiver: {
+            name: 'Non-duplication',
+            description:
+              'Allows for model participants to enter into agreements with Medicare-enrolled providers and suppliers to participate as Preferred Providers under MSSP.',
+            participationAgreementLanguageLink: 'https://cms.gov/',
+            cmmiWaiverPointOfContact: 'Jane Doe',
+            waiverType: 'Lorem Ipsum',
+            waiverFocus: 'Administrative and operational',
+            whatIsWaived: '42 CFR § 425.114(a) and (b)',
+            hasStandardizationEffort: false,
+            hasClaimsDataOrRREGAnalysis: 'Lorem ipsum',
+            isUsedInActiveModels: true
+          }
+        }}
+      />
       <div>
         <FormHeader
           header={waiverAssessmentSurveyT('modelPlanQuestions.heading')}
