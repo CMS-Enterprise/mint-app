@@ -108,11 +108,11 @@ const MedicarePaymentWaivers = () => {
       }
     );
 
-  if (loading || !data) {
+  if (loading) {
     return <Spinner size="large" />;
   }
 
-  if (error || !data.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id) {
+  if (error || !data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id) {
     return <NotFoundPartial errorMessage={error?.message} />;
   }
 
@@ -146,7 +146,7 @@ const MedicarePaymentWaivers = () => {
               );
             })}
           >
-            <Fieldset disabled={!!error || loading}>
+            <Fieldset>
               <ConfirmLeaveRHF />
 
               <div className="margin-bottom-6">
