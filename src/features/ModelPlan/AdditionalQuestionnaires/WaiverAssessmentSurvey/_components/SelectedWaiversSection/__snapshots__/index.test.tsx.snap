@@ -24,11 +24,6 @@ exports[`SelectedWaiversSection Component > matches snapshot 1`] = `
         <li
           class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
         >
-          super long survey name Waiver 1
-        </li>
-        <li
-          class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
-        >
           short Waiver 2
         </li>
         <li

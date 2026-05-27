@@ -15,10 +15,14 @@ import (
 type commonWaiverLoaders struct {
 	// ByID gets a CommonWaiver record by the supplied ID
 	ByID LoaderWrapper[uuid.UUID, *models.CommonWaiver]
+
+	// GetAll gets all CommonWaiver records
+	GetAll LoaderWrapper[*uuid.UUID, []*models.CommonWaiver]
 }
 
 var CommonWaiver = &commonWaiverLoaders{
-	ByID: NewLoaderWrapper(batchCommonWaiverByID),
+	ByID:   NewLoaderWrapper(batchCommonWaiverByID),
+	GetAll: NewLoaderWrapper(batchCommonWaiverGetAll),
 }
 
 func batchCommonWaiverByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.CommonWaiver] {
@@ -36,4 +40,24 @@ func batchCommonWaiverByID(ctx context.Context, ids []uuid.UUID) []*dataloader.R
 		return data.ID
 	}
 	return oneToOneDataLoader(ids, data, getKeyFunc)
+}
+
+func batchCommonWaiverGetAll(ctx context.Context, ids []*uuid.UUID) []*dataloader.Result[[]*models.CommonWaiver] {
+	loaders, err := Loaders(ctx)
+	logger := appcontext.ZLogger(ctx)
+	if err != nil {
+		return errorPerEachKey[*uuid.UUID, []*models.CommonWaiver](ids, err)
+	}
+
+	data, err := storage.CommonWaiverGetAll(loaders.DataReader.Store, logger)
+	if err != nil {
+		return errorPerEachKey[*uuid.UUID, []*models.CommonWaiver](ids, err)
+	}
+
+	// Since this is "get all", every key gets the same result
+	results := make([]*dataloader.Result[[]*models.CommonWaiver], len(ids))
+	for i := range ids {
+		results[i] = &dataloader.Result[[]*models.CommonWaiver]{Data: data}
+	}
+	return results
 }

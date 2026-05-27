@@ -191,8 +191,7 @@ const MedicarePaymentWaivers = () => {
               </div>
 
               <SelectedWaiversSection
-                allWaivers={suggestedWaivers || []}
-                selectedWaivers={suggestedWaivers || []} // TODO replace with actual selected waivers logic
+                selectedWaivers={suggestedWaivers || []}
               />
 
               <FormFooter

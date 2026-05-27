@@ -2,6 +2,9 @@ import { MockedResponse } from '@apollo/client/testing';
 import { KeyContactCategoryType } from 'features/HelpAndKnowledge/KeyContactDirectory/_components/CategoryModal';
 import {
   DataExchangeApproachStatus,
+  GetAllCommonWaiversDocument,
+  GetAllCommonWaiversQuery,
+  GetAllCommonWaiversQueryVariables,
   GetAllKeyContactCategoriesDocument,
   GetAllKeyContactCategoriesQuery,
   GetAllKeyContactCategoriesQueryVariables,
@@ -167,6 +170,41 @@ export const questionnairesMock: MockedResponse<
           abbreviation: 'MP',
           questionnaires: questionnairesMockData
         }
+      }
+    }
+  }
+];
+
+const commonWaiversMockData: GetAllCommonWaiversQuery['commonWaivers'] = [
+  {
+    __typename: 'CommonWaiver',
+    id: '123',
+    name: 'super long survey name Waiver 1'
+  },
+  {
+    __typename: 'CommonWaiver',
+    id: '456',
+    name: 'short Waiver 2'
+  },
+  {
+    __typename: 'CommonWaiver',
+    id: '789',
+    name: 'Waiver 3'
+  }
+];
+
+export const allCommonWaiversMocks: MockedResponse<
+  GetAllCommonWaiversQuery,
+  GetAllCommonWaiversQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllCommonWaiversDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        commonWaivers: commonWaiversMockData
       }
     }
   }

@@ -1,23 +1,30 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryBoxHeading } from '@trussworks/react-uswds';
+import { useGetAllCommonWaiversQuery } from 'gql/generated/graphql';
+
+import Spinner from 'components/Spinner';
 
 import { SuggestedWaivers } from '../../MedicarePaymentWaivers';
 
 const SelectedWaiversSection = ({
-  allWaivers,
   selectedWaivers
 }: {
-  allWaivers: SuggestedWaivers;
   selectedWaivers: SuggestedWaivers;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
 
-  const generateAllWaiverList = allWaivers.map(
+  const { data, loading } = useGetAllCommonWaiversQuery();
+
+  const generateSelectedWaiverList = selectedWaivers.map(
     waiver => waiver.commonWaiver.name
   );
+
+  if (loading) {
+    return <Spinner size="small" />;
+  }
 
   return (
     <div className="bg-info-lighter padding-3">
@@ -27,14 +34,14 @@ const SelectedWaiversSection = ({
 
       <p className="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest">
         {waiverAssessmentSurveyMiscT('selectedWaivers.description', {
-          totalWaiversCount: allWaivers.length,
+          totalWaiversCount: data?.commonWaivers?.length || 0,
           selectedWaiversCount: selectedWaivers.length
         })}
       </p>
 
       <div className="margin-bottom-2">
         <ul className="grid-row grid-gap-2 margin-y-0 padding-x-3">
-          {generateAllWaiverList.map(waiverName => (
+          {generateSelectedWaiverList.map(waiverName => (
             <li
               key={waiverName}
               className="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"

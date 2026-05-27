@@ -1,36 +1,12 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { render, screen, waitFor } from '@testing-library/react';
+import { allCommonWaiversMocks } from 'tests/mock/general';
+import MockedProvider from 'tests/MockedProvider';
 
 import { SuggestedWaivers } from '../../MedicarePaymentWaivers';
 
 import SelectedWaiversSection from './index';
-
-const MOCK_ALL_WAIVERS: SuggestedWaivers = [
-  {
-    __typename: 'SuggestedWaiver',
-    id: '123',
-    commonWaiver: {
-      __typename: 'CommonWaiver',
-      name: 'super long survey name Waiver 1'
-    }
-  },
-  {
-    __typename: 'SuggestedWaiver',
-    id: '456',
-    commonWaiver: {
-      __typename: 'CommonWaiver',
-      name: 'short Waiver 2'
-    }
-  },
-  {
-    __typename: 'SuggestedWaiver',
-    id: '789',
-    commonWaiver: {
-      __typename: 'CommonWaiver',
-      name: 'Waiver 3'
-    }
-  }
-];
 
 const MOCK_SELECTED_WAIVERS: SuggestedWaivers = [
   {
@@ -52,13 +28,29 @@ const MOCK_SELECTED_WAIVERS: SuggestedWaivers = [
 ];
 
 describe('SelectedWaiversSection Component', () => {
-  it('matches snapshot', () => {
-    const { asFragment } = render(
-      <SelectedWaiversSection
-        allWaivers={MOCK_ALL_WAIVERS}
-        selectedWaivers={MOCK_SELECTED_WAIVERS}
-      />
+  it('matches snapshot', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/selected-waivers',
+          element: (
+            <SelectedWaiversSection selectedWaivers={MOCK_SELECTED_WAIVERS} />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/selected-waivers']
+      }
     );
+    const { asFragment } = render(
+      <MockedProvider mocks={allCommonWaiversMocks} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Selected waivers')).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });
