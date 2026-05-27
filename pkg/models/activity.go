@@ -12,37 +12,39 @@ type ActivityType string
 
 // These constants represent the different values of ActivityType
 const (
-	ActivityDigest                             ActivityType = "DAILY_DIGEST_COMPLETE"
-	ActivityAddedAsCollaborator                ActivityType = "ADDED_AS_COLLABORATOR"
-	ActivityTaggedInDiscussion                 ActivityType = "TAGGED_IN_DISCUSSION"
-	ActivityTaggedInDiscussionReply            ActivityType = "TAGGED_IN_DISCUSSION_REPLY"
-	ActivityNewDiscussionReply                 ActivityType = "NEW_DISCUSSION_REPLY"
-	ActivityModelPlanShared                    ActivityType = "MODEL_PLAN_SHARED"
-	ActivityNewModelPlan                       ActivityType = "NEW_MODEL_PLAN"
-	ActivityDatesChanged                       ActivityType = "DATES_CHANGED"
-	ActivityDataExchangeApproachMarkedComplete ActivityType = "DATA_EXCHANGE_APPROACH_MARKED_COMPLETE"
-	ActivityMTOReadyForReview                  ActivityType = "MTO_READY_FOR_REVIEW"
-	ActivityNewDiscussionAdded                 ActivityType = "NEW_DISCUSSION_ADDED"
-	ActivityIDDOCQuestionnaireCompleted        ActivityType = "IDDOC_QUESTIONNAIRE_COMPLETED"
-	ActivityIncorrectModelStatus               ActivityType = "INCORRECT_MODEL_STATUS"
+	ActivityDigest                               ActivityType = "DAILY_DIGEST_COMPLETE"
+	ActivityAddedAsCollaborator                  ActivityType = "ADDED_AS_COLLABORATOR"
+	ActivityTaggedInDiscussion                   ActivityType = "TAGGED_IN_DISCUSSION"
+	ActivityTaggedInDiscussionReply              ActivityType = "TAGGED_IN_DISCUSSION_REPLY"
+	ActivityNewDiscussionReply                   ActivityType = "NEW_DISCUSSION_REPLY"
+	ActivityModelPlanShared                      ActivityType = "MODEL_PLAN_SHARED"
+	ActivityNewModelPlan                         ActivityType = "NEW_MODEL_PLAN"
+	ActivityDatesChanged                         ActivityType = "DATES_CHANGED"
+	ActivityDataExchangeApproachMarkedComplete   ActivityType = "DATA_EXCHANGE_APPROACH_MARKED_COMPLETE"
+	ActivityMTOReadyForReview                    ActivityType = "MTO_READY_FOR_REVIEW"
+	ActivityNewDiscussionAdded                   ActivityType = "NEW_DISCUSSION_ADDED"
+	ActivityIDDOCQuestionnaireCompleted          ActivityType = "IDDOC_QUESTIONNAIRE_COMPLETED"
+	ActivityWaiverAssessmentSurveyMarkedComplete ActivityType = "WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE"
+	ActivityIncorrectModelStatus                 ActivityType = "INCORRECT_MODEL_STATUS"
 )
 
 // activityMetaDataTypeMap maps ActivityType to the corresponding ActivityMetaData struct type
 // note it returns a constructor function so we can create a new instance when needed
 var activityMetaDataTypeMap = map[ActivityType]func() ActivityMetaData{
-	ActivityDigest:                             func() ActivityMetaData { return &DailyDigestCompleteActivityMeta{} },
-	ActivityAddedAsCollaborator:                func() ActivityMetaData { return &AddedAsCollaboratorMeta{} },
-	ActivityTaggedInDiscussion:                 func() ActivityMetaData { return &TaggedInPlanDiscussionActivityMeta{} },
-	ActivityTaggedInDiscussionReply:            func() ActivityMetaData { return &TaggedInDiscussionReplyActivityMeta{} },
-	ActivityNewDiscussionReply:                 func() ActivityMetaData { return &NewDiscussionRepliedActivityMeta{} },
-	ActivityModelPlanShared:                    func() ActivityMetaData { return &ModelPlanSharedActivityMeta{} },
-	ActivityNewModelPlan:                       func() ActivityMetaData { return &NewModelPlanActivityMeta{} },
-	ActivityNewDiscussionAdded:                 func() ActivityMetaData { return &NewDiscussionAddedActivityMeta{} },
-	ActivityDatesChanged:                       func() ActivityMetaData { return &DatesChangedActivityMeta{} },
-	ActivityDataExchangeApproachMarkedComplete: func() ActivityMetaData { return &PlanDataExchangeApproachMarkedCompleteActivityMeta{} },
-	ActivityMTOReadyForReview:                  func() ActivityMetaData { return &MTOReadyForReviewActivityMeta{} },
-	ActivityIDDOCQuestionnaireCompleted:        func() ActivityMetaData { return &IddocQuestionnaireCompletedActivityMeta{} },
-	ActivityIncorrectModelStatus:               func() ActivityMetaData { return &IncorrectModelStatusActivityMeta{} },
+	ActivityDigest:                               func() ActivityMetaData { return &DailyDigestCompleteActivityMeta{} },
+	ActivityAddedAsCollaborator:                  func() ActivityMetaData { return &AddedAsCollaboratorMeta{} },
+	ActivityTaggedInDiscussion:                   func() ActivityMetaData { return &TaggedInPlanDiscussionActivityMeta{} },
+	ActivityTaggedInDiscussionReply:              func() ActivityMetaData { return &TaggedInDiscussionReplyActivityMeta{} },
+	ActivityNewDiscussionReply:                   func() ActivityMetaData { return &NewDiscussionRepliedActivityMeta{} },
+	ActivityModelPlanShared:                      func() ActivityMetaData { return &ModelPlanSharedActivityMeta{} },
+	ActivityNewModelPlan:                         func() ActivityMetaData { return &NewModelPlanActivityMeta{} },
+	ActivityNewDiscussionAdded:                   func() ActivityMetaData { return &NewDiscussionAddedActivityMeta{} },
+	ActivityDatesChanged:                         func() ActivityMetaData { return &DatesChangedActivityMeta{} },
+	ActivityDataExchangeApproachMarkedComplete:   func() ActivityMetaData { return &PlanDataExchangeApproachMarkedCompleteActivityMeta{} },
+	ActivityMTOReadyForReview:                    func() ActivityMetaData { return &MTOReadyForReviewActivityMeta{} },
+	ActivityIDDOCQuestionnaireCompleted:          func() ActivityMetaData { return &IddocQuestionnaireCompletedActivityMeta{} },
+	ActivityWaiverAssessmentSurveyMarkedComplete: func() ActivityMetaData { return &WaiverAssessmentSurveyMarkedCompleteActivityMeta{} },
+	ActivityIncorrectModelStatus:                 func() ActivityMetaData { return &IncorrectModelStatusActivityMeta{} },
 }
 
 // Activity represents a discrete event that has happened in the application that might be notifiable.

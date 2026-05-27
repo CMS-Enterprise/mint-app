@@ -49,6 +49,7 @@ const (
 	TNUserViewCustomization            TableName = "user_view_customization"
 	TNPlanDataExchangeApproach         TableName = "plan_data_exchange_approach"
 	TNIddocQuestionnaire               TableName = "iddoc_questionnaire"
+	TNWaiverAssessmentSurvey           TableName = "waiver_assessment_survey"
 	TNMTOCategory                      TableName = "mto_category"
 	TNMTOMilestone                     TableName = "mto_milestone"
 	TNMTOSolution                      TableName = "mto_solution"
@@ -71,6 +72,9 @@ const (
 	TNMTOMilestoneNote                 TableName = "mto_milestone_note"
 	TNKeyContact                       TableName = "key_contact"
 	TNKeyContactCategory               TableName = "key_contact_category"
+	TNWaiver                           TableName = "waiver"
+	TNSuggestedWaiver                  TableName = "suggested_waiver"
+	TNCommonWaiver                     TableName = "common_waiver"
 
 	/*************DEPRECATED****************/
 	TNOperationalNeed                    TableName = "operational_need"

@@ -15,25 +15,27 @@ type UserNotificationPreferences struct {
 	// The id of the user this preferences object is for
 	UserID uuid.UUID `json:"userID" db:"user_id"`
 
-	DailyDigestComplete                                UserNotificationPreferenceFlags                     `json:"dailyDigestComplete" db:"daily_digest_complete"`
-	AddedAsCollaborator                                UserNotificationPreferenceFlags                     `json:"addedAsCollaborator" db:"added_as_collaborator"`
-	TaggedInDiscussion                                 UserNotificationPreferenceFlags                     `json:"taggedInDiscussion" db:"tagged_in_discussion"`
-	TaggedInDiscussionReply                            UserNotificationPreferenceFlags                     `json:"taggedInDiscussionReply" db:"tagged_in_discussion_reply"`
-	NewDiscussionReply                                 UserNotificationPreferenceFlags                     `json:"newDiscussionReply" db:"new_discussion_reply"`
-	ModelPlanShared                                    UserNotificationPreferenceFlags                     `json:"modelPlanShared" db:"model_plan_shared"`
-	NewModelPlan                                       UserNotificationPreferenceFlags                     `json:"newModelPlan" db:"new_model_plan"`
-	NewDiscussionAdded                                 UserNotificationPreferenceFlags                     `json:"newDiscussionAdded" db:"new_discussion_added"`
-	NewDiscussionAddedNotificationType                 *NewDiscussionAddedNotificationType                 `json:"newDiscussionAddedNotificationType" db:"new_discussion_added_notification_type"`
-	DatesChanged                                       UserNotificationPreferenceFlags                     `json:"datesChanged" db:"dates_changed"`
-	DatesChangedNotificationType                       *DatesChangedNotificationType                       `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
-	DataExchangeApproachMarkedComplete                 UserNotificationPreferenceFlags                     `json:"dataExchangeApproachMarkedComplete" db:"data_exchange_approach_marked_complete"`
-	DataExchangeApproachMarkedCompleteNotificationType *DataExchangeApproachMarkedCompleteNotificationType `json:"dataExchangeApproachMarkedCompleteNotificationType" db:"data_exchange_approach_marked_complete_notification_type"`
-	IddocQuestionnaireComplete                         UserNotificationPreferenceFlags                     `json:"iddocQuestionnaireComplete" db:"iddoc_questionnaire_complete"`
-	IddocQuestionnaireCompletedNotificationType        *IDDOCQuestionnaireCompletedNotificationType        `json:"iddocQuestionnaireCompletedNotificationType" db:"iddoc_questionnaire_completed_notification_type"`
-	IncorrectModelStatus                               UserNotificationPreferenceFlags                     `json:"incorrectModelStatus" db:"incorrect_model_status"`
-	IncorrectModelStatusNotificationType               UserNotificationPreferenceFlags                     `json:"incorrectModelStatusNotificationType" db:"incorrect_model_status_notification_type"`
-	MTOReadyForReview                                  UserNotificationPreferenceFlags                     `json:"mtoReadyForReview" db:"mto_ready_for_review"`
-	MTOReadyForReviewNotificationType                  *MTOReadyForReviewNotificationType                  `json:"mtoReadyForReviewNotificationType" db:"mto_ready_for_review_notification_type"`
+	DailyDigestComplete                                  UserNotificationPreferenceFlags                       `json:"dailyDigestComplete" db:"daily_digest_complete"`
+	AddedAsCollaborator                                  UserNotificationPreferenceFlags                       `json:"addedAsCollaborator" db:"added_as_collaborator"`
+	TaggedInDiscussion                                   UserNotificationPreferenceFlags                       `json:"taggedInDiscussion" db:"tagged_in_discussion"`
+	TaggedInDiscussionReply                              UserNotificationPreferenceFlags                       `json:"taggedInDiscussionReply" db:"tagged_in_discussion_reply"`
+	NewDiscussionReply                                   UserNotificationPreferenceFlags                       `json:"newDiscussionReply" db:"new_discussion_reply"`
+	ModelPlanShared                                      UserNotificationPreferenceFlags                       `json:"modelPlanShared" db:"model_plan_shared"`
+	NewModelPlan                                         UserNotificationPreferenceFlags                       `json:"newModelPlan" db:"new_model_plan"`
+	NewDiscussionAdded                                   UserNotificationPreferenceFlags                       `json:"newDiscussionAdded" db:"new_discussion_added"`
+	NewDiscussionAddedNotificationType                   *NewDiscussionAddedNotificationType                   `json:"newDiscussionAddedNotificationType" db:"new_discussion_added_notification_type"`
+	DatesChanged                                         UserNotificationPreferenceFlags                       `json:"datesChanged" db:"dates_changed"`
+	DatesChangedNotificationType                         *DatesChangedNotificationType                         `json:"datesChangedNotificationType" db:"dates_changed_notification_type"`
+	DataExchangeApproachMarkedComplete                   UserNotificationPreferenceFlags                       `json:"dataExchangeApproachMarkedComplete" db:"data_exchange_approach_marked_complete"`
+	DataExchangeApproachMarkedCompleteNotificationType   *DataExchangeApproachMarkedCompleteNotificationType   `json:"dataExchangeApproachMarkedCompleteNotificationType" db:"data_exchange_approach_marked_complete_notification_type"`
+	IddocQuestionnaireComplete                           UserNotificationPreferenceFlags                       `json:"iddocQuestionnaireComplete" db:"iddoc_questionnaire_complete"`
+	IddocQuestionnaireCompletedNotificationType          *IDDOCQuestionnaireCompletedNotificationType          `json:"iddocQuestionnaireCompletedNotificationType" db:"iddoc_questionnaire_completed_notification_type"`
+	WaiverAssessmentSurveyMarkedComplete                 UserNotificationPreferenceFlags                       `json:"waiverAssessmentSurveyMarkedComplete" db:"waiver_assessment_survey_marked_complete"`
+	WaiverAssessmentSurveyMarkedCompleteNotificationType *WaiverAssessmentSurveyMarkedCompleteNotificationType `json:"waiverAssessmentSurveyMarkedCompleteNotificationType" db:"waiver_assessment_survey_marked_complete_notification_type"`
+	IncorrectModelStatus                                 UserNotificationPreferenceFlags                       `json:"incorrectModelStatus" db:"incorrect_model_status"`
+	IncorrectModelStatusNotificationType                 UserNotificationPreferenceFlags                       `json:"incorrectModelStatusNotificationType" db:"incorrect_model_status_notification_type"`
+	MTOReadyForReview                                    UserNotificationPreferenceFlags                       `json:"mtoReadyForReview" db:"mto_ready_for_review"`
+	MTOReadyForReviewNotificationType                    *MTOReadyForReviewNotificationType                    `json:"mtoReadyForReviewNotificationType" db:"mto_ready_for_review_notification_type"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -42,19 +44,20 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		baseStruct: NewBaseStruct(userID),
 		UserID:     userID,
 
-		DailyDigestComplete:                DefaultUserNotificationPreferencesFlags(),
-		AddedAsCollaborator:                DefaultUserNotificationPreferencesFlags(),
-		TaggedInDiscussion:                 DefaultUserNotificationPreferencesFlags(),
-		TaggedInDiscussionReply:            DefaultUserNotificationPreferencesFlags(),
-		NewDiscussionReply:                 DefaultUserNotificationPreferencesFlags(),
-		ModelPlanShared:                    DefaultUserNotificationPreferencesFlags(),
-		NewModelPlan:                       EmptyUserNotificationPreferencesFlags(),
-		NewDiscussionAdded:                 DefaultUserNotificationPreferencesFlags(),
-		DatesChanged:                       EmptyUserNotificationPreferencesFlags(),
-		DataExchangeApproachMarkedComplete: EmptyUserNotificationPreferencesFlags(),
-		IddocQuestionnaireComplete:         EmptyUserNotificationPreferencesFlags(),
-		IncorrectModelStatus:               EmptyUserNotificationPreferencesFlags(),
-		MTOReadyForReview:                  EmptyUserNotificationPreferencesFlags(),
+		DailyDigestComplete:                  DefaultUserNotificationPreferencesFlags(),
+		AddedAsCollaborator:                  DefaultUserNotificationPreferencesFlags(),
+		TaggedInDiscussion:                   DefaultUserNotificationPreferencesFlags(),
+		TaggedInDiscussionReply:              DefaultUserNotificationPreferencesFlags(),
+		NewDiscussionReply:                   DefaultUserNotificationPreferencesFlags(),
+		ModelPlanShared:                      DefaultUserNotificationPreferencesFlags(),
+		NewModelPlan:                         EmptyUserNotificationPreferencesFlags(),
+		NewDiscussionAdded:                   DefaultUserNotificationPreferencesFlags(),
+		DatesChanged:                         EmptyUserNotificationPreferencesFlags(),
+		DataExchangeApproachMarkedComplete:   EmptyUserNotificationPreferencesFlags(),
+		IddocQuestionnaireComplete:           EmptyUserNotificationPreferencesFlags(),
+		WaiverAssessmentSurveyMarkedComplete: EmptyUserNotificationPreferencesFlags(),
+		IncorrectModelStatus:                 EmptyUserNotificationPreferencesFlags(),
+		MTOReadyForReview:                    EmptyUserNotificationPreferencesFlags(),
 	}
 }
 
@@ -120,6 +123,16 @@ const (
 	IDDOCQuestionnaireCompletedNotificationTypeAllModels      IDDOCQuestionnaireCompletedNotificationType = "ALL_MODELS"
 	IDDOCQuestionnaireCompletedNotificationTypeFollowedModels IDDOCQuestionnaireCompletedNotificationType = "FOLLOWED_MODELS"
 	IDDOCQuestionnaireCompletedNotificationTypeMyModels       IDDOCQuestionnaireCompletedNotificationType = "MY_MODELS"
+)
+
+// WaiverAssessmentSurveyMarkedCompleteNotificationType is an enum that represents the type of notification a user wants for when a waiver assessment survey is marked complete
+type WaiverAssessmentSurveyMarkedCompleteNotificationType string
+
+// These constants represent the possible values of a WaiverAssessmentSurveyMarkedCompleteNotificationType
+const (
+	WaiverAssessmentSurveyMarkedCompleteNotificationTypeAllModels      WaiverAssessmentSurveyMarkedCompleteNotificationType = "ALL_MODELS"
+	WaiverAssessmentSurveyMarkedCompleteNotificationTypeFollowedModels WaiverAssessmentSurveyMarkedCompleteNotificationType = "FOLLOWED_MODELS"
+	WaiverAssessmentSurveyMarkedCompleteNotificationTypeMyModels       WaiverAssessmentSurveyMarkedCompleteNotificationType = "MY_MODELS"
 )
 
 // MTOReadyForReviewNotificationType is an enum that represents the type of notification a user wants for when an MTO is marked ready for review

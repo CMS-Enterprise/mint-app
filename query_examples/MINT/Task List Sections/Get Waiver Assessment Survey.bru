@@ -1,0 +1,116 @@
+meta {
+  name: Get Waiver Assessment Survey
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query getWaiverAssessmentSurvey($id: UUID!) {
+    modelPlan(id: $id) {
+      id
+      modelName
+      questionnaires {
+        waiverAssessmentSurvey {
+          id
+          modelPlanID
+          status
+          isComplete
+  
+          # Page 3 - Medicare payment waivers
+          modifiesMedicareSavingsPrograms
+          modifiesMedicareSavingsProgramsExample
+          modifiesMedicareSavingsProgramsWhyNot
+          bundlesPayments
+          bundlesPaymentsExample
+          bundlesPaymentsWhyNot
+          offersRiskSharingArrangements
+          offersRiskSharingArrangementsExample
+          offersRiskSharingArrangementsWhyNot
+
+          # Page 4 - Program waivers (Medicare BEs)
+          impactsSiteOfCarePayments
+          impactsSiteOfCarePaymentsExample
+          impactsSiteOfCarePaymentsWhyNot
+          modifiesCareTeamScopeOfPractice
+          modifiesCareTeamScopeOfPracticeExample
+          modifiesCareTeamScopeOfPracticeWhyNot
+          modifiesCareDeliveryWithClaimsBasedPayments
+          modifiesCareDeliveryWithClaimsBasedPaymentsExample
+          modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot
+          modifiesQualityMeasurementsOrPaymentsViaWaivers
+          modifiesQualityMeasurementsOrPaymentsViaWaiversExample
+          modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot
+
+          # Page 5 - Medicaid payment waivers
+          impactsMedicaidOnlyBeneficiaries
+          impactsMedicaidOnlyBeneficiariesExample
+          impactsMedicaidOnlyBeneficiariesWhyNot
+          impactsHomeCommunityBasedServicePayments
+          impactsHomeCommunityBasedServicePaymentsExample
+          impactsHomeCommunityBasedServicePaymentsWhyNot
+          impactsManagedCareWaivers
+          impactsManagedCareWaiversExample
+          impactsManagedCareWaiversWhyNot
+          additionalMedicaidSpecificWaivers
+  
+          # Waiver selections
+          waivers {
+            id
+            commonWaiverID
+            willUseWaiver
+            notUsingReason
+            commonWaiver {
+              id
+              name
+              waiverType
+              waiverFocus
+            }
+          }
+          suggestedWaivers {
+            id
+            commonWaiverID
+            commonWaiver {
+              id
+              name
+              waiverType
+            }
+          }
+  
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+          modifiedByUserAccount {
+            commonName
+          }
+        }
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}"
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.modelPlan.questionnaires
+  
+  waiverAssessmentSurveyID = responseData.waiverAssessmentSurvey.id
+  
+  bru.setVar("waiverAssessmentSurveyID", waiverAssessmentSurveyID);
+}

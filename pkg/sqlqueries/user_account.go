@@ -38,23 +38,27 @@ var userAccountGetNotificationPreferencesIDDOCQuestionnaireCompleted string
 //go:embed SQL/user_account/get_notification_preferences_mto_ready_for_review.sql
 var userAccountGetNotificationPreferencesMTOReadyForReview string
 
+//go:embed SQL/user_account/get_notification_preferences_waiver_assessment_survey_marked_complete.sql
+var userAccountGetNotificationPreferencesWaiverAssessmentSurveyMarkedComplete string
+
 //go:embed SQL/user_account/get_lead_model_plan_count.sql
 var userAccountGetLeadModelPlanCount string
 
 type userAccountScripts struct {
-	CollectionGet                                                string
-	GetByUsername                                                string
-	GetByID                                                      string
-	GetByIDLOADER                                                string
-	InsertByUsername                                             string
-	UpdateByUsername                                             string
-	GetNotificationPreferencesNewModelPlan                       string
-	GetNotificationRecipientsDatesChanged                        string
-	GetNotificationPreferencesDataExchangeApproachMarkedComplete string
-	GetNotificationPreferencesDiscussionAdded                    string
-	GetNotificationPreferencesIDDOCQuestionnaireCompleted        string
-	GetNotificationPreferencesMTOReadyForReview                  string
-	GetLeadModelPlanCount                                        string
+	CollectionGet                                                  string
+	GetByUsername                                                  string
+	GetByID                                                        string
+	GetByIDLOADER                                                  string
+	InsertByUsername                                               string
+	UpdateByUsername                                               string
+	GetNotificationPreferencesNewModelPlan                         string
+	GetNotificationRecipientsDatesChanged                          string
+	GetNotificationPreferencesDataExchangeApproachMarkedComplete   string
+	GetNotificationPreferencesDiscussionAdded                      string
+	GetNotificationPreferencesIDDOCQuestionnaireCompleted          string
+	GetNotificationPreferencesMTOReadyForReview                    string
+	GetNotificationPreferencesWaiverAssessmentSurveyMarkedComplete string
+	GetLeadModelPlanCount                                          string
 }
 
 // UserAccount houses all the sql for getting data for user account from the database
@@ -67,9 +71,10 @@ var UserAccount = userAccountScripts{
 	UpdateByUsername:                       userAccountUpdateByUsername,
 	GetNotificationPreferencesNewModelPlan: userNotificationPreferencesNewModelPlan,
 	GetNotificationRecipientsDatesChanged:  userAccountGetNotificationRecipientsDatesChanged,
-	GetNotificationPreferencesDataExchangeApproachMarkedComplete: userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete,
-	GetNotificationPreferencesDiscussionAdded:                    userAccountGetNotificationPreferencesDiscussionAdded,
-	GetNotificationPreferencesIDDOCQuestionnaireCompleted:        userAccountGetNotificationPreferencesIDDOCQuestionnaireCompleted,
-	GetNotificationPreferencesMTOReadyForReview:                  userAccountGetNotificationPreferencesMTOReadyForReview,
-	GetLeadModelPlanCount:                                        userAccountGetLeadModelPlanCount,
+	GetNotificationPreferencesDataExchangeApproachMarkedComplete:   userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete,
+	GetNotificationPreferencesDiscussionAdded:                      userAccountGetNotificationPreferencesDiscussionAdded,
+	GetNotificationPreferencesIDDOCQuestionnaireCompleted:          userAccountGetNotificationPreferencesIDDOCQuestionnaireCompleted,
+	GetNotificationPreferencesMTOReadyForReview:                    userAccountGetNotificationPreferencesMTOReadyForReview,
+	GetNotificationPreferencesWaiverAssessmentSurveyMarkedComplete: userAccountGetNotificationPreferencesWaiverAssessmentSurveyMarkedComplete,
+	GetLeadModelPlanCount:                                          userAccountGetLeadModelPlanCount,
 }

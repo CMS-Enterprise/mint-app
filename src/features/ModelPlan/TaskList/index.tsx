@@ -43,6 +43,7 @@ import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { formatDateLocal } from 'utils/date';
+import { findEffectiveLock } from 'utils/lockableSectionLinking';
 import { isAssessment } from 'utils/user';
 
 import SectionLock from '../../../components/SectionLock';
@@ -195,9 +196,13 @@ const TaskList = () => {
   const getTaskListLockedStatus = (
     section: string
   ): TaskListSectionLockStatus | undefined => {
-    return lockableSectionLocks.find(
-      sectionLock => sectionLock.section === taskListSectionMap[section]
-    );
+    const lockableSection = taskListSectionMap[section];
+
+    if (!lockableSection) {
+      return undefined;
+    }
+
+    return findEffectiveLock(lockableSectionLocks, lockableSection);
   };
 
   return (
@@ -375,20 +380,22 @@ const TaskList = () => {
                             </div>
                           )}
 
-                          <TaskListButton
-                            ariaLabel={t(`numberedList.${key}.heading`)}
-                            path={t(`numberedList.${key}.path`)}
-                            disabled={
-                              !!getTaskListLockedStatus(key) &&
-                              getTaskListLockedStatus(key)?.lockedByUserAccount
-                                .username !== euaId
-                            }
-                            status={taskListSections[key].status}
-                          />
+                          <div className="display-flex flex-align-center">
+                            <TaskListButton
+                              ariaLabel={t(`numberedList.${key}.heading`)}
+                              path={t(`numberedList.${key}.path`)}
+                              disabled={
+                                !!getTaskListLockedStatus(key) &&
+                                getTaskListLockedStatus(key)
+                                  ?.lockedByUserAccount.username !== euaId
+                              }
+                              status={taskListSections[key].status}
+                            />
 
-                          {taskListSectionMap[key] && (
-                            <SectionLock section={taskListSectionMap[key]} />
-                          )}
+                            {taskListSectionMap[key] && (
+                              <SectionLock section={taskListSectionMap[key]} />
+                            )}
+                          </div>
                         </TaskListItem>
                         {key !== 'prepareForClearance' && (
                           <Divider className="margin-bottom-4" />

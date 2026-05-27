@@ -18,7 +18,8 @@ import {
   PlanDataExchangeApproachMarkedCompleteActivityMeta,
   TaggedInDiscussionReplyActivityMeta,
   TaggedInPlanDiscussionActivityMeta,
-  UserNotificationPreferenceFlag
+  UserNotificationPreferenceFlag,
+  WaiverAssessmentSurveyMarkedCompleteActivityMeta
 } from 'gql/generated/graphql';
 
 // Type guard to check union type
@@ -108,6 +109,13 @@ export const isIDDOCQuestionnaireCompleted = (
   return data.__typename === 'IddocQuestionnaireCompletedActivityMeta';
 };
 
+export const isWaiverAssessmentSurveyMarkedComplete = (
+  data: ActivityMetaData
+): data is WaiverAssessmentSurveyMarkedCompleteActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'WaiverAssessmentSurveyMarkedCompleteActivityMeta';
+};
+
 export const isMTOReadyForReview = (
   data: ActivityMetaData
 ): data is MtoReadyForReviewActivityMeta => {
@@ -131,6 +139,10 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
       // TODO: Add the route for the iddoc questionnaire completed activity
       return `/models/${metaData.modelPlanID}/read-view/iddoc-questionnaire`;
 
+    case 'WaiverAssessmentSurveyMarkedCompleteActivityMeta':
+      // TODO MINT-3729: Update read view route for waiver assessment survey
+      return `/models/${metaData.modelPlanID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about`;
+
     case 'MTOReadyForReviewActivityMeta':
       return `/models/${metaData.modelPlanID}/read-view/milestones`;
 
@@ -149,6 +161,8 @@ export const UnsubscribableActivities = {
   DATA_EXCHANGE_APPROACH_MARKED_COMPLETE: 'dataExchangeApproachMarkedComplete',
   DATES_CHANGED: 'datesChanged',
   IDDOC_QUESTIONNAIRE_COMPLETED: 'iddocQuestionnaireComplete',
+  WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE:
+    'waiverAssessmentSurveyMarkedComplete',
   INCORRECT_MODEL_STATUS: 'incorrectModelStatus',
   MTO_READY_FOR_REVIEW: 'mtoReadyForReview',
   NEW_DISCUSSION_ADDED: 'newDiscussionAdded',
@@ -190,7 +204,9 @@ const activityI18nKeybases = {
   IddocQuestionnaireCompletedActivityMeta:
     'notifications:index.activityType.IDDOC_QUESTIONNAIRE_COMPLETED',
   MTOReadyForReviewActivityMeta:
-    'notifications:index.activityType.MTO_READY_FOR_REVIEW'
+    'notifications:index.activityType.MTO_READY_FOR_REVIEW',
+  WaiverAssessmentSurveyMarkedCompleteActivityMeta:
+    'notifications:index.activityType.WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE'
 };
 
 export const activityText = (data: ActivityMetaData) => {

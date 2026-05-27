@@ -1042,6 +1042,107 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                     <p
                       class="text-wrap margin-y-105"
                     >
+                      When a waiver assessment survey is completed
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-waiverAssessmentSurveyMarkedComplete"
+                        id="notification-setting-email-waiverAssessmentSurveyMarkedComplete"
+                        name="waiverAssessmentSurveyMarkedComplete"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-waiverAssessmentSurveyMarkedComplete"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-waiverAssessmentSurveyMarkedComplete"
+                        id="notification-setting-in-app-waiverAssessmentSurveyMarkedComplete"
+                        name="waiverAssessmentSurveyMarkedComplete"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-waiverAssessmentSurveyMarkedComplete"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="grid-row"
+                  data-testid="grid"
+                >
+                  <div
+                    class="tablet:grid-col-6 tablet:padding-left-3"
+                    data-testid="grid"
+                  >
+                    <label
+                      class="usa-label text-normal margin-top-0"
+                      data-testid="label"
+                      for="notification-setting-whichModel"
+                    >
+                      Which models?
+                    </label>
+                    <select
+                      class="usa-select"
+                      data-testid="notification-setting-whichModel-waiverAssessmentSurveyMarkedComplete"
+                      disabled=""
+                      id="notification-setting-whichModel"
+                      name="waiverAssessmentSurveyMarkedCompleteNotificationType"
+                    >
+                      <option
+                        value="ALL_MODELS"
+                      >
+                        All models
+                      </option>
+                      <option
+                        value="FOLLOWED_MODELS"
+                      >
+                        Models I’m following
+                      </option>
+                      <option
+                        value="MY_MODELS"
+                      >
+                        My Model Plans
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
                       When a model-to-operations matrix (MTO) is ready for review
                     </p>
                   </div>

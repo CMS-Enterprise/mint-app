@@ -70,7 +70,9 @@ const mockNotificationSettingsWithInApp: MockedResponse<
             iddocQuestionnaireComplete: [],
             iddocQuestionnaireCompletedNotificationType: null,
             mtoReadyForReview: [],
-            mtoReadyForReviewNotificationType: null
+            mtoReadyForReviewNotificationType: null,
+            waiverAssessmentSurveyMarkedComplete: [],
+            waiverAssessmentSurveyMarkedCompleteNotificationType: null
           }
         }
       }
@@ -112,7 +114,9 @@ const mockNotificationSettingsWithoutInApp: MockedResponse<
             iddocQuestionnaireComplete: [],
             iddocQuestionnaireCompletedNotificationType: null,
             mtoReadyForReview: [],
-            mtoReadyForReviewNotificationType: null
+            mtoReadyForReviewNotificationType: null,
+            waiverAssessmentSurveyMarkedComplete: [],
+            waiverAssessmentSurveyMarkedCompleteNotificationType: null
           }
         }
       }
@@ -154,7 +158,9 @@ const mockNotificationSettingsEmpty: MockedResponse<
             iddocQuestionnaireComplete: [],
             iddocQuestionnaireCompletedNotificationType: null,
             mtoReadyForReview: [],
-            mtoReadyForReviewNotificationType: null
+            mtoReadyForReviewNotificationType: null,
+            waiverAssessmentSurveyMarkedComplete: [],
+            waiverAssessmentSurveyMarkedCompleteNotificationType: null
           }
         }
       }

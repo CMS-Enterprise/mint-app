@@ -21,6 +21,11 @@ func (r *questionnairesResolver) DataExchangeApproach(ctx context.Context, obj *
 	return PlanDataExchangeApproachGetByModelPlanIDLoader(ctx, obj.ModelPlanID)
 }
 
+// WaiverAssessmentSurvey is the resolver for the waiverAssessmentSurvey field.
+func (r *questionnairesResolver) WaiverAssessmentSurvey(ctx context.Context, obj *models.Questionnaires) (*models.WaiverAssessmentSurvey, error) {
+	return WaiverAssessmentSurveyGetByModelPlanID(ctx, obj.ModelPlanID)
+}
+
 // Questionnaires returns generated.QuestionnairesResolver implementation.
 func (r *Resolver) Questionnaires() generated.QuestionnairesResolver {
 	return &questionnairesResolver{r}

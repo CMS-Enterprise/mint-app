@@ -42,7 +42,8 @@ import {
   ModelPlanStatusGroup,
   ModelStatus,
   MtoStatus,
-  TaskStatus
+  TaskStatus,
+  WaiverAssessmentSurveyStatus
 } from 'gql/generated/graphql';
 
 import { GetModelPlanBaseModelPlan } from 'contexts/ModelInfoContext';
@@ -137,6 +138,13 @@ export const questionnairesMockData: QuestionnairesType = {
     modifiedByUserAccount: null,
     taskListStatus: IddocQuestionnaireTaskListStatus.NOT_NEEDED,
     needed: false
+  },
+  waiverAssessmentSurvey: {
+    __typename: 'WaiverAssessmentSurvey',
+    id: 'a1b2c3d4-0000-0000-0000-000000000001',
+    status: WaiverAssessmentSurveyStatus.READY,
+    modifiedDts: null,
+    modifiedByUserAccount: null
   }
 };
 

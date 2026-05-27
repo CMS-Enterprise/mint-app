@@ -70,7 +70,7 @@ describe('Tasks page', () => {
     renderWithMock(planTasksWithModelPlanComplete);
 
     await waitFor(() => {
-      expect(screen.getByText('Current tasks (2)')).toBeInTheDocument();
+      expect(screen.getByText('Current tasks (3)')).toBeInTheDocument();
       expect(screen.getByText('Completed tasks (1)')).toBeInTheDocument();
     });
 
@@ -83,6 +83,15 @@ describe('Tasks page', () => {
     ).toBeInTheDocument();
   });
 
+  it('renders waiver assessment survey task secondary actionas link', async () => {
+    renderWithMock(planTasksWithModelPlanComplete);
+    expect(
+      await screen.findByRole('link', {
+        name: 'View additional questionnaires'
+      })
+    ).not.toHaveClass('usa-button usa-button--outline');
+  });
+
   it('orders completed tasks newest-to-oldest by completedDts', async () => {
     const allComplete = makePlanTasks({
       [PlanTaskKey.MODEL_PLAN]: {
@@ -90,6 +99,10 @@ describe('Tasks page', () => {
         status: PlanTaskStatus.COMPLETE
       },
       [PlanTaskKey.MTO]: {
+        state: PlanTaskState.COMPLETE,
+        status: PlanTaskStatus.COMPLETE
+      },
+      [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: {
         state: PlanTaskState.COMPLETE,
         status: PlanTaskStatus.COMPLETE
       },
@@ -102,7 +115,7 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(allComplete, 'completed');
 
     await waitFor(() => {
-      expect(screen.getByText('Completed tasks (3)')).toBeInTheDocument();
+      expect(screen.getByText('Completed tasks (4)')).toBeInTheDocument();
     });
 
     const cardHeadings = container.querySelectorAll(
@@ -114,6 +127,7 @@ describe('Tasks page', () => {
     );
 
     expect(orderedHeadings).toEqual([
+      'Complete your waiver assessment survey',
       'Finalize your data exchange approach',
       'Keep your model-to-operations matrix (MTO) up-to-date',
       'Iterate on your Model Plan'

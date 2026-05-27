@@ -24,7 +24,8 @@ import {
   NewDiscussionAddedNotificationType,
   useGetNotificationSettingsQuery,
   UserNotificationPreferenceFlag,
-  useUpdateNotificationSettingsMutation
+  useUpdateNotificationSettingsMutation,
+  WaiverAssessmentSurveyMarkedCompleteNotificationType
 } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -48,11 +49,11 @@ import {
   verifyEmailParams
 } from '../Home/_components/_utils';
 
-type GetNotifcationSettingsType =
+type GetNotificationSettingsType =
   GetNotificationSettingsQuery['currentUser']['notificationPreferences'];
 
 export type NotificationSettingsFormType = Omit<
-  GetNotifcationSettingsType,
+  GetNotificationSettingsType,
   'id' | 'taggedInDiscussionReply' | '__typename'
 >;
 
@@ -107,6 +108,10 @@ const NotificationSettings = () => {
               data.currentUser.notificationPreferences
                 .iddocQuestionnaireCompletedNotificationType ??
               IddocQuestionnaireCompletedNotificationType.ALL_MODELS,
+            waiverAssessmentSurveyMarkedCompleteNotificationType:
+              data.currentUser.notificationPreferences
+                .waiverAssessmentSurveyMarkedCompleteNotificationType ??
+              WaiverAssessmentSurveyMarkedCompleteNotificationType.ALL_MODELS,
             mtoReadyForReviewNotificationType:
               data.currentUser.notificationPreferences
                 .mtoReadyForReviewNotificationType ??
@@ -134,7 +139,9 @@ const NotificationSettings = () => {
     dataExchangeApproachMarkedComplete,
     dataExchangeApproachMarkedCompleteNotificationType,
     iddocQuestionnaireComplete,
-    iddocQuestionnaireCompletedNotificationType
+    iddocQuestionnaireCompletedNotificationType,
+    waiverAssessmentSurveyMarkedComplete,
+    waiverAssessmentSurveyMarkedCompleteNotificationType
   } = notificationPreferences;
 
   const methods = useForm<NotificationSettingsFormType>({
@@ -154,7 +161,10 @@ const NotificationSettings = () => {
         dataExchangeApproachMarkedComplete ?? [],
       dataExchangeApproachMarkedCompleteNotificationType,
       iddocQuestionnaireComplete: iddocQuestionnaireComplete ?? [],
-      iddocQuestionnaireCompletedNotificationType
+      iddocQuestionnaireCompletedNotificationType,
+      waiverAssessmentSurveyMarkedComplete:
+        waiverAssessmentSurveyMarkedComplete ?? [],
+      waiverAssessmentSurveyMarkedCompleteNotificationType
     },
     values: reformedDefaultValues,
     mode: 'onChange'

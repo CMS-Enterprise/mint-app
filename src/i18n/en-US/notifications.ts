@@ -87,6 +87,10 @@ const notifications = {
         text: ' marked the 4i/ACO-OS questionnaire complete for {{-modelName}}.',
         cta: 'View questionnaire'
       },
+      WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE: {
+        text: ' marked the waiver assessment survey complete for {{-modelName}}.',
+        cta: 'View questionnaire'
+      },
       MTO_READY_FOR_REVIEW: {
         text: ' marked the model-to-operations matrix (MTO) for {{-modelName}} as ready for review.',
         cta: 'View MTO'
@@ -104,6 +108,8 @@ const notifications = {
       discussionActivity: 'New activity in Discussions',
       dataExchangeApproachComplete: 'Data exchange approach is complete',
       iddocQuestionnaireComplete: '4i and ACO-OS questionnaire is complete',
+      waiverAssessmentSurveyMarkedComplete:
+        'Waiver assessment survey is complete',
       readyForReview: '{{-taskSection}} is ready for review ',
       readyForClearance: '{{-taskSection}}  is ready for clearance',
       updatesTo: 'Updates to {{-taskSection}}',
@@ -116,6 +122,7 @@ const notifications = {
         plan_basics: 'Model Basics',
         plan_data_exchange_approach: 'Data exchange approach',
         plan_timeline: 'Model timeline',
+        waiver_assessment_survey: 'Waiver assessment survey',
         mto_category: 'Model-to-operations matrix (MTO)',
         mto_common_milestones: 'Model-to-operations matrix (MTO)',
         mto_common_solutions: 'Model-to-operations matrix (MTO)',
@@ -245,6 +252,13 @@ const notifications = {
             notificationType: 'iddocQuestionnaireCompletedNotificationType'
           },
           {
+            name: 'waiverAssessmentSurveyMarkedComplete',
+            copy: 'When a waiver assessment survey is completed',
+            modelSpecific: 'whichModelTypes',
+            notificationType:
+              'waiverAssessmentSurveyMarkedCompleteNotificationType'
+          },
+          {
             name: 'mtoReadyForReview',
             copy: 'When a model-to-operations matrix (MTO) is ready for review',
             modelSpecific: 'whichModelTypes',
@@ -282,6 +296,8 @@ const notifications = {
           'when a data exchange approach is completed',
         IDDOC_QUESTIONNAIRE_COMPLETED:
           'when a 4i/ACO-OS questionnaire is completed',
+        WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE:
+          'when a waiver assessment survey is completed',
         MTO_READY_FOR_REVIEW: 'when an MTO is marked ready for review'
       }
     }

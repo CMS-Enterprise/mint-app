@@ -10,7 +10,8 @@ import ProtectedRoute from 'components/ProtectedRoute';
 import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import useStickyHeader from 'hooks/useStickyHeader';
 
-import IDDOCBanner from './_components/IddocBanner';
+import QuestionnaireBanner from '../_components/Banner';
+
 import IDDOCMonitoring from './IDDOCMonitoring';
 import IDDOCOperations from './IDDOCOperations';
 import IDDOCTesting from './IDDOCTesting';
@@ -27,8 +28,9 @@ const IddocQuestionnaire = () => {
 
   return (
     <MainContent data-testid="iddoc-questionnaire">
+      <QuestionnaireBanner bannerText={iddocQuestionnaireMiscT('bannerText')} />
+
       <GridContainer>
-        <IDDOCBanner />
         <Breadcrumbs
           items={[
             BreadcrumbItemOptions.HOME,

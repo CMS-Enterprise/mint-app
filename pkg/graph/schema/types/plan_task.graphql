@@ -18,12 +18,13 @@ type PlanTask {
 }
 
 """
-PlanTaskKey identifies which of the three plan tasks this row represents.
+PlanTaskKey identifies which of the four plan tasks this row represents.
 """
 enum PlanTaskKey {
   MODEL_PLAN
   MTO
   DATA_EXCHANGE
+  WAIVER_ASSESSMENT_SURVEY
 }
 
 """

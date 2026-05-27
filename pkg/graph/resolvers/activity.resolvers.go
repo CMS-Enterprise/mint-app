@@ -134,6 +134,16 @@ func (r *taggedInPlanDiscussionActivityMetaResolver) Discussion(ctx context.Cont
 	return PlanDiscussionGetByID(ctx, r.store, logger, obj.DiscussionID)
 }
 
+// ModelPlan is the resolver for the modelPlan field.
+func (r *waiverAssessmentSurveyMarkedCompleteActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// MarkedCompleteByUserAccount is the resolver for the markedCompleteByUserAccount field.
+func (r *waiverAssessmentSurveyMarkedCompleteActivityMetaResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (*authentication.UserAccount, error) {
+	return UserAccountGetByIDLOADER(ctx, obj.MarkedCompleteBy)
+}
+
 // Activity returns generated.ActivityResolver implementation.
 func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
@@ -197,6 +207,11 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 	return &taggedInPlanDiscussionActivityMetaResolver{r}
 }
 
+// WaiverAssessmentSurveyMarkedCompleteActivityMeta returns generated.WaiverAssessmentSurveyMarkedCompleteActivityMetaResolver implementation.
+func (r *Resolver) WaiverAssessmentSurveyMarkedCompleteActivityMeta() generated.WaiverAssessmentSurveyMarkedCompleteActivityMetaResolver {
+	return &waiverAssessmentSurveyMarkedCompleteActivityMetaResolver{r}
+}
+
 type activityResolver struct{ *Resolver }
 type addedAsCollaboratorMetaResolver struct{ *Resolver }
 type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
@@ -210,3 +225,4 @@ type newModelPlanActivityMetaResolver struct{ *Resolver }
 type planDataExchangeApproachMarkedCompleteActivityMetaResolver struct{ *Resolver }
 type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
 type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }
+type waiverAssessmentSurveyMarkedCompleteActivityMetaResolver struct{ *Resolver }

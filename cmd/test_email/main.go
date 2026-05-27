@@ -36,6 +36,7 @@ func main() {
 	sendCollaboratorAddedEmailTest(emailService, addressBook)
 	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, addressBook)
 	sendTestIddocQuestionnaireMarkedCompleteEmail(emailService, addressBook)
+	sendTestWaiverAssessmentSurveyMarkedCompleteEmail(emailService, addressBook)
 	sendFeedbackEmail(emailService, addressBook)
 	reportAProblemEmail(emailService, addressBook)
 

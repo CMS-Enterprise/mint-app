@@ -67,6 +67,12 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNKeyContact),
 		string(models.TNKeyContactCategory),
 
+		// Waiver tables (suggested_waiver and waiver before waiver_assessment_survey;
+		// common_waiver is seed/reference data and is not truncated)
+		string(models.TNSuggestedWaiver),
+		string(models.TNWaiver),
+		"waiver_assessment_survey",
+
 		"audit.change",
 	}
 

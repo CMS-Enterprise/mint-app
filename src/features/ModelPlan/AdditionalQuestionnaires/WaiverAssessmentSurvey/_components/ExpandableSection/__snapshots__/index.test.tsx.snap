@@ -1,0 +1,201 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ExpandableSection Component > matches snapshot  1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="usa-button usa-button--unstyled display-flex flex-align-center deep_underline margin-top-0 margin-bottom-2"
+      data-testid="button"
+      type="button"
+    >
+      <span>
+        Hide questions
+      </span>
+      <svg
+        aria-hidden="true"
+        aria-label="collapse"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+        />
+      </svg>
+    </button>
+    <div
+      class="usa-form-group margin-top-4"
+      data-testid="formGroup"
+    >
+      <label
+        class="usa-label text-normal"
+        data-testid="label"
+        for="is-new-model"
+      >
+        Is this a new model?
+      </label>
+      <span
+        class="usa-hint display-block text-normal"
+      >
+        Select yes if this is a newly authorized concept.
+      </span>
+      <fieldset
+        class="usa-fieldset"
+        data-testid="fieldset"
+      >
+        <div
+          class="display-flex"
+        >
+          <fieldset
+            class="usa-fieldset margin-right-1"
+            data-testid="fieldset"
+          >
+            <div
+              class="usa-radio"
+              data-testid="radio"
+            >
+              <input
+                class="usa-radio__input"
+                data-testid="is-new-model-true"
+                id="is-new-model-true"
+                name="isNewModel"
+                type="radio"
+                value="TRUE"
+              />
+              <label
+                class="usa-radio__label"
+                for="is-new-model-true"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="usa-radio"
+              data-testid="radio"
+            >
+              <input
+                class="usa-radio__input"
+                data-testid="is-new-model-false"
+                id="is-new-model-false"
+                name="isNewModel"
+                type="radio"
+                value="FALSE"
+              />
+              <label
+                class="usa-radio__label"
+                for="is-new-model-false"
+              >
+                No
+              </label>
+            </div>
+          </fieldset>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ExpandableSection Component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <button
+      class="usa-button usa-button--unstyled display-flex flex-align-center deep_underline margin-top-0 margin-bottom-2"
+      data-testid="button"
+      type="button"
+    >
+      <span>
+        Hide questions
+      </span>
+      <svg
+        aria-hidden="true"
+        aria-label="collapse"
+        class="usa-icon"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+        />
+      </svg>
+    </button>
+    <div
+      class="usa-form-group margin-top-4"
+      data-testid="formGroup"
+    >
+      <label
+        class="usa-label text-normal"
+        data-testid="label"
+        for="is-new-model"
+      >
+        Is this a new model?
+      </label>
+      <span
+        class="usa-hint display-block text-normal"
+      >
+        Select yes if this is a newly authorized concept.
+      </span>
+      <fieldset
+        class="usa-fieldset"
+        data-testid="fieldset"
+      >
+        <div
+          class="display-flex"
+        >
+          <fieldset
+            class="usa-fieldset margin-right-1"
+            data-testid="fieldset"
+          >
+            <div
+              class="usa-radio"
+              data-testid="radio"
+            >
+              <input
+                class="usa-radio__input"
+                data-testid="is-new-model-true"
+                id="is-new-model-true"
+                name="isNewModel"
+                type="radio"
+                value="TRUE"
+              />
+              <label
+                class="usa-radio__label"
+                for="is-new-model-true"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="usa-radio"
+              data-testid="radio"
+            >
+              <input
+                class="usa-radio__input"
+                data-testid="is-new-model-false"
+                id="is-new-model-false"
+                name="isNewModel"
+                type="radio"
+                value="FALSE"
+              />
+              <label
+                class="usa-radio__label"
+                for="is-new-model-false"
+              >
+                No
+              </label>
+            </div>
+          </fieldset>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+</DocumentFragment>
+`;

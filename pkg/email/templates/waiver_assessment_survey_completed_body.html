@@ -1,0 +1,27 @@
+{{template "shared_header.html"}}
+{{template "shared_non_mint_mailbox_short_header.html" .}}
+
+<hr />
+<br />
+
+<h2>Waiver assessment survey complete:</h2>
+<br />
+
+<h3>{{.ModelName}}</h3>
+<p>Marked complete by {{.MarkedCompletedByUserCommonName}}</p>
+
+<br />
+
+<a href="{{.ClientAddress}}/models/{{.ModelID}}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about">View Questionnaire</a>
+
+<br />
+
+<hr>
+<br />
+<p>
+  You are currently subscribed to notifications about completed waiver assessment surveys. If you no longer wish to
+  receive these email notifications, please change your
+  <a href="{{.ClientAddress}}/notifications/settings" style="font-weight: normal">notification settings</a>.
+</p>
+
+{{template "shared_footer.html"}}

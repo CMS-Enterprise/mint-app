@@ -75,6 +75,11 @@ func (r *userNotificationPreferencesResolver) IddocQuestionnaireComplete(ctx con
 	return obj.IddocQuestionnaireComplete, nil
 }
 
+// WaiverAssessmentSurveyMarkedComplete is the resolver for the waiverAssessmentSurveyMarkedComplete field.
+func (r *userNotificationPreferencesResolver) WaiverAssessmentSurveyMarkedComplete(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.WaiverAssessmentSurveyMarkedComplete, nil
+}
+
 // IncorrectModelStatus is the resolver for the incorrectModelStatus field.
 func (r *userNotificationPreferencesResolver) IncorrectModelStatus(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
 	return obj.IncorrectModelStatus, nil
