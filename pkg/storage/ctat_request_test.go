@@ -39,8 +39,24 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 		expectedTypeOfHelpNeeded,
 		models.CTATStatusAssigned,
 	)
+	firstDocument := insertCTATRequestDocumentTestRow(
+		s,
+		tx,
+		expected.ID,
+		actorUserID,
+		createdDts.Add(5*time.Minute),
+		"requester-a-contract-1.pdf",
+	)
+	secondDocument := insertCTATRequestDocumentTestRow(
+		s,
+		tx,
+		expected.ID,
+		actorUserID,
+		createdDts.Add(10*time.Minute),
+		"requester-a-contract-2.pdf",
+	)
 
-	_ = insertCTATRequestTestRow(
+	otherRequest := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterB,
@@ -49,6 +65,14 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 		"Requester B contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
 		models.CTATStatusNew,
+	)
+	insertCTATRequestDocumentTestRow(
+		s,
+		tx,
+		otherRequest.ID,
+		actorUserID,
+		createdDts.Add(15*time.Minute),
+		"requester-b-contract-1.pdf",
 	)
 
 	rows, err := CTATRequestGetByRequesterIDLOADER(tx, []uuid.UUID{requesterA})
@@ -65,6 +89,13 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
 	s.Nil(row.TypeOfHelpNeededOther)
 	s.Equal(models.CTATStatusAssigned, row.Status)
+	s.Len(row.SupportingDocuments, 2)
+	s.Equal(
+		[]uuid.UUID{firstDocument.ID, secondDocument.ID},
+		[]uuid.UUID{row.SupportingDocuments[0].ID, row.SupportingDocuments[1].ID},
+	)
+	s.Equal(expected.ID, row.SupportingDocuments[0].CTATRequestID)
+	s.Equal(expected.ID, row.SupportingDocuments[1].CTATRequestID)
 }
 
 func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADEROrdersNewestFirst() {
@@ -229,7 +260,7 @@ func insertCTATRequestTestRow(
 		Requester:              requesterID,
 		Status:                 status,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
-		CmmiDivision:           loToPtr(models.CTATCMMIDivisionOptionBSGDBOM),
+		CmmiDivision:           pointerTo(models.CTATCMMIDivisionOptionBSGDBOM),
 		ContractName:           &contractName,
 		TypeOfHelpNeeded:       helpNeeded,
 		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
@@ -244,6 +275,73 @@ func insertCTATRequestTestRow(
 	return request
 }
 
-func loToPtr[T any](value T) *T {
+func insertCTATRequestDocumentTestRow(
+	s *StoreTestSuite,
+	tx *sqlx.Tx,
+	ctatRequestID uuid.UUID,
+	createdBy uuid.UUID,
+	createdDts time.Time,
+	fileName string,
+) *models.CTATRequestDocument {
+	s.T().Helper()
+
+	id := uuid.New()
+	url := "https://example.com/files/" + fileName
+
+	_, err := tx.Exec(
+		`
+			INSERT INTO ctat_request_document (
+				id,
+				ctat_request_id,
+				url,
+				file_type,
+				bucket,
+				file_key,
+				virus_scanned,
+				virus_clean,
+				restricted,
+				file_name,
+				file_size,
+				created_by,
+				created_dts
+			)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+		`,
+		id,
+		ctatRequestID,
+		url,
+		"application/pdf",
+		"ctat-docs-test",
+		"documents/"+fileName,
+		true,
+		true,
+		false,
+		fileName,
+		1024,
+		createdBy,
+		createdDts,
+	)
+	s.Require().NoError(err)
+
+	document := &models.CTATRequestDocument{
+		URL:          &url,
+		FileType:     "application/pdf",
+		Bucket:       "ctat-docs-test",
+		FileKey:      "documents/" + fileName,
+		VirusScanned: true,
+		VirusClean:   true,
+		Restricted:   false,
+		FileName:     fileName,
+		FileSize:     1024,
+	}
+	document.ID = id
+	document.CTATRequestID = ctatRequestID
+	document.CreatedBy = createdBy
+	document.CreatedDts = createdDts
+
+	return document
+}
+
+func pointerTo[T any](value T) *T {
 	return &value
 }

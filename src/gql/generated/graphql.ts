@@ -374,7 +374,6 @@ export enum CtatHelpNeededType {
   SOW_SOO_PWS_DEVELOPMENT = 'SOW_SOO_PWS_DEVELOPMENT'
 }
 
-/** A request for CTAT assistance */
 export type CtatRequest = {
   __typename: 'CTATRequest';
   assignedAdmin?: Maybe<Scalars['UUID']['output']>;
@@ -401,7 +400,7 @@ export type CtatRequest = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   notes?: Maybe<Scalars['String']['output']>;
-  relatedMINTModels?: Maybe<Array<Scalars['UUID']['output']>>;
+  relatedMINTModels?: Maybe<Array<ModelPlan>>;
   requestUrgency?: Maybe<CtatRequestUrgency>;
   requester: Scalars['UUID']['output'];
   requesterUserAccount: UserAccount;

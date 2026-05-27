@@ -17,6 +17,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// RelatedMINTModels is the resolver for the relatedMINTModels field.
+func (r *cTATRequestResolver) RelatedMINTModels(ctx context.Context, obj *models.CTATRequest) ([]*models.ModelPlan, error) {
+	return CTATRelatedMINTModelsGetByIDsLOADER(ctx, obj.RelatedMINTModels)
+}
+
 // TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
 func (r *cTATRequestResolver) TypeOfHelpNeeded(ctx context.Context, obj *models.CTATRequest) ([]models.CTATHelpNeededType, error) {
 	return obj.TypeOfHelpNeeded, nil

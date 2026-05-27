@@ -150,9 +150,6 @@ type CTATRequestDocument {
   # TODO: fully implement
 }
 
-"""
-A request for CTAT assistance
-"""
 type CTATRequest {
   id: UUID!
   humanReadableID: String!
@@ -170,7 +167,7 @@ type CTATRequest {
   cmmiGroupOther: String
   cmmiDivision: CTATCMMIDivisionOption
   cmmiDivisionOther: String
-  relatedMINTModels: [UUID!]
+  relatedMINTModels: [ModelPlan!]
   contractActivityType: CTATContractActivityType
   contractActivityTypeOther: String
   contractName: String
