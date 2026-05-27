@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -64,6 +65,10 @@ func (suite *ResolverSuite) TestCTATRequestLiteByRequesterIDLoader() {
 }
 
 func (suite *ResolverSuite) TestCtatRequestsAdmin() {
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "CTATAssessment_"+uuid.NewString())
+	suite.True(adminPrincipal.AllowASSESSMENT())
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+
 	first := suite.insertCommittedCTATRequestLiteRow(
 		suite.testConfigs.Principal.Account().ID,
 		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
@@ -85,7 +90,7 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 		},
 	}
 
-	resp, err := resolver.CtatRequestsAdmin(suite.testConfigs.Context)
+	resp, err := resolver.CtatRequestsAdmin(adminCtx)
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Len(resp.CtatRequests, 2)
