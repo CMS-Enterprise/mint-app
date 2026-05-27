@@ -2,6 +2,7 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
+  Button,
   Fieldset,
   Form,
   FormGroup,
@@ -33,6 +34,7 @@ type CommonWaiver = {
   name: string;
   description: string;
   participationAgreementLanguageLink: string;
+  // TODO: This is not nullable in schema - how to tell if answer has been provided?
   cmmiWaiverPointOfContact?: string | null;
   waiverType: string;
   waiverFocus: string;
@@ -43,7 +45,7 @@ type CommonWaiver = {
 };
 
 type WaiverInfoFields = {
-  willUseWaiver: boolean;
+  willUseWaiver: boolean | null;
   notUsingReason: string;
 };
 
@@ -77,7 +79,7 @@ const WaiverInfoPanel = ({
     isUsedInActiveModels
   } = commonWaiver;
 
-  const { handleSubmit, control } = useForm<WaiverInfoFields>({
+  const { handleSubmit, control, setValue } = useForm<WaiverInfoFields>({
     defaultValues: {
       willUseWaiver,
       notUsingReason
@@ -176,44 +178,84 @@ const WaiverInfoPanel = ({
                 name="willUseWaiver"
                 control={control}
                 render={({ field }) => (
-                  <Fieldset
-                    className="mint-yes-no-button-group margin-top-2"
-                    aria-labelledby="willUseWaiverLabel"
-                    aria-describedby="willUseWaiverHelpText"
-                  >
-                    <div className="mint-yes-no-button mint-yes-no-button--yes">
-                      <input
-                        type="radio"
-                        id="waiver-info-panel-will-use-waiver-yes"
-                        data-testid="waiver-info-panel-will-use-waiver-yes"
-                        {...field}
-                        value="true"
-                      />
-                      <label
-                        className="usa-button"
-                        htmlFor="waiver-info-panel-will-use-waiver-yes"
+                  <>
+                    {field.value === null ? (
+                      <Fieldset
+                        className="mint-yes-no-button-group margin-top-2"
+                        aria-labelledby="willUseWaiverLabel"
+                        aria-describedby="willUseWaiverHelpText"
                       >
-                        <Icon.Check aria-hidden />
-                        Yes
-                      </label>
-                    </div>
-                    <div className="mint-yes-no-button mint-yes-no-button--no">
-                      <input
-                        type="radio"
-                        id="waiver-info-panel-will-use-waiver-no"
-                        data-testid="waiver-info-panel-will-use-waiver-no"
-                        {...field}
-                        value="false"
-                      />
-                      <label
-                        className="usa-button"
-                        htmlFor="waiver-info-panel-will-use-waiver-no"
-                      >
-                        <Icon.Close aria-hidden />
-                        No
-                      </label>
-                    </div>
-                  </Fieldset>
+                        <div className="mint-yes-no-button mint-yes-no-button--yes">
+                          <input
+                            type="radio"
+                            id="waiver-info-panel-will-use-waiver-yes"
+                            data-testid="waiver-info-panel-will-use-waiver-yes"
+                            {...field}
+                            onChange={() => setValue('willUseWaiver', true)}
+                            value="true"
+                          />
+                          <label
+                            className="usa-button"
+                            htmlFor="waiver-info-panel-will-use-waiver-yes"
+                          >
+                            <Icon.Check aria-hidden />
+                            Yes
+                          </label>
+                        </div>
+                        <div className="mint-yes-no-button mint-yes-no-button--no">
+                          <input
+                            type="radio"
+                            id="waiver-info-panel-will-use-waiver-no"
+                            data-testid="waiver-info-panel-will-use-waiver-no"
+                            {...field}
+                            onChange={() => setValue('willUseWaiver', false)}
+                            value="false"
+                          />
+                          <label
+                            className="usa-button"
+                            htmlFor="waiver-info-panel-will-use-waiver-no"
+                          >
+                            <Icon.Close aria-hidden />
+                            No
+                          </label>
+                        </div>
+                      </Fieldset>
+                    ) : (
+                      <>
+                        <p
+                          className={classNames(
+                            'margin-top-2 margin-bottom-05 display-flex flex-align-center text-bold',
+                            field.value === true
+                              ? 'text-success-darker'
+                              : 'text-error-dark'
+                          )}
+                        >
+                          {field.value === true ? (
+                            <Icon.Check
+                              aria-hidden
+                              className="margin-right-1"
+                            />
+                          ) : (
+                            <Icon.Close
+                              aria-hidden
+                              className="margin-right-1"
+                            />
+                          )}
+                          {t(`waiverInfoPanel.willUseWaiver_${field.value}`)}
+                        </p>
+                        <Button
+                          type="button"
+                          className="margin-0"
+                          unstyled
+                          onClick={() => setValue('willUseWaiver', null)}
+                        >
+                          {t('waiverInfoPanel.changeResponse', {
+                            context: field.value.toString()
+                          })}
+                        </Button>
+                      </>
+                    )}
+                  </>
                 )}
               />
             </FormGroup>

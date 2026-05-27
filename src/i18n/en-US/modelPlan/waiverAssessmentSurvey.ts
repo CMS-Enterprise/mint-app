@@ -50,7 +50,10 @@ const waiverAssessmentSurvey = {
     isUsedInActiveModels: 'Is this waiver used in active models?',
     willUseWaiverLabel: 'Do you plan to use this waiver with your model?',
     willUseWaiverHelpText:
-      'Your answer to this question may reveal additional questions to be answered.'
+      'Your answer to this question may reveal additional questions to be answered.',
+    willUseWaiver_true: 'You said your model will use this waiver.',
+    willUseWaiver_false: 'You said your model will not use this waiver.',
+    changeResponse: 'Change response'
   }
 };
 
