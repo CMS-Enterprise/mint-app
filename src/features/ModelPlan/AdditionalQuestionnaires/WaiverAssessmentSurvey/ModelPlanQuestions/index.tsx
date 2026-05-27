@@ -95,7 +95,7 @@ const ModelPlanQuestions = () => {
             description:
               'Allows for model participants to enter into agreements with Medicare-enrolled providers and suppliers to participate as Preferred Providers under MSSP.',
             participationAgreementLanguageLink: 'https://cms.gov/',
-            cmmiWaiverPointOfContact: 'Jane Doe',
+            cmmiWaiverPointOfContact: '',
             waiverType: 'Lorem Ipsum',
             waiverFocus: 'Administrative and operational',
             whatIsWaived: '42 CFR § 425.114(a) and (b)',

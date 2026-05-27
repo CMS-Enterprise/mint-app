@@ -1,5 +1,6 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import {
   Fieldset,
   Form,
@@ -8,6 +9,7 @@ import {
   Icon,
   Label
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import {
   DescriptionDefinition,
@@ -24,8 +26,6 @@ import './index.scss';
 /**
  * TO DO:
  * - Update waiver type to match query
- * - Add DescriptionTerm text to translations file
- * - Empty state for waiver POC ("No point of contact listed")
  * - Remove temp test code from ModelPlanQuestions
  */
 
@@ -33,7 +33,7 @@ type CommonWaiver = {
   name: string;
   description: string;
   participationAgreementLanguageLink: string;
-  cmmiWaiverPointOfContact: string;
+  cmmiWaiverPointOfContact?: string | null;
   waiverType: string;
   waiverFocus: string;
   whatIsWaived: string;
@@ -60,6 +60,8 @@ const WaiverInfoPanel = ({
   closeModal,
   waiverInfo
 }: WaiverInfoPanelProps) => {
+  const { t } = useTranslation('waiverAssessmentSurvey');
+
   const { willUseWaiver, notUsingReason, commonWaiver } = waiverInfo;
 
   const {
@@ -84,49 +86,58 @@ const WaiverInfoPanel = ({
 
   return (
     <Sidepanel
-      ariaLabel="Waiver Information"
+      ariaLabel={t('waiverInfoPanel.heading')}
       testid="waiver-info-panel"
       isOpen={isOpen}
       closeModal={closeModal}
-      modalHeading="Waiver information"
+      modalHeading={t('waiverInfoPanel.heading')}
     >
       <GridContainer className="padding-y-6 padding-x-8">
         <div className="maxw-mobile-lg">
           <h2 className="margin-bottom-2">{name}</h2>
           <p className="text-base-dark margin-bottom-1">{description}</p>
           <ExternalLink href={participationAgreementLanguageLink}>
-            Participation Agreement Language
+            {t('waiverInfoPanel.participationAgreementLanguage')}
           </ExternalLink>
 
           <Divider className="margin-top-3 margin-bottom-4" />
 
-          <DescriptionList title="Waiver information">
+          <DescriptionList title={t('waiverInfoPanel.heading')}>
             <DescriptionTerm
-              term="CMMI Waiver Point Of Contact"
+              term={t('waiverInfoPanel.cmmiWaiverPointOfContact')}
               className="margin-bottom-0 margin-top-3"
             />
-            <DescriptionDefinition definition={cmmiWaiverPointOfContact} />
+            <DescriptionDefinition
+              className={classNames({
+                'text-italic': !cmmiWaiverPointOfContact?.trim()
+              })}
+              definition={
+                cmmiWaiverPointOfContact?.trim()
+                  ? cmmiWaiverPointOfContact
+                  : t('waiverInfoPanel.noPointOfContactListed')
+              }
+            />
 
             <DescriptionTerm
-              term="Waiver type"
+              term={t('waiverInfoPanel.waiverType')}
               className="margin-bottom-0 margin-top-3"
             />
             <DescriptionDefinition definition={waiverType} />
 
             <DescriptionTerm
-              term="Waiver focus"
+              term={t('waiverInfoPanel.waiverFocus')}
               className="margin-bottom-0 margin-top-3"
             />
             <DescriptionDefinition definition={waiverFocus} />
 
             <DescriptionTerm
-              term="What is waived?"
+              term={t('waiverInfoPanel.whatIsWaived')}
               className="margin-bottom-0 margin-top-3"
             />
             <DescriptionDefinition definition={whatIsWaived} />
 
             <DescriptionTerm
-              term="Is there a waiver standardization effort?"
+              term={t('waiverInfoPanel.hasStandardizationEffort')}
               className="margin-bottom-0 margin-top-3"
             />
             <DescriptionDefinition
@@ -134,13 +145,13 @@ const WaiverInfoPanel = ({
             />
 
             <DescriptionTerm
-              term="Is claims data or RREG analysis available?"
+              term={t('waiverInfoPanel.hasClaimsDataOrRREGAnalysis')}
               className="margin-bottom-0 margin-top-3"
             />
             <DescriptionDefinition definition={hasClaimsDataOrRREGAnalysis} />
 
             <DescriptionTerm
-              term="Is this waiver used in active models?"
+              term={t('waiverInfoPanel.isUsedInActiveModels')}
               className="margin-bottom-0 margin-top-3"
             />
             <DescriptionDefinition
@@ -156,11 +167,10 @@ const WaiverInfoPanel = ({
                 id="willUseWaiverLabel"
                 htmlFor="waiver-info-panel-will-use-waiver-yes"
               >
-                Do you plan to use this waiver with your model?
+                {t('waiverInfoPanel.willUseWaiverLabel')}
               </Label>
               <HelpText id="willUseWaiverHelpText">
-                Your answer to this question may reveal additional questions to
-                be answered.
+                {t('waiverInfoPanel.willUseWaiverHelpText')}
               </HelpText>
               <Controller
                 name="willUseWaiver"

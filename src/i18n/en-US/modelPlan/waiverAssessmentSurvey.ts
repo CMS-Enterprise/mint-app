@@ -36,6 +36,21 @@ const waiverAssessmentSurvey = {
       'Any answers updated as a part of this survey will also be updated in the Model Plan.',
     updateAnswers: 'Update answers (show questions)',
     hideQuestions: 'Hide questions'
+  },
+  waiverInfoPanel: {
+    heading: 'Waiver information',
+    participationAgreementLanguage: 'Participation Agreement Language',
+    cmmiWaiverPointOfContact: 'CMMI Waiver Point Of Contact',
+    noPointOfContactListed: 'No point of contact listed',
+    waiverType: 'Waiver type',
+    waiverFocus: 'Waiver focus',
+    whatIsWaived: 'What is waived?',
+    hasStandardizationEffort: 'Is there a waiver standardization effort?',
+    hasClaimsDataOrRREGAnalysis: 'Is claims data or RREG analysis available?',
+    isUsedInActiveModels: 'Is this waiver used in active models?',
+    willUseWaiverLabel: 'Do you plan to use this waiver with your model?',
+    willUseWaiverHelpText:
+      'Your answer to this question may reveal additional questions to be answered.'
   }
 };
 
