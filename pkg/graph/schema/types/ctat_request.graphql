@@ -1,10 +1,188 @@
 """
-This is a place holder struct that could change. It's purpose it hold
-a request for CTAT assistance
+The contract type selected for a CTAT record.
+"""
+enum CTATContractType {
+  COST_PLUS_FIXED_FEE
+  COST_REIMBURSEMENT
+  FIRMED_FIXED_PRICE
+  INCENTIVE_CONTRACT
+  TIME_AND_MATERIALS
+  OTHER
+}
+
+"""
+The contract activity type selected for a CTAT record.
+"""
+enum CTATContractActivityType {
+  EVALUATION
+  IMPLEMENTATION
+  LEARNING
+  TECHNICAL_ASSISTANCE
+  OTHER
+}
+
+"""
+The urgency selected for a CTAT request.
+"""
+enum CTATRequestUrgency {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+"""
+The status assigned to a CTAT request.
+"""
+enum CTATStatus {
+  IN_PROGRESS
+  NEW
+  ASSIGNED
+  CLOSED
+}
+
+"""
+The selected CMMI group for a CTAT record.
+"""
+enum CTATCMMIGroupOption {
+  BSG
+  LDG
+  PCMG
+  PPG
+  RREG
+  SCMG
+  SPHG
+  OTHER
+}
+
+"""
+The selected CMMI division for a CTAT record.
+"""
+enum CTATCMMIDivisionOption {
+  BSG_DBOM
+  BSG_DCCS
+  BSG_DSSOS
+  BSG_DTS
+  LDG_DMLS
+  LDG_DAN
+  PCMG_DAPC
+  PCMG_DHCPM
+  PCMG_DSPM
+  PCMG_DAPM
+  PCMG_DPM
+  PPG_DAPMI
+  PPG_DDA
+  PPG_DESP
+  PPG_DPMS
+  RREG_DHSR
+  RREG_DPAR
+  RREG_DSPR
+  RREG_DRAM
+  SCMG_DHPI
+  SCMG_DFR
+  SCMG_DSI
+  SCMG_DDI
+  SPHG_DMPM
+  SPHG_DHII
+  SPHG_DPHII
+  SPHG_DHCD
+  SPHG_DSBI
+  OTHER
+}
+
+"""
+The selected type of help needed for a CTAT record.
+"""
+enum CTATHelpNeededType {
+  CALM_SYSTEM_REQUISITION_SUPPORT
+  CONTRACT_CHANGE_REQUEST_CCR_PROCESSING
+  COR_TRANSCRIPT_REVIEW
+  DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS
+  DELIVERABLE_EVALUATION_REVIEW_DER
+  GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF
+  GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA
+  GUIDANCE_ON_MARKET_RESEARCH
+  GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING
+  INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION
+  POST_AWARD_ACTIONS_PAA
+  REQUEST_FOR_CONTRACT_MEMO_RFC
+  REQUEST_FOR_INFORMATION_RFI
+  REQUEST_FOR_PROPOSAL_RFP
+  REQUEST_FOR_QUOTATION_RFQ
+  SOW_SOO_PWS_DEVELOPMENT
+  CONTRACTOR_PERFORMANCE_MANAGEMENT
+  DATA_USE_AGREEMENT_DUA
+  DELIVERABLE_EVALUATION_REVIEW_DER_MODIFICATION
+  DOCUMENTING_AND_SUBMITTING_CPARS
+  ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES
+  FOREIGN_NATIONAL_MANAGEMENT_SYSTEM_FNMS
+  IDENTITY_AND_CREDENTIALING_TOOL_ICT
+  INVOICE_PROCESSING_PLATFORM_IPP
+  MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE
+  POST_AWARD_ACTIONS_PAA_MODIFICATION
+  OTHER
+}
+
+"""
+A supporting document attached to a CTAT request.
+"""
+type CTATRequestDocument {
+  id: UUID!
+  ctatRequestId: UUID!
+
+  url: String
+
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  restricted: Boolean!
+  fileName: String!
+  fileSize: Int!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+
+  # TODO: fully implement
+}
+
+"""
+A request for CTAT assistance
 """
 type CTATRequest {
   id: UUID!
   humanReadableID: String!
+  humanReadableIDNumber: Int!
+  requester: UUID!
+  requesterUserAccount: UserAccount!
+
+  status: CTATStatus
+  assignedAdmin: UUID
+  assignedAdminUserAccount: UserAccount
+  notes: String
+  resolution: String
+
+  cmmiGroup: CTATCMMIGroupOption
+  cmmiGroupOther: String
+  cmmiDivision: CTATCMMIDivisionOption
+  cmmiDivisionOther: String
+  relatedMINTModels: [UUID!]
+  contractActivityType: CTATContractActivityType
+  contractActivityTypeOther: String
+  contractName: String
+  contractNumber: String
+  contractType: CTATContractType
+  contractTypeOther: String
+  typeOfHelpNeeded: [CTATHelpNeededType!]!
+  typeOfHelpNeededOther: String
+  describeHelpNeeded: String
+  requestUrgency: CTATRequestUrgency
+  dateAssistanceNeededBy: Time
+  supportingDocuments: [CTATRequestDocument!]!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -14,7 +192,53 @@ type CTATRequest {
   modifiedDts: Time
 }
 
+"""
+Input for uploading a supporting document for a CTAT request.
+"""
+input CTATRequestDocumentInput {
+  fileData: Upload!
+}
+
+"""
+Input for creating a CTAT request.
+"""
+input CTATRequestInput {
+  cmmiGroup: CTATCMMIGroupOption!
+  cmmiGroupOther: String
+  cmmiDivision: CTATCMMIDivisionOption
+  cmmiDivisionOther: String
+  relatedMINTModels: [UUID!]
+  contractActivityType: CTATContractActivityType
+  contractActivityTypeOther: String
+  contractName: String
+  contractNumber: String
+  contractType: CTATContractType
+  contractTypeOther: String
+  typeOfHelpNeeded: [CTATHelpNeededType!]!
+  typeOfHelpNeededOther: String
+  describeHelpNeeded: String!
+  requestUrgency: CTATRequestUrgency!
+  dateAssistanceNeededBy: Time!
+  supportingDocuments: [CTATRequestDocumentInput!]
+}
+
+"""
+Input for an admin update to a CTAT request.
+"""
+input CTATAdminUpdateInput @goModel(model: "map[string]interface{}") {
+  id: UUID!
+  status: CTATStatus
+  assignedAdmin: String
+  notes: String
+  resolution: String
+}
+
 extend type Query {
-  ctatRequest(id: UUID!): CTATRequest
-  ctatRequests: [CTATRequest!]
+  ctatRequest(id: UUID!): CTATRequest!
+  ctatRequests: [CTATRequest!]!
+}
+
+extend type Mutation {
+  createCTATRequest(input: CTATRequestInput!): CTATRequest!
+  adminUpdateCTATRequest(input: CTATAdminUpdateInput!): CTATRequest!
 }
