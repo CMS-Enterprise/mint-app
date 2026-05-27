@@ -44,10 +44,12 @@ func batchCommonWaiverByID(ctx context.Context, ids []uuid.UUID) []*dataloader.R
 
 func batchCommonWaiverGetAll(ctx context.Context, ids []*uuid.UUID) []*dataloader.Result[[]*models.CommonWaiver] {
 	loaders, err := Loaders(ctx)
-	logger := appcontext.ZLogger(ctx)
+
 	if err != nil {
 		return errorPerEachKey[*uuid.UUID, []*models.CommonWaiver](ids, err)
 	}
+
+	logger := appcontext.ZLogger(ctx)
 
 	data, err := storage.CommonWaiverGetAll(loaders.DataReader.Store, logger)
 	if err != nil {
