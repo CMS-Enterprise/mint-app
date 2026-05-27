@@ -16,7 +16,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADERFiltersAndMaps
 
 	actorUserID := s.principal.Account().ID
 	requesterA := actorUserID
-	requesterBPrincipal, err := getTestPrincipal(s.store, "CTATRequesterB_"+uuid.NewString())
+	requesterBPrincipal, err := getTestPrincipal(s.store, "BTAL")
 	s.Require().NoError(err)
 	requesterB := requesterBPrincipal.Account().ID
 
@@ -129,7 +129,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteCollectionGetForAdminReturnsAllRows(
 
 	actorUserID := s.principal.Account().ID
 	requesterA := actorUserID
-	requesterBPrincipal, err := getTestPrincipal(s.store, "CTATAdminViewB_"+uuid.NewString())
+	requesterBPrincipal, err := getTestPrincipal(s.store, "BTMN")
 	s.Require().NoError(err)
 	requesterB := requesterBPrincipal.Account().ID
 

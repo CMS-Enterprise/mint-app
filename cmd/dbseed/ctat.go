@@ -60,9 +60,9 @@ func (s *Seeder) seedCTATRequests(
 	planApproachingClearance *models.ModelPlan,
 ) {
 	requesterBTAL := s.getTestPrincipalByUsername("BTAL")
-	requesterABIL := s.getTestPrincipalByUsername("ABIL")
-	requesterMINT := s.getTestPrincipalByUsername("MINT")
-	adminCTAT := s.getTestPrincipalByUsername("CTATADMIN")
+	requesterJANE := s.getTestPrincipalByUsername("JANE")
+	requesterBTMN := s.getTestPrincipalByUsername("BTMN")
+	adminCTAT := s.getTestPrincipalByUsername("ADMI")
 
 	bsgDivision := models.CTATCMMIDivisionOptionBSGDCCS
 	technicalAssistance := models.CTATContractActivityTypeTechnicalAssistance
@@ -94,7 +94,7 @@ func (s *Seeder) seedCTATRequests(
 	typeOfHelpNeededOther := "Assistance drafting evaluation criteria for a new workstream"
 
 	s.createCTATRequest(ctatRequestSeedInput{
-		Requester:                 requesterABIL,
+		Requester:                 requesterJANE,
 		AssignedAdmin:             adminCTAT,
 		Status:                    models.CTATStatusAssigned,
 		Notes:                     &assignedNotes,
@@ -133,7 +133,7 @@ func (s *Seeder) seedCTATRequests(
 	costPlusFixedFee := models.CTATContractTypeCostPlusFixedFee
 
 	s.createCTATRequest(ctatRequestSeedInput{
-		Requester:              requesterMINT,
+		Requester:              requesterBTMN,
 		AssignedAdmin:          adminCTAT,
 		Status:                 models.CTATStatusClosed,
 		Notes:                  &closedNotes,

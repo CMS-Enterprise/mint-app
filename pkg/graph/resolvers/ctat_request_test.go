@@ -15,9 +15,9 @@ import (
 
 func (suite *ResolverSuite) TestCTATRequestLiteByRequesterIDLoader() {
 	requesterA := suite.testConfigs.Principal.Account().ID
-	requesterBPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "CTATRequesterB_"+uuid.NewString())
+	requesterBPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "BTAL")
 	requesterB := requesterBPrincipal.Account().ID
-	requesterCPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "CTATRequesterC_"+uuid.NewString())
+	requesterCPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "JANE")
 	requesterC := requesterCPrincipal.Account().ID
 
 	firstA := suite.insertCommittedCTATRequestLiteRow(
@@ -65,7 +65,7 @@ func (suite *ResolverSuite) TestCTATRequestLiteByRequesterIDLoader() {
 }
 
 func (suite *ResolverSuite) TestCtatRequestsAdmin() {
-	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "CTATAssessment_"+uuid.NewString())
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	suite.True(adminPrincipal.AllowASSESSMENT())
 	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
 
@@ -77,7 +77,7 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 		models.CTATStatusNew,
 	)
 	second := suite.insertCommittedCTATRequestLiteRow(
-		suite.getTestPrincipal(suite.testConfigs.Store, "CTATAdminView_"+uuid.NewString()).Account().ID,
+		suite.getTestPrincipal(suite.testConfigs.Store, "BTMN").Account().ID,
 		time.Date(2026, 2, 10, 11, 0, 0, 0, time.UTC),
 		"Admin contract 2",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
