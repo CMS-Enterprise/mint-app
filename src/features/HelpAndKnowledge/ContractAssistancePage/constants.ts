@@ -4,7 +4,13 @@ export type ContractAssistanceTicket = {
   contractName: string;
   helpType: string;
   status: string;
+  assigneeId?: string | null;
 };
+
+export const CONTRACT_ASSISTANCE_TICKET_STATUS = {
+  OPEN: 'Open',
+  CLOSED: 'Closed'
+} as const;
 
 export const TICKET_TABLE_COLUMNS = [
   'ticketId',

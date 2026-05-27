@@ -12,6 +12,7 @@ import {
 } from 'utils/tableSort';
 
 import {
+  AdminTab,
   ContractAssistanceTicket,
   TICKET_TABLE_COLUMNS
 } from '../../constants';
@@ -23,18 +24,20 @@ export type { ContractAssistanceTicket };
 type ContractAssistanceTicketsTableProps = {
   tickets: ContractAssistanceTicket[];
   variant: 'admin' | 'user';
+  adminTab?: AdminTab;
 };
 
 const ContractAssistanceTicketsTable = ({
   tickets,
-  variant
+  variant,
+  adminTab = 'all'
 }: ContractAssistanceTicketsTableProps) => {
   const { t } = useTranslation('helpAndKnowledge');
   const isAdmin = variant === 'admin';
 
   const translationPrefix = isAdmin
-    ? 'contractAssistance.adminActions'
-    : 'contractAssistance.userSubmittedTickets';
+    ? `contractAssistance.adminActions.emptyState.${adminTab}`
+    : 'contractAssistance.userSubmittedTickets.emptyState';
 
   const columns: Column<ContractAssistanceTicket>[] = useMemo(
     () =>
@@ -80,7 +83,11 @@ const ContractAssistanceTicketsTable = ({
       fullWidth
     >
       <caption className="usa-sr-only">
-        {t(`${translationPrefix}.table.caption`)}
+        {t(
+          isAdmin
+            ? 'contractAssistance.adminActions.table.caption'
+            : 'contractAssistance.userSubmittedTickets.table.caption'
+        )}
       </caption>
       <thead className="margin-bottom-2">
         {headerGroups.map(headerGroup => {
@@ -135,10 +142,10 @@ const ContractAssistanceTicketsTable = ({
             >
               <Alert
                 type="info"
-                heading={t(`${translationPrefix}.emptyState.title`)}
+                heading={t(`${translationPrefix}.title`)}
                 className="margin-top-2"
               >
-                {t(`${translationPrefix}.emptyState.copy`)}
+                {t(`${translationPrefix}.copy`)}
               </Alert>
             </td>
           </tr>

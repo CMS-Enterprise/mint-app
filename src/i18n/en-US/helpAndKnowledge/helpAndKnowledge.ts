@@ -2652,8 +2652,26 @@ const helpAndKnowledge = {
     adminActions: {
       title: 'Admin ticket management',
       emptyState: {
-        title: 'There are no submitted help tickets.',
-        copy: 'Once a MINT user submits a request for contract assistance, it will appear here.'
+        all: {
+          title: 'There are no submitted help tickets.',
+          copy: 'Once a MINT user submits a request for contract assistance, it will appear here.'
+        },
+        open: {
+          title: 'There are no open help tickets.',
+          copy: 'Once a MINT user submits a request for contract assistance, it will appear here until work is complete and it is closed. You may choose another option above to see a different subset of submitted contract assistance tickets.'
+        },
+        unassigned: {
+          title: 'There are no unassigned help tickets.',
+          copy: 'Once a MINT user submits a request for contract assistance, it will appear here until assigned. You may choose another option above to see a different subset of submitted contract assistance tickets.'
+        },
+        myTickets: {
+          title: 'You have no help tickets assigned to you.',
+          copy: 'Any contract assistance tickets assigned to you will appear here. To see a different subset of submitted contract assistance tickets, choose another option above. You may assign any unassigned tickets to yourself.'
+        },
+        closed: {
+          title: 'There are no closed help tickets.',
+          copy: 'Once work is completed for a contract assistance ticket and it is closed, it will appear here. You may choose another option above to see a different subset of submitted contract assistance tickets.'
+        }
       },
       table: {
         caption: 'Contract assistance help tickets'
