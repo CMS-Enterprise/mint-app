@@ -12,27 +12,27 @@ import (
 
 // ctatRequestLoaders holds LoaderWrappers related to CTAT requests.
 type ctatRequestLoaders struct {
-	// ByRequesterID gets lite CTAT requests grouped by requester.
-	ByRequesterID LoaderWrapper[uuid.UUID, []*models.CTATRequestLite]
+	// ByRequesterID gets CTAT requests grouped by requester.
+	ByRequesterID LoaderWrapper[uuid.UUID, []*models.CTATRequest]
 }
 
 // CTATRequest is the singleton instance of all LoaderWrappers related to CTAT requests.
 var CTATRequest = &ctatRequestLoaders{
-	ByRequesterID: NewLoaderWrapper(batchCTATRequestLiteGetByRequesterID),
+	ByRequesterID: NewLoaderWrapper(batchCTATRequestGetByRequesterID),
 }
 
-func batchCTATRequestLiteGetByRequesterID(ctx context.Context, requesterIDs []uuid.UUID) []*dataloader.Result[[]*models.CTATRequestLite] {
+func batchCTATRequestGetByRequesterID(ctx context.Context, requesterIDs []uuid.UUID) []*dataloader.Result[[]*models.CTATRequest] {
 	loaders, err := Loaders(ctx)
 	if err != nil {
-		return errorPerEachKey[uuid.UUID, []*models.CTATRequestLite](requesterIDs, err)
+		return errorPerEachKey[uuid.UUID, []*models.CTATRequest](requesterIDs, err)
 	}
 
-	data, err := storage.CTATRequestLiteGetByRequesterIDLOADER(loaders.DataReader.Store, requesterIDs)
+	data, err := storage.CTATRequestGetByRequesterIDLOADER(loaders.DataReader.Store, requesterIDs)
 	if err != nil {
-		return errorPerEachKey[uuid.UUID, []*models.CTATRequestLite](requesterIDs, err)
+		return errorPerEachKey[uuid.UUID, []*models.CTATRequest](requesterIDs, err)
 	}
 
-	getKeyFunc := func(data *models.CTATRequestLite) uuid.UUID {
+	getKeyFunc := func(data *models.CTATRequest) uuid.UUID {
 		return data.Requester
 	}
 

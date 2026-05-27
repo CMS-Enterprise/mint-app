@@ -4,11 +4,11 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/ctat_request/get_lite_by_requester_id_LOADER.sql
-var ctatRequestsLiteByRequesterIDSQL string
+//go:embed SQL/ctat_request/get_by_requester_id_LOADER.sql
+var ctatRequestsByRequesterIDSQL string
 
-//go:embed SQL/ctat_request/get_lite_for_admin.sql
-var ctatRequestsLiteForAdminSQL string
+//go:embed SQL/ctat_request/get_for_admin.sql
+var ctatRequestsForAdminSQL string
 
 type ctatRequestScripts struct {
 	GetByRequesterID string
@@ -16,6 +16,6 @@ type ctatRequestScripts struct {
 }
 
 var CTATRequest = ctatRequestScripts{
-	GetByRequesterID: ctatRequestsLiteByRequesterIDSQL,
-	GetForAdmin:      ctatRequestsLiteForAdminSQL,
+	GetByRequesterID: ctatRequestsByRequesterIDSQL,
+	GetForAdmin:      ctatRequestsForAdminSQL,
 }

@@ -10,12 +10,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-// CTATRequestLiteGetByRequesterIDLOADER implements resolver logic to get lite CTAT requests by requester ID using a data loader.
-func CTATRequestLiteGetByRequesterIDLOADER(ctx context.Context, requesterID uuid.UUID) ([]*models.CTATRequestLite, error) {
+// CTATRequestGetByRequesterIDLOADER implements resolver logic to get CTAT requests by requester ID using a data loader.
+func CTATRequestGetByRequesterIDLOADER(ctx context.Context, requesterID uuid.UUID) ([]*models.CTATRequest, error) {
 	return loaders.CTATRequest.ByRequesterID.Load(ctx, requesterID)
 }
 
-// CTATRequestLiteCollectionGetForAdmin implements resolver logic to get lite CTAT requests for the admin table view.
-func CTATRequestLiteCollectionGetForAdmin(ctx context.Context, store *storage.Store) ([]*models.CTATRequestLite, error) {
-	return storage.CTATRequestLiteCollectionGetForAdmin(store)
+// CTATRequestCollectionGetForAdmin implements resolver logic to get CTAT requests for the admin table view.
+func CTATRequestCollectionGetForAdmin(ctx context.Context, store *storage.Store) ([]*models.CTATRequest, error) {
+	return storage.CTATRequestCollectionGetForAdmin(store)
 }

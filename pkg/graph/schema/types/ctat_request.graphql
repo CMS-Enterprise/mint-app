@@ -193,31 +193,17 @@ type CTATRequest {
 }
 
 """
-CTATRequestLite is a lite version of the full CTAT request that contains the required data for table population in the UI
-"""
-type CTATRequestLite {
-  id: UUID!
-  humanReadableID: String!
-  humanReadableIDNumber: Int!
-  submissionDate: Time!
-  contractName: String
-  typeOfHelpNeeded: [CTATHelpNeededType!]!
-  typeOfHelpNeededOther: String
-  status: CTATStatus
-}
-
-"""
 CTATRequestsTableDataRequester contains the requests for the table information for a requester
 """
 type CTATRequestsTableDataRequester {
-  ctatRequests: [CTATRequestLite!]!
+  ctatRequests: [CTATRequest!]!
 }
 
 """
 CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin
 """
 type CTATRequestsTableDataAdmin {
-  ctatRequests: [CTATRequestLite!]!
+  ctatRequests: [CTATRequest!]!
   count: Int!
 }
 

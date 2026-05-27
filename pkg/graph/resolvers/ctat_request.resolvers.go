@@ -41,7 +41,7 @@ func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.
 func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATRequestsTableDataRequester, error) {
 	principal := appcontext.Principal(ctx)
 
-	ctatRequests, err := CTATRequestLiteGetByRequesterIDLOADER(ctx, principal.Account().ID)
+	ctatRequests, err := CTATRequestGetByRequesterIDLOADER(ctx, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +58,7 @@ func (r *queryResolver) CtatRequestsAdmin(ctx context.Context) (*model.CTATReque
 		return nil, fmt.Errorf("user does not have permission to view admin CTAT requests")
 	}
 
-	ctatRequests, err := CTATRequestLiteCollectionGetForAdmin(ctx, r.store)
+	ctatRequests, err := CTATRequestCollectionGetForAdmin(ctx, r.store)
 	if err != nil {
 		return nil, err
 	}

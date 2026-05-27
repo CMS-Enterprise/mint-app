@@ -13,28 +13,28 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-func (suite *ResolverSuite) TestCTATRequestLiteByRequesterIDLoader() {
+func (suite *ResolverSuite) TestCTATRequestByRequesterIDLoader() {
 	requesterA := suite.testConfigs.Principal.Account().ID
 	requesterBPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "BTAL")
 	requesterB := requesterBPrincipal.Account().ID
 	requesterCPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "JANE")
 	requesterC := requesterCPrincipal.Account().ID
 
-	firstA := suite.insertCommittedCTATRequestLiteRow(
+	firstA := suite.insertCommittedCTATRequestRow(
 		requesterA,
 		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
 		"Requester A contract 1",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
 		models.CTATStatusNew,
 	)
-	secondA := suite.insertCommittedCTATRequestLiteRow(
+	secondA := suite.insertCommittedCTATRequestRow(
 		requesterA,
 		time.Date(2026, 2, 10, 10, 0, 0, 0, time.UTC),
 		"Requester A contract 2",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRfq},
 		models.CTATStatusAssigned,
 	)
-	firstB := suite.insertCommittedCTATRequestLiteRow(
+	firstB := suite.insertCommittedCTATRequestRow(
 		requesterB,
 		time.Date(2026, 2, 10, 11, 0, 0, 0, time.UTC),
 		"Requester B contract 1",
@@ -48,14 +48,14 @@ func (suite *ResolverSuite) TestCTATRequestLiteByRequesterIDLoader() {
 		{Key: requesterC, Expected: []uuid.UUID{}},
 	}
 
-	verifyFunc := func(data []*models.CTATRequestLite, expected []uuid.UUID) bool {
-		returnedIDs := lo.Map(data, func(item *models.CTATRequestLite, _ int) uuid.UUID {
+	verifyFunc := func(data []*models.CTATRequest, expected []uuid.UUID) bool {
+		returnedIDs := lo.Map(data, func(item *models.CTATRequest, _ int) uuid.UUID {
 			return item.ID
 		})
 		return suite.ElementsMatch(expected, returnedIDs)
 	}
 
-	loaders.VerifyLoaders[uuid.UUID, []*models.CTATRequestLite, []uuid.UUID](
+	loaders.VerifyLoaders[uuid.UUID, []*models.CTATRequest, []uuid.UUID](
 		suite.testConfigs.Context,
 		&suite.Suite,
 		loaders.CTATRequest.ByRequesterID,
@@ -69,14 +69,14 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 	suite.True(adminPrincipal.AllowASSESSMENT())
 	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
 
-	first := suite.insertCommittedCTATRequestLiteRow(
+	first := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
 		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
 		"Admin contract 1",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
 		models.CTATStatusNew,
 	)
-	second := suite.insertCommittedCTATRequestLiteRow(
+	second := suite.insertCommittedCTATRequestRow(
 		suite.getTestPrincipal(suite.testConfigs.Store, "BTMN").Account().ID,
 		time.Date(2026, 2, 10, 11, 0, 0, 0, time.UTC),
 		"Admin contract 2",
@@ -96,19 +96,19 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 	suite.Len(resp.CtatRequests, 2)
 	suite.Equal(2, resp.Count)
 
-	returnedIDs := lo.Map(resp.CtatRequests, func(item *models.CTATRequestLite, _ int) uuid.UUID {
+	returnedIDs := lo.Map(resp.CtatRequests, func(item *models.CTATRequest, _ int) uuid.UUID {
 		return item.ID
 	})
 	suite.ElementsMatch([]uuid.UUID{first.ID, second.ID}, returnedIDs)
 }
 
-func (suite *ResolverSuite) insertCommittedCTATRequestLiteRow(
+func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	requesterID uuid.UUID,
 	createdDts time.Time,
 	contractName string,
 	typeOfHelpNeeded []models.CTATHelpNeededType,
 	status models.CTATStatus,
-) *models.CTATRequestLite {
+) *models.CTATRequest {
 	suite.T().Helper()
 
 	tx, err := suite.testConfigs.Store.Beginx()
@@ -163,15 +163,25 @@ func (suite *ResolverSuite) insertCommittedCTATRequestLiteRow(
 	err = tx.Commit()
 	suite.Require().NoError(err)
 
-	statusCopy := status
-
-	return &models.CTATRequestLite{
-		ID:                    inserted.ID,
-		Requester:             requesterID,
-		HumanReadableIDNumber: inserted.HumanReadableIDNumber,
-		SubmissionDate:        createdDts,
-		ContractName:          &contractName,
-		TypeOfHelpNeeded:      typeOfHelpNeeded,
-		Status:                &statusCopy,
+	request := &models.CTATRequest{
+		Requester:              requesterID,
+		Status:                 status,
+		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
+		CmmiDivision:           pointerTo(models.CTATCMMIDivisionOptionBSGDBOM),
+		ContractName:           &contractName,
+		TypeOfHelpNeeded:       helpNeeded,
+		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh,
+		DateAssistanceNeededBy: dateAssistanceNeededBy,
+		HumanReadableIDNumber:  inserted.HumanReadableIDNumber,
 	}
+	request.ID = inserted.ID
+	request.CreatedBy = suite.testConfigs.Principal.Account().ID
+	request.CreatedDts = createdDts
+
+	return request
+}
+
+func pointerTo[T any](value T) *T {
+	return &value
 }

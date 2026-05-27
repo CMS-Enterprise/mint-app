@@ -53,13 +53,13 @@ type CTATRequestInput struct {
 
 // CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin
 type CTATRequestsTableDataAdmin struct {
-	CtatRequests []*models.CTATRequestLite `json:"ctatRequests"`
-	Count        int                       `json:"count"`
+	CtatRequests []*models.CTATRequest `json:"ctatRequests"`
+	Count        int                   `json:"count"`
 }
 
 // CTATRequestsTableDataRequester contains the requests for the table information for a requester
 type CTATRequestsTableDataRequester struct {
-	CtatRequests []*models.CTATRequestLite `json:"ctatRequests"`
+	CtatRequests []*models.CTATRequest `json:"ctatRequests"`
 }
 
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply

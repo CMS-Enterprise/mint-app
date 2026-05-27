@@ -460,19 +460,6 @@ export type CtatRequestInput = {
   typeOfHelpNeededOther?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** CTATRequestLite is a lite version of the full CTAT request that contains the required data for table population in the UI */
-export type CtatRequestLite = {
-  __typename: 'CTATRequestLite';
-  contractName?: Maybe<Scalars['String']['output']>;
-  humanReadableID: Scalars['String']['output'];
-  humanReadableIDNumber: Scalars['Int']['output'];
-  id: Scalars['UUID']['output'];
-  status?: Maybe<CtatStatus>;
-  submissionDate: Scalars['Time']['output'];
-  typeOfHelpNeeded: Array<CtatHelpNeededType>;
-  typeOfHelpNeededOther?: Maybe<Scalars['String']['output']>;
-};
-
 /** The urgency selected for a CTAT request. */
 export enum CtatRequestUrgency {
   HIGH = 'HIGH',
@@ -484,13 +471,13 @@ export enum CtatRequestUrgency {
 export type CtatRequestsTableDataAdmin = {
   __typename: 'CTATRequestsTableDataAdmin';
   count: Scalars['Int']['output'];
-  ctatRequests: Array<CtatRequestLite>;
+  ctatRequests: Array<CtatRequest>;
 };
 
 /** CTATRequestsTableDataRequester contains the requests for the table information for a requester */
 export type CtatRequestsTableDataRequester = {
   __typename: 'CTATRequestsTableDataRequester';
-  ctatRequests: Array<CtatRequestLite>;
+  ctatRequests: Array<CtatRequest>;
 };
 
 /** The status assigned to a CTAT request. */

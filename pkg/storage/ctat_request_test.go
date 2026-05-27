@@ -9,7 +9,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADERFiltersAndMapsLiteFields() {
+func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFields() {
 	tx, err := s.store.Beginx()
 	s.Require().NoError(err)
 	defer tx.Rollback()
@@ -25,21 +25,22 @@ func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADERFiltersAndMaps
 
 	createdDts := time.Date(2026, 1, 15, 9, 30, 0, 0, time.UTC)
 	contractName := "Requester A contract"
-	expected := insertCTATRequestLiteTestRow(
+	expectedTypeOfHelpNeeded := []models.CTATHelpNeededType{
+		models.CTATHelpNeededTypeRequestForInformationRfi,
+		models.CTATHelpNeededTypeRequestForQuotationRfq,
+	}
+	expected := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterA,
 		actorUserID,
 		createdDts,
 		contractName,
-		[]models.CTATHelpNeededType{
-			models.CTATHelpNeededTypeRequestForInformationRfi,
-			models.CTATHelpNeededTypeRequestForQuotationRfq,
-		},
+		expectedTypeOfHelpNeeded,
 		models.CTATStatusAssigned,
 	)
 
-	_ = insertCTATRequestLiteTestRow(
+	_ = insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterB,
@@ -50,7 +51,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADERFiltersAndMaps
 		models.CTATStatusNew,
 	)
 
-	rows, err := CTATRequestLiteGetByRequesterIDLOADER(tx, []uuid.UUID{requesterA})
+	rows, err := CTATRequestGetByRequesterIDLOADER(tx, []uuid.UUID{requesterA})
 	s.Require().NoError(err)
 	s.Require().Len(rows, 1)
 
@@ -58,22 +59,15 @@ func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADERFiltersAndMaps
 	s.Equal(expected.ID, row.ID)
 	s.Equal(expected.Requester, row.Requester)
 	s.Equal(expected.HumanReadableIDNumber, row.HumanReadableIDNumber)
-	s.EqualTime(expected.SubmissionDate, row.SubmissionDate)
+	s.EqualTime(createdDts, row.CreatedDts)
 	s.Require().NotNil(row.ContractName)
 	s.Equal(contractName, *row.ContractName)
-	s.Equal(
-		[]models.CTATHelpNeededType{
-			models.CTATHelpNeededTypeRequestForInformationRfi,
-			models.CTATHelpNeededTypeRequestForQuotationRfq,
-		},
-		row.TypeOfHelpNeeded,
-	)
+	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
 	s.Nil(row.TypeOfHelpNeededOther)
-	s.Require().NotNil(row.Status)
-	s.Equal(models.CTATStatusAssigned, *row.Status)
+	s.Equal(models.CTATStatusAssigned, row.Status)
 }
 
-func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADEROrdersNewestFirst() {
+func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADEROrdersNewestFirst() {
 	tx, err := s.store.Beginx()
 	s.Require().NoError(err)
 	defer tx.Rollback()
@@ -84,7 +78,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADEROrdersNewestFi
 	err = setCurrentSessionUserVariable(tx, actorUserID)
 	s.Require().NoError(err)
 
-	first := insertCTATRequestLiteTestRow(
+	first := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterID,
@@ -94,7 +88,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADEROrdersNewestFi
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
 		models.CTATStatusNew,
 	)
-	second := insertCTATRequestLiteTestRow(
+	second := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterID,
@@ -104,7 +98,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADEROrdersNewestFi
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
 		models.CTATStatusAssigned,
 	)
-	third := insertCTATRequestLiteTestRow(
+	third := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterID,
@@ -115,14 +109,14 @@ func (s *StoreTestSuite) TestCTATRequestLiteGetByRequesterIDLOADEROrdersNewestFi
 		models.CTATStatusClosed,
 	)
 
-	rows, err := CTATRequestLiteGetByRequesterIDLOADER(tx, []uuid.UUID{requesterID})
+	rows, err := CTATRequestGetByRequesterIDLOADER(tx, []uuid.UUID{requesterID})
 	s.Require().NoError(err)
 	s.Require().Len(rows, 3)
 
 	s.Equal([]uuid.UUID{third.ID, second.ID, first.ID}, []uuid.UUID{rows[0].ID, rows[1].ID, rows[2].ID})
 }
 
-func (s *StoreTestSuite) TestCTATRequestLiteCollectionGetForAdminReturnsAllRows() {
+func (s *StoreTestSuite) TestCTATRequestCollectionGetForAdminReturnsAllRows() {
 	tx, err := s.store.Beginx()
 	s.Require().NoError(err)
 	defer tx.Rollback()
@@ -136,7 +130,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteCollectionGetForAdminReturnsAllRows(
 	err = setCurrentSessionUserVariable(tx, actorUserID)
 	s.Require().NoError(err)
 
-	first := insertCTATRequestLiteTestRow(
+	first := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterA,
@@ -146,7 +140,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteCollectionGetForAdminReturnsAllRows(
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
 		models.CTATStatusNew,
 	)
-	second := insertCTATRequestLiteTestRow(
+	second := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterA,
@@ -156,7 +150,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteCollectionGetForAdminReturnsAllRows(
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
 		models.CTATStatusAssigned,
 	)
-	third := insertCTATRequestLiteTestRow(
+	third := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterB,
@@ -167,7 +161,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteCollectionGetForAdminReturnsAllRows(
 		models.CTATStatusClosed,
 	)
 
-	rows, err := CTATRequestLiteCollectionGetForAdmin(tx)
+	rows, err := CTATRequestCollectionGetForAdmin(tx)
 	s.Require().NoError(err)
 	s.Require().Len(rows, 3)
 	s.ElementsMatch(
@@ -176,7 +170,7 @@ func (s *StoreTestSuite) TestCTATRequestLiteCollectionGetForAdminReturnsAllRows(
 	)
 }
 
-func insertCTATRequestLiteTestRow(
+func insertCTATRequestTestRow(
 	s *StoreTestSuite,
 	tx *sqlx.Tx,
 	requesterID uuid.UUID,
@@ -185,7 +179,7 @@ func insertCTATRequestLiteTestRow(
 	contractName string,
 	typeOfHelpNeeded []models.CTATHelpNeededType,
 	status models.CTATStatus,
-) *models.CTATRequestLite {
+) *models.CTATRequest {
 	s.T().Helper()
 
 	id := uuid.New()
@@ -231,15 +225,25 @@ func insertCTATRequestLiteTestRow(
 	).StructScan(&inserted)
 	s.Require().NoError(err)
 
-	statusCopy := status
-
-	return &models.CTATRequestLite{
-		ID:                    inserted.ID,
-		Requester:             requesterID,
-		HumanReadableIDNumber: inserted.HumanReadableIDNumber,
-		SubmissionDate:        createdDts,
-		ContractName:          &contractName,
-		TypeOfHelpNeeded:      typeOfHelpNeeded,
-		Status:                &statusCopy,
+	request := &models.CTATRequest{
+		Requester:              requesterID,
+		Status:                 status,
+		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
+		CmmiDivision:           loToPtr(models.CTATCMMIDivisionOptionBSGDBOM),
+		ContractName:           &contractName,
+		TypeOfHelpNeeded:       helpNeeded,
+		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh,
+		DateAssistanceNeededBy: dateAssistanceNeededBy,
+		HumanReadableIDNumber:  inserted.HumanReadableIDNumber,
 	}
+	request.ID = inserted.ID
+	request.CreatedBy = createdBy
+	request.CreatedDts = createdDts
+
+	return request
+}
+
+func loToPtr[T any](value T) *T {
+	return &value
 }
