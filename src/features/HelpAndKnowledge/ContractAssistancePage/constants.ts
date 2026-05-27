@@ -1,0 +1,25 @@
+export type ContractAssistanceTicket = {
+  ticketId: string;
+  submissionDate: string;
+  contractName: string;
+  helpType: string;
+  status: string;
+};
+
+export const TICKET_TABLE_COLUMNS = [
+  'ticketId',
+  'submissionDate',
+  'contractName',
+  'helpType',
+  'status'
+] as const satisfies readonly (keyof ContractAssistanceTicket)[];
+
+export const ADMIN_TABS = [
+  'all',
+  'open',
+  'unassigned',
+  'myTickets',
+  'closed'
+] as const;
+
+export type AdminTab = (typeof ADMIN_TABS)[number];

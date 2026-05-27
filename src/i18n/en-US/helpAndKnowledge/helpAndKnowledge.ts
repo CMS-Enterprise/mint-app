@@ -2642,6 +2642,13 @@ const helpAndKnowledge = {
     hkcViewCta: 'Create and manage help tickets',
     description:
       'Use the button below to create a new contract assistance ticket. The Contract Technical Assistance Team (CTAT) can help with a variety of contract-related activities in pre-award and post-award timeframes.',
+    table: {
+      ticketId: 'Ticket ID',
+      submissionDate: 'Submission date',
+      contractName: 'Contract name',
+      helpType: 'Help type',
+      status: 'Status'
+    },
     adminActions: {
       title: 'Admin ticket management',
       emptyState: {
@@ -2649,12 +2656,7 @@ const helpAndKnowledge = {
         copy: 'Once a MINT user submits a request for contract assistance, it will appear here.'
       },
       table: {
-        caption: 'Contract assistance help tickets',
-        ticketId: 'Ticket ID',
-        submissionDate: 'Submission date',
-        contractName: 'Contract name',
-        helpType: 'Help type',
-        status: 'Status'
+        caption: 'Contract assistance help tickets'
       },
       tabs: {
         all: 'All tickets ({{count}})',

@@ -11,84 +11,61 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
+import {
+  ContractAssistanceTicket,
+  TICKET_TABLE_COLUMNS
+} from '../../constants';
+
 import './index.scss';
 
-export type ContractAssistanceTicket = {
-  ticketId: string;
-  submissionDate: string;
-  contractName: string;
-  helpType: string;
-  status: string;
-};
+export type { ContractAssistanceTicket };
 
 type ContractAssistanceTicketsTableProps = {
   tickets: ContractAssistanceTicket[];
-  isAdmin: boolean;
+  variant: 'admin' | 'user';
 };
 
 const ContractAssistanceTicketsTable = ({
   tickets,
-  isAdmin
+  variant
 }: ContractAssistanceTicketsTableProps) => {
   const { t } = useTranslation('helpAndKnowledge');
+  const isAdmin = variant === 'admin';
 
   const translationPrefix = isAdmin
     ? 'contractAssistance.adminActions'
     : 'contractAssistance.userSubmittedTickets';
 
   const columns: Column<ContractAssistanceTicket>[] = useMemo(
-    () => [
-      {
-        id: 'ticketId',
-        Header: t('contractAssistance.adminActions.table.ticketId'),
-        accessor: 'ticketId',
-        disableSortBy: isAdmin
-      },
-      {
-        id: 'submissionDate',
-        Header: t('contractAssistance.adminActions.table.submissionDate'),
-        accessor: 'submissionDate',
-        disableSortBy: isAdmin
-      },
-      {
-        id: 'contractName',
-        Header: t('contractAssistance.adminActions.table.contractName'),
-        accessor: 'contractName',
-        disableSortBy: isAdmin
-      },
-      {
-        id: 'helpType',
-        Header: t('contractAssistance.adminActions.table.helpType'),
-        accessor: 'helpType',
-        disableSortBy: isAdmin
-      },
-      {
-        id: 'status',
-        Header: t('contractAssistance.adminActions.table.status'),
-        accessor: 'status',
-        disableSortBy: isAdmin
-      }
-    ],
-    [t, isAdmin]
+    () =>
+      TICKET_TABLE_COLUMNS.map(columnKey => ({
+        id: columnKey,
+        Header: t(`contractAssistance.table.${columnKey}`),
+        accessor: columnKey
+      })),
+    [t]
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns: columns as Column<object>[],
-        data: tickets,
-        sortTypes: {
-          alphanumeric: (rowOne, rowTwo, columnName) => {
-            return sortColumnValues(
-              rowOne.values[columnName],
-              rowTwo.values[columnName]
-            );
-          }
-        },
-        autoResetSortBy: false
+  const tableOptions = {
+    columns: columns as Column<object>[],
+    data: tickets,
+    ...(variant === 'user' && {
+      sortTypes: {
+        alphanumeric: (rowOne: any, rowTwo: any, columnName: string) => {
+          return sortColumnValues(
+            rowOne.values[columnName],
+            rowTwo.values[columnName]
+          );
+        }
       },
-      useSortBy
-    );
+      autoResetSortBy: false
+    })
+  };
+
+  const tablePlugins = variant === 'user' ? [useSortBy] : [];
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(tableOptions, ...tablePlugins);
 
   return (
     <Table
@@ -106,52 +83,54 @@ const ContractAssistanceTicketsTable = ({
         {t(`${translationPrefix}.table.caption`)}
       </caption>
       <thead className="margin-bottom-2">
-        {headerGroups.map(headerGroup => (
-          <tr
-            {...headerGroup.getHeaderGroupProps()}
-            className="border-bottom-2px"
-            key={{ ...headerGroup.getHeaderGroupProps() }.key}
-          >
-            {headerGroup.headers.map(column => (
-              <th
-                {...column.getHeaderProps()}
-                aria-sort={
-                  column.canSort ? getColumnSortStatus(column) : undefined
-                }
-                scope="col"
-                key={column.id}
-                className={classNames(
-                  'padding-left-0 padding-bottom-1 padding-top-1',
-                  {
-                    'text-black bg-primary-lighter text-bold': isAdmin,
-                    'table-header': !isAdmin
+        {headerGroups.map(headerGroup => {
+          const headerGroupProps = headerGroup.getHeaderGroupProps();
+
+          return (
+            <tr
+              {...headerGroupProps}
+              className="border-bottom-2px"
+              key={headerGroupProps.key}
+            >
+              {headerGroup.headers.map(column => (
+                <th
+                  {...column.getHeaderProps()}
+                  aria-sort={
+                    column.canSort ? getColumnSortStatus(column) : undefined
                   }
-                )}
-              >
-                {column.canSort ? (
-                  <button
-                    className="usa-button usa-button--unstyled position-relative"
-                    type="button"
-                    {...column.getSortByToggleProps()}
-                  >
-                    {column.render('Header') as React.ReactNode}
-                    {getHeaderSortIcon(column, false)}
-                  </button>
-                ) : (
-                  column.render('Header')
-                )}
-              </th>
-            ))}
-          </tr>
-        ))}
+                  scope="col"
+                  key={column.id}
+                  className={classNames(
+                    'padding-left-0 padding-bottom-1 padding-top-1 bg-transparent',
+                    {
+                      'text-black text-bold ': isAdmin,
+                      'table-header': !isAdmin
+                    }
+                  )}
+                >
+                  {column.canSort ? (
+                    <button
+                      className="usa-button usa-button--unstyled position-relative"
+                      type="button"
+                      {...column.getSortByToggleProps()}
+                    >
+                      {column.render('Header') as React.ReactNode}
+                      {getHeaderSortIcon(column, false)}
+                    </button>
+                  ) : (
+                    column.render('Header')
+                  )}
+                </th>
+              ))}
+            </tr>
+          );
+        })}
       </thead>
       <tbody {...getTableBodyProps()}>
         {rows.length === 0 ? (
           <tr>
             <td
-              className={classNames('border-0 padding-0', {
-                'bg-primary-lighter': isAdmin
-              })}
+              className="border-0 padding-0 bg-transparent"
               colSpan={columns.length}
             >
               <Alert
@@ -170,15 +149,19 @@ const ContractAssistanceTicketsTable = ({
 
             return (
               <tr {...getRowProps()} key={id}>
-                {cells.map(cell => (
-                  <td
-                    {...cell.getCellProps()}
-                    key={cell.getCellProps().key}
-                    className="padding-left-0"
-                  >
-                    {cell.render('Cell')}
-                  </td>
-                ))}
+                {cells.map(cell => {
+                  const cellProps = cell.getCellProps();
+
+                  return (
+                    <td
+                      {...cellProps}
+                      key={cellProps.key}
+                      className="padding-left-0"
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
               </tr>
             );
           })
