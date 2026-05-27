@@ -2641,7 +2641,7 @@ const helpAndKnowledge = {
     hkcJumpToLabel: 'Contract assistance',
     hkcViewCta: 'Create and manage help tickets',
     description:
-      'Use the button below to create a new contract assistance ticket. The Contract Technical Assistance Team (CTAT) can help with a variety of contract-related activities in pre-award and post-award timeframes.',
+      'The Contract Technical Assistance Team (CTAT) can help with a variety of contracting needs and activities in pre-award and post-award timeframes.',
     table: {
       ticketId: 'Ticket ID',
       submissionDate: 'Submission date',

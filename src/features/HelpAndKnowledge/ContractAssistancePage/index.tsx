@@ -1,10 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
+import { useFlags } from 'launchdarkly-react-client-sdk';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import { isAssessment } from 'utils/user';
 
 import AdminTicketManagementSection from './_components/AdminTicketManagementSection';
 import UserSubmittedTicketsSection from './_components/UserSubmittedTicketsSection';
@@ -12,6 +16,9 @@ import { ContractAssistanceTicket } from './constants';
 
 const ContractAssistancePage = () => {
   const { t: hkcT } = useTranslation('helpAndKnowledge');
+  const { groups } = useSelector((state: AppState) => state.auth);
+  const flags = useFlags();
+  const isAssessmentTeam = isAssessment(groups, flags);
 
   const adminTickets: ContractAssistanceTicket[] = [];
   const userTickets: ContractAssistanceTicket[] = [];
@@ -41,7 +48,9 @@ const ContractAssistancePage = () => {
           </UswdsReactLink>
         </div>
 
-        <AdminTicketManagementSection tickets={adminTickets} />
+        {isAssessmentTeam && (
+          <AdminTicketManagementSection tickets={adminTickets} />
+        )}
         <UserSubmittedTicketsSection tickets={userTickets} />
       </GridContainer>
     </MainContent>
