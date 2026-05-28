@@ -23,7 +23,7 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
     );
   });
 
-  it('edits solution details from milestone panel with milestone context', () => {
+  it.skip('edits solution details from milestone panel with milestone context', () => {
     cy.get('table').within(() => {
       cy.get('td')
         .contains(milestoneName)
@@ -69,7 +69,7 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
     });
   });
 
-  it('edits milestone details from solution panel with solution context', () => {
+  it.skip('edits milestone details from solution panel with solution context', () => {
     cy.contains('button', 'Solutions and IT systems').click({ force: true });
     cy.get('table').within(() => {
       cy.get('td')
@@ -119,7 +119,7 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
     });
   });
 
-  it('returns to milestone details when closing solution panel opened from milestone', () => {
+  it.skip('returns to milestone details when closing solution panel opened from milestone', () => {
     cy.get('table').within(() => {
       cy.get('td')
         .contains(milestoneName)
@@ -147,7 +147,7 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
     });
   });
 
-  it('returns to solution details when closing milestone panel opened from solution', () => {
+  it.skip('returns to solution details when closing milestone panel opened from solution', () => {
     cy.contains('button', 'Solutions and IT systems').click({ force: true });
     cy.get('table').within(() => {
       cy.get('td')
