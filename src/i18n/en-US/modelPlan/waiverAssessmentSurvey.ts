@@ -39,7 +39,7 @@ const waiverAssessmentSurvey = {
   },
   waiverInfoPanel: {
     heading: 'Waiver information',
-    participationAgreementLanguage: 'Participation Agreement Language',
+    participationAgreementLanguage: 'Link to Participation Agreement Language',
     cmmiWaiverPointOfContact: 'CMMI Waiver Point Of Contact',
     noPointOfContactListed: 'No point of contact listed',
     waiverType: 'Waiver type',
@@ -53,7 +53,8 @@ const waiverAssessmentSurvey = {
       'Your answer to this question may reveal additional questions to be answered.',
     willUseWaiver_true: 'You said your model will use this waiver.',
     willUseWaiver_false: 'You said your model will not use this waiver.',
-    changeResponse: 'Change response'
+    changeResponse: 'Change response',
+    notUsingReason: 'Please explain why your model is not using this waiver.'
   }
 };
 

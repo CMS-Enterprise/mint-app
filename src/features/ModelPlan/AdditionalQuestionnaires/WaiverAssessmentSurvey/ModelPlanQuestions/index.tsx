@@ -88,7 +88,7 @@ const ModelPlanQuestions = () => {
         isOpen
         closeModal={() => {}}
         waiverInfo={{
-          willUseWaiver: false,
+          willUseWaiver: null,
           notUsingReason: '',
           commonWaiver: {
             name: 'Non-duplication',

@@ -8,7 +8,8 @@ import {
   FormGroup,
   GridContainer,
   Icon,
-  Label
+  Label,
+  Textarea
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
@@ -79,12 +80,13 @@ const WaiverInfoPanel = ({
     isUsedInActiveModels
   } = commonWaiver;
 
-  const { handleSubmit, control, setValue } = useForm<WaiverInfoFields>({
-    defaultValues: {
-      willUseWaiver,
-      notUsingReason
-    }
-  });
+  const { handleSubmit, control, setValue, register } =
+    useForm<WaiverInfoFields>({
+      defaultValues: {
+        willUseWaiver,
+        notUsingReason
+      }
+    });
 
   return (
     <Sidepanel
@@ -253,6 +255,18 @@ const WaiverInfoPanel = ({
                             context: field.value.toString()
                           })}
                         </Button>
+
+                        {field.value === false && (
+                          <FormGroup>
+                            <Label htmlFor="notUsingReason">
+                              {t('waiverInfoPanel.notUsingReason')}
+                            </Label>
+                            <Textarea
+                              {...register('notUsingReason')}
+                              id="notUsingReason"
+                            />
+                          </FormGroup>
+                        )}
                       </>
                     )}
                   </>
