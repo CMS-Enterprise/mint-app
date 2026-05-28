@@ -48,9 +48,9 @@ export const getAdminTabCounts = (
   tickets: ContractAssistanceTicket[],
   currentUserEuaId: string
 ): AdminTabCounts =>
-  Object.fromEntries(
-    ADMIN_TABS.map(tab => [
-      tab,
-      filterTicketsByAdminTab(tickets, tab, currentUserEuaId).length
-    ])
-  ) as AdminTabCounts;
+  ADMIN_TABS.reduce((tabCounts, tab) => {
+    return {
+      ...tabCounts,
+      [tab]: filterTicketsByAdminTab(tickets, tab, currentUserEuaId).length
+    };
+  }, {} as AdminTabCounts);
