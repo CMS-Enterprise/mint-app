@@ -1,9 +1,44 @@
 import {
+  CtatHelpNeededType,
+  GetCtatRequestsRequesterQuery
+} from 'gql/generated/graphql';
+
+import { helpNeededTypes, statuses } from 'i18n/en-US/ctatRequest';
+import { formatDateLocal } from 'utils/date';
+
+import {
   ADMIN_TABS,
   AdminTab,
   CONTRACT_ASSISTANCE_TICKET_STATUS,
   ContractAssistanceTicket
 } from './constants';
+
+export type CtatRequestForTicketTable =
+  GetCtatRequestsRequesterQuery['ctatRequestsRequester']['ctatRequests'][number];
+
+const formatHelpTypes = (
+  types: CtatHelpNeededType[],
+  other?: string | null
+): string =>
+  types
+    .map(type =>
+      type === CtatHelpNeededType.OTHER && other ? other : helpNeededTypes[type]
+    )
+    .join(', ');
+
+export const mapCtatRequestToContractAssistanceTicket = (
+  request: CtatRequestForTicketTable
+): ContractAssistanceTicket => ({
+  ticketId: request.humanReadableID,
+  submissionDate: formatDateLocal(request.createdDts, 'MM/dd/yyyy'),
+  contractName: request.contractName ?? '',
+  helpType: formatHelpTypes(
+    request.typeOfHelpNeeded,
+    request.typeOfHelpNeededOther
+  ),
+  status: request.status ? statuses[request.status] : '',
+  assigneeId: request.assignedAdminUserAccount?.username ?? null
+});
 
 export type AdminTabCounts = Record<AdminTab, number>;
 
@@ -18,6 +53,11 @@ export const getAdminTabFromSearchParams = (
 
   return isAdminTab(tab) ? tab : fallback;
 };
+
+export const mapCtatRequestsToContractAssistanceTickets = (
+  requests: CtatRequestForTicketTable[]
+): ContractAssistanceTicket[] =>
+  requests.map(mapCtatRequestToContractAssistanceTicket);
 
 export const filterTicketsByAdminTab = (
   tickets: ContractAssistanceTicket[],

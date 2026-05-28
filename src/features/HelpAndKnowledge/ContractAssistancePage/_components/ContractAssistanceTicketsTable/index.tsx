@@ -49,26 +49,23 @@ const ContractAssistanceTicketsTable = ({
     [t]
   );
 
-  const tableOptions = {
-    columns: columns as Column<object>[],
-    data: tickets,
-    ...(variant === 'user' && {
-      sortTypes: {
-        alphanumeric: (rowOne: any, rowTwo: any, columnName: string) => {
-          return sortColumnValues(
-            rowOne.values[columnName],
-            rowTwo.values[columnName]
-          );
-        }
-      },
-      autoResetSortBy: false
-    })
-  };
-
-  const tablePlugins = variant === 'user' ? [useSortBy] : [];
-
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(tableOptions, ...tablePlugins);
+    useTable(
+      {
+        columns: columns as Column<object>[],
+        data: tickets,
+        sortTypes: {
+          alphanumeric: (rowOne: any, rowTwo: any, columnName: string) => {
+            return sortColumnValues(
+              rowOne.values[columnName],
+              rowTwo.values[columnName]
+            );
+          }
+        },
+        autoResetSortBy: false
+      },
+      useSortBy
+    );
 
   return (
     <Table
@@ -108,10 +105,10 @@ const ContractAssistanceTicketsTable = ({
                   scope="col"
                   key={column.id}
                   className={classNames(
-                    'padding-left-0 padding-bottom-1 padding-top-1 bg-transparent',
+                    'padding-left-0 padding-y-1 bg-transparent table-header',
                     {
-                      'text-black text-bold ': isAdmin,
-                      'table-header': !isAdmin
+                      'contract-assistance-tickets-table__help-type-column':
+                        column.id === 'helpType'
                     }
                   )}
                 >
@@ -163,7 +160,10 @@ const ContractAssistanceTicketsTable = ({
                     <td
                       {...cellProps}
                       key={cellProps.key}
-                      className="padding-left-0"
+                      className={classNames('padding-left-0 bg-transparent', {
+                        'contract-assistance-tickets-table__help-type-column':
+                          cell.column.id === 'helpType'
+                      })}
                     >
                       {cell.render('Cell')}
                     </td>

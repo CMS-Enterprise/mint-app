@@ -1,3 +1,9 @@
+.contract-assistance-tickets-table {
+  &__help-type-column {
+    width: 40%;
+  }
+}
+
 .contract-assistance-tickets-table--admin {
   .usa-alert .usa-alert__body {
     background-color: white !important;
