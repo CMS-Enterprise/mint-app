@@ -43,6 +43,7 @@ const ContractAssistanceTicketsTable = ({
         id: 'ticketId',
         Header: t('table.ticketId'),
         accessor: 'ticketId',
+        sortType: 'alphanumeric',
         Cell: ({ row }: { row: Row<ContractAssistanceTicket> }) => (
           <Button
             type="button"
@@ -130,7 +131,8 @@ const ContractAssistanceTicketsTable = ({
       autoResetPage: true,
       initialState: {
         pageIndex: 0,
-        pageSize: defaultPageSize
+        pageSize: defaultPageSize,
+        sortBy: useMemo(() => [{ id: 'ticketId', asc: true }], [])
       }
     },
     useSortBy,
