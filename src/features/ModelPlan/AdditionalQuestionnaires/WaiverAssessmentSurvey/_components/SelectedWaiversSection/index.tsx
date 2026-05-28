@@ -5,12 +5,13 @@ import { useGetAllCommonWaiversQuery } from 'gql/generated/graphql';
 
 import Spinner from 'components/Spinner';
 
-import { SuggestedWaivers } from '../../MedicarePaymentWaivers';
+import { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
+import { ProgramSuggestedWaivers } from '../../ProgramWaivers';
 
 const SelectedWaiversSection = ({
   selectedWaivers
 }: {
-  selectedWaivers: SuggestedWaivers;
+  selectedWaivers: MedicarePaymentSuggestedWaivers | ProgramSuggestedWaivers;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'

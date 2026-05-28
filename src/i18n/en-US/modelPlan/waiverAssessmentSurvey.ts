@@ -528,6 +528,11 @@ const waiverAssessmentSurveyMisc = {
     description:
       'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
   },
+  programWaivers: {
+    heading: 'Program waivers - Medicare Benefit Enhancements (BEs)',
+    description:
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
+  },
   selectedWaivers: {
     heading: 'Selected waivers',
     description:
