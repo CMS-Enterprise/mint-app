@@ -2530,6 +2530,7 @@ const helpArticleNames: Record<HelpArticle, string> = {
     'Regulatory sprint (waivers, safe harbors and exceptions) templates on SharePoint',
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]:
     'Quality Vertical healthy living resources on SharePoint',
+  [HelpArticle.COR_GUIDANCE_AND_TEMPLATES]: 'COR Guidance and Templates',
   [HelpArticle.CREATING_MTO_MATRIX]:
     'Creating your Model-to-operations matrix (MTO) in MINT',
   [HelpArticle.STARTING_MTO]: 'Starting an MTO for a new model',
@@ -2598,6 +2599,11 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
       'Find your model’s assigned Information Systems Security Officer (ISSO) on SharePoint',
     description:
       'Use this Security and Privacy SharePoint site to find the assigned ISSO for your CMMI model and learn how this privacy and security expert can support your model (and all CMMI staff!).'
+  },
+  [HelpArticle.COR_GUIDANCE_AND_TEMPLATES]: {
+    title: 'COR Guidance and Templates',
+    description:
+      'For Acquisition support and guidance, visit the DCCS Contract Summary Page, which provides acquisition support for both pre-award and post-award activities, including documents, templates, and resources.'
   }
 };
 
@@ -2634,13 +2640,6 @@ const helpAndKnowledge = {
     'Below are some additional help resources that you may find useful.',
   addtionalResources: 'Additional resources',
   viewAllRelated: 'View all help resources',
-  contractAssistance: {
-    hkcHeading: 'Contract assistance',
-    hkcDescription:
-      'Need contract-related help for your model? Raise a ticket to get help from the Contract Technical Assistance Team (CTAT). CTAT can assist with a variety of contracting needs including requirements gathering, Independent Government Cost Estimate (IGCE) preparation, Requests for Proposal (RFPs), guidance on market research, and more.',
-    hkcJumpToLabel: 'Contract assistance',
-    hkcViewCta: 'Create and manage help tickets'
-  },
   milestoneLibrary: {
     hkcHeading: 'Milestone library',
     hkcDescription:
