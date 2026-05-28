@@ -4,6 +4,7 @@ export default gql(/* GraphQL */ `
   query GetCtatRequestsRequester {
     ctatRequestsRequester {
       ctatRequests {
+        id
         humanReadableID
         createdDts
         contractName
@@ -12,6 +13,8 @@ export default gql(/* GraphQL */ `
         status
         assignedAdminUserAccount {
           username
+          givenName
+          familyName
         }
       }
     }

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Column, useSortBy, useTable } from 'react-table';
-import { Table } from '@trussworks/react-uswds';
+import { Column, Row, useSortBy, useTable } from 'react-table';
+import { Button, Table } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import { Alert } from 'components/Alert';
@@ -11,11 +11,7 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
-import {
-  AdminTab,
-  ContractAssistanceTicket,
-  TICKET_TABLE_COLUMNS
-} from '../../constants';
+import { AdminTab, ContractAssistanceTicket } from '../../constants';
 
 import './index.scss';
 
@@ -40,12 +36,62 @@ const ContractAssistanceTicketsTable = ({
     : 'userSubmittedTickets.emptyState';
 
   const columns: Column<ContractAssistanceTicket>[] = useMemo(
-    () =>
-      TICKET_TABLE_COLUMNS.map(columnKey => ({
-        id: columnKey,
-        Header: t(`table.${columnKey}`),
-        accessor: columnKey
-      })),
+    () => [
+      {
+        id: 'ticketId',
+        Header: t('table.ticketId'),
+        accessor: 'ticketId',
+        Cell: ({ row }: { row: Row<ContractAssistanceTicket> }) => (
+          <Button
+            type="button"
+            unstyled
+            className="usa-link padding-0"
+            onClick={() => {
+              // eslint-disable-next-line no-console
+              console.log(row.original);
+            }}
+          >
+            {row.original.ticketId}
+          </Button>
+        )
+      },
+      {
+        id: 'submissionDate',
+        Header: t('table.submissionDate'),
+        accessor: 'submissionDate'
+      },
+      {
+        id: 'contractName',
+        Header: t('table.contractName'),
+        accessor: 'contractName',
+        Cell: ({ row }: { row: Row<ContractAssistanceTicket> }) =>
+          row.original.contractName ? (
+            row.original.contractName
+          ) : (
+            <span className="text-italic">{t('table.noContractName')}</span>
+          )
+      },
+      {
+        id: 'helpType',
+        Header: t('table.helpType'),
+        accessor: 'helpType'
+      },
+      {
+        id: 'status',
+        Header: t('table.status'),
+        accessor: 'status',
+        Cell: ({ row }: { row: Row<ContractAssistanceTicket> }) => (
+          <>
+            <div>{row.original.status}</div>
+            {row.original.assigneeName && (
+              <p className="margin-0 text-base-darker font-sans-xs">
+                {row.original.assigneeName}
+              </p>
+            )}
+          </>
+        )
+      }
+    ],
     [t]
   );
 

@@ -26,18 +26,34 @@ const formatHelpTypes = (
     )
     .join(', ');
 
+const formatAssigneeName = (
+  userAccount: CtatRequestForTicketTable['assignedAdminUserAccount']
+): string | null => {
+  if (!userAccount) {
+    return null;
+  }
+
+  const name = [userAccount.givenName, userAccount.familyName]
+    .filter(Boolean)
+    .join(' ');
+
+  return name || null;
+};
+
 export const mapCtatRequestToContractAssistanceTicket = (
   request: CtatRequestForTicketTable
 ): ContractAssistanceTicket => ({
+  id: request.id,
   ticketId: request.humanReadableID,
   submissionDate: formatDateLocal(request.createdDts, 'MM/dd/yyyy'),
-  contractName: request.contractName ?? '',
+  contractName: request.contractName?.trim() ?? '',
   helpType: formatHelpTypes(
     request.typeOfHelpNeeded,
     request.typeOfHelpNeededOther
   ),
   status: request.status ? statuses[request.status] : '',
-  assigneeId: request.assignedAdminUserAccount?.username ?? null
+  assigneeId: request.assignedAdminUserAccount?.username ?? null,
+  assigneeName: formatAssigneeName(request.assignedAdminUserAccount)
 });
 
 export type AdminTabCounts = Record<AdminTab, number>;
