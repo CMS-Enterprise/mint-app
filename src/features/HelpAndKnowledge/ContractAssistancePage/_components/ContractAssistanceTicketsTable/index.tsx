@@ -248,38 +248,34 @@ const ContractAssistanceTicketsTable = ({
         </tbody>
       </Table>
 
-      {tickets.length > defaultPageSize && (
-        <div
-          className={classNames('grid-row grid-gap grid-gap-lg', {
-            'display-flex row-reverse': tickets.length <= state.pageSize
-          })}
-        >
-          {tickets.length > state.pageSize && (
-            <TablePagination
-              gotoPage={gotoPage}
-              previousPage={previousPage}
-              nextPage={nextPage}
-              canNextPage={canNextPage}
-              pageIndex={state.pageIndex}
-              pageOptions={pageOptions}
-              canPreviousPage={canPreviousPage}
-              pageCount={pageCount}
-              pageSize={state.pageSize}
-              setPageSize={setPageSize}
-              page={[]}
-              className="desktop:grid-col-fill bg-transparent"
-            />
-          )}
+      <div
+        className={classNames('grid-row grid-gap grid-gap-lg', {
+          'display-flex row-reverse': tickets.length <= state.pageSize
+        })}
+      >
+        {tickets.length > state.pageSize && (
+          <TablePagination
+            gotoPage={gotoPage}
+            previousPage={previousPage}
+            nextPage={nextPage}
+            canNextPage={canNextPage}
+            pageIndex={state.pageIndex}
+            pageOptions={pageOptions}
+            canPreviousPage={canPreviousPage}
+            pageCount={pageCount}
+            pageSize={state.pageSize}
+            setPageSize={setPageSize}
+            page={[]}
+            className="desktop:grid-col-fill bg-transparent"
+          />
+        )}
 
-          {tickets.length > 5 && (
-            <TablePageSize
-              className="desktop:grid-col-auto"
-              pageSize={state.pageSize}
-              setPageSize={setPageSize}
-            />
-          )}
-        </div>
-      )}
+        <TablePageSize
+          className="desktop:grid-col-auto"
+          pageSize={state.pageSize}
+          setPageSize={setPageSize}
+        />
+      </div>
     </div>
   );
 };
