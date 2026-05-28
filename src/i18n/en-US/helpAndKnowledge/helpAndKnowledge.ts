@@ -2634,13 +2634,6 @@ const helpAndKnowledge = {
     'Below are some additional help resources that you may find useful.',
   addtionalResources: 'Additional resources',
   viewAllRelated: 'View all help resources',
-  contractAssistance: {
-    hkcHeading: 'Contract assistance',
-    hkcDescription:
-      'Need contract-related help for your model? Raise a ticket to get help from the Contract Technical Assistance Team (CTAT). CTAT can assist with a variety of contracting needs including requirements gathering, Independent Government Cost Estimate (IGCE) preparation, Requests for Proposal (RFPs), guidance on market research, and more.',
-    hkcJumpToLabel: 'Contract assistance',
-    hkcViewCta: 'Create and manage help tickets'
-  },
   milestoneLibrary: {
     hkcHeading: 'Milestone library',
     hkcDescription:

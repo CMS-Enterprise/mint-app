@@ -24,7 +24,7 @@ exports[`ContractAssistanceSection > matches the snapshot 1`] = `
       <a
         class="usa-button usa-button--outline bg-white text-primary-darker shadow-none"
         data-discover="true"
-        href="/help-and-knowledge"
+        href="/help-and-knowledge/contract-assistance"
       >
         Create and manage help tickets
       </a>
