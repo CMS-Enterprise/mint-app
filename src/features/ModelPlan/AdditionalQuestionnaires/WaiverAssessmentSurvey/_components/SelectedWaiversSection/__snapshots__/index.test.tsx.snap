@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SelectedWaiversSection Component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-info-lighter padding-3"
+  >
+    <h2
+      class="usa-summary-box__heading margin-bottom-2"
+    >
+      Selected waivers
+    </h2>
+    <p
+      class="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest"
+    >
+      There are 3 total available Medicare payment waivers. Based on your answers to the above questions, MINT has determined that the following 2 waivers are likely needed for your model:
+    </p>
+    <div
+      class="margin-bottom-2"
+    >
+      <ul
+        class="grid-row grid-gap-2 margin-y-0 padding-x-3"
+      >
+        <li
+          class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
+        >
+          short Waiver 2
+        </li>
+        <li
+          class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
+        >
+          Waiver 3
+        </li>
+      </ul>
+    </div>
+    <p
+      class="line-height-sans-5 margin-y-0 text-base-darkest"
+    >
+      Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.
+    </p>
+  </div>
+</DocumentFragment>
+`;

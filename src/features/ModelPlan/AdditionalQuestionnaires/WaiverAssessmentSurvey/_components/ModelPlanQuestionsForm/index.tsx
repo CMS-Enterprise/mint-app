@@ -378,7 +378,7 @@ const ModelPlanQuestionsForm = ({
         className="maxw-none"
         onSubmit={handleSubmit(() =>
           navigate(
-            `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about`
+            `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicare-payment-waivers`
           )
         )}
       >

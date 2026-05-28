@@ -12,8 +12,8 @@ import Spinner from 'components/Spinner';
 import { tArray } from 'utils/translation';
 
 const AboutWaiverAssessmentSurvey = () => {
-  const { t: waiverAssessmentSurveyT } = useTranslation(
-    'waiverAssessmentSurvey'
+  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
+    'waiverAssessmentSurveyMisc'
   );
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: additionalQuestionnairesT } = useTranslation(
@@ -25,7 +25,7 @@ const AboutWaiverAssessmentSurvey = () => {
   const navigate = useNavigate();
 
   const expandItems = tArray(
-    'waiverAssessmentSurvey:aboutWaiverAssessmentSurvey.whyDoINeedToCompleteThisSurveyItems'
+    'waiverAssessmentSurveyMisc:aboutWaiverAssessmentSurvey.whyDoINeedToCompleteThisSurveyItems'
   );
 
   const { data, loading } = useGetModelCollaboratorsQuery({
@@ -45,13 +45,15 @@ const AboutWaiverAssessmentSurvey = () => {
   return (
     <div className="mint-body-normal">
       <FormHeader
-        header={waiverAssessmentSurveyT('aboutWaiverAssessmentSurvey.heading')}
+        header={waiverAssessmentSurveyMiscT(
+          'aboutWaiverAssessmentSurvey.heading'
+        )}
         currentPage={1}
         totalPages={7}
       />
 
       <p className="margin-top-neg-1">
-        {waiverAssessmentSurveyT('aboutWaiverAssessmentSurvey.description')}
+        {waiverAssessmentSurveyMiscT('aboutWaiverAssessmentSurvey.description')}
       </p>
 
       <CollapsableLink
@@ -59,12 +61,12 @@ const AboutWaiverAssessmentSurvey = () => {
         horizontalCaret
         className="margin-bottom-3"
         childClassName="padding-top-0"
-        label={waiverAssessmentSurveyT(
+        label={waiverAssessmentSurveyMiscT(
           'aboutWaiverAssessmentSurvey.whyDoINeedToCompleteThisSurvey'
         )}
       >
         <span>
-          {waiverAssessmentSurveyT(
+          {waiverAssessmentSurveyMiscT(
             'aboutWaiverAssessmentSurvey.yourResponsesWill'
           )}
         </span>
@@ -76,23 +78,25 @@ const AboutWaiverAssessmentSurvey = () => {
       </CollapsableLink>
 
       <h3 className="margin-top-0 margin-bottom-1">
-        {waiverAssessmentSurveyT('aboutWaiverAssessmentSurvey.whosInvolved')}
+        {waiverAssessmentSurveyMiscT(
+          'aboutWaiverAssessmentSurvey.whosInvolved'
+        )}
       </h3>
 
       <p className="margin-top-0 margin-bottom-1">
-        {waiverAssessmentSurveyT(
+        {waiverAssessmentSurveyMiscT(
           'aboutWaiverAssessmentSurvey.whosInvolvedDescription'
         )}
       </p>
 
       <Link
-        aria-label={waiverAssessmentSurveyT(
+        aria-label={waiverAssessmentSurveyMiscT(
           'aboutWaiverAssessmentSurvey.email'
         )}
         href="mailto:MINTTeam@cms.hhs.gov"
         target="_blank"
       >
-        {waiverAssessmentSurveyT('aboutWaiverAssessmentSurvey.email')}
+        {waiverAssessmentSurveyMiscT('aboutWaiverAssessmentSurvey.email')}
         <Icon.MailOutline
           className="margin-left-1 text-tbottom"
           aria-label="mail"
@@ -102,11 +106,13 @@ const AboutWaiverAssessmentSurvey = () => {
       <Grid row gap className="margin-y-3">
         <Grid desktop={{ col: 6 }} tablet={{ col: 6 }}>
           <h4 className="margin-top-0 margin-bottom-1">
-            {waiverAssessmentSurveyT('aboutWaiverAssessmentSurvey.modelTeam')}
+            {waiverAssessmentSurveyMiscT(
+              'aboutWaiverAssessmentSurvey.modelTeam'
+            )}
           </h4>
 
           <p className="margin-top-0">
-            {waiverAssessmentSurveyT(
+            {waiverAssessmentSurveyMiscT(
               'aboutWaiverAssessmentSurvey.modelTeamDescription'
             )}
           </p>
@@ -114,7 +120,9 @@ const AboutWaiverAssessmentSurvey = () => {
 
         <Grid desktop={{ col: 6 }} tablet={{ col: 6 }}>
           <h4 className="margin-top-0 margin-bottom-1">
-            {waiverAssessmentSurveyT('aboutWaiverAssessmentSurvey.modelLead')}
+            {waiverAssessmentSurveyMiscT(
+              'aboutWaiverAssessmentSurvey.modelLead'
+            )}
           </h4>
 
           {loading && <Spinner />}
@@ -132,11 +140,13 @@ const AboutWaiverAssessmentSurvey = () => {
       </Grid>
 
       <h3 className="margin-top-0 margin-bottom-1">
-        {waiverAssessmentSurveyT('aboutWaiverAssessmentSurvey.whatHappenNext')}
+        {waiverAssessmentSurveyMiscT(
+          'aboutWaiverAssessmentSurvey.whatHappenNext'
+        )}
       </h3>
 
       <p className="margin-top-0 margin-bottom-6">
-        {waiverAssessmentSurveyT(
+        {waiverAssessmentSurveyMiscT(
           'aboutWaiverAssessmentSurvey.whatHappenNextDescription'
         )}
       </p>

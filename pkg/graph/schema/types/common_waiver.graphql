@@ -1,0 +1,6 @@
+extend type Query {
+  """
+  Fetch all Common Waivers available in the library
+  """
+  commonWaivers: [CommonWaiver!]! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

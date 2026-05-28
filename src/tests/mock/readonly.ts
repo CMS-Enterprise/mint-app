@@ -45,8 +45,6 @@ import {
   GetAllPaymentsQuery,
   GetModelCollaboratorsDocument,
   GetModelCollaboratorsQuery,
-  GetModelPlanQuestionsDocument,
-  GetModelPlanQuestionsQuery,
   GetModelSummaryDocument,
   GetModelSummaryQuery,
   GetTimelineDocument,
@@ -825,58 +823,6 @@ export const iddocQuestionnaireMocks = [
           }
         }
       }
-    }
-  }
-];
-
-export const modelPlanQuestionsDataMocks: GetModelPlanQuestionsQuery = {
-  __typename: 'Query',
-  modelPlan: {
-    __typename: 'ModelPlan',
-    id: modelID,
-    basics: {
-      id: 'basics-123',
-      __typename: 'PlanBasics',
-      additionalModelCategories: [],
-      cmsCenters: [],
-      cmmiGroups: []
-    },
-    generalCharacteristics: {
-      id: 'char-456',
-      __typename: 'PlanGeneralCharacteristics',
-      existingModel: '12',
-      keyCharacteristics: [],
-      geographiesTargetedTypes: [],
-      geographiesStatesAndTerritories: [],
-      geographiesRegionTypes: [],
-      geographiesTargetedAppliedTo: [],
-      waiversRequiredTypes: []
-    }
-  },
-  modelPlanCollection: [
-    {
-      id: 'uuid-mint-1',
-      modelName: 'B. MINT Model Plan',
-      __typename: 'ModelPlan'
-    }
-  ],
-  existingModelCollection: [
-    {
-      id: 12,
-      modelName: 'A. Existing Model Plan',
-      __typename: 'ExistingModel'
-    }
-  ]
-};
-
-export const modelPlanQuestionsMocks = [
-  {
-    request: {
-      query: GetModelPlanQuestionsDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: modelPlanQuestionsDataMocks
     }
   }
 ];

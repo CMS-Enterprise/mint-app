@@ -1,4 +1,490 @@
-const waiverAssessmentSurvey = {
+import { TranslationWaiverAssessmentSurvey } from 'types/translation';
+
+import {
+  NotSelectedReason,
+  TranslationDataType,
+  TranslationFormType
+} from '../../../gql/generated/graphql';
+
+const notSelectedReasonOptions: Record<NotSelectedReason, string> = {
+  OUT_OF_SCOPE: 'Outside of model scope (e.g. Medicaid-only waiver)',
+  OVERLAPS:
+    'Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)',
+  NOT_TESTING:
+    'The model will not be testing this waiver or payment type (e.g. bundles)',
+  NOT_ENGAGED:
+    'The model does not engage with the user of this waiver (e.g. WISeR, CGT)',
+  FEEDBACK_AGAINST_USE: 'Feedback from participants against waiver use',
+  OTHER: 'Other'
+};
+
+const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
+  modifiesMedicareSavingsPrograms: {
+    gqlField: 'modifiesMedicareSavingsPrograms',
+    goField: 'ModifiesMedicareSavingsPrograms',
+    dbField: 'modifies_medicare_savings_programs',
+    label: 'Does your model modify Medicare shared savings programs?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 3.01,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [
+        () => waiverAssessmentSurvey.modifiesMedicareSavingsProgramsExample
+      ],
+      false: [
+        () => waiverAssessmentSurvey.modifiesMedicareSavingsProgramsWhyNot
+      ]
+    }
+  },
+  modifiesMedicareSavingsProgramsExample: {
+    gqlField: 'modifiesMedicareSavingsProgramsExample',
+    goField: 'ModifiesMedicareSavingsProgramsExample',
+    dbField: 'modifies_medicare_savings_programs_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.011,
+    parentRelation: () => waiverAssessmentSurvey.modifiesMedicareSavingsPrograms
+  },
+  modifiesMedicareSavingsProgramsWhyNot: {
+    gqlField: 'modifiesMedicareSavingsProgramsWhyNot',
+    goField: 'ModifiesMedicareSavingsProgramsWhyNot',
+    dbField: 'modifies_medicare_savings_programs_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 3.012,
+    parentRelation: () => waiverAssessmentSurvey.modifiesMedicareSavingsPrograms
+  },
+  bundlesPayments: {
+    gqlField: 'bundlesPayments',
+    goField: 'BundlesPayments',
+    dbField: 'bundles_payments',
+    label: 'Does your model bundle payments?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 3.02,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [() => waiverAssessmentSurvey.bundlesPaymentsExample],
+      false: [() => waiverAssessmentSurvey.bundlesPaymentsWhyNot]
+    }
+  },
+  bundlesPaymentsExample: {
+    gqlField: 'bundlesPaymentsExample',
+    goField: 'BundlesPaymentsExample',
+    dbField: 'bundles_payments_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.021,
+    parentRelation: () => waiverAssessmentSurvey.bundlesPayments
+  },
+  bundlesPaymentsWhyNot: {
+    gqlField: 'bundlesPaymentsWhyNot',
+    goField: 'BundlesPaymentsWhyNot',
+    dbField: 'bundles_payments_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 3.022,
+    parentRelation: () => waiverAssessmentSurvey.bundlesPayments
+  },
+  offersRiskSharingArrangements: {
+    gqlField: 'offersRiskSharingArrangements',
+    goField: 'OffersRiskSharingArrangements',
+    dbField: 'offers_risk_sharing_arrangements',
+    label: 'Does your model offer risk sharing arrangements?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 3.03,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [() => waiverAssessmentSurvey.offersRiskSharingArrangementsExample],
+      false: [() => waiverAssessmentSurvey.offersRiskSharingArrangementsWhyNot]
+    }
+  },
+  offersRiskSharingArrangementsExample: {
+    gqlField: 'offersRiskSharingArrangementsExample',
+    goField: 'OffersRiskSharingArrangementsExample',
+    dbField: 'offers_risk_sharing_arrangements_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 3.031,
+    parentRelation: () => waiverAssessmentSurvey.offersRiskSharingArrangements
+  },
+  offersRiskSharingArrangementsWhyNot: {
+    gqlField: 'offersRiskSharingArrangementsWhyNot',
+    goField: 'OffersRiskSharingArrangementsWhyNot',
+    dbField: 'offers_risk_sharing_arrangements_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 3.032,
+    parentRelation: () => waiverAssessmentSurvey.offersRiskSharingArrangements
+  },
+  impactsSiteOfCarePayments: {
+    gqlField: 'impactsSiteOfCarePayments',
+    goField: 'ImpactsSiteOfCarePayments',
+    dbField: 'impacts_site_of_care_payments',
+    label: 'Will your model be impacting site of care payments?',
+    sublabel: 'For example: telehealth, at home',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 4.01,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [() => waiverAssessmentSurvey.impactsSiteOfCarePaymentsExample],
+      false: [() => waiverAssessmentSurvey.impactsSiteOfCarePaymentsWhyNot]
+    }
+  },
+  impactsSiteOfCarePaymentsExample: {
+    gqlField: 'impactsSiteOfCarePaymentsExample',
+    goField: 'ImpactsSiteOfCarePaymentsExample',
+    dbField: 'impacts_site_of_care_payments_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 4.011,
+    parentRelation: () => waiverAssessmentSurvey.impactsSiteOfCarePayments
+  },
+  impactsSiteOfCarePaymentsWhyNot: {
+    gqlField: 'impactsSiteOfCarePaymentsWhyNot',
+    goField: 'ImpactsSiteOfCarePaymentsWhyNot',
+    dbField: 'impacts_site_of_care_payments_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 4.012,
+    parentRelation: () => waiverAssessmentSurvey.impactsSiteOfCarePayments
+  },
+  modifiesCareTeamScopeOfPractice: {
+    gqlField: 'modifiesCareTeamScopeOfPractice',
+    goField: 'ModifiesCareTeamScopeOfPractice',
+    dbField: 'modifies_care_team_scope_of_practice',
+    label: 'Will your model be modifying the care teams’ scope of practice?',
+    sublabel: 'For example: NP/PA flexibility, CHW inclusion, etc.',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 4.02,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [
+        () => waiverAssessmentSurvey.modifiesCareTeamScopeOfPracticeExample
+      ],
+      false: [
+        () => waiverAssessmentSurvey.modifiesCareTeamScopeOfPracticeWhyNot
+      ]
+    }
+  },
+  modifiesCareTeamScopeOfPracticeExample: {
+    gqlField: 'modifiesCareTeamScopeOfPracticeExample',
+    goField: 'ModifiesCareTeamScopeOfPracticeExample',
+    dbField: 'modifies_care_team_scope_of_practice_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 4.021,
+    parentRelation: () => waiverAssessmentSurvey.modifiesCareTeamScopeOfPractice
+  },
+  modifiesCareTeamScopeOfPracticeWhyNot: {
+    gqlField: 'modifiesCareTeamScopeOfPracticeWhyNot',
+    goField: 'ModifiesCareTeamScopeOfPracticeWhyNot',
+    dbField: 'modifies_care_team_scope_of_practice_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 4.022,
+    parentRelation: () => waiverAssessmentSurvey.modifiesCareTeamScopeOfPractice
+  },
+  modifiesCareDeliveryWithClaimsBasedPayments: {
+    gqlField: 'modifiesCareDeliveryWithClaimsBasedPayments',
+    goField: 'ModifiesCareDeliveryWithClaimsBasedPayments',
+    dbField: 'modifies_care_delivery_with_claims_based_payments',
+    label:
+      'Will your model be modifying how care is delivered with claims-based payments?',
+    sublabel: 'For example: diabetic shoes',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 4.03,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [
+        () =>
+          waiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPaymentsExample
+      ],
+      false: [
+        () =>
+          waiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot
+      ]
+    }
+  },
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: {
+    gqlField: 'modifiesCareDeliveryWithClaimsBasedPaymentsExample',
+    goField: 'ModifiesCareDeliveryWithClaimsBasedPaymentsExample',
+    dbField: 'modifies_care_delivery_with_claims_based_payments_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 4.031,
+    parentRelation: () =>
+      waiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPayments
+  },
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: {
+    gqlField: 'modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot',
+    goField: 'ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot',
+    dbField: 'modifies_care_delivery_with_claims_based_payments_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 4.032,
+    parentRelation: () =>
+      waiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPayments
+  },
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: {
+    gqlField: 'modifiesQualityMeasurementsOrPaymentsViaWaivers',
+    goField: 'ModifiesQualityMeasurementsOrPaymentsViaWaivers',
+    dbField: 'modifies_quality_measurements_or_payments_via_waivers',
+    label:
+      'Will your model be modifying quality measurements or payments via waivers?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 4.04,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [
+        () =>
+          waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaiversExample
+      ],
+      false: [
+        () =>
+          waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot
+      ]
+    }
+  },
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: {
+    gqlField: 'modifiesQualityMeasurementsOrPaymentsViaWaiversExample',
+    goField: 'ModifiesQualityMeasurementsOrPaymentsViaWaiversExample',
+    dbField: 'modifies_quality_measurements_or_payments_via_waivers_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 4.041,
+    parentRelation: () =>
+      waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaivers
+  },
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: {
+    gqlField: 'modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot',
+    goField: 'ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot',
+    dbField: 'modifies_quality_measurements_or_payments_via_waivers_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 4.042,
+    parentRelation: () =>
+      waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaivers
+  },
+  impactsMedicaidOnlyBeneficiaries: {
+    gqlField: 'impactsMedicaidOnlyBeneficiaries',
+    goField: 'ImpactsMedicaidOnlyBeneficiaries',
+    dbField: 'impacts_medicaid_only_beneficiaries',
+    label: 'Does your model impact Medicaid-only beneficiaries?',
+    sublabel: 'Not including duals.',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 5.01,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [
+        () => waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiariesExample
+      ],
+      false: [
+        () => waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiariesWhyNot
+      ]
+    }
+  },
+  impactsMedicaidOnlyBeneficiariesExample: {
+    gqlField: 'impactsMedicaidOnlyBeneficiariesExample',
+    goField: 'ImpactsMedicaidOnlyBeneficiariesExample',
+    dbField: 'impacts_medicaid_only_beneficiaries_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.011,
+    parentRelation: () =>
+      waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiaries
+  },
+  impactsMedicaidOnlyBeneficiariesWhyNot: {
+    gqlField: 'impactsMedicaidOnlyBeneficiariesWhyNot',
+    goField: 'ImpactsMedicaidOnlyBeneficiariesWhyNot',
+    dbField: 'impacts_medicaid_only_beneficiaries_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 5.012,
+    parentRelation: () =>
+      waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiaries
+  },
+  impactsHomeCommunityBasedServicePayments: {
+    gqlField: 'impactsHomeCommunityBasedServicePayments',
+    goField: 'ImpactsHomeCommunityBasedServicePayments',
+    dbField: 'impacts_home_community_based_service_payments',
+    label: 'Does your model impact home- and community-based service payments?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 5.02,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [
+        () =>
+          waiverAssessmentSurvey.impactsHomeCommunityBasedServicePaymentsExample
+      ],
+      false: [
+        () =>
+          waiverAssessmentSurvey.impactsHomeCommunityBasedServicePaymentsWhyNot
+      ]
+    }
+  },
+  impactsHomeCommunityBasedServicePaymentsExample: {
+    gqlField: 'impactsHomeCommunityBasedServicePaymentsExample',
+    goField: 'ImpactsHomeCommunityBasedServicePaymentsExample',
+    dbField: 'impacts_home_community_based_service_payments_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.021,
+    parentRelation: () =>
+      waiverAssessmentSurvey.impactsHomeCommunityBasedServicePayments
+  },
+  impactsHomeCommunityBasedServicePaymentsWhyNot: {
+    gqlField: 'impactsHomeCommunityBasedServicePaymentsWhyNot',
+    goField: 'ImpactsHomeCommunityBasedServicePaymentsWhyNot',
+    dbField: 'impacts_home_community_based_service_payments_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 5.022,
+    parentRelation: () =>
+      waiverAssessmentSurvey.impactsHomeCommunityBasedServicePayments
+  },
+  impactsManagedCareWaivers: {
+    gqlField: 'impactsManagedCareWaivers',
+    goField: 'ImpactsManagedCareWaivers',
+    dbField: 'impacts_managed_care_waivers',
+    label: 'Does your model impact managed care waivers?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 5.03,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [() => waiverAssessmentSurvey.impactsManagedCareWaiversExample],
+      false: [() => waiverAssessmentSurvey.impactsManagedCareWaiversWhyNot]
+    }
+  },
+  impactsManagedCareWaiversExample: {
+    gqlField: 'impactsManagedCareWaiversExample',
+    goField: 'ImpactsManagedCareWaiversExample',
+    dbField: 'impacts_managed_care_waivers_example',
+    label: 'Please provide an example',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.031,
+    parentRelation: () => waiverAssessmentSurvey.impactsManagedCareWaivers
+  },
+  impactsManagedCareWaiversWhyNot: {
+    gqlField: 'impactsManagedCareWaiversWhyNot',
+    goField: 'ImpactsManagedCareWaiversWhyNot',
+    dbField: 'impacts_managed_care_waivers_why_not',
+    label: 'Please explain why not',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 5.032,
+    parentRelation: () => waiverAssessmentSurvey.impactsManagedCareWaivers
+  },
+  additionalMedicaidSpecificWaivers: {
+    gqlField: 'additionalMedicaidSpecificWaivers',
+    goField: 'AdditionalMedicaidSpecificWaivers',
+    dbField: 'additional_medicaid_specific_waivers',
+    label:
+      'Are there any other Medicaid-specific waivers of interest that are not outlined here?',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.04
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    label: 'Questionnaire status',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.CHECKBOX,
+    order: 8.01,
+    options: {
+      READY: 'Not started',
+      IN_PROGRESS: 'In progress',
+      COMPLETE: 'Complete'
+    },
+    hideFromReadonly: true
+  },
+  isComplete: {
+    gqlField: 'isComplete',
+    goField: 'IsComplete',
+    dbField: 'is_complete', // Note: Computed from status field
+    label: 'Questionnaire status',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.CHECKBOX,
+    order: 8.02,
+    options: {
+      true: 'This questionnaire (4i and ACO-OS) is complete.',
+      false: 'No'
+    },
+    hideFromReadonly: true
+  }
+};
+
+const waiverAssessmentSurveyMisc = {
   heading: 'Waiver Assessment Survey',
   bannerText:
     'Your waiver assessment survey can only be accessed by one person at a time. If you are not actively editing or reviewing this section, please exit out of it so others can access it.',
@@ -36,7 +522,19 @@ const waiverAssessmentSurvey = {
       'Any answers updated as a part of this survey will also be updated in the Model Plan.',
     updateAnswers: 'Update answers (show questions)',
     hideQuestions: 'Hide questions'
+  },
+  medicarePaymentWaivers: {
+    heading: 'Medicare payment waivers',
+    description:
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
+  },
+  selectedWaivers: {
+    heading: 'Selected waivers',
+    description:
+      'There are {{-totalWaiversCount}} total available Medicare payment waivers. Based on your answers to the above questions, MINT has determined that the following {{-selectedWaiversCount}} waivers are likely needed for your model:',
+    summary:
+      'Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.'
   }
 };
 
-export default waiverAssessmentSurvey;
+export { waiverAssessmentSurvey, waiverAssessmentSurveyMisc };
