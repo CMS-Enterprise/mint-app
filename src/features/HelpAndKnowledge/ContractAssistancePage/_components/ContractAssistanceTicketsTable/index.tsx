@@ -32,18 +32,18 @@ const ContractAssistanceTicketsTable = ({
   variant,
   adminTab = 'all'
 }: ContractAssistanceTicketsTableProps) => {
-  const { t } = useTranslation('helpAndKnowledge');
+  const { t } = useTranslation('contractAssistance');
   const isAdmin = variant === 'admin';
 
   const translationPrefix = isAdmin
-    ? `contractAssistance.adminActions.emptyState.${adminTab}`
-    : 'contractAssistance.userSubmittedTickets.emptyState';
+    ? `adminActions.emptyState.${adminTab}`
+    : 'userSubmittedTickets.emptyState';
 
   const columns: Column<ContractAssistanceTicket>[] = useMemo(
     () =>
       TICKET_TABLE_COLUMNS.map(columnKey => ({
         id: columnKey,
-        Header: t(`contractAssistance.table.${columnKey}`),
+        Header: t(`table.${columnKey}`),
         accessor: columnKey
       })),
     [t]
@@ -85,8 +85,8 @@ const ContractAssistanceTicketsTable = ({
       <caption className="usa-sr-only">
         {t(
           isAdmin
-            ? 'contractAssistance.adminActions.table.caption'
-            : 'contractAssistance.userSubmittedTickets.table.caption'
+            ? 'adminActions.table.caption'
+            : 'userSubmittedTickets.table.caption'
         )}
       </caption>
       <thead className="margin-bottom-2">

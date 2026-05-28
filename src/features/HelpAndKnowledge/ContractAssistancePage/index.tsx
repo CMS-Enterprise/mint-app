@@ -15,6 +15,7 @@ import UserSubmittedTicketsSection from './_components/UserSubmittedTicketsSecti
 import { ContractAssistanceTicket } from './constants';
 
 const ContractAssistancePage = () => {
+  const { t } = useTranslation('contractAssistance');
   const { t: hkcT } = useTranslation('helpAndKnowledge');
   const { groups } = useSelector((state: AppState) => state.auth);
   const flags = useFlags();
@@ -28,13 +29,13 @@ const ContractAssistancePage = () => {
       <GridContainer>
         <Breadcrumbs
           items={[BreadcrumbItemOptions.HELP_CENTER]}
-          customItem={hkcT('contractAssistance.hkcHeading')}
+          customItem={t('hkcHeading')}
         />
         <h1 className="margin-bottom-2 margin-top-5 line-height-large">
-          {hkcT('contractAssistance.hkcHeading')}
+          {t('hkcHeading')}
         </h1>
         <p className="mint-body-large margin-bottom-2 margin-top-05">
-          {hkcT('contractAssistance.description')}
+          {t('description')}
         </p>
         <div className="margin-bottom-6">
           <UswdsReactLink to="/help-and-knowledge" data-testid="return-to-hkc">

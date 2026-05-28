@@ -24,7 +24,7 @@ type AdminTicketManagementSectionProps = {
 const AdminTicketManagementSection = ({
   tickets
 }: AdminTicketManagementSectionProps) => {
-  const { t } = useTranslation('helpAndKnowledge');
+  const { t } = useTranslation('contractAssistance');
   const { euaId } = useSelector((state: AppState) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,7 +42,7 @@ const AdminTicketManagementSection = ({
   );
 
   const getTabLabel = (tab: AdminTab) =>
-    t(`contractAssistance.adminActions.tabs.${tab}`, { count: tabCounts[tab] });
+    t(`adminActions.tabs.${tab}`, { count: tabCounts[tab] });
 
   const setActiveTab = (tab: AdminTab) => {
     params.set('adminTab', tab);
@@ -53,7 +53,7 @@ const AdminTicketManagementSection = ({
     <div className="admin-section bg-primary-lighter radius-md padding-3 margin-bottom-5">
       <div className="display-flex flex-justify flex-align-center">
         <h2 className="margin-x-0 margin-top-0 margin-bottom-3">
-          {t('contractAssistance.adminActions.title')}
+          {t('adminActions.title')}
         </h2>
         <Icon.LocalPolice size={4} className="text-primary-light" />
       </div>

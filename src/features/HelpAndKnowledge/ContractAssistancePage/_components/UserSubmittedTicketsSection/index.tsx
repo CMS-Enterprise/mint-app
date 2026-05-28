@@ -12,18 +12,16 @@ type UserSubmittedTicketsSectionProps = {
 const UserSubmittedTicketsSection = ({
   tickets
 }: UserSubmittedTicketsSectionProps) => {
-  const { t } = useTranslation('helpAndKnowledge');
+  const { t } = useTranslation('contractAssistance');
 
   return (
     <div>
-      <h2 className="margin-0">
-        {t('contractAssistance.userSubmittedTickets.title')}
-      </h2>
+      <h2 className="margin-0">{t('userSubmittedTickets.title')}</h2>
       <p className="mint-body-md margin-bottom-2 margin-top-05 line-height-sans-4 text-light">
-        {t('contractAssistance.userSubmittedTickets.description')}
+        {t('userSubmittedTickets.description')}
       </p>
       <Button type="button" className="margin-bottom-4">
-        {t('contractAssistance.userSubmittedTickets.button')}
+        {t('userSubmittedTickets.button')}
       </Button>
       <ContractAssistanceTicketsTable tickets={tickets} variant="user" />
     </div>

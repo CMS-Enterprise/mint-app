@@ -78,8 +78,7 @@ export const commonBreadCrumbs = (
     url: `/models/${modelID}/collaboration-area/collaborators`
   },
   CONTRACT_ASSISTANCE: {
-    // TODO: add translation
-    text: 'askldflaksdfj ',
+    text: 'contractAssistance:hkcHeading',
     url: '/help-and-knowledge/contract-assistance'
   },
   CR_TDLS: {
