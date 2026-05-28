@@ -27,8 +27,6 @@ type CTATRequest struct {
 	CmmiDivision      *CTATCMMIDivisionOption `json:"cmmiDivision,omitempty" db:"cmmi_division"`
 	CmmiDivisionOther *string                 `json:"cmmiDivisionOther,omitempty" db:"cmmi_division_other"`
 
-	RelatedMINTModels []uuid.UUID `json:"relatedMINTModels,omitempty" db:"-"`
-
 	ContractActivityType      *CTATContractActivityType `json:"contractActivityType,omitempty" db:"contract_activity_type"`
 	ContractActivityTypeOther *string                   `json:"contractActivityTypeOther,omitempty" db:"contract_activity_type_other"`
 	ContractName              *string                   `json:"contractName,omitempty" db:"contract_name"`
@@ -41,8 +39,6 @@ type CTATRequest struct {
 	DescribeHelpNeeded     string                        `json:"describeHelpNeeded" db:"describe_help_needed"`
 	RequestUrgency         CTATRequestUrgency            `json:"requestUrgency" db:"request_urgency"`
 	DateAssistanceNeededBy time.Time                     `json:"dateAssistanceNeededBy" db:"date_assistance_needed_by"`
-
-	SupportingDocuments []*CTATRequestDocument `json:"supportingDocuments,omitempty" db:"-"`
 
 	HumanReadableIDNumber int `json:"humanReadableIDNumber" db:"human_readable_id_number"`
 }

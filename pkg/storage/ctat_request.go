@@ -21,7 +21,7 @@ func CTATRequestGetByRequesterIDLOADER(np sqlutils.NamedPreparer, requesterIDs [
 		return nil, err
 	}
 
-	return hydrateCTATRequestSupportingDocuments(np, requests)
+	return requests, nil
 }
 
 // CTATRequestCollectionGetForAdmin returns CTAT requests for the admin table view.
@@ -29,37 +29,6 @@ func CTATRequestCollectionGetForAdmin(np sqlutils.NamedPreparer) ([]*models.CTAT
 	requests, err := sqlutils.SelectProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.GetForAdmin, map[string]any{})
 	if err != nil {
 		return nil, err
-	}
-
-	return hydrateCTATRequestSupportingDocuments(np, requests)
-}
-
-func hydrateCTATRequestSupportingDocuments(np sqlutils.NamedPreparer, requests []*models.CTATRequest) ([]*models.CTATRequest, error) {
-	if len(requests) == 0 {
-		return requests, nil
-	}
-
-	requestIDs := make([]uuid.UUID, len(requests))
-	for i, request := range requests {
-		requestIDs[i] = request.ID
-		request.SupportingDocuments = []*models.CTATRequestDocument{}
-	}
-
-	documents, err := CTATRequestDocumentGetByCTATRequestIDLOADER(np, requestIDs)
-	if err != nil {
-		return nil, err
-	}
-
-	documentsByRequestID := make(map[uuid.UUID][]*models.CTATRequestDocument, len(requests))
-	for _, document := range documents {
-		documentsByRequestID[document.CTATRequestID] = append(documentsByRequestID[document.CTATRequestID], document)
-	}
-
-	for _, request := range requests {
-		request.SupportingDocuments = documentsByRequestID[request.ID]
-		if request.SupportingDocuments == nil {
-			request.SupportingDocuments = []*models.CTATRequestDocument{}
-		}
 	}
 
 	return requests, nil

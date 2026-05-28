@@ -102,6 +102,49 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 	suite.ElementsMatch([]uuid.UUID{first.ID, second.ID}, returnedIDs)
 }
 
+func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
+	request := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
+		"Requester contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusNew,
+	)
+
+	firstPlan := suite.insertCommittedCTATRelatedModelPlanRow(
+		time.Date(2026, 2, 10, 8, 0, 0, 0, time.UTC),
+		"CTAT Related Model A",
+	)
+	secondPlan := suite.insertCommittedCTATRelatedModelPlanRow(
+		time.Date(2026, 2, 10, 8, 30, 0, 0, time.UTC),
+		"CTAT Related Model B",
+	)
+
+	suite.insertCommittedCTATRequestModelPlanLinkRow(
+		request.ID,
+		firstPlan.ID,
+		time.Date(2026, 2, 10, 9, 15, 0, 0, time.UTC),
+	)
+	suite.insertCommittedCTATRequestModelPlanLinkRow(
+		request.ID,
+		secondPlan.ID,
+		time.Date(2026, 2, 10, 9, 30, 0, 0, time.UTC),
+	)
+
+	resolver := &cTATRequestResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	relatedModels, err := resolver.RelatedMINTModels(suite.testConfigs.Context, request)
+	suite.NoError(err)
+	suite.Len(relatedModels, 2)
+	suite.Equal([]uuid.UUID{firstPlan.ID, secondPlan.ID}, lo.Map(relatedModels, func(item *models.ModelPlan, _ int) uuid.UUID {
+		return item.ID
+	}))
+}
+
 func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	requesterID uuid.UUID,
 	createdDts time.Time,
@@ -167,7 +210,7 @@ func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 		Requester:              requesterID,
 		Status:                 status,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
-		CmmiDivision:           pointerTo(models.CTATCMMIDivisionOptionBSGDBOM),
+		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
 		ContractName:           &contractName,
 		TypeOfHelpNeeded:       helpNeeded,
 		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
@@ -182,6 +225,97 @@ func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	return request
 }
 
-func pointerTo[T any](value T) *T {
-	return &value
+func (suite *ResolverSuite) insertCommittedCTATRelatedModelPlanRow(
+	createdDts time.Time,
+	modelName string,
+) *models.ModelPlan {
+	suite.T().Helper()
+
+	tx, err := suite.testConfigs.Store.Beginx()
+	suite.Require().NoError(err)
+
+	_, err = tx.NamedExec(sqlqueries.Utility.SetSessionCurrentUser, utilitysql.CreateUserIDQueryMap(suite.testConfigs.Principal.Account().ID))
+	suite.Require().NoError(err)
+
+	id := uuid.New()
+	_, err = tx.Exec(
+		`
+			INSERT INTO model_plan (
+				id,
+				model_name,
+				archived,
+				status,
+				created_by,
+				created_dts
+			)
+			VALUES ($1, $2, $3, $4, $5, $6)
+		`,
+		id,
+		modelName,
+		false,
+		models.ModelStatusPlanDraft,
+		suite.testConfigs.Principal.Account().ID,
+		createdDts,
+	)
+	suite.Require().NoError(err)
+
+	err = tx.Commit()
+	suite.Require().NoError(err)
+
+	plan := &models.ModelPlan{
+		ModelName: modelName,
+		Archived:  false,
+		Status:    models.ModelStatusPlanDraft,
+	}
+	plan.ID = id
+	plan.CreatedBy = suite.testConfigs.Principal.Account().ID
+	plan.CreatedDts = createdDts
+
+	return plan
+}
+
+func (suite *ResolverSuite) insertCommittedCTATRequestModelPlanLinkRow(
+	ctatRequestID uuid.UUID,
+	modelPlanID uuid.UUID,
+	createdDts time.Time,
+) *models.CTATRequestModelPlanLink {
+	suite.T().Helper()
+
+	tx, err := suite.testConfigs.Store.Beginx()
+	suite.Require().NoError(err)
+
+	_, err = tx.NamedExec(sqlqueries.Utility.SetSessionCurrentUser, utilitysql.CreateUserIDQueryMap(suite.testConfigs.Principal.Account().ID))
+	suite.Require().NoError(err)
+
+	id := uuid.New()
+	_, err = tx.Exec(
+		`
+			INSERT INTO ctat_request_model_plan_link (
+				id,
+				model_plan_id,
+				ctat_request_id,
+				created_by,
+				created_dts
+			)
+			VALUES ($1, $2, $3, $4, $5)
+		`,
+		id,
+		modelPlanID,
+		ctatRequestID,
+		suite.testConfigs.Principal.Account().ID,
+		createdDts,
+	)
+	suite.Require().NoError(err)
+
+	err = tx.Commit()
+	suite.Require().NoError(err)
+
+	link := &models.CTATRequestModelPlanLink{}
+	link.ID = id
+	link.ModelPlanID = modelPlanID
+	link.CTATRequestID = ctatRequestID
+	link.CreatedBy = suite.testConfigs.Principal.Account().ID
+	link.CreatedDts = createdDts
+
+	return link
 }

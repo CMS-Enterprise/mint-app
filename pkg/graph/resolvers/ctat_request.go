@@ -21,10 +21,32 @@ func CTATRequestCollectionGetForAdmin(ctx context.Context, store *storage.Store)
 	return storage.CTATRequestCollectionGetForAdmin(store)
 }
 
-// CTATRelatedMINTModelsGetByIDsLOADER resolves CTAT-related MINT model plans by ID using the existing model plan dataloader.
-func CTATRelatedMINTModelsGetByIDsLOADER(ctx context.Context, ids []uuid.UUID) ([]*models.ModelPlan, error) {
-	if len(ids) == 0 {
+// CTATRequestDocumentGetByCTATRequestIDLOADER resolves CTAT request documents by CTAT request ID using a data loader.
+func CTATRequestDocumentGetByCTATRequestIDLOADER(ctx context.Context, ctatRequestID uuid.UUID) ([]*models.CTATRequestDocument, error) {
+	documents, err := loaders.CTATRequestDocument.ByCTATRequestID.Load(ctx, ctatRequestID)
+	if err != nil {
+		return nil, err
+	}
+	if documents == nil {
+		return []*models.CTATRequestDocument{}, nil
+	}
+
+	return documents, nil
+}
+
+// CTATRelatedMINTModelsGetByCTATRequestIDLOADER resolves CTAT-related MINT model plans for a CTAT request using loaders.
+func CTATRelatedMINTModelsGetByCTATRequestIDLOADER(ctx context.Context, ctatRequestID uuid.UUID) ([]*models.ModelPlan, error) {
+	links, err := loaders.CTATRequestModelPlanLink.ByCTATRequestID.Load(ctx, ctatRequestID)
+	if err != nil {
+		return nil, err
+	}
+	if len(links) == 0 {
 		return []*models.ModelPlan{}, nil
+	}
+
+	ids := make([]uuid.UUID, len(links))
+	for i, link := range links {
+		ids[i] = link.ModelPlanID
 	}
 
 	plans, errs := loaders.ModelPlan.GetByID.LoadMany(ctx, ids)

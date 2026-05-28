@@ -19,12 +19,17 @@ import (
 
 // RelatedMINTModels is the resolver for the relatedMINTModels field.
 func (r *cTATRequestResolver) RelatedMINTModels(ctx context.Context, obj *models.CTATRequest) ([]*models.ModelPlan, error) {
-	return CTATRelatedMINTModelsGetByIDsLOADER(ctx, obj.RelatedMINTModels)
+	return CTATRelatedMINTModelsGetByCTATRequestIDLOADER(ctx, obj.ID)
 }
 
 // TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
 func (r *cTATRequestResolver) TypeOfHelpNeeded(ctx context.Context, obj *models.CTATRequest) ([]models.CTATHelpNeededType, error) {
 	return obj.TypeOfHelpNeeded, nil
+}
+
+// SupportingDocuments is the resolver for the supportingDocuments field.
+func (r *cTATRequestResolver) SupportingDocuments(ctx context.Context, obj *models.CTATRequest) ([]*models.CTATRequestDocument, error) {
+	return CTATRequestDocumentGetByCTATRequestIDLOADER(ctx, obj.ID)
 }
 
 // CreateCTATRequest is the resolver for the createCTATRequest field.
