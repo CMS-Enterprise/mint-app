@@ -1,3 +1,10 @@
+.contract-assistance-tickets-table-container--admin {
+  // Overrides #main-content .usa-pagination__button in TablePagination/index.scss
+  .usa-pagination__button:not(.usa-current) {
+    background-color: transparent !important;
+  }
+}
+
 .contract-assistance-tickets-table {
   &__help-type-column {
     width: 40%;

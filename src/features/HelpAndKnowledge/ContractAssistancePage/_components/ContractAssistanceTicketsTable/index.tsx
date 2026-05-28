@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Column, Row, useSortBy, useTable } from 'react-table';
+import { Column, Row, usePagination, useSortBy, useTable } from 'react-table';
 import { Button, Table } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import { Alert } from 'components/Alert';
+import TablePageSize from 'components/TablePageSize';
+import TablePagination from 'components/TablePagination';
 import {
   getColumnSortStatus,
   getHeaderSortIcon,
@@ -95,132 +97,190 @@ const ContractAssistanceTicketsTable = ({
     [t]
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable(
-      {
-        columns: columns as Column<object>[],
-        data: tickets,
-        sortTypes: {
-          alphanumeric: (rowOne: any, rowTwo: any, columnName: string) => {
-            return sortColumnValues(
-              rowOne.values[columnName],
-              rowTwo.values[columnName]
-            );
-          }
-        },
-        autoResetSortBy: false
+  const defaultPageSize = isAdmin ? 5 : 10;
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state
+  } = useTable(
+    {
+      columns: columns as Column<object>[],
+      data: tickets,
+      sortTypes: {
+        alphanumeric: (rowOne: any, rowTwo: any, columnName: string) => {
+          return sortColumnValues(
+            rowOne.values[columnName],
+            rowTwo.values[columnName]
+          );
+        }
       },
-      useSortBy
-    );
+      autoResetSortBy: false,
+      autoResetPage: true,
+      initialState: {
+        pageIndex: 0,
+        pageSize: defaultPageSize
+      }
+    },
+    useSortBy,
+    usePagination
+  );
 
   return (
-    <Table
-      bordered={false}
-      {...getTableProps()}
-      className={classNames(
-        'contract-assistance-tickets-table margin-top-0 margin-bottom-0',
-        {
-          'contract-assistance-tickets-table--admin': isAdmin
-        }
-      )}
-      fullWidth
+    <div
+      className={classNames('contract-assistance-tickets-table-container', {
+        'contract-assistance-tickets-table-container--admin': isAdmin
+      })}
     >
-      <caption className="usa-sr-only">
-        {t(
-          isAdmin
-            ? 'adminActions.table.caption'
-            : 'userSubmittedTickets.table.caption'
+      <Table
+        bordered={false}
+        {...getTableProps()}
+        className={classNames(
+          'contract-assistance-tickets-table margin-top-0 margin-bottom-0',
+          {
+            'contract-assistance-tickets-table--admin': isAdmin
+          }
         )}
-      </caption>
-      <thead className="margin-bottom-2">
-        {headerGroups.map(headerGroup => {
-          const headerGroupProps = headerGroup.getHeaderGroupProps();
-
-          return (
-            <tr
-              {...headerGroupProps}
-              className="border-bottom-2px"
-              key={headerGroupProps.key}
-            >
-              {headerGroup.headers.map(column => (
-                <th
-                  {...column.getHeaderProps()}
-                  aria-sort={
-                    column.canSort ? getColumnSortStatus(column) : undefined
-                  }
-                  scope="col"
-                  key={column.id}
-                  className={classNames(
-                    'padding-left-0 padding-y-1 bg-transparent table-header',
-                    {
-                      'contract-assistance-tickets-table__help-type-column':
-                        column.id === 'helpType'
-                    }
-                  )}
-                >
-                  {column.canSort ? (
-                    <button
-                      className="usa-button usa-button--unstyled position-relative"
-                      type="button"
-                      {...column.getSortByToggleProps()}
-                    >
-                      {column.render('Header') as React.ReactNode}
-                      {getHeaderSortIcon(column, false)}
-                    </button>
-                  ) : (
-                    column.render('Header')
-                  )}
-                </th>
-              ))}
-            </tr>
-          );
-        })}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.length === 0 ? (
-          <tr>
-            <td
-              className="border-0 padding-0 bg-transparent"
-              colSpan={columns.length}
-            >
-              <Alert
-                type="info"
-                heading={t(`${translationPrefix}.title`)}
-                className="margin-top-2"
-              >
-                {t(`${translationPrefix}.copy`)}
-              </Alert>
-            </td>
-          </tr>
-        ) : (
-          rows.map(row => {
-            prepareRow(row);
-            const { getRowProps, cells, id } = row;
+        fullWidth
+      >
+        <caption className="usa-sr-only">
+          {t(
+            isAdmin
+              ? 'adminActions.table.caption'
+              : 'userSubmittedTickets.table.caption'
+          )}
+        </caption>
+        <thead className="margin-bottom-2">
+          {headerGroups.map(headerGroup => {
+            const headerGroupProps = headerGroup.getHeaderGroupProps();
 
             return (
-              <tr {...getRowProps()} key={id}>
-                {cells.map(cell => {
-                  const cellProps = cell.getCellProps();
-
-                  return (
-                    <td
-                      {...cellProps}
-                      key={cellProps.key}
-                      className={classNames('padding-left-0 bg-transparent', {
+              <tr
+                {...headerGroupProps}
+                className="border-bottom-2px"
+                key={headerGroupProps.key}
+              >
+                {headerGroup.headers.map(column => (
+                  <th
+                    {...column.getHeaderProps()}
+                    aria-sort={
+                      column.canSort ? getColumnSortStatus(column) : undefined
+                    }
+                    scope="col"
+                    key={column.id}
+                    className={classNames(
+                      'padding-left-0 padding-y-1 bg-transparent table-header',
+                      {
                         'contract-assistance-tickets-table__help-type-column':
-                          cell.column.id === 'helpType'
-                      })}
-                    >
-                      {cell.render('Cell')}
-                    </td>
-                  );
-                })}
+                          column.id === 'helpType'
+                      }
+                    )}
+                  >
+                    {column.canSort ? (
+                      <button
+                        className="usa-button usa-button--unstyled position-relative"
+                        type="button"
+                        {...column.getSortByToggleProps()}
+                      >
+                        {column.render('Header') as React.ReactNode}
+                        {getHeaderSortIcon(column, false)}
+                      </button>
+                    ) : (
+                      column.render('Header')
+                    )}
+                  </th>
+                ))}
               </tr>
             );
-          })
-        )}
-      </tbody>
-    </Table>
+          })}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {tickets.length === 0 ? (
+            <tr>
+              <td className="border-0 padding-0" colSpan={columns.length}>
+                <Alert
+                  type="info"
+                  heading={t(`${translationPrefix}.title`)}
+                  className="margin-top-2"
+                >
+                  {t(`${translationPrefix}.copy`)}
+                </Alert>
+              </td>
+            </tr>
+          ) : (
+            page.map(row => {
+              prepareRow(row);
+              const { getRowProps, cells, id } = row;
+
+              return (
+                <tr {...getRowProps()} key={id}>
+                  {cells.map(cell => {
+                    const cellProps = cell.getCellProps();
+
+                    return (
+                      <td
+                        {...cellProps}
+                        key={cellProps.key}
+                        className={classNames('padding-left-0 bg-transparent', {
+                          'contract-assistance-tickets-table__help-type-column':
+                            cell.column.id === 'helpType'
+                        })}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })
+          )}
+        </tbody>
+      </Table>
+
+      {tickets.length > defaultPageSize && (
+        <div
+          className={classNames('grid-row grid-gap grid-gap-lg', {
+            'display-flex row-reverse': tickets.length <= state.pageSize
+          })}
+        >
+          {tickets.length > state.pageSize && (
+            <TablePagination
+              gotoPage={gotoPage}
+              previousPage={previousPage}
+              nextPage={nextPage}
+              canNextPage={canNextPage}
+              pageIndex={state.pageIndex}
+              pageOptions={pageOptions}
+              canPreviousPage={canPreviousPage}
+              pageCount={pageCount}
+              pageSize={state.pageSize}
+              setPageSize={setPageSize}
+              page={[]}
+              className="desktop:grid-col-fill bg-transparent"
+            />
+          )}
+
+          {tickets.length > 5 && (
+            <TablePageSize
+              className="desktop:grid-col-auto"
+              pageSize={state.pageSize}
+              setPageSize={setPageSize}
+            />
+          )}
+        </div>
+      )}
+    </div>
   );
 };
 
