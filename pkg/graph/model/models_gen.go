@@ -51,6 +51,17 @@ type CTATRequestInput struct {
 	SupportingDocuments       []*CTATRequestDocumentInput      `json:"supportingDocuments,omitempty"`
 }
 
+// CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin
+type CTATRequestsTableDataAdmin struct {
+	CtatRequests []*models.CTATRequest `json:"ctatRequests"`
+	Count        int                   `json:"count"`
+}
+
+// CTATRequestsTableDataRequester contains the requests for the table information for a requester
+type CTATRequestsTableDataRequester struct {
+	CtatRequests []*models.CTATRequest `json:"ctatRequests"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`

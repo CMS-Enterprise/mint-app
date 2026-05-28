@@ -150,9 +150,6 @@ type CTATRequestDocument {
   # TODO: fully implement
 }
 
-"""
-A request for CTAT assistance
-"""
 type CTATRequest {
   id: UUID!
   humanReadableID: String!
@@ -170,7 +167,7 @@ type CTATRequest {
   cmmiGroupOther: String
   cmmiDivision: CTATCMMIDivisionOption
   cmmiDivisionOther: String
-  relatedMINTModels: [UUID!]
+  relatedMINTModels: [ModelPlan!]
   contractActivityType: CTATContractActivityType
   contractActivityTypeOther: String
   contractName: String
@@ -190,6 +187,21 @@ type CTATRequest {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
+}
+
+"""
+CTATRequestsTableDataRequester contains the requests for the table information for a requester
+"""
+type CTATRequestsTableDataRequester {
+  ctatRequests: [CTATRequest!]!
+}
+
+"""
+CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin
+"""
+type CTATRequestsTableDataAdmin {
+  ctatRequests: [CTATRequest!]!
+  count: Int!
 }
 
 """
@@ -235,7 +247,8 @@ input CTATAdminUpdateInput @goModel(model: "map[string]interface{}") {
 
 extend type Query {
   ctatRequest(id: UUID!): CTATRequest!
-  ctatRequests: [CTATRequest!]!
+  ctatRequestsRequester: CTATRequestsTableDataRequester!
+  ctatRequestsAdmin: CTATRequestsTableDataAdmin! @hasRole(role: MINT_ASSESSMENT)
 }
 
 extend type Mutation {

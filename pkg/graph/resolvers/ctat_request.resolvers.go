@@ -11,14 +11,25 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// RelatedMINTModels is the resolver for the relatedMINTModels field.
+func (r *cTATRequestResolver) RelatedMINTModels(ctx context.Context, obj *models.CTATRequest) ([]*models.ModelPlan, error) {
+	return CTATRelatedMINTModelsGetByCTATRequestIDLOADER(ctx, obj.ID)
+}
+
 // TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
 func (r *cTATRequestResolver) TypeOfHelpNeeded(ctx context.Context, obj *models.CTATRequest) ([]models.CTATHelpNeededType, error) {
 	return obj.TypeOfHelpNeeded, nil
+}
+
+// SupportingDocuments is the resolver for the supportingDocuments field.
+func (r *cTATRequestResolver) SupportingDocuments(ctx context.Context, obj *models.CTATRequest) ([]*models.CTATRequestDocument, error) {
+	return CTATRequestDocumentGetByCTATRequestIDLOADER(ctx, obj.ID)
 }
 
 // CreateCTATRequest is the resolver for the createCTATRequest field.
@@ -36,9 +47,36 @@ func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.
 	panic(fmt.Errorf("not implemented: CtatRequest - ctatRequest"))
 }
 
-// CtatRequests is the resolver for the ctatRequests field.
-func (r *queryResolver) CtatRequests(ctx context.Context) ([]*models.CTATRequest, error) {
-	panic(fmt.Errorf("not implemented: CtatRequests - ctatRequests"))
+// CtatRequestsRequester is the resolver for the ctatRequestsRequester field.
+func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATRequestsTableDataRequester, error) {
+	principal := appcontext.Principal(ctx)
+
+	ctatRequests, err := CTATRequestGetByRequesterIDLOADER(ctx, principal.Account().ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.CTATRequestsTableDataRequester{
+		CtatRequests: ctatRequests,
+	}, nil
+}
+
+// CtatRequestsAdmin is the resolver for the ctatRequestsAdmin field.
+func (r *queryResolver) CtatRequestsAdmin(ctx context.Context) (*model.CTATRequestsTableDataAdmin, error) {
+	principal := appcontext.Principal(ctx)
+	if !principal.AllowASSESSMENT() {
+		return nil, fmt.Errorf("user does not have permission to view admin CTAT requests")
+	}
+
+	ctatRequests, err := CTATRequestCollectionGetForAdmin(ctx, r.store)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.CTATRequestsTableDataAdmin{
+		CtatRequests: ctatRequests,
+		Count:        len(ctatRequests),
+	}, nil
 }
 
 // CTATRequest returns generated.CTATRequestResolver implementation.

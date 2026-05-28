@@ -374,7 +374,6 @@ export enum CtatHelpNeededType {
   SOW_SOO_PWS_DEVELOPMENT = 'SOW_SOO_PWS_DEVELOPMENT'
 }
 
-/** A request for CTAT assistance */
 export type CtatRequest = {
   __typename: 'CTATRequest';
   assignedAdmin?: Maybe<Scalars['UUID']['output']>;
@@ -401,7 +400,7 @@ export type CtatRequest = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   notes?: Maybe<Scalars['String']['output']>;
-  relatedMINTModels?: Maybe<Array<Scalars['UUID']['output']>>;
+  relatedMINTModels?: Maybe<Array<ModelPlan>>;
   requestUrgency?: Maybe<CtatRequestUrgency>;
   requester: Scalars['UUID']['output'];
   requesterUserAccount: UserAccount;
@@ -466,6 +465,19 @@ export enum CtatRequestUrgency {
   LOW = 'LOW',
   MEDIUM = 'MEDIUM'
 }
+
+/** CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin */
+export type CtatRequestsTableDataAdmin = {
+  __typename: 'CTATRequestsTableDataAdmin';
+  count: Scalars['Int']['output'];
+  ctatRequests: Array<CtatRequest>;
+};
+
+/** CTATRequestsTableDataRequester contains the requests for the table information for a requester */
+export type CtatRequestsTableDataRequester = {
+  __typename: 'CTATRequestsTableDataRequester';
+  ctatRequests: Array<CtatRequest>;
+};
 
 /** The status assigned to a CTAT request. */
 export enum CtatStatus {
@@ -4963,7 +4975,8 @@ export type Query = {
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
   ctatRequest: CtatRequest;
-  ctatRequests: Array<CtatRequest>;
+  ctatRequestsAdmin: CtatRequestsTableDataAdmin;
+  ctatRequestsRequester: CtatRequestsTableDataRequester;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
