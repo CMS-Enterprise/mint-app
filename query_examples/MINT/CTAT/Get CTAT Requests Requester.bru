@@ -60,6 +60,44 @@ body:graphql {
           id
           modelName
           abbreviation
+          archived
+          createdBy
+          createdByUserAccount {
+            id
+            username
+            isEUAID
+            commonName
+            locale
+            email
+            givenName
+            familyName
+            zoneInfo
+            hasLoggedIn
+          }
+          createdDts
+          modifiedBy
+          modifiedByUserAccount {
+            id
+            username
+            isEUAID
+            commonName
+            locale
+            email
+            givenName
+            familyName
+            zoneInfo
+            hasLoggedIn
+          }
+          modifiedDts
+          status
+          taskListStatus
+          suggestedPhase {
+            phase
+            suggestedStatuses
+          }
+          previousSuggestedPhase
+          isFavorite
+          isCollaborator
         }
         contractActivityType
         contractActivityTypeOther
