@@ -30,6 +30,7 @@ export enum HelpArticle {
   ICIP_REPOSITORY = 'ICIP_REPOSITORY',
   FRAUD_AND_ABUSE_WAIVER = 'FRAUD_AND_ABUSE_WAIVER',
   QUALITY_VERTICAL_HEALTH_EQUITY = 'QUALITY_VERTICAL_HEALTH_EQUITY',
+  COR_GUIDANCE_AND_TEMPLATES = 'COR_GUIDANCE_AND_TEMPLATES',
   CREATING_MTO_MATRIX = 'CREATING_MTO_MATRIX',
   STARTING_MTO = 'STARTING_MTO',
   USING_MILESTONE_TABLE = 'USING_MILESTONE_TABLE',
@@ -184,6 +185,14 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
     route:
       'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-BSG-Classic/DITOS/SitePages/IT%20Security%20and%20Privacy.aspx?UserPage%5FRenderAsModern=0',
     translation: HelpArticle.INFORMATION_SYSTEMS_SECURITY_OFFICER,
+    type: ArticleCategories.GETTING_STARTED,
+    external: true
+  },
+  {
+    key: HelpArticle.COR_GUIDANCE_AND_TEMPLATES,
+    route:
+      'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-BSG-DCCS/SitePages/ContractSummary.aspx',
+    translation: HelpArticle.COR_GUIDANCE_AND_TEMPLATES,
     type: ArticleCategories.GETTING_STARTED,
     external: true
   },
