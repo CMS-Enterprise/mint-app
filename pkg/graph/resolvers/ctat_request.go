@@ -108,7 +108,7 @@ func CTATRequestCreate(
 		}
 	}
 
-	createdRequest, err := sqlutils.WithTransaction[models.CTATRequest](store, func(tx *sqlx.Tx) (*models.CTATRequest, error) {
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.CTATRequest, error) {
 		createdRequest, err := storage.CTATRequestCreate(tx, logger, request)
 		if err != nil {
 			return nil, err
@@ -130,11 +130,6 @@ func CTATRequestCreate(
 
 		return createdRequest, nil
 	})
-	if err != nil {
-		return nil, err
-	}
-
-	return createdRequest, nil
 }
 
 type ctatRequestDocumentUpload struct {
@@ -143,27 +138,23 @@ type ctatRequestDocumentUpload struct {
 }
 
 func newCTATRequest(input *model.CTATRequestInput, requesterID uuid.UUID) *models.CTATRequest {
-	request := &models.CTATRequest{
-		Requester:                 requesterID,
-		Status:                    models.CTATStatusNew,
-		CmmiGroup:                 input.CmmiGroup,
-		CmmiGroupOther:            input.CmmiGroupOther,
-		CmmiDivision:              input.CmmiDivision,
-		CmmiDivisionOther:         input.CmmiDivisionOther,
-		ContractActivityType:      input.ContractActivityType,
-		ContractActivityTypeOther: input.ContractActivityTypeOther,
-		ContractName:              input.ContractName,
-		ContractNumber:            input.ContractNumber,
-		ContractType:              input.ContractType,
-		ContractTypeOther:         input.ContractTypeOther,
-		TypeOfHelpNeeded:          models.EnumArray[models.CTATHelpNeededType](input.TypeOfHelpNeeded),
-		TypeOfHelpNeededOther:     input.TypeOfHelpNeededOther,
-		DescribeHelpNeeded:        input.DescribeHelpNeeded,
-		RequestUrgency:            input.RequestUrgency,
-		DateAssistanceNeededBy:    input.DateAssistanceNeededBy,
-	}
+	request := models.NewCTATRequest(requesterID, requesterID)
 	request.ID = uuid.New()
-	request.CreatedBy = requesterID
+	request.CmmiGroup = input.CmmiGroup
+	request.CmmiGroupOther = input.CmmiGroupOther
+	request.CmmiDivision = input.CmmiDivision
+	request.CmmiDivisionOther = input.CmmiDivisionOther
+	request.ContractActivityType = input.ContractActivityType
+	request.ContractActivityTypeOther = input.ContractActivityTypeOther
+	request.ContractName = input.ContractName
+	request.ContractNumber = input.ContractNumber
+	request.ContractType = input.ContractType
+	request.ContractTypeOther = input.ContractTypeOther
+	request.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType](input.TypeOfHelpNeeded)
+	request.TypeOfHelpNeededOther = input.TypeOfHelpNeededOther
+	request.DescribeHelpNeeded = input.DescribeHelpNeeded
+	request.RequestUrgency = input.RequestUrgency
+	request.DateAssistanceNeededBy = input.DateAssistanceNeededBy
 
 	return request
 }

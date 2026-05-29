@@ -43,6 +43,15 @@ type CTATRequest struct {
 	HumanReadableIDNumber int `json:"humanReadableIDNumber" db:"human_readable_id_number"`
 }
 
+// NewCTATRequest returns a new CTAT request with base audit fields set.
+func NewCTATRequest(createdBy uuid.UUID, requester uuid.UUID) *CTATRequest {
+	return &CTATRequest{
+		baseStruct: NewBaseStruct(createdBy),
+		Requester:  requester,
+		Status:     CTATStatusNew,
+	}
+}
+
 // ctatRequestHumanReadableIDPrefix is the only currently available prefix
 const ctatRequestHumanReadableIDPrefix = "CTAT"
 
