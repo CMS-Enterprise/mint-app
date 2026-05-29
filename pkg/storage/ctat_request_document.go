@@ -6,7 +6,6 @@ import (
 	"github.com/lib/pq"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -16,7 +15,6 @@ import (
 // CTATRequestDocumentCreate creates a CTAT request document row.
 func CTATRequestDocumentCreate(
 	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
 	doc *models.CTATRequestDocument,
 ) (*models.CTATRequestDocument, error) {
 	if doc.ID == uuid.Nil {

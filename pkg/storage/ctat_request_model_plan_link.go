@@ -6,7 +6,6 @@ import (
 	"github.com/lib/pq"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -16,7 +15,6 @@ import (
 // CTATRequestModelPlanLinkCreate creates a CTAT request model-plan link row.
 func CTATRequestModelPlanLinkCreate(
 	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
 	link *models.CTATRequestModelPlanLink,
 ) (*models.CTATRequestModelPlanLink, error) {
 	if link.ID == uuid.Nil {

@@ -34,7 +34,7 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 	}
 	request.CreatedBy = actorUserID
 
-	created, err := CTATRequestCreate(tx, s.logger, request)
+	created, err := CTATRequestCreate(tx, request)
 	s.Require().NoError(err)
 
 	s.NotEqual(uuid.Nil, created.ID)
@@ -82,7 +82,7 @@ func (s *StoreTestSuite) TestCTATRequestModelPlanLinkCreate() {
 	link.ModelPlanID = createdModelPlan.ID
 	link.CreatedBy = actorUserID
 
-	created, err := CTATRequestModelPlanLinkCreate(tx, s.logger, link)
+	created, err := CTATRequestModelPlanLinkCreate(tx, link)
 	s.Require().NoError(err)
 
 	s.NotEqual(uuid.Nil, created.ID)
@@ -130,7 +130,7 @@ func (s *StoreTestSuite) TestCTATRequestDocumentCreate() {
 	doc.CTATRequestID = request.ID
 	doc.CreatedBy = actorUserID
 
-	created, err := CTATRequestDocumentCreate(tx, s.logger, doc)
+	created, err := CTATRequestDocumentCreate(tx, doc)
 	s.Require().NoError(err)
 
 	s.NotEqual(uuid.Nil, created.ID)

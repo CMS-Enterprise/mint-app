@@ -109,20 +109,20 @@ func CTATRequestCreate(
 	}
 
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.CTATRequest, error) {
-		createdRequest, err := storage.CTATRequestCreate(tx, logger, request)
+		createdRequest, err := storage.CTATRequestCreate(tx, request)
 		if err != nil {
 			return nil, err
 		}
 
 		for _, relatedModelLink := range relatedModelLinks {
-			_, err = storage.CTATRequestModelPlanLinkCreate(tx, logger, relatedModelLink)
+			_, err = storage.CTATRequestModelPlanLinkCreate(tx, relatedModelLink)
 			if err != nil {
 				return nil, err
 			}
 		}
 
 		for _, document := range supportingDocuments {
-			_, err = storage.CTATRequestDocumentCreate(tx, logger, &document.CTATRequestDocument)
+			_, err = storage.CTATRequestDocumentCreate(tx, &document.CTATRequestDocument)
 			if err != nil {
 				return nil, err
 			}

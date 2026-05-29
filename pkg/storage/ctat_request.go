@@ -6,7 +6,6 @@ import (
 	"github.com/lib/pq"
 
 	"github.com/google/uuid"
-	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -14,11 +13,7 @@ import (
 )
 
 // CTATRequestCreate creates a CTAT request row.
-func CTATRequestCreate(
-	np sqlutils.NamedPreparer,
-	_ *zap.Logger,
-	request *models.CTATRequest,
-) (*models.CTATRequest, error) {
+func CTATRequestCreate(np sqlutils.NamedPreparer, request *models.CTATRequest) (*models.CTATRequest, error) {
 	if request.ID == uuid.Nil {
 		request.ID = uuid.New()
 	}
