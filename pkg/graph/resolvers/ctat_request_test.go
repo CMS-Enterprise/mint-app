@@ -1,15 +1,19 @@
 package resolvers
 
 import (
+	"bytes"
 	"time"
 
+	"github.com/99designs/gqlgen/graphql"
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
@@ -143,6 +147,60 @@ func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
 	suite.Equal([]uuid.UUID{firstPlan.ID, secondPlan.ID}, lo.Map(relatedModels, func(item *models.ModelPlan, _ int) uuid.UUID {
 		return item.ID
 	}))
+}
+
+func (suite *ResolverSuite) TestCTATRequestCreate() {
+	relatedPlan := suite.createModelPlan("CTAT Create Related Plan")
+	reader := bytes.NewReader([]byte("Some test CTAT file contents"))
+
+	contractName := "CTAT Create Contract"
+	input := &model.CTATRequestInput{
+		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
+		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
+		RelatedMINTModels:      []uuid.UUID{relatedPlan.ID},
+		ContractName:           &contractName,
+		TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		DescribeHelpNeeded:     "Need help creating a CTAT request.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh,
+		DateAssistanceNeededBy: time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC),
+		SupportingDocuments: []*model.CTATRequestDocumentInput{
+			{
+				FileData: graphql.Upload{
+					File:        reader,
+					Filename:    "ctat-request-upload.txt",
+					Size:        reader.Size(),
+					ContentType: "text/plain",
+				},
+			},
+		},
+	}
+
+	created, err := CTATRequestCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		suite.testConfigs.S3Client,
+	)
+	suite.NoError(err)
+	suite.NotNil(created)
+	suite.Equal(models.CTATStatusNew, created.Status)
+	suite.Equal(suite.testConfigs.Principal.Account().ID, created.Requester)
+	suite.Equal(contractName, *created.ContractName)
+	suite.Greater(created.HumanReadableIDNumber, 0)
+
+	links, err := storage.CTATRequestModelPlanLinkGetByCTATRequestIDLOADER(suite.testConfigs.Store, []uuid.UUID{created.ID})
+	suite.NoError(err)
+	suite.Len(links, 1)
+	suite.Equal(relatedPlan.ID, links[0].ModelPlanID)
+
+	documents, err := storage.CTATRequestDocumentGetByCTATRequestIDLOADER(suite.testConfigs.Store, []uuid.UUID{created.ID})
+	suite.NoError(err)
+	suite.Len(documents, 1)
+	suite.Equal("ctat-request-upload.txt", documents[0].FileName)
+	suite.Equal("text/plain", documents[0].FileType)
+	suite.False(documents[0].Restricted)
 }
 
 func (suite *ResolverSuite) insertCommittedCTATRequestRow(

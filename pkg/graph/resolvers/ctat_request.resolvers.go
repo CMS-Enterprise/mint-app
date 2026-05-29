@@ -34,7 +34,10 @@ func (r *cTATRequestResolver) SupportingDocuments(ctx context.Context, obj *mode
 
 // CreateCTATRequest is the resolver for the createCTATRequest field.
 func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error) {
-	panic(fmt.Errorf("not implemented: CreateCTATRequest - createCTATRequest"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return CTATRequestCreate(ctx, logger, &input, principal, r.store, r.fileUploadS3Client)
 }
 
 // AdminUpdateCTATRequest is the resolver for the adminUpdateCTATRequest field.
