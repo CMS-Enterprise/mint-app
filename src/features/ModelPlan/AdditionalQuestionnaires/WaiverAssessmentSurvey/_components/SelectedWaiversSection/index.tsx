@@ -9,9 +9,11 @@ import { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
 import { ProgramSuggestedWaivers } from '../../ProgramWaivers';
 
 const SelectedWaiversSection = ({
-  selectedWaivers
+  selectedWaivers,
+  waiverType
 }: {
   selectedWaivers: MedicarePaymentSuggestedWaivers | ProgramSuggestedWaivers;
+  waiverType: string;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
@@ -36,7 +38,8 @@ const SelectedWaiversSection = ({
       <p className="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest">
         {waiverAssessmentSurveyMiscT('selectedWaivers.description', {
           totalWaiversCount: data?.commonWaivers?.length || 0,
-          selectedWaiversCount: selectedWaivers.length
+          selectedWaiversCount: selectedWaivers.length,
+          waiverType
         })}
       </p>
 

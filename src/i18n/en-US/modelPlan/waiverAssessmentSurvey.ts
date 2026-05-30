@@ -526,17 +526,19 @@ const waiverAssessmentSurveyMisc = {
   medicarePaymentWaivers: {
     heading: 'Medicare payment waivers',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    waiverType: 'Medicare payment waivers'
   },
   programWaivers: {
     heading: 'Program waivers - Medicare Benefit Enhancements (BEs)',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    waiverType: 'Program waivers (Medicare BEs)'
   },
   selectedWaivers: {
     heading: 'Selected waivers',
     description:
-      'There are {{-totalWaiversCount}} total available Medicare payment waivers. Based on your answers to the above questions, MINT has determined that the following {{-selectedWaiversCount}} waivers are likely needed for your model:',
+      'There are {{-totalWaiversCount}} total available {{-waiverType}}. Based on your answers to the above questions, MINT has determined that the following {{-selectedWaiversCount}} waivers are likely needed for your model:',
     summary:
       'Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.'
   }

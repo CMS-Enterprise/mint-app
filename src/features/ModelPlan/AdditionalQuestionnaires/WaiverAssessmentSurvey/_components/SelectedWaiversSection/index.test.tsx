@@ -34,7 +34,10 @@ describe('SelectedWaiversSection Component', () => {
         {
           path: '/selected-waivers',
           element: (
-            <SelectedWaiversSection selectedWaivers={MOCK_SELECTED_WAIVERS} />
+            <SelectedWaiversSection
+              selectedWaivers={MOCK_SELECTED_WAIVERS}
+              waiverType="Mocked Waivers"
+            />
           )
         }
       ],

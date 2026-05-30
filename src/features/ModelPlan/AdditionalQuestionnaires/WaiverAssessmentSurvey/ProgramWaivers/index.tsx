@@ -198,6 +198,9 @@ const ProgramWaivers = () => {
 
               <SelectedWaiversSection
                 selectedWaivers={suggestedWaivers || []}
+                waiverType={waiverAssessmentSurveyMiscT(
+                  'programWaivers.waiverType'
+                )}
               />
 
               <FormFooter
