@@ -568,7 +568,8 @@ exports[`ProgramWaivers Component > matches snapshot 1`] = `
               class="margin-bottom-2"
             >
               <ul
-                class="grid-row grid-gap-2 margin-y-0 padding-x-3"
+                class="margin-y-0 padding-left-3"
+                style="column-count: 2; column-gap: 1rem;"
               />
             </div>
             <p

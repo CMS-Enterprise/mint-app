@@ -19,15 +19,18 @@ exports[`SelectedWaiversSection Component > matches snapshot 1`] = `
       class="margin-bottom-2"
     >
       <ul
-        class="grid-row grid-gap-2 margin-y-0 padding-x-3"
+        class="margin-y-0 padding-left-3"
+        style="column-count: 2; column-gap: 1rem;"
       >
         <li
-          class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
+          class="margin-y-0 padding-y-05 line-height-sans-5"
+          style="break-inside: avoid;"
         >
           short Waiver 2
         </li>
         <li
-          class="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
+          class="margin-y-0 padding-y-05 line-height-sans-5"
+          style="break-inside: avoid;"
         >
           Waiver 3
         </li>

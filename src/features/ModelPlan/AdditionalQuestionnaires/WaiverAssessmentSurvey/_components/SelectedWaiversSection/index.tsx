@@ -44,11 +44,15 @@ const SelectedWaiversSection = ({
       </p>
 
       <div className="margin-bottom-2">
-        <ul className="grid-row grid-gap-2 margin-y-0 padding-x-3">
+        <ul
+          className="margin-y-0 padding-left-3"
+          style={{ columnCount: 2, columnGap: '1rem' }}
+        >
           {generateSelectedWaiverList.map(waiverName => (
             <li
               key={waiverName}
-              className="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
+              className="margin-y-0 padding-y-05 line-height-sans-5"
+              style={{ breakInside: 'avoid' }}
             >
               {waiverName}
             </li>
