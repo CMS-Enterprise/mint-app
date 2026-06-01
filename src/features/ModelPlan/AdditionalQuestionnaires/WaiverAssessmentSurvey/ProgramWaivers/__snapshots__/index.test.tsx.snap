@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
+exports[`ProgramWaivers Component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="mint-body-normal"
@@ -11,26 +11,26 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
       <h2
         class="margin-0 margin-right-2 display-inline"
       >
-        Medicare payment waivers
+        Program waivers - Medicare Benefit Enhancements (BEs)
       </h2>
       <div
         class="mint-body-large text-base display-inline"
       >
-        (Page 3 of 7)
+        (Page 4 of 7)
       </div>
     </div>
     <p
       class="margin-top-neg-1 margin-bottom-4 text-base-dark"
     >
-      The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.
+      The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.
     </p>
     <div
       class="tablet:grid-col-6"
     >
       <form
         class="usa-form maxw-none"
-        data-testid="waiver-assessment-survey-medicare-payment-waivers-form"
-        id="waiver-assessment-survey-medicare-payment-waivers-form"
+        data-testid="waiver-assessment-survey-program-waivers-form"
+        id="waiver-assessment-survey-program-waivers-form"
       >
         <fieldset
           class="usa-fieldset"
@@ -46,10 +46,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
               <label
                 class="usa-label text-normal text-bold"
                 data-testid="label"
-                for="modifies-medicare-savings-programs-true"
+                for="impacts-site-of-care-payments-true"
               >
-                Does your model modify Medicare shared savings programs?
+                Will your model be impacting site of care payments?
               </label>
+              <p
+                class="text-base margin-bottom-neg-05 margin-top-1"
+              >
+                For example: telehealth, at home
+              </p>
               <div
                 class="display-flex flex-column"
               >
@@ -63,15 +68,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
-                      data-testid="modifies-medicare-savings-programs-true"
-                      id="modifies-medicare-savings-programs-true"
-                      name="modifiesMedicareSavingsPrograms"
+                      data-testid="impacts-site-of-care-payments-true"
+                      id="impacts-site-of-care-payments-true"
+                      name="impactsSiteOfCarePayments"
                       type="radio"
                       value="TRUE"
                     />
                     <label
                       class="usa-radio__label"
-                      for="modifies-medicare-savings-programs-true"
+                      for="impacts-site-of-care-payments-true"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -89,17 +94,17 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
                   <label
                     class="usa-label text-normal"
                     data-testid="label"
-                    for="modifies-medicare-savings-programs-example"
+                    for="impacts-site-of-care-payments-example"
                   >
                     Please provide an example
                   </label>
                   <textarea
-                    aria-labelledby="label-modifies-medicare-savings-programs-example hint-modifies-medicare-savings-programs-example"
+                    aria-labelledby="label-impacts-site-of-care-payments-example hint-impacts-site-of-care-payments-example"
                     class="height-card usa-textarea"
-                    data-testid="modifies-medicare-savings-programs-example"
-                    id="modifies-medicare-savings-programs-example"
+                    data-testid="impacts-site-of-care-payments-example"
+                    id="impacts-site-of-care-payments-example"
                     maxlength="5000"
-                    name="modifiesMedicareSavingsProgramsExample"
+                    name="impactsSiteOfCarePaymentsExample"
                   >
                     Example
                   </textarea>
@@ -118,15 +123,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
-                      data-testid="modifies-medicare-savings-programs-false"
-                      id="modifies-medicare-savings-programs-false"
-                      name="modifiesMedicareSavingsPrograms"
+                      data-testid="impacts-site-of-care-payments-false"
+                      id="impacts-site-of-care-payments-false"
+                      name="impactsSiteOfCarePayments"
                       type="radio"
                       value="FALSE"
                     />
                     <label
                       class="usa-radio__label"
-                      for="modifies-medicare-savings-programs-false"
+                      for="impacts-site-of-care-payments-false"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -146,10 +151,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
               <label
                 class="usa-label text-normal text-bold"
                 data-testid="label"
-                for="bundles-payments-true"
+                for="modifies-care-team-scope-of-practice-true"
               >
-                Does your model bundle payments?
+                Will your model be modifying the care teams’ scope of practice?
               </label>
+              <p
+                class="text-base margin-bottom-neg-05 margin-top-1"
+              >
+                For example: NP/PA flexibility, CHW inclusion, etc.
+              </p>
               <div
                 class="display-flex flex-column"
               >
@@ -163,15 +173,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
-                      data-testid="bundles-payments-true"
-                      id="bundles-payments-true"
-                      name="bundlesPayments"
+                      data-testid="modifies-care-team-scope-of-practice-true"
+                      id="modifies-care-team-scope-of-practice-true"
+                      name="modifiesCareTeamScopeOfPractice"
                       type="radio"
                       value="TRUE"
                     />
                     <label
                       class="usa-radio__label"
-                      for="bundles-payments-true"
+                      for="modifies-care-team-scope-of-practice-true"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -196,15 +206,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
-                      data-testid="bundles-payments-false"
-                      id="bundles-payments-false"
-                      name="bundlesPayments"
+                      data-testid="modifies-care-team-scope-of-practice-false"
+                      id="modifies-care-team-scope-of-practice-false"
+                      name="modifiesCareTeamScopeOfPractice"
                       type="radio"
                       value="FALSE"
                     />
                     <label
                       class="usa-radio__label"
-                      for="bundles-payments-false"
+                      for="modifies-care-team-scope-of-practice-false"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -222,15 +232,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
                   <label
                     class="usa-label text-normal"
                     data-testid="label"
-                    for="bundles-payments-why-not"
+                    for="modifies-care-team-scope-of-practice-why-not"
                   >
                     Please explain why not
                   </label>
                   <select
                     class="usa-select"
                     data-testid="Select"
-                    id="bundles-payments-why-not"
-                    name="bundlesPaymentsWhyNot"
+                    id="modifies-care-team-scope-of-practice-why-not"
+                    name="modifiesCareTeamScopeOfPracticeWhyNot"
                   >
                     <option
                       value="default"
@@ -278,10 +288,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
               <label
                 class="usa-label text-normal text-bold"
                 data-testid="label"
-                for="offers-risk-sharing-arrangements-true"
+                for="modifies-care-delivery-with-claims-based-payments-true"
               >
-                Does your model offer risk sharing arrangements?
+                Will your model be modifying how care is delivered with claims-based payments?
               </label>
+              <p
+                class="text-base margin-bottom-neg-05 margin-top-1"
+              >
+                For example: diabetic shoes
+              </p>
               <div
                 class="display-flex flex-column"
               >
@@ -295,15 +310,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
-                      data-testid="offers-risk-sharing-arrangements-true"
-                      id="offers-risk-sharing-arrangements-true"
-                      name="offersRiskSharingArrangements"
+                      data-testid="modifies-care-delivery-with-claims-based-payments-true"
+                      id="modifies-care-delivery-with-claims-based-payments-true"
+                      name="modifiesCareDeliveryWithClaimsBasedPayments"
                       type="radio"
                       value="TRUE"
                     />
                     <label
                       class="usa-radio__label"
-                      for="offers-risk-sharing-arrangements-true"
+                      for="modifies-care-delivery-with-claims-based-payments-true"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -328,15 +343,15 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
-                      data-testid="offers-risk-sharing-arrangements-false"
-                      id="offers-risk-sharing-arrangements-false"
-                      name="offersRiskSharingArrangements"
+                      data-testid="modifies-care-delivery-with-claims-based-payments-false"
+                      id="modifies-care-delivery-with-claims-based-payments-false"
+                      name="modifiesCareDeliveryWithClaimsBasedPayments"
                       type="radio"
                       value="FALSE"
                     />
                     <label
                       class="usa-radio__label"
-                      for="offers-risk-sharing-arrangements-false"
+                      for="modifies-care-delivery-with-claims-based-payments-false"
                     >
                       <span
                         class="display-flex flex-align-center"
@@ -347,6 +362,192 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="modifies-care-delivery-with-claims-based-payments-why-not"
+                  >
+                    Please explain why not
+                  </label>
+                  <select
+                    class="usa-select"
+                    data-testid="Select"
+                    id="modifies-care-delivery-with-claims-based-payments-why-not"
+                    name="modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot"
+                  >
+                    <option
+                      value="default"
+                    >
+                      - Select -
+                    </option>
+                    <option
+                      value="OUT_OF_SCOPE"
+                    >
+                      Outside of model scope (e.g. Medicaid-only waiver)
+                    </option>
+                    <option
+                      value="OVERLAPS"
+                    >
+                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
+                    </option>
+                    <option
+                      value="NOT_TESTING"
+                    >
+                      The model will not be testing this waiver or payment type (e.g. bundles)
+                    </option>
+                    <option
+                      value="NOT_ENGAGED"
+                    >
+                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
+                    </option>
+                    <option
+                      value="FEEDBACK_AGAINST_USE"
+                    >
+                      Feedback from participants against waiver use
+                    </option>
+                    <option
+                      value="OTHER"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="modifies-quality-measurements-or-payments-via-waivers-true"
+              >
+                Will your model be modifying quality measurements or payments via waivers?
+              </label>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-quality-measurements-or-payments-via-waivers-true"
+                      id="modifies-quality-measurements-or-payments-via-waivers-true"
+                      name="modifiesQualityMeasurementsOrPaymentsViaWaivers"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-quality-measurements-or-payments-via-waivers-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-quality-measurements-or-payments-via-waivers-false"
+                      id="modifies-quality-measurements-or-payments-via-waivers-false"
+                      name="modifiesQualityMeasurementsOrPaymentsViaWaivers"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-quality-measurements-or-payments-via-waivers-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="modifies-quality-measurements-or-payments-via-waivers-why-not"
+                  >
+                    Please explain why not
+                  </label>
+                  <select
+                    class="usa-select"
+                    data-testid="Select"
+                    id="modifies-quality-measurements-or-payments-via-waivers-why-not"
+                    name="modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot"
+                  >
+                    <option
+                      value="default"
+                    >
+                      - Select -
+                    </option>
+                    <option
+                      value="OUT_OF_SCOPE"
+                    >
+                      Outside of model scope (e.g. Medicaid-only waiver)
+                    </option>
+                    <option
+                      value="OVERLAPS"
+                    >
+                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
+                    </option>
+                    <option
+                      value="NOT_TESTING"
+                    >
+                      The model will not be testing this waiver or payment type (e.g. bundles)
+                    </option>
+                    <option
+                      value="NOT_ENGAGED"
+                    >
+                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
+                    </option>
+                    <option
+                      value="FEEDBACK_AGAINST_USE"
+                    >
+                      Feedback from participants against waiver use
+                    </option>
+                    <option
+                      value="OTHER"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -361,7 +562,7 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
             <p
               class="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest"
             >
-              There are 0 total available Medicare payment waivers. Based on your answers to the above questions, MINT has determined that the following 0 waivers are likely needed for your model:
+              There are 0 total available Program waivers (Medicare BEs). Based on your answers to the above questions, MINT has determined that the following 0 waivers are likely needed for your model:
             </p>
             <div
               class="margin-bottom-2"
@@ -378,7 +579,7 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
             </p>
           </div>
           <div
-            id="waiver-assessment-survey-medicare-payment-waivers-form"
+            id="waiver-assessment-survey-program-waivers-form"
           >
             <div
               class="margin-top-6 margin-bottom-3 display-flex"
@@ -393,7 +594,7 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
               <button
                 class="usa-button margin-top-0"
                 data-testid="button"
-                id="waiver-assessment-survey-medicare-payment-waivers-form-next-button"
+                id="waiver-assessment-survey-program-waivers-form-next-button"
                 type="submit"
               >
                 Next
@@ -431,7 +632,7 @@ exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
         <span
           class="mint-page-number__page-num"
         >
-          Page 3 of 7
+          Page 4 of 7
         </span>
       </div>
     </div>

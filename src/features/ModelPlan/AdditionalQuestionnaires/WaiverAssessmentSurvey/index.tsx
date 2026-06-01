@@ -17,6 +17,7 @@ import QuestionnaireBanner from '../_components/Banner';
 import AboutWaiverAssessmentSurvey from './AboutWaiverAssessmentSurvey';
 import MedicarePaymentWaivers from './MedicarePaymentWaivers';
 import ModelPlanQuestions from './ModelPlanQuestions';
+import ProgramWaivers from './ProgramWaivers';
 
 const WaiverAssessmentSurvey = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -111,7 +112,7 @@ export const waiverAssessmentSurveyRoutes = {
     },
     {
       path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/program-waivers',
-      element: <>Program waivers - Medicare Benefit Enhancements (BEs)</>
+      element: <ProgramWaivers />
     },
     {
       path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicaid-payment-waivers',

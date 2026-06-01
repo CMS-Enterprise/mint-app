@@ -5,12 +5,15 @@ import { useGetAllCommonWaiversQuery } from 'gql/generated/graphql';
 
 import Spinner from 'components/Spinner';
 
-import { SuggestedWaivers } from '../../MedicarePaymentWaivers';
+import { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
+import { ProgramSuggestedWaivers } from '../../ProgramWaivers';
 
 const SelectedWaiversSection = ({
-  selectedWaivers
+  selectedWaivers,
+  waiverType
 }: {
-  selectedWaivers: SuggestedWaivers;
+  selectedWaivers: MedicarePaymentSuggestedWaivers | ProgramSuggestedWaivers;
+  waiverType: string;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
@@ -35,16 +38,21 @@ const SelectedWaiversSection = ({
       <p className="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest">
         {waiverAssessmentSurveyMiscT('selectedWaivers.description', {
           totalWaiversCount: data?.commonWaivers?.length || 0,
-          selectedWaiversCount: selectedWaivers.length
+          selectedWaiversCount: selectedWaivers.length,
+          waiverType
         })}
       </p>
 
       <div className="margin-bottom-2">
-        <ul className="grid-row grid-gap-2 margin-y-0 padding-x-3">
+        <ul
+          className="margin-y-0 padding-left-3"
+          style={{ columnCount: 2, columnGap: '1rem' }}
+        >
           {generateSelectedWaiverList.map(waiverName => (
             <li
               key={waiverName}
-              className="tablet:grid-col-6 margin-y-0 padding-y-05 line-height-sans-5"
+              className="margin-y-0 padding-y-05 line-height-sans-5"
+              style={{ breakInside: 'avoid' }}
             >
               {waiverName}
             </li>

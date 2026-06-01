@@ -4,11 +4,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { allCommonWaiversMocks } from 'tests/mock/general';
 import MockedProvider from 'tests/MockedProvider';
 
-import { SuggestedWaivers } from '../../MedicarePaymentWaivers';
+import { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
 
 import SelectedWaiversSection from './index';
 
-const MOCK_SELECTED_WAIVERS: SuggestedWaivers = [
+const MOCK_SELECTED_WAIVERS: MedicarePaymentSuggestedWaivers = [
   {
     __typename: 'SuggestedWaiver',
     id: '456',
@@ -34,7 +34,10 @@ describe('SelectedWaiversSection Component', () => {
         {
           path: '/selected-waivers',
           element: (
-            <SelectedWaiversSection selectedWaivers={MOCK_SELECTED_WAIVERS} />
+            <SelectedWaiversSection
+              selectedWaivers={MOCK_SELECTED_WAIVERS}
+              waiverType="Mocked Waivers"
+            />
           )
         }
       ],

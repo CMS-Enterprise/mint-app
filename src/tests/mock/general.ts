@@ -44,6 +44,9 @@ import {
   GetModelPlansDocument,
   GetModelPlansQuery,
   GetModelPlansQueryVariables,
+  GetProgramWaiversDocument,
+  GetProgramWaiversQuery,
+  GetProgramWaiversQueryVariables,
   IddocQuestionnaireTaskListStatus,
   ModelCategory,
   ModelPhase,
@@ -308,6 +311,50 @@ export const medicalPaymentWaiversMocks: MockedResponse<
     },
     result: {
       data: medicalPaymentWaiversDataMocks
+    }
+  }
+];
+
+const programWaiversDataMocks: GetProgramWaiversQuery = {
+  __typename: 'Query',
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelID,
+    questionnaires: {
+      __typename: 'Questionnaires',
+      waiverAssessmentSurvey: {
+        __typename: 'WaiverAssessmentSurvey',
+        id: '123',
+        suggestedWaivers: [],
+        impactsSiteOfCarePayments: true,
+        impactsSiteOfCarePaymentsExample: 'Example',
+        impactsSiteOfCarePaymentsWhyNot: null,
+        modifiesCareTeamScopeOfPractice: false,
+        modifiesCareTeamScopeOfPracticeExample: '',
+        modifiesCareTeamScopeOfPracticeWhyNot:
+          NotSelectedReason.FEEDBACK_AGAINST_USE,
+        modifiesCareDeliveryWithClaimsBasedPayments: false,
+        modifiesCareDeliveryWithClaimsBasedPaymentsExample: '',
+        modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: null,
+        modifiesQualityMeasurementsOrPaymentsViaWaivers: false,
+        modifiesQualityMeasurementsOrPaymentsViaWaiversExample: '',
+        modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: null
+      }
+    }
+  }
+};
+
+export const programWaiversMocks: MockedResponse<
+  GetProgramWaiversQuery,
+  GetProgramWaiversQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetProgramWaiversDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: programWaiversDataMocks
     }
   }
 ];
