@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 	"github.com/jmoiron/sqlx"
 	"github.com/samber/lo"
 
@@ -143,17 +144,17 @@ func newCTATRequest(input *model.CTATRequestInput, requesterID uuid.UUID) *model
 	request := models.NewCTATRequest(requesterID, requesterID)
 	request.ID = uuid.New()
 	request.CmmiGroup = input.CmmiGroup
-	request.CmmiGroupOther = input.CmmiGroupOther
+	request.CmmiGroupOther = zero.StringFromPtr(input.CmmiGroupOther)
 	request.CmmiDivision = input.CmmiDivision
-	request.CmmiDivisionOther = input.CmmiDivisionOther
+	request.CmmiDivisionOther = zero.StringFromPtr(input.CmmiDivisionOther)
 	request.ContractActivityType = input.ContractActivityType
-	request.ContractActivityTypeOther = input.ContractActivityTypeOther
-	request.ContractName = input.ContractName
-	request.ContractNumber = input.ContractNumber
+	request.ContractActivityTypeOther = zero.StringFromPtr(input.ContractActivityTypeOther)
+	request.ContractName = zero.StringFromPtr(input.ContractName)
+	request.ContractNumber = zero.StringFromPtr(input.ContractNumber)
 	request.ContractType = input.ContractType
-	request.ContractTypeOther = input.ContractTypeOther
+	request.ContractTypeOther = zero.StringFromPtr(input.ContractTypeOther)
 	request.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType](input.TypeOfHelpNeeded)
-	request.TypeOfHelpNeededOther = input.TypeOfHelpNeededOther
+	request.TypeOfHelpNeededOther = zero.StringFromPtr(input.TypeOfHelpNeededOther)
 	request.DescribeHelpNeeded = input.DescribeHelpNeeded
 	request.RequestUrgency = input.RequestUrgency
 	request.DateAssistanceNeededBy = input.DateAssistanceNeededBy

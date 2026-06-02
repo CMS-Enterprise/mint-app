@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -26,7 +27,7 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 		Status:                 models.CTATStatusAssigned,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           &cmmiDivision,
-		ContractName:           &contractName,
+		ContractName:           zero.StringFrom(contractName),
 		TypeOfHelpNeeded:       models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRfi},
 		DescribeHelpNeeded:     "Need help creating a CTAT request through storage.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,
@@ -45,8 +46,7 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 	s.Nil(created.ModifiedBy)
 	s.Nil(created.ModifiedDts)
 	s.Greater(created.HumanReadableIDNumber, 0)
-	s.Require().NotNil(created.ContractName)
-	s.Equal(contractName, *created.ContractName)
+	s.Equal(zero.StringFrom(contractName), created.ContractName)
 	s.Equal(
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
 		[]models.CTATHelpNeededType(created.TypeOfHelpNeeded),
@@ -226,10 +226,9 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	s.Equal(expected.Requester, row.Requester)
 	s.Equal(expected.HumanReadableIDNumber, row.HumanReadableIDNumber)
 	s.EqualTime(createdDts, row.CreatedDts)
-	s.Require().NotNil(row.ContractName)
-	s.Equal(contractName, *row.ContractName)
+	s.Equal(zero.StringFrom(contractName), row.ContractName)
 	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
-	s.Nil(row.TypeOfHelpNeededOther)
+	s.Nil(row.TypeOfHelpNeededOther.Ptr())
 	s.Equal(models.CTATStatusAssigned, row.Status)
 
 	_ = firstDocument
@@ -399,7 +398,7 @@ func insertCTATRequestTestRow(
 		Status:                 status,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
-		ContractName:           &contractName,
+		ContractName:           zero.StringFrom(contractName),
 		TypeOfHelpNeeded:       helpNeeded,
 		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,

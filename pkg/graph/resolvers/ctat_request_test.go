@@ -6,6 +6,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
@@ -187,7 +188,7 @@ func (suite *ResolverSuite) TestCTATRequestCreate() {
 	suite.NotNil(created)
 	suite.Equal(models.CTATStatusNew, created.Status)
 	suite.Equal(suite.testConfigs.Principal.Account().ID, created.Requester)
-	suite.Equal(contractName, *created.ContractName)
+	suite.Equal(zero.StringFrom(contractName), created.ContractName)
 	suite.Greater(created.HumanReadableIDNumber, 0)
 
 	links, err := storage.CTATRequestModelPlanLinkGetByCTATRequestIDLOADER(suite.testConfigs.Store, []uuid.UUID{created.ID})
@@ -300,7 +301,7 @@ func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 		Status:                 status,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
-		ContractName:           &contractName,
+		ContractName:           zero.StringFrom(contractName),
 		TypeOfHelpNeeded:       helpNeeded,
 		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,
