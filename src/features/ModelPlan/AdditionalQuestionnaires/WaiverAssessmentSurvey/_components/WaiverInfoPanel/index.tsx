@@ -1,16 +1,7 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  Fieldset,
-  Form,
-  FormGroup,
-  GridContainer,
-  Icon,
-  Label,
-  Textarea
-} from '@trussworks/react-uswds';
+import { Form, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import {
@@ -20,10 +11,9 @@ import {
 } from 'components/DescriptionGroup';
 import Divider from 'components/Divider';
 import ExternalLink from 'components/ExternalLink';
-import HelpText from 'components/HelpText';
 import Sidepanel from 'components/Sidepanel';
 
-import './index.scss';
+import SelectWaiverField from '../SelectWaiverField';
 
 /**
  * TO DO:
@@ -80,13 +70,12 @@ const WaiverInfoPanel = ({
     isUsedInActiveModels
   } = commonWaiver;
 
-  const { handleSubmit, control, setValue, register } =
-    useForm<WaiverInfoFields>({
-      defaultValues: {
-        willUseWaiver,
-        notUsingReason
-      }
-    });
+  const methods = useForm<WaiverInfoFields>({
+    defaultValues: {
+      willUseWaiver,
+      notUsingReason
+    }
+  });
 
   return (
     <Sidepanel
@@ -165,114 +154,10 @@ const WaiverInfoPanel = ({
 
           <Divider className="margin-top-3 margin-bottom-4" />
 
-          <Form className="maxw-none" onSubmit={handleSubmit(() => {})}>
-            <FormGroup>
-              <Label
-                id="willUseWaiverLabel"
-                htmlFor="waiver-info-panel-will-use-waiver-yes"
-              >
-                {t('waiverInfoPanel.willUseWaiverLabel')}
-              </Label>
-              <HelpText id="willUseWaiverHelpText">
-                {t('waiverInfoPanel.willUseWaiverHelpText')}
-              </HelpText>
-              <Controller
-                name="willUseWaiver"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    {field.value === null ? (
-                      <Fieldset
-                        className="mint-yes-no-button-group margin-top-2"
-                        aria-labelledby="willUseWaiverLabel"
-                        aria-describedby="willUseWaiverHelpText"
-                      >
-                        <div className="mint-yes-no-button mint-yes-no-button--yes">
-                          <input
-                            type="radio"
-                            id="waiver-info-panel-will-use-waiver-yes"
-                            data-testid="waiver-info-panel-will-use-waiver-yes"
-                            {...field}
-                            onChange={() => setValue('willUseWaiver', true)}
-                            value="true"
-                          />
-                          <label
-                            className="usa-button"
-                            htmlFor="waiver-info-panel-will-use-waiver-yes"
-                          >
-                            <Icon.Check aria-hidden />
-                            Yes
-                          </label>
-                        </div>
-                        <div className="mint-yes-no-button mint-yes-no-button--no">
-                          <input
-                            type="radio"
-                            id="waiver-info-panel-will-use-waiver-no"
-                            data-testid="waiver-info-panel-will-use-waiver-no"
-                            {...field}
-                            onChange={() => setValue('willUseWaiver', false)}
-                            value="false"
-                          />
-                          <label
-                            className="usa-button"
-                            htmlFor="waiver-info-panel-will-use-waiver-no"
-                          >
-                            <Icon.Close aria-hidden />
-                            No
-                          </label>
-                        </div>
-                      </Fieldset>
-                    ) : (
-                      <>
-                        <p
-                          className={classNames(
-                            'margin-top-2 margin-bottom-05 display-flex flex-align-center text-bold',
-                            field.value === true
-                              ? 'text-success-darker'
-                              : 'text-error-dark'
-                          )}
-                        >
-                          {field.value === true ? (
-                            <Icon.Check
-                              aria-hidden
-                              className="margin-right-1"
-                            />
-                          ) : (
-                            <Icon.Close
-                              aria-hidden
-                              className="margin-right-1"
-                            />
-                          )}
-                          {t(`waiverInfoPanel.willUseWaiver_${field.value}`)}
-                        </p>
-                        <Button
-                          type="button"
-                          className="margin-0"
-                          unstyled
-                          onClick={() => setValue('willUseWaiver', null)}
-                        >
-                          {t('waiverInfoPanel.changeResponse', {
-                            context: field.value.toString()
-                          })}
-                        </Button>
-
-                        {field.value === false && (
-                          <FormGroup>
-                            <Label htmlFor="notUsingReason">
-                              {t('waiverInfoPanel.notUsingReason')}
-                            </Label>
-                            <Textarea
-                              {...register('notUsingReason')}
-                              id="notUsingReason"
-                            />
-                          </FormGroup>
-                        )}
-                      </>
-                    )}
-                  </>
-                )}
-              />
-            </FormGroup>
+          <Form className="maxw-none" onSubmit={methods.handleSubmit(() => {})}>
+            <FormProvider {...methods}>
+              <SelectWaiverField />
+            </FormProvider>
           </Form>
         </div>
       </GridContainer>
