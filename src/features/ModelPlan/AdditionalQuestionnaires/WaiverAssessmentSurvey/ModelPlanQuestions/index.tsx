@@ -91,6 +91,7 @@ const ModelPlanQuestions = () => {
           willUseWaiver: null,
           notUsingReason: '',
           commonWaiver: {
+            id: '9f955945-7afd-481f-8558-e7e0fd465463',
             name: 'Non-duplication',
             description:
               'Allows for model participants to enter into agreements with Medicare-enrolled providers and suppliers to participate as Preferred Providers under MSSP.',

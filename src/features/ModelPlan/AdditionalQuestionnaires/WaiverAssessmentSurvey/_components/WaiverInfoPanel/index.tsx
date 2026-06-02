@@ -15,13 +15,8 @@ import Sidepanel from 'components/Sidepanel';
 
 import SelectWaiverField from '../SelectWaiverField';
 
-/**
- * TO DO:
- * - Update waiver type to match query
- * - Remove temp test code from ModelPlanQuestions
- */
-
 type CommonWaiver = {
+  id: string;
   name: string;
   description: string;
   participationAgreementLanguageLink: string;
