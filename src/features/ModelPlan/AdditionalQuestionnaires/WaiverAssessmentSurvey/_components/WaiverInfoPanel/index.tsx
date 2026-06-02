@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import { Form, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetCommonWaiverQuery } from 'gql/generated/graphql';
@@ -22,23 +23,28 @@ type WaiverInfoFields = {
 };
 
 type WaiverInfoPanelProps = {
-  isOpen: boolean;
-  closeModal: () => void;
   waiverInfo: WaiverInfoFields;
 };
 
-const WaiverInfoPanel = ({
-  isOpen,
-  closeModal,
-  waiverInfo
-}: WaiverInfoPanelProps) => {
+const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
   const { t } = useTranslation('waiverAssessmentSurveyMisc');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const waiverId = searchParams.get('waiverId') ?? '';
 
   const { data } = useGetCommonWaiverQuery({
     variables: {
-      id: '9f955945-7afd-481f-8558-e7e0fd465463'
-    }
+      id: waiverId
+    },
+    skip: !waiverId
   });
+
+  const closeModal = () => {
+    setSearchParams(prev => {
+      const nextParams = new URLSearchParams(prev);
+      nextParams.delete('waiverId');
+      return nextParams;
+    });
+  };
 
   const { willUseWaiver, notUsingReason } = waiverInfo;
 
@@ -66,7 +72,7 @@ const WaiverInfoPanel = ({
     <Sidepanel
       ariaLabel={t('waiverInfoPanel.heading')}
       testid="waiver-info-panel"
-      isOpen={isOpen}
+      isOpen={!!waiverId}
       closeModal={closeModal}
       modalHeading={t('waiverInfoPanel.heading')}
     >

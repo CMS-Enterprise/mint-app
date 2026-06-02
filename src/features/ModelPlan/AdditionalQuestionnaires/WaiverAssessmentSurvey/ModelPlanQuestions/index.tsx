@@ -85,8 +85,6 @@ const ModelPlanQuestions = () => {
   return (
     <div className="mint-body-normal grid-row flex-column">
       <WaiverInfoPanel
-        isOpen
-        closeModal={() => {}}
         waiverInfo={{
           willUseWaiver: null,
           notUsingReason: ''
