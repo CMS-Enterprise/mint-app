@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
+	"github.com/samber/lo"
 
 	"go.uber.org/zap"
 
@@ -90,7 +91,8 @@ func CTATRequestCreate(
 	}
 
 	request := newCTATRequest(input, principal.Account().ID)
-	relatedModelLinks := newCTATRequestModelPlanLinks(request.ID, input.RelatedMINTModels, principal.Account().ID)
+	relatedModelIDs := lo.Uniq(input.RelatedMINTModels)
+	relatedModelLinks := newCTATRequestModelPlanLinks(request.ID, relatedModelIDs, principal.Account().ID)
 	supportingDocuments, err := newCTATRequestDocuments(input.SupportingDocuments, request.ID, principal.Account().ID, *s3Client.GetBucket())
 	if err != nil {
 		return nil, err

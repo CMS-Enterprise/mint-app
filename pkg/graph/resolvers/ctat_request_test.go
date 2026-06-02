@@ -203,6 +203,37 @@ func (suite *ResolverSuite) TestCTATRequestCreate() {
 	suite.False(documents[0].Restricted)
 }
 
+func (suite *ResolverSuite) TestCTATRequestCreateDeduplicatesRelatedModelLinks() {
+	relatedPlan := suite.createModelPlan("CTAT Create Dedup Related Plan")
+
+	input := &model.CTATRequestInput{
+		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
+		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
+		RelatedMINTModels:      []uuid.UUID{relatedPlan.ID, relatedPlan.ID},
+		TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		DescribeHelpNeeded:     "Need help creating a CTAT request with duplicate related models.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh,
+		DateAssistanceNeededBy: time.Date(2026, 7, 1, 12, 0, 0, 0, time.UTC),
+		SupportingDocuments:    []*model.CTATRequestDocumentInput{},
+	}
+
+	created, err := CTATRequestCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		suite.testConfigs.S3Client,
+	)
+	suite.NoError(err)
+	suite.NotNil(created)
+
+	links, err := storage.CTATRequestModelPlanLinkGetByCTATRequestIDLOADER(suite.testConfigs.Store, []uuid.UUID{created.ID})
+	suite.NoError(err)
+	suite.Len(links, 1)
+	suite.Equal(relatedPlan.ID, links[0].ModelPlanID)
+}
+
 func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	requesterID uuid.UUID,
 	createdDts time.Time,
