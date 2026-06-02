@@ -6,18 +6,27 @@ export default gql(/* GraphQL */ `
       id
       questionnaires {
         waiverAssessmentSurvey {
-          id
-          suggestedWaivers {
-            id
-            commonWaiver {
-              name
-            }
-          }
           # Page 6 - Waiver selections for this model plan
           waivers {
             id
+            commonWaiverID
+            willUseWaiver
+            notUsingReason
             commonWaiver {
+              id
               name
+              waiverType
+              waiverFocus
+            }
+          }
+
+          suggestedWaivers {
+            id
+            commonWaiverID
+            commonWaiver {
+              id
+              name
+              waiverType
             }
           }
         }

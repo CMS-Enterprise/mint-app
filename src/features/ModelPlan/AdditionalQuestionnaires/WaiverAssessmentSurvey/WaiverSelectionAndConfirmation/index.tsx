@@ -1,13 +1,13 @@
 import React from 'react';
-import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Fieldset, Form, FormGroup, Label } from '@trussworks/react-uswds';
+import { Fieldset, Form } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
-  GetMedicaidPaymentWaiversQuery,
+  GetWaiversQuery,
   TypedUpdateWaiverAssessmentSurveyDocument,
-  useGetMedicaidPaymentWaiversQuery
+  useGetWaiversQuery
 } from 'gql/generated/graphql';
 
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
@@ -16,38 +16,12 @@ import FormHeader from 'components/FormHeader';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
-import TextAreaField from 'components/TextAreaField';
 import useHandleMutation from 'hooks/useHandleMutation';
-import usePlanTranslation from 'hooks/usePlanTranslation';
-import mapDefaultFormValues from 'utils/mapDefaultFormValues';
-import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
-import SelectedWaiversSection from '../_components/SelectedWaiversSection';
-import WaiverSurveyQuestion from '../_components/WaiverSurveyQuestion';
+import WaiverSelectionSection from '../_components/WaiverSelectionSection';
 
-type MedicaidPaymentWaiversData =
-  GetMedicaidPaymentWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
-
-export type MedicaidPaymentSuggestedWaivers =
-  MedicaidPaymentWaiversData['suggestedWaivers'];
-
-export type MedicaidPaymentWaiversForm = Omit<
-  MedicaidPaymentWaiversData,
-  '__typename' | 'id' | 'suggestedWaivers'
->;
-
-const defaultFormValues: MedicaidPaymentWaiversForm = {
-  impactsMedicaidOnlyBeneficiaries: null,
-  impactsMedicaidOnlyBeneficiariesExample: '',
-  impactsMedicaidOnlyBeneficiariesWhyNot: null,
-  impactsHomeCommunityBasedServicePayments: null,
-  impactsHomeCommunityBasedServicePaymentsExample: '',
-  impactsHomeCommunityBasedServicePaymentsWhyNot: null,
-  impactsManagedCareWaivers: null,
-  impactsManagedCareWaiversExample: '',
-  impactsManagedCareWaiversWhyNot: null,
-  additionalMedicaidSpecificWaivers: ''
-};
+export type WaiverType =
+  GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey']['waivers'][number];
 
 const WaiverSelectionAndConfirmation = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -58,67 +32,40 @@ const WaiverSelectionAndConfirmation = () => {
     'additionalQuestionnaires'
   );
 
-  const {
-    impactsMedicaidOnlyBeneficiaries: impactsMedicaidOnlyBeneficiariesConfig,
-    impactsHomeCommunityBasedServicePayments:
-      impactsHomeCommunityBasedServicePaymentsConfig,
-    impactsManagedCareWaivers: impactsManagedCareWaiversConfig,
-    additionalMedicaidSpecificWaivers: additionalMedicaidSpecificWaiversConfig
-  } = usePlanTranslation('waiverAssessmentSurvey');
-
-  const questionConfigs = [
-    impactsMedicaidOnlyBeneficiariesConfig,
-    impactsHomeCommunityBasedServicePaymentsConfig,
-    impactsManagedCareWaiversConfig
-  ];
-
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const navigate = useNavigate();
 
-  const { data, loading, error } = useGetMedicaidPaymentWaiversQuery({
+  const { data, loading, error } = useGetWaiversQuery({
     variables: {
       id: modelID
     },
     skip: !modelID
   });
 
-  const mappedFormData = mapDefaultFormValues<
-    MedicaidPaymentWaiversForm & { id?: string } & {
-      suggestedWaivers?: MedicaidPaymentSuggestedWaivers;
-    }
-  >(data?.modelPlan?.questionnaires.waiverAssessmentSurvey, {
-    ...defaultFormValues,
-    id: '',
-    suggestedWaivers: []
-  });
-
-  const { id: waiverID, suggestedWaivers, ...formData } = mappedFormData;
-
-  const methods = useForm<MedicaidPaymentWaiversForm>({
-    values: formData,
+  const methods = useForm<any>({
+    values: {},
     mode: 'onChange'
   });
 
-  const { handleSubmit, watch, control } = methods;
+  const { handleSubmit, watch } = methods;
 
-  const { mutationError, loading: isSubmitting } =
-    useHandleMutation<MedicaidPaymentWaiversForm>(
-      TypedUpdateWaiverAssessmentSurveyDocument,
-      {
-        id: waiverID || '',
-        rhfRef: {
-          initialValues: formData,
-          values: watch()
-        }
+  const { mutationError, loading: isSubmitting } = useHandleMutation<any>(
+    TypedUpdateWaiverAssessmentSurveyDocument,
+    {
+      id: '',
+      rhfRef: {
+        initialValues: {},
+        values: watch()
       }
-    );
+    }
+  );
 
   if (loading) {
     return <Spinner size="large" />;
   }
 
-  if (error || !data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id) {
+  if (error || !data?.modelPlan?.questionnaires?.waiverAssessmentSurvey) {
     return <NotFoundPartial errorMessage={error?.message} />;
   }
 
@@ -132,13 +79,13 @@ const WaiverSelectionAndConfirmation = () => {
         totalPages={7}
       />
 
-      <p className="margin-top-neg-1 margin-bottom-4 text-base-dark">
+      <p className="margin-top-neg-1 margin-bottom-5 text-base-dark">
         {waiverAssessmentSurveyMiscT(
           'waiverSelectionAndConfirmation.description'
         )}
       </p>
 
-      <div className="tablet:grid-col-6">
+      <div>
         <FormProvider {...methods}>
           <MutationErrorModal
             isOpen={mutationError.isModalOpen}
@@ -147,103 +94,32 @@ const WaiverSelectionAndConfirmation = () => {
           />
 
           <Form
-            id="waiver-assessment-survey-medicaid-payment-waivers-form"
-            data-testid="waiver-assessment-survey-medicaid-payment-waivers-form"
+            id="waiver-assessment-survey-waiver-selection-and-confirmation-form"
+            data-testid="waiver-assessment-survey-waiver-selection-and-confirmation-form"
             className="maxw-none"
             onSubmit={handleSubmit(() => {
               navigate(
-                `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation`
+                `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/confirm-your-waiver-selections`
               );
             })}
           >
             <Fieldset>
               <ConfirmLeaveRHF />
 
-              <div className="margin-bottom-6">
-                {questionConfigs.map(questionConfig => (
-                  <FormGroup
-                    key={questionConfig.gqlField}
-                    className="margin-top-0 margin-bottom-2"
-                  >
-                    <Label
-                      htmlFor={`${convertCamelCaseToKebabCase(
-                        questionConfig.gqlField
-                      )}-true`}
-                      className="text-normal text-bold"
-                    >
-                      {questionConfig.label}
-                    </Label>
-
-                    {questionConfig.sublabel && (
-                      <p className="text-base margin-bottom-neg-05 margin-top-1">
-                        {questionConfig.sublabel}
-                      </p>
-                    )}
-
-                    <Controller
-                      name={
-                        questionConfig.gqlField as keyof MedicaidPaymentWaiversForm
-                      }
-                      control={control}
-                      render={({ field: { ref, ...field } }) => (
-                        <WaiverSurveyQuestion
-                          key={field.name}
-                          questionConfig={questionConfig}
-                          fieldName={field.name}
-                          value={field.value as boolean | null | undefined}
-                          methods={methods}
-                          inputRef={ref}
-                        />
-                      )}
-                    />
-                  </FormGroup>
-                ))}
-              </div>
-
-              <SelectedWaiversSection
-                selectedWaivers={suggestedWaivers || []}
-                waiverType={waiverAssessmentSurveyMiscT(
-                  'medicaidPaymentWaivers.waiverType'
-                )}
-              >
-                <FormGroup
-                  key={additionalMedicaidSpecificWaiversConfig.gqlField}
-                  className="margin-top-2 margin-bottom-2"
-                >
-                  <Label
-                    htmlFor={convertCamelCaseToKebabCase(
-                      additionalMedicaidSpecificWaiversConfig.gqlField
-                    )}
-                    className="text-normal text-bold"
-                  >
-                    {additionalMedicaidSpecificWaiversConfig.label}
-                  </Label>
-                  <Controller
-                    name={
-                      additionalMedicaidSpecificWaiversConfig.gqlField as 'additionalMedicaidSpecificWaivers'
-                    }
-                    control={control}
-                    render={({ field: { ref, ...field } }) => (
-                      <TextAreaField
-                        {...field}
-                        id={convertCamelCaseToKebabCase(field.name)}
-                        data-testid={convertCamelCaseToKebabCase(field.name)}
-                        maxLength={5000}
-                        className="height-card"
-                        value={field.value ?? ''}
-                      />
-                    )}
-                  />
-                </FormGroup>
-              </SelectedWaiversSection>
+              <WaiverSelectionSection
+                waivers={
+                  data?.modelPlan?.questionnaires?.waiverAssessmentSurvey
+                    ?.waivers || []
+                }
+              />
 
               <FormFooter
-                id="waiver-assessment-survey-medicaid-payment-waivers-form"
+                id="waiver-assessment-survey-waiver-selection-and-confirmation-form"
                 homeArea={additionalQuestionnairesT(
                   'saveAndReturnToQuestionnaires'
                 )}
                 homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
-                backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/program-waivers`}
+                backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicaid-payment-waivers`}
                 nextPage
                 disabled={isSubmitting}
               />

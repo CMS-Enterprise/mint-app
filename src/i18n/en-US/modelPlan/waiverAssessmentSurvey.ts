@@ -563,7 +563,17 @@ const waiverAssessmentSurveyMisc = {
   waiverSelectionAndConfirmation: {
     heading: 'Waiver selection and confirmation',
     description:
-      'Confirm which waivers your model will use, and justify any you plan not to use. You may also review waivers that have been ruled out by previous questions and you may select them for your model to use.'
+      'Confirm which waivers your model will use, and justify any you plan not to use. You may also review waivers that have been ruled out by previous questions and you may select them for your model to use.',
+    waiverName: 'WAIVER NAME',
+    learnMoreAboutThisWaiver: 'Learn more about this waiver',
+    iPlanToUseThisWaiver: 'I plan to use this waiver for my model',
+    unusedWaiver: {
+      heading: 'Unused waivers',
+      description:
+        'The waivers below were filtered out based on your answers earlier in this form. If you see any that you know your model will use, please select the button labeled “I plan to use this waiver for my model”. To see more details about each waiver, including a description and other information, please select the button labeled “Learn more about this waiver”.',
+      name: 'Waiver name',
+      action: 'Actions'
+    }
   },
   selectedWaivers: {
     heading: 'Selected waivers',
