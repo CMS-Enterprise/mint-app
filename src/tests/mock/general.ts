@@ -29,6 +29,9 @@ import {
   GetFavoritesDocument,
   GetFavoritesQuery,
   GetFavoritesQueryVariables,
+  GetMedicaidPaymentWaiversDocument,
+  GetMedicaidPaymentWaiversQuery,
+  GetMedicaidPaymentWaiversQueryVariables,
   GetMedicarePaymentWaiversDocument,
   GetMedicarePaymentWaiversQuery,
   GetMedicarePaymentWaiversQueryVariables,
@@ -275,7 +278,7 @@ export const modelPlanQuestionsMocks: MockedResponse<
   }
 ];
 
-const medicalPaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
+const medicarePaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
   __typename: 'Query',
   modelPlan: {
     __typename: 'ModelPlan',
@@ -300,7 +303,7 @@ const medicalPaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
   }
 };
 
-export const medicalPaymentWaiversMocks: MockedResponse<
+export const medicarePaymentWaiversMocks: MockedResponse<
   GetMedicarePaymentWaiversQuery,
   GetMedicarePaymentWaiversQueryVariables
 >[] = [
@@ -310,7 +313,7 @@ export const medicalPaymentWaiversMocks: MockedResponse<
       variables: { id: modelID }
     },
     result: {
-      data: medicalPaymentWaiversDataMocks
+      data: medicarePaymentWaiversDataMocks
     }
   }
 ];
@@ -355,6 +358,48 @@ export const programWaiversMocks: MockedResponse<
     },
     result: {
       data: programWaiversDataMocks
+    }
+  }
+];
+
+const medicaidPaymentWaiversDataMocks: GetMedicaidPaymentWaiversQuery = {
+  __typename: 'Query',
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelID,
+    questionnaires: {
+      __typename: 'Questionnaires',
+      waiverAssessmentSurvey: {
+        __typename: 'WaiverAssessmentSurvey',
+        id: '123',
+        suggestedWaivers: [],
+        impactsMedicaidOnlyBeneficiaries: true,
+        impactsMedicaidOnlyBeneficiariesExample: 'Example',
+        impactsMedicaidOnlyBeneficiariesWhyNot: null,
+        impactsHomeCommunityBasedServicePayments: false,
+        impactsHomeCommunityBasedServicePaymentsExample: '',
+        impactsHomeCommunityBasedServicePaymentsWhyNot:
+          NotSelectedReason.FEEDBACK_AGAINST_USE,
+        impactsManagedCareWaivers: false,
+        impactsManagedCareWaiversExample: '',
+        impactsManagedCareWaiversWhyNot: null,
+        additionalMedicaidSpecificWaivers: ''
+      }
+    }
+  }
+};
+
+export const medicaidPaymentWaiversMocks: MockedResponse<
+  GetMedicaidPaymentWaiversQuery,
+  GetMedicaidPaymentWaiversQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetMedicaidPaymentWaiversDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: medicaidPaymentWaiversDataMocks
     }
   }
 ];

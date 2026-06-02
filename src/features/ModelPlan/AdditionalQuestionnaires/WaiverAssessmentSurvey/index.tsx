@@ -15,6 +15,7 @@ import useStickyHeader from 'hooks/useStickyHeader';
 import QuestionnaireBanner from '../_components/Banner';
 
 import AboutWaiverAssessmentSurvey from './AboutWaiverAssessmentSurvey';
+import MedicaidPaymentWaivers from './MedicaidPaymentWaivers';
 import MedicarePaymentWaivers from './MedicarePaymentWaivers';
 import ModelPlanQuestions from './ModelPlanQuestions';
 import ProgramWaivers from './ProgramWaivers';
@@ -116,7 +117,7 @@ export const waiverAssessmentSurveyRoutes = {
     },
     {
       path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicaid-payment-waivers',
-      element: <>Medicaid payment waivers</>
+      element: <MedicaidPaymentWaivers />
     },
     {
       path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation',

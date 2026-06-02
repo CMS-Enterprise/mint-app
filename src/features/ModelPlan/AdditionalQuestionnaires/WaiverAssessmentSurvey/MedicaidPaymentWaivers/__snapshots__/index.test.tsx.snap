@@ -1,0 +1,1159 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MedicaidPaymentWaivers Component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mint-body-normal"
+  >
+    <div
+      class="margin-bottom-2 line-height-normal"
+    >
+      <h2
+        class="margin-0 margin-right-2 display-inline"
+      >
+        Medicaid payment waivers
+      </h2>
+      <div
+        class="mint-body-large text-base display-inline"
+      >
+        (Page 5 of 7)
+      </div>
+    </div>
+    <p
+      class="margin-top-neg-1 margin-bottom-4 text-base-dark"
+    >
+      The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.
+    </p>
+    <div
+      class="tablet:grid-col-6"
+    >
+      <form
+        class="usa-form maxw-none"
+        data-testid="waiver-assessment-survey-program-waivers-form"
+        id="waiver-assessment-survey-program-waivers-form"
+      >
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="margin-bottom-6"
+          >
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="impacts-medicaid-only-beneficiaries-true"
+              >
+                Does your model impact Medicaid-only beneficiaries?
+              </label>
+              <p
+                class="text-base margin-bottom-neg-05 margin-top-1"
+              >
+                Not including duals.
+              </p>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="impacts-medicaid-only-beneficiaries-true"
+                      id="impacts-medicaid-only-beneficiaries-true"
+                      name="impactsMedicaidOnlyBeneficiaries"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="impacts-medicaid-only-beneficiaries-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="impacts-medicaid-only-beneficiaries-example"
+                  >
+                    Please provide an example
+                  </label>
+                  <textarea
+                    aria-labelledby="label-impacts-medicaid-only-beneficiaries-example hint-impacts-medicaid-only-beneficiaries-example"
+                    class="height-card usa-textarea"
+                    data-testid="impacts-medicaid-only-beneficiaries-example"
+                    id="impacts-medicaid-only-beneficiaries-example"
+                    maxlength="5000"
+                    name="impactsMedicaidOnlyBeneficiariesExample"
+                  >
+                    Example
+                  </textarea>
+                </div>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="impacts-medicaid-only-beneficiaries-false"
+                      id="impacts-medicaid-only-beneficiaries-false"
+                      name="impactsMedicaidOnlyBeneficiaries"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="impacts-medicaid-only-beneficiaries-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="impacts-home-community-based-service-payments-true"
+              >
+                Does your model impact home- and community-based service payments?
+              </label>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="impacts-home-community-based-service-payments-true"
+                      id="impacts-home-community-based-service-payments-true"
+                      name="impactsHomeCommunityBasedServicePayments"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="impacts-home-community-based-service-payments-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="impacts-home-community-based-service-payments-false"
+                      id="impacts-home-community-based-service-payments-false"
+                      name="impactsHomeCommunityBasedServicePayments"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="impacts-home-community-based-service-payments-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="impacts-home-community-based-service-payments-why-not"
+                  >
+                    Please explain why not
+                  </label>
+                  <select
+                    class="usa-select"
+                    data-testid="Select"
+                    id="impacts-home-community-based-service-payments-why-not"
+                    name="impactsHomeCommunityBasedServicePaymentsWhyNot"
+                  >
+                    <option
+                      value="default"
+                    >
+                      - Select -
+                    </option>
+                    <option
+                      value="OUT_OF_SCOPE"
+                    >
+                      Outside of model scope (e.g. Medicaid-only waiver)
+                    </option>
+                    <option
+                      value="OVERLAPS"
+                    >
+                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
+                    </option>
+                    <option
+                      value="NOT_TESTING"
+                    >
+                      The model will not be testing this waiver or payment type (e.g. bundles)
+                    </option>
+                    <option
+                      value="NOT_ENGAGED"
+                    >
+                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
+                    </option>
+                    <option
+                      value="FEEDBACK_AGAINST_USE"
+                    >
+                      Feedback from participants against waiver use
+                    </option>
+                    <option
+                      value="OTHER"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="impacts-managed-care-waivers-true"
+              >
+                Does your model impact managed care waivers?
+              </label>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="impacts-managed-care-waivers-true"
+                      id="impacts-managed-care-waivers-true"
+                      name="impactsManagedCareWaivers"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="impacts-managed-care-waivers-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="impacts-managed-care-waivers-false"
+                      id="impacts-managed-care-waivers-false"
+                      name="impactsManagedCareWaivers"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="impacts-managed-care-waivers-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="impacts-managed-care-waivers-why-not"
+                  >
+                    Please explain why not
+                  </label>
+                  <select
+                    class="usa-select"
+                    data-testid="Select"
+                    id="impacts-managed-care-waivers-why-not"
+                    name="impactsManagedCareWaiversWhyNot"
+                  >
+                    <option
+                      value="default"
+                    >
+                      - Select -
+                    </option>
+                    <option
+                      value="OUT_OF_SCOPE"
+                    >
+                      Outside of model scope (e.g. Medicaid-only waiver)
+                    </option>
+                    <option
+                      value="OVERLAPS"
+                    >
+                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
+                    </option>
+                    <option
+                      value="NOT_TESTING"
+                    >
+                      The model will not be testing this waiver or payment type (e.g. bundles)
+                    </option>
+                    <option
+                      value="NOT_ENGAGED"
+                    >
+                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
+                    </option>
+                    <option
+                      value="FEEDBACK_AGAINST_USE"
+                    >
+                      Feedback from participants against waiver use
+                    </option>
+                    <option
+                      value="OTHER"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-info-lighter padding-3"
+          >
+            <h2
+              class="usa-summary-box__heading margin-bottom-2"
+            >
+              Selected waivers
+            </h2>
+            <p
+              class="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest"
+            >
+              There are 0 total available Medicaid payment waivers. Based on your answers to the above questions, MINT has determined that the following 0 waivers are likely needed for your model:
+            </p>
+            <div
+              class="margin-bottom-2"
+            >
+              <ul
+                class="margin-y-0 padding-left-3"
+                style="column-count: 2; column-gap: 1rem;"
+              />
+            </div>
+            <p
+              class="line-height-sans-5 margin-y-0 text-base-darkest"
+            >
+              Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.
+            </p>
+            <div
+              class="usa-form-group margin-top-2 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="additional-medicaid-specific-waivers-true"
+              >
+                Are there any other Medicaid-specific waivers of interest that are not outlined here?
+              </label>
+              <textarea
+                aria-labelledby="label-additional-medicaid-specific-waivers hint-additional-medicaid-specific-waivers"
+                class="height-card usa-textarea"
+                data-testid="additional-medicaid-specific-waivers"
+                id="additional-medicaid-specific-waivers"
+                maxlength="5000"
+                name="additionalMedicaidSpecificWaivers"
+              />
+            </div>
+          </div>
+          <div
+            id="waiver-assessment-survey-program-waivers-form"
+          >
+            <div
+              class="margin-top-6 margin-bottom-3 display-flex"
+            >
+              <button
+                class="usa-button usa-button usa-button--outline margin-top-0"
+                data-testid="button"
+                type="button"
+              >
+                Back
+              </button>
+              <button
+                class="usa-button margin-top-0"
+                data-testid="button"
+                id="waiver-assessment-survey-program-waivers-form-next-button"
+                type="submit"
+              >
+                Next
+              </button>
+            </div>
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                aria-label="back"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              Save and return to questionnaires
+            </button>
+          </div>
+        </fieldset>
+      </form>
+      <div
+        class="mint-page-number margin-y-6"
+        data-testid="page-num"
+      >
+        <span
+          class="mint-page-number__page-num"
+        >
+          Page 5 of 7
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ProgramWaivers Component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mint-body-normal"
+  >
+    <div
+      class="margin-bottom-2 line-height-normal"
+    >
+      <h2
+        class="margin-0 margin-right-2 display-inline"
+      >
+        Program waivers - Medicare Benefit Enhancements (BEs)
+      </h2>
+      <div
+        class="mint-body-large text-base display-inline"
+      >
+        (Page 4 of 7)
+      </div>
+    </div>
+    <p
+      class="margin-top-neg-1 margin-bottom-4 text-base-dark"
+    >
+      The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.
+    </p>
+    <div
+      class="tablet:grid-col-6"
+    >
+      <form
+        class="usa-form maxw-none"
+        data-testid="waiver-assessment-survey-program-waivers-form"
+        id="waiver-assessment-survey-program-waivers-form"
+      >
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="margin-bottom-6"
+          >
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="impacts-site-of-care-payments-true"
+              >
+                Will your model be impacting site of care payments?
+              </label>
+              <p
+                class="text-base margin-bottom-neg-05 margin-top-1"
+              >
+                For example: telehealth, at home
+              </p>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="impacts-site-of-care-payments-true"
+                      id="impacts-site-of-care-payments-true"
+                      name="impactsSiteOfCarePayments"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="impacts-site-of-care-payments-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="impacts-site-of-care-payments-example"
+                  >
+                    Please provide an example
+                  </label>
+                  <textarea
+                    aria-labelledby="label-impacts-site-of-care-payments-example hint-impacts-site-of-care-payments-example"
+                    class="height-card usa-textarea"
+                    data-testid="impacts-site-of-care-payments-example"
+                    id="impacts-site-of-care-payments-example"
+                    maxlength="5000"
+                    name="impactsSiteOfCarePaymentsExample"
+                  >
+                    Example
+                  </textarea>
+                </div>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="impacts-site-of-care-payments-false"
+                      id="impacts-site-of-care-payments-false"
+                      name="impactsSiteOfCarePayments"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="impacts-site-of-care-payments-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="modifies-care-team-scope-of-practice-true"
+              >
+                Will your model be modifying the care teams’ scope of practice?
+              </label>
+              <p
+                class="text-base margin-bottom-neg-05 margin-top-1"
+              >
+                For example: NP/PA flexibility, CHW inclusion, etc.
+              </p>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-care-team-scope-of-practice-true"
+                      id="modifies-care-team-scope-of-practice-true"
+                      name="modifiesCareTeamScopeOfPractice"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-care-team-scope-of-practice-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-care-team-scope-of-practice-false"
+                      id="modifies-care-team-scope-of-practice-false"
+                      name="modifiesCareTeamScopeOfPractice"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-care-team-scope-of-practice-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="modifies-care-team-scope-of-practice-why-not"
+                  >
+                    Please explain why not
+                  </label>
+                  <select
+                    class="usa-select"
+                    data-testid="Select"
+                    id="modifies-care-team-scope-of-practice-why-not"
+                    name="modifiesCareTeamScopeOfPracticeWhyNot"
+                  >
+                    <option
+                      value="default"
+                    >
+                      - Select -
+                    </option>
+                    <option
+                      value="OUT_OF_SCOPE"
+                    >
+                      Outside of model scope (e.g. Medicaid-only waiver)
+                    </option>
+                    <option
+                      value="OVERLAPS"
+                    >
+                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
+                    </option>
+                    <option
+                      value="NOT_TESTING"
+                    >
+                      The model will not be testing this waiver or payment type (e.g. bundles)
+                    </option>
+                    <option
+                      value="NOT_ENGAGED"
+                    >
+                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
+                    </option>
+                    <option
+                      value="FEEDBACK_AGAINST_USE"
+                    >
+                      Feedback from participants against waiver use
+                    </option>
+                    <option
+                      value="OTHER"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="modifies-care-delivery-with-claims-based-payments-true"
+              >
+                Will your model be modifying how care is delivered with claims-based payments?
+              </label>
+              <p
+                class="text-base margin-bottom-neg-05 margin-top-1"
+              >
+                For example: diabetic shoes
+              </p>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-care-delivery-with-claims-based-payments-true"
+                      id="modifies-care-delivery-with-claims-based-payments-true"
+                      name="modifiesCareDeliveryWithClaimsBasedPayments"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-care-delivery-with-claims-based-payments-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-care-delivery-with-claims-based-payments-false"
+                      id="modifies-care-delivery-with-claims-based-payments-false"
+                      name="modifiesCareDeliveryWithClaimsBasedPayments"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-care-delivery-with-claims-based-payments-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="modifies-care-delivery-with-claims-based-payments-why-not"
+                  >
+                    Please explain why not
+                  </label>
+                  <select
+                    class="usa-select"
+                    data-testid="Select"
+                    id="modifies-care-delivery-with-claims-based-payments-why-not"
+                    name="modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot"
+                  >
+                    <option
+                      value="default"
+                    >
+                      - Select -
+                    </option>
+                    <option
+                      value="OUT_OF_SCOPE"
+                    >
+                      Outside of model scope (e.g. Medicaid-only waiver)
+                    </option>
+                    <option
+                      value="OVERLAPS"
+                    >
+                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
+                    </option>
+                    <option
+                      value="NOT_TESTING"
+                    >
+                      The model will not be testing this waiver or payment type (e.g. bundles)
+                    </option>
+                    <option
+                      value="NOT_ENGAGED"
+                    >
+                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
+                    </option>
+                    <option
+                      value="FEEDBACK_AGAINST_USE"
+                    >
+                      Feedback from participants against waiver use
+                    </option>
+                    <option
+                      value="OTHER"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="modifies-quality-measurements-or-payments-via-waivers-true"
+              >
+                Will your model be modifying quality measurements or payments via waivers?
+              </label>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-quality-measurements-or-payments-via-waivers-true"
+                      id="modifies-quality-measurements-or-payments-via-waivers-true"
+                      name="modifiesQualityMeasurementsOrPaymentsViaWaivers"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-quality-measurements-or-payments-via-waivers-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-quality-measurements-or-payments-via-waivers-false"
+                      id="modifies-quality-measurements-or-payments-via-waivers-false"
+                      name="modifiesQualityMeasurementsOrPaymentsViaWaivers"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-quality-measurements-or-payments-via-waivers-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="modifies-quality-measurements-or-payments-via-waivers-why-not"
+                  >
+                    Please explain why not
+                  </label>
+                  <select
+                    class="usa-select"
+                    data-testid="Select"
+                    id="modifies-quality-measurements-or-payments-via-waivers-why-not"
+                    name="modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot"
+                  >
+                    <option
+                      value="default"
+                    >
+                      - Select -
+                    </option>
+                    <option
+                      value="OUT_OF_SCOPE"
+                    >
+                      Outside of model scope (e.g. Medicaid-only waiver)
+                    </option>
+                    <option
+                      value="OVERLAPS"
+                    >
+                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
+                    </option>
+                    <option
+                      value="NOT_TESTING"
+                    >
+                      The model will not be testing this waiver or payment type (e.g. bundles)
+                    </option>
+                    <option
+                      value="NOT_ENGAGED"
+                    >
+                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
+                    </option>
+                    <option
+                      value="FEEDBACK_AGAINST_USE"
+                    >
+                      Feedback from participants against waiver use
+                    </option>
+                    <option
+                      value="OTHER"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-info-lighter padding-3"
+          >
+            <h2
+              class="usa-summary-box__heading margin-bottom-2"
+            >
+              Selected waivers
+            </h2>
+            <p
+              class="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest"
+            >
+              There are 0 total available Program waivers (Medicare BEs). Based on your answers to the above questions, MINT has determined that the following 0 waivers are likely needed for your model:
+            </p>
+            <div
+              class="margin-bottom-2"
+            >
+              <ul
+                class="margin-y-0 padding-left-3"
+                style="column-count: 2; column-gap: 1rem;"
+              />
+            </div>
+            <p
+              class="line-height-sans-5 margin-y-0 text-base-darkest"
+            >
+              Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.
+            </p>
+          </div>
+          <div
+            id="waiver-assessment-survey-program-waivers-form"
+          >
+            <div
+              class="margin-top-6 margin-bottom-3 display-flex"
+            >
+              <button
+                class="usa-button usa-button usa-button--outline margin-top-0"
+                data-testid="button"
+                type="button"
+              >
+                Back
+              </button>
+              <button
+                class="usa-button margin-top-0"
+                data-testid="button"
+                id="waiver-assessment-survey-program-waivers-form-next-button"
+                type="submit"
+              >
+                Next
+              </button>
+            </div>
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                aria-label="back"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              Save and return to questionnaires
+            </button>
+          </div>
+        </fieldset>
+      </form>
+      <div
+        class="mint-page-number margin-y-6"
+        data-testid="page-num"
+      >
+        <span
+          class="mint-page-number__page-num"
+        >
+          Page 4 of 7
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

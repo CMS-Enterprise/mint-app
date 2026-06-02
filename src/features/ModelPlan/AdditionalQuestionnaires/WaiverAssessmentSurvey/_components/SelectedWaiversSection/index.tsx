@@ -5,15 +5,21 @@ import { useGetAllCommonWaiversQuery } from 'gql/generated/graphql';
 
 import Spinner from 'components/Spinner';
 
+import { MedicaidPaymentSuggestedWaivers } from '../../MedicaidPaymentWaivers';
 import { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
 import { ProgramSuggestedWaivers } from '../../ProgramWaivers';
 
 const SelectedWaiversSection = ({
   selectedWaivers,
-  waiverType
+  waiverType,
+  children
 }: {
-  selectedWaivers: MedicarePaymentSuggestedWaivers | ProgramSuggestedWaivers;
+  selectedWaivers:
+    | MedicarePaymentSuggestedWaivers
+    | ProgramSuggestedWaivers
+    | MedicaidPaymentSuggestedWaivers;
   waiverType: string;
+  children?: React.ReactNode;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
@@ -63,6 +69,8 @@ const SelectedWaiversSection = ({
       <p className="line-height-sans-5 margin-y-0 text-base-darkest">
         {waiverAssessmentSurveyMiscT('selectedWaivers.summary')}
       </p>
+
+      {children}
     </div>
   );
 };
