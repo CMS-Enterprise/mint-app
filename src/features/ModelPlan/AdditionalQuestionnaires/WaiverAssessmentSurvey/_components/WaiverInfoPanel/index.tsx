@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Form, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useGetCommonWaiverQuery } from 'gql/generated/graphql';
 
 import {
   DescriptionDefinition,
@@ -15,21 +16,6 @@ import Sidepanel from 'components/Sidepanel';
 
 import SelectWaiverField from '../SelectWaiverField';
 
-type CommonWaiver = {
-  id: string;
-  name: string;
-  description: string;
-  participationAgreementLanguageLink: string;
-  // TODO: This is not nullable in schema - how to tell if answer has been provided?
-  cmmiWaiverPointOfContact?: string | null;
-  waiverType: string;
-  waiverFocus: string;
-  whatIsWaived: string;
-  hasStandardizationEffort: boolean;
-  hasClaimsDataOrRREGAnalysis: string;
-  isUsedInActiveModels: boolean;
-};
-
 type WaiverInfoFields = {
   willUseWaiver: boolean | null;
   notUsingReason: string;
@@ -38,9 +24,7 @@ type WaiverInfoFields = {
 type WaiverInfoPanelProps = {
   isOpen: boolean;
   closeModal: () => void;
-  waiverInfo: WaiverInfoFields & {
-    commonWaiver: CommonWaiver;
-  };
+  waiverInfo: WaiverInfoFields;
 };
 
 const WaiverInfoPanel = ({
@@ -50,7 +34,13 @@ const WaiverInfoPanel = ({
 }: WaiverInfoPanelProps) => {
   const { t } = useTranslation('waiverAssessmentSurveyMisc');
 
-  const { willUseWaiver, notUsingReason, commonWaiver } = waiverInfo;
+  const { data } = useGetCommonWaiverQuery({
+    variables: {
+      id: '9f955945-7afd-481f-8558-e7e0fd465463'
+    }
+  });
+
+  const { willUseWaiver, notUsingReason } = waiverInfo;
 
   const {
     cmmiWaiverPointOfContact,
@@ -63,7 +53,7 @@ const WaiverInfoPanel = ({
     hasStandardizationEffort,
     hasClaimsDataOrRREGAnalysis,
     isUsedInActiveModels
-  } = commonWaiver;
+  } = data?.commonWaiver || {};
 
   const methods = useForm<WaiverInfoFields>({
     defaultValues: {
@@ -84,7 +74,7 @@ const WaiverInfoPanel = ({
         <div className="maxw-mobile-lg">
           <h2 className="margin-bottom-2">{name}</h2>
           <p className="text-base-dark margin-bottom-1">{description}</p>
-          <ExternalLink href={participationAgreementLanguageLink}>
+          <ExternalLink href={participationAgreementLanguageLink || ''}>
             {t('waiverInfoPanel.participationAgreementLanguage')}
           </ExternalLink>
 

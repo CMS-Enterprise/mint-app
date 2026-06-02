@@ -89,21 +89,7 @@ const ModelPlanQuestions = () => {
         closeModal={() => {}}
         waiverInfo={{
           willUseWaiver: null,
-          notUsingReason: '',
-          commonWaiver: {
-            id: '9f955945-7afd-481f-8558-e7e0fd465463',
-            name: 'Non-duplication',
-            description:
-              'Allows for model participants to enter into agreements with Medicare-enrolled providers and suppliers to participate as Preferred Providers under MSSP.',
-            participationAgreementLanguageLink: 'https://cms.gov/',
-            cmmiWaiverPointOfContact: '',
-            waiverType: 'Lorem Ipsum',
-            waiverFocus: 'Administrative and operational',
-            whatIsWaived: '42 CFR § 425.114(a) and (b)',
-            hasStandardizationEffort: false,
-            hasClaimsDataOrRREGAnalysis: 'Lorem ipsum',
-            isUsedInActiveModels: true
-          }
+          notUsingReason: ''
         }}
       />
       <div>
