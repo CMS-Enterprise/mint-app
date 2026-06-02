@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
@@ -15,32 +16,41 @@ import (
 type CTATRequest struct {
 	baseStruct
 
-	Requester  uuid.UUID  `json:"requester" db:"requester"`
-	Status     CTATStatus `json:"status" db:"status"`
-	Notes      *string    `json:"notes,omitempty" db:"notes"`
-	Resolution *string    `json:"resolution,omitempty" db:"resolution"`
+	Requester  uuid.UUID   `json:"requester" db:"requester"`
+	Status     CTATStatus  `json:"status" db:"status"`
+	Notes      zero.String `json:"notes,omitempty" db:"notes"`
+	Resolution zero.String `json:"resolution,omitempty" db:"resolution"`
 
 	AssignedAdmin *uuid.UUID `json:"assignedAdmin,omitempty" db:"assigned_admin"`
 
 	CmmiGroup         CTATCMMIGroupOption     `json:"cmmiGroup" db:"cmmi_group"`
-	CmmiGroupOther    *string                 `json:"cmmiGroupOther,omitempty" db:"cmmi_group_other"`
+	CmmiGroupOther    zero.String             `json:"cmmiGroupOther,omitempty" db:"cmmi_group_other"`
 	CmmiDivision      *CTATCMMIDivisionOption `json:"cmmiDivision,omitempty" db:"cmmi_division"`
-	CmmiDivisionOther *string                 `json:"cmmiDivisionOther,omitempty" db:"cmmi_division_other"`
+	CmmiDivisionOther zero.String             `json:"cmmiDivisionOther,omitempty" db:"cmmi_division_other"`
 
 	ContractActivityType      *CTATContractActivityType `json:"contractActivityType,omitempty" db:"contract_activity_type"`
-	ContractActivityTypeOther *string                   `json:"contractActivityTypeOther,omitempty" db:"contract_activity_type_other"`
-	ContractName              *string                   `json:"contractName,omitempty" db:"contract_name"`
-	ContractNumber            *string                   `json:"contractNumber,omitempty" db:"contract_number"`
+	ContractActivityTypeOther zero.String               `json:"contractActivityTypeOther,omitempty" db:"contract_activity_type_other"`
+	ContractName              zero.String               `json:"contractName,omitempty" db:"contract_name"`
+	ContractNumber            zero.String               `json:"contractNumber,omitempty" db:"contract_number"`
 	ContractType              *CTATContractType         `json:"contractType,omitempty" db:"contract_type"`
-	ContractTypeOther         *string                   `json:"contractTypeOther,omitempty" db:"contract_type_other"`
+	ContractTypeOther         zero.String               `json:"contractTypeOther,omitempty" db:"contract_type_other"`
 
 	TypeOfHelpNeeded       EnumArray[CTATHelpNeededType] `json:"typeOfHelpNeeded" db:"type_of_help_needed"`
-	TypeOfHelpNeededOther  *string                       `json:"typeOfHelpNeededOther,omitempty" db:"type_of_help_needed_other"`
+	TypeOfHelpNeededOther  zero.String                   `json:"typeOfHelpNeededOther,omitempty" db:"type_of_help_needed_other"`
 	DescribeHelpNeeded     string                        `json:"describeHelpNeeded" db:"describe_help_needed"`
 	RequestUrgency         CTATRequestUrgency            `json:"requestUrgency" db:"request_urgency"`
 	DateAssistanceNeededBy time.Time                     `json:"dateAssistanceNeededBy" db:"date_assistance_needed_by"`
 
 	HumanReadableIDNumber int `json:"humanReadableIDNumber" db:"human_readable_id_number"`
+}
+
+// NewCTATRequest returns a new CTAT request with base audit fields set.
+func NewCTATRequest(createdBy uuid.UUID, requester uuid.UUID) *CTATRequest {
+	return &CTATRequest{
+		baseStruct: NewBaseStruct(createdBy),
+		Requester:  requester,
+		Status:     CTATStatusNew,
+	}
 }
 
 // ctatRequestHumanReadableIDPrefix is the only currently available prefix
