@@ -29,7 +29,7 @@ export type SelectWaiverFieldProps = {
  * Must be rendered within a react-hook-form FormProvider for willUseWaiver and notUsingReason.
  */
 const SelectWaiverField = ({ className }: SelectWaiverFieldProps) => {
-  const { t } = useTranslation('waiverAssessmentSurvey');
+  const { t } = useTranslation('waiverAssessmentSurveyMisc');
   const { control, setValue, register } =
     useFormContext<WaiverSelectionFields>();
 

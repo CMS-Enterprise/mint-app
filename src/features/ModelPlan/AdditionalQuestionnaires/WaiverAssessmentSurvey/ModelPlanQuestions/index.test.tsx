@@ -6,7 +6,7 @@ import {
   screen,
   waitForElementToBeRemoved
 } from '@testing-library/react';
-import { modelID, modelPlanQuestionsMocks } from 'tests/mock/readonly';
+import { modelID, modelPlanQuestionsMocks } from 'tests/mock/general';
 
 import ModelPlanQuestions from './index';
 

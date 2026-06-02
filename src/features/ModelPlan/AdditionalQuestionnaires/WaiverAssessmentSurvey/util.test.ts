@@ -1,5 +1,5 @@
 import { ModelCategory } from 'gql/generated/graphql';
-import { modelPlanQuestionsDataMocks } from 'tests/mock/readonly';
+import { modelPlanQuestionsDataMocks } from 'tests/mock/general';
 import { describe, expect, it } from 'vitest';
 
 import {

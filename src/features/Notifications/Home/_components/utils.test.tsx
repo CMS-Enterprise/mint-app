@@ -18,6 +18,11 @@ describe('VerifyEmailParams Util', () => {
     const result2 = verifyEmailParams('NEW_DISCUSSION_ADDED');
     expect(result2).toEqual(true);
 
+    const result4 = verifyEmailParams(
+      'WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE'
+    );
+    expect(result4).toEqual(true);
+
     const result3 = verifyEmailParams('INVALID_PARAM');
     expect(result3).toEqual(false);
   });

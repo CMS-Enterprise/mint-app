@@ -2,6 +2,9 @@ import { MockedResponse } from '@apollo/client/testing';
 import { KeyContactCategoryType } from 'features/HelpAndKnowledge/KeyContactDirectory/_components/CategoryModal';
 import {
   DataExchangeApproachStatus,
+  GetAllCommonWaiversDocument,
+  GetAllCommonWaiversQuery,
+  GetAllCommonWaiversQueryVariables,
   GetAllKeyContactCategoriesDocument,
   GetAllKeyContactCategoriesQuery,
   GetAllKeyContactCategoriesQueryVariables,
@@ -26,15 +29,24 @@ import {
   GetFavoritesDocument,
   GetFavoritesQuery,
   GetFavoritesQueryVariables,
+  GetMedicarePaymentWaiversDocument,
+  GetMedicarePaymentWaiversQuery,
+  GetMedicarePaymentWaiversQueryVariables,
   GetModelPlanBaseDocument,
   GetModelPlanBaseQuery,
   GetModelPlanBaseQueryVariables,
+  GetModelPlanQuestionsDocument,
+  GetModelPlanQuestionsQuery,
+  GetModelPlanQuestionsQueryVariables,
   GetModelPlansByStatusGroupDocument,
   GetModelPlansByStatusGroupQuery,
   GetModelPlansByStatusGroupQueryVariables,
   GetModelPlansDocument,
   GetModelPlansQuery,
   GetModelPlansQueryVariables,
+  GetProgramWaiversDocument,
+  GetProgramWaiversQuery,
+  GetProgramWaiversQueryVariables,
   IddocQuestionnaireTaskListStatus,
   ModelCategory,
   ModelPhase,
@@ -42,6 +54,7 @@ import {
   ModelPlanStatusGroup,
   ModelStatus,
   MtoStatus,
+  NotSelectedReason,
   TaskStatus,
   WaiverAssessmentSurveyStatus
 } from 'gql/generated/graphql';
@@ -168,6 +181,180 @@ export const questionnairesMock: MockedResponse<
           questionnaires: questionnairesMockData
         }
       }
+    }
+  }
+];
+
+const commonWaiversMockData: GetAllCommonWaiversQuery['commonWaivers'] = [
+  {
+    __typename: 'CommonWaiver',
+    id: '123',
+    name: 'super long survey name Waiver 1'
+  },
+  {
+    __typename: 'CommonWaiver',
+    id: '456',
+    name: 'short Waiver 2'
+  },
+  {
+    __typename: 'CommonWaiver',
+    id: '789',
+    name: 'Waiver 3'
+  }
+];
+
+export const allCommonWaiversMocks: MockedResponse<
+  GetAllCommonWaiversQuery,
+  GetAllCommonWaiversQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllCommonWaiversDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        commonWaivers: commonWaiversMockData
+      }
+    }
+  }
+];
+
+export const modelPlanQuestionsDataMocks: GetModelPlanQuestionsQuery = {
+  __typename: 'Query',
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelID,
+    basics: {
+      id: 'basics-123',
+      __typename: 'PlanBasics',
+      additionalModelCategories: [],
+      cmsCenters: [],
+      cmmiGroups: []
+    },
+    generalCharacteristics: {
+      id: 'char-456',
+      __typename: 'PlanGeneralCharacteristics',
+      existingModel: '12',
+      keyCharacteristics: [],
+      geographiesTargetedTypes: [],
+      geographiesStatesAndTerritories: [],
+      geographiesRegionTypes: [],
+      geographiesTargetedAppliedTo: [],
+      waiversRequiredTypes: []
+    }
+  },
+  modelPlanCollection: [
+    {
+      id: 'uuid-mint-1',
+      modelName: 'B. MINT Model Plan',
+      __typename: 'ModelPlan'
+    }
+  ],
+  existingModelCollection: [
+    {
+      id: 12,
+      modelName: 'A. Existing Model Plan',
+      __typename: 'ExistingModel'
+    }
+  ]
+};
+
+export const modelPlanQuestionsMocks: MockedResponse<
+  GetModelPlanQuestionsQuery,
+  GetModelPlanQuestionsQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetModelPlanQuestionsDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: modelPlanQuestionsDataMocks
+    }
+  }
+];
+
+const medicalPaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
+  __typename: 'Query',
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelID,
+    questionnaires: {
+      __typename: 'Questionnaires',
+      waiverAssessmentSurvey: {
+        id: '123',
+        __typename: 'WaiverAssessmentSurvey',
+        modifiesMedicareSavingsPrograms: true,
+        modifiesMedicareSavingsProgramsExample: 'Example',
+        modifiesMedicareSavingsProgramsWhyNot: null,
+        bundlesPayments: false,
+        bundlesPaymentsExample: '',
+        bundlesPaymentsWhyNot: NotSelectedReason.FEEDBACK_AGAINST_USE,
+        offersRiskSharingArrangements: null,
+        offersRiskSharingArrangementsExample: '',
+        offersRiskSharingArrangementsWhyNot: null,
+        suggestedWaivers: []
+      }
+    }
+  }
+};
+
+export const medicalPaymentWaiversMocks: MockedResponse<
+  GetMedicarePaymentWaiversQuery,
+  GetMedicarePaymentWaiversQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetMedicarePaymentWaiversDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: medicalPaymentWaiversDataMocks
+    }
+  }
+];
+
+const programWaiversDataMocks: GetProgramWaiversQuery = {
+  __typename: 'Query',
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelID,
+    questionnaires: {
+      __typename: 'Questionnaires',
+      waiverAssessmentSurvey: {
+        __typename: 'WaiverAssessmentSurvey',
+        id: '123',
+        suggestedWaivers: [],
+        impactsSiteOfCarePayments: true,
+        impactsSiteOfCarePaymentsExample: 'Example',
+        impactsSiteOfCarePaymentsWhyNot: null,
+        modifiesCareTeamScopeOfPractice: false,
+        modifiesCareTeamScopeOfPracticeExample: '',
+        modifiesCareTeamScopeOfPracticeWhyNot:
+          NotSelectedReason.FEEDBACK_AGAINST_USE,
+        modifiesCareDeliveryWithClaimsBasedPayments: false,
+        modifiesCareDeliveryWithClaimsBasedPaymentsExample: '',
+        modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: null,
+        modifiesQualityMeasurementsOrPaymentsViaWaivers: false,
+        modifiesQualityMeasurementsOrPaymentsViaWaiversExample: '',
+        modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: null
+      }
+    }
+  }
+};
+
+export const programWaiversMocks: MockedResponse<
+  GetProgramWaiversQuery,
+  GetProgramWaiversQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetProgramWaiversDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: programWaiversDataMocks
     }
   }
 ];

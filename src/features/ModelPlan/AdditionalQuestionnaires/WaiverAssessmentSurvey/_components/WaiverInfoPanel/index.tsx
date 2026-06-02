@@ -53,7 +53,7 @@ const WaiverInfoPanel = ({
   closeModal,
   waiverInfo
 }: WaiverInfoPanelProps) => {
-  const { t } = useTranslation('waiverAssessmentSurvey');
+  const { t } = useTranslation('waiverAssessmentSurveyMisc');
 
   const { willUseWaiver, notUsingReason, commonWaiver } = waiverInfo;
 

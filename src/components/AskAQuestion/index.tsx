@@ -33,8 +33,8 @@ const AskAQuestion = ({
     'dataExchangeApproachMisc'
   );
   const { t: iddocQuestionnaireT } = useTranslation('iddocQuestionnaireMisc');
-  const { t: waiverAssessmentSurveyT } = useTranslation(
-    'waiverAssessmentSurvey'
+  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
+    'waiverAssessmentSurveyMisc'
   );
   const { t: modelToOperationsT } = useTranslation('modelToOperationsMisc');
   const { t: timelineMiscT } = useTranslation('timelineMisc');
@@ -56,7 +56,7 @@ const AskAQuestion = ({
       case 'iddocQuestionnaire':
         return iddocQuestionnaireT('needHelpDiscussion');
       case 'waiverAssessmentSurvey':
-        return waiverAssessmentSurveyT('needHelpDiscussion');
+        return waiverAssessmentSurveyMiscT('needHelpDiscussion');
       case 'solution':
       default:
         return opSolutionsMiscT('helpChoosing');
