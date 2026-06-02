@@ -560,6 +560,11 @@ const waiverAssessmentSurveyMisc = {
       'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
     waiverTypeText: 'Medicaid payment waivers'
   },
+  waiverSelectionAndConfirmation: {
+    heading: 'Waiver selection and confirmation',
+    description:
+      'Confirm which waivers your model will use, and justify any you plan not to use. You may also review waivers that have been ruled out by previous questions and you may select them for your model to use.'
+  },
   selectedWaivers: {
     heading: 'Selected waivers',
     description:
