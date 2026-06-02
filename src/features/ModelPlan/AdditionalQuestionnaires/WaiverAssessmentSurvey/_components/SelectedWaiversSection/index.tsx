@@ -5,9 +5,9 @@ import { useGetAllCommonWaiversQuery } from 'gql/generated/graphql';
 
 import Spinner from 'components/Spinner';
 
-import { MedicaidPaymentSuggestedWaivers } from '../../MedicaidPaymentWaivers';
-import { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
-import { ProgramSuggestedWaivers } from '../../ProgramWaivers';
+import type { MedicaidPaymentSuggestedWaivers } from '../../MedicaidPaymentWaivers';
+import type { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
+import type { ProgramSuggestedWaivers } from '../../ProgramWaivers';
 
 const SelectedWaiversSection = ({
   selectedWaivers,

@@ -143,8 +143,8 @@ const MedicaidPaymentWaivers = () => {
           />
 
           <Form
-            id="waiver-assessment-survey-program-waivers-form"
-            data-testid="waiver-assessment-survey-program-waivers-form"
+            id="waiver-assessment-survey-medicaid-payment-waivers-form"
+            data-testid="waiver-assessment-survey-medicaid-payment-waivers-form"
             className="maxw-none"
             onSubmit={handleSubmit(() => {
               navigate(
@@ -207,9 +207,9 @@ const MedicaidPaymentWaivers = () => {
                   className="margin-top-2 margin-bottom-2"
                 >
                   <Label
-                    htmlFor={`${convertCamelCaseToKebabCase(
+                    htmlFor={convertCamelCaseToKebabCase(
                       additionalMedicaidSpecificWaiversConfig.gqlField
-                    )}-true`}
+                    )}
                     className="text-normal text-bold"
                   >
                     {additionalMedicaidSpecificWaiversConfig.label}
@@ -234,7 +234,7 @@ const MedicaidPaymentWaivers = () => {
               </SelectedWaiversSection>
 
               <FormFooter
-                id="waiver-assessment-survey-program-waivers-form"
+                id="waiver-assessment-survey-medicaid-payment-waivers-form"
                 homeArea={additionalQuestionnairesT(
                   'saveAndReturnToQuestionnaires'
                 )}
