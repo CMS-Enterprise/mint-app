@@ -235,6 +235,47 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	_ = secondDocument
 }
 
+func (s *StoreTestSuite) TestCTATRequestGetByIDReturnsExpectedRow() {
+	tx, err := s.store.Beginx()
+	s.Require().NoError(err)
+	defer tx.Rollback()
+
+	actorUserID := s.principal.Account().ID
+
+	err = setCurrentSessionUserVariable(tx, actorUserID)
+	s.Require().NoError(err)
+
+	createdDts := time.Date(2026, 1, 15, 9, 30, 0, 0, time.UTC)
+	contractName := "Get by ID contract"
+	expectedTypeOfHelpNeeded := []models.CTATHelpNeededType{
+		models.CTATHelpNeededTypeRequestForInformationRfi,
+		models.CTATHelpNeededTypeRequestForQuotationRfq,
+	}
+	expected := insertCTATRequestTestRow(
+		s,
+		tx,
+		actorUserID,
+		actorUserID,
+		createdDts,
+		contractName,
+		expectedTypeOfHelpNeeded,
+		models.CTATStatusAssigned,
+	)
+
+	row, err := CTATRequestGetByID(tx, expected.ID)
+	s.Require().NoError(err)
+	s.Require().NotNil(row)
+
+	s.Equal(expected.ID, row.ID)
+	s.Equal(expected.Requester, row.Requester)
+	s.Equal(expected.HumanReadableIDNumber, row.HumanReadableIDNumber)
+	s.EqualTime(createdDts, row.CreatedDts)
+	s.Equal(zero.StringFrom(contractName), row.ContractName)
+	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
+	s.Nil(row.TypeOfHelpNeededOther.Ptr())
+	s.Equal(models.CTATStatusAssigned, row.Status)
+}
+
 func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADEROrdersNewestFirst() {
 	tx, err := s.store.Beginx()
 	s.Require().NoError(err)

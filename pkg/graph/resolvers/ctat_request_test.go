@@ -107,6 +107,35 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 	suite.ElementsMatch([]uuid.UUID{first.ID, second.ID}, returnedIDs)
 }
 
+func (suite *ResolverSuite) TestCtatRequest() {
+	request := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
+		"Detail contract",
+		[]models.CTATHelpNeededType{
+			models.CTATHelpNeededTypeRequestForInformationRfi,
+			models.CTATHelpNeededTypeRequestForQuotationRfq,
+		},
+		models.CTATStatusAssigned,
+	)
+
+	resolver := &queryResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	resp, err := resolver.CtatRequest(suite.testConfigs.Context, request.ID)
+	suite.NoError(err)
+	suite.NotNil(resp)
+	suite.Equal(request.ID, resp.ID)
+	suite.Equal(request.Requester, resp.Requester)
+	suite.Equal(request.HumanReadableIDNumber, resp.HumanReadableIDNumber)
+	suite.Equal(request.ContractName, resp.ContractName)
+	suite.Equal([]models.CTATHelpNeededType(request.TypeOfHelpNeeded), []models.CTATHelpNeededType(resp.TypeOfHelpNeeded))
+	suite.Equal(models.CTATStatusAssigned, resp.Status)
+}
+
 func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
