@@ -4,10 +4,152 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+func (s *StoreTestSuite) TestCTATRequestCreate() {
+	tx, err := s.store.Beginx()
+	s.Require().NoError(err)
+	defer tx.Rollback()
+
+	actorUserID := s.principal.Account().ID
+
+	err = setCurrentSessionUserVariable(tx, actorUserID)
+	s.Require().NoError(err)
+
+	cmmiDivision := models.CTATCMMIDivisionOptionBSGDBOM
+	contractName := "Create request contract"
+	request := &models.CTATRequest{
+		Requester:              actorUserID,
+		Status:                 models.CTATStatusAssigned,
+		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
+		CmmiDivision:           &cmmiDivision,
+		ContractName:           zero.StringFrom(contractName),
+		TypeOfHelpNeeded:       models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRfi},
+		DescribeHelpNeeded:     "Need help creating a CTAT request through storage.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh,
+		DateAssistanceNeededBy: time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC),
+	}
+	request.CreatedBy = actorUserID
+
+	created, err := CTATRequestCreate(tx, request)
+	s.Require().NoError(err)
+
+	s.NotEqual(uuid.Nil, created.ID)
+	s.Equal(actorUserID, created.Requester)
+	s.Equal(models.CTATStatusAssigned, created.Status)
+	s.Equal(actorUserID, created.CreatedBy)
+	s.False(created.CreatedDts.IsZero())
+	s.Nil(created.ModifiedBy)
+	s.Nil(created.ModifiedDts)
+	s.Greater(created.HumanReadableIDNumber, 0)
+	s.Equal(zero.StringFrom(contractName), created.ContractName)
+	s.Equal(
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		[]models.CTATHelpNeededType(created.TypeOfHelpNeeded),
+	)
+}
+
+func (s *StoreTestSuite) TestCTATRequestModelPlanLinkCreate() {
+	tx, err := s.store.Beginx()
+	s.Require().NoError(err)
+	defer tx.Rollback()
+
+	actorUserID := s.principal.Account().ID
+
+	err = setCurrentSessionUserVariable(tx, actorUserID)
+	s.Require().NoError(err)
+
+	request := insertCTATRequestTestRow(
+		s,
+		tx,
+		actorUserID,
+		actorUserID,
+		time.Date(2026, 1, 18, 9, 0, 0, 0, time.UTC),
+		"Link create contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
+		models.CTATStatusNew,
+	)
+	modelPlan := models.NewModelPlan(actorUserID, "CTAT create link test model")
+	createdModelPlan, err := s.store.ModelPlanCreate(tx, s.logger, modelPlan)
+	s.Require().NoError(err)
+
+	link := &models.CTATRequestModelPlanLink{}
+	link.CTATRequestID = request.ID
+	link.ModelPlanID = createdModelPlan.ID
+	link.CreatedBy = actorUserID
+
+	created, err := CTATRequestModelPlanLinkCreate(tx, link)
+	s.Require().NoError(err)
+
+	s.NotEqual(uuid.Nil, created.ID)
+	s.Equal(request.ID, created.CTATRequestID)
+	s.Equal(createdModelPlan.ID, created.ModelPlanID)
+	s.Equal(actorUserID, created.CreatedBy)
+	s.False(created.CreatedDts.IsZero())
+	s.Nil(created.ModifiedBy)
+	s.Nil(created.ModifiedDts)
+}
+
+func (s *StoreTestSuite) TestCTATRequestDocumentCreate() {
+	tx, err := s.store.Beginx()
+	s.Require().NoError(err)
+	defer tx.Rollback()
+
+	actorUserID := s.principal.Account().ID
+
+	err = setCurrentSessionUserVariable(tx, actorUserID)
+	s.Require().NoError(err)
+
+	request := insertCTATRequestTestRow(
+		s,
+		tx,
+		actorUserID,
+		actorUserID,
+		time.Date(2026, 1, 19, 9, 0, 0, 0, time.UTC),
+		"Document create contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRfq},
+		models.CTATStatusAssigned,
+	)
+
+	url := "https://example.com/files/ctat-create-test.pdf"
+	doc := &models.CTATRequestDocument{
+		URL:          &url,
+		FileType:     "application/pdf",
+		Bucket:       "ctat-docs-test",
+		FileKey:      "documents/ctat-create-test.pdf",
+		VirusScanned: true,
+		VirusClean:   true,
+		Restricted:   false,
+		FileName:     "ctat-create-test.pdf",
+		FileSize:     2048,
+	}
+	doc.CTATRequestID = request.ID
+	doc.CreatedBy = actorUserID
+
+	created, err := CTATRequestDocumentCreate(tx, doc)
+	s.Require().NoError(err)
+
+	s.NotEqual(uuid.Nil, created.ID)
+	s.Equal(request.ID, created.CTATRequestID)
+	s.Equal(actorUserID, created.CreatedBy)
+	s.False(created.CreatedDts.IsZero())
+	s.Nil(created.ModifiedBy)
+	s.Nil(created.ModifiedDts)
+	s.Require().NotNil(created.URL)
+	s.Equal(url, *created.URL)
+	s.Equal("application/pdf", created.FileType)
+	s.Equal("ctat-docs-test", created.Bucket)
+	s.Equal("documents/ctat-create-test.pdf", created.FileKey)
+	s.Equal("ctat-create-test.pdf", created.FileName)
+	s.Equal(2048, created.FileSize)
+	s.True(created.VirusScanned)
+	s.True(created.VirusClean)
+	s.False(created.Restricted)
+}
 
 func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFields() {
 	tx, err := s.store.Beginx()
@@ -84,10 +226,9 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	s.Equal(expected.Requester, row.Requester)
 	s.Equal(expected.HumanReadableIDNumber, row.HumanReadableIDNumber)
 	s.EqualTime(createdDts, row.CreatedDts)
-	s.Require().NotNil(row.ContractName)
-	s.Equal(contractName, *row.ContractName)
+	s.Equal(zero.StringFrom(contractName), row.ContractName)
 	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
-	s.Nil(row.TypeOfHelpNeededOther)
+	s.Nil(row.TypeOfHelpNeededOther.Ptr())
 	s.Equal(models.CTATStatusAssigned, row.Status)
 
 	_ = firstDocument
@@ -257,7 +398,7 @@ func insertCTATRequestTestRow(
 		Status:                 status,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
-		ContractName:           &contractName,
+		ContractName:           zero.StringFrom(contractName),
 		TypeOfHelpNeeded:       helpNeeded,
 		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,

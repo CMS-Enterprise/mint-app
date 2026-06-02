@@ -1,15 +1,20 @@
 package resolvers
 
 import (
+	"bytes"
 	"time"
 
+	"github.com/99designs/gqlgen/graphql"
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
@@ -145,6 +150,91 @@ func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
 	}))
 }
 
+func (suite *ResolverSuite) TestCTATRequestCreate() {
+	relatedPlan := suite.createModelPlan("CTAT Create Related Plan")
+	reader := bytes.NewReader([]byte("Some test CTAT file contents"))
+
+	contractName := "CTAT Create Contract"
+	input := &model.CTATRequestInput{
+		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
+		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
+		RelatedMINTModels:      []uuid.UUID{relatedPlan.ID},
+		ContractName:           &contractName,
+		TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		DescribeHelpNeeded:     "Need help creating a CTAT request.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh,
+		DateAssistanceNeededBy: time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC),
+		SupportingDocuments: []*model.CTATRequestDocumentInput{
+			{
+				FileData: graphql.Upload{
+					File:        reader,
+					Filename:    "ctat-request-upload.txt",
+					Size:        reader.Size(),
+					ContentType: "text/plain",
+				},
+			},
+		},
+	}
+
+	created, err := CTATRequestCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		suite.testConfigs.S3Client,
+	)
+	suite.NoError(err)
+	suite.NotNil(created)
+	suite.Equal(models.CTATStatusNew, created.Status)
+	suite.Equal(suite.testConfigs.Principal.Account().ID, created.Requester)
+	suite.Equal(zero.StringFrom(contractName), created.ContractName)
+	suite.Greater(created.HumanReadableIDNumber, 0)
+
+	links, err := storage.CTATRequestModelPlanLinkGetByCTATRequestIDLOADER(suite.testConfigs.Store, []uuid.UUID{created.ID})
+	suite.NoError(err)
+	suite.Len(links, 1)
+	suite.Equal(relatedPlan.ID, links[0].ModelPlanID)
+
+	documents, err := storage.CTATRequestDocumentGetByCTATRequestIDLOADER(suite.testConfigs.Store, []uuid.UUID{created.ID})
+	suite.NoError(err)
+	suite.Len(documents, 1)
+	suite.Equal("ctat-request-upload.txt", documents[0].FileName)
+	suite.Equal("text/plain", documents[0].FileType)
+	suite.False(documents[0].Restricted)
+}
+
+func (suite *ResolverSuite) TestCTATRequestCreateDeduplicatesRelatedModelLinks() {
+	relatedPlan := suite.createModelPlan("CTAT Create Dedup Related Plan")
+
+	input := &model.CTATRequestInput{
+		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
+		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
+		RelatedMINTModels:      []uuid.UUID{relatedPlan.ID, relatedPlan.ID},
+		TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		DescribeHelpNeeded:     "Need help creating a CTAT request with duplicate related models.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh,
+		DateAssistanceNeededBy: time.Date(2026, 7, 1, 12, 0, 0, 0, time.UTC),
+		SupportingDocuments:    []*model.CTATRequestDocumentInput{},
+	}
+
+	created, err := CTATRequestCreate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		input,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		suite.testConfigs.S3Client,
+	)
+	suite.NoError(err)
+	suite.NotNil(created)
+
+	links, err := storage.CTATRequestModelPlanLinkGetByCTATRequestIDLOADER(suite.testConfigs.Store, []uuid.UUID{created.ID})
+	suite.NoError(err)
+	suite.Len(links, 1)
+	suite.Equal(relatedPlan.ID, links[0].ModelPlanID)
+}
+
 func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	requesterID uuid.UUID,
 	createdDts time.Time,
@@ -211,7 +301,7 @@ func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 		Status:                 status,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
-		ContractName:           &contractName,
+		ContractName:           zero.StringFrom(contractName),
 		TypeOfHelpNeeded:       helpNeeded,
 		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,

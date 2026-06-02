@@ -17,14 +17,59 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// Notes is the resolver for the notes field.
+func (r *cTATRequestResolver) Notes(ctx context.Context, obj *models.CTATRequest) (*string, error) {
+	return obj.Notes.Ptr(), nil
+}
+
+// Resolution is the resolver for the resolution field.
+func (r *cTATRequestResolver) Resolution(ctx context.Context, obj *models.CTATRequest) (*string, error) {
+	return obj.Resolution.Ptr(), nil
+}
+
+// CmmiGroupOther is the resolver for the cmmiGroupOther field.
+func (r *cTATRequestResolver) CmmiGroupOther(ctx context.Context, obj *models.CTATRequest) (*string, error) {
+	return obj.CmmiGroupOther.Ptr(), nil
+}
+
+// CmmiDivisionOther is the resolver for the cmmiDivisionOther field.
+func (r *cTATRequestResolver) CmmiDivisionOther(ctx context.Context, obj *models.CTATRequest) (*string, error) {
+	return obj.CmmiDivisionOther.Ptr(), nil
+}
+
 // RelatedMINTModels is the resolver for the relatedMINTModels field.
 func (r *cTATRequestResolver) RelatedMINTModels(ctx context.Context, obj *models.CTATRequest) ([]*models.ModelPlan, error) {
 	return CTATRelatedMINTModelsGetByCTATRequestIDLOADER(ctx, obj.ID)
 }
 
+// ContractActivityTypeOther is the resolver for the contractActivityTypeOther field.
+func (r *cTATRequestResolver) ContractActivityTypeOther(ctx context.Context, obj *models.CTATRequest) (*string, error) {
+	return obj.ContractActivityTypeOther.Ptr(), nil
+}
+
+// ContractName is the resolver for the contractName field.
+func (r *cTATRequestResolver) ContractName(ctx context.Context, obj *models.CTATRequest) (*string, error) {
+	return obj.ContractName.Ptr(), nil
+}
+
+// ContractNumber is the resolver for the contractNumber field.
+func (r *cTATRequestResolver) ContractNumber(ctx context.Context, obj *models.CTATRequest) (*string, error) {
+	return obj.ContractNumber.Ptr(), nil
+}
+
+// ContractTypeOther is the resolver for the contractTypeOther field.
+func (r *cTATRequestResolver) ContractTypeOther(ctx context.Context, obj *models.CTATRequest) (*string, error) {
+	return obj.ContractTypeOther.Ptr(), nil
+}
+
 // TypeOfHelpNeeded is the resolver for the typeOfHelpNeeded field.
 func (r *cTATRequestResolver) TypeOfHelpNeeded(ctx context.Context, obj *models.CTATRequest) ([]models.CTATHelpNeededType, error) {
 	return obj.TypeOfHelpNeeded, nil
+}
+
+// TypeOfHelpNeededOther is the resolver for the typeOfHelpNeededOther field.
+func (r *cTATRequestResolver) TypeOfHelpNeededOther(ctx context.Context, obj *models.CTATRequest) (*string, error) {
+	return obj.TypeOfHelpNeededOther.Ptr(), nil
 }
 
 // SupportingDocuments is the resolver for the supportingDocuments field.
@@ -34,7 +79,10 @@ func (r *cTATRequestResolver) SupportingDocuments(ctx context.Context, obj *mode
 
 // CreateCTATRequest is the resolver for the createCTATRequest field.
 func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error) {
-	panic(fmt.Errorf("not implemented: CreateCTATRequest - createCTATRequest"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return CTATRequestCreate(ctx, logger, &input, principal, r.store, r.fileUploadS3Client)
 }
 
 // AdminUpdateCTATRequest is the resolver for the adminUpdateCTATRequest field.

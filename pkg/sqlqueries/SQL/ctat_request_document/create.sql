@@ -1,0 +1,31 @@
+INSERT INTO ctat_request_document (
+    id,
+    ctat_request_id,
+    url,
+    file_type,
+    bucket,
+    file_key,
+    virus_scanned,
+    virus_clean,
+    restricted,
+    file_name,
+    file_size,
+    created_by,
+    modified_by
+)
+VALUES (
+    :id,
+    :ctat_request_id,
+    :url,
+    :file_type,
+    :bucket,
+    :file_key,
+    :virus_scanned,
+    :virus_clean,
+    :restricted,
+    :file_name,
+    :file_size,
+    :created_by,
+    :modified_by
+)
+RETURNING *;
