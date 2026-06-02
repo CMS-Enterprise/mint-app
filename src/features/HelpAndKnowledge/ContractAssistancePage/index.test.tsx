@@ -1,6 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
+import { screen, waitFor } from '@testing-library/react';
+import {
+  GetCtatRequestsAdminDocument,
+  GetCtatRequestsRequesterDocument
+} from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 import setup from 'tests/util';
 
@@ -19,6 +25,36 @@ const mockAuthNotAssessment = {
   groups: [],
   euaId: 'EFGH'
 };
+
+const ctatRequestsMocks = [
+  {
+    request: {
+      query: GetCtatRequestsRequesterDocument
+    },
+    result: {
+      data: {
+        ctatRequestsRequester: {
+          __typename: 'CTATRequestsTableDataRequester',
+          ctatRequests: []
+        }
+      }
+    }
+  },
+  {
+    request: {
+      query: GetCtatRequestsAdminDocument
+    },
+    result: {
+      data: {
+        ctatRequestsAdmin: {
+          __typename: 'CTATRequestsTableDataAdmin',
+          count: 0,
+          ctatRequests: []
+        }
+      }
+    }
+  }
+];
 
 const mockStore = configureMockStore();
 const assessmentStore = mockStore({ auth: mockAuthAssessment });
@@ -39,42 +75,63 @@ const renderPage = (store: ReturnType<typeof mockStore>) => {
 
   return setup(
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <MockedProvider mocks={ctatRequestsMocks}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     </Provider>
   );
 };
 
 describe('ContractAssistancePage', () => {
-  it('renders admin ticket management for assessment team', () => {
-    const { getByRole } = renderPage(assessmentStore);
+  it('renders admin ticket management for assessment team', async () => {
+    renderPage(assessmentStore);
 
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'Contract assistance' })
+      ).toBeInTheDocument();
+    });
     expect(
-      getByRole('heading', { level: 1, name: 'Contract assistance' })
+      screen.getByRole('heading', { level: 2, name: 'Admin ticket management' })
     ).toBeInTheDocument();
     expect(
-      getByRole('heading', { level: 2, name: 'Admin ticket management' })
-    ).toBeInTheDocument();
-    expect(
-      getByRole('heading', { level: 2, name: 'My submitted help tickets' })
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'My submitted help tickets'
+      })
     ).toBeInTheDocument();
   });
 
-  it('does not render admin ticket management for non-assessment team', () => {
-    const { getByRole, queryByRole } = renderPage(nonAssessmentStore);
+  it('does not render admin ticket management for non-assessment team', async () => {
+    renderPage(nonAssessmentStore);
 
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'Contract assistance' })
+      ).toBeInTheDocument();
+    });
     expect(
-      getByRole('heading', { level: 1, name: 'Contract assistance' })
-    ).toBeInTheDocument();
-    expect(
-      queryByRole('heading', { level: 2, name: 'Admin ticket management' })
+      screen.queryByRole('heading', {
+        level: 2,
+        name: 'Admin ticket management'
+      })
     ).not.toBeInTheDocument();
     expect(
-      getByRole('heading', { level: 2, name: 'My submitted help tickets' })
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'My submitted help tickets'
+      })
     ).toBeInTheDocument();
   });
 
-  it('matches snapshot', () => {
+  it('matches snapshot', async () => {
     const { asFragment } = renderPage(assessmentStore);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'Contract assistance' })
+      ).toBeInTheDocument();
+    });
 
     expect(asFragment()).toMatchSnapshot();
   });
