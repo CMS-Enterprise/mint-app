@@ -192,17 +192,20 @@ const commonWaiversMockData: GetAllCommonWaiversQuery['commonWaivers'] = [
   {
     __typename: 'CommonWaiver',
     id: '123',
-    name: 'super long survey name Waiver 1'
+    name: 'super long survey name Waiver 1',
+    waiverType: 'MEDICAID_PAYMENT'
   },
   {
     __typename: 'CommonWaiver',
     id: '456',
-    name: 'short Waiver 2'
+    name: 'short Waiver 2',
+    waiverType: 'MEDICARE_PAYMENT'
   },
   {
     __typename: 'CommonWaiver',
     id: '789',
-    name: 'Waiver 3'
+    name: 'Waiver 3',
+    waiverType: 'PROGRAM_MEDICARE_BES'
   }
 ];
 

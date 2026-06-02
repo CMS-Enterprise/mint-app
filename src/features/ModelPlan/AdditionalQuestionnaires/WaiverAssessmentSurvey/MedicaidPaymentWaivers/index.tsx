@@ -198,8 +198,9 @@ const MedicaidPaymentWaivers = () => {
 
               <SelectedWaiversSection
                 selectedWaivers={suggestedWaivers || []}
-                waiverType={waiverAssessmentSurveyMiscT(
-                  'medicaidPaymentWaivers.waiverType'
+                waiverType="MEDICAID_PAYMENT"
+                waiverTypeText={waiverAssessmentSurveyMiscT(
+                  'medicaidPaymentWaivers.waiverTypeText'
                 )}
               >
                 <FormGroup

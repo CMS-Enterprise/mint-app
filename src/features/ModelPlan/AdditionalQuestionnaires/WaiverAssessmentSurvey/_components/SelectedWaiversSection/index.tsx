@@ -12,6 +12,7 @@ import type { ProgramSuggestedWaivers } from '../../ProgramWaivers';
 const SelectedWaiversSection = ({
   selectedWaivers,
   waiverType,
+  waiverTypeText,
   children
 }: {
   selectedWaivers:
@@ -19,6 +20,7 @@ const SelectedWaiversSection = ({
     | ProgramSuggestedWaivers
     | MedicaidPaymentSuggestedWaivers;
   waiverType: string;
+  waiverTypeText: string;
   children?: React.ReactNode;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -26,6 +28,10 @@ const SelectedWaiversSection = ({
   );
 
   const { data, loading } = useGetAllCommonWaiversQuery();
+
+  const filteredCommonWaivers = data?.commonWaivers.filter(
+    waiver => waiver.waiverType === waiverType
+  );
 
   const generateSelectedWaiverList = selectedWaivers.map(
     waiver => waiver.commonWaiver.name
@@ -43,9 +49,9 @@ const SelectedWaiversSection = ({
 
       <p className="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest">
         {waiverAssessmentSurveyMiscT('selectedWaivers.description', {
-          totalWaiversCount: data?.commonWaivers?.length || 0,
+          totalWaiversCount: filteredCommonWaivers?.length || 0,
           selectedWaiversCount: selectedWaivers.length,
-          waiverType
+          waiverType: waiverTypeText
         })}
       </p>
 

@@ -198,8 +198,9 @@ const ProgramWaivers = () => {
 
               <SelectedWaiversSection
                 selectedWaivers={suggestedWaivers || []}
-                waiverType={waiverAssessmentSurveyMiscT(
-                  'programWaivers.waiverType'
+                waiverType="PROGRAM_MEDICARE_BES"
+                waiverTypeText={waiverAssessmentSurveyMiscT(
+                  'programWaivers.waiverTypeText'
                 )}
               />
 

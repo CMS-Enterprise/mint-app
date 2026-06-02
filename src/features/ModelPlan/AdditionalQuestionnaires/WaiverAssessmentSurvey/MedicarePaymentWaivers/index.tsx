@@ -187,8 +187,9 @@ const MedicarePaymentWaivers = () => {
 
               <SelectedWaiversSection
                 selectedWaivers={suggestedWaivers || []}
-                waiverType={waiverAssessmentSurveyMiscT(
-                  'medicarePaymentWaivers.waiverType'
+                waiverType="MEDICARE_PAYMENT"
+                waiverTypeText={waiverAssessmentSurveyMiscT(
+                  'medicarePaymentWaivers.waiverTypeText'
                 )}
               />
 
