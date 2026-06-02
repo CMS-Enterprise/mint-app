@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
@@ -461,21 +462,21 @@ func (s *Seeder) createCTATRequest(input ctatRequestSeedInput) *models.CTATReque
 	return &models.CTATRequest{
 		Requester:                 input.Requester.UserAccount.ID,
 		Status:                    input.Status,
-		Notes:                     input.Notes,
-		Resolution:                input.Resolution,
+		Notes:                     zero.StringFromPtr(input.Notes),
+		Resolution:                zero.StringFromPtr(input.Resolution),
 		AssignedAdmin:             assignedAdminID,
 		CmmiGroup:                 input.CMMIGroup,
-		CmmiGroupOther:            input.CMMIGroupOther,
+		CmmiGroupOther:            zero.StringFromPtr(input.CMMIGroupOther),
 		CmmiDivision:              input.CMMIDivision,
-		CmmiDivisionOther:         input.CMMIDivisionOther,
+		CmmiDivisionOther:         zero.StringFromPtr(input.CMMIDivisionOther),
 		ContractActivityType:      input.ContractActivityType,
-		ContractActivityTypeOther: input.ContractActivityTypeOther,
-		ContractName:              input.ContractName,
-		ContractNumber:            input.ContractNumber,
+		ContractActivityTypeOther: zero.StringFromPtr(input.ContractActivityTypeOther),
+		ContractName:              zero.StringFromPtr(input.ContractName),
+		ContractNumber:            zero.StringFromPtr(input.ContractNumber),
 		ContractType:              input.ContractType,
-		ContractTypeOther:         input.ContractTypeOther,
+		ContractTypeOther:         zero.StringFromPtr(input.ContractTypeOther),
 		TypeOfHelpNeeded:          helpNeeded,
-		TypeOfHelpNeededOther:     input.TypeOfHelpNeededOther,
+		TypeOfHelpNeededOther:     zero.StringFromPtr(input.TypeOfHelpNeededOther),
 		DescribeHelpNeeded:        input.DescribeHelpNeeded,
 		RequestUrgency:            input.RequestUrgency,
 		DateAssistanceNeededBy:    input.DateAssistanceNeededBy,
