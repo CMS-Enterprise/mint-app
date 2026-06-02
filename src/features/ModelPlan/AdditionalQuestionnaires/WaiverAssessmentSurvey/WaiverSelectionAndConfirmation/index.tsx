@@ -20,8 +20,55 @@ import useHandleMutation from 'hooks/useHandleMutation';
 
 import WaiverSelectionSection from '../_components/WaiverSelectionSection';
 
-export type WaiverType =
-  GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey']['waivers'][number];
+export type waiverAssessmentSurveyType =
+  GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
+
+const testData: waiverAssessmentSurveyType = {
+  __typename: 'WaiverAssessmentSurvey',
+  waivers: [
+    {
+      __typename: 'Waiver',
+      id: '123',
+      commonWaiverID: '456',
+      willUseWaiver: true,
+      notUsingReason: null,
+      commonWaiver: {
+        __typename: 'CommonWaiver',
+        id: '789',
+        name: 'Sample Waiver',
+        waiverType: null,
+        waiverFocus: null
+      }
+    },
+    {
+      __typename: 'Waiver',
+      id: '124',
+      commonWaiverID: '457',
+      willUseWaiver: false,
+      notUsingReason: null,
+      commonWaiver: {
+        __typename: 'CommonWaiver',
+        id: '790',
+        name: 'Sample Waiver 2',
+        waiverType: null,
+        waiverFocus: null
+      }
+    }
+  ],
+  suggestedWaivers: [
+    {
+      __typename: 'SuggestedWaiver',
+      id: '125',
+      commonWaiverID: '458',
+      commonWaiver: {
+        __typename: 'CommonWaiver',
+        id: '791',
+        name: 'Sample Suggested Waiver',
+        waiverType: null
+      }
+    }
+  ]
+};
 
 const WaiverSelectionAndConfirmation = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -107,10 +154,8 @@ const WaiverSelectionAndConfirmation = () => {
               <ConfirmLeaveRHF />
 
               <WaiverSelectionSection
-                waivers={
-                  data?.modelPlan?.questionnaires?.waiverAssessmentSurvey
-                    ?.waivers || []
-                }
+                //       waivers={data.modelPlan.questionnaires.waiverAssessmentSurvey}
+                waivers={testData}
               />
 
               <FormFooter

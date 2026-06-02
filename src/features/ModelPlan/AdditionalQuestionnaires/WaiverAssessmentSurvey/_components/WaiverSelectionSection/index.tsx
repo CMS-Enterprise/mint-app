@@ -2,16 +2,17 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 
-import { WaiverType } from '../../WaiverSelectionAndConfirmation';
+import { waiverAssessmentSurveyType } from '../../WaiverSelectionAndConfirmation';
 import UnusedWaiversTable from '../UnusedWaiversTable';
 
-const WaiverSelectionSection = ({ waivers }: { waivers: WaiverType[] }) => {
+const WaiverSelectionSection = ({
+  waivers
+}: {
+  waivers: waiverAssessmentSurveyType;
+}) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
-  const chosenWaivers = waivers.filter(waiver => waiver.willUseWaiver);
-
-  const unusedWaivers = waivers.filter(waiver => !waiver.willUseWaiver);
 
   return (
     <div className="margin-bottom-6">
@@ -20,7 +21,7 @@ const WaiverSelectionSection = ({ waivers }: { waivers: WaiverType[] }) => {
       </h3>
 
       <div className="margin-bottom-4">
-        {chosenWaivers.map(waiver => (
+        {waivers.waivers.map(waiver => (
           <div
             key={waiver.commonWaiverID}
             className="padding-3 border-1px border-gray-10 radius-md shadow-3 margin-bottom-2"
@@ -57,7 +58,7 @@ const WaiverSelectionSection = ({ waivers }: { waivers: WaiverType[] }) => {
         ))}
       </div>
 
-      <UnusedWaiversTable unusedWaivers={unusedWaivers} />
+      <UnusedWaiversTable unusedWaivers={waivers.suggestedWaivers} />
     </div>
   );
 };

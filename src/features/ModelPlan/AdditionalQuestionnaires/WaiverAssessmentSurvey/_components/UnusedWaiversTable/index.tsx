@@ -5,7 +5,7 @@ import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
-import { WaiverType } from '../../WaiverSelectionAndConfirmation';
+import { waiverAssessmentSurveyType } from '../../WaiverSelectionAndConfirmation';
 
 const LearnMoreButton = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -57,12 +57,13 @@ const IPlanToUseButton = () => {
   );
 };
 
-type ColumnType = WaiverType & { actions: unknown };
+type UnusedWaiverType = waiverAssessmentSurveyType['suggestedWaivers'][number];
+type ColumnType = UnusedWaiverType & { actions: unknown };
 
 const UnusedWaiversTable = ({
   unusedWaivers
 }: {
-  unusedWaivers: WaiverType[];
+  unusedWaivers: UnusedWaiverType[];
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
