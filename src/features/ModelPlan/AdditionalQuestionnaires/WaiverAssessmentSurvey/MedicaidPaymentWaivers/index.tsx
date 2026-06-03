@@ -24,6 +24,7 @@ import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import SelectedWaiversSection from '../_components/SelectedWaiversSection';
 import WaiverSurveyQuestion from '../_components/WaiverSurveyQuestion';
+import { filterSuggestedWaiversByType } from '../util';
 
 type MedicaidPaymentWaiversData =
   GetMedicaidPaymentWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
@@ -94,6 +95,11 @@ const MedicaidPaymentWaivers = () => {
   });
 
   const { id: waiverID, suggestedWaivers, ...formData } = mappedFormData;
+
+  const medicaidSuggestedWaivers = filterSuggestedWaiversByType(
+    suggestedWaivers || [],
+    'MEDICAID_PAYMENT'
+  );
 
   const methods = useForm<MedicaidPaymentWaiversForm>({
     values: formData,
@@ -197,7 +203,7 @@ const MedicaidPaymentWaivers = () => {
               </div>
 
               <SelectedWaiversSection
-                selectedWaivers={suggestedWaivers || []}
+                selectedWaivers={medicaidSuggestedWaivers || []}
                 waiverType="MEDICAID_PAYMENT"
                 waiverTypeText={waiverAssessmentSurveyMiscT(
                   'medicaidPaymentWaivers.waiverTypeText'

@@ -7,7 +7,9 @@ import {
   ModelPlanQuestionsFormTypeWithLinks
 } from './_components/ModelPlanQuestionsForm';
 import { QuestionType } from './_components/ModelPlanQuestionsForm/questionMap';
+import { MedicarePaymentSuggestedWaivers } from './MedicarePaymentWaivers';
 import {
+  filterSuggestedWaiversByType,
   formattedLabel,
   formattedValue,
   getDeepChildFields,
@@ -325,5 +327,90 @@ describe('ModelPlanQuestions Utilities', () => {
       expect(deepFields).toContain('resemblesExistingModelWhyHow');
       expect(deepFields).toContain('resemblesExistingModelHow');
     });
+  });
+});
+
+describe('filterSuggestedWaiversByType', () => {
+  it('filters suggested waivers by waiver type', () => {
+    const mockSuggestedWaivers: MedicarePaymentSuggestedWaivers = [
+      {
+        __typename: 'SuggestedWaiver',
+        id: '',
+        commonWaiver: {
+          __typename: 'CommonWaiver',
+          waiverType: 'MEDICARE_PAYMENT',
+          name: 'Common Waiver 1'
+        }
+      },
+      {
+        __typename: 'SuggestedWaiver',
+        id: '',
+        commonWaiver: {
+          __typename: 'CommonWaiver',
+          waiverType: 'PROGRAM_MEDICARE_BES',
+          name: 'Common Waiver 2'
+        }
+      },
+      {
+        __typename: 'SuggestedWaiver',
+        id: '',
+        commonWaiver: {
+          __typename: 'CommonWaiver',
+          waiverType: 'MEDICAID_PAYMENT',
+          name: 'Common Waiver 3'
+        }
+      }
+    ];
+
+    const medicareWaivers = filterSuggestedWaiversByType(
+      mockSuggestedWaivers,
+      'MEDICARE_PAYMENT'
+    );
+
+    expect(medicareWaivers).toEqual([
+      {
+        __typename: 'SuggestedWaiver',
+        id: '',
+        commonWaiver: {
+          __typename: 'CommonWaiver',
+          waiverType: 'MEDICARE_PAYMENT',
+          name: 'Common Waiver 1'
+        }
+      }
+    ]);
+
+    const programWaivers = filterSuggestedWaiversByType(
+      mockSuggestedWaivers,
+      'PROGRAM_MEDICARE_BES'
+    );
+
+    expect(programWaivers).toEqual([
+      {
+        __typename: 'SuggestedWaiver',
+        id: '',
+        commonWaiver: {
+          __typename: 'CommonWaiver',
+          waiverType: 'PROGRAM_MEDICARE_BES',
+          name: 'Common Waiver 2'
+        }
+      }
+    ]);
+
+    const medicaidWaivers = filterSuggestedWaiversByType(
+      mockSuggestedWaivers,
+      'MEDICAID_PAYMENT'
+    );
+
+    expect(medicaidWaivers).toEqual([
+      {
+        __typename: 'SuggestedWaiver',
+        id: '',
+        commonWaiver: {
+          __typename: 'CommonWaiver',
+          waiverType: 'MEDICAID_PAYMENT',
+          name: 'Common Waiver 3'
+        }
+      }
+    ]);
   });
 });

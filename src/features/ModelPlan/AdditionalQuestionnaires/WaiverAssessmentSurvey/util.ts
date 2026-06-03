@@ -15,6 +15,9 @@ import {
   QuestionFieldType,
   QuestionType
 } from './_components/ModelPlanQuestionsForm/questionMap';
+import type { MedicaidPaymentSuggestedWaivers } from './MedicaidPaymentWaivers';
+import type { MedicarePaymentSuggestedWaivers } from './MedicarePaymentWaivers';
+import type { ProgramSuggestedWaivers } from './ProgramWaivers';
 
 /**
  * Maps translation config field
@@ -367,4 +370,16 @@ export const getDeepChildFields = (
   });
 
   return deepFields;
+};
+
+export const filterSuggestedWaiversByType = (
+  suggestedWaivers:
+    | MedicarePaymentSuggestedWaivers
+    | ProgramSuggestedWaivers
+    | MedicaidPaymentSuggestedWaivers,
+  waiverType: 'MEDICARE_PAYMENT' | 'MEDICAID_PAYMENT' | 'PROGRAM_MEDICARE_BES'
+) => {
+  return suggestedWaivers.filter(
+    waiver => waiver.commonWaiver.waiverType === waiverType
+  );
 };

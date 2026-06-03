@@ -21,6 +21,7 @@ export default gql(/* GraphQL */ `
             id
             commonWaiver {
               name
+              waiverType
             }
           }
         }

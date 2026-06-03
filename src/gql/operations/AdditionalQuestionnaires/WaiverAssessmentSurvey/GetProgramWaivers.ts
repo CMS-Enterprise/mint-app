@@ -11,6 +11,7 @@ export default gql(/* GraphQL */ `
             id
             commonWaiver {
               name
+              waiverType
             }
           }
           # Page 4 - Program waivers (Medicare Benefit Enhancements)

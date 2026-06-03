@@ -23,6 +23,7 @@ import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import SelectedWaiversSection from '../_components/SelectedWaiversSection';
 import WaiverSurveyQuestion from '../_components/WaiverSurveyQuestion';
+import { filterSuggestedWaiversByType } from '../util';
 
 type ProgramWaiversData =
   GetProgramWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
@@ -96,6 +97,11 @@ const ProgramWaivers = () => {
   });
 
   const { id: waiverID, suggestedWaivers, ...formData } = mappedFormData;
+
+  const programSuggestedWaivers = filterSuggestedWaiversByType(
+    suggestedWaivers || [],
+    'PROGRAM_MEDICARE_BES'
+  );
 
   const methods = useForm<ProgramWaiversForm>({
     values: formData,
@@ -197,7 +203,7 @@ const ProgramWaivers = () => {
               </div>
 
               <SelectedWaiversSection
-                selectedWaivers={suggestedWaivers || []}
+                selectedWaivers={programSuggestedWaivers || []}
                 waiverType="PROGRAM_MEDICARE_BES"
                 waiverTypeText={waiverAssessmentSurveyMiscT(
                   'programWaivers.waiverTypeText'
