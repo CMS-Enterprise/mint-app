@@ -70,6 +70,12 @@ const testData: waiverAssessmentSurveyType = {
   ]
 };
 
+const WAIVER_HEADINGS = [
+  'medicarePaymentWaivers',
+  'programWaivers',
+  'medicaidPaymentWaivers'
+] as const;
+
 const WaiverSelectionAndConfirmation = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
@@ -153,10 +159,14 @@ const WaiverSelectionAndConfirmation = () => {
             <Fieldset>
               <ConfirmLeaveRHF />
 
-              <WaiverSelectionSection
-                //       waivers={data.modelPlan.questionnaires.waiverAssessmentSurvey}
-                waivers={testData}
-              />
+              {WAIVER_HEADINGS.map(waiverHeading => (
+                <WaiverSelectionSection
+                  key={waiverHeading}
+                  waiverHeading={waiverHeading}
+                  //        waivers={data.modelPlan.questionnaires.waiverAssessmentSurvey}
+                  waivers={testData}
+                />
+              ))}
 
               <FormFooter
                 id="waiver-assessment-survey-waiver-selection-and-confirmation-form"

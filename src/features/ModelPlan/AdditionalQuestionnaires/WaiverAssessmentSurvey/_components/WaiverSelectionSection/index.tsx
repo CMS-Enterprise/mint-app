@@ -6,8 +6,10 @@ import { waiverAssessmentSurveyType } from '../../WaiverSelectionAndConfirmation
 import UnusedWaiversTable from '../UnusedWaiversTable';
 
 const WaiverSelectionSection = ({
+  waiverHeading,
   waivers
 }: {
+  waiverHeading: string;
   waivers: waiverAssessmentSurveyType;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -15,9 +17,9 @@ const WaiverSelectionSection = ({
   );
 
   return (
-    <div className="margin-bottom-6">
+    <div className="margin-bottom-5">
       <h3 className="margin-top-0 margin-bottom-3">
-        {waiverAssessmentSurveyMiscT('medicarePaymentWaivers.heading')}
+        {waiverAssessmentSurveyMiscT(`${waiverHeading}.heading`)}
       </h3>
 
       <div className="margin-bottom-4">
