@@ -17,8 +17,8 @@ auth:apikey {
 }
 
 body:graphql {
-  mutation adminUpdateCTATRequest($input: CTATAdminUpdateInput!) {
-    adminUpdateCTATRequest(input: $input) {
+  mutation adminUpdateCTATRequest($id: UUID!, $changes: CTATAdminUpdateInput!) {
+    adminUpdateCTATRequest(id: $id, changes: $changes) {
       id
       humanReadableID
       humanReadableIDNumber
@@ -184,8 +184,8 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "input": {
-      "id": "{{ctatRequestID}}",
+    "id": "{{ctatRequestID}}",
+    "changes": {
       "status": "ASSIGNED",
       "assignedAdmin": "ADMI",
       "notes": "Assigned to CTAT admin through Bruno example request."

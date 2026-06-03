@@ -273,7 +273,6 @@ export enum CmsCenter {
 /** Input for an admin update to a CTAT request. */
 export type CtatAdminUpdateInput = {
   assignedAdmin?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['UUID']['input'];
   notes?: InputMaybe<Scalars['String']['input']>;
   resolution?: InputMaybe<Scalars['String']['input']>;
   status?: InputMaybe<CtatStatus>;
@@ -2443,7 +2442,8 @@ export type MutationAddPlanFavoriteArgs = {
 
 /** Mutations definition for the schema */
 export type MutationAdminUpdateCtatRequestArgs = {
-  input: CtatAdminUpdateInput;
+  changes: CtatAdminUpdateInput;
+  id: Scalars['UUID']['input'];
 };
 
 

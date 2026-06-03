@@ -35,6 +35,59 @@ func CTATRequestGetByID(ctx context.Context, id uuid.UUID, _ *storage.Store) (*m
 	return loaders.CTATRequest.GetByID.Load(ctx, id)
 }
 
+// CTATRequestAdminUpdate implements resolver logic to update admin-managed CTAT request fields.
+func CTATRequestAdminUpdate(
+	ctx context.Context,
+	logger *zap.Logger,
+	id uuid.UUID,
+	changes map[string]any,
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.CTATRequest, error) {
+	if !principal.AllowASSESSMENT() {
+		return nil, fmt.Errorf("user does not have permission to update admin CTAT requests")
+	}
+
+	existing, err := CTATRequestGetByID(ctx, id, store)
+	if err != nil {
+		return nil, err
+	}
+
+	if existing == nil {
+		return nil, fmt.Errorf("ctat request with id %s not found", id)
+	}
+
+	if rawAssignedAdmin, ok := changes["assignedAdmin"]; ok {
+		assignedAdminUsername, ok := rawAssignedAdmin.(*string)
+		if !ok {
+			return nil, fmt.Errorf("assignedAdmin must be a string")
+		}
+
+		if assignedAdminUsername == nil {
+			changes["assignedAdmin"] = nil
+		} else {
+			assignedAdminAccount, err := UserAccountGetByUsername(logger, store, *assignedAdminUsername)
+			if err != nil {
+				return nil, err
+			}
+
+			if assignedAdminAccount == nil {
+				return nil, fmt.Errorf("user account not found for username %s", *assignedAdminUsername)
+			}
+
+			assignedAdminID := assignedAdminAccount.ID
+			changes["assignedAdmin"] = &assignedAdminID
+		}
+	}
+
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, false)
+	if err != nil {
+		return nil, err
+	}
+
+	return storage.CTATRequestAdminUpdate(store, existing)
+}
+
 // CTATRequestDocumentGetByCTATRequestIDLOADER resolves CTAT request documents by CTAT request ID using a data loader.
 func CTATRequestDocumentGetByCTATRequestIDLOADER(ctx context.Context, ctatRequestID uuid.UUID) ([]*models.CTATRequestDocument, error) {
 	documents, err := loaders.CTATRequestDocument.ByCTATRequestID.Load(ctx, ctatRequestID)

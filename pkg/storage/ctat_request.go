@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/lib/pq"
@@ -27,6 +28,24 @@ func CTATRequestCreate(np sqlutils.NamedPreparer, request *models.CTATRequest) (
 	}
 
 	return createdRequest, nil
+}
+
+// CTATRequestAdminUpdate updates admin-managed CTAT request fields.
+func CTATRequestAdminUpdate(np sqlutils.NamedPreparer, request *models.CTATRequest) (*models.CTATRequest, error) {
+	if request == nil {
+		return nil, errors.New("ctat request cannot be nil")
+	}
+
+	if request.ID == uuid.Nil {
+		return nil, errors.New("ctat request ID cannot be nil")
+	}
+
+	updatedRequest, procErr := sqlutils.GetProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.AdminUpdate, request)
+	if procErr != nil {
+		return nil, fmt.Errorf("issue updating CTAT request: %w", procErr)
+	}
+
+	return updatedRequest, nil
 }
 
 // CTATRequestGetByIDLOADER returns CTAT requests for the supplied request IDs.
