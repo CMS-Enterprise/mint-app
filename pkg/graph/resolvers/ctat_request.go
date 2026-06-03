@@ -30,6 +30,11 @@ func CTATRequestCollectionGetForAdmin(ctx context.Context, store *storage.Store)
 	return storage.CTATRequestCollectionGetForAdmin(store)
 }
 
+// CTATRequestGetByID implements resolver logic to get a CTAT request by ID.
+func CTATRequestGetByID(ctx context.Context, id uuid.UUID, _ *storage.Store) (*models.CTATRequest, error) {
+	return loaders.CTATRequest.GetByID.Load(ctx, id)
+}
+
 // CTATRequestDocumentGetByCTATRequestIDLOADER resolves CTAT request documents by CTAT request ID using a data loader.
 func CTATRequestDocumentGetByCTATRequestIDLOADER(ctx context.Context, ctatRequestID uuid.UUID) ([]*models.CTATRequestDocument, error) {
 	documents, err := loaders.CTATRequestDocument.ByCTATRequestID.Load(ctx, ctatRequestID)

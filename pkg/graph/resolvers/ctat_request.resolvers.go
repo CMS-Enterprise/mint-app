@@ -15,7 +15,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // Notes is the resolver for the notes field.
@@ -93,7 +92,7 @@ func (r *mutationResolver) AdminUpdateCTATRequest(ctx context.Context, input map
 
 // CtatRequest is the resolver for the ctatRequest field.
 func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error) {
-	return loaders.CTATRequest.GetByID.Load(ctx, id)
+	return CTATRequestGetByID(ctx, id, r.store)
 }
 
 // CtatRequestsRequester is the resolver for the ctatRequestsRequester field.
