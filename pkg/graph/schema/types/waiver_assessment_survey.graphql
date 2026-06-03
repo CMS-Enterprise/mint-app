@@ -90,29 +90,6 @@ type WaiverAssessmentSurvey {
 }
 
 """
-CommonWaiver represents a waiver type in the CMMI waiver library.
-"""
-type CommonWaiver {
-  id: UUID!
-  name: String!
-  description: String
-  participationAgreementLanguageLink: String
-  cmmiWaiverPointOfContact: String
-  waiverType: String
-  waiverFocus: String
-  whatIsWaived: String
-  hasStandardizationEffort: Boolean
-  hasClaimsDataOrRREGAnalysis: String
-  isUsedInActiveModels: Boolean
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
 Waiver represents a model plan's decision on whether to use a specific waiver.
 """
 type Waiver {

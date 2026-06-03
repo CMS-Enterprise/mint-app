@@ -7,10 +7,39 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// WillUseWaiver is the resolver for the willUseWaiver field.
+func (r *commonWaiverResolver) WillUseWaiver(ctx context.Context, obj *models.CommonWaiver) (*bool, error) {
+	// TODO: this is a stub. Implement this.
+	return new(bool), nil
+	// panic(fmt.Errorf("not implemented: WillUseWaiver - willUseWaiver"))
+}
+
+// IsAnswered is the resolver for the isAnswered field.
+func (r *commonWaiverResolver) IsAnswered(ctx context.Context, obj *models.CommonWaiver) (bool, error) {
+	return false, nil
+	// TODO: this is a stub. Implement this.
+	// panic(fmt.Errorf("not implemented: IsAnswered - isAnswered"))
+}
+
+// IsSuggested is the resolver for the isSuggested field.
+func (r *commonWaiverResolver) IsSuggested(ctx context.Context, obj *models.CommonWaiver, modelPlanID *uuid.UUID) (bool, error) {
+	// TODO: this is a stub. Implement this.
+	return false, nil
+	// panic(fmt.Errorf("not implemented: IsSuggested - isSuggested"))
+}
 
 // CommonWaivers is the resolver for the commonWaivers field.
 func (r *queryResolver) CommonWaivers(ctx context.Context) ([]*models.CommonWaiver, error) {
 	return GetAllCommonWaivers(ctx)
 }
+
+// CommonWaiver returns generated.CommonWaiverResolver implementation.
+func (r *Resolver) CommonWaiver() generated.CommonWaiverResolver { return &commonWaiverResolver{r} }
+
+type commonWaiverResolver struct{ *Resolver }

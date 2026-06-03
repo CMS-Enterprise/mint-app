@@ -312,6 +312,13 @@ export type CommonWaiver = {
   hasClaimsDataOrRREGAnalysis?: Maybe<Scalars['String']['output']>;
   hasStandardizationEffort?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['UUID']['output'];
+  /** Returns if a model plan has answered if the waiver will be used or not. */
+  isAnswered: Scalars['Boolean']['output'];
+  /**
+   * To represent if this Common Waiver is _suggested_ for the Model Plan based on waiver assessment survey answers.
+   * This will automatically return false if it is not in the context of a model plan
+   */
+  isSuggested: Scalars['Boolean']['output'];
   isUsedInActiveModels?: Maybe<Scalars['Boolean']['output']>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -321,6 +328,17 @@ export type CommonWaiver = {
   waiverFocus?: Maybe<Scalars['String']['output']>;
   waiverType?: Maybe<Scalars['String']['output']>;
   whatIsWaived?: Maybe<Scalars['String']['output']>;
+  /**
+   * To represent if this Common Waiver is _already_ answered for the Model Plan.
+   * This will display null when not in the context of a model plan (eg fetched by key instead of model plan id), true when the model plan has indicated it will use the waiver, and false when the model plan has indicated it will not use the waiver.
+   */
+  willUseWaiver?: Maybe<Scalars['Boolean']['output']>;
+};
+
+
+/** CommonWaiver represents a waiver type in the CMMI waiver library. */
+export type CommonWaiverIsSuggestedArgs = {
+  modelPlanID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 export enum ComplexityCalculationLevelType {
