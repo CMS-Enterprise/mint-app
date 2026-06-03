@@ -1,3 +1,7 @@
+WITH QUERIED_IDS AS (
+    SELECT UNNEST(CAST(:ctat_request_ids AS UUID[])) AS id
+)
+
 SELECT
     ctat_request.id,
     ctat_request.human_readable_id_number,
@@ -26,4 +30,5 @@ SELECT
     ctat_request.modified_by,
     ctat_request.modified_dts
 FROM ctat_request
-WHERE ctat_request.id = :id;
+INNER JOIN QUERIED_IDS
+    ON ctat_request.id = QUERIED_IDS.id;

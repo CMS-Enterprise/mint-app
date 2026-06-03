@@ -69,6 +69,43 @@ func (suite *ResolverSuite) TestCTATRequestByRequesterIDLoader() {
 	)
 }
 
+func (suite *ResolverSuite) TestCTATRequestByIDLoader() {
+	requestA := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
+		"Requester A contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusNew,
+	)
+	requestB := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 10, 10, 0, 0, 0, time.UTC),
+		"Requester B contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRfq},
+		models.CTATStatusAssigned,
+	)
+
+	expectedResults := []loaders.KeyAndExpected[uuid.UUID, uuid.UUID]{
+		{Key: requestA.ID, Expected: requestA.ID},
+		{Key: requestB.ID, Expected: requestB.ID},
+	}
+
+	verifyFunc := func(data *models.CTATRequest, expected uuid.UUID) bool {
+		if suite.NotNil(data) {
+			return suite.Equal(expected, data.ID)
+		}
+		return false
+	}
+
+	loaders.VerifyLoaders[uuid.UUID, *models.CTATRequest, uuid.UUID](
+		suite.testConfigs.Context,
+		&suite.Suite,
+		loaders.CTATRequest.GetByID,
+		expectedResults,
+		verifyFunc,
+	)
+}
+
 func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	suite.True(adminPrincipal.AllowASSESSMENT())

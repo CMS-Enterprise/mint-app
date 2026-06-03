@@ -235,7 +235,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	_ = secondDocument
 }
 
-func (s *StoreTestSuite) TestCTATRequestGetByIDReturnsExpectedRow() {
+func (s *StoreTestSuite) TestCTATRequestGetByIDLOADERReturnsExpectedRow() {
 	tx, err := s.store.Beginx()
 	s.Require().NoError(err)
 	defer tx.Rollback()
@@ -262,8 +262,11 @@ func (s *StoreTestSuite) TestCTATRequestGetByIDReturnsExpectedRow() {
 		models.CTATStatusAssigned,
 	)
 
-	row, err := CTATRequestGetByID(tx, expected.ID)
+	rows, err := CTATRequestGetByIDLOADER(tx, []uuid.UUID{expected.ID})
 	s.Require().NoError(err)
+	s.Require().Len(rows, 1)
+
+	row := rows[0]
 	s.Require().NotNil(row)
 
 	s.Equal(expected.ID, row.ID)

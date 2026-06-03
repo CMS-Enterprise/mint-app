@@ -29,16 +29,18 @@ func CTATRequestCreate(np sqlutils.NamedPreparer, request *models.CTATRequest) (
 	return createdRequest, nil
 }
 
-// CTATRequestGetByID returns a CTAT request by ID.
-func CTATRequestGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*models.CTATRequest, error) {
-	request, err := sqlutils.GetProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.GetByID, map[string]any{
-		"id": id,
-	})
+// CTATRequestGetByIDLOADER returns CTAT requests for the supplied request IDs.
+func CTATRequestGetByIDLOADER(np sqlutils.NamedPreparer, ids []uuid.UUID) ([]*models.CTATRequest, error) {
+	args := map[string]any{
+		"ctat_request_ids": pq.Array(ids),
+	}
+
+	requests, err := sqlutils.SelectProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.GetByIDLoader, args)
 	if err != nil {
 		return nil, err
 	}
 
-	return request, nil
+	return requests, nil
 }
 
 // CTATRequestGetByRequesterIDLOADER returns CTAT requests for the supplied requester IDs.
@@ -47,7 +49,7 @@ func CTATRequestGetByRequesterIDLOADER(np sqlutils.NamedPreparer, requesterIDs [
 		"requester_ids": pq.Array(requesterIDs),
 	}
 
-	requests, err := sqlutils.SelectProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.GetByRequesterID, args)
+	requests, err := sqlutils.SelectProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.GetByRequesterIDLoader, args)
 	if err != nil {
 		return nil, err
 	}

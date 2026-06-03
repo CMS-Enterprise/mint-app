@@ -5,10 +5,10 @@ import (
 )
 
 //go:embed SQL/ctat_request/get_by_requester_id_LOADER.sql
-var ctatRequestsByRequesterIDSQL string
+var ctatRequestsByRequesterIDLoaderSQL string
 
-//go:embed SQL/ctat_request/get_by_id.sql
-var ctatRequestByIDSQL string
+//go:embed SQL/ctat_request/get_by_id_LOADER.sql
+var ctatRequestByIDLoaderSQL string
 
 //go:embed SQL/ctat_request/get_for_admin.sql
 var ctatRequestsForAdminSQL string
@@ -17,15 +17,15 @@ var ctatRequestsForAdminSQL string
 var ctatRequestCreateSQL string
 
 type ctatRequestScripts struct {
-	GetByID          string
-	GetByRequesterID string
-	GetForAdmin      string
-	Create           string
+	GetByIDLoader          string
+	GetByRequesterIDLoader string
+	GetForAdmin            string
+	Create                 string
 }
 
 var CTATRequest = ctatRequestScripts{
-	GetByID:          ctatRequestByIDSQL,
-	GetByRequesterID: ctatRequestsByRequesterIDSQL,
-	GetForAdmin:      ctatRequestsForAdminSQL,
-	Create:           ctatRequestCreateSQL,
+	GetByIDLoader:          ctatRequestByIDLoaderSQL,
+	GetByRequesterIDLoader: ctatRequestsByRequesterIDLoaderSQL,
+	GetForAdmin:            ctatRequestsForAdminSQL,
+	Create:                 ctatRequestCreateSQL,
 }
