@@ -23,53 +23,6 @@ import WaiverSelectionSection from '../_components/WaiverSelectionSection';
 export type waiverAssessmentSurveyType =
   GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
-const testData: waiverAssessmentSurveyType = {
-  __typename: 'WaiverAssessmentSurvey',
-  waivers: [
-    {
-      __typename: 'Waiver',
-      id: '123',
-      commonWaiverID: '456',
-      willUseWaiver: true,
-      notUsingReason: null,
-      commonWaiver: {
-        __typename: 'CommonWaiver',
-        id: '789',
-        name: 'Sample Waiver',
-        waiverType: null,
-        waiverFocus: null
-      }
-    },
-    {
-      __typename: 'Waiver',
-      id: '124',
-      commonWaiverID: '457',
-      willUseWaiver: false,
-      notUsingReason: null,
-      commonWaiver: {
-        __typename: 'CommonWaiver',
-        id: '790',
-        name: 'Sample Waiver 2',
-        waiverType: null,
-        waiverFocus: null
-      }
-    }
-  ],
-  suggestedWaivers: [
-    {
-      __typename: 'SuggestedWaiver',
-      id: '125',
-      commonWaiverID: '458',
-      commonWaiver: {
-        __typename: 'CommonWaiver',
-        id: '791',
-        name: 'Sample Suggested Waiver',
-        waiverType: null
-      }
-    }
-  ]
-};
-
 const WAIVER_HEADINGS = [
   'medicarePaymentWaivers',
   'programWaivers',
@@ -163,8 +116,7 @@ const WaiverSelectionAndConfirmation = () => {
                 <WaiverSelectionSection
                   key={waiverHeading}
                   waiverHeading={waiverHeading}
-                  //        waivers={data.modelPlan.questionnaires.waiverAssessmentSurvey}
-                  waivers={testData}
+                  waivers={data.modelPlan.questionnaires.waiverAssessmentSurvey}
                 />
               ))}
 
