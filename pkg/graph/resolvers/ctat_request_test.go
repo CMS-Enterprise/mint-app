@@ -296,6 +296,58 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
 	suite.Equal(zero.StringFrom(resolution), rows[0].Resolution)
 }
 
+func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForUnknownAssignedAdminUsername() {
+	request := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 11, 12, 0, 0, 0, time.UTC),
+		"Admin unknown user contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusNew,
+	)
+
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+
+	assignedAdmin := "NOT_A_REAL_EUA"
+
+	resolver := &mutationResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+		"assignedAdmin": &assignedAdmin,
+	})
+	suite.Nil(resp)
+	suite.ErrorContains(err, "user account not found for username NOT_A_REAL_EUA")
+}
+
+func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForWrongNotesType() {
+	request := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 11, 13, 0, 0, 0, time.UTC),
+		"Admin wrong notes type contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusNew,
+	)
+
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+
+	resolver := &mutationResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+		"notes": 123,
+	})
+	suite.Nil(resp)
+	suite.ErrorContains(err, "notes must be a string")
+}
+
 func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,

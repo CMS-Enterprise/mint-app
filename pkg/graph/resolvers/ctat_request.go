@@ -57,6 +57,17 @@ func CTATRequestAdminUpdate(
 		return nil, fmt.Errorf("ctat request with id %s not found", id)
 	}
 
+	if rawStatus, ok := changes["status"]; ok {
+		status, ok := rawStatus.(*models.CTATStatus)
+		if !ok {
+			return nil, fmt.Errorf("status must be a CTATStatus")
+		}
+
+		if status != nil {
+			existing.Status = *status
+		}
+	}
+
 	if rawAssignedAdmin, ok := changes["assignedAdmin"]; ok {
 		assignedAdminUsername, ok := rawAssignedAdmin.(*string)
 		if !ok {
@@ -64,7 +75,7 @@ func CTATRequestAdminUpdate(
 		}
 
 		if assignedAdminUsername == nil {
-			changes["assignedAdmin"] = nil
+			existing.AssignedAdmin = nil
 		} else {
 			assignedAdminAccount, err := UserAccountGetByUsername(logger, store, *assignedAdminUsername)
 			if err != nil {
@@ -76,11 +87,29 @@ func CTATRequestAdminUpdate(
 			}
 
 			assignedAdminID := assignedAdminAccount.ID
-			changes["assignedAdmin"] = &assignedAdminID
+			existing.AssignedAdmin = &assignedAdminID
 		}
 	}
 
-	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, false)
+	if rawNotes, ok := changes["notes"]; ok {
+		notes, ok := rawNotes.(*string)
+		if !ok {
+			return nil, fmt.Errorf("notes must be a string")
+		}
+
+		existing.Notes = zero.StringFromPtr(notes)
+	}
+
+	if rawResolution, ok := changes["resolution"]; ok {
+		resolution, ok := rawResolution.(*string)
+		if !ok {
+			return nil, fmt.Errorf("resolution must be a string")
+		}
+
+		existing.Resolution = zero.StringFromPtr(resolution)
+	}
+
+	err = BaseStructPreUpdate(logger, existing, nil, principal, store, false, false)
 	if err != nil {
 		return nil, err
 	}
