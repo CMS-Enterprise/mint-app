@@ -1,0 +1,199 @@
+meta {
+  name: Admin Update CTAT Request
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation adminUpdateCTATRequest($input: CTATAdminUpdateInput!) {
+    adminUpdateCTATRequest(input: $input) {
+      id
+      humanReadableID
+      humanReadableIDNumber
+      requester
+      requesterUserAccount {
+        id
+        username
+        isEUAID
+        commonName
+        locale
+        email
+        givenName
+        familyName
+        zoneInfo
+        hasLoggedIn
+      }
+      status
+      assignedAdmin
+      assignedAdminUserAccount {
+        id
+        username
+        isEUAID
+        commonName
+        locale
+        email
+        givenName
+        familyName
+        zoneInfo
+        hasLoggedIn
+      }
+      notes
+      resolution
+      cmmiGroup
+      cmmiGroupOther
+      cmmiDivision
+      cmmiDivisionOther
+      relatedMINTModels {
+        id
+        modelName
+        abbreviation
+        archived
+        createdBy
+        createdByUserAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
+        createdDts
+        modifiedBy
+        modifiedByUserAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
+        modifiedDts
+        status
+        taskListStatus
+        suggestedPhase {
+          phase
+          suggestedStatuses
+        }
+        previousSuggestedPhase
+        isFavorite
+        isCollaborator
+      }
+      contractActivityType
+      contractActivityTypeOther
+      contractName
+      contractNumber
+      contractType
+      contractTypeOther
+      typeOfHelpNeeded
+      typeOfHelpNeededOther
+      describeHelpNeeded
+      requestUrgency
+      dateAssistanceNeededBy
+      supportingDocuments {
+        id
+        ctatRequestId
+        url
+        fileType
+        bucket
+        fileKey
+        virusScanned
+        virusClean
+        restricted
+        fileName
+        fileSize
+        createdBy
+        createdByUserAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
+        createdDts
+        modifiedBy
+        modifiedByUserAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
+        modifiedDts
+      }
+      createdBy
+      createdByUserAccount {
+        id
+        username
+        isEUAID
+        commonName
+        locale
+        email
+        givenName
+        familyName
+        zoneInfo
+        hasLoggedIn
+      }
+      createdDts
+      modifiedBy
+      modifiedByUserAccount {
+        id
+        username
+        isEUAID
+        commonName
+        locale
+        email
+        givenName
+        familyName
+        zoneInfo
+        hasLoggedIn
+      }
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "input": {
+      "id": "{{ctatRequestID}}",
+      "status": "ASSIGNED",
+      "assignedAdmin": "ADMI",
+      "notes": "Assigned to CTAT admin through Bruno example request."
+    }
+  }
+}
+
+vars:pre-request {
+  EUAID: ADMI
+  jobCodes: ["MINT_ASSESSMENT_NONPROD"]
+}
