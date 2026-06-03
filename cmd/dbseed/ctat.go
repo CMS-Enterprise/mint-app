@@ -18,6 +18,7 @@ import (
 )
 
 type ctatRequestSeedInput struct {
+	RequestID                 *uuid.UUID
 	Requester                 *authentication.ApplicationPrincipal
 	AssignedAdmin             *authentication.ApplicationPrincipal
 	Status                    models.CTATStatus
@@ -51,6 +52,8 @@ type ctatRequestDocumentSeedInput struct {
 	Scanned     bool
 	VirusFound  bool
 }
+
+var seededCTATRequestID = uuid.MustParse("00000000-0000-0000-0000-000000000021")
 
 func (s *Seeder) seedCTATRequests(
 	now time.Time,
@@ -86,6 +89,7 @@ func (s *Seeder) seedCTATRequests(
 	costPlusFixedFee := models.CTATContractTypeCostPlusFixedFee
 
 	s.createCTATRequest(ctatRequestSeedInput{
+		RequestID:              &seededCTATRequestID,
 		Requester:              requesterBTAL,
 		Status:                 models.CTATStatusNew,
 		CMMIGroup:              models.CTATCMMIGroupOptionBSG,
@@ -354,6 +358,9 @@ func (s *Seeder) createCTATRequest(input ctatRequestSeedInput) *models.CTATReque
 	}
 
 	requestID := uuid.New()
+	if input.RequestID != nil {
+		requestID = *input.RequestID
+	}
 	helpNeeded := models.EnumArray[models.CTATHelpNeededType](input.TypeOfHelpNeeded)
 	var assignedAdminID *uuid.UUID
 	if input.AssignedAdmin != nil && input.AssignedAdmin.UserAccount != nil {
