@@ -37,6 +37,7 @@ export const modelSectionRouteKey: string[] = [
   'documents',
   'crs-and-tdl',
   'data-exchange-approach',
+  'waiver-assessment-survey',
   'iddoc-questionnaire'
 ];
 

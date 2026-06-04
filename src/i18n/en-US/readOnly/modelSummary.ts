@@ -31,6 +31,7 @@ const modelSummary = {
     documents: 'Documents',
     'crs-and-tdl': 'FFS CRs and TDLs',
     'data-exchange-approach': 'Data exchange approach',
+    'waiver-assessment-survey': 'Waiver assessment survey',
     'iddoc-questionnaire': '4i and ACO-OS'
   },
   more: ' more'
