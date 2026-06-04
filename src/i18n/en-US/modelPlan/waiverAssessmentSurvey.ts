@@ -600,7 +600,12 @@ const waiverAssessmentSurveyMisc = {
       viewDetails: 'Learn more about this waiver'
     }
   },
-  modelHasNotSelectedWaiver: 'This model has not yet selected any waivers.'
+  modelHasNotSelectedWaiver: 'This model has not yet selected any waivers.',
+  waiverType: {
+    MEDICARE_PAYMENT: 'Medicare payment waivers',
+    PROGRAM_MEDICARE_BES: 'Program waivers - Medicare BEs',
+    MEDICAID_PAYMENT: 'Medicaid payment waivers'
+  }
 };
 
 export { waiverAssessmentSurvey, waiverAssessmentSurveyMisc };

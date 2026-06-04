@@ -80,7 +80,9 @@ const SelectedWaiversTable = ({
         Header: waiverAssessmentSurveyMiscT(
           'selectedWaivers.readonlyColumns.waiverCategory'
         ),
-        accessor: row => row.commonWaiver.waiverType
+        accessor: row => row.commonWaiver.waiverType,
+        Cell: ({ value }: { value: string }) =>
+          waiverAssessmentSurveyMiscT(`waiverType.${value}`)
       },
       {
         Header: waiverAssessmentSurveyMiscT(
