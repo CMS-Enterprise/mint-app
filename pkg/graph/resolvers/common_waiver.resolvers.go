@@ -14,5 +14,5 @@ import (
 
 // CommonWaivers is the resolver for the commonWaivers field.
 func (r *queryResolver) CommonWaivers(ctx context.Context, modelPlanID *uuid.UUID) ([]*models.CommonWaiver, error) {
-	return GetAllCommonWaivers(ctx, modelPlanID)
+	return GetAllCommonWaiversByModelPlanID(ctx, modelPlanID)
 }

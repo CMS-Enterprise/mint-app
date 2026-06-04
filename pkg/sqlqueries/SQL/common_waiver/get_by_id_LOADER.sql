@@ -24,6 +24,6 @@ SELECT
     CAST(NULL AS UUID) AS model_plan_id,
     CAST(NULL AS BOOLEAN) AS will_use_waiver,
     NULL AS not_using_reason,
-    CAST(NULL AS UUID) AS mto_suggested_milestone_id
+    CAST(NULL AS UUID) AS suggested_waiver_id
 FROM common_waiver AS cw
 INNER JOIN QUERIED_IDS ON cw.id = QUERIED_IDS.id
