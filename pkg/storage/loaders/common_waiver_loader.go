@@ -16,13 +16,14 @@ type commonWaiverLoaders struct {
 	// ByID gets a CommonWaiver record by the supplied ID
 	ByID LoaderWrapper[uuid.UUID, *models.CommonWaiver]
 
-	// GetAll gets all CommonWaiver records
-	GetAll LoaderWrapper[*uuid.UUID, []*models.CommonWaiver]
+	// GetAllByModelPlanID gets all CommonWaiver records by the optional model_plan_ID.
+	// if model plan id is not provided, it will return the records without the contextual information.
+	GetAllByModelPlanID LoaderWrapper[uuid.UUID, []*models.CommonWaiver]
 }
 
 var CommonWaiver = &commonWaiverLoaders{
-	ByID:   NewLoaderWrapper(batchCommonWaiverByID),
-	GetAll: NewLoaderWrapper(batchCommonWaiverGetAll),
+	ByID:                NewLoaderWrapper(batchCommonWaiverByID),
+	GetAllByModelPlanID: NewLoaderWrapper(batchCommonWaiverGetByModelPlanIDAll),
 }
 
 func batchCommonWaiverByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.CommonWaiver] {
@@ -42,25 +43,29 @@ func batchCommonWaiverByID(ctx context.Context, ids []uuid.UUID) []*dataloader.R
 	return oneToOneDataLoader(ids, data, getKeyFunc)
 }
 
-func batchCommonWaiverGetAll(ctx context.Context, ids []*uuid.UUID) []*dataloader.Result[[]*models.CommonWaiver] {
+func batchCommonWaiverGetByModelPlanIDAll(ctx context.Context, modelPlanIDs []uuid.UUID) []*dataloader.Result[[]*models.CommonWaiver] {
 	loaders, err := Loaders(ctx)
 
 	if err != nil {
-		return errorPerEachKey[*uuid.UUID, []*models.CommonWaiver](ids, err)
+		return errorPerEachKey[uuid.UUID, []*models.CommonWaiver](modelPlanIDs, err)
 	}
 
 	logger := appcontext.ZLogger(ctx)
 
 	// TODO: this needs to be updated to actually verify by model_plan_id
-	data, err := storage.CommonWaiverGetAll(loaders.DataReader.Store, logger)
+	data, err := storage.CommonWaiverGetByModelPlanIDLoader(loaders.DataReader.Store, logger, modelPlanIDs)
 	if err != nil {
-		return errorPerEachKey[*uuid.UUID, []*models.CommonWaiver](ids, err)
+		return errorPerEachKey[uuid.UUID, []*models.CommonWaiver](modelPlanIDs, err)
 	}
 
-	// Since this is "get all", every key gets the same result
-	results := make([]*dataloader.Result[[]*models.CommonWaiver], len(ids))
-	for i := range ids {
-		results[i] = &dataloader.Result[[]*models.CommonWaiver]{Data: data}
+	getKeyFunc := func(data *models.CommonWaiver) uuid.UUID {
+		if data.ModelPlanID != nil {
+			return *data.ModelPlanID
+		}
+		// We use UUID.Nil for a nil value as a map to pointers doesn't compare the value
+		return uuid.Nil
 	}
-	return results
+	// implement one to many
+	return oneToManyDataLoader(modelPlanIDs, data, getKeyFunc)
+
 }

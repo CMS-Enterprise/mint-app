@@ -24,12 +24,21 @@ type CommonWaiver struct {
 	// They are populated via JOINs when querying in the context of a model plan.
 	ModelPlanID   *uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 	WillUseWaiver *bool      `json:"willUseWaiver" db:"will_use_waiver"`
-	IsSuggested   *bool      `json:"isSuggested" db:"is_suggested"`
+	// Not using reason froms from the waiver table. It is exposed here for convenience
+	NotUsingReason *string `json:"notUsingReason" db:"not_using_reason"`
+	// SuggestedWaiverID is the ID of the suggested_waiver row for this waiver+model plan,
+	// or nil if the waiver is not currently suggested.
+	SuggestedWaiverID *uuid.UUID `json:"suggestedWaiverID" db:"suggested_waiver_id"`
 }
 
 // IsAnswered returns true if the waiver has been answered (i.e. willUseWaiver is not nil)
 func (c CommonWaiver) IsAnswered() bool {
 	return c.WillUseWaiver != nil
+}
+
+// IsSuggested returns true if the waiver is suggested (i.e. SuggestedWaiverID is not nil)
+func (c CommonWaiver) IsSuggested() bool {
+	return c.SuggestedWaiverID != nil
 }
 
 // NewCommonWaiver returns a new CommonWaiver object

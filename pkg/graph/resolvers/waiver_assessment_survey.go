@@ -18,6 +18,10 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
+/*
+TODO: Seed suggested milestone should be moved out of this package to the seeding package.
+*/
+
 // SeedSuggestedWaivers creates a suggested_waiver row for every common_waiver, giving a
 // new model plan the full set of suggestions before any survey answers are recorded.
 func SeedSuggestedWaivers(
@@ -168,6 +172,8 @@ func WaiverAssessmentSurveyUpdate(
 			if err := UpdatePlanTaskStatusOnWaiverAssessmentStarted(tx, logger, updated.ModelPlanID, principal, store); err != nil {
 				return nil, err
 			}
+
+			// TODO: Consider moving this to the database layer so it's guaranteed to run on every update, not just those from this resolver.
 
 			if err := RecalculateSuggestedWaivers(tx, logger, updated, principal); err != nil {
 				return nil, err
