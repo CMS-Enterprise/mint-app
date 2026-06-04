@@ -176,6 +176,23 @@ exports[`ContractAssistancePage > matches snapshot 1`] = `
             >
               Contract assistance help tickets
             </caption>
+            <colgroup>
+              <col
+                style="width: 160px;"
+              />
+              <col
+                style="width: 180px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+            </colgroup>
             <thead
               class="margin-bottom-2"
             >
@@ -278,7 +295,7 @@ exports[`ContractAssistancePage > matches snapshot 1`] = `
                 </th>
                 <th
                   aria-sort="none"
-                  class="padding-left-0 padding-y-1 bg-transparent table-header contract-assistance-tickets-table__help-type-column"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -388,27 +405,27 @@ exports[`ContractAssistancePage > matches snapshot 1`] = `
                 <option
                   value="5"
                 >
-                  Show 5 
+                  Show 5 rows
                 </option>
                 <option
                   value="10"
                 >
-                  Show 10 
+                  Show 10 rows
                 </option>
                 <option
                   value="25"
                 >
-                  Show 25 
+                  Show 25 rows
                 </option>
                 <option
                   value="50"
                 >
-                  Show 50 
+                  Show 50 rows
                 </option>
                 <option
                   value="100"
                 >
-                  Show 100 
+                  Show 100 rows
                 </option>
               </select>
             </div>
@@ -445,6 +462,23 @@ exports[`ContractAssistancePage > matches snapshot 1`] = `
             >
               Your contract assistance help tickets
             </caption>
+            <colgroup>
+              <col
+                style="width: 160px;"
+              />
+              <col
+                style="width: 180px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+            </colgroup>
             <thead
               class="margin-bottom-2"
             >
@@ -547,7 +581,7 @@ exports[`ContractAssistancePage > matches snapshot 1`] = `
                 </th>
                 <th
                   aria-sort="none"
-                  class="padding-left-0 padding-y-1 bg-transparent table-header contract-assistance-tickets-table__help-type-column"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
                   colspan="1"
                   role="columnheader"
                   scope="col"
@@ -657,27 +691,27 @@ exports[`ContractAssistancePage > matches snapshot 1`] = `
                 <option
                   value="5"
                 >
-                  Show 5 
+                  Show 5 rows
                 </option>
                 <option
                   value="10"
                 >
-                  Show 10 
+                  Show 10 rows
                 </option>
                 <option
                   value="25"
                 >
-                  Show 25 
+                  Show 25 rows
                 </option>
                 <option
                   value="50"
                 >
-                  Show 50 
+                  Show 50 rows
                 </option>
                 <option
                   value="100"
                 >
-                  Show 100 
+                  Show 100 rows
                 </option>
               </select>
             </div>
