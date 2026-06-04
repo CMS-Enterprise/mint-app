@@ -36,7 +36,8 @@ describe('SelectedWaiversSection Component', () => {
           element: (
             <SelectedWaiversSection
               selectedWaivers={MOCK_SELECTED_WAIVERS}
-              waiverType="Mocked Waivers"
+              waiverType="MEDICAID_PAYMENT"
+              waiverTypeText="Mocked Waivers"
             />
           )
         }

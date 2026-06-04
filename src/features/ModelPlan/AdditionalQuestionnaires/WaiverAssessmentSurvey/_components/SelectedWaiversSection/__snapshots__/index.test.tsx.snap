@@ -13,7 +13,7 @@ exports[`SelectedWaiversSection Component > matches snapshot 1`] = `
     <p
       class="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest"
     >
-      There are 3 total available Mocked Waivers. Based on your answers to the above questions, MINT has determined that the following 2 waivers are likely needed for your model:
+      There are 1 total available Mocked Waivers. Based on your answers to the above questions, MINT has determined that the following 2 waivers are likely needed for your model:
     </p>
     <div
       class="margin-bottom-2"

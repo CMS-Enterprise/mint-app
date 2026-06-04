@@ -5,21 +5,33 @@ import { useGetAllCommonWaiversQuery } from 'gql/generated/graphql';
 
 import Spinner from 'components/Spinner';
 
-import { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
-import { ProgramSuggestedWaivers } from '../../ProgramWaivers';
+import type { MedicaidPaymentSuggestedWaivers } from '../../MedicaidPaymentWaivers';
+import type { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
+import type { ProgramSuggestedWaivers } from '../../ProgramWaivers';
 
 const SelectedWaiversSection = ({
   selectedWaivers,
-  waiverType
+  waiverType,
+  waiverTypeText,
+  children
 }: {
-  selectedWaivers: MedicarePaymentSuggestedWaivers | ProgramSuggestedWaivers;
+  selectedWaivers:
+    | MedicarePaymentSuggestedWaivers
+    | ProgramSuggestedWaivers
+    | MedicaidPaymentSuggestedWaivers;
   waiverType: string;
+  waiverTypeText: string;
+  children?: React.ReactNode;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
 
   const { data, loading } = useGetAllCommonWaiversQuery();
+
+  const filteredCommonWaivers = data?.commonWaivers.filter(
+    waiver => waiver.waiverType === waiverType
+  );
 
   const generateSelectedWaiverList = selectedWaivers.map(
     waiver => waiver.commonWaiver.name
@@ -37,9 +49,9 @@ const SelectedWaiversSection = ({
 
       <p className="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest">
         {waiverAssessmentSurveyMiscT('selectedWaivers.description', {
-          totalWaiversCount: data?.commonWaivers?.length || 0,
+          totalWaiversCount: filteredCommonWaivers?.length || 0,
           selectedWaiversCount: selectedWaivers.length,
-          waiverType
+          waiverType: waiverTypeText
         })}
       </p>
 
@@ -63,6 +75,8 @@ const SelectedWaiversSection = ({
       <p className="line-height-sans-5 margin-y-0 text-base-darkest">
         {waiverAssessmentSurveyMiscT('selectedWaivers.summary')}
       </p>
+
+      {children}
     </div>
   );
 };
