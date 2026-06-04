@@ -19,6 +19,17 @@ type CommonWaiver struct {
 	// SurveyQuestionField is the waiver_assessment_survey DB column name that drives suggestion
 	// eligibility. Nil means always suggested. Set via migration when real waiver mapping arrives.
 	SurveyQuestionField *string `json:"surveyQuestionField" db:"survey_question_field"`
+
+	// These fields facilitate queries but are not actual columns on the mto_common_milestone table.
+	// They are populated via JOINs when querying in the context of a model plan.
+	ModelPlanID   *uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	WillUseWaiver *bool      `json:"willUseWaiver" db:"will_use_waiver"`
+	IsSuggested   *bool      `json:"isSuggested" db:"is_suggested"`
+}
+
+// IsAnswered returns true if the waiver has been answered (i.e. willUseWaiver is not nil)
+func (c CommonWaiver) IsAnswered() bool {
+	return c.WillUseWaiver != nil
 }
 
 // NewCommonWaiver returns a new CommonWaiver object
