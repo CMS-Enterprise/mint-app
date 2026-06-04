@@ -10,6 +10,7 @@ import { Alert } from 'components/Alert';
 import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
+import SelectedWaiversTable from '../_components/SelectedWaiversTable';
 import SimpleReadOnlySection from '../_components/SimpleReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -160,10 +161,14 @@ const ReadOnlyWaiverAssessmentSurvey = ({
         {waiverAssessmentSurveyMiscT('selectedWaivers.heading')}
       </h3>
 
-      {allWaiverAssessmentSurveyData.waivers.length === 0 && (
+      {allWaiverAssessmentSurveyData.waivers.length === 0 ? (
         <Alert type="info" slim className="margin-bottom-6">
           {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
         </Alert>
+      ) : (
+        <SelectedWaiversTable
+          selectedWaivers={allWaiverAssessmentSurveyData.waivers}
+        />
       )}
 
       {Object.keys(surveyQuestionsConfig).map((waiverSurvey, index) => {

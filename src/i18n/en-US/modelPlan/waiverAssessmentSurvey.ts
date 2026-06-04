@@ -592,7 +592,13 @@ const waiverAssessmentSurveyMisc = {
     description:
       'There are {{-totalWaiversCount}} total available {{-waiverType}}. Based on your answers to the above questions, MINT has determined that the following {{-selectedWaiversCount}} waivers are likely needed for your model:',
     summary:
-      'Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.'
+      'Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.',
+    readonlyColumns: {
+      waiverName: 'Waiver name',
+      waiverCategory: 'Waiver category',
+      actions: 'Actions',
+      viewDetails: 'Learn more about this waiver'
+    }
   },
   modelHasNotSelectedWaiver: 'This model has not yet selected any waivers.'
 };
