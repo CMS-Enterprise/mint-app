@@ -60,6 +60,9 @@ const contractAssistance = {
     table: {
       caption: 'Your contract assistance help tickets'
     }
+  },
+  ctatSidePanel: {
+    heading: 'Contract assistance ticket'
   }
 };
 
