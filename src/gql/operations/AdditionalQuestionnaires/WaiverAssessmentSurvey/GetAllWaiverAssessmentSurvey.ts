@@ -66,6 +66,8 @@ export default gql(/* GraphQL */ `
           createdDts
           waivers {
             id
+            willUseWaiver
+            notUsingReason
             commonWaiver {
               name
               waiverType
