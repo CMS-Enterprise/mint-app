@@ -20,11 +20,11 @@ type CommonWaiver struct {
 	// eligibility. Nil means always suggested. Set via migration when real waiver mapping arrives.
 	SurveyQuestionField *string `json:"surveyQuestionField" db:"survey_question_field"`
 
-	// These fields facilitate queries but are not actual columns on the mto_common_milestone table.
+	// These fields facilitate queries but are not actual columns on the common_waiver table.
 	// They are populated via JOINs when querying in the context of a model plan.
 	ModelPlanID   *uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 	WillUseWaiver *bool      `json:"willUseWaiver" db:"will_use_waiver"`
-	// Not using reason froms from the waiver table. It is exposed here for convenience
+	// Not using reason comes from the waiver table. It is exposed here for convenience
 	NotUsingReason *string `json:"notUsingReason" db:"not_using_reason"`
 	// SuggestedWaiverID is the ID of the suggested_waiver row for this waiver+model plan,
 	// or nil if the waiver is not currently suggested.

@@ -15,7 +15,7 @@ import (
 )
 
 // CommonWaiverGetByModelPlanIDLoader returns the common waivers for a slice of model plan ids
-// It casts a nil model plain id to UUID.nil.
+// It casts a nil model plan id to UUID.nil.
 // If model plan id is provided, it will provide contextual information such as will_use_waiver, not_using_reason, and suggested_waiver_id. If not, those fields will be null/zero value.
 func CommonWaiverGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.CommonWaiver, error) {
 	args := map[string]any{

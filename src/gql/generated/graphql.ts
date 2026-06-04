@@ -324,7 +324,7 @@ export type CommonWaiver = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
-  /** Convenience view into the waiver table notUsingWaiver field */
+  /** Convenience view into the waiver table not_using_reason field */
   notUsingReason?: Maybe<Scalars['String']['output']>;
   participationAgreementLanguageLink?: Maybe<Scalars['String']['output']>;
   waiverFocus?: Maybe<Scalars['String']['output']>;
@@ -332,7 +332,8 @@ export type CommonWaiver = {
   whatIsWaived?: Maybe<Scalars['String']['output']>;
   /**
    * To represent if this Common Waiver is _already_ answered for the Model Plan.
-   * This will display null when not in the context of a model plan (eg fetched by key instead of model plan id), true when the model plan has indicated it will use the waiver, and false when the model plan has indicated it will not use the waiver.
+   * This will display null by default when not in the context of a model plan (eg fetched by key instead of model plan id), true when the model plan has indicated it will use the waiver, and false when the model plan has indicated it will not use the waiver.
+   * It will also display as null if the quesion is not yet answered for the model plan.
    */
   willUseWaiver?: Maybe<Scalars['Boolean']['output']>;
 };
