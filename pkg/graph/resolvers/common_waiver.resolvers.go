@@ -7,10 +7,17 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // CommonWaivers is the resolver for the commonWaivers field.
 func (r *queryResolver) CommonWaivers(ctx context.Context) ([]*models.CommonWaiver, error) {
 	return GetAllCommonWaivers(ctx)
+}
+
+// CommonWaiver is the resolver for the commonWaiver field.
+func (r *queryResolver) CommonWaiver(ctx context.Context, id uuid.UUID) (*models.CommonWaiver, error) {
+	return CommonWaiverGetByID(ctx, id)
 }

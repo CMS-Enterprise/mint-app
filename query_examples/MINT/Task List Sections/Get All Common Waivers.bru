@@ -1,0 +1,35 @@
+meta {
+  name: Get All Common Waivers
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query GetAllCommonWaivers {
+    commonWaivers {
+      id
+      name
+      description
+      participationAgreementLanguageLink
+      cmmiWaiverPointOfContact
+      waiverType
+      waiverFocus
+      whatIsWaived
+      hasStandardizationEffort
+      hasClaimsDataOrRREGAnalysis
+      isUsedInActiveModels
+    }
+  }
+}

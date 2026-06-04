@@ -1,0 +1,41 @@
+meta {
+  name: Get Common Waiver
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query GetCommonWaiver($id: UUID!) {
+    commonWaiver(id: $id) {
+      id
+      name
+      description
+      participationAgreementLanguageLink
+      cmmiWaiverPointOfContact
+      waiverType
+      waiverFocus
+      whatIsWaived
+      hasStandardizationEffort
+      hasClaimsDataOrRREGAnalysis
+      isUsedInActiveModels
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "9f955945-7afd-481f-8558-e7e0fd465463"
+  }
+}
