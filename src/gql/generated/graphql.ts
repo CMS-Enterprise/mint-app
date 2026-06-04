@@ -6191,7 +6191,7 @@ export type GetAllWaiverAssessmentSurveyQueryVariables = Exact<{
 }>;
 
 
-export type GetAllWaiverAssessmentSurveyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, status: WaiverAssessmentSurveyStatus, modifiedDts?: Time | null, createdDts: Time, modifiesMedicareSavingsPrograms?: boolean | null, modifiesMedicareSavingsProgramsExample?: string | null, modifiesMedicareSavingsProgramsWhyNot?: NotSelectedReason | null, bundlesPayments?: boolean | null, bundlesPaymentsExample?: string | null, bundlesPaymentsWhyNot?: NotSelectedReason | null, offersRiskSharingArrangements?: boolean | null, offersRiskSharingArrangementsExample?: string | null, offersRiskSharingArrangementsWhyNot?: NotSelectedReason | null, impactsSiteOfCarePayments?: boolean | null, impactsSiteOfCarePaymentsExample?: string | null, impactsSiteOfCarePaymentsWhyNot?: NotSelectedReason | null, modifiesCareTeamScopeOfPractice?: boolean | null, modifiesCareTeamScopeOfPracticeExample?: string | null, modifiesCareTeamScopeOfPracticeWhyNot?: NotSelectedReason | null, modifiesCareDeliveryWithClaimsBasedPayments?: boolean | null, modifiesCareDeliveryWithClaimsBasedPaymentsExample?: string | null, modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot?: NotSelectedReason | null, modifiesQualityMeasurementsOrPaymentsViaWaivers?: boolean | null, modifiesQualityMeasurementsOrPaymentsViaWaiversExample?: string | null, modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot?: NotSelectedReason | null, impactsMedicaidOnlyBeneficiaries?: boolean | null, impactsMedicaidOnlyBeneficiariesExample?: string | null, impactsMedicaidOnlyBeneficiariesWhyNot?: NotSelectedReason | null, impactsHomeCommunityBasedServicePayments?: boolean | null, impactsHomeCommunityBasedServicePaymentsExample?: string | null, impactsHomeCommunityBasedServicePaymentsWhyNot?: NotSelectedReason | null, impactsManagedCareWaivers?: boolean | null, impactsManagedCareWaiversExample?: string | null, impactsManagedCareWaiversWhyNot?: NotSelectedReason | null, additionalMedicaidSpecificWaivers?: string | null, waivers: Array<{ __typename: 'Waiver', id: UUID, commonWaiver: { __typename: 'CommonWaiver', name: string, waiverType?: string | null } }> } } } };
+export type GetAllWaiverAssessmentSurveyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup> }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, currentModelPlanID?: UUID | null, existingModelID?: number | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherSelected?: boolean | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherSelected?: boolean | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, managePartCDEnrollment?: boolean | null, planContractUpdated?: boolean | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', links: Array<{ __typename: 'ExistingModelLink', id?: UUID | null, existingModelID?: number | null, currentModelPlanID?: UUID | null }> } | null }, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, status: WaiverAssessmentSurveyStatus, modifiedDts?: Time | null, createdDts: Time, modifiesMedicareSavingsPrograms?: boolean | null, modifiesMedicareSavingsProgramsExample?: string | null, modifiesMedicareSavingsProgramsWhyNot?: NotSelectedReason | null, bundlesPayments?: boolean | null, bundlesPaymentsExample?: string | null, bundlesPaymentsWhyNot?: NotSelectedReason | null, offersRiskSharingArrangements?: boolean | null, offersRiskSharingArrangementsExample?: string | null, offersRiskSharingArrangementsWhyNot?: NotSelectedReason | null, impactsSiteOfCarePayments?: boolean | null, impactsSiteOfCarePaymentsExample?: string | null, impactsSiteOfCarePaymentsWhyNot?: NotSelectedReason | null, modifiesCareTeamScopeOfPractice?: boolean | null, modifiesCareTeamScopeOfPracticeExample?: string | null, modifiesCareTeamScopeOfPracticeWhyNot?: NotSelectedReason | null, modifiesCareDeliveryWithClaimsBasedPayments?: boolean | null, modifiesCareDeliveryWithClaimsBasedPaymentsExample?: string | null, modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot?: NotSelectedReason | null, modifiesQualityMeasurementsOrPaymentsViaWaivers?: boolean | null, modifiesQualityMeasurementsOrPaymentsViaWaiversExample?: string | null, modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot?: NotSelectedReason | null, impactsMedicaidOnlyBeneficiaries?: boolean | null, impactsMedicaidOnlyBeneficiariesExample?: string | null, impactsMedicaidOnlyBeneficiariesWhyNot?: NotSelectedReason | null, impactsHomeCommunityBasedServicePayments?: boolean | null, impactsHomeCommunityBasedServicePaymentsExample?: string | null, impactsHomeCommunityBasedServicePaymentsWhyNot?: NotSelectedReason | null, impactsManagedCareWaivers?: boolean | null, impactsManagedCareWaiversExample?: string | null, impactsManagedCareWaiversWhyNot?: NotSelectedReason | null, additionalMedicaidSpecificWaivers?: string | null, waivers: Array<{ __typename: 'Waiver', id: UUID, commonWaiver: { __typename: 'CommonWaiver', name: string, waiverType?: string | null } }> } } } };
 
 export type GetMedicaidPaymentWaiversQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -8230,6 +8230,59 @@ export const GetAllWaiverAssessmentSurveyDocument = gql`
     query GetAllWaiverAssessmentSurvey($id: UUID!) {
   modelPlan(id: $id) {
     id
+    basics {
+      id
+      modelCategory
+      additionalModelCategories
+      cmsCenters
+      cmmiGroups
+    }
+    generalCharacteristics {
+      id
+      isNewModel
+      existingModel
+      currentModelPlanID
+      existingModelID
+      resemblesExistingModel
+      resemblesExistingModelWhyHow
+      resemblesExistingModelHow
+      resemblesExistingModelWhich {
+        links {
+          id
+          existingModelID
+          currentModelPlanID
+        }
+      }
+      resemblesExistingModelOtherSpecify
+      resemblesExistingModelOtherSelected
+      resemblesExistingModelOtherOption
+      participationInModelPrecondition
+      participationInModelPreconditionWhich {
+        links {
+          id
+          existingModelID
+          currentModelPlanID
+        }
+      }
+      participationInModelPreconditionOtherSpecify
+      participationInModelPreconditionOtherSelected
+      participationInModelPreconditionOtherOption
+      participationInModelPreconditionWhyHow
+      keyCharacteristics
+      keyCharacteristicsOther
+      collectPlanBids
+      managePartCDEnrollment
+      planContractUpdated
+      geographiesTargeted
+      geographiesTargetedTypes
+      geographiesStatesAndTerritories
+      geographiesRegionTypes
+      geographiesTargetedTypesOther
+      geographiesTargetedAppliedTo
+      geographiesTargetedAppliedToOther
+      waiversRequired
+      waiversRequiredTypes
+    }
     questionnaires {
       waiverAssessmentSurvey {
         id

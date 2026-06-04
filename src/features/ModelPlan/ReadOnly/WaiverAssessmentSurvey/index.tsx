@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import classNames from 'classnames';
+import { convertToLowercaseAndDashes } from 'features/HelpAndKnowledge/Articles/TwoPagerMeeting';
 import { NotFoundPartial } from 'features/NotFound';
 import { useGetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 
@@ -8,8 +10,7 @@ import { Alert } from 'components/Alert';
 import PageLoading from 'components/PageLoading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
-// import ReadOnlyBody from '../_components/Body';
-import ReadOnlySection from '../_components/ReadOnlySection';
+import SimpleReadOnlySection from '../_components/SimpleReadOnlySection';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
 
@@ -103,6 +104,25 @@ const ReadOnlyWaiverAssessmentSurvey = ({
     }
   });
 
+  const surveyQuestionsConfig = {
+    modePlanQuestions: {
+      heading: waiverAssessmentSurveyMiscT('modelPlanQuestions.heading'),
+      config: modelPlanQuestionsConfig
+    },
+    medicarePaymentWaivers: {
+      heading: waiverAssessmentSurveyMiscT('medicarePaymentWaivers.heading'),
+      config: medicareQuestionsConfig
+    },
+    programWaivers: {
+      heading: waiverAssessmentSurveyMiscT('programWaivers.readOnlyHeading'),
+      config: programWaiversConfig
+    },
+    medicaidPaymentWaivers: {
+      heading: waiverAssessmentSurveyMiscT('medicaidPaymentWaivers.heading'),
+      config: medicaidQuestionsConfig
+    }
+  };
+
   if (loading) {
     return <PageLoading />;
   }
@@ -110,6 +130,11 @@ const ReadOnlyWaiverAssessmentSurvey = ({
   if (error || !data?.modelPlan?.questionnaires?.waiverAssessmentSurvey) {
     return <NotFoundPartial componentNotFound />;
   }
+
+  const modelQuestionsData = {
+    ...data.modelPlan.basics,
+    ...data.modelPlan.generalCharacteristics
+  };
 
   const allWaiverAssessmentSurveyData =
     data.modelPlan.questionnaires.waiverAssessmentSurvey;
@@ -141,76 +166,36 @@ const ReadOnlyWaiverAssessmentSurvey = ({
         </Alert>
       )}
 
-      <div
-        id="model-plan-questions-read-view"
-        className="border-bottom-1px border-base-light margin-bottom-4"
-      >
-        <h3 className="margin-top-0">
-          {waiverAssessmentSurveyMiscT('modelPlanQuestions.heading')}
-        </h3>
+      {Object.keys(surveyQuestionsConfig).map((waiverSurvey, index) => {
+        const waiverConfig =
+          surveyQuestionsConfig[
+            waiverSurvey as keyof typeof surveyQuestionsConfig
+          ];
 
-        {/* <ReadOnlyBody
-        data={allWaiverAssessmentSurveyData}
-        config={modelPlanQuestionsConfig}
-        filteredView={filteredView}
-      /> */}
+        return (
+          <div
+            id={`${convertToLowercaseAndDashes(waiverSurvey)}-read-view`}
+            className={classNames(
+              index !== Object.keys(surveyQuestionsConfig).length - 1 &&
+                'border-bottom-1px border-base-light margin-bottom-4'
+            )}
+          >
+            <h3 className="margin-top-0">{waiverConfig.heading}</h3>
 
-        {Object.keys(modelPlanQuestionsConfig).map(questionConfig => (
-          <ReadOnlySection
-            field={questionConfig}
-            translations={modelPlanQuestionsConfig}
-            values={allWaiverAssessmentSurveyData}
-          />
-        ))}
-      </div>
-
-      <div
-        id="medicare-payment-waivers-read-view"
-        className="border-bottom-1px border-base-light margin-bottom-4"
-      >
-        <h3 className="margin-top-0">
-          {waiverAssessmentSurveyMiscT('medicarePaymentWaivers.heading')}
-        </h3>
-
-        {Object.keys(medicareQuestionsConfig).map(questionConfig => (
-          <ReadOnlySection
-            field={questionConfig}
-            translations={medicareQuestionsConfig}
-            values={allWaiverAssessmentSurveyData}
-          />
-        ))}
-      </div>
-
-      <div
-        id="program-waivers-read-view"
-        className="border-bottom-1px border-base-light margin-bottom-4"
-      >
-        <h3 className="margin-top-0">
-          {waiverAssessmentSurveyMiscT('programWaivers.readOnlyHeading')}
-        </h3>
-
-        {Object.keys(programWaiversConfig).map(questionConfig => (
-          <ReadOnlySection
-            field={questionConfig}
-            translations={programWaiversConfig}
-            values={allWaiverAssessmentSurveyData}
-          />
-        ))}
-      </div>
-
-      <div id="medicaid-payment-waivers-read-view" className="">
-        <h3 className="margin-top-0">
-          {waiverAssessmentSurveyMiscT('medicaidPaymentWaivers.heading')}
-        </h3>
-
-        {Object.keys(medicaidQuestionsConfig).map(questionConfig => (
-          <ReadOnlySection
-            field={questionConfig}
-            translations={medicaidQuestionsConfig}
-            values={allWaiverAssessmentSurveyData}
-          />
-        ))}
-      </div>
+            {Object.keys(waiverConfig.config).map(questionConfig => (
+              <SimpleReadOnlySection
+                field={questionConfig}
+                translations={waiverConfig.config}
+                values={
+                  waiverSurvey === 'modePlanQuestions'
+                    ? modelQuestionsData
+                    : allWaiverAssessmentSurveyData
+                }
+              />
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 };
