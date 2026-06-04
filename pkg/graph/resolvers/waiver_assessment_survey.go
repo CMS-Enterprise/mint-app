@@ -19,7 +19,7 @@ import (
 )
 
 /*
-TODO: Seed suggested milestone should be moved out of this package to the seeding package.
+TODO: Seed suggested waivers should be moved out of this package to the seeding package.
 */
 
 // SeedSuggestedWaivers creates a suggested_waiver row for every common_waiver, giving a

@@ -20,7 +20,7 @@ SELECT
     cw.created_dts,
     cw.modified_by,
     cw.modified_dts,
-    -- These fields are only try when getting in scope of a model plan.
+    -- These fields are used when getting in scope of a model plan.
     CAST(NULL AS UUID) AS model_plan_id,
     CAST(NULL AS BOOLEAN) AS will_use_waiver,
     NULL AS not_using_reason,
