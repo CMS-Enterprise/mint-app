@@ -28,15 +28,15 @@ func (r *commonWaiverResolver) IsAnswered(ctx context.Context, obj *models.Commo
 }
 
 // IsSuggested is the resolver for the isSuggested field.
-func (r *commonWaiverResolver) IsSuggested(ctx context.Context, obj *models.CommonWaiver, modelPlanID *uuid.UUID) (bool, error) {
+func (r *commonWaiverResolver) IsSuggested(ctx context.Context, obj *models.CommonWaiver) (bool, error) {
 	// TODO: this is a stub. Implement this.
 	return false, nil
 	// panic(fmt.Errorf("not implemented: IsSuggested - isSuggested"))
 }
 
 // CommonWaivers is the resolver for the commonWaivers field.
-func (r *queryResolver) CommonWaivers(ctx context.Context) ([]*models.CommonWaiver, error) {
-	return GetAllCommonWaivers(ctx)
+func (r *queryResolver) CommonWaivers(ctx context.Context, modelPlanID *uuid.UUID) ([]*models.CommonWaiver, error) {
+	return GetAllCommonWaivers(ctx, modelPlanID)
 }
 
 // CommonWaiver returns generated.CommonWaiverResolver implementation.

@@ -1,5 +1,5 @@
 """
-CommonWaiver represents a waiver type in the CMMI waiver library.
+CommonWaiver represents a waiver type in the CMMI waiver library. It is fetched in the context of a model plan to determine if the model plan has indicated it will use the waiver or not, and to determine if the waiver is suggested based on waiver assessment survey answers.
 """
 type CommonWaiver {
   id: UUID!
@@ -34,7 +34,7 @@ type CommonWaiver {
   To represent if this Common Waiver is _suggested_ for the Model Plan based on waiver assessment survey answers.
   This will automatically return false if it is not in the context of a model plan
   """
-  isSuggested(modelPlanID: UUID): Boolean!
+  isSuggested: Boolean!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -67,5 +67,6 @@ extend type Query {
   """
   Fetch all Common Waivers available in the library
   """
-  commonWaivers: [CommonWaiver!]! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  commonWaivers(modelPlanID: UUID): [CommonWaiver!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

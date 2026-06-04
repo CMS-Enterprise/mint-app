@@ -67,6 +67,7 @@ type WaiverAssessmentSurvey {
   waivers: [Waiver!]! @goField(forceResolver: true)
 
   # Waivers MINT has determined are likely needed based on survey answers
+  # this will be removed in future implementations
   suggestedWaivers: [SuggestedWaiver!]! @goField(forceResolver: true)
 
   """
@@ -110,6 +111,7 @@ type Waiver {
 """
 SuggestedWaiver represents a waiver MINT has determined is likely needed for a model plan
 based on answers to the waiver assessment survey.
+NOTE, this will be deprecated as a type in favor of adding suggestion context directly to CommonWaiver, but is left as a separate type for now to simplify the implementation.
 """
 type SuggestedWaiver {
   id: UUID!

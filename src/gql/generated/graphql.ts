@@ -301,7 +301,7 @@ export type CommonCategory = {
   subCategories: Array<Scalars['String']['output']>;
 };
 
-/** CommonWaiver represents a waiver type in the CMMI waiver library. */
+/** CommonWaiver represents a waiver type in the CMMI waiver library. It is fetched in the context of a model plan to determine if the model plan has indicated it will use the waiver or not, and to determine if the waiver is suggested based on waiver assessment survey answers. */
 export type CommonWaiver = {
   __typename: 'CommonWaiver';
   cmmiWaiverPointOfContact?: Maybe<Scalars['String']['output']>;
@@ -333,12 +333,6 @@ export type CommonWaiver = {
    * This will display null when not in the context of a model plan (eg fetched by key instead of model plan id), true when the model plan has indicated it will use the waiver, and false when the model plan has indicated it will not use the waiver.
    */
   willUseWaiver?: Maybe<Scalars['Boolean']['output']>;
-};
-
-
-/** CommonWaiver represents a waiver type in the CMMI waiver library. */
-export type CommonWaiverIsSuggestedArgs = {
-  modelPlanID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 export enum ComplexityCalculationLevelType {
@@ -4872,6 +4866,12 @@ export type QueryAuditChangesArgs = {
 
 
 /** Query definition for the schema */
+export type QueryCommonWaiversArgs = {
+  modelPlanID?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+
+/** Query definition for the schema */
 export type QueryExistingModelLinkArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -5200,6 +5200,7 @@ export type SubscriptionOnLockableSectionLocksChangedArgs = {
 /**
  * SuggestedWaiver represents a waiver MINT has determined is likely needed for a model plan
  * based on answers to the waiver assessment survey.
+ * NOTE, this will be deprecated as a type in favor of adding suggestion context directly to CommonWaiver, but is left as a separate type for now to simplify the implementation.
  */
 export type SuggestedWaiver = {
   __typename: 'SuggestedWaiver';

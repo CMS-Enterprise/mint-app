@@ -51,6 +51,7 @@ func batchCommonWaiverGetAll(ctx context.Context, ids []*uuid.UUID) []*dataloade
 
 	logger := appcontext.ZLogger(ctx)
 
+	// TODO: this needs to be updated to actually verify by model_plan_id
 	data, err := storage.CommonWaiverGetAll(loaders.DataReader.Store, logger)
 	if err != nil {
 		return errorPerEachKey[*uuid.UUID, []*models.CommonWaiver](ids, err)
