@@ -228,19 +228,10 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
 	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
 
-	tx, err := suite.testConfigs.Store.Beginx()
+	request.AssignedAdmin = &adminPrincipal.Account().ID
+	request.ModifiedBy = &suite.testConfigs.Principal.Account().ID
+	_, err := storage.CTATRequestAdminUpdate(suite.testConfigs.Store, request)
 	suite.Require().NoError(err)
-
-	_, err = tx.NamedExec(sqlqueries.Utility.SetSessionCurrentUser, utilitysql.CreateUserIDQueryMap(suite.testConfigs.Principal.Account().ID))
-	suite.Require().NoError(err)
-
-	_, err = tx.Exec(
-		`UPDATE ctat_request SET assigned_admin = $1 WHERE id = $2`,
-		adminPrincipal.Account().ID,
-		request.ID,
-	)
-	suite.Require().NoError(err)
-	suite.Require().NoError(tx.Commit())
 
 	var noAssignedAdmin *string
 
