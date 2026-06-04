@@ -285,6 +285,7 @@ const ContractAssistanceTicketsTable = ({
           className="desktop:grid-col-auto"
           pageSize={state.pageSize}
           setPageSize={setPageSize}
+          suffix="rows"
         />
       </div>
     </div>
