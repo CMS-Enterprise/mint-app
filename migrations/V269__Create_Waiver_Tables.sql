@@ -144,20 +144,46 @@ CREATE TABLE suggested_waiver (
 COMMENT ON TABLE suggested_waiver IS 'Waivers MINT has determined are likely needed for a model plan based on waiver assessment survey answers.';
 
 -- Seed fake common_waiver data (5 per waiver type, 15 total)
-INSERT INTO common_waiver (name, waiver_type, created_by)
+INSERT INTO common_waiver (
+    id,
+    name,
+    description,
+    participation_agreement_language_link,
+    cmmi_waiver_point_of_contact,
+    waiver_type,
+    waiver_focus,
+    what_is_waived,
+    has_standardization_effort,
+    has_claims_data_or_rreg_analysis,
+    is_used_in_active_models,
+    created_by
+)
 VALUES
-('Medicare Payment Waiver 1', 'MEDICARE_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID),
-('Medicare Payment Waiver 2', 'MEDICARE_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID),
-('Medicare Payment Waiver 3', 'MEDICARE_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID),
-('Medicare Payment Waiver 4', 'MEDICARE_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID),
-('Medicare Payment Waiver 5', 'MEDICARE_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID),
-('Program Waiver - Medicare BEs 1', 'PROGRAM_MEDICARE_BES', '00000001-0001-0001-0001-000000000001'::UUID),
-('Program Waiver - Medicare BEs 2', 'PROGRAM_MEDICARE_BES', '00000001-0001-0001-0001-000000000001'::UUID),
-('Program Waiver - Medicare BEs 3', 'PROGRAM_MEDICARE_BES', '00000001-0001-0001-0001-000000000001'::UUID),
-('Program Waiver - Medicare BEs 4', 'PROGRAM_MEDICARE_BES', '00000001-0001-0001-0001-000000000001'::UUID),
-('Program Waiver - Medicare BEs 5', 'PROGRAM_MEDICARE_BES', '00000001-0001-0001-0001-000000000001'::UUID),
-('Medicaid Payment Waiver 1', 'MEDICAID_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID),
-('Medicaid Payment Waiver 2', 'MEDICAID_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID),
-('Medicaid Payment Waiver 3', 'MEDICAID_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID),
-('Medicaid Payment Waiver 4', 'MEDICAID_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID),
-('Medicaid Payment Waiver 5', 'MEDICAID_PAYMENT', '00000001-0001-0001-0001-000000000001'::UUID);
+(
+    '9f955945-7afd-481f-8558-e7e0fd465463'::UUID,
+    'Medicare Payment Waiver 1',
+    'Allows for model participants to enter into agreements with Medicare-enrolled providers and suppliers to participate as Preferred Providers under MSSP.',
+    'https://cms.gov/',
+    '',
+    'Lorem Ipsum',
+    'Administrative and operational',
+    '42 CFR § 425.114(a) and (b)',
+    FALSE,
+    'Lorem ipsum',
+    TRUE,
+    '00000001-0001-0001-0001-000000000001'::UUID
+),
+(GEN_RANDOM_UUID(), 'Medicare Payment Waiver 2', NULL, NULL, NULL, 'MEDICARE_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Medicare Payment Waiver 3', NULL, NULL, NULL, 'MEDICARE_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Medicare Payment Waiver 4', NULL, NULL, NULL, 'MEDICARE_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Medicare Payment Waiver 5', NULL, NULL, NULL, 'MEDICARE_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Program Waiver - Medicare BEs 1', NULL, NULL, NULL, 'PROGRAM_MEDICARE_BES', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Program Waiver - Medicare BEs 2', NULL, NULL, NULL, 'PROGRAM_MEDICARE_BES', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Program Waiver - Medicare BEs 3', NULL, NULL, NULL, 'PROGRAM_MEDICARE_BES', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Program Waiver - Medicare BEs 4', NULL, NULL, NULL, 'PROGRAM_MEDICARE_BES', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Program Waiver - Medicare BEs 5', NULL, NULL, NULL, 'PROGRAM_MEDICARE_BES', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Medicaid Payment Waiver 1', NULL, NULL, NULL, 'MEDICAID_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Medicaid Payment Waiver 2', NULL, NULL, NULL, 'MEDICAID_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Medicaid Payment Waiver 3', NULL, NULL, NULL, 'MEDICAID_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Medicaid Payment Waiver 4', NULL, NULL, NULL, 'MEDICAID_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
+(GEN_RANDOM_UUID(), 'Medicaid Payment Waiver 5', NULL, NULL, NULL, 'MEDICAID_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID);

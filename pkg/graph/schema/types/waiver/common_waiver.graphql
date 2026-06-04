@@ -74,4 +74,10 @@ extend type Query {
   """
   commonWaivers(modelPlanID: UUID): [CommonWaiver!]!
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  """
+  Fetch a Common Waiver by ID
+  """
+  commonWaiver(id: UUID!): CommonWaiver!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

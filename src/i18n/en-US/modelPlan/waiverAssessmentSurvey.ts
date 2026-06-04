@@ -523,6 +523,25 @@ const waiverAssessmentSurveyMisc = {
     updateAnswers: 'Update answers (show questions)',
     hideQuestions: 'Hide questions'
   },
+  waiverInfoPanel: {
+    heading: 'Waiver information',
+    participationAgreementLanguage: 'Link to Participation Agreement Language',
+    cmmiWaiverPointOfContact: 'CMMI Waiver Point Of Contact',
+    noPointOfContactListed: 'No point of contact listed',
+    waiverType: 'Waiver type',
+    waiverFocus: 'Waiver focus',
+    whatIsWaived: 'What is waived?',
+    hasStandardizationEffort: 'Is there a waiver standardization effort?',
+    hasClaimsDataOrRREGAnalysis: 'Is claims data or RREG analysis available?',
+    isUsedInActiveModels: 'Is this waiver used in active models?',
+    willUseWaiverLabel: 'Do you plan to use this waiver with your model?',
+    willUseWaiverHelpText:
+      'Your answer to this question may reveal additional questions to be answered.',
+    willUseWaiver_true: 'You said your model will use this waiver.',
+    willUseWaiver_false: 'You said your model will not use this waiver.',
+    changeResponse: 'Change response',
+    notUsingReason: 'Please explain why your model is not using this waiver.'
+  },
   medicarePaymentWaivers: {
     heading: 'Medicare payment waivers',
     description:

@@ -19,3 +19,8 @@ func GetAllCommonWaiversByModelPlanID(ctx context.Context, modelPlanID *uuid.UUI
 	}
 	return loaders.CommonWaiver.GetAllByModelPlanID.Load(ctx, key)
 }
+
+// CommonWaiverGetByID returns a common waiver by ID via dataloader
+func CommonWaiverGetByID(ctx context.Context, id uuid.UUID) (*models.CommonWaiver, error) {
+	return loaders.CommonWaiver.ByID.Load(ctx, id)
+}

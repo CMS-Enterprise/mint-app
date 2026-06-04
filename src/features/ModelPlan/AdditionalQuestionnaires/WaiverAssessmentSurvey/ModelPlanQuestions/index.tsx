@@ -9,6 +9,7 @@ import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
 
 import ModelPlanQuestionsForm from '../_components/ModelPlanQuestionsForm';
+import WaiverInfoPanel from '../_components/WaiverInfoPanel';
 
 const ModelPlanQuestions = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -83,6 +84,12 @@ const ModelPlanQuestions = () => {
 
   return (
     <div className="mint-body-normal grid-row flex-column">
+      <WaiverInfoPanel
+        waiverInfo={{
+          willUseWaiver: null,
+          notUsingReason: ''
+        }}
+      />
       <div>
         <FormHeader
           header={waiverAssessmentSurveyMiscT('modelPlanQuestions.heading')}

@@ -227,11 +227,6 @@ func SuggestedWaiversGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID
 	return loaders.SuggestedWaiver.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
-// CommonWaiverGetByID returns a common waiver by ID via dataloader
-func CommonWaiverGetByID(ctx context.Context, id uuid.UUID) (*models.CommonWaiver, error) {
-	return loaders.CommonWaiver.ByID.Load(ctx, id)
-}
-
 // TrySendWaiverAssessmentSurveyNotifications fires in-app and email notifications when a
 // waiver assessment survey transitions to COMPLETE. Errors are logged but do not fail the
 // parent transaction since notification delivery is best-effort.
