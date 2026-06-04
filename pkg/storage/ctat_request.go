@@ -29,13 +29,27 @@ func CTATRequestCreate(np sqlutils.NamedPreparer, request *models.CTATRequest) (
 	return createdRequest, nil
 }
 
+// CTATRequestGetByIDLOADER returns CTAT requests for the supplied request IDs.
+func CTATRequestGetByIDLOADER(np sqlutils.NamedPreparer, ids []uuid.UUID) ([]*models.CTATRequest, error) {
+	args := map[string]any{
+		"ctat_request_ids": pq.Array(ids),
+	}
+
+	requests, err := sqlutils.SelectProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.GetByIDLoader, args)
+	if err != nil {
+		return nil, err
+	}
+
+	return requests, nil
+}
+
 // CTATRequestGetByRequesterIDLOADER returns CTAT requests for the supplied requester IDs.
 func CTATRequestGetByRequesterIDLOADER(np sqlutils.NamedPreparer, requesterIDs []uuid.UUID) ([]*models.CTATRequest, error) {
 	args := map[string]any{
 		"requester_ids": pq.Array(requesterIDs),
 	}
 
-	requests, err := sqlutils.SelectProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.GetByRequesterID, args)
+	requests, err := sqlutils.SelectProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.GetByRequesterIDLoader, args)
 	if err != nil {
 		return nil, err
 	}

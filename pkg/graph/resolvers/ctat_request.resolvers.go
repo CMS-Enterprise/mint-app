@@ -92,7 +92,7 @@ func (r *mutationResolver) AdminUpdateCTATRequest(ctx context.Context, input map
 
 // CtatRequest is the resolver for the ctatRequest field.
 func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error) {
-	panic(fmt.Errorf("not implemented: CtatRequest - ctatRequest"))
+	return CTATRequestGetByID(ctx, id, r.store)
 }
 
 // CtatRequestsRequester is the resolver for the ctatRequestsRequester field.
