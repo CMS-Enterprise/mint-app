@@ -1,7 +1,7 @@
 meta {
-  name: Create CTAT Request
+  name: Get CTAT Request
   type: graphql
-  seq: 4
+  seq: 5
 }
 
 post {
@@ -17,8 +17,8 @@ auth:apikey {
 }
 
 body:graphql {
-  mutation createCTATRequest($input: CTATRequestInput!) {
-    createCTATRequest(input: $input) {
+  query ctatRequest($id: UUID!) {
+    ctatRequest(id: $id) {
       id
       humanReadableID
       humanReadableIDNumber
@@ -184,37 +184,11 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "input": {
-      "cmmiGroup": "BSG",
-      "cmmiDivision": "BSG_DBOM",
-      "relatedMINTModels": [
-        "{{modelPlanID}}"
-      ],
-      "contractActivityType": "TECHNICAL_ASSISTANCE",
-      "contractName": "BTAL CTAT Request Example Contract",
-      "contractNumber": "75FCMC26F1001",
-      "contractType": "TIME_AND_MATERIALS",
-      "typeOfHelpNeeded": [
-        "REQUEST_FOR_INFORMATION_RFI",
-        "GUIDANCE_ON_MARKET_RESEARCH"
-      ],
-      "describeHelpNeeded": "Bruno example request for CTAT assistance without supporting documents.",
-      "requestUrgency": "HIGH",
-      "dateAssistanceNeededBy": "2026-06-30T12:00:00Z",
-      "supportingDocuments": []
-    }
+    "id": "{{ctatRequestID}}"
   }
 }
 
 vars:pre-request {
   EUAID: BTAL
   jobCodes: ["MINT_USER_NONPROD"]
-}
-
-tests {
-  let responseData = res.getBody().data.createCTATRequest
-  
-  ctatRequestID = responseData.id
-  
-  bru.setVar("ctatRequestID", ctatRequestID);
 }
