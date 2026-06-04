@@ -41,6 +41,11 @@ func (c CommonWaiver) IsSuggested() bool {
 	return c.SuggestedWaiverID != nil
 }
 
+// A waiver is unused if it is not answered and not suggested
+func (c CommonWaiver) IsUnused() bool {
+	return !c.IsAnswered() && !c.IsSuggested()
+}
+
 // NewCommonWaiver returns a new CommonWaiver object
 func NewCommonWaiver(createdBy uuid.UUID, name string) *CommonWaiver {
 	return &CommonWaiver{

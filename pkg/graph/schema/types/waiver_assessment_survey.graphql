@@ -90,43 +90,7 @@ type WaiverAssessmentSurvey {
   modifiedDts: Time
 }
 
-"""
-Waiver represents a model plan's decision on whether to use a specific waiver.
-"""
-type Waiver {
-  id: UUID!
-  modelPlanID: UUID!
-  commonWaiverID: UUID!
-  commonWaiver: CommonWaiver! @goField(forceResolver: true)
-  willUseWaiver: Boolean
-  notUsingReason: String
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-SuggestedWaiver represents a waiver MINT has determined is likely needed for a model plan
-based on answers to the waiver assessment survey.
-NOTE, this will be deprecated as a type in favor of adding suggestion context directly to CommonWaiver, but is left as a separate type for now to simplify the implementation.
-"""
-type SuggestedWaiver {
-  id: UUID!
-  modelPlanID: UUID!
-  commonWaiverID: UUID!
-  commonWaiver: CommonWaiver! @goField(forceResolver: true)
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-input WaiverAssessmentSurveyChanges @goModel(model: "map[string]interface{}") {
+input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   # Page 3 - Medicare payment waivers
   modifiesMedicareSavingsPrograms: Boolean
   modifiesMedicareSavingsProgramsExample: String
@@ -167,17 +131,9 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]interface{}") {
   status: WaiverAssessmentSurveyStatus
 }
 
-input WaiverChanges @goModel(model: "map[string]interface{}") {
-  willUseWaiver: Boolean
-  notUsingReason: String
-}
-
 extend type Mutation {
   updateWaiverAssessmentSurvey(
     id: UUID!
     changes: WaiverAssessmentSurveyChanges!
   ): WaiverAssessmentSurvey! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
-
-  updateWaiver(id: UUID!, changes: WaiverChanges!): Waiver!
-    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }

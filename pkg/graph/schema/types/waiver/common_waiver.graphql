@@ -1,0 +1,76 @@
+"""
+CommonWaiver represents a waiver type in the CMMI waiver library. It is fetched in the context of a model plan to determine if the model plan has indicated it will use the waiver or not, and to determine if the waiver is suggested based on waiver assessment survey answers.
+"""
+type CommonWaiver {
+  id: UUID!
+  name: String!
+  description: String
+  participationAgreementLanguageLink: String
+  cmmiWaiverPointOfContact: String
+  waiverType: String
+  waiverFocus: String
+  whatIsWaived: String
+  hasStandardizationEffort: Boolean
+  hasClaimsDataOrRREGAnalysis: String
+  isUsedInActiveModels: Boolean
+
+  # Custom Resolvers
+  """
+  To represent if this Common Waiver is _already_ answered for the Model Plan.
+  This will display null when not in the context of a model plan (eg fetched by key instead of model plan id), true when the model plan has indicated it will use the waiver, and false when the model plan has indicated it will not use the waiver.
+  """
+  willUseWaiver: Boolean
+  """
+  Convenience view into the waiver table notUsingWaiver field
+  """
+  notUsingReason: String
+  """
+  Returns if a model plan has answered if the waiver will be used or not.
+  """
+  isAnswered: Boolean!
+  # """
+  # Returns the suggestion context for this waiver in relation to a model plan.
+  # If modelPlanID is provided, it takes precedence over any model plan context from how the waiver was fetched.
+  # Returns isSuggested: false with empty reasons when no model plan context is available.
+  # """
+  # suggested(modelPlanID: UUID): WaiverSuggestionReason!
+  """
+  To represent if this Common Waiver is _suggested_ for the Model Plan based on waiver assessment survey answers.
+  This will automatically return false if it is not in the context of a model plan
+  """
+  isSuggested: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+# """
+# WaiverSuggestionReason is an aggregate type that represents the suggestion context for
+# a common waiver in the context of a specific model plan.
+# """
+# type WaiverSuggestionReason {
+#   """
+#   Whether this waiver is currently suggested based on the model plan's answers.
+#   """
+#   isSuggested: Boolean!
+#   """
+#   The specific per-field reasons why this waiver is suggested.
+#   Empty when isSuggested is false.
+#   """
+#   reasons: [WaiverSuggestionReason!]!
+#   """
+#   Total count of suggestion reasons (equivalent to len(reasons)).
+#   """
+#   count: Int!
+# }
+
+extend type Query {
+  """
+  Fetch all Common Waivers available in the library
+  """
+  commonWaivers(modelPlanID: UUID): [CommonWaiver!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

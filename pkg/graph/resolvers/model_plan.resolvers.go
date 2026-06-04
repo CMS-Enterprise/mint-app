@@ -152,6 +152,11 @@ func (r *modelPlanResolver) MtoMatrix(ctx context.Context, obj *models.ModelPlan
 	}, nil
 }
 
+// WaiverInfo is the resolver for the waiverInfo field.
+func (r *modelPlanResolver) WaiverInfo(ctx context.Context, obj *models.ModelPlan) (*models.WaiverInfo, error) {
+	return GetWaiverInfoByModelPlanID(ctx, obj.ID)
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)

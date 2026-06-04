@@ -22,24 +22,6 @@ func (r *mutationResolver) UpdateWaiverAssessmentSurvey(ctx context.Context, id 
 	return WaiverAssessmentSurveyUpdate(ctx, logger, id, changes, principal, r.store, r.emailService, r.addressBook)
 }
 
-// UpdateWaiver is the resolver for the updateWaiver field.
-func (r *mutationResolver) UpdateWaiver(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.Waiver, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
-
-	return WaiverUpdate(logger, id, changes, principal, r.store)
-}
-
-// CommonWaiver is the resolver for the commonWaiver field.
-func (r *suggestedWaiverResolver) CommonWaiver(ctx context.Context, obj *models.SuggestedWaiver) (*models.CommonWaiver, error) {
-	return CommonWaiverGetByID(ctx, obj.CommonWaiverID)
-}
-
-// CommonWaiver is the resolver for the commonWaiver field.
-func (r *waiverResolver) CommonWaiver(ctx context.Context, obj *models.Waiver) (*models.CommonWaiver, error) {
-	return CommonWaiverGetByID(ctx, obj.CommonWaiverID)
-}
-
 // Waivers is the resolver for the waivers field.
 func (r *waiverAssessmentSurveyResolver) Waivers(ctx context.Context, obj *models.WaiverAssessmentSurvey) ([]*models.Waiver, error) {
 	return WaiversGetByModelPlanID(ctx, obj.ModelPlanID)
@@ -50,19 +32,9 @@ func (r *waiverAssessmentSurveyResolver) SuggestedWaivers(ctx context.Context, o
 	return SuggestedWaiversGetByModelPlanID(ctx, obj.ModelPlanID)
 }
 
-// SuggestedWaiver returns generated.SuggestedWaiverResolver implementation.
-func (r *Resolver) SuggestedWaiver() generated.SuggestedWaiverResolver {
-	return &suggestedWaiverResolver{r}
-}
-
-// Waiver returns generated.WaiverResolver implementation.
-func (r *Resolver) Waiver() generated.WaiverResolver { return &waiverResolver{r} }
-
 // WaiverAssessmentSurvey returns generated.WaiverAssessmentSurveyResolver implementation.
 func (r *Resolver) WaiverAssessmentSurvey() generated.WaiverAssessmentSurveyResolver {
 	return &waiverAssessmentSurveyResolver{r}
 }
 
-type suggestedWaiverResolver struct{ *Resolver }
-type waiverResolver struct{ *Resolver }
 type waiverAssessmentSurveyResolver struct{ *Resolver }
