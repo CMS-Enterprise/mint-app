@@ -21,6 +21,10 @@ type CommonWaiver {
   """
   willUseWaiver: Boolean
   """
+  Convenience view into the waiver table notUsingWaiver field
+  """
+  notUsingReason: String
+  """
   Returns if a model plan has answered if the waiver will be used or not.
   """
   isAnswered: Boolean!
