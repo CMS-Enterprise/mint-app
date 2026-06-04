@@ -324,6 +324,8 @@ export type CommonWaiver = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
+  /** Convenience view into the waiver table notUsingWaiver field */
+  notUsingReason?: Maybe<Scalars['String']['output']>;
   participationAgreementLanguageLink?: Maybe<Scalars['String']['output']>;
   waiverFocus?: Maybe<Scalars['String']['output']>;
   waiverType?: Maybe<Scalars['String']['output']>;
