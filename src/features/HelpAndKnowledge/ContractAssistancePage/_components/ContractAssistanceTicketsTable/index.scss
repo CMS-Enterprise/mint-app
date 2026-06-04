@@ -6,9 +6,7 @@
 }
 
 .contract-assistance-tickets-table {
-  &__help-type-column {
-    width: 40%;
-  }
+  table-layout: fixed;
 }
 
 .contract-assistance-tickets-table--admin {

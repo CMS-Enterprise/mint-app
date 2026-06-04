@@ -25,6 +25,14 @@ type ContractAssistanceTicketsTableProps = {
   adminTab?: AdminTab;
 };
 
+const TICKET_TABLE_COLUMN_WIDTHS = {
+  ticketId: 160,
+  submissionDate: 180,
+  contractName: 250,
+  helpType: 250,
+  status: 250
+};
+
 const ContractAssistanceTicketsTable = ({
   tickets,
   variant,
@@ -41,6 +49,7 @@ const ContractAssistanceTicketsTable = ({
     () => [
       {
         id: 'ticketId',
+        width: TICKET_TABLE_COLUMN_WIDTHS.ticketId,
         Header: t('table.ticketId'),
         accessor: 'ticketId',
         sortType: 'alphanumeric',
@@ -60,11 +69,13 @@ const ContractAssistanceTicketsTable = ({
       },
       {
         id: 'submissionDate',
+        width: TICKET_TABLE_COLUMN_WIDTHS.submissionDate,
         Header: t('table.submissionDate'),
         accessor: 'submissionDate'
       },
       {
         id: 'contractName',
+        width: TICKET_TABLE_COLUMN_WIDTHS.contractName,
         Header: t('table.contractName'),
         accessor: 'contractName',
         Cell: ({ row }: { row: Row<ContractAssistanceTicket> }) =>
@@ -76,11 +87,13 @@ const ContractAssistanceTicketsTable = ({
       },
       {
         id: 'helpType',
+        width: TICKET_TABLE_COLUMN_WIDTHS.helpType,
         Header: t('table.helpType'),
         accessor: 'helpType'
       },
       {
         id: 'status',
+        width: TICKET_TABLE_COLUMN_WIDTHS.status,
         Header: t('table.status'),
         accessor: 'status',
         Cell: ({ row }: { row: Row<ContractAssistanceTicket> }) => (
@@ -163,6 +176,11 @@ const ContractAssistanceTicketsTable = ({
               : 'userSubmittedTickets.table.caption'
           )}
         </caption>
+        <colgroup>
+          {columns.map(column => (
+            <col key={column.id} style={{ width: column.width }} />
+          ))}
+        </colgroup>
         <thead className="margin-bottom-2">
           {headerGroups.map(headerGroup => {
             const headerGroupProps = headerGroup.getHeaderGroupProps();
@@ -181,13 +199,7 @@ const ContractAssistanceTicketsTable = ({
                     }
                     scope="col"
                     key={column.id}
-                    className={classNames(
-                      'padding-left-0 padding-y-1 bg-transparent table-header',
-                      {
-                        'contract-assistance-tickets-table__help-type-column':
-                          column.id === 'helpType'
-                      }
-                    )}
+                    className="padding-left-0 padding-y-1 bg-transparent table-header"
                   >
                     {column.canSort ? (
                       <button
@@ -234,10 +246,7 @@ const ContractAssistanceTicketsTable = ({
                       <td
                         {...cellProps}
                         key={cellProps.key}
-                        className={classNames('padding-left-0 bg-transparent', {
-                          'contract-assistance-tickets-table__help-type-column':
-                            cell.column.id === 'helpType'
-                        })}
+                        className="padding-left-0 bg-transparent"
                       >
                         {cell.render('Cell')}
                       </td>
