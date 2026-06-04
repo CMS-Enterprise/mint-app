@@ -7,6 +7,15 @@ export default gql(/* GraphQL */ `
       questionnaires {
         waiverAssessmentSurvey {
           id
+          suggestedWaivers {
+            id
+            commonWaiverID
+            commonWaiver {
+              id
+              name
+              waiverType
+            }
+          }
           # Page 3 - Medicare payment waivers
           modifiesMedicareSavingsPrograms
           modifiesMedicareSavingsProgramsExample
@@ -17,13 +26,6 @@ export default gql(/* GraphQL */ `
           offersRiskSharingArrangements
           offersRiskSharingArrangementsExample
           offersRiskSharingArrangementsWhyNot
-          suggestedWaivers {
-            id
-            commonWaiver {
-              name
-              waiverType
-            }
-          }
         }
       }
     }

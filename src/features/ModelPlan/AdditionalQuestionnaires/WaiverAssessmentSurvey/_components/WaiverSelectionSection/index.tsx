@@ -2,7 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
 
-import { waiverAssessmentSurveyType } from '../../WaiverSelectionAndConfirmation';
+import { filterSuggestedWaiversByType } from '../../util';
+import type { WaiverAssessmentSurveyType } from '../../WaiverSelectionAndConfirmation';
 import UnusedWaiversTable from '../UnusedWaiversTable';
 
 const WaiverSelectionSection = ({
@@ -10,10 +11,25 @@ const WaiverSelectionSection = ({
   waivers
 }: {
   waiverHeading: string;
-  waivers: waiverAssessmentSurveyType;
+  waivers: WaiverAssessmentSurveyType;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
+  );
+
+  const getWaiverType = () => {
+    if (waiverHeading === 'medicarePaymentWaivers') {
+      return 'MEDICARE_PAYMENT';
+    }
+    if (waiverHeading === 'programWaivers') {
+      return 'PROGRAM_MEDICARE_BES';
+    }
+    return 'MEDICAID_PAYMENT';
+  };
+
+  const filteredWaivers = filterSuggestedWaiversByType(
+    waivers.suggestedWaivers || [],
+    getWaiverType()
   );
 
   return (
@@ -60,7 +76,7 @@ const WaiverSelectionSection = ({
         ))}
       </div>
 
-      <UnusedWaiversTable unusedWaivers={waivers.suggestedWaivers} />
+      <UnusedWaiversTable unusedWaivers={filteredWaivers} />
     </div>
   );
 };

@@ -335,30 +335,36 @@ describe('filterSuggestedWaiversByType', () => {
     const mockSuggestedWaivers: MedicarePaymentSuggestedWaivers = [
       {
         __typename: 'SuggestedWaiver',
-        id: '',
+        id: '111',
         commonWaiver: {
           __typename: 'CommonWaiver',
           waiverType: 'MEDICARE_PAYMENT',
-          name: 'Common Waiver 1'
-        }
+          name: 'Common Waiver 1',
+          id: '123'
+        },
+        commonWaiverID: '123'
       },
       {
         __typename: 'SuggestedWaiver',
-        id: '',
+        id: '222',
         commonWaiver: {
           __typename: 'CommonWaiver',
           waiverType: 'PROGRAM_MEDICARE_BES',
-          name: 'Common Waiver 2'
-        }
+          name: 'Common Waiver 2',
+          id: '124'
+        },
+        commonWaiverID: '124'
       },
       {
         __typename: 'SuggestedWaiver',
-        id: '',
+        id: '333',
         commonWaiver: {
           __typename: 'CommonWaiver',
           waiverType: 'MEDICAID_PAYMENT',
-          name: 'Common Waiver 3'
-        }
+          name: 'Common Waiver 3',
+          id: '125'
+        },
+        commonWaiverID: '125'
       }
     ];
 
@@ -370,12 +376,14 @@ describe('filterSuggestedWaiversByType', () => {
     expect(medicareWaivers).toEqual([
       {
         __typename: 'SuggestedWaiver',
-        id: '',
+        id: '111',
         commonWaiver: {
           __typename: 'CommonWaiver',
           waiverType: 'MEDICARE_PAYMENT',
-          name: 'Common Waiver 1'
-        }
+          name: 'Common Waiver 1',
+          id: '123'
+        },
+        commonWaiverID: '123'
       }
     ]);
 
@@ -387,12 +395,14 @@ describe('filterSuggestedWaiversByType', () => {
     expect(programWaivers).toEqual([
       {
         __typename: 'SuggestedWaiver',
-        id: '',
+        id: '222',
         commonWaiver: {
           __typename: 'CommonWaiver',
           waiverType: 'PROGRAM_MEDICARE_BES',
-          name: 'Common Waiver 2'
-        }
+          name: 'Common Waiver 2',
+          id: '124'
+        },
+        commonWaiverID: '124'
       }
     ]);
 
@@ -404,12 +414,14 @@ describe('filterSuggestedWaiversByType', () => {
     expect(medicaidWaivers).toEqual([
       {
         __typename: 'SuggestedWaiver',
-        id: '',
+        id: '333',
         commonWaiver: {
           __typename: 'CommonWaiver',
           waiverType: 'MEDICAID_PAYMENT',
-          name: 'Common Waiver 3'
-        }
+          name: 'Common Waiver 3',
+          id: '125'
+        },
+        commonWaiverID: '125'
       }
     ]);
   });

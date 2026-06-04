@@ -9,7 +9,9 @@ export default gql(/* GraphQL */ `
           id
           suggestedWaivers {
             id
+            commonWaiverID
             commonWaiver {
+              id
               name
               waiverType
             }

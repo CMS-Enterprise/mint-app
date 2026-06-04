@@ -20,7 +20,7 @@ import useHandleMutation from 'hooks/useHandleMutation';
 
 import WaiverSelectionSection from '../_components/WaiverSelectionSection';
 
-export type waiverAssessmentSurveyType =
+export type WaiverAssessmentSurveyType =
   GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
 const WAIVER_HEADINGS = [
@@ -49,6 +49,9 @@ const WaiverSelectionAndConfirmation = () => {
     skip: !modelID
   });
 
+  const waiverAssessmentSurveyID =
+    data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id || '';
+
   const methods = useForm<any>({
     values: {},
     mode: 'onChange'
@@ -59,7 +62,7 @@ const WaiverSelectionAndConfirmation = () => {
   const { mutationError, loading: isSubmitting } = useHandleMutation<any>(
     TypedUpdateWaiverAssessmentSurveyDocument,
     {
-      id: '',
+      id: waiverAssessmentSurveyID,
       rhfRef: {
         initialValues: {},
         values: watch()
