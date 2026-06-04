@@ -22,10 +22,12 @@ const FormWrapper = ({
       ...defaultValues
     }
   });
+  const notUsingReason = methods.watch('notUsingReason');
 
   return (
     <FormProvider {...methods}>
       <SelectWaiverField />
+      <span data-testid="notUsingReason-value">{notUsingReason}</span>
     </FormProvider>
   );
 };
@@ -89,5 +91,20 @@ describe('SelectWaiverField', () => {
     expect(
       screen.queryByText('You said your model will use this waiver.')
     ).not.toBeInTheDocument();
+  });
+
+  it('clears notUsingReason when change response is clicked', async () => {
+    const user = userEvent.setup();
+    render(<FormWrapper />);
+
+    await user.click(screen.getByTestId('willUseWaiver-no'));
+    await user.type(screen.getByTestId('notUsingReason'), 'Some reason');
+    expect(screen.getByTestId('notUsingReason-value')).toHaveTextContent(
+      'Some reason'
+    );
+
+    await user.click(screen.getByText('Change response'));
+
+    expect(screen.getByTestId('notUsingReason-value')).toHaveTextContent('');
   });
 });

@@ -29,17 +29,21 @@ export type SelectWaiverFieldProps = {
  * Must be rendered within a react-hook-form FormProvider for willUseWaiver and notUsingReason.
  */
 const SelectWaiverField = ({ className }: SelectWaiverFieldProps) => {
-  const { t } = useTranslation('waiverAssessmentSurveyMisc');
+  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
+    'waiverAssessmentSurveyMisc'
+  );
+  const { t: generalT } = useTranslation('general');
+
   const { control, setValue, register } =
     useFormContext<WaiverSelectionFields>();
 
   return (
     <FormGroup className={className}>
       <Label id="willUseWaiverLabel" htmlFor="willUseWaiver-yes">
-        {t('waiverInfoPanel.willUseWaiverLabel')}
+        {waiverAssessmentSurveyMiscT('waiverInfoPanel.willUseWaiverLabel')}
       </Label>
       <HelpText id="willUseWaiverHelpText">
-        {t('waiverInfoPanel.willUseWaiverHelpText')}
+        {waiverAssessmentSurveyMiscT('waiverInfoPanel.willUseWaiverHelpText')}
       </HelpText>
       <Controller
         name="willUseWaiver"
@@ -63,7 +67,7 @@ const SelectWaiverField = ({ className }: SelectWaiverFieldProps) => {
                   />
                   <label className="usa-button" htmlFor="willUseWaiver-yes">
                     <Icon.Check aria-hidden />
-                    Yes
+                    {generalT('yes')}
                   </label>
                 </div>
                 <div className="mint-yes-no-button mint-yes-no-button--no">
@@ -77,7 +81,7 @@ const SelectWaiverField = ({ className }: SelectWaiverFieldProps) => {
                   />
                   <label className="usa-button" htmlFor="willUseWaiver-no">
                     <Icon.Close aria-hidden />
-                    No
+                    {generalT('no')}
                   </label>
                 </div>
               </Fieldset>
@@ -97,22 +101,33 @@ const SelectWaiverField = ({ className }: SelectWaiverFieldProps) => {
                     <Icon.Close aria-hidden className="margin-right-1" />
                   )}
                   {field.value === true
-                    ? t('waiverInfoPanel.willUseWaiver_true')
-                    : t('waiverInfoPanel.willUseWaiver_false')}
+                    ? waiverAssessmentSurveyMiscT(
+                        'waiverInfoPanel.willUseWaiver_true'
+                      )
+                    : waiverAssessmentSurveyMiscT(
+                        'waiverInfoPanel.willUseWaiver_false'
+                      )}
                 </p>
                 <Button
                   type="button"
                   className="margin-0"
                   unstyled
-                  onClick={() => setValue('willUseWaiver', null)}
+                  onClick={() => {
+                    setValue('willUseWaiver', null);
+                    setValue('notUsingReason', '');
+                  }}
                 >
-                  {t('waiverInfoPanel.changeResponse')}
+                  {waiverAssessmentSurveyMiscT(
+                    'waiverInfoPanel.changeResponse'
+                  )}
                 </Button>
 
                 {field.value === false && (
                   <FormGroup>
                     <Label htmlFor="notUsingReason">
-                      {t('waiverInfoPanel.notUsingReason')}
+                      {waiverAssessmentSurveyMiscT(
+                        'waiverInfoPanel.notUsingReason'
+                      )}
                     </Label>
                     <Textarea
                       {...register('notUsingReason')}
