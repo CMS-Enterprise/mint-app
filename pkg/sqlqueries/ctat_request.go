@@ -16,11 +16,15 @@ var ctatRequestsForAdminSQL string
 //go:embed SQL/ctat_request/create.sql
 var ctatRequestCreateSQL string
 
+//go:embed SQL/ctat_request/admin_update.sql
+var ctatRequestAdminUpdateSQL string
+
 type ctatRequestScripts struct {
 	GetByIDLoader          string
 	GetByRequesterIDLoader string
 	GetForAdmin            string
 	Create                 string
+	AdminUpdate            string
 }
 
 var CTATRequest = ctatRequestScripts{
@@ -28,4 +32,5 @@ var CTATRequest = ctatRequestScripts{
 	GetByRequesterIDLoader: ctatRequestsByRequesterIDLoaderSQL,
 	GetForAdmin:            ctatRequestsForAdminSQL,
 	Create:                 ctatRequestCreateSQL,
+	AdminUpdate:            ctatRequestAdminUpdateSQL,
 }

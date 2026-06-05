@@ -86,8 +86,11 @@ func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input model.CT
 }
 
 // AdminUpdateCTATRequest is the resolver for the adminUpdateCTATRequest field.
-func (r *mutationResolver) AdminUpdateCTATRequest(ctx context.Context, input map[string]any) (*models.CTATRequest, error) {
-	panic(fmt.Errorf("not implemented: AdminUpdateCTATRequest - adminUpdateCTATRequest"))
+func (r *mutationResolver) AdminUpdateCTATRequest(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CTATRequest, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return CTATRequestAdminUpdate(ctx, logger, id, changes, principal, r.store)
 }
 
 // CtatRequest is the resolver for the ctatRequest field.

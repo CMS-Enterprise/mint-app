@@ -238,7 +238,6 @@ input CTATRequestInput {
 Input for an admin update to a CTAT request.
 """
 input CTATAdminUpdateInput @goModel(model: "map[string]interface{}") {
-  id: UUID!
   status: CTATStatus
   assignedAdmin: String
   notes: String
@@ -253,5 +252,8 @@ extend type Query {
 
 extend type Mutation {
   createCTATRequest(input: CTATRequestInput!): CTATRequest!
-  adminUpdateCTATRequest(input: CTATAdminUpdateInput!): CTATRequest!
+  adminUpdateCTATRequest(
+    id: UUID!
+    changes: CTATAdminUpdateInput!
+  ): CTATRequest! @hasRole(role: MINT_ASSESSMENT)
 }
