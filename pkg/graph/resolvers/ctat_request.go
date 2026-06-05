@@ -54,7 +54,7 @@ func CTATRequestAdminUpdate(
 	}
 
 	if existing == nil {
-		return nil, fmt.Errorf("ctat request with id %s not found", id)
+		return nil, fmt.Errorf("ctat request with id %s not found", id.String())
 	}
 
 	if rawStatus, ok := changes["status"]; ok {
