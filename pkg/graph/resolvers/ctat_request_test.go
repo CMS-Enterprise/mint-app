@@ -10,6 +10,7 @@ import (
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
@@ -415,6 +416,8 @@ func (suite *ResolverSuite) TestCTATRequestCreate() {
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		suite.testConfigs.S3Client,
+		nil,
+		email.AddressBook{},
 	)
 	suite.NoError(err)
 	suite.NotNil(created)
@@ -457,6 +460,8 @@ func (suite *ResolverSuite) TestCTATRequestCreateDeduplicatesRelatedModelLinks()
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
 		suite.testConfigs.S3Client,
+		nil,
+		email.AddressBook{},
 	)
 	suite.NoError(err)
 	suite.NotNil(created)

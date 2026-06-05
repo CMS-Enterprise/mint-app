@@ -12,9 +12,11 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -43,6 +45,8 @@ func CTATRequestAdminUpdate(
 	changes map[string]any,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) (*models.CTATRequest, error) {
 	if !principal.AllowASSESSMENT() {
 		return nil, fmt.Errorf("user does not have permission to update admin CTAT requests")
@@ -114,7 +118,25 @@ func CTATRequestAdminUpdate(
 		return nil, err
 	}
 
-	return storage.CTATRequestAdminUpdate(store, existing)
+	updatedRequest, err := storage.CTATRequestAdminUpdate(store, existing)
+	if err != nil {
+		return nil, err
+	}
+
+	if emailService != nil {
+		go func() {
+			sendEmailErr := sendCTATUpdateEmail(ctx, emailService, addressBook, updatedRequest)
+			if sendEmailErr != nil {
+				logger.Error(
+					"failed to send CTAT update email",
+					zap.String("ctatRequestID", updatedRequest.ID.String()),
+					zap.Error(sendEmailErr),
+				)
+			}
+		}()
+	}
+
+	return updatedRequest, nil
 }
 
 // CTATRequestDocumentGetByCTATRequestIDLOADER resolves CTAT request documents by CTAT request ID using a data loader.
@@ -173,6 +195,8 @@ func CTATRequestCreate(
 	principal authentication.Principal,
 	store *storage.Store,
 	s3Client *s3.S3Client,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) (*models.CTATRequest, error) {
 	if !principal.AllowUSER() {
 		return nil, fmt.Errorf("user does not have permission to create CTAT requests")
@@ -198,7 +222,7 @@ func CTATRequestCreate(
 		}
 	}
 
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.CTATRequest, error) {
+	createdRequest, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.CTATRequest, error) {
 		createdRequest, err := storage.CTATRequestCreate(tx, request)
 		if err != nil {
 			return nil, err
@@ -220,6 +244,87 @@ func CTATRequestCreate(
 
 		return createdRequest, nil
 	})
+	if err != nil {
+		return nil, err
+	}
+
+	if emailService != nil && addressBook.MINTTeamEmail != "" {
+		go func() {
+			sendEmailErr := sendCTATSubmittedEmail(emailService, addressBook)
+			if sendEmailErr != nil {
+				logger.Error(
+					"failed to send CTAT submitted email",
+					zap.String("ctatRequestID", createdRequest.ID.String()),
+					zap.Error(sendEmailErr),
+				)
+			}
+		}()
+	}
+
+	return createdRequest, nil
+}
+
+func sendCTATSubmittedEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
+	if emailService == nil || addressBook.MINTTeamEmail == "" {
+		return nil
+	}
+
+	subjectContent := email.CTATSubmittedSubjectContent{}
+	bodyContent := email.CTATSubmittedBodyContent{}
+
+	emailSubject, emailBody, err := email.CTAT.Submitted.GetContent(subjectContent, bodyContent)
+	if err != nil {
+		return err
+	}
+
+	return emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.MINTTeamEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+}
+
+func sendCTATUpdateEmail(
+	ctx context.Context,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	ctatRequest *models.CTATRequest,
+) error {
+	if emailService == nil || ctatRequest == nil {
+		return nil
+	}
+
+	requesterAccount, err := ctatRequest.RequesterUserAccount(ctx)
+	if err != nil {
+		return err
+	}
+
+	if requesterAccount == nil || requesterAccount.Email == "" {
+		return nil
+	}
+
+	subjectContent := email.CTATUpdateSubjectContent{}
+	bodyContent := email.CTATUpdateBodyContent{}
+
+	emailSubject, emailBody, err := email.CTAT.Update.GetContent(subjectContent, bodyContent)
+	if err != nil {
+		return err
+	}
+
+	return emailService.Send(
+		addressBook.DefaultSender,
+		[]string{requesterAccount.Email},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
 }
 
 type ctatRequestDocumentUpload struct {
