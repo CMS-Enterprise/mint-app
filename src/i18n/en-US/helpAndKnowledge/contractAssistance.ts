@@ -11,7 +11,8 @@ const contractAssistance = {
     submissionDate: 'Submission date',
     contractName: 'Contract name',
     helpType: 'Help type',
-    status: 'Status'
+    status: 'Status',
+    noContractName: 'No contract name added'
   },
   adminActions: {
     title: 'Admin ticket management',
