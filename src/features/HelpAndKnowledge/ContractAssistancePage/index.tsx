@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
+import {
+  useGetCtatRequestsAdminQuery,
+  useGetCtatRequestsRequesterQuery
+} from 'gql/generated/graphql';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import PageLoading from 'components/PageLoading';
 import { isAssessment } from 'utils/user';
 
 import AdminTicketManagementSection from './_components/AdminTicketManagementSection';
 import UserSubmittedTicketsSection from './_components/UserSubmittedTicketsSection';
-import { ContractAssistanceTicket } from './constants';
+import { mapCtatRequestsToContractAssistanceTickets } from './utils';
 
 const ContractAssistancePage = () => {
   const { t } = useTranslation('contractAssistance');
@@ -21,8 +27,46 @@ const ContractAssistancePage = () => {
   const flags = useFlags();
   const isAssessmentTeam = isAssessment(groups, flags);
 
-  const adminTickets: ContractAssistanceTicket[] = [];
-  const userTickets: ContractAssistanceTicket[] = [];
+  const {
+    data: requesterData,
+    loading: requesterLoading,
+    error: requesterError
+  } = useGetCtatRequestsRequesterQuery();
+
+  const {
+    data: adminData,
+    loading: adminLoading,
+    error: adminError
+  } = useGetCtatRequestsAdminQuery({
+    skip: !isAssessmentTeam
+  });
+
+  const userTickets = useMemo(
+    () =>
+      mapCtatRequestsToContractAssistanceTickets(
+        requesterData?.ctatRequestsRequester.ctatRequests ?? []
+      ),
+    [requesterData]
+  );
+
+  const adminTickets = useMemo(
+    () =>
+      mapCtatRequestsToContractAssistanceTickets(
+        adminData?.ctatRequestsAdmin.ctatRequests ?? []
+      ),
+    [adminData]
+  );
+
+  const loading = requesterLoading || (isAssessmentTeam && adminLoading);
+  const error = requesterError || adminError;
+
+  if (loading) {
+    return <PageLoading />;
+  }
+
+  if (error) {
+    return <NotFound errorMessage={error.message} />;
+  }
 
   return (
     <MainContent>

@@ -1,10 +1,12 @@
 export type ContractAssistanceTicket = {
+  id: string;
   ticketId: string;
   submissionDate: string;
   contractName: string;
   helpType: string;
   status: string;
-  assigneeId?: string | null;
+  assigneeId: string | null;
+  assigneeName: string | null;
 };
 
 export const CONTRACT_ASSISTANCE_TICKET_STATUS = {
