@@ -54,7 +54,7 @@ const LearnMoreButton = ({
   );
 };
 
-type SelectedWaiver =
+export type SelectedWaiver =
   GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey']['waivers'][number];
 
 type ColumnType = SelectedWaiver & { actions: unknown };
