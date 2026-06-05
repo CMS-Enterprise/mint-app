@@ -14,16 +14,20 @@ const MOCK_SELECTED_WAIVERS: MedicarePaymentSuggestedWaivers = [
     id: '456',
     commonWaiver: {
       __typename: 'CommonWaiver',
-      name: 'short Waiver 2'
-    }
+      name: 'short Waiver 2',
+      id: '123'
+    },
+    commonWaiverID: '1123'
   },
   {
     __typename: 'SuggestedWaiver',
     id: '789',
     commonWaiver: {
       __typename: 'CommonWaiver',
-      name: 'Waiver 3'
-    }
+      name: 'Waiver 3',
+      id: '124'
+    },
+    commonWaiverID: '1124'
   }
 ];
 

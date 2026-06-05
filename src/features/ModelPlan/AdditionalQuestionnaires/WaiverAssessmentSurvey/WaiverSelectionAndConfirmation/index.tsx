@@ -1,0 +1,145 @@
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Fieldset, Form } from '@trussworks/react-uswds';
+import NotFoundPartial from 'features/NotFound/NotFoundPartial';
+import {
+  GetWaiversQuery,
+  TypedUpdateWaiverAssessmentSurveyDocument,
+  useGetWaiversQuery
+} from 'gql/generated/graphql';
+
+import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import FormFooter from 'components/FormFooter';
+import FormHeader from 'components/FormHeader';
+import MutationErrorModal from 'components/MutationErrorModal';
+import PageNumber from 'components/PageNumber';
+import Spinner from 'components/Spinner';
+import useHandleMutation from 'hooks/useHandleMutation';
+
+import WaiverSelectionSection from '../_components/WaiverSelectionSection';
+
+export type WaiverAssessmentSurveyType =
+  GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
+
+const WAIVER_HEADINGS = [
+  'medicarePaymentWaivers',
+  'programWaivers',
+  'medicaidPaymentWaivers'
+] as const;
+
+const WaiverSelectionAndConfirmation = () => {
+  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
+    'waiverAssessmentSurveyMisc'
+  );
+
+  const { t: additionalQuestionnairesT } = useTranslation(
+    'additionalQuestionnaires'
+  );
+
+  const { modelID = '' } = useParams<{ modelID: string }>();
+
+  const navigate = useNavigate();
+
+  const { data, loading, error } = useGetWaiversQuery({
+    variables: {
+      id: modelID
+    },
+    skip: !modelID
+  });
+
+  const waiverAssessmentSurveyID =
+    data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id || '';
+
+  const methods = useForm<any>({
+    values: {},
+    mode: 'onChange'
+  });
+
+  const { handleSubmit, watch } = methods;
+
+  const { mutationError, loading: isSubmitting } = useHandleMutation<any>(
+    TypedUpdateWaiverAssessmentSurveyDocument,
+    {
+      id: waiverAssessmentSurveyID,
+      rhfRef: {
+        initialValues: {},
+        values: watch()
+      }
+    }
+  );
+
+  if (loading) {
+    return <Spinner size="large" />;
+  }
+
+  if (error || !data?.modelPlan?.questionnaires?.waiverAssessmentSurvey) {
+    return <NotFoundPartial errorMessage={error?.message} />;
+  }
+
+  return (
+    <div className="mint-body-normal">
+      <FormHeader
+        header={waiverAssessmentSurveyMiscT(
+          'waiverSelectionAndConfirmation.heading'
+        )}
+        currentPage={6}
+        totalPages={7}
+      />
+
+      <p className="margin-top-neg-1 margin-bottom-5 text-base-dark">
+        {waiverAssessmentSurveyMiscT(
+          'waiverSelectionAndConfirmation.description'
+        )}
+      </p>
+
+      <div>
+        <FormProvider {...methods}>
+          <MutationErrorModal
+            isOpen={mutationError.isModalOpen}
+            closeModal={mutationError.closeModal}
+            url={mutationError.destinationURL}
+          />
+
+          <Form
+            id="waiver-assessment-survey-waiver-selection-and-confirmation-form"
+            data-testid="waiver-assessment-survey-waiver-selection-and-confirmation-form"
+            className="maxw-none"
+            onSubmit={handleSubmit(() => {
+              navigate(
+                `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/confirm-your-waiver-selections`
+              );
+            })}
+          >
+            <Fieldset>
+              <ConfirmLeaveRHF />
+
+              {WAIVER_HEADINGS.map(waiverHeading => (
+                <WaiverSelectionSection
+                  key={waiverHeading}
+                  waiverHeading={waiverHeading}
+                  waivers={data.modelPlan.questionnaires.waiverAssessmentSurvey}
+                />
+              ))}
+
+              <FormFooter
+                id="waiver-assessment-survey-waiver-selection-and-confirmation-form"
+                homeArea={additionalQuestionnairesT(
+                  'saveAndReturnToQuestionnaires'
+                )}
+                homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
+                backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicaid-payment-waivers`}
+                nextPage
+                disabled={isSubmitting}
+              />
+            </Fieldset>
+          </Form>
+        </FormProvider>
+        <PageNumber currentPage={6} totalPages={7} className="margin-y-6" />
+      </div>
+    </div>
+  );
+};
+
+export default WaiverSelectionAndConfirmation;

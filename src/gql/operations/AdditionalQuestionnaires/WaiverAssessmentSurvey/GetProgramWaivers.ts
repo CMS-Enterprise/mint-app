@@ -9,8 +9,11 @@ export default gql(/* GraphQL */ `
           id
           suggestedWaivers {
             id
+            commonWaiverID
             commonWaiver {
+              id
               name
+              waiverType
             }
           }
           # Page 4 - Program waivers (Medicare Benefit Enhancements)

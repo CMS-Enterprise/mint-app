@@ -19,6 +19,7 @@ import MedicaidPaymentWaivers from './MedicaidPaymentWaivers';
 import MedicarePaymentWaivers from './MedicarePaymentWaivers';
 import ModelPlanQuestions from './ModelPlanQuestions';
 import ProgramWaivers from './ProgramWaivers';
+import WaiverSelectionAndConfirmation from './WaiverSelectionAndConfirmation';
 
 const WaiverAssessmentSurvey = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -121,7 +122,7 @@ export const waiverAssessmentSurveyRoutes = {
     },
     {
       path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation',
-      element: <>Waiver selection and confirmation</>
+      element: <WaiverSelectionAndConfirmation />
     },
     {
       path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/confirm-your-waiver-selections',
