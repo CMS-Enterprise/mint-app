@@ -37,7 +37,7 @@ func CTATRequestAdminUpdate(np sqlutils.NamedPreparer, request *models.CTATReque
 	}
 
 	if request.ID == uuid.Nil {
-		return nil, errors.New("ctat request ID cannot be nil")
+		return nil, errors.New("ctat request ID cannot be empty")
 	}
 
 	updatedRequest, procErr := sqlutils.GetProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.AdminUpdate, request)
