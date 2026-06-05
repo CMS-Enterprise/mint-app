@@ -10,7 +10,6 @@ import {
   TranslationFieldPropertiesWithOptions
 } from 'types/translation';
 
-import { filterGroupKey } from '../FilterView/BodyContent/_filterGroupMapping';
 import {
   formatID,
   formatListValues,
@@ -26,7 +25,6 @@ type SimpleReadOnlySectionProps<
   field: string; // Any gql field name
   translations: Record<string, TranslationConfigType<T, C>>;
   values: any;
-  filteredView?: keyof typeof filterGroupKey;
 };
 
 const SimpleReadOnlySection = <
@@ -35,8 +33,7 @@ const SimpleReadOnlySection = <
 >({
   field,
   translations,
-  values,
-  filteredView
+  values
 }: SimpleReadOnlySectionProps<T, C>): React.ReactElement | null => {
   const config = translations[field];
 

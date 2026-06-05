@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
@@ -41,8 +41,12 @@ const ReadOnlyWaiverAssessmentSurvey = ({
     isNewModel: generalCharacteristicsConfig.isNewModel,
     existingModel: generalCharacteristicsConfig.existingModel,
     resemblesExistingModel: generalCharacteristicsConfig.resemblesExistingModel,
+    resemblesExistingModelWhich:
+      generalCharacteristicsConfig.resemblesExistingModelWhich,
     participationInModelPrecondition:
       generalCharacteristicsConfig.participationInModelPrecondition,
+    participationInModelPreconditionWhich:
+      generalCharacteristicsConfig.participationInModelPreconditionWhich,
     keyCharacteristics: generalCharacteristicsConfig.keyCharacteristics,
     keyCharacteristicsOther:
       generalCharacteristicsConfig.keyCharacteristicsOther,
@@ -105,6 +109,41 @@ const ReadOnlyWaiverAssessmentSurvey = ({
     }
   });
 
+  const {
+    resemblesExistingModelWhich,
+    resemblesExistingModelOtherSelected,
+    participationInModelPreconditionWhich,
+    participationInModelPreconditionOtherSelected
+  } = data?.modelPlan?.generalCharacteristics || {};
+
+  // Add 'Other' to the resemblesExistingModelWhich list if resemblesExistingModelOtherSelected is true
+  const linkedResemblePlans = useMemo(() => {
+    const resemblesExistingModelWhichCopy = { ...resemblesExistingModelWhich }
+      .names;
+    const selectedPlans = [...(resemblesExistingModelWhichCopy || [])];
+    if (resemblesExistingModelOtherSelected) {
+      selectedPlans?.push('Other');
+    }
+    return selectedPlans;
+  }, [resemblesExistingModelWhich, resemblesExistingModelOtherSelected]);
+
+  // Add 'Other' to the participationInModelPrecondition list if participationInModelPreconditionOtherSelected is true
+  const participationPreconditionPlans = useMemo(() => {
+    const participationInModelPreconditionWhichCopy = {
+      ...participationInModelPreconditionWhich
+    }.names;
+    const selectedPlans = [
+      ...(participationInModelPreconditionWhichCopy || [])
+    ];
+    if (participationInModelPreconditionOtherSelected) {
+      selectedPlans?.push('Other');
+    }
+    return selectedPlans;
+  }, [
+    participationInModelPreconditionWhich,
+    participationInModelPreconditionOtherSelected
+  ]);
+
   const surveyQuestionsConfig = {
     modePlanQuestions: {
       heading: waiverAssessmentSurveyMiscT('modelPlanQuestions.heading'),
@@ -134,7 +173,9 @@ const ReadOnlyWaiverAssessmentSurvey = ({
 
   const modelQuestionsData = {
     ...data.modelPlan.basics,
-    ...data.modelPlan.generalCharacteristics
+    ...data.modelPlan.generalCharacteristics,
+    resemblesExistingModelWhich: linkedResemblePlans,
+    participationInModelPreconditionWhich: participationPreconditionPlans
   };
 
   const allWaiverAssessmentSurveyData =

@@ -21,22 +21,14 @@ export default gql(/* GraphQL */ `
         resemblesExistingModelWhyHow
         resemblesExistingModelHow
         resemblesExistingModelWhich {
-          links {
-            id
-            existingModelID
-            currentModelPlanID
-          }
+          names
         }
         resemblesExistingModelOtherSpecify
         resemblesExistingModelOtherSelected
         resemblesExistingModelOtherOption
         participationInModelPrecondition
         participationInModelPreconditionWhich {
-          links {
-            id
-            existingModelID
-            currentModelPlanID
-          }
+          names
         }
         participationInModelPreconditionOtherSpecify
         participationInModelPreconditionOtherSelected
