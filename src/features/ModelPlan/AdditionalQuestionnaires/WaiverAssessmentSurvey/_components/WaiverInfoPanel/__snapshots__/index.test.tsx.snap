@@ -182,13 +182,13 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
                     No
                   </dd>
                 </dl>
-                <div
-                  class="mint-divider margin-top-3 margin-bottom-4"
-                />
                 <form
                   class="usa-form maxw-none"
                   data-testid="form"
                 >
+                  <div
+                    class="mint-divider margin-top-3 margin-bottom-4"
+                  />
                   <div
                     class="usa-form-group"
                     data-testid="formGroup"

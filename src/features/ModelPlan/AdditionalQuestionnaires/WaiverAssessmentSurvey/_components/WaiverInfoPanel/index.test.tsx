@@ -122,6 +122,34 @@ describe('WaiverInfoPanel', () => {
     });
   });
 
+  it('hides waiver select actions on readview', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/read-view',
+          element: <WaiverInfoPanel waiverInfo={defaultWaiverInfo} />
+        }
+      ],
+      {
+        initialEntries: [`/read-view/?waiverId=${waiverId}`]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={[getCommonWaiver()]}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Test Waiver')).toBeInTheDocument();
+
+      expect(
+        screen.queryByText('Do you plan to use this waiver with your model?')
+      ).not.toBeInTheDocument();
+    });
+  });
+
   it('matches snapshot when open', async () => {
     const { asFragment } = renderPanel({ search: `waiverId=${waiverId}` });
 
