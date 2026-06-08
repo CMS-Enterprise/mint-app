@@ -70,7 +70,7 @@ export const cmmiDivisions: Record<CtatcmmiDivisionOption, string> = {
   [CtatcmmiDivisionOption.SCMG_DFR]: 'Division of Financial Risk (SCMG/DFR)',
   [CtatcmmiDivisionOption.SCMG_DSI]:
     'Division of Seamless Infrastructure (SCMG/DSI)',
-  [CtatcmmiDivisionOption.SCMG_DDI]: 'Division of Drug Innovation (SCMG-DDI)',
+  [CtatcmmiDivisionOption.SCMG_DDI]: 'Division of Drug Innovation (SCMG/DDI)',
   [CtatcmmiDivisionOption.SPHG_DMPM]:
     'Division of Multi-Payer Models (SPHG/DMPM)',
   [CtatcmmiDivisionOption.SPHG_DHII]:

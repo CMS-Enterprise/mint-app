@@ -28,7 +28,7 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           &cmmiDivision,
 		ContractName:           zero.StringFrom(contractName),
-		TypeOfHelpNeeded:       models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRfi},
+		TypeOfHelpNeeded:       models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRFI},
 		DescribeHelpNeeded:     "Need help creating a CTAT request through storage.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,
 		DateAssistanceNeededBy: time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC),
@@ -48,7 +48,7 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 	s.Greater(created.HumanReadableIDNumber, 0)
 	s.Equal(zero.StringFrom(contractName), created.ContractName)
 	s.Equal(
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		[]models.CTATHelpNeededType(created.TypeOfHelpNeeded),
 	)
 }
@@ -70,7 +70,7 @@ func (s *StoreTestSuite) TestCTATRequestModelPlanLinkCreate() {
 		actorUserID,
 		time.Date(2026, 1, 18, 9, 0, 0, 0, time.UTC),
 		"Link create contract",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
 		models.CTATStatusNew,
 	)
 	modelPlan := models.NewModelPlan(actorUserID, "CTAT create link test model")
@@ -111,7 +111,7 @@ func (s *StoreTestSuite) TestCTATRequestDocumentCreate() {
 		actorUserID,
 		time.Date(2026, 1, 19, 9, 0, 0, 0, time.UTC),
 		"Document create contract",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRfq},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRFQ},
 		models.CTATStatusAssigned,
 	)
 
@@ -168,8 +168,8 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	createdDts := time.Date(2026, 1, 15, 9, 30, 0, 0, time.UTC)
 	contractName := "Requester A contract"
 	expectedTypeOfHelpNeeded := []models.CTATHelpNeededType{
-		models.CTATHelpNeededTypeRequestForInformationRfi,
-		models.CTATHelpNeededTypeRequestForQuotationRfq,
+		models.CTATHelpNeededTypeRequestForInformationRFI,
+		models.CTATHelpNeededTypeRequestForQuotationRFQ,
 	}
 	expected := insertCTATRequestTestRow(
 		s,
@@ -205,7 +205,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 		actorUserID,
 		createdDts.Add(2*time.Hour),
 		"Requester B contract",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
 		models.CTATStatusNew,
 	)
 	insertCTATRequestDocumentTestRow(
@@ -248,8 +248,8 @@ func (s *StoreTestSuite) TestCTATRequestGetByIDLOADERReturnsExpectedRow() {
 	createdDts := time.Date(2026, 1, 15, 9, 30, 0, 0, time.UTC)
 	contractName := "Get by ID contract"
 	expectedTypeOfHelpNeeded := []models.CTATHelpNeededType{
-		models.CTATHelpNeededTypeRequestForInformationRfi,
-		models.CTATHelpNeededTypeRequestForQuotationRfq,
+		models.CTATHelpNeededTypeRequestForInformationRFI,
+		models.CTATHelpNeededTypeRequestForQuotationRFQ,
 	}
 	expected := insertCTATRequestTestRow(
 		s,
@@ -297,7 +297,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADEROrdersNewestFirst(
 		actorUserID,
 		time.Date(2026, 1, 15, 9, 0, 0, 0, time.UTC),
 		"Oldest contract",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
 	)
 	second := insertCTATRequestTestRow(
@@ -307,7 +307,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADEROrdersNewestFirst(
 		actorUserID,
 		time.Date(2026, 1, 15, 11, 0, 0, 0, time.UTC),
 		"Middle contract",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
 		models.CTATStatusAssigned,
 	)
 	third := insertCTATRequestTestRow(
@@ -317,7 +317,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADEROrdersNewestFirst(
 		actorUserID,
 		time.Date(2026, 1, 15, 13, 0, 0, 0, time.UTC),
 		"Newest contract",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRfq},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRFQ},
 		models.CTATStatusClosed,
 	)
 
@@ -349,7 +349,7 @@ func (s *StoreTestSuite) TestCTATRequestCollectionGetForAdminReturnsAllRows() {
 		actorUserID,
 		time.Date(2026, 1, 16, 8, 0, 0, 0, time.UTC),
 		"Admin contract A1",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
 	)
 	second := insertCTATRequestTestRow(
@@ -359,7 +359,7 @@ func (s *StoreTestSuite) TestCTATRequestCollectionGetForAdminReturnsAllRows() {
 		actorUserID,
 		time.Date(2026, 1, 16, 9, 0, 0, 0, time.UTC),
 		"Admin contract A2",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRfp},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
 		models.CTATStatusAssigned,
 	)
 	third := insertCTATRequestTestRow(
@@ -369,7 +369,7 @@ func (s *StoreTestSuite) TestCTATRequestCollectionGetForAdminReturnsAllRows() {
 		actorUserID,
 		time.Date(2026, 1, 16, 10, 0, 0, 0, time.UTC),
 		"Admin contract B1",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRfq},
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRFQ},
 		models.CTATStatusClosed,
 	)
 
