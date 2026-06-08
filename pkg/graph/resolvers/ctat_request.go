@@ -62,6 +62,8 @@ func CTATRequestAdminUpdate(
 		return nil, fmt.Errorf("ctat request with id %s not found", id.String())
 	}
 
+	originalRequest := *existing
+
 	if rawStatus, ok := changes["status"]; ok {
 		status, ok := rawStatus.(*models.CTATStatus)
 		if !ok {
@@ -126,7 +128,7 @@ func CTATRequestAdminUpdate(
 
 	if emailService != nil {
 		go func() {
-			sendEmailErr := sendCTATUpdateEmail(ctx, emailService, addressBook, updatedRequest)
+			sendEmailErr := sendCTATUpdateEmail(ctx, emailService, addressBook, &originalRequest, updatedRequest)
 			if sendEmailErr != nil {
 				logger.Error(
 					"failed to send CTAT update email",
@@ -265,6 +267,64 @@ func CTATRequestCreate(
 	return createdRequest, nil
 }
 
+func buildCTATSubmittedBodyContent(
+	ctx context.Context,
+	emailService oddmail.EmailService,
+	ctatRequest *models.CTATRequest,
+) (email.CTATSubmittedBodyContent, error) {
+	if emailService == nil || ctatRequest == nil {
+		return email.CTATSubmittedBodyContent{}, nil
+	}
+
+	requesterAccount, err := ctatRequest.RequesterUserAccount(ctx)
+	if err != nil {
+		return email.CTATSubmittedBodyContent{}, err
+	}
+
+	relatedModels, err := CTATRelatedMINTModelsGetByCTATRequestIDLOADER(ctx, ctatRequest.ID)
+	if err != nil {
+		return email.CTATSubmittedBodyContent{}, err
+	}
+
+	documents, err := CTATRequestDocumentGetByCTATRequestIDLOADER(ctx, ctatRequest.ID)
+	if err != nil {
+		return email.CTATSubmittedBodyContent{}, err
+	}
+
+	bodyContent := email.CTATSubmittedBodyContent{
+		ClientAddress:          emailService.GetConfig().GetClientAddress(),
+		ModelID:                ctatRequest.ID.String(),
+		TicketNumber:           ctatRequest.HumanReadableID(),
+		CMMIGroup:              ctatRequest.CmmiGroup.Humanize(),
+		RelatedMINTModels:      strings.Join(lo.Map(relatedModels, func(item *models.ModelPlan, _ int) string { return item.ModelName }), ", "),
+		ContractName:           ctatRequest.ContractName.String,
+		TypeOfHelpNeeded:       strings.Join(lo.Map(ctatRequest.TypeOfHelpNeeded, func(item models.CTATHelpNeededType, _ int) string { return item.Humanize() }), ", "),
+		DescribeHelpNeeded:     ctatRequest.DescribeHelpNeeded,
+		RequestUrgency:         ctatRequest.RequestUrgency.Humanize(),
+		DateAssistanceNeededBy: ctatRequest.DateAssistanceNeededBy.Format("01/02/2006"),
+		UploadedFiles:          strings.Join(lo.Map(documents, func(item *models.CTATRequestDocument, _ int) string { return item.FileName }), ", "),
+	}
+
+	if requesterAccount != nil {
+		bodyContent.RequesterName = requesterAccount.CommonName
+		bodyContent.RequesterEmail = requesterAccount.Email
+	}
+
+	if ctatRequest.CmmiDivision != nil {
+		bodyContent.CMMIDivision = ctatRequest.CmmiDivision.Humanize()
+	}
+
+	if ctatRequest.ContractActivityType != nil {
+		bodyContent.ContractActivityType = ctatRequest.ContractActivityType.Humanize()
+	}
+
+	if ctatRequest.ContractType != nil {
+		bodyContent.ContractType = ctatRequest.ContractType.Humanize()
+	}
+
+	return bodyContent, nil
+}
+
 func sendCTATSubmittedEmail(
 	ctx context.Context,
 	emailService oddmail.EmailService,
@@ -275,41 +335,13 @@ func sendCTATSubmittedEmail(
 		return nil
 	}
 
-	requesterAccount, err := ctatRequest.RequesterUserAccount(ctx)
-	if err != nil {
-		return err
-	}
-
-	relatedModels, err := CTATRelatedMINTModelsGetByCTATRequestIDLOADER(ctx, ctatRequest.ID)
-	if err != nil {
-		return err
-	}
-
-	documents, err := CTATRequestDocumentGetByCTATRequestIDLOADER(ctx, ctatRequest.ID)
-	if err != nil {
-		return err
-	}
-
 	subjectContent := email.CTATSubmittedSubjectContent{
 		TicketNumber: ctatRequest.HumanReadableID(),
 	}
-	bodyContent := email.CTATSubmittedBodyContent{
-		ClientAddress:          emailService.GetConfig().GetClientAddress(),
-		ModelID:                ctatRequest.ID.String(),
-		TicketNumber:           ctatRequest.HumanReadableID(),
-		RequesterName:          userAccountCommonName(requesterAccount),
-		RequesterEmail:         userAccountEmail(requesterAccount),
-		CMMIGroup:              string(ctatRequest.CmmiGroup),
-		CMMIDivision:           stringValue(ctatRequest.CmmiDivision),
-		RelatedMINTModels:      strings.Join(lo.Map(relatedModels, func(item *models.ModelPlan, _ int) string { return item.ModelName }), ", "),
-		ContractActivityType:   stringValue(ctatRequest.ContractActivityType),
-		ContractName:           ctatRequest.ContractName.String,
-		ContractType:           stringValue(ctatRequest.ContractType),
-		TypeOfHelpNeeded:       strings.Join(lo.Map(ctatRequest.TypeOfHelpNeeded, func(item models.CTATHelpNeededType, _ int) string { return string(item) }), ", "),
-		DescribeHelpNeeded:     ctatRequest.DescribeHelpNeeded,
-		RequestUrgency:         string(ctatRequest.RequestUrgency),
-		DateAssistanceNeededBy: ctatRequest.DateAssistanceNeededBy.Format("01/02/2006"),
-		UploadedFiles:          strings.Join(lo.Map(documents, func(item *models.CTATRequestDocument, _ int) string { return item.FileName }), ", "),
+
+	bodyContent, err := buildCTATSubmittedBodyContent(ctx, emailService, ctatRequest)
+	if err != nil {
+		return err
 	}
 
 	emailSubject, emailBody, err := email.CTAT.Submitted.GetContent(subjectContent, bodyContent)
@@ -327,41 +359,35 @@ func sendCTATSubmittedEmail(
 	)
 }
 
-func userAccountCommonName(account *authentication.UserAccount) string {
-	if account == nil {
-		return ""
+func uuidPointersEqual(first *uuid.UUID, second *uuid.UUID) bool {
+	if first == nil && second == nil {
+		return true
 	}
 
-	return account.CommonName
-}
-
-func userAccountEmail(account *authentication.UserAccount) string {
-	if account == nil {
-		return ""
+	if first == nil || second == nil {
+		return false
 	}
 
-	return account.Email
-}
-
-func stringValue[T ~string](value *T) string {
-	if value == nil {
-		return ""
-	}
-
-	return string(*value)
+	return *first == *second
 }
 
 func sendCTATUpdateEmail(
 	ctx context.Context,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
-	ctatRequest *models.CTATRequest,
+	originalRequest *models.CTATRequest,
+	updatedRequest *models.CTATRequest,
 ) error {
-	if emailService == nil || ctatRequest == nil {
+	if emailService == nil || originalRequest == nil || updatedRequest == nil {
 		return nil
 	}
 
-	requesterAccount, err := ctatRequest.RequesterUserAccount(ctx)
+	bodySummary, err := buildCTATSubmittedBodyContent(ctx, emailService, updatedRequest)
+	if err != nil {
+		return err
+	}
+
+	requesterAccount, err := updatedRequest.RequesterUserAccount(ctx)
 	if err != nil {
 		return err
 	}
@@ -370,10 +396,45 @@ func sendCTATUpdateEmail(
 		return nil
 	}
 
-	subjectContent := email.CTATUpdateSubjectContent{
-		TicketNumber: ctatRequest.HumanReadableID(),
+	assignedAdminAccount, err := updatedRequest.AssignedAdminUserAccount(ctx)
+	if err != nil {
+		return err
 	}
-	bodyContent := email.CTATUpdateBodyContent{}
+
+	subjectContent := email.CTATUpdateSubjectContent{
+		TicketNumber: updatedRequest.HumanReadableID(),
+	}
+
+	bodyContent := email.CTATUpdateBodyContent{
+		Status:                    updatedRequest.Status.Humanize(),
+		StatusUpdated:             originalRequest.Status != updatedRequest.Status,
+		AssignedTeamMemberUpdated: !uuidPointersEqual(originalRequest.AssignedAdmin, updatedRequest.AssignedAdmin),
+		ProgressNotesUpdated:      originalRequest.Notes.String != updatedRequest.Notes.String,
+		ProgressNotes:             updatedRequest.Notes.String,
+		ResolutionUpdated:         originalRequest.Resolution.String != updatedRequest.Resolution.String,
+		Resolution:                updatedRequest.Resolution.String,
+		ClientAddress:             bodySummary.ClientAddress,
+		ModelID:                   bodySummary.ModelID,
+		TicketNumber:              bodySummary.TicketNumber,
+		RequesterName:             bodySummary.RequesterName,
+		RequesterEmail:            bodySummary.RequesterEmail,
+		CMMIGroup:                 bodySummary.CMMIGroup,
+		CMMIDivision:              bodySummary.CMMIDivision,
+		RelatedMINTModels:         bodySummary.RelatedMINTModels,
+		ContractActivityType:      bodySummary.ContractActivityType,
+		ContractName:              bodySummary.ContractName,
+		ContractType:              bodySummary.ContractType,
+		TypeOfHelpNeeded:          bodySummary.TypeOfHelpNeeded,
+		DescribeHelpNeeded:        bodySummary.DescribeHelpNeeded,
+		RequestUrgency:            bodySummary.RequestUrgency,
+		DateAssistanceNeededBy:    bodySummary.DateAssistanceNeededBy,
+		UploadedFiles:             bodySummary.UploadedFiles,
+	}
+
+	if assignedAdminAccount != nil {
+		bodyContent.AssignedTeamMemberName = assignedAdminAccount.CommonName
+		bodyContent.AssignedTeamMemberEmail = assignedAdminAccount.Email
+	}
 
 	emailSubject, emailBody, err := email.CTAT.Update.GetContent(subjectContent, bodyContent)
 	if err != nil {
