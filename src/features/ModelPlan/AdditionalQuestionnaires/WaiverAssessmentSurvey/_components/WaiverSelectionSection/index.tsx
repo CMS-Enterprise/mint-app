@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Icon } from '@trussworks/react-uswds';
+import type { SuggestedCommonWaiverFragment } from 'gql/generated/graphql';
 
 import { filterSuggestedWaiversByType } from '../../util';
 import type { WaiverAssessmentSurveyType } from '../../WaiverSelectionAndConfirmation';
@@ -8,10 +9,12 @@ import UnusedWaiversTable from '../UnusedWaiversTable';
 
 const WaiverSelectionSection = ({
   waiverHeading,
-  waivers
+  waivers,
+  suggestedCommonWaivers
 }: {
   waiverHeading: string;
   waivers: WaiverAssessmentSurveyType;
+  suggestedCommonWaivers: SuggestedCommonWaiverFragment[];
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
@@ -28,7 +31,7 @@ const WaiverSelectionSection = ({
   };
 
   const filteredWaivers = filterSuggestedWaiversByType(
-    waivers.suggestedWaivers || [],
+    suggestedCommonWaivers,
     getWaiverType()
   );
 

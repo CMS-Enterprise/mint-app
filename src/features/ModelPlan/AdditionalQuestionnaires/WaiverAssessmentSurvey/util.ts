@@ -1,4 +1,7 @@
-import { GetModelPlanQuestionsQuery } from 'gql/generated/graphql';
+import {
+  GetModelPlanQuestionsQuery,
+  SuggestedCommonWaiverFragment
+} from 'gql/generated/graphql';
 
 import {
   isTranslationFieldPropertiesWithOptions,
@@ -15,9 +18,6 @@ import {
   QuestionFieldType,
   QuestionType
 } from './_components/ModelPlanQuestionsForm/questionMap';
-import type { MedicaidPaymentSuggestedWaivers } from './MedicaidPaymentWaivers';
-import type { MedicarePaymentSuggestedWaivers } from './MedicarePaymentWaivers';
-import type { ProgramSuggestedWaivers } from './ProgramWaivers';
 
 /**
  * Maps translation config field
@@ -373,13 +373,8 @@ export const getDeepChildFields = (
 };
 
 export const filterSuggestedWaiversByType = (
-  suggestedWaivers:
-    | MedicarePaymentSuggestedWaivers
-    | ProgramSuggestedWaivers
-    | MedicaidPaymentSuggestedWaivers,
+  suggestedWaivers: SuggestedCommonWaiverFragment[],
   waiverType: 'MEDICARE_PAYMENT' | 'MEDICAID_PAYMENT' | 'PROGRAM_MEDICARE_BES'
 ) => {
-  return suggestedWaivers.filter(
-    waiver => waiver.commonWaiver.waiverType === waiverType
-  );
+  return suggestedWaivers.filter(waiver => waiver.waiverType === waiverType);
 };

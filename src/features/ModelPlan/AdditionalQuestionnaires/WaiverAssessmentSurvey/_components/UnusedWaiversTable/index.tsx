@@ -2,10 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Column, Row, useSortBy, useTable } from 'react-table';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import { SuggestedCommonWaiverFragment } from 'gql/generated/graphql';
 
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
-
-import type { WaiverAssessmentSurveyType } from '../../WaiverSelectionAndConfirmation';
 
 const LearnMoreButton = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -59,7 +58,7 @@ const IPlanToUseButton = () => {
   );
 };
 
-type UnusedWaiverType = WaiverAssessmentSurveyType['suggestedWaivers'][number];
+type UnusedWaiverType = SuggestedCommonWaiverFragment[][number];
 type ColumnType = UnusedWaiverType & { actions: unknown };
 
 const UnusedWaiversTable = ({
@@ -77,7 +76,7 @@ const UnusedWaiversTable = ({
         Header: waiverAssessmentSurveyMiscT(
           'waiverSelectionAndConfirmation.unusedWaiver.name'
         ),
-        accessor: row => row.commonWaiver.name
+        accessor: row => row.name
       },
       {
         Header: waiverAssessmentSurveyMiscT(

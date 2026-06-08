@@ -299,9 +299,12 @@ const medicarePaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
         bundlesPaymentsWhyNot: NotSelectedReason.FEEDBACK_AGAINST_USE,
         offersRiskSharingArrangements: null,
         offersRiskSharingArrangementsExample: '',
-        offersRiskSharingArrangementsWhyNot: null,
-        suggestedWaivers: []
+        offersRiskSharingArrangementsWhyNot: null
       }
+    },
+    waiverInfo: {
+      __typename: 'WaiverInfo',
+      suggestedCommonWaivers: []
     }
   }
 };
@@ -331,7 +334,6 @@ const programWaiversDataMocks: GetProgramWaiversQuery = {
       waiverAssessmentSurvey: {
         __typename: 'WaiverAssessmentSurvey',
         id: '123',
-        suggestedWaivers: [],
         impactsSiteOfCarePayments: true,
         impactsSiteOfCarePaymentsExample: 'Example',
         impactsSiteOfCarePaymentsWhyNot: null,
@@ -346,6 +348,10 @@ const programWaiversDataMocks: GetProgramWaiversQuery = {
         modifiesQualityMeasurementsOrPaymentsViaWaiversExample: '',
         modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: null
       }
+    },
+    waiverInfo: {
+      __typename: 'WaiverInfo',
+      suggestedCommonWaivers: []
     }
   }
 };
@@ -375,7 +381,6 @@ const medicaidPaymentWaiversDataMocks: GetMedicaidPaymentWaiversQuery = {
       waiverAssessmentSurvey: {
         __typename: 'WaiverAssessmentSurvey',
         id: '123',
-        suggestedWaivers: [],
         impactsMedicaidOnlyBeneficiaries: true,
         impactsMedicaidOnlyBeneficiariesExample: 'Example',
         impactsMedicaidOnlyBeneficiariesWhyNot: null,
@@ -388,6 +393,10 @@ const medicaidPaymentWaiversDataMocks: GetMedicaidPaymentWaiversQuery = {
         impactsManagedCareWaiversWhyNot: null,
         additionalMedicaidSpecificWaivers: ''
       }
+    },
+    waiverInfo: {
+      __typename: 'WaiverInfo',
+      suggestedCommonWaivers: []
     }
   }
 };

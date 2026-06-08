@@ -29,12 +29,9 @@ import { filterSuggestedWaiversByType } from '../util';
 type MedicaidPaymentWaiversData =
   GetMedicaidPaymentWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
-export type MedicaidPaymentSuggestedWaivers =
-  MedicaidPaymentWaiversData['suggestedWaivers'];
-
 export type MedicaidPaymentWaiversForm = Omit<
   MedicaidPaymentWaiversData,
-  '__typename' | 'id' | 'suggestedWaivers'
+  '__typename' | 'id'
 >;
 
 const defaultFormValues: MedicaidPaymentWaiversForm = {
@@ -85,19 +82,16 @@ const MedicaidPaymentWaivers = () => {
   });
 
   const mappedFormData = mapDefaultFormValues<
-    MedicaidPaymentWaiversForm & { id?: string } & {
-      suggestedWaivers?: MedicaidPaymentSuggestedWaivers;
-    }
+    MedicaidPaymentWaiversForm & { id?: string }
   >(data?.modelPlan?.questionnaires.waiverAssessmentSurvey, {
     ...defaultFormValues,
-    id: '',
-    suggestedWaivers: []
+    id: ''
   });
 
-  const { id: waiverID, suggestedWaivers, ...formData } = mappedFormData;
+  const { id: waiverID, ...formData } = mappedFormData;
 
   const medicaidSuggestedWaivers = filterSuggestedWaiversByType(
-    suggestedWaivers || [],
+    data?.modelPlan?.waiverInfo.suggestedCommonWaivers || [],
     'MEDICAID_PAYMENT'
   );
 

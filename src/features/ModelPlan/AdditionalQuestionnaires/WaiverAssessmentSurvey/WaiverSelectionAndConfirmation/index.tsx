@@ -120,6 +120,9 @@ const WaiverSelectionAndConfirmation = () => {
                   key={waiverHeading}
                   waiverHeading={waiverHeading}
                   waivers={data.modelPlan.questionnaires.waiverAssessmentSurvey}
+                  suggestedCommonWaivers={
+                    data.modelPlan.waiverInfo.suggestedCommonWaivers
+                  }
                 />
               ))}
 

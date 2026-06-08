@@ -1,4 +1,7 @@
-import { ModelCategory } from 'gql/generated/graphql';
+import {
+  ModelCategory,
+  SuggestedCommonWaiverFragment
+} from 'gql/generated/graphql';
 import { modelPlanQuestionsDataMocks } from 'tests/mock/general';
 import { describe, expect, it } from 'vitest';
 
@@ -7,7 +10,6 @@ import {
   ModelPlanQuestionsFormTypeWithLinks
 } from './_components/ModelPlanQuestionsForm';
 import { QuestionType } from './_components/ModelPlanQuestionsForm/questionMap';
-import { MedicarePaymentSuggestedWaivers } from './MedicarePaymentWaivers';
 import {
   filterSuggestedWaiversByType,
   formattedLabel,
@@ -332,39 +334,24 @@ describe('ModelPlanQuestions Utilities', () => {
 
 describe('filterSuggestedWaiversByType', () => {
   it('filters suggested waivers by waiver type', () => {
-    const mockSuggestedWaivers: MedicarePaymentSuggestedWaivers = [
+    const mockSuggestedWaivers: SuggestedCommonWaiverFragment[] = [
       {
-        __typename: 'SuggestedWaiver',
-        id: '111',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: 'MEDICARE_PAYMENT',
-          name: 'Common Waiver 1',
-          id: '123'
-        },
-        commonWaiverID: '123'
+        __typename: 'CommonWaiver',
+        id: '123',
+        waiverType: 'MEDICARE_PAYMENT',
+        name: 'Common Waiver 1'
       },
       {
-        __typename: 'SuggestedWaiver',
-        id: '222',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: 'PROGRAM_MEDICARE_BES',
-          name: 'Common Waiver 2',
-          id: '124'
-        },
-        commonWaiverID: '124'
+        __typename: 'CommonWaiver',
+        id: '124',
+        waiverType: 'PROGRAM_MEDICARE_BES',
+        name: 'Common Waiver 2'
       },
       {
-        __typename: 'SuggestedWaiver',
-        id: '333',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: 'MEDICAID_PAYMENT',
-          name: 'Common Waiver 3',
-          id: '125'
-        },
-        commonWaiverID: '125'
+        __typename: 'CommonWaiver',
+        id: '125',
+        waiverType: 'MEDICAID_PAYMENT',
+        name: 'Common Waiver 3'
       }
     ];
 
@@ -375,15 +362,10 @@ describe('filterSuggestedWaiversByType', () => {
 
     expect(medicareWaivers).toEqual([
       {
-        __typename: 'SuggestedWaiver',
-        id: '111',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: 'MEDICARE_PAYMENT',
-          name: 'Common Waiver 1',
-          id: '123'
-        },
-        commonWaiverID: '123'
+        __typename: 'CommonWaiver',
+        id: '123',
+        waiverType: 'MEDICARE_PAYMENT',
+        name: 'Common Waiver 1'
       }
     ]);
 
@@ -394,15 +376,10 @@ describe('filterSuggestedWaiversByType', () => {
 
     expect(programWaivers).toEqual([
       {
-        __typename: 'SuggestedWaiver',
-        id: '222',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: 'PROGRAM_MEDICARE_BES',
-          name: 'Common Waiver 2',
-          id: '124'
-        },
-        commonWaiverID: '124'
+        __typename: 'CommonWaiver',
+        id: '124',
+        waiverType: 'PROGRAM_MEDICARE_BES',
+        name: 'Common Waiver 2'
       }
     ]);
 
@@ -413,15 +390,10 @@ describe('filterSuggestedWaiversByType', () => {
 
     expect(medicaidWaivers).toEqual([
       {
-        __typename: 'SuggestedWaiver',
-        id: '333',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: 'MEDICAID_PAYMENT',
-          name: 'Common Waiver 3',
-          id: '125'
-        },
-        commonWaiverID: '125'
+        __typename: 'CommonWaiver',
+        id: '125',
+        waiverType: 'MEDICAID_PAYMENT',
+        name: 'Common Waiver 3'
       }
     ]);
   });

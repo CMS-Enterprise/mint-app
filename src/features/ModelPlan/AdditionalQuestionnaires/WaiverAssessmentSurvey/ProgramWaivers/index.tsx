@@ -28,12 +28,7 @@ import { filterSuggestedWaiversByType } from '../util';
 type ProgramWaiversData =
   GetProgramWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
-export type ProgramSuggestedWaivers = ProgramWaiversData['suggestedWaivers'];
-
-export type ProgramWaiversForm = Omit<
-  ProgramWaiversData,
-  '__typename' | 'id' | 'suggestedWaivers'
->;
+export type ProgramWaiversForm = Omit<ProgramWaiversData, '__typename' | 'id'>;
 
 const defaultFormValues: ProgramWaiversForm = {
   impactsSiteOfCarePayments: null,
@@ -87,19 +82,16 @@ const ProgramWaivers = () => {
   });
 
   const mappedFormData = mapDefaultFormValues<
-    ProgramWaiversForm & { id?: string } & {
-      suggestedWaivers?: ProgramSuggestedWaivers;
-    }
+    ProgramWaiversForm & { id?: string }
   >(data?.modelPlan?.questionnaires.waiverAssessmentSurvey, {
     ...defaultFormValues,
-    id: '',
-    suggestedWaivers: []
+    id: ''
   });
 
-  const { id: waiverID, suggestedWaivers, ...formData } = mappedFormData;
+  const { id: waiverID, ...formData } = mappedFormData;
 
   const programSuggestedWaivers = filterSuggestedWaiversByType(
-    suggestedWaivers || [],
+    data?.modelPlan?.waiverInfo.suggestedCommonWaivers || [],
     'PROGRAM_MEDICARE_BES'
   );
 
