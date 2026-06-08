@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
@@ -250,7 +251,7 @@ func CTATRequestCreate(
 
 	if emailService != nil && addressBook.MINTTeamEmail != "" {
 		go func() {
-			sendEmailErr := sendCTATSubmittedEmail(emailService, addressBook)
+			sendEmailErr := sendCTATSubmittedEmail(ctx, emailService, addressBook, createdRequest)
 			if sendEmailErr != nil {
 				logger.Error(
 					"failed to send CTAT submitted email",
@@ -265,15 +266,51 @@ func CTATRequestCreate(
 }
 
 func sendCTATSubmittedEmail(
+	ctx context.Context,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
+	ctatRequest *models.CTATRequest,
 ) error {
-	if emailService == nil || addressBook.MINTTeamEmail == "" {
+	if emailService == nil || addressBook.MINTTeamEmail == "" || ctatRequest == nil {
 		return nil
 	}
 
-	subjectContent := email.CTATSubmittedSubjectContent{}
-	bodyContent := email.CTATSubmittedBodyContent{}
+	requesterAccount, err := ctatRequest.RequesterUserAccount(ctx)
+	if err != nil {
+		return err
+	}
+
+	relatedModels, err := CTATRelatedMINTModelsGetByCTATRequestIDLOADER(ctx, ctatRequest.ID)
+	if err != nil {
+		return err
+	}
+
+	documents, err := CTATRequestDocumentGetByCTATRequestIDLOADER(ctx, ctatRequest.ID)
+	if err != nil {
+		return err
+	}
+
+	subjectContent := email.CTATSubmittedSubjectContent{
+		TicketNumber: ctatRequest.HumanReadableID(),
+	}
+	bodyContent := email.CTATSubmittedBodyContent{
+		ClientAddress:          emailService.GetConfig().GetClientAddress(),
+		ModelID:                ctatRequest.ID.String(),
+		TicketNumber:           ctatRequest.HumanReadableID(),
+		RequesterName:          userAccountCommonName(requesterAccount),
+		RequesterEmail:         userAccountEmail(requesterAccount),
+		CMMIGroup:              string(ctatRequest.CmmiGroup),
+		CMMIDivision:           stringValue(ctatRequest.CmmiDivision),
+		RelatedMINTModels:      strings.Join(lo.Map(relatedModels, func(item *models.ModelPlan, _ int) string { return item.ModelName }), ", "),
+		ContractActivityType:   stringValue(ctatRequest.ContractActivityType),
+		ContractName:           ctatRequest.ContractName.String,
+		ContractType:           stringValue(ctatRequest.ContractType),
+		TypeOfHelpNeeded:       strings.Join(lo.Map(ctatRequest.TypeOfHelpNeeded, func(item models.CTATHelpNeededType, _ int) string { return string(item) }), ", "),
+		DescribeHelpNeeded:     ctatRequest.DescribeHelpNeeded,
+		RequestUrgency:         string(ctatRequest.RequestUrgency),
+		DateAssistanceNeededBy: ctatRequest.DateAssistanceNeededBy.Format("01/02/2006"),
+		UploadedFiles:          strings.Join(lo.Map(documents, func(item *models.CTATRequestDocument, _ int) string { return item.FileName }), ", "),
+	}
 
 	emailSubject, emailBody, err := email.CTAT.Submitted.GetContent(subjectContent, bodyContent)
 	if err != nil {
@@ -288,6 +325,30 @@ func sendCTATSubmittedEmail(
 		"text/html",
 		emailBody,
 	)
+}
+
+func userAccountCommonName(account *authentication.UserAccount) string {
+	if account == nil {
+		return ""
+	}
+
+	return account.CommonName
+}
+
+func userAccountEmail(account *authentication.UserAccount) string {
+	if account == nil {
+		return ""
+	}
+
+	return account.Email
+}
+
+func stringValue[T ~string](value *T) string {
+	if value == nil {
+		return ""
+	}
+
+	return string(*value)
 }
 
 func sendCTATUpdateEmail(
@@ -309,7 +370,9 @@ func sendCTATUpdateEmail(
 		return nil
 	}
 
-	subjectContent := email.CTATUpdateSubjectContent{}
+	subjectContent := email.CTATUpdateSubjectContent{
+		TicketNumber: ctatRequest.HumanReadableID(),
+	}
 	bodyContent := email.CTATUpdateBodyContent{}
 
 	emailSubject, emailBody, err := email.CTAT.Update.GetContent(subjectContent, bodyContent)

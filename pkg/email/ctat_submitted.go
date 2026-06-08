@@ -43,16 +43,37 @@ var CTAT = ctatEmails{
 }
 
 // CTATSubmittedSubjectContent defines the parameters necessary for the corresponding email subject.
-type CTATSubmittedSubjectContent struct{}
+type CTATSubmittedSubjectContent struct {
+	TicketNumber string
+}
 
 // CTATSubmittedBodyContent defines the parameters necessary for the corresponding email body.
-type CTATSubmittedBodyContent struct{}
+type CTATSubmittedBodyContent struct {
+	ClientAddress          string
+	ModelID                string
+	TicketNumber           string
+	RequesterName          string
+	RequesterEmail         string
+	CMMIGroup              string
+	CMMIDivision           string
+	RelatedMINTModels      string
+	ContractActivityType   string
+	ContractName           string
+	ContractType           string
+	TypeOfHelpNeeded       string
+	DescribeHelpNeeded     string
+	RequestUrgency         string
+	DateAssistanceNeededBy string
+	UploadedFiles          string
+}
 
 // CTATUpdateTemplateName is the template name for the CTAT update email.
 const CTATUpdateTemplateName string = "ctat_update"
 
 // CTATUpdateSubjectContent defines the parameters necessary for the corresponding email subject.
-type CTATUpdateSubjectContent struct{}
+type CTATUpdateSubjectContent struct {
+	TicketNumber string
+}
 
 // CTATUpdateBodyContent defines the parameters necessary for the corresponding email body.
 type CTATUpdateBodyContent struct{}
