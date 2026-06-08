@@ -331,7 +331,9 @@ func sendCTATSubmittedEmail(
 	addressBook email.AddressBook,
 	ctatRequest *models.CTATRequest,
 ) error {
-	if emailService == nil || addressBook.MINTTeamEmail == "" || ctatRequest == nil {
+	if emailService == nil || ctatRequest == nil {
+		return nil
+	}
 		return nil
 	}
 
