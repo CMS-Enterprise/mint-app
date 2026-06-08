@@ -21,7 +21,7 @@ export default gql(/* GraphQL */ `
       }
       waiverInfo {
         suggestedCommonWaivers {
-          ...SuggestedCommonWaiverFragment
+          ...SuggestedCommonWaiver
         }
       }
     }
