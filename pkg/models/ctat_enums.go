@@ -260,7 +260,7 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeSOWSOOPWSDevelopment:                             "Statement of Work (SOW) / Statement of Objectives (SOO) / Performance Work Statement (PWS) development",
 	CTATHelpNeededTypeContractorPerformanceManagement:                  "Contractor Performance Management",
 	CTATHelpNeededTypeDataUseAgreementDUA:                              "Data Use Agreement (DUA)",
-	CTATHelpNeededTypeDeliverableEvaluationReviewDERModification:       "Departmental Efficiency Review (DER) Modification",
+	CTATHelpNeededTypeDeliverableEvaluationReviewDERModification:       "Deliverable/Evaluation Review (DER) Modification",
 	CTATHelpNeededTypeDocumentingAndSubmittingCPARS:                    "Documenting and submitting contractor performance evaluations (CPARS)",
 	CTATHelpNeededTypeEnterpriseUserAdministrationEUAJobCodes:          "Enterprise User Administration (EUA) job codes",
 	CTATHelpNeededTypeForeignNationalManagementSystemFNMS:              "Foreign National Management System (FNMS)",
