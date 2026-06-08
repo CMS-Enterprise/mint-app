@@ -284,7 +284,7 @@ func sendCTATSubmittedTestEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		[]string{bodyContent.RequesterEmail},
 		nil,
 		emailSubject,
 		"text/html",
@@ -338,7 +338,7 @@ func sendCTATUpdateTestEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test.requester@mint.dev.cms.gov"},
+		[]string{bodyContent.RequesterEmail},
 		nil,
 		emailSubject,
 		"text/html",

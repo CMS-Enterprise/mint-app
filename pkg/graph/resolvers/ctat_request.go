@@ -251,7 +251,7 @@ func CTATRequestCreate(
 		return nil, err
 	}
 
-	if emailService != nil && addressBook.MINTTeamEmail != "" {
+	if emailService != nil {
 		go func() {
 			sendEmailErr := sendCTATSubmittedEmail(ctx, emailService, addressBook, createdRequest)
 			if sendEmailErr != nil {
@@ -334,8 +334,6 @@ func sendCTATSubmittedEmail(
 	if emailService == nil || ctatRequest == nil {
 		return nil
 	}
-		return nil
-	}
 
 	subjectContent := email.CTATSubmittedSubjectContent{
 		TicketNumber: ctatRequest.HumanReadableID(),
@@ -345,6 +343,9 @@ func sendCTATSubmittedEmail(
 	if err != nil {
 		return err
 	}
+	if bodyContent.RequesterEmail == "" {
+		return nil
+	}
 
 	emailSubject, emailBody, err := email.CTAT.Submitted.GetContent(subjectContent, bodyContent)
 	if err != nil {
@@ -353,7 +354,7 @@ func sendCTATSubmittedEmail(
 
 	return emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		[]string{bodyContent.RequesterEmail},
 		nil,
 		emailSubject,
 		"text/html",
@@ -388,13 +389,7 @@ func sendCTATUpdateEmail(
 	if err != nil {
 		return err
 	}
-
-	requesterAccount, err := updatedRequest.RequesterUserAccount(ctx)
-	if err != nil {
-		return err
-	}
-
-	if requesterAccount == nil || requesterAccount.Email == "" {
+	if bodySummary.RequesterEmail == "" {
 		return nil
 	}
 
@@ -445,7 +440,7 @@ func sendCTATUpdateEmail(
 
 	return emailService.Send(
 		addressBook.DefaultSender,
-		[]string{requesterAccount.Email},
+		[]string{bodySummary.RequesterEmail},
 		nil,
 		emailSubject,
 		"text/html",
