@@ -267,7 +267,7 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeIdentityAndCredentialingToolICT:                  "Identity and Credentialing Tool (ICT)",
 	CTATHelpNeededTypeInvoiceProcessingPlatformIPP:                     "Invoice Processing Platform (IPP)",
 	CTATHelpNeededTypeMaintainingTheElectronicCorECORFile:              "Maintaining the electronic COR (e-COR) file",
-	CTATHelpNeededTypePostAwardActionsPAAModification:                  "Political Appointee Approval (PAA) Modification",
+	CTATHelpNeededTypePostAwardActionsPAAModification:                  "Post-Award Actions (PAA) Modification",
 	CTATHelpNeededTypeOther:                                            "Other",
 }
 
