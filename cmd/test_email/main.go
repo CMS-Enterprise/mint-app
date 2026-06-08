@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -251,6 +252,11 @@ func sendCTATSubmittedTestEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		models.CTATHelpNeededTypeGuidanceOnMarketResearch.Humanize(),
+	}, ", ")
+
 	subjectContent := email.CTATSubmittedSubjectContent{
 		TicketNumber: "CTAT-021",
 	}
@@ -260,15 +266,15 @@ func sendCTATSubmittedTestEmail(
 		TicketNumber:           "CTAT-021",
 		RequesterName:          "Betty Alpha",
 		RequesterEmail:         "betty.alpha@mint.dev.cms.gov",
-		CMMIGroup:              "BSG",
-		CMMIDivision:           "BSG_DBOM",
+		CMMIGroup:              models.CTATCMMIGroupOptionBSG.Humanize(),
+		CMMIDivision:           models.CTATCMMIDivisionOptionBSGDBOM.Humanize(),
 		RelatedMINTModels:      "Plan With CRs and TDLs 1, Test Model Plan",
-		ContractActivityType:   "TECHNICAL_ASSISTANCE",
+		ContractActivityType:   models.CTATContractActivityTypeTechnicalAssistance.Humanize(),
 		ContractName:           "BTAL CTAT Request Example Contract",
-		ContractType:           "TIME_AND_MATERIALS",
-		TypeOfHelpNeeded:       "REQUEST_FOR_INFORMATION_RFI, GUIDANCE_ON_MARKET_RESEARCH",
+		ContractType:           models.CTATContractTypeTimeAndMaterials.Humanize(),
+		TypeOfHelpNeeded:       typeOfHelpNeeded,
 		DescribeHelpNeeded:     "Bruno example request for CTAT assistance without supporting documents.",
-		RequestUrgency:         "HIGH",
+		RequestUrgency:         models.CTATRequestUrgencyHigh.Humanize(),
 		DateAssistanceNeededBy: "06/30/2026",
 		UploadedFiles:          "ctat-request-upload.txt, ctat-background-notes.pdf",
 	}
@@ -291,11 +297,16 @@ func sendCTATUpdateTestEmail(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		models.CTATHelpNeededTypeGuidanceOnMarketResearch.Humanize(),
+	}, ", ")
+
 	subjectContent := email.CTATUpdateSubjectContent{
 		TicketNumber: "CTAT-021",
 	}
 	bodyContent := email.CTATUpdateBodyContent{
-		Status:                    "IN_PROGRESS",
+		Status:                    models.CTATStatusInProgress.Humanize(),
 		StatusUpdated:             true,
 		AssignedTeamMemberUpdated: true,
 		AssignedTeamMemberName:    "Audrey Abrams",
@@ -309,15 +320,15 @@ func sendCTATUpdateTestEmail(
 		TicketNumber:              "CTAT-021",
 		RequesterName:             "Betty Alpha",
 		RequesterEmail:            "betty.alpha@mint.dev.cms.gov",
-		CMMIGroup:                 "BSG",
-		CMMIDivision:              "BSG_DBOM",
+		CMMIGroup:                 models.CTATCMMIGroupOptionBSG.Humanize(),
+		CMMIDivision:              models.CTATCMMIDivisionOptionBSGDBOM.Humanize(),
 		RelatedMINTModels:         "Plan With CRs and TDLs 1, Test Model Plan",
-		ContractActivityType:      "TECHNICAL_ASSISTANCE",
+		ContractActivityType:      models.CTATContractActivityTypeTechnicalAssistance.Humanize(),
 		ContractName:              "BTAL CTAT Request Example Contract",
-		ContractType:              "TIME_AND_MATERIALS",
-		TypeOfHelpNeeded:          "REQUEST_FOR_INFORMATION_RFI, GUIDANCE_ON_MARKET_RESEARCH",
+		ContractType:              models.CTATContractTypeTimeAndMaterials.Humanize(),
+		TypeOfHelpNeeded:          typeOfHelpNeeded,
 		DescribeHelpNeeded:        "Bruno example request for CTAT assistance without supporting documents.",
-		RequestUrgency:            "HIGH",
+		RequestUrgency:            models.CTATRequestUrgencyHigh.Humanize(),
 		DateAssistanceNeededBy:    "06/30/2026",
 		UploadedFiles:             "ctat-request-upload.txt, ctat-background-notes.pdf",
 	}
