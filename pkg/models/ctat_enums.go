@@ -252,7 +252,7 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeGuidanceOnMarketResearch:                         "Guidance on Market Research",
 	CTATHelpNeededTypeGuidanceOnTEPMembershipScoringReporting:          "Guidance on Technical Evaluation Panel (TEP) membership, scoring, and/or reporting",
 	CTATHelpNeededTypeIndependentGovernmentCostEstimateIGCEPreparation: "Independent Government Cost Estimate (IGCE) preparation",
-	CTATHelpNeededTypePostAwardActionsPAA:                              "Political Appointee Approval (PAA)",
+	CTATHelpNeededTypePostAwardActionsPAA:                              "Post-Award Actions (PAA)",
 	CTATHelpNeededTypeRequestForContractMemoRFC:                        "Request for Contract Memo (RFC)",
 	CTATHelpNeededTypeRequestForInformationRFI:                         "Request for Information (RFI)",
 	CTATHelpNeededTypeRequestForProposalRFP:                            "Request for Proposal (RFP)",
