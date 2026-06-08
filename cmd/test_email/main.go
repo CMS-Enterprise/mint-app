@@ -294,7 +294,33 @@ func sendCTATUpdateTestEmail(
 	subjectContent := email.CTATUpdateSubjectContent{
 		TicketNumber: "CTAT-021",
 	}
-	bodyContent := email.CTATUpdateBodyContent{}
+	bodyContent := email.CTATUpdateBodyContent{
+		Status:                    "IN_PROGRESS",
+		StatusUpdated:             true,
+		AssignedTeamMemberUpdated: true,
+		AssignedTeamMemberName:    "Audrey Abrams",
+		AssignedTeamMemberEmail:   "audrey.abrams@mint.dev.cms.gov",
+		ProgressNotesUpdated:      true,
+		ProgressNotes:             "We reviewed the request and scheduled follow-up office hours to walk through the next steps.",
+		ResolutionUpdated:         false,
+		Resolution:                "",
+		ClientAddress:             emailService.GetConfig().GetClientAddress(),
+		ModelID:                   "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		TicketNumber:              "CTAT-021",
+		RequesterName:             "Betty Alpha",
+		RequesterEmail:            "betty.alpha@mint.dev.cms.gov",
+		CMMIGroup:                 "BSG",
+		CMMIDivision:              "BSG_DBOM",
+		RelatedMINTModels:         "Plan With CRs and TDLs 1, Test Model Plan",
+		ContractActivityType:      "TECHNICAL_ASSISTANCE",
+		ContractName:              "BTAL CTAT Request Example Contract",
+		ContractType:              "TIME_AND_MATERIALS",
+		TypeOfHelpNeeded:          "REQUEST_FOR_INFORMATION_RFI, GUIDANCE_ON_MARKET_RESEARCH",
+		DescribeHelpNeeded:        "Bruno example request for CTAT assistance without supporting documents.",
+		RequestUrgency:            "HIGH",
+		DateAssistanceNeededBy:    "06/30/2026",
+		UploadedFiles:             "ctat-request-upload.txt, ctat-background-notes.pdf",
+	}
 
 	emailSubject, emailBody, err := email.CTAT.Update.GetContent(subjectContent, bodyContent)
 	noErr(err)

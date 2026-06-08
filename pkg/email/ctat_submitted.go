@@ -76,4 +76,30 @@ type CTATUpdateSubjectContent struct {
 }
 
 // CTATUpdateBodyContent defines the parameters necessary for the corresponding email body.
-type CTATUpdateBodyContent struct{}
+type CTATUpdateBodyContent struct {
+	Status                    string
+	StatusUpdated             bool
+	AssignedTeamMemberUpdated bool
+	AssignedTeamMemberName    string
+	AssignedTeamMemberEmail   string
+	ProgressNotesUpdated      bool
+	ProgressNotes             string
+	ResolutionUpdated         bool
+	Resolution                string
+	ClientAddress             string
+	ModelID                   string
+	TicketNumber              string
+	RequesterName             string
+	RequesterEmail            string
+	CMMIGroup                 string
+	CMMIDivision              string
+	RelatedMINTModels         string
+	ContractActivityType      string
+	ContractName              string
+	ContractType              string
+	TypeOfHelpNeeded          string
+	DescribeHelpNeeded        string
+	RequestUrgency            string
+	DateAssistanceNeededBy    string
+	UploadedFiles             string
+}
