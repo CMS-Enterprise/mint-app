@@ -254,7 +254,11 @@ func sendCTATSubmittedTestEmail(
 ) {
 	typeOfHelpNeeded := strings.Join([]string{
 		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
-		models.CTATHelpNeededTypeGuidanceOnMarketResearch.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
 	}, ", ")
 
 	subjectContent := email.CTATSubmittedSubjectContent{
@@ -266,12 +270,12 @@ func sendCTATSubmittedTestEmail(
 		TicketNumber:           "CTAT-021",
 		RequesterName:          "Betty Alpha",
 		RequesterEmail:         "betty.alpha@mint.dev.cms.gov",
-		CMMIGroup:              models.CTATCMMIGroupOptionBSG.Humanize(),
-		CMMIDivision:           models.CTATCMMIDivisionOptionBSGDBOM.Humanize(),
+		CMMIGroup:              fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+		CMMIDivision:           fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
 		RelatedMINTModels:      "Plan With CRs and TDLs 1, Test Model Plan",
-		ContractActivityType:   models.CTATContractActivityTypeTechnicalAssistance.Humanize(),
+		ContractActivityType:   fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
 		ContractName:           "BTAL CTAT Request Example Contract",
-		ContractType:           models.CTATContractTypeTimeAndMaterials.Humanize(),
+		ContractType:           fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
 		TypeOfHelpNeeded:       typeOfHelpNeeded,
 		DescribeHelpNeeded:     "Bruno example request for CTAT assistance without supporting documents.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh.Humanize(),
@@ -299,7 +303,11 @@ func sendCTATUpdateTestEmail(
 ) {
 	typeOfHelpNeeded := strings.Join([]string{
 		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
-		models.CTATHelpNeededTypeGuidanceOnMarketResearch.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
 	}, ", ")
 
 	subjectContent := email.CTATUpdateSubjectContent{
@@ -320,12 +328,12 @@ func sendCTATUpdateTestEmail(
 		TicketNumber:              "CTAT-021",
 		RequesterName:             "Betty Alpha",
 		RequesterEmail:            "betty.alpha@mint.dev.cms.gov",
-		CMMIGroup:                 models.CTATCMMIGroupOptionBSG.Humanize(),
-		CMMIDivision:              models.CTATCMMIDivisionOptionBSGDBOM.Humanize(),
+		CMMIGroup:                 fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+		CMMIDivision:              fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
 		RelatedMINTModels:         "Plan With CRs and TDLs 1, Test Model Plan",
-		ContractActivityType:      models.CTATContractActivityTypeTechnicalAssistance.Humanize(),
+		ContractActivityType:      fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
 		ContractName:              "BTAL CTAT Request Example Contract",
-		ContractType:              models.CTATContractTypeTimeAndMaterials.Humanize(),
+		ContractType:              fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
 		TypeOfHelpNeeded:          typeOfHelpNeeded,
 		DescribeHelpNeeded:        "Bruno example request for CTAT assistance without supporting documents.",
 		RequestUrgency:            models.CTATRequestUrgencyHigh.Humanize(),

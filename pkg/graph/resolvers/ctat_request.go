@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/google/uuid"
@@ -310,16 +311,41 @@ func buildCTATSubmittedBodyContent(
 		bodyContent.RequesterEmail = requesterAccount.Email
 	}
 
+	if ctatRequest.CmmiGroup == models.CTATCMMIGroupOptionOther && ctatRequest.CmmiGroupOther.String != "" {
+		bodyContent.CMMIGroup = fmt.Sprintf("%s (%s)", bodyContent.CMMIGroup, ctatRequest.CmmiGroupOther.String)
+	}
+
 	if ctatRequest.CmmiDivision != nil {
 		bodyContent.CMMIDivision = ctatRequest.CmmiDivision.Humanize()
+		if *ctatRequest.CmmiDivision == models.CTATCMMIDivisionOptionOther && ctatRequest.CmmiDivisionOther.String != "" {
+			bodyContent.CMMIDivision = fmt.Sprintf("%s (%s)", bodyContent.CMMIDivision, ctatRequest.CmmiDivisionOther.String)
+		}
 	}
 
 	if ctatRequest.ContractActivityType != nil {
 		bodyContent.ContractActivityType = ctatRequest.ContractActivityType.Humanize()
+		if *ctatRequest.ContractActivityType == models.CTATContractActivityTypeOther && ctatRequest.ContractActivityTypeOther.String != "" {
+			bodyContent.ContractActivityType = fmt.Sprintf("%s (%s)", bodyContent.ContractActivityType, ctatRequest.ContractActivityTypeOther.String)
+		}
 	}
 
 	if ctatRequest.ContractType != nil {
 		bodyContent.ContractType = ctatRequest.ContractType.Humanize()
+		if *ctatRequest.ContractType == models.CTATContractTypeOther && ctatRequest.ContractTypeOther.String != "" {
+			bodyContent.ContractType = fmt.Sprintf("%s (%s)", bodyContent.ContractType, ctatRequest.ContractTypeOther.String)
+		}
+	}
+
+	if slices.Contains(ctatRequest.TypeOfHelpNeeded, models.CTATHelpNeededTypeOther) && ctatRequest.TypeOfHelpNeededOther.String != "" {
+		helpNeededValues := lo.Map(ctatRequest.TypeOfHelpNeeded, func(item models.CTATHelpNeededType, _ int) string {
+			humanized := item.Humanize()
+			if item == models.CTATHelpNeededTypeOther {
+				return fmt.Sprintf("%s (%s)", humanized, ctatRequest.TypeOfHelpNeededOther.String)
+			}
+
+			return humanized
+		})
+		bodyContent.TypeOfHelpNeeded = strings.Join(helpNeededValues, ", ")
 	}
 
 	return bodyContent, nil
