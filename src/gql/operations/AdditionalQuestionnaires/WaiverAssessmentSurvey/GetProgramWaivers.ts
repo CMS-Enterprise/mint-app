@@ -7,15 +7,6 @@ export default gql(/* GraphQL */ `
       questionnaires {
         waiverAssessmentSurvey {
           id
-          suggestedWaivers {
-            id
-            commonWaiverID
-            commonWaiver {
-              id
-              name
-              waiverType
-            }
-          }
           # Page 4 - Program waivers (Medicare Benefit Enhancements)
           impactsSiteOfCarePayments
           impactsSiteOfCarePaymentsExample
@@ -32,6 +23,11 @@ export default gql(/* GraphQL */ `
           modifiesQualityMeasurementsOrPaymentsViaWaivers
           modifiesQualityMeasurementsOrPaymentsViaWaiversExample
           modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot
+        }
+      }
+      waiverInfo {
+        suggestedCommonWaivers {
+          ...SuggestedCommonWaiverFragment
         }
       }
     }
