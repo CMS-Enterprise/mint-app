@@ -159,7 +159,7 @@ export const requestUrgencies: Record<CtatRequestUrgency, string> = {
 };
 
 export const statuses: Record<CtatStatus, string> = {
-  [CtatStatus.IN_PROGRESS]: 'In Progress',
+  [CtatStatus.IN_PROGRESS]: 'In progress',
   [CtatStatus.NEW]: 'New',
   [CtatStatus.ASSIGNED]: 'Assigned',
   [CtatStatus.CLOSED]: 'Closed'
