@@ -191,7 +191,7 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		if err := SeedSuggestedWaivers(tx, logger, baseTaskListUser.ModelPlanID, principal); err != nil {
+		if err := SeedSuggestedWaivers(ctx, tx, logger, baseTaskListUser.ModelPlanID, principal); err != nil {
 			return nil, err
 		}
 

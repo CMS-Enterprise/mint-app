@@ -61,7 +61,7 @@ func (suite *WorkerSuite) SetupTest() {
 
 func (suite *WorkerSuite) createModelPlan(planName string) *models.ModelPlan {
 	mp, err := resolvers.ModelPlanCreate(
-		context.Background(),
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		nil,
 		email.AddressBook{},
@@ -112,7 +112,7 @@ func (suite *WorkerSuite) createPlanCollaborator(
 	}
 
 	collaborator, _, err := resolvers.PlanCollaboratorCreate(
-		context.Background(),
+		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,

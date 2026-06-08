@@ -18,15 +18,21 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
+/*
+TODO: Seed suggested waivers should be moved out of this package to the seeding package.
+*/
+
 // SeedSuggestedWaivers creates a suggested_waiver row for every common_waiver, giving a
 // new model plan the full set of suggestions before any survey answers are recorded.
 func SeedSuggestedWaivers(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 ) error {
-	commonWaivers, err := storage.CommonWaiverGetAll(np, logger)
+	// we don't provide model plan id here because we are just looking for the entire list
+	commonWaivers, err := GetAllCommonWaiversByModelPlanID(ctx, nil)
 	if err != nil {
 		return err
 	}
@@ -49,6 +55,7 @@ func SeedSuggestedWaivers(
 // When real waiver→question mappings are available, populate common_waiver.survey_question_field
 // via a migration — no Go code changes needed.
 func RecalculateSuggestedWaivers(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	survey *models.WaiverAssessmentSurvey,
@@ -58,7 +65,8 @@ func RecalculateSuggestedWaivers(
 		return err
 	}
 
-	commonWaivers, err := storage.CommonWaiverGetAll(np, logger)
+	// we don't provide model plan id here because we are just looking for the entire list
+	commonWaivers, err := GetAllCommonWaiversByModelPlanID(ctx, nil)
 	if err != nil {
 		return err
 	}
@@ -169,7 +177,9 @@ func WaiverAssessmentSurveyUpdate(
 				return nil, err
 			}
 
-			if err := RecalculateSuggestedWaivers(tx, logger, updated, principal); err != nil {
+			// TODO: Consider moving this to the database layer so it's guaranteed to run on every update, not just those from this resolver.
+
+			if err := RecalculateSuggestedWaivers(ctx, tx, logger, updated, principal); err != nil {
 				return nil, err
 			}
 

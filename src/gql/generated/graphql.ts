@@ -301,7 +301,7 @@ export type CommonCategory = {
   subCategories: Array<Scalars['String']['output']>;
 };
 
-/** CommonWaiver represents a waiver type in the CMMI waiver library. */
+/** CommonWaiver represents a waiver type in the CMMI waiver library. It is fetched in the context of a model plan to determine if the model plan has indicated it will use the waiver or not, and to determine if the waiver is suggested based on waiver assessment survey answers. */
 export type CommonWaiver = {
   __typename: 'CommonWaiver';
   cmmiWaiverPointOfContact?: Maybe<Scalars['String']['output']>;
@@ -312,15 +312,30 @@ export type CommonWaiver = {
   hasClaimsDataOrRREGAnalysis?: Maybe<Scalars['String']['output']>;
   hasStandardizationEffort?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['UUID']['output'];
+  /** Returns if a model plan has answered if the waiver will be used or not. */
+  isAnswered: Scalars['Boolean']['output'];
+  /**
+   * To represent if this Common Waiver is _suggested_ for the Model Plan based on waiver assessment survey answers.
+   * This will automatically return false if it is not in the context of a model plan
+   */
+  isSuggested: Scalars['Boolean']['output'];
   isUsedInActiveModels?: Maybe<Scalars['Boolean']['output']>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   name: Scalars['String']['output'];
+  /** Convenience view into the waiver table not_using_reason field */
+  notUsingReason?: Maybe<Scalars['String']['output']>;
   participationAgreementLanguageLink?: Maybe<Scalars['String']['output']>;
   waiverFocus?: Maybe<Scalars['String']['output']>;
   waiverType?: Maybe<Scalars['String']['output']>;
   whatIsWaived?: Maybe<Scalars['String']['output']>;
+  /**
+   * To represent if this Common Waiver is _already_ answered for the Model Plan.
+   * This will display null by default when not in the context of a model plan (eg fetched by key instead of model plan id), true when the model plan has indicated it will use the waiver, and false when the model plan has indicated it will not use the waiver.
+   * It will also display as null if the quesion is not yet answered for the model plan.
+   */
+  willUseWaiver?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export enum ComplexityCalculationLevelType {
@@ -1933,6 +1948,7 @@ export type ModelPlan = {
   tasks: Array<PlanTask>;
   tdls: Array<PlanTdl>;
   timeline: PlanTimeline;
+  waiverInfo: WaiverInfo;
 };
 
 
@@ -2232,6 +2248,8 @@ export type Mutation = {
   updatePlanPayments: PlanPayments;
   updatePlanTDL: PlanTdl;
   updatePlanTimeline: PlanTimeline;
+  /** Update multiple waivers for a model plan. */
+  updateSelectedWaivers: Array<Waiver>;
   /** Sets the notification preferences of a user. */
   updateUserNotificationPreferences: UserNotificationPreferences;
   updateUserViewCustomization: UserViewCustomization;
@@ -2759,6 +2777,13 @@ export type MutationUpdatePlanTdlArgs = {
 export type MutationUpdatePlanTimelineArgs = {
   changes: PlanTimelineChanges;
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateSelectedWaiversArgs = {
+  changes: Array<WaiverChanges>;
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
@@ -4839,6 +4864,7 @@ export type Query = {
   translatedAuditCollection?: Maybe<Array<TranslatedAudit>>;
   userAccount: UserAccount;
   userViewCustomization: UserViewCustomization;
+  waiverInfo: WaiverInfo;
 };
 
 
@@ -4858,6 +4884,12 @@ export type QueryAuditChangesArgs = {
 /** Query definition for the schema */
 export type QueryCommonWaiverArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryCommonWaiversArgs = {
+  modelPlanID?: InputMaybe<Scalars['UUID']['input']>;
 };
 
 
@@ -5011,6 +5043,12 @@ export type QueryTranslatedAuditCollectionArgs = {
 /** Query definition for the schema */
 export type QueryUserAccountArgs = {
   username: Scalars['String']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryWaiverInfoArgs = {
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 /** Questionnaires groups all questionnaire-related fields for a model plan */
@@ -5190,6 +5228,7 @@ export type SubscriptionOnLockableSectionLocksChangedArgs = {
 /**
  * SuggestedWaiver represents a waiver MINT has determined is likely needed for a model plan
  * based on answers to the waiver assessment survey.
+ * NOTE, this will be deprecated as a type in favor of adding suggestion context directly to CommonWaiver, but is left as a separate type for now to simplify the implementation.
  */
 export type SuggestedWaiver = {
   __typename: 'SuggestedWaiver';
@@ -6080,9 +6119,24 @@ export type WaiverAssessmentSurveyTranslation = {
   status: TranslationFieldWithOptions;
 };
 
+/** The fields needed to update a model plan's decision on whether to use a specific waiver. */
 export type WaiverChanges = {
+  /** The id  of the common waiver. */
+  commonWaiverID: Scalars['UUID']['input'];
+  /** What is the reason for not using the waiver? Required when willUseWaiver is false. */
   notUsingReason?: InputMaybe<Scalars['String']['input']>;
-  willUseWaiver?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Does the model plan on using the waiver? */
+  willUseWaiver: Scalars['Boolean']['input'];
+};
+
+/** This is a convenience type to wrap the info about a model */
+export type WaiverInfo = {
+  __typename: 'WaiverInfo';
+  commonWaivers: Array<CommonWaiver>;
+  modelPlanID: Scalars['UUID']['output'];
+  suggestedCommonWaivers: Array<CommonWaiver>;
+  unusedCommonWaivers: Array<CommonWaiver>;
+  waivers: Array<Waiver>;
 };
 
 export enum WaiverType {
