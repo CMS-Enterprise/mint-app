@@ -29,7 +29,7 @@ WITH retVal AS (
         :created_by,
         CURRENT_TIMESTAMP
     )
-    ON CONFLICT (model_plan_id, mto_common_milestone_id) 
+    ON CONFLICT (model_plan_id, mto_common_milestone_id)
     DO NOTHING
     RETURNING
         id,
@@ -47,8 +47,7 @@ WITH retVal AS (
         created_dts,
         modified_by,
         modified_dts,
-        -- Indicate whether this was newly inserted or already existed
-        CASE WHEN xmax = 0 THEN TRUE ELSE FALSE END AS newly_inserted
+        TRUE AS newly_inserted
 )
 
 SELECT
@@ -69,4 +68,31 @@ SELECT
     retVal.modified_dts,
     retVal.newly_inserted
 FROM retVal
-LEFT JOIN mto_common_milestone ON retVal.mto_common_milestone_id = mto_common_milestone.id;
+LEFT JOIN mto_common_milestone ON retVal.mto_common_milestone_id = mto_common_milestone.id
+
+UNION ALL
+
+SELECT
+    m.id,
+    m.model_plan_id,
+    m.mto_common_milestone_id,
+    m.mto_category_id,
+    COALESCE(m.name, mto_common_milestone.name) AS "name",
+    m.facilitated_by,
+    m.facilitated_by_other,
+    m.need_by,
+    m.status,
+    m.risk_indicator,
+    m.is_draft,
+    m.created_by,
+    m.created_dts,
+    m.modified_by,
+    m.modified_dts,
+    FALSE AS newly_inserted
+FROM mto_milestone m
+LEFT JOIN mto_common_milestone ON m.mto_common_milestone_id = mto_common_milestone.id
+WHERE
+    m.model_plan_id = :model_plan_id
+    AND m.mto_common_milestone_id = :mto_common_milestone_id
+    AND NOT EXISTS (SELECT 1 FROM retVal)
+LIMIT 1;
