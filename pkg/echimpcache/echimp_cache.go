@@ -2,6 +2,7 @@ package echimpcache
 
 import (
 	"context"
+	"sync"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,25 +18,33 @@ import (
 )
 
 var CRAndTDLCache *crAndTDLCache
+var crAndTDLCacheMu sync.Mutex
+
+// failedRefreshCooldown bounds how long we suppress repeated ECHIMP refresh
+// attempts after an unsuccessful refresh result. One minute is long enough to
+// absorb bursts of identical request traffic without pinning the cache in a
+// stale state for long if the underlying issue clears quickly.
+const failedRefreshCooldown = time.Minute
 
 // GetECHIMPCrAndTDLCache returns a cached of data for CR and TDLs from an echimp s3 bucket.
 // If the time since it was last updated has elapsed, it will fetch the data again
 func GetECHIMPCrAndTDLCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) (*crAndTDLCache, error) {
-	if CRAndTDLCache == nil {
-		CRAndTDLCache = &crAndTDLCache{}
-	}
+	cache := getOrCreateECHIMPCache()
 	logger = logger.With(logfields.EchimpCacheAppSection)
-	if CRAndTDLCache.IsOld(viperConfig) {
-		err := CRAndTDLCache.refreshCache(ctx, client, viperConfig, logger)
+	if cache.IsOld(viperConfig) {
+		err := cache.ensureFresh(viperConfig, logger, func() error {
+			return cache.refreshCache(ctx, client, viperConfig, logger)
+		})
 		if err != nil {
-			logger.Error("error refreshing ECHIMP CR and TDL cache", zap.Error(err))
-			return CRAndTDLCache, err
+			return cache, err
 		}
 	}
-	return CRAndTDLCache, nil
+	return cache, nil
 }
 
 type crAndTDLCache struct {
+	mu sync.Mutex
+
 	lastChecked      time.Time
 	CRs              []*models.EChimpCR
 	CRsByModelPlanID map[uuid.UUID][]*models.EChimpCR
@@ -47,6 +56,22 @@ type crAndTDLCache struct {
 
 	AllCrsAndTDLs           []models.EChimpCRAndTDLS
 	CrsAndTDLsByModelPlanID map[uuid.UUID][]models.EChimpCRAndTDLS
+
+	refreshInFlight            bool
+	refreshDone                chan struct{}
+	lastUnsuccessfulRefreshAt  time.Time
+	lastUnsuccessfulRefreshErr error
+}
+
+func getOrCreateECHIMPCache() *crAndTDLCache {
+	crAndTDLCacheMu.Lock()
+	defer crAndTDLCacheMu.Unlock()
+
+	if CRAndTDLCache == nil {
+		CRAndTDLCache = &crAndTDLCache{}
+	}
+
+	return CRAndTDLCache
 }
 
 func (c *crAndTDLCache) IsOld(viperConfig *viper.Viper) bool {
@@ -62,6 +87,93 @@ func (c *crAndTDLCache) IsOld(viperConfig *viper.Viper) bool {
 	// Return true if the current time is after the expiration time
 	return time.Now().After(expirationTime)
 
+}
+
+func (c *crAndTDLCache) ensureFresh(viperConfig *viper.Viper, logger *zap.Logger, refresh func() error) error {
+	for {
+		now := time.Now()
+
+		c.mu.Lock()
+		if !c.IsOld(viperConfig) {
+			c.mu.Unlock()
+			return nil
+		}
+
+		if c.refreshInFlight {
+			done := c.refreshDone
+			c.mu.Unlock()
+			<-done
+			continue
+		}
+
+		if c.inFailedRefreshCooldown(now) {
+			err := c.lastUnsuccessfulRefreshErr
+			hasSnapshot := c.hasCachedSnapshot()
+			c.mu.Unlock()
+			if hasSnapshot || err == nil {
+				return nil
+			}
+			return err
+		}
+
+		previousLastChecked := c.lastChecked
+		c.refreshInFlight = true
+		c.refreshDone = make(chan struct{})
+		c.mu.Unlock()
+
+		err := refresh()
+		result := c.completeRefreshAttempt(previousLastChecked, err)
+
+		if result.err == nil {
+			return nil
+		}
+		if result.hasSnapshot {
+			logger.Warn("using stale ECHIMP cache after refresh failure", zap.Error(result.err))
+			return nil
+		}
+
+		logger.Error("error refreshing ECHIMP CR and TDL cache", zap.Error(result.err))
+		return result.err
+	}
+}
+
+func (c *crAndTDLCache) inFailedRefreshCooldown(now time.Time) bool {
+	return !c.lastUnsuccessfulRefreshAt.IsZero() && now.Sub(c.lastUnsuccessfulRefreshAt) < failedRefreshCooldown
+}
+
+func (c *crAndTDLCache) hasCachedSnapshot() bool {
+	return !c.lastChecked.IsZero()
+}
+
+type refreshAttemptResult struct {
+	err         error
+	hasSnapshot bool
+}
+
+func (c *crAndTDLCache) completeRefreshAttempt(previousLastChecked time.Time, refreshErr error) refreshAttemptResult {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	refreshed := c.lastChecked.After(previousLastChecked)
+	hasSnapshot := c.hasCachedSnapshot()
+
+	if refreshErr == nil && refreshed {
+		c.lastUnsuccessfulRefreshAt = time.Time{}
+		c.lastUnsuccessfulRefreshErr = nil
+	} else {
+		c.lastUnsuccessfulRefreshAt = time.Now()
+		c.lastUnsuccessfulRefreshErr = refreshErr
+	}
+
+	done := c.refreshDone
+	c.refreshDone = nil
+	c.refreshInFlight = false
+	close(done)
+
+	return refreshAttemptResult{
+		err:         refreshErr,
+		hasSnapshot: hasSnapshot,
+	}
 }
 
 func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) error {
