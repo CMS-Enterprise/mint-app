@@ -932,7 +932,7 @@ const CtatTicketForm = ({
               )}
             />
 
-            <FormGroup className="margin-top-0 margin-bottom-3">
+            <FormGroup className="margin-top-0 margin-bottom-6">
               <Label
                 htmlFor="ctat-supporting-documents"
                 className="maxw-none text-bold"
