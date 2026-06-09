@@ -71,7 +71,7 @@ const contractAssistance = {
     submitTicket: 'Submit ticket',
     cancel: 'Cancel',
     success:
-      'You submitted a contract assistance ticket (<bold>{{ticketId}}</bold>).',
+      'You submitted a new contract assistance ticket (<bold>{{ticketId}}</bold>).',
     error:
       'There was an error submitting your ticket. Please try again. If the error persists, please try again another time.',
     validation: {

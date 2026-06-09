@@ -33,6 +33,7 @@ import DatePickerFormatted from 'components/DatePickerFormatted';
 import FieldErrorMsg from 'components/FieldErrorMsg';
 import HelpText from 'components/HelpText';
 import MultiSelect from 'components/MultiSelect';
+import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
@@ -387,7 +388,18 @@ const CtatTicketForm = ({
   }
 
   return (
-    <div className="padding-y-4 padding-x-3">
+    <div className="margin-top-8 padding-8 maxw-tablet">
+      <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-3">
+        {t('ctatSidePanel.newTicketHeading')}
+      </PageHeading>
+      <p className="text-base margin-top-0margin-bottom-3">
+        <Trans
+          i18nKey={t('ctatSidePanel.allFieldsRequired')}
+          components={{
+            s: <span className="text-secondary-dark" />
+          }}
+        />
+      </p>
       <FormProvider {...methods}>
         <ConfirmLeaveRHF />
         <Form

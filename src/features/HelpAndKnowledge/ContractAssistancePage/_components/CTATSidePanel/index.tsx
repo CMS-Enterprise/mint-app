@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
 
 import Modal from 'components/Modal';
@@ -68,30 +68,19 @@ const CtatSidePanel = ({
       <Sidepanel
         isOpen={isOpen}
         closeModal={closePanel}
-        ariaLabel={t('ctatSidePanel.newTicketHeading')}
+        ariaLabel={t('ctatSidePanel.modalHeading')}
         testid="ctat-sidepanel"
-        modalHeading={t('ctatSidePanel.newTicketHeading')}
+        modalHeading={t('ctatSidePanel.modalHeading')}
         footer={footer}
         fixed
         noScrollable
-        wideContent
       >
-        <p className="text-base margin-y-1 padding-x-3">
-          <Trans
-            i18nKey={t('ctatSidePanel.allFieldsRequired')}
-            components={{
-              s: <span className="text-error" />
-            }}
-          />
-        </p>
-        {isOpen && (
-          <CtatTicketForm
-            closeModal={handleCloseModal}
-            setDisableButton={setDisableSubmitBtn}
-            setIsDirty={setIsDirty}
-            onSubmitted={handleSubmitted}
-          />
-        )}
+        <CtatTicketForm
+          closeModal={handleCloseModal}
+          setDisableButton={setDisableSubmitBtn}
+          setIsDirty={setIsDirty}
+          onSubmitted={handleSubmitted}
+        />
       </Sidepanel>
 
       <Modal
