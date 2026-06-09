@@ -50,7 +50,7 @@ type CTATSubmittedSubjectContent struct {
 // CTATSubmittedBodyContent defines the parameters necessary for the corresponding email body.
 type CTATSubmittedBodyContent struct {
 	ClientAddress          string
-	ModelID                string
+	CTATTicketID           string
 	TicketNumber           string
 	RequesterName          string
 	RequesterEmail         string
@@ -87,7 +87,7 @@ type CTATUpdateBodyContent struct {
 	ResolutionUpdated         bool
 	Resolution                string
 	ClientAddress             string
-	ModelID                   string
+	CTATTicketID              string
 	TicketNumber              string
 	RequesterName             string
 	RequesterEmail            string

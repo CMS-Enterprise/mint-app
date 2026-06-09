@@ -266,7 +266,7 @@ func sendCTATSubmittedTestEmail(
 	}
 	bodyContent := email.CTATSubmittedBodyContent{
 		ClientAddress:          emailService.GetConfig().GetClientAddress(),
-		ModelID:                "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		CTATTicketID:           "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
 		TicketNumber:           "CTAT-021",
 		RequesterName:          "Betty Alpha",
 		RequesterEmail:         "betty.alpha@mint.dev.cms.gov",
@@ -324,7 +324,7 @@ func sendCTATUpdateTestEmail(
 		ResolutionUpdated:         false,
 		Resolution:                "",
 		ClientAddress:             emailService.GetConfig().GetClientAddress(),
-		ModelID:                   "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		CTATTicketID:              "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
 		TicketNumber:              "CTAT-021",
 		RequesterName:             "Betty Alpha",
 		RequesterEmail:            "betty.alpha@mint.dev.cms.gov",

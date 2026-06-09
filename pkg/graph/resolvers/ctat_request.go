@@ -294,7 +294,7 @@ func buildCTATSubmittedBodyContent(
 
 	bodyContent := email.CTATSubmittedBodyContent{
 		ClientAddress:          emailService.GetConfig().GetClientAddress(),
-		ModelID:                ctatRequest.ID.String(),
+		CTATTicketID:           ctatRequest.ID.String(),
 		TicketNumber:           ctatRequest.HumanReadableID(),
 		CMMIGroup:              ctatRequest.CmmiGroup.Humanize(),
 		RelatedMINTModels:      strings.Join(lo.Map(relatedModels, func(item *models.ModelPlan, _ int) string { return item.ModelName }), ", "),
@@ -447,7 +447,7 @@ func sendCTATUpdateEmail(
 		ResolutionUpdated:         resolutionUpdated,
 		Resolution:                updatedRequest.Resolution.String,
 		ClientAddress:             bodySummary.ClientAddress,
-		ModelID:                   bodySummary.ModelID,
+		CTATTicketID:              bodySummary.CTATTicketID,
 		TicketNumber:              bodySummary.TicketNumber,
 		RequesterName:             bodySummary.RequesterName,
 		RequesterEmail:            bodySummary.RequesterEmail,
