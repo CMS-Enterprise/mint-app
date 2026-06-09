@@ -445,42 +445,58 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	emailService, err := oddmail.NewGoSimpleMailService(emailtestconfigs.TestEmailServiceConfig)
 	suite.Require().NoError(err)
 
-	cmmiDivision := models.CTATCMMIDivisionOptionOther
 	contractActivityType := models.CTATContractActivityTypeOther
 	contractType := models.CTATContractTypeOther
-	request := models.NewCTATRequest(suite.testConfigs.Principal.Account().ID, suite.testConfigs.Principal.Account().ID)
-	request.CmmiGroup = models.CTATCMMIGroupOptionOther
-	request.CmmiGroupOther = zero.StringFrom("Cross-CMMI Strategic Operations")
-	request.CmmiDivision = &cmmiDivision
-	request.CmmiDivisionOther = zero.StringFrom("Division of Innovation Partnerships (PPG/DIP)")
-	request.ContractActivityType = &contractActivityType
-	request.ContractActivityTypeOther = zero.StringFrom("Acquisition strategy support")
-	request.ContractType = &contractType
-	request.ContractTypeOther = zero.StringFrom("Blanket Purchase Agreement")
-	request.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType]{
+
+	groupOtherRequest := models.NewCTATRequest(suite.testConfigs.Principal.Account().ID, suite.testConfigs.Principal.Account().ID)
+	groupOtherRequest.CmmiGroup = models.CTATCMMIGroupOptionOther
+	groupOtherRequest.CmmiGroupOther = zero.StringFrom("Cross-CMMI Strategic Operations")
+	groupOtherRequest.ContractActivityType = &contractActivityType
+	groupOtherRequest.ContractActivityTypeOther = zero.StringFrom("Acquisition strategy support")
+	groupOtherRequest.ContractType = &contractType
+	groupOtherRequest.ContractTypeOther = zero.StringFrom("Blanket Purchase Agreement")
+	groupOtherRequest.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType]{
 		models.CTATHelpNeededTypeRequestForInformationRFI,
 		models.CTATHelpNeededTypeOther,
 	}
-	request.TypeOfHelpNeededOther = zero.StringFrom("Assistance drafting evaluation criteria for a new workstream")
-	request.DescribeHelpNeeded = "Need help formatting CTAT email body content."
-	request.RequestUrgency = models.CTATRequestUrgencyHigh
-	request.DateAssistanceNeededBy = time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC)
+	groupOtherRequest.TypeOfHelpNeededOther = zero.StringFrom("Assistance drafting evaluation criteria for a new workstream")
+	groupOtherRequest.DescribeHelpNeeded = "Need help formatting CTAT email body content."
+	groupOtherRequest.RequestUrgency = models.CTATRequestUrgencyHigh
+	groupOtherRequest.DateAssistanceNeededBy = time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC)
 
-	created, err := storage.CTATRequestCreate(suite.testConfigs.Store, request)
+	createdGroupOtherRequest, err := storage.CTATRequestCreate(suite.testConfigs.Store, groupOtherRequest)
 	suite.Require().NoError(err)
 
-	bodyContent, err := buildCTATSubmittedBodyContent(suite.testConfigs.Context, emailService, created)
+	groupOtherBodyContent, err := buildCTATSubmittedBodyContent(suite.testConfigs.Context, emailService, createdGroupOtherRequest)
 	suite.Require().NoError(err)
 
-	suite.Equal("Other (Cross-CMMI Strategic Operations)", bodyContent.CMMIGroup)
-	suite.Equal("Other (Division of Innovation Partnerships (PPG/DIP))", bodyContent.CMMIDivision)
-	suite.Equal("Other (Acquisition strategy support)", bodyContent.ContractActivityType)
-	suite.Equal("Other (Blanket Purchase Agreement)", bodyContent.ContractType)
+	suite.Equal("Other (Cross-CMMI Strategic Operations)", groupOtherBodyContent.CMMIGroup)
+	suite.Empty(groupOtherBodyContent.CMMIDivision)
+	suite.Equal("Other (Acquisition strategy support)", groupOtherBodyContent.ContractActivityType)
+	suite.Equal("Other (Blanket Purchase Agreement)", groupOtherBodyContent.ContractType)
 	suite.Equal(
 		"Request for Information (RFI), Other (Assistance drafting evaluation criteria for a new workstream)",
-		bodyContent.TypeOfHelpNeeded,
+		groupOtherBodyContent.TypeOfHelpNeeded,
 	)
-	suite.Equal(emailtestconfigs.TestEmailServiceConfig.ClientAddress, bodyContent.ClientAddress)
+	suite.Equal(emailtestconfigs.TestEmailServiceConfig.ClientAddress, groupOtherBodyContent.ClientAddress)
+
+	cmmiDivision := models.CTATCMMIDivisionOptionOther
+	divisionOtherRequest := models.NewCTATRequest(suite.testConfigs.Principal.Account().ID, suite.testConfigs.Principal.Account().ID)
+	divisionOtherRequest.CmmiGroup = models.CTATCMMIGroupOptionPPG
+	divisionOtherRequest.CmmiDivision = &cmmiDivision
+	divisionOtherRequest.CmmiDivisionOther = zero.StringFrom("Division of Innovation Partnerships (PPG/DIP)")
+	divisionOtherRequest.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRFI}
+	divisionOtherRequest.DescribeHelpNeeded = "Need help formatting CTAT division email body content."
+	divisionOtherRequest.RequestUrgency = models.CTATRequestUrgencyHigh
+	divisionOtherRequest.DateAssistanceNeededBy = time.Date(2026, 7, 1, 12, 0, 0, 0, time.UTC)
+
+	createdDivisionOtherRequest, err := storage.CTATRequestCreate(suite.testConfigs.Store, divisionOtherRequest)
+	suite.Require().NoError(err)
+
+	divisionOtherBodyContent, err := buildCTATSubmittedBodyContent(suite.testConfigs.Context, emailService, createdDivisionOtherRequest)
+	suite.Require().NoError(err)
+
+	suite.Equal("Other (Division of Innovation Partnerships (PPG/DIP))", divisionOtherBodyContent.CMMIDivision)
 }
 
 func (suite *ResolverSuite) TestCTATRequestCreateDeduplicatesRelatedModelLinks() {
