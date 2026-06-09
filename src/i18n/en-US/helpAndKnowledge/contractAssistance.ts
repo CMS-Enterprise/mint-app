@@ -62,8 +62,104 @@ const contractAssistance = {
       caption: 'Your contract assistance help tickets'
     }
   },
+
   ctatSidePanel: {
-    heading: 'Contract assistance ticket'
+    modalHeading: 'Contract assistance ticket',
+    allFieldsRequired:
+      'Fields marked with an asterisk ( <s>*</s> ) are required.',
+    newTicketHeading: 'New ticket',
+    submitTicket: 'Submit ticket',
+    cancel: 'Cancel',
+    success:
+      'You submitted a contract assistance ticket (<bold>{{ticketId}}</bold>).',
+    error:
+      'There was an error submitting your ticket. Please try again. If the error persists, please try again another time.',
+    validation: {
+      fillOut: 'Please fill out the required field.'
+    },
+    leaveConfirm: {
+      heading: 'Are you sure you want to leave?',
+      description:
+        'You have unsaved changes. If you leave, your changes will not be saved.',
+      confirm: 'Leave without saving',
+      dontLeave: 'Stay on page'
+    },
+    fields: {
+      requester: {
+        label: 'Requester',
+        hint: 'This field is automatically populated based on your MINT user account.'
+      },
+      cmmiGroup: {
+        label: 'CMMI group',
+        selectDefault: '-Select-'
+      },
+      cmmiDivision: {
+        label: 'CMMI division',
+        hint: 'Select your CMMI group before selecting your division.',
+        selectDefault: '-Select-'
+      },
+      modelOrDemonstration: {
+        label: 'Model or demonstration',
+        hint: 'If applicable, select the model(s) associated with this assistance request. Only models listed in MINT will appear in this list. Select all that apply.'
+      },
+      contractActivityType: {
+        label: 'Contract activity type',
+        selectDefault: '-Select-'
+      },
+      contractName: {
+        label: 'Contract name'
+      },
+      contractNumber: {
+        label: 'Contract number'
+      },
+      contractType: {
+        label: 'Contract type',
+        selectDefault: '-Select-'
+      },
+      helpNeededType: {
+        label: 'Type of help needed',
+        hint: 'Select all that apply.'
+      },
+      assistanceDescription: {
+        label: 'Describe the type of assistance you need.',
+        hint: 'Add additional detail about the help you need. If you selected "Other" in the previous question, please explain.',
+        charactersAllowed: '500 characters allowed'
+      },
+      requestUrgency: {
+        label: 'Request urgency',
+        selectDefault: '-Select-'
+      },
+      assistanceNeededBy: {
+        label: 'When do you need assistance by?',
+        dateFormat: 'mm/dd/yyyy'
+      },
+      supportingDocuments: {
+        label: 'Supporting documents',
+        hint: 'Upload any documentation that will help CTAT better understand your request.',
+        uploadText: 'Drag file here or choose from folder',
+        addAnother: 'Add another document',
+        remove: 'Remove'
+      },
+      other: {
+        cmmiGroup: 'Please specify your CMMI group',
+        cmmiDivision: 'Please specify your CMMI division',
+        contractActivityType: 'Please specify the contract activity type',
+        contractType: 'Please specify the contract type',
+        helpNeededType: 'Please specify the type of help needed'
+      }
+    },
+    whatHappensNext: {
+      heading: 'What happens next?',
+      intro: 'After you submit your ticket:',
+      bullet1:
+        'you will receive an automated confirmation email from MINT that includes all the details you shared about your assistance request',
+      bullet2:
+        'CTAT will assign a team member to your assistance request, and they will work with you to investigate your issue and provide assistance',
+      bullet3:
+        'you will receive update emails when CTAT updates anything about your ticket in MINT or changes the status',
+      bullet4:
+        'you may continue to check on the status of your ticket from the contract assistance page in the MINT Help and Knowledge Center'
+    }
   }
 };
 
