@@ -411,6 +411,16 @@ func sendCTATUpdateEmail(
 		return nil
 	}
 
+	// we only want to send the eamil if there was an update, so compute those ahead of time
+	// note: we won't send an email for a whitespace-only change, but we will still save the change in the DB
+	statusUpdated := originalRequest.Status != updatedRequest.Status
+	assignedAdminUpdated := !uuidPointersEqual(originalRequest.AssignedAdmin, updatedRequest.AssignedAdmin)
+	progressNotesUpdated := strings.TrimSpace(originalRequest.Notes.String) != strings.TrimSpace(updatedRequest.Notes.String)
+	resolutionUpdated := strings.TrimSpace(originalRequest.Resolution.String) != strings.TrimSpace(updatedRequest.Resolution.String)
+	if !statusUpdated && !assignedAdminUpdated && !progressNotesUpdated && !resolutionUpdated {
+		return nil
+	}
+
 	bodySummary, err := buildCTATSubmittedBodyContent(ctx, emailService, updatedRequest)
 	if err != nil {
 		return err
@@ -430,11 +440,11 @@ func sendCTATUpdateEmail(
 
 	bodyContent := email.CTATUpdateBodyContent{
 		Status:                    updatedRequest.Status.Humanize(),
-		StatusUpdated:             originalRequest.Status != updatedRequest.Status,
-		AssignedTeamMemberUpdated: !uuidPointersEqual(originalRequest.AssignedAdmin, updatedRequest.AssignedAdmin),
-		ProgressNotesUpdated:      originalRequest.Notes.String != updatedRequest.Notes.String,
+		StatusUpdated:             statusUpdated,
+		AssignedTeamMemberUpdated: assignedAdminUpdated,
+		ProgressNotesUpdated:      progressNotesUpdated,
 		ProgressNotes:             updatedRequest.Notes.String,
-		ResolutionUpdated:         originalRequest.Resolution.String != updatedRequest.Resolution.String,
+		ResolutionUpdated:         resolutionUpdated,
 		Resolution:                updatedRequest.Resolution.String,
 		ClientAddress:             bodySummary.ClientAddress,
 		ModelID:                   bodySummary.ModelID,
