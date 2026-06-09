@@ -411,7 +411,7 @@ func sendCTATUpdateEmail(
 		return nil
 	}
 
-	// we only want to send the eamil if there was an update, so compute those ahead of time
+	// we only want to send the email if there was an update, so compute those ahead of time
 	// note: we won't send an email for a whitespace-only change, but we will still save the change in the DB
 	statusUpdated := originalRequest.Status != updatedRequest.Status
 	assignedAdminUpdated := !uuidPointersEqual(originalRequest.AssignedAdmin, updatedRequest.AssignedAdmin)
