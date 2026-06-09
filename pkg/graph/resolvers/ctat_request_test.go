@@ -2,9 +2,12 @@ package resolvers
 
 import (
 	"bytes"
+	"context"
+	"testing"
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
+	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
 	"github.com/samber/lo"
@@ -497,6 +500,37 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	suite.Require().NoError(err)
 
 	suite.Equal("Other (Division of Innovation Partnerships (PPG/DIP))", divisionOtherBodyContent.CMMIDivision)
+}
+
+func TestSendCTATUpdateEmailSkipsWhitespaceOnlyChanges(t *testing.T) {
+	mockController := gomock.NewController(t)
+	defer mockController.Finish()
+
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailService.
+		EXPECT().
+		Send(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).
+		MaxTimes(0)
+
+	requesterID := uuid.New()
+	originalRequest := models.NewCTATRequest(requesterID, requesterID)
+	updatedRequest := models.NewCTATRequest(requesterID, requesterID)
+
+	originalRequest.Notes = zero.StringFrom("Working through next steps with the team.")
+	updatedRequest.Notes = zero.StringFrom("  Working through next steps with the team.  ")
+	originalRequest.Resolution = zero.StringFrom("Resolved and documented.")
+	updatedRequest.Resolution = zero.StringFrom("\nResolved and documented.\t")
+
+	err := sendCTATUpdateEmail(
+		context.Background(),
+		mockEmailService,
+		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+		originalRequest,
+		updatedRequest,
+	)
+	if err != nil {
+		t.Fatalf("expected whitespace-only CTAT update to skip email send, got error: %v", err)
+	}
 }
 
 func (suite *ResolverSuite) TestCTATRequestCreateDeduplicatesRelatedModelLinks() {
