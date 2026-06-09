@@ -96,7 +96,9 @@ const contractAssistance = {
       cmmiDivision: {
         label: 'CMMI division',
         hint: 'Select your CMMI group before selecting your division.',
-        selectDefault: '-Select-'
+        selectDefault: '-Select-',
+        otherLabel: 'Describe other',
+        otherHint: 'Please describe your "Other" division.'
       },
       modelOrDemonstration: {
         label: 'Model or demonstration',
@@ -104,7 +106,9 @@ const contractAssistance = {
       },
       contractActivityType: {
         label: 'Contract activity type',
-        selectDefault: '-Select-'
+        selectDefault: '-Select-',
+        otherLabel: 'Describe other',
+        otherHint: 'Please describe your "Other" contract activity type.'
       },
       contractName: {
         label: 'Contract name'
@@ -114,7 +118,9 @@ const contractAssistance = {
       },
       contractType: {
         label: 'Contract type',
-        selectDefault: '-Select-'
+        selectDefault: '-Select-',
+        otherLabel: 'Describe other',
+        otherHint: 'Please describe your "Other" contract type.'
       },
       helpNeededType: {
         label: 'Type of help needed',
@@ -131,7 +137,7 @@ const contractAssistance = {
       },
       assistanceNeededBy: {
         label: 'When do you need assistance by?',
-        dateFormat: 'mm/dd/yyyy'
+        hint: 'mm/dd/yyyy'
       },
       supportingDocuments: {
         label: 'Supporting documents',
@@ -142,9 +148,6 @@ const contractAssistance = {
       },
       other: {
         cmmiGroup: 'Please specify your CMMI group',
-        cmmiDivision: 'Please specify your CMMI division',
-        contractActivityType: 'Please specify the contract activity type',
-        contractType: 'Please specify the contract type',
         helpNeededType: 'Please specify the type of help needed'
       }
     },

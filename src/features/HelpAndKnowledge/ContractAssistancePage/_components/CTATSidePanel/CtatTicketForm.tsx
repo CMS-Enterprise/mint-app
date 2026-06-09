@@ -170,26 +170,24 @@ const CtatTicketForm = ({
         selectedCmmiGroup as keyof typeof divisionOptionsByGroup
       ] || [];
 
-    const options = divisions.map(division => ({
-      value: division,
-      label: cmmiDivisions[division]
-    }));
-
-    if (selectedCmmiGroup === CtatcmmiGroupOption.SPHG) {
-      options.push({
+    return [
+      ...divisions.map(division => ({
+        value: division,
+        label: cmmiDivisions[division]
+      })),
+      {
         value: CtatcmmiDivisionOption.OTHER,
         label: cmmiDivisions[CtatcmmiDivisionOption.OTHER]
-      });
-    }
-
-    return options;
+      }
+    ];
   }, [selectedCmmiGroup]);
 
   const contractActivityTypeOptions = useMemo(
     () =>
-      Object.entries(contractActivityTypes)
-        .filter(([key]) => key !== CtatContractActivityType.OTHER)
-        .map(([value, label]) => ({ value, label })),
+      Object.entries(contractActivityTypes).map(([value, label]) => ({
+        value,
+        label
+      })),
     []
   );
 
@@ -281,6 +279,8 @@ const CtatTicketForm = ({
         formValues.typeOfHelpNeededOther.trim().length > 0) &&
       (formValues.cmmiDivision !== CtatcmmiDivisionOption.OTHER ||
         formValues.cmmiDivisionOther.trim().length > 0) &&
+      (formValues.contractActivityType !== CtatContractActivityType.OTHER ||
+        formValues.contractActivityTypeOther.trim().length > 0) &&
       (formValues.contractType !== CtatContractType.OTHER ||
         formValues.contractTypeOther.trim().length > 0);
 
@@ -404,7 +404,7 @@ const CtatTicketForm = ({
         <ConfirmLeaveRHF />
         <Form
           id="ctat-ticket-form"
-          className="maxw-none"
+          className="maxw-none padding-bottom-10"
           onSubmit={handleSubmit(onSubmit)}
         >
           <Fieldset disabled={isSubmitting}>
@@ -533,10 +533,12 @@ const CtatTicketForm = ({
                     <Label
                       htmlFor="cmmi-division-other"
                       className="maxw-none text-bold"
-                      requiredMarker
                     >
-                      {t('ctatSidePanel.fields.other.cmmiDivision')}
+                      {t('ctatSidePanel.fields.cmmiDivision.otherLabel')}
                     </Label>
+                    <HelpText className="margin-top-05">
+                      {t('ctatSidePanel.fields.cmmiDivision.otherHint')}
+                    </HelpText>
                     {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                     <TextInput
                       {...field}
@@ -619,6 +621,46 @@ const CtatTicketForm = ({
                 </FormGroup>
               )}
             />
+
+            {watch('contractActivityType') ===
+              CtatContractActivityType.OTHER && (
+              <Controller
+                name="contractActivityTypeOther"
+                control={control}
+                rules={{
+                  required: t('ctatSidePanel.validation.fillOut')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor="contract-activity-type-other"
+                      className="maxw-none text-bold"
+                    >
+                      {t(
+                        'ctatSidePanel.fields.contractActivityType.otherLabel'
+                      )}
+                    </Label>
+                    <HelpText className="margin-top-05">
+                      {t('ctatSidePanel.fields.contractActivityType.otherHint')}
+                    </HelpText>
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                    <TextInput
+                      {...field}
+                      inputRef={ref}
+                      id="contract-activity-type-other"
+                      type="text"
+                      value={field.value || ''}
+                    />
+                  </FormGroup>
+                )}
+              />
+            )}
 
             <Controller
               name="contractName"
@@ -717,10 +759,12 @@ const CtatTicketForm = ({
                     <Label
                       htmlFor="contract-type-other"
                       className="maxw-none text-bold"
-                      requiredMarker
                     >
-                      {t('ctatSidePanel.fields.other.contractType')}
+                      {t('ctatSidePanel.fields.contractType.otherLabel')}
                     </Label>
+                    <HelpText className="margin-top-05">
+                      {t('ctatSidePanel.fields.contractType.otherHint')}
+                    </HelpText>
                     {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                     <TextInput
                       {...field}
@@ -920,6 +964,9 @@ const CtatTicketForm = ({
                   >
                     {t('ctatSidePanel.fields.assistanceNeededBy.label')}
                   </Label>
+                  <HelpText className="margin-top-05">
+                    {t('ctatSidePanel.fields.assistanceNeededBy.hint')}
+                  </HelpText>
                   {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                   <DatePickerFormatted
                     id="assistance-needed-by"
