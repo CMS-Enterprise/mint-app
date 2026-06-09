@@ -173,6 +173,172 @@ func (suite *ResolverSuite) TestCtatRequest() {
 	suite.Equal(models.CTATStatusAssigned, resp.Status)
 }
 
+func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdminAndNotes() {
+	request := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 11, 9, 0, 0, 0, time.UTC),
+		"Admin update contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusNew,
+	)
+
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+
+	status := models.CTATStatusAssigned
+	assignedAdmin := "ADMI"
+	notes := "Assigned to CTAT admin during resolver test."
+
+	resolver := &mutationResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+		"status":        &status,
+		"assignedAdmin": &assignedAdmin,
+		"notes":         &notes,
+	})
+	suite.NoError(err)
+	suite.NotNil(resp)
+	suite.Equal(models.CTATStatusAssigned, resp.Status)
+	suite.Require().NotNil(resp.AssignedAdmin)
+	suite.Equal(adminPrincipal.Account().ID, *resp.AssignedAdmin)
+	suite.Equal(zero.StringFrom(notes), resp.Notes)
+
+	rows, err := storage.CTATRequestGetByIDLOADER(suite.testConfigs.Store, []uuid.UUID{request.ID})
+	suite.NoError(err)
+	suite.Len(rows, 1)
+	suite.Equal(models.CTATStatusAssigned, rows[0].Status)
+	suite.Require().NotNil(rows[0].AssignedAdmin)
+	suite.Equal(adminPrincipal.Account().ID, *rows[0].AssignedAdmin)
+	suite.Equal(zero.StringFrom(notes), rows[0].Notes)
+}
+
+func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
+	request := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 11, 10, 0, 0, 0, time.UTC),
+		"Admin clear contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusAssigned,
+	)
+
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+
+	request.AssignedAdmin = &adminPrincipal.Account().ID
+	request.ModifiedBy = &suite.testConfigs.Principal.Account().ID
+	_, err := storage.CTATRequestAdminUpdate(suite.testConfigs.Store, request)
+	suite.Require().NoError(err)
+
+	var noAssignedAdmin *string
+
+	resolver := &mutationResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+		"assignedAdmin": noAssignedAdmin,
+	})
+	suite.NoError(err)
+	suite.NotNil(resp)
+	suite.Nil(resp.AssignedAdmin)
+
+	rows, err := storage.CTATRequestGetByIDLOADER(suite.testConfigs.Store, []uuid.UUID{request.ID})
+	suite.NoError(err)
+	suite.Len(rows, 1)
+	suite.Nil(rows[0].AssignedAdmin)
+}
+
+func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
+	request := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 11, 11, 0, 0, 0, time.UTC),
+		"Admin resolution contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusInProgress,
+	)
+
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+
+	resolution := "Resolved during resolver-layer admin update test."
+
+	resolver := &mutationResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+		"resolution": &resolution,
+	})
+	suite.NoError(err)
+	suite.NotNil(resp)
+	suite.Equal(zero.StringFrom(resolution), resp.Resolution)
+
+	rows, err := storage.CTATRequestGetByIDLOADER(suite.testConfigs.Store, []uuid.UUID{request.ID})
+	suite.NoError(err)
+	suite.Len(rows, 1)
+	suite.Equal(zero.StringFrom(resolution), rows[0].Resolution)
+}
+
+func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForUnknownAssignedAdminUsername() {
+	request := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 11, 12, 0, 0, 0, time.UTC),
+		"Admin unknown user contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusNew,
+	)
+
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+
+	assignedAdmin := "NOT_A_REAL_EUA"
+
+	resolver := &mutationResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+		"assignedAdmin": &assignedAdmin,
+	})
+	suite.Nil(resp)
+	suite.ErrorContains(err, "user account not found for username NOT_A_REAL_EUA")
+}
+
+func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForWrongNotesType() {
+	request := suite.insertCommittedCTATRequestRow(
+		suite.testConfigs.Principal.Account().ID,
+		time.Date(2026, 2, 11, 13, 0, 0, 0, time.UTC),
+		"Admin wrong notes type contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRfi},
+		models.CTATStatusNew,
+	)
+
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+
+	resolver := &mutationResolver{
+		&Resolver{
+			store: suite.testConfigs.Store,
+		},
+	}
+
+	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+		"notes": 123,
+	})
+	suite.Nil(resp)
+	suite.ErrorContains(err, "notes must be a string")
+}
+
 func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
