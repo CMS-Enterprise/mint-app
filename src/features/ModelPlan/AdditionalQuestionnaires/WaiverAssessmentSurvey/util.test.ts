@@ -1,4 +1,4 @@
-import { ModelCategory } from 'gql/generated/graphql';
+import { CommonWaiverType, ModelCategory } from 'gql/generated/graphql';
 import { modelPlanQuestionsDataMocks } from 'tests/mock/general';
 import { describe, expect, it } from 'vitest';
 
@@ -338,7 +338,7 @@ describe('filterSuggestedWaiversByType', () => {
         id: '111',
         commonWaiver: {
           __typename: 'CommonWaiver',
-          waiverType: 'MEDICARE_PAYMENT',
+          waiverType: CommonWaiverType.MEDICARE_PAYMENT,
           name: 'Common Waiver 1',
           id: '123'
         },
@@ -349,7 +349,7 @@ describe('filterSuggestedWaiversByType', () => {
         id: '222',
         commonWaiver: {
           __typename: 'CommonWaiver',
-          waiverType: 'PROGRAM_MEDICARE_BES',
+          waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
           name: 'Common Waiver 2',
           id: '124'
         },
@@ -360,7 +360,7 @@ describe('filterSuggestedWaiversByType', () => {
         id: '333',
         commonWaiver: {
           __typename: 'CommonWaiver',
-          waiverType: 'MEDICAID_PAYMENT',
+          waiverType: CommonWaiverType.MEDICAID_PAYMENT,
           name: 'Common Waiver 3',
           id: '125'
         },
@@ -379,7 +379,7 @@ describe('filterSuggestedWaiversByType', () => {
         id: '111',
         commonWaiver: {
           __typename: 'CommonWaiver',
-          waiverType: 'MEDICARE_PAYMENT',
+          waiverType: CommonWaiverType.MEDICARE_PAYMENT,
           name: 'Common Waiver 1',
           id: '123'
         },
@@ -398,7 +398,7 @@ describe('filterSuggestedWaiversByType', () => {
         id: '222',
         commonWaiver: {
           __typename: 'CommonWaiver',
-          waiverType: 'PROGRAM_MEDICARE_BES',
+          waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
           name: 'Common Waiver 2',
           id: '124'
         },
@@ -417,7 +417,7 @@ describe('filterSuggestedWaiversByType', () => {
         id: '333',
         commonWaiver: {
           __typename: 'CommonWaiver',
-          waiverType: 'MEDICAID_PAYMENT',
+          waiverType: CommonWaiverType.MEDICAID_PAYMENT,
           name: 'Common Waiver 3',
           id: '125'
         },

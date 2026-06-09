@@ -328,7 +328,7 @@ export type CommonWaiver = {
   notUsingReason?: Maybe<Scalars['String']['output']>;
   participationAgreementLanguageLink?: Maybe<Scalars['String']['output']>;
   waiverFocus?: Maybe<Scalars['String']['output']>;
-  waiverType?: Maybe<Scalars['String']['output']>;
+  waiverType?: Maybe<CommonWaiverType>;
   whatIsWaived?: Maybe<Scalars['String']['output']>;
   /**
    * To represent if this Common Waiver is _already_ answered for the Model Plan.
@@ -337,6 +337,12 @@ export type CommonWaiver = {
    */
   willUseWaiver?: Maybe<Scalars['Boolean']['output']>;
 };
+
+export enum CommonWaiverType {
+  MEDICAID_PAYMENT = 'MEDICAID_PAYMENT',
+  MEDICARE_PAYMENT = 'MEDICARE_PAYMENT',
+  PROGRAM_MEDICARE_BE = 'PROGRAM_MEDICARE_BE'
+}
 
 export enum ComplexityCalculationLevelType {
   HIGH = 'HIGH',
@@ -6238,28 +6244,28 @@ export type UpdateIddocQuestionnaireMutation = { __typename: 'Mutation', updateI
 export type GetAllCommonWaiversQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllCommonWaiversQuery = { __typename: 'Query', commonWaivers: Array<{ __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: string | null }> };
+export type GetAllCommonWaiversQuery = { __typename: 'Query', commonWaivers: Array<{ __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null }> };
 
 export type GetCommonWaiverQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetCommonWaiverQuery = { __typename: 'Query', commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, description?: string | null, participationAgreementLanguageLink?: string | null, cmmiWaiverPointOfContact?: string | null, waiverType?: string | null, waiverFocus?: string | null, whatIsWaived?: string | null, hasStandardizationEffort?: boolean | null, hasClaimsDataOrRREGAnalysis?: string | null, isUsedInActiveModels?: boolean | null } };
+export type GetCommonWaiverQuery = { __typename: 'Query', commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, description?: string | null, participationAgreementLanguageLink?: string | null, cmmiWaiverPointOfContact?: string | null, waiverType?: CommonWaiverType | null, waiverFocus?: string | null, whatIsWaived?: string | null, hasStandardizationEffort?: boolean | null, hasClaimsDataOrRREGAnalysis?: string | null, isUsedInActiveModels?: boolean | null } };
 
 export type GetMedicaidPaymentWaiversQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetMedicaidPaymentWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, impactsMedicaidOnlyBeneficiaries?: boolean | null, impactsMedicaidOnlyBeneficiariesExample?: string | null, impactsMedicaidOnlyBeneficiariesWhyNot?: NotSelectedReason | null, impactsHomeCommunityBasedServicePayments?: boolean | null, impactsHomeCommunityBasedServicePaymentsExample?: string | null, impactsHomeCommunityBasedServicePaymentsWhyNot?: NotSelectedReason | null, impactsManagedCareWaivers?: boolean | null, impactsManagedCareWaiversExample?: string | null, impactsManagedCareWaiversWhyNot?: NotSelectedReason | null, additionalMedicaidSpecificWaivers?: string | null, suggestedWaivers: Array<{ __typename: 'SuggestedWaiver', id: UUID, commonWaiverID: UUID, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: string | null } }> } } } };
+export type GetMedicaidPaymentWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, impactsMedicaidOnlyBeneficiaries?: boolean | null, impactsMedicaidOnlyBeneficiariesExample?: string | null, impactsMedicaidOnlyBeneficiariesWhyNot?: NotSelectedReason | null, impactsHomeCommunityBasedServicePayments?: boolean | null, impactsHomeCommunityBasedServicePaymentsExample?: string | null, impactsHomeCommunityBasedServicePaymentsWhyNot?: NotSelectedReason | null, impactsManagedCareWaivers?: boolean | null, impactsManagedCareWaiversExample?: string | null, impactsManagedCareWaiversWhyNot?: NotSelectedReason | null, additionalMedicaidSpecificWaivers?: string | null, suggestedWaivers: Array<{ __typename: 'SuggestedWaiver', id: UUID, commonWaiverID: UUID, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null } }> } } } };
 
 export type GetMedicarePaymentWaiversQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetMedicarePaymentWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, modifiesMedicareSavingsPrograms?: boolean | null, modifiesMedicareSavingsProgramsExample?: string | null, modifiesMedicareSavingsProgramsWhyNot?: NotSelectedReason | null, bundlesPayments?: boolean | null, bundlesPaymentsExample?: string | null, bundlesPaymentsWhyNot?: NotSelectedReason | null, offersRiskSharingArrangements?: boolean | null, offersRiskSharingArrangementsExample?: string | null, offersRiskSharingArrangementsWhyNot?: NotSelectedReason | null, suggestedWaivers: Array<{ __typename: 'SuggestedWaiver', id: UUID, commonWaiverID: UUID, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: string | null } }> } } } };
+export type GetMedicarePaymentWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, modifiesMedicareSavingsPrograms?: boolean | null, modifiesMedicareSavingsProgramsExample?: string | null, modifiesMedicareSavingsProgramsWhyNot?: NotSelectedReason | null, bundlesPayments?: boolean | null, bundlesPaymentsExample?: string | null, bundlesPaymentsWhyNot?: NotSelectedReason | null, offersRiskSharingArrangements?: boolean | null, offersRiskSharingArrangementsExample?: string | null, offersRiskSharingArrangementsWhyNot?: NotSelectedReason | null, suggestedWaivers: Array<{ __typename: 'SuggestedWaiver', id: UUID, commonWaiverID: UUID, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null } }> } } } };
 
 export type GetModelPlanQuestionsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -6273,14 +6279,14 @@ export type GetProgramWaiversQueryVariables = Exact<{
 }>;
 
 
-export type GetProgramWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, impactsSiteOfCarePayments?: boolean | null, impactsSiteOfCarePaymentsExample?: string | null, impactsSiteOfCarePaymentsWhyNot?: NotSelectedReason | null, modifiesCareTeamScopeOfPractice?: boolean | null, modifiesCareTeamScopeOfPracticeExample?: string | null, modifiesCareTeamScopeOfPracticeWhyNot?: NotSelectedReason | null, modifiesCareDeliveryWithClaimsBasedPayments?: boolean | null, modifiesCareDeliveryWithClaimsBasedPaymentsExample?: string | null, modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot?: NotSelectedReason | null, modifiesQualityMeasurementsOrPaymentsViaWaivers?: boolean | null, modifiesQualityMeasurementsOrPaymentsViaWaiversExample?: string | null, modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot?: NotSelectedReason | null, suggestedWaivers: Array<{ __typename: 'SuggestedWaiver', id: UUID, commonWaiverID: UUID, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: string | null } }> } } } };
+export type GetProgramWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, impactsSiteOfCarePayments?: boolean | null, impactsSiteOfCarePaymentsExample?: string | null, impactsSiteOfCarePaymentsWhyNot?: NotSelectedReason | null, modifiesCareTeamScopeOfPractice?: boolean | null, modifiesCareTeamScopeOfPracticeExample?: string | null, modifiesCareTeamScopeOfPracticeWhyNot?: NotSelectedReason | null, modifiesCareDeliveryWithClaimsBasedPayments?: boolean | null, modifiesCareDeliveryWithClaimsBasedPaymentsExample?: string | null, modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot?: NotSelectedReason | null, modifiesQualityMeasurementsOrPaymentsViaWaivers?: boolean | null, modifiesQualityMeasurementsOrPaymentsViaWaiversExample?: string | null, modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot?: NotSelectedReason | null, suggestedWaivers: Array<{ __typename: 'SuggestedWaiver', id: UUID, commonWaiverID: UUID, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null } }> } } } };
 
 export type GetWaiversQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, waivers: Array<{ __typename: 'Waiver', id: UUID, commonWaiverID: UUID, willUseWaiver?: boolean | null, notUsingReason?: string | null, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: string | null, waiverFocus?: string | null } }>, suggestedWaivers: Array<{ __typename: 'SuggestedWaiver', id: UUID, commonWaiverID: UUID, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: string | null } }> } } } };
+export type GetWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, waivers: Array<{ __typename: 'Waiver', id: UUID, commonWaiverID: UUID, willUseWaiver?: boolean | null, notUsingReason?: string | null, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null, waiverFocus?: string | null } }>, suggestedWaivers: Array<{ __typename: 'SuggestedWaiver', id: UUID, commonWaiverID: UUID, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null } }> } } } };
 
 export type UpdateModelPlanQuestionsMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
