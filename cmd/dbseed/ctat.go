@@ -213,7 +213,7 @@ func (s *Seeder) seedCTATRequests(
 			ContractNumber:         new("75FCMC24F0008"),
 			ContractType:           &costPlusFixedFee,
 			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypePoliticalAppointeeApprovalPAAModification, models.CTATHelpNeededTypeMaintainingTheElectronicCorECORFile},
-			DescribeHelpNeeded:     "Needed follow-up support on post-award actions and electronic COR documentation maintenance.",
+			DescribeHelpNeeded:     "Needed follow-up support on political appointee approval and electronic COR documentation maintenance.",
 			RequestUrgency:         models.CTATRequestUrgencyLow,
 			DateAssistanceNeededBy: now.AddDate(0, 0, 18),
 			CreatedDts:             now.AddDate(0, 0, -9),
