@@ -45,6 +45,7 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 	s.Nil(created.ModifiedBy)
 	s.Nil(created.ModifiedDts)
 	s.Greater(created.HumanReadableIDNumber, 0)
+	s.Require().NotNil(created.ContractName)
 	s.Equal(contractName, *created.ContractName)
 	s.Equal(
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
@@ -225,6 +226,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	s.Equal(expected.Requester, row.Requester)
 	s.Equal(expected.HumanReadableIDNumber, row.HumanReadableIDNumber)
 	s.EqualTime(createdDts, row.CreatedDts)
+	s.Require().NotNil(row.ContractName)
 	s.Equal(contractName, *row.ContractName)
 	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
 	s.Nil(row.TypeOfHelpNeededOther)
@@ -272,6 +274,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByIDLOADERReturnsExpectedRow() {
 	s.Equal(expected.Requester, row.Requester)
 	s.Equal(expected.HumanReadableIDNumber, row.HumanReadableIDNumber)
 	s.EqualTime(createdDts, row.CreatedDts)
+	s.Require().NotNil(row.ContractName)
 	s.Equal(contractName, *row.ContractName)
 	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
 	s.Nil(row.TypeOfHelpNeededOther)

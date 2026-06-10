@@ -210,7 +210,9 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdmin
 	suite.Equal(models.CTATStatusAssigned, resp.Status)
 	suite.Require().NotNil(resp.AssignedAdmin)
 	suite.Equal(adminPrincipal.Account().ID, *resp.AssignedAdmin)
-	suite.Equal(new(notes), resp.Notes)
+
+	suite.Require().NotNil(resp.Notes)
+	suite.Equal(notes, *resp.Notes)
 
 	rows, err := storage.CTATRequestGetByIDLOADER(suite.testConfigs.Store, []uuid.UUID{request.ID})
 	suite.NoError(err)
@@ -218,7 +220,9 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdmin
 	suite.Equal(models.CTATStatusAssigned, rows[0].Status)
 	suite.Require().NotNil(rows[0].AssignedAdmin)
 	suite.Equal(adminPrincipal.Account().ID, *rows[0].AssignedAdmin)
-	suite.Equal(new(notes), rows[0].Notes)
+
+	suite.Require().NotNil(rows[0].Notes)
+	suite.Equal(notes, *rows[0].Notes)
 }
 
 func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
@@ -284,11 +288,13 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
 	})
 	suite.NoError(err)
 	suite.NotNil(resp)
+	suite.Require().NotNil(resp.Resolution)
 	suite.Equal(resolution, *resp.Resolution)
 
 	rows, err := storage.CTATRequestGetByIDLOADER(suite.testConfigs.Store, []uuid.UUID{request.ID})
 	suite.NoError(err)
 	suite.Len(rows, 1)
+	suite.Require().NotNil(rows[0].Resolution)
 	suite.Equal(resolution, *rows[0].Resolution)
 }
 
@@ -427,6 +433,7 @@ func (suite *ResolverSuite) TestCTATRequestCreate() {
 	suite.NotNil(created)
 	suite.Equal(models.CTATStatusNew, created.Status)
 	suite.Equal(suite.testConfigs.Principal.Account().ID, created.Requester)
+	suite.Require().NotNil(created.ContractName)
 	suite.Equal(contractName, *created.ContractName)
 	suite.Greater(created.HumanReadableIDNumber, 0)
 
