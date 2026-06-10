@@ -82,7 +82,7 @@ func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input model.CT
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CTATRequestCreate(ctx, logger, &input, principal, r.store, r.fileUploadS3Client)
+	return CTATRequestCreate(ctx, logger, &input, principal, r.store, r.fileUploadS3Client, r.emailService, r.addressBook)
 }
 
 // AdminUpdateCTATRequest is the resolver for the adminUpdateCTATRequest field.
@@ -90,7 +90,7 @@ func (r *mutationResolver) AdminUpdateCTATRequest(ctx context.Context, id uuid.U
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CTATRequestAdminUpdate(ctx, logger, id, changes, principal, r.store)
+	return CTATRequestAdminUpdate(ctx, logger, id, changes, principal, r.store, r.emailService, r.addressBook)
 }
 
 // CtatRequest is the resolver for the ctatRequest field.

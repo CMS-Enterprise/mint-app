@@ -70,7 +70,7 @@ export const cmmiDivisions: Record<CtatcmmiDivisionOption, string> = {
   [CtatcmmiDivisionOption.SCMG_DFR]: 'Division of Financial Risk (SCMG/DFR)',
   [CtatcmmiDivisionOption.SCMG_DSI]:
     'Division of Seamless Infrastructure (SCMG/DSI)',
-  [CtatcmmiDivisionOption.SCMG_DDI]: 'Division of Drug Innovation (SCMG-DDI)',
+  [CtatcmmiDivisionOption.SCMG_DDI]: 'Division of Drug Innovation (SCMG/DDI)',
   [CtatcmmiDivisionOption.SPHG_DMPM]:
     'Division of Multi-Payer Models (SPHG/DMPM)',
   [CtatcmmiDivisionOption.SPHG_DHII]:
@@ -159,7 +159,7 @@ export const requestUrgencies: Record<CtatRequestUrgency, string> = {
 };
 
 export const statuses: Record<CtatStatus, string> = {
-  [CtatStatus.IN_PROGRESS]: 'In Progress',
+  [CtatStatus.IN_PROGRESS]: 'In progress',
   [CtatStatus.NEW]: 'New',
   [CtatStatus.ASSIGNED]: 'Assigned',
   [CtatStatus.CLOSED]: 'Closed'
