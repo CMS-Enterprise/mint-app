@@ -95,22 +95,22 @@ export const contractActivityTypes: Record<CtatContractActivityType, string> = {
 export const contractTypes: Record<CtatContractType, string> = {
   [CtatContractType.COST_PLUS_FIXED_FEE]: 'Cost Plus Fixed Fee',
   [CtatContractType.COST_REIMBURSEMENT]: 'Cost Reimbursement',
-  [CtatContractType.FIRMED_FIXED_PRICE]: 'Firmed Fixed Price',
+  [CtatContractType.FIRM_FIXED_PRICE]: 'Firm Fixed Price',
   [CtatContractType.INCENTIVE_CONTRACT]: 'Incentive Contract',
-  [CtatContractType.TIME_AND_MATERIALS]: 'Time and Material',
+  [CtatContractType.TIME_AND_MATERIALS]: 'Time and Materials',
   [CtatContractType.OTHER]: 'Other'
 };
 
 export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.CALM_SYSTEM_REQUISITION_SUPPORT]:
     'CALM system requisition support',
-  [CtatHelpNeededType.CONTRACT_CHANGE_REQUEST_CCR_PROCESSING]:
-    'Contract Change Request (CCR) processing',
+  [CtatHelpNeededType.CONTRACT_COST_REVIEW_CCR_PROCESSING]:
+    'Contract Cost Review (CCR) processing',
   [CtatHelpNeededType.COR_TRANSCRIPT_REVIEW]: 'COR Transcript Review',
   [CtatHelpNeededType.DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS]:
     'Defining and documenting contract requirements',
-  [CtatHelpNeededType.DELIVERABLE_EVALUATION_REVIEW_DER]:
-    'Deliverable/Evaluation Review (DER)',
+  [CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER]:
+    'Departmental Efficiency Review (DER)',
   [CtatHelpNeededType.GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF]:
     'Guidance on Determinations & Findings (D&F)',
   [CtatHelpNeededType.GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA]:
@@ -121,7 +121,8 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
     'Guidance on Technical Evaluation Panel (TEP) membership, scoring, and/or reporting',
   [CtatHelpNeededType.INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION]:
     'Independent Government Cost Estimate (IGCE) preparation',
-  [CtatHelpNeededType.POST_AWARD_ACTIONS_PAA]: 'Post-Award Actions (PAA)',
+  [CtatHelpNeededType.POLITICAL_APPOINTEE_APPROVAL_PAA]:
+    'Political Appointee Approval (PAA)',
   [CtatHelpNeededType.REQUEST_FOR_CONTRACT_MEMO_RFC]:
     'Request for Contract Memo (RFC)',
   [CtatHelpNeededType.REQUEST_FOR_INFORMATION_RFI]:
@@ -133,8 +134,8 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.CONTRACTOR_PERFORMANCE_MANAGEMENT]:
     'Contractor Performance Management',
   [CtatHelpNeededType.DATA_USE_AGREEMENT_DUA]: 'Data Use Agreement (DUA)',
-  [CtatHelpNeededType.DELIVERABLE_EVALUATION_REVIEW_DER_MODIFICATION]:
-    'Deliverable/Evaluation Review (DER) Modification',
+  [CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION]:
+    'Departmental Efficiency Review (DER) Modification',
   [CtatHelpNeededType.DOCUMENTING_AND_SUBMITTING_CPARS]:
     'Documenting and submitting contractor performance evaluations (CPARS)',
   [CtatHelpNeededType.ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES]:
@@ -147,8 +148,8 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
     'Invoice Processing Platform (IPP)',
   [CtatHelpNeededType.MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE]:
     'Maintaining the electronic COR (e-COR) file',
-  [CtatHelpNeededType.POST_AWARD_ACTIONS_PAA_MODIFICATION]:
-    'Post-Award Actions (PAA) Modification',
+  [CtatHelpNeededType.POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION]:
+    'Political Appointee Approval (PAA) Modification',
   [CtatHelpNeededType.OTHER]: 'Other'
 };
 
