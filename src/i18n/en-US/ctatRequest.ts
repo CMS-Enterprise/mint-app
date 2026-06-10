@@ -104,8 +104,8 @@ export const contractTypes: Record<CtatContractType, string> = {
 export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.CALM_SYSTEM_REQUISITION_SUPPORT]:
     'CALM system requisition support',
-  [CtatHelpNeededType.CONTRACT_CHANGE_REQUEST_CCR_PROCESSING]:
-    'Contract Change Request (CCR) processing',
+  [CtatHelpNeededType.CONTRACT_COST_REVIEW_CCR_PROCESSING]:
+    'Contract Cost Review (CCR) processing',
   [CtatHelpNeededType.COR_TRANSCRIPT_REVIEW]: 'COR Transcript Review',
   [CtatHelpNeededType.DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS]:
     'Defining and documenting contract requirements',

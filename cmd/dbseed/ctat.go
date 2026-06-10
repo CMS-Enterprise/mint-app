@@ -175,7 +175,7 @@ func (s *Seeder) seedCTATRequests(
 			ContractName:           new("Data Analytics Advisory BPA"),
 			ContractNumber:         new("75FCMC24F0006"),
 			ContractType:           &timeAndMaterials,
-			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeContractChangeRequestCCRProcessing, models.CTATHelpNeededTypeGuidanceOnMarketResearch},
+			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeContractCostReviewCCRProcessing, models.CTATHelpNeededTypeGuidanceOnMarketResearch},
 			DescribeHelpNeeded:     "Looking for guidance on market research and a contract change request tied to an analytics workstream.",
 			RequestUrgency:         models.CTATRequestUrgencyMedium,
 			DateAssistanceNeededBy: now.AddDate(0, 0, 24),

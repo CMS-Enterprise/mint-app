@@ -212,7 +212,7 @@ type CTATHelpNeededType string
 // Enum values for CTATHelpNeededType.
 const (
 	CTATHelpNeededTypeCalmSystemRequisitionSupport                     CTATHelpNeededType = "CALM_SYSTEM_REQUISITION_SUPPORT"
-	CTATHelpNeededTypeContractChangeRequestCCRProcessing               CTATHelpNeededType = "CONTRACT_CHANGE_REQUEST_CCR_PROCESSING"
+	CTATHelpNeededTypeContractCostReviewCCRProcessing                  CTATHelpNeededType = "CONTRACT_COST_REVIEW_CCR_PROCESSING"
 	CTATHelpNeededTypeCORTranscriptReview                              CTATHelpNeededType = "COR_TRANSCRIPT_REVIEW"
 	CTATHelpNeededTypeDefiningAndDocumentingContractRequirements       CTATHelpNeededType = "DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS"
 	CTATHelpNeededTypeDepartmentEfficiencyReviewDER                    CTATHelpNeededType = "DEPARTMENTAL_EFFICIENCY_REVIEW_DER"
@@ -221,7 +221,7 @@ const (
 	CTATHelpNeededTypeGuidanceOnMarketResearch                         CTATHelpNeededType = "GUIDANCE_ON_MARKET_RESEARCH"
 	CTATHelpNeededTypeGuidanceOnTEPMembershipScoringReporting          CTATHelpNeededType = "GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING"
 	CTATHelpNeededTypeIndependentGovernmentCostEstimateIGCEPreparation CTATHelpNeededType = "INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION"
-	CTATHelpNeededTypePoliticalAppointeeApprovalPAA                    CTATHelpNeededType = "POST_AWARD_ACTIONS_PAA"
+	CTATHelpNeededTypePoliticalAppointeeApprovalPAA                    CTATHelpNeededType = "POLITICAL_APPOINTEE_APPROVAL_PAA"
 	CTATHelpNeededTypeRequestForContractMemoRFC                        CTATHelpNeededType = "REQUEST_FOR_CONTRACT_MEMO_RFC"
 	CTATHelpNeededTypeRequestForInformationRFI                         CTATHelpNeededType = "REQUEST_FOR_INFORMATION_RFI"
 	CTATHelpNeededTypeRequestForProposalRFP                            CTATHelpNeededType = "REQUEST_FOR_PROPOSAL_RFP"
@@ -236,14 +236,14 @@ const (
 	CTATHelpNeededTypeIdentityAndCredentialingToolICT                  CTATHelpNeededType = "IDENTITY_AND_CREDENTIALING_TOOL_ICT"
 	CTATHelpNeededTypeInvoiceProcessingPlatformIPP                     CTATHelpNeededType = "INVOICE_PROCESSING_PLATFORM_IPP"
 	CTATHelpNeededTypeMaintainingTheElectronicCorECORFile              CTATHelpNeededType = "MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE"
-	CTATHelpNeededTypePoliticalAppointeeApprovalPAAModification        CTATHelpNeededType = "POST_AWARD_ACTIONS_PAA_MODIFICATION"
+	CTATHelpNeededTypePoliticalAppointeeApprovalPAAModification        CTATHelpNeededType = "POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION"
 	CTATHelpNeededTypeOther                                            CTATHelpNeededType = "OTHER"
 )
 
 // ctatHelpNeededTypeHumanized maps CTAT help needed values to human-readable strings.
 var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeCalmSystemRequisitionSupport:                     "CALM system requisition support",
-	CTATHelpNeededTypeContractChangeRequestCCRProcessing:               "Contract Change Request (CCR) processing",
+	CTATHelpNeededTypeContractCostReviewCCRProcessing:                  "Contract Cost Review (CCR) processing",
 	CTATHelpNeededTypeCORTranscriptReview:                              "COR Transcript Review",
 	CTATHelpNeededTypeDefiningAndDocumentingContractRequirements:       "Defining and documenting contract requirements",
 	CTATHelpNeededTypeDepartmentEfficiencyReviewDER:                    "Departmental Efficiency Review (DER)",
