@@ -9,7 +9,6 @@ import (
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
-	"github.com/guregu/null/zero"
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
@@ -285,12 +284,12 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
 	})
 	suite.NoError(err)
 	suite.NotNil(resp)
-	suite.Equal(zero.StringFrom(resolution), resp.Resolution)
+	suite.Equal(resolution, *resp.Resolution)
 
 	rows, err := storage.CTATRequestGetByIDLOADER(suite.testConfigs.Store, []uuid.UUID{request.ID})
 	suite.NoError(err)
 	suite.Len(rows, 1)
-	suite.Equal(zero.StringFrom(resolution), rows[0].Resolution)
+	suite.Equal(resolution, *rows[0].Resolution)
 }
 
 func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForUnknownAssignedAdminUsername() {
@@ -428,7 +427,7 @@ func (suite *ResolverSuite) TestCTATRequestCreate() {
 	suite.NotNil(created)
 	suite.Equal(models.CTATStatusNew, created.Status)
 	suite.Equal(suite.testConfigs.Principal.Account().ID, created.Requester)
-	suite.Equal(zero.StringFrom(contractName), created.ContractName)
+	suite.Equal(contractName, *created.ContractName)
 	suite.Greater(created.HumanReadableIDNumber, 0)
 
 	links, err := storage.CTATRequestModelPlanLinkGetByCTATRequestIDLOADER(suite.testConfigs.Store, []uuid.UUID{created.ID})
