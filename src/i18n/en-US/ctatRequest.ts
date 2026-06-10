@@ -109,8 +109,8 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.COR_TRANSCRIPT_REVIEW]: 'COR Transcript Review',
   [CtatHelpNeededType.DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS]:
     'Defining and documenting contract requirements',
-  [CtatHelpNeededType.DELIVERABLE_EVALUATION_REVIEW_DER]:
-    'Deliverable/Evaluation Review (DER)',
+  [CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER]:
+    'Departmental Efficiency Review (DER)',
   [CtatHelpNeededType.GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF]:
     'Guidance on Determinations & Findings (D&F)',
   [CtatHelpNeededType.GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA]:
@@ -134,8 +134,8 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.CONTRACTOR_PERFORMANCE_MANAGEMENT]:
     'Contractor Performance Management',
   [CtatHelpNeededType.DATA_USE_AGREEMENT_DUA]: 'Data Use Agreement (DUA)',
-  [CtatHelpNeededType.DELIVERABLE_EVALUATION_REVIEW_DER_MODIFICATION]:
-    'Deliverable/Evaluation Review (DER) Modification',
+  [CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION]:
+    'Departmental Efficiency Review (DER) Modification',
   [CtatHelpNeededType.DOCUMENTING_AND_SUBMITTING_CPARS]:
     'Documenting and submitting contractor performance evaluations (CPARS)',
   [CtatHelpNeededType.ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES]:

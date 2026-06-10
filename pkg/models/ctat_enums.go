@@ -215,7 +215,7 @@ const (
 	CTATHelpNeededTypeContractChangeRequestCCRProcessing               CTATHelpNeededType = "CONTRACT_CHANGE_REQUEST_CCR_PROCESSING"
 	CTATHelpNeededTypeCORTranscriptReview                              CTATHelpNeededType = "COR_TRANSCRIPT_REVIEW"
 	CTATHelpNeededTypeDefiningAndDocumentingContractRequirements       CTATHelpNeededType = "DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS"
-	CTATHelpNeededTypeDeliverableEvaluationReviewDER                   CTATHelpNeededType = "DELIVERABLE_EVALUATION_REVIEW_DER"
+	CTATHelpNeededTypeDepartmentEfficiencyReviewDER                    CTATHelpNeededType = "DEPARTMENTAL_EFFICIENCY_REVIEW_DER"
 	CTATHelpNeededTypeGuidanceOnDeterminationsAndFindingsDF            CTATHelpNeededType = "GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF"
 	CTATHelpNeededTypeGuidanceOnJustificationAndApprovalJA             CTATHelpNeededType = "GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA"
 	CTATHelpNeededTypeGuidanceOnMarketResearch                         CTATHelpNeededType = "GUIDANCE_ON_MARKET_RESEARCH"
@@ -229,7 +229,7 @@ const (
 	CTATHelpNeededTypeSOWSOOPWSDevelopment                             CTATHelpNeededType = "SOW_SOO_PWS_DEVELOPMENT" // #nosec G101 false positive - CTAT enum label abbreviating Statement of Work / Statement of Objectives / Performance Work Statement
 	CTATHelpNeededTypeContractorPerformanceManagement                  CTATHelpNeededType = "CONTRACTOR_PERFORMANCE_MANAGEMENT"
 	CTATHelpNeededTypeDataUseAgreementDUA                              CTATHelpNeededType = "DATA_USE_AGREEMENT_DUA"
-	CTATHelpNeededTypeDeliverableEvaluationReviewDERModification       CTATHelpNeededType = "DELIVERABLE_EVALUATION_REVIEW_DER_MODIFICATION"
+	CTATHelpNeededTypeDepartmentEfficiencyReviewDERModification        CTATHelpNeededType = "DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION"
 	CTATHelpNeededTypeDocumentingAndSubmittingCPARS                    CTATHelpNeededType = "DOCUMENTING_AND_SUBMITTING_CPARS"
 	CTATHelpNeededTypeEnterpriseUserAdministrationEUAJobCodes          CTATHelpNeededType = "ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES"
 	CTATHelpNeededTypeForeignNationalManagementSystemFNMS              CTATHelpNeededType = "FOREIGN_NATIONAL_MANAGEMENT_SYSTEM_FNMS"
@@ -246,7 +246,7 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeContractChangeRequestCCRProcessing:               "Contract Change Request (CCR) processing",
 	CTATHelpNeededTypeCORTranscriptReview:                              "COR Transcript Review",
 	CTATHelpNeededTypeDefiningAndDocumentingContractRequirements:       "Defining and documenting contract requirements",
-	CTATHelpNeededTypeDeliverableEvaluationReviewDER:                   "Deliverable/Evaluation Review (DER)",
+	CTATHelpNeededTypeDepartmentEfficiencyReviewDER:                    "Departmental Efficiency Review (DER)",
 	CTATHelpNeededTypeGuidanceOnDeterminationsAndFindingsDF:            "Guidance on Determinations & Findings (D&F)",
 	CTATHelpNeededTypeGuidanceOnJustificationAndApprovalJA:             "Guidance on Justification and Approval (J&A)",
 	CTATHelpNeededTypeGuidanceOnMarketResearch:                         "Guidance on Market Research",
@@ -260,7 +260,7 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeSOWSOOPWSDevelopment:                             "Statement of Work (SOW) / Statement of Objectives (SOO) / Performance Work Statement (PWS) development",
 	CTATHelpNeededTypeContractorPerformanceManagement:                  "Contractor Performance Management",
 	CTATHelpNeededTypeDataUseAgreementDUA:                              "Data Use Agreement (DUA)",
-	CTATHelpNeededTypeDeliverableEvaluationReviewDERModification:       "Deliverable/Evaluation Review (DER) Modification",
+	CTATHelpNeededTypeDepartmentEfficiencyReviewDERModification:        "Departmental Efficiency Review (DER) Modification",
 	CTATHelpNeededTypeDocumentingAndSubmittingCPARS:                    "Documenting and submitting contractor performance evaluations (CPARS)",
 	CTATHelpNeededTypeEnterpriseUserAdministrationEUAJobCodes:          "Enterprise User Administration (EUA) job codes",
 	CTATHelpNeededTypeForeignNationalManagementSystemFNMS:              "Foreign National Management System (FNMS)",
