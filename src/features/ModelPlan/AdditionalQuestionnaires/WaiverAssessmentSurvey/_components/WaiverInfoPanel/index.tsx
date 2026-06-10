@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { Form, GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetCommonWaiverQuery } from 'gql/generated/graphql';
@@ -30,6 +30,9 @@ const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
   const { t } = useTranslation('waiverAssessmentSurveyMisc');
   const [searchParams, setSearchParams] = useSearchParams();
   const waiverId = searchParams.get('waiverId') ?? '';
+
+  const location = useLocation();
+  const isReadview = location.pathname.includes('read-view');
 
   const { data } = useGetCommonWaiverQuery({
     variables: {
@@ -143,13 +146,18 @@ const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
             />
           </DescriptionList>
 
-          <Divider className="margin-top-3 margin-bottom-4" />
+          {!isReadview && (
+            <Form
+              className="maxw-none"
+              onSubmit={methods.handleSubmit(() => {})}
+            >
+              <FormProvider {...methods}>
+                <Divider className="margin-top-3 margin-bottom-4" />
 
-          <Form className="maxw-none" onSubmit={methods.handleSubmit(() => {})}>
-            <FormProvider {...methods}>
-              <SelectWaiverField />
-            </FormProvider>
-          </Form>
+                <SelectWaiverField />
+              </FormProvider>
+            </Form>
+          )}
         </div>
       </GridContainer>
     </Sidepanel>

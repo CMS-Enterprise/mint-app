@@ -24,6 +24,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'ModifiesMedicareSavingsPrograms',
     dbField: 'modifies_medicare_savings_programs',
     label: 'Does your model modify Medicare shared savings programs?',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.01,
@@ -66,6 +67,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'BundlesPayments',
     dbField: 'bundles_payments',
     label: 'Does your model bundle payments?',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.02,
@@ -104,6 +106,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'OffersRiskSharingArrangements',
     dbField: 'offers_risk_sharing_arrangements',
     label: 'Does your model offer risk sharing arrangements?',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 3.03,
@@ -143,6 +146,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dbField: 'impacts_site_of_care_payments',
     label: 'Will your model be impacting site of care payments?',
     sublabel: 'For example: telehealth, at home',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 4.01,
@@ -182,6 +186,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dbField: 'modifies_care_team_scope_of_practice',
     label: 'Will your model be modifying the care teams’ scope of practice?',
     sublabel: 'For example: NP/PA flexibility, CHW inclusion, etc.',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 4.02,
@@ -226,6 +231,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label:
       'Will your model be modifying how care is delivered with claims-based payments?',
     sublabel: 'For example: diabetic shoes',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 4.03,
@@ -273,6 +279,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dbField: 'modifies_quality_measurements_or_payments_via_waivers',
     label:
       'Will your model be modifying quality measurements or payments via waivers?',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 4.04,
@@ -320,6 +327,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dbField: 'impacts_medicaid_only_beneficiaries',
     label: 'Does your model impact Medicaid-only beneficiaries?',
     sublabel: 'Not including duals.',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.01,
@@ -364,6 +372,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'ImpactsHomeCommunityBasedServicePayments',
     dbField: 'impacts_home_community_based_service_payments',
     label: 'Does your model impact home- and community-based service payments?',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.02,
@@ -410,6 +419,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'ImpactsManagedCareWaivers',
     dbField: 'impacts_managed_care_waivers',
     label: 'Does your model impact managed care waivers?',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
     order: 5.03,
@@ -473,6 +483,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'IsComplete',
     dbField: 'is_complete', // Note: Computed from status field
     label: 'Questionnaire status',
+    hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.CHECKBOX,
     order: 8.02,
@@ -550,6 +561,7 @@ const waiverAssessmentSurveyMisc = {
   },
   programWaivers: {
     heading: 'Program waivers - Medicare Benefit Enhancements (BEs)',
+    readOnlyHeading: 'Program waivers - Medicare BEs',
     description:
       'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
     waiverTypeText: 'Program waivers (Medicare BEs)'
@@ -580,7 +592,19 @@ const waiverAssessmentSurveyMisc = {
     description:
       'There are {{-totalWaiversCount}} total available {{-waiverType}}. Based on your answers to the above questions, MINT has determined that the following {{-selectedWaiversCount}} waivers are likely needed for your model:',
     summary:
-      'Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.'
+      'Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.',
+    readonlyColumns: {
+      waiverName: 'Waiver name',
+      waiverCategory: 'Waiver category',
+      actions: 'Actions',
+      viewDetails: 'Learn more about this waiver'
+    }
+  },
+  modelHasNotSelectedWaiver: 'This model has not yet selected any waivers.',
+  waiverType: {
+    MEDICARE_PAYMENT: 'Medicare payment waivers',
+    PROGRAM_MEDICARE_BES: 'Program waivers - Medicare BEs',
+    MEDICAID_PAYMENT: 'Medicaid payment waivers'
   }
 };
 

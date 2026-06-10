@@ -43,6 +43,9 @@ import {
   GetAllParticipantsAndProvidersQuery,
   GetAllPaymentsDocument,
   GetAllPaymentsQuery,
+  GetAllWaiverAssessmentSurveyDocument,
+  GetAllWaiverAssessmentSurveyQuery,
+  GetAllWaiverAssessmentSurveyQueryVariables,
   GetModelCollaboratorsDocument,
   GetModelCollaboratorsQuery,
   GetModelSummaryDocument,
@@ -61,6 +64,7 @@ import {
   ModelType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
+  NotSelectedReason,
   OverlapType,
   ParticipantCommunicationType,
   ParticipantRequireFinancialGuaranteeType,
@@ -79,6 +83,7 @@ import {
   TaskStatus,
   TeamRole,
   TriStateAnswer,
+  WaiverAssessmentSurveyStatus,
   WaiverType,
   YesNoOtherType,
   YesNoType
@@ -200,6 +205,159 @@ export const modelTimelineMocks: MockedResponse<
           timeline: modelTimelineData
         }
       }
+    }
+  }
+];
+
+export const waiverAssessmentSurveyMockData: GetAllWaiverAssessmentSurveyQuery =
+  {
+    __typename: 'Query',
+    modelPlan: {
+      __typename: 'ModelPlan',
+      id: modelID,
+
+      basics: {
+        __typename: 'PlanBasics',
+        id: '123',
+        modelCategory: ModelCategory.STATE_BASED,
+        additionalModelCategories: [ModelCategory.ACCOUNTABLE_CARE],
+        cmsCenters: [
+          CmsCenter.CENTER_FOR_MEDICARE,
+          CmsCenter.CENTER_FOR_MEDICAID_AND_CHIP_SERVICES
+        ],
+        cmmiGroups: [
+          CmmiGroup.STATE_AND_POPULATION_HEALTH_GROUP,
+          CmmiGroup.POLICY_AND_PROGRAMS_GROUP
+        ]
+      },
+      generalCharacteristics: {
+        __typename: 'PlanGeneralCharacteristics',
+        id: '123',
+        isNewModel: false,
+        existingModel:
+          'Accountable Care Organizations (ACOs): General Information',
+        resemblesExistingModel: YesNoOtherType.YES,
+        resemblesExistingModelWhich: {
+          __typename: 'ExistingModelLinks',
+          names: ['name']
+        },
+        resemblesExistingModelWhyHow: 'We think it is right',
+        resemblesExistingModelHow: null,
+        resemblesExistingModelOtherSpecify: '',
+        resemblesExistingModelOtherOption: 'Other model',
+        resemblesExistingModelOtherSelected: true,
+        participationInModelPrecondition: YesNoOtherType.YES,
+        participationInModelPreconditionWhyHow: 'It is a condition',
+        participationInModelPreconditionOtherSpecify: '',
+        participationInModelPreconditionOtherOption: 'Other model',
+        participationInModelPreconditionOtherSelected: true,
+        participationInModelPreconditionWhich: {
+          __typename: 'ExistingModelLinks',
+          names: ['name']
+        },
+        keyCharacteristics: [
+          KeyCharacteristic.POPULATION_BASED,
+          KeyCharacteristic.PAYMENT,
+          KeyCharacteristic.SERVICE_DELIVERY,
+          KeyCharacteristic.OTHER
+        ],
+        keyCharacteristicsOther: 'Custom characteristic',
+        collectPlanBids: true,
+        managePartCDEnrollment: true,
+        planContractUpdated: true,
+        geographiesTargeted: true,
+        geographiesTargetedTypes: [
+          GeographyType.OTHER,
+          GeographyType.STATE,
+          GeographyType.REGION
+        ],
+        geographiesStatesAndTerritories: [
+          StatesAndTerritories.CA,
+          StatesAndTerritories.IN
+        ],
+        geographiesRegionTypes: [GeographyRegionType.CBSA],
+        geographiesTargetedTypesOther: 'Geography type other',
+        geographiesTargetedAppliedTo: [
+          GeographyApplication.BENEFICIARIES,
+          GeographyApplication.OTHER
+        ],
+        geographiesTargetedAppliedToOther: 'Geography applied other',
+        waiversRequired: true,
+        waiversRequiredTypes: [WaiverType.FRAUD_ABUSE, WaiverType.MEDICAID]
+      },
+      questionnaires: {
+        __typename: 'Questionnaires',
+        waiverAssessmentSurvey: {
+          __typename: 'WaiverAssessmentSurvey',
+          id: '123',
+          status: WaiverAssessmentSurveyStatus.IN_PROGRESS,
+          modifiedDts: '2022-06-03T19:32:24.412662Z',
+          createdDts: '2022-06-03T19:32:24.412662Z',
+          waivers: [
+            {
+              __typename: 'Waiver',
+              id: '123',
+              willUseWaiver: true,
+              notUsingReason: '',
+              commonWaiver: {
+                __typename: 'CommonWaiver',
+                name: 'Common Waiver Name',
+                waiverType: 'MEDICAID_PAYMENT'
+              }
+            }
+          ],
+
+          modifiesMedicareSavingsPrograms: true,
+          modifiesMedicareSavingsProgramsExample: 'Example',
+          modifiesMedicareSavingsProgramsWhyNot: null,
+          bundlesPayments: false,
+          bundlesPaymentsExample: '',
+          bundlesPaymentsWhyNot: NotSelectedReason.FEEDBACK_AGAINST_USE,
+          offersRiskSharingArrangements: null,
+          offersRiskSharingArrangementsExample: '',
+          offersRiskSharingArrangementsWhyNot: null,
+
+          impactsSiteOfCarePayments: true,
+          impactsSiteOfCarePaymentsExample: 'Example',
+          impactsSiteOfCarePaymentsWhyNot: null,
+          modifiesCareTeamScopeOfPractice: false,
+          modifiesCareTeamScopeOfPracticeExample: '',
+          modifiesCareTeamScopeOfPracticeWhyNot:
+            NotSelectedReason.FEEDBACK_AGAINST_USE,
+          modifiesCareDeliveryWithClaimsBasedPayments: false,
+          modifiesCareDeliveryWithClaimsBasedPaymentsExample: '',
+          modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: null,
+          modifiesQualityMeasurementsOrPaymentsViaWaivers: false,
+          modifiesQualityMeasurementsOrPaymentsViaWaiversExample: '',
+          modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: null,
+
+          impactsMedicaidOnlyBeneficiaries: true,
+          impactsMedicaidOnlyBeneficiariesExample: 'Example',
+          impactsMedicaidOnlyBeneficiariesWhyNot: null,
+          impactsHomeCommunityBasedServicePayments: false,
+          impactsHomeCommunityBasedServicePaymentsExample: '',
+          impactsHomeCommunityBasedServicePaymentsWhyNot:
+            NotSelectedReason.FEEDBACK_AGAINST_USE,
+          impactsManagedCareWaivers: false,
+          impactsManagedCareWaiversExample: '',
+          impactsManagedCareWaiversWhyNot: null,
+          additionalMedicaidSpecificWaivers: ''
+        }
+      }
+    }
+  };
+
+export const waiverAssessmentSurveyMocks: MockedResponse<
+  GetAllWaiverAssessmentSurveyQuery,
+  GetAllWaiverAssessmentSurveyQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetAllWaiverAssessmentSurveyDocument,
+      variables: { id: modelID }
+    },
+    result: {
+      data: waiverAssessmentSurveyMockData
     }
   }
 ];

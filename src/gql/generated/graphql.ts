@@ -6246,6 +6246,13 @@ export type GetAllCommonWaiversQueryVariables = Exact<{ [key: string]: never; }>
 
 export type GetAllCommonWaiversQuery = { __typename: 'Query', commonWaivers: Array<{ __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null }> };
 
+export type GetAllWaiverAssessmentSurveyQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetAllWaiverAssessmentSurveyQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, basics: { __typename: 'PlanBasics', id: UUID, modelCategory?: ModelCategory | null, additionalModelCategories: Array<ModelCategory>, cmsCenters: Array<CmsCenter>, cmmiGroups: Array<CmmiGroup> }, generalCharacteristics: { __typename: 'PlanGeneralCharacteristics', id: UUID, isNewModel?: boolean | null, existingModel?: string | null, currentModelPlanID?: UUID | null, existingModelID?: number | null, resemblesExistingModel?: YesNoOtherType | null, resemblesExistingModelWhyHow?: string | null, resemblesExistingModelHow?: string | null, resemblesExistingModelOtherSpecify?: string | null, resemblesExistingModelOtherSelected?: boolean | null, resemblesExistingModelOtherOption?: string | null, participationInModelPrecondition?: YesNoOtherType | null, participationInModelPreconditionOtherSpecify?: string | null, participationInModelPreconditionOtherSelected?: boolean | null, participationInModelPreconditionOtherOption?: string | null, participationInModelPreconditionWhyHow?: string | null, keyCharacteristics: Array<KeyCharacteristic>, keyCharacteristicsOther?: string | null, collectPlanBids?: boolean | null, managePartCDEnrollment?: boolean | null, planContractUpdated?: boolean | null, geographiesTargeted?: boolean | null, geographiesTargetedTypes: Array<GeographyType>, geographiesStatesAndTerritories: Array<StatesAndTerritories>, geographiesRegionTypes: Array<GeographyRegionType>, geographiesTargetedTypesOther?: string | null, geographiesTargetedAppliedTo: Array<GeographyApplication>, geographiesTargetedAppliedToOther?: string | null, waiversRequired?: boolean | null, waiversRequiredTypes: Array<WaiverType>, resemblesExistingModelWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null, participationInModelPreconditionWhich?: { __typename: 'ExistingModelLinks', names: Array<string> } | null }, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, status: WaiverAssessmentSurveyStatus, modifiedDts?: Time | null, createdDts: Time, modifiesMedicareSavingsPrograms?: boolean | null, modifiesMedicareSavingsProgramsExample?: string | null, modifiesMedicareSavingsProgramsWhyNot?: NotSelectedReason | null, bundlesPayments?: boolean | null, bundlesPaymentsExample?: string | null, bundlesPaymentsWhyNot?: NotSelectedReason | null, offersRiskSharingArrangements?: boolean | null, offersRiskSharingArrangementsExample?: string | null, offersRiskSharingArrangementsWhyNot?: NotSelectedReason | null, impactsSiteOfCarePayments?: boolean | null, impactsSiteOfCarePaymentsExample?: string | null, impactsSiteOfCarePaymentsWhyNot?: NotSelectedReason | null, modifiesCareTeamScopeOfPractice?: boolean | null, modifiesCareTeamScopeOfPracticeExample?: string | null, modifiesCareTeamScopeOfPracticeWhyNot?: NotSelectedReason | null, modifiesCareDeliveryWithClaimsBasedPayments?: boolean | null, modifiesCareDeliveryWithClaimsBasedPaymentsExample?: string | null, modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot?: NotSelectedReason | null, modifiesQualityMeasurementsOrPaymentsViaWaivers?: boolean | null, modifiesQualityMeasurementsOrPaymentsViaWaiversExample?: string | null, modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot?: NotSelectedReason | null, impactsMedicaidOnlyBeneficiaries?: boolean | null, impactsMedicaidOnlyBeneficiariesExample?: string | null, impactsMedicaidOnlyBeneficiariesWhyNot?: NotSelectedReason | null, impactsHomeCommunityBasedServicePayments?: boolean | null, impactsHomeCommunityBasedServicePaymentsExample?: string | null, impactsHomeCommunityBasedServicePaymentsWhyNot?: NotSelectedReason | null, impactsManagedCareWaivers?: boolean | null, impactsManagedCareWaiversExample?: string | null, impactsManagedCareWaiversWhyNot?: NotSelectedReason | null, additionalMedicaidSpecificWaivers?: string | null, waivers: Array<{ __typename: 'Waiver', id: UUID, willUseWaiver?: boolean | null, notUsingReason?: string | null, commonWaiver: { __typename: 'CommonWaiver', name: string, waiverType?: string | null } }> } } } };
+
 export type GetCommonWaiverQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -8286,6 +8293,142 @@ export type GetAllCommonWaiversQueryHookResult = ReturnType<typeof useGetAllComm
 export type GetAllCommonWaiversLazyQueryHookResult = ReturnType<typeof useGetAllCommonWaiversLazyQuery>;
 export type GetAllCommonWaiversSuspenseQueryHookResult = ReturnType<typeof useGetAllCommonWaiversSuspenseQuery>;
 export type GetAllCommonWaiversQueryResult = Apollo.QueryResult<GetAllCommonWaiversQuery, GetAllCommonWaiversQueryVariables>;
+export const GetAllWaiverAssessmentSurveyDocument = gql`
+    query GetAllWaiverAssessmentSurvey($id: UUID!) {
+  modelPlan(id: $id) {
+    id
+    basics {
+      id
+      modelCategory
+      additionalModelCategories
+      cmsCenters
+      cmmiGroups
+    }
+    generalCharacteristics {
+      id
+      isNewModel
+      existingModel
+      currentModelPlanID
+      existingModelID
+      resemblesExistingModel
+      resemblesExistingModelWhyHow
+      resemblesExistingModelHow
+      resemblesExistingModelWhich {
+        names
+      }
+      resemblesExistingModelOtherSpecify
+      resemblesExistingModelOtherSelected
+      resemblesExistingModelOtherOption
+      participationInModelPrecondition
+      participationInModelPreconditionWhich {
+        names
+      }
+      participationInModelPreconditionOtherSpecify
+      participationInModelPreconditionOtherSelected
+      participationInModelPreconditionOtherOption
+      participationInModelPreconditionWhyHow
+      keyCharacteristics
+      keyCharacteristicsOther
+      collectPlanBids
+      managePartCDEnrollment
+      planContractUpdated
+      geographiesTargeted
+      geographiesTargetedTypes
+      geographiesStatesAndTerritories
+      geographiesRegionTypes
+      geographiesTargetedTypesOther
+      geographiesTargetedAppliedTo
+      geographiesTargetedAppliedToOther
+      waiversRequired
+      waiversRequiredTypes
+    }
+    questionnaires {
+      waiverAssessmentSurvey {
+        id
+        status
+        modifiedDts
+        createdDts
+        waivers {
+          id
+          willUseWaiver
+          notUsingReason
+          commonWaiver {
+            name
+            waiverType
+          }
+        }
+        modifiesMedicareSavingsPrograms
+        modifiesMedicareSavingsProgramsExample
+        modifiesMedicareSavingsProgramsWhyNot
+        bundlesPayments
+        bundlesPaymentsExample
+        bundlesPaymentsWhyNot
+        offersRiskSharingArrangements
+        offersRiskSharingArrangementsExample
+        offersRiskSharingArrangementsWhyNot
+        impactsSiteOfCarePayments
+        impactsSiteOfCarePaymentsExample
+        impactsSiteOfCarePaymentsWhyNot
+        modifiesCareTeamScopeOfPractice
+        modifiesCareTeamScopeOfPracticeExample
+        modifiesCareTeamScopeOfPracticeWhyNot
+        modifiesCareDeliveryWithClaimsBasedPayments
+        modifiesCareDeliveryWithClaimsBasedPaymentsExample
+        modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot
+        modifiesQualityMeasurementsOrPaymentsViaWaivers
+        modifiesQualityMeasurementsOrPaymentsViaWaiversExample
+        modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot
+        impactsMedicaidOnlyBeneficiaries
+        impactsMedicaidOnlyBeneficiariesExample
+        impactsMedicaidOnlyBeneficiariesWhyNot
+        impactsHomeCommunityBasedServicePayments
+        impactsHomeCommunityBasedServicePaymentsExample
+        impactsHomeCommunityBasedServicePaymentsWhyNot
+        impactsManagedCareWaivers
+        impactsManagedCareWaiversExample
+        impactsManagedCareWaiversWhyNot
+        additionalMedicaidSpecificWaivers
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllWaiverAssessmentSurveyQuery__
+ *
+ * To run a query within a React component, call `useGetAllWaiverAssessmentSurveyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllWaiverAssessmentSurveyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllWaiverAssessmentSurveyQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetAllWaiverAssessmentSurveyQuery(baseOptions: Apollo.QueryHookOptions<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables> & ({ variables: GetAllWaiverAssessmentSurveyQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>(GetAllWaiverAssessmentSurveyDocument, options);
+      }
+export function useGetAllWaiverAssessmentSurveyLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>(GetAllWaiverAssessmentSurveyDocument, options);
+        }
+// @ts-ignore
+export function useGetAllWaiverAssessmentSurveySuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>;
+export function useGetAllWaiverAssessmentSurveySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllWaiverAssessmentSurveyQuery | undefined, GetAllWaiverAssessmentSurveyQueryVariables>;
+export function useGetAllWaiverAssessmentSurveySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>(GetAllWaiverAssessmentSurveyDocument, options);
+        }
+export type GetAllWaiverAssessmentSurveyQueryHookResult = ReturnType<typeof useGetAllWaiverAssessmentSurveyQuery>;
+export type GetAllWaiverAssessmentSurveyLazyQueryHookResult = ReturnType<typeof useGetAllWaiverAssessmentSurveyLazyQuery>;
+export type GetAllWaiverAssessmentSurveySuspenseQueryHookResult = ReturnType<typeof useGetAllWaiverAssessmentSurveySuspenseQuery>;
+export type GetAllWaiverAssessmentSurveyQueryResult = Apollo.QueryResult<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>;
 export const GetCommonWaiverDocument = gql`
     query GetCommonWaiver($id: UUID!) {
   commonWaiver(id: $id) {
@@ -19729,6 +19872,7 @@ export const TypedGetIddocQuestionnaireOperationsDocument = {"kind":"Document","
 export const TypedGetIddocQuestionnaireTestingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIDDOCQuestionnaireTesting"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"iddocQuestionnaire"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetIddocQuestionnaireTestingQuery, GetIddocQuestionnaireTestingQueryVariables>;
 export const TypedUpdateIddocQuestionnaireDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateIDDOCQuestionnaire"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IDDOCQuestionnaireChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateIDDOCQuestionnaire"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateIddocQuestionnaireMutation, UpdateIddocQuestionnaireMutationVariables>;
 export const TypedGetAllCommonWaiversDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllCommonWaivers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonWaivers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"waiverType"}}]}}]}}]} as unknown as DocumentNode<GetAllCommonWaiversQuery, GetAllCommonWaiversQueryVariables>;
+export const TypedGetAllWaiverAssessmentSurveyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllWaiverAssessmentSurvey"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isNewModel"}},{"kind":"Field","name":{"kind":"Name","value":"existingModel"}},{"kind":"Field","name":{"kind":"Name","value":"currentModelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"existingModelID"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModel"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelHow"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherSelected"}},{"kind":"Field","name":{"kind":"Name","value":"resemblesExistingModelOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPrecondition"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhich"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"names"}}]}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherSpecify"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherSelected"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionOtherOption"}},{"kind":"Field","name":{"kind":"Name","value":"participationInModelPreconditionWhyHow"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristicsOther"}},{"kind":"Field","name":{"kind":"Name","value":"collectPlanBids"}},{"kind":"Field","name":{"kind":"Name","value":"managePartCDEnrollment"}},{"kind":"Field","name":{"kind":"Name","value":"planContractUpdated"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargeted"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesStatesAndTerritories"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesRegionTypes"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedTypesOther"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedTo"}},{"kind":"Field","name":{"kind":"Name","value":"geographiesTargetedAppliedToOther"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequired"}},{"kind":"Field","name":{"kind":"Name","value":"waiversRequiredTypes"}}]}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"waiverAssessmentSurvey"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"waivers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"willUseWaiver"}},{"kind":"Field","name":{"kind":"Name","value":"notUsingReason"}},{"kind":"Field","name":{"kind":"Name","value":"commonWaiver"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"waiverType"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"modifiesMedicareSavingsPrograms"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesMedicareSavingsProgramsExample"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesMedicareSavingsProgramsWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"bundlesPayments"}},{"kind":"Field","name":{"kind":"Name","value":"bundlesPaymentsExample"}},{"kind":"Field","name":{"kind":"Name","value":"bundlesPaymentsWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"offersRiskSharingArrangements"}},{"kind":"Field","name":{"kind":"Name","value":"offersRiskSharingArrangementsExample"}},{"kind":"Field","name":{"kind":"Name","value":"offersRiskSharingArrangementsWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"impactsSiteOfCarePayments"}},{"kind":"Field","name":{"kind":"Name","value":"impactsSiteOfCarePaymentsExample"}},{"kind":"Field","name":{"kind":"Name","value":"impactsSiteOfCarePaymentsWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesCareTeamScopeOfPractice"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesCareTeamScopeOfPracticeExample"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesCareTeamScopeOfPracticeWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesCareDeliveryWithClaimsBasedPayments"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesCareDeliveryWithClaimsBasedPaymentsExample"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesQualityMeasurementsOrPaymentsViaWaivers"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesQualityMeasurementsOrPaymentsViaWaiversExample"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"impactsMedicaidOnlyBeneficiaries"}},{"kind":"Field","name":{"kind":"Name","value":"impactsMedicaidOnlyBeneficiariesExample"}},{"kind":"Field","name":{"kind":"Name","value":"impactsMedicaidOnlyBeneficiariesWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"impactsHomeCommunityBasedServicePayments"}},{"kind":"Field","name":{"kind":"Name","value":"impactsHomeCommunityBasedServicePaymentsExample"}},{"kind":"Field","name":{"kind":"Name","value":"impactsHomeCommunityBasedServicePaymentsWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"impactsManagedCareWaivers"}},{"kind":"Field","name":{"kind":"Name","value":"impactsManagedCareWaiversExample"}},{"kind":"Field","name":{"kind":"Name","value":"impactsManagedCareWaiversWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"additionalMedicaidSpecificWaivers"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetAllWaiverAssessmentSurveyQuery, GetAllWaiverAssessmentSurveyQueryVariables>;
 export const TypedGetCommonWaiverDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCommonWaiver"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commonWaiver"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"participationAgreementLanguageLink"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiWaiverPointOfContact"}},{"kind":"Field","name":{"kind":"Name","value":"waiverType"}},{"kind":"Field","name":{"kind":"Name","value":"waiverFocus"}},{"kind":"Field","name":{"kind":"Name","value":"whatIsWaived"}},{"kind":"Field","name":{"kind":"Name","value":"hasStandardizationEffort"}},{"kind":"Field","name":{"kind":"Name","value":"hasClaimsDataOrRREGAnalysis"}},{"kind":"Field","name":{"kind":"Name","value":"isUsedInActiveModels"}}]}}]}}]} as unknown as DocumentNode<GetCommonWaiverQuery, GetCommonWaiverQueryVariables>;
 export const TypedGetMedicaidPaymentWaiversDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMedicaidPaymentWaivers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"waiverAssessmentSurvey"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedWaivers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonWaiverID"}},{"kind":"Field","name":{"kind":"Name","value":"commonWaiver"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"waiverType"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"impactsMedicaidOnlyBeneficiaries"}},{"kind":"Field","name":{"kind":"Name","value":"impactsMedicaidOnlyBeneficiariesExample"}},{"kind":"Field","name":{"kind":"Name","value":"impactsMedicaidOnlyBeneficiariesWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"impactsHomeCommunityBasedServicePayments"}},{"kind":"Field","name":{"kind":"Name","value":"impactsHomeCommunityBasedServicePaymentsExample"}},{"kind":"Field","name":{"kind":"Name","value":"impactsHomeCommunityBasedServicePaymentsWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"impactsManagedCareWaivers"}},{"kind":"Field","name":{"kind":"Name","value":"impactsManagedCareWaiversExample"}},{"kind":"Field","name":{"kind":"Name","value":"impactsManagedCareWaiversWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"additionalMedicaidSpecificWaivers"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMedicaidPaymentWaiversQuery, GetMedicaidPaymentWaiversQueryVariables>;
 export const TypedGetMedicarePaymentWaiversDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMedicarePaymentWaivers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"waiverAssessmentSurvey"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"suggestedWaivers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonWaiverID"}},{"kind":"Field","name":{"kind":"Name","value":"commonWaiver"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"waiverType"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"modifiesMedicareSavingsPrograms"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesMedicareSavingsProgramsExample"}},{"kind":"Field","name":{"kind":"Name","value":"modifiesMedicareSavingsProgramsWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"bundlesPayments"}},{"kind":"Field","name":{"kind":"Name","value":"bundlesPaymentsExample"}},{"kind":"Field","name":{"kind":"Name","value":"bundlesPaymentsWhyNot"}},{"kind":"Field","name":{"kind":"Name","value":"offersRiskSharingArrangements"}},{"kind":"Field","name":{"kind":"Name","value":"offersRiskSharingArrangementsExample"}},{"kind":"Field","name":{"kind":"Name","value":"offersRiskSharingArrangementsWhyNot"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMedicarePaymentWaiversQuery, GetMedicarePaymentWaiversQueryVariables>;

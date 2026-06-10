@@ -1,0 +1,799 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="read-only-waiver-assessment-survey"
+    data-testid="read-only-waiver-assessment-survey"
+  >
+    <div>
+      <div
+        class="display-flex margin-bottom-2 "
+      >
+        <h2
+          class="margin-y-0 margin-right-2"
+        >
+          Waiver Assessment Survey
+        </h2>
+      </div>
+      <div
+        class="display-flex flex-align-center flex-wrap margin-right-1 margin-bottom-4"
+      >
+        <p
+          class="margin-y-0 text-bold margin-right-1"
+        >
+          Status:
+        </p>
+        <div
+          class="model-plan-task-list__task-tag line-height-body-1 text-bold bg-warning width-fit-content margin-right-1"
+          data-testid="tasklist-tag"
+        >
+          <span>
+            In progress
+          </span>
+        </div>
+        <div
+          class="display-flex flex-align-center flex-wrap margin-right-1"
+        >
+          <p
+            class="margin-y-0 text-normal margin-right-1 text-base-dark"
+          >
+            Last updated 06/03/2022
+          </p>
+        </div>
+      </div>
+    </div>
+    <h3
+      class="margin-bottom-2"
+    >
+      Selected waivers
+    </h3>
+    <table
+      class="usa-table usa-table--borderless width-full margin-top-0 margin-bottom-3"
+      data-testid="table"
+    >
+      <thead
+        class="margin-x-2"
+      >
+        <tr
+          role="row"
+        >
+          <th
+            class="padding-left-2 padding-y-1 border-bottom-2px text-no-wrap"
+            colspan="1"
+            role="columnheader"
+            scope="col"
+            style="width: 33.333%;"
+          >
+            <button
+              class="usa-button usa-button--unstyled usa-button position-relative deep-underline margin-top-0"
+              data-testid="button"
+              style="cursor: pointer;"
+              title="Toggle SortBy"
+              type="button"
+            >
+              Waiver name
+              <svg
+                aria-label="unfold"
+                class="usa-icon margin-left-05"
+                data-testid="caret--sort"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                />
+              </svg>
+            </button>
+          </th>
+          <th
+            class="padding-left-2 padding-y-1 border-bottom-2px text-no-wrap"
+            colspan="1"
+            role="columnheader"
+            scope="col"
+            style="width: 33.333%;"
+          >
+            <button
+              class="usa-button usa-button--unstyled usa-button position-relative deep-underline margin-top-0"
+              data-testid="button"
+              style="cursor: pointer;"
+              title="Toggle SortBy"
+              type="button"
+            >
+              Waiver category
+              <svg
+                aria-label="unfold"
+                class="usa-icon margin-left-05"
+                data-testid="caret--sort"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                />
+              </svg>
+            </button>
+          </th>
+          <th
+            class="padding-left-2 padding-y-1 border-bottom-2px text-no-wrap"
+            colspan="1"
+            role="columnheader"
+            scope="col"
+            style="width: 33.333%;"
+          >
+            <p
+              class="text-bold margin-0"
+            >
+              Actions
+            </p>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        role="rowgroup"
+      >
+        <tr
+          role="row"
+        >
+          <td
+            class="padding-left-2"
+            role="cell"
+          >
+            Common Waiver Name
+          </td>
+          <td
+            class="padding-left-2"
+            role="cell"
+          >
+            Medicaid payment waivers
+          </td>
+          <td
+            class="padding-left-2"
+            role="cell"
+          >
+            <button
+              class="usa-button usa-button--unstyled margin-y-0 margin-right-3 deep-underline mint-body-normal"
+              data-testid="button"
+              type="button"
+            >
+              Learn more about this waiver
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div
+      class="border-bottom-1px border-base-light margin-bottom-4"
+      id="modeplanquestions-read-view"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Model Plan questions
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--primary-model-category margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Primary model category
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            State & Community-Based
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--additional-model-categories margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Additional model categories
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            Accountable Care
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--cms-component margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              CMS component
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            Center for Medicaid and CHIP Services (CMCS), Center for Medicare (CM)
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--cmmi-group margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              CMMI group
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            Policy and Programs Group (PPG), State and Population Health Group (SPHG)
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--is-this-a-new-track-of-an-existing-model-or-a-new-model margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Is this a new track of an existing model or a new model?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            New track of an existing model
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--which-existing-model margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Which existing model?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Accountable Care Organizations (ACOs): General Information
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-your-proposed-track-model-resemble-any-existing-models margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Does your proposed track/model resemble any existing models?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--which-existing-models-does-your-proposed-track-model-most-closely-resemble margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Which existing models does your proposed track/model most closely resemble?
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            name, Other
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--is-participation-in-another-model-a-precondition-for-participation-in-this-model margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Is participation in another model a precondition for participation in this model?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--which-models margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Which models?
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            name, Other
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-are-the-model-key-characteristics margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              What are the model key characteristics?
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            Payment Model, Population-based Model, Service Delivery Model, Other
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--is-the-model-targeted-at-specific-geographies margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Is the model targeted at specific geographies?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--geography-type-is margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Geography type is
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            States and territories, Region, Other
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Geographies are applied to
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            Beneficiaries, Other
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-waivers-required--if-so--which-types-of-waivers margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Are waivers required? If so, which types of waivers?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+            <div
+              class="margin-y-0"
+            >
+              Anti-Kickback Statute (AKS) safe harbor or other exception, Medicaid
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="border-bottom-1px border-base-light margin-bottom-4"
+      id="medicarepaymentwaivers-read-view"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Medicare payment waivers
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-your-model-modify-medicare-shared-savings-programs margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Does your model modify Medicare shared savings programs?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-your-model-bundle-payments margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Does your model bundle payments?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            No
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-your-model-offer-risk-sharing-arrangements margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Does your model offer risk sharing arrangements?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            <i
+              class="text-base"
+            >
+              No answer entered
+            </i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="border-bottom-1px border-base-light margin-bottom-4"
+      id="programwaivers-read-view"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Program waivers - Medicare BEs
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-your-model-be-impacting-site-of-care-payments margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Will your model be impacting site of care payments?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-your-model-be-modifying-the-care-teams--scope-of-practice margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Will your model be modifying the care teams’ scope of practice?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            No
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-your-model-be-modifying-how-care-is-delivered-with-claims-based-payments margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Will your model be modifying how care is delivered with claims-based payments?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            No
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--will-your-model-be-modifying-quality-measurements-or-payments-via-waivers margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Will your model be modifying quality measurements or payments via waivers?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            No
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+      id="medicaidpaymentwaivers-read-view"
+    >
+      <h3
+        class="margin-top-0"
+      >
+        Medicaid payment waivers
+      </h3>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-your-model-impact-medicaid-only-beneficiaries margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Does your model impact Medicaid-only beneficiaries?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Yes
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-your-model-impact-home--and-community-based-service-payments margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Does your model impact home- and community-based service payments?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            No
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--does-your-model-impact-managed-care-waivers margin-bottom-3"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Does your model impact managed care waivers?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            No
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
