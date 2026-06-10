@@ -396,66 +396,24 @@ func insertCTATRequestTestRow(
 ) *models.CTATRequest {
 	s.T().Helper()
 
-	id := uuid.New()
 	helpNeeded := models.EnumArray[models.CTATHelpNeededType](typeOfHelpNeeded)
 	dateAssistanceNeededBy := createdDts.Add(24 * time.Hour)
 
-	var inserted struct {
-		ID                    uuid.UUID `db:"id"`
-		HumanReadableIDNumber int       `db:"human_readable_id_number"`
-	}
-
-	err := tx.QueryRowx(
-		`
-			INSERT INTO ctat_request (
-				id,
-				requester,
-				status,
-				cmmi_group,
-				cmmi_division,
-				contract_name,
-				type_of_help_needed,
-				describe_help_needed,
-				request_urgency,
-				date_assistance_needed_by,
-				created_by,
-				created_dts
-			)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-			RETURNING id, human_readable_id_number
-		`,
-		id,
-		requesterID,
-		status,
-		models.CTATCMMIGroupOptionBSG,
-		models.CTATCMMIDivisionOptionBSGDBOM,
-		contractName,
-		helpNeeded,
-		"Need help validating the test CTAT request.",
-		models.CTATRequestUrgencyHigh,
-		dateAssistanceNeededBy,
-		createdBy,
-		createdDts,
-	).StructScan(&inserted)
-	s.Require().NoError(err)
-
-	request := &models.CTATRequest{
-		Requester:              requesterID,
-		Status:                 status,
-		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
-		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
-		ContractName:           &contractName,
-		TypeOfHelpNeeded:       helpNeeded,
-		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
-		RequestUrgency:         models.CTATRequestUrgencyHigh,
-		DateAssistanceNeededBy: dateAssistanceNeededBy,
-		HumanReadableIDNumber:  inserted.HumanReadableIDNumber,
-	}
-	request.ID = inserted.ID
-	request.CreatedBy = createdBy
+	request := models.NewCTATRequest(createdBy, requesterID)
+	request.Status = status
+	request.CmmiGroup = models.CTATCMMIGroupOptionBSG
+	request.CmmiDivision = new(models.CTATCMMIDivisionOptionBSGDBOM)
+	request.ContractName = new(contractName)
+	request.TypeOfHelpNeeded = helpNeeded
+	request.DescribeHelpNeeded = "Need help validating the test CTAT request."
+	request.RequestUrgency = models.CTATRequestUrgencyHigh
+	request.DateAssistanceNeededBy = dateAssistanceNeededBy
 	request.CreatedDts = createdDts
 
-	return request
+	createdRequest, err := CTATRequestCreate(tx, request)
+	s.Require().NoError(err)
+
+	return createdRequest
 }
 
 func insertCTATRequestDocumentTestRow(
@@ -468,43 +426,7 @@ func insertCTATRequestDocumentTestRow(
 ) *models.CTATRequestDocument {
 	s.T().Helper()
 
-	id := uuid.New()
 	url := "https://example.com/files/" + fileName
-
-	_, err := tx.Exec(
-		`
-			INSERT INTO ctat_request_document (
-				id,
-				ctat_request_id,
-				url,
-				file_type,
-				bucket,
-				file_key,
-				virus_scanned,
-				virus_clean,
-				restricted,
-				file_name,
-				file_size,
-				created_by,
-				created_dts
-			)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-		`,
-		id,
-		ctatRequestID,
-		url,
-		"application/pdf",
-		"ctat-docs-test",
-		"documents/"+fileName,
-		true,
-		true,
-		false,
-		fileName,
-		1024,
-		createdBy,
-		createdDts,
-	)
-	s.Require().NoError(err)
 
 	document := &models.CTATRequestDocument{
 		URL:          &url,
@@ -517,10 +439,12 @@ func insertCTATRequestDocumentTestRow(
 		FileName:     fileName,
 		FileSize:     1024,
 	}
-	document.ID = id
 	document.CTATRequestID = ctatRequestID
 	document.CreatedBy = createdBy
 	document.CreatedDts = createdDts
 
-	return document
+	createdDocument, err := CTATRequestDocumentCreate(tx, document)
+	s.Require().NoError(err)
+
+	return createdDocument
 }

@@ -489,10 +489,9 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	)
 	suite.Equal(emailtestconfigs.TestEmailServiceConfig.ClientAddress, groupOtherBodyContent.ClientAddress)
 
-	cmmiDivision := models.CTATCMMIDivisionOptionOther
 	divisionOtherRequest := models.NewCTATRequest(suite.testConfigs.Principal.Account().ID, suite.testConfigs.Principal.Account().ID)
 	divisionOtherRequest.CmmiGroup = models.CTATCMMIGroupOptionPPG
-	divisionOtherRequest.CmmiDivision = &cmmiDivision
+	divisionOtherRequest.CmmiDivision = new(models.CTATCMMIDivisionOptionOther)
 	divisionOtherRequest.CmmiDivisionOther = new("Division of Innovation Partnerships (PPG/DIP)")
 	divisionOtherRequest.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRFI}
 	divisionOtherRequest.DescribeHelpNeeded = "Need help formatting CTAT division email body content."
@@ -587,69 +586,27 @@ func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	_, err = tx.NamedExec(sqlqueries.Utility.SetSessionCurrentUser, utilitysql.CreateUserIDQueryMap(suite.testConfigs.Principal.Account().ID))
 	suite.Require().NoError(err)
 
-	id := uuid.New()
 	helpNeeded := models.EnumArray[models.CTATHelpNeededType](typeOfHelpNeeded)
 	dateAssistanceNeededBy := createdDts.Add(24 * time.Hour)
+	cmmiDivision := models.CTATCMMIDivisionOptionBSGDBOM
+	request := models.NewCTATRequest(suite.testConfigs.Principal.Account().ID, requesterID)
+	request.Status = status
+	request.CmmiGroup = models.CTATCMMIGroupOptionBSG
+	request.CmmiDivision = &cmmiDivision
+	request.ContractName = &contractName
+	request.TypeOfHelpNeeded = helpNeeded
+	request.DescribeHelpNeeded = "Need help validating the test CTAT request."
+	request.RequestUrgency = models.CTATRequestUrgencyHigh
+	request.DateAssistanceNeededBy = dateAssistanceNeededBy
+	request.CreatedDts = createdDts
 
-	var inserted struct {
-		ID                    uuid.UUID `db:"id"`
-		HumanReadableIDNumber int       `db:"human_readable_id_number"`
-	}
-
-	err = tx.QueryRowx(
-		`
-			INSERT INTO ctat_request (
-				id,
-				requester,
-				status,
-				cmmi_group,
-				cmmi_division,
-				contract_name,
-				type_of_help_needed,
-				describe_help_needed,
-				request_urgency,
-				date_assistance_needed_by,
-				created_by,
-				created_dts
-			)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-			RETURNING id, human_readable_id_number
-		`,
-		id,
-		requesterID,
-		status,
-		models.CTATCMMIGroupOptionBSG,
-		models.CTATCMMIDivisionOptionBSGDBOM,
-		contractName,
-		helpNeeded,
-		"Need help validating the test CTAT request.",
-		models.CTATRequestUrgencyHigh,
-		dateAssistanceNeededBy,
-		suite.testConfigs.Principal.Account().ID,
-		createdDts,
-	).StructScan(&inserted)
+	createdRequest, err := storage.CTATRequestCreate(tx, request)
 	suite.Require().NoError(err)
 
 	err = tx.Commit()
 	suite.Require().NoError(err)
 
-	request := &models.CTATRequest{
-		Requester:              requesterID,
-		Status:                 status,
-		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
-		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
-		ContractName:           new(contractName),
-		TypeOfHelpNeeded:       helpNeeded,
-		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
-		RequestUrgency:         models.CTATRequestUrgencyHigh,
-		DateAssistanceNeededBy: dateAssistanceNeededBy,
-		HumanReadableIDNumber:  inserted.HumanReadableIDNumber,
-	}
-	request.ID = inserted.ID
-	request.CreatedBy = suite.testConfigs.Principal.Account().ID
-	request.CreatedDts = createdDts
-
-	return request
+	return createdRequest
 }
 
 func (suite *ResolverSuite) insertCommittedCTATRelatedModelPlanRow(
@@ -714,35 +671,17 @@ func (suite *ResolverSuite) insertCommittedCTATRequestModelPlanLinkRow(
 	_, err = tx.NamedExec(sqlqueries.Utility.SetSessionCurrentUser, utilitysql.CreateUserIDQueryMap(suite.testConfigs.Principal.Account().ID))
 	suite.Require().NoError(err)
 
-	id := uuid.New()
-	_, err = tx.Exec(
-		`
-			INSERT INTO ctat_request_model_plan_link (
-				id,
-				model_plan_id,
-				ctat_request_id,
-				created_by,
-				created_dts
-			)
-			VALUES ($1, $2, $3, $4, $5)
-		`,
-		id,
-		modelPlanID,
-		ctatRequestID,
-		suite.testConfigs.Principal.Account().ID,
-		createdDts,
-	)
-	suite.Require().NoError(err)
-
-	err = tx.Commit()
-	suite.Require().NoError(err)
-
 	link := &models.CTATRequestModelPlanLink{}
-	link.ID = id
 	link.ModelPlanID = modelPlanID
 	link.CTATRequestID = ctatRequestID
 	link.CreatedBy = suite.testConfigs.Principal.Account().ID
 	link.CreatedDts = createdDts
 
-	return link
+	createdLink, err := storage.CTATRequestModelPlanLinkCreate(tx, link)
+	suite.Require().NoError(err)
+
+	err = tx.Commit()
+	suite.Require().NoError(err)
+
+	return createdLink
 }

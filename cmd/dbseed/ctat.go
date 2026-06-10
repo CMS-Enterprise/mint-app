@@ -14,6 +14,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 type ctatRequestSeedInput struct {
@@ -366,90 +367,42 @@ func (s *Seeder) createCTATRequest(input ctatRequestSeedInput) *models.CTATReque
 		assignedAdminID = &input.AssignedAdmin.UserAccount.ID
 	}
 
-	var inserted struct {
-		ID                    uuid.UUID `db:"id"`
-		HumanReadableIDNumber int       `db:"human_readable_id_number"`
-	}
+	request := models.NewCTATRequest(actorUserID, input.Requester.UserAccount.ID)
+	request.ID = requestID
+	request.Status = input.Status
+	request.AssignedAdmin = assignedAdminID
+	request.Notes = input.Notes
+	request.Resolution = input.Resolution
+	request.CmmiGroup = input.CMMIGroup
+	request.CmmiGroupOther = input.CMMIGroupOther
+	request.CmmiDivision = input.CMMIDivision
+	request.CmmiDivisionOther = input.CMMIDivisionOther
+	request.ContractActivityType = input.ContractActivityType
+	request.ContractActivityTypeOther = input.ContractActivityTypeOther
+	request.ContractName = input.ContractName
+	request.ContractNumber = input.ContractNumber
+	request.ContractType = input.ContractType
+	request.ContractTypeOther = input.ContractTypeOther
+	request.TypeOfHelpNeeded = helpNeeded
+	request.TypeOfHelpNeededOther = input.TypeOfHelpNeededOther
+	request.DescribeHelpNeeded = input.DescribeHelpNeeded
+	request.RequestUrgency = input.RequestUrgency
+	request.DateAssistanceNeededBy = input.DateAssistanceNeededBy
+	request.CreatedDts = input.CreatedDts
 
-	err = tx.QueryRowx(
-		`
-			INSERT INTO ctat_request (
-				id,
-				requester,
-				status,
-				assigned_admin,
-				notes,
-				resolution,
-				cmmi_group,
-				cmmi_group_other,
-				cmmi_division,
-				cmmi_division_other,
-				contract_activity_type,
-				contract_activity_type_other,
-				contract_name,
-				contract_number,
-				contract_type,
-				contract_type_other,
-				type_of_help_needed,
-				type_of_help_needed_other,
-				describe_help_needed,
-				request_urgency,
-				date_assistance_needed_by,
-				created_by,
-				created_dts
-			)
-			VALUES (
-				$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12,
-				$13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23
-			)
-			RETURNING id, human_readable_id_number
-		`,
-		requestID,
-		input.Requester.UserAccount.ID,
-		input.Status,
-		assignedAdminID,
-		input.Notes,
-		input.Resolution,
-		input.CMMIGroup,
-		input.CMMIGroupOther,
-		input.CMMIDivision,
-		input.CMMIDivisionOther,
-		input.ContractActivityType,
-		input.ContractActivityTypeOther,
-		input.ContractName,
-		input.ContractNumber,
-		input.ContractType,
-		input.ContractTypeOther,
-		helpNeeded,
-		input.TypeOfHelpNeededOther,
-		input.DescribeHelpNeeded,
-		input.RequestUrgency,
-		input.DateAssistanceNeededBy,
-		actorUserID,
-		input.CreatedDts,
-	).StructScan(&inserted)
+	inserted, err := storage.CTATRequestCreate(tx, request)
 	if err != nil {
 		panic(err)
 	}
 
 	for index, modelPlanID := range input.RelatedModelPlanIDs {
-		_, err = tx.Exec(
-			`
-				INSERT INTO ctat_request_model_plan_link (
-					id,
-					model_plan_id,
-					ctat_request_id,
-					created_by,
-					created_dts
-				)
-				VALUES ($1, $2, $3, $4, $5)
-			`,
-			uuid.New(),
-			modelPlanID,
-			inserted.ID,
-			actorUserID,
-			input.CreatedDts.Add(time.Duration(index+1)*time.Minute),
-		)
+		link := &models.CTATRequestModelPlanLink{}
+		link.ModelPlanID = modelPlanID
+		link.CTATRequestID = inserted.ID
+		link.CreatedBy = actorUserID
+		link.CreatedDts = input.CreatedDts.Add(time.Duration(index+1) * time.Minute)
+
+		_, err = storage.CTATRequestModelPlanLinkCreate(tx, link)
 		if err != nil {
 			panic(err)
 		}
@@ -465,29 +418,7 @@ func (s *Seeder) createCTATRequest(input ctatRequestSeedInput) *models.CTATReque
 		panic(err)
 	}
 
-	return &models.CTATRequest{
-		Requester:                 input.Requester.UserAccount.ID,
-		Status:                    input.Status,
-		Notes:                     input.Notes,
-		Resolution:                input.Resolution,
-		AssignedAdmin:             assignedAdminID,
-		CmmiGroup:                 input.CMMIGroup,
-		CmmiGroupOther:            input.CMMIGroupOther,
-		CmmiDivision:              input.CMMIDivision,
-		CmmiDivisionOther:         input.CMMIDivisionOther,
-		ContractActivityType:      input.ContractActivityType,
-		ContractActivityTypeOther: input.ContractActivityTypeOther,
-		ContractName:              input.ContractName,
-		ContractNumber:            input.ContractNumber,
-		ContractType:              input.ContractType,
-		ContractTypeOther:         input.ContractTypeOther,
-		TypeOfHelpNeeded:          helpNeeded,
-		TypeOfHelpNeededOther:     input.TypeOfHelpNeededOther,
-		DescribeHelpNeeded:        input.DescribeHelpNeeded,
-		RequestUrgency:            input.RequestUrgency,
-		DateAssistanceNeededBy:    input.DateAssistanceNeededBy,
-		HumanReadableIDNumber:     inserted.HumanReadableIDNumber,
-	}
+	return inserted
 }
 
 func (s *Seeder) createCTATRequestDocument(
@@ -530,36 +461,20 @@ func (s *Seeder) createCTATRequestDocument(
 
 	virusClean := input.Scanned && !input.VirusFound
 
-	_, err = tx.Exec(
-		`
-			INSERT INTO ctat_request_document (
-				id,
-				ctat_request_id,
-				file_type,
-				bucket,
-				file_key,
-				virus_scanned,
-				virus_clean,
-				restricted,
-				file_name,
-				file_size,
-				created_by,
-				created_dts
-			)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-		`,
-		uuid.New(),
-		ctatRequestID,
-		input.ContentType,
-		*s.Config.S3Client.GetBucket(),
-		fileKey,
-		input.Scanned,
-		virusClean,
-		input.Restricted,
-		input.FileName,
-		int(fileStats.Size()),
-		actorUserID,
-		createdDts,
-	)
+	doc := &models.CTATRequestDocument{
+		FileType:     input.ContentType,
+		Bucket:       *s.Config.S3Client.GetBucket(),
+		FileKey:      fileKey,
+		VirusScanned: input.Scanned,
+		VirusClean:   virusClean,
+		Restricted:   input.Restricted,
+		FileName:     input.FileName,
+		FileSize:     int(fileStats.Size()),
+	}
+	doc.CTATRequestID = ctatRequestID
+	doc.CreatedBy = actorUserID
+	doc.CreatedDts = createdDts
+
+	_, err = storage.CTATRequestDocumentCreate(tx, doc)
 	return err
 }
