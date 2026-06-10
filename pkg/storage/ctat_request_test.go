@@ -27,7 +27,7 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 		Status:                 models.CTATStatusAssigned,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           &cmmiDivision,
-		ContractName:           zero.StringFrom(contractName),
+		ContractName:           &contractName,
 		TypeOfHelpNeeded:       models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRFI},
 		DescribeHelpNeeded:     "Need help creating a CTAT request through storage.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,
@@ -228,7 +228,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	s.EqualTime(createdDts, row.CreatedDts)
 	s.Equal(zero.StringFrom(contractName), row.ContractName)
 	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
-	s.Nil(row.TypeOfHelpNeededOther.Ptr())
+	s.Nil(row.TypeOfHelpNeededOther)
 	s.Equal(models.CTATStatusAssigned, row.Status)
 
 	_ = firstDocument
@@ -275,7 +275,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByIDLOADERReturnsExpectedRow() {
 	s.EqualTime(createdDts, row.CreatedDts)
 	s.Equal(zero.StringFrom(contractName), row.ContractName)
 	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
-	s.Nil(row.TypeOfHelpNeededOther.Ptr())
+	s.Nil(row.TypeOfHelpNeededOther)
 	s.Equal(models.CTATStatusAssigned, row.Status)
 }
 
@@ -442,7 +442,7 @@ func insertCTATRequestTestRow(
 		Status:                 status,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
-		ContractName:           zero.StringFrom(contractName),
+		ContractName:           &contractName,
 		TypeOfHelpNeeded:       helpNeeded,
 		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,

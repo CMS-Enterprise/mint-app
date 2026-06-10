@@ -211,7 +211,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdmin
 	suite.Equal(models.CTATStatusAssigned, resp.Status)
 	suite.Require().NotNil(resp.AssignedAdmin)
 	suite.Equal(adminPrincipal.Account().ID, *resp.AssignedAdmin)
-	suite.Equal(zero.StringFrom(notes), resp.Notes)
+	suite.Equal(new(notes), resp.Notes)
 
 	rows, err := storage.CTATRequestGetByIDLOADER(suite.testConfigs.Store, []uuid.UUID{request.ID})
 	suite.NoError(err)
@@ -219,7 +219,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdmin
 	suite.Equal(models.CTATStatusAssigned, rows[0].Status)
 	suite.Require().NotNil(rows[0].AssignedAdmin)
 	suite.Equal(adminPrincipal.Account().ID, *rows[0].AssignedAdmin)
-	suite.Equal(zero.StringFrom(notes), rows[0].Notes)
+	suite.Equal(new(notes), rows[0].Notes)
 }
 
 func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
@@ -453,16 +453,16 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 
 	groupOtherRequest := models.NewCTATRequest(suite.testConfigs.Principal.Account().ID, suite.testConfigs.Principal.Account().ID)
 	groupOtherRequest.CmmiGroup = models.CTATCMMIGroupOptionOther
-	groupOtherRequest.CmmiGroupOther = zero.StringFrom("Cross-CMMI Strategic Operations")
+	groupOtherRequest.CmmiGroupOther = new("Cross-CMMI Strategic Operations")
 	groupOtherRequest.ContractActivityType = &contractActivityType
-	groupOtherRequest.ContractActivityTypeOther = zero.StringFrom("Acquisition strategy support")
+	groupOtherRequest.ContractActivityTypeOther = new("Acquisition strategy support")
 	groupOtherRequest.ContractType = &contractType
-	groupOtherRequest.ContractTypeOther = zero.StringFrom("Blanket Purchase Agreement")
+	groupOtherRequest.ContractTypeOther = new("Blanket Purchase Agreement")
 	groupOtherRequest.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType]{
 		models.CTATHelpNeededTypeRequestForInformationRFI,
 		models.CTATHelpNeededTypeOther,
 	}
-	groupOtherRequest.TypeOfHelpNeededOther = zero.StringFrom("Assistance drafting evaluation criteria for a new workstream")
+	groupOtherRequest.TypeOfHelpNeededOther = new("Assistance drafting evaluation criteria for a new workstream")
 	groupOtherRequest.DescribeHelpNeeded = "Need help formatting CTAT email body content."
 	groupOtherRequest.RequestUrgency = models.CTATRequestUrgencyHigh
 	groupOtherRequest.DateAssistanceNeededBy = time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC)
@@ -487,7 +487,7 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	divisionOtherRequest := models.NewCTATRequest(suite.testConfigs.Principal.Account().ID, suite.testConfigs.Principal.Account().ID)
 	divisionOtherRequest.CmmiGroup = models.CTATCMMIGroupOptionPPG
 	divisionOtherRequest.CmmiDivision = &cmmiDivision
-	divisionOtherRequest.CmmiDivisionOther = zero.StringFrom("Division of Innovation Partnerships (PPG/DIP)")
+	divisionOtherRequest.CmmiDivisionOther = new("Division of Innovation Partnerships (PPG/DIP)")
 	divisionOtherRequest.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRFI}
 	divisionOtherRequest.DescribeHelpNeeded = "Need help formatting CTAT division email body content."
 	divisionOtherRequest.RequestUrgency = models.CTATRequestUrgencyHigh
@@ -516,10 +516,10 @@ func TestSendCTATUpdateEmailSkipsWhitespaceOnlyChanges(t *testing.T) {
 	originalRequest := models.NewCTATRequest(requesterID, requesterID)
 	updatedRequest := models.NewCTATRequest(requesterID, requesterID)
 
-	originalRequest.Notes = zero.StringFrom("Working through next steps with the team.")
-	updatedRequest.Notes = zero.StringFrom("  Working through next steps with the team.  ")
-	originalRequest.Resolution = zero.StringFrom("Resolved and documented.")
-	updatedRequest.Resolution = zero.StringFrom("\nResolved and documented.\t")
+	originalRequest.Notes = new("Working through next steps with the team.")
+	updatedRequest.Notes = new("  Working through next steps with the team.  ")
+	originalRequest.Resolution = new("Resolved and documented.")
+	updatedRequest.Resolution = new("\nResolved and documented.\t")
 
 	err := sendCTATUpdateEmail(
 		context.Background(),
@@ -632,7 +632,7 @@ func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 		Status:                 status,
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           new(models.CTATCMMIDivisionOptionBSGDBOM),
-		ContractName:           zero.StringFrom(contractName),
+		ContractName:           new(contractName),
 		TypeOfHelpNeeded:       helpNeeded,
 		DescribeHelpNeeded:     "Need help validating the test CTAT request.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,
