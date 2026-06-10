@@ -95,7 +95,7 @@ export const contractActivityTypes: Record<CtatContractActivityType, string> = {
 export const contractTypes: Record<CtatContractType, string> = {
   [CtatContractType.COST_PLUS_FIXED_FEE]: 'Cost Plus Fixed Fee',
   [CtatContractType.COST_REIMBURSEMENT]: 'Cost Reimbursement',
-  [CtatContractType.FIRMED_FIXED_PRICE]: 'Firmed Fixed Price',
+  [CtatContractType.FIRM_FIXED_PRICE]: 'Firm Fixed Price',
   [CtatContractType.INCENTIVE_CONTRACT]: 'Incentive Contract',
   [CtatContractType.TIME_AND_MATERIALS]: 'Time and Material',
   [CtatContractType.OTHER]: 'Other'
