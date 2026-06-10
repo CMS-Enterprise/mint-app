@@ -212,7 +212,7 @@ func (s *Seeder) seedCTATRequests(
 			ContractName:           new("Health Care Delivery Advisory"),
 			ContractNumber:         new("75FCMC24F0008"),
 			ContractType:           &costPlusFixedFee,
-			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypePostAwardActionsPAAModification, models.CTATHelpNeededTypeMaintainingTheElectronicCorECORFile},
+			TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypePoliticalAppointeeApprovalPAAModification, models.CTATHelpNeededTypeMaintainingTheElectronicCorECORFile},
 			DescribeHelpNeeded:     "Needed follow-up support on post-award actions and electronic COR documentation maintenance.",
 			RequestUrgency:         models.CTATRequestUrgencyLow,
 			DateAssistanceNeededBy: now.AddDate(0, 0, 18),

@@ -121,7 +121,8 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
     'Guidance on Technical Evaluation Panel (TEP) membership, scoring, and/or reporting',
   [CtatHelpNeededType.INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION]:
     'Independent Government Cost Estimate (IGCE) preparation',
-  [CtatHelpNeededType.POST_AWARD_ACTIONS_PAA]: 'Post-Award Actions (PAA)',
+  [CtatHelpNeededType.POLITICAL_APPOINTEE_APPROVAL_PAA]:
+    'Political Appointee Approval (PAA)',
   [CtatHelpNeededType.REQUEST_FOR_CONTRACT_MEMO_RFC]:
     'Request for Contract Memo (RFC)',
   [CtatHelpNeededType.REQUEST_FOR_INFORMATION_RFI]:
@@ -147,8 +148,8 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
     'Invoice Processing Platform (IPP)',
   [CtatHelpNeededType.MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE]:
     'Maintaining the electronic COR (e-COR) file',
-  [CtatHelpNeededType.POST_AWARD_ACTIONS_PAA_MODIFICATION]:
-    'Post-Award Actions (PAA) Modification',
+  [CtatHelpNeededType.POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION]:
+    'Political Appointee Approval (PAA) Modification',
   [CtatHelpNeededType.OTHER]: 'Other'
 };
 

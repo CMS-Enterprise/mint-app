@@ -221,7 +221,7 @@ const (
 	CTATHelpNeededTypeGuidanceOnMarketResearch                         CTATHelpNeededType = "GUIDANCE_ON_MARKET_RESEARCH"
 	CTATHelpNeededTypeGuidanceOnTEPMembershipScoringReporting          CTATHelpNeededType = "GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING"
 	CTATHelpNeededTypeIndependentGovernmentCostEstimateIGCEPreparation CTATHelpNeededType = "INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION"
-	CTATHelpNeededTypePostAwardActionsPAA                              CTATHelpNeededType = "POST_AWARD_ACTIONS_PAA"
+	CTATHelpNeededTypePoliticalAppointeeApprovalPAA                    CTATHelpNeededType = "POST_AWARD_ACTIONS_PAA"
 	CTATHelpNeededTypeRequestForContractMemoRFC                        CTATHelpNeededType = "REQUEST_FOR_CONTRACT_MEMO_RFC"
 	CTATHelpNeededTypeRequestForInformationRFI                         CTATHelpNeededType = "REQUEST_FOR_INFORMATION_RFI"
 	CTATHelpNeededTypeRequestForProposalRFP                            CTATHelpNeededType = "REQUEST_FOR_PROPOSAL_RFP"
@@ -236,7 +236,7 @@ const (
 	CTATHelpNeededTypeIdentityAndCredentialingToolICT                  CTATHelpNeededType = "IDENTITY_AND_CREDENTIALING_TOOL_ICT"
 	CTATHelpNeededTypeInvoiceProcessingPlatformIPP                     CTATHelpNeededType = "INVOICE_PROCESSING_PLATFORM_IPP"
 	CTATHelpNeededTypeMaintainingTheElectronicCorECORFile              CTATHelpNeededType = "MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE"
-	CTATHelpNeededTypePostAwardActionsPAAModification                  CTATHelpNeededType = "POST_AWARD_ACTIONS_PAA_MODIFICATION"
+	CTATHelpNeededTypePoliticalAppointeeApprovalPAAModification        CTATHelpNeededType = "POST_AWARD_ACTIONS_PAA_MODIFICATION"
 	CTATHelpNeededTypeOther                                            CTATHelpNeededType = "OTHER"
 )
 
@@ -252,7 +252,7 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeGuidanceOnMarketResearch:                         "Guidance on Market Research",
 	CTATHelpNeededTypeGuidanceOnTEPMembershipScoringReporting:          "Guidance on Technical Evaluation Panel (TEP) membership, scoring, and/or reporting",
 	CTATHelpNeededTypeIndependentGovernmentCostEstimateIGCEPreparation: "Independent Government Cost Estimate (IGCE) preparation",
-	CTATHelpNeededTypePostAwardActionsPAA:                              "Post-Award Actions (PAA)",
+	CTATHelpNeededTypePoliticalAppointeeApprovalPAA:                    "Political Appointee Approval (PAA)",
 	CTATHelpNeededTypeRequestForContractMemoRFC:                        "Request for Contract Memo (RFC)",
 	CTATHelpNeededTypeRequestForInformationRFI:                         "Request for Information (RFI)",
 	CTATHelpNeededTypeRequestForProposalRFP:                            "Request for Proposal (RFP)",
@@ -267,7 +267,7 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeIdentityAndCredentialingToolICT:                  "Identity and Credentialing Tool (ICT)",
 	CTATHelpNeededTypeInvoiceProcessingPlatformIPP:                     "Invoice Processing Platform (IPP)",
 	CTATHelpNeededTypeMaintainingTheElectronicCorECORFile:              "Maintaining the electronic COR (e-COR) file",
-	CTATHelpNeededTypePostAwardActionsPAAModification:                  "Post-Award Actions (PAA) Modification",
+	CTATHelpNeededTypePoliticalAppointeeApprovalPAAModification:        "Political Appointee Approval (PAA) Modification",
 	CTATHelpNeededTypeOther:                                            "Other",
 }
 
