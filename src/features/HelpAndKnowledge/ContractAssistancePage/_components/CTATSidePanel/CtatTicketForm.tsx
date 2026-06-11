@@ -129,7 +129,8 @@ const CtatTicketForm = ({
 
   const methods = useForm<CtatTicketFormValues>({
     defaultValues: defaultFormValues,
-    mode: 'onChange'
+    mode: 'onChange',
+    criteriaMode: 'all'
   });
 
   const {

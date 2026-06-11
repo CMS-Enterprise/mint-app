@@ -103,9 +103,11 @@ describe('CtatSidePanel', () => {
     expect(screen.getByLabelText(/Requester/)).toBeInTheDocument();
     expect(screen.getByLabelText(/CMMI group/)).toBeInTheDocument();
     expect(screen.getByLabelText(/CMMI division/)).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: 'Submit ticket' })
-    ).toBeDisabled();
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'Submit ticket' })
+      ).toBeDisabled();
+    });
   });
 
   it('disables CMMI division until a group is selected', async () => {
