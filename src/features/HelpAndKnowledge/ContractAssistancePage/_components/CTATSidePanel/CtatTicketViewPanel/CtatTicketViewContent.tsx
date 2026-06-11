@@ -1,6 +1,11 @@
 import React, { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@trussworks/react-uswds';
+import {
+  Button,
+  SummaryBox,
+  SummaryBoxContent,
+  SummaryBoxHeading
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import {
   CtatcmmiDivisionOption,
@@ -11,7 +16,6 @@ import {
   GetCtatRequestQuery
 } from 'gql/generated/graphql';
 
-import Alert from 'components/Alert';
 import {
   DescriptionDefinition,
   DescriptionTerm
@@ -323,20 +327,22 @@ const CtatTicketViewContent = ({ ticket }: CtatTicketViewContentProps) => {
       />
 
       {!isClosed && (
-        <Alert noIcon type="info" validation className="margin-bottom-0">
-          <p className="margin-top-0 margin-bottom-1 text-bold">
+        <SummaryBox>
+          <SummaryBoxHeading headingLevel="h3" className="margin-bottom-1">
             {t('ctatSidePanel.whatHappensNext.heading')}
-          </p>
-          <p className="margin-top-0 margin-bottom-1">
-            {t('ctatSidePanel.whatHappensNext.intro')}
-          </p>
-          <ul className="margin-top-0 margin-bottom-0">
-            <li>{t('ctatSidePanel.whatHappensNext.bullet1')}</li>
-            <li>{t('ctatSidePanel.whatHappensNext.bullet2')}</li>
-            <li>{t('ctatSidePanel.whatHappensNext.bullet3')}</li>
-            <li>{t('ctatSidePanel.whatHappensNext.bullet4')}</li>
-          </ul>
-        </Alert>
+          </SummaryBoxHeading>
+          <SummaryBoxContent>
+            <p className="margin-top-0 margin-bottom-1">
+              {t('ctatSidePanel.whatHappensNext.intro')}
+            </p>
+            <ul className="margin-top-0 margin-bottom-0">
+              <li>{t('ctatSidePanel.whatHappensNext.bullet1')}</li>
+              <li>{t('ctatSidePanel.whatHappensNext.bullet2')}</li>
+              <li>{t('ctatSidePanel.whatHappensNext.bullet3')}</li>
+              <li>{t('ctatSidePanel.whatHappensNext.bullet4')}</li>
+            </ul>
+          </SummaryBoxContent>
+        </SummaryBox>
       )}
     </div>
   );
