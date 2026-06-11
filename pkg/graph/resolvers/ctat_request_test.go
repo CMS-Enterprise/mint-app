@@ -564,6 +564,58 @@ func TestSendCTATUpdateEmailSkipsWhitespaceOnlyChanges(t *testing.T) {
 	}
 }
 
+func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange() {
+	mockController := gomock.NewController(suite.T())
+	defer mockController.Finish()
+
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailService.
+		EXPECT().
+		GetConfig().
+		Return(&oddmail.GoSimpleMailServiceConfig{
+			ClientAddress: "http://localhost:3005",
+		}).
+		AnyTimes()
+
+	now := time.Now().UTC()
+	originalRequest := suite.createTestCTATRequest(
+		suite.testConfigs.Principal.Account().ID,
+		now.Add(24*time.Hour),
+		"CTAT update email contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
+		models.CTATStatusNew,
+	)
+
+	requesterAccount, err := originalRequest.RequesterUserAccount(suite.testConfigs.Context)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(requesterAccount)
+
+	updatedRequest := *originalRequest
+	notes := "This is a substantial update."
+	updatedRequest.Notes = &notes
+
+	mockEmailService.
+		EXPECT().
+		Send(
+			gomock.Eq("unit-test-execution@mint.cms.gov"),
+			gomock.Eq([]string{requesterAccount.Email}),
+			gomock.Nil(),
+			gomock.Any(),
+			gomock.Eq("text/html"),
+			gomock.Any(),
+		).
+		Times(1)
+
+	err = sendCTATUpdateEmail(
+		suite.testConfigs.Context,
+		mockEmailService,
+		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+		originalRequest,
+		&updatedRequest,
+	)
+	suite.NoError(err)
+}
+
 func (suite *ResolverSuite) TestCTATRequestCreateDeduplicatesRelatedModelLinks() {
 	relatedPlan := suite.createModelPlan("CTAT Create Dedup Related Plan")
 	now := time.Now().UTC()
