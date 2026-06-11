@@ -64,17 +64,7 @@ func CTATRequestAdminUpdate(
 
 	originalRequest := *existing
 
-	if rawStatus, ok := changes["status"]; ok {
-		status, ok := rawStatus.(*models.CTATStatus)
-		if !ok {
-			return nil, fmt.Errorf("status must be a CTATStatus")
-		}
-
-		if status != nil {
-			existing.Status = *status
-		}
-	}
-
+	// handle this separately as needs some custom work
 	if rawAssignedAdmin, ok := changes["assignedAdmin"]; ok {
 		assignedAdminUsername, ok := rawAssignedAdmin.(*string)
 		if !ok {
@@ -93,30 +83,14 @@ func CTATRequestAdminUpdate(
 				return nil, fmt.Errorf("user account not found for username %s", *assignedAdminUsername)
 			}
 
-			assignedAdminID := assignedAdminAccount.ID
-			existing.AssignedAdmin = &assignedAdminID
+			existing.AssignedAdmin = &assignedAdminAccount.ID
 		}
 	}
 
-	if rawNotes, ok := changes["notes"]; ok {
-		notes, ok := rawNotes.(*string)
-		if !ok {
-			return nil, fmt.Errorf("notes must be a string")
-		}
+	// remove from map to avoid any issues in `ApplyChanges`
+	delete(changes, "assignedAdmin")
 
-		existing.Notes = notes
-	}
-
-	if rawResolution, ok := changes["resolution"]; ok {
-		resolution, ok := rawResolution.(*string)
-		if !ok {
-			return nil, fmt.Errorf("resolution must be a string")
-		}
-
-		existing.Resolution = resolution
-	}
-
-	err = BaseStructPreUpdate(logger, existing, nil, principal, store, false, false)
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}

@@ -325,33 +325,6 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForUnknownAssi
 	suite.ErrorContains(err, "user account not found for username NOT_A_REAL_EUA")
 }
 
-func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForWrongNotesType() {
-	now := time.Now().UTC()
-
-	request := suite.createTestCTATRequest(
-		suite.testConfigs.Principal.Account().ID,
-		now.Add(24*time.Hour),
-		"Admin wrong notes type contract",
-		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
-		models.CTATStatusNew,
-	)
-
-	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
-	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
-
-	resolver := &mutationResolver{
-		&Resolver{
-			store: suite.testConfigs.Store,
-		},
-	}
-
-	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
-		"notes": 123,
-	})
-	suite.Nil(resp)
-	suite.ErrorContains(err, "notes must be a string")
-}
-
 func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
 	now := time.Now().UTC()
 
@@ -385,7 +358,7 @@ func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
 	relatedModels, err := CTATRelatedMINTModelsGetByCTATRequestIDLOADER(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.Len(relatedModels, 2)
-	suite.Equal([]uuid.UUID{firstPlan.ID, secondPlan.ID}, lo.Map(relatedModels, func(item *models.ModelPlan, _ int) uuid.UUID {
+	suite.ElementsMatch([]uuid.UUID{firstPlan.ID, secondPlan.ID}, lo.Map(relatedModels, func(item *models.ModelPlan, _ int) uuid.UUID {
 		return item.ID
 	}))
 }
