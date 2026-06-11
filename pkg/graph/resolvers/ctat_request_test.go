@@ -377,14 +377,8 @@ func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
 		models.CTATStatusNew,
 	)
 
-	firstPlan := suite.insertCommittedCTATRelatedModelPlanRow(
-		now.Add(-2*time.Hour),
-		"CTAT Related Model A",
-	)
-	secondPlan := suite.insertCommittedCTATRelatedModelPlanRow(
-		now.Add(-90*time.Minute),
-		"CTAT Related Model B",
-	)
+	firstPlan := suite.createModelPlan("CTAT Related Model A")
+	secondPlan := suite.createModelPlan("CTAT Related Model B")
 
 	suite.insertCommittedCTATRequestModelPlanLinkRow(
 		request.ID,
@@ -626,55 +620,6 @@ func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	suite.Require().NoError(err)
 
 	return createdRequest
-}
-
-func (suite *ResolverSuite) insertCommittedCTATRelatedModelPlanRow(
-	createdDts time.Time,
-	modelName string,
-) *models.ModelPlan {
-	suite.T().Helper()
-
-	tx, err := suite.testConfigs.Store.Beginx()
-	suite.Require().NoError(err)
-
-	_, err = tx.NamedExec(sqlqueries.Utility.SetSessionCurrentUser, utilitysql.CreateUserIDQueryMap(suite.testConfigs.Principal.Account().ID))
-	suite.Require().NoError(err)
-
-	id := uuid.New()
-	_, err = tx.Exec(
-		`
-			INSERT INTO model_plan (
-				id,
-				model_name,
-				archived,
-				status,
-				created_by,
-				created_dts
-			)
-			VALUES ($1, $2, $3, $4, $5, $6)
-		`,
-		id,
-		modelName,
-		false,
-		models.ModelStatusPlanDraft,
-		suite.testConfigs.Principal.Account().ID,
-		createdDts,
-	)
-	suite.Require().NoError(err)
-
-	err = tx.Commit()
-	suite.Require().NoError(err)
-
-	plan := &models.ModelPlan{
-		ModelName: modelName,
-		Archived:  false,
-		Status:    models.ModelStatusPlanDraft,
-	}
-	plan.ID = id
-	plan.CreatedBy = suite.testConfigs.Principal.Account().ID
-	plan.CreatedDts = createdDts
-
-	return plan
 }
 
 func (suite *ResolverSuite) insertCommittedCTATRequestModelPlanLinkRow(
