@@ -4,6 +4,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
+  CommonWaiverType,
   GetCommonWaiverDocument,
   GetCommonWaiverQuery,
   GetCommonWaiverQueryVariables
@@ -25,7 +26,7 @@ const commonWaiverMockData: GetCommonWaiverQuery['commonWaiver'] = {
   description: 'Test waiver description',
   participationAgreementLanguageLink: 'https://example.com/pal',
   cmmiWaiverPointOfContact: 'Jane Doe',
-  waiverType: 'Payment',
+  waiverType: CommonWaiverType.MEDICARE_PAYMENT,
   waiverFocus: 'Site of care',
   whatIsWaived: 'Some regulation',
   hasStandardizationEffort: true,

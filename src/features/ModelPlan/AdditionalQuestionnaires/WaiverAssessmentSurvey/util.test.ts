@@ -1,4 +1,5 @@
 import {
+  CommonWaiverType,
   ModelCategory,
   SuggestedCommonWaiverFragment
 } from 'gql/generated/graphql';
@@ -338,19 +339,19 @@ describe('filterSuggestedWaiversByType', () => {
       {
         __typename: 'CommonWaiver',
         id: '123',
-        waiverType: 'MEDICARE_PAYMENT',
+        waiverType: CommonWaiverType.MEDICARE_PAYMENT,
         name: 'Common Waiver 1'
       },
       {
         __typename: 'CommonWaiver',
         id: '124',
-        waiverType: 'PROGRAM_MEDICARE_BES',
+        waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
         name: 'Common Waiver 2'
       },
       {
         __typename: 'CommonWaiver',
         id: '125',
-        waiverType: 'MEDICAID_PAYMENT',
+        waiverType: CommonWaiverType.MEDICAID_PAYMENT,
         name: 'Common Waiver 3'
       }
     ];
@@ -364,7 +365,7 @@ describe('filterSuggestedWaiversByType', () => {
       {
         __typename: 'CommonWaiver',
         id: '123',
-        waiverType: 'MEDICARE_PAYMENT',
+        waiverType: CommonWaiverType.MEDICARE_PAYMENT,
         name: 'Common Waiver 1'
       }
     ]);
@@ -378,7 +379,7 @@ describe('filterSuggestedWaiversByType', () => {
       {
         __typename: 'CommonWaiver',
         id: '124',
-        waiverType: 'PROGRAM_MEDICARE_BES',
+        waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
         name: 'Common Waiver 2'
       }
     ]);
@@ -392,7 +393,7 @@ describe('filterSuggestedWaiversByType', () => {
       {
         __typename: 'CommonWaiver',
         id: '125',
-        waiverType: 'MEDICAID_PAYMENT',
+        waiverType: CommonWaiverType.MEDICAID_PAYMENT,
         name: 'Common Waiver 3'
       }
     ]);

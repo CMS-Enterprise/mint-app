@@ -1,3 +1,9 @@
+enum CommonWaiverType {
+  MEDICAID_PAYMENT
+  MEDICARE_PAYMENT
+  PROGRAM_MEDICARE_BE
+}
+
 """
 CommonWaiver represents a waiver type in the CMMI waiver library. It is fetched in the context of a model plan to determine if the model plan has indicated it will use the waiver or not, and to determine if the waiver is suggested based on waiver assessment survey answers.
 """
@@ -7,7 +13,7 @@ type CommonWaiver {
   description: String
   participationAgreementLanguageLink: String
   cmmiWaiverPointOfContact: String
-  waiverType: String
+  waiverType: CommonWaiverType
   waiverFocus: String
   whatIsWaived: String
   hasStandardizationEffort: Boolean

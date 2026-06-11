@@ -1,7 +1,10 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import { SuggestedCommonWaiverFragment } from 'gql/generated/graphql';
+import {
+  CommonWaiverType,
+  SuggestedCommonWaiverFragment
+} from 'gql/generated/graphql';
 import { allCommonWaiversMocks } from 'tests/mock/general';
 import MockedProvider from 'tests/MockedProvider';
 
@@ -12,13 +15,13 @@ const MOCK_SELECTED_WAIVERS: SuggestedCommonWaiverFragment[] = [
     __typename: 'CommonWaiver',
     id: '123',
     name: 'short Waiver 2',
-    waiverType: 'MEDICARE_PAYMENT'
+    waiverType: CommonWaiverType.MEDICARE_PAYMENT
   },
   {
     __typename: 'CommonWaiver',
     id: '124',
     name: 'Waiver 3',
-    waiverType: 'MEDICARE_PAYMENT'
+    waiverType: CommonWaiverType.MEDICARE_PAYMENT
   }
 ];
 
