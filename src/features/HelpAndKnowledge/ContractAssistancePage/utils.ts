@@ -26,6 +26,33 @@ const formatHelpTypes = (
     )
     .join(', ');
 
+export { formatHelpTypes };
+
+type UserAccountDisplay = {
+  commonName?: string | null;
+  givenName?: string | null;
+  familyName?: string | null;
+  email?: string | null;
+};
+
+export const formatUserDisplay = (
+  userAccount: UserAccountDisplay | null | undefined
+): string => {
+  if (!userAccount) {
+    return '';
+  }
+
+  const name =
+    userAccount.commonName ||
+    [userAccount.givenName, userAccount.familyName].filter(Boolean).join(' ');
+
+  if (userAccount.email) {
+    return `${name} (${userAccount.email})`;
+  }
+
+  return name;
+};
+
 const formatAssigneeName = (
   userAccount: CtatRequestForTicketTable['assignedAdminUserAccount']
 ): string | null => {

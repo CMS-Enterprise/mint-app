@@ -1,0 +1,158 @@
+import React from 'react';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { screen, waitFor } from '@testing-library/react';
+import {
+  CtatcmmiGroupOption,
+  CtatHelpNeededType,
+  CtatRequestUrgency,
+  CtatStatus,
+  GetCtatRequestDocument
+} from 'gql/generated/graphql';
+import setup from 'tests/util';
+
+import CtatTicketViewPanel from './index';
+
+const ticketId = '550e8400-e29b-41d4-a716-446655440000';
+
+const baseTicket = {
+  __typename: 'CTATRequest' as const,
+  id: ticketId,
+  humanReadableID: 'CTAT-001',
+  createdDts: '2026-05-02T00:00:00Z',
+  notes: null,
+  resolution: null,
+  cmmiGroup: CtatcmmiGroupOption.SCMG,
+  cmmiGroupOther: null,
+  cmmiDivision: null,
+  cmmiDivisionOther: null,
+  contractActivityType: null,
+  contractActivityTypeOther: null,
+  contractName: null,
+  contractNumber: null,
+  contractType: null,
+  contractTypeOther: null,
+  typeOfHelpNeeded: [CtatHelpNeededType.DATA_USE_AGREEMENT_DUA],
+  typeOfHelpNeededOther: null,
+  describeHelpNeeded: 'Need help drafting a DUA.',
+  requestUrgency: CtatRequestUrgency.MEDIUM,
+  dateAssistanceNeededBy: '2026-07-12T00:00:00Z',
+  requesterUserAccount: {
+    __typename: 'UserAccount' as const,
+    givenName: 'Luke',
+    familyName: 'Skywalker',
+    commonName: 'Luke Skywalker',
+    email: 'luke.skywalker@cms.hhs.gov'
+  },
+  assignedAdminUserAccount: null,
+  relatedMINTModels: [],
+  supportingDocuments: []
+};
+
+const openTicketMock = {
+  request: {
+    query: GetCtatRequestDocument,
+    variables: { id: ticketId }
+  },
+  result: {
+    data: {
+      ctatRequest: {
+        ...baseTicket,
+        status: CtatStatus.NEW
+      }
+    }
+  }
+};
+
+const closedTicketMock = {
+  request: {
+    query: GetCtatRequestDocument,
+    variables: { id: ticketId }
+  },
+  result: {
+    data: {
+      ctatRequest: {
+        ...baseTicket,
+        status: CtatStatus.CLOSED,
+        notes: 'Working on data security language.',
+        resolution: 'Drafted a legally sound document.',
+        assignedAdminUserAccount: {
+          __typename: 'UserAccount' as const,
+          givenName: 'Mace',
+          familyName: 'Windu',
+          commonName: 'Mace Windu',
+          email: 'mace.windu@cms.hhs.gov'
+        }
+      }
+    }
+  }
+};
+
+const renderPanel = (mocks: MockedResponse[]) => {
+  const router = createMemoryRouter(
+    [
+      {
+        path: '/help-and-knowledge/contract-assistance/:ticketId',
+        element: (
+          <CtatTicketViewPanel ticketId={ticketId} closeModal={() => {}} />
+        )
+      }
+    ],
+    {
+      initialEntries: [`/help-and-knowledge/contract-assistance/${ticketId}`]
+    }
+  );
+
+  return setup(
+    <MockedProvider mocks={mocks}>
+      <RouterProvider router={router} />
+    </MockedProvider>
+  );
+};
+
+describe('CtatTicketViewPanel', () => {
+  it('renders open ticket with blue progress box and what happens next', async () => {
+    renderPanel([openTicketMock]);
+
+    await waitFor(() => {
+      expect(screen.getByText('CTAT-001')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByText('Ticket progress and resolution')
+    ).toBeInTheDocument();
+    expect(screen.getByText('Not assigned yet')).toBeInTheDocument();
+    expect(screen.getByText('No notes added')).toBeInTheDocument();
+    expect(screen.getByText('No resolution added')).toBeInTheDocument();
+    expect(screen.getByText('What happens next?')).toBeInTheDocument();
+
+    const progressBox = screen
+      .getByText('Ticket progress and resolution')
+      .closest('div');
+    expect(progressBox).toHaveClass('bg-primary-lighter');
+  });
+
+  it('renders closed ticket with grey progress box and no what happens next', async () => {
+    renderPanel([closedTicketMock]);
+
+    await waitFor(() => {
+      expect(screen.getByText('Closed')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByText('Working on data security language.')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Drafted a legally sound document.')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('Mace Windu (mace.windu@cms.hhs.gov)')
+    ).toBeInTheDocument();
+    expect(screen.queryByText('What happens next?')).not.toBeInTheDocument();
+
+    const progressBox = screen
+      .getByText('Ticket progress and resolution')
+      .closest('div');
+    expect(progressBox).toHaveClass('bg-base-lighter');
+  });
+});

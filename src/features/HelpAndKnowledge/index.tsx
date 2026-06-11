@@ -91,7 +91,11 @@ export const helpAndKnowledgeRoutes = {
       path: 'operational-planning-for-medicare-advantage-and-part-d-models',
       element: <OperationalPlanning />
     },
-    { path: 'contract-assistance', element: <ContractAssistancePage /> }
+    { path: 'contract-assistance', element: <ContractAssistancePage /> },
+    {
+      path: 'contract-assistance/:ticketId',
+      element: <ContractAssistancePage />
+    }
   ]
 };
 
