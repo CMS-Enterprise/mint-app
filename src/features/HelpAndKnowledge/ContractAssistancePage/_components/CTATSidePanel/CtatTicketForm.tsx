@@ -392,7 +392,7 @@ const CtatTicketForm = ({
       <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-3">
         {t('ctatSidePanel.newTicketHeading')}
       </PageHeading>
-      <p className="text-base margin-top-0margin-bottom-3">
+      <p className="text-base margin-top-0 margin-bottom-3">
         <Trans
           i18nKey={t('ctatSidePanel.allFieldsRequired')}
           components={{
