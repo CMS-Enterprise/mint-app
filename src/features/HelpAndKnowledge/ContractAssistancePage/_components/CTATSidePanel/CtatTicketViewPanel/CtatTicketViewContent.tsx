@@ -42,7 +42,7 @@ type DetailFieldProps = {
 
 const DetailField = ({ label, definition, className }: DetailFieldProps) => (
   <div className={classNames('margin-bottom-3', className)}>
-    <DescriptionTerm term={label} />
+    <DescriptionTerm className="margin-bottom-0" term={label} />
     <DescriptionDefinition
       className="font-body-md text-base-darkest"
       definition={definition}
@@ -84,9 +84,9 @@ const CtatTicketViewContent = ({ ticket }: CtatTicketViewContentProps) => {
           'bg-primary-lighter': !isClosed
         })}
       >
-        <p className="margin-top-0 margin-bottom-3 text-bold">
+        <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
           {t('ctatViewPanel.progressHeading')}
-        </p>
+        </PageHeading>
 
         <DetailField
           label={t('table.status')}
@@ -126,9 +126,9 @@ const CtatTicketViewContent = ({ ticket }: CtatTicketViewContentProps) => {
         />
       </div>
 
-      <p className="margin-top-0 margin-bottom-3 text-bold">
+      <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
         {t('ctatViewPanel.ticketDetailsHeading')}
-      </p>
+      </PageHeading>
 
       <DetailField
         label={t('ctatSidePanel.fields.requester.label')}
