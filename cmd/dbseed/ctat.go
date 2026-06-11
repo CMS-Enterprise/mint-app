@@ -3,13 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"time"
 
+	"github.com/99designs/gqlgen/graphql"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -17,12 +20,10 @@ import (
 )
 
 type ctatRequestDocumentSeedInput struct {
-	FileName    string
-	FilePath    string
-	ContentType string
-	Restricted  bool
-	Scanned     bool
-	VirusFound  bool
+	Input      model.CTATRequestDocumentInput
+	Restricted bool
+	Scanned    bool
+	VirusFound bool
 }
 
 var seededCTATRequestID = uuid.MustParse("00000000-0000-0000-0000-000000000021")
@@ -32,6 +33,45 @@ func seededCTATRequest(requesterID uuid.UUID, createdDts time.Time) *models.CTAT
 	request.CreatedDts = createdDts
 
 	return request
+}
+
+func (s *Seeder) ctatSupportingDocumentInput(
+	fileName string,
+	filePath string,
+	contentType string,
+	restricted bool,
+	scanned bool,
+	virusFound bool,
+) ctatRequestDocumentSeedInput {
+	path, err := filepath.Abs(filePath)
+	if err != nil {
+		panic(err)
+	}
+
+	file, err := os.Open(path) // #nosec
+	if err != nil {
+		panic(err)
+	}
+
+	fileStats, err := file.Stat()
+	if err != nil {
+		_ = file.Close()
+		panic(err)
+	}
+
+	return ctatRequestDocumentSeedInput{
+		Input: model.CTATRequestDocumentInput{
+			FileData: graphql.Upload{
+				File:        file,
+				Filename:    fileName,
+				Size:        fileStats.Size(),
+				ContentType: contentType,
+			},
+		},
+		Restricted: restricted,
+		Scanned:    scanned,
+		VirusFound: virusFound,
+	}
 }
 
 func (s *Seeder) seedCTATRequests(
@@ -292,14 +332,7 @@ func (s *Seeder) seedCTATRequests(
 		eleventhRequest,
 		[]uuid.UUID{planWithDocuments.ID},
 		[]ctatRequestDocumentSeedInput{
-			{
-				FileName:    "ctat-assigned-request.pdf",
-				FilePath:    "cmd/dbseed/data/sample.pdf",
-				ContentType: "application/pdf",
-				Restricted:  false,
-				Scanned:     true,
-				VirusFound:  false,
-			},
+			s.ctatSupportingDocumentInput("ctat-assigned-request.pdf", "cmd/dbseed/data/sample.pdf", "application/pdf", false, true, false),
 		},
 	)
 
@@ -394,24 +427,21 @@ func (s *Seeder) createCTATRequestDocument(
 	createdDts time.Time,
 	input ctatRequestDocumentSeedInput,
 ) error {
-	absPath, err := filepath.Abs(input.FilePath)
-	if err != nil {
+	if input.Input.FileData.File == nil {
+		return fmt.Errorf("ctat supporting document file cannot be nil")
+	}
+
+	if closer, ok := input.Input.FileData.File.(io.Closer); ok {
+		defer closer.Close()
+	}
+
+	fileKey := fmt.Sprintf("seed/ctat/%s/%s", ctatRequestID.String(), input.Input.FileData.Filename)
+	if err := s.Config.S3Client.UploadFile(context.TODO(), input.Input.FileData.File, fileKey); err != nil {
 		return err
 	}
 
-	file, err := os.Open(absPath) // #nosec
+	url, err := s.Config.S3Client.NewGetPresignedURL(context.TODO(), fileKey)
 	if err != nil {
-		return err
-	}
-	defer file.Close()
-
-	fileStats, err := file.Stat()
-	if err != nil {
-		return err
-	}
-
-	fileKey := fmt.Sprintf("seed/ctat/%s/%s", ctatRequestID.String(), input.FileName)
-	if err := s.Config.S3Client.UploadFile(context.TODO(), file, fileKey); err != nil {
 		return err
 	}
 
@@ -428,14 +458,15 @@ func (s *Seeder) createCTATRequestDocument(
 	virusClean := input.Scanned && !input.VirusFound
 
 	doc := &models.CTATRequestDocument{
-		FileType:     input.ContentType,
+		URL:          url,
+		FileType:     input.Input.FileData.ContentType,
 		Bucket:       *s.Config.S3Client.GetBucket(),
 		FileKey:      fileKey,
 		VirusScanned: input.Scanned,
 		VirusClean:   virusClean,
 		Restricted:   input.Restricted,
-		FileName:     input.FileName,
-		FileSize:     int(fileStats.Size()),
+		FileName:     input.Input.FileData.Filename,
+		FileSize:     int(input.Input.FileData.Size),
 	}
 	doc.CTATRequestID = ctatRequestID
 	doc.CreatedBy = actorUserID
