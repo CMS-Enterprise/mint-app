@@ -91,7 +91,9 @@ const contractAssistance = {
       },
       cmmiGroup: {
         label: 'CMMI group',
-        selectDefault: '-Select-'
+        selectDefault: '-Select-',
+        otherLabel: 'Describe other',
+        otherHint: 'Please describe your "Other" CMMI group.'
       },
       cmmiDivision: {
         label: 'CMMI division',
@@ -147,7 +149,6 @@ const contractAssistance = {
         remove: 'Remove'
       },
       other: {
-        cmmiGroup: 'Please specify your CMMI group',
         helpNeededType: 'Please specify the type of help needed'
       }
     },

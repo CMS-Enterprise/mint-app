@@ -137,12 +137,10 @@ const CtatTicketForm = ({
     handleSubmit,
     watch,
     setValue,
-    formState: { isSubmitting, isDirty }
+    formState: { isSubmitting, isDirty, isValid }
   } = methods;
 
-  const formValues = watch();
-  const selectedCmmiGroup = formValues.cmmiGroup;
-  const selectedTypeOfHelpNeeded = formValues.typeOfHelpNeeded;
+  const selectedCmmiGroup = watch('cmmiGroup');
 
   const defaultSelectOption = {
     value: SELECT_DEFAULT,
@@ -151,9 +149,7 @@ const CtatTicketForm = ({
 
   const cmmiGroupOptions = useMemo(
     () =>
-      Object.entries(cmmiGroups)
-        .filter(([key]) => key !== CtatcmmiGroupOption.OTHER)
-        .map(([value, label]) => ({ value, label })),
+      Object.entries(cmmiGroups).map(([value, label]) => ({ value, label })),
     []
   );
 
@@ -264,38 +260,9 @@ const CtatTicketForm = ({
     setIsDirty(isDirty);
   }, [isDirty, setIsDirty]);
 
-  const isFormComplete = useMemo(() => {
-    const hasRequiredSelects =
-      formValues.cmmiGroup !== SELECT_DEFAULT &&
-      formValues.cmmiDivision !== SELECT_DEFAULT &&
-      formValues.requestUrgency !== SELECT_DEFAULT;
-
-    const hasHelpTypes = formValues.typeOfHelpNeeded.length > 0;
-    const hasDescription = formValues.describeHelpNeeded.trim().length > 0;
-    const hasDate = formValues.dateAssistanceNeededBy.length > 0;
-
-    const hasOtherFields =
-      (!formValues.typeOfHelpNeeded.includes(CtatHelpNeededType.OTHER) ||
-        formValues.typeOfHelpNeededOther.trim().length > 0) &&
-      (formValues.cmmiDivision !== CtatcmmiDivisionOption.OTHER ||
-        formValues.cmmiDivisionOther.trim().length > 0) &&
-      (formValues.contractActivityType !== CtatContractActivityType.OTHER ||
-        formValues.contractActivityTypeOther.trim().length > 0) &&
-      (formValues.contractType !== CtatContractType.OTHER ||
-        formValues.contractTypeOther.trim().length > 0);
-
-    return (
-      hasRequiredSelects &&
-      hasHelpTypes &&
-      hasDescription &&
-      hasDate &&
-      hasOtherFields
-    );
-  }, [formValues]);
-
   useEffect(() => {
-    setDisableButton(!isFormComplete || isSubmitting);
-  }, [isFormComplete, isSubmitting, setDisableButton]);
+    setDisableButton(!isValid || isSubmitting);
+  }, [isValid, isSubmitting, setDisableButton]);
 
   const buildMutationInput = (
     formData: CtatTicketFormValues
@@ -457,8 +424,11 @@ const CtatTicketForm = ({
                     value={field.value}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                       field.onChange(e);
-                      setValue('cmmiDivision', SELECT_DEFAULT);
+                      setValue('cmmiDivision', SELECT_DEFAULT, {
+                        shouldValidate: true
+                      });
                       setValue('cmmiDivisionOther', '');
+                      setValue('cmmiGroupOther', '');
                     }}
                   >
                     {[defaultSelectOption, ...cmmiGroupOptions].map(option => (
@@ -471,12 +441,50 @@ const CtatTicketForm = ({
               )}
             />
 
+            {selectedCmmiGroup === CtatcmmiGroupOption.OTHER && (
+              <Controller
+                name="cmmiGroupOther"
+                control={control}
+                rules={{
+                  required: t('ctatSidePanel.validation.fillOut')
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor="cmmi-group-other"
+                      className="maxw-none text-bold"
+                    >
+                      {t('ctatSidePanel.fields.cmmiGroup.otherLabel')}
+                    </Label>
+                    <HelpText className="margin-top-05">
+                      {t('ctatSidePanel.fields.cmmiGroup.otherHint')}
+                    </HelpText>
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                    <TextInput
+                      {...field}
+                      inputRef={ref}
+                      id="cmmi-group-other"
+                      type="text"
+                      value={field.value || ''}
+                    />
+                  </FormGroup>
+                )}
+              />
+            )}
+
             <Controller
               name="cmmiDivision"
               control={control}
               rules={{
                 required: t('ctatSidePanel.validation.fillOut'),
                 validate: value =>
+                  selectedCmmiGroup === CtatcmmiGroupOption.OTHER ||
                   value !== SELECT_DEFAULT ||
                   t('ctatSidePanel.validation.fillOut')
               }}
@@ -501,7 +509,10 @@ const CtatTicketForm = ({
                     inputRef={ref}
                     id="cmmi-division"
                     value={field.value}
-                    disabled={selectedCmmiGroup === SELECT_DEFAULT}
+                    disabled={
+                      selectedCmmiGroup === SELECT_DEFAULT ||
+                      selectedCmmiGroup === CtatcmmiGroupOption.OTHER
+                    }
                   >
                     {[defaultSelectOption, ...cmmiDivisionOptions].map(
                       option => (
@@ -816,13 +827,13 @@ const CtatTicketForm = ({
                     selectedLabel={t(
                       'ctatSidePanel.fields.helpNeededType.label'
                     )}
-                    initialValues={selectedTypeOfHelpNeeded}
+                    initialValues={watch('typeOfHelpNeeded')}
                   />
                 </FormGroup>
               )}
             />
 
-            {selectedTypeOfHelpNeeded.includes(CtatHelpNeededType.OTHER) && (
+            {watch('typeOfHelpNeeded').includes(CtatHelpNeededType.OTHER) && (
               <Controller
                 name="typeOfHelpNeededOther"
                 control={control}
