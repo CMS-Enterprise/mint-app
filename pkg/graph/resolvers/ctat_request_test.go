@@ -29,24 +29,25 @@ func (suite *ResolverSuite) TestCTATRequestByRequesterIDLoader() {
 	requesterB := requesterBPrincipal.Account().ID
 	requesterCPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "JANE")
 	requesterC := requesterCPrincipal.Account().ID
+	now := time.Now().UTC()
 
 	firstA := suite.insertCommittedCTATRequestRow(
 		requesterA,
-		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Requester A contract 1",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
 	)
 	secondA := suite.insertCommittedCTATRequestRow(
 		requesterA,
-		time.Date(2026, 2, 10, 10, 0, 0, 0, time.UTC),
+		now.Add(48*time.Hour),
 		"Requester A contract 2",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRFQ},
 		models.CTATStatusAssigned,
 	)
 	firstB := suite.insertCommittedCTATRequestRow(
 		requesterB,
-		time.Date(2026, 2, 10, 11, 0, 0, 0, time.UTC),
+		now.Add(72*time.Hour),
 		"Requester B contract 1",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
 		models.CTATStatusClosed,
@@ -75,16 +76,18 @@ func (suite *ResolverSuite) TestCTATRequestByRequesterIDLoader() {
 }
 
 func (suite *ResolverSuite) TestCTATRequestByIDLoader() {
+	now := time.Now().UTC()
+
 	requestA := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Requester A contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
 	)
 	requestB := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 10, 10, 0, 0, 0, time.UTC),
+		now.Add(48*time.Hour),
 		"Requester B contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRFQ},
 		models.CTATStatusAssigned,
@@ -115,17 +118,18 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	suite.True(adminPrincipal.AllowASSESSMENT())
 	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+	now := time.Now().UTC()
 
 	first := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Admin contract 1",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
 	)
 	second := suite.insertCommittedCTATRequestRow(
 		suite.getTestPrincipal(suite.testConfigs.Store, "BTMN").Account().ID,
-		time.Date(2026, 2, 10, 11, 0, 0, 0, time.UTC),
+		now.Add(48*time.Hour),
 		"Admin contract 2",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
 		models.CTATStatusAssigned,
@@ -150,9 +154,11 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 }
 
 func (suite *ResolverSuite) TestCtatRequest() {
+	now := time.Now().UTC()
+
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Detail contract",
 		[]models.CTATHelpNeededType{
 			models.CTATHelpNeededTypeRequestForInformationRFI,
@@ -179,9 +185,11 @@ func (suite *ResolverSuite) TestCtatRequest() {
 }
 
 func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdminAndNotes() {
+	now := time.Now().UTC()
+
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 11, 9, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Admin update contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
@@ -226,9 +234,11 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdmin
 }
 
 func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
+	now := time.Now().UTC()
+
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 11, 10, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Admin clear contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusAssigned,
@@ -264,9 +274,11 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
 }
 
 func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
+	now := time.Now().UTC()
+
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 11, 11, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Admin resolution contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusInProgress,
@@ -299,9 +311,11 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
 }
 
 func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForUnknownAssignedAdminUsername() {
+	now := time.Now().UTC()
+
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 11, 12, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Admin unknown user contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
@@ -326,9 +340,11 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForUnknownAssi
 }
 
 func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForWrongNotesType() {
+	now := time.Now().UTC()
+
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 11, 13, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Admin wrong notes type contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
@@ -351,32 +367,34 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForWrongNotesT
 }
 
 func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
+	now := time.Now().UTC()
+
 	request := suite.insertCommittedCTATRequestRow(
 		suite.testConfigs.Principal.Account().ID,
-		time.Date(2026, 2, 10, 9, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Requester contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
 	)
 
 	firstPlan := suite.insertCommittedCTATRelatedModelPlanRow(
-		time.Date(2026, 2, 10, 8, 0, 0, 0, time.UTC),
+		now.Add(-2*time.Hour),
 		"CTAT Related Model A",
 	)
 	secondPlan := suite.insertCommittedCTATRelatedModelPlanRow(
-		time.Date(2026, 2, 10, 8, 30, 0, 0, time.UTC),
+		now.Add(-90*time.Minute),
 		"CTAT Related Model B",
 	)
 
 	suite.insertCommittedCTATRequestModelPlanLinkRow(
 		request.ID,
 		firstPlan.ID,
-		time.Date(2026, 2, 10, 9, 15, 0, 0, time.UTC),
+		now.Add(-30*time.Minute),
 	)
 	suite.insertCommittedCTATRequestModelPlanLinkRow(
 		request.ID,
 		secondPlan.ID,
-		time.Date(2026, 2, 10, 9, 30, 0, 0, time.UTC),
+		now.Add(-15*time.Minute),
 	)
 
 	resolver := &cTATRequestResolver{
@@ -396,6 +414,7 @@ func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
 func (suite *ResolverSuite) TestCTATRequestCreate() {
 	relatedPlan := suite.createModelPlan("CTAT Create Related Plan")
 	reader := bytes.NewReader([]byte("Some test CTAT file contents"))
+	now := time.Now().UTC()
 
 	contractName := "CTAT Create Contract"
 	input := &model.CTATRequestInput{
@@ -406,7 +425,7 @@ func (suite *ResolverSuite) TestCTATRequestCreate() {
 		TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		DescribeHelpNeeded:     "Need help creating a CTAT request.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,
-		DateAssistanceNeededBy: time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC),
+		DateAssistanceNeededBy: now.Add(24 * time.Hour),
 		SupportingDocuments: []*model.CTATRequestDocumentInput{
 			{
 				FileData: graphql.Upload{
@@ -453,6 +472,7 @@ func (suite *ResolverSuite) TestCTATRequestCreate() {
 func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues() {
 	emailService, err := oddmail.NewGoSimpleMailService(emailtestconfigs.TestEmailServiceConfig)
 	suite.Require().NoError(err)
+	now := time.Now().UTC()
 
 	contractActivityType := models.CTATContractActivityTypeOther
 	contractType := models.CTATContractTypeOther
@@ -471,7 +491,7 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	groupOtherRequest.TypeOfHelpNeededOther = new("Assistance drafting evaluation criteria for a new workstream")
 	groupOtherRequest.DescribeHelpNeeded = "Need help formatting CTAT email body content."
 	groupOtherRequest.RequestUrgency = models.CTATRequestUrgencyHigh
-	groupOtherRequest.DateAssistanceNeededBy = time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC)
+	groupOtherRequest.DateAssistanceNeededBy = now.Add(24 * time.Hour)
 
 	createdGroupOtherRequest, err := storage.CTATRequestCreate(suite.testConfigs.Store, groupOtherRequest)
 	suite.Require().NoError(err)
@@ -496,7 +516,7 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	divisionOtherRequest.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRFI}
 	divisionOtherRequest.DescribeHelpNeeded = "Need help formatting CTAT division email body content."
 	divisionOtherRequest.RequestUrgency = models.CTATRequestUrgencyHigh
-	divisionOtherRequest.DateAssistanceNeededBy = time.Date(2026, 7, 1, 12, 0, 0, 0, time.UTC)
+	divisionOtherRequest.DateAssistanceNeededBy = now.Add(48 * time.Hour)
 
 	createdDivisionOtherRequest, err := storage.CTATRequestCreate(suite.testConfigs.Store, divisionOtherRequest)
 	suite.Require().NoError(err)
@@ -540,6 +560,7 @@ func TestSendCTATUpdateEmailSkipsWhitespaceOnlyChanges(t *testing.T) {
 
 func (suite *ResolverSuite) TestCTATRequestCreateDeduplicatesRelatedModelLinks() {
 	relatedPlan := suite.createModelPlan("CTAT Create Dedup Related Plan")
+	now := time.Now().UTC()
 
 	input := &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
@@ -548,7 +569,7 @@ func (suite *ResolverSuite) TestCTATRequestCreateDeduplicatesRelatedModelLinks()
 		TypeOfHelpNeeded:       []models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		DescribeHelpNeeded:     "Need help creating a CTAT request with duplicate related models.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,
-		DateAssistanceNeededBy: time.Date(2026, 7, 1, 12, 0, 0, 0, time.UTC),
+		DateAssistanceNeededBy: now.Add(24 * time.Hour),
 		SupportingDocuments:    []*model.CTATRequestDocumentInput{},
 	}
 
@@ -573,7 +594,7 @@ func (suite *ResolverSuite) TestCTATRequestCreateDeduplicatesRelatedModelLinks()
 
 func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	requesterID uuid.UUID,
-	createdDts time.Time,
+	dateAssistanceNeededBy time.Time,
 	contractName string,
 	typeOfHelpNeeded []models.CTATHelpNeededType,
 	status models.CTATStatus,
@@ -587,7 +608,6 @@ func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	suite.Require().NoError(err)
 
 	helpNeeded := models.EnumArray[models.CTATHelpNeededType](typeOfHelpNeeded)
-	dateAssistanceNeededBy := createdDts.Add(24 * time.Hour)
 	cmmiDivision := models.CTATCMMIDivisionOptionBSGDBOM
 	request := models.NewCTATRequest(suite.testConfigs.Principal.Account().ID, requesterID)
 	request.Status = status
@@ -598,7 +618,6 @@ func (suite *ResolverSuite) insertCommittedCTATRequestRow(
 	request.DescribeHelpNeeded = "Need help validating the test CTAT request."
 	request.RequestUrgency = models.CTATRequestUrgencyHigh
 	request.DateAssistanceNeededBy = dateAssistanceNeededBy
-	request.CreatedDts = createdDts
 
 	createdRequest, err := storage.CTATRequestCreate(tx, request)
 	suite.Require().NoError(err)

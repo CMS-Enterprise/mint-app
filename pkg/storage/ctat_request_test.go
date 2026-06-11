@@ -15,6 +15,7 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 	defer tx.Rollback()
 
 	actorUserID := s.principal.Account().ID
+	now := time.Now().UTC()
 
 	err = setCurrentSessionUserVariable(tx, actorUserID)
 	s.Require().NoError(err)
@@ -30,7 +31,7 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 		TypeOfHelpNeeded:       models.EnumArray[models.CTATHelpNeededType]{models.CTATHelpNeededTypeRequestForInformationRFI},
 		DescribeHelpNeeded:     "Need help creating a CTAT request through storage.",
 		RequestUrgency:         models.CTATRequestUrgencyHigh,
-		DateAssistanceNeededBy: time.Date(2026, 6, 30, 12, 0, 0, 0, time.UTC),
+		DateAssistanceNeededBy: now.Add(24 * time.Hour),
 	}
 	request.CreatedBy = actorUserID
 
@@ -41,7 +42,6 @@ func (s *StoreTestSuite) TestCTATRequestCreate() {
 	s.Equal(actorUserID, created.Requester)
 	s.Equal(models.CTATStatusAssigned, created.Status)
 	s.Equal(actorUserID, created.CreatedBy)
-	s.False(created.CreatedDts.IsZero())
 	s.Nil(created.ModifiedBy)
 	s.Nil(created.ModifiedDts)
 	s.Greater(created.HumanReadableIDNumber, 0)
@@ -89,7 +89,6 @@ func (s *StoreTestSuite) TestCTATRequestModelPlanLinkCreate() {
 	s.Equal(request.ID, created.CTATRequestID)
 	s.Equal(createdModelPlan.ID, created.ModelPlanID)
 	s.Equal(actorUserID, created.CreatedBy)
-	s.False(created.CreatedDts.IsZero())
 	s.Nil(created.ModifiedBy)
 	s.Nil(created.ModifiedDts)
 }
@@ -136,7 +135,6 @@ func (s *StoreTestSuite) TestCTATRequestDocumentCreate() {
 	s.NotEqual(uuid.Nil, created.ID)
 	s.Equal(request.ID, created.CTATRequestID)
 	s.Equal(actorUserID, created.CreatedBy)
-	s.False(created.CreatedDts.IsZero())
 	s.Nil(created.ModifiedBy)
 	s.Nil(created.ModifiedDts)
 	s.Require().NotNil(created.URL)
@@ -165,7 +163,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	err = setCurrentSessionUserVariable(tx, actorUserID)
 	s.Require().NoError(err)
 
-	createdDts := time.Date(2026, 1, 15, 9, 30, 0, 0, time.UTC)
+	now := time.Now().UTC()
 	contractName := "Requester A contract"
 	expectedTypeOfHelpNeeded := []models.CTATHelpNeededType{
 		models.CTATHelpNeededTypeRequestForInformationRFI,
@@ -176,7 +174,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 		tx,
 		requesterA,
 		actorUserID,
-		createdDts,
+		now.Add(24*time.Hour),
 		contractName,
 		expectedTypeOfHelpNeeded,
 		models.CTATStatusAssigned,
@@ -186,7 +184,6 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 		tx,
 		expected.ID,
 		actorUserID,
-		createdDts.Add(5*time.Minute),
 		"requester-a-contract-1.pdf",
 	)
 	secondDocument := insertCTATRequestDocumentTestRow(
@@ -194,7 +191,6 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 		tx,
 		expected.ID,
 		actorUserID,
-		createdDts.Add(10*time.Minute),
 		"requester-a-contract-2.pdf",
 	)
 
@@ -203,7 +199,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 		tx,
 		requesterB,
 		actorUserID,
-		createdDts.Add(2*time.Hour),
+		now.Add(48*time.Hour),
 		"Requester B contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
 		models.CTATStatusNew,
@@ -213,7 +209,6 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 		tx,
 		otherRequest.ID,
 		actorUserID,
-		createdDts.Add(15*time.Minute),
 		"requester-b-contract-1.pdf",
 	)
 
@@ -225,7 +220,6 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADERFiltersAndMapsFiel
 	s.Equal(expected.ID, row.ID)
 	s.Equal(expected.Requester, row.Requester)
 	s.Equal(expected.HumanReadableIDNumber, row.HumanReadableIDNumber)
-	s.EqualTime(createdDts, row.CreatedDts)
 	s.Require().NotNil(row.ContractName)
 	s.Equal(contractName, *row.ContractName)
 	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
@@ -246,7 +240,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByIDLOADERReturnsExpectedRow() {
 	err = setCurrentSessionUserVariable(tx, actorUserID)
 	s.Require().NoError(err)
 
-	createdDts := time.Date(2026, 1, 15, 9, 30, 0, 0, time.UTC)
+	now := time.Now().UTC()
 	contractName := "Get by ID contract"
 	expectedTypeOfHelpNeeded := []models.CTATHelpNeededType{
 		models.CTATHelpNeededTypeRequestForInformationRFI,
@@ -257,7 +251,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByIDLOADERReturnsExpectedRow() {
 		tx,
 		actorUserID,
 		actorUserID,
-		createdDts,
+		now.Add(24*time.Hour),
 		contractName,
 		expectedTypeOfHelpNeeded,
 		models.CTATStatusAssigned,
@@ -273,7 +267,6 @@ func (s *StoreTestSuite) TestCTATRequestGetByIDLOADERReturnsExpectedRow() {
 	s.Equal(expected.ID, row.ID)
 	s.Equal(expected.Requester, row.Requester)
 	s.Equal(expected.HumanReadableIDNumber, row.HumanReadableIDNumber)
-	s.EqualTime(createdDts, row.CreatedDts)
 	s.Require().NotNil(row.ContractName)
 	s.Equal(contractName, *row.ContractName)
 	s.Equal(expectedTypeOfHelpNeeded, []models.CTATHelpNeededType(row.TypeOfHelpNeeded))
@@ -292,12 +285,13 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADEROrdersNewestFirst(
 	err = setCurrentSessionUserVariable(tx, actorUserID)
 	s.Require().NoError(err)
 
+	now := time.Now().UTC()
 	first := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterID,
 		actorUserID,
-		time.Date(2026, 1, 15, 9, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Oldest contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
@@ -307,7 +301,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADEROrdersNewestFirst(
 		tx,
 		requesterID,
 		actorUserID,
-		time.Date(2026, 1, 15, 11, 0, 0, 0, time.UTC),
+		now.Add(48*time.Hour),
 		"Middle contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
 		models.CTATStatusAssigned,
@@ -317,7 +311,7 @@ func (s *StoreTestSuite) TestCTATRequestGetByRequesterIDLOADEROrdersNewestFirst(
 		tx,
 		requesterID,
 		actorUserID,
-		time.Date(2026, 1, 15, 13, 0, 0, 0, time.UTC),
+		now.Add(72*time.Hour),
 		"Newest contract",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRFQ},
 		models.CTATStatusClosed,
@@ -344,12 +338,13 @@ func (s *StoreTestSuite) TestCTATRequestCollectionGetForAdminReturnsAllRows() {
 	err = setCurrentSessionUserVariable(tx, actorUserID)
 	s.Require().NoError(err)
 
+	now := time.Now().UTC()
 	first := insertCTATRequestTestRow(
 		s,
 		tx,
 		requesterA,
 		actorUserID,
-		time.Date(2026, 1, 16, 8, 0, 0, 0, time.UTC),
+		now.Add(24*time.Hour),
 		"Admin contract A1",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
@@ -359,7 +354,7 @@ func (s *StoreTestSuite) TestCTATRequestCollectionGetForAdminReturnsAllRows() {
 		tx,
 		requesterA,
 		actorUserID,
-		time.Date(2026, 1, 16, 9, 0, 0, 0, time.UTC),
+		now.Add(48*time.Hour),
 		"Admin contract A2",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
 		models.CTATStatusAssigned,
@@ -369,7 +364,7 @@ func (s *StoreTestSuite) TestCTATRequestCollectionGetForAdminReturnsAllRows() {
 		tx,
 		requesterB,
 		actorUserID,
-		time.Date(2026, 1, 16, 10, 0, 0, 0, time.UTC),
+		now.Add(72*time.Hour),
 		"Admin contract B1",
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForQuotationRFQ},
 		models.CTATStatusClosed,
@@ -389,7 +384,7 @@ func insertCTATRequestTestRow(
 	tx *sqlx.Tx,
 	requesterID uuid.UUID,
 	createdBy uuid.UUID,
-	createdDts time.Time,
+	dateAssistanceNeededBy time.Time,
 	contractName string,
 	typeOfHelpNeeded []models.CTATHelpNeededType,
 	status models.CTATStatus,
@@ -397,7 +392,6 @@ func insertCTATRequestTestRow(
 	s.T().Helper()
 
 	helpNeeded := models.EnumArray[models.CTATHelpNeededType](typeOfHelpNeeded)
-	dateAssistanceNeededBy := createdDts.Add(24 * time.Hour)
 
 	request := models.NewCTATRequest(createdBy, requesterID)
 	request.Status = status
@@ -408,7 +402,6 @@ func insertCTATRequestTestRow(
 	request.DescribeHelpNeeded = "Need help validating the test CTAT request."
 	request.RequestUrgency = models.CTATRequestUrgencyHigh
 	request.DateAssistanceNeededBy = dateAssistanceNeededBy
-	request.CreatedDts = createdDts
 
 	createdRequest, err := CTATRequestCreate(tx, request)
 	s.Require().NoError(err)
@@ -421,7 +414,6 @@ func insertCTATRequestDocumentTestRow(
 	tx *sqlx.Tx,
 	ctatRequestID uuid.UUID,
 	createdBy uuid.UUID,
-	createdDts time.Time,
 	fileName string,
 ) *models.CTATRequestDocument {
 	s.T().Helper()
@@ -441,7 +433,6 @@ func insertCTATRequestDocumentTestRow(
 	}
 	document.CTATRequestID = ctatRequestID
 	document.CreatedBy = createdBy
-	document.CreatedDts = createdDts
 
 	createdDocument, err := CTATRequestDocumentCreate(tx, document)
 	s.Require().NoError(err)
