@@ -187,17 +187,11 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdmin
 	assignedAdmin := "ADMI"
 	notes := "Assigned to CTAT admin during resolver test."
 
-	resolver := &mutationResolver{
-		&Resolver{
-			store: suite.testConfigs.Store,
-		},
-	}
-
-	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+	resp, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"status":        &status,
 		"assignedAdmin": &assignedAdmin,
 		"notes":         &notes,
-	})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Equal(models.CTATStatusAssigned, resp.Status)
@@ -233,22 +227,16 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
 	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
 
 	assignedAdmin := "ADMI"
-	resolver := &mutationResolver{
-		&Resolver{
-			store: suite.testConfigs.Store,
-		},
-	}
-
-	_, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+	_, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"assignedAdmin": &assignedAdmin,
-	})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.Require().NoError(err)
 
 	var noAssignedAdmin *string
 
-	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+	resp, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"assignedAdmin": noAssignedAdmin,
-	})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Nil(resp.AssignedAdmin)
@@ -275,15 +263,9 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
 
 	resolution := "Resolved during resolver-layer admin update test."
 
-	resolver := &mutationResolver{
-		&Resolver{
-			store: suite.testConfigs.Store,
-		},
-	}
-
-	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+	resp, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"resolution": &resolution,
-	})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Require().NotNil(resp.Resolution)
@@ -312,15 +294,9 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForUnknownAssi
 
 	assignedAdmin := "NOT_A_REAL_EUA"
 
-	resolver := &mutationResolver{
-		&Resolver{
-			store: suite.testConfigs.Store,
-		},
-	}
-
-	resp, err := resolver.AdminUpdateCTATRequest(adminCtx, request.ID, map[string]any{
+	resp, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"assignedAdmin": &assignedAdmin,
-	})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.Nil(resp)
 	suite.ErrorContains(err, "user account not found for username NOT_A_REAL_EUA")
 }
