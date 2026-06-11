@@ -33,6 +33,7 @@ const CtatTicketViewPanel = ({
       ariaLabel={t('ctatSidePanel.modalHeading')}
       testid="ctat-ticket-view-sidepanel"
       modalHeading={t('ctatSidePanel.modalHeading')}
+      fixed
     >
       {loading && <PageLoading />}
       {error && <NotFound errorMessage={error.message} />}

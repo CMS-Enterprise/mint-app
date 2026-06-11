@@ -73,7 +73,6 @@ const CtatSidePanel = ({
         modalHeading={t('ctatSidePanel.modalHeading')}
         footer={footer}
         fixed
-        noScrollable
       >
         <CtatTicketForm
           closeModal={handleCloseModal}
