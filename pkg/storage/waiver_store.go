@@ -33,6 +33,13 @@ func WaiverUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, waiver *models.Waive
 	return sqlutils.GetProcedure[models.Waiver](np, sqlqueries.Waiver.Update, waiver)
 }
 
+// WaiverUpsert creates the waiver row if it does not exist, otherwise updates
+// will_use_waiver and not_using_reason. Used by the bulk updateSelectedWaivers mutation.
+func WaiverUpsert(np sqlutils.NamedPreparer, _ *zap.Logger, waiver *models.Waiver) (*models.Waiver, error) {
+	waiver.ID = utilityuuid.ValueOrNewUUID(waiver.ID)
+	return sqlutils.GetProcedure[models.Waiver](np, sqlqueries.Waiver.Upsert, waiver)
+}
+
 // WaiverGetByModelPlanIDLoader returns ALL waivers for the given model plan ids (one-to-many).
 func WaiverGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.Waiver, error) {
 	args := map[string]interface{}{

@@ -12,6 +12,14 @@ type Waiver struct {
 	NotUsingReason *string   `json:"notUsingReason" db:"not_using_reason"`
 }
 
+// WaiverSelectionInput is the input for a single waiver decision in a bulk update.
+// It is autobiound by gqlgen via the pkg/models autobind path.
+type WaiverSelectionInput struct {
+	CommonWaiverID uuid.UUID `json:"commonWaiverID"`
+	WillUseWaiver  bool      `json:"willUseWaiver"`
+	NotUsingReason *string   `json:"notUsingReason"`
+}
+
 // NewWaiver returns a new Waiver object
 func NewWaiver(createdBy uuid.UUID, modelPlanID uuid.UUID, commonWaiverID uuid.UUID) *Waiver {
 	return &Waiver{

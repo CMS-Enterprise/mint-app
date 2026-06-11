@@ -14,6 +14,9 @@ var suggestedWaiverGetByModelPlanIDLoaderSQL string
 //go:embed SQL/suggested_waiver/delete_by_model_plan_id.sql
 var suggestedWaiverDeleteByModelPlanIDSQL string
 
+//go:embed SQL/suggested_waiver/insert_for_model_plan.sql
+var suggestedWaiverInsertForModelPlanSQL string
+
 type suggestedWaiverScripts struct {
 	Create  string
 	GetByID string
@@ -21,6 +24,8 @@ type suggestedWaiverScripts struct {
 	GetByModelPlanIDLoader string
 	// Deletes all suggested waivers for a model plan (used when recalculating suggestions)
 	DeleteByModelPlanID string
+	// Inserts suggested waivers for a model plan based on current survey answers (DB-level logic)
+	InsertForModelPlan string
 }
 
 // SuggestedWaiver houses all the SQL scripts for the suggested_waiver table
@@ -29,4 +34,5 @@ var SuggestedWaiver = suggestedWaiverScripts{
 	GetByID:                suggestedWaiverGetByIDSQL,
 	GetByModelPlanIDLoader: suggestedWaiverGetByModelPlanIDLoaderSQL,
 	DeleteByModelPlanID:    suggestedWaiverDeleteByModelPlanIDSQL,
+	InsertForModelPlan:     suggestedWaiverInsertForModelPlanSQL,
 }

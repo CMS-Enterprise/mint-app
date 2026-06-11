@@ -6,6 +6,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -29,7 +30,7 @@ func (r *waiverAssessmentSurveyResolver) Waivers(ctx context.Context, obj *model
 
 // SuggestedWaivers is the resolver for the suggestedWaivers field.
 func (r *waiverAssessmentSurveyResolver) SuggestedWaivers(ctx context.Context, obj *models.WaiverAssessmentSurvey) ([]*models.SuggestedWaiver, error) {
-	return SuggestedWaiversGetByModelPlanID(ctx, obj.ModelPlanID)
+	panic(fmt.Errorf("not implemented: SuggestedWaivers - suggestedWaivers"))
 }
 
 // WaiverAssessmentSurvey returns generated.WaiverAssessmentSurveyResolver implementation.
