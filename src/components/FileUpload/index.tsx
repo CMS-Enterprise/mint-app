@@ -1,16 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import classnames from 'classnames';
-
-export type FileUploadLabels = {
-  dragText?: string;
-  chooseFromFolder?: string;
-  selectedFile?: string;
-  changeFile?: string;
-  oneFileSelected?: string;
-  filesSelected?: string;
-  changeFiles?: string;
-};
 
 type FileUploadProps = {
   id: string;
@@ -20,7 +10,6 @@ type FileUploadProps = {
   /** When provided with `multiple`, preview is driven by the parent. */
   files?: File[];
   showFileTypeIcons?: boolean;
-  labels?: FileUploadLabels;
   disabled?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
@@ -36,7 +25,6 @@ const FileUpload = (props: FileUploadProps) => {
     multiple = false,
     files,
     showFileTypeIcons = true,
-    labels,
     disabled = false,
     onChange,
     onBlur,
@@ -64,26 +52,10 @@ const FileUpload = (props: FileUploadProps) => {
   const previewFiles = getPreviewFiles();
   const hasFiles = previewFiles.length > 0;
 
-  const resolvedLabels = useMemo(
-    () => ({
-      dragText: labels?.dragText ?? t('dragFile'),
-      chooseFromFolder: labels?.chooseFromFolder ?? t('chooseFromFolder'),
-      selectedFile: labels?.selectedFile ?? t('selectedFile'),
-      changeFile: labels?.changeFile ?? t('changeFile'),
-      oneFileSelected: labels?.oneFileSelected ?? t('oneFileSelected'),
-      filesSelected: labels?.filesSelected ?? t('filesSelected'),
-      changeFiles: labels?.changeFiles ?? t('changeFiles')
-    }),
-    [labels, t]
-  );
-
   const filesSelectedLabel =
     previewFiles.length === 1
-      ? resolvedLabels.oneFileSelected
-      : resolvedLabels.filesSelected.replace(
-          '{{count}}',
-          String(previewFiles.length)
-        );
+      ? t('oneFileSelected')
+      : t('filesSelected', { count: previewFiles.length });
 
   const fileInputWrapper = classnames(
     'easi-file-upload',
@@ -166,17 +138,13 @@ const FileUpload = (props: FileUploadProps) => {
         {hasFiles && isControlledMultiple && (
           <div className="usa-file-input__preview-heading">
             {filesSelectedLabel}
-            <span className="usa-file-input__choose">
-              {resolvedLabels.changeFiles}
-            </span>
+            <span className="usa-file-input__choose">{t('changeFiles')}</span>
           </div>
         )}
         {hasFiles && !isControlledMultiple && (
           <div className="usa-file-input__preview-heading">
-            {resolvedLabels.selectedFile}
-            <span className="usa-file-input__choose">
-              {resolvedLabels.changeFile}
-            </span>
+            {t('selectedFile')}
+            <span className="usa-file-input__choose">{t('changeFile')}</span>
           </div>
         )}
         {hasFiles && isControlledMultiple && (
@@ -192,12 +160,10 @@ const FileUpload = (props: FileUploadProps) => {
           </div>
         )}
         <div className={instructionsClasses} aria-hidden>
-          <span className="usa-file-input__drag-text">
-            {resolvedLabels.dragText}
-          </span>
+          <span className="usa-file-input__drag-text">{t('dragFile')}</span>
           <span className="usa-file-input__choose">
             {' '}
-            {resolvedLabels.chooseFromFolder}
+            {t('chooseFromFolder')}
           </span>
         </div>
         {previewFiles.map(previewFile => (
