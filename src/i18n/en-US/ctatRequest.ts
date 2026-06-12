@@ -166,6 +166,49 @@ export const statuses: Record<CtatStatus, string> = {
   [CtatStatus.CLOSED]: 'Closed'
 };
 
+export const helpNeededGroupLabels = {
+  preAward: 'Pre-award activities',
+  postAward: 'Post-award activities',
+  other: 'Other'
+};
+
+export const helpNeededTypesPreAward: CtatHelpNeededType[] = [
+  CtatHelpNeededType.CALM_SYSTEM_REQUISITION_SUPPORT,
+  CtatHelpNeededType.CONTRACT_COST_REVIEW_CCR_PROCESSING,
+  CtatHelpNeededType.COR_TRANSCRIPT_REVIEW,
+  CtatHelpNeededType.DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS,
+  CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER,
+  CtatHelpNeededType.GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF,
+  CtatHelpNeededType.GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA,
+  CtatHelpNeededType.GUIDANCE_ON_MARKET_RESEARCH,
+  CtatHelpNeededType.GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING,
+  CtatHelpNeededType.INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION,
+  CtatHelpNeededType.POLITICAL_APPOINTEE_APPROVAL_PAA,
+  CtatHelpNeededType.REQUEST_FOR_CONTRACT_MEMO_RFC,
+  CtatHelpNeededType.REQUEST_FOR_INFORMATION_RFI,
+  CtatHelpNeededType.REQUEST_FOR_PROPOSAL_RFP,
+  CtatHelpNeededType.REQUEST_FOR_QUOTATION_RFQ,
+  CtatHelpNeededType.SOW_SOO_PWS_DEVELOPMENT
+];
+
+export const helpNeededTypesPostAward: CtatHelpNeededType[] = [
+  CtatHelpNeededType.CONTRACT_COST_REVIEW_CCR_PROCESSING,
+  CtatHelpNeededType.CONTRACTOR_PERFORMANCE_MANAGEMENT,
+  CtatHelpNeededType.DATA_USE_AGREEMENT_DUA,
+  CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION,
+  CtatHelpNeededType.DOCUMENTING_AND_SUBMITTING_CPARS,
+  CtatHelpNeededType.ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES,
+  CtatHelpNeededType.FOREIGN_NATIONAL_MANAGEMENT_SYSTEM_FNMS,
+  CtatHelpNeededType.IDENTITY_AND_CREDENTIALING_TOOL_ICT,
+  CtatHelpNeededType.INVOICE_PROCESSING_PLATFORM_IPP,
+  CtatHelpNeededType.MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE,
+  CtatHelpNeededType.POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION
+];
+
+export const helpNeededTypesOther: CtatHelpNeededType[] = [
+  CtatHelpNeededType.OTHER
+];
+
 export const divisionOptionsByGroup: Record<
   CtatRealGroupOption,
   CtatcmmiDivisionOption[]
@@ -220,6 +263,7 @@ const ctatRequest = {
   contractActivityTypes,
   contractTypes,
   helpNeededTypes,
+  helpNeededGroupLabels,
   requestUrgencies,
   statuses,
   divisionOptionsByGroup
