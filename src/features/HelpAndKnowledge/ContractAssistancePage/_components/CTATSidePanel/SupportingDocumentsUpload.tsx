@@ -49,23 +49,6 @@ const SupportingDocumentsUpload = ({
             showFileTypeIcons={false}
             onChange={addFiles}
             onBlur={() => null}
-            labels={{
-              dragText: t(
-                'ctatSidePanel.fields.supportingDocuments.uploadText'
-              ),
-              chooseFromFolder: t(
-                'ctatSidePanel.fields.supportingDocuments.chooseFromFolder'
-              ),
-              oneFileSelected: t(
-                'ctatSidePanel.fields.supportingDocuments.oneFileSelected'
-              ),
-              filesSelected: t(
-                'ctatSidePanel.fields.supportingDocuments.filesSelected'
-              ),
-              changeFiles: t(
-                'ctatSidePanel.fields.supportingDocuments.changeFiles'
-              )
-            }}
             inputProps={{
               'aria-label': t('ctatSidePanel.fields.supportingDocuments.label')
             }}
