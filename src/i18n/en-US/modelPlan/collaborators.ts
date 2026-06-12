@@ -45,6 +45,7 @@ export const collaborators: TranslationCollaborators = {
       MODEL_TEAM: 'Model Team',
       OACT: 'Office of the Actuary (OACT)',
       PAYMENT: 'Payment',
+      SENIOR_ADVISOR: 'Senior Advisor',
       SOLUTION_ARCHITECT: 'Solution Architect',
       QUALITY: 'Quality'
     }
@@ -133,6 +134,7 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
       '<bold>Model Lead:</bold> Individual(s) responsible for the overall design, development, and implementation of the model.',
       '<bold>IT Lead:</bold> Individual(s) responsible for coordinating IT implementation activities and timelines. The IT Lead also acts as a liaison to the other CMS components who own IT systems, such as OIT. This role is often a Business Services Group (BSG) team member.',
       '<bold>Leadership:</bold> Individuals in a leadership role overseeing the design, development, and/or implementation of this model.',
+      '<bold>Senior Advisor:</bold> Individual(s) providing senior-level guidance and advice for this model.',
       '<bold>Model Team member:</bold> Other team members supporting this model.'
     ],
     workstreamLeads: 'Workstream leads',
