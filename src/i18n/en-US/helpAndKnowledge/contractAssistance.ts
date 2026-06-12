@@ -63,6 +63,28 @@ const contractAssistance = {
     }
   },
 
+  ctatViewPanel: {
+    submittedOn: 'Submitted on {{date}}',
+    progressHeading: 'Ticket progress and resolution',
+    ticketDetailsHeading: 'Ticket details',
+    assignedMember: 'Assigned contract assistance team member',
+    progressNotes: 'Progress notes',
+    resolution: 'Resolution',
+    uploadedDocuments: 'Uploaded documents',
+    viewModelInMint: 'View model in MINT',
+    empty: {
+      notAssigned: 'Not assigned yet',
+      noNotes: 'No notes added',
+      noResolution: 'No resolution added',
+      noModel: 'No model added',
+      noContractActivityType: 'No contract activity type added',
+      noContractName: 'No contract name added',
+      noContractNumber: 'No contract number added',
+      noContractType: 'No contract type added',
+      noDocuments: 'No documents added'
+    }
+  },
+
   ctatSidePanel: {
     modalHeading: 'Contract assistance ticket',
     allFieldsRequired:

@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
@@ -17,6 +18,7 @@ import PageLoading from 'components/PageLoading';
 import { isAssessment } from 'utils/user';
 
 import AdminTicketManagementSection from './_components/AdminTicketManagementSection';
+import CtatTicketViewPanel from './_components/CTATSidePanel/CtatTicketViewPanel';
 import UserSubmittedTicketsSection from './_components/UserSubmittedTicketsSection';
 import { mapCtatRequestsToContractAssistanceTickets } from './utils';
 
@@ -26,6 +28,15 @@ const ContractAssistancePage = () => {
   const { groups } = useSelector((state: AppState) => state.auth);
   const flags = useFlags();
   const isAssessmentTeam = isAssessment(groups, flags);
+  const { ticketId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const closeTicketViewPanel = useCallback(() => {
+    navigate(`/help-and-knowledge/contract-assistance${location.search}`, {
+      replace: true
+    });
+  }, [navigate, location.search]);
 
   const {
     data: requesterData,
@@ -98,6 +109,13 @@ const ContractAssistancePage = () => {
         )}
         <UserSubmittedTicketsSection tickets={userTickets} />
       </GridContainer>
+
+      {ticketId && (
+        <CtatTicketViewPanel
+          ticketId={ticketId}
+          closeModal={closeTicketViewPanel}
+        />
+      )}
     </MainContent>
   );
 };

@@ -23,6 +23,7 @@ type ContractAssistanceTicketsTableProps = {
   tickets: ContractAssistanceTicket[];
   variant: 'admin' | 'user';
   adminTab?: AdminTab;
+  onTicketClick?: (ticket: ContractAssistanceTicket) => void;
 };
 
 const TICKET_TABLE_COLUMN_WIDTHS = {
@@ -36,7 +37,8 @@ const TICKET_TABLE_COLUMN_WIDTHS = {
 const ContractAssistanceTicketsTable = ({
   tickets,
   variant,
-  adminTab = 'all'
+  adminTab = 'all',
+  onTicketClick
 }: ContractAssistanceTicketsTableProps) => {
   const { t } = useTranslation('contractAssistance');
   const isAdmin = variant === 'admin';
@@ -58,10 +60,7 @@ const ContractAssistanceTicketsTable = ({
             type="button"
             unstyled
             className="usa-link padding-0"
-            onClick={() => {
-              // eslint-disable-next-line no-console
-              console.log(row.original);
-            }}
+            onClick={() => onTicketClick?.(row.original)}
           >
             {row.original.ticketId}
           </Button>
@@ -108,7 +107,7 @@ const ContractAssistanceTicketsTable = ({
         )
       }
     ],
-    [t]
+    [t, onTicketClick]
   );
 
   const defaultPageSize = isAdmin ? 5 : 10;

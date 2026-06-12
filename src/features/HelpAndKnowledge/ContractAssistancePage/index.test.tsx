@@ -60,16 +60,25 @@ const mockStore = configureMockStore();
 const assessmentStore = mockStore({ auth: mockAuthAssessment });
 const nonAssessmentStore = mockStore({ auth: mockAuthNotAssessment });
 
-const renderPage = (store: ReturnType<typeof mockStore>) => {
+const renderPage = (
+  store: ReturnType<typeof mockStore>,
+  initialEntry?: string
+) => {
   const router = createMemoryRouter(
     [
       {
         path: '/help-and-knowledge/contract-assistance',
         element: <ContractAssistancePage />
+      },
+      {
+        path: '/help-and-knowledge/contract-assistance/:ticketId',
+        element: <ContractAssistancePage />
       }
     ],
     {
-      initialEntries: ['/help-and-knowledge/contract-assistance']
+      initialEntries: [
+        initialEntry ?? '/help-and-knowledge/contract-assistance'
+      ]
     }
   );
 

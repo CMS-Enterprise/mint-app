@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -49,6 +49,15 @@ const AdminTicketManagementSection = ({
     navigate({ search: params.toString() }, { replace: true });
   };
 
+  const handleTicketClick = useCallback(
+    (ticket: ContractAssistanceTicket) => {
+      navigate(
+        `/help-and-knowledge/contract-assistance/${ticket.id}${location.search}`
+      );
+    },
+    [navigate, location.search]
+  );
+
   return (
     <div className="admin-section bg-primary-lighter radius-md padding-3 margin-bottom-5">
       <div className="display-flex flex-justify flex-align-center">
@@ -75,6 +84,7 @@ const AdminTicketManagementSection = ({
         tickets={filteredTickets}
         variant="admin"
         adminTab={activeTab}
+        onTicketClick={handleTicketClick}
       />
     </div>
   );
