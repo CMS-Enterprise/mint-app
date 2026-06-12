@@ -191,10 +191,6 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		if err := SeedSuggestedWaivers(ctx, tx, logger, baseTaskListUser.ModelPlanID, principal); err != nil {
-			return nil, err
-		}
-
 		// Create a default planTimeline object
 		planTimeline := models.NewPlanTimeline(baseTaskListUser)
 
