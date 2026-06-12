@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
-// TBD: multiple files
-// Multiple files in a single input is not recommended, but it might be worth
-// supporting, just in case.
 type FileUploadProps = {
   id: string;
   name: string;
   accept?: string;
-  // multiple?: boolean;
+  multiple?: boolean;
+  /** When provided with `multiple`, preview is driven by the parent. */
+  files?: File[];
+  showFileTypeIcons?: boolean;
   disabled?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
@@ -22,7 +22,9 @@ const FileUpload = (props: FileUploadProps) => {
     id,
     name,
     accept,
-    // multiple = false,
+    multiple = false,
+    files,
+    showFileTypeIcons = true,
     disabled = false,
     onChange,
     onBlur,
@@ -31,6 +33,30 @@ const FileUpload = (props: FileUploadProps) => {
   const { t } = useTranslation('documentsMisc');
   const [file, setFile] = useState<File>();
   const [error, setError] = useState(false);
+  const [inputKey, setInputKey] = useState(0);
+
+  const isControlledMultiple = multiple && files !== undefined;
+
+  const getPreviewFiles = (): File[] => {
+    if (isControlledMultiple) {
+      return files;
+    }
+
+    if (file) {
+      return [file];
+    }
+
+    return [];
+  };
+
+  const previewFiles = getPreviewFiles();
+  const hasFiles = previewFiles.length > 0;
+
+  const filesSelectedLabel =
+    previewFiles.length === 1
+      ? t('oneFileSelected')
+      : t('filesSelected', { count: previewFiles.length });
+
   const fileInputWrapper = classnames(
     'easi-file-upload',
     'usa-file-input',
@@ -43,21 +69,8 @@ const FileUpload = (props: FileUploadProps) => {
     'has-invalid-file': error
   });
   const instructionsClasses = classnames('usa-file-input__instructions', {
-    'display-none': !!file
+    'display-none': hasFiles
   });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e?.target?.files && e.target.files.length > 0) {
-      if (isFileTypeValid(e.target.files[0])) {
-        setError(false);
-        setFile(e.target.files[0]);
-        onChange(e);
-      } else {
-        setError(true);
-        setFile(undefined);
-      }
-    }
-  };
 
   const isFileTypeValid = (localFile: File) => {
     if (!accept) {
@@ -76,6 +89,45 @@ const FileUpload = (props: FileUploadProps) => {
     return isFileTypeAcceptable;
   };
 
+  const areAllFilesValid = (selectedFiles: FileList) =>
+    Array.from(selectedFiles).every(isFileTypeValid);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e?.target?.files || e.target.files.length === 0) {
+      return;
+    }
+
+    if (!areAllFilesValid(e.target.files)) {
+      setError(true);
+      if (!isControlledMultiple) {
+        setFile(undefined);
+      }
+      return;
+    }
+
+    setError(false);
+
+    if (!isControlledMultiple) {
+      setFile(e.target.files[0]);
+    } else {
+      setInputKey(previous => previous + 1);
+    }
+
+    onChange(e);
+  };
+
+  const getDescriptionText = () => {
+    if (!hasFiles) {
+      return 'Select a file';
+    }
+
+    if (isControlledMultiple) {
+      return filesSelectedLabel;
+    }
+
+    return `File ${file?.name} selected`;
+  };
+
   return (
     <div
       className={fileInputWrapper}
@@ -83,13 +135,24 @@ const FileUpload = (props: FileUploadProps) => {
       data-testid="file-upload-wrapper"
     >
       <div className={targetWrapperClasses}>
-        {file && (
+        {hasFiles && isControlledMultiple && (
+          <div className="usa-file-input__preview-heading">
+            {filesSelectedLabel}
+            <span className="usa-file-input__choose">{t('changeFiles')}</span>
+          </div>
+        )}
+        {hasFiles && !isControlledMultiple && (
           <div className="usa-file-input__preview-heading">
             {t('selectedFile')}
             <span className="usa-file-input__choose">{t('changeFile')}</span>
           </div>
         )}
-        {file && (
+        {hasFiles && isControlledMultiple && (
+          <div role="alert" aria-live="assertive" className="sr-only">
+            {filesSelectedLabel}
+          </div>
+        )}
+        {hasFiles && !isControlledMultiple && file && (
           <div role="alert" aria-live="assertive" className="sr-only">
             <Trans i18nKey="documents:fileSelected">
               indexZero {file.name} indexTwo
@@ -103,12 +166,16 @@ const FileUpload = (props: FileUploadProps) => {
             {t('chooseFromFolder')}
           </span>
         </div>
-        {file && (
-          <div className="usa-file-input__preview" aria-hidden>
-            <FileTypeIcon fileName={file.name} />
-            {file.name}
+        {previewFiles.map(previewFile => (
+          <div
+            key={`${previewFile.name}-${previewFile.lastModified}-${previewFile.size}`}
+            className="usa-file-input__preview padding-105 font-body-xs line-height-sans-1"
+            aria-hidden
+          >
+            {showFileTypeIcons && <FileTypeIcon fileName={previewFile.name} />}
+            {previewFile.name}
           </div>
-        )}
+        ))}
         <div className="usa-file-input__box" />
         {error && (
           <div
@@ -119,12 +186,13 @@ const FileUpload = (props: FileUploadProps) => {
           </div>
         )}
         <input
+          key={isControlledMultiple ? inputKey : undefined}
           id={id}
           className="usa-file-input__input"
           type="file"
           name={name}
           accept={accept}
-          // multiple={multiple}
+          multiple={multiple}
           disabled={disabled}
           aria-describedby="FileUpload-Description"
           onChange={handleChange}
@@ -134,7 +202,7 @@ const FileUpload = (props: FileUploadProps) => {
         />
       </div>
       <div id="FileUpload-Description" className="sr-only">
-        {file ? `File ${file.name} selected` : 'Select a file'}
+        {getDescriptionText()}
       </div>
     </div>
   );

@@ -1,0 +1,724 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ContractAssistancePage > matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <nav
+        aria-label="Breadcrumbs"
+        class="usa-breadcrumb usa-breadcrumb--wrap"
+      >
+        <ol
+          class="usa-breadcrumb__list"
+        >
+          <li
+            class="usa-breadcrumb__list-item"
+          >
+            <a
+              class="usa-link usa-breadcrumb__link"
+              data-discover="true"
+              href="/help-and-knowledge"
+            >
+              <span>
+                Help and Knowledge Center
+              </span>
+            </a>
+          </li>
+          <li
+            aria-current="page"
+            class="usa-breadcrumb__list-item usa-current"
+          >
+            <span>
+              Contract assistance
+            </span>
+          </li>
+        </ol>
+      </nav>
+      <h1
+        class="margin-bottom-2 margin-top-5 line-height-large"
+      >
+        Contract assistance
+      </h1>
+      <p
+        class="mint-body-large margin-bottom-2 margin-top-05"
+      >
+        The Contract Technical Assistance Team (CTAT) can help with a variety of contracting needs and activities in pre-award and post-award timeframes.
+      </p>
+      <div
+        class="margin-bottom-6"
+      >
+        <a
+          class="usa-link"
+          data-discover="true"
+          data-testid="return-to-hkc"
+          href="/help-and-knowledge"
+        >
+          <span>
+            <svg
+              aria-label="back"
+              class="usa-icon top-3px margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Return to Help and Knowledge Center
+          </span>
+        </a>
+      </div>
+      <div
+        class="admin-section bg-primary-lighter radius-md padding-3 margin-bottom-5"
+      >
+        <div
+          class="display-flex flex-justify flex-align-center"
+        >
+          <h2
+            class="margin-x-0 margin-top-0 margin-bottom-3"
+          >
+            Admin ticket management
+          </h2>
+          <svg
+            class="usa-icon usa-icon--size-4 text-primary-light"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm2.5 11.59.9 3.88-3.4-2.05-3.4 2.05.9-3.87-3-2.59 3.96-.34L12 6.02l1.54 3.64 3.96.34-3 2.59z"
+            />
+          </svg>
+        </div>
+        <ul
+          class="usa-button-group usa-button-group--segmented margin-bottom-2"
+        >
+          <li
+            class="usa-button-group__item"
+          >
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="button"
+            >
+              All tickets (0)
+            </button>
+          </li>
+          <li
+            class="usa-button-group__item"
+          >
+            <button
+              class="usa-button usa-button--outline"
+              data-testid="button"
+              type="button"
+            >
+              Open tickets (0)
+            </button>
+          </li>
+          <li
+            class="usa-button-group__item"
+          >
+            <button
+              class="usa-button usa-button--outline"
+              data-testid="button"
+              type="button"
+            >
+              Unassigned tickets (0)
+            </button>
+          </li>
+          <li
+            class="usa-button-group__item"
+          >
+            <button
+              class="usa-button usa-button--outline"
+              data-testid="button"
+              type="button"
+            >
+              My assigned tickets (0)
+            </button>
+          </li>
+          <li
+            class="usa-button-group__item"
+          >
+            <button
+              class="usa-button usa-button--outline"
+              data-testid="button"
+              type="button"
+            >
+              Closed tickets (0)
+            </button>
+          </li>
+        </ul>
+        <div
+          class="contract-assistance-tickets-table-container contract-assistance-tickets-table-container--admin"
+        >
+          <table
+            class="usa-table usa-table--borderless width-full contract-assistance-tickets-table margin-top-0 margin-bottom-0 contract-assistance-tickets-table--admin"
+            data-testid="table"
+          >
+            <caption
+              class="usa-sr-only"
+            >
+              Contract assistance help tickets
+            </caption>
+            <colgroup>
+              <col
+                style="width: 160px;"
+              />
+              <col
+                style="width: 180px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+            </colgroup>
+            <thead
+              class="margin-bottom-2"
+            >
+              <tr
+                class="border-bottom-2px"
+                role="row"
+              >
+                <th
+                  aria-sort="ascending"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Ticket ID
+                    <svg
+                      aria-label="collapse"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--up"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Submission date
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Contract name
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Help type
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Status
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              role="rowgroup"
+            >
+              <tr>
+                <td
+                  class="border-0 padding-0"
+                  colspan="5"
+                >
+                  <div
+                    class="usa-alert usa-alert--info flex margin-top-2"
+                    data-testid="alert"
+                  >
+                    <div
+                      class="usa-alert__body"
+                    >
+                      <h4
+                        class="usa-alert__heading"
+                      >
+                        There are no submitted help tickets.
+                      </h4>
+                      <p
+                        class="usa-alert__text"
+                      >
+                        <span>
+                          Once a MINT user submits a request for contract assistance, it will appear here.
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            class="grid-row grid-gap grid-gap-lg display-flex row-reverse"
+          >
+            <div
+              class="desktop:margin-top-2 desktop:grid-col-auto"
+            >
+              <select
+                class="usa-select margin-top-0 width-auto bg-transparent"
+                data-testid="table-page-size"
+                id="table-page-size"
+                name="tablePageSize"
+              >
+                <option
+                  value="5"
+                >
+                  Show 5 rows
+                </option>
+                <option
+                  value="10"
+                >
+                  Show 10 rows
+                </option>
+                <option
+                  value="25"
+                >
+                  Show 25 rows
+                </option>
+                <option
+                  value="50"
+                >
+                  Show 50 rows
+                </option>
+                <option
+                  value="100"
+                >
+                  Show 100 rows
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2
+          class="margin-0"
+        >
+          My submitted help tickets
+        </h2>
+        <p
+          class="mint-body-md margin-bottom-2 margin-top-05 line-height-sans-4 text-light"
+        >
+          Use the button below to start a new contract assistance ticket.
+        </p>
+        <button
+          class="usa-button margin-bottom-4"
+          data-testid="button"
+          type="button"
+        >
+          Create a new ticket
+        </button>
+        <div
+          class="contract-assistance-tickets-table-container"
+        >
+          <table
+            class="usa-table usa-table--borderless width-full contract-assistance-tickets-table margin-top-0 margin-bottom-0"
+            data-testid="table"
+          >
+            <caption
+              class="usa-sr-only"
+            >
+              Your contract assistance help tickets
+            </caption>
+            <colgroup>
+              <col
+                style="width: 160px;"
+              />
+              <col
+                style="width: 180px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+              <col
+                style="width: 250px;"
+              />
+            </colgroup>
+            <thead
+              class="margin-bottom-2"
+            >
+              <tr
+                class="border-bottom-2px"
+                role="row"
+              >
+                <th
+                  aria-sort="ascending"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Ticket ID
+                    <svg
+                      aria-label="collapse"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--up"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Submission date
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Contract name
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Help type
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+                <th
+                  aria-sort="none"
+                  class="padding-left-0 padding-y-1 bg-transparent table-header"
+                  colspan="1"
+                  role="columnheader"
+                  scope="col"
+                >
+                  <button
+                    class="usa-button usa-button--unstyled position-relative"
+                    style="cursor: pointer;"
+                    title="Toggle SortBy"
+                    type="button"
+                  >
+                    Status
+                    <svg
+                      aria-label="unfold"
+                      class="usa-icon margin-left-05"
+                      data-testid="caret--sort"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 5.83 15.17 9l1.41-1.41L12 3 7.41 7.59 8.83 9 12 5.83zm0 12.34L8.83 15l-1.41 1.41L12 21l4.59-4.59L15.17 15 12 18.17z"
+                      />
+                    </svg>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              role="rowgroup"
+            >
+              <tr>
+                <td
+                  class="border-0 padding-0"
+                  colspan="5"
+                >
+                  <div
+                    class="usa-alert usa-alert--info flex margin-top-2"
+                    data-testid="alert"
+                  >
+                    <div
+                      class="usa-alert__body"
+                    >
+                      <h4
+                        class="usa-alert__heading"
+                      >
+                        You have not submitted any help tickets.
+                      </h4>
+                      <p
+                        class="usa-alert__text"
+                      >
+                        <span>
+                          Use the button above to create a new ticket and request contract assistance from CTAT.
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div
+            class="grid-row grid-gap grid-gap-lg display-flex row-reverse"
+          >
+            <div
+              class="desktop:margin-top-2 desktop:grid-col-auto"
+            >
+              <select
+                class="usa-select margin-top-0 width-auto bg-transparent"
+                data-testid="table-page-size"
+                id="table-page-size"
+                name="tablePageSize"
+              >
+                <option
+                  value="5"
+                >
+                  Show 5 rows
+                </option>
+                <option
+                  value="10"
+                >
+                  Show 10 rows
+                </option>
+                <option
+                  value="25"
+                >
+                  Show 25 rows
+                </option>
+                <option
+                  value="50"
+                >
+                  Show 50 rows
+                </option>
+                <option
+                  value="100"
+                >
+                  Show 100 rows
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

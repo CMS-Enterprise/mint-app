@@ -21,7 +21,7 @@ export const Default = () => {
       onChange={() => {}}
       onBlur={() => {}}
       ariaDescribedBy=""
-      inputProps={<input />}
+      inputProps={{}}
     />
   );
 };
@@ -36,7 +36,28 @@ export const Disabled = () => {
       onBlur={() => {}}
       ariaDescribedBy=""
       disabled
-      inputProps={<input />}
+      inputProps={{}}
+    />
+  );
+};
+
+export const ControlledMultiple = () => {
+  const files = [
+    new File(['one'], 'Draft_DUA.pdf', { type: 'application/pdf' }),
+    new File(['two'], 'SupplementalNotes.pdf', { type: 'application/pdf' })
+  ];
+
+  return (
+    <FileUpload
+      id="file-upload-multiple"
+      name="file-upload-multiple"
+      multiple
+      files={files}
+      showFileTypeIcons={false}
+      onChange={() => {}}
+      onBlur={() => {}}
+      ariaDescribedBy=""
+      inputProps={{}}
     />
   );
 };
