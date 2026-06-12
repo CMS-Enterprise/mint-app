@@ -1,0 +1,13 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+title: RepoConfig
+description: Configuration for Gemini Code Assist.
+
+# Points Gemini to the centralized review guidelines
+code_review:
+  style_guide: ".ai/REVIEW_GUIDELINES.md"
+
+# Instructions for chat and autocomplete
+custom_instructions:
+  - "Read and follow .ai/ARCHITECTURE.md for codebase structure."
+  - "Read and follow .ai/CODING_STYLE.md for implementation standards."
+  - "Read and follow .ai/TESTING_RULES.md for verification patterns."
