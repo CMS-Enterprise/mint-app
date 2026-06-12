@@ -19,7 +19,7 @@ func (r *mutationResolver) UpdateWaiver(ctx context.Context, modelPlanID uuid.UU
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return WaiverUpdate(logger, modelPlanID, commonWaiverID, changes, principal, r.store)
+	return WaiverUpsert(logger, modelPlanID, commonWaiverID, changes, principal, r.store)
 }
 
 // UpdateSelectedWaivers is the resolver for the updateSelectedWaivers field.

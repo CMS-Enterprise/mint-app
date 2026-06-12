@@ -36,14 +36,6 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "id": "9f955945-7afd-481f-8558-e7e0fd465463"
+    "id": "{{commonWaiverID}}"
   }
-}
-
-tests {
-  let responseData = res.getBody().data
-  
-  commonWaiverID = responseData.commonWaiver.id
-  
-  bru.setVar("commonWaiverID", commonWaiverID);
 }

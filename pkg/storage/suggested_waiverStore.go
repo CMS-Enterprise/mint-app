@@ -33,25 +33,3 @@ func SuggestedWaiverGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Log
 
 	return sqlutils.SelectProcedure[models.SuggestedWaiver](np, sqlqueries.SuggestedWaiver.GetByModelPlanIDLoader, args)
 }
-
-// SuggestedWaiverDeleteAllByModelPlanID deletes all suggested_waiver rows for a model plan.
-// Used when recalculating suggestions after a survey update.
-func SuggestedWaiverDeleteAllByModelPlanID(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanID uuid.UUID) ([]*models.SuggestedWaiver, error) {
-	args := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-	}
-
-	return sqlutils.SelectProcedure[models.SuggestedWaiver](np, sqlqueries.SuggestedWaiver.DeleteByModelPlanID, args)
-}
-
-// SuggestedWaiverInsertForModelPlan inserts a suggested_waiver row for every common_waiver
-// that should be suggested based on the current survey answers (DB-level CASE logic).
-// Skips rows that already exist (ON CONFLICT DO NOTHING).
-func SuggestedWaiverInsertForModelPlan(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanID uuid.UUID, createdBy uuid.UUID) ([]*models.SuggestedWaiver, error) {
-	args := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-		"created_by":    createdBy,
-	}
-
-	return sqlutils.SelectProcedure[models.SuggestedWaiver](np, sqlqueries.SuggestedWaiver.InsertForModelPlan, args)
-}

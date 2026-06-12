@@ -12,6 +12,11 @@ import (
 var medicarePaymentWaiver1ID = uuid.MustParse("9f955945-7afd-481f-8558-e7e0fd465463")
 
 func (suite *ResolverSuite) TestWaiverSuggestionTrigger() {
+	// TODO: replace the inline SQL below with a native storage/resolver call once
+	// CMS provides the real waiver-to-question mappings and a proper mechanism exists
+	// to set common_waiver.survey_question_field via the app. Until then, inline SQL
+	// is the only way to wire up a test fixture for this trigger.
+	//
 	// Wire "Medicare Payment Waiver 1" to the modifies_medicare_savings_programs survey
 	// question so the trigger can un-suggest it when the answer is false.
 	// common_waiver is seed/reference data that is not truncated between tests, so we
@@ -29,14 +34,16 @@ func (suite *ResolverSuite) TestWaiverSuggestionTrigger() {
 	suite.NoError(tx.Commit())
 	defer func() {
 		tx2, err := suite.testConfigs.Store.Beginx()
+		suite.NoError(err, "cleanup: begin transaction")
 		if err != nil {
 			return
 		}
-		_, _ = tx2.NamedExec(
+		_, err = tx2.NamedExec(
 			`UPDATE common_waiver SET survey_question_field = NULL WHERE id = :id`,
 			map[string]any{"id": medicarePaymentWaiver1ID},
 		)
-		_ = tx2.Commit()
+		suite.NoError(err, "cleanup: reset survey_question_field")
+		suite.NoError(tx2.Commit(), "cleanup: commit transaction")
 	}()
 
 	// Creating a model plan triggers the INSERT trigger on waiver_assessment_survey,

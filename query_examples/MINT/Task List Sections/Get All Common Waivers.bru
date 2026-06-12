@@ -43,3 +43,9 @@ body:graphql:vars {
     "modelPlanID": "{{modelPlanID}}"
   }
 }
+
+tests {
+  let responseData = res.getBody().data
+
+  bru.setVar("commonWaiverID", responseData.commonWaivers[0].id);
+}
