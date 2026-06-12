@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
-	"github.com/guregu/null/zero"
 	"github.com/jmoiron/sqlx"
 	"github.com/samber/lo"
 
@@ -65,17 +64,7 @@ func CTATRequestAdminUpdate(
 
 	originalRequest := *existing
 
-	if rawStatus, ok := changes["status"]; ok {
-		status, ok := rawStatus.(*models.CTATStatus)
-		if !ok {
-			return nil, fmt.Errorf("status must be a CTATStatus")
-		}
-
-		if status != nil {
-			existing.Status = *status
-		}
-	}
-
+	// handle this separately as needs some custom work
 	if rawAssignedAdmin, ok := changes["assignedAdmin"]; ok {
 		assignedAdminUsername, ok := rawAssignedAdmin.(*string)
 		if !ok {
@@ -94,30 +83,14 @@ func CTATRequestAdminUpdate(
 				return nil, fmt.Errorf("user account not found for username %s", *assignedAdminUsername)
 			}
 
-			assignedAdminID := assignedAdminAccount.ID
-			existing.AssignedAdmin = &assignedAdminID
+			existing.AssignedAdmin = &assignedAdminAccount.ID
 		}
 	}
 
-	if rawNotes, ok := changes["notes"]; ok {
-		notes, ok := rawNotes.(*string)
-		if !ok {
-			return nil, fmt.Errorf("notes must be a string")
-		}
+	// remove from map to avoid any issues in `ApplyChanges`
+	delete(changes, "assignedAdmin")
 
-		existing.Notes = zero.StringFromPtr(notes)
-	}
-
-	if rawResolution, ok := changes["resolution"]; ok {
-		resolution, ok := rawResolution.(*string)
-		if !ok {
-			return nil, fmt.Errorf("resolution must be a string")
-		}
-
-		existing.Resolution = zero.StringFromPtr(resolution)
-	}
-
-	err = BaseStructPreUpdate(logger, existing, nil, principal, store, false, false)
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, false)
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +271,6 @@ func buildCTATSubmittedBodyContent(
 		TicketNumber:           ctatRequest.HumanReadableID(),
 		CMMIGroup:              ctatRequest.CmmiGroup.Humanize(),
 		RelatedMINTModels:      strings.Join(lo.Map(relatedModels, func(item *models.ModelPlan, _ int) string { return item.ModelName }), ", "),
-		ContractName:           ctatRequest.ContractName.String,
 		TypeOfHelpNeeded:       strings.Join(lo.Map(ctatRequest.TypeOfHelpNeeded, func(item models.CTATHelpNeededType, _ int) string { return item.Humanize() }), ", "),
 		DescribeHelpNeeded:     ctatRequest.DescribeHelpNeeded,
 		RequestUrgency:         ctatRequest.RequestUrgency.Humanize(),
@@ -311,36 +283,40 @@ func buildCTATSubmittedBodyContent(
 		bodyContent.RequesterEmail = requesterAccount.Email
 	}
 
-	if ctatRequest.CmmiGroup == models.CTATCMMIGroupOptionOther && ctatRequest.CmmiGroupOther.String != "" {
-		bodyContent.CMMIGroup = fmt.Sprintf("%s (%s)", bodyContent.CMMIGroup, ctatRequest.CmmiGroupOther.String)
+	if ctatRequest.ContractName != nil {
+		bodyContent.ContractName = *ctatRequest.ContractName
+	}
+
+	if ctatRequest.CmmiGroup == models.CTATCMMIGroupOptionOther && ctatRequest.CmmiGroupOther != nil {
+		bodyContent.CMMIGroup = fmt.Sprintf("%s (%s)", bodyContent.CMMIGroup, *ctatRequest.CmmiGroupOther)
 	}
 
 	if ctatRequest.CmmiDivision != nil {
 		bodyContent.CMMIDivision = ctatRequest.CmmiDivision.Humanize()
-		if *ctatRequest.CmmiDivision == models.CTATCMMIDivisionOptionOther && ctatRequest.CmmiDivisionOther.String != "" {
-			bodyContent.CMMIDivision = fmt.Sprintf("%s (%s)", bodyContent.CMMIDivision, ctatRequest.CmmiDivisionOther.String)
+		if *ctatRequest.CmmiDivision == models.CTATCMMIDivisionOptionOther && ctatRequest.CmmiDivisionOther != nil {
+			bodyContent.CMMIDivision = fmt.Sprintf("%s (%s)", bodyContent.CMMIDivision, *ctatRequest.CmmiDivisionOther)
 		}
 	}
 
 	if ctatRequest.ContractActivityType != nil {
 		bodyContent.ContractActivityType = ctatRequest.ContractActivityType.Humanize()
-		if *ctatRequest.ContractActivityType == models.CTATContractActivityTypeOther && ctatRequest.ContractActivityTypeOther.String != "" {
-			bodyContent.ContractActivityType = fmt.Sprintf("%s (%s)", bodyContent.ContractActivityType, ctatRequest.ContractActivityTypeOther.String)
+		if *ctatRequest.ContractActivityType == models.CTATContractActivityTypeOther && ctatRequest.ContractActivityTypeOther != nil {
+			bodyContent.ContractActivityType = fmt.Sprintf("%s (%s)", bodyContent.ContractActivityType, *ctatRequest.ContractActivityTypeOther)
 		}
 	}
 
 	if ctatRequest.ContractType != nil {
 		bodyContent.ContractType = ctatRequest.ContractType.Humanize()
-		if *ctatRequest.ContractType == models.CTATContractTypeOther && ctatRequest.ContractTypeOther.String != "" {
-			bodyContent.ContractType = fmt.Sprintf("%s (%s)", bodyContent.ContractType, ctatRequest.ContractTypeOther.String)
+		if *ctatRequest.ContractType == models.CTATContractTypeOther && ctatRequest.ContractTypeOther != nil {
+			bodyContent.ContractType = fmt.Sprintf("%s (%s)", bodyContent.ContractType, *ctatRequest.ContractTypeOther)
 		}
 	}
 
-	if slices.Contains(ctatRequest.TypeOfHelpNeeded, models.CTATHelpNeededTypeOther) && ctatRequest.TypeOfHelpNeededOther.String != "" {
+	if slices.Contains(ctatRequest.TypeOfHelpNeeded, models.CTATHelpNeededTypeOther) && ctatRequest.TypeOfHelpNeededOther != nil {
 		helpNeededValues := lo.Map(ctatRequest.TypeOfHelpNeeded, func(item models.CTATHelpNeededType, _ int) string {
 			humanized := item.Humanize()
 			if item == models.CTATHelpNeededTypeOther {
-				return fmt.Sprintf("%s (%s)", humanized, ctatRequest.TypeOfHelpNeededOther.String)
+				return fmt.Sprintf("%s (%s)", humanized, *ctatRequest.TypeOfHelpNeededOther)
 			}
 
 			return humanized
@@ -400,6 +376,20 @@ func uuidPointersEqual(first *uuid.UUID, second *uuid.UUID) bool {
 	return *first == *second
 }
 
+func trimmedStringPointersEqual(first *string, second *string) bool {
+	firstValue := ""
+	if first != nil {
+		firstValue = strings.TrimSpace(*first)
+	}
+
+	secondValue := ""
+	if second != nil {
+		secondValue = strings.TrimSpace(*second)
+	}
+
+	return firstValue == secondValue
+}
+
 func sendCTATUpdateEmail(
 	ctx context.Context,
 	emailService oddmail.EmailService,
@@ -415,8 +405,8 @@ func sendCTATUpdateEmail(
 	// note: we won't send an email for a whitespace-only change, but we will still save the change in the DB
 	statusUpdated := originalRequest.Status != updatedRequest.Status
 	assignedAdminUpdated := !uuidPointersEqual(originalRequest.AssignedAdmin, updatedRequest.AssignedAdmin)
-	progressNotesUpdated := strings.TrimSpace(originalRequest.Notes.String) != strings.TrimSpace(updatedRequest.Notes.String)
-	resolutionUpdated := strings.TrimSpace(originalRequest.Resolution.String) != strings.TrimSpace(updatedRequest.Resolution.String)
+	progressNotesUpdated := !trimmedStringPointersEqual(originalRequest.Notes, updatedRequest.Notes)
+	resolutionUpdated := !trimmedStringPointersEqual(originalRequest.Resolution, updatedRequest.Resolution)
 	if !statusUpdated && !assignedAdminUpdated && !progressNotesUpdated && !resolutionUpdated {
 		return nil
 	}
@@ -443,9 +433,7 @@ func sendCTATUpdateEmail(
 		StatusUpdated:             statusUpdated,
 		AssignedTeamMemberUpdated: assignedAdminUpdated,
 		ProgressNotesUpdated:      progressNotesUpdated,
-		ProgressNotes:             updatedRequest.Notes.String,
 		ResolutionUpdated:         resolutionUpdated,
-		Resolution:                updatedRequest.Resolution.String,
 		ClientAddress:             bodySummary.ClientAddress,
 		CTATTicketID:              bodySummary.CTATTicketID,
 		TicketNumber:              bodySummary.TicketNumber,
@@ -467,6 +455,14 @@ func sendCTATUpdateEmail(
 	if assignedAdminAccount != nil {
 		bodyContent.AssignedTeamMemberName = assignedAdminAccount.CommonName
 		bodyContent.AssignedTeamMemberEmail = assignedAdminAccount.Email
+	}
+
+	if updatedRequest.Notes != nil {
+		bodyContent.ProgressNotes = *updatedRequest.Notes
+	}
+
+	if updatedRequest.Resolution != nil {
+		bodyContent.Resolution = *updatedRequest.Resolution
 	}
 
 	emailSubject, emailBody, err := email.CTAT.Update.GetContent(subjectContent, bodyContent)
@@ -493,17 +489,17 @@ func newCTATRequest(input *model.CTATRequestInput, requesterID uuid.UUID) *model
 	request := models.NewCTATRequest(requesterID, requesterID)
 	request.ID = uuid.New()
 	request.CmmiGroup = input.CmmiGroup
-	request.CmmiGroupOther = zero.StringFromPtr(input.CmmiGroupOther)
+	request.CmmiGroupOther = input.CmmiGroupOther
 	request.CmmiDivision = input.CmmiDivision
-	request.CmmiDivisionOther = zero.StringFromPtr(input.CmmiDivisionOther)
+	request.CmmiDivisionOther = input.CmmiDivisionOther
 	request.ContractActivityType = input.ContractActivityType
-	request.ContractActivityTypeOther = zero.StringFromPtr(input.ContractActivityTypeOther)
-	request.ContractName = zero.StringFromPtr(input.ContractName)
-	request.ContractNumber = zero.StringFromPtr(input.ContractNumber)
+	request.ContractActivityTypeOther = input.ContractActivityTypeOther
+	request.ContractName = input.ContractName
+	request.ContractNumber = input.ContractNumber
 	request.ContractType = input.ContractType
-	request.ContractTypeOther = zero.StringFromPtr(input.ContractTypeOther)
+	request.ContractTypeOther = input.ContractTypeOther
 	request.TypeOfHelpNeeded = models.EnumArray[models.CTATHelpNeededType](input.TypeOfHelpNeeded)
-	request.TypeOfHelpNeededOther = zero.StringFromPtr(input.TypeOfHelpNeededOther)
+	request.TypeOfHelpNeededOther = input.TypeOfHelpNeededOther
 	request.DescribeHelpNeeded = input.DescribeHelpNeeded
 	request.RequestUrgency = input.RequestUrgency
 	request.DateAssistanceNeededBy = input.DateAssistanceNeededBy
