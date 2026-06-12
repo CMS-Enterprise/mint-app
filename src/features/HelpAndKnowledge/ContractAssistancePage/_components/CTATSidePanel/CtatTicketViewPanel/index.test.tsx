@@ -132,6 +132,43 @@ describe('CtatTicketViewPanel', () => {
     expect(progressBox).toHaveClass('bg-primary-lighter');
   });
 
+  it('renders downloadable supporting documents when virus scan is clean', async () => {
+    const ticketWithDocumentMock = {
+      request: {
+        query: GetCtatRequestDocument,
+        variables: { id: ticketId }
+      },
+      result: {
+        data: {
+          ctatRequest: {
+            ...baseTicket,
+            status: CtatStatus.NEW,
+            supportingDocuments: [
+              {
+                __typename: 'CTATRequestDocument' as const,
+                id: '660e8400-e29b-41d4-a716-446655440001',
+                fileName: 'dua-draft.pdf',
+                fileType: 'application/pdf',
+                url: null,
+                downloadUrl: 'https://example.com/dua-draft.pdf',
+                virusScanned: true,
+                virusClean: true
+              }
+            ]
+          }
+        }
+      }
+    };
+
+    renderPanel([ticketWithDocumentMock]);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: 'dua-draft.pdf' })
+      ).toBeInTheDocument();
+    });
+  });
+
   it('renders closed ticket with grey progress box and no what happens next', async () => {
     renderPanel([closedTicketMock]);
 

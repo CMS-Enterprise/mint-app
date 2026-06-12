@@ -139,6 +139,7 @@ type CTATRequestDocument {
   restricted: Boolean!
   fileName: String!
   fileSize: Int!
+  downloadUrl: String
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -146,8 +147,6 @@ type CTATRequestDocument {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
-
-  # TODO: fully implement
 }
 
 type CTATRequest {
