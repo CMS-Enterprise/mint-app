@@ -165,10 +165,7 @@ const contractAssistance = {
       },
       supportingDocuments: {
         label: 'Supporting documents',
-        hint: 'Upload any documentation that will help CTAT better understand your request.',
-        uploadText: 'Drag file here or choose from folder',
-        addAnother: 'Add another document',
-        remove: 'Remove'
+        hint: 'Upload any documentation that will help CTAT better understand your request.'
       },
       other: {
         helpNeededType: 'Please specify the type of help needed'

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Button, Icon } from '@trussworks/react-uswds';
 
 import FileUpload from 'components/FileUpload';
 
@@ -10,6 +9,11 @@ import { CtatTicketFormValues } from './CtatTicketForm';
 type SupportingDocumentsUploadProps = {
   control: Control<CtatTicketFormValues>;
 };
+
+const isSameFile = (left: File, right: File) =>
+  left.name === right.name &&
+  left.size === right.size &&
+  left.lastModified === right.lastModified;
 
 const SupportingDocumentsUpload = ({
   control
@@ -23,48 +27,32 @@ const SupportingDocumentsUpload = ({
       render={({ field }) => {
         const files: File[] = field.value || [];
 
-        const addFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-          const newFile = e.target.files?.[0];
-          if (newFile) {
-            field.onChange([...files, newFile]);
+        const addFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+          const selectedFiles = e.target.files
+            ? Array.from(e.target.files)
+            : [];
+          const newFiles = selectedFiles.filter(
+            selected => !files.some(existing => isSameFile(existing, selected))
+          );
+
+          if (newFiles.length > 0) {
+            field.onChange([...files, ...newFiles]);
           }
         };
 
-        const removeFile = (index: number) => {
-          field.onChange(files.filter((_, i) => i !== index));
-        };
-
         return (
-          <div>
-            {files.map((file, index) => (
-              <div
-                key={`${file.name}-${file.lastModified}`}
-                className="display-flex flex-align-center margin-bottom-2"
-              >
-                <Icon.AttachFile className="margin-right-1" aria-hidden />
-                <span className="margin-right-2">{file.name}</span>
-                <Button
-                  type="button"
-                  unstyled
-                  className="margin-top-0"
-                  onClick={() => removeFile(index)}
-                >
-                  {t('ctatSidePanel.fields.supportingDocuments.remove')}
-                </Button>
-              </div>
-            ))}
-            <FileUpload
-              id="ctat-supporting-documents"
-              name="supportingDocuments"
-              onChange={addFile}
-              onBlur={() => null}
-              inputProps={{
-                'aria-label': t(
-                  'ctatSidePanel.fields.supportingDocuments.label'
-                )
-              }}
-            />
-          </div>
+          <FileUpload
+            id="ctat-supporting-documents"
+            name="supportingDocuments"
+            multiple
+            files={files}
+            showFileTypeIcons={false}
+            onChange={addFiles}
+            onBlur={() => null}
+            inputProps={{
+              'aria-label': t('ctatSidePanel.fields.supportingDocuments.label')
+            }}
+          />
         );
       }}
     />
