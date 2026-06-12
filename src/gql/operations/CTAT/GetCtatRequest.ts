@@ -43,6 +43,7 @@ export default gql(/* GraphQL */ `
       supportingDocuments {
         id
         fileName
+        url
         virusScanned
         virusClean
       }
