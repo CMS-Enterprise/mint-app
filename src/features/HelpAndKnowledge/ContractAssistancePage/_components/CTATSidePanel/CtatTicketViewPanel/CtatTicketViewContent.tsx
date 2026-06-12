@@ -31,6 +31,7 @@ import {
   statuses
 } from 'i18n/en-US/ctatRequest';
 import { formatDateLocal } from 'utils/date';
+import downloadFile from 'utils/downloadFile';
 
 import { formatHelpTypes, formatUserDisplay } from '../../../utils';
 
@@ -57,6 +58,69 @@ const DetailField = ({ label, definition, className }: DetailFieldProps) => (
 const EmptyValue = ({ children }: { children: ReactNode }) => (
   <p className="margin-0 text-base-dark text-italic">{children}</p>
 );
+
+type SupportingDocument =
+  GetCtatRequestQuery['ctatRequest']['supportingDocuments'][number];
+
+const SupportingDocumentItem = ({
+  document
+}: {
+  document: SupportingDocument;
+}) => {
+  const { t } = useTranslation('documentsMisc');
+
+  if (!document.virusScanned) {
+    return (
+      <span className="text-base-light">
+        {document.fileName} ({t('documentTable.scanInProgress')})
+      </span>
+    );
+  }
+
+  if (!document.virusClean) {
+    return (
+      <span className="text-red">
+        {document.fileName} ({t('documentTable.virusFound')})
+      </span>
+    );
+  }
+
+  if (document.url) {
+    return (
+      <a
+        href={document.url}
+        className="usa-link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {document.fileName}
+      </a>
+    );
+  }
+
+  const handleDownload = () => {
+    if (!document.fileName || !document.fileType || !document.downloadUrl) {
+      return;
+    }
+
+    downloadFile({
+      fileType: document.fileType,
+      fileName: document.fileName,
+      downloadURL: document.downloadUrl
+    });
+  };
+
+  return (
+    <Button
+      type="button"
+      unstyled
+      className="usa-link padding-0"
+      onClick={handleDownload}
+    >
+      {document.fileName}
+    </Button>
+  );
+};
 
 const CtatTicketViewContent = ({ ticket }: CtatTicketViewContentProps) => {
   const { t } = useTranslation('contractAssistance');
@@ -307,16 +371,7 @@ const CtatTicketViewContent = ({ ticket }: CtatTicketViewContentProps) => {
             <ul className="margin-top-0 margin-bottom-0 padding-left-0 usa-list usa-list--unstyled">
               {ticket.supportingDocuments.map(document => (
                 <li key={document.id} className="margin-bottom-05">
-                  {/* TODO: wire download when BE adds downloadUrl on CTATRequestDocument */}
-                  <Button
-                    type="button"
-                    unstyled
-                    className="usa-link padding-0 cursor-default"
-                    tabIndex={-1}
-                    aria-disabled
-                  >
-                    {document.fileName}
-                  </Button>
+                  <SupportingDocumentItem document={document} />
                 </li>
               ))}
             </ul>

@@ -15,6 +15,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // Notes is the resolver for the notes field.
@@ -74,7 +75,33 @@ func (r *cTATRequestResolver) TypeOfHelpNeededOther(ctx context.Context, obj *mo
 
 // SupportingDocuments is the resolver for the supportingDocuments field.
 func (r *cTATRequestResolver) SupportingDocuments(ctx context.Context, obj *models.CTATRequest) ([]*models.CTATRequestDocument, error) {
-	return CTATRequestDocumentGetByCTATRequestIDLOADER(ctx, obj.ID)
+	documents, err := CTATRequestDocumentGetByCTATRequestIDLOADER(ctx, obj.ID)
+	if err != nil {
+		return nil, err
+	}
+	if len(documents) == 0 {
+		return documents, nil
+	}
+
+	err = storage.CTATRequestDocumentsUpdateVirusScanStatuses(r.fileUploadS3Client, documents)
+	if err != nil {
+		return nil, err
+	}
+
+	return documents, nil
+}
+
+// DownloadURL is the resolver for the downloadUrl field.
+func (r *cTATRequestDocumentResolver) DownloadURL(ctx context.Context, obj *models.CTATRequestDocument) (*string, error) {
+	if obj.URL != nil && *obj.URL != "" {
+		return nil, nil
+	}
+	url, err := r.fileUploadS3Client.NewGetPresignedURL(ctx, obj.FileKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return url, nil
 }
 
 // CreateCTATRequest is the resolver for the createCTATRequest field.
@@ -133,4 +160,10 @@ func (r *queryResolver) CtatRequestsAdmin(ctx context.Context) (*model.CTATReque
 // CTATRequest returns generated.CTATRequestResolver implementation.
 func (r *Resolver) CTATRequest() generated.CTATRequestResolver { return &cTATRequestResolver{r} }
 
+// CTATRequestDocument returns generated.CTATRequestDocumentResolver implementation.
+func (r *Resolver) CTATRequestDocument() generated.CTATRequestDocumentResolver {
+	return &cTATRequestDocumentResolver{r}
+}
+
 type cTATRequestResolver struct{ *Resolver }
+type cTATRequestDocumentResolver struct{ *Resolver }
