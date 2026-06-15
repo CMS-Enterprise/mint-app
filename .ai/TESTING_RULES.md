@@ -8,8 +8,9 @@ All changes in this repository MUST be accompanied by appropriate tests.
 
 ## Backend Testing (Go)
 - **Framework:** Use `testify/suite` for structured tests.
-- **Database:** Use real database instances in integration tests, but wrap operations in transactions that roll back to ensure isolation.
+- **Database:** Use real database instances in integration tests. The setup test suite will clear database tables between tests.
 - **Mocks:** Use `testhelpers` for common mocks like Okta authentication. Use **gomock** for interface-level dependency injection mocks.
+- **Resolvers:** Do not write custom store methods for testing. Rely on existing business logic used by the application
 
 ## Frontend Testing (React)
 - **Test runner:** **Vitest** (not Jest).
