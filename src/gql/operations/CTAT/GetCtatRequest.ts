@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
       createdDts
       status
       assignedAdminUserAccount {
+        username
         givenName
         familyName
         commonName
