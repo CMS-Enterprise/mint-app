@@ -150,7 +150,11 @@ const CtatTicketViewContent = ({
     : null;
 
   return (
-    <div className="margin-top-8 padding-8 maxw-tablet">
+    <div
+      className={classNames('margin-top-8 padding-8 maxw-tablet', {
+        'padding-bottom-15': isAdmin
+      })}
+    >
       <PageHeading className="margin-top-0 margin-bottom-1" headingLevel="h2">
         {ticket.humanReadableID}
       </PageHeading>
