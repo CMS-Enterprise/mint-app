@@ -1,4 +1,4 @@
-WITH retVal AS (
+WITH insert_attempt AS (
     INSERT INTO mto_milestone(
         id,
         model_plan_id,
@@ -29,7 +29,7 @@ WITH retVal AS (
         :created_by,
         CURRENT_TIMESTAMP
     )
-    ON CONFLICT (model_plan_id, mto_common_milestone_id) 
+    ON CONFLICT (model_plan_id, mto_common_milestone_id)
     DO NOTHING
     RETURNING
         id,
@@ -47,26 +47,52 @@ WITH retVal AS (
         created_dts,
         modified_by,
         modified_dts,
-        -- Indicate whether this was newly inserted or already existed
-        CASE WHEN xmax = 0 THEN TRUE ELSE FALSE END AS newly_inserted
+        TRUE AS newly_inserted
 )
 
 SELECT
-    retVal.id,
-    retVal.model_plan_id,
-    retVal.mto_common_milestone_id,
-    retVal.mto_category_id,
-    COALESCE(retVal.name, mto_common_milestone.name) AS "name",
-    retVal.facilitated_by,
-    retVal.facilitated_by_other,
-    retVal.need_by,
-    retVal.status,
-    retVal.risk_indicator,
-    retVal.is_draft,
-    retVal.created_by,
-    retVal.created_dts,
-    retVal.modified_by,
-    retVal.modified_dts,
-    retVal.newly_inserted
-FROM retVal
-LEFT JOIN mto_common_milestone ON retVal.mto_common_milestone_id = mto_common_milestone.id;
+    ia.id,
+    ia.model_plan_id,
+    ia.mto_common_milestone_id,
+    ia.mto_category_id,
+    COALESCE(ia.name, mcm.name) AS "name",
+    ia.facilitated_by,
+    ia.facilitated_by_other,
+    ia.need_by,
+    ia.status,
+    ia.risk_indicator,
+    ia.is_draft,
+    ia.created_by,
+    ia.created_dts,
+    ia.modified_by,
+    ia.modified_dts,
+    ia.newly_inserted
+FROM insert_attempt ia
+LEFT JOIN mto_common_milestone mcm ON ia.mto_common_milestone_id = mcm.id
+
+UNION ALL
+
+SELECT
+    m.id,
+    m.model_plan_id,
+    m.mto_common_milestone_id,
+    m.mto_category_id,
+    COALESCE(m.name, mcm.name) AS "name",
+    m.facilitated_by,
+    m.facilitated_by_other,
+    m.need_by,
+    m.status,
+    m.risk_indicator,
+    m.is_draft,
+    m.created_by,
+    m.created_dts,
+    m.modified_by,
+    m.modified_dts,
+    FALSE AS newly_inserted
+FROM mto_milestone m
+LEFT JOIN mto_common_milestone mcm ON m.mto_common_milestone_id = mcm.id
+WHERE
+    m.model_plan_id = :model_plan_id
+    AND m.mto_common_milestone_id = :mto_common_milestone_id
+    AND NOT EXISTS (SELECT 1 FROM insert_attempt)
+LIMIT 1;
