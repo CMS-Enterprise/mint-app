@@ -14,7 +14,7 @@ This document defines the coding patterns and standards that MUST be followed ac
 ### 1. Store Pattern (Database Access)
 All database operations must live in the `storage` package and follow this signature:
 ```go
-func (s *Store) {Entity}{Action}(np sqlutils.NamedPreparer, logger *zap.Logger, {entity} *models.{Entity}) (*models.{Entity}, error)
+func (s *Store) {Entity}{Action}(np sqlutils.NamedPreparer, logger logging.ILogger, {entity} *models.{Entity}) (*models.{Entity}, error)
 ```
 - Always use `sqlutils.NamedPreparer` to support both direct and transactional queries.
 - Use parameterized queries to prevent SQL injection.

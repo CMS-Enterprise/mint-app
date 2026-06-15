@@ -16,7 +16,7 @@ MINT is a web application designed to help CMS staff collaborate on model plans.
 - **`appcontext`**: Setting and retrieving per-request information (trace IDs, etc.).
 - **`apperrors`**: Custom error types used to inform HTTP response codes (e.g., `UnauthorizedError`).
 - **`cedar`**: Interaction with the CEDAR API and translation to internal models.
-- **`graph`**: GraphQL schema (`schema.graphql`), generated code, and handwritten resolvers (`gqlresolvers/`).
+- **`graph`**: GraphQL schema (`schema.graphql`), generated code, and handwritten resolvers (`resolvers/`).
 - **`handlers`**: HTTP handlers that parse requests, offload logic to services, and format responses.
 - **`models`**: Shared data structures used across the application.
 - **`services`**: The entry point for business logic; orchestrates auth, database, and third-party APIs.

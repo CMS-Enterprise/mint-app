@@ -3,7 +3,7 @@
 All changes in this repository MUST be accompanied by appropriate tests.
 
 ## General Rules
-- Colocate tests with source: `{name}_test.go` for Go, `index.test.tsx` for React.
+- Colocate tests with source: `{name}_test.go` for Go, `*.test.tsx` or `*.test.ts` for React.
 - Always aim for deterministic tests; mock external network dependencies.
 
 ## Backend Testing (Go)
@@ -16,7 +16,7 @@ All changes in this repository MUST be accompanied by appropriate tests.
 - **Framework:** Use **React Testing Library (RTL)** for component testing.
 - **Patterns:** Test behavior from the user's perspective (e.g., `screen.getByText`) rather than implementation details.
 - **GraphQL:** Use `MockedProvider` from `@apollo/client/testing` to mock GQL responses.
-- **Accessibility:** Use `jest-axe` to catch basic a11y violations in unit tests.
+- **Accessibility:** Use a tool like `jest-axe` to catch basic a11y violations in unit tests. Adding this dependency may be required.
 - **Snapshots:** Snapshot tests are permitted for stable UI components but must be reviewed on every update.
 
 ## End-to-End (Cypress)

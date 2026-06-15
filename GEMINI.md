@@ -11,6 +11,6 @@ All architectural maps, coding standards, and testing rules are centralized in t
 - `.ai/REVIEW_GUIDELINES.md`: For evaluating code quality.
 
 ## Project Specifics
-- Always use `zap` for logging.
+- Always use the `pkg/logging` abstraction for logging.
 - Never use `any` in TypeScript.
 - Ensure all GQL operations have role-based authorization.
