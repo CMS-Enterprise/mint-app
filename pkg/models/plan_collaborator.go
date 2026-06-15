@@ -32,6 +32,7 @@ type TeamRole string
 const (
 	TeamRoleModelLead         TeamRole = "MODEL_LEAD"
 	TeamRoleModelTeam         TeamRole = "MODEL_TEAM"
+	TeamRoleSeniorAdvisor     TeamRole = "SENIOR_ADVISOR"
 	TeamRoleLeadership        TeamRole = "LEADERSHIP"
 	TeamRoleLearning          TeamRole = "LEARNING"
 	TeamRoleEvaluation        TeamRole = "EVALUATION"
