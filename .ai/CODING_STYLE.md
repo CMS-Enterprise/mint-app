@@ -14,12 +14,12 @@ This document defines the coding patterns and standards that MUST be followed ac
 ### 1. Store Pattern (Database Access)
 All database operations must live in the `storage` package and follow this signature:
 ```go
-func (s *Store) {Entity}{Action}(np sqlutils.NamedPreparer, logger logging.ILogger, {entity} *models.{Entity}) (*models.{Entity}, error)
+func  {Entity}{Action}(np sqlutils.NamedPreparer, logger logging.ILogger, {entity} *models.{Entity}) (*models.{Entity}, error)
 ```
 - Always use `sqlutils.NamedPreparer` to support both direct and transactional queries.
 - Use parameterized queries to prevent SQL injection.
 - All models should embed `baseStruct`, which provides a UUID-based `ID` field.
-- SQL files are embedded via `//go:embed` and loaded at startup; do not construct SQL strings at runtime.
+- SQL files are embedded via `//go:embed` in the `sqlqueries` pacakge and loaded at startup; do not construct SQL strings at runtime. Do not embed SQL directly in the `storage` pacakge
 
 ### 2. Authentication & Authorization
 - Use the `Principal` interface for all authorization checks.
