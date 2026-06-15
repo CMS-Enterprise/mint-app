@@ -160,7 +160,11 @@ const CtatTicketViewContent = ({
         })}
       </p>
 
-      {isAdmin && closeModal && setDisableButton && setIsDirty && onSubmitted ? (
+      {isAdmin &&
+      closeModal &&
+      setDisableButton &&
+      setIsDirty &&
+      onSubmitted ? (
         <CtatTicketAdminForm
           ticket={ticket}
           closeModal={closeModal}
@@ -175,7 +179,10 @@ const CtatTicketViewContent = ({
             'bg-primary-lighter': !isClosed
           })}
         >
-          <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
+          <PageHeading
+            headingLevel="h3"
+            className="margin-top-0 margin-bottom-3"
+          >
             {t('ctatViewPanel.progressHeading')}
           </PageHeading>
 

@@ -16,6 +16,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // RelatedMINTModels is the resolver for the relatedMINTModels field.
@@ -72,7 +73,17 @@ func (r *mutationResolver) AdminUpdateCTATRequest(ctx context.Context, id uuid.U
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CTATRequestAdminUpdate(ctx, logger, id, changes, principal, r.store, r.emailService, r.addressBook)
+	return CTATRequestAdminUpdate(
+		ctx,
+		logger,
+		id,
+		changes,
+		principal,
+		r.store,
+		r.emailService,
+		r.addressBook,
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(r.service.FetchUserInfo),
+	)
 }
 
 // CtatRequest is the resolver for the ctatRequest field.

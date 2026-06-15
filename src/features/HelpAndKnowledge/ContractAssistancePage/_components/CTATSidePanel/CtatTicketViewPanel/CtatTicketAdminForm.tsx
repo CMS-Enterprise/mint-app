@@ -121,10 +121,7 @@ const CtatTicketAdminForm = ({
   }, [isDirty, isSubmitting, setDisableButton]);
 
   const onSubmit = (formData: CtatTicketAdminFormValues) => {
-    const changes = dirtyInput(
-      initialValues,
-      formData
-    ) as CtatAdminUpdateInput;
+    const changes = dirtyInput(initialValues, formData) as CtatAdminUpdateInput;
 
     setCurrentErrorMeta({
       overrideMessage: getStatusAlertBody({

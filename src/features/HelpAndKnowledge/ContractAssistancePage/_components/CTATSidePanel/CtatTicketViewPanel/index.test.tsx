@@ -11,8 +11,8 @@ import {
   GetCtatRequestDocument,
   GetCtatRequestsAdminDocument
 } from 'gql/generated/graphql';
-import { vi } from 'vitest';
 import setup from 'tests/util';
+import { vi } from 'vitest';
 
 import CtatTicketViewPanel from './index';
 
@@ -244,11 +244,13 @@ describe('CtatTicketViewPanel', () => {
     expect(screen.getByText('Assigned admin team member')).toBeInTheDocument();
     expect(screen.getByText('Progress notes')).toBeInTheDocument();
     expect(screen.getByText('Resolution')).toBeInTheDocument();
-    expect(document.getElementById('ctat-admin-progress-notes')).toBeInTheDocument();
-    expect(document.getElementById('ctat-admin-resolution')).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: 'Save changes' })
-    ).toBeDisabled();
+      document.getElementById('ctat-admin-progress-notes')
+    ).toBeInTheDocument();
+    expect(
+      document.getElementById('ctat-admin-resolution')
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Save changes' })).toBeDisabled();
     expect(screen.queryByText('Not assigned yet')).not.toBeInTheDocument();
   });
 
@@ -312,7 +314,9 @@ describe('CtatTicketViewPanel', () => {
     );
 
     await waitFor(() => {
-      expect(document.getElementById('ctat-admin-progress-notes')).toBeInTheDocument();
+      expect(
+        document.getElementById('ctat-admin-progress-notes')
+      ).toBeInTheDocument();
     });
 
     const saveButton = screen.getByRole('button', { name: 'Save changes' });

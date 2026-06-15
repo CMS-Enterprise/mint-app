@@ -21,6 +21,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // CTATRequestGetByRequesterIDLOADER implements resolver logic to get CTAT requests by requester ID using a data loader.
@@ -48,6 +49,7 @@ func CTATRequestAdminUpdate(
 	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
+	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.CTATRequest, error) {
 	if !principal.AllowASSESSMENT() {
 		return nil, fmt.Errorf("user does not have permission to update admin CTAT requests")
@@ -74,13 +76,21 @@ func CTATRequestAdminUpdate(
 		if assignedAdminUsername == nil {
 			existing.AssignedAdmin = nil
 		} else {
-			assignedAdminAccount, err := UserAccountGetByUsername(logger, store, *assignedAdminUsername)
+			assignedAdminAccount, err := userhelpers.GetOrCreateUserAccount(
+				ctx,
+				store,
+				store,
+				*assignedAdminUsername,
+				false,
+				false,
+				getAccountInformation,
+			)
 			if err != nil {
-				return nil, err
-			}
-
-			if assignedAdminAccount == nil {
-				return nil, fmt.Errorf("user account not found for username %s", *assignedAdminUsername)
+				return nil, fmt.Errorf(
+					"failed to get user account by username %s: %w",
+					*assignedAdminUsername,
+					err,
+				)
 			}
 
 			existing.AssignedAdmin = &assignedAdminAccount.ID
