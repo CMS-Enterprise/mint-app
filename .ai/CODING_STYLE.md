@@ -12,7 +12,7 @@ This document defines the coding patterns and standards that MUST be followed ac
 - **Interfaces**: PascalCase; use an `I` prefix when naming an interface that mirrors a concrete struct (`IBaseStruct`)
 
 ### 1. Store Pattern (Database Access)
-All database operations must live in the `storage` package and follow this signature:
+All database operations must live in the `storage` package. New functions should follow this signature:
 ```go
 func  {Entity}{Action}(np sqlutils.NamedPreparer, logger logging.ILogger, {entity} *models.{Entity}) (*models.{Entity}, error)
 ```
