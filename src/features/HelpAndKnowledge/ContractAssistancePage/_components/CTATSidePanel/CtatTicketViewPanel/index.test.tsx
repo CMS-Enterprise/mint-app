@@ -3,12 +3,15 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { screen, waitFor } from '@testing-library/react';
 import {
+  AdminUpdateCtatRequestDocument,
   CtatcmmiGroupOption,
   CtatHelpNeededType,
   CtatRequestUrgency,
   CtatStatus,
-  GetCtatRequestDocument
+  GetCtatRequestDocument,
+  GetCtatRequestsAdminDocument
 } from 'gql/generated/graphql';
+import { vi } from 'vitest';
 import setup from 'tests/util';
 
 import CtatTicketViewPanel from './index';
@@ -78,6 +81,7 @@ const closedTicketMock = {
         resolution: 'Drafted a legally sound document.',
         assignedAdminUserAccount: {
           __typename: 'UserAccount' as const,
+          username: 'MWIN',
           givenName: 'Mace',
           familyName: 'Windu',
           commonName: 'Mace Windu',
@@ -88,13 +92,50 @@ const closedTicketMock = {
   }
 };
 
-const renderPanel = (mocks: MockedResponse[]) => {
+const adminListMock = {
+  request: {
+    query: GetCtatRequestsAdminDocument
+  },
+  result: {
+    data: {
+      ctatRequestsAdmin: {
+        __typename: 'CTATRequestsTableDataAdmin',
+        count: 1,
+        ctatRequests: [
+          {
+            __typename: 'CTATRequest',
+            id: ticketId,
+            humanReadableID: 'CTAT-001',
+            createdDts: '2026-05-02T00:00:00Z',
+            contractName: null,
+            typeOfHelpNeeded: [CtatHelpNeededType.DATA_USE_AGREEMENT_DUA],
+            typeOfHelpNeededOther: null,
+            status: CtatStatus.NEW,
+            assignedAdminUserAccount: null
+          }
+        ]
+      }
+    }
+  }
+};
+
+const renderPanel = (
+  mocks: MockedResponse[],
+  {
+    isAdmin = false,
+    closeModal = vi.fn()
+  }: { isAdmin?: boolean; closeModal?: () => void } = {}
+) => {
   const router = createMemoryRouter(
     [
       {
         path: '/help-and-knowledge/contract-assistance/:ticketId',
         element: (
-          <CtatTicketViewPanel ticketId={ticketId} closeModal={() => {}} />
+          <CtatTicketViewPanel
+            ticketId={ticketId}
+            closeModal={closeModal}
+            isAdmin={isAdmin}
+          />
         )
       }
     ],
@@ -112,7 +153,7 @@ const renderPanel = (mocks: MockedResponse[]) => {
 
 describe('CtatTicketViewPanel', () => {
   it('renders open ticket with blue progress box and what happens next', async () => {
-    renderPanel([openTicketMock]);
+    renderPanel([openTicketMock], { isAdmin: false });
 
     await waitFor(() => {
       expect(screen.getByText('CTAT-001')).toBeInTheDocument();
@@ -170,7 +211,7 @@ describe('CtatTicketViewPanel', () => {
   });
 
   it('renders closed ticket with grey progress box and no what happens next', async () => {
-    renderPanel([closedTicketMock]);
+    renderPanel([closedTicketMock], { isAdmin: false });
 
     await waitFor(() => {
       expect(screen.getByText('Closed')).toBeInTheDocument();
@@ -191,5 +232,105 @@ describe('CtatTicketViewPanel', () => {
       .getByText('Ticket progress and resolution')
       .closest('div');
     expect(progressBox).toHaveClass('bg-base-lighter');
+  });
+
+  it('renders admin editable form with save footer for assessment users', async () => {
+    renderPanel([openTicketMock], { isAdmin: true });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('ctat-admin-status')).toBeInTheDocument();
+    });
+
+    expect(screen.getByText('Assigned admin team member')).toBeInTheDocument();
+    expect(screen.getByText('Progress notes')).toBeInTheDocument();
+    expect(screen.getByText('Resolution')).toBeInTheDocument();
+    expect(document.getElementById('ctat-admin-progress-notes')).toBeInTheDocument();
+    expect(document.getElementById('ctat-admin-resolution')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: 'Save changes' })
+    ).toBeDisabled();
+    expect(screen.queryByText('Not assigned yet')).not.toBeInTheDocument();
+  });
+
+  it('renders blue admin progress box for open tickets', async () => {
+    renderPanel([openTicketMock], { isAdmin: true });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('ctat-admin-status')).toBeInTheDocument();
+    });
+
+    const progressBox = screen
+      .getByText('Ticket progress and resolution')
+      .closest('div');
+    expect(progressBox).toHaveClass('bg-primary-lighter');
+  });
+
+  it('renders grey admin progress box for closed tickets', async () => {
+    renderPanel([closedTicketMock], { isAdmin: true });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('ctat-admin-status')).toBeInTheDocument();
+    });
+
+    const progressBox = screen
+      .getByText('Ticket progress and resolution')
+      .closest('div');
+    expect(progressBox).toHaveClass('bg-base-lighter');
+  });
+
+  it('enables save and closes panel after successful admin update', async () => {
+    const closeModal = vi.fn();
+
+    const adminUpdateMock = {
+      request: {
+        query: AdminUpdateCtatRequestDocument,
+        variables: {
+          id: ticketId,
+          changes: {
+            notes: 'Updated notes'
+          }
+        }
+      },
+      result: {
+        data: {
+          adminUpdateCTATRequest: {
+            __typename: 'CTATRequest',
+            id: ticketId,
+            humanReadableID: 'CTAT-001',
+            status: CtatStatus.NEW,
+            notes: 'Updated notes',
+            resolution: null,
+            assignedAdminUserAccount: null
+          }
+        }
+      }
+    };
+
+    const { user } = renderPanel(
+      [openTicketMock, adminUpdateMock, openTicketMock, adminListMock],
+      { isAdmin: true, closeModal }
+    );
+
+    await waitFor(() => {
+      expect(document.getElementById('ctat-admin-progress-notes')).toBeInTheDocument();
+    });
+
+    const saveButton = screen.getByRole('button', { name: 'Save changes' });
+    expect(saveButton).toBeDisabled();
+
+    const notesField = document.getElementById(
+      'ctat-admin-progress-notes'
+    ) as HTMLTextAreaElement;
+    await user.type(notesField, 'Updated notes');
+
+    await waitFor(() => {
+      expect(saveButton).toBeEnabled();
+    });
+
+    await user.click(saveButton);
+
+    await waitFor(() => {
+      expect(closeModal).toHaveBeenCalled();
+    });
   });
 });

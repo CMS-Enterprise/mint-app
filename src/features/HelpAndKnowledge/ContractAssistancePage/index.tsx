@@ -114,6 +114,7 @@ const ContractAssistancePage = () => {
         <CtatTicketViewPanel
           ticketId={ticketId}
           closeModal={closeTicketViewPanel}
+          isAdmin={isAssessmentTeam}
         />
       )}
     </MainContent>

@@ -85,6 +85,28 @@ const contractAssistance = {
     }
   },
 
+  ctatAdminPanel: {
+    assignedMember: {
+      label: 'Assigned admin team member',
+      hint: 'Look up the admin team member you wish to assign this ticket to. You may look up by name or EUA ID.'
+    },
+    progressNotes: {
+      hint: 'Add any notes about your progress on this ticket. Once saved, these notes are viewable by the requester, who will receive an email update alerting them to your changes.'
+    },
+    resolution: {
+      hint: 'Document the final outcome of this ticket. Once saved, this resolution is viewable by the requester, who will receive an email update alerting them to the new resolution.'
+    },
+    saveChanges: 'Save changes',
+    success:
+      'You have updated a contract assistance ticket (<bold>{{ticketId}}</bold>).',
+    error:
+      'There was an error saving your changes. Please try again. If the error persists, please try again another time.',
+    leaveConfirm: {
+      description:
+        'You have made changes that will not be saved if you navigate away from this view.'
+    }
+  },
+
   ctatSidePanel: {
     modalHeading: 'Contract assistance ticket',
     allFieldsRequired:
