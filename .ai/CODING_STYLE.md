@@ -51,11 +51,37 @@ result, _ := someFunction()
 - Use `logger.Error` only for failures that are actionable and should trigger an alert. Use `logger.Warn` for expected or non-critical degraded states.
 
 ### 4. Logging
-- Use structured logging with `zap`.
-- Pass the logger at the **highest** level of a function chain so descendant functions can decorate it with trace context.
+
+- **Use the `logging.ILogger` interface** for all structured logging. This provides a consistent, zap-backed logging abstraction across the application.
+- **Pass the logger at the highest level** of a function chain. This allows descendant functions to decorate it with additional trace context.
+
+- **For code shared between workers and request handlers**, use the generic `logging.ChainableErrorOrWarnLogger`. This pattern allows the caller to determine whether a failure should be logged as a `Warn` (e.g., in a request context) or an `Error` (e.g., in a background job). When using this logger, call the `logger.ErrorOrWarn()` method to log failures.
+
 ```go
-// ✅ Pass logger at the top of the call chain
-func ModelPlansGetByModelPlanIDsLOADER(np sqlutils.NamedPreparer, logger *zap.Logger) { ... }
+// ✅ Standard logging with the ILogger interface
+func MyRequestHandler(logger logging.ILogger, ...) {
+    // ...
+    if err != nil {
+        // In a request handler, a failure might just be a warning.
+        logger.Warn("Non-critical failure in request", zap.Error(err))
+        return
+    }
+    // ...
+}
+
+// ✅ Advanced pattern for shared code using generics
+func AnalyzeSharedResource[T logging.ChainableErrorOrWarnLogger[T]](
+    logger T,
+    // ...
+) error {
+    // ...
+    if err != nil {
+        // Let the caller decide if this is an Error or a Warn.
+        return logger.ErrorOrWarn("Failed to analyze shared resource", err)
+    }
+    // ...
+    return nil
+}
 ```
 
 ### Go Anti-patterns to Avoid
