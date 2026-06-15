@@ -1,4 +1,7 @@
-import { GetModelPlanQuestionsQuery } from 'gql/generated/graphql';
+import {
+  CommonWaiverType,
+  GetModelPlanQuestionsQuery
+} from 'gql/generated/graphql';
 
 import {
   isTranslationFieldPropertiesWithOptions,
@@ -372,6 +375,16 @@ export const getDeepChildFields = (
   return deepFields;
 };
 
+// Category keys used by page sections; PROGRAM_MEDICARE_BES maps to the GQL enum PROGRAM_MEDICARE_BE
+const WAIVER_CATEGORY_TO_TYPE: Record<
+  'MEDICARE_PAYMENT' | 'MEDICAID_PAYMENT' | 'PROGRAM_MEDICARE_BES',
+  CommonWaiverType
+> = {
+  MEDICARE_PAYMENT: CommonWaiverType.MEDICARE_PAYMENT,
+  MEDICAID_PAYMENT: CommonWaiverType.MEDICAID_PAYMENT,
+  PROGRAM_MEDICARE_BES: CommonWaiverType.PROGRAM_MEDICARE_BE
+};
+
 export const filterSuggestedWaiversByType = (
   suggestedWaivers:
     | MedicarePaymentSuggestedWaivers
@@ -379,7 +392,8 @@ export const filterSuggestedWaiversByType = (
     | MedicaidPaymentSuggestedWaivers,
   waiverType: 'MEDICARE_PAYMENT' | 'MEDICAID_PAYMENT' | 'PROGRAM_MEDICARE_BES'
 ) => {
+  const actualType = WAIVER_CATEGORY_TO_TYPE[waiverType];
   return suggestedWaivers.filter(
-    waiver => waiver.commonWaiver.waiverType === waiverType
+    waiver => waiver.commonWaiver.waiverType === actualType
   );
 };
