@@ -19,7 +19,7 @@ func  {Entity}{Action}(np sqlutils.NamedPreparer, logger logging.ILogger, {entit
 - Always use `sqlutils.NamedPreparer` to support both direct and transactional queries.
 - Use parameterized queries to prevent SQL injection.
 - All models should embed `baseStruct`, which provides a UUID-based `ID` field.
-- SQL files are embedded via `//go:embed` in the `sqlqueries` pacakge and loaded at startup; do not construct SQL strings at runtime. Do not embed SQL directly in the `storage` pacakge
+- SQL files are embedded via `//go:embed` in the `sqlqueries` package and loaded at startup; do not construct SQL strings at runtime. Do not embed SQL directly in the `storage` package
 
 ### 2. Authentication & Authorization
 - Use the `Principal` interface for all authorization checks.

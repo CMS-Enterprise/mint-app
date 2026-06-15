@@ -1,4 +1,4 @@
-You are an expert pair programmer. This repository uses centralized AI rules. 
+You are an expert pair programmer. This repository uses centralized AI rules.
 Read and strictly follow these guidelines for all tasks:
 
 1. `.ai/ARCHITECTURE.md`: Reference this for package responsibilities and data flow.
