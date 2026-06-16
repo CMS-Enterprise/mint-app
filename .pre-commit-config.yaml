@@ -29,8 +29,10 @@ repos:
         exclude: >
           (?x)^(
             .github/PULL_REQUEST_TEMPLATE.md|
-            .github/COPILOT_INSTRUCTIONS.md|
-            .github/COPILOT_REVIEW.md|
+            .ai/ARCHITECTURE.md|
+            .ai/CODING_STYLE.md|
+            .ai/REVIEW_GUIDELINES.md|
+            .ai/TESTING_RULES.md|
             node_modules/|
             vendor
           )$
