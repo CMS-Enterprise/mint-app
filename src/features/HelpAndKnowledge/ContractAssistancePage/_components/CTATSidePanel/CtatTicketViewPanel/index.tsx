@@ -87,6 +87,7 @@ const CtatTicketViewPanel = ({
         modalHeading={t('ctatSidePanel.modalHeading')}
         footer={footer}
         fixed
+        contentScrollKey={loading ? undefined : ticketId}
       >
         {loading && <PageLoading />}
         {error && <NotFound errorMessage={error.message} />}
