@@ -11,10 +11,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // CustomTimelineDate is the resolver for the customTimelineDate field.
-func (r *queryResolver) CustomTimelineDate(ctx context.Context, id uuid.UUID) (*model.CustomTimelineDate, error) {
+func (r *queryResolver) CustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error) {
 	panic(fmt.Errorf("not implemented: CustomTimelineDate - customTimelineDate"))
 }
