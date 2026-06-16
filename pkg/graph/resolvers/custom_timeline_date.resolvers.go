@@ -18,3 +18,8 @@ import (
 func (r *queryResolver) CustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error) {
 	panic(fmt.Errorf("not implemented: CustomTimelineDate - customTimelineDate"))
 }
+
+// CustomTimelineDates is the resolver for the customTimelineDates field.
+func (r *queryResolver) CustomTimelineDates(ctx context.Context, modelPlanID uuid.UUID) ([]*models.CustomTimelineDate, error) {
+	panic(fmt.Errorf("not implemented: CustomTimelineDates - customTimelineDates"))
+}

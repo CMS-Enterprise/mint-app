@@ -24,4 +24,5 @@ type CustomTimelineDate {
 
 extend type Query {
   customTimelineDate(id: UUID!): CustomTimelineDate!
+  customTimelineDates(modelPlanID: UUID!): [CustomTimelineDate!]!
 }
