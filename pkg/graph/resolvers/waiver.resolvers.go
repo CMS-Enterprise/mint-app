@@ -6,7 +6,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -16,17 +15,19 @@ import (
 )
 
 // UpdateWaiver is the resolver for the updateWaiver field.
-func (r *mutationResolver) UpdateWaiver(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.Waiver, error) {
+func (r *mutationResolver) UpdateWaiver(ctx context.Context, modelPlanID uuid.UUID, commonWaiverID uuid.UUID, changes map[string]any) (*models.Waiver, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 
-	return WaiverUpdate(logger, id, changes, principal, r.store)
+	return WaiverUpsert(logger, modelPlanID, commonWaiverID, changes, principal, r.store)
 }
 
 // UpdateSelectedWaivers is the resolver for the updateSelectedWaivers field.
-func (r *mutationResolver) UpdateSelectedWaivers(ctx context.Context, modelPlanID uuid.UUID, changes map[string]any) ([]*models.Waiver, error) {
-	//TODO: implement this!
-	panic(fmt.Errorf("not implemented: UpdateSelectedWaivers - updateSelectedWaivers"))
+func (r *mutationResolver) UpdateSelectedWaivers(ctx context.Context, modelPlanID uuid.UUID, changes []*models.WaiverSelectionInput) ([]*models.Waiver, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return UpdateSelectedWaivers(logger, modelPlanID, changes, principal, r.store)
 }
 
 // CommonWaiver is the resolver for the commonWaiver field.

@@ -106,7 +106,13 @@ const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
               term={t('waiverInfoPanel.waiverType')}
               className="margin-bottom-0 margin-top-3"
             />
-            <DescriptionDefinition definition={waiverType} />
+            <DescriptionDefinition
+              definition={
+                waiverType
+                  ? t(`waiverInfoPanel.waiverTypeLabels.${waiverType}`)
+                  : undefined
+              }
+            />
 
             <DescriptionTerm
               term={t('waiverInfoPanel.waiverFocus')}

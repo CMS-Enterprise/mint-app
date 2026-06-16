@@ -17,8 +17,8 @@ auth:apikey {
 }
 
 body:graphql {
-  query GetAllCommonWaivers {
-    commonWaivers {
+  query GetAllCommonWaivers($modelPlanID: UUID) {
+    commonWaivers(modelPlanID: $modelPlanID) {
       id
       name
       description
@@ -30,6 +30,22 @@ body:graphql {
       hasStandardizationEffort
       hasClaimsDataOrRREGAnalysis
       isUsedInActiveModels
+      isSuggested
+      willUseWaiver
+      notUsingReason
+      isAnswered
     }
   }
+}
+
+body:graphql:vars {
+  {
+    "modelPlanID": "{{modelPlanID}}"
+  }
+}
+
+tests {
+  let responseData = res.getBody().data
+
+  bru.setVar("commonWaiverID", responseData.commonWaivers[0].id);
 }

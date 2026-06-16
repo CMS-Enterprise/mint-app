@@ -12,6 +12,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // UpdateWaiverAssessmentSurvey is the resolver for the updateWaiverAssessmentSurvey field.
@@ -29,7 +30,7 @@ func (r *waiverAssessmentSurveyResolver) Waivers(ctx context.Context, obj *model
 
 // SuggestedWaivers is the resolver for the suggestedWaivers field.
 func (r *waiverAssessmentSurveyResolver) SuggestedWaivers(ctx context.Context, obj *models.WaiverAssessmentSurvey) ([]*models.SuggestedWaiver, error) {
-	return SuggestedWaiversGetByModelPlanID(ctx, obj.ModelPlanID)
+	return loaders.SuggestedWaiver.ByModelPlanID.Load(ctx, obj.ModelPlanID)
 }
 
 // WaiverAssessmentSurvey returns generated.WaiverAssessmentSurveyResolver implementation.

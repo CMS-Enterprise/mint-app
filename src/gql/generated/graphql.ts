@@ -2254,7 +2254,10 @@ export type Mutation = {
   updatePlanPayments: PlanPayments;
   updatePlanTDL: PlanTdl;
   updatePlanTimeline: PlanTimeline;
-  /** Update multiple waivers for a model plan. */
+  /**
+   * Update multiple waivers for a model plan in a single transaction.
+   * Creates the waiver row if it does not yet exist (upsert).
+   */
   updateSelectedWaivers: Array<Waiver>;
   /** Sets the notification preferences of a user. */
   updateUserNotificationPreferences: UserNotificationPreferences;
@@ -2788,7 +2791,7 @@ export type MutationUpdatePlanTimelineArgs = {
 
 /** Mutations definition for the schema */
 export type MutationUpdateSelectedWaiversArgs = {
-  changes: Array<WaiverChanges>;
+  changes: Array<WaiverSelectionInput>;
   modelPlanID: Scalars['UUID']['input'];
 };
 
@@ -2808,7 +2811,8 @@ export type MutationUpdateUserViewCustomizationArgs = {
 /** Mutations definition for the schema */
 export type MutationUpdateWaiverArgs = {
   changes: WaiverChanges;
-  id: Scalars['UUID']['input'];
+  commonWaiverID: Scalars['UUID']['input'];
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
@@ -6127,12 +6131,10 @@ export type WaiverAssessmentSurveyTranslation = {
 
 /** The fields needed to update a model plan's decision on whether to use a specific waiver. */
 export type WaiverChanges = {
-  /** The id  of the common waiver. */
-  commonWaiverID: Scalars['UUID']['input'];
   /** What is the reason for not using the waiver? Required when willUseWaiver is false. */
   notUsingReason?: InputMaybe<Scalars['String']['input']>;
   /** Does the model plan on using the waiver? */
-  willUseWaiver: Scalars['Boolean']['input'];
+  willUseWaiver?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** This is a convenience type to wrap the info about a model */
@@ -6143,6 +6145,13 @@ export type WaiverInfo = {
   suggestedCommonWaivers: Array<CommonWaiver>;
   unusedCommonWaivers: Array<CommonWaiver>;
   waivers: Array<Waiver>;
+};
+
+/** Input for a single waiver selection in a bulk updateSelectedWaivers call. */
+export type WaiverSelectionInput = {
+  commonWaiverID: Scalars['UUID']['input'];
+  notUsingReason?: InputMaybe<Scalars['String']['input']>;
+  willUseWaiver: Scalars['Boolean']['input'];
 };
 
 export enum WaiverType {
