@@ -1,0 +1,27 @@
+"""
+The selected date type for a Custom Timeline Date.
+"""
+enum CustomTimelineDateType {
+  SINGLE
+  RANGE
+}
+
+type CustomTimelineDate {
+  id: UUID!
+  title: String!
+  description: String
+  dateType: CustomTimelineDateType!
+  startDate: Time!
+  endDate: Time
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  customTimelineDate(id: UUID!): CustomTimelineDate!
+}

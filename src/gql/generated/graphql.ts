@@ -344,6 +344,28 @@ export type CurrentUser = {
   notifications: UserNotifications;
 };
 
+export type CustomTimelineDate = {
+  __typename: 'CustomTimelineDate';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dateType: CustomTimelineDateType;
+  description?: Maybe<Scalars['String']['output']>;
+  endDate?: Maybe<Scalars['Time']['output']>;
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  startDate: Scalars['Time']['output'];
+  title: Scalars['String']['output'];
+};
+
+/** The selected date type for a Custom Timeline Date. */
+export enum CustomTimelineDateType {
+  RANGE = 'RANGE',
+  SINGLE = 'SINGLE'
+}
+
 export type DailyDigestCompleteActivityMeta = {
   __typename: 'DailyDigestCompleteActivityMeta';
   analyzedAudits: Array<AnalyzedAudit>;
@@ -4744,6 +4766,7 @@ export type Query = {
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
   currentUser: CurrentUser;
+  customTimelineDate: CustomTimelineDate;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
@@ -4798,6 +4821,12 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
+};
+
+
+/** Query definition for the schema */
+export type QueryCustomTimelineDateArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 

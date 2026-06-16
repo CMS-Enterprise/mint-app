@@ -25,6 +25,21 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
+type CustomTimelineDate struct {
+	ID                    uuid.UUID                   `json:"id"`
+	Title                 string                      `json:"title"`
+	Description           *string                     `json:"description,omitempty"`
+	DateType              CustomTimelineDateType      `json:"dateType"`
+	StartDate             time.Time                   `json:"startDate"`
+	EndDate               *time.Time                  `json:"endDate,omitempty"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
@@ -1541,6 +1556,62 @@ func (e *ContractorSupportType) UnmarshalJSON(b []byte) error {
 }
 
 func (e ContractorSupportType) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// The selected date type for a Custom Timeline Date.
+type CustomTimelineDateType string
+
+const (
+	CustomTimelineDateTypeSingle CustomTimelineDateType = "SINGLE"
+	CustomTimelineDateTypeRange  CustomTimelineDateType = "RANGE"
+)
+
+var AllCustomTimelineDateType = []CustomTimelineDateType{
+	CustomTimelineDateTypeSingle,
+	CustomTimelineDateTypeRange,
+}
+
+func (e CustomTimelineDateType) IsValid() bool {
+	switch e {
+	case CustomTimelineDateTypeSingle, CustomTimelineDateTypeRange:
+		return true
+	}
+	return false
+}
+
+func (e CustomTimelineDateType) String() string {
+	return string(e)
+}
+
+func (e *CustomTimelineDateType) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CustomTimelineDateType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CustomTimelineDateType", str)
+	}
+	return nil
+}
+
+func (e CustomTimelineDateType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *CustomTimelineDateType) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e CustomTimelineDateType) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil
