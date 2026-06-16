@@ -416,7 +416,7 @@ const CtatTicketViewContent = ({
         }
       />
 
-      {!isClosed && (
+      {!isClosed && !isAdmin && (
         <SummaryBox>
           <SummaryBoxHeading headingLevel="h3" className="margin-bottom-1">
             {t('ctatSidePanel.whatHappensNext.heading')}

@@ -252,6 +252,7 @@ describe('CtatTicketViewPanel', () => {
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Save changes' })).toBeDisabled();
     expect(screen.queryByText('Not assigned yet')).not.toBeInTheDocument();
+    expect(screen.queryByText('What happens next?')).not.toBeInTheDocument();
   });
 
   it('renders blue admin progress box for open tickets', async () => {
