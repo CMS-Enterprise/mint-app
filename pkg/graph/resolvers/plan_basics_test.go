@@ -3,10 +3,12 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -100,4 +102,122 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.EqualValues(changes["cmmiGroups"], updatedBasics.CMMIGroups)
 	suite.Nil(updatedBasics.TestInterventions)
 	suite.Nil(updatedBasics.Note)
+}
+
+// TestUpdatePlanBasics_MandatoryModelTypeClearsTimelineApplicationDates verifies that saving a mandatory
+// model type clears plan timeline application period dates (see PlanBasicsUpdate transaction behavior).
+func (suite *ResolverSuite) TestUpdatePlanBasics_MandatoryModelTypeClearsTimelineApplicationDates() {
+	plan := suite.createModelPlan("Plan mandatory clears application dates")
+
+	planTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+
+	start := time.Date(2025, 1, 10, 12, 0, 0, 0, time.UTC)
+	end := time.Date(2025, 3, 15, 12, 0, 0, 0, time.UTC)
+
+	timelineChanges := map[string]interface{}{
+		"applicationsStart": start.Format(time.RFC3339),
+		"applicationsEnd":   end.Format(time.RFC3339),
+	}
+
+	_, err = UpdatePlanTimeline(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		planTimeline.ID,
+		timelineChanges,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	planTimeline, err = PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.WithinDuration(start, *planTimeline.ApplicationsStart, 0)
+	suite.WithinDuration(end, *planTimeline.ApplicationsEnd, 0)
+
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+
+	basicsChanges := map[string]interface{}{
+		"modelType": []models.ModelType{models.MTMandatoryNational},
+		"goal":      "Goal text",
+	}
+
+	updatedBasics, err := UpdatePlanBasics(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		basics.ID,
+		basicsChanges,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+	suite.NoError(err)
+	suite.EqualValues(models.TaskInProgress, updatedBasics.Status)
+	suite.EqualValues([]models.ModelType{models.MTMandatoryNational}, models.ConvertEnums[models.ModelType](updatedBasics.ModelType))
+
+	updatedPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.Nil(updatedPlanTimeline.ApplicationsStart)
+	suite.Nil(updatedPlanTimeline.ApplicationsEnd)
+}
+
+// TestUpdatePlanBasics_VoluntaryModelTypeKeepsTimelineApplicationDates verifies that a voluntary model type
+// does not clear existing plan timeline application period dates.
+func (suite *ResolverSuite) TestUpdatePlanBasics_VoluntaryModelTypeKeepsTimelineApplicationDates() {
+	plan := suite.createModelPlan("Plan voluntary keeps application dates")
+
+	planTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+
+	start := time.Date(2024, 6, 1, 0, 0, 0, 0, time.UTC)
+	end := time.Date(2024, 12, 1, 0, 0, 0, 0, time.UTC)
+
+	timelineChanges := map[string]interface{}{
+		"applicationsStart": start.Format(time.RFC3339),
+		"applicationsEnd":   end.Format(time.RFC3339),
+	}
+
+	_, err = UpdatePlanTimeline(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		planTimeline.ID,
+		timelineChanges,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	planTimeline, err = PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.WithinDuration(start, *planTimeline.ApplicationsStart, 0)
+	suite.WithinDuration(end, *planTimeline.ApplicationsEnd, 0)
+
+	basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+
+	basicsChanges := map[string]interface{}{
+		"modelType": []models.ModelType{models.MTVoluntary},
+		"goal":      "Another goal",
+	}
+
+	updatedBasics, err := UpdatePlanBasics(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		basics.ID,
+		basicsChanges,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+	suite.NoError(err)
+	suite.EqualValues(models.TaskInProgress, updatedBasics.Status)
+	suite.EqualValues([]models.ModelType{models.MTVoluntary}, models.ConvertEnums[models.ModelType](updatedBasics.ModelType))
+
+	updatedPlanTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+	suite.NoError(err)
+	suite.WithinDuration(start, *updatedPlanTimeline.ApplicationsStart, 0)
+	suite.WithinDuration(end, *updatedPlanTimeline.ApplicationsEnd, 0)
 }

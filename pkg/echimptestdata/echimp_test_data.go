@@ -21,18 +21,23 @@ var tdlDataParquet []byte
 func SeedEChimpTestData(eChimpClient *s3.S3Client, viperConfig *viper.Viper) error {
 	crKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
 	tdlKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
-	// TODO: see if you can validate if the data is already seeded so you don't upload multiple copies
-	// Create a crReader from the embedded byte slice
-	crReader := bytes.NewReader(fsCrDataParquet)
-	tldReader := bytes.NewReader(tdlDataParquet)
-	err := eChimpClient.UploadFile(context.TODO(), crReader, crKey)
+	err := SeedCRTestData(eChimpClient, crKey)
 	if err != nil {
 		return err
 	}
-	err = eChimpClient.UploadFile(context.TODO(), tldReader, tdlKey)
-	if err != nil {
-		return err
-	}
-	return nil
 
+	return SeedTDLTestData(eChimpClient, tdlKey)
+
+}
+
+// SeedCRTestData uploads the embedded ECHIMP CR parquet data using the provided key.
+func SeedCRTestData(eChimpClient *s3.S3Client, crKey string) error {
+	crReader := bytes.NewReader(fsCrDataParquet)
+	return eChimpClient.UploadFile(context.TODO(), crReader, crKey)
+}
+
+// SeedTDLTestData uploads the embedded ECHIMP TDL parquet data using the provided key.
+func SeedTDLTestData(eChimpClient *s3.S3Client, tdlKey string) error {
+	tdlReader := bytes.NewReader(tdlDataParquet)
+	return eChimpClient.UploadFile(context.TODO(), tdlReader, tdlKey)
 }

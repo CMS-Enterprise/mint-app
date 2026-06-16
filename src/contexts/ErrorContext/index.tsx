@@ -36,6 +36,18 @@ export const useErrorMessage = (
   return useContext(ErrorMessageContext);
 };
 
+export const getStatusAlertBody = ({
+  type,
+  message
+}: {
+  type: 'success' | 'error' | 'warning';
+  message: string | React.ReactNode;
+}) => (
+  <Alert type={type} isClosable={false}>
+    {message}
+  </Alert>
+);
+
 /**
  * statusAlert
  *
@@ -55,15 +67,12 @@ export const statusAlert = ({
       ? 'Something went wrong with your request. Please try again.'
       : 'The operation was successful';
 
-  return toast[type](
-    <Alert type={type} isClosable={false}>
-      {message || generalMessage}
-    </Alert>,
-    {
-      autoClose: timeout || 5000,
-      hideProgressBar: true
-    }
-  );
+  const alertMessage = message || generalMessage;
+
+  return toast[type](getStatusAlertBody({ type, message: alertMessage }), {
+    autoClose: timeout || 5000,
+    hideProgressBar: true
+  });
 };
 
 /**

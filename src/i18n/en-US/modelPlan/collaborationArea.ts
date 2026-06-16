@@ -24,6 +24,7 @@ const collaborationArea = {
   heading: 'Model collaboration area',
   modelPlan: 'for {{modelName}}',
   errorHeading: 'Failed to fetch model plan',
+  partialErrorHeading: 'Failed to fetch some data',
   errorMessage: 'Please try again',
   switchToReadView: 'Switch to the Read View for the model',
   updateStatus: 'Update model status',
@@ -33,7 +34,7 @@ const collaborationArea = {
     heading: 'Model Plan',
     body: 'The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.',
     mostRecentEdit: 'Most recent edit on {{-date}} by ',
-    sectionsStarted: '{{-sectionsStarted}}/7 sections started',
+    sectionsStarted: '{{-sectionsStarted}}/6 sections started',
     shareButton: 'Share or export Model Plan'
   },
   teamCard: {

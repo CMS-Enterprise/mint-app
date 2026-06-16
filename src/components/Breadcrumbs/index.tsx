@@ -20,6 +20,7 @@ export enum BreadcrumbItemOptions {
   HOME_SETTINGS = 'HOME_SETTINGS',
   TASK_LIST = 'TASK_LIST',
   COLLABORATION_AREA = 'COLLABORATION_AREA',
+  TASKS = 'TASKS',
   DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
   MODEL_TO_OPERATIONS = 'MODEL_TO_OPERATIONS',
   NOTIFICATIONS = 'NOTIFICATIONS',
@@ -60,6 +61,10 @@ export const commonBreadCrumbs = (
   HOME_SETTINGS: {
     text: 'homepageSettings:heading',
     url: '/homepage-settings/form'
+  },
+  TASKS: {
+    text: 'tasks:breadcrumb',
+    url: `/models/${modelID}/collaboration-area/tasks`
   },
   TASK_LIST: {
     text: 'modelPlanTaskList:heading',

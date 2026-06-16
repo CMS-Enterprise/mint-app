@@ -149,7 +149,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                       class="margin-bottom-2"
                       role="status"
                     >
-                      Showing 1-9 of 31 results 
+                      Showing 1-9 of 32 results 
                     </div>
                   </span>
                 </div>
@@ -513,6 +513,130 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               </div>
             </li>
             <li
+              class="usa-card desktop:grid-col-4 article"
+              data-testid="article-card"
+            >
+              <div
+                class="usa-card__container radius-md shadow-2 minh-mobile padding-0"
+              >
+                <div
+                  class="display-flex flex-align-center bg-base-lightest padding-x-3 text-base-dark"
+                >
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon margin-right-05"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                   External resource
+                </div>
+                <div
+                  class="padding-x-3 padding-bottom-3 display-flex flex-column height-full"
+                >
+                  <div
+                    class="usa-card__header padding-0"
+                    data-testid="CardHeader"
+                  >
+                    <h3
+                      class="line-height-body-4 margin-bottom-1 margin-top-3"
+                    >
+                      COR Guidance and Templates
+                    </h3>
+                  </div>
+                  <a
+                    class="usa-link width-fit-content display-block "
+                    data-discover="true"
+                    href="/help-and-knowledge/articles?category=getting-started"
+                  >
+                    <span
+                      aria-label="Articles under the Getting started category"
+                      class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+                      data-testid="tag"
+                    >
+                      Getting started
+                    </span>
+                  </a>
+                  <div
+                    class="usa-card__body padding-x-0 padding-top-2"
+                    data-testid="CardBody"
+                  >
+                    <div
+                      class="truncated-text"
+                      data-testid="truncated-text"
+                    >
+                      <div
+                        class=""
+                      >
+                        For Acquisition support and guidance, visit the DCCS Contract Summary Page, which provides acquisition support ...
+                      </div>
+                      <button
+                        aria-controls="COR_GUIDANCE_AND_TEMPLATES"
+                        aria-expanded="true"
+                        class="usa-button usa-button--unstyled display-flex flex-align-center margin-top-1"
+                        data-testid="button"
+                        type="button"
+                      >
+                        Read more
+                        <svg
+                          aria-label="expand"
+                          class="usa-icon"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
+                    data-testid="CardFooter"
+                  >
+                    <button
+                      class="usa-button usa-button usa-button--outline"
+                      data-testid="button"
+                      type="button"
+                    >
+                      <span
+                        class="display-flex flex-align-center line-height-normal"
+                        style="column-gap: 0.25rem;"
+                      >
+                        View on SharePoint
+                        <svg
+                          aria-label="launch"
+                          class="usa-icon"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                          />
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li
               class="usa-card desktop:grid-col-4 article article-card--isLink"
               data-testid="article-card"
             >
@@ -792,58 +916,6 @@ exports[`The AllArticles component > matches snapshot 1`] = `
                 </div>
               </div>
             </li>
-            <li
-              class="usa-card desktop:grid-col-4 article article-card--isLink"
-              data-testid="article-card"
-            >
-              <div
-                class="usa-card__container radius-md shadow-2 minh-mobile padding-3"
-              >
-                <div
-                  class="usa-card__header padding-0"
-                  data-testid="CardHeader"
-                >
-                  <h3
-                    class="line-height-body-4 margin-bottom-1"
-                  >
-                    How to add a custom milestone
-                  </h3>
-                </div>
-                <a
-                  class="usa-link width-fit-content display-block "
-                  data-discover="true"
-                  href="/help-and-knowledge/articles?category=mto-tutorials"
-                >
-                  <span
-                    aria-label="Articles under the MINT tutorials category"
-                    class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-                    data-testid="tag"
-                  >
-                    MINT tutorials
-                  </span>
-                </a>
-                <div
-                  class="usa-card__body padding-x-0 article__body padding-top-2"
-                  data-testid="CardBody"
-                >
-                  <p>
-                    MINT encourages users to leverage the common milestones available in the milestone library, but the unique needs of individual models often necessitate the creation of custom milestones for a given model. Custom milestones and IT milestones allow IT Leads to identify and document system-specific milestones that align with the operational needs of the model. IT Leads can create these custom milestones directly within the model-to-Operations matrix (MTO) to ensure their model’s operational requirements are fully captured.
-                  </p>
-                </div>
-                <div
-                  class="usa-card__footer padding-x-0 padding-top-2 padding-bottom-0"
-                  data-testid="CardFooter"
-                >
-                  <button
-                    aria-label="Read How to add a custom milestone article"
-                    class="usa-button usa-button--outline"
-                    type="button"
-                  >
-                    Read
-                  </button>
-                </div>
-              </div>
-            </li>
           </ul>
           <div
             class="display-flex"
@@ -994,7 +1066,7 @@ exports[`The AllArticles component > matches snapshot 1`] = `
               <p
                 class="margin-y-1"
               >
-                9 resources
+                10 resources
               </p>
             </div>
           </div>

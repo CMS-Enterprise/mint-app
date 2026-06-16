@@ -1,0 +1,54 @@
+{{template "shared_header.html"}}
+{{template "shared_mint_mailbox_header.html" .}}
+
+<hr/>
+
+<p>{{.UserName}} updated a common milestone in the MINT milestone library.</p>
+
+<br/>
+<br/>
+
+<p><strong><u>Updated milestone</u></strong></p>
+<!-- TITLE -->
+{{if ne .PreviousTitle .NewTitle}}
+<p><strong>Title:</strong></p>
+<p class="error-text strikethrough">{{.PreviousTitle}}</p>
+<p>{{.NewTitle}}</p>
+{{end}}
+<!-- DESCRIPTION -->
+{{if ne .PreviousDescription .NewDescription}}
+<p><strong>Description:</strong></p>
+<p class="error-text strikethrough">{{.PreviousDescription}}</p>
+<p>{{.NewDescription}}</p>
+{{end}}
+<!-- CATEGORY -->
+{{if ne .PreviousCategoryAndSub .NewCategoryAndSub}}
+<p><strong>Category:</strong></p>
+<p class="error-text strikethrough">{{.PreviousCategoryAndSub}}</p>
+<p>{{.NewCategoryAndSub}}</p>
+{{end}}
+<!-- FACILITATED BY -->
+{{if ne .PreviousRoles .NewRoles}}
+<p><strong>Facilitated by:</strong></p>
+<p class="error-text strikethrough">{{.PreviousRoles}}</p>
+<p>{{.NewRoles}}</p>
+{{end}}
+<!-- COMMONLY USED SOLUTIONS -->
+{{if ne .PreviousSolutions .NewSolutions}}
+<p><strong>Commonly used solution(s):</strong></p>
+<p class="error-text strikethrough">{{.PreviousSolutions}}</p>
+<p>{{.NewSolutions}}</p>
+{{end}}
+
+<br/>
+<br/>
+
+<p><a href="{{.ClientAddress}}/help-and-knowledge/milestone-library">Go to milestone library</a></p>
+
+<br/>
+
+<hr/>
+
+<br/>
+{{template "shared_mint_mailbox_footer.html"}}
+{{template "shared_footer.html"}}

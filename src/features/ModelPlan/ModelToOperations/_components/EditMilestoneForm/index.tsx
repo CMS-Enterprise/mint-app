@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
 import {
   Controller,
   FormProvider,
@@ -38,7 +44,6 @@ import {
   MtoMilestoneResponsibleComponent,
   MtoMilestoneStatus,
   MtoRiskIndicator,
-  MtoSolution,
   MtoSolutionStatus,
   useCreateMtoMilestoneNoteMutation,
   useDeleteMtoMilestoneMutation,
@@ -65,6 +70,7 @@ import Sidepanel from 'components/Sidepanel';
 import TablePagination from 'components/TablePagination';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
+import { EditMTOSolutionContext } from 'contexts/EditMTOSolutionContext';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import useFormatMTOCategories from 'hooks/useFormatMTOCategories';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -77,6 +83,7 @@ import {
 } from 'utils/modelPlan';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
+import CompletionModal from '../CompletionModal';
 import LinkSolutionForm from '../LinkSolutionForm';
 import MilestoneNotes from '../MilestoneNotes';
 import MTORiskIndicatorTag from '../MTORiskIndicatorIcon';
@@ -113,6 +120,7 @@ type FormValues = {
 
 type TableSolutionType = {
   name: string;
+  id: string;
   status: MtoSolutionStatus;
   riskIndicator: MtoRiskIndicator;
 };
@@ -152,8 +160,12 @@ const EditMilestoneForm = ({
   const params = new URLSearchParams(location.search);
 
   const editMilestoneID = params.get('edit-milestone');
+  const sourceParam = params.get('source');
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const [isCompletionModalOpen, setIsCompletionModalOpen] =
+    useState<boolean>(false);
 
   const [unsavedChanges, setUnsavedChanges] = useState<number>(0);
 
@@ -173,6 +185,8 @@ const EditMilestoneForm = ({
   const [notesToUpdate, setNotesToUpdate] = useState<MilestoneNoteType[]>([]);
 
   const { setErrorMeta } = useErrorMessage();
+
+  const { openEditSolutionModal } = useContext(EditMTOSolutionContext);
 
   const {
     data,
@@ -219,31 +233,11 @@ const EditMilestoneForm = ({
 
   // Extracts all solutions from the query
   const allSolutions = useMemo(() => {
-    return (
-      allSolutionData?.modelPlan.mtoMatrix || {
-        __typename: 'ModelsToOperationMatrix',
-        commonSolutions: [],
-        solutions: []
-      }
-    );
+    const { commonSolutions = [], solutions = [] } =
+      allSolutionData?.modelPlan.mtoMatrix || {};
+
+    return { commonSolutions, solutions };
   }, [allSolutionData]);
-
-  // Combine all solutions from both custom and common solutions
-  const combinedSolutions = useMemo(
-    () => [
-      ...allSolutions?.solutions,
-      ...(allSolutions?.commonSolutions as MtoSolution[])
-    ],
-    [allSolutions]
-  );
-
-  // Checks to see if a solution is a custom solution by its ID
-  const isCustomSolution = useCallback(
-    (id: string) => {
-      return combinedSolutions.find(solution => solution.id === id);
-    },
-    [combinedSolutions]
-  );
 
   // Format solution for table from either a MtoCommonSolutionKey or an UUID or SolutionType
   const formatSolutionForTable = useCallback(
@@ -251,30 +245,30 @@ const EditMilestoneForm = ({
       solution: SolutionType | MtoCommonSolutionKey | string
     ): TableSolutionType => {
       if (typeof solution === 'string') {
+        const isCommonSolution = solution in MtoCommonSolutionKey;
+
+        // If common solution, find by key, otherwise find by id
+        const solutionData = allSolutions.solutions.find(({ key, id }) =>
+          isCommonSolution ? key === solution : id === solution
+        );
+
         return {
-          name: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)?.name || ''
-            : combinedSolutions.find(sol => sol.key === solution)?.name || '',
-          status: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)?.status ||
-              MtoSolutionStatus.NOT_STARTED
-            : combinedSolutions.find(sol => sol.key === solution)?.status ||
-              MtoSolutionStatus.NOT_STARTED,
-          riskIndicator: isCustomSolution(solution)
-            ? combinedSolutions.find(sol => sol.id === solution)
-                ?.riskIndicator || MtoRiskIndicator.ON_TRACK
-            : combinedSolutions.find(sol => sol.key === solution)
-                ?.riskIndicator || MtoRiskIndicator.ON_TRACK
+          name: solutionData?.name || '',
+          id: solutionData?.id || '',
+          status: solutionData?.status || MtoSolutionStatus.NOT_STARTED,
+          riskIndicator:
+            solutionData?.riskIndicator || MtoRiskIndicator.ON_TRACK
         };
       }
 
       return {
         name: solution.name || '',
+        id: solution.id,
         status: solution.status,
         riskIndicator: solution.riskIndicator || MtoRiskIndicator.ON_TRACK
       };
     },
-    [combinedSolutions, isCustomSolution]
+    [allSolutions]
   );
 
   // Common solution state
@@ -637,7 +631,13 @@ const EditMilestoneForm = ({
           // eslint-disable-next-line no-param-reassign
           submitted.current = true;
           setIsDirty(false);
-          closeModal();
+
+          if (formChanges.status === MtoMilestoneStatus.COMPLETED) {
+            setIsCompletionModalOpen(true);
+          } else {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }
         }
       });
 
@@ -729,6 +729,40 @@ const EditMilestoneForm = ({
     });
   };
 
+  const handleRemoveRiskIndicator = () => {
+    setErrorMeta({
+      overrideMessage: modelToOperationsMiscT(
+        'modal.editMilestone.errorUpdated'
+      )
+    });
+
+    updateMilestone({
+      variables: {
+        id: editMilestoneID || '',
+        changes: {
+          riskIndicator: MtoRiskIndicator.ON_TRACK
+        }
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={modelToOperationsMiscT(
+              'modal.editMilestone.successUpdated'
+            )}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+            values={{ milestone: milestone?.name }}
+          />
+        );
+
+        setIsCompletionModalOpen(false);
+        closeModal();
+      }
+    });
+  };
+
   // Set the footer of the modal to be rendered in the parent Sidepanel to allow for sticky bottom
   useEffect(() => {
     setFooter(
@@ -741,17 +775,21 @@ const EditMilestoneForm = ({
           }
           className="margin-bottom-2 margin-top-0"
         >
-          {modelToOperationsMiscT('modal.editMilestone.saveChanges')}
+          {modelToOperationsMiscT('modal.editMilestone.saveChanges', {
+            context: sourceParam || ''
+          })}
         </Button>
 
-        <Button
-          type="button"
-          disabled={isSubmitting}
-          className="bg-error margin-top-0"
-          onClick={() => setIsModalOpen(true)}
-        >
-          {modelToOperationsMiscT('modal.editMilestone.removeMilestone')}
-        </Button>
+        {!sourceParam && (
+          <Button
+            type="button"
+            disabled={isSubmitting}
+            className="bg-error margin-top-0"
+            onClick={() => setIsModalOpen(true)}
+          >
+            {modelToOperationsMiscT('modal.editMilestone.removeMilestone')}
+          </Button>
+        )}
       </div>
     );
   }, [
@@ -761,14 +799,36 @@ const EditMilestoneForm = ({
     setFooter,
     onSubmit,
     modelToOperationsMiscT,
-    unsavedChanges
+    unsavedChanges,
+    sourceParam
   ]);
 
   const columns: Column<SolutionType>[] = useMemo(
     () => [
       {
         Header: modelToOperationsMiscT('modal.editMilestone.solution'),
-        accessor: 'name'
+        accessor: 'name',
+        Cell: ({ row }: { row: Row<SolutionType> }) => {
+          return (
+            <>
+              <span className="display-block">{row.original.name}</span>
+              <Button
+                type="button"
+                unstyled
+                className="margin-top-0"
+                onClick={() => {
+                  openEditSolutionModal({
+                    selectedSolutionID: row.original.id,
+                    source: 'milestone'
+                  });
+                }}
+              >
+                {modelToOperationsMiscT('modal.editMilestone.editSolution')}
+                <Icon.ArrowForward aria-hidden />
+              </Button>
+            </>
+          );
+        }
       },
       {
         Header: modelToOperationsMiscT('modal.editMilestone.status'),
@@ -803,7 +863,7 @@ const EditMilestoneForm = ({
         }
       }
     ],
-    [modelToOperationsMiscT]
+    [modelToOperationsMiscT, openEditSolutionModal]
   );
 
   const {
@@ -880,6 +940,20 @@ const EditMilestoneForm = ({
           {modelToOperationsMiscT('modal.editMilestone.goBack')}
         </Button>
       </Modal>
+
+      {milestone && isCompletionModalOpen && (
+        <CompletionModal
+          isModalOpen={isCompletionModalOpen}
+          closeModal={() => {
+            setIsCompletionModalOpen(false);
+            closeModal();
+          }}
+          mode="milestone"
+          modelID={modelID}
+          riskIndicator={milestone.riskIndicator}
+          handleRemoveRiskIndicator={handleRemoveRiskIndicator}
+        />
+      )}
 
       {milestone && (
         <>
@@ -978,6 +1052,17 @@ const EditMilestoneForm = ({
               {milestone.name}
             </h2>
 
+            {sourceParam === 'solution' && milestone.solutions.length > 1 && (
+              <Alert type="warning" className="margin-y-4" slim>
+                {modelToOperationsMiscT(
+                  'modal.editMilestone.editMultipleSolutionsAlert',
+                  {
+                    count: milestone.solutions.length
+                  }
+                )}
+              </Alert>
+            )}
+
             <Fieldset disabled={loading} className="margin-bottom-8">
               <p className="margin-top-0 margin-bottom-3 text-base">
                 <Trans
@@ -999,7 +1084,7 @@ const EditMilestoneForm = ({
                     field: { ref, ...field },
                     fieldState: { error }
                   }) => (
-                    <FormGroup className="margin-bottom-3">
+                    <FormGroup className="margin-bottom-3" error={!!error}>
                       <Label requiredMarker htmlFor="name">
                         {mtoMilestoneT('name.label')}
                       </Label>
@@ -1008,7 +1093,12 @@ const EditMilestoneForm = ({
                         <FieldErrorMsg>{error.message}</FieldErrorMsg>
                       )}
 
-                      <TextInput {...field} ref={null} id="name" type="text" />
+                      <TextInput
+                        {...field}
+                        inputRef={ref}
+                        id="name"
+                        type="text"
+                      />
                     </FormGroup>
                   )}
                 />
@@ -1046,6 +1136,7 @@ const EditMilestoneForm = ({
                         value={formField.value || ''}
                         className="height-card"
                         id="description"
+                        ref={ref}
                       />
                     </FormGroup>
                   )}
@@ -1064,6 +1155,7 @@ const EditMilestoneForm = ({
                       checked={field.value}
                       label={mtoMilestoneT('isDraft.label')}
                       subLabel={mtoMilestoneT('isDraft.sublabel')}
+                      inputProps={{ ref }}
                     />
                   </FormGroup>
                 )}
@@ -1106,6 +1198,7 @@ const EditMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || 'default'}
                       defaultValue="default"
@@ -1164,6 +1257,7 @@ const EditMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || 'default'}
                       defaultValue="default"
@@ -1229,6 +1323,7 @@ const EditMilestoneForm = ({
                         responsibleComponentConfig.multiSelectLabel || ''
                       }
                       initialValues={watch('responsibleComponent')}
+                      inputRef={ref}
                     />
                   </FormGroup>
                 )}
@@ -1262,6 +1357,7 @@ const EditMilestoneForm = ({
                       )}
                       selectedLabel={facilitatedByConfig.multiSelectLabel || ''}
                       initialValues={watch('facilitatedBy')}
+                      inputRef={ref}
                     />
                   </FormGroup>
                 )}
@@ -1302,7 +1398,7 @@ const EditMilestoneForm = ({
 
                       <TextInput
                         {...field}
-                        ref={null}
+                        inputRef={ref}
                         id={convertCamelCaseToKebabCase('facilitatedByOther')}
                         type="text"
                         maxLength={75}
@@ -1342,6 +1438,7 @@ const EditMilestoneForm = ({
                         }}
                         defaultValue={milestone.assignedTo || ''}
                         options={modelCollaboratorsOptions}
+                        inputProps={{ ref }}
                       />
                     </FormGroup>
                   );
@@ -1382,6 +1479,7 @@ const EditMilestoneForm = ({
                     <div className="position-relative">
                       <DatePickerFormatted
                         {...field}
+                        ref={ref}
                         aria-labelledby={convertCamelCaseToKebabCase('needBy')}
                         id="milestone-need-by"
                         suppressMilliseconds
@@ -1425,6 +1523,7 @@ const EditMilestoneForm = ({
 
                     <Select
                       {...field}
+                      inputRef={ref}
                       id={convertCamelCaseToKebabCase(field.name)}
                       value={field.value || ''}
                     >
@@ -1505,158 +1604,173 @@ const EditMilestoneForm = ({
                 )}
               />
 
-              <div className="border-top-1px border-base-lighter padding-y-4">
-                <h3 className="margin-0 margin-bottom-1">
-                  {modelToOperationsMiscT(
-                    'modal.editMilestone.selectedSolutions'
-                  )}
-                </h3>
+              {sourceParam !== 'solution' && (
+                <div className="border-top-1px border-base-lighter padding-y-4">
+                  <h3 className="margin-0 margin-bottom-1">
+                    {modelToOperationsMiscT(
+                      'modal.editMilestone.selectedSolutions'
+                    )}
+                  </h3>
 
-                <p className="margin-0 margin-bottom-1">
-                  {modelToOperationsMiscT(
-                    'modal.editMilestone.selectedSolutionsCount',
-                    {
-                      count: selectedSolutions?.length || 0
-                    }
-                  )}
-                </p>
+                  <p className="margin-0 margin-bottom-1">
+                    {modelToOperationsMiscT(
+                      'modal.editMilestone.selectedSolutionsCount',
+                      {
+                        count: selectedSolutions?.length || 0
+                      }
+                    )}
+                  </p>
 
-                <Button
-                  type="button"
-                  onClick={() => {
-                    setEditSolutionsOpen(true);
-                  }}
-                  unstyled
-                  className="margin-0 display-flex"
-                >
-                  {modelToOperationsMiscT('modal.editMilestone.editSolutions')}
-                  <Icon.ArrowForward className="top-2px" aria-label="forward" />
-                </Button>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setEditSolutionsOpen(true);
+                    }}
+                    unstyled
+                    className="margin-0 display-flex"
+                  >
+                    {modelToOperationsMiscT(
+                      'modal.editMilestone.updateSelectedSolutions'
+                    )}
+                    <Icon.ArrowForward
+                      className="top-2px"
+                      aria-label="forward"
+                    />
+                  </Button>
 
-                {selectedSolutions.length === 0 ? (
-                  <Alert type="info" slim>
-                    {modelToOperationsMiscT('modal.editMilestone.noSolutions')}
-                  </Alert>
-                ) : (
-                  <>
-                    <UswdsTable
-                      bordered={false}
-                      {...getTableProps()}
-                      className="margin-top-0"
-                      fullWidth
-                    >
-                      <thead>
-                        {headerGroups.map(headerGroup => (
-                          <tr
-                            {...headerGroup.getHeaderGroupProps()}
-                            key={{ ...headerGroup.getHeaderGroupProps() }.key}
-                          >
-                            {headerGroup.headers.map(column => (
-                              <th
-                                {...column.getHeaderProps()}
-                                scope="col"
-                                key={column.id}
-                                className="padding-left-0 padding-bottom-0"
-                                style={{
-                                  width:
-                                    column.id === 'status' ? '150px' : 'auto'
+                  {selectedSolutions.length === 0 ? (
+                    <Alert type="info" slim>
+                      {modelToOperationsMiscT(
+                        'modal.editMilestone.noSolutions'
+                      )}
+                    </Alert>
+                  ) : (
+                    <>
+                      <UswdsTable
+                        bordered={false}
+                        {...getTableProps()}
+                        className="margin-top-0"
+                        fullWidth
+                      >
+                        <thead>
+                          {headerGroups.map(headerGroup => (
+                            <tr
+                              {...headerGroup.getHeaderGroupProps()}
+                              key={{ ...headerGroup.getHeaderGroupProps() }.key}
+                            >
+                              {headerGroup.headers.map(column => (
+                                <th
+                                  {...column.getHeaderProps()}
+                                  scope="col"
+                                  key={column.id}
+                                  className="padding-left-0 padding-bottom-0"
+                                  style={{
+                                    width:
+                                      column.id === 'status' ? '150px' : 'auto'
+                                  }}
+                                >
+                                  <button
+                                    className="usa-button usa-button--unstyled position-relative"
+                                    type="button"
+                                    {...column.getSortByToggleProps()}
+                                  >
+                                    {
+                                      column.render(
+                                        'Header'
+                                      ) as React.ReactElement
+                                    }
+                                    {column.canSort &&
+                                      getHeaderSortIcon(column, false)}
+                                  </button>
+                                </th>
+                              ))}
+                            </tr>
+                          ))}
+                        </thead>
+                        <tbody {...getTableBodyProps()}>
+                          {page.map((row, i) => {
+                            const { getRowProps, cells, id } = { ...row };
+
+                            prepareRow(row);
+                            return (
+                              <tr {...getRowProps()} key={id}>
+                                {cells.map(cell => {
+                                  return (
+                                    <td
+                                      {...cell.getCellProps()}
+                                      key={cell.getCellProps().key}
+                                      className="padding-left-0"
+                                    >
+                                      {
+                                        cell.render(
+                                          'Cell'
+                                        ) as React.ReactElement
+                                      }
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </UswdsTable>
+
+                      {selectedSolutions.length > 5 && (
+                        <TablePagination
+                          className="flex-justify-start margin-left-neg-05"
+                          gotoPage={gotoPage}
+                          previousPage={previousPage}
+                          nextPage={nextPage}
+                          canNextPage={canNextPage}
+                          pageIndex={state.pageIndex}
+                          pageOptions={pageOptions}
+                          canPreviousPage={canPreviousPage}
+                          pageCount={pageCount}
+                          pageSize={state.pageSize}
+                          setPageSize={setPageSize}
+                          page={[]}
+                        />
+                      )}
+
+                      <Alert type="info" slim className="margin-top-4">
+                        <Trans
+                          i18nKey={modelToOperationsMiscT(
+                            'modal.editMilestone.solutionInfo'
+                          )}
+                          components={{
+                            link1: (
+                              <Button
+                                type="button"
+                                unstyled
+                                className="usa-button--unstyled margin-0"
+                                onClick={() => {
+                                  setCloseDestination(
+                                    `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
+                                  );
                                 }}
                               >
-                                <button
-                                  className="usa-button usa-button--unstyled position-relative"
-                                  type="button"
-                                  {...column.getSortByToggleProps()}
-                                >
-                                  {
-                                    column.render(
-                                      'Header'
-                                    ) as React.ReactElement
-                                  }
-                                  {column.canSort &&
-                                    getHeaderSortIcon(column, false)}
-                                </button>
-                              </th>
-                            ))}
-                          </tr>
-                        ))}
-                      </thead>
-                      <tbody {...getTableBodyProps()}>
-                        {page.map((row, i) => {
-                          const { getRowProps, cells, id } = { ...row };
+                                {' '}
+                              </Button>
+                            )
+                          }}
+                        />
+                      </Alert>
+                    </>
+                  )}
+                </div>
+              )}
 
-                          prepareRow(row);
-                          return (
-                            <tr {...getRowProps()} key={id}>
-                              {cells.map(cell => {
-                                return (
-                                  <td
-                                    {...cell.getCellProps()}
-                                    key={cell.getCellProps().key}
-                                    className="padding-left-0"
-                                  >
-                                    {cell.render('Cell') as React.ReactElement}
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </UswdsTable>
-
-                    {selectedSolutions.length > 5 && (
-                      <TablePagination
-                        className="flex-justify-start margin-left-neg-05"
-                        gotoPage={gotoPage}
-                        previousPage={previousPage}
-                        nextPage={nextPage}
-                        canNextPage={canNextPage}
-                        pageIndex={state.pageIndex}
-                        pageOptions={pageOptions}
-                        canPreviousPage={canPreviousPage}
-                        pageCount={pageCount}
-                        pageSize={state.pageSize}
-                        setPageSize={setPageSize}
-                        page={[]}
-                      />
-                    )}
-
-                    <Alert type="info" slim className="margin-top-4">
-                      <Trans
-                        i18nKey={modelToOperationsMiscT(
-                          'modal.editMilestone.solutionInfo'
-                        )}
-                        components={{
-                          link1: (
-                            <Button
-                              type="button"
-                              unstyled
-                              className="usa-button--unstyled margin-0"
-                              onClick={() => {
-                                setCloseDestination(
-                                  `/models/${modelID}/collaboration-area/model-to-operations/matrix?view=solutions`
-                                );
-                              }}
-                            >
-                              {' '}
-                            </Button>
-                          )
-                        }}
-                      />
-                    </Alert>
-                  </>
-                )}
-              </div>
-
-              <div className="border-top-1px border-base-lighter padding-y-4">
-                <MilestoneNotes
-                  milestoneID={editMilestoneID || ''}
-                  milestoneNotes={milestoneNotes}
-                  setMilestoneNotes={setMilestoneNotes}
-                  selectedMilestoneNote={selectedMilestoneNote}
-                  setSelectedMilestoneNote={setSelectedMilestoneNote}
-                />
-              </div>
+              {!sourceParam && (
+                <div className="border-top-1px border-base-lighter padding-y-4">
+                  <MilestoneNotes
+                    milestoneID={editMilestoneID || ''}
+                    milestoneNotes={milestoneNotes}
+                    setMilestoneNotes={setMilestoneNotes}
+                    selectedMilestoneNote={selectedMilestoneNote}
+                    setSelectedMilestoneNote={setSelectedMilestoneNote}
+                  />
+                </div>
+              )}
             </Fieldset>
           </Form>
         </FormProvider>

@@ -261,8 +261,8 @@
     "goField": "FacilitatedByOther",
     "dbField": "facilitated_by_other",
     "label": "Please describe",
-    "exportLabel": "Milestone facilitated by (other)",
-    "sublabel": "Because you selected “Other” above, please provide a role or title.",
+    "exportLabel": "Solution facilitated by (other)",
+    "sublabel": "Because you selected “Other” above, please provide a role or group.",
     "dataType": "STRING",
     "formType": "TEXT",
     "order": 1.85

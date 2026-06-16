@@ -28,6 +28,7 @@ export default gql(/* GraphQL */ `
           categoryName
           subCategoryName
           facilitatedByRole
+          facilitatedByOther
           commonSolutions {
             key
           }

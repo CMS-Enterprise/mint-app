@@ -9,6 +9,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -154,6 +155,98 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithCategories() {
 		return item != nil && item.Name == mtoSubCatInternalFunctions
 	})
 	suite.True(foundInternalFunctions)
+}
+
+func (suite *ResolverSuite) TestMTOMilestoneCreateCommonPreservesFacilitatedByOther() {
+	actorUserID := suite.testConfigs.Principal.UserAccount.ID
+	subCategoryName := "Facilitated by other tests"
+	facilitatedByOther := "Cross-team support"
+
+	commonMilestone, err := CreateMTOCommonMilestone(
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+		"Facilitated by other common milestone test "+uuid.New().String(),
+		"Temporary common milestone used to verify facilitated by other is copied.",
+		"Operations",
+		&subCategoryName,
+		[]models.MTOFacilitator{models.MTOFacilitatorOther},
+		&facilitatedByOther,
+		[]models.MTOCommonSolutionKey{models.MTOCSKInnovation},
+		actorUserID,
+		suite.testConfigs.Principal.UserAccount.CommonName,
+	)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(commonMilestone)
+
+	var appliedMilestoneID uuid.UUID
+	suite.T().Cleanup(func() {
+		if appliedMilestoneID != uuid.Nil {
+			suite.NoError(deleteTestMTOMilestone(suite.testConfigs.Store, appliedMilestoneID))
+		}
+		suite.NoError(deleteTestMTOCommonMilestone(suite.testConfigs.Store, commonMilestone.ID))
+	})
+
+	plan := suite.createModelPlan("testing common milestone facilitated by other")
+	appliedMilestone, err := MTOMilestoneCreateCommon(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+		plan.ID,
+		commonMilestone.ID,
+		[]models.MTOCommonSolutionKey{},
+	)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(appliedMilestone)
+	appliedMilestoneID = appliedMilestone.ID
+	suite.Require().NotNil(appliedMilestone.FacilitatedByOther)
+	suite.Equal(facilitatedByOther, *appliedMilestone.FacilitatedByOther)
+
+	reloadedMilestones, err := storage.MTOMilestoneGetByIDLoader(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		[]uuid.UUID{appliedMilestone.ID},
+	)
+	suite.Require().NoError(err)
+	suite.Require().Len(reloadedMilestones, 1)
+	suite.Require().NotNil(reloadedMilestones[0].FacilitatedByOther)
+	suite.Equal(facilitatedByOther, *reloadedMilestones[0].FacilitatedByOther)
+
+	templatePlan := suite.createModelPlan("testing template common milestone facilitated by other")
+	tx, err := suite.testConfigs.Store.Beginx()
+	suite.Require().NoError(err)
+	defer tx.Rollback()
+
+	appliedTemplateMilestone, err := MTOMilestoneCreateCommonWithTXAllowConflicts(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Principal,
+		tx,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+		templatePlan.ID,
+		commonMilestone.ID,
+		[]models.MTOCommonSolutionKey{},
+	)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(appliedTemplateMilestone)
+	suite.Require().NotNil(appliedTemplateMilestone.FacilitatedByOther)
+	suite.Equal(facilitatedByOther, *appliedTemplateMilestone.FacilitatedByOther)
+
+	reloadedTemplateMilestones, err := storage.MTOMilestoneGetByIDLoader(
+		tx,
+		suite.testConfigs.Logger,
+		[]uuid.UUID{appliedTemplateMilestone.ID},
+	)
+	suite.Require().NoError(err)
+	suite.Require().Len(reloadedTemplateMilestones, 1)
+	suite.Require().NotNil(reloadedTemplateMilestones[0].FacilitatedByOther)
+	suite.Equal(facilitatedByOther, *reloadedTemplateMilestones[0].FacilitatedByOther)
 }
 
 // This test makes sure that you get an error if you try and create 2 milestones sourced from the same common milestone
@@ -705,4 +798,14 @@ func (suite *ResolverSuite) TestMTOMilestoneCreateCommonWithSolutionsAndEmailSer
 	if suite.NotNil(solutions[0].Key) {
 		suite.Equal(models.MTOCSKCcw, *solutions[0].Key)
 	}
+}
+
+func deleteTestMTOMilestone(np sqlutils.NamedPreparer, id uuid.UUID) error {
+	return sqlutils.ExecProcedure(
+		np,
+		`DELETE FROM mto_milestone WHERE id = :id`,
+		map[string]any{
+			"id": id,
+		},
+	)
 }

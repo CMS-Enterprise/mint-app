@@ -97,6 +97,19 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		// Create default tasks for the model plan
+		for _, key := range []models.PlanTaskKey{
+			models.PlanTaskKeyModelPlan,
+			models.PlanTaskKeyMto,
+			models.PlanTaskKeyDataExchange,
+		} {
+			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, key, models.PlanTaskStatusToDo)
+			_, err = storage.PlanTaskCreate(tx, logger, task)
+			if err != nil {
+				return nil, err
+			}
+		}
+
 		baseTaskListUser := models.NewBaseTaskListSection(userAccount.ID, createdPlan.ID)
 
 		// Create a default plan basics object
@@ -321,6 +334,8 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
+	oldStatus := existingPlan.Status
+
 	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
@@ -330,6 +345,40 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 	if err != nil {
 		return nil, err
 	}
+
+	// Plan tasks: CLEARED model status completes MODEL_PLAN and DATA_EXCHANGE tasks
+	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
+		updErr := UpdatePlanTaskStatusOnModelCleared(store, logger, retPlan.ID, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+	}
+
+	// Plan tasks: Regress DATA_EXCHANGE and MODEL_PLAN tasks if model status moves backwards from CLEARED
+	if oldStatus == models.ModelStatusCleared &&
+		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) {
+		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(store, logger, retPlan.ID, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+	}
+
+	// Plan tasks: ACTIVE model status completes MTO task
+	if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
+		updErr := UpdatePlanTaskStatusOnModelActive(store, logger, retPlan.ID, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+	}
+	// Plan tasks: Regress MTO task if model status moves backwards from ACTIVE
+	if oldStatus == models.ModelStatusActive &&
+		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusActive) {
+		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(store, logger, retPlan.ID, principal, store)
+		if updErr != nil {
+			return nil, updErr
+		}
+	}
+
 	return retPlan, err
 
 }
@@ -360,10 +409,13 @@ func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.
 }
 
 // ModelPlansWithEchimpCRAndTDLS returns all model plans that have an echimp cr or tdl associated with it
-func ModelPlansWithEchimpCRAndTDLS(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, store *storage.Store) ([]*models.ModelPlan, error) {
-	data, err := echimpcache.GetECHIMPCrAndTDLCache(echimpS3Client, viperConfig, logger)
+func ModelPlansWithEchimpCRAndTDLS(ctx context.Context, echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, store *storage.Store) ([]*models.ModelPlan, error) {
+	data, err := echimpcache.GetECHIMPCrAndTDLCache(ctx, echimpS3Client, viperConfig, logger)
 	if err != nil {
 		return nil, err
+	}
+	if data == nil {
+		return nil, nil
 	}
 
 	modelPlanIDs := maps.Keys(data.CrsAndTDLsByModelPlanID)
@@ -373,7 +425,7 @@ func ModelPlansWithEchimpCRAndTDLS(echimpS3Client *s3.S3Client, viperConfig *vip
 }
 
 // ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollection(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, principal authentication.Principal, store *storage.Store, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
+func ModelPlanCollection(ctx context.Context, echimpS3Client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger, principal authentication.Principal, store *storage.Store, filter model.ModelPlanFilter) ([]*models.ModelPlan, error) {
 	var modelPlans []*models.ModelPlan
 	var err error
 	switch filter {
@@ -382,7 +434,7 @@ func ModelPlanCollection(echimpS3Client *s3.S3Client, viperConfig *viper.Viper, 
 	case model.ModelPlanFilterCollabOnly:
 		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterWithCrTdls:
-		modelPlans, err = ModelPlansWithEchimpCRAndTDLS(echimpS3Client, viperConfig, logger, store)
+		modelPlans, err = ModelPlansWithEchimpCRAndTDLS(ctx, echimpS3Client, viperConfig, logger, store)
 	case model.ModelPlanFilterFavorited:
 		modelPlans, err = store.ModelPlanCollectionFavorited(logger, false, principal.Account().ID)
 	case model.ModelPlanFilterApproachingClearance:

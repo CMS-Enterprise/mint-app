@@ -50,7 +50,7 @@ const TaskListButton = ({
           type="button"
           disabled={disabled}
           data-testid={path}
-          className="usa-button margin-bottom-2 width-auto"
+          className="usa-button margin-bottom-0 width-auto margin-right-2"
           onClick={() =>
             navigate(`/models/${modelID}/collaboration-area/model-plan/${path}`)
           }

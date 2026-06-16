@@ -1,6 +1,5 @@
 import { MockedResponse } from '@apollo/client/testing';
-import { KeyContactCategoryType } from 'features/HelpAndKnowledge/_components/KeyContactDirectory/_components/CategoryModal';
-import { QuestionnairesType } from 'features/ModelPlan/CollaborationArea/Cards/AdditionalQuestionnairesCard';
+import { KeyContactCategoryType } from 'features/HelpAndKnowledge/KeyContactDirectory/_components/CategoryModal';
 import {
   DataExchangeApproachStatus,
   GetAllKeyContactCategoriesDocument,
@@ -18,6 +17,9 @@ import {
   GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   GetCollaborationAreaQueryVariables,
+  GetCommonSolutionsAndCategoriesDocument,
+  GetCommonSolutionsAndCategoriesQuery,
+  GetCommonSolutionsAndCategoriesQueryVariables,
   GetEchimpCrandTdlDocument,
   GetEchimpCrandTdlQuery,
   GetEchimpCrandTdlQueryVariables,
@@ -44,14 +46,16 @@ import {
 } from 'gql/generated/graphql';
 
 import { GetModelPlanBaseModelPlan } from 'contexts/ModelInfoContext';
+import { QuestionnairesType } from 'types/questionnaires';
 
 type GetFavoritesType = GetFavoritesQuery['modelPlanCollection'];
 type GetModelPlansType = GetModelPlansQuery['modelPlanCollection'];
 type GetModelPlansByStatusGroupType =
   GetModelPlansByStatusGroupQuery['modelPlansByStatusGroup'];
 
-export type EchimpCrAndTdlsType =
-  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs'][0];
+export type EchimpCrAndTdlsType = NonNullable<
+  GetEchimpCrandTdlQuery['modelPlan']['echimpCRsAndTDLs']
+>[number];
 
 export const modelID: string = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 
@@ -119,8 +123,12 @@ export const questionnairesMockData: QuestionnairesType = {
     __typename: 'PlanDataExchangeApproach',
     id: '123',
     status: DataExchangeApproachStatus.IN_PROGRESS,
-    modifiedDts: null,
-    modifiedByUserAccount: null
+    modifiedDts: '2026-03-30T18:22:08.557193Z',
+    modifiedByUserAccount: {
+      __typename: 'UserAccount',
+      id: '123',
+      commonName: 'Test Mint'
+    }
   },
   iddocQuestionnaire: {
     __typename: 'IDDOCQuestionnaire',
@@ -182,6 +190,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
   id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
   status: ModelStatus.PLAN_DRAFT,
   taskListStatus: TaskStatus.IN_PROGRESS,
+  tasks: [],
   modelName: 'Test',
   createdDts: '2022-05-12T15:01:39.190679Z',
   mostRecentEdit: {
@@ -852,6 +861,35 @@ export const keyContactsMock: MockedResponse<
       data: {
         __typename: 'Query',
         keyContacts: keyContactsMockData
+      }
+    }
+  }
+];
+
+export const commonSolutionsAndCategoriesMock: MockedResponse<
+  GetCommonSolutionsAndCategoriesQuery,
+  GetCommonSolutionsAndCategoriesQueryVariables
+>[] = [
+  {
+    request: {
+      query: GetCommonSolutionsAndCategoriesDocument
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        mtoCommonSolutions: [],
+        commonCategories: [
+          {
+            __typename: 'CommonCategory',
+            name: 'Category 1',
+            subCategories: ['Subcategory 1', 'Subcategory 2']
+          },
+          {
+            __typename: 'CommonCategory',
+            name: 'Category 2',
+            subCategories: []
+          }
+        ]
       }
     }
   }

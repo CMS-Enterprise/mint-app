@@ -135,13 +135,6 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                         In progress
                       </span>
                     </div>
-                    <div
-                      class="additional-questionnaires-list__last-updated-status line-height-body-4 text-base"
-                    >
-                      <p
-                        class="margin-y-0"
-                      />
-                    </div>
                   </span>
                 </div>
                 <div
@@ -152,15 +145,53 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                   >
                     After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you'll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.
                   </p>
+                  <p
+                    class="margin-top-0"
+                  >
+                    Responsible team member: IT Lead (with assistance from other team members)
+                  </p>
                 </div>
-                <button
-                  aria-label="Continue data exchange approach"
-                  class="usa-button usa-button margin-bottom-0 width-auto"
-                  data-testid="data-exchange-approach-button"
-                  type="button"
+                <div
+                  class="display-flex flex-align-center margin-top-1 margin-bottom-2"
+                  data-testid="most-recent-edit"
                 >
-                  Continue
-                </button>
+                  <span
+                    class="text-base margin-right-1"
+                  >
+                    Most recent edit on 03/30/2026 by 
+                  </span>
+                  <div
+                    class="display-flex text-base-darkest flex-align-center"
+                  >
+                    <div
+                      class="display-flex flex-align-center flex-justify-center minw-4 circle-4 bg-green-5 margin-right-1"
+                      data-testid="avatar--basic"
+                    >
+                      TM
+                    </div>
+                    <div
+                      class="margin-y-0"
+                    >
+                      <span
+                        class=""
+                      >
+                        Test Mint
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="display-flex flex-align-center"
+                >
+                  <button
+                    aria-label="Continue data exchange approach"
+                    class="usa-button usa-button margin-bottom-0 width-auto margin-right-2"
+                    data-testid="data-exchange-approach-button"
+                    type="button"
+                  >
+                    Continue
+                  </button>
+                </div>
               </div>
             </li>
             <div
@@ -192,20 +223,6 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                         Not Needed
                       </span>
                     </div>
-                    <div
-                      class="additional-questionnaires-list__last-updated-status line-height-body-4 text-base"
-                    >
-                      <p
-                        class="margin-y-0"
-                      >
-                        Last updated
-                      </p>
-                      <p
-                        class="margin-y-0"
-                      >
-                        01/05/2026
-                      </p>
-                    </div>
                   </span>
                 </div>
                 <div
@@ -216,7 +233,15 @@ exports[`AdditionalQuestionnaires > match snapshot 1`] = `
                   >
                     As you work to complete your Model Plan and model-to-operations matrix (MTO), some of your responses may indicate the need to fill out additional, more-detailed questions about how you plan to implement and operationalize your model. As those questions become required, additional questionnaires will be unlocked in this section of the model collaboration area.
                   </p>
+                  <p
+                    class="margin-top-0 text-base-dark"
+                  >
+                    Responsible team member: IT Lead
+                  </p>
                 </div>
+                <div
+                  class="display-flex flex-align-center"
+                />
               </div>
             </li>
           </ol>

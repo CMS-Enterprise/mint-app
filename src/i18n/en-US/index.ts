@@ -26,6 +26,10 @@ import keyContact, { keyContactMisc } from './helpAndKnowledge/keyContact';
 import keyContactCategory, {
   keyContactCategoryMisc
 } from './helpAndKnowledge/keyContactCategory';
+import mtoCommonMilestone, {
+  mtoCommonMilestoneMisc
+} from './helpAndKnowledge/mtoCommonMilestone';
+import adminActions from './home/adminActions';
 import customHome from './home/customHome';
 import homepageSettings from './home/settings';
 import additionalQuestionnaires from './modelPlan/additionalQuestionnaires';
@@ -84,6 +88,7 @@ import prepareForClearance from './modelPlan/prepareForClearance';
 import replies from './modelPlan/replies';
 import solutions from './modelPlan/solutions';
 import modelPlanTaskList from './modelPlan/taskList';
+import tasks from './modelPlan/tasks';
 import tdls from './modelPlan/tdls';
 import { timeline, timelineMisc } from './modelPlan/timeline';
 import filterView from './readOnly/filterView';
@@ -114,6 +119,7 @@ const enUS = {
   collaborationArea,
   cookies,
   changeHistory,
+  adminActions,
   customHome,
   error,
   filterView,
@@ -153,6 +159,8 @@ const enUS = {
   mtoMilestone,
   mtoMilestoneNote,
   mtoMilestoneNoteMisc,
+  mtoCommonMilestone,
+  mtoCommonMilestoneMisc,
   mtoCommonSolutionContact,
   mtoCommonSolutionContactMisc,
   mtoCommonSolutionContractor,
@@ -216,7 +224,8 @@ const enUS = {
   tableAndPagination,
   termsAndConditions,
   externalLinkModal,
-  analytics
+  analytics,
+  tasks
 };
 
 export default enUS;

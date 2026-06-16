@@ -23,12 +23,12 @@ var eChimp2relatedMPID = uuid.MustParse("003032aa-4a75-49c1-8dca-91e645c4384f")
 var eEChimpModelIDS = []uuid.UUID{eChimp1relatedMPID, eChimp2relatedMPID}
 
 func (suite *ResolverSuite) TestGetEchimpCRAndTdlsByModelPlanID() {
-	result, err := GetEchimpCRAndTdlsByModelPlanID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, eChimp1relatedMPID)
+	result, err := GetEchimpCRAndTdlsByModelPlanID(context.Background(), suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, eChimp1relatedMPID)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 2)
 
-	result, err = GetEchimpCRAndTdlsByModelPlanID(suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, eChimp1relatedMPID)
+	result, err = GetEchimpCRAndTdlsByModelPlanID(context.Background(), suite.testConfigs.EChimpS3Client, suite.testConfigs.viperConfig, suite.testConfigs.Logger, eChimp1relatedMPID)
 	suite.NoError(err)
 	suite.NotNil(result)
 	suite.Len(result, 2)
@@ -42,7 +42,7 @@ func (suite *ResolverSuite) TestGetEchimpCRAndTdlsByModelPlanID() {
 		ExpectNoBucket: true,
 	}
 	realClient := s3.NewS3Client(context.TODO(), testConfig)
-	result, err = GetEchimpCRAndTdlsByModelPlanID(&realClient, suite.testConfigs.viperConfig, suite.testConfigs.Logger, eChimp1relatedMPID)
+	result, err = GetEchimpCRAndTdlsByModelPlanID(context.Background(), realClient, suite.testConfigs.viperConfig, suite.testConfigs.Logger, eChimp1relatedMPID)
 	suite.Nil(result)
 	suite.Nil(err)
 }

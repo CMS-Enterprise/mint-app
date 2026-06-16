@@ -4,7 +4,7 @@ exports[`QuestionnaireListItem > match snapshot 1`] = `
 <DocumentFragment>
   <li
     class="display-flex padding-bottom-4"
-    data-testid="questionnaire-list-item"
+    data-testid="questionnaire-list-intake-form-dataExchangeApproach"
   >
     <div
       class="width-full"
@@ -15,7 +15,7 @@ exports[`QuestionnaireListItem > match snapshot 1`] = `
         <h3
           class="margin-top-0 margin-bottom-1"
         >
-          Sample Heading
+          Data exchange approach
         </h3>
         <span
           class="display-flex flex-column flex-align-end"
@@ -28,13 +28,6 @@ exports[`QuestionnaireListItem > match snapshot 1`] = `
               Ready to start
             </span>
           </div>
-          <div
-            class="additional-questionnaires-list__last-updated-status line-height-body-4 text-base"
-          >
-            <p
-              class="margin-y-0"
-            />
-          </div>
         </span>
       </div>
       <div
@@ -43,7 +36,12 @@ exports[`QuestionnaireListItem > match snapshot 1`] = `
         <p
           class="margin-top-0"
         >
-          Sample Description
+          After your 6-page concept paper is approved, work with your IT Lead or Solution Architect (or reach out to the MINT Team if one still needs to be assigned) to determine how you'll exchange data so that we can help with new policy or technology opportunities. You should also include your data exchange approach in your ICIP.
+        </p>
+        <p
+          class="margin-top-0"
+        >
+          Responsible team member: IT Lead (with assistance from other team members)
         </p>
       </div>
     </div>

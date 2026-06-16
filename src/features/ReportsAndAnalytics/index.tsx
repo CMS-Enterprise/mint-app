@@ -25,6 +25,7 @@ import downloadAnalytics, {
   UsedAnalyticsSummaryKey
 } from 'features/ReportsAndAnalytics/util';
 import {
+  ModelShareSection,
   TableName,
   useGetAnalyticsSummaryQuery,
   useGetMtoMilestoneSummaryQuery
@@ -51,7 +52,10 @@ import { reports } from 'i18n/en-US/analytics';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { formatDateUtc } from 'utils/date';
 
-export type ReportsType = 'mtoMilestoneSummary' | 'allModels';
+export type ReportsType =
+  | 'mtoMilestoneSummary'
+  | 'allModels'
+  | 'basicModelInfo';
 
 const ReportsAndAnalytics = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -59,6 +63,8 @@ const ReportsAndAnalytics = () => {
 
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
+
+  const sortedReports = Object.keys(reports).sort((a, b) => a.localeCompare(b));
 
   // Responsive margins and height for the chart
   const chartMargins = useMemo(() => {
@@ -176,7 +182,7 @@ const ReportsAndAnalytics = () => {
         <CardGroup className="padding-x-1 margin-y-4">
           <Grid desktop={{ col: 12 }}>
             <Grid row gap={1}>
-              {Object.keys(reports).map(reportKey => (
+              {sortedReports.map(reportKey => (
                 <Grid desktop={{ col: 4 }} tablet={{ col: 6 }} key={reportKey}>
                   <Card
                     containerProps={{
@@ -214,7 +220,9 @@ const ReportsAndAnalytics = () => {
                               'MINT-MTO_Milestone_Summary.xlsx'
                             );
                           } else if (reportKey === 'allModels') {
-                            fetchAllData();
+                            fetchAllData(ModelShareSection.ALL);
+                          } else if (reportKey === 'basicModelInfo') {
+                            fetchAllData('basicModelInfo');
                           }
                         }}
                       >

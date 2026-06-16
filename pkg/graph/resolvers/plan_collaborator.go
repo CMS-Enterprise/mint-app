@@ -167,8 +167,11 @@ func PlanCollaboratorGetByID(ctx context.Context, id uuid.UUID) (*models.PlanCol
 	return loaders.PlanCollaborators.ByID.Load(ctx, id)
 }
 
-// IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.
-func IsPlanCollaborator(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
-	// Future Enhancement: Consider making this a dataloader.
-	return store.CheckIfCollaborator(logger, principal.Account().ID, modelPlanID)
+// IsPlanCollaborator checks if a user is a collaborator on a model plan using a DataLoader.
+func IsPlanCollaborator(ctx context.Context, userID uuid.UUID, modelPlanID uuid.UUID) (bool, error) {
+	key := storage.IsCollaboratorKey{
+		ModelPlanID: modelPlanID,
+		UserID:      userID,
+	}
+	return loaders.AccessControl.IsCollaborator.Load(ctx, key)
 }

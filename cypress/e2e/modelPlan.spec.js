@@ -139,7 +139,7 @@ describe('The Model Plan Form', () => {
       );
     });
 
-    cy.get('.model-plan-task-list__last-updated-status').should('be.visible');
+    cy.get('[data-testid="most-recent-edit"]').should('be.visible');
 
     cy.get('[data-testid="tasklist-tag"]').first().contains('In progress');
 

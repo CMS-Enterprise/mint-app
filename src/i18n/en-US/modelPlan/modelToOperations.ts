@@ -289,9 +289,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       }
     },
     editMilestone: {
-      milestoneTitle: 'Milestone details',
+      heading: 'Milestone details',
+      heading_solution: 'Back to solution details',
       readviewDescription:
         'Calculate benchmarks and share information with participants so they know what standard they will be compared to for the performance period.',
+      editMultipleSolutionsAlert:
+        'This milestone is related to {{count}} solutions. Updating the status and information here will also update it for the other solutions.',
       alert: {
         info: 'Before adding this milestone, consider checking the <s>milestone library</s> to see if MINT offers a similar preset milestone.',
         success:
@@ -308,6 +311,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       ],
       custom: 'Custom',
       saveChanges: 'Save changes',
+      saveChanges_solution: 'Save and return to solution details',
       save: 'Save',
       unsavedChanges: '{{count}} unsaved change',
       unsavedChanges_other: '{{count}} unsaved changes',
@@ -335,8 +339,10 @@ export const modelToOperationsMisc: Record<string, any> = {
       successRemoved: 'Your milestone ({{milestone}}) has been removed.',
       errorRemoved:
         'There was an error removing your milestone. Please try again. If the error persists, please try again another time.',
-      leaveConfim: {
+      leaveConfirm: {
         heading: 'Are you sure you want to leave?',
+        heading_solution:
+          'Are you sure you want to return to solution details?',
         description:
           'You have made changes that will not be saved if you navigate away from this view.',
         confirm: 'Leave without saving',
@@ -347,12 +353,13 @@ export const modelToOperationsMisc: Record<string, any> = {
         '{{count}} solutions associated with this milestone',
       selectedSolutionsCount_other:
         '{{count}} solution associated with this milestone',
-      editSolutions: 'Edit solutions',
+      updateSelectedSolutions: 'Update selected solutions',
       noSolutions:
         'You haven’t selected any solutions or IT systems to implement this milestone.',
       noSolutionsTable:
         'There are no solutions or IT systems selected to implement this milestone.',
       solution: 'Solution',
+      editSolution: 'Edit solution',
       status: 'Status',
       selectedSolutionCount_other: '{{count}} selected solutions',
       selectedSolutionCount: '{{count}} selected solution',
@@ -373,8 +380,11 @@ export const modelToOperationsMisc: Record<string, any> = {
         'To view more information about the solutions associated with this milestone, navigate to the <link1>“Solutions and IT systems” tab</link1> in your MTO. From there you may edit details about the solutions, including the status.'
     },
     editSolution: {
-      solutionTitle: 'Solution details',
+      heading: 'Solution details',
+      heading_milestone: 'Back to milestone details',
       learnMore: 'Learn more about this solution',
+      editMultipleMilestonesAlert:
+        'This solution is selected for {{count}} milestones. Updating the status and information here will also update it for the other milestones.',
       label: {
         solutionTitle: 'Solution title',
         solutionType: 'Solution type'
@@ -394,6 +404,7 @@ export const modelToOperationsMisc: Record<string, any> = {
         'As opposed to common operational solutions and IT systems available in the MINT solution library, custom solutions were created by this IT Lead and model team specifically for this model. This could be because they are existing systems or solutions that are not yet available in the MINT solution library, or because they are completely custom implementation solutions for this model.',
       custom: 'Custom',
       saveChanges: 'Save changes',
+      saveChanges_milestone: 'Save and return to milestone details',
       save: 'Save',
       unsavedChanges: '{{count}} unsaved change',
       unsavedChanges_other: '{{count}} unsaved changes',
@@ -420,10 +431,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       successRemoved: 'Your solution ({{solution}}) has been removed.',
       errorRemoved:
         'There was an error removing your solution. Please try again. If the error persists, please try again another time.',
-      leaveConfim: {
+      leaveConfirm: {
         heading: 'Are you sure you want to leave?',
+        heading_milestone:
+          'Are you sure you want to return to milestone details?',
         description:
-          'You have made changes that will not be saved if you navigate away from this view.',
+          'You have made changes to this solution that will not be saved if you navigate away from this view.',
         confirm: 'Leave without saving',
         dontLeave: 'Don’t leave'
       },
@@ -432,7 +445,8 @@ export const modelToOperationsMisc: Record<string, any> = {
         '{{count}} milestone associated with this solution',
       selectedMilestonesCount_other:
         '{{count}} milestones associated with this solution',
-      editMilestones: 'Edit related milestones',
+      updateMilestones: 'Update related milestones',
+      editMilestone: 'Edit milestone',
       noMilestones:
         'You haven’t identified any specific milestones that this solution will help implement.',
       milestone: 'Milestone',
@@ -455,6 +469,27 @@ export const modelToOperationsMisc: Record<string, any> = {
       backToSolution: 'Back to solution details',
       milestoneInfo:
         'To view more information about the milestones using this solution, navigate to the <link1>“Milestones” tab</link1> in your MTO. From there you may edit details about the milestones, including the status.'
+    },
+    completionModal: {
+      heading_milestone: 'You marked this milestone as complete!',
+      heading_solution: 'You marked this solution as complete!',
+      noRiskText_milestone:
+        'If needed, please update the status of any selected solutions by navigating to the <solutionTabLink>Solutions and IT systems tab</solutionTabLink> of your MTO to update their details or mark them as complete from within the milestone details panel.',
+      noRiskText_solution:
+        'If needed, please update the status of any selected milestones by navigating to the <milestoneTabLink>Milestones tab</milestoneTabLink> of your MTO to update their details or mark them as complete from within the solution details panel.',
+      riskText_milestone:
+        'There is a risk indicator for this milestone. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}',
+      riskText_solution:
+        'There is a risk indicator for this solution. Would you like to remove it?<br /><br />Risk indicator: {{-riskIndicator}}',
+      riskInfoAlert_milestone:
+        'If needed, please update the status of any selected solutions by navigating to the “Solutions and IT systems” tab of your MTO to update their details or mark them as complete from within the milestone details panel..',
+      riskInfoAlert_solution:
+        'If needed, please update the status of any selected milestones by navigating to the “Milestones” tab of your MTO to update their details or mark them as complete from within the solution details panel.',
+      cta: {
+        okay: 'Okay',
+        removeRiskIndicator: 'Remove risk indicator',
+        dontRemoveRiskIndicator: 'Don’t remove indicator'
+      }
     },
     solution: {
       title: 'Add a new solution',

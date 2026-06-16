@@ -4,7 +4,9 @@ import { waitFor } from '@testing-library/react';
 import { collaborationAreaData } from 'tests/mock/general';
 import setup from 'tests/util';
 
-import ModelPlanCard, { getLastModifiedSection } from './index';
+import { getLastModifiedSection } from '../../_utils/modelPlanSectionUtils';
+
+import ModelPlanCard from './index';
 
 const modelID: string = 'ce3405a0-3399-4e3a-88d7-3cfc613d2905';
 

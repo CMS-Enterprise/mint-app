@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CommonMilestoneActions > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="margin-top-3"
+  >
+    <button
+      class="usa-button usa-button usa-button--outline margin-right-2"
+      data-testid="button"
+      type="button"
+    >
+      Edit milestone
+    </button>
+    <button
+      class="usa-button usa-button--unstyled text-error-dark deep-underline"
+      data-testid="button"
+      type="button"
+    >
+      Remove milestone
+    </button>
+  </div>
+</DocumentFragment>
+`;

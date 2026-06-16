@@ -1,0 +1,66 @@
+meta {
+  name: CreateMTO Common Milestone
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation CreateMTOCommonMilestone(
+    $name: String!
+    $description: String!
+    $categoryName: String!
+    $subCategoryName: String
+    $facilitatedByRole: [MTOFacilitator!]!
+    $facilitatedByOther: String
+    $commonSolutions: [MTOCommonSolutionKey!]!
+  ) {
+    createMTOCommonMilestone(
+      name: $name
+      description: $description
+      categoryName: $categoryName
+      subCategoryName: $subCategoryName
+      facilitatedByRole: $facilitatedByRole
+      facilitatedByOther: $facilitatedByOther
+      commonSolutions: $commonSolutions
+    ) {
+      id
+      name
+      description
+      categoryName
+      subCategoryName
+      facilitatedByRole
+      facilitatedByOther
+      section
+      isArchived
+      isAdded
+      commonSolutions {
+        key
+        name
+        type
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "name": "Test common milestone",
+    "description": "Temporary common milestone created from Bruno.",
+    "categoryName": "Operations",
+    "subCategoryName": "Set up operations",
+    "facilitatedByRole": ["OTHER"],
+    "facilitatedByOther": "Cross-team support",
+    "commonSolutions": ["INNOVATION", "ACO_OS"]
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createMTOCommonMilestone;
+  bru.setVar("mtoCommonMilestoneID", responseData.id);
+}

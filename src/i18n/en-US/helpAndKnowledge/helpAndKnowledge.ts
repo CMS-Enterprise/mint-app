@@ -2530,6 +2530,7 @@ const helpArticleNames: Record<HelpArticle, string> = {
     'Regulatory sprint (waivers, safe harbors and exceptions) templates on SharePoint',
   [HelpArticle.QUALITY_VERTICAL_HEALTH_EQUITY]:
     'Quality Vertical healthy living resources on SharePoint',
+  [HelpArticle.COR_GUIDANCE_AND_TEMPLATES]: 'COR Guidance and Templates',
   [HelpArticle.CREATING_MTO_MATRIX]:
     'Creating your Model-to-operations matrix (MTO) in MINT',
   [HelpArticle.STARTING_MTO]: 'Starting an MTO for a new model',
@@ -2598,6 +2599,11 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
       'Find your model’s assigned Information Systems Security Officer (ISSO) on SharePoint',
     description:
       'Use this Security and Privacy SharePoint site to find the assigned ISSO for your CMMI model and learn how this privacy and security expert can support your model (and all CMMI staff!).'
+  },
+  [HelpArticle.COR_GUIDANCE_AND_TEMPLATES]: {
+    title: 'COR Guidance and Templates',
+    description:
+      'For Acquisition support and guidance, visit the DCCS Contract Summary Page, which provides acquisition support for both pre-award and post-award activities, including documents, templates, and resources.'
   }
 };
 
@@ -2642,6 +2648,7 @@ const helpAndKnowledge = {
     description:
       'The milestones in this library are common milestones that MINT suggests to teams, allowing them to select from a set of often-used milestones to more quickly fill in the model-to-operations matrix (MTO) for their model. Each common milestone has a common category, description, list of roles often responsible for completing the work, and a set of solutions and/or IT systems often used to implement the work for the milestone.',
     returnToHkc: 'Return to Help and Knowledge Center',
+    returnToHome: 'Return to MINT home',
     learnAboutThisMilestone: 'Learn about this milestone',
     filters: {
       primaryCategory: 'primary category',
@@ -2652,6 +2659,15 @@ const helpAndKnowledge = {
     noResults: {
       heading: 'There are no results that match your filters.',
       body: 'Try changing or clearing your filters to see more milestones.'
+    },
+    adminActions: {
+      title: 'Admin actions',
+      manageCommonMilestones: {
+        header: 'Manage common milestones',
+        description:
+          'Add, edit, and remove milestones from the common milestone library. This will apply to all MINT users and will affect the common milestones that model teams and IT Leads have access to when completing their MTO.',
+        cta: 'Add a milestone'
+      }
     }
   },
   operationalSolutions: 'Operational solutions',

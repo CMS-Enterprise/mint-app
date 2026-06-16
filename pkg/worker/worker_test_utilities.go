@@ -45,7 +45,7 @@ func GetDefaultTestConfigs() *TestConfigs {
 	return &tc
 }
 
-func createS3Client() s3.S3Client {
+func createS3Client() *s3.S3Client {
 	config := testhelpers.NewConfig()
 
 	s3Cfg := s3.Config{
@@ -77,7 +77,7 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.Logger = logger
 	tc.UserInfo = userInfo
 	tc.Store = store
-	tc.S3Client = &s3Client
+	tc.S3Client = s3Client
 	tc.PubSub = ps
 	tc.OktaClient = oktaClient
 

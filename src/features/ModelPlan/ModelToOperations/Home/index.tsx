@@ -62,7 +62,7 @@ const MTOHome = () => {
   const dataAvalilable: boolean = !loading || !!modelToOperationsMatrix;
 
   const suggestedMilestones =
-    modelToOperationsMatrix?.commonMilestones.filter(
+    modelToOperationsMatrix?.commonMilestones?.filter(
       obj => obj.suggested.isSuggested && !obj.isAdded
     ) || [];
 
@@ -251,8 +251,8 @@ const MTOHome = () => {
             </div>
           )}
 
-          <EditMTOMilestoneProvider>
-            <EditMTOSolutionProvider>
+          <EditMTOSolutionProvider>
+            <EditMTOMilestoneProvider>
               {currentView === 'milestones' && (
                 <>
                   {!dataAvalilable ? (
@@ -297,8 +297,8 @@ const MTOHome = () => {
                   )}
                 </>
               )}
-            </EditMTOSolutionProvider>
-          </EditMTOMilestoneProvider>
+            </EditMTOMilestoneProvider>
+          </EditMTOSolutionProvider>
         </div>
       </GridContainer>
     </>
