@@ -8,6 +8,7 @@ enum CustomTimelineDateType {
 
 type CustomTimelineDate {
   id: UUID!
+  modelPlanID: UUID!
   title: String!
   description: String
   dateType: CustomTimelineDateType!

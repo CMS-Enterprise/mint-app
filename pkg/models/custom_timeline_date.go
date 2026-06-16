@@ -20,6 +20,7 @@ var AllCustomTimelineDateType = []CustomTimelineDateType{
 
 type CustomTimelineDate struct {
 	baseStruct
+	modelPlanRelation
 
 	ID          uuid.UUID              `json:"id"`
 	Title       string                 `json:"title"`

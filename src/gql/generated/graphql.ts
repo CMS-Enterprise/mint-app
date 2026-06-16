@@ -353,6 +353,7 @@ export type CustomTimelineDate = {
   description?: Maybe<Scalars['String']['output']>;
   endDate?: Maybe<Scalars['Time']['output']>;
   id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
