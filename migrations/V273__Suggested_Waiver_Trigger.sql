@@ -11,6 +11,26 @@
 --
 -- TODO: populate common_waiver.survey_question_field once CMS provides real
 -- waiver-to-question mappings. Until then the ELSE TRUE branch suggests every waiver.
+--
+-- TODO: revisit this whole function once the final waiver-to-question configuration is
+-- in hand — this is a reasonable starting point but the shape may need to change
+-- depending on what that configuration looks like. We'll also want to test more
+-- thoroughly once every common_waiver row has a real field mapping (today only one
+-- waiver is wired up, for manual/integration testing — see waiver_suggestion_trigger_test.go).
+-- Open questions to settle once the config exists:
+--   1. Is each waiver suggested by exactly one survey question (1:1), or can a waiver's
+--      suggestion depend on multiple fields/questions? If the latter, a single
+--      survey_question_field column + hstore lookup won't be enough and this will need
+--      a refactor (e.g. a join table mapping a waiver to its trigger fields/conditions).
+--   2. Is "is this common_waiver suggested for this survey" logic needed anywhere else
+--      (resolvers, reports, etc.)? If so, consider splitting this into a SQL function
+--      that just computes/returns suggestion status (a view over the data), with this
+--      trigger calling that function to decide what to insert/delete, instead of
+--      duplicating the CASE logic wherever it's needed.
+--   3. Would it be simpler to split the INSERT and UPDATE handling into two separate
+--      triggers/functions (or push the initial seed onto app code) instead of one
+--      function branching on TG_OP? The MERGE itself doesn't need an INSERT-specific
+--      branch — it's only there so every common_waiver gets evaluated on first seed.
 CREATE OR REPLACE FUNCTION MANAGE_SUGGESTED_WAIVERS()
 RETURNS TRIGGER AS $body$
 DECLARE
@@ -37,6 +57,11 @@ BEGIN
             CASE
                 WHEN cw.survey_question_field IS NULL THEN TRUE
                 -- Dynamically look up the field value by name; NULL answer means still suggest
+                -- TODO: this assumes a waiver is only suggested when its mapped field is
+                -- TRUE. If some waivers should instead be suggested on FALSE (or some
+                -- other value), survey_question_field alone won't be enough — we'd need
+                -- an extra column on common_waiver (e.g. the expected/target value) to
+                -- compare against instead of hardcoding TRUE here.
                 ELSE COALESCE((h_new -> cw.survey_question_field)::BOOLEAN, TRUE)
             END AS suggested
         FROM common_waiver cw
