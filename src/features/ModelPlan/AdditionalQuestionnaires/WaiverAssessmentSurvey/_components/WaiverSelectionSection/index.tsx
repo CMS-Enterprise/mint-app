@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
@@ -7,7 +8,12 @@ import type {
   CommonWaiverType
 } from 'gql/generated/graphql';
 
-import { filterSuggestedWaiversByType } from '../../util';
+import { ExistingWaiver, WaiverSelectionForm } from 'types/waivers';
+
+import {
+  getDisplayWaiversForSection,
+  getRemainingUnusedWaivers
+} from '../../util';
 import SelectWaiverField from '../SelectWaiverField';
 import UnusedWaiversTable from '../UnusedWaiversTable';
 
@@ -15,27 +21,53 @@ type WaiverSelectionSectionProps = {
   waiverType: CommonWaiverType;
   suggestedCommonWaivers: CommonWaiverFragment[];
   unusedWaivers: CommonWaiverFragment[];
+  existingWaivers: ExistingWaiver[];
 };
 
 const WaiverSelectionSection = ({
   waiverType,
   suggestedCommonWaivers,
-  unusedWaivers
+  unusedWaivers,
+  existingWaivers
 }: WaiverSelectionSectionProps) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
   const [, setSearchParams] = useSearchParams();
+  const { setValue, watch } = useFormContext<WaiverSelectionForm>();
 
-  const filteredSuggestedWaivers = filterSuggestedWaiversByType(
-    suggestedCommonWaivers,
-    waiverType
+  const formWaivers = watch('waivers');
+
+  const displayWaivers = useMemo(
+    () =>
+      getDisplayWaiversForSection(
+        suggestedCommonWaivers,
+        unusedWaivers,
+        existingWaivers,
+        waiverType,
+        formWaivers
+      ),
+    [
+      suggestedCommonWaivers,
+      unusedWaivers,
+      existingWaivers,
+      waiverType,
+      formWaivers
+    ]
   );
 
-  const filteredUnusedWaivers = filterSuggestedWaiversByType(
-    unusedWaivers,
-    waiverType
+  const remainingUnusedWaivers = useMemo(
+    () => getRemainingUnusedWaivers(unusedWaivers, waiverType, formWaivers),
+    [unusedWaivers, waiverType, formWaivers]
   );
+
+  const handleAddUnusedWaiver = (waiver: CommonWaiverFragment) => {
+    setValue(
+      `waivers.${waiver.id}`,
+      { willUseWaiver: true, notUsingReason: '' },
+      { shouldDirty: true }
+    );
+  };
 
   return (
     <div className="margin-bottom-5">
@@ -44,7 +76,7 @@ const WaiverSelectionSection = ({
       </h3>
 
       <div className="margin-bottom-4">
-        {filteredSuggestedWaivers.map(waiver => (
+        {displayWaivers.map(waiver => (
           <div
             key={waiver.id}
             className="padding-3 border-1px border-gray-10 radius-md shadow-3 margin-bottom-2"
@@ -86,7 +118,10 @@ const WaiverSelectionSection = ({
         ))}
       </div>
 
-      <UnusedWaiversTable unusedWaivers={filteredUnusedWaivers} />
+      <UnusedWaiversTable
+        unusedWaivers={remainingUnusedWaivers}
+        onAddUnusedWaiver={handleAddUnusedWaiver}
+      />
     </div>
   );
 };

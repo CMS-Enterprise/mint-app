@@ -1,3 +1,5 @@
+import { GetWaiversQuery } from 'gql/generated/graphql';
+
 /** A single waiver's yes/no selection and optional reason for not using it. */
 export type WaiverSelectionFields = {
   willUseWaiver: boolean | null;
@@ -8,3 +10,7 @@ export type WaiverSelectionFields = {
 export type WaiverSelectionForm = {
   waivers: Record<string, WaiverSelectionFields>;
 };
+
+/** A model plan waiver row from the GetWaivers query. */
+export type ExistingWaiver =
+  GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey']['waivers'][number];

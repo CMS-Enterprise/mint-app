@@ -10,7 +10,11 @@ import {
   isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren
 } from 'types/translation';
-import { WaiverSelectionFields, WaiverSelectionForm } from 'types/waivers';
+import {
+  ExistingWaiver,
+  WaiverSelectionFields,
+  WaiverSelectionForm
+} from 'types/waivers';
 import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 
 import {
@@ -381,6 +385,61 @@ export const filterSuggestedWaiversByType = (
   waiverType: CommonWaiverType
 ) => {
   return suggestedWaivers.filter(waiver => waiver.waiverType === waiverType);
+};
+/**
+ * Merges suggested waivers with user-added waivers for display in a section.
+ */
+export const getDisplayWaiversForSection = (
+  suggestedCommonWaivers: CommonWaiverFragment[],
+  unusedCommonWaivers: CommonWaiverFragment[],
+  existingWaivers: ExistingWaiver[],
+  waiverType: CommonWaiverType,
+  formWaivers: WaiverSelectionForm['waivers']
+): CommonWaiverFragment[] => {
+  const suggested = filterSuggestedWaiversByType(
+    suggestedCommonWaivers,
+    waiverType
+  );
+  const unused = filterSuggestedWaiversByType(unusedCommonWaivers, waiverType);
+  const suggestedIds = new Set(suggested.map(waiver => waiver.id));
+
+  const addedFromUnused = unused.filter(
+    waiver => formWaivers[waiver.id]?.willUseWaiver === true
+  );
+
+  const addedFromSaved = existingWaivers
+    .filter(
+      waiver =>
+        waiver.commonWaiver.waiverType === waiverType &&
+        !suggestedIds.has(waiver.commonWaiverID)
+    )
+    .map(waiver => ({
+      __typename: 'CommonWaiver' as const,
+      id: waiver.commonWaiver.id,
+      name: waiver.commonWaiver.name,
+      waiverType: waiver.commonWaiver.waiverType
+    }));
+
+  const displayById = new Map<string, CommonWaiverFragment>();
+
+  [...suggested, ...addedFromUnused, ...addedFromSaved].forEach(waiver => {
+    displayById.set(waiver.id, waiver);
+  });
+
+  return Array.from(displayById.values());
+};
+
+/**
+ * Returns unused waivers still available for selection in the table.
+ */
+export const getRemainingUnusedWaivers = (
+  unusedCommonWaivers: CommonWaiverFragment[],
+  waiverType: CommonWaiverType,
+  formWaivers: WaiverSelectionForm['waivers']
+): CommonWaiverFragment[] => {
+  return filterSuggestedWaiversByType(unusedCommonWaivers, waiverType).filter(
+    waiver => formWaivers[waiver.id]?.willUseWaiver !== true
+  );
 };
 
 const emptyWaiverSelectionFields = (): WaiverSelectionFields => ({

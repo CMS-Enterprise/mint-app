@@ -192,6 +192,9 @@ const WaiverSelectionAndConfirmation = () => {
                     data.modelPlan.waiverInfo.suggestedCommonWaivers
                   }
                   unusedWaivers={data.modelPlan.waiverInfo.unusedCommonWaivers}
+                  existingWaivers={
+                    data.modelPlan.questionnaires.waiverAssessmentSurvey.waivers
+                  }
                 />
               ))}
 

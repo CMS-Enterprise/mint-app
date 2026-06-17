@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Column, Row, useSortBy, useTable } from 'react-table';
@@ -33,40 +33,43 @@ const LearnMoreButton = ({ waiverId }: { waiverId: string }) => {
   );
 };
 
-const IPlanToUseButton = () => {
+const AddUnusedWaiverButton = ({
+  waiver,
+  onAddUnusedWaiver
+}: {
+  waiver: CommonWaiverFragment;
+  onAddUnusedWaiver: (waiver: CommonWaiverFragment) => void;
+}) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <>
-      {/* modal goes here */}
-      <Button
-        type="button"
-        className="margin-y-0 deep-underline mint-body-normal"
-        unstyled
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
-      >
-        {waiverAssessmentSurveyMiscT(
-          'waiverSelectionAndConfirmation.iPlanToUseThisWaiver'
-        )}
-      </Button>
-    </>
+    <Button
+      type="button"
+      className="margin-y-0 deep-underline mint-body-normal"
+      unstyled
+      onClick={() => onAddUnusedWaiver(waiver)}
+    >
+      {waiverAssessmentSurveyMiscT(
+        'waiverSelectionAndConfirmation.iPlanToUseThisWaiver'
+      )}
+    </Button>
   );
 };
 
 type UnusedWaiverType = CommonWaiverFragment[][number];
 type ColumnType = UnusedWaiverType & { actions: unknown };
 
-const UnusedWaiversTable = ({
-  unusedWaivers
-}: {
+type UnusedWaiversTableProps = {
   unusedWaivers: UnusedWaiverType[];
-}) => {
+  onAddUnusedWaiver: (waiver: CommonWaiverFragment) => void;
+};
+
+const UnusedWaiversTable = ({
+  unusedWaivers,
+  onAddUnusedWaiver
+}: UnusedWaiversTableProps) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
@@ -88,13 +91,16 @@ const UnusedWaiversTable = ({
           return (
             <div className="display-flex">
               <LearnMoreButton waiverId={row.original.id} />
-              <IPlanToUseButton />
+              <AddUnusedWaiverButton
+                waiver={row.original}
+                onAddUnusedWaiver={onAddUnusedWaiver}
+              />
             </div>
           );
         }
       }
     ],
-    [waiverAssessmentSurveyMiscT]
+    [onAddUnusedWaiver, waiverAssessmentSurveyMiscT]
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -113,6 +119,10 @@ const UnusedWaiversTable = ({
       },
       useSortBy
     );
+
+  if (unusedWaivers.length === 0) {
+    return null;
+  }
 
   return (
     <div>
@@ -170,7 +180,7 @@ const UnusedWaiversTable = ({
         </thead>
 
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
+          {rows.map(row => {
             prepareRow(row);
             const { getRowProps, cells, id } = { ...row };
 
