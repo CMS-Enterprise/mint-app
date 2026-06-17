@@ -13,11 +13,6 @@ const (
 	CustomTimelineDateTypeRange  CustomTimelineDateType = "RANGE"
 )
 
-var AllCustomTimelineDateType = []CustomTimelineDateType{
-	CustomTimelineDateTypeSingle,
-	CustomTimelineDateTypeRange,
-}
-
 type CustomTimelineDate struct {
 	baseStruct
 	modelPlanRelation
