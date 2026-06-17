@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Fieldset, Form, FormGroup, Label } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
+  CommonWaiverType,
   GetProgramWaiversQuery,
   TypedUpdateWaiverAssessmentSurveyDocument,
   useGetProgramWaiversQuery
@@ -92,7 +93,7 @@ const ProgramWaivers = () => {
 
   const programSuggestedWaivers = filterSuggestedWaiversByType(
     data?.modelPlan?.waiverInfo.suggestedCommonWaivers || [],
-    'PROGRAM_MEDICARE_BES'
+    CommonWaiverType.PROGRAM_MEDICARE_BE
   );
 
   const methods = useForm<ProgramWaiversForm>({
@@ -125,13 +126,13 @@ const ProgramWaivers = () => {
   return (
     <div className="mint-body-normal">
       <FormHeader
-        header={waiverAssessmentSurveyMiscT('programWaivers.heading')}
+        header={waiverAssessmentSurveyMiscT('PROGRAM_MEDICARE_BE.heading')}
         currentPage={4}
         totalPages={7}
       />
 
       <p className="margin-top-neg-1 margin-bottom-4 text-base-dark">
-        {waiverAssessmentSurveyMiscT('programWaivers.description')}
+        {waiverAssessmentSurveyMiscT('PROGRAM_MEDICARE_BE.description')}
       </p>
 
       <div className="tablet:grid-col-6">
@@ -198,7 +199,7 @@ const ProgramWaivers = () => {
                 selectedWaivers={programSuggestedWaivers || []}
                 waiverType="PROGRAM_MEDICARE_BES"
                 waiverTypeText={waiverAssessmentSurveyMiscT(
-                  'programWaivers.waiverTypeText'
+                  'PROGRAM_MEDICARE_BE.waiverTypeText'
                 )}
               />
 

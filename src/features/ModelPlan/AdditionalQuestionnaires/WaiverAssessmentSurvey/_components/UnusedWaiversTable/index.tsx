@@ -1,34 +1,35 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import { Column, Row, useSortBy, useTable } from 'react-table';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import { SuggestedCommonWaiverFragment } from 'gql/generated/graphql';
 
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
-const LearnMoreButton = () => {
+const LearnMoreButton = ({ waiverId }: { waiverId: string }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [, setSearchParams] = useSearchParams();
 
   return (
-    <>
-      {/* modal goes here */}
-      <Button
-        type="button"
-        className="margin-y-0 margin-right-3 deep-underline mint-body-normal"
-        unstyled
-        onClick={() => {
-          setIsModalOpen(true);
-        }}
-      >
-        {waiverAssessmentSurveyMiscT(
-          'waiverSelectionAndConfirmation.learnMoreAboutThisWaiver'
-        )}
-      </Button>
-    </>
+    <Button
+      type="button"
+      className="margin-y-0 margin-right-3 deep-underline mint-body-normal"
+      unstyled
+      onClick={() => {
+        setSearchParams(prev => {
+          const nextParams = new URLSearchParams(prev);
+          nextParams.set('waiverId', waiverId);
+          return nextParams;
+        });
+      }}
+    >
+      {waiverAssessmentSurveyMiscT(
+        'waiverSelectionAndConfirmation.learnMoreAboutThisWaiver'
+      )}
+    </Button>
   );
 };
 
@@ -86,7 +87,7 @@ const UnusedWaiversTable = ({
         Cell: ({ row }: { row: Row<ColumnType> }) => {
           return (
             <div className="display-flex">
-              <LearnMoreButton />
+              <LearnMoreButton waiverId={row.original.id} />
               <IPlanToUseButton />
             </div>
           );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
   Button,
@@ -34,8 +34,12 @@ const SelectWaiverField = ({ className }: SelectWaiverFieldProps) => {
   );
   const { t: generalT } = useTranslation('general');
 
-  const { control, setValue, register } =
-    useFormContext<WaiverSelectionFields>();
+  const { control, setValue, register } = useForm<WaiverSelectionFields>({
+    defaultValues: {
+      willUseWaiver: null,
+      notUsingReason: ''
+    }
+  });
 
   return (
     <FormGroup className={className}>

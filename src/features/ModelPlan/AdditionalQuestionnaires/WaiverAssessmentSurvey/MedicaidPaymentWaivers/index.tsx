@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Fieldset, Form, FormGroup, Label } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
+  CommonWaiverType,
   GetMedicaidPaymentWaiversQuery,
   TypedUpdateWaiverAssessmentSurveyDocument,
   useGetMedicaidPaymentWaiversQuery
@@ -92,7 +93,7 @@ const MedicaidPaymentWaivers = () => {
 
   const medicaidSuggestedWaivers = filterSuggestedWaiversByType(
     data?.modelPlan?.waiverInfo.suggestedCommonWaivers || [],
-    'MEDICAID_PAYMENT'
+    CommonWaiverType.MEDICAID_PAYMENT
   );
 
   const methods = useForm<MedicaidPaymentWaiversForm>({
@@ -125,13 +126,13 @@ const MedicaidPaymentWaivers = () => {
   return (
     <div className="mint-body-normal">
       <FormHeader
-        header={waiverAssessmentSurveyMiscT('medicaidPaymentWaivers.heading')}
+        header={waiverAssessmentSurveyMiscT('MEDICAID_PAYMENT.heading')}
         currentPage={5}
         totalPages={7}
       />
 
       <p className="margin-top-neg-1 margin-bottom-4 text-base-dark">
-        {waiverAssessmentSurveyMiscT('medicaidPaymentWaivers.description')}
+        {waiverAssessmentSurveyMiscT('MEDICAID_PAYMENT.description')}
       </p>
 
       <div className="tablet:grid-col-6">
@@ -200,7 +201,7 @@ const MedicaidPaymentWaivers = () => {
                 selectedWaivers={medicaidSuggestedWaivers || []}
                 waiverType="MEDICAID_PAYMENT"
                 waiverTypeText={waiverAssessmentSurveyMiscT(
-                  'medicaidPaymentWaivers.waiverTypeText'
+                  'MEDICAID_PAYMENT.waiverTypeText'
                 )}
               >
                 <FormGroup

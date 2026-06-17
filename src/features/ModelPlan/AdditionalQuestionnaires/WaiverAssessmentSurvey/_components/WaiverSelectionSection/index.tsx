@@ -1,50 +1,52 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
-import type { SuggestedCommonWaiverFragment } from 'gql/generated/graphql';
+import type {
+  CommonWaiverType,
+  SuggestedCommonWaiverFragment
+} from 'gql/generated/graphql';
 
 import { filterSuggestedWaiversByType } from '../../util';
-import type { WaiverAssessmentSurveyType } from '../../WaiverSelectionAndConfirmation';
+import SelectWaiverField from '../SelectWaiverField';
 import UnusedWaiversTable from '../UnusedWaiversTable';
+import WaiverInfoPanel from '../WaiverInfoPanel';
 
 const WaiverSelectionSection = ({
-  waiverHeading,
+  waiverType,
   waivers,
   suggestedCommonWaivers
 }: {
-  waiverHeading: string;
-  waivers: WaiverAssessmentSurveyType;
+  waiverType: CommonWaiverType;
+  waivers: SuggestedCommonWaiverFragment[];
   suggestedCommonWaivers: SuggestedCommonWaiverFragment[];
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
-
-  const getWaiverType = () => {
-    if (waiverHeading === 'medicarePaymentWaivers') {
-      return 'MEDICARE_PAYMENT';
-    }
-    if (waiverHeading === 'programWaivers') {
-      return 'PROGRAM_MEDICARE_BES';
-    }
-    return 'MEDICAID_PAYMENT';
-  };
+  const [, setSearchParams] = useSearchParams();
 
   const filteredWaivers = filterSuggestedWaiversByType(
     suggestedCommonWaivers,
-    getWaiverType()
+    waiverType
   );
 
   return (
     <div className="margin-bottom-5">
+      <WaiverInfoPanel
+        waiverInfo={{
+          willUseWaiver: null,
+          notUsingReason: ''
+        }}
+      />
       <h3 className="margin-top-0 margin-bottom-3">
-        {waiverAssessmentSurveyMiscT(`${waiverHeading}.heading`)}
+        {waiverAssessmentSurveyMiscT(`${waiverType}.heading`)}
       </h3>
 
       <div className="margin-bottom-4">
-        {waivers.waivers.map(waiver => (
+        {waivers.slice(0, 2).map(waiver => (
           <div
-            key={waiver.commonWaiverID}
+            key={waiver.id}
             className="padding-3 border-1px border-gray-10 radius-md shadow-3 margin-bottom-2"
           >
             <div className="margin-bottom-3">
@@ -55,26 +57,31 @@ const WaiverSelectionSection = ({
               </h5>
 
               <p className="mint-body-large margin-top-0 margin-bottom-1">
-                {waiver.commonWaiver.name}
+                {waiver.name}
               </p>
 
               <Button
                 type="button"
                 className="margin-top-0 deep-underline"
                 unstyled
-                onClick={() => {}}
+                onClick={() => {
+                  setSearchParams(prev => {
+                    const nextParams = new URLSearchParams(prev);
+                    nextParams.set('waiverId', waiver.id);
+                    return nextParams;
+                  });
+                }}
               >
                 {waiverAssessmentSurveyMiscT(
                   'waiverSelectionAndConfirmation.learnMoreAboutThisWaiver'
                 )}
                 <Icon.ArrowForward
-                  className="top-3px margin-left-1"
+                  className="margin-left-0"
                   aria-label="forward"
                 />
               </Button>
             </div>
-
-            <div>reusable Do you plan to use component goes here</div>
+            <SelectWaiverField />
           </div>
         ))}
       </div>

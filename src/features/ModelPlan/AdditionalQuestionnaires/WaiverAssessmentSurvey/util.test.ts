@@ -358,7 +358,7 @@ describe('filterSuggestedWaiversByType', () => {
 
     const medicareWaivers = filterSuggestedWaiversByType(
       mockSuggestedWaivers,
-      'MEDICARE_PAYMENT'
+      CommonWaiverType.MEDICARE_PAYMENT
     );
 
     expect(medicareWaivers).toEqual([
@@ -372,7 +372,7 @@ describe('filterSuggestedWaiversByType', () => {
 
     const programWaivers = filterSuggestedWaiversByType(
       mockSuggestedWaivers,
-      'PROGRAM_MEDICARE_BES'
+      CommonWaiverType.PROGRAM_MEDICARE_BE
     );
 
     expect(programWaivers).toEqual([
@@ -386,7 +386,7 @@ describe('filterSuggestedWaiversByType', () => {
 
     const medicaidWaivers = filterSuggestedWaiversByType(
       mockSuggestedWaivers,
-      'MEDICAID_PAYMENT'
+      CommonWaiverType.MEDICAID_PAYMENT
     );
 
     expect(medicaidWaivers).toEqual([

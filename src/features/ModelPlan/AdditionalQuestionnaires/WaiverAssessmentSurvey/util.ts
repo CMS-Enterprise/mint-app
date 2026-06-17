@@ -1,4 +1,5 @@
 import {
+  CommonWaiverType,
   GetModelPlanQuestionsQuery,
   SuggestedCommonWaiverFragment
 } from 'gql/generated/graphql';
@@ -374,7 +375,7 @@ export const getDeepChildFields = (
 
 export const filterSuggestedWaiversByType = (
   suggestedWaivers: SuggestedCommonWaiverFragment[],
-  waiverType: 'MEDICARE_PAYMENT' | 'MEDICAID_PAYMENT' | 'PROGRAM_MEDICARE_BES'
+  waiverType: CommonWaiverType
 ) => {
   return suggestedWaivers.filter(waiver => waiver.waiverType === waiverType);
 };

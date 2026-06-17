@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Fieldset, Form } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
+  CommonWaiverType,
   GetWaiversQuery,
   TypedUpdateWaiverAssessmentSurveyDocument,
   useGetWaiversQuery
@@ -23,11 +24,11 @@ import WaiverSelectionSection from '../_components/WaiverSelectionSection';
 export type WaiverAssessmentSurveyType =
   GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
-const WAIVER_HEADINGS = [
-  'medicarePaymentWaivers',
-  'programWaivers',
-  'medicaidPaymentWaivers'
-] as const;
+const ORDERED_WAIVER_TYPES = [
+  CommonWaiverType.MEDICARE_PAYMENT,
+  CommonWaiverType.PROGRAM_MEDICARE_BE,
+  CommonWaiverType.MEDICAID_PAYMENT
+];
 
 const WaiverSelectionAndConfirmation = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -115,11 +116,11 @@ const WaiverSelectionAndConfirmation = () => {
             <Fieldset>
               <ConfirmLeaveRHF />
 
-              {WAIVER_HEADINGS.map(waiverHeading => (
+              {ORDERED_WAIVER_TYPES.map(waiverType => (
                 <WaiverSelectionSection
-                  key={waiverHeading}
-                  waiverHeading={waiverHeading}
-                  waivers={data.modelPlan.questionnaires.waiverAssessmentSurvey}
+                  key={waiverType}
+                  waiverType={waiverType}
+                  waivers={data.modelPlan.waiverInfo.suggestedCommonWaivers}
                   suggestedCommonWaivers={
                     data.modelPlan.waiverInfo.suggestedCommonWaivers
                   }
