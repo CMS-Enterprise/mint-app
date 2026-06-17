@@ -1,7 +1,7 @@
 import {
+  CommonWaiverFragment,
   CommonWaiverType,
-  ModelCategory,
-  SuggestedCommonWaiverFragment
+  ModelCategory
 } from 'gql/generated/graphql';
 import { modelPlanQuestionsDataMocks } from 'tests/mock/general';
 import { describe, expect, it } from 'vitest';
@@ -335,7 +335,7 @@ describe('ModelPlanQuestions Utilities', () => {
 
 describe('filterSuggestedWaiversByType', () => {
   it('filters suggested waivers by waiver type', () => {
-    const mockSuggestedWaivers: SuggestedCommonWaiverFragment[] = [
+    const mockSuggestedWaivers: CommonWaiverFragment[] = [
       {
         __typename: 'CommonWaiver',
         id: '123',

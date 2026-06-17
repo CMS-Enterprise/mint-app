@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryBoxHeading } from '@trussworks/react-uswds';
-import type { SuggestedCommonWaiverFragment } from 'gql/generated/graphql';
+import type { CommonWaiverFragment } from 'gql/generated/graphql';
 import { useGetAllCommonWaiversQuery } from 'gql/generated/graphql';
 
 import Spinner from 'components/Spinner';
@@ -12,7 +12,7 @@ const SelectedWaiversSection = ({
   waiverTypeText,
   children
 }: {
-  selectedWaivers: SuggestedCommonWaiverFragment[];
+  selectedWaivers: CommonWaiverFragment[];
   waiverType: string;
   waiverTypeText: string;
   children?: React.ReactNode;

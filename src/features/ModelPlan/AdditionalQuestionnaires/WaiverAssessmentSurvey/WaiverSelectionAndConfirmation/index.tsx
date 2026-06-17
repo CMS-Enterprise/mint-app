@@ -116,10 +116,10 @@ const WaiverSelectionAndConfirmation = () => {
                 <WaiverSelectionSection
                   key={waiverType}
                   waiverType={waiverType}
-                  waivers={data.modelPlan.waiverInfo.suggestedCommonWaivers}
                   suggestedCommonWaivers={
                     data.modelPlan.waiverInfo.suggestedCommonWaivers
                   }
+                  unusedWaivers={data.modelPlan.waiverInfo.unusedCommonWaivers}
                 />
               ))}
 

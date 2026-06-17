@@ -1,16 +1,13 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
-import {
-  CommonWaiverType,
-  SuggestedCommonWaiverFragment
-} from 'gql/generated/graphql';
+import { CommonWaiverFragment, CommonWaiverType } from 'gql/generated/graphql';
 import { allCommonWaiversMocks } from 'tests/mock/general';
 import MockedProvider from 'tests/MockedProvider';
 
 import SelectedWaiversSection from './index';
 
-const MOCK_SELECTED_WAIVERS: SuggestedCommonWaiverFragment[] = [
+const MOCK_SELECTED_WAIVERS: CommonWaiverFragment[] = [
   {
     __typename: 'CommonWaiver',
     id: '123',

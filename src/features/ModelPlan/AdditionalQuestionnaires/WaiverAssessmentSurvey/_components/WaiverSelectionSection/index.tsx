@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import type {
-  CommonWaiverType,
-  SuggestedCommonWaiverFragment
+  CommonWaiverFragment,
+  CommonWaiverType
 } from 'gql/generated/graphql';
 
 import { filterSuggestedWaiversByType } from '../../util';
@@ -12,22 +12,29 @@ import SelectWaiverField from '../SelectWaiverField';
 import UnusedWaiversTable from '../UnusedWaiversTable';
 import WaiverInfoPanel from '../WaiverInfoPanel';
 
+type WaiverSelectionSectionProps = {
+  waiverType: CommonWaiverType;
+  suggestedCommonWaivers: CommonWaiverFragment[];
+  unusedWaivers: CommonWaiverFragment[];
+};
+
 const WaiverSelectionSection = ({
   waiverType,
-  waivers,
-  suggestedCommonWaivers
-}: {
-  waiverType: CommonWaiverType;
-  waivers: SuggestedCommonWaiverFragment[];
-  suggestedCommonWaivers: SuggestedCommonWaiverFragment[];
-}) => {
+  suggestedCommonWaivers,
+  unusedWaivers
+}: WaiverSelectionSectionProps) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
   const [, setSearchParams] = useSearchParams();
 
-  const filteredWaivers = filterSuggestedWaiversByType(
+  const filteredSuggestedWaivers = filterSuggestedWaiversByType(
     suggestedCommonWaivers,
+    waiverType
+  );
+
+  const filteredUnusedWaivers = filterSuggestedWaiversByType(
+    unusedWaivers,
     waiverType
   );
 
@@ -44,7 +51,7 @@ const WaiverSelectionSection = ({
       </h3>
 
       <div className="margin-bottom-4">
-        {waivers.slice(0, 2).map(waiver => (
+        {filteredSuggestedWaivers.map(waiver => (
           <div
             key={waiver.id}
             className="padding-3 border-1px border-gray-10 radius-md shadow-3 margin-bottom-2"
@@ -86,7 +93,7 @@ const WaiverSelectionSection = ({
         ))}
       </div>
 
-      <UnusedWaiversTable unusedWaivers={filteredWaivers} />
+      <UnusedWaiversTable unusedWaivers={filteredUnusedWaivers} />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Column, Row, useSortBy, useTable } from 'react-table';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
-import { SuggestedCommonWaiverFragment } from 'gql/generated/graphql';
+import { CommonWaiverFragment } from 'gql/generated/graphql';
 
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
 
@@ -59,7 +59,7 @@ const IPlanToUseButton = () => {
   );
 };
 
-type UnusedWaiverType = SuggestedCommonWaiverFragment[][number];
+type UnusedWaiverType = CommonWaiverFragment[][number];
 type ColumnType = UnusedWaiverType & { actions: unknown };
 
 const UnusedWaiversTable = ({
