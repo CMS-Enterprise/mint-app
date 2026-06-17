@@ -1,11 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useBlocker, useNavigate, useParams } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 import { Fieldset, Form } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
   CommonWaiverType,
+  GetWaiversDocument,
   TypedUpdateSelectedWaiversDocument,
   useGetWaiversQuery
 } from 'gql/generated/graphql';
@@ -16,12 +18,15 @@ import FormHeader from 'components/FormHeader';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
-import useHandleMutation from 'hooks/useHandleMutation';
+import { useErrorMessage } from 'contexts/ErrorContext';
 import { WaiverSelectionForm } from 'types/waivers';
 
 import WaiverInfoPanel from '../_components/WaiverInfoPanel';
 import WaiverSelectionSection from '../_components/WaiverSelectionSection';
-import { buildWaiverSelectionFormValues } from '../util';
+import {
+  buildWaiverSelectionFormValues,
+  getWaiverSelectionChanges
+} from '../util';
 
 const ORDERED_WAIVER_TYPES = [
   CommonWaiverType.MEDICARE_PAYMENT,
@@ -42,6 +47,11 @@ const WaiverSelectionAndConfirmation = () => {
 
   const navigate = useNavigate();
 
+  useErrorMessage('skip', true);
+
+  const [destinationURL, setDestinationURL] = useState('');
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
   const { data, loading, error } = useGetWaiversQuery({
     variables: {
       id: modelID
@@ -59,22 +69,73 @@ const WaiverSelectionAndConfirmation = () => {
     mode: 'onChange'
   });
 
-  const {
-    handleSubmit,
-    watch,
-    formState: { defaultValues }
-  } = methods;
+  const { handleSubmit, getValues } = methods;
 
-  const { mutationError, loading: isSubmitting } = useHandleMutation(
+  const [updateSelectedWaivers, { loading: isSubmitting }] = useMutation(
     TypedUpdateSelectedWaiversDocument,
     {
-      id: modelID,
-      rhfRef: {
-        initialValues: defaultValues,
-        values: watch()
-      }
+      refetchQueries: [
+        { query: GetWaiversDocument, variables: { id: modelID } }
+      ]
     }
   );
+
+  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
+    if (isErrorModalOpen) {
+      return false;
+    }
+
+    if (nextLocation.pathname.includes('locked-task-list-section')) {
+      return false;
+    }
+
+    if (nextLocation.pathname === currentLocation.pathname) {
+      return false;
+    }
+
+    const changes = getWaiverSelectionChanges(formData, getValues());
+
+    if (changes.length === 0) {
+      return false;
+    }
+
+    updateSelectedWaivers({
+      variables: {
+        modelPlanID: modelID,
+        changes
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          setDestinationURL(nextLocation.pathname);
+          blocker?.proceed?.();
+        } else {
+          setDestinationURL(nextLocation.pathname);
+          setIsErrorModalOpen(true);
+        }
+      })
+      .catch(() => {
+        setDestinationURL(nextLocation.pathname);
+        setIsErrorModalOpen(true);
+      });
+
+    return true;
+  });
+
+  useEffect(() => {
+    if (destinationURL && !isErrorModalOpen) {
+      blocker?.proceed?.();
+    }
+  }, [destinationURL, blocker, isErrorModalOpen]);
+
+  const closeErrorModal = ({
+    clearDestination = true
+  }: { clearDestination?: boolean } = {}) => {
+    setIsErrorModalOpen(false);
+    if (clearDestination) {
+      setDestinationURL('');
+    }
+  };
 
   if (loading) {
     return <Spinner size="large" />;
@@ -105,9 +166,9 @@ const WaiverSelectionAndConfirmation = () => {
           <WaiverInfoPanel />
 
           <MutationErrorModal
-            isOpen={mutationError.isModalOpen}
-            closeModal={mutationError.closeModal}
-            url={mutationError.destinationURL}
+            isOpen={isErrorModalOpen}
+            closeModal={closeErrorModal}
+            url={destinationURL}
           />
 
           <Form
