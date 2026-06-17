@@ -6,7 +6,7 @@ import { Fieldset, Form } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
   CommonWaiverType,
-  TypedUpdateWaiverAssessmentSurveyDocument,
+  TypedUpdateSelectedWaiversDocument,
   useGetWaiversQuery
 } from 'gql/generated/graphql';
 
@@ -46,22 +46,23 @@ const WaiverSelectionAndConfirmation = () => {
     skip: !modelID
   });
 
-  const waiverAssessmentSurveyID =
-    data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id || '';
-
   const methods = useForm<any>({
     values: {},
     mode: 'onChange'
   });
 
-  const { handleSubmit, watch } = methods;
+  const {
+    handleSubmit,
+    watch,
+    formState: { defaultValues }
+  } = methods;
 
-  const { mutationError, loading: isSubmitting } = useHandleMutation<any>(
-    TypedUpdateWaiverAssessmentSurveyDocument,
+  const { mutationError, loading: isSubmitting } = useHandleMutation(
+    TypedUpdateSelectedWaiversDocument,
     {
-      id: waiverAssessmentSurveyID,
+      id: modelID,
       rhfRef: {
-        initialValues: {},
+        initialValues: defaultValues,
         values: watch()
       }
     }
