@@ -10,7 +10,6 @@ import type {
 import { filterSuggestedWaiversByType } from '../../util';
 import SelectWaiverField from '../SelectWaiverField';
 import UnusedWaiversTable from '../UnusedWaiversTable';
-import WaiverInfoPanel from '../WaiverInfoPanel';
 
 type WaiverSelectionSectionProps = {
   waiverType: CommonWaiverType;
@@ -40,12 +39,6 @@ const WaiverSelectionSection = ({
 
   return (
     <div className="margin-bottom-5">
-      <WaiverInfoPanel
-        waiverInfo={{
-          willUseWaiver: null,
-          notUsingReason: ''
-        }}
-      />
       <h3 className="margin-top-0 margin-bottom-3">
         {waiverAssessmentSurveyMiscT(`${waiverType}.heading`)}
       </h3>

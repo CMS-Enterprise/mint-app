@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,8 +17,11 @@ import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
 import useHandleMutation from 'hooks/useHandleMutation';
+import { WaiverSelectionForm } from 'types/waivers';
 
+import WaiverInfoPanel from '../_components/WaiverInfoPanel';
 import WaiverSelectionSection from '../_components/WaiverSelectionSection';
+import { buildWaiverSelectionFormValues } from '../util';
 
 const ORDERED_WAIVER_TYPES = [
   CommonWaiverType.MEDICARE_PAYMENT,
@@ -46,8 +49,13 @@ const WaiverSelectionAndConfirmation = () => {
     skip: !modelID
   });
 
-  const methods = useForm<any>({
-    values: {},
+  const formData = useMemo(
+    () => buildWaiverSelectionFormValues(data?.modelPlan),
+    [data?.modelPlan]
+  );
+
+  const methods = useForm<WaiverSelectionForm>({
+    values: formData,
     mode: 'onChange'
   });
 
@@ -94,6 +102,8 @@ const WaiverSelectionAndConfirmation = () => {
 
       <div>
         <FormProvider {...methods}>
+          <WaiverInfoPanel />
+
           <MutationErrorModal
             isOpen={mutationError.isModalOpen}
             closeModal={mutationError.closeModal}
