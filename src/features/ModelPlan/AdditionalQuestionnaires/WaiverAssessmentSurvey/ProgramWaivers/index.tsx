@@ -29,7 +29,7 @@ import { filterSuggestedWaiversByType } from '../util';
 type ProgramWaiversData =
   GetProgramWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
-export type ProgramWaiversForm = Omit<ProgramWaiversData, '__typename' | 'id'>;
+type ProgramWaiversForm = Omit<ProgramWaiversData, '__typename' | 'id'>;
 
 const defaultFormValues: ProgramWaiversForm = {
   impactsSiteOfCarePayments: null,

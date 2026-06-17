@@ -6,7 +6,6 @@ import { Fieldset, Form } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
   CommonWaiverType,
-  GetWaiversQuery,
   TypedUpdateWaiverAssessmentSurveyDocument,
   useGetWaiversQuery
 } from 'gql/generated/graphql';
@@ -20,9 +19,6 @@ import Spinner from 'components/Spinner';
 import useHandleMutation from 'hooks/useHandleMutation';
 
 import WaiverSelectionSection from '../_components/WaiverSelectionSection';
-
-export type WaiverAssessmentSurveyType =
-  GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
 const ORDERED_WAIVER_TYPES = [
   CommonWaiverType.MEDICARE_PAYMENT,

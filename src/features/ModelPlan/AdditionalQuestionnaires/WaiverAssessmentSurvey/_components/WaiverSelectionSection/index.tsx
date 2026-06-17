@@ -81,7 +81,7 @@ const WaiverSelectionSection = ({
                 />
               </Button>
             </div>
-            <SelectWaiverField />
+            <SelectWaiverField fieldPrefix={`waivers.${waiver.id}`} />
           </div>
         ))}
       </div>

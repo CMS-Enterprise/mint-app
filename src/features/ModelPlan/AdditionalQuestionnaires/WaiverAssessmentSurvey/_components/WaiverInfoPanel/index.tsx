@@ -14,16 +14,12 @@ import {
 import Divider from 'components/Divider';
 import ExternalLink from 'components/ExternalLink';
 import Sidepanel from 'components/Sidepanel';
+import { WaiverSelectionFields } from 'types/waivers';
 
 import SelectWaiverField from '../SelectWaiverField';
 
-type WaiverInfoFields = {
-  willUseWaiver: boolean | null;
-  notUsingReason: string;
-};
-
 type WaiverInfoPanelProps = {
-  waiverInfo: WaiverInfoFields;
+  waiverInfo: WaiverSelectionFields;
 };
 
 const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
@@ -61,10 +57,14 @@ const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
     isUsedInActiveModels
   } = data?.commonWaiver || {};
 
-  const methods = useForm<WaiverInfoFields>({
+  const methods = useForm<{ waivers: Record<string, WaiverSelectionFields> }>({
     defaultValues: {
-      willUseWaiver,
-      notUsingReason
+      waivers: {
+        [waiverId]: {
+          willUseWaiver,
+          notUsingReason
+        }
+      }
     }
   });
 
@@ -149,7 +149,7 @@ const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
 
           <Form className="maxw-none" onSubmit={methods.handleSubmit(() => {})}>
             <FormProvider {...methods}>
-              <SelectWaiverField />
+              <SelectWaiverField fieldPrefix={`waivers.${waiverId}`} />
             </FormProvider>
           </Form>
         </div>

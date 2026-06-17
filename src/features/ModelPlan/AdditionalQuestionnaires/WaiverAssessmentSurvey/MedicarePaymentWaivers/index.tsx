@@ -26,10 +26,10 @@ import SelectedWaiversSection from '../_components/SelectedWaiversSection';
 import WaiverSurveyQuestion from '../_components/WaiverSurveyQuestion';
 import { filterSuggestedWaiversByType } from '../util';
 
-export type MedicarePaymentWaiversData =
+type MedicarePaymentWaiversData =
   GetMedicarePaymentWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
-export type MedicarePaymentWaiversForm = Omit<
+type MedicarePaymentWaiversForm = Omit<
   MedicarePaymentWaiversData,
   '__typename' | 'id'
 >;

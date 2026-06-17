@@ -30,7 +30,7 @@ import { filterSuggestedWaiversByType } from '../util';
 type MedicaidPaymentWaiversData =
   GetMedicaidPaymentWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
-export type MedicaidPaymentWaiversForm = Omit<
+type MedicaidPaymentWaiversForm = Omit<
   MedicaidPaymentWaiversData,
   '__typename' | 'id'
 >;

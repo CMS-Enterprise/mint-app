@@ -129,7 +129,7 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
                   <dd
                     class="description-definition margin-0"
                   >
-                    Payment
+                    Medicare payment waivers
                   </dd>
                   <dt
                     class="text-bold margin-bottom-05 margin-bottom-0 margin-top-3"
@@ -196,20 +196,20 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
                     <label
                       class="usa-label"
                       data-testid="label"
-                      for="willUseWaiver-yes"
-                      id="willUseWaiverLabel"
+                      for="willUseWaiver-yes-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                      id="willUseWaiverLabel-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
                     >
                       Do you plan to use this waiver with your model?
                     </label>
                     <div
                       class="mint-help-text"
-                      id="willUseWaiverHelpText"
+                      id="willUseWaiverHelpText-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
                     >
                       Your answer to this question may reveal additional questions to be answered.
                     </div>
                     <fieldset
-                      aria-describedby="willUseWaiverHelpText"
-                      aria-labelledby="willUseWaiverLabel"
+                      aria-describedby="willUseWaiverHelpText-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                      aria-labelledby="willUseWaiverLabel-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
                       class="usa-fieldset mint-yes-no-button-group margin-top-2"
                       data-testid="fieldset"
                     >
@@ -217,15 +217,15 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
                         class="mint-yes-no-button mint-yes-no-button--yes"
                       >
                         <input
-                          data-testid="willUseWaiver-yes"
-                          id="willUseWaiver-yes"
-                          name="willUseWaiver"
+                          data-testid="willUseWaiver-yes-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                          id="willUseWaiver-yes-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                          name="waivers.15736fa3-d5d0-4c2e-a233-2a59113b9806.willUseWaiver"
                           type="radio"
                           value="true"
                         />
                         <label
                           class="usa-button"
-                          for="willUseWaiver-yes"
+                          for="willUseWaiver-yes-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
                         >
                           <svg
                             aria-hidden="true"
@@ -248,15 +248,15 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
                         class="mint-yes-no-button mint-yes-no-button--no"
                       >
                         <input
-                          data-testid="willUseWaiver-no"
-                          id="willUseWaiver-no"
-                          name="willUseWaiver"
+                          data-testid="willUseWaiver-no-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                          id="willUseWaiver-no-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                          name="waivers.15736fa3-d5d0-4c2e-a233-2a59113b9806.willUseWaiver"
                           type="radio"
                           value="false"
                         />
                         <label
                           class="usa-button"
-                          for="willUseWaiver-no"
+                          for="willUseWaiver-no-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
                         >
                           <svg
                             aria-hidden="true"
