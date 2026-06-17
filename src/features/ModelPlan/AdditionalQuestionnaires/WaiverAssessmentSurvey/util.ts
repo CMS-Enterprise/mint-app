@@ -1,13 +1,16 @@
 import {
   CommonWaiverFragment,
   CommonWaiverType,
-  GetModelPlanQuestionsQuery
+  GetModelPlanQuestionsQuery,
+  GetWaiversQuery,
+  WaiverChanges
 } from 'gql/generated/graphql';
 
 import {
   isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren
 } from 'types/translation';
+import { WaiverSelectionFields, WaiverSelectionForm } from 'types/waivers';
 import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 
 import {
@@ -378,4 +381,88 @@ export const filterSuggestedWaiversByType = (
   waiverType: CommonWaiverType
 ) => {
   return suggestedWaivers.filter(waiver => waiver.waiverType === waiverType);
+};
+
+const emptyWaiverSelectionFields = (): WaiverSelectionFields => ({
+  willUseWaiver: null,
+  notUsingReason: ''
+});
+
+/**
+ * Builds react-hook-form values for waiver selection from GetWaivers query data.
+ * Suggested waivers default to unanswered; existing waiver rows overlay saved answers.
+ */
+export const buildWaiverSelectionFormValues = (
+  modelPlan: GetWaiversQuery['modelPlan'] | undefined | null
+): WaiverSelectionForm => {
+  const waivers: Record<string, WaiverSelectionFields> = {};
+
+  modelPlan?.waiverInfo.suggestedCommonWaivers.forEach(commonWaiver => {
+    waivers[commonWaiver.id] = emptyWaiverSelectionFields();
+  });
+
+  modelPlan?.questionnaires.waiverAssessmentSurvey.waivers.forEach(waiver => {
+    waivers[waiver.commonWaiverID] = {
+      willUseWaiver: waiver.willUseWaiver ?? null,
+      notUsingReason: waiver.notUsingReason ?? ''
+    };
+  });
+
+  return { waivers };
+};
+
+const waiverSelectionFieldsChanged = (
+  initial: WaiverSelectionFields | undefined,
+  current: WaiverSelectionFields
+) => {
+  if (!initial) {
+    return true;
+  }
+
+  return (
+    initial.willUseWaiver !== current.willUseWaiver ||
+    initial.notUsingReason !== current.notUsingReason
+  );
+};
+
+/**
+ * Returns WaiverChanges entries for waivers the user has answered and modified.
+ */
+export const getWaiverSelectionChanges = (
+  initial: WaiverSelectionForm,
+  current: WaiverSelectionForm
+): WaiverChanges[] => {
+  const commonWaiverIDs = new Set([
+    ...Object.keys(initial.waivers),
+    ...Object.keys(current.waivers)
+  ]);
+
+  const changes: WaiverChanges[] = [];
+
+  commonWaiverIDs.forEach(commonWaiverID => {
+    const currentFields = current.waivers[commonWaiverID];
+
+    if (!currentFields || currentFields.willUseWaiver === null) {
+      return;
+    }
+
+    if (
+      !waiverSelectionFieldsChanged(
+        initial.waivers[commonWaiverID],
+        currentFields
+      )
+    ) {
+      return;
+    }
+
+    changes.push({
+      commonWaiverID,
+      willUseWaiver: currentFields.willUseWaiver,
+      ...(currentFields.willUseWaiver === false
+        ? { notUsingReason: currentFields.notUsingReason || null }
+        : {})
+    });
+  });
+
+  return changes;
 };

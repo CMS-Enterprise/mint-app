@@ -3,3 +3,8 @@ export type WaiverSelectionFields = {
   willUseWaiver: boolean | null;
   notUsingReason: string;
 };
+
+/** Form state for page 6 waiver selection, keyed by common waiver ID. */
+export type WaiverSelectionForm = {
+  waivers: Record<string, WaiverSelectionFields>;
+};
