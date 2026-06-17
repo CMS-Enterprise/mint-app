@@ -25,5 +25,7 @@ type CustomTimelineDate {
 
 extend type Query {
   customTimelineDate(id: UUID!): CustomTimelineDate!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   customTimelineDates(modelPlanID: UUID!): [CustomTimelineDate!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
