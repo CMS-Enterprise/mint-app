@@ -515,7 +515,6 @@ export const getWaiverSelectionChanges = (
     }
 
     changes.push({
-      commonWaiverID,
       willUseWaiver: currentFields.willUseWaiver,
       ...(currentFields.willUseWaiver === false
         ? { notUsingReason: currentFields.notUsingReason || null }

@@ -554,6 +554,11 @@ const waiverAssessmentSurveyMisc = {
     cmmiWaiverPointOfContact: 'CMMI Waiver Point Of Contact',
     noPointOfContactListed: 'No point of contact listed',
     waiverType: 'Waiver type',
+    waiverTypeLabels: {
+      MEDICARE_PAYMENT: 'Payment',
+      PROGRAM_MEDICARE_BE: 'Program',
+      MEDICAID_PAYMENT: 'Medicaid'
+    },
     waiverFocus: 'Waiver focus',
     whatIsWaived: 'What is waived?',
     hasStandardizationEffort: 'Is there a waiver standardization effort?',
