@@ -143,7 +143,7 @@ export const commonBreadCrumbs = (
   },
   STATUS: {
     text: 'modelPlanMisc:headingStatus',
-    url: `/models/${modelID}}/collaboration-area/status`
+    url: `/models/${modelID}/collaboration-area/status`
   },
   TASK_LIST: {
     text: 'modelPlanTaskList:heading',
