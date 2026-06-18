@@ -5371,6 +5371,9 @@ export type SubscriptionOnLockableSectionLocksChangedArgs = {
 export enum TableName {
   ACTIVITY = 'activity',
   ANALYZED_AUDIT = 'analyzed_audit',
+  CTAT_REQUEST = 'ctat_request',
+  CTAT_REQUEST_DOCUMENT = 'ctat_request_document',
+  CTAT_REQUEST_MODEL_PLAN_LINK = 'ctat_request_model_plan_link',
   DISCUSSION_REPLY = 'discussion_reply',
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',
