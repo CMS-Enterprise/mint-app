@@ -64,7 +64,7 @@ func CustomTimelineDateUpdate(np sqlutils.NamedPreparer, customTimelineDate *mod
 func CustomTimelineDateDelete(tx *sqlx.Tx, actorUserID uuid.UUID, id uuid.UUID) (*models.CustomTimelineDate, error) {
 	// We need to set the session user variable so that the audit trigger knows who made the delete operation
 	if err := setCurrentSessionUserVariable(tx, actorUserID); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("problem setting current session user variable when deleting custom timeline date by id: %w", err)
 	}
 
 	res, err := sqlutils.GetProcedure[models.CustomTimelineDate](tx, sqlqueries.CustomTimelineDate.Delete, utilitysql.CreateIDQueryMap(id))
