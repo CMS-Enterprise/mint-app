@@ -25,7 +25,7 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
-// CustomTimelineDateCreateInput reporesents the necessary fields to create a CustomTimelineDate
+// CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate
 type CustomTimelineDateCreateInput struct {
 	ModelPlanID uuid.UUID                     `json:"modelPlanID"`
 	Title       string                        `json:"title"`
