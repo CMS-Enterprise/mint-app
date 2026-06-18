@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type CustomTimelineDateType string
@@ -20,4 +22,12 @@ type CustomTimelineDate struct {
 	DateType    CustomTimelineDateType `json:"dateType" db:"date_type"`
 	StartDate   time.Time              `json:"startDate" db:"start_date"`
 	EndDate     *time.Time             `json:"endDate,omitempty" db:"end_date"`
+}
+
+// NewCustomTimelineDate returns a new custom timeline date.
+func NewCustomTimelineDate(createdBy uuid.UUID, modelPlanID uuid.UUID) *CustomTimelineDate {
+	return &CustomTimelineDate{
+		baseStruct:        NewBaseStruct(createdBy),
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
+	}
 }

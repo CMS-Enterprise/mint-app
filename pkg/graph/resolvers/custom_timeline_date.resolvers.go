@@ -7,7 +7,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -18,12 +17,18 @@ import (
 
 // CreateCustomTimelineDate is the resolver for the createCustomTimelineDate field.
 func (r *mutationResolver) CreateCustomTimelineDate(ctx context.Context, input model.CustomTimelineDateCreateInput) (*models.CustomTimelineDate, error) {
-	panic(fmt.Errorf("not implemented: CreateCustomTimelineDate - createCustomTimelineDate"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return CustomTimelineDateCreate(logger, &input, principal, r.store)
 }
 
 // UpdateCustomTimelineDate is the resolver for the updateCustomTimelineDate field.
 func (r *mutationResolver) UpdateCustomTimelineDate(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CustomTimelineDate, error) {
-	panic(fmt.Errorf("not implemented: UpdateCustomTimelineDate - updateCustomTimelineDate"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return CustomTimelineDateUpdate(ctx, logger, id, changes, principal, r.store)
 }
 
 // DeleteCustomTimelineDate is the resolver for the deleteCustomTimelineDate field.

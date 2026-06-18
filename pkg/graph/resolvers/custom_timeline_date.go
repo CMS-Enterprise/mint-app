@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"sort"
 
@@ -10,11 +11,93 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
+
+// CustomTimelineDateCreate creates a custom timeline date.
+func CustomTimelineDateCreate(
+	logger *zap.Logger,
+	input *model.CustomTimelineDateCreateInput,
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.CustomTimelineDate, error) {
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	customTimelineDate := models.NewCustomTimelineDate(principalAccount.ID, input.ModelPlanID)
+	customTimelineDate.Title = input.Title
+	customTimelineDate.Description = input.Description
+	customTimelineDate.DateType = input.DateType
+	customTimelineDate.StartDate = input.StartDate
+	customTimelineDate.EndDate = input.EndDate
+
+	if err := validateAndNormalizeCustomTimelineDate(customTimelineDate); err != nil {
+		return nil, err
+	}
+
+	if err := BaseStructPreCreate(logger, customTimelineDate, principal, store, true); err != nil {
+		return nil, err
+	}
+
+	return storage.CustomTimelineDateCreate(store, customTimelineDate)
+}
+
+// validateAndNormalizeCustomTimelineDate gets the request body's dates ready for the DB
+func validateAndNormalizeCustomTimelineDate(customTimelineDate *models.CustomTimelineDate) error {
+	switch customTimelineDate.DateType {
+	case models.CustomTimelineDateTypeSingle:
+		customTimelineDate.EndDate = nil
+	case models.CustomTimelineDateTypeRange:
+		if customTimelineDate.EndDate == nil {
+			return errors.New("end date is required when custom timeline date type is RANGE")
+		}
+	default:
+		return fmt.Errorf("unsupported custom timeline date type %s", customTimelineDate.DateType)
+	}
+
+	return nil
+}
+
+// CustomTimelineDateUpdate updates a custom timeline date.
+func CustomTimelineDateUpdate(
+	ctx context.Context,
+	logger *zap.Logger,
+	id uuid.UUID,
+	changes map[string]any,
+	principal authentication.Principal,
+	store *storage.Store,
+) (*models.CustomTimelineDate, error) {
+	if principal.Account() == nil {
+		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
+	}
+
+	existing, err := CustomTimelineDateGetByIDLOADER(ctx, id)
+	if err != nil {
+		return nil, fmt.Errorf("error fetching custom timeline date during update: %w", err)
+	}
+
+	if existing == nil {
+		return nil, fmt.Errorf("custom timeline date with id %s not found", id)
+	}
+
+	customTimelineDate := *existing
+
+	if err := BaseStructPreUpdate(logger, &customTimelineDate, changes, principal, store, true, true); err != nil {
+		return nil, err
+	}
+
+	if err := validateAndNormalizeCustomTimelineDate(&customTimelineDate); err != nil {
+		return nil, err
+	}
+
+	return storage.CustomTimelineDateUpdate(store, &customTimelineDate)
+}
 
 // CustomTimelineDateGetByIDLOADER returns a custom timeline date by its provided ID.
 func CustomTimelineDateGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error) {
