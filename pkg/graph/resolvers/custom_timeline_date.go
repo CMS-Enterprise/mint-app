@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"sort"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -14,6 +15,29 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
+
+// CustomTimelineDateGetByIDLOADER returns a custom timeline date by its provided ID.
+func CustomTimelineDateGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error) {
+	return loaders.CustomTimelineDate.ByID.Load(ctx, id)
+}
+
+// CustomTimelineDateGetByModelPlanIDLOADER returns custom timeline dates by their provided model plan ID.
+func CustomTimelineDateGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.CustomTimelineDate, error) {
+	customTimelineDates, err := loaders.CustomTimelineDate.ByModelPlanID.Load(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	sort.SliceStable(customTimelineDates, func(i, j int) bool {
+		// in order to always get a deterministic return, we first order by the start date, and if those are equal, then we fall back to ordering by which was created first
+		if customTimelineDates[i].StartDate.Equal(customTimelineDates[j].StartDate) {
+			return customTimelineDates[i].CreatedDts.Before(customTimelineDates[j].CreatedDts)
+		}
+		return customTimelineDates[i].StartDate.Before(customTimelineDates[j].StartDate)
+	})
+
+	return customTimelineDates, nil
+}
 
 // DeleteCustomTimelineDate deletes a custom timeline date.
 func DeleteCustomTimelineDate(

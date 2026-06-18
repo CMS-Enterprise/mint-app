@@ -36,10 +36,10 @@ func (r *mutationResolver) DeleteCustomTimelineDate(ctx context.Context, id uuid
 
 // CustomTimelineDate is the resolver for the customTimelineDate field.
 func (r *queryResolver) CustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error) {
-	panic(fmt.Errorf("not implemented: CustomTimelineDate - customTimelineDate"))
+	return CustomTimelineDateGetByIDLOADER(ctx, id)
 }
 
 // CustomTimelineDates is the resolver for the customTimelineDates field.
 func (r *queryResolver) CustomTimelineDates(ctx context.Context, modelPlanID uuid.UUID) ([]*models.CustomTimelineDate, error) {
-	panic(fmt.Errorf("not implemented: CustomTimelineDates - customTimelineDates"))
+	return CustomTimelineDateGetByModelPlanIDLOADER(ctx, modelPlanID)
 }
