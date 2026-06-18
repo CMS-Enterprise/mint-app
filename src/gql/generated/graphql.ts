@@ -361,6 +361,24 @@ export type CustomTimelineDate = {
   title: Scalars['String']['output'];
 };
 
+export type CustomTimelineDateChanges = {
+  dateType?: InputMaybe<CustomTimelineDateType>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['Time']['input']>;
+  startDate?: InputMaybe<Scalars['Time']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** CustomTimelineDateCreateInput reporesents the necessary fields to create a CustomTimelineDate */
+export type CustomTimelineDateCreateInput = {
+  dateType: CustomTimelineDateType;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['Time']['input']>;
+  modelPlanID: Scalars['UUID']['input'];
+  startDate: Scalars['Time']['input'];
+  title: Scalars['String']['input'];
+};
+
 /** The selected date type for a Custom Timeline Date. */
 export enum CustomTimelineDateType {
   RANGE = 'RANGE',
@@ -2126,6 +2144,7 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   archiveMTOCommonMilestone: MtoCommonMilestone;
+  createCustomTimelineDate: CustomTimelineDate;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2156,6 +2175,7 @@ export type Mutation = {
    */
   createStandardCategories: Scalars['Boolean']['output'];
   createTemplateToMTO: ApplyTemplateResult;
+  deleteCustomTimelineDate: CustomTimelineDate;
   deleteKeyContact: KeyContact;
   deleteKeyContactCategory: KeyContactCategory;
   /**
@@ -2205,6 +2225,7 @@ export type Mutation = {
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllLockableSections: Array<LockableSectionLockStatus>;
   unlockLockableSection: Scalars['Boolean']['output'];
+  updateCustomTimelineDate: CustomTimelineDate;
   /**
    * This will update linked existing models, and relatede model plans for given model plan and fieldName.
    * The fieldName allows it so you can create links for multiple sections of the model plan
@@ -2254,6 +2275,12 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationArchiveMtoCommonMilestoneArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateCustomTimelineDateArgs = {
+  input: CustomTimelineDateCreateInput;
 };
 
 
@@ -2429,6 +2456,12 @@ export type MutationCreateTemplateToMtoArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationDeleteCustomTimelineDateArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationDeleteKeyContactArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -2592,6 +2625,13 @@ export type MutationUnlockAllLockableSectionsArgs = {
 export type MutationUnlockLockableSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
   section: LockableSection;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateCustomTimelineDateArgs = {
+  changes: CustomTimelineDateChanges;
+  id: Scalars['UUID']['input'];
 };
 
 
