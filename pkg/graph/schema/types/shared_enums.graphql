@@ -189,6 +189,9 @@ enum TableName {
   activity
   analyzed_audit
   discussion_reply
+  ctat_request
+  ctat_request_document
+  ctat_request_model_plan_link
   existing_model
   existing_model_link
   iddoc_questionnaire
