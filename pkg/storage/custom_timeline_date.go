@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -32,5 +33,20 @@ func CustomTimelineDateGetByModelPlanIDLoader(np sqlutils.NamedPreparer, modelPl
 	if err != nil {
 		return nil, fmt.Errorf("problem getting custom timeline dates by model plan id: %w", err)
 	}
+	return res, nil
+}
+
+// CustomTimelineDateDelete deletes the custom timeline date for a given id.
+func CustomTimelineDateDelete(tx *sqlx.Tx, actorUserID uuid.UUID, id uuid.UUID) (*models.CustomTimelineDate, error) {
+	// We need to set the session user variable so that the audit trigger knows who made the delete operation
+	if err := setCurrentSessionUserVariable(tx, actorUserID); err != nil {
+		return nil, err
+	}
+
+	res, err := sqlutils.GetProcedure[models.CustomTimelineDate](tx, sqlqueries.CustomTimelineDate.Delete, utilitysql.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, fmt.Errorf("problem deleting custom timeline date by id: %w", err)
+	}
+
 	return res, nil
 }
