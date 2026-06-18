@@ -369,7 +369,7 @@ export type CustomTimelineDateChanges = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** CustomTimelineDateCreateInput reporesents the necessary fields to create a CustomTimelineDate */
+/** CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate */
 export type CustomTimelineDateCreateInput = {
   dateType: CustomTimelineDateType;
   description?: InputMaybe<Scalars['String']['input']>;
