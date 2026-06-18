@@ -13,6 +13,20 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
+// CustomTimelineDateCreate creates a custom timeline date.
+func CustomTimelineDateCreate(np sqlutils.NamedPreparer, customTimelineDate *models.CustomTimelineDate) (*models.CustomTimelineDate, error) {
+	if customTimelineDate.ID == uuid.Nil {
+		customTimelineDate.ID = uuid.New()
+	}
+
+	res, err := sqlutils.GetProcedure[models.CustomTimelineDate](np, sqlqueries.CustomTimelineDate.Create, customTimelineDate)
+	if err != nil {
+		return nil, fmt.Errorf("problem creating custom timeline date: %w", err)
+	}
+
+	return res, nil
+}
+
 // CustomTimelineDateGetByID returns the custom timeline date for a given id.
 func CustomTimelineDateGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*models.CustomTimelineDate, error) {
 	res, err := sqlutils.GetProcedure[models.CustomTimelineDate](np, sqlqueries.CustomTimelineDate.GetByID, utilitysql.CreateIDQueryMap(id))
