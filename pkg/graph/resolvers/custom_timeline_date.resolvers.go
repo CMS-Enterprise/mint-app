@@ -11,6 +11,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -27,7 +28,10 @@ func (r *mutationResolver) UpdateCustomTimelineDate(ctx context.Context, id uuid
 
 // DeleteCustomTimelineDate is the resolver for the deleteCustomTimelineDate field.
 func (r *mutationResolver) DeleteCustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error) {
-	panic(fmt.Errorf("not implemented: DeleteCustomTimelineDate - deleteCustomTimelineDate"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return DeleteCustomTimelineDate(ctx, logger, principal, r.store, id)
 }
 
 // CustomTimelineDate is the resolver for the customTimelineDate field.
