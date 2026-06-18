@@ -24,7 +24,7 @@ type CustomTimelineDate {
 }
 
 """
-CustomTimelineDateCreateInput reporesents the necessary fields to create a CustomTimelineDate
+CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate
 """
 input CustomTimelineDateCreateInput {
   modelPlanID: UUID!
