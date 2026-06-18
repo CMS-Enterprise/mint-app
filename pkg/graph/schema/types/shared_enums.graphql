@@ -217,6 +217,7 @@ enum TableName {
   possible_operational_solution_contact
   tag
   plan_timeline
+  custom_timeline_dates
   translated_audit
   translated_audit_field
   translated_audit_queue

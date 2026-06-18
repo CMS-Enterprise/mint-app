@@ -3,6 +3,7 @@ import { EnumTranslation, TableName } from '../../../gql/generated/graphql';
 export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   [TableName.ACTIVITY]: { generalName: 'Activities' },
   [TableName.ANALYZED_AUDIT]: { generalName: 'Analyzed audits' },
+  [TableName.CUSTOM_TIMELINE_DATES]: { generalName: 'Custom timeline dates' },
   [TableName.DISCUSSION_REPLY]: {
     generalName: 'Replies',
     groupedName: 'Discussions'
