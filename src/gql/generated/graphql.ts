@@ -5167,6 +5167,7 @@ export type SubscriptionOnLockableSectionLocksChangedArgs = {
 export enum TableName {
   ACTIVITY = 'activity',
   ANALYZED_AUDIT = 'analyzed_audit',
+  CUSTOM_TIMELINE_DATES = 'custom_timeline_dates',
   DISCUSSION_REPLY = 'discussion_reply',
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',

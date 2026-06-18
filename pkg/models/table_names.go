@@ -39,6 +39,7 @@ const (
 	TNPlanPayments                     TableName = "plan_payments"
 	TNPlanTdl                          TableName = "plan_tdl"
 	TNPlanTask                         TableName = "plan_task"
+	TNCustomTimelineDates              TableName = "custom_timeline_dates"
 	TNTag                              TableName = "tag"
 	TNTranslatedAudit                  TableName = "translated_audit"
 	TNTranslatedAuditField             TableName = "translated_audit_field"
