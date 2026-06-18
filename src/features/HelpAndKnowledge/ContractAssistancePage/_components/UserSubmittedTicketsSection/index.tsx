@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 
 import { ContractAssistanceTicket } from '../../constants';
@@ -15,6 +16,17 @@ const UserSubmittedTicketsSection = ({
 }: UserSubmittedTicketsSectionProps) => {
   const { t } = useTranslation('contractAssistance');
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleTicketClick = useCallback(
+    (ticket: ContractAssistanceTicket) => {
+      navigate(
+        `/help-and-knowledge/contract-assistance/${ticket.id}${location.search}`
+      );
+    },
+    [navigate, location.search]
+  );
 
   return (
     <div>
@@ -29,7 +41,11 @@ const UserSubmittedTicketsSection = ({
       >
         {t('userSubmittedTickets.button')}
       </Button>
-      <ContractAssistanceTicketsTable tickets={tickets} variant="user" />
+      <ContractAssistanceTicketsTable
+        tickets={tickets}
+        variant="user"
+        onTicketClick={handleTicketClick}
+      />
       <CtatSidePanel
         isOpen={isPanelOpen}
         closeModal={() => setIsPanelOpen(false)}
