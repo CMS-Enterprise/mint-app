@@ -36,6 +36,16 @@ func CustomTimelineDateGetByModelPlanIDLoader(np sqlutils.NamedPreparer, modelPl
 	return res, nil
 }
 
+// CustomTimelineDateUpdate updates the custom timeline date for a given id.
+func CustomTimelineDateUpdate(np sqlutils.NamedPreparer, customTimelineDate *models.CustomTimelineDate) (*models.CustomTimelineDate, error) {
+	res, err := sqlutils.GetProcedure[models.CustomTimelineDate](np, sqlqueries.CustomTimelineDate.Update, customTimelineDate)
+	if err != nil {
+		return nil, fmt.Errorf("problem updating custom timeline date: %w", err)
+	}
+
+	return res, nil
+}
+
 // CustomTimelineDateDelete deletes the custom timeline date for a given id.
 func CustomTimelineDateDelete(tx *sqlx.Tx, actorUserID uuid.UUID, id uuid.UUID) (*models.CustomTimelineDate, error) {
 	// We need to set the session user variable so that the audit trigger knows who made the delete operation

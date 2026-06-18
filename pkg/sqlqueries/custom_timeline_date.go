@@ -8,12 +8,16 @@ var customTimelineDateGetByIDSQL string
 //go:embed SQL/custom_timeline_date/get_by_model_plan_id_LOADER.sql
 var customTimelineDateGetByModelPlanIDLoaderSQL string
 
+//go:embed SQL/custom_timeline_date/update.sql
+var customTimelineDateUpdateSQL string
+
 //go:embed SQL/custom_timeline_date/delete.sql
 var customTimelineDateDeleteSQL string
 
 type customTimelineDateScripts struct {
 	GetByID                string
 	GetByModelPlanIDLoader string
+	Update                 string
 	Delete                 string
 }
 
@@ -21,5 +25,6 @@ type customTimelineDateScripts struct {
 var CustomTimelineDate = customTimelineDateScripts{
 	GetByID:                customTimelineDateGetByIDSQL,
 	GetByModelPlanIDLoader: customTimelineDateGetByModelPlanIDLoaderSQL,
+	Update:                 customTimelineDateUpdateSQL,
 	Delete:                 customTimelineDateDeleteSQL,
 }
