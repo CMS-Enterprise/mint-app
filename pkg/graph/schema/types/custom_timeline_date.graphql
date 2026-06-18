@@ -23,9 +23,41 @@ type CustomTimelineDate {
   modifiedDts: Time
 }
 
+"""
+CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate
+"""
+input CustomTimelineDateCreateInput {
+  modelPlanID: UUID!
+  title: String!
+  description: String
+  dateType: CustomTimelineDateType!
+  startDate: Time!
+  endDate: Time
+}
+
+input CustomTimelineDateChanges @goModel(model: "map[string]interface{}") {
+  title: String
+  description: String
+  dateType: CustomTimelineDateType
+  startDate: Time
+  endDate: Time
+}
+
 extend type Query {
   customTimelineDate(id: UUID!): CustomTimelineDate!
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
   customTimelineDates(modelPlanID: UUID!): [CustomTimelineDate!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createCustomTimelineDate(
+    input: CustomTimelineDateCreateInput!
+  ): CustomTimelineDate! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  updateCustomTimelineDate(
+    id: UUID!
+    changes: CustomTimelineDateChanges!
+  ): CustomTimelineDate! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  deleteCustomTimelineDate(id: UUID!): CustomTimelineDate!
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }

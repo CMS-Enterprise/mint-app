@@ -25,6 +25,16 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
+// CustomTimelineDateCreateInput reporesents the necessary fields to create a CustomTimelineDate
+type CustomTimelineDateCreateInput struct {
+	ModelPlanID uuid.UUID                     `json:"modelPlanID"`
+	Title       string                        `json:"title"`
+	Description *string                       `json:"description,omitempty"`
+	DateType    models.CustomTimelineDateType `json:"dateType"`
+	StartDate   time.Time                     `json:"startDate"`
+	EndDate     *time.Time                    `json:"endDate,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
