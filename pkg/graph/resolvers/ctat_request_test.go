@@ -3,6 +3,7 @@ package resolvers
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"testing"
 	"time"
 
@@ -19,6 +20,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/testconfig/emailtestconfigs"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 func (suite *ResolverSuite) TestCTATRequestByRequesterIDLoader() {
@@ -191,7 +193,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdmin
 		"status":        &status,
 		"assignedAdmin": &assignedAdmin,
 		"notes":         &notes,
-	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{}, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Equal(models.CTATStatusAssigned, resp.Status)
@@ -229,14 +231,14 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
 	assignedAdmin := "ADMI"
 	_, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"assignedAdmin": &assignedAdmin,
-	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{}, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.Require().NoError(err)
 
 	var noAssignedAdmin *string
 
 	resp, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"assignedAdmin": noAssignedAdmin,
-	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{}, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Nil(resp.AssignedAdmin)
@@ -265,7 +267,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
 
 	resp, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"resolution": &resolution,
-	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{}, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Require().NotNil(resp.Resolution)
@@ -294,11 +296,15 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestReturnsErrorForUnknownAssi
 
 	assignedAdmin := "NOT_A_REAL_EUA"
 
+	unknownUserFetch := func(_ context.Context, _ string) (*models.UserInfo, error) {
+		return nil, fmt.Errorf("user not found in okta")
+	}
+
 	resp, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"assignedAdmin": &assignedAdmin,
-	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{})
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{}, userhelpers.GetUserInfoAccountInfoWrapperFunc(unknownUserFetch))
 	suite.Nil(resp)
-	suite.ErrorContains(err, "user account not found for username NOT_A_REAL_EUA")
+	suite.ErrorContains(err, "failed to get user account by username NOT_A_REAL_EUA")
 }
 
 func (suite *ResolverSuite) TestCTATRequestRelatedMINTModels() {
@@ -649,6 +655,7 @@ func (suite *ResolverSuite) createTestCTATRequest(
 		suite.testConfigs.Store,
 		nil,
 		email.AddressBook{},
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo),
 	)
 	suite.Require().NoError(err)
 

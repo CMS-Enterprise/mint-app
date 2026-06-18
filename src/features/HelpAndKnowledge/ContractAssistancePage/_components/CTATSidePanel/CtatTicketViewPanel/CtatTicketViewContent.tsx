@@ -35,8 +35,15 @@ import downloadFile from 'utils/downloadFile';
 
 import { formatHelpTypes, formatUserDisplay } from '../../../utils';
 
+import CtatTicketAdminForm from './CtatTicketAdminForm';
+
 type CtatTicketViewContentProps = {
   ticket: GetCtatRequestQuery['ctatRequest'];
+  isAdmin?: boolean;
+  closeModal?: () => void;
+  setDisableButton?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDirty?: (isDirty: boolean) => void;
+  onSubmitted?: () => void;
 };
 
 type DetailFieldProps = {
@@ -122,7 +129,14 @@ const SupportingDocumentItem = ({
   );
 };
 
-const CtatTicketViewContent = ({ ticket }: CtatTicketViewContentProps) => {
+const CtatTicketViewContent = ({
+  ticket,
+  isAdmin = false,
+  closeModal,
+  setDisableButton,
+  setIsDirty,
+  onSubmitted
+}: CtatTicketViewContentProps) => {
   const { t } = useTranslation('contractAssistance');
   const isClosed = ticket.status === CtatStatus.CLOSED;
 
@@ -136,7 +150,11 @@ const CtatTicketViewContent = ({ ticket }: CtatTicketViewContentProps) => {
     : null;
 
   return (
-    <div className="margin-top-8 padding-8 maxw-tablet">
+    <div
+      className={classNames('margin-top-8 padding-8 maxw-tablet', {
+        'padding-bottom-15': isAdmin
+      })}
+    >
       <PageHeading className="margin-top-0 margin-bottom-1" headingLevel="h2">
         {ticket.humanReadableID}
       </PageHeading>
@@ -146,53 +164,70 @@ const CtatTicketViewContent = ({ ticket }: CtatTicketViewContentProps) => {
         })}
       </p>
 
-      <div
-        className={classNames('radius-md padding-3 margin-bottom-4', {
-          'bg-base-lighter': isClosed,
-          'bg-primary-lighter': !isClosed
-        })}
-      >
-        <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
-          {t('ctatViewPanel.progressHeading')}
-        </PageHeading>
-
-        <DetailField
-          label={t('table.status')}
-          definition={ticket.status ? statuses[ticket.status] : ''}
+      {isAdmin &&
+      closeModal &&
+      setDisableButton &&
+      setIsDirty &&
+      onSubmitted ? (
+        <CtatTicketAdminForm
+          ticket={ticket}
+          closeModal={closeModal}
+          setDisableButton={setDisableButton}
+          setIsDirty={setIsDirty}
+          onSubmitted={onSubmitted}
         />
+      ) : (
+        <div
+          className={classNames('radius-md padding-3 margin-bottom-4', {
+            'bg-base-lighter': isClosed,
+            'bg-primary-lighter': !isClosed
+          })}
+        >
+          <PageHeading
+            headingLevel="h3"
+            className="margin-top-0 margin-bottom-3"
+          >
+            {t('ctatViewPanel.progressHeading')}
+          </PageHeading>
 
-        <DetailField
-          label={t('ctatViewPanel.assignedMember')}
-          definition={
-            assignedMemberDisplay || (
-              <EmptyValue>{t('ctatViewPanel.empty.notAssigned')}</EmptyValue>
-            )
-          }
-        />
+          <DetailField
+            label={t('table.status')}
+            definition={ticket.status ? statuses[ticket.status] : ''}
+          />
 
-        <DetailField
-          label={t('ctatViewPanel.progressNotes')}
-          definition={
-            ticket.notes?.trim() ? (
-              ticket.notes
-            ) : (
-              <EmptyValue>{t('ctatViewPanel.empty.noNotes')}</EmptyValue>
-            )
-          }
-        />
+          <DetailField
+            label={t('ctatViewPanel.assignedMember')}
+            definition={
+              assignedMemberDisplay || (
+                <EmptyValue>{t('ctatViewPanel.empty.notAssigned')}</EmptyValue>
+              )
+            }
+          />
 
-        <DetailField
-          label={t('ctatViewPanel.resolution')}
-          className="margin-bottom-0"
-          definition={
-            ticket.resolution?.trim() ? (
-              ticket.resolution
-            ) : (
-              <EmptyValue>{t('ctatViewPanel.empty.noResolution')}</EmptyValue>
-            )
-          }
-        />
-      </div>
+          <DetailField
+            label={t('ctatViewPanel.progressNotes')}
+            definition={
+              ticket.notes?.trim() ? (
+                ticket.notes
+              ) : (
+                <EmptyValue>{t('ctatViewPanel.empty.noNotes')}</EmptyValue>
+              )
+            }
+          />
+
+          <DetailField
+            label={t('ctatViewPanel.resolution')}
+            className="margin-bottom-0"
+            definition={
+              ticket.resolution?.trim() ? (
+                ticket.resolution
+              ) : (
+                <EmptyValue>{t('ctatViewPanel.empty.noResolution')}</EmptyValue>
+              )
+            }
+          />
+        </div>
+      )}
 
       <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
         {t('ctatViewPanel.ticketDetailsHeading')}
@@ -381,7 +416,7 @@ const CtatTicketViewContent = ({ ticket }: CtatTicketViewContentProps) => {
         }
       />
 
-      {!isClosed && (
+      {!isClosed && !isAdmin && (
         <SummaryBox>
           <SummaryBoxHeading headingLevel="h3" className="margin-bottom-1">
             {t('ctatSidePanel.whatHappensNext.heading')}
