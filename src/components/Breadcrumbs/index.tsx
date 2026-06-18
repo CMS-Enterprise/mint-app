@@ -83,7 +83,7 @@ export const commonBreadCrumbs = (
   },
   CR_TDLS: {
     text: 'crtdlsMisc:heading',
-    url: `/models/${modelID}}/collaboration-area/cr-tdls`
+    url: `/models/${modelID}/collaboration-area/cr-tdls`
   },
   DATA_EXCHANGE_APPROACH: {
     text: 'dataExchangeApproachMisc:heading',
