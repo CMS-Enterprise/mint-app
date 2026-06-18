@@ -27,13 +27,16 @@ func CustomTimelineDateCreate(np sqlutils.NamedPreparer, customTimelineDate *mod
 	return res, nil
 }
 
-// CustomTimelineDateGetByID returns the custom timeline date for a given id.
-func CustomTimelineDateGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*models.CustomTimelineDate, error) {
-	res, err := sqlutils.GetProcedure[models.CustomTimelineDate](np, sqlqueries.CustomTimelineDate.GetByID, utilitysql.CreateIDQueryMap(id))
-	if err != nil {
-		return nil, fmt.Errorf("problem getting custom timeline date by id: %w", err)
+// CustomTimelineDateGetByIDLoader returns custom timeline dates for a slice of ids.
+func CustomTimelineDateGetByIDLoader(np sqlutils.NamedPreparer, ids []uuid.UUID) ([]*models.CustomTimelineDate, error) {
+	args := map[string]any{
+		"ids": pq.Array(ids),
 	}
 
+	res, err := sqlutils.SelectProcedure[models.CustomTimelineDate](np, sqlqueries.CustomTimelineDate.GetByIDLoader, args)
+	if err != nil {
+		return nil, fmt.Errorf("problem getting custom timeline dates by id: %w", err)
+	}
 	return res, nil
 }
 
