@@ -11,7 +11,7 @@ import {
  * TODO: Delete this file and associated imports when the waiver selection feature is complete.
  */
 
-export const MOCK_WAIVERS_ENABLED = true;
+export const MOCK_WAIVERS_ENABLED = false;
 
 const WAIVER_ASSESSMENT_SURVEY_ID = 'a1b2c3d4-0000-0000-0000-000000000001';
 
