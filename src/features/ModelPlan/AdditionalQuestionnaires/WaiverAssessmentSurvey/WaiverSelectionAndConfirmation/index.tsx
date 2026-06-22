@@ -23,6 +23,7 @@ import { WaiverSelectionForm } from 'types/waivers';
 
 import WaiverInfoPanel from '../_components/WaiverInfoPanel';
 import WaiverSelectionSection from '../_components/WaiverSelectionSection';
+import { getWaiversMockData, MOCK_WAIVERS_ENABLED } from '../mockWaiversData';
 import {
   buildWaiverSelectionFormValues,
   getWaiverSelectionChanges
@@ -52,12 +53,20 @@ const WaiverSelectionAndConfirmation = () => {
   const [destinationURL, setDestinationURL] = useState('');
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
-  const { data, loading, error } = useGetWaiversQuery({
+  const {
+    data: queryData,
+    loading: queryLoading,
+    error: queryError
+  } = useGetWaiversQuery({
     variables: {
       id: modelID
     },
-    skip: !modelID
+    skip: !modelID || MOCK_WAIVERS_ENABLED
   });
+
+  const data = MOCK_WAIVERS_ENABLED ? getWaiversMockData(modelID) : queryData;
+  const loading = MOCK_WAIVERS_ENABLED ? false : queryLoading;
+  const error = MOCK_WAIVERS_ENABLED ? undefined : queryError;
 
   const formData = useMemo(
     () => buildWaiverSelectionFormValues(data?.modelPlan),

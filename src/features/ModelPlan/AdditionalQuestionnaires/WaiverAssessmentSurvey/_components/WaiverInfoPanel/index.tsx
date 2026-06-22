@@ -16,6 +16,10 @@ import ExternalLink from 'components/ExternalLink';
 import Sidepanel from 'components/Sidepanel';
 import { WaiverSelectionForm } from 'types/waivers';
 
+import {
+  getCommonWaiverMockData,
+  MOCK_WAIVERS_ENABLED
+} from '../../mockWaiversData';
 import SelectWaiverField from '../SelectWaiverField';
 
 /**
@@ -29,12 +33,16 @@ const WaiverInfoPanel = () => {
 
   const { getValues, setValue } = useFormContext<WaiverSelectionForm>();
 
-  const { data } = useGetCommonWaiverQuery({
+  const { data: queryData } = useGetCommonWaiverQuery({
     variables: {
       id: waiverId
     },
-    skip: !waiverId
+    skip: !waiverId || MOCK_WAIVERS_ENABLED
   });
+
+  const data = MOCK_WAIVERS_ENABLED
+    ? getCommonWaiverMockData(waiverId)
+    : queryData;
 
   useEffect(() => {
     if (!waiverId) {
