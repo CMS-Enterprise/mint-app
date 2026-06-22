@@ -3,7 +3,7 @@ import {
   CommonWaiverType,
   GetModelPlanQuestionsQuery,
   GetWaiversQuery,
-  WaiverChanges
+  WaiverSelectionInput
 } from 'gql/generated/graphql';
 
 import {
@@ -485,18 +485,18 @@ const waiverSelectionFieldsChanged = (
 };
 
 /**
- * Returns WaiverChanges entries for waivers the user has answered and modified.
+ * Returns WaiverSelectionInput entries for waivers the user has answered and modified.
  */
 export const getWaiverSelectionChanges = (
   initial: WaiverSelectionForm,
   current: WaiverSelectionForm
-): WaiverChanges[] => {
+): WaiverSelectionInput[] => {
   const commonWaiverIDs = new Set([
     ...Object.keys(initial.waivers),
     ...Object.keys(current.waivers)
   ]);
 
-  const changes: WaiverChanges[] = [];
+  const changes: WaiverSelectionInput[] = [];
 
   commonWaiverIDs.forEach(commonWaiverID => {
     const currentFields = current.waivers[commonWaiverID];
@@ -515,6 +515,7 @@ export const getWaiverSelectionChanges = (
     }
 
     changes.push({
+      commonWaiverID,
       willUseWaiver: currentFields.willUseWaiver,
       ...(currentFields.willUseWaiver === false
         ? { notUsingReason: currentFields.notUsingReason || null }
