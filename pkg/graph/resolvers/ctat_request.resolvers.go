@@ -79,7 +79,7 @@ func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.
 }
 
 // CtatRequestsRequester is the resolver for the ctatRequestsRequester field.
-func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATRequestsTableDataRequester, error) {
+func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*models.CTATRequestsTableDataRequester, error) {
 	principal := appcontext.Principal(ctx)
 
 	ctatRequests, err := CTATRequestGetByRequesterIDLOADER(ctx, principal.Account().ID)
@@ -87,13 +87,13 @@ func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATR
 		return nil, err
 	}
 
-	return &model.CTATRequestsTableDataRequester{
+	return &models.CTATRequestsTableDataRequester{
 		CtatRequests: ctatRequests,
 	}, nil
 }
 
 // CtatRequests is the resolver for the ctatRequests field.
-func (r *queryResolver) CtatRequests(ctx context.Context) (*model.CTATRequestsTableData, error) {
+func (r *queryResolver) CtatRequests(ctx context.Context) (*models.CTATRequestsTableData, error) {
 	principal := appcontext.Principal(ctx)
 	if !principal.AllowASSESSMENT() {
 		return nil, fmt.Errorf("user does not have permission to view admin CTAT requests")
@@ -104,9 +104,8 @@ func (r *queryResolver) CtatRequests(ctx context.Context) (*model.CTATRequestsTa
 		return nil, err
 	}
 
-	return &model.CTATRequestsTableData{
+	return &models.CTATRequestsTableData{
 		CtatRequests: ctatRequests,
-		Count:        len(ctatRequests),
 	}, nil
 }
 
