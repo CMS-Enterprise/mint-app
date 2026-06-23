@@ -160,7 +160,7 @@ func (suite *ResolverSuite) TestCtatRequest() {
 		models.CTATStatusAssigned,
 	)
 
-	resp, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID, suite.testConfigs.Store)
+	resp, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Equal(request.ID, resp.ID)
@@ -203,7 +203,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdmin
 	suite.Require().NotNil(resp.Notes)
 	suite.Equal(notes, *resp.Notes)
 
-	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID, suite.testConfigs.Store)
+	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.NotNil(reloaded)
 	suite.Equal(models.CTATStatusAssigned, reloaded.Status)
@@ -243,7 +243,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
 	suite.NotNil(resp)
 	suite.Nil(resp.AssignedAdmin)
 
-	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID, suite.testConfigs.Store)
+	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.NotNil(reloaded)
 	suite.Nil(reloaded.AssignedAdmin)
@@ -273,7 +273,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
 	suite.Require().NotNil(resp.Resolution)
 	suite.Equal(resolution, *resp.Resolution)
 
-	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID, suite.testConfigs.Store)
+	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.NotNil(reloaded)
 	suite.Require().NotNil(reloaded.Resolution)
@@ -390,7 +390,7 @@ func (suite *ResolverSuite) TestCTATRequestCreate() {
 	suite.Equal(contractName, *created.ContractName)
 	suite.Greater(created.HumanReadableIDNumber, 0)
 
-	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, created.ID, suite.testConfigs.Store)
+	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, created.ID)
 	suite.NoError(err)
 	suite.NotNil(reloaded)
 	suite.Equal(models.CTATStatusNew, reloaded.Status)

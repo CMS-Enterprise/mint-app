@@ -35,7 +35,7 @@ func CTATRequestCollectionGetForAdmin(ctx context.Context, store *storage.Store)
 }
 
 // CTATRequestGetByID implements resolver logic to get a CTAT request by ID.
-func CTATRequestGetByID(ctx context.Context, id uuid.UUID, _ *storage.Store) (*models.CTATRequest, error) {
+func CTATRequestGetByID(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error) {
 	return loaders.CTATRequest.GetByID.Load(ctx, id)
 }
 
@@ -55,7 +55,7 @@ func CTATRequestAdminUpdate(
 		return nil, fmt.Errorf("user does not have permission to update admin CTAT requests")
 	}
 
-	existing, err := CTATRequestGetByID(ctx, id, store)
+	existing, err := CTATRequestGetByID(ctx, id)
 	if err != nil {
 		return nil, err
 	}

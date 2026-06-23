@@ -75,7 +75,7 @@ func (r *mutationResolver) AdminUpdateCTATRequest(ctx context.Context, id uuid.U
 
 // CtatRequest is the resolver for the ctatRequest field.
 func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error) {
-	return CTATRequestGetByID(ctx, id, r.store)
+	return CTATRequestGetByID(ctx, id)
 }
 
 // CtatRequestsRequester is the resolver for the ctatRequestsRequester field.
