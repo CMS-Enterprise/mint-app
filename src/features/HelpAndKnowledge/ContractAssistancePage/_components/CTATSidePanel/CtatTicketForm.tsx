@@ -142,6 +142,9 @@ const CtatTicketForm = ({
   } = methods;
 
   const selectedCmmiGroup = watch('cmmiGroup');
+  const isCmmiDivisionRequired =
+    selectedCmmiGroup !== SELECT_DEFAULT &&
+    selectedCmmiGroup !== CtatcmmiGroupOption.OTHER;
 
   const defaultSelectOption = {
     value: SELECT_DEFAULT,
@@ -155,10 +158,7 @@ const CtatTicketForm = ({
   );
 
   const cmmiDivisionOptions = useMemo(() => {
-    if (
-      selectedCmmiGroup === SELECT_DEFAULT ||
-      selectedCmmiGroup === CtatcmmiGroupOption.OTHER
-    ) {
+    if (!isCmmiDivisionRequired) {
       return [];
     }
 
@@ -177,7 +177,7 @@ const CtatTicketForm = ({
         label: cmmiDivisions[CtatcmmiDivisionOption.OTHER]
       }
     ];
-  }, [selectedCmmiGroup]);
+  }, [isCmmiDivisionRequired, selectedCmmiGroup]);
 
   const contractActivityTypeOptions = useMemo(
     () =>
@@ -483,9 +483,8 @@ const CtatTicketForm = ({
               name="cmmiDivision"
               control={control}
               rules={{
-                required: t('ctatSidePanel.validation.fillOut'),
                 validate: value =>
-                  selectedCmmiGroup === CtatcmmiGroupOption.OTHER ||
+                  !isCmmiDivisionRequired ||
                   value !== SELECT_DEFAULT ||
                   t('ctatSidePanel.validation.fillOut')
               }}
@@ -510,10 +509,7 @@ const CtatTicketForm = ({
                     inputRef={ref}
                     id="cmmi-division"
                     value={field.value}
-                    disabled={
-                      selectedCmmiGroup === SELECT_DEFAULT ||
-                      selectedCmmiGroup === CtatcmmiGroupOption.OTHER
-                    }
+                    disabled={!isCmmiDivisionRequired}
                   >
                     {[defaultSelectOption, ...cmmiDivisionOptions].map(
                       option => (

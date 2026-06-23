@@ -117,10 +117,23 @@ describe('CtatSidePanel', () => {
 
     expect(cmmiDivisionSelect).toBeDisabled();
 
-    await user.selectOptions(screen.getByLabelText(/CMMI group/), 'BSG');
+    await user.selectOptions(await screen.findByLabelText(/CMMI group/), 'BSG');
 
     await waitFor(() => {
       expect(screen.getByLabelText(/CMMI division/)).not.toBeDisabled();
+    });
+  });
+
+  it('keeps CMMI division disabled when Other group is selected', async () => {
+    const { user } = renderPanel(true);
+
+    await user.selectOptions(
+      await screen.findByLabelText(/CMMI group/),
+      'OTHER'
+    );
+
+    await waitFor(() => {
+      expect(screen.getByLabelText(/CMMI division/)).toBeDisabled();
     });
   });
 
