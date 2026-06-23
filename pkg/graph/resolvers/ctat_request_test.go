@@ -114,6 +114,47 @@ func (suite *ResolverSuite) TestCTATRequestByIDLoader() {
 	)
 }
 
+func (suite *ResolverSuite) TestCTATRequestGetForAdminLoader() {
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	suite.True(adminPrincipal.AllowASSESSMENT())
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+	now := time.Now().UTC()
+
+	first := suite.createTestCTATRequest(
+		suite.testConfigs.Principal.Account().ID,
+		now.Add(24*time.Hour),
+		"Admin contract 1",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
+		models.CTATStatusNew,
+	)
+	second := suite.createTestCTATRequest(
+		suite.getTestPrincipal(suite.testConfigs.Store, "BTMN").Account().ID,
+		now.Add(48*time.Hour),
+		"Admin contract 2",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
+		models.CTATStatusAssigned,
+	)
+
+	expectedResults := []loaders.KeyAndExpected[*uuid.UUID, []uuid.UUID]{
+		{Key: nil, Expected: []uuid.UUID{first.ID, second.ID}},
+	}
+
+	verifyFunc := func(data []*models.CTATRequest, expected []uuid.UUID) bool {
+		returnedIDs := lo.Map(data, func(item *models.CTATRequest, _ int) uuid.UUID {
+			return item.ID
+		})
+		return suite.ElementsMatch(expected, returnedIDs)
+	}
+
+	loaders.VerifyLoaders[*uuid.UUID, []*models.CTATRequest, []uuid.UUID](
+		adminCtx,
+		&suite.Suite,
+		loaders.CTATRequest.GetAll,
+		expectedResults,
+		verifyFunc,
+	)
+}
+
 func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	suite.True(adminPrincipal.AllowASSESSMENT())
@@ -135,7 +176,7 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 		models.CTATStatusAssigned,
 	)
 
-	resp, err := CTATRequestCollectionGetForAdmin(adminCtx, suite.testConfigs.Store)
+	resp, err := CTATRequestCollectionGetAll(adminCtx)
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Len(resp, 2)

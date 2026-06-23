@@ -28,9 +28,9 @@ func CTATRequestGetByRequesterIDLOADER(ctx context.Context, requesterID uuid.UUI
 	return loaders.CTATRequest.ByRequesterID.Load(ctx, requesterID)
 }
 
-// CTATRequestCollectionGetForAdmin implements resolver logic to get CTAT requests for the admin table view.
-func CTATRequestCollectionGetForAdmin(ctx context.Context, store *storage.Store) ([]*models.CTATRequest, error) {
-	return storage.CTATRequestCollectionGetForAdmin(store)
+// CTATRequestCollectionGetAll implements resolver logic to get CTAT requests for the admin table view.
+func CTATRequestCollectionGetAll(ctx context.Context) ([]*models.CTATRequest, error) {
+	return loaders.CTATRequest.GetAll.Load(ctx, nil)
 }
 
 // CTATRequestGetByID implements resolver logic to get a CTAT request by ID.

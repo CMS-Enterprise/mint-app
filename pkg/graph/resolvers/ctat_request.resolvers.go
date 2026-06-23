@@ -99,7 +99,7 @@ func (r *queryResolver) CtatRequestsAdmin(ctx context.Context) (*model.CTATReque
 		return nil, fmt.Errorf("user does not have permission to view admin CTAT requests")
 	}
 
-	ctatRequests, err := CTATRequestCollectionGetForAdmin(ctx, r.store)
+	ctatRequests, err := CTATRequestCollectionGetAll(ctx)
 	if err != nil {
 		return nil, err
 	}
