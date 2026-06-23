@@ -155,7 +155,7 @@ func (suite *ResolverSuite) TestCTATRequestGetForAdminLoader() {
 	)
 }
 
-func (suite *ResolverSuite) TestCtatRequestsAdmin() {
+func (suite *ResolverSuite) TestCtatRequests() {
 	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	suite.True(adminPrincipal.AllowASSESSMENT())
 	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)

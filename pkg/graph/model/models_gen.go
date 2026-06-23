@@ -51,8 +51,8 @@ type CTATRequestInput struct {
 	SupportingDocuments       []*CTATRequestDocumentInput      `json:"supportingDocuments,omitempty"`
 }
 
-// CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin
-type CTATRequestsTableDataAdmin struct {
+// CTATRequestsTableData contains the requests and the request count for the table information for an admin
+type CTATRequestsTableData struct {
 	CtatRequests []*models.CTATRequest `json:"ctatRequests"`
 	Count        int                   `json:"count"`
 }
