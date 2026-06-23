@@ -14,6 +14,13 @@ const adminActions = {
         'Add, edit, and remove subject matter experts (SMEs) from the contact directory in MINT’s Help and Knowledge Center.',
       cta: 'View SME contact directory',
       route: '/help-and-knowledge#contact-directory'
+    },
+    {
+      header: 'CTAT ticket management',
+      description:
+        'As a member of the Contract Technical Assistance Team (CTAT), view, assign, and triage incoming contract assistance tickets.',
+      cta: 'View contract assistance tickets',
+      route: '/help-and-knowledge/contract-assistance'
     }
   ]
 };

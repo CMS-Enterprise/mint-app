@@ -51,7 +51,7 @@ exports[`AdminActions Component > matches snapshot 1`] = `
         </a>
       </div>
       <div
-        class="usa-summary-box__text"
+        class="usa-summary-box__text margin-bottom-3"
       >
         <h4
           class="margin-0 margin-bottom-1 line-height-sans-2"
@@ -70,6 +70,42 @@ exports[`AdminActions Component > matches snapshot 1`] = `
           href="/help-and-knowledge#contact-directory"
         >
           View SME contact directory
+          <svg
+            aria-label="forward"
+            class="usa-icon margin-left-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="usa-summary-box__text"
+      >
+        <h4
+          class="margin-0 margin-bottom-1 line-height-sans-2"
+        >
+          CTAT ticket management
+        </h4>
+        <p
+          class="margin-0 margin-bottom-1 line-height-sans-5"
+        >
+          As a member of the Contract Technical Assistance Team (CTAT), view, assign, and triage incoming contract assistance tickets.
+        </p>
+        <a
+          class="display-flex flex-align-center deep-underline"
+          data-discover="true"
+          data-testid="to-view-contract-assistance-tickets"
+          href="/help-and-knowledge/contract-assistance"
+        >
+          View contract assistance tickets
           <svg
             aria-label="forward"
             class="usa-icon margin-left-1"

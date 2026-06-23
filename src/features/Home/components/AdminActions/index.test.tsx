@@ -37,6 +37,14 @@ describe('AdminActions Component', () => {
       'href',
       '/help-and-knowledge#contact-directory'
     );
+
+    const ctatTicketLink = getByRole('link', {
+      name: /View contract assistance tickets/
+    });
+    expect(ctatTicketLink).toHaveAttribute(
+      'href',
+      '/help-and-knowledge/contract-assistance'
+    );
   });
 
   it('matches snapshot', () => {
