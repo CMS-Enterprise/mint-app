@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { screen, waitFor } from '@testing-library/react';
 import {
   GetModelPlansBaseDocument,
@@ -10,8 +10,6 @@ import {
 } from 'gql/generated/graphql';
 import configureMockStore from 'redux-mock-store';
 import setup from 'tests/util';
-
-import MessageProvider from 'contexts/MessageContext';
 
 import CtatSidePanel from '.';
 
@@ -24,7 +22,7 @@ const mockAuth = {
 const mockStore = configureMockStore();
 const store = mockStore({ auth: mockAuth });
 
-const mocks = [
+const mocks: MockedResponse[] = [
   {
     request: {
       query: GetUserInfoDocument,
@@ -68,11 +66,7 @@ const renderPanel = (isOpen = true) => {
     [
       {
         path: '/help-and-knowledge/contract-assistance',
-        element: (
-          <MessageProvider>
-            <CtatSidePanel isOpen={isOpen} closeModal={() => {}} />
-          </MessageProvider>
-        )
+        element: <CtatSidePanel isOpen={isOpen} closeModal={() => {}} />
       }
     ],
     {
@@ -82,7 +76,7 @@ const renderPanel = (isOpen = true) => {
 
   return setup(
     <Provider store={store}>
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     </Provider>
