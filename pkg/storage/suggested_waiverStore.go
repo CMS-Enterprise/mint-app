@@ -33,13 +33,3 @@ func SuggestedWaiverGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Log
 
 	return sqlutils.SelectProcedure[models.SuggestedWaiver](np, sqlqueries.SuggestedWaiver.GetByModelPlanIDLoader, args)
 }
-
-// SuggestedWaiverDeleteAllByModelPlanID deletes all suggested_waiver rows for a model plan.
-// Used when recalculating suggestions after a survey update.
-func SuggestedWaiverDeleteAllByModelPlanID(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanID uuid.UUID) ([]*models.SuggestedWaiver, error) {
-	args := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-	}
-
-	return sqlutils.SelectProcedure[models.SuggestedWaiver](np, sqlqueries.SuggestedWaiver.DeleteByModelPlanID, args)
-}

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useBlocker, useNavigate, useParams } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 import { Fieldset, Form } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
-  GetWaiversQuery,
-  TypedUpdateWaiverAssessmentSurveyDocument,
+  CommonWaiverType,
+  GetWaiversDocument,
+  TypedUpdateSelectedWaiversDocument,
   useGetWaiversQuery
 } from 'gql/generated/graphql';
 
@@ -16,18 +18,22 @@ import FormHeader from 'components/FormHeader';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
-import useHandleMutation from 'hooks/useHandleMutation';
+import { useErrorMessage } from 'contexts/ErrorContext';
+import { WaiverSelectionForm } from 'types/waivers';
 
+import WaiverInfoPanel from '../_components/WaiverInfoPanel';
 import WaiverSelectionSection from '../_components/WaiverSelectionSection';
+import { getWaiversMockData, MOCK_WAIVERS_ENABLED } from '../mockWaiversData';
+import {
+  buildWaiverSelectionFormValues,
+  getWaiverSelectionChanges
+} from '../util';
 
-export type WaiverAssessmentSurveyType =
-  GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
-
-const WAIVER_HEADINGS = [
-  'medicarePaymentWaivers',
-  'programWaivers',
-  'medicaidPaymentWaivers'
-] as const;
+const ORDERED_WAIVER_TYPES = [
+  CommonWaiverType.MEDICARE_PAYMENT,
+  CommonWaiverType.PROGRAM_MEDICARE_BE,
+  CommonWaiverType.MEDICAID_PAYMENT
+];
 
 const WaiverSelectionAndConfirmation = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -42,33 +48,103 @@ const WaiverSelectionAndConfirmation = () => {
 
   const navigate = useNavigate();
 
-  const { data, loading, error } = useGetWaiversQuery({
+  useErrorMessage('skip', true);
+
+  const [destinationURL, setDestinationURL] = useState('');
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
+  const {
+    data: queryData,
+    loading: queryLoading,
+    error: queryError
+  } = useGetWaiversQuery({
     variables: {
       id: modelID
     },
-    skip: !modelID
+    skip: !modelID || MOCK_WAIVERS_ENABLED
   });
 
-  const waiverAssessmentSurveyID =
-    data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id || '';
+  const data = MOCK_WAIVERS_ENABLED ? getWaiversMockData(modelID) : queryData;
+  const loading = MOCK_WAIVERS_ENABLED ? false : queryLoading;
+  const error = MOCK_WAIVERS_ENABLED ? undefined : queryError;
 
-  const methods = useForm<any>({
-    values: {},
+  const formData = useMemo(
+    () => buildWaiverSelectionFormValues(data?.modelPlan),
+    [data?.modelPlan]
+  );
+
+  const methods = useForm<WaiverSelectionForm>({
+    values: formData,
     mode: 'onChange'
   });
 
-  const { handleSubmit, watch } = methods;
+  const { handleSubmit, getValues } = methods;
 
-  const { mutationError, loading: isSubmitting } = useHandleMutation<any>(
-    TypedUpdateWaiverAssessmentSurveyDocument,
+  const [updateSelectedWaivers, { loading: isSubmitting }] = useMutation(
+    TypedUpdateSelectedWaiversDocument,
     {
-      id: waiverAssessmentSurveyID,
-      rhfRef: {
-        initialValues: {},
-        values: watch()
-      }
+      refetchQueries: [
+        { query: GetWaiversDocument, variables: { id: modelID } }
+      ]
     }
   );
+
+  const blocker = useBlocker(({ currentLocation, nextLocation }) => {
+    if (isErrorModalOpen) {
+      return false;
+    }
+
+    if (nextLocation.pathname.includes('locked-task-list-section')) {
+      return false;
+    }
+
+    if (nextLocation.pathname === currentLocation.pathname) {
+      return false;
+    }
+
+    const changes = getWaiverSelectionChanges(formData, getValues());
+
+    if (changes.length === 0) {
+      return false;
+    }
+
+    updateSelectedWaivers({
+      variables: {
+        modelPlanID: modelID,
+        changes
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          setDestinationURL(nextLocation.pathname);
+          blocker?.proceed?.();
+        } else {
+          setDestinationURL(nextLocation.pathname);
+          setIsErrorModalOpen(true);
+        }
+      })
+      .catch(() => {
+        setDestinationURL(nextLocation.pathname);
+        setIsErrorModalOpen(true);
+      });
+
+    return true;
+  });
+
+  useEffect(() => {
+    if (destinationURL && !isErrorModalOpen) {
+      blocker?.proceed?.();
+    }
+  }, [destinationURL, blocker, isErrorModalOpen]);
+
+  const closeErrorModal = ({
+    clearDestination = true
+  }: { clearDestination?: boolean } = {}) => {
+    setIsErrorModalOpen(false);
+    if (clearDestination) {
+      setDestinationURL('');
+    }
+  };
 
   if (loading) {
     return <Spinner size="large" />;
@@ -96,10 +172,12 @@ const WaiverSelectionAndConfirmation = () => {
 
       <div>
         <FormProvider {...methods}>
+          <WaiverInfoPanel />
+
           <MutationErrorModal
-            isOpen={mutationError.isModalOpen}
-            closeModal={mutationError.closeModal}
-            url={mutationError.destinationURL}
+            isOpen={isErrorModalOpen}
+            closeModal={closeErrorModal}
+            url={destinationURL}
           />
 
           <Form
@@ -115,11 +193,17 @@ const WaiverSelectionAndConfirmation = () => {
             <Fieldset>
               <ConfirmLeaveRHF />
 
-              {WAIVER_HEADINGS.map(waiverHeading => (
+              {ORDERED_WAIVER_TYPES.map(waiverType => (
                 <WaiverSelectionSection
-                  key={waiverHeading}
-                  waiverHeading={waiverHeading}
-                  waivers={data.modelPlan.questionnaires.waiverAssessmentSurvey}
+                  key={waiverType}
+                  waiverType={waiverType}
+                  suggestedCommonWaivers={
+                    data.modelPlan.waiverInfo.suggestedCommonWaivers
+                  }
+                  unusedWaivers={data.modelPlan.waiverInfo.unusedCommonWaivers}
+                  existingWaivers={
+                    data.modelPlan.questionnaires.waiverAssessmentSurvey.waivers
+                  }
                 />
               ))}
 

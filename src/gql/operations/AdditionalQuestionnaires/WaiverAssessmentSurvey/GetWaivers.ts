@@ -20,16 +20,14 @@ export default gql(/* GraphQL */ `
               waiverFocus
             }
           }
-
-          suggestedWaivers {
-            id
-            commonWaiverID
-            commonWaiver {
-              id
-              name
-              waiverType
-            }
-          }
+        }
+      }
+      waiverInfo {
+        suggestedCommonWaivers {
+          ...CommonWaiver
+        }
+        unusedCommonWaivers {
+          ...CommonWaiver
         }
       }
     }

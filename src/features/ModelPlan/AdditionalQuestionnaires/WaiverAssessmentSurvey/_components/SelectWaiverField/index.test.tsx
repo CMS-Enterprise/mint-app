@@ -3,11 +3,15 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { WaiverSelectionFields } from 'types/waivers';
+
 import SelectWaiverField from './index';
 
-type WaiverSelectionFields = {
-  willUseWaiver: boolean | null;
-  notUsingReason: string;
+const TEST_WAIVER_ID = 'test-waiver-id';
+const FIELD_PREFIX = `waivers.${TEST_WAIVER_ID}`;
+
+type FormValues = {
+  waivers: Record<string, WaiverSelectionFields>;
 };
 
 const FormWrapper = ({
@@ -15,24 +19,34 @@ const FormWrapper = ({
 }: {
   defaultValues?: Partial<WaiverSelectionFields>;
 }) => {
-  const methods = useForm<WaiverSelectionFields>({
+  const methods = useForm<FormValues>({
     defaultValues: {
-      willUseWaiver: null,
-      notUsingReason: '',
-      ...defaultValues
+      waivers: {
+        [TEST_WAIVER_ID]: {
+          willUseWaiver: null,
+          notUsingReason: '',
+          ...defaultValues
+        }
+      }
     }
   });
-  const notUsingReason = methods.watch('notUsingReason');
+  const notUsingReason = methods.watch(
+    `${FIELD_PREFIX}.notUsingReason` as `waivers.${string}.notUsingReason`
+  );
 
   return (
     <FormProvider {...methods}>
-      <SelectWaiverField />
+      <SelectWaiverField fieldPrefix={FIELD_PREFIX} />
       <span data-testid="notUsingReason-value">{notUsingReason}</span>
     </FormProvider>
   );
 };
 
 describe('SelectWaiverField', () => {
+  const yesTestId = `willUseWaiver-yes-waivers-${TEST_WAIVER_ID}`;
+  const noTestId = `willUseWaiver-no-waivers-${TEST_WAIVER_ID}`;
+  const notUsingReasonTestId = `notUsingReason-waivers-${TEST_WAIVER_ID}`;
+
   it('renders the label and yes/no options when no selection has been made', () => {
     render(<FormWrapper />);
 
@@ -44,28 +58,28 @@ describe('SelectWaiverField', () => {
         'Your answer to this question may reveal additional questions to be answered.'
       )
     ).toBeInTheDocument();
-    expect(screen.getByTestId('willUseWaiver-yes')).toBeInTheDocument();
-    expect(screen.getByTestId('willUseWaiver-no')).toBeInTheDocument();
+    expect(screen.getByTestId(yesTestId)).toBeInTheDocument();
+    expect(screen.getByTestId(noTestId)).toBeInTheDocument();
   });
 
   it('shows confirmation when yes is selected', async () => {
     const user = userEvent.setup();
     render(<FormWrapper />);
 
-    await user.click(screen.getByTestId('willUseWaiver-yes'));
+    await user.click(screen.getByTestId(yesTestId));
 
     expect(
       screen.getByText('You said your model will use this waiver.')
     ).toBeInTheDocument();
     expect(screen.getByText('Change response')).toBeInTheDocument();
-    expect(screen.queryByTestId('notUsingReason')).not.toBeInTheDocument();
+    expect(screen.queryByTestId(notUsingReasonTestId)).not.toBeInTheDocument();
   });
 
   it('shows confirmation and reason field when no is selected', async () => {
     const user = userEvent.setup();
     render(<FormWrapper />);
 
-    await user.click(screen.getByTestId('willUseWaiver-no'));
+    await user.click(screen.getByTestId(noTestId));
 
     expect(
       screen.getByText('You said your model will not use this waiver.')
@@ -76,18 +90,18 @@ describe('SelectWaiverField', () => {
         'Please explain why your model is not using this waiver.'
       )
     ).toBeInTheDocument();
-    expect(screen.getByTestId('notUsingReason')).toBeInTheDocument();
+    expect(screen.getByTestId(notUsingReasonTestId)).toBeInTheDocument();
   });
 
   it('resets to yes/no options when change response is clicked', async () => {
     const user = userEvent.setup();
     render(<FormWrapper />);
 
-    await user.click(screen.getByTestId('willUseWaiver-yes'));
+    await user.click(screen.getByTestId(yesTestId));
     await user.click(screen.getByText('Change response'));
 
-    expect(screen.getByTestId('willUseWaiver-yes')).toBeInTheDocument();
-    expect(screen.getByTestId('willUseWaiver-no')).toBeInTheDocument();
+    expect(screen.getByTestId(yesTestId)).toBeInTheDocument();
+    expect(screen.getByTestId(noTestId)).toBeInTheDocument();
     expect(
       screen.queryByText('You said your model will use this waiver.')
     ).not.toBeInTheDocument();
@@ -97,8 +111,8 @@ describe('SelectWaiverField', () => {
     const user = userEvent.setup();
     render(<FormWrapper />);
 
-    await user.click(screen.getByTestId('willUseWaiver-no'));
-    await user.type(screen.getByTestId('notUsingReason'), 'Some reason');
+    await user.click(screen.getByTestId(noTestId));
+    await user.type(screen.getByTestId(notUsingReasonTestId), 'Some reason');
     expect(screen.getByTestId('notUsingReason-value')).toHaveTextContent(
       'Some reason'
     );

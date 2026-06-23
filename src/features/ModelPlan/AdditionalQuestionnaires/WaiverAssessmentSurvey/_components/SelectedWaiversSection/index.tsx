@@ -1,13 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryBoxHeading } from '@trussworks/react-uswds';
+import type { CommonWaiverFragment } from 'gql/generated/graphql';
 import { useGetAllCommonWaiversQuery } from 'gql/generated/graphql';
 
 import Spinner from 'components/Spinner';
-
-import type { MedicaidPaymentSuggestedWaivers } from '../../MedicaidPaymentWaivers';
-import type { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
-import type { ProgramSuggestedWaivers } from '../../ProgramWaivers';
 
 const SelectedWaiversSection = ({
   selectedWaivers,
@@ -15,10 +12,7 @@ const SelectedWaiversSection = ({
   waiverTypeText,
   children
 }: {
-  selectedWaivers:
-    | MedicarePaymentSuggestedWaivers
-    | ProgramSuggestedWaivers
-    | MedicaidPaymentSuggestedWaivers;
+  selectedWaivers: CommonWaiverFragment[];
   waiverType: string;
   waiverTypeText: string;
   children?: React.ReactNode;
@@ -31,10 +25,6 @@ const SelectedWaiversSection = ({
 
   const filteredCommonWaivers = data?.commonWaivers.filter(
     waiver => waiver.waiverType === waiverType
-  );
-
-  const generateSelectedWaiverList = selectedWaivers.map(
-    waiver => waiver.commonWaiver.name
   );
 
   if (loading) {
@@ -60,13 +50,13 @@ const SelectedWaiversSection = ({
           className="margin-y-0 padding-left-3"
           style={{ columnCount: 2, columnGap: '1rem' }}
         >
-          {generateSelectedWaiverList.map(waiverName => (
+          {selectedWaivers.map(waiver => (
             <li
-              key={waiverName}
+              key={waiver.id}
               className="margin-y-0 padding-y-05 line-height-sans-5"
               style={{ breakInside: 'avoid' }}
             >
-              {waiverName}
+              {waiver.name}
             </li>
           ))}
         </ul>

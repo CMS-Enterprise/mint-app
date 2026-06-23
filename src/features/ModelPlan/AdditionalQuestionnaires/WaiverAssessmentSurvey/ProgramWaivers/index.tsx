@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Fieldset, Form, FormGroup, Label } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
+  CommonWaiverType,
   GetProgramWaiversQuery,
   TypedUpdateWaiverAssessmentSurveyDocument,
   useGetProgramWaiversQuery
@@ -28,12 +29,7 @@ import { filterSuggestedWaiversByType } from '../util';
 type ProgramWaiversData =
   GetProgramWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
-export type ProgramSuggestedWaivers = ProgramWaiversData['suggestedWaivers'];
-
-export type ProgramWaiversForm = Omit<
-  ProgramWaiversData,
-  '__typename' | 'id' | 'suggestedWaivers'
->;
+type ProgramWaiversForm = Omit<ProgramWaiversData, '__typename' | 'id'>;
 
 const defaultFormValues: ProgramWaiversForm = {
   impactsSiteOfCarePayments: null,
@@ -87,20 +83,17 @@ const ProgramWaivers = () => {
   });
 
   const mappedFormData = mapDefaultFormValues<
-    ProgramWaiversForm & { id?: string } & {
-      suggestedWaivers?: ProgramSuggestedWaivers;
-    }
+    ProgramWaiversForm & { id?: string }
   >(data?.modelPlan?.questionnaires.waiverAssessmentSurvey, {
     ...defaultFormValues,
-    id: '',
-    suggestedWaivers: []
+    id: ''
   });
 
-  const { id: waiverID, suggestedWaivers, ...formData } = mappedFormData;
+  const { id: waiverID, ...formData } = mappedFormData;
 
   const programSuggestedWaivers = filterSuggestedWaiversByType(
-    suggestedWaivers || [],
-    'PROGRAM_MEDICARE_BES'
+    data?.modelPlan?.waiverInfo.suggestedCommonWaivers || [],
+    CommonWaiverType.PROGRAM_MEDICARE_BE
   );
 
   const methods = useForm<ProgramWaiversForm>({
@@ -133,13 +126,13 @@ const ProgramWaivers = () => {
   return (
     <div className="mint-body-normal">
       <FormHeader
-        header={waiverAssessmentSurveyMiscT('programWaivers.heading')}
+        header={waiverAssessmentSurveyMiscT('PROGRAM_MEDICARE_BE.heading')}
         currentPage={4}
         totalPages={7}
       />
 
       <p className="margin-top-neg-1 margin-bottom-4 text-base-dark">
-        {waiverAssessmentSurveyMiscT('programWaivers.description')}
+        {waiverAssessmentSurveyMiscT('PROGRAM_MEDICARE_BE.description')}
       </p>
 
       <div className="tablet:grid-col-6">
@@ -206,7 +199,7 @@ const ProgramWaivers = () => {
                 selectedWaivers={programSuggestedWaivers || []}
                 waiverType="PROGRAM_MEDICARE_BES"
                 waiverTypeText={waiverAssessmentSurveyMiscT(
-                  'programWaivers.waiverTypeText'
+                  'PROGRAM_MEDICARE_BE.waiverTypeText'
                 )}
               />
 

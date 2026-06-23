@@ -19,6 +19,11 @@ SELECT
     cw.created_by,
     cw.created_dts,
     cw.modified_by,
-    cw.modified_dts
+    cw.modified_dts,
+    -- These fields are used when getting in scope of a model plan.
+    CAST(NULL AS UUID) AS model_plan_id,
+    CAST(NULL AS BOOLEAN) AS will_use_waiver,
+    NULL AS not_using_reason,
+    CAST(NULL AS UUID) AS suggested_waiver_id
 FROM common_waiver AS cw
 INNER JOIN QUERIED_IDS ON cw.id = QUERIED_IDS.id

@@ -1,8 +1,8 @@
-import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import React, { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { Form, GridContainer } from '@trussworks/react-uswds';
+import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetCommonWaiverQuery } from 'gql/generated/graphql';
 
@@ -14,32 +14,53 @@ import {
 import Divider from 'components/Divider';
 import ExternalLink from 'components/ExternalLink';
 import Sidepanel from 'components/Sidepanel';
+import { WaiverSelectionForm } from 'types/waivers';
 
+import {
+  getCommonWaiverMockData,
+  MOCK_WAIVERS_ENABLED
+} from '../../mockWaiversData';
 import SelectWaiverField from '../SelectWaiverField';
 
-type WaiverInfoFields = {
-  willUseWaiver: boolean | null;
-  notUsingReason: string;
-};
-
-type WaiverInfoPanelProps = {
-  waiverInfo: WaiverInfoFields;
-};
-
-const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
+/**
+ * Side panel for viewing common waiver details and selecting whether to use it.
+ * Must be rendered within a FormProvider.
+ */
+const WaiverInfoPanel = () => {
   const { t } = useTranslation('waiverAssessmentSurveyMisc');
   const [searchParams, setSearchParams] = useSearchParams();
   const waiverId = searchParams.get('waiverId') ?? '';
 
   const location = useLocation();
-  const isReadview = location.pathname.includes('read-view');
+  const isReadView = location.pathname.includes('read-view');
 
-  const { data } = useGetCommonWaiverQuery({
+  const { getValues, setValue } = useFormContext<WaiverSelectionForm>();
+
+  const { data: queryData } = useGetCommonWaiverQuery({
     variables: {
       id: waiverId
     },
-    skip: !waiverId
+    skip: !waiverId || MOCK_WAIVERS_ENABLED
   });
+
+  const data = MOCK_WAIVERS_ENABLED
+    ? getCommonWaiverMockData(waiverId)
+    : queryData;
+
+  useEffect(() => {
+    if (!waiverId) {
+      return;
+    }
+
+    const existingFields = getValues(`waivers.${waiverId}`);
+
+    if (!existingFields) {
+      setValue(`waivers.${waiverId}`, {
+        willUseWaiver: null,
+        notUsingReason: ''
+      });
+    }
+  }, [waiverId, getValues, setValue]);
 
   const closeModal = () => {
     setSearchParams(prev => {
@@ -48,8 +69,6 @@ const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
       return nextParams;
     });
   };
-
-  const { willUseWaiver, notUsingReason } = waiverInfo;
 
   const {
     cmmiWaiverPointOfContact,
@@ -63,13 +82,6 @@ const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
     hasClaimsDataOrRREGAnalysis,
     isUsedInActiveModels
   } = data?.commonWaiver || {};
-
-  const methods = useForm<WaiverInfoFields>({
-    defaultValues: {
-      willUseWaiver,
-      notUsingReason
-    }
-  });
 
   return (
     <Sidepanel
@@ -109,7 +121,9 @@ const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
               term={t('waiverInfoPanel.waiverType')}
               className="margin-bottom-0 margin-top-3"
             />
-            <DescriptionDefinition definition={waiverType} />
+            <DescriptionDefinition
+              definition={t(`${waiverType}.waiverTypeText`)}
+            />
 
             <DescriptionTerm
               term={t('waiverInfoPanel.waiverFocus')}
@@ -146,17 +160,11 @@ const WaiverInfoPanel = ({ waiverInfo }: WaiverInfoPanelProps) => {
             />
           </DescriptionList>
 
-          {!isReadview && (
-            <Form
-              className="maxw-none"
-              onSubmit={methods.handleSubmit(() => {})}
-            >
-              <FormProvider {...methods}>
-                <Divider className="margin-top-3 margin-bottom-4" />
-
-                <SelectWaiverField />
-              </FormProvider>
-            </Form>
+          {!isReadView && (
+            <>
+              <Divider className="margin-top-3 margin-bottom-4" />
+              <SelectWaiverField fieldPrefix={`waivers.${waiverId}`} />
+            </>
           )}
         </div>
       </GridContainer>

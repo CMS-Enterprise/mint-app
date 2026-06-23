@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Fieldset, Form, FormGroup, Label } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
+  CommonWaiverType,
   GetMedicarePaymentWaiversQuery,
   TypedUpdateWaiverAssessmentSurveyDocument,
   useGetMedicarePaymentWaiversQuery
@@ -25,15 +26,12 @@ import SelectedWaiversSection from '../_components/SelectedWaiversSection';
 import WaiverSurveyQuestion from '../_components/WaiverSurveyQuestion';
 import { filterSuggestedWaiversByType } from '../util';
 
-export type MedicarePaymentWaiversData =
+type MedicarePaymentWaiversData =
   GetMedicarePaymentWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
-export type MedicarePaymentSuggestedWaivers =
-  MedicarePaymentWaiversData['suggestedWaivers'];
-
-export type MedicarePaymentWaiversForm = Omit<
+type MedicarePaymentWaiversForm = Omit<
   MedicarePaymentWaiversData,
-  '__typename' | 'id' | 'suggestedWaivers'
+  '__typename' | 'id'
 >;
 
 const defaultFormValues: MedicarePaymentWaiversForm = {
@@ -80,20 +78,17 @@ const MedicarePaymentWaivers = () => {
   });
 
   const mappedFormData = mapDefaultFormValues<
-    MedicarePaymentWaiversForm & { id?: string } & {
-      suggestedWaivers?: MedicarePaymentSuggestedWaivers;
-    }
+    MedicarePaymentWaiversForm & { id?: string }
   >(data?.modelPlan?.questionnaires.waiverAssessmentSurvey, {
     ...defaultFormValues,
-    id: '',
-    suggestedWaivers: []
+    id: ''
   });
 
-  const { id: waiverID, suggestedWaivers, ...formData } = mappedFormData;
+  const { id: waiverID, ...formData } = mappedFormData;
 
   const medicareSuggestedWaivers = filterSuggestedWaiversByType(
-    suggestedWaivers || [],
-    'MEDICARE_PAYMENT'
+    data?.modelPlan?.waiverInfo.suggestedCommonWaivers || [],
+    CommonWaiverType.MEDICARE_PAYMENT
   );
 
   const methods = useForm<MedicarePaymentWaiversForm>({
@@ -126,13 +121,13 @@ const MedicarePaymentWaivers = () => {
   return (
     <div className="mint-body-normal">
       <FormHeader
-        header={waiverAssessmentSurveyMiscT('medicarePaymentWaivers.heading')}
+        header={waiverAssessmentSurveyMiscT('MEDICARE_PAYMENT.heading')}
         currentPage={3}
         totalPages={7}
       />
 
       <p className="margin-top-neg-1 margin-bottom-4 text-base-dark">
-        {waiverAssessmentSurveyMiscT('medicarePaymentWaivers.description')}
+        {waiverAssessmentSurveyMiscT('MEDICARE_PAYMENT.description')}
       </p>
 
       <div className="tablet:grid-col-6">
@@ -195,7 +190,7 @@ const MedicarePaymentWaivers = () => {
                 selectedWaivers={medicareSuggestedWaivers || []}
                 waiverType="MEDICARE_PAYMENT"
                 waiverTypeText={waiverAssessmentSurveyMiscT(
-                  'medicarePaymentWaivers.waiverTypeText'
+                  'MEDICARE_PAYMENT.waiverTypeText'
                 )}
               />
 

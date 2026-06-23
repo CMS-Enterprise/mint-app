@@ -31,14 +31,7 @@ const LearnMoreButton = ({
   return (
     <>
       {/* Selected waiver at this point should be willUseWaiver and has no notUsingReason */}
-      {shouldPanelOpen && (
-        <WaiverInfoPanel
-          waiverInfo={{
-            willUseWaiver: true,
-            notUsingReason: ''
-          }}
-        />
-      )}
+      {shouldPanelOpen && <WaiverInfoPanel />}
 
       <Button
         type="button"

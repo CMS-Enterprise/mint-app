@@ -7,15 +7,6 @@ export default gql(/* GraphQL */ `
       questionnaires {
         waiverAssessmentSurvey {
           id
-          suggestedWaivers {
-            id
-            commonWaiverID
-            commonWaiver {
-              id
-              name
-              waiverType
-            }
-          }
           # Page 5 - Medicaid payment waivers
           impactsMedicaidOnlyBeneficiaries
           impactsMedicaidOnlyBeneficiariesExample
@@ -30,6 +21,11 @@ export default gql(/* GraphQL */ `
           impactsManagedCareWaiversWhyNot
 
           additionalMedicaidSpecificWaivers
+        }
+      }
+      waiverInfo {
+        suggestedCommonWaivers {
+          ...CommonWaiver
         }
       }
     }

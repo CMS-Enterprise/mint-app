@@ -1,7 +1,7 @@
 meta {
   name: Update Waiver
   type: graphql
-  seq: 3
+  seq: 6
 }
 
 post {
@@ -17,8 +17,8 @@ auth:apikey {
 }
 
 body:graphql {
-  mutation updateWaiver($id: UUID!, $changes: WaiverChanges!) {
-    updateWaiver(id: $id, changes: $changes) {
+  mutation updateWaiver($modelPlanID: UUID!, $commonWaiverID: UUID!, $changes: WaiverChanges!) {
+    updateWaiver(modelPlanID: $modelPlanID, commonWaiverID: $commonWaiverID, changes: $changes) {
       id
       modelPlanID
       commonWaiverID
@@ -39,7 +39,8 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "id": "{{waiverID}}",
+    "modelPlanID": "{{modelPlanID}}",
+    "commonWaiverID": "{{commonWaiverID}}",
     "changes": {
       "willUseWaiver": true,
       "notUsingReason": null

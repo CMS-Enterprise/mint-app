@@ -1,22 +1,21 @@
 import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import Modal from 'react-modal';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
+  CommonWaiverType,
   GetCommonWaiverDocument,
   GetCommonWaiverQuery,
   GetCommonWaiverQueryVariables
 } from 'gql/generated/graphql';
 
+import { WaiverSelectionForm } from 'types/waivers';
+
 import WaiverInfoPanel from './index';
 
 const waiverId = '15736fa3-d5d0-4c2e-a233-2a59113b9806';
-
-const defaultWaiverInfo = {
-  willUseWaiver: null,
-  notUsingReason: ''
-};
 
 const commonWaiverMockData: GetCommonWaiverQuery['commonWaiver'] = {
   __typename: 'CommonWaiver',
@@ -25,7 +24,7 @@ const commonWaiverMockData: GetCommonWaiverQuery['commonWaiver'] = {
   description: 'Test waiver description',
   participationAgreementLanguageLink: 'https://example.com/pal',
   cmmiWaiverPointOfContact: 'Jane Doe',
-  waiverType: 'Payment',
+  waiverType: CommonWaiverType.MEDICARE_PAYMENT,
   waiverFocus: 'Site of care',
   whatIsWaived: 'Some regulation',
   hasStandardizationEffort: true,
@@ -51,6 +50,21 @@ const getCommonWaiver = (
   }
 });
 
+const FormWrapper = ({ children }: { children: React.ReactNode }) => {
+  const methods = useForm<WaiverSelectionForm>({
+    defaultValues: {
+      waivers: {
+        [waiverId]: {
+          willUseWaiver: null,
+          notUsingReason: ''
+        }
+      }
+    }
+  });
+
+  return <FormProvider {...methods}>{children}</FormProvider>;
+};
+
 const renderPanel = ({
   search = '',
   mocks = [getCommonWaiver()]
@@ -62,7 +76,11 @@ const renderPanel = ({
     [
       {
         path: '/',
-        element: <WaiverInfoPanel waiverInfo={defaultWaiverInfo} />
+        element: (
+          <FormWrapper>
+            <WaiverInfoPanel />
+          </FormWrapper>
+        )
       }
     ],
     {
@@ -101,7 +119,7 @@ describe('WaiverInfoPanel', () => {
       screen.getByText('Link to Participation Agreement Language')
     ).toBeInTheDocument();
     expect(screen.getByText('Jane Doe')).toBeInTheDocument();
-    expect(screen.getByText('Payment')).toBeInTheDocument();
+    expect(screen.getByText('Medicare payment waivers')).toBeInTheDocument();
     expect(screen.getByText('Site of care')).toBeInTheDocument();
     expect(screen.getByText('Some regulation')).toBeInTheDocument();
     expect(
@@ -127,7 +145,7 @@ describe('WaiverInfoPanel', () => {
       [
         {
           path: '/read-view',
-          element: <WaiverInfoPanel waiverInfo={defaultWaiverInfo} />
+          element: <WaiverInfoPanel />
         }
       ],
       {

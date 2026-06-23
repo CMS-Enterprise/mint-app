@@ -1,7 +1,7 @@
 package storage
 
 import (
-	_ "embed"
+	"fmt"
 
 	"github.com/lib/pq"
 
@@ -11,26 +11,46 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-// WaiverCreate creates a new waiver row.
-// TODO (MINT-3718): Call this when creating waivers from suggested waivers once that logic is implemented.
-func WaiverCreate(np sqlutils.NamedPreparer, _ *zap.Logger, waiver *models.Waiver) (*models.Waiver, error) {
+// WaiverUpsert creates the waiver row if it does not exist, otherwise updates
+// will_use_waiver and not_using_reason. Used by the bulk updateSelectedWaivers mutation.
+func WaiverUpsert(np sqlutils.NamedPreparer, _ *zap.Logger, waiver *models.Waiver) (*models.Waiver, error) {
 	waiver.ID = utilityuuid.ValueOrNewUUID(waiver.ID)
-	return sqlutils.GetProcedure[models.Waiver](np, sqlqueries.Waiver.Create, waiver)
+	return sqlutils.GetProcedure[models.Waiver](np, sqlqueries.Waiver.Upsert, waiver)
 }
 
-// WaiverGetByID returns a waiver row for a given id
-func WaiverGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.Waiver, error) {
-	return sqlutils.GetProcedure[models.Waiver](np, sqlqueries.Waiver.GetByID, utilitysql.CreateIDQueryMap(id))
-}
+// WaiverUpsertCollection inserts or updates a collection of waiver rows in a single SQL statement.
+// Accepts a JSON array via JSON_TO_RECORDSET; intended to be called within a transaction.
+func WaiverUpsertCollection(np sqlutils.NamedPreparer, _ *zap.Logger, waivers []*models.Waiver) ([]*models.Waiver, error) {
+	mapSlice := make([]map[string]interface{}, 0, len(waivers))
+	for _, w := range waivers {
+		w.ID = utilityuuid.ValueOrNewUUID(w.ID)
+		wMap, err := models.StructToMap(*w)
+		if err != nil {
+			return nil, fmt.Errorf("issue serializing waiver collection: %w", err)
+		}
+		mapSlice = append(mapSlice, wMap)
+	}
 
-// WaiverUpdate updates a waiver row for a given id
-func WaiverUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, waiver *models.Waiver) (*models.Waiver, error) {
-	return sqlutils.GetProcedure[models.Waiver](np, sqlqueries.Waiver.Update, waiver)
+	jsonWaivers, err := models.MapArrayToJSONArray(mapSlice)
+	if err != nil {
+		return nil, fmt.Errorf("issue converting waiver collection to JSON: %w", err)
+	}
+
+	stmt, err := np.PrepareNamed(sqlqueries.Waiver.UpsertCollection)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	var results []*models.Waiver
+	if err := stmt.Select(&results, map[string]interface{}{"paramTableJSON": jsonWaivers}); err != nil {
+		return nil, err
+	}
+	return results, nil
 }
 
 // WaiverGetByModelPlanIDLoader returns ALL waivers for the given model plan ids (one-to-many).
