@@ -57,6 +57,9 @@ import SupportingDocumentsUpload from './SupportingDocumentsUpload';
 
 const SELECT_DEFAULT = 'default';
 
+const isCmmiGroupRequiringDivision = (cmmiGroup: string) =>
+  cmmiGroup !== SELECT_DEFAULT && cmmiGroup !== CtatcmmiGroupOption.OTHER;
+
 export type CtatTicketFormValues = {
   cmmiGroup: string;
   cmmiGroupOther: string;
@@ -138,13 +141,14 @@ const CtatTicketForm = ({
     handleSubmit,
     watch,
     setValue,
+    getValues,
+    clearErrors,
     formState: { isSubmitting, isDirty, isValid }
   } = methods;
 
   const selectedCmmiGroup = watch('cmmiGroup');
   const isCmmiDivisionRequired =
-    selectedCmmiGroup !== SELECT_DEFAULT &&
-    selectedCmmiGroup !== CtatcmmiGroupOption.OTHER;
+    isCmmiGroupRequiringDivision(selectedCmmiGroup);
 
   const defaultSelectOption = {
     value: SELECT_DEFAULT,
@@ -260,6 +264,12 @@ const CtatTicketForm = ({
   useEffect(() => {
     setIsDirty(isDirty);
   }, [isDirty, setIsDirty]);
+
+  useEffect(() => {
+    if (!isCmmiDivisionRequired) {
+      clearErrors(['cmmiDivision', 'cmmiDivisionOther']);
+    }
+  }, [isCmmiDivisionRequired, clearErrors]);
 
   useEffect(() => {
     setDisableButton(!isValid || isSubmitting);
@@ -424,12 +434,15 @@ const CtatTicketForm = ({
                     id="cmmi-group"
                     value={field.value}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                      const newGroup = e.target.value;
                       field.onChange(e);
-                      setValue('cmmiDivision', SELECT_DEFAULT, {
-                        shouldValidate: true
-                      });
+                      setValue('cmmiDivision', SELECT_DEFAULT);
                       setValue('cmmiDivisionOther', '');
                       setValue('cmmiGroupOther', '');
+
+                      if (newGroup === CtatcmmiGroupOption.OTHER) {
+                        clearErrors(['cmmiDivision', 'cmmiDivisionOther']);
+                      }
                     }}
                   >
                     {[defaultSelectOption, ...cmmiGroupOptions].map(option => (
@@ -483,27 +496,35 @@ const CtatTicketForm = ({
               name="cmmiDivision"
               control={control}
               rules={{
-                validate: value =>
-                  !isCmmiDivisionRequired ||
-                  value !== SELECT_DEFAULT ||
-                  t('ctatSidePanel.validation.fillOut')
+                validate: value => {
+                  if (!isCmmiGroupRequiringDivision(getValues('cmmiGroup'))) {
+                    return true;
+                  }
+
+                  return (
+                    value !== SELECT_DEFAULT ||
+                    t('ctatSidePanel.validation.fillOut')
+                  );
+                }
               }}
               render={({ field: { ref, ...field }, fieldState: { error } }) => (
                 <FormGroup
-                  error={!!error}
+                  error={!!error && isCmmiDivisionRequired}
                   className="margin-top-0 margin-bottom-3"
                 >
                   <Label
                     htmlFor="cmmi-division"
                     className="maxw-none text-bold"
-                    requiredMarker
+                    requiredMarker={isCmmiDivisionRequired}
                   >
                     {t('ctatSidePanel.fields.cmmiDivision.label')}
                   </Label>
                   <HelpText className="margin-top-05">
                     {t('ctatSidePanel.fields.cmmiDivision.hint')}
                   </HelpText>
-                  {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                  {!!error && isCmmiDivisionRequired && (
+                    <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                  )}
                   <Select
                     {...field}
                     inputRef={ref}
