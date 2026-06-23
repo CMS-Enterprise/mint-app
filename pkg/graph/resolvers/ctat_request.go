@@ -9,7 +9,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/samber/lo"
-
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
@@ -141,36 +140,15 @@ func CTATRequestDocumentGetByCTATRequestIDLOADER(ctx context.Context, ctatReques
 
 // CTATRelatedMINTModelsGetByCTATRequestIDLOADER resolves CTAT-related MINT model plans for a CTAT request using loaders.
 func CTATRelatedMINTModelsGetByCTATRequestIDLOADER(ctx context.Context, ctatRequestID uuid.UUID) ([]*models.ModelPlan, error) {
-	links, err := loaders.CTATRequestModelPlanLink.ByCTATRequestID.Load(ctx, ctatRequestID)
+	plans, err := loaders.ModelPlan.ByCTATRequestID.Load(ctx, ctatRequestID)
 	if err != nil {
 		return nil, err
 	}
-	if len(links) == 0 {
+	if plans == nil {
 		return []*models.ModelPlan{}, nil
 	}
 
-	ids := make([]uuid.UUID, len(links))
-	for i, link := range links {
-		ids[i] = link.ModelPlanID
-	}
-
-	plans, errs := loaders.ModelPlan.GetByID.LoadMany(ctx, ids)
-	for _, err := range errs {
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	relatedModels := make([]*models.ModelPlan, 0, len(plans))
-	for _, plan := range plans {
-		if plan == nil {
-			return nil, fmt.Errorf("model plan not found while resolving CTAT related MINT models")
-		}
-
-		relatedModels = append(relatedModels, plan)
-	}
-
-	return relatedModels, nil
+	return plans, nil
 }
 
 // CTATRequestCreate implements resolver logic to create a CTAT request, related model links,
