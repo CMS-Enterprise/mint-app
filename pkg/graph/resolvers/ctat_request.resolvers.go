@@ -39,7 +39,7 @@ func (r *cTATRequestResolver) SupportingDocuments(ctx context.Context, obj *mode
 		return documents, nil
 	}
 
-	err = storage.CTATRequestDocumentsUpdateVirusScanStatuses(r.fileUploadS3Client, documents)
+	err = storage.CTATRequestDocumentsUpdateVirusScanStatuses(ctx, r.fileUploadS3Client, documents)
 	if err != nil {
 		return nil, err
 	}
