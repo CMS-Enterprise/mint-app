@@ -47,19 +47,6 @@ func (r *cTATRequestResolver) SupportingDocuments(ctx context.Context, obj *mode
 	return documents, nil
 }
 
-// DownloadURL is the resolver for the downloadUrl field.
-func (r *cTATRequestDocumentResolver) DownloadURL(ctx context.Context, obj *models.CTATRequestDocument) (*string, error) {
-	if obj.URL != nil && *obj.URL != "" {
-		return nil, nil
-	}
-	url, err := r.fileUploadS3Client.NewGetPresignedURL(ctx, obj.FileKey)
-	if err != nil {
-		return nil, err
-	}
-
-	return url, nil
-}
-
 // CreateCTATRequest is the resolver for the createCTATRequest field.
 func (r *mutationResolver) CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error) {
 	principal := appcontext.Principal(ctx)
@@ -126,10 +113,4 @@ func (r *queryResolver) CtatRequestsAdmin(ctx context.Context) (*model.CTATReque
 // CTATRequest returns generated.CTATRequestResolver implementation.
 func (r *Resolver) CTATRequest() generated.CTATRequestResolver { return &cTATRequestResolver{r} }
 
-// CTATRequestDocument returns generated.CTATRequestDocumentResolver implementation.
-func (r *Resolver) CTATRequestDocument() generated.CTATRequestDocumentResolver {
-	return &cTATRequestDocumentResolver{r}
-}
-
 type cTATRequestResolver struct{ *Resolver }
-type cTATRequestDocumentResolver struct{ *Resolver }
