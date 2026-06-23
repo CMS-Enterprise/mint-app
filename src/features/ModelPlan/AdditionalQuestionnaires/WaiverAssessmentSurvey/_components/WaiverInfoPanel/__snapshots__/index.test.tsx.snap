@@ -129,7 +129,7 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
                   <dd
                     class="description-definition margin-0"
                   >
-                    Payment
+                    Medicare payment waivers
                   </dd>
                   <dt
                     class="text-bold margin-bottom-05 margin-bottom-0 margin-top-3"
@@ -185,99 +185,94 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
                 <div
                   class="mint-divider margin-top-3 margin-bottom-4"
                 />
-                <form
-                  class="usa-form maxw-none"
-                  data-testid="form"
+                <div
+                  class="usa-form-group"
+                  data-testid="formGroup"
                 >
-                  <div
-                    class="usa-form-group"
-                    data-testid="formGroup"
+                  <label
+                    class="usa-label"
+                    data-testid="label"
+                    for="willUseWaiver-yes-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                    id="willUseWaiverLabel-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
                   >
-                    <label
-                      class="usa-label"
-                      data-testid="label"
-                      for="willUseWaiver-yes"
-                      id="willUseWaiverLabel"
-                    >
-                      Do you plan to use this waiver with your model?
-                    </label>
-                    <div
-                      class="mint-help-text"
-                      id="willUseWaiverHelpText"
-                    >
-                      Your answer to this question may reveal additional questions to be answered.
-                    </div>
-                    <fieldset
-                      aria-describedby="willUseWaiverHelpText"
-                      aria-labelledby="willUseWaiverLabel"
-                      class="usa-fieldset mint-yes-no-button-group margin-top-2"
-                      data-testid="fieldset"
-                    >
-                      <div
-                        class="mint-yes-no-button mint-yes-no-button--yes"
-                      >
-                        <input
-                          data-testid="willUseWaiver-yes"
-                          id="willUseWaiver-yes"
-                          name="willUseWaiver"
-                          type="radio"
-                          value="true"
-                        />
-                        <label
-                          class="usa-button"
-                          for="willUseWaiver-yes"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="usa-icon"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
-                            />
-                          </svg>
-                          Yes
-                        </label>
-                      </div>
-                      <div
-                        class="mint-yes-no-button mint-yes-no-button--no"
-                      >
-                        <input
-                          data-testid="willUseWaiver-no"
-                          id="willUseWaiver-no"
-                          name="willUseWaiver"
-                          type="radio"
-                          value="false"
-                        />
-                        <label
-                          class="usa-button"
-                          for="willUseWaiver-no"
-                        >
-                          <svg
-                            aria-hidden="true"
-                            class="usa-icon"
-                            focusable="false"
-                            height="1em"
-                            role="img"
-                            viewBox="0 0 24 24"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                            />
-                          </svg>
-                          No
-                        </label>
-                      </div>
-                    </fieldset>
+                    Do you plan to use this waiver with your model?
+                  </label>
+                  <div
+                    class="mint-help-text"
+                    id="willUseWaiverHelpText-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                  >
+                    Your answer to this question may reveal additional questions to be answered.
                   </div>
-                </form>
+                  <fieldset
+                    aria-describedby="willUseWaiverHelpText-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                    aria-labelledby="willUseWaiverLabel-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                    class="usa-fieldset mint-yes-no-button-group margin-top-2"
+                    data-testid="fieldset"
+                  >
+                    <div
+                      class="mint-yes-no-button mint-yes-no-button--yes"
+                    >
+                      <input
+                        data-testid="willUseWaiver-yes-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                        id="willUseWaiver-yes-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                        name="waivers.15736fa3-d5d0-4c2e-a233-2a59113b9806.willUseWaiver"
+                        type="radio"
+                        value="true"
+                      />
+                      <label
+                        class="usa-button"
+                        for="willUseWaiver-yes-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="usa-icon"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"
+                          />
+                        </svg>
+                        Yes
+                      </label>
+                    </div>
+                    <div
+                      class="mint-yes-no-button mint-yes-no-button--no"
+                    >
+                      <input
+                        data-testid="willUseWaiver-no-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                        id="willUseWaiver-no-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                        name="waivers.15736fa3-d5d0-4c2e-a233-2a59113b9806.willUseWaiver"
+                        type="radio"
+                        value="false"
+                      />
+                      <label
+                        class="usa-button"
+                        for="willUseWaiver-no-waivers-15736fa3-d5d0-4c2e-a233-2a59113b9806"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="usa-icon"
+                          focusable="false"
+                          height="1em"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                        No
+                      </label>
+                    </div>
+                  </fieldset>
+                </div>
               </div>
             </div>
           </div>

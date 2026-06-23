@@ -1,6 +1,7 @@
 import { TranslationWaiverAssessmentSurvey } from 'types/translation';
 
 import {
+  CommonWaiverType,
   NotSelectedReason,
   TranslationDataType,
   TranslationFormType
@@ -484,6 +485,30 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
   }
 };
 
+const waiverTypes: Record<
+  CommonWaiverType,
+  { heading: string; description: string; waiverTypeText: string }
+> = {
+  [CommonWaiverType.MEDICARE_PAYMENT]: {
+    heading: 'Medicare payment waivers',
+    description:
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    waiverTypeText: 'Medicare payment waivers'
+  },
+  [CommonWaiverType.MEDICAID_PAYMENT]: {
+    heading: 'Medicaid payment waivers',
+    description:
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    waiverTypeText: 'Medicaid payment waivers'
+  },
+  [CommonWaiverType.PROGRAM_MEDICARE_BE]: {
+    heading: 'Program waivers - Medicare Benefit Enhancements (BEs)',
+    description:
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    waiverTypeText: 'Program waivers (Medicare BEs)'
+  }
+};
+
 const waiverAssessmentSurveyMisc = {
   heading: 'Waiver Assessment Survey',
   bannerText:
@@ -565,6 +590,7 @@ const waiverAssessmentSurveyMisc = {
       'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
     waiverTypeText: 'Medicaid payment waivers'
   },
+  ...waiverTypes,
   waiverSelectionAndConfirmation: {
     heading: 'Waiver selection and confirmation',
     description:

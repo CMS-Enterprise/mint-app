@@ -1,4 +1,8 @@
-import { CommonWaiverType, ModelCategory } from 'gql/generated/graphql';
+import {
+  CommonWaiverFragment,
+  CommonWaiverType,
+  ModelCategory
+} from 'gql/generated/graphql';
 import { modelPlanQuestionsDataMocks } from 'tests/mock/general';
 import { describe, expect, it } from 'vitest';
 
@@ -7,7 +11,6 @@ import {
   ModelPlanQuestionsFormTypeWithLinks
 } from './_components/ModelPlanQuestionsForm';
 import { QuestionType } from './_components/ModelPlanQuestionsForm/questionMap';
-import { MedicarePaymentSuggestedWaivers } from './MedicarePaymentWaivers';
 import {
   filterSuggestedWaiversByType,
   formattedLabel,
@@ -332,96 +335,66 @@ describe('ModelPlanQuestions Utilities', () => {
 
 describe('filterSuggestedWaiversByType', () => {
   it('filters suggested waivers by waiver type', () => {
-    const mockSuggestedWaivers: MedicarePaymentSuggestedWaivers = [
+    const mockSuggestedWaivers: CommonWaiverFragment[] = [
       {
-        __typename: 'SuggestedWaiver',
-        id: '111',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: CommonWaiverType.MEDICARE_PAYMENT,
-          name: 'Common Waiver 1',
-          id: '123'
-        },
-        commonWaiverID: '123'
+        __typename: 'CommonWaiver',
+        id: '123',
+        waiverType: CommonWaiverType.MEDICARE_PAYMENT,
+        name: 'Common Waiver 1'
       },
       {
-        __typename: 'SuggestedWaiver',
-        id: '222',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
-          name: 'Common Waiver 2',
-          id: '124'
-        },
-        commonWaiverID: '124'
+        __typename: 'CommonWaiver',
+        id: '124',
+        waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
+        name: 'Common Waiver 2'
       },
       {
-        __typename: 'SuggestedWaiver',
-        id: '333',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: CommonWaiverType.MEDICAID_PAYMENT,
-          name: 'Common Waiver 3',
-          id: '125'
-        },
-        commonWaiverID: '125'
+        __typename: 'CommonWaiver',
+        id: '125',
+        waiverType: CommonWaiverType.MEDICAID_PAYMENT,
+        name: 'Common Waiver 3'
       }
     ];
 
     const medicareWaivers = filterSuggestedWaiversByType(
       mockSuggestedWaivers,
-      'MEDICARE_PAYMENT'
+      CommonWaiverType.MEDICARE_PAYMENT
     );
 
     expect(medicareWaivers).toEqual([
       {
-        __typename: 'SuggestedWaiver',
-        id: '111',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: CommonWaiverType.MEDICARE_PAYMENT,
-          name: 'Common Waiver 1',
-          id: '123'
-        },
-        commonWaiverID: '123'
+        __typename: 'CommonWaiver',
+        id: '123',
+        waiverType: CommonWaiverType.MEDICARE_PAYMENT,
+        name: 'Common Waiver 1'
       }
     ]);
 
     const programWaivers = filterSuggestedWaiversByType(
       mockSuggestedWaivers,
-      'PROGRAM_MEDICARE_BES'
+      CommonWaiverType.PROGRAM_MEDICARE_BE
     );
 
     expect(programWaivers).toEqual([
       {
-        __typename: 'SuggestedWaiver',
-        id: '222',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
-          name: 'Common Waiver 2',
-          id: '124'
-        },
-        commonWaiverID: '124'
+        __typename: 'CommonWaiver',
+        id: '124',
+        waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
+        name: 'Common Waiver 2'
       }
     ]);
 
     const medicaidWaivers = filterSuggestedWaiversByType(
       mockSuggestedWaivers,
-      'MEDICAID_PAYMENT'
+      CommonWaiverType.MEDICAID_PAYMENT
     );
 
     expect(medicaidWaivers).toEqual([
       {
-        __typename: 'SuggestedWaiver',
-        id: '333',
-        commonWaiver: {
-          __typename: 'CommonWaiver',
-          waiverType: CommonWaiverType.MEDICAID_PAYMENT,
-          name: 'Common Waiver 3',
-          id: '125'
-        },
-        commonWaiverID: '125'
+        __typename: 'CommonWaiver',
+        id: '125',
+        waiverType: CommonWaiverType.MEDICAID_PAYMENT,
+        name: 'Common Waiver 3'
       }
     ]);
   });

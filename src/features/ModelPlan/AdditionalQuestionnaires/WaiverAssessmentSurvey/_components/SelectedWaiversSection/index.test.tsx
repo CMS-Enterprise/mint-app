@@ -1,33 +1,24 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
+import { CommonWaiverFragment, CommonWaiverType } from 'gql/generated/graphql';
 import { allCommonWaiversMocks } from 'tests/mock/general';
 import MockedProvider from 'tests/MockedProvider';
 
-import { MedicarePaymentSuggestedWaivers } from '../../MedicarePaymentWaivers';
-
 import SelectedWaiversSection from './index';
 
-const MOCK_SELECTED_WAIVERS: MedicarePaymentSuggestedWaivers = [
+const MOCK_SELECTED_WAIVERS: CommonWaiverFragment[] = [
   {
-    __typename: 'SuggestedWaiver',
-    id: '456',
-    commonWaiver: {
-      __typename: 'CommonWaiver',
-      name: 'short Waiver 2',
-      id: '123'
-    },
-    commonWaiverID: '1123'
+    __typename: 'CommonWaiver',
+    id: '123',
+    name: 'short Waiver 2',
+    waiverType: CommonWaiverType.MEDICARE_PAYMENT
   },
   {
-    __typename: 'SuggestedWaiver',
-    id: '789',
-    commonWaiver: {
-      __typename: 'CommonWaiver',
-      name: 'Waiver 3',
-      id: '124'
-    },
-    commonWaiverID: '1124'
+    __typename: 'CommonWaiver',
+    id: '124',
+    name: 'Waiver 3',
+    waiverType: CommonWaiverType.MEDICARE_PAYMENT
   }
 ];
 
