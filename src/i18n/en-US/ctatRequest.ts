@@ -104,7 +104,9 @@ export const contractTypes: Record<CtatContractType, string> = {
 export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.CALM_SYSTEM_REQUISITION_SUPPORT]:
     'CALM system requisition support',
-  [CtatHelpNeededType.CONTRACT_COST_REVIEW_CCR_PROCESSING]:
+  [CtatHelpNeededType.PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING]:
+    'Contract Cost Review (CCR) processing',
+  [CtatHelpNeededType.POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING]:
     'Contract Cost Review (CCR) processing',
   [CtatHelpNeededType.COR_TRANSCRIPT_REVIEW]: 'COR Transcript Review',
   [CtatHelpNeededType.DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS]:
@@ -153,6 +155,15 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.OTHER]: 'Other'
 };
 
+export const helpNeededTypeDisplayOverrides: Partial<
+  Record<CtatHelpNeededType, string>
+> = {
+  [CtatHelpNeededType.PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING]:
+    'Contract Cost Review (CCR) processing - Pre-award',
+  [CtatHelpNeededType.POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING]:
+    'Contract Cost Review (CCR) processing - Post-award'
+};
+
 export const requestUrgencies: Record<CtatRequestUrgency, string> = {
   [CtatRequestUrgency.HIGH]: 'High',
   [CtatRequestUrgency.MEDIUM]: 'Medium',
@@ -174,7 +185,7 @@ export const helpNeededGroupLabels = {
 
 export const helpNeededTypesPreAward: CtatHelpNeededType[] = [
   CtatHelpNeededType.CALM_SYSTEM_REQUISITION_SUPPORT,
-  CtatHelpNeededType.CONTRACT_COST_REVIEW_CCR_PROCESSING,
+  CtatHelpNeededType.PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING,
   CtatHelpNeededType.COR_TRANSCRIPT_REVIEW,
   CtatHelpNeededType.DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS,
   CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER,
@@ -192,7 +203,7 @@ export const helpNeededTypesPreAward: CtatHelpNeededType[] = [
 ];
 
 export const helpNeededTypesPostAward: CtatHelpNeededType[] = [
-  CtatHelpNeededType.CONTRACT_COST_REVIEW_CCR_PROCESSING,
+  CtatHelpNeededType.POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING,
   CtatHelpNeededType.CONTRACTOR_PERFORMANCE_MANAGEMENT,
   CtatHelpNeededType.DATA_USE_AGREEMENT_DUA,
   CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION,

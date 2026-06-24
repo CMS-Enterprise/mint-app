@@ -212,7 +212,8 @@ type CTATHelpNeededType string
 // Enum values for CTATHelpNeededType.
 const (
 	CTATHelpNeededTypeCalmSystemRequisitionSupport                     CTATHelpNeededType = "CALM_SYSTEM_REQUISITION_SUPPORT"
-	CTATHelpNeededTypeContractCostReviewCCRProcessing                  CTATHelpNeededType = "CONTRACT_COST_REVIEW_CCR_PROCESSING"
+	CTATHelpNeededTypePreAwardContractCostReviewCCRProcessing          CTATHelpNeededType = "PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING"
+	CTATHelpNeededTypePostAwardContractCostReviewCCRProcessing         CTATHelpNeededType = "POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING"
 	CTATHelpNeededTypeCORTranscriptReview                              CTATHelpNeededType = "COR_TRANSCRIPT_REVIEW"
 	CTATHelpNeededTypeDefiningAndDocumentingContractRequirements       CTATHelpNeededType = "DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS"
 	CTATHelpNeededTypeDepartmentEfficiencyReviewDER                    CTATHelpNeededType = "DEPARTMENTAL_EFFICIENCY_REVIEW_DER"
@@ -243,7 +244,8 @@ const (
 // ctatHelpNeededTypeHumanized maps CTAT help needed values to human-readable strings.
 var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeCalmSystemRequisitionSupport:                     "CALM system requisition support",
-	CTATHelpNeededTypeContractCostReviewCCRProcessing:                  "Contract Cost Review (CCR) processing",
+	CTATHelpNeededTypePreAwardContractCostReviewCCRProcessing:          "Contract Cost Review (CCR) processing - Pre-award",
+	CTATHelpNeededTypePostAwardContractCostReviewCCRProcessing:         "Contract Cost Review (CCR) processing - Post-award",
 	CTATHelpNeededTypeCORTranscriptReview:                              "COR Transcript Review",
 	CTATHelpNeededTypeDefiningAndDocumentingContractRequirements:       "Defining and documenting contract requirements",
 	CTATHelpNeededTypeDepartmentEfficiencyReviewDER:                    "Departmental Efficiency Review (DER)",
