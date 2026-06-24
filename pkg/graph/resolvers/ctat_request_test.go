@@ -489,7 +489,13 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	)
 	suite.Require().NoError(err)
 
-	groupOtherBodyContent, err := buildCTATSubmittedBodyContent(suite.testConfigs.Context, emailService, createdGroupOtherRequest)
+	groupOtherBodyContent, err := email.BuildCTATSubmittedBodyContent(
+		suite.testConfigs.Context,
+		emailService,
+		createdGroupOtherRequest,
+		CTATRelatedMINTModelsGetByCTATRequestIDLOADER,
+		CTATRequestDocumentGetByCTATRequestIDLOADER,
+	)
 	suite.Require().NoError(err)
 
 	suite.Equal("Other (Cross-CMMI Strategic Operations)", groupOtherBodyContent.CMMIGroup)
@@ -523,7 +529,13 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	)
 	suite.Require().NoError(err)
 
-	divisionOtherBodyContent, err := buildCTATSubmittedBodyContent(suite.testConfigs.Context, emailService, createdDivisionOtherRequest)
+	divisionOtherBodyContent, err := email.BuildCTATSubmittedBodyContent(
+		suite.testConfigs.Context,
+		emailService,
+		createdDivisionOtherRequest,
+		CTATRelatedMINTModelsGetByCTATRequestIDLOADER,
+		CTATRequestDocumentGetByCTATRequestIDLOADER,
+	)
 	suite.Require().NoError(err)
 
 	suite.Equal("Other (Division of Innovation Partnerships (PPG/DIP))", divisionOtherBodyContent.CMMIDivision)
@@ -548,12 +560,14 @@ func TestSendCTATUpdateEmailSkipsWhitespaceOnlyChanges(t *testing.T) {
 	originalRequest.Resolution = new("Resolved and documented.")
 	updatedRequest.Resolution = new("\nResolved and documented.\t")
 
-	err := sendCTATUpdateEmail(
+	err := email.SendCTATUpdateEmail(
 		context.Background(),
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
 		originalRequest,
 		updatedRequest,
+		nil,
+		nil,
 	)
 	if err != nil {
 		t.Fatalf("expected whitespace-only CTAT update to skip email send, got error: %v", err)
@@ -602,12 +616,14 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 		).
 		Times(1)
 
-	err = sendCTATUpdateEmail(
+	err = email.SendCTATUpdateEmail(
 		suite.testConfigs.Context,
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
 		originalRequest,
 		&updatedRequest,
+		CTATRelatedMINTModelsGetByCTATRequestIDLOADER,
+		CTATRequestDocumentGetByCTATRequestIDLOADER,
 	)
 	suite.NoError(err)
 }
