@@ -3,7 +3,11 @@ import {
   GetCtatRequestsRequesterQuery
 } from 'gql/generated/graphql';
 
-import { helpNeededTypes, statuses } from 'i18n/en-US/ctatRequest';
+import {
+  helpNeededTypeDisplayOverrides,
+  helpNeededTypes,
+  statuses
+} from 'i18n/en-US/ctatRequest';
 import { formatDateLocal } from 'utils/date';
 
 import {
@@ -22,7 +26,9 @@ const formatHelpTypes = (
 ): string =>
   types
     .map(type =>
-      type === CtatHelpNeededType.OTHER && other ? other : helpNeededTypes[type]
+      type === CtatHelpNeededType.OTHER && other
+        ? other
+        : helpNeededTypeDisplayOverrides[type] || helpNeededTypes[type]
     )
     .join(', ');
 

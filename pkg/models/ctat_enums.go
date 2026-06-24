@@ -244,8 +244,8 @@ const (
 // ctatHelpNeededTypeHumanized maps CTAT help needed values to human-readable strings.
 var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeCalmSystemRequisitionSupport:                     "CALM system requisition support",
-	CTATHelpNeededTypePreAwardContractCostReviewCCRProcessing:          "Contract Cost Review (CCR) processing",
-	CTATHelpNeededTypePostAwardContractCostReviewCCRProcessing:         "Contract Cost Review (CCR) processing",
+	CTATHelpNeededTypePreAwardContractCostReviewCCRProcessing:          "Contract Cost Review (CCR) processing - Pre-award",
+	CTATHelpNeededTypePostAwardContractCostReviewCCRProcessing:         "Contract Cost Review (CCR) processing - Post-award",
 	CTATHelpNeededTypeCORTranscriptReview:                              "COR Transcript Review",
 	CTATHelpNeededTypeDefiningAndDocumentingContractRequirements:       "Defining and documenting contract requirements",
 	CTATHelpNeededTypeDepartmentEfficiencyReviewDER:                    "Departmental Efficiency Review (DER)",

@@ -155,6 +155,15 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.OTHER]: 'Other'
 };
 
+export const helpNeededTypeDisplayOverrides: Partial<
+  Record<CtatHelpNeededType, string>
+> = {
+  [CtatHelpNeededType.PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING]:
+    'Contract Cost Review (CCR) processing - Pre-award',
+  [CtatHelpNeededType.POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING]:
+    'Contract Cost Review (CCR) processing - Post-award'
+};
+
 export const requestUrgencies: Record<CtatRequestUrgency, string> = {
   [CtatRequestUrgency.HIGH]: 'High',
   [CtatRequestUrgency.MEDIUM]: 'Medium',
