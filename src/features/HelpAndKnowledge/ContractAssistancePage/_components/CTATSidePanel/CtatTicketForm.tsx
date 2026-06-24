@@ -46,6 +46,7 @@ import {
   contractTypes,
   divisionOptionsByGroup,
   helpNeededGroupLabels,
+  helpNeededTypeDisplayOverrides,
   helpNeededTypes,
   helpNeededTypesOther,
   helpNeededTypesPostAward,
@@ -221,21 +222,24 @@ const CtatTicketForm = ({
         label: helpNeededGroupLabels.preAward,
         options: helpNeededTypesPreAward.map(key => ({
           value: key,
-          label: helpNeededTypes[key]
+          label: helpNeededTypes[key],
+          readonlyLabel: helpNeededTypeDisplayOverrides[key]
         }))
       },
       {
         label: helpNeededGroupLabels.postAward,
         options: helpNeededTypesPostAward.map(key => ({
           value: key,
-          label: helpNeededTypes[key]
+          label: helpNeededTypes[key],
+          readonlyLabel: helpNeededTypeDisplayOverrides[key]
         }))
       },
       {
         label: helpNeededGroupLabels.other,
         options: helpNeededTypesOther.map(key => ({
           value: key,
-          label: helpNeededTypes[key]
+          label: helpNeededTypes[key],
+          readonlyLabel: helpNeededTypeDisplayOverrides[key]
         }))
       }
     ],
