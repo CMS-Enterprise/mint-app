@@ -12,4 +12,11 @@ VALUES (
     :created_by,
     :modified_by
 )
-RETURNING *;
+RETURNING
+    id,
+    model_plan_id,
+    ctat_request_id,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;

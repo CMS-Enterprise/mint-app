@@ -76,8 +76,8 @@ func CTATRequestGetByRequesterIDLOADER(np sqlutils.NamedPreparer, requesterIDs [
 	return requests, nil
 }
 
-// CTATRequestCollectionGetForAdmin returns CTAT requests for the admin table view.
-func CTATRequestCollectionGetForAdmin(np sqlutils.NamedPreparer) ([]*models.CTATRequest, error) {
+// CTATRequestGetForAdminLOADER returns CTAT requests for the admin table view.
+func CTATRequestGetForAdminLOADER(np sqlutils.NamedPreparer) ([]*models.CTATRequest, error) {
 	requests, err := sqlutils.SelectProcedure[models.CTATRequest](np, sqlqueries.CTATRequest.GetForAdmin, map[string]any{})
 	if err != nil {
 		return nil, err

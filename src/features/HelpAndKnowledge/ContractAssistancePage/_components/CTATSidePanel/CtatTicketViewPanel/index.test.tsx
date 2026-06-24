@@ -99,7 +99,7 @@ const adminListMock = {
   result: {
     data: {
       ctatRequestsAdmin: {
-        __typename: 'CTATRequestsTableDataAdmin',
+        __typename: 'CTATRequestsTableData',
         count: 1,
         ctatRequests: [
           {

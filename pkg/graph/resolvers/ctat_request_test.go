@@ -114,7 +114,7 @@ func (suite *ResolverSuite) TestCTATRequestByIDLoader() {
 	)
 }
 
-func (suite *ResolverSuite) TestCtatRequestsAdmin() {
+func (suite *ResolverSuite) TestCTATRequestGetForAdminLoader() {
 	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	suite.True(adminPrincipal.AllowASSESSMENT())
 	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
@@ -135,7 +135,48 @@ func (suite *ResolverSuite) TestCtatRequestsAdmin() {
 		models.CTATStatusAssigned,
 	)
 
-	resp, err := CTATRequestCollectionGetForAdmin(adminCtx, suite.testConfigs.Store)
+	expectedResults := []loaders.KeyAndExpected[*uuid.UUID, []uuid.UUID]{
+		{Key: nil, Expected: []uuid.UUID{first.ID, second.ID}},
+	}
+
+	verifyFunc := func(data []*models.CTATRequest, expected []uuid.UUID) bool {
+		returnedIDs := lo.Map(data, func(item *models.CTATRequest, _ int) uuid.UUID {
+			return item.ID
+		})
+		return suite.ElementsMatch(expected, returnedIDs)
+	}
+
+	loaders.VerifyLoaders[*uuid.UUID, []*models.CTATRequest, []uuid.UUID](
+		adminCtx,
+		&suite.Suite,
+		loaders.CTATRequest.GetAll,
+		expectedResults,
+		verifyFunc,
+	)
+}
+
+func (suite *ResolverSuite) TestCtatRequests() {
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	suite.True(adminPrincipal.AllowASSESSMENT())
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+	now := time.Now().UTC()
+
+	first := suite.createTestCTATRequest(
+		suite.testConfigs.Principal.Account().ID,
+		now.Add(24*time.Hour),
+		"Admin contract 1",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
+		models.CTATStatusNew,
+	)
+	second := suite.createTestCTATRequest(
+		suite.getTestPrincipal(suite.testConfigs.Store, "BTMN").Account().ID,
+		now.Add(48*time.Hour),
+		"Admin contract 2",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForProposalRFP},
+		models.CTATStatusAssigned,
+	)
+
+	resp, err := CTATRequestCollectionGetAll(adminCtx)
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Len(resp, 2)
@@ -160,7 +201,7 @@ func (suite *ResolverSuite) TestCtatRequest() {
 		models.CTATStatusAssigned,
 	)
 
-	resp, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID, suite.testConfigs.Store)
+	resp, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Equal(request.ID, resp.ID)
@@ -203,7 +244,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesStatusAssignedAdmin
 	suite.Require().NotNil(resp.Notes)
 	suite.Equal(notes, *resp.Notes)
 
-	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID, suite.testConfigs.Store)
+	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.NotNil(reloaded)
 	suite.Equal(models.CTATStatusAssigned, reloaded.Status)
@@ -243,7 +284,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
 	suite.NotNil(resp)
 	suite.Nil(resp.AssignedAdmin)
 
-	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID, suite.testConfigs.Store)
+	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.NotNil(reloaded)
 	suite.Nil(reloaded.AssignedAdmin)
@@ -273,7 +314,7 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
 	suite.Require().NotNil(resp.Resolution)
 	suite.Equal(resolution, *resp.Resolution)
 
-	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID, suite.testConfigs.Store)
+	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.NotNil(reloaded)
 	suite.Require().NotNil(reloaded.Resolution)
@@ -390,7 +431,7 @@ func (suite *ResolverSuite) TestCTATRequestCreate() {
 	suite.Equal(contractName, *created.ContractName)
 	suite.Greater(created.HumanReadableIDNumber, 0)
 
-	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, created.ID, suite.testConfigs.Store)
+	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, created.ID)
 	suite.NoError(err)
 	suite.NotNil(reloaded)
 	suite.Equal(models.CTATStatusNew, reloaded.Status)
@@ -448,7 +489,13 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	)
 	suite.Require().NoError(err)
 
-	groupOtherBodyContent, err := buildCTATSubmittedBodyContent(suite.testConfigs.Context, emailService, createdGroupOtherRequest)
+	groupOtherBodyContent, err := email.BuildCTATSubmittedBodyContent(
+		suite.testConfigs.Context,
+		emailService,
+		createdGroupOtherRequest,
+		CTATRelatedMINTModelsGetByCTATRequestIDLOADER,
+		CTATRequestDocumentGetByCTATRequestIDLOADER,
+	)
 	suite.Require().NoError(err)
 
 	suite.Equal("Other (Cross-CMMI Strategic Operations)", groupOtherBodyContent.CMMIGroup)
@@ -482,7 +529,13 @@ func (suite *ResolverSuite) TestBuildCTATSubmittedBodyContentFormatsOtherValues(
 	)
 	suite.Require().NoError(err)
 
-	divisionOtherBodyContent, err := buildCTATSubmittedBodyContent(suite.testConfigs.Context, emailService, createdDivisionOtherRequest)
+	divisionOtherBodyContent, err := email.BuildCTATSubmittedBodyContent(
+		suite.testConfigs.Context,
+		emailService,
+		createdDivisionOtherRequest,
+		CTATRelatedMINTModelsGetByCTATRequestIDLOADER,
+		CTATRequestDocumentGetByCTATRequestIDLOADER,
+	)
 	suite.Require().NoError(err)
 
 	suite.Equal("Other (Division of Innovation Partnerships (PPG/DIP))", divisionOtherBodyContent.CMMIDivision)
@@ -507,12 +560,14 @@ func TestSendCTATUpdateEmailSkipsWhitespaceOnlyChanges(t *testing.T) {
 	originalRequest.Resolution = new("Resolved and documented.")
 	updatedRequest.Resolution = new("\nResolved and documented.\t")
 
-	err := sendCTATUpdateEmail(
+	err := email.SendCTATUpdateEmail(
 		context.Background(),
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
 		originalRequest,
 		updatedRequest,
+		nil,
+		nil,
 	)
 	if err != nil {
 		t.Fatalf("expected whitespace-only CTAT update to skip email send, got error: %v", err)
@@ -561,12 +616,14 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 		).
 		Times(1)
 
-	err = sendCTATUpdateEmail(
+	err = email.SendCTATUpdateEmail(
 		suite.testConfigs.Context,
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
 		originalRequest,
 		&updatedRequest,
+		CTATRelatedMINTModelsGetByCTATRequestIDLOADER,
+		CTATRequestDocumentGetByCTATRequestIDLOADER,
 	)
 	suite.NoError(err)
 }

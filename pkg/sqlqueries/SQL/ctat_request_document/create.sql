@@ -28,4 +28,19 @@ VALUES (
     :created_by,
     :modified_by
 )
-RETURNING *;
+RETURNING
+    id,
+    ctat_request_id,
+    url,
+    file_type,
+    bucket,
+    file_key,
+    virus_scanned,
+    virus_clean,
+    restricted,
+    file_name,
+    file_size,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;
