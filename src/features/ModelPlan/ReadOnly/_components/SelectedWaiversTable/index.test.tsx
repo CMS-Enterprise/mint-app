@@ -1,6 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { CommonWaiverType } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import SelectedWaiversTable, { SelectedWaiver } from '.';
@@ -14,7 +15,7 @@ const mockSelectedWaivers: SelectedWaiver[] = [
     commonWaiver: {
       __typename: 'CommonWaiver',
       name: 'Test Waiver',
-      waiverType: 'PROGRAM_MEDICARE_BES'
+      waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE
     }
   },
   {
@@ -25,7 +26,7 @@ const mockSelectedWaivers: SelectedWaiver[] = [
     commonWaiver: {
       __typename: 'CommonWaiver',
       name: 'Test Waiver 2',
-      waiverType: 'MEDICAID_PAYMENT'
+      waiverType: CommonWaiverType.MEDICAID_PAYMENT
     }
   }
 ];

@@ -11,6 +11,7 @@ import {
   ClaimsBasedPayType,
   CmmiGroup,
   CmsCenter,
+  CommonWaiverType,
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
@@ -302,7 +303,7 @@ export const waiverAssessmentSurveyMockData: GetAllWaiverAssessmentSurveyQuery =
               commonWaiver: {
                 __typename: 'CommonWaiver',
                 name: 'Common Waiver Name',
-                waiverType: 'MEDICAID_PAYMENT'
+                waiverType: CommonWaiverType.MEDICAID_PAYMENT
               }
             }
           ],
