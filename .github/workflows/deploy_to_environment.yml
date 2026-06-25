@@ -92,12 +92,11 @@ jobs:
         run: |
           export TASK_REVISION=$(./scripts/update_ecs_task_definition.sh)
           ./scripts/deploy_ecs_service.sh
-      - name: Wait for /healthcheck to return new version
-        env:
-          APP_ENV: ${{ inputs.env }}
-          NEW_IMAGE_TAG: ${{ env.GIT_HASH }}
+      - name: Wait for ECS service to stabilize
         run: |
-          ./scripts/healthcheck "$NEW_IMAGE_TAG"
+          aws ecs wait services-stable \
+            --cluster "${{ inputs.env }}-mint-app" \
+            --services mint-app
       - name: Announce failure
         if: ${{ failure() }}
         run: |
