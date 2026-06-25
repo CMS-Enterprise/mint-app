@@ -46,8 +46,8 @@ const ctatRequestsMocks = [
     },
     result: {
       data: {
-        ctatRequestsAdmin: {
-          __typename: 'CTATRequestsTableDataAdmin',
+        ctatRequests: {
+          __typename: 'CTATRequestsTableData',
           count: 0,
           ctatRequests: []
         }

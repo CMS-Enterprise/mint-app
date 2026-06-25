@@ -16,12 +16,15 @@ type ctatRequestLoaders struct {
 	GetByID LoaderWrapper[uuid.UUID, *models.CTATRequest]
 	// ByRequesterID gets CTAT requests grouped by requester.
 	ByRequesterID LoaderWrapper[uuid.UUID, []*models.CTATRequest]
+	// GetAll gets all CTAT requests for the admin table view.
+	GetAll LoaderWrapper[*uuid.UUID, []*models.CTATRequest]
 }
 
 // CTATRequest is the singleton instance of all LoaderWrappers related to CTAT requests.
 var CTATRequest = &ctatRequestLoaders{
 	GetByID:       NewLoaderWrapper(batchCTATRequestGetByID),
 	ByRequesterID: NewLoaderWrapper(batchCTATRequestGetByRequesterID),
+	GetAll:        NewLoaderWrapper(batchCTATRequestsGetAll),
 }
 
 func batchCTATRequestGetByID(ctx context.Context, ids []uuid.UUID) []*dataloader.Result[*models.CTATRequest] {
@@ -58,4 +61,24 @@ func batchCTATRequestGetByRequesterID(ctx context.Context, requesterIDs []uuid.U
 	}
 
 	return oneToManyDataLoader(requesterIDs, data, getKeyFunc)
+}
+
+// batchCTATRequestsGetAll loads all CTAT requests; the key is ignored but required by the dataloader interface.
+func batchCTATRequestsGetAll(ctx context.Context, ids []*uuid.UUID) []*dataloader.Result[[]*models.CTATRequest] {
+	loaders, err := Loaders(ctx)
+	if err != nil {
+		return errorPerEachKey[*uuid.UUID, []*models.CTATRequest](ids, err)
+	}
+
+	data, err := storage.CTATRequestGetForAdminLOADER(loaders.DataReader.Store)
+	if err != nil {
+		return errorPerEachKey[*uuid.UUID, []*models.CTATRequest](ids, err)
+	}
+
+	results := make([]*dataloader.Result[[]*models.CTATRequest], len(ids))
+	for i := range ids {
+		results[i] = &dataloader.Result[[]*models.CTATRequest]{Data: data}
+	}
+
+	return results
 }

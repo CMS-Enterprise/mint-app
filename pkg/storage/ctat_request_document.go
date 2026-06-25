@@ -45,26 +45,26 @@ func CTATRequestDocumentGetByCTATRequestIDLOADER(np sqlutils.NamedPreparer, ctat
 }
 
 // CTATRequestDocumentsUpdateVirusScanStatuses updates virus scan fields from S3 av-status tags.
-func CTATRequestDocumentsUpdateVirusScanStatuses(s3Client *s3.S3Client, documents []*models.CTATRequestDocument) error {
-	var errorGroup errgroup.Group
+func CTATRequestDocumentsUpdateVirusScanStatuses(ctx context.Context, s3Client *s3.S3Client, documents []*models.CTATRequestDocument) error {
+	errorGroup, groupCtx := errgroup.WithContext(ctx)
 	for documentIndex := range documents {
 		document := documents[documentIndex]
 		errorGroup.Go(func() error {
-			return ctatRequestDocumentUpdateVirusScanStatus(s3Client, document)
+			return ctatRequestDocumentUpdateVirusScanStatus(groupCtx, s3Client, document)
 		})
 	}
 
 	return errorGroup.Wait()
 }
 
-func ctatRequestDocumentUpdateVirusScanStatus(s3Client *s3.S3Client, document *models.CTATRequestDocument) error {
+func ctatRequestDocumentUpdateVirusScanStatus(ctx context.Context, s3Client *s3.S3Client, document *models.CTATRequestDocument) error {
 	if document.URL != nil && *document.URL != "" {
 		document.VirusScanned = true
 		document.VirusClean = true
 		return nil
 	}
 
-	status, err := s3Client.TagValueForKey(context.TODO(), document.FileKey, "av-status")
+	status, err := s3Client.TagValueForKey(ctx, document.FileKey, "av-status")
 	if err != nil {
 		return err
 	}

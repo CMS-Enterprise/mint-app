@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
   query GetCtatRequestsAdmin {
-    ctatRequestsAdmin {
+    ctatRequests {
       count
       ctatRequests {
         id

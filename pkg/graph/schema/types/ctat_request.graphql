@@ -123,33 +123,6 @@ enum CTATHelpNeededType {
   OTHER
 }
 
-"""
-A supporting document attached to a CTAT request.
-"""
-type CTATRequestDocument {
-  id: UUID!
-  ctatRequestId: UUID!
-
-  url: String
-
-  fileType: String!
-  bucket: String!
-  fileKey: String!
-  virusScanned: Boolean!
-  virusClean: Boolean!
-  restricted: Boolean!
-  fileName: String!
-  fileSize: Int!
-  downloadUrl: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
 type CTATRequest {
   id: UUID!
   humanReadableID: String!
@@ -197,9 +170,9 @@ type CTATRequestsTableDataRequester {
 }
 
 """
-CTATRequestsTableDataAdmin contains the requests and the request count for the table information for an admin
+CTATRequestsTableData contains the requests and the request count for the table information for an admin
 """
-type CTATRequestsTableDataAdmin {
+type CTATRequestsTableData {
   ctatRequests: [CTATRequest!]!
   count: Int!
 }
@@ -247,7 +220,7 @@ input CTATAdminUpdateInput @goModel(model: "map[string]interface{}") {
 extend type Query {
   ctatRequest(id: UUID!): CTATRequest!
   ctatRequestsRequester: CTATRequestsTableDataRequester!
-  ctatRequestsAdmin: CTATRequestsTableDataAdmin! @hasRole(role: MINT_ASSESSMENT)
+  ctatRequests: CTATRequestsTableData! @hasRole(role: MINT_ASSESSMENT)
 }
 
 extend type Mutation {

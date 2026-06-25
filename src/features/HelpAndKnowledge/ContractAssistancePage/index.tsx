@@ -63,7 +63,7 @@ const ContractAssistancePage = () => {
   const adminTickets = useMemo(
     () =>
       mapCtatRequestsToContractAssistanceTickets(
-        adminData?.ctatRequestsAdmin.ctatRequests ?? []
+        adminData?.ctatRequests.ctatRequests ?? []
       ),
     [adminData]
   );

@@ -39,25 +39,12 @@ func (r *cTATRequestResolver) SupportingDocuments(ctx context.Context, obj *mode
 		return documents, nil
 	}
 
-	err = storage.CTATRequestDocumentsUpdateVirusScanStatuses(r.fileUploadS3Client, documents)
+	err = storage.CTATRequestDocumentsUpdateVirusScanStatuses(ctx, r.fileUploadS3Client, documents)
 	if err != nil {
 		return nil, err
 	}
 
 	return documents, nil
-}
-
-// DownloadURL is the resolver for the downloadUrl field.
-func (r *cTATRequestDocumentResolver) DownloadURL(ctx context.Context, obj *models.CTATRequestDocument) (*string, error) {
-	if obj.URL != nil && *obj.URL != "" {
-		return nil, nil
-	}
-	url, err := r.fileUploadS3Client.NewGetPresignedURL(ctx, obj.FileKey)
-	if err != nil {
-		return nil, err
-	}
-
-	return url, nil
 }
 
 // CreateCTATRequest is the resolver for the createCTATRequest field.
@@ -88,11 +75,11 @@ func (r *mutationResolver) AdminUpdateCTATRequest(ctx context.Context, id uuid.U
 
 // CtatRequest is the resolver for the ctatRequest field.
 func (r *queryResolver) CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error) {
-	return CTATRequestGetByID(ctx, id, r.store)
+	return CTATRequestGetByID(ctx, id)
 }
 
 // CtatRequestsRequester is the resolver for the ctatRequestsRequester field.
-func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATRequestsTableDataRequester, error) {
+func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*models.CTATRequestsTableDataRequester, error) {
 	principal := appcontext.Principal(ctx)
 
 	ctatRequests, err := CTATRequestGetByRequesterIDLOADER(ctx, principal.Account().ID)
@@ -100,36 +87,29 @@ func (r *queryResolver) CtatRequestsRequester(ctx context.Context) (*model.CTATR
 		return nil, err
 	}
 
-	return &model.CTATRequestsTableDataRequester{
+	return &models.CTATRequestsTableDataRequester{
 		CtatRequests: ctatRequests,
 	}, nil
 }
 
-// CtatRequestsAdmin is the resolver for the ctatRequestsAdmin field.
-func (r *queryResolver) CtatRequestsAdmin(ctx context.Context) (*model.CTATRequestsTableDataAdmin, error) {
+// CtatRequests is the resolver for the ctatRequests field.
+func (r *queryResolver) CtatRequests(ctx context.Context) (*models.CTATRequestsTableData, error) {
 	principal := appcontext.Principal(ctx)
 	if !principal.AllowASSESSMENT() {
 		return nil, fmt.Errorf("user does not have permission to view admin CTAT requests")
 	}
 
-	ctatRequests, err := CTATRequestCollectionGetForAdmin(ctx, r.store)
+	ctatRequests, err := CTATRequestCollectionGetAll(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return &model.CTATRequestsTableDataAdmin{
+	return &models.CTATRequestsTableData{
 		CtatRequests: ctatRequests,
-		Count:        len(ctatRequests),
 	}, nil
 }
 
 // CTATRequest returns generated.CTATRequestResolver implementation.
 func (r *Resolver) CTATRequest() generated.CTATRequestResolver { return &cTATRequestResolver{r} }
 
-// CTATRequestDocument returns generated.CTATRequestDocumentResolver implementation.
-func (r *Resolver) CTATRequestDocument() generated.CTATRequestDocumentResolver {
-	return &cTATRequestDocumentResolver{r}
-}
-
 type cTATRequestResolver struct{ *Resolver }
-type cTATRequestDocumentResolver struct{ *Resolver }
