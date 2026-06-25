@@ -676,6 +676,7 @@ const CtatTicketForm = ({
                     <Label
                       htmlFor="contract-activity-type-other"
                       className="maxw-none text-bold"
+                      requiredMarker
                     >
                       {t(
                         'ctatSidePanel.fields.contractActivityType.otherLabel'
@@ -794,6 +795,7 @@ const CtatTicketForm = ({
                     <Label
                       htmlFor="contract-type-other"
                       className="maxw-none text-bold"
+                      requiredMarker
                     >
                       {t('ctatSidePanel.fields.contractType.otherLabel')}
                     </Label>
