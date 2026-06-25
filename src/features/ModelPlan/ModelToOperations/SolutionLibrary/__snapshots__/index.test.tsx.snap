@@ -326,7 +326,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                 aria-label="Click to learn more about this solution: Accountable Care Organization - Operational System"
                 class="usa-link display-block width-fit-content usa-button usa-button--unstyled margin-top-2"
                 data-discover="true"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library?solution-key=ACO_OS&section=about"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library?page=1&solution-key=ACO_OS&section=about"
               >
                 About this solution
               </a>
@@ -398,7 +398,7 @@ exports[`SolutionLibrary Component > renders correctly and matches snapshot 1`] 
                 aria-label="Click to learn more about this solution: Automated Plan Payment System"
                 class="usa-link display-block width-fit-content usa-button usa-button--unstyled margin-top-2"
                 data-discover="true"
-                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library?solution-key=APPS&section=about"
+                href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-to-operations/solution-library?page=1&solution-key=APPS&section=about"
               >
                 About this solution
               </a>
