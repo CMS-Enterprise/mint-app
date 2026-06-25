@@ -91,6 +91,18 @@ const RelatedArticles = ({
             {t('viewAllRelated')}
           </UswdsReactLink>
         )}
+
+        <div className="bg-primary-darker margin-top-5 padding-2">
+          <p className="text-white margin-0 display-inline-block margin-right-1">
+            {t('needHelpWithContractingActivities')}
+          </p>
+          <UswdsReactLink
+            to="/help-and-knowledge/contract-assistance"
+            className="display-inline-block text-white deep-underline"
+          >
+            {t('startCTATticket')}
+          </UswdsReactLink>
+        </div>
       </GridContainer>
     </div>
   );
