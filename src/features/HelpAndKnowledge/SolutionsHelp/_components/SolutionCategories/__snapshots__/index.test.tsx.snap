@@ -19,7 +19,7 @@ exports[`Solution Help Categories > matches snapshot 1`] = `
       <p
         class="margin-bottom-4 font-body-md"
       >
-        Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model design, development, and implementation.
+        Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model.
       </p>
       <ul
         class="usa-card-group"

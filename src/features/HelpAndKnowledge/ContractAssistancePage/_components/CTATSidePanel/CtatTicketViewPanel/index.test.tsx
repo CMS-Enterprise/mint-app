@@ -210,6 +210,46 @@ describe('CtatTicketViewPanel', () => {
     });
   });
 
+  it('opens View model in MINT links in a new tab', async () => {
+    const modelId = '770e8400-e29b-41d4-a716-446655440002';
+    const ticketWithModelMock = {
+      request: {
+        query: GetCtatRequestDocument,
+        variables: { id: ticketId }
+      },
+      result: {
+        data: {
+          ctatRequest: {
+            ...baseTicket,
+            status: CtatStatus.NEW,
+            relatedMINTModels: [
+              {
+                __typename: 'ModelPlan' as const,
+                id: modelId,
+                modelName: 'Test Model'
+              }
+            ]
+          }
+        }
+      }
+    };
+
+    renderPanel([ticketWithModelMock], { isAdmin: false });
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('link', { name: 'View model in MINT' })
+      ).toHaveAttribute('target', '_blank');
+    });
+
+    expect(
+      screen.getByRole('link', { name: 'View model in MINT' })
+    ).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(
+      screen.getByRole('link', { name: 'View model in MINT' })
+    ).toHaveAttribute('href', `/models/${modelId}/collaboration-area`);
+  });
+
   it('renders closed ticket with grey progress box and no what happens next', async () => {
     renderPanel([closedTicketMock], { isAdmin: false });
 

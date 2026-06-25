@@ -284,6 +284,8 @@ const CtatTicketViewContent = ({
                     <UswdsReactLink
                       to={`/models/${model.id}/collaboration-area`}
                       className="usa-link"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {t('ctatViewPanel.viewModelInMint')}
                     </UswdsReactLink>
