@@ -2673,7 +2673,7 @@ const helpAndKnowledge = {
   },
   operationalSolutions: 'Library of operational solutions and IT systems',
   operationalSolutionsInfo:
-    'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model design, development, and implementation.',
+    'Learn about the CMS systems, data sources, IT tools, and other services that are available to assist with your model.',
   viewAllButton: 'View solution library',
   learnMore: 'Learn more',
   browseCategories: 'Browse solutions by category',
