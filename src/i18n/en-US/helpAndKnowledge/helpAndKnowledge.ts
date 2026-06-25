@@ -2640,6 +2640,8 @@ const helpAndKnowledge = {
     'Below are some additional help resources that you may find useful.',
   addtionalResources: 'Additional resources',
   viewAllRelated: 'View all help resources',
+  needHelpWithContractingActivities: 'Need help with contracting activities?',
+  startCTATticket: 'Start a contract assistance ticket',
   milestoneLibrary: {
     hkcHeading: 'Milestone library',
     hkcDescription:

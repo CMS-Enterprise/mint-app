@@ -1,5 +1,7 @@
 const adminActions = {
   title: 'Admin actions',
+  hideAdminActions: 'Hide admin actions',
+  showAdminActions: 'Show admin actions',
   actions: [
     {
       header: 'Manage common milestones',

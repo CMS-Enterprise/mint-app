@@ -443,6 +443,22 @@ exports[`AddCustomSolution > matches the snapshot 1`] = `
         >
           View all help resources
         </a>
+        <div
+          class="bg-primary-darker margin-top-5 padding-2"
+        >
+          <p
+            class="text-white margin-0 display-inline-block margin-right-1"
+          >
+            Need help with contracting activities?
+          </p>
+          <a
+            class="usa-link display-inline-block text-white deep-underline"
+            data-discover="true"
+            href="/help-and-knowledge/contract-assistance"
+          >
+            Start a contract assistance ticket
+          </a>
+        </div>
       </div>
     </div>
   </div>

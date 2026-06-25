@@ -1,3 +1,4 @@
+@use 'uswds-core' as *;
 @use 'colors' as *;
 @use 'viewports' as *;
 
@@ -62,7 +63,7 @@
       margin-top: 2em;
     }
 
-    a {
+    a:not(.mint-nav__submenu-link) {
       &:visited {
         color: #565c65;
       }
@@ -92,6 +93,98 @@
           left: 0;
           border-radius: 99rem;
         }
+      }
+    }
+
+    &--help {
+      position: relative;
+
+      @media (min-width: $desktop) {
+        align-self: stretch;
+      }
+
+      &-open {
+        @media (min-width: $desktop) {
+          .mint-nav__link--dropdown {
+            background-color: color('primary-darker');
+            color: white;
+
+            .mint-nav__label,
+            .mint-nav__dropdown-icon {
+              color: white;
+            }
+
+            &:after {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    &__link--dropdown {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-style: normal;
+      width: 100%;
+      text-align: left;
+    }
+
+    &__dropdown-icon {
+      flex-shrink: 0;
+      transition: transform 0.2s ease-in-out;
+
+      &--open {
+        transform: rotate(180deg);
+      }
+    }
+
+    &__submenu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      background-color: color('primary-darker');
+      color: white;
+
+      @media (min-width: $desktop) {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 20rem;
+        z-index: 500;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &__submenu-item {
+      margin: 0;
+      background-color: color('primary-darker');
+
+      &:nth-child(odd),
+      &:nth-child(even) {
+        background-color: color('primary-darker');
+      }
+    }
+
+    &__submenu-link {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: white !important;
+      text-decoration: none;
+      font-style: normal;
+      background-color: color('primary-darker');
+
+      &:link,
+      &:visited,
+      &:hover,
+      &:focus,
+      &:active,
+      &.usa-current {
+        color: white !important;
       }
     }
   }
