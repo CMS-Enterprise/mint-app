@@ -477,6 +477,7 @@ const CtatTicketForm = ({
                     <Label
                       htmlFor="cmmi-group-other"
                       className="maxw-none text-bold"
+                      requiredMarker
                     >
                       {t('ctatSidePanel.fields.cmmiGroup.otherLabel')}
                     </Label>
@@ -566,6 +567,7 @@ const CtatTicketForm = ({
                     <Label
                       htmlFor="cmmi-division-other"
                       className="maxw-none text-bold"
+                      requiredMarker
                     >
                       {t('ctatSidePanel.fields.cmmiDivision.otherLabel')}
                     </Label>
