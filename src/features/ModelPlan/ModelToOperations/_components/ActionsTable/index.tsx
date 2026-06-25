@@ -47,7 +47,10 @@ const MTOTableActions = () => {
   });
 
   useEffect(() => {
-    localStorage.setItem(`mto-table-toggle`, JSON.stringify(actionsMenuOpen));
+    window.localStorage.setItem(
+      `mto-table-toggle`,
+      JSON.stringify(actionsMenuOpen)
+    );
   }, [actionsMenuOpen]);
 
   return (

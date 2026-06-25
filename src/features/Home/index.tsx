@@ -306,19 +306,35 @@ const Home = () => {
                 </Grid>
               </Grid>
               {!isMAC(userGroups) && (
-                <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-bottom-6">
-                  <p className="margin-0 margin-bottom-1">
-                    {t('newModelSummaryBox.copy')}
-                  </p>
+                <div className="home__summary-boxes">
+                  <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3">
+                    <p className="margin-0 margin-bottom-1">
+                      {t('newModelSummaryBox.copy')}
+                    </p>
 
-                  <UswdsReactLink
-                    className="usa-button"
-                    variant="unstyled"
-                    to="/models/steps-overview"
-                  >
-                    {t('newModelSummaryBox.cta')}
-                  </UswdsReactLink>
-                </SummaryBox>
+                    <UswdsReactLink
+                      className="usa-button"
+                      variant="unstyled"
+                      to="/models/steps-overview"
+                    >
+                      {t('newModelSummaryBox.cta')}
+                    </UswdsReactLink>
+                  </SummaryBox>
+
+                  <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-0">
+                    <p className="margin-0 margin-bottom-1">
+                      {t('contractAssistanceSummaryBox.copy')}
+                    </p>
+
+                    <UswdsReactLink
+                      className="usa-button usa-button--outline"
+                      variant="unstyled"
+                      to="/help-and-knowledge/contract-assistance"
+                    >
+                      {t('contractAssistanceSummaryBox.cta')}
+                    </UswdsReactLink>
+                  </SummaryBox>
+                </div>
               )}
 
               {isAssessment(userGroups, flags) && <AdminActions />}
