@@ -9,118 +9,154 @@ exports[`AdminActions Component > matches snapshot 1`] = `
     <div
       class="usa-summary-box__body"
     >
-      <h2
-        class="usa-summary-box__heading margin-bottom-2"
-      >
-        Admin actions
-      </h2>
       <div
-        class="usa-summary-box__text margin-bottom-3"
+        class="display-flex flex-align-center"
       >
-        <h4
-          class="margin-0 margin-bottom-1 line-height-sans-2"
+        <h2
+          class="usa-summary-box__heading margin-0"
         >
-          Manage common milestones
-        </h4>
-        <p
-          class="margin-0 margin-bottom-1 line-height-sans-5"
+          Admin actions
+        </h2>
+        <button
+          aria-controls="admin-actions-content"
+          aria-expanded="true"
+          class="usa-button usa-button--unstyled margin-left-2 deep-underline"
+          data-testid="admin-actions-toggle"
+          type="button"
         >
-          Add, edit, and remove milestones from the common milestone library. This will apply to all MINT users and will affect the common milestones that model teams and IT Leads have access to when completing their MTO.
-        </p>
-        <a
-          class="display-flex flex-align-center deep-underline"
-          data-discover="true"
-          data-testid="to-view-common-milestones"
-          href="/help-and-knowledge/milestone-library"
-        >
-          View common milestones
-          <svg
-            aria-label="forward"
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="display-flex flex-align-center"
           >
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
-        </a>
+            Hide admin actions
+            <svg
+              aria-label="collapse"
+              class="usa-icon margin-left-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14z"
+              />
+            </svg>
+          </div>
+        </button>
       </div>
       <div
-        class="usa-summary-box__text margin-bottom-3"
+        class="margin-top-2"
+        id="admin-actions-content"
       >
-        <h4
-          class="margin-0 margin-bottom-1 line-height-sans-2"
+        <div
+          class="usa-summary-box__text margin-bottom-3"
         >
-          Manage SME contact directory
-        </h4>
-        <p
-          class="margin-0 margin-bottom-1 line-height-sans-5"
-        >
-          Add, edit, and remove subject matter experts (SMEs) from the contact directory in MINT’s Help and Knowledge Center.
-        </p>
-        <a
-          class="display-flex flex-align-center deep-underline"
-          data-discover="true"
-          data-testid="to-view-sme-contact-directory"
-          href="/help-and-knowledge#contact-directory"
-        >
-          View SME contact directory
-          <svg
-            aria-label="forward"
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <h4
+            class="margin-0 margin-bottom-1 line-height-sans-2"
           >
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
-        </a>
-      </div>
-      <div
-        class="usa-summary-box__text"
-      >
-        <h4
-          class="margin-0 margin-bottom-1 line-height-sans-2"
-        >
-          CTAT ticket management
-        </h4>
-        <p
-          class="margin-0 margin-bottom-1 line-height-sans-5"
-        >
-          As a member of the Contract Technical Assistance Team (CTAT), view, assign, and triage incoming contract assistance tickets.
-        </p>
-        <a
-          class="display-flex flex-align-center deep-underline"
-          data-discover="true"
-          data-testid="to-view-contract-assistance-tickets"
-          href="/help-and-knowledge/contract-assistance"
-        >
-          View contract assistance tickets
-          <svg
-            aria-label="forward"
-            class="usa-icon margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+            Manage common milestones
+          </h4>
+          <p
+            class="margin-0 margin-bottom-1 line-height-sans-5"
           >
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
-        </a>
+            Add, edit, and remove milestones from the common milestone library. This will apply to all MINT users and will affect the common milestones that model teams and IT Leads have access to when completing their MTO.
+          </p>
+          <a
+            class="display-flex flex-align-center deep-underline"
+            data-discover="true"
+            data-testid="to-view-common-milestones"
+            href="/help-and-knowledge/milestone-library"
+          >
+            View common milestones
+            <svg
+              aria-label="forward"
+              class="usa-icon margin-left-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </a>
+        </div>
+        <div
+          class="usa-summary-box__text margin-bottom-3"
+        >
+          <h4
+            class="margin-0 margin-bottom-1 line-height-sans-2"
+          >
+            Manage SME contact directory
+          </h4>
+          <p
+            class="margin-0 margin-bottom-1 line-height-sans-5"
+          >
+            Add, edit, and remove subject matter experts (SMEs) from the contact directory in MINT’s Help and Knowledge Center.
+          </p>
+          <a
+            class="display-flex flex-align-center deep-underline"
+            data-discover="true"
+            data-testid="to-view-sme-contact-directory"
+            href="/help-and-knowledge#contact-directory"
+          >
+            View SME contact directory
+            <svg
+              aria-label="forward"
+              class="usa-icon margin-left-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </a>
+        </div>
+        <div
+          class="usa-summary-box__text"
+        >
+          <h4
+            class="margin-0 margin-bottom-1 line-height-sans-2"
+          >
+            CTAT ticket management
+          </h4>
+          <p
+            class="margin-0 margin-bottom-1 line-height-sans-5"
+          >
+            As a member of the Contract Technical Assistance Team (CTAT), view, assign, and triage incoming contract assistance tickets.
+          </p>
+          <a
+            class="display-flex flex-align-center deep-underline"
+            data-discover="true"
+            data-testid="to-view-contract-assistance-tickets"
+            href="/help-and-knowledge/contract-assistance"
+          >
+            View contract assistance tickets
+            <svg
+              aria-label="forward"
+              class="usa-icon margin-left-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
   </div>
