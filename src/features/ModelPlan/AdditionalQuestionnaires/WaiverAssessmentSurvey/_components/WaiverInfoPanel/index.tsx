@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetCommonWaiverQuery } from 'gql/generated/graphql';
@@ -22,16 +22,35 @@ import {
 } from '../../mockWaiversData';
 import SelectWaiverField from '../SelectWaiverField';
 
+/** Ensures form fields exist for the selected waiver. Requires FormProvider. */
+const WaiverInfoPanelFormInitializer = ({ waiverId }: { waiverId: string }) => {
+  const { getValues, setValue } = useFormContext<WaiverSelectionForm>();
+
+  useEffect(() => {
+    const existingFields = getValues(`waivers.${waiverId}`);
+
+    if (!existingFields) {
+      setValue(`waivers.${waiverId}`, {
+        willUseWaiver: null,
+        notUsingReason: ''
+      });
+    }
+  }, [waiverId, getValues, setValue]);
+
+  return null;
+};
+
 /**
  * Side panel for viewing common waiver details and selecting whether to use it.
- * Must be rendered within a FormProvider.
+ * Must be rendered within a FormProvider when not on read view.
  */
 const WaiverInfoPanel = () => {
   const { t } = useTranslation('waiverAssessmentSurveyMisc');
   const [searchParams, setSearchParams] = useSearchParams();
   const waiverId = searchParams.get('waiverId') ?? '';
 
-  const { getValues, setValue } = useFormContext<WaiverSelectionForm>();
+  const location = useLocation();
+  const isReadView = location.pathname.includes('read-view');
 
   const { data: queryData } = useGetCommonWaiverQuery({
     variables: {
@@ -43,21 +62,6 @@ const WaiverInfoPanel = () => {
   const data = MOCK_WAIVERS_ENABLED
     ? getCommonWaiverMockData(waiverId)
     : queryData;
-
-  useEffect(() => {
-    if (!waiverId) {
-      return;
-    }
-
-    const existingFields = getValues(`waivers.${waiverId}`);
-
-    if (!existingFields) {
-      setValue(`waivers.${waiverId}`, {
-        willUseWaiver: null,
-        notUsingReason: ''
-      });
-    }
-  }, [waiverId, getValues, setValue]);
 
   const closeModal = () => {
     setSearchParams(prev => {
@@ -88,6 +92,9 @@ const WaiverInfoPanel = () => {
       closeModal={closeModal}
       modalHeading={t('waiverInfoPanel.heading')}
     >
+      {!isReadView && waiverId && (
+        <WaiverInfoPanelFormInitializer waiverId={waiverId} />
+      )}
       <GridContainer className="padding-y-6 padding-x-8">
         <div className="maxw-mobile-lg">
           <h2 className="margin-bottom-2">{name}</h2>
@@ -157,9 +164,12 @@ const WaiverInfoPanel = () => {
             />
           </DescriptionList>
 
-          <Divider className="margin-top-3 margin-bottom-4" />
-
-          <SelectWaiverField fieldPrefix={`waivers.${waiverId}`} />
+          {!isReadView && (
+            <>
+              <Divider className="margin-top-3 margin-bottom-4" />
+              <SelectWaiverField fieldPrefix={`waivers.${waiverId}`} />
+            </>
+          )}
         </div>
       </GridContainer>
     </Sidepanel>

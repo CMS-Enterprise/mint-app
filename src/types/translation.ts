@@ -1598,7 +1598,8 @@ export type TranslationPlanSection =
   | TranslationPlan['opsEvalAndLearning']
   | TranslationPlan['payments']
   | TranslationPlan['dataExchangeApproach']
-  | TranslationPlan['iddocQuestionnaire'];
+  | TranslationPlan['iddocQuestionnaire']
+  | TranslationPlan['waiverAssessmentSurvey'];
 
 export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
