@@ -1,0 +1,42 @@
+meta {
+  name: Get Custom Timeline Dates
+  type: graphql
+  seq: 5
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  query CustomTimelineDates($modelPlanID: UUID!) {
+    customTimelineDates(modelPlanID: $modelPlanID) {
+      id
+      title
+      description
+      dateType
+      startDate
+      endDate
+      createdBy
+      createdByUserAccount {
+        id
+        commonName
+      }
+      createdDts
+      modifiedBy
+      modifiedByUserAccount {
+        id
+        commonName
+      }
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "modelPlanID": "{{modelPlanID}}"
+  }
+}

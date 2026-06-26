@@ -5,6 +5,9 @@
   "analyzed_audit": {
     "generalName": "Analyzed audits"
   },
+  "custom_timeline_dates": {
+    "generalName": "Custom timeline dates"
+  },
   "discussion_reply": {
     "generalName": "Replies",
     "groupedName": "Discussions"

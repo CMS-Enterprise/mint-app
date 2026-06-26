@@ -344,6 +344,47 @@ export type CurrentUser = {
   notifications: UserNotifications;
 };
 
+export type CustomTimelineDate = {
+  __typename: 'CustomTimelineDate';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dateType: CustomTimelineDateType;
+  description?: Maybe<Scalars['String']['output']>;
+  endDate?: Maybe<Scalars['Time']['output']>;
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  startDate: Scalars['Time']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type CustomTimelineDateChanges = {
+  dateType?: InputMaybe<CustomTimelineDateType>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['Time']['input']>;
+  startDate?: InputMaybe<Scalars['Time']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate */
+export type CustomTimelineDateCreateInput = {
+  dateType: CustomTimelineDateType;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['Time']['input']>;
+  modelPlanID: Scalars['UUID']['input'];
+  startDate: Scalars['Time']['input'];
+  title: Scalars['String']['input'];
+};
+
+/** The selected date type for a Custom Timeline Date. */
+export enum CustomTimelineDateType {
+  RANGE = 'RANGE',
+  SINGLE = 'SINGLE'
+}
+
 export type DailyDigestCompleteActivityMeta = {
   __typename: 'DailyDigestCompleteActivityMeta';
   analyzedAudits: Array<AnalyzedAudit>;
@@ -2103,6 +2144,7 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   archiveMTOCommonMilestone: MtoCommonMilestone;
+  createCustomTimelineDate: CustomTimelineDate;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2133,6 +2175,7 @@ export type Mutation = {
    */
   createStandardCategories: Scalars['Boolean']['output'];
   createTemplateToMTO: ApplyTemplateResult;
+  deleteCustomTimelineDate: CustomTimelineDate;
   deleteKeyContact: KeyContact;
   deleteKeyContactCategory: KeyContactCategory;
   /**
@@ -2182,6 +2225,7 @@ export type Mutation = {
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllLockableSections: Array<LockableSectionLockStatus>;
   unlockLockableSection: Scalars['Boolean']['output'];
+  updateCustomTimelineDate: CustomTimelineDate;
   /**
    * This will update linked existing models, and relatede model plans for given model plan and fieldName.
    * The fieldName allows it so you can create links for multiple sections of the model plan
@@ -2231,6 +2275,12 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationArchiveMtoCommonMilestoneArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateCustomTimelineDateArgs = {
+  input: CustomTimelineDateCreateInput;
 };
 
 
@@ -2406,6 +2456,12 @@ export type MutationCreateTemplateToMtoArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationDeleteCustomTimelineDateArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationDeleteKeyContactArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -2569,6 +2625,13 @@ export type MutationUnlockAllLockableSectionsArgs = {
 export type MutationUnlockLockableSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
   section: LockableSection;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateCustomTimelineDateArgs = {
+  changes: CustomTimelineDateChanges;
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -4744,6 +4807,8 @@ export type Query = {
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
   currentUser: CurrentUser;
+  customTimelineDate: CustomTimelineDate;
+  customTimelineDates: Array<CustomTimelineDate>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
@@ -4798,6 +4863,18 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
+};
+
+
+/** Query definition for the schema */
+export type QueryCustomTimelineDateArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryCustomTimelineDatesArgs = {
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
@@ -5130,6 +5207,7 @@ export type SubscriptionOnLockableSectionLocksChangedArgs = {
 export enum TableName {
   ACTIVITY = 'activity',
   ANALYZED_AUDIT = 'analyzed_audit',
+  CUSTOM_TIMELINE_DATES = 'custom_timeline_dates',
   DISCUSSION_REPLY = 'discussion_reply',
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',
