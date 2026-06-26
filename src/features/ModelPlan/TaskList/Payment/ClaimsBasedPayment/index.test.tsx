@@ -81,7 +81,7 @@ describe('Model Plan -- Claims Based Payment', () => {
     );
 
     render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
+      <MockedProvider mocks={paymentsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -119,7 +119,7 @@ describe('Model Plan -- Claims Based Payment', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
+      <MockedProvider mocks={paymentsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

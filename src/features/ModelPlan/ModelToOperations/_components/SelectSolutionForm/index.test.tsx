@@ -31,7 +31,6 @@ describe('Select a Solution form', () => {
     const { getByText, asFragment } = render(
       <VerboseMockedProvider
         mocks={[...milestoneMock(''), ...allMTOSolutionsMock]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </VerboseMockedProvider>

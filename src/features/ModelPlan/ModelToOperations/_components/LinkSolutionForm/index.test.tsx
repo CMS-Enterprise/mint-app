@@ -120,7 +120,6 @@ describe('LinkSolutionForm', () => {
           ...categoryMock,
           ...possibleSolutionsMock
         ]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>

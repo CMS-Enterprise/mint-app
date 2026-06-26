@@ -69,7 +69,7 @@ describe('Model Plan Characteristics', () => {
     );
 
     render(
-      <MockedProvider mocks={involvementsMock} addTypename={false}>
+      <MockedProvider mocks={involvementsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -109,7 +109,7 @@ describe('Model Plan Characteristics', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={involvementsMock} addTypename={false}>
+      <MockedProvider mocks={involvementsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

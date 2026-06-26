@@ -85,7 +85,7 @@ describe('Model Plan Documents page', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>
@@ -118,7 +118,7 @@ describe('Model Plan Documents page', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>

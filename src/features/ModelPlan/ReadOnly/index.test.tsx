@@ -49,7 +49,7 @@ describe('Read Only Model Plan Summary', () => {
     );
 
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>
@@ -105,7 +105,7 @@ describe('Read Only Model Plan Summary', () => {
     );
 
     const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>
@@ -148,7 +148,7 @@ describe('Status Tag updates', () => {
     );
 
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>
@@ -180,7 +180,7 @@ describe('Status Tag updates', () => {
     );
 
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>

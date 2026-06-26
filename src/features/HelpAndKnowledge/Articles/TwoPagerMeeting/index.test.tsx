@@ -16,7 +16,7 @@ describe('TwoPagerMeeting', () => {
         {
           path: '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings',
           element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <VerboseMockedProvider mocks={mocks}>
               <TwoPagerMeeting />
             </VerboseMockedProvider>
           )
@@ -30,7 +30,7 @@ describe('TwoPagerMeeting', () => {
     );
 
     const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

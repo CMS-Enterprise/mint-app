@@ -69,7 +69,7 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
     );
 
     render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
+      <MockedProvider mocks={paymentsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -113,7 +113,7 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
+      <MockedProvider mocks={paymentsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

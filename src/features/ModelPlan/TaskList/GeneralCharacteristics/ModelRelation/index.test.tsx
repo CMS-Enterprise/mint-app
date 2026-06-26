@@ -155,7 +155,6 @@ describe('Model Plan Characteristics', () => {
           ...modelPlanCollectionMock,
           ...existingModelPlanMock
         ]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>
@@ -216,7 +215,6 @@ describe('Model Plan Characteristics', () => {
           ...modelPlanCollectionMock,
           ...existingModelPlanMock
         ]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>

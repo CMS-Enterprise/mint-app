@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.13.9",
+    "@apollo/client": "^3.14.1",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@hookform/resolvers": "^3.9.1",
     "@json2csv/formatters": "^7.0.6",

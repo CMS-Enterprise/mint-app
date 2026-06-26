@@ -82,7 +82,7 @@ describe('Model Plan -- Complexity', () => {
     );
 
     render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
+      <MockedProvider mocks={paymentsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -118,7 +118,7 @@ describe('Model Plan -- Complexity', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
+      <MockedProvider mocks={paymentsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
