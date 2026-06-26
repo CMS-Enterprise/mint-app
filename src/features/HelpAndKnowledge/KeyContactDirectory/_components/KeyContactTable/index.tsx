@@ -108,7 +108,11 @@ const KeyContactTable = ({
               target="_blank"
             >
               {name} ({email}
-              <Icon.MailOutline className="margin-left-05 text-tbottom" />)
+              <Icon.MailOutline
+                className="margin-left-05 text-tbottom"
+                aria-hidden
+              />
+              )
             </Link>
           );
         }

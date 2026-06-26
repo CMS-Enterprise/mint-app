@@ -87,7 +87,7 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
     );
 
     render(
-      <MockedProvider mocks={ccwAndQualityMock} addTypename={false}>
+      <MockedProvider mocks={ccwAndQualityMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -125,7 +125,7 @@ describe('Model Plan Ops Eval and Learning CCW and Qualtiy', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={ccwAndQualityMock} addTypename={false}>
+      <MockedProvider mocks={ccwAndQualityMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

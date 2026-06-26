@@ -31,7 +31,7 @@ describe('MTO SolutionCard Component', () => {
     );
 
     const { asFragment, getByText } = render(
-      <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
+      <MockedProvider mocks={[...possibleSolutionsMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

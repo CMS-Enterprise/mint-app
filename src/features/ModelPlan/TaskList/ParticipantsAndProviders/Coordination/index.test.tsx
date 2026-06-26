@@ -87,7 +87,7 @@ describe('Model Plan Coordination', () => {
     );
 
     render(
-      <MockedProvider mocks={coordinationMock} addTypename={false}>
+      <MockedProvider mocks={coordinationMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -125,7 +125,7 @@ describe('Model Plan Coordination', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={coordinationMock} addTypename={false}>
+      <MockedProvider mocks={coordinationMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

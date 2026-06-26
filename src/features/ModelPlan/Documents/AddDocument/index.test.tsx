@@ -28,7 +28,7 @@ describe('Model Plan Add Documents page', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={[]} addTypename={false}>
+      <MockedProvider mocks={[]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

@@ -77,7 +77,7 @@ describe('Model Plan -- Anticipate Dependencies', () => {
     );
 
     render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
+      <MockedProvider mocks={paymentsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -115,7 +115,7 @@ describe('Model Plan -- Anticipate Dependencies', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={paymentsMock} addTypename={false}>
+      <MockedProvider mocks={paymentsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

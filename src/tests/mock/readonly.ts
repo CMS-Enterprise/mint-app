@@ -195,7 +195,8 @@ export const modelTimelineMocks: MockedResponse<
           basics: {
             __typename: 'PlanBasics',
             id: '123',
-            modelType: [ModelType.MANDATORY_NATIONAL]
+            modelType: [ModelType.MANDATORY_NATIONAL],
+            modelTypeOther: 'Other model'
           },
           timeline: modelTimelineData
         }

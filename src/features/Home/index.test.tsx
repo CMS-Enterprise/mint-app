@@ -174,7 +174,6 @@ describe('The home page', () => {
           ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
           ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
         ]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </VerboseMockedProvider>
@@ -223,7 +222,6 @@ describe('The home page', () => {
           ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
           ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
         ]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>
@@ -264,7 +262,6 @@ describe('The home page', () => {
           ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
           ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
         ]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </VerboseMockedProvider>
@@ -318,7 +315,6 @@ describe('The home page', () => {
           ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
           ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
         ]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </VerboseMockedProvider>
@@ -367,7 +363,6 @@ describe('The home page', () => {
           ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
           ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
         ]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>

@@ -24,7 +24,7 @@ describe('SolutionPanel Component', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider addTypename={false} mocks={[solutionMock('1')]}>
+      <MockedProvider mocks={[solutionMock('1')]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -63,7 +63,7 @@ describe('SolutionPanel Component', () => {
     );
 
     render(
-      <MockedProvider addTypename={false} mocks={[noSolutionsMock]}>
+      <MockedProvider mocks={[noSolutionsMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

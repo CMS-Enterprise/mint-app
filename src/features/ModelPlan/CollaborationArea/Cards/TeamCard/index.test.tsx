@@ -29,7 +29,7 @@ describe('TeamCard component', () => {
     );
 
     const { asFragment, getByTestId, getByText, queryByTestId } = render(
-      <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
+      <MockedProvider mocks={collaboratorsMocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -65,7 +65,7 @@ describe('TeamCard component', () => {
     );
 
     const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
+      <MockedProvider mocks={collaboratorsMocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
