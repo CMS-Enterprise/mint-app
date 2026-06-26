@@ -692,34 +692,34 @@ exports[`ModelsCardTable > matches snapshot with no models 1`] = `
       <div
         class="usa-alert__body"
       >
-        <p
-          class="usa-alert__text"
-        >
-          <span />
-        </p>
         <h3
-          class="margin-0"
+          class="usa-alert__heading"
         >
           There is no record of any  models using this solution.
         </h3>
-        If you believe this is an error, please 
-        <a
-          class="usa-link"
-          data-discover="true"
-          href="/report-a-problem"
-          target="_blank"
+        <p
+          class="usa-alert__text"
         >
-          report a problem
-        </a>
-         or email the MINT Team at 
-        <a
-          class="usa-link"
-          href="mailto:MINTTeam@cms.hhs.gov"
-        >
-          MINTTeam@cms.hhs.gov
-        </a>
-        .
-        <p />
+          <span>
+            If you believe this is an error, please 
+            <a
+              class="usa-link"
+              data-discover="true"
+              href="/report-a-problem"
+              target="_blank"
+            >
+              report a problem
+            </a>
+             or email the MINT Team at 
+            <a
+              class="usa-link"
+              href="mailto:MINTTeam@cms.hhs.gov"
+            >
+              MINTTeam@cms.hhs.gov
+            </a>
+            .
+          </span>
+        </p>
       </div>
     </div>
     <div
