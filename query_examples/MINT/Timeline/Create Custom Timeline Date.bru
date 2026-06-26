@@ -1,7 +1,7 @@
 meta {
   name: Create Custom Timeline Date
   type: graphql
-  seq: 5
+  seq: 3
 }
 
 post {
@@ -51,6 +51,8 @@ body:graphql:vars {
 
 tests {
   let responseData = res.getBody().data.createCustomTimelineDate
+  
+  let customTimelineDateID = responseData.id
 
-  bru.setVar("customTimelineDateID", responseData.id);
+  bru.setVar("customTimelineDateID", customTimelineDateID);
 }
