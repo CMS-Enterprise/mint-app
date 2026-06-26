@@ -219,12 +219,15 @@ input CTATAdminUpdateInput @goModel(model: "map[string]interface{}") {
 
 extend type Query {
   ctatRequest(id: UUID!): CTATRequest!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
   ctatRequestsRequester: CTATRequestsTableDataRequester!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
   ctatRequests: CTATRequestsTableData! @hasRole(role: MINT_ASSESSMENT)
 }
 
 extend type Mutation {
   createCTATRequest(input: CTATRequestInput!): CTATRequest!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
   adminUpdateCTATRequest(
     id: UUID!
     changes: CTATAdminUpdateInput!

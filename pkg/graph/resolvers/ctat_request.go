@@ -175,7 +175,7 @@ func CTATRequestCreate(
 
 	request := newCTATRequest(input, principal.Account().ID)
 	relatedModelIDs := lo.Uniq(input.RelatedMINTModels)
-	relatedModelLinks := newCTATRequestModelPlanLinks(request.ID, relatedModelIDs, principal.Account().ID)
+	relatedModelLinks := models.NewCTATRequestModelPlanLinks(request.ID, relatedModelIDs, principal.Account().ID)
 	supportingDocuments, err := newCTATRequestDocuments(input.SupportingDocuments, request.ID, principal.Account().ID, *s3Client.GetBucket())
 	if err != nil {
 		return nil, err
@@ -267,22 +267,6 @@ func newCTATRequest(input *model.CTATRequestInput, requesterID uuid.UUID) *model
 	request.DateAssistanceNeededBy = input.DateAssistanceNeededBy
 
 	return request
-}
-
-func newCTATRequestModelPlanLinks(ctatRequestID uuid.UUID, modelPlanIDs []uuid.UUID, createdBy uuid.UUID) []*models.CTATRequestModelPlanLink {
-	links := make([]*models.CTATRequestModelPlanLink, 0, len(modelPlanIDs))
-
-	for _, modelPlanID := range modelPlanIDs {
-		link := &models.CTATRequestModelPlanLink{}
-		link.ID = uuid.New()
-		link.CTATRequestID = ctatRequestID
-		link.ModelPlanID = modelPlanID
-		link.CreatedBy = createdBy
-
-		links = append(links, link)
-	}
-
-	return links
 }
 
 func newCTATRequestDocuments(
