@@ -3,28 +3,31 @@ import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
 
+import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
-import MilestoneLibrarySection from './_components/MilestoneLibrarySection';
 import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
 import ResourcesByCategory from './Articles/_components/ResourcesByCategory';
 import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
 import { homeArticles } from './Articles';
+import ContractAssistanceSection from './ContractAssistanceSection';
 import KeyContactDirectory from './KeyContactDirectory';
+import MilestoneLibrarySection from './MilestoneLibrarySection';
 
 const JUMP_TO_LINKS_I18NKEYS = [
   'helpResourcesAndLinks',
+  'contractAssistance:hkcJumpToLabel',
   'milestoneLibrary.hkcJumpToLabel',
   'operationalSolutionsAndITSystems',
   'keyContactDirectory.jumpToLabel'
 ];
 
 export const HelpAndKnowledgeHome = () => {
-  const { t } = useTranslation('helpAndKnowledge');
+  const { t } = useTranslation(['helpAndKnowledge', 'contractAssistance']);
 
   const { hash } = useLocation();
 
@@ -106,24 +109,26 @@ export const HelpAndKnowledgeHome = () => {
             {t('description')}
           </div>
 
-          <div>
-            <p className="display-inline text-bold margin-right-2">
-              {t('jumpTo')}:
-            </p>
-            {JUMP_TO_LINKS_I18NKEYS.map((linkI18nkey, index) => (
-              <div className="display-inline" key={linkI18nkey}>
-                <UswdsReactLink
-                  key={linkI18nkey}
-                  to={`#${convertToLowercaseAndDashes(t(linkI18nkey))}`} // 👈 Just the hash for same-page jumping
-                  className="usa-link"
-                >
-                  {t(linkI18nkey)}
-                </UswdsReactLink>
-                {index < JUMP_TO_LINKS_I18NKEYS.length - 1 && (
-                  <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-                )}
-              </div>
-            ))}
+          <div className="display-flex">
+            <div className="flex-shrink-0 margin-right-2">
+              <p className="text-bold margin-0 text-no-wrap">{t('jumpTo')}:</p>
+            </div>
+            <div className="display-flex flex-wrap" style={{ rowGap: '12px' }}>
+              {JUMP_TO_LINKS_I18NKEYS.map((linkI18nkey, index) => (
+                <div key={linkI18nkey}>
+                  <UswdsReactLink
+                    key={linkI18nkey}
+                    to={`#${convertToLowercaseAndDashes(t(linkI18nkey))}`} // 👈 Just the hash for same-page jumping
+                    className="usa-link"
+                  >
+                    {t(linkI18nkey)}
+                  </UswdsReactLink>
+                  {index < JUMP_TO_LINKS_I18NKEYS.length - 1 && (
+                    <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </GridContainer>
       </SummaryBox>
@@ -143,9 +148,15 @@ export const HelpAndKnowledgeHome = () => {
         <ResourcesByCategory />
       </GridContainer>
 
-      <MilestoneLibrarySection />
+      <ContractAssistanceSection />
 
-      <SolutionCategories />
+      <div className="bg-base-lightest padding-y-6 padding-bottom-8">
+        <MilestoneLibrarySection />
+        <GridContainer>
+          <Divider className="margin-top-5 margin-bottom-4" />
+        </GridContainer>
+        <SolutionCategories />
+      </div>
 
       <KeyContactDirectory />
     </MainContent>

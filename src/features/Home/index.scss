@@ -13,4 +13,15 @@
             margin: 0 !important;
         }
     }
+
+    &__summary-boxes {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+
+        .usa-summary-box {
+            flex: 1;
+            margin-bottom: 0;
+        }
+    }
 }

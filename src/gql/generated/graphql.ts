@@ -270,6 +270,224 @@ export enum CmsCenter {
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE'
 }
 
+/** Input for an admin update to a CTAT request. */
+export type CtatAdminUpdateInput = {
+  assignedAdmin?: InputMaybe<Scalars['String']['input']>;
+  notes?: InputMaybe<Scalars['String']['input']>;
+  resolution?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<CtatStatus>;
+};
+
+/** The selected CMMI division for a CTAT record. */
+export enum CtatcmmiDivisionOption {
+  BSG_DBOM = 'BSG_DBOM',
+  BSG_DCCS = 'BSG_DCCS',
+  BSG_DSSOS = 'BSG_DSSOS',
+  BSG_DTS = 'BSG_DTS',
+  LDG_DAN = 'LDG_DAN',
+  LDG_DMLS = 'LDG_DMLS',
+  OTHER = 'OTHER',
+  PCMG_DAPC = 'PCMG_DAPC',
+  PCMG_DAPM = 'PCMG_DAPM',
+  PCMG_DHCPM = 'PCMG_DHCPM',
+  PCMG_DPM = 'PCMG_DPM',
+  PCMG_DSPM = 'PCMG_DSPM',
+  PPG_DAPMI = 'PPG_DAPMI',
+  PPG_DDA = 'PPG_DDA',
+  PPG_DESP = 'PPG_DESP',
+  PPG_DPMS = 'PPG_DPMS',
+  RREG_DHSR = 'RREG_DHSR',
+  RREG_DPAR = 'RREG_DPAR',
+  RREG_DRAM = 'RREG_DRAM',
+  RREG_DSPR = 'RREG_DSPR',
+  SCMG_DDI = 'SCMG_DDI',
+  SCMG_DFR = 'SCMG_DFR',
+  SCMG_DHPI = 'SCMG_DHPI',
+  SCMG_DSI = 'SCMG_DSI',
+  SPHG_DHCD = 'SPHG_DHCD',
+  SPHG_DHII = 'SPHG_DHII',
+  SPHG_DMPM = 'SPHG_DMPM',
+  SPHG_DPHII = 'SPHG_DPHII',
+  SPHG_DSBI = 'SPHG_DSBI'
+}
+
+/** The selected CMMI group for a CTAT record. */
+export enum CtatcmmiGroupOption {
+  BSG = 'BSG',
+  LDG = 'LDG',
+  OTHER = 'OTHER',
+  PCMG = 'PCMG',
+  PPG = 'PPG',
+  RREG = 'RREG',
+  SCMG = 'SCMG',
+  SPHG = 'SPHG'
+}
+
+/** The contract activity type selected for a CTAT record. */
+export enum CtatContractActivityType {
+  EVALUATION = 'EVALUATION',
+  IMPLEMENTATION = 'IMPLEMENTATION',
+  LEARNING = 'LEARNING',
+  OTHER = 'OTHER',
+  TECHNICAL_ASSISTANCE = 'TECHNICAL_ASSISTANCE'
+}
+
+/** The contract type selected for a CTAT record. */
+export enum CtatContractType {
+  COST_PLUS_FIXED_FEE = 'COST_PLUS_FIXED_FEE',
+  COST_REIMBURSEMENT = 'COST_REIMBURSEMENT',
+  FIRM_FIXED_PRICE = 'FIRM_FIXED_PRICE',
+  INCENTIVE_CONTRACT = 'INCENTIVE_CONTRACT',
+  OTHER = 'OTHER',
+  TIME_AND_MATERIALS = 'TIME_AND_MATERIALS'
+}
+
+/** The selected type of help needed for a CTAT record. */
+export enum CtatHelpNeededType {
+  CALM_SYSTEM_REQUISITION_SUPPORT = 'CALM_SYSTEM_REQUISITION_SUPPORT',
+  CONTRACTOR_PERFORMANCE_MANAGEMENT = 'CONTRACTOR_PERFORMANCE_MANAGEMENT',
+  COR_TRANSCRIPT_REVIEW = 'COR_TRANSCRIPT_REVIEW',
+  DATA_USE_AGREEMENT_DUA = 'DATA_USE_AGREEMENT_DUA',
+  DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS = 'DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS',
+  DEPARTMENTAL_EFFICIENCY_REVIEW_DER = 'DEPARTMENTAL_EFFICIENCY_REVIEW_DER',
+  DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION = 'DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION',
+  DOCUMENTING_AND_SUBMITTING_CPARS = 'DOCUMENTING_AND_SUBMITTING_CPARS',
+  ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES = 'ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES',
+  FOREIGN_NATIONAL_MANAGEMENT_SYSTEM_FNMS = 'FOREIGN_NATIONAL_MANAGEMENT_SYSTEM_FNMS',
+  GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF = 'GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF',
+  GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA = 'GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA',
+  GUIDANCE_ON_MARKET_RESEARCH = 'GUIDANCE_ON_MARKET_RESEARCH',
+  GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING = 'GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING',
+  IDENTITY_AND_CREDENTIALING_TOOL_ICT = 'IDENTITY_AND_CREDENTIALING_TOOL_ICT',
+  INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION = 'INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION',
+  INVOICE_PROCESSING_PLATFORM_IPP = 'INVOICE_PROCESSING_PLATFORM_IPP',
+  MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE = 'MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE',
+  OTHER = 'OTHER',
+  POLITICAL_APPOINTEE_APPROVAL_PAA = 'POLITICAL_APPOINTEE_APPROVAL_PAA',
+  POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION = 'POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION',
+  POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING = 'POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING',
+  PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING = 'PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING',
+  REQUEST_FOR_CONTRACT_MEMO_RFC = 'REQUEST_FOR_CONTRACT_MEMO_RFC',
+  REQUEST_FOR_INFORMATION_RFI = 'REQUEST_FOR_INFORMATION_RFI',
+  REQUEST_FOR_PROPOSAL_RFP = 'REQUEST_FOR_PROPOSAL_RFP',
+  REQUEST_FOR_QUOTATION_RFQ = 'REQUEST_FOR_QUOTATION_RFQ',
+  SOW_SOO_PWS_DEVELOPMENT = 'SOW_SOO_PWS_DEVELOPMENT'
+}
+
+export type CtatRequest = {
+  __typename: 'CTATRequest';
+  assignedAdmin?: Maybe<Scalars['UUID']['output']>;
+  assignedAdminUserAccount?: Maybe<UserAccount>;
+  cmmiDivision?: Maybe<CtatcmmiDivisionOption>;
+  cmmiDivisionOther?: Maybe<Scalars['String']['output']>;
+  cmmiGroup?: Maybe<CtatcmmiGroupOption>;
+  cmmiGroupOther?: Maybe<Scalars['String']['output']>;
+  contractActivityType?: Maybe<CtatContractActivityType>;
+  contractActivityTypeOther?: Maybe<Scalars['String']['output']>;
+  contractName?: Maybe<Scalars['String']['output']>;
+  contractNumber?: Maybe<Scalars['String']['output']>;
+  contractType?: Maybe<CtatContractType>;
+  contractTypeOther?: Maybe<Scalars['String']['output']>;
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dateAssistanceNeededBy?: Maybe<Scalars['Time']['output']>;
+  describeHelpNeeded?: Maybe<Scalars['String']['output']>;
+  humanReadableID: Scalars['String']['output'];
+  humanReadableIDNumber: Scalars['Int']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  notes?: Maybe<Scalars['String']['output']>;
+  relatedMINTModels?: Maybe<Array<ModelPlan>>;
+  requestUrgency?: Maybe<CtatRequestUrgency>;
+  requester: Scalars['UUID']['output'];
+  requesterUserAccount: UserAccount;
+  resolution?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<CtatStatus>;
+  supportingDocuments: Array<CtatRequestDocument>;
+  typeOfHelpNeeded: Array<CtatHelpNeededType>;
+  typeOfHelpNeededOther?: Maybe<Scalars['String']['output']>;
+};
+
+/** A supporting document attached to a CTAT request. */
+export type CtatRequestDocument = {
+  __typename: 'CTATRequestDocument';
+  bucket: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  ctatRequestId: Scalars['UUID']['output'];
+  downloadUrl?: Maybe<Scalars['String']['output']>;
+  fileKey: Scalars['String']['output'];
+  fileName: Scalars['String']['output'];
+  fileSize: Scalars['Int']['output'];
+  fileType: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  restricted: Scalars['Boolean']['output'];
+  url?: Maybe<Scalars['String']['output']>;
+  virusClean: Scalars['Boolean']['output'];
+  virusScanned: Scalars['Boolean']['output'];
+};
+
+/** Input for uploading a supporting document for a CTAT request. */
+export type CtatRequestDocumentInput = {
+  fileData: Scalars['Upload']['input'];
+};
+
+/** Input for creating a CTAT request. */
+export type CtatRequestInput = {
+  cmmiDivision?: InputMaybe<CtatcmmiDivisionOption>;
+  cmmiDivisionOther?: InputMaybe<Scalars['String']['input']>;
+  cmmiGroup: CtatcmmiGroupOption;
+  cmmiGroupOther?: InputMaybe<Scalars['String']['input']>;
+  contractActivityType?: InputMaybe<CtatContractActivityType>;
+  contractActivityTypeOther?: InputMaybe<Scalars['String']['input']>;
+  contractName?: InputMaybe<Scalars['String']['input']>;
+  contractNumber?: InputMaybe<Scalars['String']['input']>;
+  contractType?: InputMaybe<CtatContractType>;
+  contractTypeOther?: InputMaybe<Scalars['String']['input']>;
+  dateAssistanceNeededBy: Scalars['Time']['input'];
+  describeHelpNeeded: Scalars['String']['input'];
+  relatedMINTModels?: InputMaybe<Array<Scalars['UUID']['input']>>;
+  requestUrgency: CtatRequestUrgency;
+  supportingDocuments?: InputMaybe<Array<CtatRequestDocumentInput>>;
+  typeOfHelpNeeded: Array<CtatHelpNeededType>;
+  typeOfHelpNeededOther?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The urgency selected for a CTAT request. */
+export enum CtatRequestUrgency {
+  HIGH = 'HIGH',
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM'
+}
+
+/** CTATRequestsTableData contains the requests and the request count for the table information for an admin */
+export type CtatRequestsTableData = {
+  __typename: 'CTATRequestsTableData';
+  count: Scalars['Int']['output'];
+  ctatRequests: Array<CtatRequest>;
+};
+
+/** CTATRequestsTableDataRequester contains the requests for the table information for a requester */
+export type CtatRequestsTableDataRequester = {
+  __typename: 'CTATRequestsTableDataRequester';
+  ctatRequests: Array<CtatRequest>;
+};
+
+/** The status assigned to a CTAT request. */
+export enum CtatStatus {
+  ASSIGNED = 'ASSIGNED',
+  CLOSED = 'CLOSED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  NEW = 'NEW'
+}
+
 export enum CcmInvolvmentType {
   NO = 'NO',
   OTHER = 'OTHER',
@@ -2101,8 +2319,10 @@ export enum MultiSourceDataToCollect {
 export type Mutation = {
   __typename: 'Mutation';
   addPlanFavorite: PlanFavorite;
+  adminUpdateCTATRequest: CtatRequest;
   agreeToNDA: NdaInfo;
   archiveMTOCommonMilestone: MtoCommonMilestone;
+  createCTATRequest: CtatRequest;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2223,6 +2443,13 @@ export type MutationAddPlanFavoriteArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationAdminUpdateCtatRequestArgs = {
+  changes: CtatAdminUpdateInput;
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationAgreeToNdaArgs = {
   agree?: Scalars['Boolean']['input'];
 };
@@ -2231,6 +2458,12 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationArchiveMtoCommonMilestoneArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateCtatRequestArgs = {
+  input: CtatRequestInput;
 };
 
 
@@ -4743,6 +4976,9 @@ export type Query = {
   auditChanges: Array<AuditChange>;
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
+  ctatRequest: CtatRequest;
+  ctatRequests: CtatRequestsTableData;
+  ctatRequestsRequester: CtatRequestsTableDataRequester;
   currentUser: CurrentUser;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
@@ -4798,6 +5034,12 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
+};
+
+
+/** Query definition for the schema */
+export type QueryCtatRequestArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -5130,6 +5372,9 @@ export type SubscriptionOnLockableSectionLocksChangedArgs = {
 export enum TableName {
   ACTIVITY = 'activity',
   ANALYZED_AUDIT = 'analyzed_audit',
+  CTAT_REQUEST = 'ctat_request',
+  CTAT_REQUEST_DOCUMENT = 'ctat_request_document',
+  CTAT_REQUEST_MODEL_PLAN_LINK = 'ctat_request_model_plan_link',
   DISCUSSION_REPLY = 'discussion_reply',
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',
@@ -6009,6 +6254,38 @@ export type UpdateModelPlanBeneficiariesMutationVariables = Exact<{
 
 
 export type UpdateModelPlanBeneficiariesMutation = { __typename: 'Mutation', updatePlanBeneficiaries: { __typename: 'PlanBeneficiaries', id: UUID } };
+
+export type AdminUpdateCtatRequestMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: CtatAdminUpdateInput;
+}>;
+
+
+export type AdminUpdateCtatRequestMutation = { __typename: 'Mutation', adminUpdateCTATRequest: { __typename: 'CTATRequest', id: UUID, humanReadableID: string, status?: CtatStatus | null, notes?: string | null, resolution?: string | null, assignedAdminUserAccount?: { __typename: 'UserAccount', username: string, commonName: string, email: string, givenName: string, familyName: string } | null } };
+
+export type CreateCtatRequestMutationVariables = Exact<{
+  input: CtatRequestInput;
+}>;
+
+
+export type CreateCtatRequestMutation = { __typename: 'Mutation', createCTATRequest: { __typename: 'CTATRequest', id: UUID, humanReadableID: string, createdDts: Time } };
+
+export type GetCtatRequestQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCtatRequestQuery = { __typename: 'Query', ctatRequest: { __typename: 'CTATRequest', id: UUID, humanReadableID: string, createdDts: Time, status?: CtatStatus | null, notes?: string | null, resolution?: string | null, cmmiGroup?: CtatcmmiGroupOption | null, cmmiGroupOther?: string | null, cmmiDivision?: CtatcmmiDivisionOption | null, cmmiDivisionOther?: string | null, contractActivityType?: CtatContractActivityType | null, contractActivityTypeOther?: string | null, contractName?: string | null, contractNumber?: string | null, contractType?: CtatContractType | null, contractTypeOther?: string | null, typeOfHelpNeeded: Array<CtatHelpNeededType>, typeOfHelpNeededOther?: string | null, describeHelpNeeded?: string | null, requestUrgency?: CtatRequestUrgency | null, dateAssistanceNeededBy?: Time | null, assignedAdminUserAccount?: { __typename: 'UserAccount', username: string, givenName: string, familyName: string, commonName: string, email: string } | null, requesterUserAccount: { __typename: 'UserAccount', givenName: string, familyName: string, commonName: string, email: string }, relatedMINTModels?: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string }> | null, supportingDocuments: Array<{ __typename: 'CTATRequestDocument', id: UUID, fileName: string, fileType: string, url?: string | null, downloadUrl?: string | null, virusScanned: boolean, virusClean: boolean }> } };
+
+export type GetCtatRequestsAdminQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCtatRequestsAdminQuery = { __typename: 'Query', ctatRequests: { __typename: 'CTATRequestsTableData', count: number, ctatRequests: Array<{ __typename: 'CTATRequest', id: UUID, humanReadableID: string, createdDts: Time, contractName?: string | null, typeOfHelpNeeded: Array<CtatHelpNeededType>, typeOfHelpNeededOther?: string | null, status?: CtatStatus | null, assignedAdminUserAccount?: { __typename: 'UserAccount', username: string, givenName: string, familyName: string } | null }> } };
+
+export type GetCtatRequestsRequesterQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCtatRequestsRequesterQuery = { __typename: 'Query', ctatRequestsRequester: { __typename: 'CTATRequestsTableDataRequester', ctatRequests: Array<{ __typename: 'CTATRequest', id: UUID, humanReadableID: string, createdDts: Time, contractName?: string | null, typeOfHelpNeeded: Array<CtatHelpNeededType>, typeOfHelpNeededOther?: string | null, status?: CtatStatus | null, assignedAdminUserAccount?: { __typename: 'UserAccount', username: string, givenName: string, familyName: string } | null }> } };
 
 export type GetChangeHistoryQueryVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
@@ -8526,6 +8803,286 @@ export function useUpdateModelPlanBeneficiariesMutation(baseOptions?: Apollo.Mut
 export type UpdateModelPlanBeneficiariesMutationHookResult = ReturnType<typeof useUpdateModelPlanBeneficiariesMutation>;
 export type UpdateModelPlanBeneficiariesMutationResult = Apollo.MutationResult<UpdateModelPlanBeneficiariesMutation>;
 export type UpdateModelPlanBeneficiariesMutationOptions = Apollo.BaseMutationOptions<UpdateModelPlanBeneficiariesMutation, UpdateModelPlanBeneficiariesMutationVariables>;
+export const AdminUpdateCtatRequestDocument = gql`
+    mutation AdminUpdateCtatRequest($id: UUID!, $changes: CTATAdminUpdateInput!) {
+  adminUpdateCTATRequest(id: $id, changes: $changes) {
+    id
+    humanReadableID
+    status
+    notes
+    resolution
+    assignedAdminUserAccount {
+      username
+      commonName
+      email
+      givenName
+      familyName
+    }
+  }
+}
+    `;
+export type AdminUpdateCtatRequestMutationFn = Apollo.MutationFunction<AdminUpdateCtatRequestMutation, AdminUpdateCtatRequestMutationVariables>;
+
+/**
+ * __useAdminUpdateCtatRequestMutation__
+ *
+ * To run a mutation, you first call `useAdminUpdateCtatRequestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAdminUpdateCtatRequestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [adminUpdateCtatRequestMutation, { data, loading, error }] = useAdminUpdateCtatRequestMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useAdminUpdateCtatRequestMutation(baseOptions?: Apollo.MutationHookOptions<AdminUpdateCtatRequestMutation, AdminUpdateCtatRequestMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AdminUpdateCtatRequestMutation, AdminUpdateCtatRequestMutationVariables>(AdminUpdateCtatRequestDocument, options);
+      }
+export type AdminUpdateCtatRequestMutationHookResult = ReturnType<typeof useAdminUpdateCtatRequestMutation>;
+export type AdminUpdateCtatRequestMutationResult = Apollo.MutationResult<AdminUpdateCtatRequestMutation>;
+export type AdminUpdateCtatRequestMutationOptions = Apollo.BaseMutationOptions<AdminUpdateCtatRequestMutation, AdminUpdateCtatRequestMutationVariables>;
+export const CreateCtatRequestDocument = gql`
+    mutation CreateCTATRequest($input: CTATRequestInput!) {
+  createCTATRequest(input: $input) {
+    id
+    humanReadableID
+    createdDts
+  }
+}
+    `;
+export type CreateCtatRequestMutationFn = Apollo.MutationFunction<CreateCtatRequestMutation, CreateCtatRequestMutationVariables>;
+
+/**
+ * __useCreateCtatRequestMutation__
+ *
+ * To run a mutation, you first call `useCreateCtatRequestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCtatRequestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCtatRequestMutation, { data, loading, error }] = useCreateCtatRequestMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCtatRequestMutation(baseOptions?: Apollo.MutationHookOptions<CreateCtatRequestMutation, CreateCtatRequestMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCtatRequestMutation, CreateCtatRequestMutationVariables>(CreateCtatRequestDocument, options);
+      }
+export type CreateCtatRequestMutationHookResult = ReturnType<typeof useCreateCtatRequestMutation>;
+export type CreateCtatRequestMutationResult = Apollo.MutationResult<CreateCtatRequestMutation>;
+export type CreateCtatRequestMutationOptions = Apollo.BaseMutationOptions<CreateCtatRequestMutation, CreateCtatRequestMutationVariables>;
+export const GetCtatRequestDocument = gql`
+    query GetCtatRequest($id: UUID!) {
+  ctatRequest(id: $id) {
+    id
+    humanReadableID
+    createdDts
+    status
+    assignedAdminUserAccount {
+      username
+      givenName
+      familyName
+      commonName
+      email
+    }
+    notes
+    resolution
+    requesterUserAccount {
+      givenName
+      familyName
+      commonName
+      email
+    }
+    cmmiGroup
+    cmmiGroupOther
+    cmmiDivision
+    cmmiDivisionOther
+    relatedMINTModels {
+      id
+      modelName
+    }
+    contractActivityType
+    contractActivityTypeOther
+    contractName
+    contractNumber
+    contractType
+    contractTypeOther
+    typeOfHelpNeeded
+    typeOfHelpNeededOther
+    describeHelpNeeded
+    requestUrgency
+    dateAssistanceNeededBy
+    supportingDocuments {
+      id
+      fileName
+      fileType
+      url
+      downloadUrl
+      virusScanned
+      virusClean
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCtatRequestQuery__
+ *
+ * To run a query within a React component, call `useGetCtatRequestQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCtatRequestQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCtatRequestQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCtatRequestQuery(baseOptions: Apollo.QueryHookOptions<GetCtatRequestQuery, GetCtatRequestQueryVariables> & ({ variables: GetCtatRequestQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCtatRequestQuery, GetCtatRequestQueryVariables>(GetCtatRequestDocument, options);
+      }
+export function useGetCtatRequestLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCtatRequestQuery, GetCtatRequestQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCtatRequestQuery, GetCtatRequestQueryVariables>(GetCtatRequestDocument, options);
+        }
+// @ts-ignore
+export function useGetCtatRequestSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCtatRequestQuery, GetCtatRequestQueryVariables>): Apollo.UseSuspenseQueryResult<GetCtatRequestQuery, GetCtatRequestQueryVariables>;
+export function useGetCtatRequestSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCtatRequestQuery, GetCtatRequestQueryVariables>): Apollo.UseSuspenseQueryResult<GetCtatRequestQuery | undefined, GetCtatRequestQueryVariables>;
+export function useGetCtatRequestSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCtatRequestQuery, GetCtatRequestQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCtatRequestQuery, GetCtatRequestQueryVariables>(GetCtatRequestDocument, options);
+        }
+export type GetCtatRequestQueryHookResult = ReturnType<typeof useGetCtatRequestQuery>;
+export type GetCtatRequestLazyQueryHookResult = ReturnType<typeof useGetCtatRequestLazyQuery>;
+export type GetCtatRequestSuspenseQueryHookResult = ReturnType<typeof useGetCtatRequestSuspenseQuery>;
+export type GetCtatRequestQueryResult = Apollo.QueryResult<GetCtatRequestQuery, GetCtatRequestQueryVariables>;
+export const GetCtatRequestsAdminDocument = gql`
+    query GetCtatRequestsAdmin {
+  ctatRequests {
+    count
+    ctatRequests {
+      id
+      humanReadableID
+      createdDts
+      contractName
+      typeOfHelpNeeded
+      typeOfHelpNeededOther
+      status
+      assignedAdminUserAccount {
+        username
+        givenName
+        familyName
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCtatRequestsAdminQuery__
+ *
+ * To run a query within a React component, call `useGetCtatRequestsAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCtatRequestsAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCtatRequestsAdminQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCtatRequestsAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>(GetCtatRequestsAdminDocument, options);
+      }
+export function useGetCtatRequestsAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>(GetCtatRequestsAdminDocument, options);
+        }
+// @ts-ignore
+export function useGetCtatRequestsAdminSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>): Apollo.UseSuspenseQueryResult<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>;
+export function useGetCtatRequestsAdminSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>): Apollo.UseSuspenseQueryResult<GetCtatRequestsAdminQuery | undefined, GetCtatRequestsAdminQueryVariables>;
+export function useGetCtatRequestsAdminSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>(GetCtatRequestsAdminDocument, options);
+        }
+export type GetCtatRequestsAdminQueryHookResult = ReturnType<typeof useGetCtatRequestsAdminQuery>;
+export type GetCtatRequestsAdminLazyQueryHookResult = ReturnType<typeof useGetCtatRequestsAdminLazyQuery>;
+export type GetCtatRequestsAdminSuspenseQueryHookResult = ReturnType<typeof useGetCtatRequestsAdminSuspenseQuery>;
+export type GetCtatRequestsAdminQueryResult = Apollo.QueryResult<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>;
+export const GetCtatRequestsRequesterDocument = gql`
+    query GetCtatRequestsRequester {
+  ctatRequestsRequester {
+    ctatRequests {
+      id
+      humanReadableID
+      createdDts
+      contractName
+      typeOfHelpNeeded
+      typeOfHelpNeededOther
+      status
+      assignedAdminUserAccount {
+        username
+        givenName
+        familyName
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCtatRequestsRequesterQuery__
+ *
+ * To run a query within a React component, call `useGetCtatRequestsRequesterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCtatRequestsRequesterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCtatRequestsRequesterQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCtatRequestsRequesterQuery(baseOptions?: Apollo.QueryHookOptions<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>(GetCtatRequestsRequesterDocument, options);
+      }
+export function useGetCtatRequestsRequesterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>(GetCtatRequestsRequesterDocument, options);
+        }
+// @ts-ignore
+export function useGetCtatRequestsRequesterSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>): Apollo.UseSuspenseQueryResult<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>;
+export function useGetCtatRequestsRequesterSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>): Apollo.UseSuspenseQueryResult<GetCtatRequestsRequesterQuery | undefined, GetCtatRequestsRequesterQueryVariables>;
+export function useGetCtatRequestsRequesterSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>(GetCtatRequestsRequesterDocument, options);
+        }
+export type GetCtatRequestsRequesterQueryHookResult = ReturnType<typeof useGetCtatRequestsRequesterQuery>;
+export type GetCtatRequestsRequesterLazyQueryHookResult = ReturnType<typeof useGetCtatRequestsRequesterLazyQuery>;
+export type GetCtatRequestsRequesterSuspenseQueryHookResult = ReturnType<typeof useGetCtatRequestsRequesterSuspenseQuery>;
+export type GetCtatRequestsRequesterQueryResult = Apollo.QueryResult<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>;
 export const GetChangeHistoryDocument = gql`
     query GetChangeHistory($modelPlanID: UUID!) {
   translatedAuditCollection(modelPlanID: $modelPlanID) {
@@ -18697,6 +19254,11 @@ export const TypedGetBeneficiaryIdentificationDocument = {"kind":"Document","def
 export const TypedGetFrequencyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFrequency"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequency"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyContinually"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryRemovalFrequencyOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlap"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaryOverlapNote"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRules"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesYes"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNo"}},{"kind":"Field","name":{"kind":"Name","value":"precedenceRulesNote"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetFrequencyQuery, GetFrequencyQueryVariables>;
 export const TypedGetPeopleImpactedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPeopleImpacted"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiaries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"numberPeopleImpacted"}},{"kind":"Field","name":{"kind":"Name","value":"estimateConfidence"}},{"kind":"Field","name":{"kind":"Name","value":"confidenceNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionNote"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionOther"}},{"kind":"Field","name":{"kind":"Name","value":"beneficiarySelectionMethod"}}]}}]}}]}}]} as unknown as DocumentNode<GetPeopleImpactedQuery, GetPeopleImpactedQueryVariables>;
 export const TypedUpdateModelPlanBeneficiariesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlanBeneficiaries"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBeneficiariesChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanBeneficiaries"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanBeneficiariesMutation, UpdateModelPlanBeneficiariesMutationVariables>;
+export const TypedAdminUpdateCtatRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AdminUpdateCtatRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CTATAdminUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminUpdateCTATRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"resolution"}},{"kind":"Field","name":{"kind":"Name","value":"assignedAdminUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]}}]} as unknown as DocumentNode<AdminUpdateCtatRequestMutation, AdminUpdateCtatRequestMutationVariables>;
+export const TypedCreateCtatRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCTATRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CTATRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createCTATRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]} as unknown as DocumentNode<CreateCtatRequestMutation, CreateCtatRequestMutationVariables>;
+export const TypedGetCtatRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCtatRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ctatRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"assignedAdminUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"resolution"}},{"kind":"Field","name":{"kind":"Name","value":"requesterUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroup"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroupOther"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiDivision"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiDivisionOther"}},{"kind":"Field","name":{"kind":"Name","value":"relatedMINTModels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contractActivityType"}},{"kind":"Field","name":{"kind":"Name","value":"contractActivityTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractName"}},{"kind":"Field","name":{"kind":"Name","value":"contractNumber"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"contractTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeededOther"}},{"kind":"Field","name":{"kind":"Name","value":"describeHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"requestUrgency"}},{"kind":"Field","name":{"kind":"Name","value":"dateAssistanceNeededBy"}},{"kind":"Field","name":{"kind":"Name","value":"supportingDocuments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"downloadUrl"}},{"kind":"Field","name":{"kind":"Name","value":"virusScanned"}},{"kind":"Field","name":{"kind":"Name","value":"virusClean"}}]}}]}}]}}]} as unknown as DocumentNode<GetCtatRequestQuery, GetCtatRequestQueryVariables>;
+export const TypedGetCtatRequestsAdminDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCtatRequestsAdmin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ctatRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"ctatRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"contractName"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeededOther"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"assignedAdminUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>;
+export const TypedGetCtatRequestsRequesterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCtatRequestsRequester"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ctatRequestsRequester"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ctatRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"contractName"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeededOther"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"assignedAdminUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCtatRequestsRequesterQuery, GetCtatRequestsRequesterQueryVariables>;
 export const TypedGetChangeHistoryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetChangeHistory"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"translatedAuditCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"action"}},{"kind":"Field","name":{"kind":"Name","value":"actorName"}},{"kind":"Field","name":{"kind":"Name","value":"translatedFields"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"changeType"}},{"kind":"Field","name":{"kind":"Name","value":"dataType"}},{"kind":"Field","name":{"kind":"Name","value":"fieldName"}},{"kind":"Field","name":{"kind":"Name","value":"fieldNameTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"referenceLabel"}},{"kind":"Field","name":{"kind":"Name","value":"questionType"}},{"kind":"Field","name":{"kind":"Name","value":"notApplicableQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"old"}},{"kind":"Field","name":{"kind":"Name","value":"oldTranslated"}},{"kind":"Field","name":{"kind":"Name","value":"new"}},{"kind":"Field","name":{"kind":"Name","value":"newTranslated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"metaData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaBaseStruct"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaGeneric"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"relation"}},{"kind":"Field","name":{"kind":"Name","value":"relationContent"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDiscussionReply"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"discussionContent"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfReplies"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalNeed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"isOther"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolution"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionStatus"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustStart"}},{"kind":"Field","name":{"kind":"Name","value":"solutionMustFinish"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaOperationalSolutionSubtask"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"subtaskName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfSubtasks"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaDocumentSolutionLink"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"version"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionName"}},{"kind":"Field","name":{"kind":"Name","value":"solutionOtherHeader"}},{"kind":"Field","name":{"kind":"Name","value":"solutionIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"needName"}},{"kind":"Field","name":{"kind":"Name","value":"needIsOther"}},{"kind":"Field","name":{"kind":"Name","value":"documentName"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"documentOtherType"}},{"kind":"Field","name":{"kind":"Name","value":"documentVisibility"}},{"kind":"Field","name":{"kind":"Name","value":"documentNote"}},{"kind":"Field","name":{"kind":"Name","value":"documentURL"}},{"kind":"Field","name":{"kind":"Name","value":"documentID"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TranslatedAuditMetaMTOCategory"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"isSubCategory"}},{"kind":"Field","name":{"kind":"Name","value":"parentCategoryID"}},{"kind":"Field","name":{"kind":"Name","value":"parentCategoryName"}},{"kind":"Field","name":{"kind":"Name","value":"categoryName"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"version"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetChangeHistoryQuery, GetChangeHistoryQueryVariables>;
 export const TypedCreateModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanCollaboratorCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createPlanCollaborator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}}]}}]} as unknown as DocumentNode<CreateModelPlanCollaboratorMutation, CreateModelPlanCollaboratorMutationVariables>;
 export const TypedDeleteModelPlanCollaboratorDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteModelPlanCollaborator"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePlanCollaborator"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}}]}}]}}]} as unknown as DocumentNode<DeleteModelPlanCollaboratorMutation, DeleteModelPlanCollaboratorMutationVariables>;

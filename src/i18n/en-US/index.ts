@@ -21,6 +21,7 @@ import usingSolutionLibrary from './helpAndKnowledge/Articles/usingSolutionLibra
 import usingSolutionsAndITSystemsTable from './helpAndKnowledge/Articles/usingSolutionsAndITSystemsTable';
 import usingTableActions from './helpAndKnowledge/Articles/usingTableActions';
 import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
+import contractAssistance from './helpAndKnowledge/contractAssistance';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import keyContact, { keyContactMisc } from './helpAndKnowledge/keyContact';
 import keyContactCategory, {
@@ -99,6 +100,7 @@ import accessibilityStatement from './accessibilityStatement';
 import analytics from './analytics';
 import auth from './auth';
 import cookies from './cookies';
+import ctatRequest from './ctatRequest';
 import error from './error';
 import externalLinkModal from './externalLinkModal';
 import feedback from './feedback';
@@ -121,6 +123,7 @@ const enUS = {
   changeHistory,
   adminActions,
   customHome,
+  ctatRequest,
   error,
   filterView,
   footer,
@@ -198,6 +201,7 @@ const enUS = {
   // Help and Knowledge Center Articles
   evaluatingDataExchangeApproach,
   getAccess,
+  contractAssistance,
   helpAndKnowledge,
   highLevelProjectPlans,
   modelPlanOverview,

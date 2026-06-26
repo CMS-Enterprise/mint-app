@@ -16,31 +16,32 @@ type BreadcrumbItems = {
 };
 
 export enum BreadcrumbItemOptions {
-  HOME = 'HOME',
-  HOME_SETTINGS = 'HOME_SETTINGS',
-  TASK_LIST = 'TASK_LIST',
+  ADDITIONAL_QUESTIONNAIRES = 'ADDITIONAL_QUESTIONNAIRES',
+  ANALYTICS = 'ANALYTICS',
+  BASICS = 'BASICS',
+  BENEFICIARIES = 'BENEFICIARIES',
   COLLABORATION_AREA = 'COLLABORATION_AREA',
-  TASKS = 'TASKS',
+  COLLABORATORS = 'COLLABORATORS',
+  CONTRACT_ASSISTANCE = 'CONTRACT_ASSISTANCE',
+  CR_TDLS = 'CR_TDLS',
   DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
-  MODEL_TO_OPERATIONS = 'MODEL_TO_OPERATIONS',
-  NOTIFICATIONS = 'NOTIFICATIONS',
+  DOCUMENTS = 'DOCUMENTS',
+  GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
   HELP_CENTER = 'HELP_CENTER',
   HELP_SOLUTIONS = 'HELP_SOLUTIONS',
-  BASICS = 'BASICS',
-  GENERAL_CHARACTERISTICS = 'GENERAL_CHARACTERISTICS',
-  PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
-  BENEFICIARIES = 'BENEFICIARIES',
+  HOME = 'HOME',
+  HOME_SETTINGS = 'HOME_SETTINGS',
+  IDDOC_QUESTIONNAIRE = 'IDDOC_QUESTIONNAIRE',
+  MODEL_TO_OPERATIONS = 'MODEL_TO_OPERATIONS',
+  NOTIFICATIONS = 'NOTIFICATIONS',
   OPS_EVAL_AND_LEARNING = 'OPS_EVAL_AND_LEARNING',
+  PARTICIPANTS_AND_PROVIDERS = 'PARTICIPANTS_AND_PROVIDERS',
   PAYMENTS = 'PAYMENTS',
   PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE',
-  COLLABORATORS = 'COLLABORATORS',
-  DOCUMENTS = 'DOCUMENTS',
-  CR_TDLS = 'CR_TDLS',
   STATUS = 'STATUS',
-  TIMELINE = 'TIMELINE',
-  ADDITIONAL_QUESTIONNAIRES = 'ADDITIONAL_QUESTIONNAIRES',
-  IDDOC_QUESTIONNAIRE = 'IDDOC_QUESTIONNAIRE',
-  ANALYTICS = 'ANALYTICS'
+  TASK_LIST = 'TASK_LIST',
+  TASKS = 'TASKS',
+  TIMELINE = 'TIMELINE'
 }
 
 export interface BreadcrumbsProps {
@@ -50,37 +51,51 @@ export interface BreadcrumbsProps {
 }
 
 export const commonBreadCrumbs = (
-  modelID: string,
-  operationalNeedID?: string,
-  operationalSolutionID?: string
+  modelID: string
 ): Record<BreadcrumbItemOptions, BreadcrumbItems> => ({
-  HOME: {
-    text: 'miscellaneous:home',
-    url: '/'
+  ADDITIONAL_QUESTIONNAIRES: {
+    text: 'additionalQuestionnaires:heading',
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires`
   },
-  HOME_SETTINGS: {
-    text: 'homepageSettings:heading',
-    url: '/homepage-settings/form'
+  ANALYTICS: {
+    text: 'analytics:heading',
+    url: `/analytics`
   },
-  TASKS: {
-    text: 'tasks:breadcrumb',
-    url: `/models/${modelID}/collaboration-area/tasks`
+  BASICS: {
+    text: 'basicsMisc:heading',
+    url: `/models/${modelID}/collaboration-area/model-plan/basics`
   },
-  TASK_LIST: {
-    text: 'modelPlanTaskList:heading',
-    url: `/models/${modelID}/collaboration-area/model-plan`
+  BENEFICIARIES: {
+    text: 'beneficiariesMisc:heading',
+    url: `/models/${modelID}/collaboration-area/model-plan/beneficiaries`
   },
   COLLABORATION_AREA: {
     text: 'collaborationArea:heading',
     url: `/models/${modelID}/collaboration-area`
   },
-  MODEL_TO_OPERATIONS: {
-    text: 'modelToOperationsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/model-to-operations`
+  COLLABORATORS: {
+    text: 'collaboratorsMisc:manageModelTeam',
+    url: `/models/${modelID}/collaboration-area/collaborators`
   },
-  NOTIFICATIONS: {
-    text: 'notifications:breadcrumb',
-    url: '/notifications'
+  CONTRACT_ASSISTANCE: {
+    text: 'contractAssistance:hkcHeading',
+    url: '/help-and-knowledge/contract-assistance'
+  },
+  CR_TDLS: {
+    text: 'crtdlsMisc:heading',
+    url: `/models/${modelID}/collaboration-area/cr-tdls`
+  },
+  DATA_EXCHANGE_APPROACH: {
+    text: 'dataExchangeApproachMisc:heading',
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/about-data-exchange-approach`
+  },
+  DOCUMENTS: {
+    text: 'documentsMisc:heading',
+    url: `/models/${modelID}/collaboration-area/documents`
+  },
+  GENERAL_CHARACTERISTICS: {
+    text: 'generalCharacteristicsMisc:heading',
+    url: `/models/${modelID}/collaboration-area/model-plan/characteristics`
   },
   HELP_CENTER: {
     text: 'helpAndKnowledge:heading',
@@ -90,25 +105,33 @@ export const commonBreadCrumbs = (
     text: 'helpAndKnowledge:operationalSolutions',
     url: '/help-and-knowledge/operational-solutions?page=1'
   },
-  BASICS: {
-    text: 'basicsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/model-plan/basics`
+  HOME: {
+    text: 'miscellaneous:home',
+    url: '/'
   },
-  GENERAL_CHARACTERISTICS: {
-    text: 'generalCharacteristicsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/model-plan/characteristics`
+  HOME_SETTINGS: {
+    text: 'homepageSettings:heading',
+    url: '/homepage-settings/form'
   },
-  PARTICIPANTS_AND_PROVIDERS: {
-    text: 'participantsAndProvidersMisc:heading',
-    url: `/models/${modelID}/collaboration-area/model-plan/participants-and-providers`
+  IDDOC_QUESTIONNAIRE: {
+    text: 'iddocQuestionnaireMisc:heading',
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/operations`
   },
-  BENEFICIARIES: {
-    text: 'beneficiariesMisc:heading',
-    url: `/models/${modelID}/collaboration-area/model-plan/beneficiaries`
+  MODEL_TO_OPERATIONS: {
+    text: 'modelToOperationsMisc:heading',
+    url: `/models/${modelID}/collaboration-area/model-to-operations`
+  },
+  NOTIFICATIONS: {
+    text: 'notifications:breadcrumb',
+    url: '/notifications'
   },
   OPS_EVAL_AND_LEARNING: {
     text: 'opsEvalAndLearningMisc:heading',
     url: `/models/${modelID}/collaboration-area/model-plan/ops-eval-and-learning`
+  },
+  PARTICIPANTS_AND_PROVIDERS: {
+    text: 'participantsAndProvidersMisc:heading',
+    url: `/models/${modelID}/collaboration-area/model-plan/participants-and-providers`
   },
   PAYMENTS: {
     text: 'paymentsMisc:heading',
@@ -118,41 +141,21 @@ export const commonBreadCrumbs = (
     text: 'prepareForClearance:heading',
     url: `/models/${modelID}/collaboration-area/model-plan/prepare-for-clearance`
   },
-  COLLABORATORS: {
-    text: 'collaboratorsMisc:manageModelTeam',
-    url: `/models/${modelID}/collaboration-area/collaborators`
-  },
-  DOCUMENTS: {
-    text: 'documentsMisc:heading',
-    url: `/models/${modelID}/collaboration-area/documents`
-  },
-  CR_TDLS: {
-    text: 'crtdlsMisc:heading',
-    url: `/models/${modelID}}/collaboration-area/cr-tdls`
-  },
   STATUS: {
     text: 'modelPlanMisc:headingStatus',
-    url: `/models/${modelID}}/collaboration-area/status`
+    url: `/models/${modelID}/collaboration-area/status`
+  },
+  TASK_LIST: {
+    text: 'modelPlanTaskList:heading',
+    url: `/models/${modelID}/collaboration-area/model-plan`
+  },
+  TASKS: {
+    text: 'tasks:breadcrumb',
+    url: `/models/${modelID}/collaboration-area/tasks`
   },
   TIMELINE: {
     text: 'timelineMisc:heading',
     url: `/models/${modelID}/collaboration-area/model-timeline`
-  },
-  ADDITIONAL_QUESTIONNAIRES: {
-    text: 'additionalQuestionnaires:heading',
-    url: `/models/${modelID}/collaboration-area/additional-questionnaires`
-  },
-  DATA_EXCHANGE_APPROACH: {
-    text: 'dataExchangeApproachMisc:heading',
-    url: `/models/${modelID}/collaboration-area/additional-questionnaires/data-exchange-approach/about-data-exchange-approach`
-  },
-  IDDOC_QUESTIONNAIRE: {
-    text: 'iddocQuestionnaireMisc:heading',
-    url: `/models/${modelID}/collaboration-area/additional-questionnaires/iddoc-questionnaire/operations`
-  },
-  ANALYTICS: {
-    text: 'analytics:heading',
-    url: `/analytics`
   }
 });
 
