@@ -66,7 +66,7 @@ describe('CollectionAndAggregation', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mock} addTypename={false}>
+      <MockedProvider mocks={mock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -94,7 +94,7 @@ describe('CollectionAndAggregation', () => {
     );
 
     render(
-      <MockedProvider mocks={mock} addTypename={false}>
+      <MockedProvider mocks={mock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

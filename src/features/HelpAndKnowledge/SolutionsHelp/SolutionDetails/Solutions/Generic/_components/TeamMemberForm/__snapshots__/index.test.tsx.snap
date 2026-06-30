@@ -228,6 +228,7 @@ exports[`Team member point of contact form > should matches snapshot 1`] = `
               type="button"
             >
               <svg
+                aria-label="info"
                 class="usa-icon minw-4 text-base-light margin-left-neg-05 margin-bottom-neg-2px"
                 focusable="false"
                 height="1em"

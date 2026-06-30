@@ -26,7 +26,7 @@ describe('Read Only IDDOC Questionnaire', () => {
     );
 
     render(
-      <MockedProvider mocks={iddocQuestionnaireMocks} addTypename={false}>
+      <MockedProvider mocks={iddocQuestionnaireMocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -92,7 +92,7 @@ describe('Read Only IDDOC Questionnaire', () => {
     );
 
     render(
-      <MockedProvider mocks={secondMocks} addTypename={false}>
+      <MockedProvider mocks={secondMocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -140,7 +140,7 @@ describe('Read Only IDDOC Questionnaire', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={iddocQuestionnaireMocks} addTypename={false}>
+      <MockedProvider mocks={iddocQuestionnaireMocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

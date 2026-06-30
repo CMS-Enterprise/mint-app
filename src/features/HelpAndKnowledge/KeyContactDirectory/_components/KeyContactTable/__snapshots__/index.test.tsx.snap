@@ -102,6 +102,7 @@ exports[`KeyContactTable > matches snapshot 1`] = `
           >
             Aliza Kim (aliza.kim@cms.hhs.gov
             <svg
+              aria-hidden="true"
               class="usa-icon margin-left-05 text-tbottom"
               focusable="false"
               height="1em"
@@ -139,6 +140,7 @@ exports[`KeyContactTable > matches snapshot 1`] = `
           >
             pstm team mailbox (pstm@example.com
             <svg
+              aria-hidden="true"
               class="usa-icon margin-left-05 text-tbottom"
               focusable="false"
               height="1em"

@@ -28,7 +28,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>
@@ -66,7 +66,7 @@ describe('Read Only Model Plan Summary -- Model Basics', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>

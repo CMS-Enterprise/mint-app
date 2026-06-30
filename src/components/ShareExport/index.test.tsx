@@ -61,7 +61,6 @@ describe('ShareExportModal', () => {
             ...solutionAndMilestoneMock,
             ...echimpCRsAndTDLsMock
           ]}
-          addTypename={false}
         >
           <RouterProvider router={router} />
         </VerboseMockedProvider>
@@ -130,7 +129,6 @@ describe('ShareExportModal', () => {
             ...solutionAndMilestoneMock,
             ...echimpCRsAndTDLsMock
           ]}
-          addTypename={false}
         >
           <RouterProvider router={router} />
         </VerboseMockedProvider>
