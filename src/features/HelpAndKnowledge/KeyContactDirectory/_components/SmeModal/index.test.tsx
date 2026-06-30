@@ -43,7 +43,7 @@ describe('SmeModal Component', () => {
     );
 
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -75,7 +75,7 @@ describe('SmeModal Component', () => {
     );
 
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -88,7 +88,7 @@ describe('SmeModal Component', () => {
 
   it('matches snapshot', () => {
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <SmeModal isOpen closeModal={() => {}} mode="addWithoutCategory" />
       </MockedProvider>
     );

@@ -47,7 +47,7 @@ describe('Report a problem form', () => {
         {
           path: '/report-a-problem',
           element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <VerboseMockedProvider mocks={mocks}>
               <ReportAProblem />
             </VerboseMockedProvider>
           )
@@ -106,7 +106,7 @@ describe('Report a problem form', () => {
         {
           path: '/report-a-problem',
           element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <VerboseMockedProvider mocks={mocks}>
               <ReportAProblem />
             </VerboseMockedProvider>
           )

@@ -80,7 +80,7 @@ describe('Basics overview page', () => {
     );
 
     const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false} showWarnings>
+      <MockedProvider mocks={mocks} showWarnings>
         <RouterProvider router={router} />
       </MockedProvider>
     );

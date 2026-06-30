@@ -125,7 +125,7 @@ const renderWithTemplate = (
   };
 
   return render(
-    <MockedProvider mocks={mocks} addTypename={false}>
+    <MockedProvider mocks={mocks}>
       <TestWrapperWithRouter />
     </MockedProvider>
   );
@@ -140,7 +140,7 @@ describe('AddTemplateModal', () => {
     const router = createMockRouter();
 
     const { asFragment } = render(
-      <MockedProvider mocks={[]} addTypename={false}>
+      <MockedProvider mocks={[]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

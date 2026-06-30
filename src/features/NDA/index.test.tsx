@@ -27,7 +27,7 @@ describe('NDA Page', () => {
         {
           path: '/pre-decisional-notice',
           element: (
-            <MockedProvider addTypename={false}>
+            <MockedProvider>
               <Provider store={store}>
                 <NDA />
               </Provider>
@@ -62,7 +62,7 @@ describe('NDA Page', () => {
         {
           path: '/pre-decisional-notice',
           element: (
-            <MockedProvider addTypename={false}>
+            <MockedProvider>
               <Provider store={store}>
                 <NDA />
               </Provider>
@@ -99,7 +99,7 @@ describe('NDA Page', () => {
         {
           path: '/pre-decisional-notice',
           element: (
-            <MockedProvider addTypename={false}>
+            <MockedProvider>
               <Provider store={store}>
                 <NDA />
               </Provider>

@@ -119,7 +119,7 @@ describe('ClearanceReview component', () => {
     );
 
     const { getByTestId } = render(
-      <MockedProvider mocks={clearanceMocks} addTypename={false}>
+      <MockedProvider mocks={clearanceMocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -151,7 +151,7 @@ describe('ClearanceReview component', () => {
     );
 
     const { getByTestId, user } = setup(
-      <MockedProvider mocks={clearanceMocks} addTypename={false}>
+      <MockedProvider mocks={clearanceMocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -185,7 +185,7 @@ describe('ClearanceReview component', () => {
     );
 
     const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={clearanceMocks} addTypename={false}>
+      <MockedProvider mocks={clearanceMocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

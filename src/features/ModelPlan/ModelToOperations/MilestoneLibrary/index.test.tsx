@@ -50,7 +50,6 @@ describe('Milestone library Component', () => {
     const { asFragment } = render(
       <MockedProvider
         mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
-        addTypename={false}
       >
         <Provider store={store2}>
           <RouterProvider router={router} />
@@ -84,7 +83,6 @@ describe('Milestone library Component', () => {
     render(
       <MockedProvider
         mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
-        addTypename={false}
       >
         <Provider store={store2}>
           <RouterProvider router={router} />
@@ -119,7 +117,6 @@ describe('Milestone library Component', () => {
     render(
       <MockedProvider
         mocks={[...suggestedMilestonesMock, ...commonMilestonesMock]}
-        addTypename={false}
       >
         <Provider store={store1}>
           <RouterProvider router={router} />

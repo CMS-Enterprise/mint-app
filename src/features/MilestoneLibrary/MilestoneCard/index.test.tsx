@@ -60,7 +60,7 @@ describe('MilestoneCard Component', () => {
     );
 
     const { asFragment, getByText } = render(
-      <MockedProvider mocks={suggestedMilestonesMock} addTypename={false}>
+      <MockedProvider mocks={suggestedMilestonesMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
