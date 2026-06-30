@@ -12,9 +12,9 @@ import {
 } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import {
   GetAllModelDataQuery,
-  GetAllModelDataQueryHookResult,
+  GetAllModelDataQueryResult,
   GetAllSingleModelDataQuery,
-  GetAllSingleModelDataQueryHookResult,
+  GetAllSingleModelDataQueryResult,
   ModelShareSection,
   ModelStatus,
   TeamRole,
@@ -539,10 +539,10 @@ type UseFetchCSVData = {
   fetchSingleData: (
     input: string,
     exportSection?: ExportSection
-  ) => Promise<GetAllSingleModelDataQueryHookResult>;
+  ) => Promise<GetAllSingleModelDataQueryResult>;
   fetchAllData: (
     exportSection?: ExportSection
-  ) => Promise<GetAllModelDataQueryHookResult>;
+  ) => Promise<GetAllModelDataQueryResult>;
   setExportSection: (exportSection: ExportSection) => void;
 };
 
