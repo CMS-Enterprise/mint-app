@@ -89,7 +89,7 @@ describe('Model Plan Payment', () => {
     );
 
     const { getByTestId } = render(
-      <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
+      <VerboseMockedProvider mocks={paymentMock}>
         <RouterProvider router={router} />
       </VerboseMockedProvider>
     );
@@ -128,7 +128,7 @@ describe('Model Plan Payment', () => {
     );
 
     const { asFragment, getByTestId } = render(
-      <VerboseMockedProvider mocks={paymentMock} addTypename={false}>
+      <VerboseMockedProvider mocks={paymentMock}>
         <RouterProvider router={router} />
       </VerboseMockedProvider>
     );

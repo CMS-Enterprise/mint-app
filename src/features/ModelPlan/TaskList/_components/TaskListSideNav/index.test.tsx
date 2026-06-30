@@ -94,7 +94,7 @@ describe('The TaskListSideNavActions', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={[...changeHistoryMock]} addTypename={false}>
+      <MockedProvider mocks={[...changeHistoryMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

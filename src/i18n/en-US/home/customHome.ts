@@ -194,7 +194,7 @@ const customHome = {
     tbd: 'To be determined'
   },
   noModelsHeading:
-    '<h3>There is no record of any {{status}} models {{article}} this {{type}}.</h3>',
+    'There is no record of any {{status}} models {{article}} this {{type}}.',
   noModelsDescription:
     'If you believe this is an error, please <report>report a problem</report> or email the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.',
   generalStatus,

@@ -25,7 +25,7 @@ describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning',
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -59,7 +59,7 @@ describe('Read Only Model Plan Summary -- Operations, Evaluation, and Learning',
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

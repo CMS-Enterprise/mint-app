@@ -63,7 +63,7 @@ describe('Operational Solutions Model Usage Components', () => {
         {
           path: '/help-and-knowledge/operational-solutions',
           element: (
-            <MockedProvider mocks={modelUsageMock} addTypename={false}>
+            <MockedProvider mocks={modelUsageMock}>
               <ModelUsage solution={helpSolutions.AMS} />
             </MockedProvider>
           )

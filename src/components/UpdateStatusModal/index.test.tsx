@@ -78,7 +78,7 @@ describe('UpdateStatusModal', () => {
       }
     );
     render(
-      <MockedProvider mocks={statusMock} addTypename={false}>
+      <MockedProvider mocks={statusMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

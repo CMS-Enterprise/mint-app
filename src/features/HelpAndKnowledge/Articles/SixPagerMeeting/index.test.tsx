@@ -15,7 +15,7 @@ describe('SixPagerMeeting', () => {
         {
           path: '/',
           element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <VerboseMockedProvider mocks={mocks}>
               <SixPagerMeeting />
             </VerboseMockedProvider>
           )
