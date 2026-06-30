@@ -18,11 +18,26 @@ import (
 // CTATSubmittedTemplateName is the template name for the CTAT submitted email.
 const CTATSubmittedTemplateName string = "ctat_submitted"
 
+// CTATSubmittedAdminTemplateName is the template name for the CTAT submitted admin email.
+const CTATSubmittedAdminTemplateName string = "ctat_submitted_admin"
+
+// CTATUpdateTemplateName is the template name for the CTAT update email.
+const CTATUpdateTemplateName string = "ctat_update"
+
+// CTATUpdateAdminTemplateName is the template name for the CTAT update admin email.
+const CTATUpdateAdminTemplateName string = "ctat_update_admin"
+
 //go:embed templates/ctat_submitted_body.html
 var ctatSubmittedBodyTemplate string
 
 //go:embed templates/ctat_submitted_subject.html
 var ctatSubmittedSubjectTemplate string
+
+//go:embed templates/ctat_submitted_admin_body.html
+var ctatSubmittedAdminBodyTemplate string
+
+//go:embed templates/ctat_submitted_admin_subject.html
+var ctatSubmittedAdminSubjectTemplate string
 
 //go:embed templates/ctat_update_body.html
 var ctatUpdateBodyTemplate string
@@ -30,11 +45,21 @@ var ctatUpdateBodyTemplate string
 //go:embed templates/ctat_update_subject.html
 var ctatUpdateSubjectTemplate string
 
+//go:embed templates/ctat_update_admin_body.html
+var ctatUpdateAdminBodyTemplate string
+
+//go:embed templates/ctat_update_admin_subject.html
+var ctatUpdateAdminSubjectTemplate string
+
 type ctatEmails struct {
 	// Submitted is the email sent when a CTAT request is submitted.
 	Submitted *emailtemplates.GenEmailTemplate[CTATSubmittedSubjectContent, CTATSubmittedBodyContent]
+	// SubmittedAdmin is the email sent to admins when a CTAT request is submitted.
+	SubmittedAdmin *emailtemplates.GenEmailTemplate[CTATSubmittedAdminSubjectContent, CTATSubmittedAdminBodyContent]
 	// Update is the email sent when a CTAT request is updated.
 	Update *emailtemplates.GenEmailTemplate[CTATUpdateSubjectContent, CTATUpdateBodyContent]
+	// UpdateAdmin is the email sent to admins when a CTAT request is updated.
+	UpdateAdmin *emailtemplates.GenEmailTemplate[CTATUpdateAdminSubjectContent, CTATUpdateAdminBodyContent]
 }
 
 // CTAT is the collection of CTAT-related email templates.
@@ -44,10 +69,20 @@ var CTAT = ctatEmails{
 		ctatSubmittedSubjectTemplate,
 		ctatSubmittedBodyTemplate,
 	),
+	SubmittedAdmin: NewEmailTemplate[CTATSubmittedAdminSubjectContent, CTATSubmittedAdminBodyContent](
+		CTATSubmittedAdminTemplateName,
+		ctatSubmittedAdminSubjectTemplate,
+		ctatSubmittedAdminBodyTemplate,
+	),
 	Update: NewEmailTemplate[CTATUpdateSubjectContent, CTATUpdateBodyContent](
 		CTATUpdateTemplateName,
 		ctatUpdateSubjectTemplate,
 		ctatUpdateBodyTemplate,
+	),
+	UpdateAdmin: NewEmailTemplate[CTATUpdateAdminSubjectContent, CTATUpdateAdminBodyContent](
+		CTATUpdateAdminTemplateName,
+		ctatUpdateAdminSubjectTemplate,
+		ctatUpdateAdminBodyTemplate,
 	),
 }
 
@@ -55,6 +90,10 @@ var CTAT = ctatEmails{
 type CTATSubmittedSubjectContent struct {
 	TicketNumber string
 }
+
+// CTATSubmittedAdminSubjectContent defines the parameters necessary for the corresponding admin email subject.
+// It currently shares the same shape as the requester-submitted email.
+type CTATSubmittedAdminSubjectContent = CTATSubmittedSubjectContent
 
 // CTATSubmittedBodyContent defines the parameters necessary for the corresponding email body.
 type CTATSubmittedBodyContent struct {
@@ -76,13 +115,18 @@ type CTATSubmittedBodyContent struct {
 	UploadedFiles          string
 }
 
-// CTATUpdateTemplateName is the template name for the CTAT update email.
-const CTATUpdateTemplateName string = "ctat_update"
+// CTATSubmittedAdminBodyContent defines the parameters necessary for the corresponding admin email body.
+// It currently shares the same shape as the requester-submitted email.
+type CTATSubmittedAdminBodyContent = CTATSubmittedBodyContent
 
 // CTATUpdateSubjectContent defines the parameters necessary for the corresponding email subject.
 type CTATUpdateSubjectContent struct {
 	TicketNumber string
 }
+
+// CTATUpdateAdminSubjectContent defines the parameters necessary for the corresponding admin email subject.
+// It currently shares the same shape as the requester-update email.
+type CTATUpdateAdminSubjectContent = CTATUpdateSubjectContent
 
 // CTATUpdateBodyContent defines the parameters necessary for the corresponding email body.
 type CTATUpdateBodyContent struct {
@@ -112,6 +156,10 @@ type CTATUpdateBodyContent struct {
 	DateAssistanceNeededBy    string
 	UploadedFiles             string
 }
+
+// CTATUpdateAdminBodyContent defines the parameters necessary for the corresponding admin email body.
+// It currently shares the same shape as the requester-update email.
+type CTATUpdateAdminBodyContent = CTATUpdateBodyContent
 
 // BuildCTATSubmittedBodyContent assembles the CTAT submitted email body content.
 func BuildCTATSubmittedBodyContent(
