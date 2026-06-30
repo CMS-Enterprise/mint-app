@@ -114,6 +114,7 @@ func initializeAddressBook() email.AddressBook {
 	return email.AddressBook{
 		DefaultSender: "test@mint.dev.cms.gov",
 		MINTTeamEmail: "test.team@mint.dev.cms.gov",
+		CTATTeamEmail: "test.ctat.team@mint.dev.cms.gov",
 		DevTeamEmail:  "test.dev.team@mint.dev.cms.gov",
 
 		ModelPlanDateChangedRecipients: []string{

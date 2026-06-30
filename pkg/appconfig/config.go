@@ -30,6 +30,9 @@ const AccessibilityTeamEmailKey = "ACCESSIBILITY_TEAM_EMAIL"
 // MINTTeamEmailKey is the key for the receiving email for the MINT team
 const MINTTeamEmailKey = "MINT_TEAM_EMAIL"
 
+// CTATTeamEmailkey is the key for the receiving email for the CTAT team
+const CTATTeamEmailkey = "CTAT_TEAM_EMAIL"
+
 // DevTeamEmailKey is the key for getting the email sender
 const DevTeamEmailKey = "DEV_TEAM_EMAIL"
 
