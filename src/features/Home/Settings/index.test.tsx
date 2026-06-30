@@ -142,7 +142,7 @@ describe('settings snapshots', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -167,7 +167,7 @@ describe('settings snapshots', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -192,7 +192,7 @@ describe('settings snapshots', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={[...mocks, solutionsMock]} addTypename={false}>
+      <MockedProvider mocks={[...mocks, solutionsMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

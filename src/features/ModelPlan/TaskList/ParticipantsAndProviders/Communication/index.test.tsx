@@ -83,7 +83,7 @@ describe('Model Plan Communication', () => {
     );
 
     render(
-      <MockedProvider mocks={communicationMock} addTypename={false}>
+      <MockedProvider mocks={communicationMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -121,7 +121,7 @@ describe('Model Plan Communication', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={communicationMock} addTypename={false}>
+      <MockedProvider mocks={communicationMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

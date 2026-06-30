@@ -394,7 +394,7 @@ describe('MTOOptionsPanel', () => {
     );
 
     render(
-      <MockedProvider mocks={[...mtoTemplateMock]} addTypename={false}>
+      <MockedProvider mocks={[...mtoTemplateMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

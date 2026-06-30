@@ -20,9 +20,7 @@ const renderWithProviders = (ui: React.ReactElement) => {
 
   return render(
     <Provider store={store}>
-      <MockedProvider mocks={[]} addTypename={false}>
-        {ui}
-      </MockedProvider>
+      <MockedProvider mocks={[]}>{ui}</MockedProvider>
     </Provider>
   );
 };

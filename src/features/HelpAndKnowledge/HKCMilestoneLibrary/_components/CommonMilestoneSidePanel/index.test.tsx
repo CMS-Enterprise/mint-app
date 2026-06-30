@@ -71,7 +71,7 @@ describe('CommonMilestoneSidePanel', () => {
 
   it('should render side panel in add mode accordingly', async () => {
     const { getByText, getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={addRouterConfig(true)} />
         </Provider>
@@ -87,7 +87,7 @@ describe('CommonMilestoneSidePanel', () => {
 
   it('should render side panel in edit mode accordingly', async () => {
     const { getByText, getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={editRouterConfig(true)} />
         </Provider>
@@ -103,7 +103,7 @@ describe('CommonMilestoneSidePanel', () => {
 
   it('matches snapshot', async () => {
     const { getByTestId, getByRole, baseElement } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={addRouterConfig(true)} />
         </Provider>

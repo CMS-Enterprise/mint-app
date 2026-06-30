@@ -35,7 +35,6 @@ describe('ITSystemsTable Component', () => {
     const { asFragment } = render(
       <MockedProvider
         mocks={[...possibleSolutionsMock, ...solutionAndMilestoneMock]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>

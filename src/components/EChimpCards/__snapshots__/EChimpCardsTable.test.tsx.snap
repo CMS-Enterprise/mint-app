@@ -190,7 +190,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
               <p
                 class="text-bold"
               >
-                TDL Status
+                CR Status
               </p>
               <p>
                 Open
@@ -202,7 +202,7 @@ exports[`EChimpCardsTable > matches snapshot 1`] = `
               <p
                 class="text-bold"
               >
-                Issued date
+                Implementation Date
               </p>
               <p>
                 2022-07-30T05:00:00Z

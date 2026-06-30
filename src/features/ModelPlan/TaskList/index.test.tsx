@@ -308,7 +308,6 @@ describe('The Model Plan Task List', () => {
       <Provider store={store}>
         <MockedProvider
           mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-          addTypename={false}
         >
           <RouterProvider router={router} />
         </MockedProvider>
@@ -343,7 +342,6 @@ describe('The Model Plan Task List', () => {
       <Provider store={store}>
         <MockedProvider
           mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-          addTypename={false}
         >
           <RouterProvider router={router} />
         </MockedProvider>
@@ -386,7 +384,6 @@ describe('The Model Plan Task List', () => {
       <Provider store={store}>
         <MockedProvider
           mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-          addTypename={false}
         >
           <RouterProvider router={router} />
         </MockedProvider>
@@ -420,7 +417,6 @@ describe('The Model Plan Task List', () => {
       <Provider store={store}>
         <MockedProvider
           mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-          addTypename={false}
         >
           <RouterProvider router={router} />
         </MockedProvider>
@@ -460,7 +456,6 @@ describe('The Model Plan Task List', () => {
         <Provider store={store}>
           <MockedProvider
             mocks={[modelPlanQuery(modelPlan), ...changeHistoryMock]}
-            addTypename={false}
           >
             <RouterProvider router={router} />
           </MockedProvider>

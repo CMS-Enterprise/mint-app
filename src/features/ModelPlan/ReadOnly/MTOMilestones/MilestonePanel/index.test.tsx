@@ -36,7 +36,7 @@ describe('MilestonePanel Component', () => {
 
     render(
       <Provider store={store}>
-        <MockedProvider addTypename={false} mocks={milestoneMock('123')}>
+        <MockedProvider mocks={milestoneMock('123')}>
           <RouterProvider router={router} />
         </MockedProvider>
       </Provider>
@@ -79,7 +79,7 @@ describe('MilestonePanel Component', () => {
 
     render(
       <Provider store={store}>
-        <MockedProvider addTypename={false} mocks={noSolutionsMock}>
+        <MockedProvider mocks={noSolutionsMock}>
           <RouterProvider router={router} />
         </MockedProvider>
       </Provider>

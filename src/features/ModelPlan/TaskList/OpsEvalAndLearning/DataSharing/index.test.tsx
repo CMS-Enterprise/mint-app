@@ -84,7 +84,7 @@ describe('Model Plan Ops Eval and Learning Data Sharing', () => {
     );
 
     render(
-      <MockedProvider mocks={dataSharingMock} addTypename={false}>
+      <MockedProvider mocks={dataSharingMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -122,7 +122,7 @@ describe('Model Plan Ops Eval and Learning Data Sharing', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={dataSharingMock} addTypename={false}>
+      <MockedProvider mocks={dataSharingMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

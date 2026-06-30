@@ -68,7 +68,7 @@ describe('The NavigationBar component', () => {
     );
 
     const { getByTestId } = render(
-      <MockedProvider mocks={notificationsMock} addTypename={false}>
+      <MockedProvider mocks={notificationsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -97,7 +97,7 @@ describe('The NavigationBar component', () => {
     );
 
     const { getByText, getByTestId } = render(
-      <MockedProvider mocks={notificationsMock} addTypename={false}>
+      <MockedProvider mocks={notificationsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

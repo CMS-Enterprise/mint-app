@@ -36,7 +36,7 @@ describe('Filter View Modal', () => {
       }
     );
     render(
-      <MockedProvider mocks={[]} addTypename={false}>
+      <MockedProvider mocks={[]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -71,7 +71,7 @@ describe('Filter View Modal', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={[]} addTypename={false}>
+      <MockedProvider mocks={[]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

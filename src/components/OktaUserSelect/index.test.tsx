@@ -30,7 +30,7 @@ describe('OktaUserSelect', () => {
 
   it('selects contact from dropdown', async () => {
     const { user, asFragment, getByRole, findByText } = setup(
-      <MockedProvider mocks={[oktaUsersQuery]} addTypename={false}>
+      <MockedProvider mocks={[oktaUsersQuery]}>
         <OktaUserSelect
           id="cedarContactSelect"
           name="cedarContactSelect"

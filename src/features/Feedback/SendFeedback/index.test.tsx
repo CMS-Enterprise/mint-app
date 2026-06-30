@@ -44,7 +44,7 @@ describe('Send feedback form', () => {
         {
           path: '/send-feedback',
           element: (
-            <MockedProvider mocks={mocks} addTypename={false}>
+            <MockedProvider mocks={mocks}>
               <SendFeedback />
             </MockedProvider>
           )
@@ -98,7 +98,7 @@ describe('Send feedback form', () => {
         {
           path: '/send-feedback',
           element: (
-            <MockedProvider mocks={mocks} addTypename={false}>
+            <MockedProvider mocks={mocks}>
               <SendFeedback />
             </MockedProvider>
           )

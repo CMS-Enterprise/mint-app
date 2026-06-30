@@ -89,7 +89,7 @@ describe('Model Plan Beneficiaries', () => {
     );
 
     render(
-      <MockedProvider mocks={beneficiaryMock} addTypename={false}>
+      <MockedProvider mocks={beneficiaryMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -127,7 +127,7 @@ describe('Model Plan Beneficiaries', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={beneficiaryMock} addTypename={false}>
+      <MockedProvider mocks={beneficiaryMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
