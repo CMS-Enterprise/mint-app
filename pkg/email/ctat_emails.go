@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -159,7 +160,10 @@ type CTATUpdateBodyContent struct {
 
 // CTATUpdateAdminBodyContent defines the parameters necessary for the corresponding admin email body.
 // It currently shares the same shape as the requester-update email.
-type CTATUpdateAdminBodyContent = CTATUpdateBodyContent
+type CTATUpdateAdminBodyContent struct {
+	CTATUpdateBodyContent
+	AdminName string
+}
 
 // BuildCTATSubmittedBodyContent assembles the CTAT submitted email body content.
 func BuildCTATSubmittedBodyContent(
@@ -256,8 +260,8 @@ func BuildCTATSubmittedBodyContent(
 	return bodyContent, nil
 }
 
-// SendCTATSubmittedEmail sends the CTAT submitted email to the requester.
-func SendCTATSubmittedEmail(
+// SendCTATSubmittedEmails sends the CTAT submitted emails to the requester and admin
+func SendCTATSubmittedEmails(
 	ctx context.Context,
 	emailService oddmail.EmailService,
 	addressBook AddressBook,
@@ -287,18 +291,34 @@ func SendCTATSubmittedEmail(
 		return nil
 	}
 
-	emailSubject, emailBody, err := CTAT.Submitted.GetContent(subjectContent, bodyContent)
+	requesterEmailSubject, requesterEmailBody, err := CTAT.Submitted.GetContent(subjectContent, bodyContent)
+	if err != nil {
+		return err
+	}
+
+	if err := emailService.Send(
+		addressBook.DefaultSender,
+		[]string{bodyContent.RequesterEmail},
+		nil,
+		requesterEmailSubject,
+		"text/html",
+		requesterEmailBody,
+	); err != nil {
+		return err
+	}
+
+	adminEmailSubject, adminEmailBody, err := CTAT.SubmittedAdmin.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
 	}
 
 	return emailService.Send(
 		addressBook.DefaultSender,
-		[]string{bodyContent.RequesterEmail},
+		[]string{addressBook.CTATTeamEmail},
 		nil,
-		emailSubject,
+		adminEmailSubject,
 		"text/html",
-		emailBody,
+		adminEmailBody,
 	)
 }
 
@@ -328,8 +348,8 @@ func trimmedStringPointersEqual(first *string, second *string) bool {
 	return firstValue == secondValue
 }
 
-// SendCTATUpdateEmail sends the CTAT update email to the requester.
-func SendCTATUpdateEmail(
+// SendCTATUpdateEmails sends the CTAT update emails to the requester and admin
+func SendCTATUpdateEmails(
 	ctx context.Context,
 	emailService oddmail.EmailService,
 	addressBook AddressBook,
@@ -410,17 +430,41 @@ func SendCTATUpdateEmail(
 		bodyContent.Resolution = *updatedRequest.Resolution
 	}
 
-	emailSubject, emailBody, err := CTAT.Update.GetContent(subjectContent, bodyContent)
+	requesterEmailSubject, requesterEmailBody, err := CTAT.Update.GetContent(subjectContent, bodyContent)
+	if err != nil {
+		return err
+	}
+
+	if err := emailService.Send(
+		addressBook.DefaultSender,
+		[]string{bodySummary.RequesterEmail},
+		nil,
+		requesterEmailSubject,
+		"text/html",
+		requesterEmailBody,
+	); err != nil {
+		return err
+	}
+
+	principalAcct := appcontext.Principal(ctx).Account()
+	if principalAcct == nil {
+		return nil
+	}
+
+	adminEmailSubject, adminEmailBody, err := CTAT.UpdateAdmin.GetContent(subjectContent, CTATUpdateAdminBodyContent{
+		CTATUpdateBodyContent: bodyContent,
+		AdminName:             principalAcct.CommonName,
+	})
 	if err != nil {
 		return err
 	}
 
 	return emailService.Send(
 		addressBook.DefaultSender,
-		[]string{bodySummary.RequesterEmail},
+		[]string{addressBook.CTATTeamEmail},
 		nil,
-		emailSubject,
+		adminEmailSubject,
 		"text/html",
-		emailBody,
+		adminEmailBody,
 	)
 }

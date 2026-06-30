@@ -109,7 +109,7 @@ func CTATRequestAdminUpdate(
 
 	if emailService != nil {
 		go func() {
-			sendEmailErr := email.SendCTATUpdateEmail(
+			sendEmailErr := email.SendCTATUpdateEmails(
 				ctx,
 				emailService,
 				addressBook,
@@ -221,7 +221,7 @@ func CTATRequestCreate(
 
 	if emailService != nil {
 		go func() {
-			sendEmailErr := email.SendCTATSubmittedEmail(
+			sendEmailErr := email.SendCTATSubmittedEmails(
 				ctx,
 				emailService,
 				addressBook,

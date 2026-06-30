@@ -560,7 +560,7 @@ func TestSendCTATUpdateEmailSkipsWhitespaceOnlyChanges(t *testing.T) {
 	originalRequest.Resolution = new("Resolved and documented.")
 	updatedRequest.Resolution = new("\nResolved and documented.\t")
 
-	err := email.SendCTATUpdateEmail(
+	err := email.SendCTATUpdateEmails(
 		context.Background(),
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
@@ -616,7 +616,7 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 		).
 		Times(1)
 
-	err = email.SendCTATUpdateEmail(
+	err = email.SendCTATUpdateEmails(
 		suite.testConfigs.Context,
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
