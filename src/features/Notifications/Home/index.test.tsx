@@ -101,7 +101,7 @@ describe('Notification Page', () => {
     );
 
     setup(
-      <MockedProvider mocks={notificationsMock} addTypename={false}>
+      <MockedProvider mocks={notificationsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -131,7 +131,7 @@ describe('Notification Page', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={notificationsMock} addTypename={false}>
+      <MockedProvider mocks={notificationsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

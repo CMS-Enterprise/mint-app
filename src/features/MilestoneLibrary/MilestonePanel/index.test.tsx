@@ -75,7 +75,7 @@ describe('MilestonePanel Component', () => {
     );
 
     const { asFragment, getByText } = render(
-      <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
+      <MockedProvider mocks={[...possibleSolutionsMock]}>
         <Provider store={store2}>
           <RouterProvider router={router} />
         </Provider>
@@ -117,7 +117,7 @@ describe('MilestonePanel Component', () => {
     );
 
     const { getByText, getByRole } = render(
-      <MockedProvider mocks={[...possibleSolutionsMock]} addTypename={false}>
+      <MockedProvider mocks={[...possibleSolutionsMock]}>
         <Provider store={store1}>
           <RouterProvider router={router} />
         </Provider>

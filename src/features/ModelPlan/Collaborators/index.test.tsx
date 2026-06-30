@@ -89,7 +89,7 @@ describe('Collaborator/Team Member page w/table', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>
@@ -127,7 +127,7 @@ describe('Collaborator/Team Member page w/table', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>

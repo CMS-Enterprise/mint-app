@@ -29,7 +29,7 @@ describe('Adding a collaborator page', () => {
     );
 
     const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={collaboratorsMocks} addTypename={false}>
+      <MockedProvider mocks={collaboratorsMocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

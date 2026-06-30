@@ -76,7 +76,7 @@ describe('Custom Milestone form', () => {
     );
 
     const { getAllByTestId, getByTestId, asFragment } = render(
-      <VerboseMockedProvider mocks={mocks} addTypename={false}>
+      <VerboseMockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </VerboseMockedProvider>
     );

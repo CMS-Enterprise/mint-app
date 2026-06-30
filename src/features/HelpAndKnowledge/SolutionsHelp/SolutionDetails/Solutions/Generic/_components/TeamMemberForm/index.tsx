@@ -273,7 +273,10 @@ const TeamMemberForm = ({
                       className="bg-white padding-0 text-base-dark"
                       style={{ gap: '0.25rem' }}
                     >
-                      <Icon.Info className="minw-4 text-base-light margin-left-neg-05 margin-bottom-neg-2px" />
+                      <Icon.Info
+                        className="minw-4 text-base-light margin-left-neg-05 margin-bottom-neg-2px"
+                        aria-label="info"
+                      />
                     </Tooltip>
                   }
                 />

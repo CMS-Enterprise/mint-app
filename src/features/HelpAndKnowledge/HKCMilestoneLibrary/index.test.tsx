@@ -46,10 +46,7 @@ describe('HKC Milestone library Component', () => {
     );
 
     const { getByTestId, findByRole, asFragment } = render(
-      <MockedProvider
-        mocks={[...commonMilestonesLibraryMock]}
-        addTypename={false}
-      >
+      <MockedProvider mocks={[...commonMilestonesLibraryMock]}>
         <Provider store={store2}>
           <RouterProvider router={router} />
         </Provider>
@@ -80,10 +77,7 @@ describe('HKC Milestone library Component', () => {
     );
 
     const { getByRole, getByTestId } = render(
-      <MockedProvider
-        mocks={[...commonMilestonesLibraryMock]}
-        addTypename={false}
-      >
+      <MockedProvider mocks={[...commonMilestonesLibraryMock]}>
         <Provider store={store2}>
           <RouterProvider router={router} />
         </Provider>
@@ -113,10 +107,7 @@ describe('HKC Milestone library Component', () => {
     );
 
     const { getByText } = render(
-      <MockedProvider
-        mocks={[...commonMilestonesLibraryMock]}
-        addTypename={false}
-      >
+      <MockedProvider mocks={[...commonMilestonesLibraryMock]}>
         <Provider store={store1}>
           <RouterProvider router={router} />
         </Provider>

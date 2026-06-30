@@ -41,7 +41,6 @@ describe('MTO Table Actions Component', () => {
           ...commonMilestonesMock,
           ...commonMilestonesMock
         ]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>

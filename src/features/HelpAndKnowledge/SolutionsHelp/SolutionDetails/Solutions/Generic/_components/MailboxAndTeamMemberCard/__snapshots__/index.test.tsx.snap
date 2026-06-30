@@ -78,6 +78,7 @@ exports[`MailboxAndTeamMemberCard Component > should matches snapshot 1`] = `
           >
             aliza.kim@cms.hhs.gov
             <svg
+              aria-hidden="true"
               class="usa-icon margin-left-05 margin-bottom-1px text-tbottom"
               focusable="false"
               height="1em"

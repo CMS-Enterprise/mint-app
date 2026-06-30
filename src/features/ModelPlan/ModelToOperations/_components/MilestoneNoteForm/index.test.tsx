@@ -29,7 +29,7 @@ describe('MilestoneNoteForm', () => {
   it('renders add form and disables submit when empty', () => {
     render(
       <Provider store={store}>
-        <MockedProvider mocks={[]} addTypename={false}>
+        <MockedProvider mocks={[]}>
           <MilestoneNoteForm {...baseProps} />
         </MockedProvider>
       </Provider>
@@ -53,7 +53,7 @@ describe('MilestoneNoteForm', () => {
   it('matches snapshot', () => {
     const { asFragment } = render(
       <Provider store={store}>
-        <MockedProvider mocks={[]} addTypename={false}>
+        <MockedProvider mocks={[]}>
           <MilestoneNoteForm {...baseProps} />
         </MockedProvider>
       </Provider>

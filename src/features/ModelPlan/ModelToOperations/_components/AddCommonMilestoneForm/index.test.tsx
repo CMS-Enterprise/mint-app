@@ -49,7 +49,7 @@ describe('Add common milestone form', () => {
     );
 
     const { asFragment } = render(
-      <VerboseMockedProvider mocks={[]} addTypename={false}>
+      <VerboseMockedProvider mocks={[]}>
         <RouterProvider router={router} />
       </VerboseMockedProvider>
     );

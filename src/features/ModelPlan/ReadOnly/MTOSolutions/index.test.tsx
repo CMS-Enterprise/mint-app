@@ -33,7 +33,6 @@ describe('Read view MTO milestones', () => {
     const { asFragment } = render(
       <MockedProvider
         mocks={[...solutionAndMilestoneMock, ...possibleSolutionsMock]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>
