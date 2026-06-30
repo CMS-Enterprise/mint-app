@@ -43,7 +43,7 @@ describe('Contractor form', () => {
       }
     );
     const { getByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -78,7 +78,7 @@ describe('Contractor form', () => {
       }
     );
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

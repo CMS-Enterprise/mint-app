@@ -99,7 +99,10 @@ const MailboxAndTeamMemberCard = ({
           >
             {pointOfContact.email}
 
-            <Icon.MailOutline className="margin-left-05 margin-bottom-1px text-tbottom" />
+            <Icon.MailOutline
+              className="margin-left-05 margin-bottom-1px text-tbottom"
+              aria-hidden
+            />
           </Link>
         </CardBody>
         {pointOfContact.isPrimary && (

@@ -51,7 +51,7 @@ describe('Owner Modal Component', () => {
     );
 
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -93,7 +93,7 @@ describe('Owner Modal Component', () => {
     );
 
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

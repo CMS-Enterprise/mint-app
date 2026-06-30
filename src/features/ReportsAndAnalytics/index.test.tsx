@@ -37,7 +37,6 @@ describe('ReportsAndAnalytics', () => {
     const { asFragment } = render(
       <MockedProvider
         mocks={[...analyticsSummaryMock, ...mtoMilestoneSummaryMock]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>

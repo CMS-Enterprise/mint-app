@@ -13,7 +13,7 @@ describe('CategoryModal Component', () => {
     <CategoryModal isOpen closeModal={() => {}} mode="add" />;
 
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={keyContactCategoriesMock} addTypename={false}>
+      <MockedProvider mocks={keyContactCategoriesMock}>
         <CategoryModal isOpen closeModal={() => {}} mode="add" />
       </MockedProvider>
     );
@@ -30,7 +30,7 @@ describe('CategoryModal Component', () => {
 
   it('should render edit key contact category when in edit mode', () => {
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={keyContactCategoriesMock} addTypename={false}>
+      <MockedProvider mocks={keyContactCategoriesMock}>
         <CategoryModal
           isOpen
           closeModal={() => {}}
@@ -47,7 +47,7 @@ describe('CategoryModal Component', () => {
 
   it('matches snapshot', () => {
     render(
-      <MockedProvider mocks={keyContactCategoriesMock} addTypename={false}>
+      <MockedProvider mocks={keyContactCategoriesMock}>
         <CategoryModal isOpen closeModal={() => {}} mode="add" />
       </MockedProvider>
     );

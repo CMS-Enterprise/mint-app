@@ -65,7 +65,7 @@ describe('TestComponent', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mock} addTypename={false}>
+      <MockedProvider mocks={mock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

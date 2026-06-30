@@ -131,7 +131,7 @@ describe('Ask a Question Component', () => {
         {
           path: '/models/:modelID/collaboration-area/task-list/basics',
           element: (
-            <MockedProvider mocks={mocks} addTypename={false}>
+            <MockedProvider mocks={mocks}>
               <Provider store={store}>
                 <AskAQuestion modelID={modelID} />
               </Provider>

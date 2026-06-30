@@ -31,10 +31,7 @@ describe('Read view MTO milestones', () => {
     );
 
     render(
-      <MockedProvider
-        mocks={[...mtoMatrixMockFull, ...possibleSolutionsMock]}
-        addTypename={false}
-      >
+      <MockedProvider mocks={[...mtoMatrixMockFull, ...possibleSolutionsMock]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

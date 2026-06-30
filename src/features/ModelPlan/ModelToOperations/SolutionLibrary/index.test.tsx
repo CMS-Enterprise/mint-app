@@ -35,7 +35,6 @@ describe('SolutionLibrary Component', () => {
     const { asFragment, getByText } = render(
       <MockedProvider
         mocks={[...commonSolutionsMock, ...possibleSolutionsMock]}
-        addTypename={false}
       >
         <RouterProvider router={router} />
       </MockedProvider>

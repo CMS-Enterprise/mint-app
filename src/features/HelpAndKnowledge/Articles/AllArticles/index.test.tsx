@@ -1,6 +1,5 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { render } from '@testing-library/react';
 
 import AllArticles from '.';
@@ -11,11 +10,7 @@ describe('The AllArticles component', () => {
       [
         {
           path: '/help-and-knowledge/articles',
-          element: (
-            <MockedProvider mocks={[]} addTypename={false}>
-              <AllArticles />
-            </MockedProvider>
-          )
+          element: <AllArticles />
         }
       ],
       {
@@ -35,11 +30,7 @@ describe('The AllArticles component', () => {
       [
         {
           path: '/help-and-knowledge/articles',
-          element: (
-            <MockedProvider mocks={[]} addTypename={false}>
-              <AllArticles />
-            </MockedProvider>
-          )
+          element: <AllArticles />
         }
       ],
       {
@@ -59,11 +50,7 @@ describe('The AllArticles component', () => {
       [
         {
           path: '/',
-          element: (
-            <MockedProvider mocks={[]} addTypename={false}>
-              <AllArticles />
-            </MockedProvider>
-          )
+          element: <AllArticles />
         }
       ],
       {

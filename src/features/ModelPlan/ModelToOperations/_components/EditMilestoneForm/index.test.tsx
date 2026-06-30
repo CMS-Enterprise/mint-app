@@ -58,7 +58,6 @@ describe('EditMilestoneForm', () => {
             ...categoryMock,
             ...allMTOSolutionsMock
           ]}
-          addTypename={false}
         >
           <RouterProvider router={router} />
         </MockedProvider>

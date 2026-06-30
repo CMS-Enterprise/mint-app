@@ -84,7 +84,7 @@ describe('RecentChanges', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -108,7 +108,7 @@ describe('RecentChanges', () => {
     );
 
     const { getByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -137,7 +137,7 @@ describe('RecentChanges', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
