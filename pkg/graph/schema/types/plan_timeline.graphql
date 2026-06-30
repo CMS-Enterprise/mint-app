@@ -42,6 +42,16 @@ type PlanTimeline {
 }
 
 """
+CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
+(this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
+"""
+input CustomTimelineDateUpdateDatesInput {
+  id: UUID!
+  newStartDate: Time
+  newEndDate: Time
+}
+
+"""
 PlanTimelineChanges represents the possible changes you can make to a Timeline object when updating it.
 Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
 https://gqlgen.com/reference/changesets/
@@ -58,6 +68,8 @@ input PlanTimelineChanges @goModel(model: "map[string]interface{}") {
   wrapUpEnds: Time
   highLevelNote: String
   status: TaskStatusInput
+
+  customTimelineDateUpdates: [CustomTimelineDateUpdateDatesInput!]
 }
 
 extend type Mutation {

@@ -35,6 +35,14 @@ type CustomTimelineDateCreateInput struct {
 	EndDate     *time.Time                    `json:"endDate,omitempty"`
 }
 
+// CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
+// (this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
+type CustomTimelineDateUpdateDatesInput struct {
+	ID           uuid.UUID  `json:"id"`
+	NewStartDate *time.Time `json:"newStartDate,omitempty"`
+	NewEndDate   *time.Time `json:"newEndDate,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`

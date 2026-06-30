@@ -385,6 +385,16 @@ export enum CustomTimelineDateType {
   SINGLE = 'SINGLE'
 }
 
+/**
+ * CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
+ * (this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
+ */
+export type CustomTimelineDateUpdateDatesInput = {
+  id: Scalars['UUID']['input'];
+  newEndDate?: InputMaybe<Scalars['Time']['input']>;
+  newStartDate?: InputMaybe<Scalars['Time']['input']>;
+};
+
 export type DailyDigestCompleteActivityMeta = {
   __typename: 'DailyDigestCompleteActivityMeta';
   analyzedAudits: Array<AnalyzedAudit>;
@@ -4739,6 +4749,7 @@ export type PlanTimelineChanges = {
   clearanceEnds?: InputMaybe<Scalars['Time']['input']>;
   clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
   completeICIP?: InputMaybe<Scalars['Time']['input']>;
+  customTimelineDateUpdates?: InputMaybe<Array<CustomTimelineDateUpdateDatesInput>>;
   highLevelNote?: InputMaybe<Scalars['String']['input']>;
   performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
   performancePeriodStarts?: InputMaybe<Scalars['Time']['input']>;
