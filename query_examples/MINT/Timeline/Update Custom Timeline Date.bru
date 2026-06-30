@@ -1,0 +1,50 @@
+meta {
+  name: Update Custom Timeline Date
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation UpdateCustomTimelineDate($id: UUID!, $changes: CustomTimelineDateChanges!) {
+    updateCustomTimelineDate(id: $id, changes: $changes) {
+      id
+      modelPlanID
+      title
+      description
+      dateType
+      startDate
+      endDate
+      createdBy
+      createdByUserAccount {
+        id
+        commonName
+      }
+      createdDts
+      modifiedBy
+      modifiedByUserAccount {
+        id
+        commonName
+      }
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{customTimelineDateID}}",
+    "changes": {
+      "title": "Updated custom timeline date",
+      "description": "An updated custom date range for this model plan timeline.",
+      "dateType": "RANGE",
+      "startDate": "2026-09-01T00:00:00Z",
+      "endDate": "2026-09-15T00:00:00Z"
+    }
+  }
+}

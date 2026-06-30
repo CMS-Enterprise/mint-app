@@ -1,0 +1,32 @@
+INSERT INTO custom_timeline_dates (
+    id,
+    model_plan_id,
+    title,
+    description,
+    date_type,
+    start_date,
+    end_date,
+    created_by
+)
+VALUES (
+    :id,
+    :model_plan_id,
+    :title,
+    :description,
+    :date_type,
+    :start_date,
+    :end_date,
+    :created_by
+)
+RETURNING
+    id,
+    model_plan_id,
+    title,
+    description,
+    date_type,
+    start_date,
+    end_date,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts;

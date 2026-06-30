@@ -1,0 +1,43 @@
+meta {
+  name: Delete Custom Timeline Date
+  type: graphql
+  seq: 7
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation DeleteCustomTimelineDate($id: UUID!) {
+    deleteCustomTimelineDate(id: $id) {
+      id
+      modelPlanID
+      title
+      description
+      dateType
+      startDate
+      endDate
+      createdBy
+      createdByUserAccount {
+        id
+        commonName
+      }
+      createdDts
+      modifiedBy
+      modifiedByUserAccount {
+        id
+        commonName
+      }
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{customTimelineDateID}}"
+  }
+}
