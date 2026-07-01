@@ -560,7 +560,7 @@ func TestSendCTATUpdateEmailSkipsWhitespaceOnlyChanges(t *testing.T) {
 	originalRequest.Resolution = new("Resolved and documented.")
 	updatedRequest.Resolution = new("\nResolved and documented.\t")
 
-	err := email.SendCTATUpdateEmail(
+	err := email.SendCTATUpdateEmails(
 		context.Background(),
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
@@ -600,6 +600,11 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 	suite.Require().NoError(err)
 	suite.Require().NotNil(requesterAccount)
 
+	adminCtx := appcontext.WithPrincipal(
+		suite.testConfigs.Context,
+		suite.getTestPrincipal(suite.testConfigs.Store, "ADMI"),
+	)
+
 	updatedRequest := *originalRequest
 	notes := "This is a substantial update."
 	updatedRequest.Notes = &notes
@@ -616,10 +621,25 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 		).
 		Times(1)
 
-	err = email.SendCTATUpdateEmail(
-		suite.testConfigs.Context,
+	mockEmailService.
+		EXPECT().
+		Send(
+			gomock.Eq("unit-test-execution@mint.cms.gov"),
+			gomock.Eq([]string{"test.ctat.team@mint.dev.cms.gov"}),
+			gomock.Nil(),
+			gomock.Any(),
+			gomock.Eq("text/html"),
+			gomock.Any(),
+		).
+		Times(1)
+
+	err = email.SendCTATUpdateEmails(
+		adminCtx,
 		mockEmailService,
-		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+		email.AddressBook{
+			DefaultSender: "unit-test-execution@mint.cms.gov",
+			CTATTeamEmail: "test.ctat.team@mint.dev.cms.gov",
+		},
 		originalRequest,
 		&updatedRequest,
 		CTATRelatedMINTModelsGetByCTATRequestIDLOADER,
