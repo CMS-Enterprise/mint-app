@@ -10,6 +10,7 @@ export default gql(/* GraphQL */ `
         modelType
         modelTypeOther
       }
+
       timeline {
         id
         completeICIP
@@ -30,6 +31,15 @@ export default gql(/* GraphQL */ `
         modifiedDts
         status
       }
+    }
+
+    customTimelineDates(modelPlanID: $id) {
+      id
+      title
+      description
+      dateType
+      startDate
+      endDate
     }
   }
 `);
