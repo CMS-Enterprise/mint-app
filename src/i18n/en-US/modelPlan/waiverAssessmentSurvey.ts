@@ -618,6 +618,11 @@ const waiverAssessmentSurveyMisc = {
       action: 'Actions'
     }
   },
+  confirmAndSubmit: {
+    heading: 'Confirm your waiver selections',
+    description:
+      'Check through your waiver selections, and if everything looks accurate, mark this survey as complete.'
+  },
   selectedWaivers: {
     heading: 'Selected waivers',
     description:
