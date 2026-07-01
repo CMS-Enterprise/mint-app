@@ -137,6 +137,17 @@ export const timeline: TranslationTimeline = {
     formType: TranslationFormType.TEXTAREA,
     order: 1.09
   },
+  customDatesNote: {
+    gqlField: 'customDatesNote',
+    goField: 'CustomDatesNote',
+    dbField: 'custom_dates_note',
+    label: 'Additional model dates note',
+    isNote: true,
+    parentReferencesLabel: 'Additional model dates',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.095
+  },
   wrapUpEnds: {
     gqlField: 'wrapUpEnds',
     goField: 'WrapUpEnds',

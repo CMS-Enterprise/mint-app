@@ -11,6 +11,7 @@ SELECT
     performance_period_ends,
     wrap_up_ends,
     high_level_note,
+    custom_dates_note,
     created_by,
     created_dts,
     modified_by,
