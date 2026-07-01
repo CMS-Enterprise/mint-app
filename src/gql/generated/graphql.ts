@@ -18699,6 +18699,14 @@ export const GetTimelineDocument = gql`
       }
     }
   }
+  customTimelineDates(modelPlanID: $id) {
+    id
+    title
+    description
+    dateType
+    startDate
+    endDate
+  }
 }
     ${ReadyForReviewUserFragmentFragmentDoc}`;
 

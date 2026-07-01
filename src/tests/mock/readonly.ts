@@ -200,7 +200,8 @@ export const modelTimelineMocks: MockedResponse<
             modelTypeOther: null
           },
           timeline: modelTimelineData
-        }
+        },
+        customTimelineDates: []
       }
     }
   }

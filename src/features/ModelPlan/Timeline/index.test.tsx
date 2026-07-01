@@ -67,7 +67,8 @@ const getTimelineQuery = (
   result: {
     data: {
       __typename: 'Query',
-      modelPlan: { ...timelineData, ...data }
+      modelPlan: { ...timelineData, ...data },
+      customTimelineDates: []
     }
   }
 });

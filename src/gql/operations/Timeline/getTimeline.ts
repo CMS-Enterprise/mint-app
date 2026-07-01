@@ -41,5 +41,14 @@ export default gql(/* GraphQL */ `
         }
       }
     }
+
+    customTimelineDates(modelPlanID: $id) {
+      id
+      title
+      description
+      dateType
+      startDate
+      endDate
+    }
   }
 `);
