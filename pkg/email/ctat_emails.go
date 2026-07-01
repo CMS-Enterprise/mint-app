@@ -307,6 +307,12 @@ func SendCTATSubmittedEmails(
 		return err
 	}
 
+	// if unset, exit here
+	if len(addressBook.CTATTeamEmail) < 1 {
+		appcontext.ZLogger(ctx).Error("CTAT team email unset, aborting admin email send on submission")
+		return nil
+	}
+
 	adminEmailSubject, adminEmailBody, err := CTAT.SubmittedAdmin.GetContent(subjectContent, bodyContent)
 	if err != nil {
 		return err
@@ -444,6 +450,12 @@ func SendCTATUpdateEmails(
 		requesterEmailBody,
 	); err != nil {
 		return err
+	}
+
+	// if unset, exit here
+	if len(addressBook.CTATTeamEmail) < 1 {
+		appcontext.ZLogger(ctx).Error("CTAT team email unset, aborting admin email send on update")
+		return nil
 	}
 
 	principalAcct := appcontext.Principal(ctx).Account()
