@@ -3,6 +3,7 @@ package email
 import (
 	"context"
 	_ "embed"
+	"errors"
 	"fmt"
 	"slices"
 	"strings"
@@ -309,8 +310,7 @@ func SendCTATSubmittedEmails(
 
 	// if unset, exit here
 	if len(addressBook.CTATTeamEmail) < 1 {
-		appcontext.ZLogger(ctx).Error("CTAT team email unset, aborting admin email send on submission")
-		return nil
+		return errors.New("CTAT team email unset, aborting admin email send on submission")
 	}
 
 	adminEmailSubject, adminEmailBody, err := CTAT.SubmittedAdmin.GetContent(subjectContent, bodyContent)
@@ -454,13 +454,12 @@ func SendCTATUpdateEmails(
 
 	// if unset, exit here
 	if len(addressBook.CTATTeamEmail) < 1 {
-		appcontext.ZLogger(ctx).Error("CTAT team email unset, aborting admin email send on update")
-		return nil
+		return errors.New("CTAT email team unset, aborting admin email send on update")
 	}
 
 	principalAcct := appcontext.Principal(ctx).Account()
 	if principalAcct == nil {
-		return nil
+		return errors.New("unexpected nil principal account, aborting admin email send on update")
 	}
 
 	adminEmailSubject, adminEmailBody, err := CTAT.UpdateAdmin.GetContent(subjectContent, CTATUpdateAdminBodyContent{
