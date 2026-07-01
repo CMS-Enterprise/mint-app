@@ -621,7 +621,18 @@ const waiverAssessmentSurveyMisc = {
   confirmAndSubmit: {
     heading: 'Confirm your waiver selections',
     description:
-      'Check through your waiver selections, and if everything looks accurate, mark this survey as complete.'
+      'Check through your waiver selections, and if everything looks accurate, mark this survey as complete.',
+    summaryBox: {
+      title: 'Want to review all past CMMI waivers?',
+      // TODO: Update link
+      text: 'Visit <link1>link and title of link</link1> to learn more'
+    },
+    saveAndExit: 'Save and exit questionnaire',
+    questionnaireStatus: 'Questionnaire status',
+    questionnaireComplete:
+      'This questionnaire (waiver assessment survey) is complete.',
+    questionnaireStatusAlert:
+      'You must complete all questions in this form before you can mark it as complete.'
   },
   selectedWaivers: {
     heading: 'Selected waivers',

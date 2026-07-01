@@ -1,12 +1,20 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import {
+  Button,
+  Link,
+  SummaryBox,
+  SummaryBoxContent,
+  SummaryBoxHeading
+} from '@trussworks/react-uswds';
 import SelectedWaiversTable from 'features/ModelPlan/ReadOnly/_components/SelectedWaiversTable';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import { useGetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 
 import { Alert } from 'components/Alert';
 import FormHeader from 'components/FormHeader';
+import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
 
 import WaiverAssessmentSurveyReadOnlySections from '../_components/WaiverAssessmentSurveyReadOnlySections';
@@ -16,6 +24,7 @@ import {
 } from '../mockWaiversData';
 
 const ConfirmAndSubmit = () => {
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
@@ -77,6 +86,50 @@ const ConfirmAndSubmit = () => {
       )}
 
       <WaiverAssessmentSurveyReadOnlySections modelPlan={data.modelPlan} />
+
+      <SummaryBox className="maxw-tablet">
+        <SummaryBoxHeading headingLevel="h2" className="margin-bottom-2">
+          {waiverAssessmentSurveyMiscT('confirmAndSubmit.summaryBox.title')}
+        </SummaryBoxHeading>
+        <SummaryBoxContent>
+          <p className="margin-0">
+            <Trans
+              i18nKey="waiverAssessmentSurveyMisc:confirmAndSubmit.summaryBox.text"
+              components={{
+                // TODO: Update link
+                link1: <Link href="/">link</Link>
+              }}
+            />
+          </p>
+        </SummaryBoxContent>
+      </SummaryBox>
+
+      <div className="margin-top-6 margin-bottom-3 maxw-tablet border-1px border-base-light radius-md padding-2">
+        <p className="margin-bottom-2 margin-top-0">
+          {waiverAssessmentSurveyMiscT('confirmAndSubmit.questionnaireStatus')}
+        </p>
+        {/* TODO: Add checkbox here to mark as complete */}
+        <Alert type="warning" slim>
+          {waiverAssessmentSurveyMiscT(
+            'confirmAndSubmit.questionnaireStatusAlert'
+          )}
+        </Alert>
+      </div>
+
+      <div className="margin-top-6 margin-bottom-3 display-flex">
+        <Button
+          type="button"
+          className="usa-button usa-button--outline margin-top-0"
+          onClick={() => null}
+        >
+          {miscellaneousT('back')}
+        </Button>
+        <Button type="submit" className="margin-top-0">
+          {waiverAssessmentSurveyMiscT('confirmAndSubmit.saveAndExit')}
+        </Button>
+      </div>
+
+      <PageNumber currentPage={7} totalPages={7} className="margin-y-6" />
     </div>
   );
 };
