@@ -176,7 +176,7 @@ func (s *Server) routes(
 	addressBook := email.AddressBook{
 		DefaultSender:                  s.Config.GetString(appconfig.EmailSenderKey),
 		MINTTeamEmail:                  s.Config.GetString(appconfig.MINTTeamEmailKey),
-		CTATTeamEmail:                  s.Config.GetString(appconfig.CTATTeamEmailkey),
+		CTATTeamEmail:                  s.Config.GetString(appconfig.CTATTeamEmailKey),
 		ModelPlanDateChangedRecipients: dateChangedRecipientEmails,
 		DevTeamEmail:                   s.Config.GetString(appconfig.DevTeamEmailKey),
 	}
