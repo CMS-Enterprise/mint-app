@@ -7,10 +7,13 @@ import {
   WaiverSelectionInput
 } from 'gql/generated/graphql';
 
+import { waiverAssessmentSurvey } from 'i18n/en-US/modelPlan/waiverAssessmentSurvey';
 import {
+  Bool,
   isTranslationFieldPropertiesWithOptions,
   isTranslationFieldPropertiesWithOptionsAndChildren,
   TranslationConfigType,
+  TranslationFieldPropertiesWithOptionsAndChildren,
   TranslationPlan
 } from 'types/translation';
 import {
@@ -725,3 +728,75 @@ export const buildWaiverAssessmentSurveyModelQuestionsData = (
     generalCharacteristics.participationInModelPreconditionOtherSelected
   )
 });
+
+const WAIVER_SURVEY_PARENT_QUESTION_CONFIGS = [
+  waiverAssessmentSurvey.modifiesMedicareSavingsPrograms,
+  waiverAssessmentSurvey.bundlesPayments,
+  waiverAssessmentSurvey.offersRiskSharingArrangements,
+  waiverAssessmentSurvey.impactsSiteOfCarePayments,
+  waiverAssessmentSurvey.modifiesCareTeamScopeOfPractice,
+  waiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPayments,
+  waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaivers,
+  waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiaries,
+  waiverAssessmentSurvey.impactsHomeCommunityBasedServicePayments,
+  waiverAssessmentSurvey.impactsManagedCareWaivers
+] as const;
+
+type WaiverSurveyQuestionnaireData =
+  GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
+
+const isNonEmptyString = (value: unknown): boolean =>
+  typeof value === 'string' && value.trim() !== '';
+
+const isSelectedEnum = (value: unknown): boolean =>
+  value !== null && value !== undefined && value !== '';
+
+/**
+ * Returns true when a single yes/no waiver question and its conditional child are complete.
+ */
+export const isWaiverSurveyQuestionComplete = (
+  questionConfig: TranslationFieldPropertiesWithOptionsAndChildren<Bool, void>,
+  surveyData: Record<string, unknown>
+): boolean => {
+  const parentValue = surveyData[questionConfig.gqlField];
+
+  if (parentValue === null || parentValue === undefined) {
+    return false;
+  }
+
+  if (parentValue === true) {
+    const exampleField =
+      questionConfig.childRelation?.[Bool.true]?.[0]?.().gqlField;
+
+    return exampleField ? isNonEmptyString(surveyData[exampleField]) : false;
+  }
+
+  if (parentValue === false) {
+    const whyNotField =
+      questionConfig.childRelation?.[Bool.false]?.[0]?.().gqlField;
+
+    return whyNotField ? isSelectedEnum(surveyData[whyNotField]) : false;
+  }
+
+  return false;
+};
+
+/**
+ * Returns true when all pages 3–5 waiver question fields are complete.
+ */
+export const isWaiverSurveyQuestionsComplete = (
+  surveyData: WaiverSurveyQuestionnaireData
+): boolean => {
+  const allParentQuestionsComplete =
+    WAIVER_SURVEY_PARENT_QUESTION_CONFIGS.every(questionConfig =>
+      isWaiverSurveyQuestionComplete(
+        questionConfig,
+        surveyData as Record<string, unknown>
+      )
+    );
+
+  return (
+    allParentQuestionsComplete &&
+    isNonEmptyString(surveyData.additionalMedicaidSpecificWaivers)
+  );
+};

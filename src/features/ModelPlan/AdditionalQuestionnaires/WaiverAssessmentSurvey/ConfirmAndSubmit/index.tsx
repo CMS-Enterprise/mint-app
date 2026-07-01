@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
   Link,
@@ -13,6 +13,7 @@ import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import { useGetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 
 import { Alert } from 'components/Alert';
+import CheckboxField from 'components/CheckboxField';
 import FormHeader from 'components/FormHeader';
 import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
@@ -22,14 +23,18 @@ import {
   getAllWaiverAssessmentSurveyMockData,
   MOCK_WAIVERS_ENABLED
 } from '../mockWaiversData';
+import { isWaiverSurveyQuestionsComplete } from '../util';
 
 const ConfirmAndSubmit = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
+  const navigate = useNavigate();
 
   const { modelID = '' } = useParams<{ modelID: string }>();
+
+  const [shouldSubmitForm, setShouldSubmitForm] = useState<boolean>(false);
 
   const {
     data: queryData,
@@ -48,16 +53,26 @@ const ConfirmAndSubmit = () => {
   const loading = MOCK_WAIVERS_ENABLED ? false : queryLoading;
   const error = MOCK_WAIVERS_ENABLED ? undefined : queryError;
 
+  const waiverAssessmentSurveyData =
+    data?.modelPlan?.questionnaires?.waiverAssessmentSurvey;
+
+  const isSurveyComplete = waiverAssessmentSurveyData
+    ? isWaiverSurveyQuestionsComplete(waiverAssessmentSurveyData)
+    : false;
+
+  useEffect(() => {
+    if (!isSurveyComplete) {
+      setShouldSubmitForm(false);
+    }
+  }, [isSurveyComplete]);
+
   if (loading) {
     return <Spinner size="large" />;
   }
 
-  if (error || !data?.modelPlan?.questionnaires?.waiverAssessmentSurvey) {
+  if (error || !waiverAssessmentSurveyData) {
     return <NotFoundPartial errorMessage={error?.message} />;
   }
-
-  const waiverAssessmentSurveyData =
-    data.modelPlan.questionnaires.waiverAssessmentSurvey;
 
   return (
     <div className="mint-body-normal">
@@ -105,10 +120,24 @@ const ConfirmAndSubmit = () => {
       </SummaryBox>
 
       <div className="margin-top-6 margin-bottom-3 maxw-tablet border-1px border-base-light radius-md padding-2">
-        <p className="margin-bottom-2 margin-top-0">
+        <p className="margin-y-0">
           {waiverAssessmentSurveyMiscT('confirmAndSubmit.questionnaireStatus')}
         </p>
-        {/* TODO: Add checkbox here to mark as complete */}
+        <CheckboxField
+          name="shouldSubmitForm"
+          id="should-submit-form"
+          testid="should-submit-form"
+          checked={shouldSubmitForm}
+          disabled={!isSurveyComplete}
+          value="true"
+          label={waiverAssessmentSurveyMiscT(
+            'confirmAndSubmit.questionnaireComplete'
+          )}
+          onChange={e => {
+            setShouldSubmitForm(e.target.checked);
+          }}
+          onBlur={() => null}
+        />
         <Alert type="warning" slim>
           {waiverAssessmentSurveyMiscT(
             'confirmAndSubmit.questionnaireStatusAlert'
@@ -120,7 +149,11 @@ const ConfirmAndSubmit = () => {
         <Button
           type="button"
           className="usa-button usa-button--outline margin-top-0"
-          onClick={() => null}
+          onClick={() =>
+            navigate(
+              `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicaid-payment-waivers`
+            )
+          }
         >
           {miscellaneousT('back')}
         </Button>
