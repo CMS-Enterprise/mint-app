@@ -9,6 +9,15 @@
     "generalName": "Replies",
     "groupedName": "Discussions"
   },
+  "ctat_request": {
+    "generalName": "CTAT requests"
+  },
+  "ctat_request_document": {
+    "generalName": "CTAT request documents"
+  },
+  "ctat_request_model_plan_link": {
+    "generalName": "CTAT request model plan links"
+  },
   "existing_model": {
     "generalName": "Existing models"
   },

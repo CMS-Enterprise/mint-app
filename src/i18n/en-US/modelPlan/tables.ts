@@ -7,6 +7,15 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
     generalName: 'Replies',
     groupedName: 'Discussions'
   },
+  [TableName.CTAT_REQUEST]: {
+    generalName: 'CTAT requests'
+  },
+  [TableName.CTAT_REQUEST_DOCUMENT]: {
+    generalName: 'CTAT request documents'
+  },
+  [TableName.CTAT_REQUEST_MODEL_PLAN_LINK]: {
+    generalName: 'CTAT request model plan links'
+  },
   [TableName.EXISTING_MODEL]: { generalName: 'Existing models' },
   [TableName.EXISTING_MODEL_LINK]: {
     generalName: 'Existing model links',

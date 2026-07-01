@@ -1,0 +1,220 @@
+meta {
+  name: Create CTAT Request
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation createCTATRequest($input: CTATRequestInput!) {
+    createCTATRequest(input: $input) {
+      id
+      humanReadableID
+      humanReadableIDNumber
+      requester
+      requesterUserAccount {
+        id
+        username
+        isEUAID
+        commonName
+        locale
+        email
+        givenName
+        familyName
+        zoneInfo
+        hasLoggedIn
+      }
+      status
+      assignedAdmin
+      assignedAdminUserAccount {
+        id
+        username
+        isEUAID
+        commonName
+        locale
+        email
+        givenName
+        familyName
+        zoneInfo
+        hasLoggedIn
+      }
+      notes
+      resolution
+      cmmiGroup
+      cmmiGroupOther
+      cmmiDivision
+      cmmiDivisionOther
+      relatedMINTModels {
+        id
+        modelName
+        abbreviation
+        archived
+        createdBy
+        createdByUserAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
+        createdDts
+        modifiedBy
+        modifiedByUserAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
+        modifiedDts
+        status
+        taskListStatus
+        suggestedPhase {
+          phase
+          suggestedStatuses
+        }
+        previousSuggestedPhase
+        isFavorite
+        isCollaborator
+      }
+      contractActivityType
+      contractActivityTypeOther
+      contractName
+      contractNumber
+      contractType
+      contractTypeOther
+      typeOfHelpNeeded
+      typeOfHelpNeededOther
+      describeHelpNeeded
+      requestUrgency
+      dateAssistanceNeededBy
+      supportingDocuments {
+        id
+        ctatRequestId
+        url
+        fileType
+        bucket
+        fileKey
+        virusScanned
+        virusClean
+        restricted
+        fileName
+        fileSize
+        createdBy
+        createdByUserAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
+        createdDts
+        modifiedBy
+        modifiedByUserAccount {
+          id
+          username
+          isEUAID
+          commonName
+          locale
+          email
+          givenName
+          familyName
+          zoneInfo
+          hasLoggedIn
+        }
+        modifiedDts
+      }
+      createdBy
+      createdByUserAccount {
+        id
+        username
+        isEUAID
+        commonName
+        locale
+        email
+        givenName
+        familyName
+        zoneInfo
+        hasLoggedIn
+      }
+      createdDts
+      modifiedBy
+      modifiedByUserAccount {
+        id
+        username
+        isEUAID
+        commonName
+        locale
+        email
+        givenName
+        familyName
+        zoneInfo
+        hasLoggedIn
+      }
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "input": {
+      "cmmiGroup": "BSG",
+      "cmmiDivision": "BSG_DBOM",
+      "relatedMINTModels": [
+        "{{modelPlanID}}"
+      ],
+      "contractActivityType": "TECHNICAL_ASSISTANCE",
+      "contractName": "BTAL CTAT Request Example Contract",
+      "contractNumber": "75FCMC26F1001",
+      "contractType": "TIME_AND_MATERIALS",
+      "typeOfHelpNeeded": [
+        "REQUEST_FOR_INFORMATION_RFI",
+        "GUIDANCE_ON_MARKET_RESEARCH"
+      ],
+      "describeHelpNeeded": "Bruno example request for CTAT assistance without supporting documents.",
+      "requestUrgency": "HIGH",
+      "dateAssistanceNeededBy": "2026-06-30T12:00:00Z",
+      "supportingDocuments": []
+    }
+  }
+}
+
+vars:pre-request {
+  EUAID: BTAL
+  jobCodes: ["MINT_USER_NONPROD"]
+}
+
+tests {
+  let responseData = res.getBody().data.createCTATRequest
+  
+  ctatRequestID = responseData.id
+  
+  bru.setVar("ctatRequestID", ctatRequestID);
+}

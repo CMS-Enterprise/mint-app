@@ -30,7 +30,9 @@ const scrollBypass: string[] = [
   'hide-milestones-without-solutions=',
   // Read view bypasses for MTO panels
   'view-milestone=',
-  'view-solution='
+  'view-solution=',
+  // Contract assistance ticket side panel
+  '/help-and-knowledge/contract-assistance/'
 ];
 
 const shouldScroll = (path: string, prevPath: string | undefined) => {

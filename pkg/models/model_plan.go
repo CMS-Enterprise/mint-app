@@ -14,6 +14,17 @@ type ModelPlan struct {
 	PreviousSuggestedPhase *ModelPhase `json:"previousSuggestedPhase" db:"previous_suggested_phase"`
 }
 
+// ModelPlanWithCTATRequestID wraps a model plan with the CTAT request it is linked to.
+type ModelPlanWithCTATRequestID struct {
+	ModelPlan
+	CTATRequestID uuid.UUID `json:"ctatRequestID" db:"ctat_request_id"`
+}
+
+// ToModelPlan returns the embedded model plan.
+func (m *ModelPlanWithCTATRequestID) ToModelPlan() *ModelPlan {
+	return &m.ModelPlan
+}
+
 // NewModelPlan returns a new unarchived model plan with a default status of ModelStatusPlanDraft
 func NewModelPlan(createdBy uuid.UUID, modelName string) *ModelPlan {
 	return &ModelPlan{
