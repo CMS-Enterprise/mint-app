@@ -1,6 +1,7 @@
 import {
   CommonWaiverFragment,
   CommonWaiverType,
+  GetAllWaiverAssessmentSurveyQuery,
   GetModelPlanQuestionsQuery,
   GetWaiversQuery,
   WaiverSelectionInput
@@ -8,7 +9,9 @@ import {
 
 import {
   isTranslationFieldPropertiesWithOptions,
-  isTranslationFieldPropertiesWithOptionsAndChildren
+  isTranslationFieldPropertiesWithOptionsAndChildren,
+  TranslationConfigType,
+  TranslationPlan
 } from 'types/translation';
 import {
   ExistingWaiver,
@@ -525,3 +528,200 @@ export const getWaiverSelectionChanges = (
 
   return changes;
 };
+
+type WaiverAssessmentSurveyModelPlan =
+  GetAllWaiverAssessmentSurveyQuery['modelPlan'];
+
+type WaiverAssessmentSurveyGeneralCharacteristics =
+  WaiverAssessmentSurveyModelPlan['generalCharacteristics'];
+
+export type WaiverAssessmentSurveyQuestionConfigs = {
+  modelPlanQuestionsConfig: Record<string, TranslationConfigType<string>>;
+  medicareQuestionsConfig: Record<string, TranslationConfigType<string>>;
+  programWaiversConfig: Record<string, TranslationConfigType<string>>;
+  medicaidQuestionsConfig: Record<string, TranslationConfigType<string>>;
+};
+
+export type WaiverAssessmentSurveySectionHeadings = {
+  modelPlanQuestions: string;
+  medicarePaymentWaivers: string;
+  programWaivers: string;
+  medicaidPaymentWaivers: string;
+};
+
+export type WaiverAssessmentSurveySectionsConfig = {
+  modePlanQuestions: {
+    heading: string;
+    config: Record<string, TranslationConfigType<string>>;
+  };
+  medicarePaymentWaivers: {
+    heading: string;
+    config: Record<string, TranslationConfigType<string>>;
+  };
+  programWaivers: {
+    heading: string;
+    config: Record<string, TranslationConfigType<string>>;
+  };
+  medicaidPaymentWaivers: {
+    heading: string;
+    config: Record<string, TranslationConfigType<string>>;
+  };
+};
+
+/**
+ * Builds translation configs for waiver assessment survey read-only sections.
+ */
+export const buildWaiverAssessmentSurveyQuestionConfigs = (
+  modelBasicsConfig: TranslationPlan['basics'],
+  generalCharacteristicsConfig: TranslationPlan['generalCharacteristics'],
+  waiverAssessmentSurveyConfig: TranslationPlan['waiverAssessmentSurvey']
+): WaiverAssessmentSurveyQuestionConfigs => ({
+  modelPlanQuestionsConfig: {
+    modelCategory: modelBasicsConfig.modelCategory,
+    additionalModelCategories: modelBasicsConfig.additionalModelCategories,
+    cmsCenters: modelBasicsConfig.cmsCenters,
+    cmmiGroups: modelBasicsConfig.cmmiGroups,
+    isNewModel: generalCharacteristicsConfig.isNewModel,
+    existingModel: generalCharacteristicsConfig.existingModel,
+    resemblesExistingModel: generalCharacteristicsConfig.resemblesExistingModel,
+    resemblesExistingModelWhich:
+      generalCharacteristicsConfig.resemblesExistingModelWhich,
+    participationInModelPrecondition:
+      generalCharacteristicsConfig.participationInModelPrecondition,
+    participationInModelPreconditionWhich:
+      generalCharacteristicsConfig.participationInModelPreconditionWhich,
+    keyCharacteristics: generalCharacteristicsConfig.keyCharacteristics,
+    keyCharacteristicsOther:
+      generalCharacteristicsConfig.keyCharacteristicsOther,
+    collectPlanBids: generalCharacteristicsConfig.collectPlanBids,
+    managePartCDEnrollment: generalCharacteristicsConfig.managePartCDEnrollment,
+    planContractUpdated: generalCharacteristicsConfig.planContractUpdated,
+    geographiesTargeted: generalCharacteristicsConfig.geographiesTargeted,
+    geographiesTargetedTypes:
+      generalCharacteristicsConfig.geographiesTargetedTypes,
+    geographiesStatesAndTerritories:
+      generalCharacteristicsConfig.geographiesStatesAndTerritories,
+    geographiesRegionTypes: generalCharacteristicsConfig.geographiesRegionTypes,
+    geographiesTargetedTypesOther:
+      generalCharacteristicsConfig.geographiesTargetedTypesOther,
+    geographiesTargetedAppliedTo:
+      generalCharacteristicsConfig.geographiesTargetedAppliedTo,
+    geographiesTargetedAppliedToOther:
+      generalCharacteristicsConfig.geographiesTargetedAppliedToOther,
+    waiversRequired: generalCharacteristicsConfig.waiversRequired,
+    waiversRequiredTypes: generalCharacteristicsConfig.waiversRequiredTypes
+  },
+  medicareQuestionsConfig: {
+    modifiesMedicareSavingsPrograms:
+      waiverAssessmentSurveyConfig.modifiesMedicareSavingsPrograms,
+    bundlesPayments: waiverAssessmentSurveyConfig.bundlesPayments,
+    offersRiskSharingArrangements:
+      waiverAssessmentSurveyConfig.offersRiskSharingArrangements
+  },
+  programWaiversConfig: {
+    impactsSiteOfCarePayments:
+      waiverAssessmentSurveyConfig.impactsSiteOfCarePayments,
+    modifiesCareTeamScopeOfPractice:
+      waiverAssessmentSurveyConfig.modifiesCareTeamScopeOfPractice,
+    modifiesCareDeliveryWithClaimsBasedPayments:
+      waiverAssessmentSurveyConfig.modifiesCareDeliveryWithClaimsBasedPayments,
+    modifiesQualityMeasurementsOrPaymentsViaWaivers:
+      waiverAssessmentSurveyConfig.modifiesQualityMeasurementsOrPaymentsViaWaivers
+  },
+  medicaidQuestionsConfig: {
+    impactsMedicaidOnlyBeneficiaries:
+      waiverAssessmentSurveyConfig.impactsMedicaidOnlyBeneficiaries,
+    impactsHomeCommunityBasedServicePayments:
+      waiverAssessmentSurveyConfig.impactsHomeCommunityBasedServicePayments,
+    impactsManagedCareWaivers:
+      waiverAssessmentSurveyConfig.impactsManagedCareWaivers
+  }
+});
+
+/**
+ * Builds section headings and configs for waiver assessment survey read-only views.
+ */
+export const buildWaiverAssessmentSurveySectionsConfig = (
+  questionConfigs: WaiverAssessmentSurveyQuestionConfigs,
+  headings: WaiverAssessmentSurveySectionHeadings
+): WaiverAssessmentSurveySectionsConfig => ({
+  modePlanQuestions: {
+    heading: headings.modelPlanQuestions,
+    config: questionConfigs.modelPlanQuestionsConfig
+  },
+  medicarePaymentWaivers: {
+    heading: headings.medicarePaymentWaivers,
+    config: questionConfigs.medicareQuestionsConfig
+  },
+  programWaivers: {
+    heading: headings.programWaivers,
+    config: questionConfigs.programWaiversConfig
+  },
+  medicaidPaymentWaivers: {
+    heading: headings.medicaidPaymentWaivers,
+    config: questionConfigs.medicaidQuestionsConfig
+  }
+});
+
+/**
+ * Adds "Other" to linked plan lists when the corresponding other-selected flag is true.
+ */
+export const buildLinkedResemblePlans = (
+  resemblesExistingModelWhich:
+    | WaiverAssessmentSurveyGeneralCharacteristics['resemblesExistingModelWhich']
+    | undefined,
+  resemblesExistingModelOtherSelected?: boolean | null
+): string[] => {
+  const selectedPlans = [
+    ...(resemblesExistingModelWhich?.names
+      ? [...resemblesExistingModelWhich.names]
+      : [])
+  ];
+
+  if (resemblesExistingModelOtherSelected) {
+    selectedPlans.push('Other');
+  }
+
+  return selectedPlans;
+};
+
+/**
+ * Adds "Other" to participation precondition plan lists when the other-selected flag is true.
+ */
+export const buildParticipationPreconditionPlans = (
+  participationInModelPreconditionWhich:
+    | WaiverAssessmentSurveyGeneralCharacteristics['participationInModelPreconditionWhich']
+    | undefined,
+  participationInModelPreconditionOtherSelected?: boolean | null
+): string[] => {
+  const selectedPlans = [
+    ...(participationInModelPreconditionWhich?.names
+      ? [...participationInModelPreconditionWhich.names]
+      : [])
+  ];
+
+  if (participationInModelPreconditionOtherSelected) {
+    selectedPlans.push('Other');
+  }
+
+  return selectedPlans;
+};
+
+/**
+ * Builds merged model plan question values for waiver assessment survey read-only views.
+ */
+export const buildWaiverAssessmentSurveyModelQuestionsData = (
+  basics: WaiverAssessmentSurveyModelPlan['basics'],
+  generalCharacteristics: WaiverAssessmentSurveyGeneralCharacteristics
+) => ({
+  ...basics,
+  ...generalCharacteristics,
+  resemblesExistingModelWhich: buildLinkedResemblePlans(
+    generalCharacteristics.resemblesExistingModelWhich,
+    generalCharacteristics.resemblesExistingModelOtherSelected
+  ),
+  participationInModelPreconditionWhich: buildParticipationPreconditionPlans(
+    generalCharacteristics.participationInModelPreconditionWhich,
+    generalCharacteristics.participationInModelPreconditionOtherSelected
+  )
+});

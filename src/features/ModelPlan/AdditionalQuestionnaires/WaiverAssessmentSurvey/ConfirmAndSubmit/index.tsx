@@ -3,13 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import SelectedWaiversTable from 'features/ModelPlan/ReadOnly/_components/SelectedWaiversTable';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
-import { useGetWaiversQuery } from 'gql/generated/graphql';
+import { useGetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 
 import { Alert } from 'components/Alert';
 import FormHeader from 'components/FormHeader';
 import Spinner from 'components/Spinner';
 
-import { getWaiversMockData, MOCK_WAIVERS_ENABLED } from '../mockWaiversData';
+import WaiverAssessmentSurveyReadOnlySections from '../_components/WaiverAssessmentSurveyReadOnlySections';
+import {
+  getAllWaiverAssessmentSurveyMockData,
+  MOCK_WAIVERS_ENABLED
+} from '../mockWaiversData';
 
 const ConfirmAndSubmit = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -22,14 +26,16 @@ const ConfirmAndSubmit = () => {
     data: queryData,
     loading: queryLoading,
     error: queryError
-  } = useGetWaiversQuery({
+  } = useGetAllWaiverAssessmentSurveyQuery({
     variables: {
       id: modelID
     },
     skip: !modelID || MOCK_WAIVERS_ENABLED
   });
 
-  const data = MOCK_WAIVERS_ENABLED ? getWaiversMockData(modelID) : queryData;
+  const data = MOCK_WAIVERS_ENABLED
+    ? getAllWaiverAssessmentSurveyMockData(modelID)
+    : queryData;
   const loading = MOCK_WAIVERS_ENABLED ? false : queryLoading;
   const error = MOCK_WAIVERS_ENABLED ? undefined : queryError;
 
@@ -41,8 +47,8 @@ const ConfirmAndSubmit = () => {
     return <NotFoundPartial errorMessage={error?.message} />;
   }
 
-  const selectedWaivers =
-    data.modelPlan.questionnaires.waiverAssessmentSurvey.waivers;
+  const waiverAssessmentSurveyData =
+    data.modelPlan.questionnaires.waiverAssessmentSurvey;
 
   return (
     <div className="mint-body-normal">
@@ -60,13 +66,17 @@ const ConfirmAndSubmit = () => {
         {waiverAssessmentSurveyMiscT('selectedWaivers.heading')}
       </h3>
 
-      {selectedWaivers.length === 0 ? (
+      {waiverAssessmentSurveyData.waivers.length === 0 ? (
         <Alert type="info" slim className="margin-bottom-6">
           {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
         </Alert>
       ) : (
-        <SelectedWaiversTable selectedWaivers={selectedWaivers} />
+        <SelectedWaiversTable
+          selectedWaivers={waiverAssessmentSurveyData.waivers}
+        />
       )}
+
+      <WaiverAssessmentSurveyReadOnlySections modelPlan={data.modelPlan} />
     </div>
   );
 };
