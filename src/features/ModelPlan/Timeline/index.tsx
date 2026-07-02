@@ -593,6 +593,12 @@ const Timeline = () => {
                             field="customDatesNote"
                             className="margin-y-0"
                           />
+
+                          <AddNote
+                            id="ModelType-customDatesNote"
+                            field="customDatesNote"
+                            className="margin-y-0"
+                          />
                         </Fieldset>
 
                         {!loading && values.status && (
