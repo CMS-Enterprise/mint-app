@@ -230,17 +230,23 @@ export const GenericAbout = ({ solution }: { solution: HelpSolutionType }) => {
               'list-style-none padding-left-0': shouldRemoveListStyle,
               'list-style-none padding-left-0 margin-top-neg-2':
                 shouldRemoveWithNegativeMargin,
-              'margin-top-0': isMultiItem
+              'margin-top-0': isMultiItem,
+              'margin-bottom-0': !header
             });
           };
 
           return (
             <div
               key={component.header + componentIndex} // eslint-disable-line react/no-array-index-key
-              className="margin-top-4"
+              className={classNames({
+                'margin-top-4': component.header,
+                'margin-top-0': !component.header
+              })}
             >
               <HeadingLevel
-                className={classNames('margin-bottom-2', {
+                className={classNames({
+                  'margin-bottom-2': component.header,
+                  'margin-top-0 margin-bottom-1': !component.header,
                   'margin-bottom-0 font-body-md': component.level === 'h4'
                 })}
               >

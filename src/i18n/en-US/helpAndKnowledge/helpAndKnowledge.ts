@@ -1301,8 +1301,49 @@ The data in the IDR is leveraged by various components across the agency to faci
   [MtoCommonSolutionKey.LDG]: {
     about: {
       description:
-        'The Learning and Diffusion Group (LDG) is a team within CMMI that facilitates learning within models and disseminates the lessons learned across models so that participants can benefit from the experiences of other models. LDG has two divisions: the Division of Model Learning Systems (DMLS) and the Division of Analysis and Networks (DAN).',
+        'LDG helps CMMI gain insights, shape strategy, and drive impact. As a cross-cutting team, we bring a center-wide perspective to address center priorities across a model’s lifecycle.',
       components: [
+        {
+          header: '',
+          description: 'We <bold>strengthen new model design</bold> by:',
+          items: [
+            'Conducting patient journey analyses and listening sessions to understand and amplify the beneficiary experience',
+            'Aligning model components to center strategy',
+            'Prompting key questions to identify gaps in design'
+          ]
+        },
+        {
+          header: '',
+          description: 'We <bold>support model launch operations</bold> by:',
+          items: [
+            'Leading recruitment strategy',
+            'Developing written resources and virtual events to guide applicants through launch'
+          ]
+        },
+        {
+          header: '',
+          description: 'We <bold>improve model performance</bold> by:',
+          items: [
+            'Identifying insights from high-performing organizations and testing care delivery strategies',
+            'Facilitating participant learning on successful techniques for model implementation'
+          ]
+        },
+        {
+          header: '',
+          description:
+            'We <bold>grow knowledge across the health care ecosystem</bold> by:',
+          items: [
+            'Disseminating evidence on successful value-based care strategies and driving alignment around CMMI model elements',
+            'Engaging health industry leaders to drive adoption of alternative payment methodologies',
+            'Sharing cross-model data and insights across CMMI and to model participants'
+          ]
+        },
+        {
+          header: '',
+          description:
+            'LDG advances value-based care and accelerates the adoption of innovative strategies by quickly capturing, analyzing, and disseminating real-world insights to the health care community.',
+          items: []
+        },
         {
           header: 'Services provided',
           items: [
