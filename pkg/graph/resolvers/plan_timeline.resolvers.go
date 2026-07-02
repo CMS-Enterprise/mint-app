@@ -43,6 +43,11 @@ func (r *planTimelineResolver) DatesAddedCount(ctx context.Context, obj *models.
 	return countPopulatedPlanTimelineDates(obj)
 }
 
+// CustomTimelineDates is the resolver for the customTimelineDates field.
+func (r *planTimelineResolver) CustomTimelineDates(ctx context.Context, obj *models.PlanTimeline) ([]*models.CustomTimelineDate, error) {
+	return CustomTimelineDateGetByModelPlanIDLOADER(ctx, obj.ModelPlanID)
+}
+
 // PlanTimeline returns generated.PlanTimelineResolver implementation.
 func (r *Resolver) PlanTimeline() generated.PlanTimelineResolver { return &planTimelineResolver{r} }
 

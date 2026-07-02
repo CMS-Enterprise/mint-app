@@ -129,12 +129,10 @@ func UpdatePlanTimeline(
 
 		// update custom dates separately
 		if len(customTimelineUpdates) > 0 {
-			result, err := storage.CustomTimelineDateUpdateDatesByIDs(tx, principal.Account().ID, customTimelineUpdates)
+			_, err := storage.CustomTimelineDateUpdateDatesByIDs(tx, principal.Account().ID, customTimelineUpdates)
 			if err != nil {
 				return nil, err
 			}
-
-			updatedTimeline.CustomTimelineDates = result
 		}
 
 		return updatedTimeline, nil
@@ -171,11 +169,6 @@ func UpdatePlanTimeline(
 
 func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {
 	plan, err := loaders.PlanTimeline.ByModelPlanID.Load(ctx, modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-
-	plan.CustomTimelineDates, err = CustomTimelineDateGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
