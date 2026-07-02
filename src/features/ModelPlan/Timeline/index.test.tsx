@@ -31,6 +31,7 @@ const timelineMockData: GetTimelineType = {
   performancePeriodEnds: '2029-012-28T15:01:39.190679Z',
   wrapUpEnds: '2030-05-08T15:01:39.190679Z',
   highLevelNote: 'High level note',
+  customDatesNote: 'custom dates note',
   readyForReviewByUserAccount: {
     __typename: 'UserAccount',
     commonName: 'ASDF',
