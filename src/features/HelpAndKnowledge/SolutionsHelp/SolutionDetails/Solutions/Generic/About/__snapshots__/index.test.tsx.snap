@@ -2787,10 +2787,10 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
       </ul>
     </div>
     <div
-      class="margin-top-4"
+      class="margin-top-0"
     >
       <h4
-        class="margin-bottom-2 margin-bottom-0 font-body-md"
+        class="margin-top-0 margin-bottom-1 margin-bottom-0 font-body-md"
       />
       <span
         class="text-pre-wrap "
@@ -2820,7 +2820,7 @@ exports[`Generic About Components > matches the snapshot > Innovation Support Pl
         </span>
       </span>
       <ul
-        class="padding-left-4"
+        class="padding-left-4 margin-bottom-0"
       />
     </div>
     <div
@@ -3048,8 +3048,153 @@ exports[`Generic About Components > matches the snapshot > Learning and Diffusio
     <p
       class="margin-top-0 text-pre-wrap margin-bottom-0"
     >
-      The Learning and Diffusion Group (LDG) is a team within CMMI that facilitates learning within models and disseminates the lessons learned across models so that participants can benefit from the experiences of other models. LDG has two divisions: the Division of Model Learning Systems (DMLS) and the Division of Analysis and Networks (DAN).
+      LDG helps CMMI gain insights, shape strategy, and drive impact. As a cross-cutting team, we bring a center-wide perspective to address center priorities across a model’s lifecycle.
     </p>
+    <div
+      class="margin-top-0"
+    >
+      <h3
+        class="margin-top-0 margin-bottom-1"
+      />
+      <span
+        class="text-pre-wrap "
+      >
+        We 
+        <strong>
+          strengthen new model design
+        </strong>
+         by:
+      </span>
+      <ul
+        class="padding-left-4 margin-top-0 margin-bottom-0"
+      >
+        <li
+          class=""
+        >
+          Conducting patient journey analyses and listening sessions to understand and amplify the beneficiary experience
+        </li>
+        <li
+          class=""
+        >
+          Aligning model components to center strategy
+        </li>
+        <li
+          class=""
+        >
+          Prompting key questions to identify gaps in design
+        </li>
+      </ul>
+    </div>
+    <div
+      class="margin-top-0"
+    >
+      <h3
+        class="margin-top-0 margin-bottom-1"
+      />
+      <span
+        class="text-pre-wrap "
+      >
+        We 
+        <strong>
+          support model launch operations
+        </strong>
+         by:
+      </span>
+      <ul
+        class="padding-left-4 margin-top-0 margin-bottom-0"
+      >
+        <li
+          class=""
+        >
+          Leading recruitment strategy
+        </li>
+        <li
+          class=""
+        >
+          Developing written resources and virtual events to guide applicants through launch
+        </li>
+      </ul>
+    </div>
+    <div
+      class="margin-top-0"
+    >
+      <h3
+        class="margin-top-0 margin-bottom-1"
+      />
+      <span
+        class="text-pre-wrap "
+      >
+        We 
+        <strong>
+          improve model performance
+        </strong>
+         by:
+      </span>
+      <ul
+        class="padding-left-4 margin-top-0 margin-bottom-0"
+      >
+        <li
+          class=""
+        >
+          Identifying insights from high-performing organizations and testing care delivery strategies
+        </li>
+        <li
+          class=""
+        >
+          Facilitating participant learning on successful techniques for model implementation
+        </li>
+      </ul>
+    </div>
+    <div
+      class="margin-top-0"
+    >
+      <h3
+        class="margin-top-0 margin-bottom-1"
+      />
+      <span
+        class="text-pre-wrap "
+      >
+        We 
+        <strong>
+          grow knowledge across the health care ecosystem
+        </strong>
+         by:
+      </span>
+      <ul
+        class="padding-left-4 margin-top-0 margin-bottom-0"
+      >
+        <li
+          class=""
+        >
+          Disseminating evidence on successful value-based care strategies and driving alignment around CMMI model elements
+        </li>
+        <li
+          class=""
+        >
+          Engaging health industry leaders to drive adoption of alternative payment methodologies
+        </li>
+        <li
+          class=""
+        >
+          Sharing cross-model data and insights across CMMI and to model participants
+        </li>
+      </ul>
+    </div>
+    <div
+      class="margin-top-0"
+    >
+      <h3
+        class="margin-top-0 margin-bottom-1"
+      />
+      <span
+        class="text-pre-wrap "
+      >
+        LDG advances value-based care and accelerates the adoption of innovative strategies by quickly capturing, analyzing, and disseminating real-world insights to the health care community.
+      </span>
+      <ul
+        class="padding-left-4 margin-bottom-0"
+      />
+    </div>
     <div
       class="margin-top-4"
     >
@@ -3582,10 +3727,10 @@ Model Space offers model teams and their contractors templates or Databricks not
       </ul>
     </div>
     <div
-      class="margin-top-4"
+      class="margin-top-0"
     >
       <h3
-        class="margin-bottom-2"
+        class="margin-top-0 margin-bottom-1"
       />
       <span
         class="text-pre-wrap "
@@ -3615,7 +3760,7 @@ Model Space offers model teams and their contractors templates or Databricks not
         </span>
       </span>
       <ul
-        class="padding-left-4"
+        class="padding-left-4 margin-bottom-0"
       />
     </div>
   </div>
@@ -4315,13 +4460,13 @@ exports[`Generic About Components > matches the snapshot > Salesforce Applicatio
       </ul>
     </div>
     <div
-      class="margin-top-4"
+      class="margin-top-0"
     >
       <h3
-        class="margin-bottom-2"
+        class="margin-top-0 margin-bottom-1"
       />
       <ul
-        class="padding-left-4 list-style-none padding-left-0"
+        class="padding-left-4 list-style-none padding-left-0 margin-bottom-0"
       >
         <li
           class=""
@@ -4553,13 +4698,13 @@ exports[`Generic About Components > matches the snapshot > Salesforce Letter of 
       </ul>
     </div>
     <div
-      class="margin-top-4"
+      class="margin-top-0"
     >
       <h3
-        class="margin-bottom-2"
+        class="margin-top-0 margin-bottom-1"
       />
       <ul
-        class="padding-left-4 list-style-none padding-left-0"
+        class="padding-left-4 list-style-none padding-left-0 margin-bottom-0"
       >
         <li
           class=""
@@ -4897,13 +5042,13 @@ exports[`Generic About Components > matches the snapshot > Salesforce Request fo
       </ul>
     </div>
     <div
-      class="margin-top-4"
+      class="margin-top-0"
     >
       <h3
-        class="margin-bottom-2"
+        class="margin-top-0 margin-bottom-1"
       />
       <ul
-        class="padding-left-4 list-style-none padding-left-0"
+        class="padding-left-4 list-style-none padding-left-0 margin-bottom-0"
       >
         <li
           class=""
@@ -5038,10 +5183,10 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
       </ul>
     </div>
     <div
-      class="margin-top-4"
+      class="margin-top-0"
     >
       <h3
-        class="margin-bottom-2"
+        class="margin-top-0 margin-bottom-1"
       />
       <span
         class="text-pre-wrap "
@@ -5049,7 +5194,7 @@ Beneficiaries visit a provider of Medicare services, and that provider files a c
         The following systems are a part of Shared Systems: 
       </span>
       <ul
-        class="padding-left-4"
+        class="padding-left-4 margin-bottom-0"
       />
     </div>
     <div
