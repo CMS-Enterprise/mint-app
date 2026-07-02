@@ -84,6 +84,7 @@ const Timeline = () => {
     performancePeriodStarts,
     performancePeriodEnds,
     highLevelNote,
+    customDatesNote,
     wrapUpEnds,
     readyForReviewByUserAccount,
     readyForReviewDts,
@@ -126,6 +127,7 @@ const Timeline = () => {
     performancePeriodEnds: performancePeriodEnds ?? null,
     wrapUpEnds: wrapUpEnds ?? null,
     highLevelNote: highLevelNote ?? '',
+    customDatesNote: customDatesNote ?? '',
     status
   };
 
@@ -579,6 +581,12 @@ const Timeline = () => {
                         <Fieldset disabled={!!error || loading}>
                           <AdditionalModelDates
                             customTimelineDates={customTimelineDates}
+                          />
+
+                          <AddNote
+                            id="ModelType-customDatesNote"
+                            field="customDatesNote"
+                            className="margin-y-0"
                           />
                         </Fieldset>
 

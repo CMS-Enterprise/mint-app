@@ -9,7 +9,6 @@ import {
 import classNames from 'classnames';
 import { CustomTimelineDateType } from 'gql/generated/graphql';
 
-import AddNote from 'components/AddNote';
 import MINTAlert from 'components/Alert';
 import MINTDatePicker from 'components/DatePicker';
 import PageHeading from 'components/PageHeading';
@@ -23,9 +22,13 @@ const AdditionalModelDates = ({
 }) => {
   const { t: timelineMiscT } = useTranslation('timelineMisc');
 
+  const sortedCustomTimelineDates = [...customTimelineDates].sort(
+    (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+  );
+
   return (
     <div>
-      <div className="margin-bottom-3">
+      <div className="margin-bottom-1">
         <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-1">
           {timelineMiscT('additionalModelDates')}
         </PageHeading>
@@ -40,13 +43,13 @@ const AdditionalModelDates = ({
       </div>
 
       {customTimelineDates.length === 0 ? (
-        <MINTAlert type="info" slim className="margin-bottom-4">
+        <MINTAlert type="info" slim className="margin-top-3 margin-bottom-4">
           {timelineMiscT('noAdditionalModelDates')}
         </MINTAlert>
       ) : (
         <div>
           <ProcessList className="read-only-model-plan__timeline maxw-full margin-left-neg-105">
-            {customTimelineDates.map(customDate => {
+            {sortedCustomTimelineDates.map(customDate => {
               const isSingleDate =
                 customDate.dateType === CustomTimelineDateType.SINGLE;
 
@@ -124,12 +127,6 @@ const AdditionalModelDates = ({
           </ProcessList>
         </div>
       )}
-
-      <AddNote
-        id="ModelType-customNote"
-        field="customNote"
-        className="margin-y-0"
-      />
     </div>
   );
 };

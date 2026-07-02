@@ -22,6 +22,7 @@ export default gql(/* GraphQL */ `
         performancePeriodStarts
         performancePeriodEnds
         highLevelNote
+        customDatesNote
         wrapUpEnds
         readyForReviewByUserAccount {
           ...ReadyForReviewUserFragment
