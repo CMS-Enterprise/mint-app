@@ -76,30 +76,51 @@ func UpdatePlanTimeline(
 		return nil, err
 	}
 
-	if len(datesChanged) > 0 {
-		resetSuggestedPhaseChanges := map[string]interface{}{
-			"previousSuggestedPhase": nil,
+	plan, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
+
+		if len(datesChanged) > 0 {
+			resetSuggestedPhaseChanges := map[string]interface{}{
+				"previousSuggestedPhase": nil,
+			}
+
+			err = BaseStructPreUpdate(
+				logger,
+				modelPlan,
+				resetSuggestedPhaseChanges,
+				principal,
+				store,
+				true,
+				true,
+			)
+			if err != nil {
+				return nil, err
+			}
+
+			_, mpUpdateErr := storage.ModelPlanUpdate(tx, logger, modelPlan)
+			if mpUpdateErr != nil {
+				return nil, mpUpdateErr
+			}
 		}
 
-		err = BaseStructPreUpdate(
-			logger,
-			modelPlan,
-			resetSuggestedPhaseChanges,
-			principal,
-			store,
-			true,
-			true,
-		)
+		err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
 		if err != nil {
 			return nil, err
 		}
 
-		_, mpUpdateErr := store.ModelPlanUpdate(logger, modelPlan)
-		if mpUpdateErr != nil {
-			return nil, mpUpdateErr
+		updatedTimeline, err := store.PlanTimelineUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update timeline: %w", err)
 		}
+
+		return updatedTimeline, nil
+
+	})
+
+	if err != nil {
+		return nil, err
 	}
 
+	// send email after all DB
 	if emailService != nil &&
 		len(addressBook.ModelPlanDateChangedRecipients) > 0 {
 		err2 := processPlanTimelineChangedDates(
@@ -107,8 +128,7 @@ func UpdatePlanTimeline(
 			logger,
 			store,
 			principal,
-			changes,
-			existing,
+			datesChanged,
 			emailService,
 			addressBook,
 			modelPlan,
@@ -121,19 +141,7 @@ func UpdatePlanTimeline(
 		}
 	}
 
-	err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
-	if err != nil {
-		return nil, err
-	}
-
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
-		updatedTimeline, err := store.PlanTimelineUpdate(tx, logger, existing)
-		if err != nil {
-			return nil, fmt.Errorf("failed to update timeline: %w", err)
-		}
-
-		return updatedTimeline, nil
-	})
+	return plan, nil
 }
 
 func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {
