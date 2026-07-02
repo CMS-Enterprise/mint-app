@@ -175,7 +175,7 @@ func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UU
 		return nil, err
 	}
 
-	plan.CustomTimelineDates, err = loaders.CustomTimelineDate.ByModelPlanID.Load(ctx, modelPlanID)
+	plan.CustomTimelineDates, err = CustomTimelineDateGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
