@@ -855,6 +855,7 @@ type PlanTimelineTranslation struct {
 	PerformancePeriodEnds   models.TranslationField            `json:"performancePeriodEnds" db:"performance_period_ends"`
 	WrapUpEnds              models.TranslationField            `json:"wrapUpEnds" db:"wrap_up_ends"`
 	HighLevelNote           models.TranslationField            `json:"highLevelNote" db:"high_level_note"`
+	CustomDatesNote         models.TranslationField            `json:"customDatesNote" db:"custom_dates_note"`
 	ReadyForReviewBy        models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts       models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	ReadyForClearanceBy     models.TranslationField            `json:"readyForClearanceBy" db:"ready_for_clearance_by"`

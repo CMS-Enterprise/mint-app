@@ -17,6 +17,8 @@ type PlanTimelineTranslation {
     @goTag(key: "db", value: "performance_period_ends")
   wrapUpEnds: TranslationField! @goTag(key: "db", value: "wrap_up_ends")
   highLevelNote: TranslationField! @goTag(key: "db", value: "high_level_note")
+  customDatesNote: TranslationField!
+    @goTag(key: "db", value: "custom_dates_note")
 
   readyForReviewBy: TranslationField!
     @goTag(key: "db", value: "ready_for_review_by")

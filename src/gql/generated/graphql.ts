@@ -4717,6 +4717,7 @@ export type PlanTimeline = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  customDatesNote?: Maybe<Scalars['String']['output']>;
   datesAddedCount: Scalars['Int']['output'];
   highLevelNote?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
@@ -4749,6 +4750,7 @@ export type PlanTimelineChanges = {
   clearanceEnds?: InputMaybe<Scalars['Time']['input']>;
   clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
   completeICIP?: InputMaybe<Scalars['Time']['input']>;
+  customDatesNote?: InputMaybe<Scalars['String']['input']>;
   customTimelineDateUpdates?: InputMaybe<Array<CustomTimelineDateUpdateDatesInput>>;
   highLevelNote?: InputMaybe<Scalars['String']['input']>;
   performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
@@ -4766,6 +4768,7 @@ export type PlanTimelineTranslation = {
   clearanceEnds: TranslationField;
   clearanceStarts: TranslationField;
   completeICIP: TranslationField;
+  customDatesNote: TranslationField;
   highLevelNote: TranslationField;
   performancePeriodEnds: TranslationField;
   performancePeriodStarts: TranslationField;
