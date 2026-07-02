@@ -6,6 +6,7 @@ import (
 	"github.com/golang/mock/gomock"
 
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
@@ -29,7 +30,7 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 	timeNow := time.Now().UTC()
 	plan.ModifiedDts = &timeNow
 	plan.ModifiedBy = &suite.testConfigs.Principal.Account().ID
-	plan, err := suite.testConfigs.Store.ModelPlanUpdate(suite.testConfigs.Logger, plan)
+	plan, err := storage.ModelPlanUpdate(suite.testConfigs.Store, suite.testConfigs.Logger, plan)
 	suite.NoError(err)
 
 	emailRecipients := []string{"TEST1@local.mock", "TEST2@local.mock"}
@@ -206,7 +207,7 @@ func (suite *ResolverSuite) setUpPlanWithPastICIPDate(planName string) *models.M
 
 	plan.ModifiedBy = &userID
 	plan.ModifiedDts = &timeNow
-	plan, err = suite.testConfigs.Store.ModelPlanUpdate(suite.testConfigs.Logger, plan)
+	plan, err = storage.ModelPlanUpdate(suite.testConfigs.Store, suite.testConfigs.Logger, plan)
 	suite.NoError(err)
 
 	return plan

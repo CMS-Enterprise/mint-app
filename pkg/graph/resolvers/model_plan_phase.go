@@ -132,7 +132,7 @@ func TrySendEmailForPhaseSuggestion[T logging.ChainableErrorOrWarnLogger[T]](
 	// will break on the SQL trigger.
 	// TODO: As tech debt, refactor the previous suggested phase column to another field OR loosen the trigger
 	// constraints to allow unrestricted modification for previous suggested phase as a more specific query
-	_, err = store.ModelPlanUpdate(logger, modelPlan)
+	_, err = storage.ModelPlanUpdate(store, logger, modelPlan)
 	if err != nil {
 		err = fmt.Errorf("unable to update model plan for model plan id %s. Err %w", modelPlan.ID, err)
 		logger.Error(err.Error(), zap.Error(err))
