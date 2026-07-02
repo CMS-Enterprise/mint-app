@@ -2,11 +2,13 @@ package storage
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
@@ -58,6 +60,48 @@ func CustomTimelineDateUpdate(np sqlutils.NamedPreparer, customTimelineDate *mod
 	res, err := sqlutils.GetProcedure[models.CustomTimelineDate](np, sqlqueries.CustomTimelineDate.Update, customTimelineDate)
 	if err != nil {
 		return nil, fmt.Errorf("problem updating custom timeline date: %w", err)
+	}
+
+	return res, nil
+}
+
+// CustomTimelineDateUpdateDatesByIDs updates start and end dates for custom timeline dates by id.
+func CustomTimelineDateUpdateDatesByIDs(
+	np sqlutils.NamedPreparer,
+	actorUserID uuid.UUID,
+	customTimelineDateUpdates []*model.CustomTimelineDateUpdateDatesInput,
+) ([]*models.CustomTimelineDate, error) {
+	if len(customTimelineDateUpdates) == 0 {
+		return []*models.CustomTimelineDate{}, nil
+	}
+
+	ids := make([]uuid.UUID, 0, len(customTimelineDateUpdates))
+	startDates := make([]*time.Time, 0, len(customTimelineDateUpdates))
+	endDates := make([]*time.Time, 0, len(customTimelineDateUpdates))
+
+	for index, customTimelineDateUpdate := range customTimelineDateUpdates {
+		if customTimelineDateUpdate == nil {
+			return nil, fmt.Errorf("custom timeline date update at index %d is nil", index)
+		}
+		if customTimelineDateUpdate.ID == uuid.Nil {
+			return nil, fmt.Errorf("custom timeline date update at index %d is missing an id", index)
+		}
+
+		ids = append(ids, customTimelineDateUpdate.ID)
+		startDates = append(startDates, customTimelineDateUpdate.NewStartDate)
+		endDates = append(endDates, customTimelineDateUpdate.NewEndDate)
+	}
+
+	args := map[string]any{
+		"ids":         pq.Array(ids),
+		"start_dates": pq.Array(startDates),
+		"end_dates":   pq.Array(endDates),
+		"modified_by": actorUserID,
+	}
+
+	res, err := sqlutils.SelectProcedure[models.CustomTimelineDate](np, sqlqueries.CustomTimelineDate.UpdateDatesByIDs, args)
+	if err != nil {
+		return nil, fmt.Errorf("problem bulk updating custom timeline dates by id: %w", err)
 	}
 
 	return res, nil

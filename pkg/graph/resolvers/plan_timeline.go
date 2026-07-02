@@ -2,11 +2,13 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
@@ -45,6 +47,19 @@ func UpdatePlanTimeline(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) (*models.PlanTimeline, error) {
+	if principal.Account() == nil {
+		return nil, errors.New("unexpected nil principal account in UpdatePlanTimeline")
+	}
+	// check for custom dates ahead of time, we need it removed before any `ApplyChanges` calls happen
+	var customTimelineUpdates []*model.CustomTimelineDateUpdateDatesInput
+	if val, ok := changes["customTimelineDateUpdates"]; ok {
+		delete(changes, "customTimelineDateUpdates")
+		customTimelineUpdates, ok = val.([]*model.CustomTimelineDateUpdateDatesInput)
+		if !ok {
+			customTimelineUpdates = nil
+		}
+	}
+
 	// Get existing planTimeline
 	existing, err := store.PlanTimelineGetByID(store, logger, id)
 	if err != nil {
@@ -77,15 +92,6 @@ func UpdatePlanTimeline(
 	}
 
 	planTimeline, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
-		// check for custom dates ahead of time
-		var customTimelineUpdates []*models.CustomTimelineDate
-		if val, ok := changes["customTimelineDateUpdates"]; ok {
-			delete(changes, "customTimelineDateUpdates")
-			customTimelineUpdates, ok = val.([]*models.CustomTimelineDate)
-			if !ok {
-				customTimelineUpdates = nil
-			}
-		}
 
 		if len(datesChanged) > 0 {
 			resetSuggestedPhaseChanges := map[string]interface{}{
@@ -123,18 +129,12 @@ func UpdatePlanTimeline(
 
 		// update custom dates separately
 		if len(customTimelineUpdates) > 0 {
-			var updates []*models.CustomTimelineDate
-			for _, update := range customTimelineUpdates {
-
-				result, err := storage.CustomTimelineDateUpdate(tx, update)
-				if err != nil {
-					return nil, err
-				}
-
-				updates = append(updates, result)
+			result, err := storage.CustomTimelineDateUpdateDatesByIDs(tx, principal.Account().ID, customTimelineUpdates)
+			if err != nil {
+				return nil, err
 			}
 
-			updatedTimeline.CustomTimelineDates = updates
+			updatedTimeline.CustomTimelineDates = result
 		}
 
 		return updatedTimeline, nil
