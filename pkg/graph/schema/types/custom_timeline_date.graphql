@@ -46,8 +46,6 @@ input CustomTimelineDateChanges @goModel(model: "map[string]interface{}") {
 extend type Query {
   customTimelineDate(id: UUID!): CustomTimelineDate!
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  customTimelineDates(modelPlanID: UUID!): [CustomTimelineDate!]!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {

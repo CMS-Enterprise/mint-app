@@ -40,6 +40,8 @@ type PlanTimeline {
   readyForClearanceDts: Time
 
   status: TaskStatus!
+
+  customTimelineDates: [CustomTimelineDate!]!
 }
 
 """

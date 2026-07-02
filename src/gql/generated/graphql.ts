@@ -4718,6 +4718,7 @@ export type PlanTimeline = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   customDatesNote?: Maybe<Scalars['String']['output']>;
+  customTimelineDates: Array<CustomTimelineDate>;
   datesAddedCount: Scalars['Int']['output'];
   highLevelNote?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
@@ -4822,7 +4823,6 @@ export type Query = {
   commonCategories: Array<CommonCategory>;
   currentUser: CurrentUser;
   customTimelineDate: CustomTimelineDate;
-  customTimelineDates: Array<CustomTimelineDate>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
@@ -4883,12 +4883,6 @@ export type QueryAuditChangesArgs = {
 /** Query definition for the schema */
 export type QueryCustomTimelineDateArgs = {
   id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryCustomTimelineDatesArgs = {
-  modelPlanID: Scalars['UUID']['input'];
 };
 
 

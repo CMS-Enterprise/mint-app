@@ -76,7 +76,16 @@ func UpdatePlanTimeline(
 		return nil, err
 	}
 
-	plan, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
+	planTimeline, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
+		// check for custom dates ahead of time
+		var customTimelineUpdates []*models.CustomTimelineDate
+		if val, ok := changes["customTimelineDateUpdates"]; ok {
+			delete(changes, "customTimelineDateUpdates")
+			customTimelineUpdates, ok = val.([]*models.CustomTimelineDate)
+			if !ok {
+				customTimelineUpdates = nil
+			}
+		}
 
 		if len(datesChanged) > 0 {
 			resetSuggestedPhaseChanges := map[string]interface{}{
@@ -112,6 +121,22 @@ func UpdatePlanTimeline(
 			return nil, fmt.Errorf("failed to update timeline: %w", err)
 		}
 
+		// update custom dates separately
+		if len(customTimelineUpdates) > 0 {
+			var updates []*models.CustomTimelineDate
+			for _, update := range customTimelineUpdates {
+
+				result, err := storage.CustomTimelineDateUpdate(tx, update)
+				if err != nil {
+					return nil, err
+				}
+
+				updates = append(updates, result)
+			}
+
+			updatedTimeline.CustomTimelineDates = updates
+		}
+
 		return updatedTimeline, nil
 
 	})
@@ -141,9 +166,19 @@ func UpdatePlanTimeline(
 		}
 	}
 
-	return plan, nil
+	return planTimeline, nil
 }
 
 func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {
-	return loaders.PlanTimeline.ByModelPlanID.Load(ctx, modelPlanID)
+	plan, err := loaders.PlanTimeline.ByModelPlanID.Load(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	plan.CustomTimelineDates, err = loaders.CustomTimelineDate.ByModelPlanID.Load(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	return plan, nil
 }
