@@ -20,6 +20,7 @@ type PlanTimeline {
   performancePeriodEnds: Time
   wrapUpEnds: Time
   highLevelNote: String
+  customDatesNote: String
 
   upcomingTimelineDate: UpcomingTimelineDate
   datesAddedCount: Int!
@@ -57,6 +58,7 @@ input PlanTimelineChanges @goModel(model: "map[string]interface{}") {
   performancePeriodEnds: Time
   wrapUpEnds: Time
   highLevelNote: String
+  customDatesNote: String
   status: TaskStatusInput
 }
 
