@@ -168,10 +168,5 @@ func UpdatePlanTimeline(
 }
 
 func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {
-	plan, err := loaders.PlanTimeline.ByModelPlanID.Load(ctx, modelPlanID)
-	if err != nil {
-		return nil, err
-	}
-
-	return plan, nil
+	return loaders.PlanTimeline.ByModelPlanID.Load(ctx, modelPlanID)
 }
