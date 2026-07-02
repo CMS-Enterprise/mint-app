@@ -356,6 +356,7 @@ export const commonMilestonesMock: MockedResponse<
                 categoryName: 'Test Category',
                 subCategoryName: 'Test SubCategory',
                 facilitatedByRole: [],
+                facilitatedByOther: null,
                 description: 'Description 1',
                 commonSolutions: [
                   {
@@ -606,6 +607,8 @@ export const milestoneMock = (
           responsibleComponent: [],
           facilitatedBy: [],
           facilitatedByOther: '',
+          assignedToPlanCollaborator: null,
+          assignedTo: null,
           needBy: '2021-08-01',
           status: MtoMilestoneStatus.COMPLETED,
           riskIndicator: MtoRiskIndicator.AT_RISK,
@@ -1127,6 +1130,7 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   id: '123',
                   mtoCommonMilestoneID: '123456',
                   name: 'Test Milestone 1',
+                  description: 'Test Milestone 1 description',
                   needBy: '2022-05-12T15:01:39.190679Z',
                   responsibleComponent: [],
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
@@ -1164,10 +1168,12 @@ export const mtoMilestoneSummaryMock: MockedResponse<
                   id: '456',
                   mtoCommonMilestoneID: '123456',
                   name: 'Test Milestone 2',
+                  description: 'Test Milestone 2 description',
                   needBy: '2022-05-12T15:01:39.190679Z',
                   responsibleComponent: [],
                   facilitatedBy: [MtoFacilitator.MODEL_TEAM],
                   facilitatedByOther: 'Test Facilitated By Other',
+                  assignedToPlanCollaborator: null,
                   status: MtoMilestoneStatus.NOT_STARTED,
                   riskIndicator: MtoRiskIndicator.ON_TRACK,
                   notes: []

@@ -1,0 +1,14 @@
+# Repository AI Context
+
+> This repository centralizes all developer guidelines and AI instructions in the `.ai/` directory.
+
+## Core Documentation
+- [Architecture](.ai/ARCHITECTURE.md): Overview of packages and data flow.
+- [Coding Style](.ai/CODING_STYLE.md): Architectural patterns, formatting, and language-specific idioms.
+- [Testing Rules](.ai/TESTING_RULES.md): Framework requirements and coverage standards.
+- [Review Guidelines](.ai/REVIEW_GUIDELINES.md): Strict criteria for PR reviews.
+
+## Tech Stack
+- **Backend:** Go, GraphQL (gqlgen), Postgres, Flyway.
+- **Frontend:** React, TypeScript, Apollo Client, USWDS.
+- **Infrastructure:** Docker, Faktory, AWS.

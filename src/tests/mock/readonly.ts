@@ -127,7 +127,7 @@ const modelBasicsData: GetAllBasicsTypes = {
     CmmiGroup.POLICY_AND_PROGRAMS_GROUP
   ],
   modelType: [ModelType.MANDATORY_NATIONAL],
-  modelTypeOther: 'Other model',
+  modelTypeOther: null,
   problem: 'There is not enough candy',
   goal: 'To get more candy',
   testInterventions: 'The great candy machine',
@@ -201,7 +201,8 @@ export const modelTimelineMocks: MockedResponse<
           basics: {
             __typename: 'PlanBasics',
             id: '123',
-            modelType: [ModelType.MANDATORY_NATIONAL]
+            modelType: [ModelType.MANDATORY_NATIONAL],
+            modelTypeOther: null
           },
           timeline: modelTimelineData
         }

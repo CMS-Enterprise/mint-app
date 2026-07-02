@@ -41,7 +41,7 @@ describe('CommonMilestoneActions', () => {
     );
 
     const { getByText } = render(
-      <MockedProvider addTypename={false}>
+      <MockedProvider>
         <Provider store={storeAssessment}>
           <RouterProvider router={router} />
         </Provider>
@@ -72,7 +72,7 @@ describe('CommonMilestoneActions', () => {
     );
 
     const { getByText } = render(
-      <MockedProvider addTypename={false}>
+      <MockedProvider>
         <Provider store={storeAssessment}>
           <RouterProvider router={router} />
         </Provider>
@@ -101,7 +101,7 @@ describe('CommonMilestoneActions', () => {
     );
 
     render(
-      <MockedProvider addTypename={false}>
+      <MockedProvider>
         <Provider store={storeNotAssessment}>
           <RouterProvider router={router} />
         </Provider>
@@ -127,7 +127,7 @@ describe('CommonMilestoneActions', () => {
     );
 
     const { asFragment, getByText } = render(
-      <MockedProvider addTypename={false}>
+      <MockedProvider>
         <Provider store={storeAssessment}>
           <RouterProvider router={router} />
         </Provider>

@@ -119,7 +119,7 @@ export const QuestionnaireListButton = ({
         type="button"
         disabled={disabled}
         data-testid={testId || path}
-        className="usa-button margin-bottom-0 width-auto"
+        className="usa-button margin-bottom-0 width-auto margin-right-2"
         onClick={() =>
           navigate(
             `/models/${modelID}/collaboration-area/additional-questionnaires/${path}`

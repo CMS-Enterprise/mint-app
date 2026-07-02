@@ -54,7 +54,7 @@ describe('The Header component when logged in', () => {
     );
 
     render(
-      <MockedProvider mocks={notificationsMock} addTypename={false}>
+      <MockedProvider mocks={notificationsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -96,7 +96,7 @@ describe('When logged in', () => {
     );
 
     render(
-      <MockedProvider mocks={notificationsMock} addTypename={false}>
+      <MockedProvider mocks={notificationsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

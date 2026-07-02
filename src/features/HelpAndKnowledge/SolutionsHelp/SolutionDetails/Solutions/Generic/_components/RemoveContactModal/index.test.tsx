@@ -76,7 +76,7 @@ describe('RemoveContactModal Component', () => {
     );
 
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -109,7 +109,7 @@ describe('RemoveContactModal Component', () => {
     );
 
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -144,7 +144,7 @@ describe('RemoveContactModal Component', () => {
     );
 
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -181,7 +181,7 @@ describe('RemoveContactModal Component', () => {
     );
 
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

@@ -15,7 +15,7 @@ describe('High Level Project Plan Article', () => {
         {
           path: '/help-and-knowledge/high-level-project-plan',
           element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <VerboseMockedProvider mocks={mocks}>
               <HighLevelProjectPlan />
             </VerboseMockedProvider>
           )

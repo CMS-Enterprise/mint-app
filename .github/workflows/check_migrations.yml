@@ -46,7 +46,7 @@ jobs:
     
     steps:
       - name: Checkout all
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           # Fetch full history to compare with base branch
           fetch-depth: 0

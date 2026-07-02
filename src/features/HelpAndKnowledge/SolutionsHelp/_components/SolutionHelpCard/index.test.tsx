@@ -23,7 +23,7 @@ describe('Operation Solution Help Card', () => {
         {
           path: '/help-and-knowledge/operational-solutions',
           element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <VerboseMockedProvider mocks={mocks}>
               <SolutionHelpCard solution={solutionToTest} />
             </VerboseMockedProvider>
           )
@@ -47,7 +47,7 @@ describe('Operation Solution Help Card', () => {
         {
           path: '/help-and-knowledge/operational-solutions',
           element: (
-            <VerboseMockedProvider mocks={mocks} addTypename={false}>
+            <VerboseMockedProvider mocks={mocks}>
               <SolutionHelpCard solution={solutionToTest} />
             </VerboseMockedProvider>
           )

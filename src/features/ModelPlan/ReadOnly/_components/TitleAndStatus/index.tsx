@@ -102,6 +102,7 @@ const TitleAndStatus = ({
                 <Icon.Edit
                   className="margin-right-1 text-primary mint-no-print"
                   data-testid="edit-icon"
+                  aria-hidden
                 />
 
                 <UswdsReactLink

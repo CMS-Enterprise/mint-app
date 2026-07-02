@@ -28,7 +28,7 @@ describe('CommonMilestoneConfirmationModal Component', () => {
 
   it('renders the edit context correctly', () => {
     const { getByText, getByRole } = render(
-      <MockedProvider addTypename={false}>
+      <MockedProvider>
         <RouterProvider router={renderComponent('edit')} />
       </MockedProvider>
     );
@@ -46,7 +46,7 @@ describe('CommonMilestoneConfirmationModal Component', () => {
 
   it('renders the remove context with error styling', () => {
     const { getByText, getByRole } = render(
-      <MockedProvider addTypename={false}>
+      <MockedProvider>
         <RouterProvider router={renderComponent('remove')} />
       </MockedProvider>
     );
@@ -63,7 +63,7 @@ describe('CommonMilestoneConfirmationModal Component', () => {
 
   it('matches snapshot', () => {
     const { asFragment } = render(
-      <MockedProvider addTypename={false}>
+      <MockedProvider>
         <RouterProvider router={renderComponent('edit')} />
       </MockedProvider>
     );

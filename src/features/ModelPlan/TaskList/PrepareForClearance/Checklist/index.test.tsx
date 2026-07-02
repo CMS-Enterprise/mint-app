@@ -60,7 +60,7 @@ describe('Prepare for clearance checklist', () => {
     );
 
     const { user } = setup(
-      <MockedProvider mocks={clearanceMock} addTypename={false}>
+      <MockedProvider mocks={clearanceMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -109,7 +109,7 @@ describe('Prepare for clearance checklist', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={clearanceMock} addTypename={false}>
+      <MockedProvider mocks={clearanceMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

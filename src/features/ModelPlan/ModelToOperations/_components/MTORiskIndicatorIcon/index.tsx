@@ -23,7 +23,13 @@ export const MTORiskIndicatorTag = ({
   let RiskIcon = <></>;
 
   if (riskIndicator === MtoRiskIndicator.AT_RISK)
-    RiskIcon = <Icon.Error className="text-error-dark top-05" size={3} />;
+    RiskIcon = (
+      <Icon.Error
+        className="text-error-dark top-05"
+        size={3}
+        aria-label="error"
+      />
+    );
 
   if (riskIndicator === MtoRiskIndicator.OFF_TRACK)
     RiskIcon = (
