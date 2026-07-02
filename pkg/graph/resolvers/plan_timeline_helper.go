@@ -336,38 +336,35 @@ func processPlanTimelineChangedDates(
 	logger *zap.Logger,
 	store *storage.Store,
 	principal authentication.Principal,
-	changes map[string]interface{},
-	existing *models.PlanTimeline,
+	dateChanges map[string]email.DateChange,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
 ) error {
-	dateChanges, err := extractPlanTimelineChangedDates(changes, existing)
-	if err != nil {
-		return err
+	if len(dateChanges) < 1 {
+		return nil
 	}
 
-	if len(dateChanges) > 0 {
-		go func() {
-			err2 := sendPlanTimelineDateChangedEmails(
-				ctx,
-				logger,
-				store,
-				principal,
-				emailService,
-				addressBook,
-				modelPlan,
-				dateChanges,
+	go func() {
+		err := sendPlanTimelineDateChangedEmails(
+			ctx,
+			logger,
+			store,
+			principal,
+			emailService,
+			addressBook,
+			modelPlan,
+			dateChanges,
+		)
+
+		if err != nil {
+			logger.Error("Failed to send email notification",
+				zap.Error(err),
+				zap.String("modelPlanID", modelPlan.ID.String()),
 			)
+		}
+	}()
 
-			if err2 != nil {
-				logger.Error("Failed to send email notification",
-					zap.Error(err),
-					zap.String("modelPlanID", modelPlan.ID.String()),
-				)
-			}
-		}()
-	}
 	return nil
 }
 func extractPlanTimelineChangedDates(changes map[string]interface{}, existing *models.PlanTimeline) (

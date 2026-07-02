@@ -40,6 +40,18 @@ type PlanTimeline {
   readyForClearanceDts: Time
 
   status: TaskStatus!
+
+  customTimelineDates: [CustomTimelineDate!]!
+}
+
+"""
+CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
+(this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
+"""
+input CustomTimelineDateUpdateDatesInput {
+  id: UUID!
+  newStartDate: Time
+  newEndDate: Time
 }
 
 """
@@ -60,6 +72,8 @@ input PlanTimelineChanges @goModel(model: "map[string]interface{}") {
   highLevelNote: String
   customDatesNote: String
   status: TaskStatusInput
+
+  customTimelineDateUpdates: [CustomTimelineDateUpdateDatesInput!]
 }
 
 extend type Mutation {

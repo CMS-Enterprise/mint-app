@@ -1,0 +1,55 @@
+meta {
+  name: Bulk Update Custom Timeline Dates
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation BulkUpdateCustomTimelineDates($id: UUID!, $changes: PlanTimelineChanges!) {
+    updatePlanTimeline(id: $id, changes: $changes) {
+      id
+      customTimelineDates {
+        id
+        modelPlanID
+        title
+        description
+        dateType
+        startDate
+        endDate
+        createdBy
+        createdByUserAccount {
+          id
+          commonName
+        }
+        createdDts
+        modifiedBy
+        modifiedByUserAccount {
+          id
+          commonName
+        }
+        modifiedDts
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "54b51d40-839b-40e2-8074-7131921653d5",
+    "changes": {
+      "customTimelineDateUpdates": [
+        {
+          "id": "3e4de507-6c72-46ee-8efc-d943201a73ef",
+          "newStartDate": "2026-10-01T00:00:00Z",
+          "newEndDate": null
+        }
+      ]
+    }
+  }
+}

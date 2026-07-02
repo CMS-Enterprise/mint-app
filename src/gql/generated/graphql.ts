@@ -385,6 +385,16 @@ export enum CustomTimelineDateType {
   SINGLE = 'SINGLE'
 }
 
+/**
+ * CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
+ * (this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
+ */
+export type CustomTimelineDateUpdateDatesInput = {
+  id: Scalars['UUID']['input'];
+  newEndDate?: InputMaybe<Scalars['Time']['input']>;
+  newStartDate?: InputMaybe<Scalars['Time']['input']>;
+};
+
 export type DailyDigestCompleteActivityMeta = {
   __typename: 'DailyDigestCompleteActivityMeta';
   analyzedAudits: Array<AnalyzedAudit>;
@@ -4708,6 +4718,7 @@ export type PlanTimeline = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   customDatesNote?: Maybe<Scalars['String']['output']>;
+  customTimelineDates: Array<CustomTimelineDate>;
   datesAddedCount: Scalars['Int']['output'];
   highLevelNote?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
@@ -4741,6 +4752,7 @@ export type PlanTimelineChanges = {
   clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
   completeICIP?: InputMaybe<Scalars['Time']['input']>;
   customDatesNote?: InputMaybe<Scalars['String']['input']>;
+  customTimelineDateUpdates?: InputMaybe<Array<CustomTimelineDateUpdateDatesInput>>;
   highLevelNote?: InputMaybe<Scalars['String']['input']>;
   performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
   performancePeriodStarts?: InputMaybe<Scalars['Time']['input']>;
@@ -4811,7 +4823,6 @@ export type Query = {
   commonCategories: Array<CommonCategory>;
   currentUser: CurrentUser;
   customTimelineDate: CustomTimelineDate;
-  customTimelineDates: Array<CustomTimelineDate>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
@@ -4872,12 +4883,6 @@ export type QueryAuditChangesArgs = {
 /** Query definition for the schema */
 export type QueryCustomTimelineDateArgs = {
   id: Scalars['UUID']['input'];
-};
-
-
-/** Query definition for the schema */
-export type QueryCustomTimelineDatesArgs = {
-  modelPlanID: Scalars['UUID']['input'];
 };
 
 
