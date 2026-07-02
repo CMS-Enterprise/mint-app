@@ -1478,6 +1478,7 @@ export type TranslationTimelineForm = {
   performancePeriodStarts: TranslationFieldProperties;
   performancePeriodEnds: TranslationFieldProperties;
   highLevelNote: TranslationFieldProperties;
+  customDatesNote: TranslationFieldProperties;
   wrapUpEnds: TranslationFieldProperties;
   readyForReviewBy: TranslationFieldProperties;
   readyForReviewDts: TranslationFieldProperties;

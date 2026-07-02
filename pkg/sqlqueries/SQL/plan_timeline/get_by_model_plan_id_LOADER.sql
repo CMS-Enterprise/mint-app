@@ -16,6 +16,7 @@ SELECT
     plan_timeline.performance_period_ends,
     plan_timeline.wrap_up_ends,
     plan_timeline.high_level_note,
+    plan_timeline.custom_dates_note,
     plan_timeline.created_by,
     plan_timeline.created_dts,
     plan_timeline.modified_by,
