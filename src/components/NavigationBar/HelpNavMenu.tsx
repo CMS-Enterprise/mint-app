@@ -114,13 +114,11 @@ const HelpNavMenu = ({ isMobile, expandMobileSideNav }: HelpNavMenuProps) => {
           className={classNames('mint-nav__submenu', {
             'mint-nav__submenu--mobile': isMobile
           })}
-          role="menu"
         >
           {helpSubmenuLinks.map(item => (
-            <li key={item.link} className="mint-nav__submenu-item" role="none">
+            <li key={item.link} className="mint-nav__submenu-item">
               <NavLink
                 to={item.link}
-                role="menuitem"
                 className={() =>
                   classNames('mint-nav__submenu-link', {
                     'usa-current': isHelpSubmenuLinkActive(
