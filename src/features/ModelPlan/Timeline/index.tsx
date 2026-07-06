@@ -178,7 +178,9 @@ const Timeline = () => {
               <Button
                 type="button"
                 onClick={() =>
-                  navigate(`/models/${modelID}/collaboration-area`)
+                  navigate(
+                    `/models/${modelID}/collaboration-area/model-timeline/customDate/new`
+                  )
                 }
               >
                 {timelineMiscT('addADate')}
