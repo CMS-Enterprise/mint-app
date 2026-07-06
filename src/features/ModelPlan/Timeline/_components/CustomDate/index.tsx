@@ -1,19 +1,26 @@
 import React from 'react';
 import { Controller, Form, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
+  Button,
   Fieldset,
   FormGroup,
   Grid,
   GridContainer,
+  Icon,
   Label
 } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
+import PageHeading from 'components/PageHeading';
 
 const CustomDate = () => {
-  const { t: timelineMiscT } = useTranslation('timelineMisc');
+  const { t: customDateMiscT } = useTranslation('customDateMisc');
+
+  const { modelID = '' } = useParams<{ modelID: string }>();
+
+  const navigate = useNavigate();
 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -35,6 +42,34 @@ const CustomDate = () => {
       className="padding-top-2"
     >
       <GridContainer>
+        <div className="margin-bottom-3">
+          <PageHeading headingLevel="h2" className="margin-y-0">
+            {customDateMiscT('add.heading')}
+          </PageHeading>
+
+          <p className="mint-body-large text-base-dark margin-top-0 margin-bottom-2">
+            {customDateMiscT('add.description')}
+          </p>
+
+          <div>
+            <Button
+              type="submit"
+              className="usa-button usa-button--unstyled"
+              onClick={() =>
+                navigate(`/models/${modelID}/collaboration-area/model-timeline`)
+              }
+            >
+              <Icon.ArrowBack
+                className="deep-underline"
+                aria-hidden
+                aria-label="back"
+              />
+
+              {customDateMiscT('dontSaveAndReturn')}
+            </Button>
+          </div>
+        </div>
+
         <FormProvider {...methods}>
           <Form
             className="maxw-none padding-bottom-6"
@@ -61,11 +96,11 @@ const CustomDate = () => {
                       className="mint-body-normal maxw-none margin-bottom-0"
                       requiredMarker
                     >
-                      {timelineMiscT('dateTitle.label')}
+                      {customDateMiscT('add.heading')}
                     </Label>
 
                     <span className="text-base-dark">
-                      {timelineMiscT('dateTitle.sublabel')}
+                      {customDateMiscT('add.description')}
                     </span>
                   </FormGroup>
                 )}
@@ -85,7 +120,7 @@ const CustomDate = () => {
                       className="mint-body-normal maxw-none margin-bottom-0"
                       requiredMarker
                     >
-                      {timelineMiscT('ownerType.label')}
+                      {customDateMiscT('ownerType.label')}
                     </Label>
 
                     {/* {getKeys(ownerTypeConfig.options).map(option => (

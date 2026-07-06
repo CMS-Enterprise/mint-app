@@ -18,6 +18,8 @@ import {
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
+  CustomTimelineDateTranslation,
+  CustomTimelineDateType,
   DataExchangeApproachStatus,
   DataForMonitoringType,
   DataStartsType,
@@ -1498,6 +1500,27 @@ type TranslationTimelineGQL = Omit<
 */
 export type TranslationTimeline = {
   [K in keyof TranslationTimelineGQL]: TranslationTimelineForm[K]; // FE form type
+};
+
+export type TranslationCustomDateForm = {
+  title: TranslationFieldProperties;
+  description: TranslationFieldProperties;
+  dateType: TranslationFieldPropertiesWithOptions<CustomTimelineDateType>;
+  startDate: TranslationFieldProperties;
+  endDate: TranslationFieldProperties;
+};
+
+type TranslationCustomDateGQL = Omit<
+  CustomTimelineDateTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationCustomDate = {
+  [K in keyof TranslationCustomDateGQL]: TranslationCustomDateForm[K]; // FE form type
 };
 
 export type TranslationPlan = {

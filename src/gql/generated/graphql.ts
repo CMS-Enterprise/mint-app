@@ -379,6 +379,16 @@ export type CustomTimelineDateCreateInput = {
   title: Scalars['String']['input'];
 };
 
+/** Represents custom timeline date translation data */
+export type CustomTimelineDateTranslation = {
+  __typename: 'CustomTimelineDateTranslation';
+  dateType: TranslationFieldWithOptions;
+  description: TranslationField;
+  endDate: TranslationField;
+  startDate: TranslationField;
+  title: TranslationField;
+};
+
 /** The selected date type for a Custom Timeline Date. */
 export enum CustomTimelineDateType {
   RANGE = 'RANGE',
