@@ -31,16 +31,15 @@ export default gql(/* GraphQL */ `
         createdDts
         modifiedDts
         status
+        customTimelineDates {
+          id
+          title
+          description
+          dateType
+          startDate
+          endDate
+        }
       }
-    }
-
-    customTimelineDates(modelPlanID: $id) {
-      id
-      title
-      description
-      dateType
-      startDate
-      endDate
     }
   }
 `);

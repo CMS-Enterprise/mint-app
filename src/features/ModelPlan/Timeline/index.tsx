@@ -43,7 +43,6 @@ import AdditionalModelDates from './_components/AdditionalModelDates';
 import './index.scss';
 
 type TimelineFormType = GetTimelineQuery['modelPlan']['timeline'];
-export type CustomTimelineDates = GetTimelineQuery['customTimelineDates'];
 
 // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
 export type InitialValueType = Omit<
@@ -88,11 +87,9 @@ const Timeline = () => {
     wrapUpEnds,
     readyForReviewByUserAccount,
     readyForReviewDts,
-    status
+    status,
+    customTimelineDates
   } = (data?.modelPlan?.timeline || {}) as TimelineFormType;
-
-  const customTimelineDates =
-    data?.customTimelineDates || ([] as CustomTimelineDates);
 
   const modelType = data?.modelPlan?.basics?.modelType || [];
   const modelTypeOther = data?.modelPlan?.basics?.modelTypeOther;
@@ -128,7 +125,11 @@ const Timeline = () => {
     wrapUpEnds: wrapUpEnds ?? null,
     highLevelNote: highLevelNote ?? '',
     customDatesNote: customDatesNote ?? '',
-    status
+    status,
+    customTimelineDates: (customTimelineDates ?? []).toSorted(
+      (a, b) =>
+        new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    )
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -580,7 +581,8 @@ const Timeline = () => {
 
                         <Fieldset disabled={!!error || loading}>
                           <AdditionalModelDates
-                            customTimelineDates={customTimelineDates}
+                            customTimelineDates={values.customTimelineDates}
+                            onBlur={handleOnBlur}
                           />
 
                           <AddNote

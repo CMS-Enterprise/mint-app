@@ -40,7 +40,8 @@ const timelineMockData: GetTimelineType = {
   readyForReviewDts: '2022-05-12T15:01:39.190679Z',
   createdDts: '2022-05-12T15:01:39.190679Z',
   modifiedDts: '2022-05-12T15:01:39.190679Z',
-  status: TaskStatus.IN_PROGRESS
+  status: TaskStatus.IN_PROGRESS,
+  customTimelineDates: []
 };
 
 const timelineData: GetTimelineQuery['modelPlan'] = {
@@ -66,8 +67,7 @@ const getTimelineQuery = (
   result: {
     data: {
       __typename: 'Query',
-      modelPlan: { ...timelineData, ...data },
-      customTimelineDates: []
+      modelPlan: { ...timelineData, ...data }
     }
   }
 });

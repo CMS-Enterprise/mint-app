@@ -4,9 +4,7 @@ import { render } from '@testing-library/react';
 import { Formik } from 'formik';
 import { CustomTimelineDateType } from 'gql/generated/graphql';
 
-import { CustomTimelineDates } from '../..';
-
-import AdditionalModelDates from '.';
+import AdditionalModelDates, { type CustomTimelineDates } from '.';
 
 const onSubmit = (values: any) => {};
 
@@ -37,7 +35,10 @@ describe('AdditionalModelDates', () => {
           path: '/',
           element: (
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
-              <AdditionalModelDates customTimelineDates={initialValues} />
+              <AdditionalModelDates
+                customTimelineDates={initialValues}
+                onBlur={() => {}}
+              />
             </Formik>
           )
         }
@@ -60,7 +61,10 @@ describe('AdditionalModelDates', () => {
           path: '/',
           element: (
             <Formik initialValues={[]} onSubmit={onSubmit}>
-              <AdditionalModelDates customTimelineDates={[]} />
+              <AdditionalModelDates
+                customTimelineDates={[]}
+                onBlur={() => {}}
+              />
             </Formik>
           )
         }
@@ -90,7 +94,10 @@ describe('AdditionalModelDates', () => {
           path: '/',
           element: (
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
-              <AdditionalModelDates customTimelineDates={initialValues} />
+              <AdditionalModelDates
+                customTimelineDates={initialValues}
+                onBlur={() => {}}
+              />
             </Formik>
           )
         }
