@@ -52,8 +52,9 @@ export const formatUserDisplay = (
     userAccount.commonName ||
     [userAccount.givenName, userAccount.familyName].filter(Boolean).join(' ');
 
-  if (userAccount.email) {
-    return `${name} (${userAccount.email})`;
+  const email = userAccount.email?.trim();
+  if (email) {
+    return name ? `${name} (${email})` : email;
   }
 
   return name;
