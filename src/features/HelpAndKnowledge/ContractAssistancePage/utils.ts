@@ -1,21 +1,16 @@
 import {
   CtatHelpNeededType,
+  CtatStatus,
   GetCtatRequestsRequesterQuery
 } from 'gql/generated/graphql';
 
 import {
   helpNeededTypeDisplayOverrides,
-  helpNeededTypes,
-  statuses
+  helpNeededTypes
 } from 'i18n/en-US/ctatRequest';
 import { formatDateLocal } from 'utils/date';
 
-import {
-  ADMIN_TABS,
-  AdminTab,
-  CONTRACT_ASSISTANCE_TICKET_STATUS,
-  ContractAssistanceTicket
-} from './constants';
+import { ADMIN_TABS, AdminTab, ContractAssistanceTicket } from './constants';
 
 export type CtatRequestForTicketTable =
   GetCtatRequestsRequesterQuery['ctatRequestsRequester']['ctatRequests'][number];
@@ -85,7 +80,7 @@ export const mapCtatRequestToContractAssistanceTicket = (
     request.typeOfHelpNeeded,
     request.typeOfHelpNeededOther
   ),
-  status: request.status ? statuses[request.status] : '',
+  statusCode: request.status ?? null,
   assigneeId: request.assignedAdminUserAccount?.username ?? null,
   assigneeName: formatAssigneeName(request.assignedAdminUserAccount)
 });
@@ -118,17 +113,13 @@ export const filterTicketsByAdminTab = (
     case 'all':
       return tickets;
     case 'open':
-      return tickets.filter(
-        ticket => ticket.status !== CONTRACT_ASSISTANCE_TICKET_STATUS.CLOSED
-      );
+      return tickets.filter(ticket => ticket.statusCode !== CtatStatus.CLOSED);
     case 'unassigned':
       return tickets.filter(ticket => !ticket.assigneeId);
     case 'myTickets':
       return tickets.filter(ticket => ticket.assigneeId === currentUserEuaId);
     case 'closed':
-      return tickets.filter(
-        ticket => ticket.status === CONTRACT_ASSISTANCE_TICKET_STATUS.CLOSED
-      );
+      return tickets.filter(ticket => ticket.statusCode === CtatStatus.CLOSED);
     default:
       return tickets;
   }

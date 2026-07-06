@@ -2,6 +2,7 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { CtatStatus } from 'gql/generated/graphql';
 import setup from 'tests/util';
 import { vi } from 'vitest';
 
@@ -16,7 +17,7 @@ const tickets: ContractAssistanceTicket[] = [
     submissionDate: '05/02/2026',
     contractName: 'Home Health Learning',
     helpType: 'Data Use Agreement (DUA)',
-    status: 'New',
+    statusCode: CtatStatus.NEW,
     assigneeId: null,
     assigneeName: null
   }

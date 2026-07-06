@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import { Alert } from 'components/Alert';
 import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
+import { statuses } from 'i18n/en-US/ctatRequest';
 import {
   getColumnSortStatus,
   getHeaderSortIcon,
@@ -94,10 +95,12 @@ const ContractAssistanceTicketsTable = ({
         id: 'status',
         width: TICKET_TABLE_COLUMN_WIDTHS.status,
         Header: t('table.status'),
-        accessor: 'status',
+        accessor: 'statusCode',
         Cell: ({ row }: { row: Row<ContractAssistanceTicket> }) => (
           <>
-            <div>{row.original.status}</div>
+            <div>
+              {row.original.statusCode ? statuses[row.original.statusCode] : ''}
+            </div>
             {row.original.assigneeName && (
               <p className="margin-0 text-base-darker font-sans-xs">
                 {row.original.assigneeName}
