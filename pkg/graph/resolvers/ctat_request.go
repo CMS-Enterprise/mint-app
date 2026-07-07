@@ -105,13 +105,16 @@ func CTATRequestAdminUpdate(
 	const statusFieldKey = "status"
 	if rawStatusUpdate, ok := changes[statusFieldKey]; ok {
 
-		newStatus, ok := rawStatusUpdate.(models.CTATStatus)
+		newStatus, ok := rawStatusUpdate.(*models.CTATStatus)
 		if !ok {
 			return nil, fmt.Errorf("status must be of type CTATStatus")
 		}
+		if newStatus == nil {
+			return nil, fmt.Errorf("status must not be nil")
+		}
 		// Only take action if the status is changing to or from closed
-		if existing.Status != newStatus {
-			if newStatus == models.CTATStatusClosed {
+		if existing.Status != *newStatus {
+			if *newStatus == models.CTATStatusClosed {
 				// If the status is being changed to closed, set the resolution timestamp
 				now := time.Now()
 				existing.CompletedDts = &now
@@ -121,7 +124,7 @@ func CTATRequestAdminUpdate(
 				existing.CompletedDts = nil
 				existing.CompletedBy = nil
 			}
-			existing.Status = newStatus
+			existing.Status = *newStatus
 
 		}
 
