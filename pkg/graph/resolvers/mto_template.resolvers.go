@@ -109,8 +109,10 @@ func (r *Resolver) MTOTemplateSubCategory() generated.MTOTemplateSubCategoryReso
 	return &mTOTemplateSubCategoryResolver{r}
 }
 
-type mTOTemplateResolver struct{ *Resolver }
-type mTOTemplateCategoryResolver struct{ *Resolver }
-type mTOTemplateMilestoneResolver struct{ *Resolver }
-type mTOTemplateSolutionResolver struct{ *Resolver }
-type mTOTemplateSubCategoryResolver struct{ *Resolver }
+type (
+	mTOTemplateResolver            struct{ *Resolver }
+	mTOTemplateCategoryResolver    struct{ *Resolver }
+	mTOTemplateMilestoneResolver   struct{ *Resolver }
+	mTOTemplateSolutionResolver    struct{ *Resolver }
+	mTOTemplateSubCategoryResolver struct{ *Resolver }
+)

@@ -84,5 +84,7 @@ func (r *Resolver) MTOSubcategory() generated.MTOSubcategoryResolver {
 	return &mTOSubcategoryResolver{r}
 }
 
-type mTOCategoryResolver struct{ *Resolver }
-type mTOSubcategoryResolver struct{ *Resolver }
+type (
+	mTOCategoryResolver    struct{ *Resolver }
+	mTOSubcategoryResolver struct{ *Resolver }
+)

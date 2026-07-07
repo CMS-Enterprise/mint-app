@@ -17,8 +17,8 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
+	coderws "github.com/coder/websocket"
 	"github.com/gorilla/mux"
-	"github.com/gorilla/websocket"
 	_ "github.com/lib/pq" // pq is required to get the postgres driver into sqlx
 	"github.com/vektah/gqlparser/v2/ast"
 	mail "github.com/xhit/go-simple-mail/v2"
@@ -267,11 +267,11 @@ func (s *Server) routes(
 
 	graphqlServer.AddTransport(transport.Websocket{
 		KeepAlivePingInterval: 10 * time.Second,
-		Upgrader: websocket.Upgrader{
-			CheckOrigin: func(r *http.Request) bool {
-				return true
+		Implementation: transport.CoderWebsocketImplementation{
+			AcceptOptions: coderws.AcceptOptions{
+				InsecureSkipVerify: true,
+				Subprotocols:       []string{"graphql-transport-ws"},
 			},
-			Subprotocols: []string{"graphql-transport-ws"},
 		},
 		InitFunc: HandleLocalOrOktaWebSocketAuth(oktaMiddlewareFactory),
 	})
