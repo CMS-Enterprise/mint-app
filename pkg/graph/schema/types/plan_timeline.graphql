@@ -52,6 +52,11 @@ input CustomTimelineDateUpdateDatesInput {
   id: UUID!
   startDate: Time
   endDate: Time
+
+  # unused - needed for UI parity
+  title: String
+  description: String
+  dateType: CustomTimelineDateType
 }
 
 """
