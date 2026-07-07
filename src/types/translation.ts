@@ -1527,6 +1527,7 @@ export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
   timeline: TranslationTimeline;
+  customDate: TranslationCustomDate;
   generalCharacteristics: TranslationGeneralCharacteristics;
   participantsAndProviders: TranslationParticipantsAndProviders;
   beneficiaries: TranslationBeneficiaries;
@@ -1567,6 +1568,7 @@ export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
   BASICS = 'basics',
   TIMELINE = 'timeline',
+  CUSTOM_DATE = 'customDate',
   GENERAL_CHARACTERISTICS = 'generalCharacteristics',
   PARTICPANTS_AND_PROVIDERS = 'participantsAndProviders',
   BENEFICIARIES = 'beneficiaries',
