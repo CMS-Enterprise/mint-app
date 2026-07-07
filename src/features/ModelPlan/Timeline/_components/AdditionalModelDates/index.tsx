@@ -15,7 +15,6 @@ import {
 
 import MINTAlert from 'components/Alert';
 import MINTDatePicker from 'components/DatePicker';
-import PageHeading from 'components/PageHeading';
 
 export type CustomTimelineDates =
   GetTimelineQuery['modelPlan']['timeline']['customTimelineDates'];
@@ -32,9 +31,9 @@ const AdditionalModelDates = ({
   return (
     <div>
       <div className="margin-bottom-1">
-        <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-1">
+        <h2 className="margin-top-0 margin-bottom-1">
           {timelineMiscT('additionalModelDates')}
-        </PageHeading>
+        </h2>
 
         <p className="mint-body-normal text-base-darkest margin-top-0 margin-bottom-1">
           {timelineMiscT('additionalModelDatesInfo')}
@@ -52,7 +51,7 @@ const AdditionalModelDates = ({
       ) : (
         <div>
           <FieldArray name="customTimelineDates">
-            {({ replace }) => (
+            {() => (
               <ProcessList className="read-only-model-plan__timeline maxw-full margin-left-neg-105">
                 {customTimelineDates.map((customDate, index) => {
                   const isSingleDate =

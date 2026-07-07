@@ -7,9 +7,7 @@ exports[`AdditionalModelDates > matches the snapshot 1`] = `
       class="margin-bottom-1"
     >
       <h2
-        aria-live="polite"
-        class="mint-h1 margin-top-0 margin-bottom-1"
-        tabindex="-1"
+        class="margin-top-0 margin-bottom-1"
       >
         Additional model dates
       </h2>
