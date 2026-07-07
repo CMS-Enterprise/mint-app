@@ -4,6 +4,7 @@ SELECT
     ctat_request.requester,
     ctat_request.status,
     ctat_request.assigned_admin,
+    ctat_request.admin_assigned_at,
     ctat_request.notes,
     ctat_request.resolution,
     ctat_request.cmmi_group,

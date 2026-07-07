@@ -21,6 +21,8 @@ type CTATRequest struct {
 	Resolution *string    `json:"resolution,omitempty" db:"resolution"`
 
 	AssignedAdmin *uuid.UUID `json:"assignedAdmin,omitempty" db:"assigned_admin"`
+	// AdminAssignedAt is the timestamp when an admin was assigned to the request. It is nil if no admin has been assigned yet. It doesn't change if the admin is unassigned or reassigned.
+	AdminAssignedAt *time.Time `json:"adminAssignedAt" db:"admin_assigned_at"`
 
 	CmmiGroup         CTATCMMIGroupOption     `json:"cmmiGroup" db:"cmmi_group"`
 	CmmiGroupOther    *string                 `json:"cmmiGroupOther,omitempty" db:"cmmi_group_other"`

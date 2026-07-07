@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -48,6 +49,7 @@ func CTATRequestAdminUpdate(
 	addressBook email.AddressBook,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.CTATRequest, error) {
+	// TODO: update dates here for completed and admin assigned.
 	if !principal.AllowASSESSMENT() {
 		return nil, fmt.Errorf("user does not have permission to update admin CTAT requests")
 	}
@@ -91,6 +93,10 @@ func CTATRequestAdminUpdate(
 			}
 
 			existing.AssignedAdmin = &assignedAdminAccount.ID
+		}
+		// Update the AdminAssignedAt timestamp only if the admin is being assigned for the first time
+		if existing.AdminAssignedAt == nil {
+			existing.AdminAssignedAt = new(time.Now())
 		}
 	}
 

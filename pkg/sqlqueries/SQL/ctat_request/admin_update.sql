@@ -2,6 +2,7 @@ UPDATE ctat_request
 SET
     status = :status,
     assigned_admin = :assigned_admin,
+    admin_assigned_at = :admin_assigned_at,
     notes = :notes,
     resolution = :resolution,
     modified_by = :modified_by,
@@ -13,6 +14,7 @@ RETURNING
     requester,
     status,
     assigned_admin,
+    admin_assigned_at,
     notes,
     resolution,
     cmmi_group,

@@ -54,6 +54,7 @@ RETURNING
     requester,
     status,
     assigned_admin,
+    admin_assigned_at,
     notes,
     resolution,
     cmmi_group,

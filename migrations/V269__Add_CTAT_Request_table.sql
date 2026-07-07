@@ -4,6 +4,7 @@ CREATE TABLE ctat_request (
     requester UUID NOT NULL REFERENCES public.user_account(id) MATCH SIMPLE,
     status CTAT_STATUS NOT NULL DEFAULT 'NEW',
     assigned_admin UUID REFERENCES public.user_account(id) MATCH SIMPLE,
+    admin_assigned_at TIMESTAMP WITH TIME ZONE,
     notes ZERO_STRING,
     resolution ZERO_STRING,
 
@@ -142,6 +143,7 @@ COMMENT ON COLUMN ctat_request.human_readable_id_number IS 'Stored numeric porti
 COMMENT ON COLUMN ctat_request.requester IS 'The user who requested CTAT assistance.';
 COMMENT ON COLUMN ctat_request.status IS 'The workflow status assigned to the CTAT request.';
 COMMENT ON COLUMN ctat_request.assigned_admin IS 'The user account currently assigned to administer the CTAT request.';
+COMMENT ON COLUMN ctat_request.admin_assigned_at IS 'The timestamp when an admin was assigned to the CTAT request. It is nil if no admin has been assigned yet. It does not change if the admin is unassigned or reassigned.';
 COMMENT ON COLUMN ctat_request.notes IS 'Internal notes associated with the CTAT request.';
 COMMENT ON COLUMN ctat_request.resolution IS 'Resolution details recorded when the CTAT request is completed.';
 COMMENT ON COLUMN ctat_request.cmmi_group IS 'The selected CMMI group for the request.';

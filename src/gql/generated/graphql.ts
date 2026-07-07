@@ -376,6 +376,8 @@ export enum CtatHelpNeededType {
 
 export type CtatRequest = {
   __typename: 'CTATRequest';
+  /** Tracks the first time an admin was assigned to the request. It is nil if no admin has been assigned yet. It does not change if the admin is unassigned or reassigned. */
+  adminAssignedAt?: Maybe<Scalars['Time']['output']>;
   assignedAdmin?: Maybe<Scalars['UUID']['output']>;
   assignedAdminUserAccount?: Maybe<UserAccount>;
   cmmiDivision?: Maybe<CtatcmmiDivisionOption>;
