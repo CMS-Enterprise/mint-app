@@ -49,7 +49,6 @@ func CTATRequestAdminUpdate(
 	addressBook email.AddressBook,
 	getAccountInformation userhelpers.GetAccountInfoFunc,
 ) (*models.CTATRequest, error) {
-	// TODO: update dates here for completed and admin assigned.
 	if !principal.AllowASSESSMENT() {
 		return nil, fmt.Errorf("user does not have permission to update admin CTAT requests")
 	}
@@ -94,14 +93,40 @@ func CTATRequestAdminUpdate(
 
 			existing.AssignedAdmin = &assignedAdminAccount.ID
 		}
-		// Update the AdminAssignedAt timestamp only if the admin is being assigned for the first time
-		if existing.AdminAssignedAt == nil {
-			existing.AdminAssignedAt = new(time.Now())
+		// Update the AdminAssignedDts timestamp only if the admin is being assigned for the first time
+		if existing.AdminAssignedDts == nil {
+			existing.AdminAssignedDts = new(time.Now())
 		}
 	}
 
 	// remove from map to avoid any issues in `ApplyChanges`
 	delete(changes, "assignedAdmin")
+
+	const statusFieldKey = "status"
+	if rawStatusUpdate, ok := changes[statusFieldKey]; ok {
+
+		newStatus, ok := rawStatusUpdate.(models.CTATStatus)
+		if !ok {
+			return nil, fmt.Errorf("status must be of type CTATStatus")
+		}
+		// Only take action if the status is changing to or from closed
+		if existing.Status != newStatus {
+			if newStatus == models.CTATStatusClosed {
+				// If the status is being changed to closed, set the resolution timestamp
+				now := time.Now()
+				existing.CompletedDts = &now
+				existing.CompletedBy = &principal.Account().ID
+			} else {
+				// Clear out the closed by fields
+				existing.CompletedDts = nil
+				existing.CompletedBy = nil
+			}
+			existing.Status = newStatus
+
+		}
+
+	}
+	delete(changes, statusFieldKey)
 
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, false)
 	if err != nil {

@@ -131,12 +131,26 @@ type CTATRequest {
   requesterUserAccount: UserAccount!
 
   status: CTATStatus
+  """
+  The UUID of the user who completed the request
+  """
+  completedBy: UUID
+
+  """
+  The user who completed the request
+  """
+  completedByUserAccount: UserAccount
+
+  """
+  The timestamp when the request was completed
+  """
+  completedDts: Time
   assignedAdmin: UUID
   assignedAdminUserAccount: UserAccount
   """
   Tracks the first time an admin was assigned to the request. It is nil if no admin has been assigned yet. It does not change if the admin is unassigned or reassigned.
   """
-  adminAssignedAt: Time
+  adminAssignedDts: Time
   notes: String
   resolution: String
 
@@ -161,6 +175,26 @@ type CTATRequest {
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
+  """
+  A convience field, this is the same as created by
+  """
+  submittedBy: UUID!
+  """
+  A convience field, this is the same as created by
+  """
+  submittedByUserAccount: UserAccount!
+  """
+  A convience field, this is the same as created at
+  """
+  submittedDts: Time!
+  """
+  How long Until the CTAT request was closed
+  """
+  daysFromSubmittedToCompleted: Int
+  """
+  How long from assignment to completion for the CTAT request
+  """
+  daysFromAssignedToCompleted: Int
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
