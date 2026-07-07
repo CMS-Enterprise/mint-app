@@ -1,0 +1,41 @@
+{{template "shared_header.html"}} {{template
+"shared_non_mint_mailbox_short_header.html" .}}
+<hr />
+
+<h2>New date added to {{.ModelName}}</h2>
+<p>
+  {{.UserName}} added a new date to the model timeline for {{.ModelName}}. Model
+  teams in MINT can customize their model timeline by adding, updating, and/or
+  removing custom dates that are not a part of the standard dates in the basic
+  high level timeline.
+</p>
+<br />
+<br />
+
+<p><u>New date summary</u></p>
+<p><strong>Date title:</strong> {{.CustomTimelineDateTitle}}</p>
+<p><strong>Date description:</strong> {{.CustomTimelineDateDescription}}</p>
+<p><strong>Date:</strong> {{.CustomTimelineDate}}</p>
+
+<br />
+<p>
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view">
+    View this model's timeline in MINT
+  </a>
+</p>
+<br />
+
+<hr />
+<br />
+<p>
+  You are currently subscribed to notifications about changes to model dates. If
+  you no longer wish to receive these email notifications, please
+  <a
+    href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=DATES_CHANGED"
+    >unsubscribe</a
+  >
+  or change your
+  <a href="{{.ClientAddress}}/notifications/settings">notification settings</a>.
+</p>
+
+{{template "shared_footer.html"}}
