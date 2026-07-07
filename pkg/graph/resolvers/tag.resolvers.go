@@ -28,5 +28,7 @@ func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
 // TaggedContent returns generated.TaggedContentResolver implementation.
 func (r *Resolver) TaggedContent() generated.TaggedContentResolver { return &taggedContentResolver{r} }
 
-type tagResolver struct{ *Resolver }
-type taggedContentResolver struct{ *Resolver }
+type (
+	tagResolver           struct{ *Resolver }
+	taggedContentResolver struct{ *Resolver }
+)

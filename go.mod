@@ -24,7 +24,7 @@ require (
 	golang.org/x/sync v0.21.0
 )
 
-require github.com/gorilla/websocket v1.5.3
+require github.com/coder/websocket v1.8.15
 
 require github.com/xhit/go-simple-mail/v2 v2.16.0
 
@@ -59,7 +59,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.43.5 // indirect
 	github.com/charmbracelet/colorprofile v0.2.3-0.20250311203215-f60798e515dc // indirect
 	github.com/charmbracelet/x/cellbuf v0.0.13-0.20250311204145-2c3ea96c31dd // indirect
-	github.com/coder/websocket v1.8.15 // indirect
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/goccy/go-yaml v1.19.2 // indirect
 	github.com/parquet-go/bitpack v1.0.0 // indirect
