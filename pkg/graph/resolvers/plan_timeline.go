@@ -52,8 +52,8 @@ func UpdatePlanTimeline(
 	}
 	// check for custom dates ahead of time, we need it removed before any `ApplyChanges` calls happen
 	var customTimelineUpdates []*model.CustomTimelineDateUpdateDatesInput
-	if val, ok := changes["customTimelineDateUpdates"]; ok {
-		delete(changes, "customTimelineDateUpdates")
+	if val, ok := changes["customTimelineDates"]; ok {
+		delete(changes, "customTimelineDates")
 		customTimelineUpdates, ok = val.([]*model.CustomTimelineDateUpdateDatesInput)
 		if !ok {
 			customTimelineUpdates = nil

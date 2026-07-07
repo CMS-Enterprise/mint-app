@@ -50,8 +50,8 @@ CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk op
 """
 input CustomTimelineDateUpdateDatesInput {
   id: UUID!
-  newStartDate: Time
-  newEndDate: Time
+  startDate: Time
+  endDate: Time
 }
 
 """
@@ -73,7 +73,7 @@ input PlanTimelineChanges @goModel(model: "map[string]interface{}") {
   customDatesNote: String
   status: TaskStatusInput
 
-  customTimelineDateUpdates: [CustomTimelineDateUpdateDatesInput!]
+  customTimelineDates: [CustomTimelineDateUpdateDatesInput!]
 }
 
 extend type Mutation {
