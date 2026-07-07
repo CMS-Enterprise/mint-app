@@ -581,6 +581,9 @@ const Timeline = () => {
 
                         <Fieldset disabled={!!error || loading}>
                           <AdditionalModelDates
+                            initialCustomDates={
+                              initialValues.customTimelineDates
+                            }
                             customTimelineDates={values.customTimelineDates}
                             onBlur={handleOnBlur}
                           />

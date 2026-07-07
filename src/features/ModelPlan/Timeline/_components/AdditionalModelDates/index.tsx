@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Alert,
   Button,
   ProcessList,
   ProcessListHeading,
@@ -15,18 +16,22 @@ import {
 
 import MINTAlert from 'components/Alert';
 import MINTDatePicker from 'components/DatePicker';
+import { isDateInPast } from 'utils/date';
 
 export type CustomTimelineDates =
   GetTimelineQuery['modelPlan']['timeline']['customTimelineDates'];
 
 const AdditionalModelDates = ({
+  initialCustomDates,
   customTimelineDates,
   onBlur
 }: {
+  initialCustomDates: CustomTimelineDates;
   customTimelineDates: CustomTimelineDates;
   onBlur: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
 }) => {
   const { t: timelineMiscT } = useTranslation('timelineMisc');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   return (
     <div>
@@ -110,6 +115,11 @@ const AdditionalModelDates = ({
                           value={customDate.startDate}
                           half={isSingleDate}
                           boldLabel={false}
+                          warning={false}
+                          shouldShowWarning={
+                            initialCustomDates[index].startDate !==
+                            customDate.startDate
+                          }
                         />
 
                         {!isSingleDate && (
@@ -122,9 +132,29 @@ const AdditionalModelDates = ({
                             formikValue={customDate.endDate}
                             value={customDate.endDate}
                             boldLabel={false}
+                            warning={false}
+                            shouldShowWarning={
+                              initialCustomDates[index].endDate !==
+                              customDate.endDate
+                            }
                           />
                         )}
                       </div>
+
+                      {(isDateInPast(customDate.startDate) ||
+                        isDateInPast(customDate.endDate)) &&
+                        (initialCustomDates[index].startDate !==
+                          customDate.startDate ||
+                          initialCustomDates[index].endDate !==
+                            customDate.endDate) && (
+                          <Alert
+                            type="warning"
+                            className="margin-top-4"
+                            headingLevel="h4"
+                          >
+                            {miscellaneousT('dateWarning')}
+                          </Alert>
+                        )}
                     </ProcessListItem>
                   );
                 })}

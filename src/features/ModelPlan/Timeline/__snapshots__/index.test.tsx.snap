@@ -1100,7 +1100,7 @@ exports[`Model Timeline page > renders without errors and matches snapshot 1`] =
               <button
                 class="usa-button usa-button usa-button--unstyled"
                 data-testid="button"
-                type="submit"
+                type="button"
               >
                 <svg
                   aria-hidden="true"

@@ -36,6 +36,7 @@ describe('AdditionalModelDates', () => {
           element: (
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
               <AdditionalModelDates
+                initialCustomDates={initialValues}
                 customTimelineDates={initialValues}
                 onBlur={() => {}}
               />
@@ -62,6 +63,7 @@ describe('AdditionalModelDates', () => {
           element: (
             <Formik initialValues={[]} onSubmit={onSubmit}>
               <AdditionalModelDates
+                initialCustomDates={[]}
                 customTimelineDates={[]}
                 onBlur={() => {}}
               />
@@ -95,6 +97,7 @@ describe('AdditionalModelDates', () => {
           element: (
             <Formik initialValues={initialValues} onSubmit={onSubmit}>
               <AdditionalModelDates
+                initialCustomDates={initialValues}
                 customTimelineDates={initialValues}
                 onBlur={() => {}}
               />
