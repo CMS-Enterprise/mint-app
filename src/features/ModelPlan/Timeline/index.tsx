@@ -126,7 +126,7 @@ const Timeline = () => {
     highLevelNote: highLevelNote ?? '',
     customDatesNote: customDatesNote ?? '',
     status,
-    customTimelineDates: (customTimelineDates ?? []).toSorted(
+    customTimelineDates: [...(customTimelineDates ?? [])].sort(
       (a, b) =>
         new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
     )
@@ -607,7 +607,7 @@ const Timeline = () => {
                         )}
 
                         <Button
-                          type="submit"
+                          type="button"
                           className="usa-button usa-button--unstyled"
                           onClick={() =>
                             navigate(`/models/${modelID}/collaboration-area`)
