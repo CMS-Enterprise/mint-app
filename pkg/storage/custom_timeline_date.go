@@ -88,8 +88,8 @@ func CustomTimelineDateUpdateDatesByIDs(
 		}
 
 		ids = append(ids, customTimelineDateUpdate.ID)
-		startDates = append(startDates, customTimelineDateUpdate.NewStartDate)
-		endDates = append(endDates, customTimelineDateUpdate.NewEndDate)
+		startDates = append(startDates, customTimelineDateUpdate.StartDate)
+		endDates = append(endDates, customTimelineDateUpdate.EndDate)
 	}
 
 	args := map[string]any{
