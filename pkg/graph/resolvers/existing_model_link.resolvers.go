@@ -49,5 +49,7 @@ func (r *Resolver) ExistingModelLinks() generated.ExistingModelLinksResolver {
 	return &existingModelLinksResolver{r}
 }
 
-type existingModelLinkResolver struct{ *Resolver }
-type existingModelLinksResolver struct{ *Resolver }
+type (
+	existingModelLinkResolver  struct{ *Resolver }
+	existingModelLinksResolver struct{ *Resolver }
+)
