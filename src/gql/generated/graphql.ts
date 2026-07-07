@@ -390,9 +390,12 @@ export enum CustomTimelineDateType {
  * (this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
  */
 export type CustomTimelineDateUpdateDatesInput = {
+  dateType?: InputMaybe<CustomTimelineDateType>;
+  description?: InputMaybe<Scalars['String']['input']>;
   endDate?: InputMaybe<Scalars['Time']['input']>;
   id: Scalars['UUID']['input'];
   startDate?: InputMaybe<Scalars['Time']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DailyDigestCompleteActivityMeta = {
