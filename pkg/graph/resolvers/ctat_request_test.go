@@ -270,10 +270,11 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
 	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
 
 	assignedAdmin := "ADMI"
-	_, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
+	updatedCTAT, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
 		"assignedAdmin": &assignedAdmin,
 	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{}, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
 	suite.Require().NoError(err)
+	suite.NotNil(updatedCTAT.AdminAssignedDts, "expected AdminAssignedDts to be set after assigning admin")
 
 	var noAssignedAdmin *string
 
@@ -283,11 +284,57 @@ func (suite *ResolverSuite) TestAdminUpdateCTATRequestClearsAssignedAdmin() {
 	suite.NoError(err)
 	suite.NotNil(resp)
 	suite.Nil(resp.AssignedAdmin)
+	suite.EqualValues(resp.AdminAssignedDts, updatedCTAT.AdminAssignedDts, "expected AdminAssignedDts to remain set after clearing assigned admin")
 
 	reloaded, err := CTATRequestGetByID(suite.testConfigs.Context, request.ID)
 	suite.NoError(err)
 	suite.NotNil(reloaded)
 	suite.Nil(reloaded.AssignedAdmin)
+}
+
+func (suite *ResolverSuite) TestAdminUpdateCTATRequestSetClosed() {
+	now := time.Now().UTC()
+
+	request := suite.createTestCTATRequest(
+		suite.testConfigs.Principal.Account().ID,
+		now.Add(24*time.Hour),
+		"Admin closed contract",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
+		models.CTATStatusInProgress,
+	)
+
+	adminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, adminPrincipal)
+
+	resolution := "Resolved during resolver-layer admin update test."
+
+	closedStatus := models.CTATStatusClosed
+	resp, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
+		"resolution": &resolution,
+		"status":     &closedStatus,
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{}, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	suite.NoError(err)
+	suite.NotNil(resp)
+	suite.NotNil(resp.CompletedDts, "expected CompletedDts to be set after closing request")
+	if suite.NotNil(resp.CompletedBy, "expected CompletedBy to be set after closing request") {
+		suite.EqualValues(adminPrincipal.UserAccount.ID, *resp.CompletedBy, "expected the completed by field to match the admin account user account")
+	}
+
+	suite.Require().NotNil(resp.Resolution)
+	suite.Equal(resolution, *resp.Resolution)
+
+	openedStatus := models.CTATStatusInProgress
+	reOpenedResp, err := CTATRequestAdminUpdate(adminCtx, suite.testConfigs.Logger, request.ID, map[string]any{
+		"resolution": &resolution,
+		"status":     &openedStatus,
+	}, adminPrincipal, suite.testConfigs.Store, nil, email.AddressBook{}, userhelpers.GetUserInfoAccountInfoWrapperFunc(suite.stubFetchUserInfo))
+	suite.NoError(err)
+	suite.NotNil(reOpenedResp)
+	suite.Nil(reOpenedResp.CompletedDts, "expected CompletedDts to be nil after reopening request")
+	suite.Nil(reOpenedResp.CompletedBy, "expected CompletedBy to be nil after reopening request")
+	suite.Require().NotNil(reOpenedResp.Resolution)
+	suite.Equal(resolution, *reOpenedResp.Resolution)
+
 }
 
 func (suite *ResolverSuite) TestAdminUpdateCTATRequestUpdatesResolution() {
