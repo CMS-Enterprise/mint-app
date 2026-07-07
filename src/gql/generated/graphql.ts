@@ -390,9 +390,9 @@ export enum CustomTimelineDateType {
  * (this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
  */
 export type CustomTimelineDateUpdateDatesInput = {
+  endDate?: InputMaybe<Scalars['Time']['input']>;
   id: Scalars['UUID']['input'];
-  newEndDate?: InputMaybe<Scalars['Time']['input']>;
-  newStartDate?: InputMaybe<Scalars['Time']['input']>;
+  startDate?: InputMaybe<Scalars['Time']['input']>;
 };
 
 export type DailyDigestCompleteActivityMeta = {
@@ -4752,7 +4752,7 @@ export type PlanTimelineChanges = {
   clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
   completeICIP?: InputMaybe<Scalars['Time']['input']>;
   customDatesNote?: InputMaybe<Scalars['String']['input']>;
-  customTimelineDateUpdates?: InputMaybe<Array<CustomTimelineDateUpdateDatesInput>>;
+  customTimelineDates?: InputMaybe<Array<CustomTimelineDateUpdateDatesInput>>;
   highLevelNote?: InputMaybe<Scalars['String']['input']>;
   performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
   performancePeriodStarts?: InputMaybe<Scalars['Time']['input']>;
