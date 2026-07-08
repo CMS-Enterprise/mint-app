@@ -1,7 +1,7 @@
 meta {
-  name: Create CTAT Request
+  name: Close CTAT Request
   type: graphql
-  seq: 4
+  seq: 6
 }
 
 post {
@@ -17,8 +17,8 @@ auth:apikey {
 }
 
 body:graphql {
-  mutation createCTATRequest($input: CTATRequestInput!) {
-    createCTATRequest(input: $input) {
+  mutation adminUpdateCTATRequest($id: UUID!, $changes: CTATAdminUpdateInput!) {
+    adminUpdateCTATRequest(id: $id, changes: $changes) {
       id
       humanReadableID
       humanReadableIDNumber
@@ -36,6 +36,11 @@ body:graphql {
         hasLoggedIn
       }
       status
+      adminAssignedDts
+      completedBy
+      completedDts
+      daysFromSubmittedToCompleted
+      daysFromAssignedToCompleted    
       assignedAdmin
       assignedAdminUserAccount {
         id
@@ -49,11 +54,6 @@ body:graphql {
         zoneInfo
         hasLoggedIn
       }
-      adminAssignedDts
-      completedBy
-      completedDts
-      daysFromSubmittedToCompleted
-      daysFromAssignedToCompleted    
       notes
       resolution
       cmmiGroup
@@ -189,37 +189,15 @@ body:graphql {
 
 body:graphql:vars {
   {
-    "input": {
-      "cmmiGroup": "BSG",
-      "cmmiDivision": "BSG_DBOM",
-      "relatedMINTModels": [
-        "{{modelPlanID}}"
-      ],
-      "contractActivityType": "TECHNICAL_ASSISTANCE",
-      "contractName": "BTAL CTAT Request Example Contract",
-      "contractNumber": "75FCMC26F1001",
-      "contractType": "TIME_AND_MATERIALS",
-      "typeOfHelpNeeded": [
-        "REQUEST_FOR_INFORMATION_RFI",
-        "GUIDANCE_ON_MARKET_RESEARCH"
-      ],
-      "describeHelpNeeded": "Bruno example request for CTAT assistance without supporting documents.",
-      "requestUrgency": "HIGH",
-      "dateAssistanceNeededBy": "2026-06-30T12:00:00Z",
-      "supportingDocuments": []
+    "id": "{{ctatRequestID}}",
+    "changes": {
+      "status": "CLOSED"
+      ,"resolution": "This is now closed"
     }
   }
 }
 
 vars:pre-request {
-  EUAID: BTAL
-  jobCodes: ["MINT_USER_NONPROD"]
-}
-
-tests {
-  let responseData = res.getBody().data.createCTATRequest
-  
-  ctatRequestID = responseData.id
-  
-  bru.setVar("ctatRequestID", ctatRequestID);
+  EUAID: ADMI
+  jobCodes: ["MINT_ASSESSMENT_NONPROD"]
 }

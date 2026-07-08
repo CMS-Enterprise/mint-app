@@ -3,7 +3,10 @@ CREATE TABLE ctat_request (
     human_readable_id_number INTEGER GENERATED ALWAYS AS IDENTITY,
     requester UUID NOT NULL REFERENCES public.user_account(id) MATCH SIMPLE,
     status CTAT_STATUS NOT NULL DEFAULT 'NEW',
+    completed_by UUID REFERENCES public.user_account(id) MATCH SIMPLE,
+    completed_dts TIMESTAMP WITH TIME ZONE,
     assigned_admin UUID REFERENCES public.user_account(id) MATCH SIMPLE,
+    admin_assigned_dts TIMESTAMP WITH TIME ZONE,
     notes ZERO_STRING,
     resolution ZERO_STRING,
 
@@ -141,7 +144,10 @@ COMMENT ON COLUMN ctat_request.id IS 'Unique identifier for the CTAT request.';
 COMMENT ON COLUMN ctat_request.human_readable_id_number IS 'Stored numeric portion of the CTAT human-readable ID. The display value is formatted as CTAT-{number}.';
 COMMENT ON COLUMN ctat_request.requester IS 'The user who requested CTAT assistance.';
 COMMENT ON COLUMN ctat_request.status IS 'The workflow status assigned to the CTAT request.';
+COMMENT ON COLUMN ctat_request.completed_by IS 'The user who completed the ctat_request.';
+COMMENT ON COLUMN ctat_request.completed_dts IS 'The timestamp when the ctat_request was completed.';
 COMMENT ON COLUMN ctat_request.assigned_admin IS 'The user account currently assigned to administer the CTAT request.';
+COMMENT ON COLUMN ctat_request.admin_assigned_dts IS 'The timestamp when an admin was assigned to the CTAT request. It is nil if no admin has been assigned yet. It does not change if the admin is unassigned or reassigned.';
 COMMENT ON COLUMN ctat_request.notes IS 'Internal notes associated with the CTAT request.';
 COMMENT ON COLUMN ctat_request.resolution IS 'Resolution details recorded when the CTAT request is completed.';
 COMMENT ON COLUMN ctat_request.cmmi_group IS 'The selected CMMI group for the request.';

@@ -376,12 +376,20 @@ export enum CtatHelpNeededType {
 
 export type CtatRequest = {
   __typename: 'CTATRequest';
+  /** Tracks the first time an admin was assigned to the request. It is nil if no admin has been assigned yet. It does not change if the admin is unassigned or reassigned. */
+  adminAssignedDts?: Maybe<Scalars['Time']['output']>;
   assignedAdmin?: Maybe<Scalars['UUID']['output']>;
   assignedAdminUserAccount?: Maybe<UserAccount>;
   cmmiDivision?: Maybe<CtatcmmiDivisionOption>;
   cmmiDivisionOther?: Maybe<Scalars['String']['output']>;
   cmmiGroup?: Maybe<CtatcmmiGroupOption>;
   cmmiGroupOther?: Maybe<Scalars['String']['output']>;
+  /** The UUID of the user who completed the request */
+  completedBy?: Maybe<Scalars['UUID']['output']>;
+  /** The user who completed the request */
+  completedByUserAccount?: Maybe<UserAccount>;
+  /** The timestamp when the request was completed */
+  completedDts?: Maybe<Scalars['Time']['output']>;
   contractActivityType?: Maybe<CtatContractActivityType>;
   contractActivityTypeOther?: Maybe<Scalars['String']['output']>;
   contractName?: Maybe<Scalars['String']['output']>;
@@ -392,6 +400,10 @@ export type CtatRequest = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   dateAssistanceNeededBy?: Maybe<Scalars['Time']['output']>;
+  /** How long from assignment to completion for the CTAT request */
+  daysFromAssignedToCompleted?: Maybe<Scalars['Int']['output']>;
+  /** How long until the CTAT request was closed */
+  daysFromSubmittedToCompleted?: Maybe<Scalars['Int']['output']>;
   describeHelpNeeded?: Maybe<Scalars['String']['output']>;
   humanReadableID: Scalars['String']['output'];
   humanReadableIDNumber: Scalars['Int']['output'];
@@ -406,6 +418,12 @@ export type CtatRequest = {
   requesterUserAccount: UserAccount;
   resolution?: Maybe<Scalars['String']['output']>;
   status?: Maybe<CtatStatus>;
+  /** A convenience field, this is the same as created by */
+  submittedBy: Scalars['UUID']['output'];
+  /** A convenience field, this is the same as created by */
+  submittedByUserAccount: UserAccount;
+  /** A convenience field, this is the same as created at */
+  submittedDts: Scalars['Time']['output'];
   supportingDocuments: Array<CtatRequestDocument>;
   typeOfHelpNeeded: Array<CtatHelpNeededType>;
   typeOfHelpNeededOther?: Maybe<Scalars['String']['output']>;

@@ -14,6 +14,7 @@ import (
 // CTATRequest represents a request for CTAT assistance.
 type CTATRequest struct {
 	baseStruct
+	completedByRelation
 
 	Requester  uuid.UUID  `json:"requester" db:"requester"`
 	Status     CTATStatus `json:"status" db:"status"`
@@ -21,6 +22,8 @@ type CTATRequest struct {
 	Resolution *string    `json:"resolution,omitempty" db:"resolution"`
 
 	AssignedAdmin *uuid.UUID `json:"assignedAdmin,omitempty" db:"assigned_admin"`
+	// AdminAssignedDts is the timestamp when an admin was assigned to the request. It is nil if no admin has been assigned yet. It doesn't change if the admin is unassigned or reassigned.
+	AdminAssignedDts *time.Time `json:"adminAssignedDts" db:"admin_assigned_dts"`
 
 	CmmiGroup         CTATCMMIGroupOption     `json:"cmmiGroup" db:"cmmi_group"`
 	CmmiGroupOther    *string                 `json:"cmmiGroupOther,omitempty" db:"cmmi_group_other"`
@@ -90,4 +93,39 @@ func (c *CTATRequest) AssignedAdminUserAccount(ctx context.Context) (*authentica
 	}
 
 	return service(ctx, *c.AssignedAdmin)
+}
+
+// The creator is the same as the submitter currently
+func (c *CTATRequest) SubmittedByUserAccount(ctx context.Context) (*authentication.UserAccount, error) {
+	return c.CreatedByUserAccount(ctx)
+}
+
+// SubmittedBy is the same as the creator
+func (c *CTATRequest) SubmittedBy() uuid.UUID {
+	return c.CreatedBy
+}
+
+// SubmittedDTS is the same as the createdDTS
+func (c *CTATRequest) SubmittedDts() time.Time {
+	return c.CreatedDts
+}
+
+// DaysFromSubmittedToCompleted returns the number of days between when the request was submitted and when it was completed. If either date is nil, it returns nil.
+func (c *CTATRequest) DaysFromSubmittedToCompleted() *int {
+	if c.CompletedDts == nil {
+		return nil
+	}
+
+	days := int(c.CompletedDts.Sub(c.CreatedDts).Hours() / 24)
+	return &days
+}
+
+// DaysFromAssignedToCompleted returns the number of days between when the request was assigned to an admin and when it was completed. If either date is nil, it returns nil.
+func (c *CTATRequest) DaysFromAssignedToCompleted() *int {
+	if c.CompletedDts == nil || c.AdminAssignedDts == nil {
+		return nil
+	}
+
+	days := int(c.CompletedDts.Sub(*c.AdminAssignedDts).Hours() / 24)
+	return &days
 }
