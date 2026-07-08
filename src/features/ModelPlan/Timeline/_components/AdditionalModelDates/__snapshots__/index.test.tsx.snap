@@ -229,6 +229,60 @@ exports[`AdditionalModelDates > matches the snapshot 1`] = `
                     />
                   </div>
                 </div>
+                <div
+                  class="mint-datepicker-warning"
+                >
+                  <span
+                    class="usa-tooltip"
+                    data-testid="tooltipWrapper"
+                  >
+                    <div
+                      aria-describedby="tooltip-_r_1_"
+                      class="usa-tooltip__trigger"
+                      data-testid="triggerElement"
+                      tabindex="0"
+                    >
+                      <svg
+                        aria-label="warning"
+                        class="usa-icon usa-icon--size-3 text-warning-dark"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+                        />
+                      </svg>
+                    </div>
+                    <span
+                      aria-hidden="true"
+                      class="usa-tooltip__body"
+                      data-testid="tooltipBody"
+                      id="tooltip-_r_1_"
+                      role="tooltip"
+                      title="You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate."
+                    >
+                      You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-alert usa-alert--warning margin-top-4"
+              data-testid="alert"
+            >
+              <div
+                class="usa-alert__body"
+              >
+                <p
+                  class="usa-alert__text"
+                >
+                  You’ve entered one or more dates that are in the past. Please double-check your dates to make sure they’re accurate.
+                </p>
               </div>
             </div>
             <div

@@ -227,7 +227,7 @@ const CustomDate = () => {
                   render={({ field: { ref, ...field } }) => (
                     <FormGroup className="margin-top-0 margin-bottom-2">
                       <Label
-                        htmlFor="date-type"
+                        htmlFor="SINGLE"
                         className="text-bold maxw-none margin-bottom-0"
                         requiredMarker
                       >
@@ -268,7 +268,7 @@ const CustomDate = () => {
                           }) => (
                             <FormGroup className="margin-top-05 margin-left-4 margin-bottom-2">
                               <Label
-                                htmlFor="date-type"
+                                htmlFor="startDate"
                                 className="text-bold maxw-none margin-bottom-1"
                                 requiredMarker
                               >
@@ -334,7 +334,7 @@ const CustomDate = () => {
                             }) => (
                               <FormGroup className="margin-top-05 margin-left-4 margin-bottom-2">
                                 <Label
-                                  htmlFor="date-type"
+                                  htmlFor="startDate"
                                   className="text-bold maxw-none margin-bottom-1"
                                   requiredMarker
                                 >
@@ -376,7 +376,7 @@ const CustomDate = () => {
                             }) => (
                               <FormGroup className="margin-top-05 margin-left-4 margin-bottom-2">
                                 <Label
-                                  htmlFor="date-type"
+                                  htmlFor="endDate"
                                   className="text-bold maxw-none margin-bottom-1"
                                   requiredMarker
                                 >
