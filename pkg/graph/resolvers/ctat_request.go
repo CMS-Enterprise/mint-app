@@ -117,8 +117,7 @@ func CTATRequestAdminUpdate(
 		if existing.Status != *newStatus {
 			if *newStatus == models.CTATStatusClosed {
 				// If the status is being changed to closed, set the resolution timestamp
-				now := time.Now()
-				existing.CompletedDts = &now
+				existing.CompletedDts = new(time.Now())
 				existing.CompletedBy = &principal.Account().ID
 			} else {
 				// Clear out the closed by fields
