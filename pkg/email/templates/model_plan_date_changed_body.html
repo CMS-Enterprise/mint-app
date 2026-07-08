@@ -41,6 +41,36 @@
   </p>
 {{end}}
 
+<h3>Additional model dates</h3>
+
+{{range .CustomTimelineDateChanges}}
+  <br/>
+  <p>
+    <b>{{.Title}}</b>
+    <br/>
+    <i style="color: #008817; display: initial;">Date information updated</i>
+    {{if .Description}}
+      <br/>
+      {{.Description}}
+    {{end}}
+    <br/>
+    <span style="color: #D54309; text-decoration: line-through;">
+      {{if .IsRange}}
+        {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}
+      {{else}}
+        {{template "date" .OldStartDate}}
+      {{end}}
+    </span>
+    <br/>
+    {{if .IsRange}}
+      {{template "date" .NewStartDate}} - {{template "date" .NewEndDate}}
+    {{else}}
+      {{template "date" .NewStartDate}}
+    {{end}}
+    <br/>
+  </p>
+{{end}}
+
 <br/>
 <p>
   <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view">

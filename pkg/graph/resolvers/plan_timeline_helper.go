@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
@@ -65,6 +66,121 @@ func copyPlanTimelineTime(t *time.Time) *time.Time {
 		return copyData
 	}
 	return nil
+}
+
+func getCustomTimelineDateUpdateIDs(customTimelineUpdates []*model.CustomTimelineDateUpdateDatesInput) ([]uuid.UUID, error) {
+	if len(customTimelineUpdates) == 0 {
+		return []uuid.UUID{}, nil
+	}
+
+	ids := make([]uuid.UUID, 0, len(customTimelineUpdates))
+	seenIDs := make(map[uuid.UUID]struct{}, len(customTimelineUpdates))
+
+	for index, customTimelineUpdate := range customTimelineUpdates {
+		if customTimelineUpdate == nil {
+			return nil, fmt.Errorf("custom timeline date update at index %d is nil", index)
+		}
+
+		if customTimelineUpdate.ID == uuid.Nil {
+			return nil, fmt.Errorf("custom timeline date update at index %d is missing an id", index)
+		}
+
+		if _, ok := seenIDs[customTimelineUpdate.ID]; ok {
+			return nil, fmt.Errorf("custom timeline date update at index %d has duplicate id %s", index, customTimelineUpdate.ID)
+		}
+
+		seenIDs[customTimelineUpdate.ID] = struct{}{}
+		ids = append(ids, customTimelineUpdate.ID)
+	}
+
+	return ids, nil
+}
+
+func buildCustomTimelineDateChanges(
+	updateIDs []uuid.UUID,
+	existingCustomTimelineDates []*models.CustomTimelineDate,
+	updatedCustomTimelineDates []*models.CustomTimelineDate,
+) ([]email.CustomTimelineDateChange, error) {
+	if len(updateIDs) == 0 {
+		return []email.CustomTimelineDateChange{}, nil
+	}
+
+	existingCustomTimelineDatesByID, err := customTimelineDatesByID(existingCustomTimelineDates)
+	if err != nil {
+		return nil, err
+	}
+
+	updatedCustomTimelineDatesByID, err := customTimelineDatesByID(updatedCustomTimelineDates)
+	if err != nil {
+		return nil, err
+	}
+
+	customTimelineDateChanges := make([]email.CustomTimelineDateChange, 0, len(updateIDs))
+	for _, id := range updateIDs {
+		existingCustomTimelineDate, ok := existingCustomTimelineDatesByID[id]
+		if !ok {
+			return nil, fmt.Errorf("custom timeline date with id %s was not found before update", id)
+		}
+
+		updatedCustomTimelineDate, ok := updatedCustomTimelineDatesByID[id]
+		if !ok {
+			return nil, fmt.Errorf("custom timeline date with id %s was not returned after update", id)
+		}
+
+		customTimelineDateChange := buildCustomTimelineDateChange(existingCustomTimelineDate, updatedCustomTimelineDate)
+		if customTimelineDateChange.IsChanged {
+			customTimelineDateChanges = append(customTimelineDateChanges, customTimelineDateChange)
+		}
+	}
+
+	return customTimelineDateChanges, nil
+}
+
+func customTimelineDatesByID(customTimelineDates []*models.CustomTimelineDate) (map[uuid.UUID]*models.CustomTimelineDate, error) {
+	customTimelineDatesByID := make(map[uuid.UUID]*models.CustomTimelineDate, len(customTimelineDates))
+
+	for index, customTimelineDate := range customTimelineDates {
+		if customTimelineDate == nil {
+			return nil, fmt.Errorf("custom timeline date at index %d is nil", index)
+		}
+
+		customTimelineDatesByID[customTimelineDate.ID] = customTimelineDate
+	}
+
+	return customTimelineDatesByID, nil
+}
+
+func buildCustomTimelineDateChange(
+	existingCustomTimelineDate *models.CustomTimelineDate,
+	updatedCustomTimelineDate *models.CustomTimelineDate,
+) email.CustomTimelineDateChange {
+	oldStartDate := existingCustomTimelineDate.StartDate
+	newStartDate := updatedCustomTimelineDate.StartDate
+
+	isDateChanged := !existingCustomTimelineDate.StartDate.Equal(updatedCustomTimelineDate.StartDate) ||
+		!customTimelineDateTimePointersEqual(existingCustomTimelineDate.EndDate, updatedCustomTimelineDate.EndDate)
+
+	return email.CustomTimelineDateChange{
+		IsChanged: isDateChanged,
+
+		Title:       updatedCustomTimelineDate.Title,
+		Description: updatedCustomTimelineDate.Description,
+
+		IsRange: updatedCustomTimelineDate.DateType == models.CustomTimelineDateTypeRange,
+
+		OldStartDate: &oldStartDate,
+		OldEndDate:   copyPlanTimelineTime(existingCustomTimelineDate.EndDate),
+		NewStartDate: &newStartDate,
+		NewEndDate:   copyPlanTimelineTime(updatedCustomTimelineDate.EndDate),
+	}
+}
+
+func customTimelineDateTimePointersEqual(a *time.Time, b *time.Time) bool {
+	if a == nil || b == nil {
+		return a == b
+	}
+
+	return a.Equal(*b)
 }
 
 // ExtractPlanTimelineChangedDates extracts the changed dates from the PlanTimelineDateProcessor
@@ -337,11 +453,12 @@ func processPlanTimelineChangedDates(
 	store *storage.Store,
 	principal authentication.Principal,
 	dateChanges map[string]email.DateChange,
+	customTimelineDateChanges []email.CustomTimelineDateChange,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
 ) error {
-	if len(dateChanges) < 1 {
+	if len(dateChanges) < 1 && len(customTimelineDateChanges) < 1 {
 		return nil
 	}
 
@@ -355,6 +472,7 @@ func processPlanTimelineChangedDates(
 			addressBook,
 			modelPlan,
 			dateChanges,
+			customTimelineDateChanges,
 		)
 
 		if err != nil {
@@ -402,6 +520,7 @@ func sendPlanTimelineDateChangedEmails(
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
 	dateChanges map[string]email.DateChange,
+	customTimelineDateChanges []email.CustomTimelineDateChange,
 ) error {
 	subjectContent := email.ModelPlanDateChangedSubjectContent{
 		ModelName: modelPlan.ModelName,
@@ -412,7 +531,10 @@ func sendPlanTimelineDateChangedEmails(
 	// Loop over the field data map to ensure order of the date changes in the email
 	orderedCommonKeys := getPlanTimelineOrderedCommonKeys()
 	for _, commonKey := range orderedCommonKeys {
-		dateChange := dateChanges[commonKey]
+		dateChange, ok := dateChanges[commonKey]
+		if !ok {
+			continue
+		}
 
 		dateChange.OldDate = sanitizePlanTimelineZeroDate(dateChange.OldDate)
 		dateChange.NewDate = sanitizePlanTimelineZeroDate(dateChange.NewDate)
@@ -425,11 +547,12 @@ func sendPlanTimelineDateChangedEmails(
 	}
 
 	defaultRecipientBodyContent := email.ModelPlanDateChangedBodyContent{
-		ClientAddress: emailService.GetConfig().GetClientAddress(),
-		ModelName:     modelPlan.ModelName,
-		ModelID:       modelPlan.GetModelPlanID().String(),
-		DateChanges:   dateChangeSlice,
-		ShowFooter:    false,
+		ClientAddress:             emailService.GetConfig().GetClientAddress(),
+		ModelName:                 modelPlan.ModelName,
+		ModelID:                   modelPlan.GetModelPlanID().String(),
+		DateChanges:               dateChangeSlice,
+		CustomTimelineDateChanges: customTimelineDateChanges,
+		ShowFooter:                false,
 	}
 
 	emailSubject, defaultRecipientEmailBody, err := email.ModelPlan.DateChanged.GetContent(subjectContent, defaultRecipientBodyContent)
@@ -462,11 +585,12 @@ func sendPlanTimelineDateChangedEmails(
 	emailRecipientUserAccounts, inAppRecipientUserAccounts := models.FilterNotificationPreferences(recipientUserAccounts)
 
 	recipientBodyContent := email.ModelPlanDateChangedBodyContent{
-		ClientAddress: emailService.GetConfig().GetClientAddress(),
-		ModelName:     modelPlan.ModelName,
-		ModelID:       modelPlan.GetModelPlanID().String(),
-		DateChanges:   dateChangeSlice,
-		ShowFooter:    true,
+		ClientAddress:             emailService.GetConfig().GetClientAddress(),
+		ModelName:                 modelPlan.ModelName,
+		ModelID:                   modelPlan.GetModelPlanID().String(),
+		DateChanges:               dateChangeSlice,
+		CustomTimelineDateChanges: customTimelineDateChanges,
+		ShowFooter:                true,
 	}
 
 	_, emailBody, err := email.ModelPlan.DateChanged.GetContent(subjectContent, recipientBodyContent)

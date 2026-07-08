@@ -321,6 +321,14 @@ func sendDateChangedEmailsTest(
 	)
 
 	t1, _ := time.Parse(time.RFC3339, "2024-01-01T00:00:00Z")
+	oldCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-09-01T00:00:00Z")
+	newCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-10-01T00:00:00Z")
+	oldCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-01-01T00:00:00Z")
+	oldCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-06-30T00:00:00Z")
+	newCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-02-01T00:00:00Z")
+	newCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-07-31T00:00:00Z")
+	customSingleDateDescription := "A custom single date for this model plan timeline."
+	customDateRangeDescription := "A custom date range for this model plan timeline."
 	dateChangeSlice := []email.DateChange{
 		{
 			Field:     "Complete ICIP",
@@ -354,15 +362,36 @@ func sendDateChangedEmailsTest(
 			NewDate:   &t1,
 		},
 	}
+	customTimelineDateChangeSlice := []email.CustomTimelineDateChange{
+		{
+			IsChanged:    true,
+			Title:        "Custom single date title",
+			Description:  &customSingleDateDescription,
+			IsRange:      false,
+			OldStartDate: &oldCustomSingleDate,
+			NewStartDate: &newCustomSingleDate,
+		},
+		{
+			IsChanged:    true,
+			Title:        "Custom date range title",
+			Description:  &customDateRangeDescription,
+			IsRange:      true,
+			OldStartDate: &oldCustomRangeStart,
+			OldEndDate:   &oldCustomRangeEnd,
+			NewStartDate: &newCustomRangeStart,
+			NewEndDate:   &newCustomRangeEnd,
+		},
+	}
 
 	subjectContent := email.ModelPlanDateChangedSubjectContent{
 		ModelName: modelPlan.ModelName,
 	}
 	bodyContent := email.ModelPlanDateChangedBodyContent{
-		ClientAddress: emailService.GetConfig().GetClientAddress(),
-		ModelName:     modelPlan.ModelName,
-		ModelID:       modelPlan.GetModelPlanID().String(),
-		DateChanges:   dateChangeSlice,
+		ClientAddress:             emailService.GetConfig().GetClientAddress(),
+		ModelName:                 modelPlan.ModelName,
+		ModelID:                   modelPlan.GetModelPlanID().String(),
+		DateChanges:               dateChangeSlice,
+		CustomTimelineDateChanges: customTimelineDateChangeSlice,
 	}
 
 	emailSubject, emailBody, err := email.ModelPlan.DateChanged.GetContent(subjectContent, bodyContent)
