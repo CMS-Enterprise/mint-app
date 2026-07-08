@@ -92,10 +92,11 @@ func CTATRequestAdminUpdate(
 			}
 
 			existing.AssignedAdmin = &assignedAdminAccount.ID
-		}
-		// Update the AdminAssignedDts timestamp only if the admin is being assigned for the first time
-		if existing.AdminAssignedDts == nil {
-			existing.AdminAssignedDts = new(time.Now())
+
+			// Update the AdminAssignedDts timestamp only if the admin is being assigned for the first time
+			if existing.AdminAssignedDts == nil {
+				existing.AdminAssignedDts = new(time.Now())
+			}
 		}
 	}
 
