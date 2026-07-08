@@ -402,7 +402,7 @@ export type CtatRequest = {
   dateAssistanceNeededBy?: Maybe<Scalars['Time']['output']>;
   /** How long from assignment to completion for the CTAT request */
   daysFromAssignedToCompleted?: Maybe<Scalars['Int']['output']>;
-  /** How long Until the CTAT request was closed */
+  /** How long until the CTAT request was closed */
   daysFromSubmittedToCompleted?: Maybe<Scalars['Int']['output']>;
   describeHelpNeeded?: Maybe<Scalars['String']['output']>;
   humanReadableID: Scalars['String']['output'];
@@ -418,11 +418,11 @@ export type CtatRequest = {
   requesterUserAccount: UserAccount;
   resolution?: Maybe<Scalars['String']['output']>;
   status?: Maybe<CtatStatus>;
-  /** A convience field, this is the same as created by */
+  /** A convenience field, this is the same as created by */
   submittedBy: Scalars['UUID']['output'];
-  /** A convience field, this is the same as created by */
+  /** A convenience field, this is the same as created by */
   submittedByUserAccount: UserAccount;
-  /** A convience field, this is the same as created at */
+  /** A convenience field, this is the same as created at */
   submittedDts: Scalars['Time']['output'];
   supportingDocuments: Array<CtatRequestDocument>;
   typeOfHelpNeeded: Array<CtatHelpNeededType>;
