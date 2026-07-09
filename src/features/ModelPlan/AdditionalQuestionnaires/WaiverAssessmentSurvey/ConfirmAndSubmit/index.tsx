@@ -90,15 +90,17 @@ const ConfirmAndSubmit = () => {
         {waiverAssessmentSurveyMiscT('selectedWaivers.heading')}
       </h3>
 
-      {waiverAssessmentSurveyData.waivers.length === 0 ? (
-        <Alert type="info" slim className="margin-bottom-6">
-          {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
-        </Alert>
-      ) : (
-        <SelectedWaiversTable
-          selectedWaivers={waiverAssessmentSurveyData.waivers}
-        />
-      )}
+      <div className="margin-bottom-5">
+        {waiverAssessmentSurveyData.waivers.length === 0 ? (
+          <Alert type="info" slim>
+            {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
+          </Alert>
+        ) : (
+          <SelectedWaiversTable
+            selectedWaivers={waiverAssessmentSurveyData.waivers}
+          />
+        )}
+      </div>
 
       <WaiverAssessmentSurveyReadOnlySections modelPlan={data.modelPlan} />
 
@@ -151,7 +153,7 @@ const ConfirmAndSubmit = () => {
           className="usa-button usa-button--outline margin-top-0"
           onClick={() =>
             navigate(
-              `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicaid-payment-waivers`
+              `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation`
             )
           }
         >
