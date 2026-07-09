@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import {
   Button,
@@ -15,6 +15,7 @@ import NavigationBar from 'components/NavigationBar';
 import { localAuthStorageKey } from 'constants/localAuth';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useOutsideClick from 'hooks/useOutsideClick';
+import { isLocalAuthEnabled, isOktaRedirectLoginEnabled } from 'utils/auth';
 
 import { NavContext } from '../../contexts/NavContext';
 import { useOktaSession } from '../../contexts/OktaSessionContext';
@@ -26,7 +27,7 @@ const Header = () => {
   const { pathname } = useLocation();
   const { t } = useTranslation();
   const [userName, setUserName] = useState('');
-
+  const navigate = useNavigate();
   const { hasSession } = useOktaSession();
 
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
@@ -157,8 +158,10 @@ const Header = () => {
                   {t('landing:getAccess')}
                 </UswdsReactLink>
               )}
-              {/* If a user has an active okta session, replace router link with a button that automicatally authenticates the user for MINT.  Bypasses /signin */}
-              {hasSession ? (
+              {/* Redirect login (or an existing Okta session): go straight to Okta/ELP. */}
+              {/* TODO(MINT-3761): remove isOktaRedirectLoginEnabled() check once redirect login is permanent
+                  (always use signInWithRedirect; drop the /signin link fallback). */}
+              {hasSession || isOktaRedirectLoginEnabled() ? (
                 <Button
                   type="button"
                   className={classnames(
@@ -189,6 +192,21 @@ const Header = () => {
                 >
                   {t('header:signIn')}
                 </Link>
+              )}
+              {isOktaRedirectLoginEnabled() && isLocalAuthEnabled() && (
+                <Button
+                  type="button"
+                  className={classnames(
+                    'mint-header__nav-link  radius-md padding-y-105 padding-x-2 bg-transparent',
+                    {
+                      'text-white border': isLanding,
+                      'text-base-darker': !isLanding
+                    }
+                  )}
+                  onClick={() => navigate('/signin?local=true')}
+                >
+                  Local Auth
+                </Button>
               )}
             </div>
           )}
