@@ -5,6 +5,7 @@ import { convertToLowercaseAndDashes } from 'features/HelpAndKnowledge/Articles/
 import SimpleReadOnlySection from 'features/ModelPlan/ReadOnly/_components/SimpleReadOnlySection';
 import { GetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
 import {
@@ -76,11 +77,22 @@ const WaiverAssessmentSurveyReadOnlySections = ({
             key={waiverSurvey}
             id={`${convertToLowercaseAndDashes(waiverSurvey)}-read-view`}
             className={classNames(
-              index !== Object.keys(surveyQuestionsConfig).length - 1 &&
-                'border-bottom-1px border-base-light margin-bottom-4'
+              index !== Object.keys(surveyQuestionsConfig).length - 1
+                ? 'margin-bottom-5'
+                : 'margin-bottom-6'
             )}
           >
-            <h3 className="margin-top-0">{waiverConfig.heading}</h3>
+            <h3 className="margin-top-0 margin-bottom-1">
+              {waiverConfig.heading}
+            </h3>
+
+            <UswdsReactLink
+              to={waiverConfig.href}
+              data-testid={`edit-${convertToLowercaseAndDashes(waiverConfig.heading)}-section`}
+              className="deep-underline display-block margin-bottom-3 mint-body-normal"
+            >
+              {waiverAssessmentSurveyMiscT('confirmAndSubmit.editSection')}
+            </UswdsReactLink>
 
             {Object.keys(waiverConfig.config).map(questionConfig => (
               <SimpleReadOnlySection

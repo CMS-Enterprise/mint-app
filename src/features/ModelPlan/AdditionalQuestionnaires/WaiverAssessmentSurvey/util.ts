@@ -556,18 +556,22 @@ export type WaiverAssessmentSurveySectionsConfig = {
   modePlanQuestions: {
     heading: string;
     config: Record<string, TranslationConfigType<string>>;
+    href: string;
   };
   medicarePaymentWaivers: {
     heading: string;
     config: Record<string, TranslationConfigType<string>>;
+    href: string;
   };
   programWaivers: {
     heading: string;
     config: Record<string, TranslationConfigType<string>>;
+    href: string;
   };
   medicaidPaymentWaivers: {
     heading: string;
     config: Record<string, TranslationConfigType<string>>;
+    href: string;
   };
 };
 
@@ -650,19 +654,23 @@ export const buildWaiverAssessmentSurveySectionsConfig = (
 ): WaiverAssessmentSurveySectionsConfig => ({
   modePlanQuestions: {
     heading: headings.modelPlanQuestions,
-    config: questionConfigs.modelPlanQuestionsConfig
+    config: questionConfigs.modelPlanQuestionsConfig,
+    href: '../model-plan-questions'
   },
   medicarePaymentWaivers: {
     heading: headings.medicarePaymentWaivers,
-    config: questionConfigs.medicareQuestionsConfig
+    config: questionConfigs.medicareQuestionsConfig,
+    href: '../medicare-payment-waivers'
   },
   programWaivers: {
     heading: headings.programWaivers,
-    config: questionConfigs.programWaiversConfig
+    config: questionConfigs.programWaiversConfig,
+    href: '../program-waivers'
   },
   medicaidPaymentWaivers: {
     heading: headings.medicaidPaymentWaivers,
-    config: questionConfigs.medicaidQuestionsConfig
+    config: questionConfigs.medicaidQuestionsConfig,
+    href: '../medicaid-payment-waivers'
   }
 });
 

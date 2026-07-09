@@ -632,7 +632,8 @@ const waiverAssessmentSurveyMisc = {
     questionnaireComplete:
       'This questionnaire (waiver assessment survey) is complete.',
     questionnaireStatusAlert:
-      'You must complete all questions in this form before you can mark it as complete.'
+      'You must complete all questions in this form before you can mark it as complete.',
+    editSection: 'Edit this section'
   },
   selectedWaivers: {
     heading: 'Selected waivers',
