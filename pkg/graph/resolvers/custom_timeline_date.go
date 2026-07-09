@@ -140,6 +140,7 @@ func sendCustomTimelineDateCreatedEmails(
 		return err
 	}
 
+	// send to default recipients
 	if len(addressBook.ModelPlanDateChangedRecipients) > 0 {
 		err = emailService.Send(
 			addressBook.DefaultSender,
@@ -165,6 +166,7 @@ func sendCustomTimelineDateCreatedEmails(
 		recipientEmails = append(recipientEmails, recipient.Email)
 	}
 
+	// send email notifications to appropriate users
 	if len(recipientEmails) > 0 {
 		err = emailService.Send(
 			addressBook.DefaultSender,
