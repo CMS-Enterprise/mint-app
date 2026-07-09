@@ -1,0 +1,10 @@
+"""
+Represents custom timeline date translation data
+"""
+type CustomTimelineDateTranslation {
+  title: TranslationField! @goTag(key: "db", value: "title")
+  description: TranslationField! @goTag(key: "db", value: "description")
+  dateType: TranslationFieldWithOptions! @goTag(key: "db", value: "date_type")
+  startDate: TranslationField! @goTag(key: "db", value: "start_date")
+  endDate: TranslationField! @goTag(key: "db", value: "end_date")
+}

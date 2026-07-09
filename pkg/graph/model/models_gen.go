@@ -35,6 +35,15 @@ type CustomTimelineDateCreateInput struct {
 	EndDate     *time.Time                    `json:"endDate,omitempty"`
 }
 
+// Represents custom timeline date translation data
+type CustomTimelineDateTranslation struct {
+	Title       models.TranslationField            `json:"title" db:"title"`
+	Description models.TranslationField            `json:"description" db:"description"`
+	DateType    models.TranslationFieldWithOptions `json:"dateType" db:"date_type"`
+	StartDate   models.TranslationField            `json:"startDate" db:"start_date"`
+	EndDate     models.TranslationField            `json:"endDate" db:"end_date"`
+}
+
 // CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
 // (this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
 type CustomTimelineDateUpdateDatesInput struct {
