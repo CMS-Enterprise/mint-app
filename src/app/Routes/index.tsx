@@ -47,6 +47,7 @@ import paymentRoutes from 'features/ModelPlan/TaskList/Payment';
 import { prepareForClearanceRoutes } from 'features/ModelPlan/TaskList/PrepareForClearance';
 import Tasks from 'features/ModelPlan/Tasks';
 import Timeline from 'features/ModelPlan/Timeline';
+import CustomDate from 'features/ModelPlan/Timeline/_components/CustomDate';
 import Unfollow from 'features/ModelPlan/Unfollow';
 import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
 import NDA from 'features/NDA';
@@ -326,6 +327,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Timeline />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/model-timeline/customDate/new',
+        element: (
+          <ProtectedRoute>
+            <CustomDate />
           </ProtectedRoute>
         )
       },

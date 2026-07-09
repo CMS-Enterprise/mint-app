@@ -18,6 +18,8 @@ import {
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
+  CustomTimelineDateTranslation,
+  CustomTimelineDateType,
   DataExchangeApproachStatus,
   DataForMonitoringType,
   DataStartsType,
@@ -1500,10 +1502,32 @@ export type TranslationTimeline = {
   [K in keyof TranslationTimelineGQL]: TranslationTimelineForm[K]; // FE form type
 };
 
+export type TranslationCustomDateForm = {
+  title: TranslationFieldProperties;
+  description: TranslationFieldProperties;
+  dateType: TranslationFieldPropertiesWithOptions<CustomTimelineDateType>;
+  startDate: TranslationFieldProperties;
+  endDate: TranslationFieldProperties;
+};
+
+type TranslationCustomDateGQL = Omit<
+  CustomTimelineDateTranslation, // graphql gen type
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationCustomDate = {
+  [K in keyof TranslationCustomDateGQL]: TranslationCustomDateForm[K]; // FE form type
+};
+
 export type TranslationPlan = {
   modelPlan: TranslationModelPlan;
   basics: TranslationBasics;
   timeline: TranslationTimeline;
+  customDate: TranslationCustomDate;
   generalCharacteristics: TranslationGeneralCharacteristics;
   participantsAndProviders: TranslationParticipantsAndProviders;
   beneficiaries: TranslationBeneficiaries;
@@ -1544,6 +1568,7 @@ export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
   BASICS = 'basics',
   TIMELINE = 'timeline',
+  CUSTOM_DATE = 'customDate',
   GENERAL_CHARACTERISTICS = 'generalCharacteristics',
   PARTICPANTS_AND_PROVIDERS = 'participantsAndProviders',
   BENEFICIARIES = 'beneficiaries',
