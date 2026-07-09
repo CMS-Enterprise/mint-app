@@ -16,6 +16,8 @@ services:
       - VITE_OKTA_ISSUER
       - VITE_OKTA_REDIRECT_URI
       - VITE_OKTA_SERVER_ID
+      # TODO(MINT-3761): remove VITE_OKTA_REDIRECT_LOGIN_ENABLED once redirect login is permanent.
+      - VITE_OKTA_REDIRECT_LOGIN_ENABLED
       - VITE_LD_ENV_USER
       - VITE_LD_USER_HASH
       - VITE_LD_CLIENT_ID

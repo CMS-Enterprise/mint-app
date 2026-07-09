@@ -41,6 +41,9 @@ jobs:
           VITE_BEACON_ID: ${{ secrets.VITE_BEACON_ID }}
           VITE_GA_TRACKING_ID: ${{ secrets.VITE_GA_TRACKING_ID }}
           VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
+          # Optional per-environment GitHub Actions variable; build_static.sh defaults to false when unset.
+          # TODO(MINT-3761): remove this flag once redirect login is permanent (always on).
+          VITE_OKTA_REDIRECT_LOGIN_ENABLED: ${{ vars.VITE_OKTA_REDIRECT_LOGIN_ENABLED }}
         run: |
           ./scripts/build_static.sh
       - name: Upload Frontend assets
