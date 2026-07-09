@@ -1,3 +1,5 @@
+// TODO(MINT-3761): rewrite cy.login() for hosted Okta/ELP redirect login (widget DOM selectors
+// below break when VITE_OKTA_REDIRECT_LOGIN_ENABLED=true).
 Cypress.Commands.add('login', () => {
   cy.intercept('POST', '/oauth2/*').as('oauthPost');
   cy.intercept('GET', '/oauth2/*').as('oauthGet');
@@ -35,18 +37,15 @@ Cypress.Commands.add(
   'localLogin',
   ({ name, role = 'MINT_USER_NONPROD', nda }) => {
     cy.session([name, role, nda], () => {
-      // Adding an extended timeout here to give Vite enough time to compile sass on it's first run
-      cy.visit('/login', { timeout: 120000 });
+      // Adding an extended timeout here to give Vite enough time to compile sass on it's first run.
+      // ?local=true opens DevLogin directly (needed when redirect Okta login is enabled).
+      cy.visit('/signin?local=true', { timeout: 120000 });
 
       cy.wait(500);
 
-      cy.get('[data-testid="LocalAuth-Visit"]')
-        .should('be.not.disabled')
-        .click({ force: true });
       cy.get('[data-testid="LocalAuth-EUA"]')
         .should('be.not.disabled')
         .type(name);
-
       if (role) {
         cy.get(`input[value="${role}"]`).should('be.not.disabled').check({
           force: true
