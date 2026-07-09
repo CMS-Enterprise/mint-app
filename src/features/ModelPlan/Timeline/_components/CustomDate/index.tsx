@@ -54,7 +54,10 @@ const CustomDate = () => {
 
   const [disableButton, setDisableButton] = useState(true);
 
-  const [create] = useCreateCustomDateMutation();
+  const [create] = useCreateCustomDateMutation({
+    refetchQueries: ['GetTimeline'],
+    awaitRefetchQueries: true
+  });
 
   const methods = useForm<CustomDateFormValues>({
     defaultValues: {
