@@ -803,8 +803,5 @@ export const isWaiverSurveyQuestionsComplete = (
       )
     );
 
-  return (
-    allParentQuestionsComplete &&
-    isNonEmptyString(surveyData.additionalMedicaidSpecificWaivers)
-  );
+  return allParentQuestionsComplete;
 };

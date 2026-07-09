@@ -50,6 +50,7 @@ const ConfirmAndSubmit = () => {
   const data = MOCK_WAIVERS_ENABLED
     ? getAllWaiverAssessmentSurveyMockData(modelID)
     : queryData;
+
   const loading = MOCK_WAIVERS_ENABLED ? false : queryLoading;
   const error = MOCK_WAIVERS_ENABLED ? undefined : queryError;
 
@@ -140,11 +141,13 @@ const ConfirmAndSubmit = () => {
           }}
           onBlur={() => null}
         />
-        <Alert type="warning" slim>
-          {waiverAssessmentSurveyMiscT(
-            'confirmAndSubmit.questionnaireStatusAlert'
-          )}
-        </Alert>
+        {!isSurveyComplete && (
+          <Alert type="warning" slim>
+            {waiverAssessmentSurveyMiscT(
+              'confirmAndSubmit.questionnaireStatusAlert'
+            )}
+          </Alert>
+        )}
       </div>
 
       <div className="margin-top-6 margin-bottom-3 display-flex">
