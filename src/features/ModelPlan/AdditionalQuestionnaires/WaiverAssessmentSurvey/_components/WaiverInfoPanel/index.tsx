@@ -166,7 +166,7 @@ const WaiverInfoPanel = () => {
             />
           </DescriptionList>
 
-          {!isReadView && (
+          {!isReadView && waiverId && (
             <>
               <Divider className="margin-top-3 margin-bottom-4" />
               <SelectWaiverField fieldPrefix={`waivers.${waiverId}`} />
