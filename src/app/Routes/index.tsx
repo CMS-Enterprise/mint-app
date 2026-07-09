@@ -8,7 +8,7 @@ import {
   useParams
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { LoginCallback, useOktaAuth } from '@okta/okta-react';
+import { useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
 import Cookies from 'features/Cookies';
 import FeedbackReceived from 'features/Feedback/FeedbackReceived';
@@ -68,6 +68,7 @@ import UserInfoWrapper from 'wrappers/UserInfoWrapper';
 
 import Footer from 'components/Footer';
 import Header from 'components/Header';
+import OktaLoginCallback from 'components/OktaLoginCallback';
 import PageWrapper from 'components/PageWrapper';
 import ProtectedRoute from 'components/ProtectedRoute';
 import TaskListBannerAlert from 'components/TaskListBannerAlert';
@@ -529,7 +530,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/implicit/callback',
-        element: <LoginCallback />
+        element: <OktaLoginCallback />
       },
       // 404
       {
