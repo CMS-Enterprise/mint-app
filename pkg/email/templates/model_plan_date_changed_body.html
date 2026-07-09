@@ -1,13 +1,7 @@
 {{template "shared_header.html"}}
 
 {{template "shared_non_mint_mailbox_short_header.html" .}}
-<hr/>
 
-<h2>Dates updated for {{.ModelName}}</h2>
-<p>One or more dates have been updated for this model.</p>
-<br/>
-<br/>
-<h3>Basic high level timeline</h3>
 {{define "date"}}
     {{if .}}
         {{.Format "01/02/2006"}}
@@ -16,60 +10,74 @@
     {{end}}
 {{end}}
 
-{{range .DateChanges}}
+<hr/>
+
+<h2>Dates updated for {{.ModelName}}</h2>
+<p>One or more dates have been updated for this model.</p>
+
+{{if .DateChanges}}
   <br/>
-  <p>
-    <b>{{.Field}}</b>
+  <br/>
+  <h3>Basic high level timeline</h3>
+
+  {{range .DateChanges}}
     <br/>
-      {{if .IsRange}}
-          {{if .IsChanged}}
-            <span style="color: #D54309; text-decoration: line-through;">
-              {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}<br/>
-            </span>
-            {{template "date" .NewRangeStart}} - {{template "date" .NewRangeEnd}}
-          {{else}}
-            {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}
-          {{end}}
-      {{else}}
-          {{if .IsChanged}}
-            <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldDate}}</span> &nbsp; {{template "date" .NewDate}}
-          {{else}}
-            {{template "date" .OldDate}}
-          {{end}}
-      {{end}}
-    <br/>
-  </p>
+    <p>
+      <b>{{.Field}}</b>
+      <br/>
+        {{if .IsRange}}
+            {{if .IsChanged}}
+              <span style="color: #D54309; text-decoration: line-through;">
+                {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}<br/>
+              </span>
+              {{template "date" .NewRangeStart}} - {{template "date" .NewRangeEnd}}
+            {{else}}
+              {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}
+            {{end}}
+        {{else}}
+            {{if .IsChanged}}
+              <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldDate}}</span> &nbsp; {{template "date" .NewDate}}
+            {{else}}
+              {{template "date" .OldDate}}
+            {{end}}
+        {{end}}
+      <br/>
+    </p>
+  {{end}}
 {{end}}
 
-<br/>
-<br/>
-
-<h3>Additional model dates</h3>
-
-{{range .CustomTimelineDateChanges}}
+<!-- only render section if there are custom timeline date changes -->
+{{if .CustomTimelineDateChanges}}
   <br/>
-  <p>
-    <strong>{{.Title}}</strong>
-    {{if .Description}}
-      <br/>
-      {{.Description}}
-    {{end}}
+  <br/>
+
+  <h3>Additional model dates</h3>
+
+  {{range .CustomTimelineDateChanges}}
     <br/>
-    <span style="color: #D54309; text-decoration: line-through;">
-      {{if .IsRange}}
-        {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}
-      {{else}}
-        {{template "date" .OldStartDate}}
+    <p>
+      <strong>{{.Title}}</strong>
+      {{if .Description}}
+        <br/>
+        {{.Description}}
       {{end}}
-    </span>
-    <br/>
-    {{if .IsRange}}
-      {{template "date" .NewStartDate}} - {{template "date" .NewEndDate}}
-    {{else}}
-      {{template "date" .NewStartDate}}
-    {{end}}
-    <br/>
-  </p>
+      <br/>
+      <span style="color: #D54309; text-decoration: line-through;">
+        {{if .IsRange}}
+          {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}
+        {{else}}
+          {{template "date" .OldStartDate}}
+        {{end}}
+      </span>
+      <br/>
+      {{if .IsRange}}
+        {{template "date" .NewStartDate}} - {{template "date" .NewEndDate}}
+      {{else}}
+        {{template "date" .NewStartDate}}
+      {{end}}
+      <br/>
+    </p>
+  {{end}}
 {{end}}
 
 <br/>
