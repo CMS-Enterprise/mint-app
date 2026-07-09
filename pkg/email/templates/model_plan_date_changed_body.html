@@ -41,13 +41,15 @@
   </p>
 {{end}}
 
+<br/>
+<br/>
+
 <h3>Additional model dates</h3>
 
 {{range .CustomTimelineDateChanges}}
   <br/>
   <p>
     <strong>{{.Title}}</strong>
-    <br/>
     {{if .Description}}
       <br/>
       {{.Description}}
@@ -71,6 +73,8 @@
 {{end}}
 
 <br/>
+<br/>
+
 <p>
   <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view">
     View this model in MINT
