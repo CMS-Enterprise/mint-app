@@ -34,9 +34,7 @@ describe('Incorrect Model Status in Notifications', () => {
       }
     );
 
-    const { asFragment } = render(
-      <RouterProvider router={router} addTypename={false} />
-    );
+    const { asFragment } = render(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(screen.getByTestId('incorrect-model-status')).toBeInTheDocument();

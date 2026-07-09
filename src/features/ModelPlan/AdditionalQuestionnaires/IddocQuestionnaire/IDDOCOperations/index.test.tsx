@@ -66,7 +66,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     );
 
     render(
-      <MockedProvider mocks={iddocMock} addTypename={false}>
+      <MockedProvider mocks={iddocMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -102,7 +102,7 @@ describe('Model Plan Ops Eval and Learning IDDOC', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={iddocMock} addTypename={false}>
+      <MockedProvider mocks={iddocMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

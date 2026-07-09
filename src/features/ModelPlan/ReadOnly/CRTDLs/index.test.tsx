@@ -41,7 +41,7 @@ describe('Read Only CR and TDLs page', () => {
     );
 
     render(
-      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+      <MockedProvider mocks={echimpCRsAndTDLsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -75,7 +75,7 @@ describe('Read Only CR and TDLs page', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+      <MockedProvider mocks={echimpCRsAndTDLsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

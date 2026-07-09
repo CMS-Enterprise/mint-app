@@ -42,7 +42,7 @@ describe('Operation Solution Contact', () => {
     );
 
     const { getByText } = render(
-      <MockedProvider mocks={[]} addTypename={false}>
+      <MockedProvider mocks={[]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -69,7 +69,7 @@ describe('Operation Solution Contact', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={[]} addTypename={false}>
+      <MockedProvider mocks={[]}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

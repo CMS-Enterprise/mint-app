@@ -59,7 +59,7 @@ describe('MailboxAndTeamMembers Component', () => {
     );
 
     const { getAllByTestId } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -89,7 +89,7 @@ describe('MailboxAndTeamMembers Component', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

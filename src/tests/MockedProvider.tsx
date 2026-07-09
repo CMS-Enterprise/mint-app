@@ -44,14 +44,7 @@ const VerboseMockedProvider = (props: Props) => {
   // @ts-ignore
   const link = ApolloLink.from([errorLoggingLink, mockLink]);
 
-  return (
-    <MockedProvider
-      {...otherProps}
-      addTypename={false}
-      mocks={mocks}
-      link={link}
-    />
-  );
+  return <MockedProvider {...otherProps} mocks={mocks} link={link} />;
 };
 
 export default VerboseMockedProvider;

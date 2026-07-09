@@ -1010,6 +1010,7 @@ exports[`EditMilestoneForm > matches snapshot 1`] = `
                           tabindex="0"
                         >
                           <svg
+                            aria-label="error"
                             class="usa-icon usa-icon--size-3 text-error-dark top-05"
                             focusable="false"
                             height="1em"

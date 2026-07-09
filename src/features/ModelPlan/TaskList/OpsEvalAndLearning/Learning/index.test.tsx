@@ -82,7 +82,7 @@ describe('Model Plan Ops Eval and Learning - Learning', () => {
     );
 
     render(
-      <MockedProvider mocks={learningMock} addTypename={false}>
+      <MockedProvider mocks={learningMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -122,7 +122,7 @@ describe('Model Plan Ops Eval and Learning - Learning', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={learningMock} addTypename={false}>
+      <MockedProvider mocks={learningMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

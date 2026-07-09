@@ -122,13 +122,12 @@ const ModelsCardTable = ({ models, filterKey, type }: ModelsCardTableProps) => {
 
       {(modelsWithStatus(models, selectedStatus).length === 0 ||
         models.length === 0) && (
-        <Alert type="info">
-          <>
+        <Alert
+          type="info"
+          headingLevel="h3"
+          heading={
             <Trans
               i18nKey="customHome:noModelsHeading"
-              components={{
-                h3: <h3 className="margin-0"> </h3>
-              }}
               values={{
                 status:
                   selectedStatus === 'total'
@@ -140,18 +139,19 @@ const ModelsCardTable = ({ models, filterKey, type }: ModelsCardTableProps) => {
                 article: type === 'solution' ? 'using' : 'in'
               }}
             />
-            <Trans
-              i18nKey="customHome:noModelsDescription"
-              components={{
-                report: (
-                  <UswdsReactLink to="/report-a-problem" target="_blank">
-                    {' '}
-                  </UswdsReactLink>
-                ),
-                email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
-              }}
-            />
-          </>
+          }
+        >
+          <Trans
+            i18nKey="customHome:noModelsDescription"
+            components={{
+              report: (
+                <UswdsReactLink to="/report-a-problem" target="_blank">
+                  {' '}
+                </UswdsReactLink>
+              ),
+              email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+            }}
+          />
         </Alert>
       )}
 
