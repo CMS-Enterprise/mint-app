@@ -11,6 +11,7 @@ type ctatRequestModelPlanLinkScripts struct {
 	Create string
 }
 
+// CTATRequestModelPlanLink houses all the SQL for CTAT request model link operations in the database
 var CTATRequestModelPlanLink = ctatRequestModelPlanLinkScripts{
 	Create: ctatRequestModelPlanLinkCreateSQL,
 }

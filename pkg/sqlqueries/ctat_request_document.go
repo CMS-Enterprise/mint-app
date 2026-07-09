@@ -15,6 +15,7 @@ type ctatRequestDocumentScripts struct {
 	Create             string
 }
 
+// CTATRequestDocument houses all the SQL queries for CTAT request document operations in the database
 var CTATRequestDocument = ctatRequestDocumentScripts{
 	GetByCTATRequestID: ctatRequestDocumentsByCTATRequestIDSQL,
 	Create:             ctatRequestDocumentCreateSQL,

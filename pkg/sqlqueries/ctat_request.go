@@ -27,6 +27,7 @@ type ctatRequestScripts struct {
 	AdminUpdate            string
 }
 
+// CTATRequest houses all the SQL queries for CTAT request operations in the database
 var CTATRequest = ctatRequestScripts{
 	GetByIDLoader:          ctatRequestByIDLoaderSQL,
 	GetByRequesterIDLoader: ctatRequestsByRequesterIDLoaderSQL,
