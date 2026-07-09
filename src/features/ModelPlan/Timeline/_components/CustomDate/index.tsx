@@ -3,6 +3,7 @@ import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
+  Alert,
   Button,
   Fieldset,
   Form,
@@ -29,11 +30,13 @@ import toastSuccess from 'components/ToastSuccess';
 import { getStatusAlertBody } from 'contexts/ErrorContext';
 import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { isDateInPast } from 'utils/date';
 
 type CustomDateFormValues = GetCustomDateQuery['customTimelineDate'];
 
 const CustomDate = () => {
   const { t: generalT } = useTranslation('general');
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
   const { t: customDateT } = useTranslation('customDate');
   const { t: customDateMiscT } = useTranslation('customDateMisc');
   const { dateType: dateTypeConfig } = usePlanTranslation('customDate');
@@ -68,7 +71,7 @@ const CustomDate = () => {
     control,
     handleSubmit,
     setValue,
-    formState: { isSubmitting, isDirty, isValid },
+    formState: { defaultValues, isSubmitting, isDirty, isValid },
     watch
   } = methods;
 
@@ -321,90 +324,104 @@ const CustomDate = () => {
                       />
 
                       {watch('dateType') === CustomTimelineDateType.RANGE && (
-                        <div className="display-flex">
-                          <Controller
-                            name="startDate"
-                            control={control}
-                            rules={{
-                              required: true,
-                              validate: value => value !== undefined
-                            }}
-                            render={({
-                              field: { ref: childRef, ...childField }
-                            }) => (
-                              <FormGroup className="margin-top-05 margin-left-4 margin-bottom-2">
-                                <Label
-                                  htmlFor="startDate"
-                                  className="text-bold maxw-none margin-bottom-1"
-                                  requiredMarker
-                                >
-                                  {customDateT('startDate.label')}
-                                </Label>
+                        <div>
+                          <div className="display-flex">
+                            <Controller
+                              name="startDate"
+                              control={control}
+                              rules={{
+                                required: true,
+                                validate: value => value !== undefined
+                              }}
+                              render={({
+                                field: { ref: childRef, ...childField }
+                              }) => (
+                                <FormGroup className="margin-top-05 margin-left-4 margin-bottom-2">
+                                  <Label
+                                    htmlFor="startDate"
+                                    className="text-bold maxw-none margin-bottom-1"
+                                    requiredMarker
+                                  >
+                                    {customDateT('startDate.label')}
+                                  </Label>
 
-                                <HelpText className="usa-hint margin-bottom-1">
-                                  {generalT('datePlaceholder')}
-                                </HelpText>
+                                  <HelpText className="usa-hint margin-bottom-1">
+                                    {generalT('datePlaceholder')}
+                                  </HelpText>
 
-                                <DateTimePicker
-                                  id="startDate"
-                                  name="startDate"
-                                  className="padding-right-4"
-                                  value={childField.value}
-                                  onChange={date => {
-                                    setValue('startDate', date || '', {
-                                      shouldDirty: true,
-                                      shouldValidate: true
-                                    });
-                                  }}
-                                  alertText
-                                  alertIcon={false}
-                                  isClearable
-                                />
-                              </FormGroup>
+                                  <DateTimePicker
+                                    id="startDate"
+                                    name="startDate"
+                                    className="padding-right-4"
+                                    value={childField.value}
+                                    onChange={date => {
+                                      setValue('startDate', date || '', {
+                                        shouldDirty: true,
+                                        shouldValidate: true
+                                      });
+                                    }}
+                                    alertText={false}
+                                    alertIcon={false}
+                                    isClearable
+                                  />
+                                </FormGroup>
+                              )}
+                            />
+                            <Controller
+                              name="endDate"
+                              control={control}
+                              rules={{
+                                required: true,
+                                validate: value => value !== undefined
+                              }}
+                              render={({
+                                field: { ref: childRef2, ...childField2 }
+                              }) => (
+                                <FormGroup className="margin-top-05 margin-left-4 margin-bottom-2">
+                                  <Label
+                                    htmlFor="endDate"
+                                    className="text-bold maxw-none margin-bottom-1"
+                                    requiredMarker
+                                  >
+                                    {customDateT('endDate.label')}
+                                  </Label>
+
+                                  <HelpText className="usa-hint margin-bottom-1">
+                                    {generalT('datePlaceholder')}
+                                  </HelpText>
+
+                                  <DateTimePicker
+                                    id="endDate"
+                                    name="endDate"
+                                    className="padding-right-4"
+                                    value={childField2.value || ''}
+                                    onChange={date => {
+                                      setValue('endDate', date || '', {
+                                        shouldDirty: true,
+                                        shouldValidate: true
+                                      });
+                                    }}
+                                    alertText={false}
+                                    alertIcon={false}
+                                    isClearable
+                                  />
+                                </FormGroup>
+                              )}
+                            />
+                          </div>
+
+                          {(isDateInPast(watch('startDate')) ||
+                            isDateInPast(watch('endDate'))) &&
+                            (defaultValues?.startDate !== watch('startDate') ||
+                              defaultValues?.endDate !== watch('endDate')) && (
+                              <Alert
+                                type="warning"
+                                className="margin-top-0"
+                                headingLevel="h4"
+                              >
+                                {miscellaneousT('dateWarning')}
+                              </Alert>
                             )}
-                          />
-
-                          <Controller
-                            name="endDate"
-                            control={control}
-                            rules={{
-                              required: true,
-                              validate: value => value !== undefined
-                            }}
-                            render={({
-                              field: { ref: childRef2, ...childField2 }
-                            }) => (
-                              <FormGroup className="margin-top-05 margin-left-4 margin-bottom-2">
-                                <Label
-                                  htmlFor="endDate"
-                                  className="text-bold maxw-none margin-bottom-1"
-                                  requiredMarker
-                                >
-                                  {customDateT('endDate.label')}
-                                </Label>
-
-                                <HelpText className="usa-hint margin-bottom-1">
-                                  {generalT('datePlaceholder')}
-                                </HelpText>
-
-                                <DateTimePicker
-                                  id="endDate"
-                                  name="endDate"
-                                  className="padding-right-4"
-                                  value={childField2.value || ''}
-                                  onChange={date => {
-                                    setValue('endDate', date || '', {
-                                      shouldDirty: true,
-                                      shouldValidate: true
-                                    });
-                                  }}
-                                  alertText
-                                  alertIcon={false}
-                                  isClearable
-                                />
-                              </FormGroup>
-                            )}
-                          />
                         </div>
                       )}
                     </FormGroup>
