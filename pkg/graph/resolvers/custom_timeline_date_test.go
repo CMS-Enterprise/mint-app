@@ -5,6 +5,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -26,10 +27,13 @@ func (suite *ResolverSuite) TestCustomTimelineDateCreateSingleClearsEndDate() {
 	}
 
 	customTimelineDate, err := CustomTimelineDateCreate(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
 	)
 
 	suite.NoError(err)
@@ -58,10 +62,13 @@ func (suite *ResolverSuite) TestCustomTimelineDateCreateRangeRequiresEndDate() {
 	}
 
 	customTimelineDate, err := CustomTimelineDateCreate(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		input,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
 	)
 
 	suite.Error(err)
@@ -237,6 +244,7 @@ func (suite *ResolverSuite) createCustomTimelineDate(
 	endDate *time.Time,
 ) *models.CustomTimelineDate {
 	customTimelineDate, err := CustomTimelineDateCreate(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		&model.CustomTimelineDateCreateInput{
 			ModelPlanID: plan.ID,
@@ -247,6 +255,8 @@ func (suite *ResolverSuite) createCustomTimelineDate(
 		},
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
 	)
 
 	suite.NoError(err)

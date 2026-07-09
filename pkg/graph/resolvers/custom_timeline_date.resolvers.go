@@ -20,7 +20,15 @@ func (r *mutationResolver) CreateCustomTimelineDate(ctx context.Context, input m
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CustomTimelineDateCreate(logger, &input, principal, r.store)
+	return CustomTimelineDateCreate(
+		ctx,
+		logger,
+		&input,
+		principal,
+		r.store,
+		r.emailService,
+		r.addressBook,
+	)
 }
 
 // UpdateCustomTimelineDate is the resolver for the updateCustomTimelineDate field.

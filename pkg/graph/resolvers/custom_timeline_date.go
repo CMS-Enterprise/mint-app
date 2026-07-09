@@ -11,8 +11,10 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -20,10 +22,13 @@ import (
 
 // CustomTimelineDateCreate creates a custom timeline date.
 func CustomTimelineDateCreate(
+	ctx context.Context,
 	logger *zap.Logger,
 	input *model.CustomTimelineDateCreateInput,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) (*models.CustomTimelineDate, error) {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
@@ -45,7 +50,154 @@ func CustomTimelineDateCreate(
 		return nil, err
 	}
 
-	return storage.CustomTimelineDateCreate(store, customTimelineDate)
+	createdCustomDate, err := storage.CustomTimelineDateCreate(store, customTimelineDate)
+	if err != nil {
+		return nil, err
+	}
+
+	processCustomTimelineDateCreatedEmails(
+		ctx,
+		logger,
+		store,
+		principal,
+		emailService,
+		addressBook,
+		createdCustomDate,
+	)
+
+	return createdCustomDate, nil
+}
+
+func processCustomTimelineDateCreatedEmails(
+	ctx context.Context,
+	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	customTimelineDate *models.CustomTimelineDate,
+) {
+	if emailService == nil || customTimelineDate == nil {
+		return
+	}
+
+	principalAccount := principal.Account()
+	if principalAccount == nil {
+		logger.Error("failed to send custom timeline date created email because principal account is nil",
+			zap.String("customTimelineDateID", customTimelineDate.ID.String()),
+			zap.String("modelPlanID", customTimelineDate.ModelPlanID.String()),
+		)
+		return
+	}
+
+	go func() {
+		err := sendCustomTimelineDateCreatedEmails(
+			ctx,
+			store,
+			emailService,
+			addressBook,
+			customTimelineDate,
+			principalAccount.CommonName,
+		)
+		if err != nil {
+			logger.Error("failed to send custom timeline date created email",
+				zap.String("customTimelineDateID", customTimelineDate.ID.String()),
+				zap.String("modelPlanID", customTimelineDate.ModelPlanID.String()),
+				zap.Error(err),
+			)
+		}
+	}()
+}
+
+func sendCustomTimelineDateCreatedEmails(
+	ctx context.Context,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	customTimelineDate *models.CustomTimelineDate,
+	createdByUserName string,
+) error {
+	modelPlan, err := loaders.ModelPlan.GetByID.Load(ctx, customTimelineDate.ModelPlanID)
+	if err != nil {
+		return fmt.Errorf("unable to load model plan for custom timeline date created email: %w", err)
+	}
+
+	subjectContent := email.CustomTimelineDateCreatedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+	bodyContent := email.CustomTimelineDateCreatedBodyContent{
+		ClientAddress:                 emailService.GetConfig().GetClientAddress(),
+		ModelName:                     modelPlan.ModelName,
+		ModelID:                       modelPlan.GetModelPlanID().String(),
+		UserName:                      createdByUserName,
+		CustomTimelineDateTitle:       customTimelineDate.Title,
+		CustomTimelineDateDescription: customTimelineDateDescriptionForEmail(customTimelineDate),
+		CustomTimelineDate:            customTimelineDateForEmail(customTimelineDate),
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.CustomTimelineDateCreated.GetContent(subjectContent, bodyContent)
+	if err != nil {
+		return err
+	}
+
+	if len(addressBook.ModelPlanDateChangedRecipients) > 0 {
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			addressBook.ModelPlanDateChangedRecipients,
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+		)
+		if err != nil {
+			return err
+		}
+	}
+
+	recipientUserAccounts, err := store.UserAccountsGetNotificationRecipientsForDatesChanged(customTimelineDate.ModelPlanID)
+	if err != nil {
+		return fmt.Errorf("unable to get date change notification recipients for custom timeline date created email: %w", err)
+	}
+
+	emailRecipientUserAccounts, _ := models.FilterNotificationPreferences(recipientUserAccounts)
+	recipientEmails := make([]string, 0, len(emailRecipientUserAccounts))
+	for _, recipient := range emailRecipientUserAccounts {
+		recipientEmails = append(recipientEmails, recipient.Email)
+	}
+
+	if len(recipientEmails) > 0 {
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			nil,
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+			oddmail.WithBCC(recipientEmails),
+		)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func customTimelineDateDescriptionForEmail(customTimelineDate *models.CustomTimelineDate) string {
+	if customTimelineDate.Description == nil {
+		return ""
+	}
+
+	return *customTimelineDate.Description
+}
+
+func customTimelineDateForEmail(customTimelineDate *models.CustomTimelineDate) string {
+	startDate := customTimelineDate.StartDate.Format("01/02/2006")
+	if customTimelineDate.DateType != models.CustomTimelineDateTypeRange || customTimelineDate.EndDate == nil {
+		return startDate
+	}
+
+	return fmt.Sprintf("%s - %s", startDate, customTimelineDate.EndDate.Format("01/02/2006"))
 }
 
 // validateAndNormalizeCustomTimelineDate gets the request body's dates ready for the DB
