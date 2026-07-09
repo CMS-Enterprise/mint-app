@@ -91,6 +91,27 @@ func (s *Seeder) updatePlanTimeline(
 	return updated
 }
 
+// createCustomTimelineDate is a wrapper for resolvers.CustomTimelineDateCreate
+// It will panic if an error occurs, rather than bubbling the error up
+// It will always add the custom timeline date with the principal value of the Model Plan's "createdBy"
+func (s *Seeder) createCustomTimelineDate(
+	mp *models.ModelPlan,
+	input *model.CustomTimelineDateCreateInput,
+) *models.CustomTimelineDate {
+	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
+
+	customTimelineDate, err := resolvers.CustomTimelineDateCreate(
+		s.Config.Logger,
+		input,
+		princ,
+		s.Config.Store,
+	)
+	if err != nil {
+		panic(err)
+	}
+	return customTimelineDate
+}
+
 // updatePlanBasics is a wrapper for resolvers.PlanBasicsGetByModelPlanID and resolvers.UpdatePlanBasics
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always update the Plan Basics object with the principal value of the Model Plan's "createdBy"
