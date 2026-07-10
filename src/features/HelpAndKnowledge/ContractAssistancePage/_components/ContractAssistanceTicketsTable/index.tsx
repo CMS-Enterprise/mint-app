@@ -30,9 +30,10 @@ type ContractAssistanceTicketsTableProps = {
 const TICKET_TABLE_COLUMN_WIDTHS = {
   ticketId: 160,
   submissionDate: 180,
-  contractName: 250,
-  helpType: 250,
-  status: 250
+  cmmiGroup: 120,
+  contractName: 230,
+  helpType: 230,
+  status: 230
 };
 
 const ContractAssistanceTicketsTable = ({
@@ -73,6 +74,16 @@ const ContractAssistanceTicketsTable = ({
         Header: t('table.submissionDate'),
         accessor: 'submissionDate'
       },
+      ...(isAdmin
+        ? [
+            {
+              id: 'cmmiGroup',
+              width: TICKET_TABLE_COLUMN_WIDTHS.cmmiGroup,
+              Header: t('table.cmmiGroup'),
+              accessor: 'cmmiGroupAcronym'
+            } as Column<ContractAssistanceTicket>
+          ]
+        : []),
       {
         id: 'contractName',
         width: TICKET_TABLE_COLUMN_WIDTHS.contractName,
@@ -110,7 +121,7 @@ const ContractAssistanceTicketsTable = ({
         )
       }
     ],
-    [t, onTicketClick]
+    [t, onTicketClick, isAdmin]
   );
 
   const defaultPageSize = isAdmin ? 5 : 10;
@@ -169,7 +180,7 @@ const ContractAssistanceTicketsTable = ({
             'contract-assistance-tickets-table--admin': isAdmin
           }
         )}
-        fullWidth
+        fullWidth={!isAdmin}
       >
         <caption className="usa-sr-only">
           {t(

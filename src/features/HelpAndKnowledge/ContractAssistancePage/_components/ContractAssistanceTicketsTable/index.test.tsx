@@ -16,6 +16,7 @@ const tickets: ContractAssistanceTicket[] = [
     ticketId: 'CTAT-001',
     submissionDate: '05/02/2026',
     contractName: 'Home Health Learning',
+    cmmiGroupAcronym: 'PCMG',
     helpType: 'Data Use Agreement (DUA)',
     statusCode: CtatStatus.NEW,
     assigneeId: null,
@@ -76,5 +77,26 @@ describe('ContractAssistanceTicketsTable', () => {
         '/help-and-knowledge/contract-assistance/550e8400-e29b-41d4-a716-446655440000'
       );
     });
+  });
+
+  it('renders the CMMI group column for admin tickets', () => {
+    setup(
+      <ContractAssistanceTicketsTable tickets={tickets} variant="admin" />
+    );
+
+    expect(
+      screen.getByRole('columnheader', { name: /CMMI group/i })
+    ).toBeInTheDocument();
+    expect(screen.getByText('PCMG')).toBeInTheDocument();
+  });
+
+  it('does not render the CMMI group column for user tickets', () => {
+    setup(
+      <ContractAssistanceTicketsTable tickets={tickets} variant="user" />
+    );
+
+    expect(
+      screen.queryByRole('columnheader', { name: 'CMMI group' })
+    ).not.toBeInTheDocument();
   });
 });
