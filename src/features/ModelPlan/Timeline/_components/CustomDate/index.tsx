@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -17,22 +17,31 @@ import {
 } from '@trussworks/react-uswds';
 import {
   CustomTimelineDateType,
-  GetCustomDateQuery,
-  useCreateCustomDateMutation
+  useCreateCustomDateMutation,
+  useGetCustomDateQuery,
+  useUpdateCustomDateMutation
 } from 'gql/generated/graphql';
 
 import DateTimePicker from 'components/DateTimePicker';
 import HelpText from 'components/HelpText';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { getStatusAlertBody } from 'contexts/ErrorContext';
 import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { isDateInPast } from 'utils/date';
+import { dirtyInput } from 'utils/formUtil';
 
-type CustomDateFormValues = GetCustomDateQuery['customTimelineDate'];
+type CustomDateFormValues = {
+  title: string;
+  description?: string;
+  dateType?: CustomTimelineDateType;
+  startDate: string;
+  endDate?: string;
+};
 
 const CustomDate = () => {
   const { t: generalT } = useTranslation('general');
@@ -52,19 +61,37 @@ const CustomDate = () => {
 
   const [disableButton, setDisableButton] = useState(true);
 
+  const { data, loading, error } = useGetCustomDateQuery({
+    variables: {
+      id: customDateID
+    },
+    skip: !customDateID
+  });
+
   const [create] = useCreateCustomDateMutation({
     refetchQueries: ['GetTimeline'],
     awaitRefetchQueries: true
   });
 
+  const [update] = useUpdateCustomDateMutation({
+    refetchQueries: ['GetTimeline'],
+    awaitRefetchQueries: true
+  });
+
+  const defaultValues: CustomDateFormValues = useMemo(
+    () => ({
+      title: data?.customTimelineDate?.title || '',
+      description: data?.customTimelineDate?.description || '',
+      dateType: data?.customTimelineDate?.dateType || undefined,
+      startDate: data?.customTimelineDate?.startDate || '',
+      endDate: data?.customTimelineDate?.endDate || ''
+    }),
+    [data]
+  );
+
   const methods = useForm<CustomDateFormValues>({
-    defaultValues: {
-      title: '',
-      description: '',
-      dateType: undefined,
-      startDate: '',
-      endDate: ''
-    },
+    defaultValues,
+    values: defaultValues,
     mode: 'onChange'
   });
 
@@ -72,7 +99,7 @@ const CustomDate = () => {
     control,
     handleSubmit,
     setValue,
-    formState: { defaultValues, isSubmitting, isDirty, isValid },
+    formState: { isSubmitting, isDirty, isValid },
     watch
   } = methods;
 
@@ -83,6 +110,8 @@ const CustomDate = () => {
   }, [setDisableButton, disabledSubmitBtn]);
 
   const onSubmit = (formData: CustomDateFormValues) => {
+    const formChanges = dirtyInput(defaultValues, formData);
+
     setCurrentErrorMeta({
       overrideMessage: getStatusAlertBody({
         type: 'error',
@@ -90,18 +119,28 @@ const CustomDate = () => {
       })
     });
 
-    create({
-      variables: {
-        input: {
-          modelPlanID: modelID,
-          title: formData.title || '',
-          description: formData.description || undefined,
-          dateType: formData.dateType,
-          startDate: formData.startDate || '',
-          endDate: formData.endDate || undefined
-        }
-      }
-    }).then(response => {
+    const promise =
+      mode === 'add'
+        ? create({
+            variables: {
+              input: {
+                modelPlanID: modelID,
+                title: formData.title || '',
+                description: formData.description || undefined,
+                dateType: formData.dateType!,
+                startDate: formData.startDate || '',
+                endDate: formData.endDate || undefined
+              }
+            }
+          })
+        : update({
+            variables: {
+              id: customDateID,
+              changes: formChanges
+            }
+          });
+
+    promise.then(response => {
       if (!response?.errors) {
         toastSuccess(
           <Trans
@@ -119,6 +158,10 @@ const CustomDate = () => {
       }
     });
   };
+
+  if (loading) {
+    return <PageLoading testId="custom-date-timeline-loading" />;
+  }
 
   return (
     <MainContent
@@ -170,7 +213,7 @@ const CustomDate = () => {
               id="custom-date-form"
               onSubmit={handleSubmit(onSubmit)}
             >
-              <Fieldset disabled={false}>
+              <Fieldset disabled={loading || !!error}>
                 <Controller
                   name="title"
                   control={control}
