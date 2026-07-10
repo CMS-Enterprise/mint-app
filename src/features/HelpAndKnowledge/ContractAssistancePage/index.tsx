@@ -12,6 +12,7 @@ import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
+import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
@@ -91,6 +92,15 @@ const ContractAssistancePage = () => {
         </h1>
         <p className="mint-body-large margin-bottom-2 margin-top-05">
           {t('description')}
+        </p>
+        <p className="mint-body-medium margin-top-0 margin-bottom-2">
+          {t('dccsDescription')}{' '}
+          <ExternalLink
+            href="https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-BSG-DCCS/SitePages/ContractSummary.aspx"
+            inlineText
+          >
+            {t('dccsLinkText')}
+          </ExternalLink>
         </p>
         <div className="margin-bottom-6">
           <UswdsReactLink to="/help-and-knowledge" data-testid="return-to-hkc">

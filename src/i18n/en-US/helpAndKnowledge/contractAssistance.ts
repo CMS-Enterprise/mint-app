@@ -6,6 +6,9 @@ const contractAssistance = {
   hkcViewCta: 'Create and manage help tickets',
   description:
     'The Contract Technical Assistance Team (CTAT) can help with a variety of contracting needs and activities in pre-award and post-award timeframes.',
+  dccsDescription:
+    'For additional acquisition support and guidance, visit the DCCS Contract Summary Page, which provides acquisition support for both pre-award and post-award activities, including documents, templates, and resources.',
+  dccsLinkText: 'Visit the DCCS Contract Summary Page on SharePoint',
   table: {
     ticketId: 'Ticket ID',
     submissionDate: 'Submission date',
