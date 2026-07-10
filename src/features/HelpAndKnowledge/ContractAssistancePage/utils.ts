@@ -1,4 +1,5 @@
 import {
+  CtatcmmiGroupOption,
   CtatHelpNeededType,
   CtatStatus,
   GetCtatRequestsRequesterQuery
@@ -69,6 +70,20 @@ const formatAssigneeName = (
   return name || null;
 };
 
+export const formatCmmiGroupAcronym = (
+  cmmiGroup?: CtatcmmiGroupOption | null
+): string => {
+  if (!cmmiGroup) {
+    return '';
+  }
+
+  if (cmmiGroup === CtatcmmiGroupOption.OTHER) {
+    return 'Other';
+  }
+
+  return cmmiGroup;
+};
+
 export const mapCtatRequestToContractAssistanceTicket = (
   request: CtatRequestForTicketTable
 ): ContractAssistanceTicket => ({
@@ -76,6 +91,7 @@ export const mapCtatRequestToContractAssistanceTicket = (
   ticketId: request.humanReadableID,
   submissionDate: formatDateLocal(request.createdDts, 'MM/dd/yyyy'),
   contractName: request.contractName?.trim() ?? '',
+  cmmiGroupAcronym: formatCmmiGroupAcronym(request.cmmiGroup),
   helpType: formatHelpTypes(
     request.typeOfHelpNeeded,
     request.typeOfHelpNeededOther
