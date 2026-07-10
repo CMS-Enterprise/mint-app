@@ -1,14 +1,20 @@
 import {
   CommonWaiverFragment,
   CommonWaiverType,
+  GetAllWaiverAssessmentSurveyQuery,
   GetModelPlanQuestionsQuery,
   GetWaiversQuery,
   WaiverSelectionInput
 } from 'gql/generated/graphql';
 
+import { waiverAssessmentSurvey } from 'i18n/en-US/modelPlan/waiverAssessmentSurvey';
 import {
+  Bool,
   isTranslationFieldPropertiesWithOptions,
-  isTranslationFieldPropertiesWithOptionsAndChildren
+  isTranslationFieldPropertiesWithOptionsAndChildren,
+  TranslationConfigType,
+  TranslationFieldPropertiesWithOptionsAndChildren,
+  TranslationPlan
 } from 'types/translation';
 import {
   ExistingWaiver,
@@ -524,4 +530,278 @@ export const getWaiverSelectionChanges = (
   });
 
   return changes;
+};
+
+type WaiverAssessmentSurveyModelPlan =
+  GetAllWaiverAssessmentSurveyQuery['modelPlan'];
+
+type WaiverAssessmentSurveyGeneralCharacteristics =
+  WaiverAssessmentSurveyModelPlan['generalCharacteristics'];
+
+export type WaiverAssessmentSurveyQuestionConfigs = {
+  modelPlanQuestionsConfig: Record<string, TranslationConfigType<string>>;
+  medicareQuestionsConfig: Record<string, TranslationConfigType<string>>;
+  programWaiversConfig: Record<string, TranslationConfigType<string>>;
+  medicaidQuestionsConfig: Record<string, TranslationConfigType<string>>;
+};
+
+export type WaiverAssessmentSurveySectionHeadings = {
+  modelPlanQuestions: string;
+  medicarePaymentWaivers: string;
+  programWaivers: string;
+  medicaidPaymentWaivers: string;
+};
+
+export type WaiverAssessmentSurveySectionsConfig = {
+  modePlanQuestions: {
+    heading: string;
+    config: Record<string, TranslationConfigType<string>>;
+    href: string;
+  };
+  medicarePaymentWaivers: {
+    heading: string;
+    config: Record<string, TranslationConfigType<string>>;
+    href: string;
+  };
+  programWaivers: {
+    heading: string;
+    config: Record<string, TranslationConfigType<string>>;
+    href: string;
+  };
+  medicaidPaymentWaivers: {
+    heading: string;
+    config: Record<string, TranslationConfigType<string>>;
+    href: string;
+  };
+};
+
+/**
+ * Builds translation configs for waiver assessment survey read-only sections.
+ */
+export const buildWaiverAssessmentSurveyQuestionConfigs = (
+  modelBasicsConfig: TranslationPlan['basics'],
+  generalCharacteristicsConfig: TranslationPlan['generalCharacteristics'],
+  waiverAssessmentSurveyConfig: TranslationPlan['waiverAssessmentSurvey']
+): WaiverAssessmentSurveyQuestionConfigs => ({
+  modelPlanQuestionsConfig: {
+    modelCategory: modelBasicsConfig.modelCategory,
+    additionalModelCategories: modelBasicsConfig.additionalModelCategories,
+    cmsCenters: modelBasicsConfig.cmsCenters,
+    cmmiGroups: modelBasicsConfig.cmmiGroups,
+    isNewModel: generalCharacteristicsConfig.isNewModel,
+    existingModel: generalCharacteristicsConfig.existingModel,
+    resemblesExistingModel: generalCharacteristicsConfig.resemblesExistingModel,
+    resemblesExistingModelWhich:
+      generalCharacteristicsConfig.resemblesExistingModelWhich,
+    participationInModelPrecondition:
+      generalCharacteristicsConfig.participationInModelPrecondition,
+    participationInModelPreconditionWhich:
+      generalCharacteristicsConfig.participationInModelPreconditionWhich,
+    keyCharacteristics: generalCharacteristicsConfig.keyCharacteristics,
+    keyCharacteristicsOther:
+      generalCharacteristicsConfig.keyCharacteristicsOther,
+    collectPlanBids: generalCharacteristicsConfig.collectPlanBids,
+    managePartCDEnrollment: generalCharacteristicsConfig.managePartCDEnrollment,
+    planContractUpdated: generalCharacteristicsConfig.planContractUpdated,
+    geographiesTargeted: generalCharacteristicsConfig.geographiesTargeted,
+    geographiesTargetedTypes:
+      generalCharacteristicsConfig.geographiesTargetedTypes,
+    geographiesStatesAndTerritories:
+      generalCharacteristicsConfig.geographiesStatesAndTerritories,
+    geographiesRegionTypes: generalCharacteristicsConfig.geographiesRegionTypes,
+    geographiesTargetedTypesOther:
+      generalCharacteristicsConfig.geographiesTargetedTypesOther,
+    geographiesTargetedAppliedTo:
+      generalCharacteristicsConfig.geographiesTargetedAppliedTo,
+    geographiesTargetedAppliedToOther:
+      generalCharacteristicsConfig.geographiesTargetedAppliedToOther,
+    waiversRequired: generalCharacteristicsConfig.waiversRequired,
+    waiversRequiredTypes: generalCharacteristicsConfig.waiversRequiredTypes
+  },
+  medicareQuestionsConfig: {
+    modifiesMedicareSavingsPrograms:
+      waiverAssessmentSurveyConfig.modifiesMedicareSavingsPrograms,
+    bundlesPayments: waiverAssessmentSurveyConfig.bundlesPayments,
+    offersRiskSharingArrangements:
+      waiverAssessmentSurveyConfig.offersRiskSharingArrangements
+  },
+  programWaiversConfig: {
+    impactsSiteOfCarePayments:
+      waiverAssessmentSurveyConfig.impactsSiteOfCarePayments,
+    modifiesCareTeamScopeOfPractice:
+      waiverAssessmentSurveyConfig.modifiesCareTeamScopeOfPractice,
+    modifiesCareDeliveryWithClaimsBasedPayments:
+      waiverAssessmentSurveyConfig.modifiesCareDeliveryWithClaimsBasedPayments,
+    modifiesQualityMeasurementsOrPaymentsViaWaivers:
+      waiverAssessmentSurveyConfig.modifiesQualityMeasurementsOrPaymentsViaWaivers
+  },
+  medicaidQuestionsConfig: {
+    impactsMedicaidOnlyBeneficiaries:
+      waiverAssessmentSurveyConfig.impactsMedicaidOnlyBeneficiaries,
+    impactsHomeCommunityBasedServicePayments:
+      waiverAssessmentSurveyConfig.impactsHomeCommunityBasedServicePayments,
+    impactsManagedCareWaivers:
+      waiverAssessmentSurveyConfig.impactsManagedCareWaivers
+  }
+});
+
+/**
+ * Builds section headings and configs for waiver assessment survey read-only views.
+ */
+export const buildWaiverAssessmentSurveySectionsConfig = (
+  questionConfigs: WaiverAssessmentSurveyQuestionConfigs,
+  headings: WaiverAssessmentSurveySectionHeadings
+): WaiverAssessmentSurveySectionsConfig => ({
+  modePlanQuestions: {
+    heading: headings.modelPlanQuestions,
+    config: questionConfigs.modelPlanQuestionsConfig,
+    href: '../model-plan-questions'
+  },
+  medicarePaymentWaivers: {
+    heading: headings.medicarePaymentWaivers,
+    config: questionConfigs.medicareQuestionsConfig,
+    href: '../medicare-payment-waivers'
+  },
+  programWaivers: {
+    heading: headings.programWaivers,
+    config: questionConfigs.programWaiversConfig,
+    href: '../program-waivers'
+  },
+  medicaidPaymentWaivers: {
+    heading: headings.medicaidPaymentWaivers,
+    config: questionConfigs.medicaidQuestionsConfig,
+    href: '../medicaid-payment-waivers'
+  }
+});
+
+/**
+ * Adds "Other" to linked plan lists when the corresponding other-selected flag is true.
+ */
+export const buildLinkedResemblePlans = (
+  resemblesExistingModelWhich:
+    | WaiverAssessmentSurveyGeneralCharacteristics['resemblesExistingModelWhich']
+    | undefined,
+  resemblesExistingModelOtherSelected?: boolean | null
+): string[] => {
+  const selectedPlans = [
+    ...(resemblesExistingModelWhich?.names
+      ? [...resemblesExistingModelWhich.names]
+      : [])
+  ];
+
+  if (resemblesExistingModelOtherSelected) {
+    selectedPlans.push('Other');
+  }
+
+  return selectedPlans;
+};
+
+/**
+ * Adds "Other" to participation precondition plan lists when the other-selected flag is true.
+ */
+export const buildParticipationPreconditionPlans = (
+  participationInModelPreconditionWhich:
+    | WaiverAssessmentSurveyGeneralCharacteristics['participationInModelPreconditionWhich']
+    | undefined,
+  participationInModelPreconditionOtherSelected?: boolean | null
+): string[] => {
+  const selectedPlans = [
+    ...(participationInModelPreconditionWhich?.names
+      ? [...participationInModelPreconditionWhich.names]
+      : [])
+  ];
+
+  if (participationInModelPreconditionOtherSelected) {
+    selectedPlans.push('Other');
+  }
+
+  return selectedPlans;
+};
+
+/**
+ * Builds merged model plan question values for waiver assessment survey read-only views.
+ */
+export const buildWaiverAssessmentSurveyModelQuestionsData = (
+  basics: WaiverAssessmentSurveyModelPlan['basics'],
+  generalCharacteristics: WaiverAssessmentSurveyGeneralCharacteristics
+) => ({
+  ...basics,
+  ...generalCharacteristics,
+  resemblesExistingModelWhich: buildLinkedResemblePlans(
+    generalCharacteristics.resemblesExistingModelWhich,
+    generalCharacteristics.resemblesExistingModelOtherSelected
+  ),
+  participationInModelPreconditionWhich: buildParticipationPreconditionPlans(
+    generalCharacteristics.participationInModelPreconditionWhich,
+    generalCharacteristics.participationInModelPreconditionOtherSelected
+  )
+});
+
+const WAIVER_SURVEY_PARENT_QUESTION_CONFIGS = [
+  waiverAssessmentSurvey.modifiesMedicareSavingsPrograms,
+  waiverAssessmentSurvey.bundlesPayments,
+  waiverAssessmentSurvey.offersRiskSharingArrangements,
+  waiverAssessmentSurvey.impactsSiteOfCarePayments,
+  waiverAssessmentSurvey.modifiesCareTeamScopeOfPractice,
+  waiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPayments,
+  waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaivers,
+  waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiaries,
+  waiverAssessmentSurvey.impactsHomeCommunityBasedServicePayments,
+  waiverAssessmentSurvey.impactsManagedCareWaivers
+] as const;
+
+type WaiverSurveyQuestionnaireData =
+  GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
+
+const isNonEmptyString = (value: unknown): boolean =>
+  typeof value === 'string' && value.trim() !== '';
+
+const isSelectedEnum = (value: unknown): boolean =>
+  value !== null && value !== undefined && value !== '';
+
+/**
+ * Returns true when a single yes/no waiver question and its conditional child are complete.
+ */
+export const isWaiverSurveyQuestionComplete = (
+  questionConfig: TranslationFieldPropertiesWithOptionsAndChildren<Bool, void>,
+  surveyData: Record<string, unknown>
+): boolean => {
+  const parentValue = surveyData[questionConfig.gqlField];
+
+  if (parentValue === null || parentValue === undefined) {
+    return false;
+  }
+
+  if (parentValue === true) {
+    const exampleField =
+      questionConfig.childRelation?.[Bool.true]?.[0]?.().gqlField;
+
+    return exampleField ? isNonEmptyString(surveyData[exampleField]) : false;
+  }
+
+  if (parentValue === false) {
+    const whyNotField =
+      questionConfig.childRelation?.[Bool.false]?.[0]?.().gqlField;
+
+    return whyNotField ? isSelectedEnum(surveyData[whyNotField]) : false;
+  }
+
+  return false;
+};
+
+/**
+ * Returns true when all pages 3–5 waiver question fields are complete.
+ */
+export const isWaiverSurveyQuestionsComplete = (
+  surveyData: WaiverSurveyQuestionnaireData
+): boolean => {
+  const allParentQuestionsComplete =
+    WAIVER_SURVEY_PARENT_QUESTION_CONFIGS.every(questionConfig =>
+      isWaiverSurveyQuestionComplete(
+        questionConfig,
+        surveyData as Record<string, unknown>
+      )
+    );
+
+  return allParentQuestionsComplete;
 };

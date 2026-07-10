@@ -1,8 +1,10 @@
 import {
   CommonWaiverFragment,
   CommonWaiverType,
+  GetAllWaiverAssessmentSurveyQuery,
   GetCommonWaiverQuery,
-  GetWaiversQuery
+  GetWaiversQuery,
+  WaiverAssessmentSurveyStatus
 } from 'gql/generated/graphql';
 
 /**
@@ -129,6 +131,122 @@ export const getWaiversMockData = (modelPlanID: string): GetWaiversQuery => ({
         unusedProgramWaiver,
         unusedMedicaidWaiver
       ]
+    }
+  }
+});
+
+/**
+ * Returns mock GetAllWaiverAssessmentSurvey data for local UI development.
+ */
+export const getAllWaiverAssessmentSurveyMockData = (
+  modelPlanID: string
+): GetAllWaiverAssessmentSurveyQuery => ({
+  __typename: 'Query',
+  modelPlan: {
+    __typename: 'ModelPlan',
+    id: modelPlanID,
+    basics: {
+      __typename: 'PlanBasics',
+      id: 'basics-mock-id',
+      modelCategory: null,
+      additionalModelCategories: [],
+      cmsCenters: [],
+      cmmiGroups: []
+    },
+    generalCharacteristics: {
+      __typename: 'PlanGeneralCharacteristics',
+      id: 'general-characteristics-mock-id',
+      isNewModel: null,
+      existingModel: null,
+      currentModelPlanID: null,
+      existingModelID: null,
+      resemblesExistingModel: null,
+      resemblesExistingModelWhyHow: null,
+      resemblesExistingModelHow: null,
+      resemblesExistingModelWhich: {
+        __typename: 'ExistingModelLinks',
+        names: []
+      },
+      resemblesExistingModelOtherSpecify: null,
+      resemblesExistingModelOtherSelected: null,
+      resemblesExistingModelOtherOption: null,
+      participationInModelPrecondition: null,
+      participationInModelPreconditionWhich: {
+        __typename: 'ExistingModelLinks',
+        names: []
+      },
+      participationInModelPreconditionOtherSpecify: null,
+      participationInModelPreconditionOtherSelected: null,
+      participationInModelPreconditionOtherOption: null,
+      participationInModelPreconditionWhyHow: null,
+      keyCharacteristics: [],
+      keyCharacteristicsOther: null,
+      collectPlanBids: null,
+      managePartCDEnrollment: null,
+      planContractUpdated: null,
+      geographiesTargeted: null,
+      geographiesTargetedTypes: [],
+      geographiesStatesAndTerritories: [],
+      geographiesRegionTypes: [],
+      geographiesTargetedTypesOther: null,
+      geographiesTargetedAppliedTo: [],
+      geographiesTargetedAppliedToOther: null,
+      waiversRequired: null,
+      waiversRequiredTypes: []
+    },
+    questionnaires: {
+      __typename: 'Questionnaires',
+      waiverAssessmentSurvey: {
+        __typename: 'WaiverAssessmentSurvey',
+        id: WAIVER_ASSESSMENT_SURVEY_ID,
+        status: WaiverAssessmentSurveyStatus.IN_PROGRESS,
+        modifiedDts: null,
+        createdDts: '2026-01-01T00:00:00Z',
+        waivers: [
+          {
+            __typename: 'Waiver',
+            id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+            willUseWaiver: true,
+            notUsingReason: null,
+            commonWaiver: {
+              __typename: 'CommonWaiver',
+              name: suggestedMedicareWaiver.name,
+              waiverType: CommonWaiverType.MEDICARE_PAYMENT
+            }
+          }
+        ],
+        modifiesMedicareSavingsPrograms: null,
+        modifiesMedicareSavingsProgramsExample: null,
+        modifiesMedicareSavingsProgramsWhyNot: null,
+        bundlesPayments: null,
+        bundlesPaymentsExample: null,
+        bundlesPaymentsWhyNot: null,
+        offersRiskSharingArrangements: null,
+        offersRiskSharingArrangementsExample: null,
+        offersRiskSharingArrangementsWhyNot: null,
+        impactsSiteOfCarePayments: null,
+        impactsSiteOfCarePaymentsExample: null,
+        impactsSiteOfCarePaymentsWhyNot: null,
+        modifiesCareTeamScopeOfPractice: null,
+        modifiesCareTeamScopeOfPracticeExample: null,
+        modifiesCareTeamScopeOfPracticeWhyNot: null,
+        modifiesCareDeliveryWithClaimsBasedPayments: null,
+        modifiesCareDeliveryWithClaimsBasedPaymentsExample: null,
+        modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: null,
+        modifiesQualityMeasurementsOrPaymentsViaWaivers: null,
+        modifiesQualityMeasurementsOrPaymentsViaWaiversExample: null,
+        modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: null,
+        impactsMedicaidOnlyBeneficiaries: null,
+        impactsMedicaidOnlyBeneficiariesExample: null,
+        impactsMedicaidOnlyBeneficiariesWhyNot: null,
+        impactsHomeCommunityBasedServicePayments: null,
+        impactsHomeCommunityBasedServicePaymentsExample: null,
+        impactsHomeCommunityBasedServicePaymentsWhyNot: null,
+        impactsManagedCareWaivers: null,
+        impactsManagedCareWaiversExample: null,
+        impactsManagedCareWaiversWhyNot: null,
+        additionalMedicaidSpecificWaivers: null
+      }
     }
   }
 });

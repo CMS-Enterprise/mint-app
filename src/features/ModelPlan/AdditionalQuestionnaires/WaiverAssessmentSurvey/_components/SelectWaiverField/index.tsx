@@ -34,7 +34,7 @@ const SelectWaiverField = ({
   );
   const { t: generalT } = useTranslation('general');
 
-  const { control, setValue, register } = useFormContext();
+  const { control, setValue } = useFormContext();
 
   const willUseWaiverField = `${fieldPrefix}.willUseWaiver`;
   const notUsingReasonField = `${fieldPrefix}.notUsingReason`;
@@ -145,10 +145,18 @@ const SelectWaiverField = ({
                         'waiverInfoPanel.notUsingReason'
                       )}
                     </Label>
-                    <Textarea
-                      {...register(notUsingReasonField)}
-                      id={`notUsingReason-${fieldId}`}
-                      data-testid={`notUsingReason-${fieldId}`}
+
+                    <Controller
+                      name={notUsingReasonField}
+                      control={control}
+                      defaultValue=""
+                      render={({ field: { ref, ...textField } }) => (
+                        <Textarea
+                          {...textField}
+                          id={`notUsingReason-${fieldId}`}
+                          data-testid={`notUsingReason-${fieldId}`}
+                        />
+                      )}
                     />
                   </FormGroup>
                 )}

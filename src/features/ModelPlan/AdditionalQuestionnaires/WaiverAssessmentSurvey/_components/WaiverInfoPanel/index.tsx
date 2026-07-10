@@ -50,7 +50,9 @@ const WaiverInfoPanel = () => {
   const waiverId = searchParams.get('waiverId') ?? '';
 
   const location = useLocation();
-  const isReadView = location.pathname.includes('read-view');
+  const isReadView =
+    location.pathname.includes('read-view') ||
+    location.pathname.includes('confirm-your-waiver-selections');
 
   const { data: queryData } = useGetCommonWaiverQuery({
     variables: {
@@ -164,7 +166,7 @@ const WaiverInfoPanel = () => {
             />
           </DescriptionList>
 
-          {!isReadView && (
+          {!isReadView && waiverId && (
             <>
               <Divider className="margin-top-3 margin-bottom-4" />
               <SelectWaiverField fieldPrefix={`waivers.${waiverId}`} />

@@ -64,7 +64,7 @@ const SimpleReadOnlySection = <
   return (
     <Grid desktop={{ col: 12 }}>
       <div
-        className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
+        className={`read-only-section read-only-section--${sectionName} margin-bottom-2`}
       >
         <div className="read-only-section--question">
           <span className="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line">
