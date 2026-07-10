@@ -17,6 +17,7 @@ import {
 } from '@trussworks/react-uswds';
 import {
   CustomTimelineDateType,
+  GetCustomDateQuery,
   useCreateCustomDateMutation,
   useGetCustomDateQuery,
   useUpdateCustomDateMutation
@@ -35,12 +36,11 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import { isDateInPast } from 'utils/date';
 import { dirtyInput } from 'utils/formUtil';
 
-type CustomDateFormValues = {
-  title: string;
-  description?: string;
+type CustomDateFormValues = Omit<
+  GetCustomDateQuery['customTimelineDate'],
+  '__typename' | 'id' | 'dateType'
+> & {
   dateType?: CustomTimelineDateType;
-  startDate: string;
-  endDate?: string;
 };
 
 const CustomDate = () => {
@@ -127,7 +127,7 @@ const CustomDate = () => {
                 modelPlanID: modelID,
                 title: formData.title || '',
                 description: formData.description || undefined,
-                dateType: formData.dateType!,
+                dateType: formData.dateType!, // it should always have a value, but just in case
                 startDate: formData.startDate || '',
                 endDate: formData.endDate || undefined
               }
