@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
         humanReadableID
         createdDts
         contractName
+        cmmiGroup
         typeOfHelpNeeded
         typeOfHelpNeededOther
         status

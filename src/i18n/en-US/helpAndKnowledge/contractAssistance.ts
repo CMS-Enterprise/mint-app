@@ -9,6 +9,7 @@ const contractAssistance = {
   table: {
     ticketId: 'Ticket ID',
     submissionDate: 'Submission date',
+    cmmiGroup: 'CMMI group',
     contractName: 'Contract name',
     helpType: 'Help type',
     status: 'Status',
