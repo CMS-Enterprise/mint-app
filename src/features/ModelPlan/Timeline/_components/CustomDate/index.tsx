@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -41,16 +41,14 @@ const CustomDate = () => {
   const { t: customDateMiscT } = useTranslation('customDateMisc');
   const { dateType: dateTypeConfig } = usePlanTranslation('customDate');
 
-  const { modelID = '' } = useParams<{ modelID: string }>();
+  const { modelID = '', customDateID = '' } = useParams<{
+    modelID: string;
+    customDateID: string;
+  }>();
 
   const navigate = useNavigate();
 
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-
-  const dateParam = params.get('customDateID');
-
-  const mode = dateParam ? 'edit' : 'add';
+  const mode = customDateID ? 'edit' : 'add';
 
   const [disableButton, setDisableButton] = useState(true);
 
@@ -456,7 +454,7 @@ const CustomDate = () => {
                     aria-label="back"
                   />
 
-                  {customDateMiscT(`${mode}.returnCta`)}
+                  {customDateMiscT(`${mode}.cancelCta`)}
                 </Button>
               </div>
             </Form>

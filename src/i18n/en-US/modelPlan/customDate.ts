@@ -63,9 +63,21 @@ export const customDateMisc = {
     description: 'Add a custom date or date range to your model timeline.',
     returnCta: 'Don’t add a date and return to model timeline',
     saveCta: 'Save date',
+    cancelCta: 'Don’t add a date and return to model timeline',
     success: 'You have added a new date ({{-name}}) to the model timeline.',
     error:
       'There was an error adding your new timeline date. Please try again. If the error persists, please try again another time.'
+  },
+  edit: {
+    heading: 'Edit a date',
+    description:
+      'Make changes to a custom date or date range on your model timeline.',
+    returnCta: 'Don’t edit a date and return to model timeline',
+    saveCta: 'Save changes',
+    cancelCta: 'Don’t save changes and return to model timeline',
+    success: 'You have updated the date ({{-name}}) on the model timeline.',
+    error:
+      'There was an error editing your timeline date. Please try again. If the error persists, please try again another time.'
   },
   requiredField: 'Fields marked with an asterisk ( <s>*</s> ) are required.',
   date: 'Date',
