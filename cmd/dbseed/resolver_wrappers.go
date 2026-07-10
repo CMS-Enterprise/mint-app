@@ -101,10 +101,13 @@ func (s *Seeder) createCustomTimelineDate(
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
 
 	customTimelineDate, err := resolvers.CustomTimelineDateCreate(
+		s.Config.Context,
 		s.Config.Logger,
 		input,
 		princ,
 		s.Config.Store,
+		s.Config.EmailService,
+		s.Config.AddressBook,
 	)
 	if err != nil {
 		panic(err)
