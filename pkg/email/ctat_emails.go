@@ -470,12 +470,31 @@ func SendCTATUpdateEmails(
 		return err
 	}
 
-	return emailService.Send(
+	// send email to CTAT team inbox
+	if err := emailService.Send(
 		addressBook.DefaultSender,
 		[]string{addressBook.CTATTeamEmail},
 		nil,
 		adminEmailSubject,
 		"text/html",
 		adminEmailBody,
-	)
+	); err != nil {
+		return err
+	}
+
+	if assignedAdminAccount != nil && len(assignedAdminAccount.Email) > 0 {
+		// send email to the assigned admin on the CTAT request
+		if err := emailService.Send(
+			addressBook.DefaultSender,
+			[]string{assignedAdminAccount.Email},
+			nil,
+			adminEmailSubject,
+			"text/html",
+			adminEmailBody,
+		); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
