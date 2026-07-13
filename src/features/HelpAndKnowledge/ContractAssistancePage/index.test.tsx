@@ -133,6 +133,19 @@ describe('ContractAssistancePage', () => {
     ).toBeInTheDocument();
   });
 
+  it('renders the DCCS Contract Summary Page link', async () => {
+    renderPage(nonAssessmentStore);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('heading', { level: 1, name: 'Contract assistance' })
+      ).toBeInTheDocument();
+    });
+    expect(
+      screen.getByText('Visit the DCCS Contract Summary Page on SharePoint')
+    ).toBeInTheDocument();
+  });
+
   it('matches snapshot', async () => {
     const { asFragment } = renderPage(assessmentStore);
 

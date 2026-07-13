@@ -80,9 +80,7 @@ describe('ContractAssistanceTicketsTable', () => {
   });
 
   it('renders the CMMI group column for admin tickets', () => {
-    setup(
-      <ContractAssistanceTicketsTable tickets={tickets} variant="admin" />
-    );
+    setup(<ContractAssistanceTicketsTable tickets={tickets} variant="admin" />);
 
     expect(
       screen.getByRole('columnheader', { name: /CMMI group/i })
@@ -91,9 +89,7 @@ describe('ContractAssistanceTicketsTable', () => {
   });
 
   it('does not render the CMMI group column for user tickets', () => {
-    setup(
-      <ContractAssistanceTicketsTable tickets={tickets} variant="user" />
-    );
+    setup(<ContractAssistanceTicketsTable tickets={tickets} variant="user" />);
 
     expect(
       screen.queryByRole('columnheader', { name: 'CMMI group' })

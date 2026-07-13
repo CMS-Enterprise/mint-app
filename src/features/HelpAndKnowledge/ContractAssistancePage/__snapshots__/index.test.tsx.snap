@@ -52,6 +52,34 @@ exports[`ContractAssistancePage > matches snapshot 1`] = `
       >
         The Contract Technical Assistance Team (CTAT) can help with a variety of contracting needs and activities in pre-award and post-award timeframes.
       </p>
+      <p
+        class="mint-body-medium margin-top-0 margin-bottom-2"
+      >
+        For additional acquisition support and guidance, visit the DCCS Contract Summary Page, which provides acquisition support for both pre-award and post-award activities, including documents, templates, and resources. 
+        <span
+          class="usa-link pointer"
+          role="button"
+          tabindex="0"
+        >
+          <span>
+            Visit the DCCS Contract Summary Page on SharePoint
+            <svg
+              aria-label="launch"
+              class="usa-icon margin-left-05 top-05"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+              />
+            </svg>
+          </span>
+        </span>
+      </p>
       <div
         class="margin-bottom-6"
       >
