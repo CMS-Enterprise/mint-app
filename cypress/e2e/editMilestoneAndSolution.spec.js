@@ -95,14 +95,19 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
       cy.contains('button', 'Add a milestone note').should('not.exist');
     });
 
-    cy.get('#responsible-component').click({ force: true }).type('fch{enter}');
-    cy.get('#clear-selection')
-      .parent()
-      .find('[class$="indicatorContainer"]')
-      .eq(1)
-      .click({ force: true });
-    cy.contains('FCHCO').click({ force: true });
-    cy.get('#responsible-component-tags li').should('contain.text', 'FCHCO');
+    cy.get('[data-testid="edit-milestone-sidepanel"]').within(() => {
+      cy.get('#responsible-component')
+        .should('be.not.disabled')
+        .click({ force: true })
+        .clear({ force: true })
+        .type('fch', { force: true });
+
+      cy.contains('.usa-combo-box__list-option', 'FCHCO')
+        .should('be.visible')
+        .click({ force: true });
+
+      cy.get('#responsible-component-tags li').should('contain.text', 'FCHCO');
+    });
 
     cy.contains('button', 'Save and return to solution details')
       .should('be.not.disabled')
