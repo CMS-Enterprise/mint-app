@@ -15,6 +15,7 @@ import {
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
 import {
   CustomTimelineDateType,
   GetCustomDateQuery,
@@ -159,8 +160,14 @@ const CustomDate = () => {
     });
   };
 
-  if (loading) {
-    return <PageLoading testId="custom-date-timeline-loading" />;
+  if (mode === 'edit') {
+    if (loading) {
+      return <PageLoading testId="custom-date-timeline-loading" />;
+    }
+
+    if ((!loading && error) || (!loading && !data)) {
+      return <NotFound />;
+    }
   }
 
   return (
