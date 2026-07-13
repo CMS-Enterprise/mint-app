@@ -466,6 +466,18 @@ func sendCTATUpdateAdminTestEmail(
 		emailBody,
 	)
 	noErr(err)
+
+	if len(bodyContent.AssignedTeamMemberEmail) > 0 {
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			[]string{bodyContent.AssignedTeamMemberEmail},
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+		)
+		noErr(err)
+	}
 }
 
 func sendModelPlanShareTest(
