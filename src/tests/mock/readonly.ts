@@ -293,6 +293,7 @@ export const waiverAssessmentSurveyMockData: GetAllWaiverAssessmentSurveyQuery =
           __typename: 'WaiverAssessmentSurvey',
           id: '123',
           status: WaiverAssessmentSurveyStatus.IN_PROGRESS,
+          isComplete: false,
           modifiedDts: '2022-06-03T19:32:24.412662Z',
           createdDts: '2022-06-03T19:32:24.412662Z',
           waivers: [

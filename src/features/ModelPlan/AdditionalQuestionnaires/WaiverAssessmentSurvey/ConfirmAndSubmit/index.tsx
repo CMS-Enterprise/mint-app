@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
+  Form,
   Link,
   SummaryBox,
   SummaryBoxContent,
@@ -10,11 +11,16 @@ import {
 } from '@trussworks/react-uswds';
 import SelectedWaiversTable from 'features/ModelPlan/ReadOnly/_components/SelectedWaiversTable';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
-import { useGetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
+import {
+  useGetAllWaiverAssessmentSurveyQuery,
+  useUpdateWaiverAssessmentSurveyMutation,
+  WaiverAssessmentSurveyStatus
+} from 'gql/generated/graphql';
 
 import { Alert } from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import FormHeader from 'components/FormHeader';
+import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
 
@@ -35,6 +41,8 @@ const ConfirmAndSubmit = () => {
   const { modelID = '' } = useParams<{ modelID: string }>();
 
   const [shouldSubmitForm, setShouldSubmitForm] = useState<boolean>(false);
+  const [destinationURL, setDestinationURL] = useState('');
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
   const {
     data: queryData,
@@ -61,11 +69,58 @@ const ConfirmAndSubmit = () => {
     ? isWaiverSurveyQuestionsComplete(waiverAssessmentSurveyData)
     : false;
 
+  const [updateWaiverAssessmentSurvey, { loading: isSubmitting }] =
+    useUpdateWaiverAssessmentSurveyMutation();
+
+  const homeRoute = `/models/${modelID}/collaboration-area/additional-questionnaires`;
+
   useEffect(() => {
     if (!isSurveyComplete) {
       setShouldSubmitForm(false);
+    } else {
+      setShouldSubmitForm(!!waiverAssessmentSurveyData?.isComplete);
     }
-  }, [isSurveyComplete]);
+  }, [isSurveyComplete, waiverAssessmentSurveyData?.isComplete]);
+
+  const handleFormSubmit = () => {
+    if (!waiverAssessmentSurveyData) return;
+
+    updateWaiverAssessmentSurvey({
+      variables: {
+        id: waiverAssessmentSurveyData.id,
+        changes: {
+          status: shouldSubmitForm
+            ? WaiverAssessmentSurveyStatus.COMPLETE
+            : WaiverAssessmentSurveyStatus.IN_PROGRESS
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          setDestinationURL(homeRoute);
+        } else {
+          setIsErrorModalOpen(true);
+        }
+      })
+      .catch(() => {
+        setIsErrorModalOpen(true);
+      });
+  };
+
+  useEffect(() => {
+    if (destinationURL && !isErrorModalOpen) {
+      navigate(destinationURL);
+    }
+  }, [destinationURL, isErrorModalOpen, navigate]);
+
+  const closeErrorModal = ({
+    clearDestination = true
+  }: { clearDestination?: boolean } = {}) => {
+    setIsErrorModalOpen(false);
+    if (clearDestination) {
+      setDestinationURL('');
+    }
+  };
 
   if (loading) {
     return <Spinner size="large" />;
@@ -86,6 +141,12 @@ const ConfirmAndSubmit = () => {
       <p className="margin-top-neg-1 margin-bottom-5 text-base-dark">
         {waiverAssessmentSurveyMiscT('confirmAndSubmit.description')}
       </p>
+
+      <MutationErrorModal
+        isOpen={isErrorModalOpen}
+        closeModal={closeErrorModal}
+        url={destinationURL}
+      />
 
       <h3 className="margin-bottom-2">
         {waiverAssessmentSurveyMiscT('selectedWaivers.heading')}
@@ -122,50 +183,67 @@ const ConfirmAndSubmit = () => {
         </SummaryBoxContent>
       </SummaryBox>
 
-      <div className="margin-top-6 margin-bottom-3 maxw-tablet border-1px border-base-light radius-md padding-2">
-        <p className="margin-y-0">
-          {waiverAssessmentSurveyMiscT('confirmAndSubmit.questionnaireStatus')}
-        </p>
-        <CheckboxField
-          name="shouldSubmitForm"
-          id="should-submit-form"
-          testid="should-submit-form"
-          checked={shouldSubmitForm}
-          disabled={!isSurveyComplete}
-          value="true"
-          label={waiverAssessmentSurveyMiscT(
-            'confirmAndSubmit.questionnaireComplete'
-          )}
-          onChange={e => {
-            setShouldSubmitForm(e.target.checked);
-          }}
-          onBlur={() => null}
-        />
-        {!isSurveyComplete && (
-          <Alert type="warning" slim>
+      <Form
+        id="waiver-assessment-survey-confirm-and-submit-form"
+        data-testid="waiver-assessment-survey-confirm-and-submit-form"
+        className="maxw-none"
+        onSubmit={e => {
+          e.preventDefault();
+          handleFormSubmit();
+        }}
+      >
+        <div className="margin-top-6 margin-bottom-3 maxw-tablet border-1px border-base-light radius-md padding-2">
+          <p className="margin-y-0">
             {waiverAssessmentSurveyMiscT(
-              'confirmAndSubmit.questionnaireStatusAlert'
+              'confirmAndSubmit.questionnaireStatus'
             )}
-          </Alert>
-        )}
-      </div>
+          </p>
+          <CheckboxField
+            name="shouldSubmitForm"
+            id="should-submit-form"
+            testid="should-submit-form"
+            checked={shouldSubmitForm}
+            disabled={!isSurveyComplete}
+            value="true"
+            label={waiverAssessmentSurveyMiscT(
+              'confirmAndSubmit.questionnaireComplete'
+            )}
+            onChange={e => {
+              setShouldSubmitForm(e.target.checked);
+            }}
+            onBlur={() => null}
+          />
+          {!isSurveyComplete && (
+            <Alert type="warning" slim>
+              {waiverAssessmentSurveyMiscT(
+                'confirmAndSubmit.questionnaireStatusAlert'
+              )}
+            </Alert>
+          )}
+        </div>
 
-      <div className="margin-top-6 margin-bottom-3 display-flex">
-        <Button
-          type="button"
-          className="usa-button usa-button--outline margin-top-0"
-          onClick={() =>
-            navigate(
-              `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation`
-            )
-          }
-        >
-          {miscellaneousT('back')}
-        </Button>
-        <Button type="submit" className="margin-top-0">
-          {waiverAssessmentSurveyMiscT('confirmAndSubmit.saveAndExit')}
-        </Button>
-      </div>
+        <div className="margin-top-6 margin-bottom-3 display-flex">
+          <Button
+            type="button"
+            className="usa-button usa-button--outline margin-top-0"
+            disabled={isSubmitting}
+            onClick={() =>
+              navigate(
+                `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation`
+              )
+            }
+          >
+            {miscellaneousT('back')}
+          </Button>
+          <Button
+            type="submit"
+            className="margin-top-0"
+            disabled={isSubmitting}
+          >
+            {waiverAssessmentSurveyMiscT('confirmAndSubmit.saveAndExit')}
+          </Button>
+        </div>
+      </Form>
 
       <PageNumber currentPage={7} totalPages={7} className="margin-y-6" />
     </div>

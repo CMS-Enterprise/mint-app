@@ -54,6 +54,7 @@ export default gql(/* GraphQL */ `
         waiverAssessmentSurvey {
           id
           status
+          isComplete
           modifiedDts
           createdDts
           waivers {
