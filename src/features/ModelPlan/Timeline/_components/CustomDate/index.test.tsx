@@ -109,14 +109,21 @@ describe('CustomDate', () => {
       getByTestId('custom-date-timeline-loading')
     );
 
-    expect(await getByText('Edit a date')).toBeInTheDocument();
-    expect(
-      await getByText(
-        'Make changes to a custom date or date range on your model timeline.'
-      )
-    ).toBeInTheDocument();
-    expect(await getByTestId('date-title')).toHaveValue('My Custom Date');
-    expect(await getByRole('button', { name: 'Save changes' })).toBeDisabled();
+    await waitFor(() => expect(getByText('Edit a date')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(
+        getByText(
+          'Make changes to a custom date or date range on your model timeline.'
+        )
+      ).toBeInTheDocument()
+    );
+
+    await waitFor(() => {
+      expect(getByTestId('date-title')).toHaveValue('My Custom Date');
+    });
+    await waitFor(() => {
+      expect(getByRole('button', { name: 'Save changes' })).toBeDisabled();
+    });
   });
 
   it('matches the snapshot', () => {
