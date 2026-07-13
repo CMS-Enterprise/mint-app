@@ -165,7 +165,7 @@ const CustomDate = () => {
       return <PageLoading testId="custom-date-timeline-loading" />;
     }
 
-    if ((!loading && error) || (!loading && !data)) {
+    if (error || !data) {
       return <NotFound />;
     }
   }
