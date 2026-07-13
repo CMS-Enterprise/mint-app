@@ -1,7 +1,7 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
-import { customDateMocks } from 'tests/mock/general';
+import { customDateID, customDateMocks } from 'tests/mock/general';
 
 import RemoveCustomDateModal from '.';
 
@@ -12,7 +12,7 @@ describe('RemoveCustomDateModal Component', () => {
         <RemoveCustomDateModal
           isModalOpen
           closeModal={() => {}}
-          customDateID="test-id"
+          customDateID={customDateID}
           onDeleteSuccess={() => {}}
         />
       </MockedProvider>
