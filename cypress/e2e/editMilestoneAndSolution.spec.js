@@ -99,24 +99,20 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
       const selectedComponents = $panel
         .find('#responsible-component-tags')
         .text();
-      const componentToSelect = selectedComponents.includes('FCHCO')
-        ? 'CCIIO'
-        : 'FCHCO';
+      const componentToSelect =
+        ['FCHCO', 'CCIIO', 'CCSQ'].find(
+          component => !selectedComponents.includes(component)
+        ) || 'FCHCO';
 
       cy.wrap($panel).within(() => {
         cy.get('input#responsible-component')
           .should('be.not.disabled')
           .click({ force: true })
-          .type(componentToSelect, { force: true });
+          .type(`${componentToSelect}{enter}`, { force: true });
 
-        cy.contains('.usa-combo-box__list-option', componentToSelect)
-          .should('be.visible')
-          .click({ force: true });
-
-        cy.get('#responsible-component-tags li').should(
-          'contain.text',
-          componentToSelect
-        );
+        cy.get('#responsible-component-tags li')
+          .should('have.length.greaterThan', 0)
+          .should('contain.text', componentToSelect);
       });
     });
 
