@@ -61,7 +61,7 @@ const RemoveCustomDateModal = ({
       closeModal={closeModal}
       fixed
       className="tablet:width-mobile-lg mint-body-normal"
-      testId="remove-key-contact-directory-modal"
+      testId="remove-custom-date-modal"
     >
       <div className="padding-bottom-8">
         <PageHeading headingLevel="h3" className="margin-y-0">
