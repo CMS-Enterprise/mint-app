@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -32,6 +33,10 @@ const AdditionalModelDates = ({
 }) => {
   const { t: timelineMiscT } = useTranslation('timelineMisc');
   const { t: miscellaneousT } = useTranslation('miscellaneous');
+
+  const location = useLocation();
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -85,7 +90,11 @@ const AdditionalModelDates = ({
                           type="button"
                           unstyled
                           className="deep-underline margin-right-2"
-                          onClick={() => {}}
+                          onClick={() => {
+                            navigate(
+                              `${location.pathname}/customDate/${customDate.id}`
+                            );
+                          }}
                         >
                           {timelineMiscT('editCustomDate')}
                         </Button>

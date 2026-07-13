@@ -1,9 +1,13 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { render, waitFor } from '@testing-library/react';
+import {
+  render,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CustomTimelineDateType } from 'gql/generated/graphql';
-import { modelID } from 'tests/mock/general';
+import { customDateID, customDateMocks, modelID } from 'tests/mock/general';
 import MockedProvider from 'tests/MockedProvider';
 
 import CustomDate from '.';
@@ -13,7 +17,7 @@ describe('CustomDate', () => {
     const router = createMemoryRouter(
       [
         {
-          path: `/models/${modelID}/collaboration-area/model-timeline/customDate/new`,
+          path: `/models/:modelID/collaboration-area/model-timeline/customDate/new`,
           element: <CustomDate />
         }
       ],
@@ -44,7 +48,7 @@ describe('CustomDate', () => {
     const router = createMemoryRouter(
       [
         {
-          path: `/models/${modelID}/collaboration-area/model-timeline/customDate/new`,
+          path: `/models/:modelID/collaboration-area/model-timeline/customDate/new`,
           element: <CustomDate />
         }
       ],
@@ -80,11 +84,53 @@ describe('CustomDate', () => {
     });
   });
 
+  it('renders edit a chosen custom date form when rendered', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: `/models/:modelID/collaboration-area/model-timeline/customDate/:customDateID`,
+          element: <CustomDate />
+        }
+      ],
+      {
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-timeline/customDate/${customDateID}`
+        ]
+      }
+    );
+
+    const { getByText, getByRole, getByTestId } = render(
+      <MockedProvider mocks={customDateMocks}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    await waitForElementToBeRemoved(() =>
+      getByTestId('custom-date-timeline-loading')
+    );
+
+    await waitFor(() => expect(getByText('Edit a date')).toBeInTheDocument());
+    await waitFor(() =>
+      expect(
+        getByText(
+          'Make changes to a custom date or date range on your model timeline.'
+        )
+      ).toBeInTheDocument()
+    );
+
+    await waitFor(() => {
+      expect(getByTestId('date-title')).toHaveValue('My Custom Date');
+    });
+    await waitFor(() => {
+      expect(getByRole('button', { name: 'Save changes' })).toBeDisabled();
+    });
+  });
+
   it('matches the snapshot', () => {
     const router = createMemoryRouter(
       [
         {
-          path: `/models/${modelID}/collaboration-area/model-timeline/customDate/new`,
+          path: `/models/:modelID/collaboration-area/model-timeline/customDate/new`,
           element: <CustomDate />
         }
       ],

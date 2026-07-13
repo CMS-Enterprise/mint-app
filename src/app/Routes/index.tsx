@@ -338,6 +338,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      {
+        path: '/models/:modelID/collaboration-area/model-timeline/customDate/:customDateID',
+        element: (
+          <ProtectedRoute>
+            <CustomDate />
+          </ProtectedRoute>
+        )
+      },
       // Additional questionnaire Routes
       {
         path: '/models/:modelID/collaboration-area/additional-questionnaires',
