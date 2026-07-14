@@ -658,25 +658,37 @@ func TestCountPopulatedPlanTimelineDates(t *testing.T) {
 	assert.Equal(t, 9, count)
 }
 
-func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
+func TestGetDedupedCustomTimelineDateUpdates(t *testing.T) {
 	id := uuid.New()
 	otherID := uuid.New()
+	update := &model.CustomTimelineDateUpdateDatesInput{
+		ID: id,
+	}
+	otherUpdate := &model.CustomTimelineDateUpdateDatesInput{
+		ID: otherID,
+	}
+	duplicateUpdate := &model.CustomTimelineDateUpdateDatesInput{
+		ID: id,
+	}
 
 	tests := []struct {
-		name        string
-		updates     []*model.CustomTimelineDateUpdateDatesInput
-		expectedIDs []uuid.UUID
+		name            string
+		updates         []*model.CustomTimelineDateUpdateDatesInput
+		expectedIDs     []uuid.UUID
+		expectedUpdates []*model.CustomTimelineDateUpdateDatesInput
 	}{
 		{
-			name:        "empty updates returns empty IDs",
-			expectedIDs: []uuid.UUID{},
+			name:            "empty updates returns empty IDs and updates",
+			expectedIDs:     []uuid.UUID{},
+			expectedUpdates: []*model.CustomTimelineDateUpdateDatesInput{},
 		},
 		{
 			name: "nil update is skipped",
 			updates: []*model.CustomTimelineDateUpdateDatesInput{
 				nil,
 			},
-			expectedIDs: []uuid.UUID{},
+			expectedIDs:     []uuid.UUID{},
+			expectedUpdates: []*model.CustomTimelineDateUpdateDatesInput{},
 		},
 		{
 			name: "missing ID is skipped",
@@ -685,38 +697,37 @@ func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
 					ID: uuid.Nil,
 				},
 			},
-			expectedIDs: []uuid.UUID{},
+			expectedIDs:     []uuid.UUID{},
+			expectedUpdates: []*model.CustomTimelineDateUpdateDatesInput{},
 		},
 		{
 			name: "duplicate ID is skipped",
 			updates: []*model.CustomTimelineDateUpdateDatesInput{
-				{
-					ID: id,
-				},
-				{
-					ID: id,
-				},
+				update,
+				duplicateUpdate,
 			},
-			expectedIDs: []uuid.UUID{id},
+			expectedIDs:     []uuid.UUID{id},
+			expectedUpdates: []*model.CustomTimelineDateUpdateDatesInput{update},
 		},
 		{
-			name: "valid updates return IDs in order",
+			name: "valid updates return IDs and updates in order",
 			updates: []*model.CustomTimelineDateUpdateDatesInput{
-				{
-					ID: id,
-				},
-				{
-					ID: otherID,
-				},
+				update,
+				otherUpdate,
 			},
-			expectedIDs: []uuid.UUID{id, otherID},
+			expectedIDs:     []uuid.UUID{id, otherID},
+			expectedUpdates: []*model.CustomTimelineDateUpdateDatesInput{update, otherUpdate},
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ids := getCustomTimelineDateUpdateIDs(tt.updates)
+			ids, updates := getDedupedCustomTimelineDateUpdates(tt.updates)
 			assert.Equal(t, tt.expectedIDs, ids)
+			assert.Len(t, updates, len(tt.expectedUpdates))
+			for index, expectedUpdate := range tt.expectedUpdates {
+				assert.Same(t, expectedUpdate, updates[index])
+			}
 		})
 	}
 }

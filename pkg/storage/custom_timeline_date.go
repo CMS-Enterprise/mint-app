@@ -65,8 +65,8 @@ func CustomTimelineDateUpdate(np sqlutils.NamedPreparer, customTimelineDate *mod
 	return res, nil
 }
 
-// CustomTimelineDateUpdateDatesByIDs updates start and end dates for custom timeline dates by id.
-func CustomTimelineDateUpdateDatesByIDs(
+// CustomTimelineDateUpdateDatesByIDsAndDates updates start and end dates for custom timeline dates by id.
+func CustomTimelineDateUpdateDatesByIDsAndDates(
 	np sqlutils.NamedPreparer,
 	actorUserID uuid.UUID,
 	customTimelineDateUpdates []*model.CustomTimelineDateUpdateDatesInput,

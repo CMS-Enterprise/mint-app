@@ -130,13 +130,14 @@ func UpdatePlanTimeline(
 		}
 
 		// update custom dates separately
-		if customTimelineUpdateIDs := getCustomTimelineDateUpdateIDs(customTimelineUpdates); len(customTimelineUpdates) > 0 {
+		customTimelineUpdateIDs, dedupedCustomTimelineUpdates := getDedupedCustomTimelineDateUpdates(customTimelineUpdates)
+		if len(dedupedCustomTimelineUpdates) > 0 {
 			existingCustomTimelineDates, err := storage.CustomTimelineDateGetByIDLoader(tx, customTimelineUpdateIDs)
 			if err != nil {
 				return nil, err
 			}
 
-			updatedCustomTimelineDates, err := storage.CustomTimelineDateUpdateDatesByIDs(tx, principal.Account().ID, customTimelineUpdates)
+			updatedCustomTimelineDates, err := storage.CustomTimelineDateUpdateDatesByIDsAndDates(tx, principal.Account().ID, dedupedCustomTimelineUpdates)
 			if err != nil {
 				return nil, err
 			}

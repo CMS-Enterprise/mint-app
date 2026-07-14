@@ -68,12 +68,15 @@ func copyPlanTimelineTime(t *time.Time) *time.Time {
 	return nil
 }
 
-func getCustomTimelineDateUpdateIDs(customTimelineUpdates []*model.CustomTimelineDateUpdateDatesInput) []uuid.UUID {
+func getDedupedCustomTimelineDateUpdates(
+	customTimelineUpdates []*model.CustomTimelineDateUpdateDatesInput,
+) ([]uuid.UUID, []*model.CustomTimelineDateUpdateDatesInput) {
 	if len(customTimelineUpdates) == 0 {
-		return []uuid.UUID{}
+		return []uuid.UUID{}, []*model.CustomTimelineDateUpdateDatesInput{}
 	}
 
 	ids := make([]uuid.UUID, 0, len(customTimelineUpdates))
+	updates := make([]*model.CustomTimelineDateUpdateDatesInput, 0, len(customTimelineUpdates))
 	seenIDs := make(map[uuid.UUID]struct{}, len(customTimelineUpdates))
 
 	for _, customTimelineUpdate := range customTimelineUpdates {
@@ -91,9 +94,10 @@ func getCustomTimelineDateUpdateIDs(customTimelineUpdates []*model.CustomTimelin
 
 		seenIDs[customTimelineUpdate.ID] = struct{}{}
 		ids = append(ids, customTimelineUpdate.ID)
+		updates = append(updates, customTimelineUpdate)
 	}
 
-	return ids
+	return ids, updates
 }
 
 func buildCustomTimelineDateChanges(
