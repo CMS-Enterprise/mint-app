@@ -4,9 +4,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
@@ -654,4 +656,181 @@ func TestCountPopulatedPlanTimelineDates(t *testing.T) {
 	count, err = countPopulatedPlanTimelineDates(planTimeline)
 	assert.NoError(t, err)
 	assert.Equal(t, 9, count)
+}
+
+func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
+	id := uuid.New()
+	otherID := uuid.New()
+
+	tests := []struct {
+		name        string
+		updates     []*model.CustomTimelineDateUpdateDatesInput
+		expectedIDs []uuid.UUID
+		expectedErr string
+	}{
+		{
+			name:        "empty updates returns empty IDs",
+			expectedIDs: []uuid.UUID{},
+		},
+		{
+			name: "nil update returns error",
+			updates: []*model.CustomTimelineDateUpdateDatesInput{
+				nil,
+			},
+			expectedErr: "custom timeline date update at index 0 is nil",
+		},
+		{
+			name: "missing ID returns error",
+			updates: []*model.CustomTimelineDateUpdateDatesInput{
+				{
+					ID: uuid.Nil,
+				},
+			},
+			expectedErr: "custom timeline date update at index 0 is missing an id",
+		},
+		{
+			name: "duplicate ID returns error",
+			updates: []*model.CustomTimelineDateUpdateDatesInput{
+				{
+					ID: id,
+				},
+				{
+					ID: id,
+				},
+			},
+			expectedErr: "custom timeline date update at index 1 has duplicate id",
+		},
+		{
+			name: "valid updates return IDs in order",
+			updates: []*model.CustomTimelineDateUpdateDatesInput{
+				{
+					ID: id,
+				},
+				{
+					ID: otherID,
+				},
+			},
+			expectedIDs: []uuid.UUID{id, otherID},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ids, err := getCustomTimelineDateUpdateIDs(tt.updates)
+
+			if tt.expectedErr != "" {
+				assert.ErrorContains(t, err, tt.expectedErr)
+				assert.Nil(t, ids)
+				return
+			}
+
+			assert.NoError(t, err)
+			assert.Equal(t, tt.expectedIDs, ids)
+		})
+	}
+}
+
+func TestBuildCustomTimelineDateChangesReturnsOnlyChangedDates(t *testing.T) {
+	modelPlanID := uuid.New()
+	createdBy := uuid.New()
+	changedID := uuid.New()
+	unchangedID := uuid.New()
+	description := "Custom timeline date description"
+	oldStartDate := time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC)
+	newStartDate := time.Date(2026, 2, 1, 0, 0, 0, 0, time.UTC)
+	rangeEndDate := time.Date(2026, 3, 1, 0, 0, 0, 0, time.UTC)
+	unchangedStartDate := time.Date(2026, 4, 1, 0, 0, 0, 0, time.UTC)
+
+	existingChangedDate := testCustomTimelineDate(
+		changedID,
+		createdBy,
+		modelPlanID,
+		"Changed date",
+		&description,
+		models.CustomTimelineDateTypeRange,
+		oldStartDate,
+		&rangeEndDate,
+	)
+	updatedChangedDate := testCustomTimelineDate(
+		changedID,
+		createdBy,
+		modelPlanID,
+		"Changed date",
+		&description,
+		models.CustomTimelineDateTypeRange,
+		newStartDate,
+		&rangeEndDate,
+	)
+	existingUnchangedDate := testCustomTimelineDate(
+		unchangedID,
+		createdBy,
+		modelPlanID,
+		"Unchanged date",
+		nil,
+		models.CustomTimelineDateTypeSingle,
+		unchangedStartDate,
+		nil,
+	)
+	updatedUnchangedDate := testCustomTimelineDate(
+		unchangedID,
+		createdBy,
+		modelPlanID,
+		"Unchanged date",
+		nil,
+		models.CustomTimelineDateTypeSingle,
+		unchangedStartDate,
+		nil,
+	)
+
+	changes, err := buildCustomTimelineDateChanges(
+		[]uuid.UUID{unchangedID, changedID},
+		[]*models.CustomTimelineDate{existingChangedDate, existingUnchangedDate},
+		[]*models.CustomTimelineDate{updatedChangedDate, updatedUnchangedDate},
+	)
+
+	assert.NoError(t, err)
+	if assert.Len(t, changes, 1) {
+		change := changes[0]
+		assert.True(t, change.IsChanged)
+		assert.Equal(t, "Changed date", change.Title)
+		assert.Equal(t, &description, change.Description)
+		assert.True(t, change.IsRange)
+		assert.Equal(t, oldStartDate, *change.OldStartDate)
+		assert.Equal(t, rangeEndDate, *change.OldEndDate)
+		assert.Equal(t, newStartDate, *change.NewStartDate)
+		assert.Equal(t, rangeEndDate, *change.NewEndDate)
+	}
+}
+
+func TestBuildCustomTimelineDateChangesReturnsErrorForNilDate(t *testing.T) {
+	id := uuid.New()
+
+	changes, err := buildCustomTimelineDateChanges(
+		[]uuid.UUID{id},
+		[]*models.CustomTimelineDate{nil},
+		[]*models.CustomTimelineDate{},
+	)
+
+	assert.Nil(t, changes)
+	assert.ErrorContains(t, err, "custom timeline date at index 0 is nil")
+}
+
+func testCustomTimelineDate(
+	id uuid.UUID,
+	createdBy uuid.UUID,
+	modelPlanID uuid.UUID,
+	title string,
+	description *string,
+	dateType models.CustomTimelineDateType,
+	startDate time.Time,
+	endDate *time.Time,
+) *models.CustomTimelineDate {
+	customTimelineDate := models.NewCustomTimelineDate(createdBy, modelPlanID)
+	customTimelineDate.ID = id
+	customTimelineDate.Title = title
+	customTimelineDate.Description = description
+	customTimelineDate.DateType = dateType
+	customTimelineDate.StartDate = startDate
+	customTimelineDate.EndDate = endDate
+	return customTimelineDate
 }
