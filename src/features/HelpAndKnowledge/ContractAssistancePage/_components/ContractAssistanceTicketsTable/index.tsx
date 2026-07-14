@@ -38,8 +38,6 @@ const TICKET_TABLE_COLUMN_WIDTHS = {
 
 const DEFAULT_PAGE_SIZE = 10;
 
-const PAGE_SIZE_VALUE_ARRAY: number[] = [10, 25, 50, 100];
-
 const ContractAssistanceTicketsTable = ({
   tickets,
   variant,
@@ -300,7 +298,6 @@ const ContractAssistanceTicketsTable = ({
           className="desktop:grid-col-auto"
           pageSize={state.pageSize}
           setPageSize={setPageSize}
-          valueArray={isAdmin ? PAGE_SIZE_VALUE_ARRAY : undefined}
           suffix="rows"
         />
       </div>
