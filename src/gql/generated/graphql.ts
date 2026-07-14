@@ -5986,6 +5986,12 @@ export type WaiverAssessmentSurvey = {
   bundlesPayments?: Maybe<Scalars['Boolean']['output']>;
   bundlesPaymentsExample?: Maybe<Scalars['String']['output']>;
   bundlesPaymentsWhyNot?: Maybe<NotSelectedReason>;
+  /** The UUID of the user who marked the waiver assessment survey complete. */
+  completedBy?: Maybe<Scalars['UUID']['output']>;
+  /** The user who marked the waiver assessment survey complete. */
+  completedByUserAccount?: Maybe<UserAccount>;
+  /** The timestamp when the waiver assessment survey was marked complete. */
+  completedDts?: Maybe<Scalars['Time']['output']>;
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];

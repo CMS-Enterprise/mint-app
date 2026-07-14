@@ -38,6 +38,8 @@ SELECT
     was.impacts_managed_care_waivers_why_not,
     was.additional_medicaid_specific_waivers,
     was.status,
+    was.completed_by,
+    was.completed_dts,
     was.created_by,
     was.created_dts,
     was.modified_by,

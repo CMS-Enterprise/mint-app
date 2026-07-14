@@ -33,6 +33,8 @@ SELECT
     impacts_managed_care_waivers_why_not,
     additional_medicaid_specific_waivers,
     status,
+    completed_by,
+    completed_dts,
     created_by,
     created_dts,
     modified_by,

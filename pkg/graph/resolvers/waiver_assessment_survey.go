@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -58,6 +60,19 @@ func WaiverAssessmentSurveyUpdate(
 
 			if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, true); err != nil {
 				return nil, err
+			}
+
+			// Track who completed the survey and when, mirroring the status field.
+			// Only stamp CompletedBy/CompletedDts once per completion so re-saving an
+			// already-complete survey doesn't churn the timestamp.
+			if existing.Status == models.WaiverAssessmentSurveyStatusComplete {
+				if existing.CompletedDts == nil {
+					existing.CompletedBy = &principal.Account().ID
+					existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
+				}
+			} else {
+				existing.CompletedBy = nil
+				existing.CompletedDts = nil
 			}
 
 			updated, err := storage.WaiverAssessmentSurveyUpdate(tx, logger, existing)

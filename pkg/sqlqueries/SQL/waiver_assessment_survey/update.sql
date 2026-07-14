@@ -32,6 +32,8 @@ SET
     impacts_managed_care_waivers_why_not = :impacts_managed_care_waivers_why_not,
     additional_medicaid_specific_waivers = :additional_medicaid_specific_waivers,
     status = :status,
+    completed_by = :completed_by,
+    completed_dts = :completed_dts,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE id = :id
@@ -70,6 +72,8 @@ RETURNING
     impacts_managed_care_waivers_why_not,
     additional_medicaid_specific_waivers,
     status,
+    completed_by,
+    completed_dts,
     created_by,
     created_dts,
     modified_by,

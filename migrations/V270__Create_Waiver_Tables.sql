@@ -68,6 +68,8 @@ CREATE TABLE waiver_assessment_survey (
     additional_medicaid_specific_waivers TEXT,
 
     status WAIVER_ASSESSMENT_SURVEY_STATUS NOT NULL DEFAULT 'READY',
+    completed_by UUID REFERENCES public.user_account(id) MATCH SIMPLE,
+    completed_dts TIMESTAMP WITH TIME ZONE,
 
     -- Standard audit fields
     created_by UUID REFERENCES public.user_account(id) MATCH SIMPLE NOT NULL,
@@ -80,6 +82,8 @@ CREATE TABLE waiver_assessment_survey (
 );
 
 COMMENT ON TABLE waiver_assessment_survey IS 'Waiver assessment survey for a model plan. Tracks whether and how the model affects various Medicare and Medicaid waivers.';
+COMMENT ON COLUMN waiver_assessment_survey.completed_by IS 'The user who marked the waiver assessment survey complete.';
+COMMENT ON COLUMN waiver_assessment_survey.completed_dts IS 'The timestamp when the waiver assessment survey was marked complete.';
 
 -- Create the common_waiver table
 CREATE TABLE common_waiver (

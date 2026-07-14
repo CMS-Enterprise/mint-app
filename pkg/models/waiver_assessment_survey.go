@@ -27,6 +27,7 @@ const (
 type WaiverAssessmentSurvey struct {
 	baseStruct
 	modelPlanRelation
+	completedByRelation
 
 	// Page 3 - Medicare payment waivers
 	ModifiesMedicareSavingsPrograms        *bool              `json:"modifiesMedicareSavingsPrograms" db:"modifies_medicare_savings_programs"`

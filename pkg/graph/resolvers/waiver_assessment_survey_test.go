@@ -66,13 +66,34 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	suite.Equal(models.PlanTaskStatusInProgress, task.Status)
 
 	// Transition to COMPLETE and verify the plan task follows
-	_, err = WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
+	completed, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
 		"status": models.WaiverAssessmentSurveyStatusComplete,
 	}, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
 	suite.Equal(models.PlanTaskStatusComplete, task.Status)
+
+	// CompletedBy/CompletedDts should be stamped on completion
+	suite.NotNil(completed.CompletedBy)
+	suite.Equal(suite.testConfigs.Principal.Account().ID, *completed.CompletedBy)
+	suite.NotNil(completed.CompletedDts)
+	firstCompletedDts := *completed.CompletedDts
+
+	// Re-saving while already complete should not change CompletedDts
+	resaved, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
+		"status": models.WaiverAssessmentSurveyStatusComplete,
+	}, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
+	suite.NoError(err)
+	suite.Equal(firstCompletedDts, *resaved.CompletedDts)
+
+	// Moving back to IN_PROGRESS should clear CompletedBy/CompletedDts
+	reopened, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
+		"status": models.WaiverAssessmentSurveyStatusInProgress,
+	}, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
+	suite.NoError(err)
+	suite.Nil(reopened.CompletedBy)
+	suite.Nil(reopened.CompletedDts)
 }
 
 // TestWaiverAssessmentSurveyAutoTransition verifies that saving any answer without an explicit
