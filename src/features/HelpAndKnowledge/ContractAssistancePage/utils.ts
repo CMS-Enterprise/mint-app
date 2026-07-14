@@ -133,7 +133,11 @@ export const filterTicketsByAdminTab = (
     case 'unassigned':
       return tickets.filter(ticket => !ticket.assigneeId);
     case 'myTickets':
-      return tickets.filter(ticket => ticket.assigneeId === currentUserEuaId);
+      return tickets.filter(
+        ticket =>
+          ticket.assigneeId === currentUserEuaId &&
+          ticket.statusCode !== CtatStatus.CLOSED
+      );
     case 'closed':
       return tickets.filter(ticket => ticket.statusCode === CtatStatus.CLOSED);
     default:
