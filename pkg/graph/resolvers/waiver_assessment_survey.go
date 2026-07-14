@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -51,10 +52,30 @@ func WaiverAssessmentSurveyUpdate(
 				return nil, err
 			}
 
-			// Auto-transition from READY to IN_PROGRESS on first save, matching the
-			// DEA pattern. If the caller also sends an explicit status it will override
-			// this via ApplyChanges below.
-			if existing.Status == models.WaiverAssessmentSurveyStatusReady {
+			currentStatus := existing.Status
+			surveyChangedToComplete := false
+
+			// Handle convenience field: isComplete. This lets the FE toggle completion
+			// without knowing about the underlying status enum, matching the IDDOC
+			// questionnaire pattern.
+			if isCompleteValue, ok := changes["isComplete"]; ok {
+				isCompletePointer, ok := isCompleteValue.(*bool)
+				if !ok || isCompletePointer == nil {
+					return nil, fmt.Errorf("unable to update waiver assessment survey, isComplete is not a bool")
+				}
+
+				if *isCompletePointer {
+					surveyChangedToComplete = currentStatus != models.WaiverAssessmentSurveyStatusComplete
+					existing.Status = models.WaiverAssessmentSurveyStatusComplete
+				} else if existing.ModifiedBy != nil {
+					existing.Status = models.WaiverAssessmentSurveyStatusInProgress
+				} else {
+					existing.Status = models.WaiverAssessmentSurveyStatusReady
+				}
+
+				delete(changes, "isComplete")
+			} else if existing.Status == models.WaiverAssessmentSurveyStatusReady {
+				// Auto-transition from READY to IN_PROGRESS on first save, matching the DEA pattern.
 				existing.Status = models.WaiverAssessmentSurveyStatusInProgress
 			}
 
@@ -84,7 +105,7 @@ func WaiverAssessmentSurveyUpdate(
 				return nil, err
 			}
 
-			if updated.Status == models.WaiverAssessmentSurveyStatusComplete {
+			if surveyChangedToComplete {
 				TrySendWaiverAssessmentSurveyNotifications(ctx, updated, logger, emailService, emailAddressBook, principal, tx)
 			}
 

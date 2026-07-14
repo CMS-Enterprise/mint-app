@@ -36,13 +36,12 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	suite.NoError(err)
 	suite.NotNil(survey)
 
-	// Update fields and transition to IN_PROGRESS
+	// Update fields; saving any answer auto-transitions the survey to IN_PROGRESS
 	changes := map[string]interface{}{
 		"modifiesMedicareSavingsPrograms":        helpers.PointerTo(true),
 		"modifiesMedicareSavingsProgramsExample": helpers.PointerTo("Some example"),
 		"bundlesPayments":                        helpers.PointerTo(false),
 		"additionalMedicaidSpecificWaivers":      helpers.PointerTo("Some additional waivers"),
-		"status":                                 models.WaiverAssessmentSurveyStatusInProgress,
 	}
 
 	updated, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
@@ -65,11 +64,12 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
 	suite.Equal(models.PlanTaskStatusInProgress, task.Status)
 
-	// Transition to COMPLETE and verify the plan task follows
+	// Transition to COMPLETE via the isComplete convenience field and verify the plan task follows
 	completed, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
-		"status": models.WaiverAssessmentSurveyStatusComplete,
+		"isComplete": helpers.PointerTo(true),
 	}, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
+	suite.Equal(models.WaiverAssessmentSurveyStatusComplete, completed.Status)
 
 	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
 	suite.Equal(models.PlanTaskStatusComplete, task.Status)
@@ -82,16 +82,18 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 
 	// Re-saving while already complete should not change CompletedDts
 	resaved, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
-		"status": models.WaiverAssessmentSurveyStatusComplete,
+		"isComplete": helpers.PointerTo(true),
 	}, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 	suite.Equal(firstCompletedDts, *resaved.CompletedDts)
 
-	// Moving back to IN_PROGRESS should clear CompletedBy/CompletedDts
+	// Moving back to incomplete should clear CompletedBy/CompletedDts and reopen to IN_PROGRESS
+	// (since the survey has already been modified by a real user)
 	reopened, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
-		"status": models.WaiverAssessmentSurveyStatusInProgress,
+		"isComplete": helpers.PointerTo(false),
 	}, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
+	suite.Equal(models.WaiverAssessmentSurveyStatusInProgress, reopened.Status)
 	suite.Nil(reopened.CompletedBy)
 	suite.Nil(reopened.CompletedDts)
 }
