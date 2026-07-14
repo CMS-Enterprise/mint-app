@@ -489,7 +489,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     formType: TranslationFormType.CHECKBOX,
     order: 8.02,
     options: {
-      true: 'This questionnaire (4i and ACO-OS) is complete.',
+      true: 'This questionnaire (waiver assessment survey) is complete.',
       false: 'No'
     },
     hideFromReadonly: true
