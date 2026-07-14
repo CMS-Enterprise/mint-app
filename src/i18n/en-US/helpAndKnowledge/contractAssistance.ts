@@ -164,7 +164,7 @@ const contractAssistance = {
         label: 'Contract name'
       },
       contractNumber: {
-        label: 'Contract number'
+        label: 'Contract number (if applicable)'
       },
       contractType: {
         label: 'Contract type',
