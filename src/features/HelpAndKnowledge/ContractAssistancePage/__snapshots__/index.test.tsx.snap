@@ -465,6 +465,11 @@ exports[`ContractAssistancePage > matches snapshot 1`] = `
                 name="tablePageSize"
               >
                 <option
+                  value="5"
+                >
+                  Show 5 rows
+                </option>
+                <option
                   value="10"
                 >
                   Show 10 rows
