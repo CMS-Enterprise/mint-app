@@ -14,6 +14,7 @@ import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
 
+import MINTAlert from 'components/Alert';
 import PageLoading from 'components/PageLoading';
 import Tooltip from 'components/Tooltip';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -71,7 +72,9 @@ const ReadOnlyModelTimeline = ({
     performancePeriodEnds,
     wrapUpEnds,
     highLevelNote,
-    status
+    status,
+    customDatesNote,
+    customTimelineDates
   } = allTimelineData;
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -109,139 +112,224 @@ const ReadOnlyModelTimeline = ({
               filteredView={filteredView}
             />
           ) : (
-            <ProcessList className="read-only-model-plan__timeline margin-left-neg-1">
-              <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                <TimelineItem
-                  label={timelineT('completeICIP.label')}
-                  value={completeICIP}
-                />
-              </ProcessListItem>
+            <div>
+              <div className="margin-bottom-4">
+                <h3 className="margin-y-0">
+                  {timelineMiscT('basicHighLevelTimeline')}
+                </h3>
 
-              <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                <div className="display-flex flex-align-top">
-                  <ProcessListHeading
-                    type="p"
-                    className="mint-text-normal line-height-sans-4"
-                  >
-                    {timelineMiscT('clearance')}
-                  </ProcessListHeading>
-                  <span className="margin-top-0 position-relative text-normal">
-                    <Tooltip
-                      label={timelineMiscT('clearanceInfo')}
-                      position="right"
-                      className="margin-left-05"
+                <ProcessList className="read-only-model-plan__timeline margin-left-neg-1">
+                  <ProcessListItem className="read-only-model-plan__timeline__list-item">
+                    <TimelineItem
+                      label={timelineT('completeICIP.label')}
+                      value={completeICIP}
+                    />
+                  </ProcessListItem>
+
+                  <ProcessListItem className="read-only-model-plan__timeline__list-item">
+                    <div className="display-flex flex-align-top">
+                      <ProcessListHeading
+                        type="p"
+                        className="mint-text-normal line-height-sans-4"
+                      >
+                        {timelineMiscT('clearance')}
+                      </ProcessListHeading>
+                      <span className="margin-top-0 position-relative text-normal">
+                        <Tooltip
+                          label={timelineMiscT('clearanceInfo')}
+                          position="right"
+                          className="margin-left-05"
+                        >
+                          <Icon.Info
+                            className="text-base-light"
+                            aria-label="info"
+                          />
+                        </Tooltip>
+                      </span>
+                    </div>
+
+                    <div className="mobile-lg:display-flex">
+                      <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                        <TimelineItem
+                          label={timelineT('clearanceStarts.label')}
+                          value={clearanceStarts}
+                        />
+                      </div>
+
+                      <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                        <TimelineItem
+                          label={timelineT('clearanceEnds.label')}
+                          value={clearanceEnds}
+                        />
+                      </div>
+                    </div>
+                  </ProcessListItem>
+
+                  <ProcessListItem className="read-only-model-plan__timeline__list-item">
+                    <TimelineItem
+                      label={timelineT('announced.label')}
+                      value={announced}
+                    />
+                  </ProcessListItem>
+
+                  <ProcessListItem className="read-only-model-plan__timeline__list-item">
+                    <ProcessListHeading
+                      type="p"
+                      className="mint-text-normal line-height-sans-4"
                     >
-                      <Icon.Info
-                        className="text-base-light"
-                        aria-label="info"
-                      />
-                    </Tooltip>
-                  </span>
-                </div>
+                      {timelineMiscT('applicationPeriod')}
+                    </ProcessListHeading>
 
-                <div className="mobile-lg:display-flex">
-                  <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                    <div className="mobile-lg:display-flex">
+                      <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                        <TimelineItem
+                          label={timelineT('applicationsStart.label')}
+                          value={applicationsStart}
+                        />
+                      </div>
+
+                      <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                        <TimelineItem
+                          label={timelineT('applicationsEnd.label')}
+                          value={applicationsEnd}
+                        />
+                      </div>
+                    </div>
+                  </ProcessListItem>
+
+                  <ProcessListItem className="read-only-model-plan__timeline__list-item">
+                    <div className="display-flex flex-align-top">
+                      <ProcessListHeading
+                        type="p"
+                        className="mint-text-normal line-height-sans-4"
+                      >
+                        {timelineMiscT('demonstrationPerformance')}
+                      </ProcessListHeading>
+                      <span className="margin-top-0 position-relative text-normal">
+                        <Tooltip
+                          label={timelineMiscT('demonstrationPerformanceInfo')}
+                          position="right"
+                          className="margin-left-05"
+                        >
+                          <Icon.Info
+                            className="text-base-light"
+                            aria-label="info"
+                          />
+                        </Tooltip>
+                      </span>
+                    </div>
+
+                    <div className="mobile-lg:display-flex">
+                      <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                        <TimelineItem
+                          label={timelineT('performancePeriodStarts.label')}
+                          value={performancePeriodStarts}
+                        />
+                      </div>
+
+                      <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                        <TimelineItem
+                          label={timelineT('performancePeriodEnds.label')}
+                          value={performancePeriodEnds}
+                        />
+                      </div>
+                    </div>
+                  </ProcessListItem>
+
+                  <ProcessListItem className="read-only-model-plan__timeline__list-item padding-bottom-2">
                     <TimelineItem
-                      label={timelineT('clearanceStarts.label')}
-                      value={clearanceStarts}
+                      label={timelineT('wrapUpEnds.label')}
+                      value={wrapUpEnds}
                     />
-                  </div>
+                  </ProcessListItem>
+                </ProcessList>
 
-                  <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineItem
-                      label={timelineT('clearanceEnds.label')}
-                      value={clearanceEnds}
-                    />
-                  </div>
-                </div>
-              </ProcessListItem>
-
-              <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                <TimelineItem
-                  label={timelineT('announced.label')}
-                  value={announced}
+                <ReadOnlySection
+                  field="highLevelNote"
+                  translations={modelTimelineConfig}
+                  values={{ highLevelNote }}
+                  filteredView={filteredView}
                 />
-              </ProcessListItem>
+              </div>
 
-              <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                <ProcessListHeading
-                  type="p"
-                  className="mint-text-normal line-height-sans-4"
-                >
-                  {timelineMiscT('applicationPeriod')}
-                </ProcessListHeading>
+              <div>
+                <h3 className="margin-y-0">
+                  {timelineMiscT('additionalModelDates')}
+                </h3>
 
-                <div className="mobile-lg:display-flex">
-                  <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineItem
-                      label={timelineT('applicationsStart.label')}
-                      value={applicationsStart}
-                    />
-                  </div>
-
-                  <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineItem
-                      label={timelineT('applicationsEnd.label')}
-                      value={applicationsEnd}
-                    />
-                  </div>
-                </div>
-              </ProcessListItem>
-
-              <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                <div className="display-flex flex-align-top">
-                  <ProcessListHeading
-                    type="p"
-                    className="mint-text-normal line-height-sans-4"
+                {customTimelineDates.length === 0 && (
+                  <MINTAlert
+                    type="info"
+                    slim
+                    className="margin-top-3 margin-bottom-2"
                   >
-                    {timelineMiscT('demonstrationPerformance')}
-                  </ProcessListHeading>
-                  <span className="margin-top-0 position-relative text-normal">
-                    <Tooltip
-                      label={timelineMiscT('demonstrationPerformanceInfo')}
-                      position="right"
-                      className="margin-left-05"
-                    >
-                      <Icon.Info
-                        className="text-base-light"
-                        aria-label="info"
-                      />
-                    </Tooltip>
-                  </span>
-                </div>
+                    {timelineMiscT('noAdditionalModelDates')}
+                  </MINTAlert>
+                )}
 
-                <div className="mobile-lg:display-flex">
-                  <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineItem
-                      label={timelineT('performancePeriodStarts.label')}
-                      value={performancePeriodStarts}
-                    />
-                  </div>
+                {customTimelineDates.length > 0 && (
+                  <ProcessList className="read-only-model-plan__timeline maxw-full margin-left-neg-105">
+                    {customTimelineDates.map(customDate => (
+                      <ProcessListItem
+                        className="read-only-model-plan__timeline__list-item"
+                        key={customDate.id}
+                      >
+                        {customDate.dateType === 'SINGLE' && (
+                          <TimelineItem
+                            label={customDate.title}
+                            subLabel={customDate.description || ''}
+                            value={customDate.startDate}
+                          />
+                        )}
 
-                  <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
-                    <TimelineItem
-                      label={timelineT('performancePeriodEnds.label')}
-                      value={performancePeriodEnds}
-                    />
-                  </div>
-                </div>
-              </ProcessListItem>
+                        {customDate.dateType === 'RANGE' && (
+                          <>
+                            <div className="line-height-sans-3">
+                              <ProcessListHeading
+                                type="p"
+                                className="mint-text-normal"
+                              >
+                                {customDate.title}
+                              </ProcessListHeading>
 
-              <ProcessListItem className="read-only-model-plan__timeline__list-item">
-                <TimelineItem
-                  label={timelineT('wrapUpEnds.label')}
-                  value={wrapUpEnds}
+                              {customDate.description && (
+                                <p className="margin-top-0 margin-bottom-1 text-base-dark">
+                                  {customDate.description}
+                                </p>
+                              )}
+                            </div>
+
+                            <div className="mobile-lg:display-flex">
+                              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                                <TimelineItem
+                                  label={timelineMiscT('startDate')}
+                                  value={customDate.startDate}
+                                />
+                              </div>
+
+                              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
+                                <TimelineItem
+                                  label={timelineMiscT('endDate')}
+                                  value={customDate.endDate}
+                                />
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </ProcessListItem>
+                    ))}
+                  </ProcessList>
+                )}
+
+                <ReadOnlySection
+                  field="customDatesNote"
+                  translations={modelTimelineConfig}
+                  values={{ customDatesNote }}
+                  filteredView={filteredView}
                 />
-              </ProcessListItem>
-            </ProcessList>
+              </div>
+            </div>
           )}
-
-          <ReadOnlySection
-            field="highLevelNote"
-            translations={modelTimelineConfig}
-            values={{ highLevelNote }}
-            filteredView={filteredView}
-          />
         </>
       )}
     </div>
@@ -262,9 +350,11 @@ const dateOrNoAnswer = (value: string | null | undefined) => {
 
 const TimelineItem = ({
   label,
+  subLabel = '',
   value
 }: {
   label: string;
+  subLabel?: string;
   value: string | null | undefined;
 }) => (
   <>
@@ -274,6 +364,12 @@ const TimelineItem = ({
     >
       {label}
     </ProcessListHeading>
+
+    {subLabel && (
+      <p className="line-height-sans-4 margin-top-0 margin-bottom-1 text-base-dark">
+        {subLabel}
+      </p>
+    )}
 
     <p className="mint-text-normal  margin-y-0 line-height-sans-4">
       {dateOrNoAnswer(value)}
