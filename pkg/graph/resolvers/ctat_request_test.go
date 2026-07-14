@@ -647,10 +647,16 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 	suite.Require().NoError(err)
 	suite.Require().NotNil(requesterAccount)
 
+	assignedAdminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+	suite.Require().NotNil(assignedAdminPrincipal)
+	suite.Require().NotNil(assignedAdminPrincipal.Account())
+
 	adminCtx := appcontext.WithPrincipal(
 		suite.testConfigs.Context,
-		suite.getTestPrincipal(suite.testConfigs.Store, "ADMI"),
+		assignedAdminPrincipal,
 	)
+	assignedAdminID := assignedAdminPrincipal.Account().ID
+	originalRequest.AssignedAdmin = &assignedAdminID
 
 	updatedRequest := *originalRequest
 	notes := "This is a substantial update."
@@ -673,6 +679,18 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
 			gomock.Eq([]string{"test.ctat.team@mint.dev.cms.gov"}),
+			gomock.Nil(),
+			gomock.Any(),
+			gomock.Eq("text/html"),
+			gomock.Any(),
+		).
+		Times(1)
+
+	mockEmailService.
+		EXPECT().
+		Send(
+			gomock.Eq("unit-test-execution@mint.cms.gov"),
+			gomock.Eq([]string{assignedAdminPrincipal.Account().Email}),
 			gomock.Nil(),
 			gomock.Any(),
 			gomock.Eq("text/html"),
