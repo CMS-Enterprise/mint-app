@@ -55,6 +55,11 @@ export default gql(/* GraphQL */ `
           id
           status
           isComplete
+          completedByUserAccount {
+            id
+            commonName
+          }
+          completedDts
           modifiedDts
           createdDts
           waivers {
