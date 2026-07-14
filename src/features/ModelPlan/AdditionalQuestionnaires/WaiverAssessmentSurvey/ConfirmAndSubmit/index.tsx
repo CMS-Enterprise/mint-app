@@ -28,6 +28,7 @@ import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
+import { formatDateLocal } from 'utils/date';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
@@ -40,8 +41,19 @@ import { isWaiverSurveyQuestionsComplete } from '../util';
 
 type ConfirmAndSubmitForm = Pick<
   GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'],
-  'id' | 'isComplete'
+  'id' | 'isComplete' | 'completedByUserAccount' | 'completedDts'
 >;
+
+const DEFAULT_FORM_VALUES: ConfirmAndSubmitForm = {
+  id: '',
+  isComplete: false,
+  completedByUserAccount: {
+    __typename: 'UserAccount',
+    id: '',
+    commonName: ''
+  },
+  completedDts: ''
+};
 
 const ConfirmAndSubmit = () => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
@@ -83,10 +95,7 @@ const ConfirmAndSubmit = () => {
 
   const mappedFormData = mapDefaultFormValues<ConfirmAndSubmitForm>(
     waiverAssessmentSurveyData,
-    {
-      id: waiverAssessmentSurveyData?.id || '',
-      isComplete: Boolean(waiverAssessmentSurveyData?.isComplete)
-    }
+    DEFAULT_FORM_VALUES
   );
 
   const methods = useForm<ConfirmAndSubmitForm>({
@@ -162,6 +171,7 @@ const ConfirmAndSubmit = () => {
           </p>
         </SummaryBoxContent>
       </SummaryBox>
+
       <FormProvider {...methods}>
         <MutationErrorModal
           isOpen={mutationError.isModalOpen}
@@ -193,21 +203,32 @@ const ConfirmAndSubmit = () => {
               control={control}
               render={({ field: { ref, ...field } }) => (
                 <FormGroup className="margin-y-0">
-                  <FormGroup className="margin-0">
-                    <CheckboxField
-                      name={field.name}
-                      id={convertCamelCaseToKebabCase(field.name)}
-                      data-testid={convertCamelCaseToKebabCase(field.name)}
-                      checked={field.value === true}
-                      // disabled={!isSurveyComplete}
-                      value="true"
-                      label={isCompleteConfig.options.true}
-                      onChange={e => {
-                        field.onChange(e.target.checked);
-                      }}
-                      onBlur={field.onBlur}
-                    />
-                  </FormGroup>
+                  <CheckboxField
+                    name={field.name}
+                    id={convertCamelCaseToKebabCase(field.name)}
+                    data-testid={convertCamelCaseToKebabCase(field.name)}
+                    checked={field.value === true}
+                    disabled={!isSurveyComplete}
+                    value="true"
+                    label={isCompleteConfig.options.true}
+                    onChange={e => {
+                      field.onChange(e.target.checked);
+                    }}
+                    onBlur={field.onBlur}
+                  />
+
+                  {mappedFormData.completedByUserAccount?.commonName &&
+                    mappedFormData.completedDts && (
+                      <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
+                        {miscellaneousT('markedComplete', {
+                          user: mappedFormData.completedByUserAccount.commonName
+                        })}
+                        {formatDateLocal(
+                          mappedFormData.completedDts,
+                          'MM/dd/yyyy'
+                        )}
+                      </p>
+                    )}
                 </FormGroup>
               )}
             />
