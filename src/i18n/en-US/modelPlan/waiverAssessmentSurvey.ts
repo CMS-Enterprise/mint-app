@@ -489,7 +489,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     formType: TranslationFormType.CHECKBOX,
     order: 8.02,
     options: {
-      true: 'This questionnaire (4i and ACO-OS) is complete.',
+      true: 'This questionnaire (waiver assessment survey) is complete.',
       false: 'No'
     },
     hideFromReadonly: true
@@ -651,7 +651,7 @@ const waiverAssessmentSurveyMisc = {
   modelHasNotSelectedWaiver: 'This model has not yet selected any waivers.',
   waiverType: {
     MEDICARE_PAYMENT: 'Medicare payment waivers',
-    PROGRAM_MEDICARE_BES: 'Program waivers - Medicare BEs',
+    PROGRAM_MEDICARE_BE: 'Program waivers - Medicare BEs',
     MEDICAID_PAYMENT: 'Medicaid payment waivers'
   }
 };
