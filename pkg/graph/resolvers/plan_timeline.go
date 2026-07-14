@@ -141,14 +141,11 @@ func UpdatePlanTimeline(
 				return nil, err
 			}
 
-			customTimelineDateChanges, err = buildCustomTimelineDateChanges(
+			customTimelineDateChanges = buildCustomTimelineDateChanges(
 				customTimelineUpdateIDs,
 				existingCustomTimelineDates,
 				updatedCustomTimelineDates,
 			)
-			if err != nil {
-				return nil, err
-			}
 		}
 
 		return updatedTimeline, nil

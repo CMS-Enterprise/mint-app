@@ -672,21 +672,23 @@ func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
 			expectedIDs: []uuid.UUID{},
 		},
 		{
-			name: "nil update returns error",
+			name: "nil update is skipped",
 			updates: []*model.CustomTimelineDateUpdateDatesInput{
 				nil,
 			},
+			expectedIDs: []uuid.UUID{},
 		},
 		{
-			name: "missing ID returns error",
+			name: "missing ID is skipped",
 			updates: []*model.CustomTimelineDateUpdateDatesInput{
 				{
 					ID: uuid.Nil,
 				},
 			},
+			expectedIDs: []uuid.UUID{},
 		},
 		{
-			name: "duplicate ID returns error",
+			name: "duplicate ID is skipped",
 			updates: []*model.CustomTimelineDateUpdateDatesInput{
 				{
 					ID: id,
@@ -695,6 +697,7 @@ func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
 					ID: id,
 				},
 			},
+			expectedIDs: []uuid.UUID{id},
 		},
 		{
 			name: "valid updates return IDs in order",
@@ -770,13 +773,12 @@ func TestBuildCustomTimelineDateChangesReturnsOnlyChangedDates(t *testing.T) {
 		nil,
 	)
 
-	changes, err := buildCustomTimelineDateChanges(
+	changes := buildCustomTimelineDateChanges(
 		[]uuid.UUID{unchangedID, changedID},
 		[]*models.CustomTimelineDate{existingChangedDate, existingUnchangedDate},
 		[]*models.CustomTimelineDate{updatedChangedDate, updatedUnchangedDate},
 	)
 
-	assert.NoError(t, err)
 	if assert.Len(t, changes, 1) {
 		change := changes[0]
 		assert.True(t, change.IsChanged)
@@ -790,17 +792,16 @@ func TestBuildCustomTimelineDateChangesReturnsOnlyChangedDates(t *testing.T) {
 	}
 }
 
-func TestBuildCustomTimelineDateChangesReturnsErrorForNilDate(t *testing.T) {
+func TestBuildCustomTimelineDateChangesSkipsNilUpdates(t *testing.T) {
 	id := uuid.New()
 
-	changes, err := buildCustomTimelineDateChanges(
+	changes := buildCustomTimelineDateChanges(
 		[]uuid.UUID{id},
 		[]*models.CustomTimelineDate{nil},
 		[]*models.CustomTimelineDate{},
 	)
 
-	assert.Nil(t, changes)
-	assert.ErrorContains(t, err, "custom timeline date at index 0 is nil")
+	assert.Empty(t, changes)
 }
 
 func testCustomTimelineDate(

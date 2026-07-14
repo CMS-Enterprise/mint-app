@@ -100,31 +100,25 @@ func buildCustomTimelineDateChanges(
 	updateIDs []uuid.UUID,
 	existingCustomTimelineDates []*models.CustomTimelineDate,
 	updatedCustomTimelineDates []*models.CustomTimelineDate,
-) ([]email.CustomTimelineDateChange, error) {
+) []email.CustomTimelineDateChange {
 	if len(updateIDs) == 0 {
-		return []email.CustomTimelineDateChange{}, nil
+		return []email.CustomTimelineDateChange{}
 	}
 
-	existingCustomTimelineDatesByID, err := customTimelineDatesByID(existingCustomTimelineDates)
-	if err != nil {
-		return nil, err
-	}
+	existingCustomTimelineDatesByID := customTimelineDatesByID(existingCustomTimelineDates)
 
-	updatedCustomTimelineDatesByID, err := customTimelineDatesByID(updatedCustomTimelineDates)
-	if err != nil {
-		return nil, err
-	}
+	updatedCustomTimelineDatesByID := customTimelineDatesByID(updatedCustomTimelineDates)
 
 	customTimelineDateChanges := make([]email.CustomTimelineDateChange, 0, len(updateIDs))
 	for _, id := range updateIDs {
 		existingCustomTimelineDate, ok := existingCustomTimelineDatesByID[id]
 		if !ok {
-			return nil, fmt.Errorf("custom timeline date with id %s was not found before update", id)
+			continue
 		}
 
 		updatedCustomTimelineDate, ok := updatedCustomTimelineDatesByID[id]
 		if !ok {
-			return nil, fmt.Errorf("custom timeline date with id %s was not returned after update", id)
+			continue
 		}
 
 		customTimelineDateChange := buildCustomTimelineDateChange(existingCustomTimelineDate, updatedCustomTimelineDate)
@@ -133,21 +127,21 @@ func buildCustomTimelineDateChanges(
 		}
 	}
 
-	return customTimelineDateChanges, nil
+	return customTimelineDateChanges
 }
 
-func customTimelineDatesByID(customTimelineDates []*models.CustomTimelineDate) (map[uuid.UUID]*models.CustomTimelineDate, error) {
+func customTimelineDatesByID(customTimelineDates []*models.CustomTimelineDate) map[uuid.UUID]*models.CustomTimelineDate {
 	customTimelineDatesByID := make(map[uuid.UUID]*models.CustomTimelineDate, len(customTimelineDates))
 
-	for index, customTimelineDate := range customTimelineDates {
-		if customTimelineDate == nil {
-			return nil, fmt.Errorf("custom timeline date at index %d is nil", index)
+	for _, customTimelineDate := range customTimelineDates {
+		if customTimelineDate == nil || customTimelineDate.ID == uuid.Nil {
+			continue
 		}
 
 		customTimelineDatesByID[customTimelineDate.ID] = customTimelineDate
 	}
 
-	return customTimelineDatesByID, nil
+	return customTimelineDatesByID
 }
 
 func buildCustomTimelineDateChange(
