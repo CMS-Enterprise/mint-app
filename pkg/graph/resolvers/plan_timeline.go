@@ -132,9 +132,14 @@ func UpdatePlanTimeline(
 		// update custom dates separately
 		customTimelineUpdateIDs, dedupedCustomTimelineUpdates := getDedupedCustomTimelineDateUpdates(customTimelineUpdates)
 		if len(dedupedCustomTimelineUpdates) > 0 {
-			existingCustomTimelineDates, err := storage.CustomTimelineDateGetByIDLoader(tx, customTimelineUpdateIDs)
-			if err != nil {
-				return nil, err
+
+			existingCustomTimelineDates, errs := loaders.CustomTimelineDate.ByID.LoadMany(ctx, customTimelineUpdateIDs)
+			if errs != nil {
+				if len(errs) > 0 {
+					return nil, errs[0]
+				}
+
+				return nil, errors.New("problem getting existing custom timeline dates when updating plan timeline")
 			}
 
 			updatedCustomTimelineDates, err := storage.CustomTimelineDateUpdateDatesByIDsAndDates(tx, principal.Account().ID, dedupedCustomTimelineUpdates)
