@@ -56,7 +56,6 @@ func CustomTimelineDateCreate(
 	}
 
 	processCustomTimelineDateCreatedEmails(
-		ctx,
 		logger,
 		store,
 		principal,
@@ -69,7 +68,6 @@ func CustomTimelineDateCreate(
 }
 
 func processCustomTimelineDateCreatedEmails(
-	ctx context.Context,
 	logger *zap.Logger,
 	store *storage.Store,
 	principal authentication.Principal,
@@ -90,38 +88,43 @@ func processCustomTimelineDateCreatedEmails(
 		return
 	}
 
+	modelPlan, err := ModelPlanGetByID(logger, customTimelineDate.ModelPlanID, store)
+	if err != nil {
+		logger.Error("unable to load model plan for custom timeline date created email",
+			zap.Error(err),
+			zap.String("customTimelineDateID", customTimelineDate.ID.String()),
+			zap.String("modelPlanID", customTimelineDate.ModelPlanID.String()),
+		)
+		return
+	}
+
 	go func() {
 		err := sendCustomTimelineDateCreatedEmails(
-			ctx,
 			store,
 			emailService,
 			addressBook,
 			customTimelineDate,
 			principalAccount.CommonName,
+			modelPlan,
 		)
 		if err != nil {
 			logger.Error("failed to send custom timeline date created email",
+				zap.Error(err),
 				zap.String("customTimelineDateID", customTimelineDate.ID.String()),
 				zap.String("modelPlanID", customTimelineDate.ModelPlanID.String()),
-				zap.Error(err),
 			)
 		}
 	}()
 }
 
 func sendCustomTimelineDateCreatedEmails(
-	ctx context.Context,
 	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	customTimelineDate *models.CustomTimelineDate,
 	createdByUserName string,
+	modelPlan *models.ModelPlan,
 ) error {
-	modelPlan, err := loaders.ModelPlan.GetByID.Load(ctx, customTimelineDate.ModelPlanID)
-	if err != nil {
-		return fmt.Errorf("unable to load model plan for custom timeline date created email: %w", err)
-	}
-
 	subjectContent := email.CustomTimelineDateCreatedSubjectContent{
 		ModelName: modelPlan.ModelName,
 	}
