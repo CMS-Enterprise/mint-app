@@ -36,6 +36,10 @@ const TICKET_TABLE_COLUMN_WIDTHS = {
   status: 230
 };
 
+const DEFAULT_PAGE_SIZE = 10;
+
+const PAGE_SIZE_VALUE_ARRAY: number[] = [10, 25, 50, 100];
+
 const ContractAssistanceTicketsTable = ({
   tickets,
   variant,
@@ -124,8 +128,6 @@ const ContractAssistanceTicketsTable = ({
     [t, onTicketClick, isAdmin]
   );
 
-  const defaultPageSize = isAdmin ? 5 : 10;
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -157,7 +159,7 @@ const ContractAssistanceTicketsTable = ({
       autoResetPage: true,
       initialState: {
         pageIndex: 0,
-        pageSize: defaultPageSize,
+        pageSize: DEFAULT_PAGE_SIZE,
         sortBy: useMemo(() => [{ id: 'ticketId', asc: true }], [])
       }
     },
@@ -298,6 +300,7 @@ const ContractAssistanceTicketsTable = ({
           className="desktop:grid-col-auto"
           pageSize={state.pageSize}
           setPageSize={setPageSize}
+          valueArray={isAdmin ? PAGE_SIZE_VALUE_ARRAY : undefined}
           suffix="rows"
         />
       </div>
