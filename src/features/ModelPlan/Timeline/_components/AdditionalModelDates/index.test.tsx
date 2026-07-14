@@ -3,6 +3,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import { Formik } from 'formik';
 import { CustomTimelineDateType } from 'gql/generated/graphql';
+import MockedProvider from 'tests/MockedProvider';
 
 import AdditionalModelDates, { type CustomTimelineDates } from '.';
 
@@ -34,7 +35,10 @@ describe('AdditionalModelDates', () => {
         {
           path: '/',
           element: (
-            <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            <Formik
+              initialValues={{ customTimelineDates: initialValues }}
+              onSubmit={onSubmit}
+            >
               <AdditionalModelDates
                 initialCustomDates={initialValues}
                 customTimelineDates={initialValues}
@@ -49,7 +53,11 @@ describe('AdditionalModelDates', () => {
       }
     );
 
-    const { getByText } = render(<RouterProvider router={router} />);
+    const { getByText } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
 
     expect(getByText('title 1')).toBeInTheDocument();
     expect(getByText('second title')).toBeInTheDocument();
@@ -61,7 +69,10 @@ describe('AdditionalModelDates', () => {
         {
           path: '/',
           element: (
-            <Formik initialValues={[]} onSubmit={onSubmit}>
+            <Formik
+              initialValues={{ customTimelineDates: [] }}
+              onSubmit={onSubmit}
+            >
               <AdditionalModelDates
                 initialCustomDates={[]}
                 customTimelineDates={[]}
@@ -77,7 +88,9 @@ describe('AdditionalModelDates', () => {
     );
 
     const { getByText, queryByText } = render(
-      <RouterProvider router={router} />
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     expect(
@@ -95,7 +108,10 @@ describe('AdditionalModelDates', () => {
         {
           path: '/',
           element: (
-            <Formik initialValues={initialValues} onSubmit={onSubmit}>
+            <Formik
+              initialValues={{ customTimelineDates: initialValues }}
+              onSubmit={onSubmit}
+            >
               <AdditionalModelDates
                 initialCustomDates={initialValues}
                 customTimelineDates={initialValues}
@@ -110,7 +126,11 @@ describe('AdditionalModelDates', () => {
       }
     );
 
-    const { asFragment } = render(<RouterProvider router={router} />);
+    const { asFragment } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 });

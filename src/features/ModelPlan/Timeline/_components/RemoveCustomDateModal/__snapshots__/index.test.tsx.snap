@@ -56,7 +56,7 @@ exports[`RemoveCustomDateModal Component > matches snapshot 1`] = `
         <button
           class="usa-button margin-right-3 margin-top-0 bg-error"
           data-testid="button"
-          type="submit"
+          type="button"
         >
           Remove date
         </button>

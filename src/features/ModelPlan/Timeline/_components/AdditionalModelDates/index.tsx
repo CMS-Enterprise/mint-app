@@ -100,6 +100,10 @@ const AdditionalModelDates = ({
                   const isSingleDate =
                     customDate.dateType === CustomTimelineDateType.SINGLE;
 
+                  const initialCustomDate = initialCustomDates.find(
+                    initialDate => initialDate.id === customDate.id
+                  );
+
                   return (
                     <ProcessListItem
                       className="read-only-model-plan__timeline__list-item maxw-full"
@@ -155,7 +159,7 @@ const AdditionalModelDates = ({
                           boldLabel={false}
                           warning={false}
                           shouldShowWarning={
-                            initialCustomDates[index].startDate !==
+                            initialCustomDate?.startDate !==
                             customDate.startDate
                           }
                         />
@@ -172,8 +176,7 @@ const AdditionalModelDates = ({
                             boldLabel={false}
                             warning={false}
                             shouldShowWarning={
-                              initialCustomDates[index].endDate !==
-                              customDate.endDate
+                              initialCustomDate?.endDate !== customDate.endDate
                             }
                           />
                         )}
@@ -181,9 +184,9 @@ const AdditionalModelDates = ({
 
                       {(isDateInPast(customDate.startDate) ||
                         isDateInPast(customDate.endDate)) &&
-                        (initialCustomDates[index].startDate !==
+                        (initialCustomDate?.startDate !==
                           customDate.startDate ||
-                          initialCustomDates[index].endDate !==
+                          initialCustomDate?.endDate !==
                             customDate.endDate) && (
                           <Alert
                             type="warning"

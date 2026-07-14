@@ -72,7 +72,7 @@ const RemoveCustomDateModal = ({
 
         <div className="display-flex mint-modal__footer">
           <Button
-            type="submit"
+            type="button"
             className="margin-right-3 margin-top-0 bg-error"
             onClick={() => removeCustomDate(customDateID)}
           >
