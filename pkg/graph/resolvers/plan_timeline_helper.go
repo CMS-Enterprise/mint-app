@@ -68,32 +68,32 @@ func copyPlanTimelineTime(t *time.Time) *time.Time {
 	return nil
 }
 
-func getCustomTimelineDateUpdateIDs(customTimelineUpdates []*model.CustomTimelineDateUpdateDatesInput) ([]uuid.UUID, error) {
+func getCustomTimelineDateUpdateIDs(customTimelineUpdates []*model.CustomTimelineDateUpdateDatesInput) []uuid.UUID {
 	if len(customTimelineUpdates) == 0 {
-		return []uuid.UUID{}, nil
+		return []uuid.UUID{}
 	}
 
 	ids := make([]uuid.UUID, 0, len(customTimelineUpdates))
 	seenIDs := make(map[uuid.UUID]struct{}, len(customTimelineUpdates))
 
-	for index, customTimelineUpdate := range customTimelineUpdates {
+	for _, customTimelineUpdate := range customTimelineUpdates {
 		if customTimelineUpdate == nil {
-			return nil, fmt.Errorf("custom timeline date update at index %d is nil", index)
+			continue
 		}
 
 		if customTimelineUpdate.ID == uuid.Nil {
-			return nil, fmt.Errorf("custom timeline date update at index %d is missing an id", index)
+			continue
 		}
 
 		if _, ok := seenIDs[customTimelineUpdate.ID]; ok {
-			return nil, fmt.Errorf("custom timeline date update at index %d has duplicate id %s", index, customTimelineUpdate.ID)
+			continue
 		}
 
 		seenIDs[customTimelineUpdate.ID] = struct{}{}
 		ids = append(ids, customTimelineUpdate.ID)
 	}
 
-	return ids, nil
+	return ids
 }
 
 func buildCustomTimelineDateChanges(

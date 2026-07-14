@@ -91,11 +91,6 @@ func UpdatePlanTimeline(
 		return nil, err
 	}
 
-	customTimelineUpdateIDs, err := getCustomTimelineDateUpdateIDs(customTimelineUpdates)
-	if err != nil {
-		return nil, err
-	}
-
 	var customTimelineDateChanges []email.CustomTimelineDateChange
 
 	planTimeline, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
@@ -135,7 +130,7 @@ func UpdatePlanTimeline(
 		}
 
 		// update custom dates separately
-		if len(customTimelineUpdates) > 0 {
+		if customTimelineUpdateIDs := getCustomTimelineDateUpdateIDs(customTimelineUpdates); len(customTimelineUpdates) > 0 {
 			existingCustomTimelineDates, err := storage.CustomTimelineDateGetByIDLoader(tx, customTimelineUpdateIDs)
 			if err != nil {
 				return nil, err

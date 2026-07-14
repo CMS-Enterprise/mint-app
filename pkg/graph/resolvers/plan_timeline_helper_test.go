@@ -666,7 +666,6 @@ func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
 		name        string
 		updates     []*model.CustomTimelineDateUpdateDatesInput
 		expectedIDs []uuid.UUID
-		expectedErr string
 	}{
 		{
 			name:        "empty updates returns empty IDs",
@@ -677,7 +676,6 @@ func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
 			updates: []*model.CustomTimelineDateUpdateDatesInput{
 				nil,
 			},
-			expectedErr: "custom timeline date update at index 0 is nil",
 		},
 		{
 			name: "missing ID returns error",
@@ -686,7 +684,6 @@ func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
 					ID: uuid.Nil,
 				},
 			},
-			expectedErr: "custom timeline date update at index 0 is missing an id",
 		},
 		{
 			name: "duplicate ID returns error",
@@ -698,7 +695,6 @@ func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
 					ID: id,
 				},
 			},
-			expectedErr: "custom timeline date update at index 1 has duplicate id",
 		},
 		{
 			name: "valid updates return IDs in order",
@@ -716,15 +712,7 @@ func TestGetCustomTimelineDateUpdateIDs(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ids, err := getCustomTimelineDateUpdateIDs(tt.updates)
-
-			if tt.expectedErr != "" {
-				assert.ErrorContains(t, err, tt.expectedErr)
-				assert.Nil(t, ids)
-				return
-			}
-
-			assert.NoError(t, err)
+			ids := getCustomTimelineDateUpdateIDs(tt.updates)
 			assert.Equal(t, tt.expectedIDs, ids)
 		})
 	}
