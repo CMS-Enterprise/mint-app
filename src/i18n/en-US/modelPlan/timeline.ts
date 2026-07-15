@@ -141,7 +141,7 @@ export const timeline: TranslationTimeline = {
     gqlField: 'customDatesNote',
     goField: 'CustomDatesNote',
     dbField: 'custom_dates_note',
-    label: 'Additional model dates note',
+    label: 'Notes',
     isNote: true,
     parentReferencesLabel: 'Additional model dates',
     dataType: TranslationDataType.STRING,
