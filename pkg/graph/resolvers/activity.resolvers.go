@@ -198,16 +198,18 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 	return &taggedInPlanDiscussionActivityMetaResolver{r}
 }
 
-type activityResolver struct{ *Resolver }
-type addedAsCollaboratorMetaResolver struct{ *Resolver }
-type dailyDigestCompleteActivityMetaResolver struct{ *Resolver }
-type datesChangedActivityMetaResolver struct{ *Resolver }
-type iddocQuestionnaireCompletedActivityMetaResolver struct{ *Resolver }
-type incorrectModelStatusActivityMetaResolver struct{ *Resolver }
-type mTOReadyForReviewActivityMetaResolver struct{ *Resolver }
-type modelPlanSharedActivityMetaResolver struct{ *Resolver }
-type newDiscussionRepliedActivityMetaResolver struct{ *Resolver }
-type newModelPlanActivityMetaResolver struct{ *Resolver }
-type planDataExchangeApproachMarkedCompleteActivityMetaResolver struct{ *Resolver }
-type taggedInDiscussionReplyActivityMetaResolver struct{ *Resolver }
-type taggedInPlanDiscussionActivityMetaResolver struct{ *Resolver }
+type (
+	activityResolver                                           struct{ *Resolver }
+	addedAsCollaboratorMetaResolver                            struct{ *Resolver }
+	dailyDigestCompleteActivityMetaResolver                    struct{ *Resolver }
+	datesChangedActivityMetaResolver                           struct{ *Resolver }
+	iddocQuestionnaireCompletedActivityMetaResolver            struct{ *Resolver }
+	incorrectModelStatusActivityMetaResolver                   struct{ *Resolver }
+	mTOReadyForReviewActivityMetaResolver                      struct{ *Resolver }
+	modelPlanSharedActivityMetaResolver                        struct{ *Resolver }
+	newDiscussionRepliedActivityMetaResolver                   struct{ *Resolver }
+	newModelPlanActivityMetaResolver                           struct{ *Resolver }
+	planDataExchangeApproachMarkedCompleteActivityMetaResolver struct{ *Resolver }
+	taggedInDiscussionReplyActivityMetaResolver                struct{ *Resolver }
+	taggedInPlanDiscussionActivityMetaResolver                 struct{ *Resolver }
+)

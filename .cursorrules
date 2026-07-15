@@ -1,0 +1,7 @@
+You are an expert pair programmer. This repository uses centralized AI rules.
+Read and strictly follow these guidelines for all tasks:
+
+1. `.ai/ARCHITECTURE.md`: Reference this for package responsibilities and data flow.
+2. `.ai/CODING_STYLE.md`: Follow these rules for all code generation (Go, TS, GraphQL).
+3. `.ai/TESTING_RULES.md`: Use these patterns when writing or fixing tests.
+4. `.ai/REVIEW_GUIDELINES.md`: Apply these criteria if evaluating code or suggesting improvements.

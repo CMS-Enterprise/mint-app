@@ -19,7 +19,7 @@ describe('Operational Solutions Points of Contact Components', () => {
           {
             path: '/help-and-knowledge/operational-solutions',
             element: (
-              <VerboseMockedProvider mocks={mocks} addTypename={false}>
+              <VerboseMockedProvider mocks={mocks}>
                 <PointsOfContact solution={solutionPoCComponent} />
               </VerboseMockedProvider>
             )

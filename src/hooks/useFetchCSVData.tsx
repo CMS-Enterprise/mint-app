@@ -12,9 +12,9 @@ import {
 } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
 import {
   GetAllModelDataQuery,
-  GetAllModelDataQueryHookResult,
+  GetAllModelDataQueryResult,
   GetAllSingleModelDataQuery,
-  GetAllSingleModelDataQueryHookResult,
+  GetAllSingleModelDataQueryResult,
   ModelShareSection,
   ModelStatus,
   TeamRole,
@@ -539,10 +539,10 @@ type UseFetchCSVData = {
   fetchSingleData: (
     input: string,
     exportSection?: ExportSection
-  ) => Promise<GetAllSingleModelDataQueryHookResult>;
+  ) => Promise<GetAllSingleModelDataQueryResult>;
   fetchAllData: (
     exportSection?: ExportSection
-  ) => Promise<GetAllModelDataQueryHookResult>;
+  ) => Promise<GetAllModelDataQueryResult>;
   setExportSection: (exportSection: ExportSection) => void;
 };
 
@@ -555,41 +555,37 @@ const useFetchCSVData = (): UseFetchCSVData => {
   }, []);
 
   // Get data for a single model plan
-  const [fetchSingleData] = useGetAllSingleModelDataLazyQuery({
-    onCompleted: data => {
-      csvFormatter(
-        data.modelPlan ? [data.modelPlan] : [],
-        allPlanTranslation,
-        exportSectionRef.current
-      );
-    }
-  });
+  const [fetchSingleDataQuery] = useGetAllSingleModelDataLazyQuery();
 
   // Get data for all model plans
-  const [fetchAllData] = useGetAllModelDataLazyQuery({
-    onCompleted: data => {
-      csvFormatter(
-        data.modelPlanCollection || [],
-        allPlanTranslation,
-        exportSectionRef.current
-      );
-    }
-  });
+  const [fetchAllDataQuery] = useGetAllModelDataLazyQuery();
 
   return {
     fetchSingleData: useCallback(
       async (id, exportSection) => {
         if (exportSection) setExportSection(exportSection);
-        return fetchSingleData({ variables: { id } });
+        const result = await fetchSingleDataQuery({ variables: { id } });
+        csvFormatter(
+          result.data?.modelPlan ? [result.data.modelPlan] : [],
+          allPlanTranslation,
+          exportSectionRef.current
+        );
+        return result;
       },
-      [fetchSingleData, setExportSection]
+      [fetchSingleDataQuery, setExportSection, allPlanTranslation]
     ),
     fetchAllData: useCallback(
       async exportSection => {
         if (exportSection) setExportSection(exportSection);
-        return fetchAllData();
+        const result = await fetchAllDataQuery();
+        csvFormatter(
+          result.data?.modelPlanCollection || [],
+          allPlanTranslation,
+          exportSectionRef.current
+        );
+        return result;
       },
-      [fetchAllData, setExportSection]
+      [fetchAllDataQuery, setExportSection, allPlanTranslation]
     ),
     setExportSection
   };

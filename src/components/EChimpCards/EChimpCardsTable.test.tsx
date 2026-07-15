@@ -45,7 +45,7 @@ describe('EChimpCardsTable', () => {
     );
 
     render(
-      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+      <MockedProvider mocks={echimpCRsAndTDLsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -80,7 +80,7 @@ describe('EChimpCardsTable', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+      <MockedProvider mocks={echimpCRsAndTDLsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

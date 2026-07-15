@@ -28,7 +28,7 @@ describe('Sme form', () => {
       }
     );
     const { getByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -64,7 +64,7 @@ describe('Sme form', () => {
       }
     );
     const { asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

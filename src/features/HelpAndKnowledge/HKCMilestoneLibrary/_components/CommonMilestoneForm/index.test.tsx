@@ -35,7 +35,7 @@ describe('Manage Common Milestone form', () => {
     );
 
     const { getByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -78,7 +78,7 @@ describe('Manage Common Milestone form', () => {
     );
 
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -119,7 +119,7 @@ describe('Manage Common Milestone form', () => {
     );
 
     const { queryByText, asFragment } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

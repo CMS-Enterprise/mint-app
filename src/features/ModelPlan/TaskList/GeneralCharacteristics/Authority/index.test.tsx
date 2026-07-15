@@ -77,7 +77,7 @@ describe('Model Plan Characteristics', () => {
     );
 
     render(
-      <MockedProvider mocks={authorityMock} addTypename={false}>
+      <MockedProvider mocks={authorityMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -117,7 +117,7 @@ describe('Model Plan Characteristics', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={authorityMock} addTypename={false}>
+      <MockedProvider mocks={authorityMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

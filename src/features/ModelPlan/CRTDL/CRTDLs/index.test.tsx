@@ -41,7 +41,7 @@ describe('CR and TDLs page', () => {
     );
 
     render(
-      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+      <MockedProvider mocks={echimpCRsAndTDLsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
@@ -76,7 +76,7 @@ describe('CR and TDLs page', () => {
     );
 
     const { asFragment } = render(
-      <MockedProvider mocks={echimpCRsAndTDLsMock} addTypename={false}>
+      <MockedProvider mocks={echimpCRsAndTDLsMock}>
         <RouterProvider router={router} />
       </MockedProvider>
     );

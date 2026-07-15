@@ -36,7 +36,7 @@ describe('Custom Catergory form', () => {
     );
 
     render(
-      <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
+      <VerboseMockedProvider mocks={[allMilestonesMock]}>
         <RouterProvider router={router} />
       </VerboseMockedProvider>
     );
@@ -83,7 +83,7 @@ describe('Custom Catergory form', () => {
     );
 
     const { asFragment } = render(
-      <VerboseMockedProvider mocks={[allMilestonesMock]} addTypename={false}>
+      <VerboseMockedProvider mocks={[allMilestonesMock]}>
         <RouterProvider router={router} />
       </VerboseMockedProvider>
     );

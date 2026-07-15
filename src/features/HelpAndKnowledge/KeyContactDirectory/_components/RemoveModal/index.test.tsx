@@ -14,7 +14,7 @@ const mocks = [...keyContactsMock];
 describe('RemoveModal Component', () => {
   it('should render sme context when given key contact', () => {
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RemoveModal
           isModalOpen
           closeModal={() => {}}
@@ -35,7 +35,7 @@ describe('RemoveModal Component', () => {
 
   it('should render category context when given key contact category', () => {
     const { getByText, queryByText } = render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RemoveModal
           isModalOpen
           closeModal={() => {}}
@@ -57,7 +57,7 @@ describe('RemoveModal Component', () => {
 
   it('matches snapshot', () => {
     render(
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks}>
         <RemoveModal
           isModalOpen
           closeModal={() => {}}

@@ -167,7 +167,7 @@ describe('Read Only Filtered View Body Content', () => {
     );
 
     const { getByTestId } = render(
-      <MockedProvider mocks={mock} addTypename={false}>
+      <MockedProvider mocks={mock}>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>
