@@ -71,6 +71,21 @@ type WaiverAssessmentSurvey {
   suggestedWaivers: [SuggestedWaiver!]! @goField(forceResolver: true)
 
   """
+  The UUID of the user who marked the waiver assessment survey complete.
+  """
+  completedBy: UUID
+
+  """
+  The user who marked the waiver assessment survey complete.
+  """
+  completedByUserAccount: UserAccount
+
+  """
+  The timestamp when the waiver assessment survey was marked complete.
+  """
+  completedDts: Time
+
+  """
   Convenience field indicating whether the survey has been marked as complete.
   Computed from status: true when status is COMPLETE.
   """
@@ -128,7 +143,8 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   impactsManagedCareWaiversWhyNot: NotSelectedReason
   additionalMedicaidSpecificWaivers: String
 
-  status: WaiverAssessmentSurveyStatus
+  # Convenience field for controlling status
+  isComplete: Boolean
 }
 
 extend type Mutation {

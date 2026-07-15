@@ -2,6 +2,8 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -10,6 +12,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -49,15 +52,48 @@ func WaiverAssessmentSurveyUpdate(
 				return nil, err
 			}
 
-			// Auto-transition from READY to IN_PROGRESS on first save, matching the
-			// DEA pattern. If the caller also sends an explicit status it will override
-			// this via ApplyChanges below.
-			if existing.Status == models.WaiverAssessmentSurveyStatusReady {
+			currentStatus := existing.Status
+			surveyChangedToComplete := false
+
+			// Handle convenience field: isComplete. This lets the FE toggle completion
+			// without knowing about the underlying status enum, matching the IDDOC
+			// questionnaire pattern.
+			if isCompleteValue, ok := changes["isComplete"]; ok {
+				isCompletePointer, ok := isCompleteValue.(*bool)
+				if !ok || isCompletePointer == nil {
+					return nil, fmt.Errorf("unable to update waiver assessment survey, isComplete is not a bool")
+				}
+
+				if *isCompletePointer {
+					surveyChangedToComplete = currentStatus != models.WaiverAssessmentSurveyStatusComplete
+					existing.Status = models.WaiverAssessmentSurveyStatusComplete
+				} else if existing.ModifiedBy != nil {
+					existing.Status = models.WaiverAssessmentSurveyStatusInProgress
+				} else {
+					existing.Status = models.WaiverAssessmentSurveyStatusReady
+				}
+
+				delete(changes, "isComplete")
+			} else if existing.Status == models.WaiverAssessmentSurveyStatusReady {
+				// Auto-transition from READY to IN_PROGRESS on first save, matching the DEA pattern.
 				existing.Status = models.WaiverAssessmentSurveyStatusInProgress
 			}
 
 			if err := BaseStructPreUpdate(logger, existing, changes, principal, store, true, true); err != nil {
 				return nil, err
+			}
+
+			// Track who completed the survey and when, mirroring the status field.
+			// Only stamp CompletedBy/CompletedDts once per completion so re-saving an
+			// already-complete survey doesn't churn the timestamp.
+			if existing.Status == models.WaiverAssessmentSurveyStatusComplete {
+				if existing.CompletedDts == nil {
+					existing.CompletedBy = &principal.Account().ID
+					existing.CompletedDts = helpers.PointerTo(time.Now().UTC())
+				}
+			} else {
+				existing.CompletedBy = nil
+				existing.CompletedDts = nil
 			}
 
 			updated, err := storage.WaiverAssessmentSurveyUpdate(tx, logger, existing)
@@ -69,7 +105,7 @@ func WaiverAssessmentSurveyUpdate(
 				return nil, err
 			}
 
-			if updated.Status == models.WaiverAssessmentSurveyStatusComplete {
+			if surveyChangedToComplete {
 				TrySendWaiverAssessmentSurveyNotifications(ctx, updated, logger, emailService, emailAddressBook, principal, tx)
 			}
 

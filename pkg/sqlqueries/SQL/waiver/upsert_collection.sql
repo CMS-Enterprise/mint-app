@@ -7,7 +7,9 @@ WITH QUERIED_IDS AS (
         "notUsingReason" AS not_using_reason,
         "createdBy" AS created_by,
         "modifiedBy" AS modified_by
-    FROM JSON_TO_RECORDSET(:paramTableJSON)
+    FROM
+        JSON_TO_RECORDSET(:paramTableJSON)
+    AS x("id" UUID, "modelPlanID" UUID, "commonWaiverID" UUID, "willUseWaiver" BOOLEAN, "notUsingReason" TEXT, "createdBy" UUID, "modifiedBy" UUID) --noqa
 )
 
 INSERT INTO waiver (
