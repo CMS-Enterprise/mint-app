@@ -7,6 +7,7 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
   const modelPlanName = 'Model Plan for MTO testing';
   const milestoneName = 'MilestoneCategory 0A';
   const solutionName = '4i';
+  const responsibleComponent = 'FCHCO';
 
   beforeEach(() => {
     cy.localLogin({ name: 'MINT' });
@@ -95,14 +96,25 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
       cy.contains('button', 'Add a milestone note').should('not.exist');
     });
 
-    cy.get('[data-testid="edit-milestone-sidepanel"]').within(() => {
-      cy.get('div#responsible-component').within(() => {
-        cy.get("input[type='text']").click({ force: true });
-        cy.get('[data-testid="option-FCHCO"]').click({ force: true });
-      });
-
-      cy.get('#responsible-component-tags li').should('contain.text', 'FCHCO');
+    cy.get('[data-testid="edit-milestone-sidepanel"]').then($panel => {
+      if (
+        $panel.find(`[data-testid="multiselect-tag--${responsibleComponent}"]`)
+          .length === 0
+      ) {
+        cy.wrap($panel).within(() => {
+          cy.get('div#responsible-component').within(() => {
+            cy.get("input[type='text']").click();
+            cy.get(`[data-testid="option-${responsibleComponent}"]`).click({
+              force: true
+            });
+          });
+        });
+      }
     });
+
+    cy.get('[data-testid="edit-milestone-sidepanel"]')
+      .find(`[data-testid="multiselect-tag--${responsibleComponent}"]`)
+      .should('be.visible');
 
     cy.contains('button', 'Save and return to solution details')
       .should('be.not.disabled')

@@ -1,3 +1,18 @@
+const waitForTimelineForm = () => {
+  cy.get('form.timeline-form').should('be.visible');
+};
+
+const saveTimelineForm = () => {
+  cy.get('form.timeline-form')
+    .should('be.visible')
+    .within(() => {
+      cy.contains('button[type="submit"]', 'Save')
+        .should('be.visible')
+        .and('not.be.disabled')
+        .click();
+    });
+};
+
 describe('Notification Center', () => {
   describe('MINT Assessment User Tests', () => {
     beforeEach(() => {
@@ -248,6 +263,8 @@ describe('Notification Center', () => {
       cy.contains('a', 'Plan with Timeline').click();
       cy.url().should('include', '/collaboration-area');
       cy.contains('button', 'Edit timeline').click();
+      cy.url().should('include', '/model-timeline');
+      waitForTimelineForm();
 
       cy.get('#timeline-completeICIP')
         .clear()
@@ -257,10 +274,10 @@ describe('Notification Center', () => {
       cy.get('#timeline-wrapUpEnds')
         .clear()
         .type('05/23/2025')
-        .should('have.value', '05/23/2025');
+        .should('have.value', '05/23/2025')
+        .blur();
 
-      cy.clickOutside();
-      cy.contains('button', 'Save').click();
+      saveTimelineForm();
       cy.wait(500);
 
       // Comment out since currently need to wait for too long for below notification to show
@@ -383,13 +400,13 @@ describe('Notification Center', () => {
       cy.get('[data-testid="to-timeline"]').click();
 
       cy.url().should('include', '/model-timeline');
+      waitForTimelineForm();
       cy.get('#timeline-completeICIP')
         .type('12/31/2025')
-        .should('have.value', '12/31/2025');
+        .should('have.value', '12/31/2025')
+        .blur();
 
-      cy.clickOutside();
-
-      cy.contains('button', 'Save').click();
+      saveTimelineForm();
 
       cy.get('[data-testid="page-loading"]').should('not.exist');
 
