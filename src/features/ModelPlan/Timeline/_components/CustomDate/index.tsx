@@ -19,6 +19,7 @@ import NotFound from 'features/NotFound';
 import {
   CustomTimelineDateType,
   GetCustomDateQuery,
+  GetTimelineDocument,
   useCreateCustomDateMutation,
   useGetCustomDateQuery,
   useUpdateCustomDateMutation
@@ -70,13 +71,21 @@ const CustomDate = () => {
   });
 
   const [create] = useCreateCustomDateMutation({
-    refetchQueries: ['GetTimeline'],
-    awaitRefetchQueries: true
+    refetchQueries: [
+      {
+        query: GetTimelineDocument,
+        variables: { id: modelID }
+      }
+    ]
   });
 
   const [update] = useUpdateCustomDateMutation({
-    refetchQueries: ['GetTimeline'],
-    awaitRefetchQueries: true
+    refetchQueries: [
+      {
+        query: GetTimelineDocument,
+        variables: { id: modelID }
+      }
+    ]
   });
 
   const defaultValues: CustomDateFormValues = useMemo(
