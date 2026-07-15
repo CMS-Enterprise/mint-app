@@ -91,6 +91,8 @@ func UpdatePlanTimeline(
 		return nil, err
 	}
 
+	var customTimelineDateChanges []email.CustomTimelineDateChange
+
 	planTimeline, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
 
 		if len(datesChanged) > 0 {
@@ -128,15 +130,31 @@ func UpdatePlanTimeline(
 		}
 
 		// update custom dates separately
-		if len(customTimelineUpdates) > 0 {
-			_, err := storage.CustomTimelineDateUpdateDatesByIDs(tx, principal.Account().ID, customTimelineUpdates)
+		customTimelineUpdateIDs, dedupedCustomTimelineUpdates := getDedupedCustomTimelineDateUpdates(customTimelineUpdates)
+		if len(dedupedCustomTimelineUpdates) > 0 {
+
+			existingCustomTimelineDates, errs := loaders.CustomTimelineDate.ByID.LoadMany(ctx, customTimelineUpdateIDs)
+			if errs != nil {
+				if len(errs) > 0 {
+					return nil, errs[0]
+				}
+
+				return nil, errors.New("problem getting existing custom timeline dates when updating plan timeline")
+			}
+
+			updatedCustomTimelineDates, err := storage.CustomTimelineDateUpdateDatesByIDs(tx, principal.Account().ID, dedupedCustomTimelineUpdates)
 			if err != nil {
 				return nil, err
 			}
+
+			customTimelineDateChanges = buildCustomTimelineDateChanges(
+				customTimelineUpdateIDs,
+				existingCustomTimelineDates,
+				updatedCustomTimelineDates,
+			)
 		}
 
 		return updatedTimeline, nil
-
 	})
 
 	if err != nil {
@@ -152,6 +170,7 @@ func UpdatePlanTimeline(
 			store,
 			principal,
 			datesChanged,
+			customTimelineDateChanges,
 			emailService,
 			addressBook,
 			modelPlan,
