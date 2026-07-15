@@ -153,6 +153,7 @@ func sendCustomTimelineDateCreatedEmails(
 				logger.Error("problem sending custom timeline date created email to recipients",
 					zap.Error(err),
 					zap.String("modelPlanID", modelPlan.ID.String()))
+			}
 		}()
 	}
 
