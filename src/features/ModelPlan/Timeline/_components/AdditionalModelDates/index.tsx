@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -19,8 +19,41 @@ import MINTAlert from 'components/Alert';
 import MINTDatePicker from 'components/DatePicker';
 import { isDateInPast } from 'utils/date';
 
+import RemoveCustomDateModal from '../RemoveCustomDateModal';
+
 export type CustomTimelineDates =
   GetTimelineQuery['modelPlan']['timeline']['customTimelineDates'];
+
+const RemoveCustomDateButton = ({
+  customDateID,
+  onDeleteSuccess
+}: {
+  customDateID: string;
+  onDeleteSuccess: () => void;
+}) => {
+  const { t: timelineMiscT } = useTranslation('timelineMisc');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      <RemoveCustomDateModal
+        isModalOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        customDateID={customDateID}
+        onDeleteSuccess={onDeleteSuccess}
+      />
+
+      <Button
+        type="button"
+        unstyled
+        className="text-error deep-underline"
+        onClick={() => setIsModalOpen(true)}
+      >
+        {timelineMiscT('removeCustomDate')}
+      </Button>
+    </>
+  );
+};
 
 const AdditionalModelDates = ({
   initialCustomDates,
@@ -61,11 +94,15 @@ const AdditionalModelDates = ({
       ) : (
         <div>
           <FieldArray name="customTimelineDates">
-            {() => (
+            {({ remove }) => (
               <ProcessList className="read-only-model-plan__timeline maxw-full margin-left-neg-105">
                 {customTimelineDates.map((customDate, index) => {
                   const isSingleDate =
                     customDate.dateType === CustomTimelineDateType.SINGLE;
+
+                  const initialCustomDate = initialCustomDates.find(
+                    initialDate => initialDate.id === customDate.id
+                  );
 
                   return (
                     <ProcessListItem
@@ -99,14 +136,10 @@ const AdditionalModelDates = ({
                           {timelineMiscT('editCustomDate')}
                         </Button>
 
-                        <Button
-                          type="button"
-                          unstyled
-                          className="text-error deep-underline"
-                          onClick={() => {}}
-                        >
-                          {timelineMiscT('removeCustomDate')}
-                        </Button>
+                        <RemoveCustomDateButton
+                          customDateID={customDate.id}
+                          onDeleteSuccess={() => remove(index)}
+                        />
                       </div>
 
                       <div
@@ -126,7 +159,7 @@ const AdditionalModelDates = ({
                           boldLabel={false}
                           warning={false}
                           shouldShowWarning={
-                            initialCustomDates[index].startDate !==
+                            initialCustomDate?.startDate !==
                             customDate.startDate
                           }
                         />
@@ -143,8 +176,7 @@ const AdditionalModelDates = ({
                             boldLabel={false}
                             warning={false}
                             shouldShowWarning={
-                              initialCustomDates[index].endDate !==
-                              customDate.endDate
+                              initialCustomDate?.endDate !== customDate.endDate
                             }
                           />
                         )}
@@ -152,9 +184,9 @@ const AdditionalModelDates = ({
 
                       {(isDateInPast(customDate.startDate) ||
                         isDateInPast(customDate.endDate)) &&
-                        (initialCustomDates[index].startDate !==
+                        (initialCustomDate?.startDate !==
                           customDate.startDate ||
-                          initialCustomDates[index].endDate !==
+                          initialCustomDate?.endDate !==
                             customDate.endDate) && (
                           <Alert
                             type="warning"
