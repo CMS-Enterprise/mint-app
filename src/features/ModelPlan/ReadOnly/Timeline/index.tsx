@@ -9,7 +9,11 @@ import {
   ProcessListItem
 } from '@trussworks/react-uswds';
 import { NotFoundPartial } from 'features/NotFound';
-import { GetTimelineQuery, useGetTimelineQuery } from 'gql/generated/graphql';
+import {
+  CustomTimelineDateType,
+  GetTimelineQuery,
+  useGetTimelineQuery
+} from 'gql/generated/graphql';
 import i18next from 'i18next';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
@@ -274,7 +278,8 @@ const ReadOnlyModelTimeline = ({
                         className="read-only-model-plan__timeline__list-item"
                         key={customDate.id}
                       >
-                        {customDate.dateType === 'SINGLE' && (
+                        {customDate.dateType ===
+                          CustomTimelineDateType.SINGLE && (
                           <TimelineItem
                             label={customDate.title}
                             subLabel={customDate.description || ''}
@@ -282,7 +287,8 @@ const ReadOnlyModelTimeline = ({
                           />
                         )}
 
-                        {customDate.dateType === 'RANGE' && (
+                        {customDate.dateType ===
+                          CustomTimelineDateType.RANGE && (
                           <>
                             <div className="line-height-sans-3">
                               <ProcessListHeading
