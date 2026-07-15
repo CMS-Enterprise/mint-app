@@ -142,7 +142,7 @@ func UpdatePlanTimeline(
 				return nil, errors.New("problem getting existing custom timeline dates when updating plan timeline")
 			}
 
-			updatedCustomTimelineDates, err := storage.CustomTimelineDateUpdateDatesByIDsAndDates(tx, principal.Account().ID, dedupedCustomTimelineUpdates)
+			updatedCustomTimelineDates, err := storage.CustomTimelineDateUpdateDatesByIDs(tx, principal.Account().ID, dedupedCustomTimelineUpdates)
 			if err != nil {
 				return nil, err
 			}
