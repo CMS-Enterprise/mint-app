@@ -180,7 +180,7 @@ func sendCustomTimelineDateCreatedEmails(
 				emailBody,
 				oddmail.WithBCC(recipientEmails),
 			); err != nil {
-				logger.Error("problem sending email notifications to users with notifications enabled",
+				logger.Error("problem sending custom timeline date created email notifications to users with notifications enabled",
 					zap.Error(err),
 					zap.String("modelPlanID", modelPlan.ID.String()))
 			}
