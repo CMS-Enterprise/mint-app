@@ -18,7 +18,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/s3"
 )
 
-var CRAndTDLCache *crAndTDLCache
+var crAndTDLCacheInstance *crAndTDLCache
 var crAndTDLCacheOnce sync.Once
 
 // failedRefreshCooldown bounds how long we suppress repeated ECHIMP refresh
@@ -46,16 +46,16 @@ type crAndTDLCache struct {
 	mu sync.Mutex
 
 	lastChecked      time.Time
-	CRs              []*models.EChimpCR
-	CRsByModelPlanID map[uuid.UUID][]*models.EChimpCR
-	CRByCRNumber     map[string]*models.EChimpCR
+	crs              []*models.EChimpCR
+	crsByModelPlanID map[uuid.UUID][]*models.EChimpCR
+	crByCRNumber     map[string]*models.EChimpCR
 
-	TDls              []*models.EChimpTDL
-	TDLsByModelPlanID map[uuid.UUID][]*models.EChimpTDL
-	TDLsByTDLNumber   map[string]*models.EChimpTDL
+	tdls              []*models.EChimpTDL
+	tdlsByModelPlanID map[uuid.UUID][]*models.EChimpTDL
+	tdlsByTDLNumber   map[string]*models.EChimpTDL
 
-	AllCrsAndTDLs           []models.EChimpCRAndTDLS
-	CrsAndTDLsByModelPlanID map[uuid.UUID][]models.EChimpCRAndTDLS
+	allCrsAndTDLs           []models.EChimpCRAndTDLS
+	crsAndTDLsByModelPlanID map[uuid.UUID][]models.EChimpCRAndTDLS
 
 	refreshInFlight            bool
 	refreshDone                chan struct{}
@@ -65,10 +65,32 @@ type crAndTDLCache struct {
 
 func getOrCreateECHIMPCache() *crAndTDLCache {
 	crAndTDLCacheOnce.Do(func() {
-		CRAndTDLCache = &crAndTDLCache{}
+		crAndTDLCacheInstance = &crAndTDLCache{}
 	})
 
-	return CRAndTDLCache
+	return crAndTDLCacheInstance
+}
+
+// ReadCRsAndTDLsByModelPlanID reads cached ECHIMP CR/TDL records for a model plan.
+func (c *crAndTDLCache) ReadCRsAndTDLsByModelPlanID(modelPlanID uuid.UUID) []models.EChimpCRAndTDLS {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	val, ok := c.crsAndTDLsByModelPlanID[modelPlanID]
+	if !ok {
+		return nil
+	}
+
+	// return copy whenever possible
+	return append([]models.EChimpCRAndTDLS(nil), val...)
+}
+
+// ReadModelPlanIDsWithCRsAndTDLs reads the model plan IDs with cached ECHIMP CR/TDL records.
+func (c *crAndTDLCache) ReadModelPlanIDsWithCRsAndTDLs() []uuid.UUID {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	return lo.Keys(c.crsAndTDLsByModelPlanID)
 }
 
 func (c *crAndTDLCache) isOld(viperConfig *viper.Viper) bool {
@@ -186,13 +208,13 @@ func (c *crAndTDLCache) completeRefreshAttempt(previousLastChecked time.Time, re
 }
 
 func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) error {
-	CRKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
-	TDLKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
+	crKey := viperConfig.GetString(appconfig.AWSS3ECHIMPCRFileName)
+	tdlKey := viperConfig.GetString(appconfig.AWSS3ECHIMPTDLFileName)
 
-	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](ctx, client, CRKey)
+	crsRaw, err := parquet.ReadFromS3[*models.EChimpCRRaw](ctx, client, crKey)
 	if err != nil {
 		if s3.S3ErrorIsKeyNotFound(err) {
-			logger.Error("file not found for ECHIMP CR data", zap.String("key", CRKey), zap.Error(err))
+			logger.Error("file not found for ECHIMP CR data", zap.String("key", crKey), zap.Error(err))
 			return nil
 		}
 		return err
@@ -203,10 +225,10 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 		return err
 	}
 
-	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](ctx, client, TDLKey)
+	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](ctx, client, tdlKey)
 	if err != nil {
 		if s3.S3ErrorIsKeyNotFound(err) {
-			logger.Error("file not found for ECHIMP TDL data", zap.String("key", TDLKey), zap.Error(err))
+			logger.Error("file not found for ECHIMP TDL data", zap.String("key", tdlKey), zap.Error(err))
 			return nil
 		}
 		return err
@@ -216,6 +238,7 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 	if err != nil {
 		return err
 	}
+
 	allCrsAndTDLs := aggregateAllCrsAndTDLS(sanitizedCRS, sanitizedTDLS)
 	crsByModelPlanID := mapCRsByRelatedModelUUIDS(sanitizedCRS)
 	tdlsByModelPlanID := mapTDLSByRelatedModelUUIDS(sanitizedTDLS)
@@ -223,18 +246,19 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 	crByCRNumber := mapCRsByCRNumber(sanitizedCRS)
 	tdlsByTDLNumber := mapTDLsByTDLNumber(sanitizedTDLS)
 
-	c.CRs = sanitizedCRS
-	c.TDls = sanitizedTDLS
-	c.AllCrsAndTDLs = allCrsAndTDLs
-	c.CRsByModelPlanID = crsByModelPlanID
-	c.TDLsByModelPlanID = tdlsByModelPlanID
-	c.CrsAndTDLsByModelPlanID = crsAndTDLsByModelPlanID
-	c.CRByCRNumber = crByCRNumber
-	c.TDLsByTDLNumber = tdlsByTDLNumber
-
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.crs = sanitizedCRS
+	c.tdls = sanitizedTDLS
+	c.allCrsAndTDLs = allCrsAndTDLs
+	c.crsByModelPlanID = crsByModelPlanID
+	c.tdlsByModelPlanID = tdlsByModelPlanID
+	c.crsAndTDLsByModelPlanID = crsAndTDLsByModelPlanID
+	c.crByCRNumber = crByCRNumber
+	c.tdlsByTDLNumber = tdlsByTDLNumber
 	c.lastChecked = time.Now()
-	return nil
 
+	return nil
 }
 
 func aggregateAllCrsAndTDLS(crs []*models.EChimpCR, tdls []*models.EChimpTDL) []models.EChimpCRAndTDLS {
@@ -243,12 +267,13 @@ func aggregateAllCrsAndTDLS(crs []*models.EChimpCR, tdls []*models.EChimpTDL) []
 		allData = append(allData, cr)
 
 	}
+
 	for _, tdl := range tdls {
 		allData = append(allData, tdl)
 
 	}
-	return allData
 
+	return allData
 }
 
 func mapCRsByRelatedModelUUIDS(crs []*models.EChimpCR) map[uuid.UUID][]*models.EChimpCR {
@@ -268,6 +293,7 @@ func mapCRsByRelatedModelUUIDS(crs []*models.EChimpCR) map[uuid.UUID][]*models.E
 		}
 
 	}
+
 	return allData
 }
 
@@ -299,6 +325,7 @@ func mapTDLSByRelatedModelUUIDS(tdls []*models.EChimpTDL) map[uuid.UUID][]*model
 		}
 
 	}
+
 	return allData
 }
 
@@ -331,6 +358,6 @@ func mapCRAndTDLsByModelPlanID(crsByModelPlanID map[uuid.UUID][]*models.EChimpCR
 		}
 
 	}
-	return allData
 
+	return allData
 }

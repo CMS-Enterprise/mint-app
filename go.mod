@@ -113,7 +113,7 @@ require (
 
 require (
 	github.com/graph-gophers/dataloader v5.0.0+incompatible
-	golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa
+	golang.org/x/exp v0.0.0-20240808152545-0cdaa3abc0fa // indirect
 	gopkg.in/ghodss/yaml.v1 v1.0.0 // indirect
 )
 

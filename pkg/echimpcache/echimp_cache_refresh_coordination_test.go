@@ -108,7 +108,7 @@ func TestEnsureFreshServesStaleCacheAfterRefreshFailure(t *testing.T) {
 	existingCR := &models.EChimpCR{CrNumber: "existing-cr"}
 	cache := &crAndTDLCache{
 		lastChecked: time.Now().Add(-2 * time.Hour),
-		CRs:         []*models.EChimpCR{existingCR},
+		crs:         []*models.EChimpCR{existingCR},
 	}
 	refreshErr := errors.New("refresh failed")
 	var refreshCalls atomic.Int32
@@ -126,7 +126,7 @@ func TestEnsureFreshServesStaleCacheAfterRefreshFailure(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.Equal(t, int32(1), refreshCalls.Load())
-	assert.Equal(t, []*models.EChimpCR{existingCR}, cache.CRs)
+	assert.Equal(t, []*models.EChimpCR{existingCR}, cache.crs)
 
 	entries := logs.All()
 	require.Len(t, entries, 1)

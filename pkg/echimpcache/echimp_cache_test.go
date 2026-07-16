@@ -34,9 +34,9 @@ func TestGetECHIMPCrAndTDLCache(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, cache)
 
-	assert.NotEmpty(t, cache.CRs)
-	assert.NotEmpty(t, cache.TDls)
-	assert.NotEmpty(t, cache.AllCrsAndTDLs)
+	assert.NotEmpty(t, cache.crs)
+	assert.NotEmpty(t, cache.tdls)
+	assert.NotEmpty(t, cache.allCrsAndTDLs)
 	assert.False(t, cache.lastChecked.IsZero())
 }
 
@@ -90,10 +90,10 @@ func newECHIMPTestClient(t *testing.T) *s3.S3Client {
 func resetECHIMPCache(t *testing.T) {
 	t.Helper()
 
-	CRAndTDLCache = nil
+	crAndTDLCacheInstance = nil
 	crAndTDLCacheOnce = sync.Once{}
 	t.Cleanup(func() {
-		CRAndTDLCache = nil
+		crAndTDLCacheInstance = nil
 		crAndTDLCacheOnce = sync.Once{}
 	})
 }
