@@ -2,6 +2,7 @@ package echimpcache
 
 import (
 	"context"
+	"fmt"
 	"sync"
 	"time"
 
@@ -31,14 +32,13 @@ const failedRefreshCooldown = time.Minute
 func GetECHIMPCrAndTDLCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) (*crAndTDLCache, error) {
 	cache := getOrCreateECHIMPCache()
 	logger = logger.With(logfields.EchimpCacheAppSection)
-	if cache.IsOld(viperConfig) {
-		err := cache.ensureFresh(viperConfig, logger, func() error {
-			return cache.refreshCache(ctx, client, viperConfig, logger)
-		})
-		if err != nil {
-			return cache, err
-		}
+
+	if err := cache.ensureFresh(viperConfig, logger, func() error {
+		return cache.refreshCache(ctx, client, viperConfig, logger)
+	}); err != nil {
+		return cache, err
 	}
+
 	return cache, nil
 }
 
@@ -121,7 +121,16 @@ func (c *crAndTDLCache) ensureFresh(viperConfig *viper.Viper, logger *zap.Logger
 		c.refreshDone = make(chan struct{})
 		c.mu.Unlock()
 
-		err := refresh()
+		err := func() (refreshErr error) {
+			defer func() {
+				if recovered := recover(); recovered != nil {
+					refreshErr = fmt.Errorf("panic refreshing ECHIMP CR and TDL cache: %v", recovered)
+					logger.Error("panic refreshing ECHIMP CR and TDL cache", zap.Any("panic", recovered))
+				}
+			}()
+
+			return refresh()
+		}()
 		result := c.completeRefreshAttempt(previousLastChecked, err)
 
 		if result.err == nil {

@@ -132,3 +132,41 @@ func TestEnsureFreshServesStaleCacheAfterRefreshFailure(t *testing.T) {
 	require.Len(t, entries, 1)
 	assert.Equal(t, "using stale ECHIMP cache after refresh failure", entries[0].Message)
 }
+
+func TestEnsureFreshCompletesRefreshAttemptAfterPanic(t *testing.T) {
+	viperConfig := viper.New()
+	viperConfig.Set(appconfig.AWSS3ECHIMPCacheTimeMins, 1)
+
+	core, logs := observer.New(zap.ErrorLevel)
+	logger := zap.New(core)
+
+	cache := &crAndTDLCache{}
+	err := cache.ensureFresh(viperConfig, logger, func() error {
+		panic("refresh exploded")
+	})
+	require.Error(t, err)
+	assert.ErrorContains(t, err, "panic refreshing ECHIMP CR and TDL cache: refresh exploded")
+
+	var refreshCalls atomic.Int32
+	errs := make(chan error, 1)
+	go func() {
+		errs <- cache.ensureFresh(viperConfig, logger, func() error {
+			refreshCalls.Add(1)
+			return errors.New("refresh should not be retried during cooldown after panic")
+		})
+	}()
+
+	select {
+	case err := <-errs:
+		require.Error(t, err)
+		assert.ErrorContains(t, err, "panic refreshing ECHIMP CR and TDL cache: refresh exploded")
+	case <-time.After(time.Second):
+		t.Fatal("ensureFresh blocked after refresh panic")
+	}
+
+	assert.Equal(t, int32(0), refreshCalls.Load())
+	entries := logs.All()
+	require.Len(t, entries, 2)
+	assert.Equal(t, "panic refreshing ECHIMP CR and TDL cache", entries[0].Message)
+	assert.Equal(t, "error refreshing ECHIMP CR and TDL cache", entries[1].Message)
+}
