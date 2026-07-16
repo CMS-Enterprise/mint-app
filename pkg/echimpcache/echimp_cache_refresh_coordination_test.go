@@ -48,7 +48,7 @@ func TestEnsureFreshCollapsesConcurrentFailedRefreshesAndLogsOnce(t *testing.T) 
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			errs <- cache.ensureFresh(viperConfig, logger, refresh)
+			errs <- cache.ensureUsableCache(viperConfig, logger, refresh)
 		}()
 	}
 
@@ -83,10 +83,10 @@ func TestEnsureFreshUsesFailedRefreshCooldown(t *testing.T) {
 		return refreshErr
 	}
 
-	err := cache.ensureFresh(viperConfig, logger, refresh)
+	err := cache.ensureUsableCache(viperConfig, logger, refresh)
 	require.ErrorIs(t, err, refreshErr)
 
-	err = cache.ensureFresh(viperConfig, logger, func() error {
+	err = cache.ensureUsableCache(viperConfig, logger, func() error {
 		t.Fatal("refresh should not be retried during cooldown")
 		return nil
 	})
@@ -113,13 +113,13 @@ func TestEnsureFreshServesStaleCacheAfterRefreshFailure(t *testing.T) {
 	refreshErr := errors.New("refresh failed")
 	var refreshCalls atomic.Int32
 
-	err := cache.ensureFresh(viperConfig, logger, func() error {
+	err := cache.ensureUsableCache(viperConfig, logger, func() error {
 		refreshCalls.Add(1)
 		return refreshErr
 	})
 	require.NoError(t, err)
 
-	err = cache.ensureFresh(viperConfig, logger, func() error {
+	err = cache.ensureUsableCache(viperConfig, logger, func() error {
 		t.Fatal("refresh should not be retried during cooldown when serving stale data")
 		return nil
 	})
@@ -141,7 +141,7 @@ func TestEnsureFreshCompletesRefreshAttemptAfterPanic(t *testing.T) {
 	logger := zap.New(core)
 
 	cache := &crAndTDLCache{}
-	err := cache.ensureFresh(viperConfig, logger, func() error {
+	err := cache.ensureUsableCache(viperConfig, logger, func() error {
 		panic("refresh exploded")
 	})
 	require.Error(t, err)
@@ -150,7 +150,7 @@ func TestEnsureFreshCompletesRefreshAttemptAfterPanic(t *testing.T) {
 	var refreshCalls atomic.Int32
 	errs := make(chan error, 1)
 	go func() {
-		errs <- cache.ensureFresh(viperConfig, logger, func() error {
+		errs <- cache.ensureUsableCache(viperConfig, logger, func() error {
 			refreshCalls.Add(1)
 			return errors.New("refresh should not be retried during cooldown after panic")
 		})

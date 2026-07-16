@@ -33,7 +33,7 @@ func GetECHIMPCrAndTDLCache(ctx context.Context, client *s3.S3Client, viperConfi
 	cache := getOrCreateECHIMPCache()
 	logger = logger.With(logfields.EchimpCacheAppSection)
 
-	if err := cache.ensureFresh(viperConfig, logger, func() error {
+	if err := cache.ensureUsableCache(viperConfig, logger, func() error {
 		return cache.refreshCache(ctx, client, viperConfig, logger)
 	}); err != nil {
 		return cache, err
@@ -86,7 +86,9 @@ func (c *crAndTDLCache) isOld(viperConfig *viper.Viper) bool {
 
 }
 
-func (c *crAndTDLCache) ensureFresh(viperConfig *viper.Viper, logger *zap.Logger, refresh func() error) error {
+// ensureUsableCache checks if the on-hand cache is fresh. if stale, it will handle refresh attempts and either return a fresh cache
+// if the refresh attempts fail, it will return stale data if available, else error
+func (c *crAndTDLCache) ensureUsableCache(viperConfig *viper.Viper, logger *zap.Logger, refresh func() error) error {
 	for {
 		now := time.Now()
 
@@ -156,6 +158,7 @@ type refreshAttemptResult struct {
 	hasSnapshot bool
 }
 
+// completeRefreshAttempt checks if the cache was refreshed and updates cooldown/refresh state
 func (c *crAndTDLCache) completeRefreshAttempt(previousLastChecked time.Time, refreshErr error) refreshAttemptResult {
 	c.mu.Lock()
 	defer c.mu.Unlock()
@@ -300,7 +303,6 @@ func mapTDLSByRelatedModelUUIDS(tdls []*models.EChimpTDL) map[uuid.UUID][]*model
 }
 
 func mapCRAndTDLsByModelPlanID(crsByModelPlanID map[uuid.UUID][]*models.EChimpCR, tdlsByModelPlanID map[uuid.UUID][]*models.EChimpTDL) map[uuid.UUID][]models.EChimpCRAndTDLS {
-
 	allData := map[uuid.UUID][]models.EChimpCRAndTDLS{}
 
 	for modelPlanID, crs := range crsByModelPlanID {
