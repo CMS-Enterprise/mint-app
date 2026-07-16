@@ -133,6 +133,41 @@ func TestEnsureFreshServesStaleCacheAfterRefreshFailure(t *testing.T) {
 	assert.Equal(t, "using stale ECHIMP cache after refresh failure", entries[0].Message)
 }
 
+func TestEnsureFreshServesStaleCacheDuringInFlightRefresh(t *testing.T) {
+	viperConfig := viper.New()
+	viperConfig.Set(appconfig.AWSS3ECHIMPCacheTimeMins, 1)
+
+	existingCR := &models.EChimpCR{CrNumber: "existing-cr"}
+	refreshDone := make(chan struct{})
+	cache := &crAndTDLCache{
+		lastChecked:     time.Now().Add(-2 * time.Hour),
+		crs:             []*models.EChimpCR{existingCR},
+		refreshInFlight: true,
+		refreshDone:     refreshDone,
+	}
+
+	var refreshCalls atomic.Int32
+	unexpectedRefreshErr := errors.New("refresh should not be called while serving stale data")
+	errs := make(chan error, 1)
+	go func() {
+		errs <- cache.ensureUsableCache(viperConfig, zap.NewNop(), func() error {
+			refreshCalls.Add(1)
+			return unexpectedRefreshErr
+		})
+	}()
+
+	select {
+	case err := <-errs:
+		require.NoError(t, err)
+	case <-time.After(time.Second):
+		close(refreshDone)
+		t.Fatal("ensureUsableCache blocked instead of serving stale data during in-flight refresh")
+	}
+
+	assert.Equal(t, int32(0), refreshCalls.Load())
+	assert.Equal(t, []*models.EChimpCR{existingCR}, cache.crs)
+}
+
 func TestEnsureFreshCompletesRefreshAttemptAfterPanic(t *testing.T) {
 	viperConfig := viper.New()
 	viperConfig.Set(appconfig.AWSS3ECHIMPCacheTimeMins, 1)

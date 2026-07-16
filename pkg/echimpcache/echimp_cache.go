@@ -32,14 +32,19 @@ const failedRefreshCooldown = time.Minute
 func GetECHIMPCrAndTDLCache(ctx context.Context, client *s3.S3Client, viperConfig *viper.Viper, logger *zap.Logger) (*crAndTDLCache, error) {
 	cache := getOrCreateECHIMPCache()
 	logger = logger.With(logfields.EchimpCacheAppSection)
+	refreshCtx := cacheRefreshContext(ctx)
 
 	if err := cache.ensureUsableCache(viperConfig, logger, func() error {
-		return cache.refreshCache(ctx, client, viperConfig, logger)
+		return cache.refreshCache(refreshCtx, client, viperConfig, logger)
 	}); err != nil {
 		return cache, err
 	}
 
 	return cache, nil
+}
+
+func cacheRefreshContext(ctx context.Context) context.Context {
+	return context.WithoutCancel(ctx)
 }
 
 type crAndTDLCache struct {
@@ -121,6 +126,10 @@ func (c *crAndTDLCache) ensureUsableCache(viperConfig *viper.Viper, logger *zap.
 		}
 
 		if c.refreshInFlight {
+			if c.hasCachedSnapshot() {
+				c.mu.Unlock()
+				return nil
+			}
 			done := c.refreshDone
 			c.mu.Unlock()
 			<-done
