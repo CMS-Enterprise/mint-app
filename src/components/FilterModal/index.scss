@@ -1,0 +1,8 @@
+@use 'uswds-core' as *;
+
+.mint-filter-modal {
+  fieldset.mint-filter-group:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+}

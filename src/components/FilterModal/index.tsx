@@ -7,6 +7,8 @@ import classNames from 'classnames';
 import FieldGroup from 'components/FieldGroup';
 import HelpText from 'components/HelpText';
 
+import './index.scss';
+
 type FilterGroupType = {
   key: string;
   label: string;
@@ -18,7 +20,7 @@ type FilterGroupType = {
   displayShowAll: boolean;
 };
 
-type FilterModalProps<T extends Record<string, unknown[]>> = {
+type FilterModalProps<T extends Record<string, string[]>> = {
   filters: FilterGroupType[];
   appliedFilters: T;
   setAppliedFilters: (filters: T) => void;
@@ -26,8 +28,8 @@ type FilterModalProps<T extends Record<string, unknown[]>> = {
 
 type FilterGroupProps = {
   filterGroup: FilterGroupType;
-  selectedFilters: unknown[];
-  setSelectedFilters: (filters: unknown[]) => void;
+  selectedFilters: string[];
+  setSelectedFilters: (filters: string[]) => void;
 };
 
 /**
@@ -35,7 +37,7 @@ type FilterGroupProps = {
  *
  * Includes the "Filter" button to open the modal.
  */
-const FilterModal = <T extends Record<string, unknown[]>>({
+const FilterModal = <T extends Record<string, string[]>>({
   filters,
   appliedFilters,
   setAppliedFilters
