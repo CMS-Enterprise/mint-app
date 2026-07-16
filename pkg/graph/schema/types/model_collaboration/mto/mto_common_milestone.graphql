@@ -1,0 +1,83 @@
+"""
+CommonCategory represents a common category and its subcategories
+"""
+type CommonCategory {
+  name: String!
+  subCategories: [String!]!
+}
+
+"""
+MTOCommonMilestone represents a Milestone from the "Common Milestones" library
+"""
+type MTOCommonMilestone {
+  # DB Fields
+  id: UUID!
+  name: String!
+  description: String!
+  categoryName: String!
+  subCategoryName: String
+  facilitatedByRole: [MTOFacilitator!]!
+  facilitatedByOther: String
+  """
+  Specifies the Task List Section that corresponds to suggesting this common milestone
+  """
+  section: TaskListSection
+
+  # Custom Resolvers
+  """
+  To represent if this Common Milestone is _already_ part of the Model Plan's MTO.
+  This will automatically return false if it is not in the context of a model plan (eg fetched by key instead of model plan id)
+  """
+  isAdded: Boolean!
+  """
+  Returns the suggestion context for this milestone in relation to a model plan.
+  If modelPlanID is provided, it takes precedence over any model plan context from how the milestone was fetched.
+  Returns isSuggested: false with empty reasons when no model plan context is available.
+  """
+  suggested(modelPlanID: UUID): MilestoneSuggestionReasons!
+  isArchived: Boolean!
+  commonSolutions: [MTOCommonSolution!]!
+}
+
+input MTOCommonMilestoneChanges @goModel(model: "map[string]interface{}") {
+  name: String
+  description: String
+  categoryName: String
+  subCategoryName: String
+  facilitatedByRole: [MTOFacilitator!]
+  facilitatedByOther: String
+}
+
+extend type Query {
+  """
+  Fetch all Common Milestones available in the library
+  """
+  mtoCommonMilestones: [MTOCommonMilestone!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  """
+  Get a deduplicated, alphabetized category/subcategory list sourced from template categories
+  """
+  commonCategories: [CommonCategory!]! @hasRole(role: MINT_ASSESSMENT)
+}
+
+extend type Mutation {
+  createMTOCommonMilestone(
+    name: String!
+    description: String!
+    categoryName: String!
+    subCategoryName: String
+    facilitatedByRole: [MTOFacilitator!]!
+    facilitatedByOther: String
+    commonSolutions: [MTOCommonSolutionKey!]!
+  ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
+
+  updateMTOCommonMilestone(
+    id: UUID!
+    changes: MTOCommonMilestoneChanges!
+    commonSolutions: [MTOCommonSolutionKey!]
+  ): MTOCommonMilestone! @hasRole(role: MINT_ASSESSMENT)
+
+  archiveMTOCommonMilestone(id: UUID!): MTOCommonMilestone!
+    @hasRole(role: MINT_ASSESSMENT)
+}

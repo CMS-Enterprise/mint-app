@@ -1,0 +1,10 @@
+type ModelPlanAndGroup {
+  key: ComponentGroup!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+}
+
+extend type Query {
+  modelPlansByComponentGroup(key: ComponentGroup!): [ModelPlanAndGroup!]!
+    @hasRole(role: MINT_USER)
+}

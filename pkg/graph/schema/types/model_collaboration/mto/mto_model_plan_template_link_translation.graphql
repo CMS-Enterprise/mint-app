@@ -1,0 +1,8 @@
+"""
+Represents Model Plan MTO Template Link translation data
+"""
+type ModelPlanMTOTemplateLinkTranslation {
+  modelPlanID: TranslationField! @goTag(key: "db", value: "model_plan_id")
+  templateID: TranslationField! @goTag(key: "db", value: "template_id")
+  appliedDate: TranslationField! @goTag(key: "db", value: "applied_date")
+}
