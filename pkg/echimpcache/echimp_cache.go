@@ -71,7 +71,7 @@ func getOrCreateECHIMPCache() *crAndTDLCache {
 	return CRAndTDLCache
 }
 
-func (c *crAndTDLCache) IsOld(viperConfig *viper.Viper) bool {
+func (c *crAndTDLCache) isOld(viperConfig *viper.Viper) bool {
 	// Get the time to cache the data from env vars
 	cacheMinutes := viperConfig.GetInt(appconfig.AWSS3ECHIMPCacheTimeMins)
 
@@ -91,7 +91,7 @@ func (c *crAndTDLCache) ensureFresh(viperConfig *viper.Viper, logger *zap.Logger
 		now := time.Now()
 
 		c.mu.Lock()
-		if !c.IsOld(viperConfig) {
+		if !c.isOld(viperConfig) {
 			c.mu.Unlock()
 			return nil
 		}
