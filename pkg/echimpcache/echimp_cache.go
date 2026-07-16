@@ -19,7 +19,7 @@ import (
 )
 
 var CRAndTDLCache *crAndTDLCache
-var crAndTDLCacheMu sync.Mutex
+var crAndTDLCacheOnce sync.Once
 
 // failedRefreshCooldown bounds how long we suppress repeated ECHIMP refresh
 // attempts after an unsuccessful refresh result. One minute is long enough to
@@ -64,12 +64,9 @@ type crAndTDLCache struct {
 }
 
 func getOrCreateECHIMPCache() *crAndTDLCache {
-	crAndTDLCacheMu.Lock()
-	defer crAndTDLCacheMu.Unlock()
-
-	if CRAndTDLCache == nil {
+	crAndTDLCacheOnce.Do(func() {
 		CRAndTDLCache = &crAndTDLCache{}
-	}
+	})
 
 	return CRAndTDLCache
 }

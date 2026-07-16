@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/google/uuid"
@@ -90,7 +91,9 @@ func resetECHIMPCache(t *testing.T) {
 	t.Helper()
 
 	CRAndTDLCache = nil
+	crAndTDLCacheOnce = sync.Once{}
 	t.Cleanup(func() {
 		CRAndTDLCache = nil
+		crAndTDLCacheOnce = sync.Once{}
 	})
 }
