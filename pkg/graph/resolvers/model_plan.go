@@ -7,7 +7,6 @@ import (
 
 	"github.com/samber/lo"
 	"github.com/spf13/viper"
-	"golang.org/x/exp/maps"
 
 	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
@@ -415,10 +414,13 @@ func ModelPlansWithEchimpCRAndTDLS(ctx context.Context, echimpS3Client *s3.S3Cli
 		return nil, err
 	}
 	if data == nil {
-		return nil, nil
+		return []*models.ModelPlan{}, nil
 	}
 
-	modelPlanIDs := maps.Keys(data.CrsAndTDLsByModelPlanID)
+	modelPlanIDs := data.ReadModelPlanIDsWithCRsAndTDLs()
+	if len(modelPlanIDs) < 1 {
+		return []*models.ModelPlan{}, nil
+	}
 
 	return storage.ModelPlansGetByModePlanIDsLOADER(store, logger, modelPlanIDs)
 
