@@ -1,35 +1,17 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import { Button, Checkbox, Fieldset, Icon } from '@trussworks/react-uswds';
+import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
-import FieldGroup from 'components/FieldGroup';
-import HelpText from 'components/HelpText';
+import FilterGroup, { FilterGroupType } from 'components/FilterGroup';
 
 import './index.scss';
-
-type FilterGroupType = {
-  key: string;
-  label: string;
-  fieldLabel: string;
-  options: {
-    label: string;
-    value: string;
-  }[];
-  displayShowAll: boolean;
-};
 
 type FilterModalProps<T extends Record<string, string[]>> = {
   filters: FilterGroupType[];
   appliedFilters: T;
   setAppliedFilters: (filters: T) => void;
-};
-
-type FilterGroupProps = {
-  filterGroup: FilterGroupType;
-  selectedFilters: string[];
-  setSelectedFilters: (filters: string[]) => void;
 };
 
 /**
@@ -157,98 +139,6 @@ const FilterModal = <T extends Record<string, string[]>>({
         </div>
       </ReactModal>
     </>
-  );
-};
-
-/**
- * Displays a filter group with checkboxes or time pickers for each option.
- */
-const FilterGroup = ({
-  filterGroup,
-  selectedFilters,
-  setSelectedFilters
-}: FilterGroupProps) => {
-  const { t } = useTranslation('general');
-
-  /**
-   * Determines if the "Show All" checkbox should be checked based on the selected filters.
-   * @returns true if all options in group are selected and `filterGroup.displayShowAll` is true.
-   */
-  const showAllIsChecked = useMemo(
-    () =>
-      filterGroup.displayShowAll &&
-      selectedFilters.length === filterGroup.options.length,
-    [
-      filterGroup.displayShowAll,
-      selectedFilters.length,
-      filterGroup.options.length
-    ]
-  );
-
-  const handleSetShowAll = (value: boolean) => {
-    if (value) {
-      setSelectedFilters(filterGroup.options.map(option => option.value));
-    } else {
-      setSelectedFilters([]);
-    }
-  };
-
-  const toggleFilterOption = (option: string) => {
-    if (selectedFilters.includes(option)) {
-      setSelectedFilters(selectedFilters.filter(filter => filter !== option));
-    } else {
-      setSelectedFilters([...selectedFilters, option]);
-    }
-  };
-
-  return (
-    <Fieldset className="mint-filter-group font-body-sm margin-bottom-2 border-bottom-1px border-base-light padding-bottom-4">
-      <legend>
-        <h3 className="margin-y-1">
-          {t('filter.filterGroupHeading', { groupName: filterGroup.label })}
-        </h3>
-      </legend>
-
-      <HelpText>
-        {t('filter.filterGroupDescription', {
-          groupName: filterGroup.fieldLabel
-        })}
-      </HelpText>
-
-      <FieldGroup
-        className={classNames('mint-filter-group__options margin-top-105', {
-          'grid-row': filterGroup.displayShowAll
-        })}
-      >
-        {filterGroup.displayShowAll && (
-          <Checkbox
-            className="grid-col-12 bg-none"
-            id={`${filterGroup.key}-show-all`}
-            name={`${filterGroup.key}-show-all`}
-            onChange={() => handleSetShowAll(!showAllIsChecked)}
-            label={t('filter.showAll')}
-            checked={showAllIsChecked}
-          />
-        )}
-
-        {filterGroup.options.map(option => (
-          <Checkbox
-            className={classNames({
-              'grid-col-6 padding-right-05 bg-transparent':
-                filterGroup.displayShowAll
-            })}
-            key={option.value}
-            id={option.value}
-            name={option.value}
-            onChange={() => toggleFilterOption(option.value)}
-            label={option.label}
-            value={option.value}
-            checked={showAllIsChecked || selectedFilters.includes(option.value)}
-            disabled={showAllIsChecked}
-          />
-        ))}
-      </FieldGroup>
-    </Fieldset>
   );
 };
 
