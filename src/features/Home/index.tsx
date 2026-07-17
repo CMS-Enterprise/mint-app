@@ -31,6 +31,7 @@ import useMessage from 'hooks/useMessage';
 import { isAssessment, isMAC } from 'utils/user';
 
 import AdminActions from './components/AdminActions';
+import HyperlinkPlayground from './components/HyperlinkPlayground';
 import ModelsApproachingClearance from './components/ModelsApproachingClearance';
 import ModelsByGroup from './components/ModelsByGroup';
 import ModelsBySolutions from './components/ModelsBySolution';
@@ -322,6 +323,8 @@ const Home = () => {
               )}
 
               {isAssessment(userGroups, flags) && <AdminActions />}
+
+              <HyperlinkPlayground />
 
               {!loading &&
                 data?.userViewCustomization.viewCustomization.length === 0 && (

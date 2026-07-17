@@ -13,4 +13,10 @@
             margin: 0 !important;
         }
     }
+
+    &__hyperlink-playground-preview {
+        min-height: 9rem;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+    }
 }

@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import {
+  fireEvent,
   render,
   waitFor,
   waitForElementToBeRemoved
@@ -229,10 +230,13 @@ describe('The home page', () => {
 
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
-    const settingsHeaders = getByTestId('homepage').querySelectorAll('h2');
-    expect(settingsHeaders.length).toEqual(2);
-    expect(settingsHeaders[0].textContent).toEqual('All models');
-    expect(settingsHeaders[1].textContent).toEqual('My models');
+    const settingsHeaders = Array.from(
+      getByTestId('homepage').querySelectorAll('h2')
+    )
+      .map(heading => heading.textContent)
+      .filter(heading => heading === 'All models' || heading === 'My models');
+
+    expect(settingsHeaders).toEqual(['All models', 'My models']);
   });
 
   it('renders admin actions for assessment users', async () => {
@@ -325,6 +329,53 @@ describe('The home page', () => {
     expect(queryByText('Admin actions')).not.toBeInTheDocument();
     expect(queryByText(/View common milestones/i)).not.toBeInTheDocument();
     expect(queryByText(/View SME contact directory/i)).not.toBeInTheDocument();
+  });
+
+  it('renders detected playground hyperlinks at render time', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <Provider store={store}>
+              <MessageProvider>
+                <HomeNew />
+              </MessageProvider>
+            </Provider>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByRole, getByTestId } = render(
+      <VerboseMockedProvider
+        mocks={[
+          ...settingsMock,
+          ...favoritesMock,
+          ...modelPlanCollectionMock(ModelPlanFilter.INCLUDE_ALL),
+          ...modelPlanCollectionMock(ModelPlanFilter.COLLAB_ONLY)
+        ]}
+      >
+        <RouterProvider router={router} />
+      </VerboseMockedProvider>
+    );
+
+    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+
+    fireEvent.change(getByRole('textbox', { name: /Sample copy/i }), {
+      target: { value: 'Review https://www.cms.gov before launch.' }
+    });
+
+    expect(getByTestId('hyperlink-playground-preview')).toHaveTextContent(
+      'Review https://www.cms.gov before launch.'
+    );
+    expect(getByRole('link', { name: 'https://www.cms.gov' })).toHaveAttribute(
+      'href',
+      'https://www.cms.gov'
+    );
   });
 
   it('matches setting snapshot', async () => {

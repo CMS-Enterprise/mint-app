@@ -135,6 +135,15 @@ const customHome = {
     copy: 'Have a new model or demonstration?',
     cta: 'Add a new model to MINT'
   },
+  hyperlinkPlayground: {
+    heading: 'User-submitted copy playground',
+    description:
+      'Use this space to test how user-submitted copy renders before link detection is added.',
+    label: 'Sample copy',
+    hint: 'Try URLs, email addresses, plain text, and punctuation around links.',
+    previewHeading: 'Preview',
+    emptyPreview: 'Preview copy will appear here.'
+  },
   allModels: {
     copy: 'Don’t see the model you’re looking for?',
     cta: 'View all models',

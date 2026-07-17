@@ -187,6 +187,80 @@ exports[`The home page > matches setting snapshot 1`] = `
             </a>
           </div>
         </div>
+        <div
+          class="usa-summary-box home__hyperlink-playground bg-base-lightest border-base-lighter radius-0 padding-3 margin-bottom-6"
+          data-testid="hyperlink-playground"
+        >
+          <div
+            class="usa-summary-box__body"
+          >
+            <h2
+              class="usa-summary-box__heading margin-bottom-1"
+            >
+              User-submitted copy playground
+            </h2>
+            <div
+              class="usa-summary-box__text"
+            >
+              <p
+                class="margin-top-0 margin-bottom-3"
+              >
+                Use this space to test how user-submitted copy renders before link detection is added.
+              </p>
+              <div
+                class="grid-row grid-gap"
+                data-testid="grid"
+              >
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <label
+                    class="usa-label"
+                    for="hyperlink-playground-input"
+                    id="label-hyperlink-playground-input"
+                  >
+                    Sample copy
+                  </label>
+                  <span
+                    class="usa-hint display-block text-normal"
+                    id="hint-hyperlink-playground-input"
+                  >
+                    Try URLs, email addresses, plain text, and punctuation around links.
+                  </span>
+                  <textarea
+                    aria-labelledby="label-hyperlink-playground-input hint-hyperlink-playground-input"
+                    class="usa-textarea"
+                    id="hyperlink-playground-input"
+                    name="hyperlinkPlaygroundInput"
+                    rows="6"
+                  />
+                </div>
+                <div
+                  class="tablet:grid-col-6"
+                  data-testid="grid"
+                >
+                  <h3
+                    class="font-heading-md margin-top-0 margin-bottom-1"
+                  >
+                    Preview
+                  </h3>
+                  <div
+                    aria-live="polite"
+                    class="home__hyperlink-playground-preview border-1px border-base-lighter bg-white padding-2"
+                    data-testid="hyperlink-playground-preview"
+                  >
+                    <span
+                      class="text-base"
+                    >
+                      Preview copy will appear here.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div>
           <div
             class="mint-divider margin-y-6"
