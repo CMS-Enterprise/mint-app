@@ -11,7 +11,8 @@ describe('FilterModal', () => {
     {
       key: 'categoryName',
       label: 'primary category',
-      fieldLabel: 'Category',
+      description: 'This filters by the "Category" field.',
+      tagLabel: 'Category',
       options: [
         { label: 'Category 1', value: 'Category 1' },
         { label: 'Category 2', value: 'Category 2' }
@@ -21,7 +22,8 @@ describe('FilterModal', () => {
     {
       key: 'facilitatedByRole',
       label: 'role',
-      fieldLabel: 'Facilitated by role',
+      description: 'This filters by the "Facilitated by" field.',
+      tagLabel: 'Role',
       options: [
         { label: 'Model team', value: MtoFacilitator.MODEL_TEAM },
         { label: 'IT Lead', value: MtoFacilitator.IT_LEAD }
