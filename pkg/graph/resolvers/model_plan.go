@@ -414,12 +414,12 @@ func ModelPlansWithEchimpCRAndTDLS(ctx context.Context, echimpS3Client *s3.S3Cli
 		return nil, err
 	}
 	if data == nil {
-		return nil, nil
+		return []*models.ModelPlan{}, nil
 	}
 
 	modelPlanIDs := data.ReadModelPlanIDsWithCRsAndTDLs()
 	if len(modelPlanIDs) < 1 {
-		return nil, nil
+		return []*models.ModelPlan{}, nil
 	}
 
 	return storage.ModelPlansGetByModePlanIDsLOADER(store, logger, modelPlanIDs)
