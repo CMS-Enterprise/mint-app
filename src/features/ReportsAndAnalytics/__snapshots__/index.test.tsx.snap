@@ -88,7 +88,7 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
                     </p>
                   </div>
                   <div
-                    class="usa-card__footer padding-3"
+                    class="usa-card__footer padding-3 display-flex"
                     data-testid="CardFooter"
                   >
                     <button
@@ -138,7 +138,7 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
                     </p>
                   </div>
                   <div
-                    class="usa-card__footer padding-3"
+                    class="usa-card__footer padding-3 display-flex"
                     data-testid="CardFooter"
                   >
                     <button
@@ -188,7 +188,7 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
                     </p>
                   </div>
                   <div
-                    class="usa-card__footer padding-3"
+                    class="usa-card__footer padding-3 display-flex"
                     data-testid="CardFooter"
                   >
                     <button
