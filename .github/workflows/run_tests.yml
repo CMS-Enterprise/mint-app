@@ -76,7 +76,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v7
       - name: Set up node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
@@ -181,7 +181,7 @@ jobs:
             s3 mb s3://${{ env.S3_ECHIMP_BUCKET }}
 
       - name: Set up go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v7
         with:
           go-version-file: 'go.mod'
 
@@ -222,12 +222,12 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v7
       - name: Set up node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: yarn
       - name: Set up go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v7
         with:
           go-version-file: 'go.mod'
       - name: Install go modules
@@ -313,14 +313,14 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v7
       - name: Set up node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: yarn
       - name: Install yarn dependencies
         run: yarn install --immutable
       - name: Set up go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v7
         with:
           go-version-file: 'go.mod'
       - name: Install go modules
@@ -352,7 +352,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v7
       - name: Set up node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: yarn
@@ -374,7 +374,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v7
       - name: Set up node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version-file: '.nvmrc'
           cache: yarn
