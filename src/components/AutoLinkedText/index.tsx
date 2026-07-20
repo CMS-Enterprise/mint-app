@@ -7,11 +7,26 @@ const ALLOWED_PROTOCOLS = new Set(['http:', 'https:', 'mailto:']);
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const TRAILING_PUNCTUATION_REGEX = /[),.;:!?]+$/;
 
+// Reject invisible/bidi formatting chars that can obscure the visible URL.
+const UNSAFE_FORMAT_CHARACTER_REGEX =
+  /[\u200B-\u200F\u202A-\u202E\u2060-\u206F\uFEFF]/;
+
+// Reject ASCII control chars before URL parsing normalizes or ignores them.
 const hasUnsafeControlCharacters = (href: string) =>
   href.split('').some(character => {
     const code = character.charCodeAt(0);
     return code < 32 || code === 127;
   });
+
+const hasUnsafeCharacters = (href: string) =>
+  hasUnsafeControlCharacters(href) || UNSAFE_FORMAT_CHARACTER_REGEX.test(href);
+
+// Reject punycode/IDN hostnames to avoid visually deceptive homograph domains.
+const hasPunycodeHostname = (hostname: string) =>
+  hostname
+    .toLowerCase()
+    .split('.')
+    .some(part => part.startsWith('xn--'));
 
 const splitTrailingPunctuation = (candidate: string) => {
   const punctuation = candidate.match(TRAILING_PUNCTUATION_REGEX)?.[0] || '';
@@ -29,7 +44,7 @@ const splitTrailingPunctuation = (candidate: string) => {
 export const getSafeHref = (linkedText: string): string | null => {
   let href = linkedText;
 
-  if (hasUnsafeControlCharacters(href)) {
+  if (hasUnsafeCharacters(href)) {
     return null;
   }
 
@@ -37,11 +52,32 @@ export const getSafeHref = (linkedText: string): string | null => {
     href = `https://${href}`;
   } else if (EMAIL_REGEX.test(href)) {
     href = `mailto:${href}`;
+  } else if (href.toLowerCase().startsWith('mailto:')) {
+    const emailAddress = href.slice('mailto:'.length);
+
+    if (!EMAIL_REGEX.test(emailAddress)) {
+      return null;
+    }
+
+    href = `mailto:${emailAddress}`;
   }
 
   try {
     const url = new URL(href);
-    return ALLOWED_PROTOCOLS.has(url.protocol) ? href : null;
+
+    if (!ALLOWED_PROTOCOLS.has(url.protocol)) {
+      return null;
+    }
+
+    if (url.protocol === 'mailto:') {
+      return href;
+    }
+
+    if (url.username || url.password || hasPunycodeHostname(url.hostname)) {
+      return null;
+    }
+
+    return href;
   } catch {
     return null;
   }

@@ -37,6 +37,14 @@ describe('AutoLinkedText', () => {
     ).toHaveAttribute('href', 'mailto:MINTTeam@cms.hhs.gov');
   });
 
+  it('renders simple explicit mailto links', () => {
+    render(<AutoLinkedText text="Contact mailto:MINTTeam@cms.hhs.gov" />);
+
+    expect(
+      screen.getByRole('link', { name: 'mailto:MINTTeam@cms.hhs.gov' })
+    ).toHaveAttribute('href', 'mailto:MINTTeam@cms.hhs.gov');
+  });
+
   it('leaves unsafe protocols as plain text', () => {
     render(
       <AutoLinkedText text="Bad javascript:alert(1) data:text/html,test" />
@@ -44,6 +52,39 @@ describe('AutoLinkedText', () => {
 
     expect(screen.queryByRole('link')).not.toBeInTheDocument();
     expect(screen.getByText(/javascript:alert\(1\)/)).toBeInTheDocument();
+  });
+
+  it('leaves mailto links with non-email payloads as plain text', () => {
+    render(
+      <AutoLinkedText text="Bad mailto:javascript:alert(1) mailto:user@example.com?subject=hi" />
+    );
+
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/mailto:javascript:alert\(1\)/)
+    ).toBeInTheDocument();
+  });
+
+  it('leaves URLs with username or password credentials as plain text', () => {
+    render(
+      <AutoLinkedText text="Bad https://cms.gov@evil.example/path https://user:pass@example.com" />
+    );
+
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+    expect(screen.getByText(/cms\.gov@evil\.example/)).toBeInTheDocument();
+  });
+
+  it('leaves punycode and IDN hostnames as plain text', () => {
+    const cyrillicSmallEs = '\u0441';
+
+    render(
+      <AutoLinkedText
+        text={`Bad https://xn--ms-nmc.gov https://${cyrillicSmallEs}ms.gov`}
+      />
+    );
+
+    expect(screen.queryByRole('link')).not.toBeInTheDocument();
+    expect(screen.getByText(/xn--ms-nmc\.gov/)).toBeInTheDocument();
   });
 
   it('does not include trailing punctuation in URL links', () => {
@@ -59,5 +100,9 @@ describe('AutoLinkedText', () => {
 
   it('rejects hrefs with control characters', () => {
     expect(getSafeHref('https://www.cms.gov\nbad')).toBeNull();
+  });
+
+  it('rejects hrefs with unsafe unicode format characters', () => {
+    expect(getSafeHref('https://www.cms.gov/\u202Ebad')).toBeNull();
   });
 });
