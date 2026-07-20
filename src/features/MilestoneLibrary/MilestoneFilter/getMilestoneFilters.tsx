@@ -1,24 +1,8 @@
 import { MilestoneCardType } from 'features/MilestoneLibrary/MilestoneCardGroup';
-import { MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
+import { upperFirst } from 'lodash';
 
-type MilestoneFilterFields = Pick<
-  MilestoneCardType,
-  'categoryName' | 'facilitatedByRole'
->;
-
-/** Base type for milestone filter groups */
-type MilestoneFilterObject = {
-  key: keyof MilestoneFilterFields;
-  label: string;
-  fieldLabel: string;
-  options: {
-    label: string;
-    value: string | MtoFacilitator;
-  }[];
-  /** Whether to display the "show all" checkbox option */
-  displayShowAll: boolean;
-}[];
+import { FilterGroupType } from 'components/FilterGroup';
 
 /**
  * Returns the `categoryName` and `facilitatedByRole` milestone filters for use in the `FilterModal` component
@@ -26,7 +10,7 @@ type MilestoneFilterObject = {
 const getMilestoneFilters = (
   /** Milestones currently being displayed after applying any other filters or search criteria */
   milestones: MilestoneCardType[]
-) => {
+): FilterGroupType[] => {
   // Extract unique values for each field
   const categoryNames = milestones.map(milestone => milestone.categoryName);
   const uniqueCategoryNames = [...new Set(categoryNames)];
@@ -40,10 +24,13 @@ const getMilestoneFilters = (
     {
       key: 'categoryName',
       label: i18next.t(
-        'helpAndKnowledge:milestoneLibrary.filters.primaryCategory'
+        'helpAndKnowledge:milestoneLibrary.filters.primaryCategory.heading'
       ),
-      fieldLabel: i18next.t(
-        'helpAndKnowledge:milestoneLibrary.filters.category'
+      description: i18next.t(
+        'helpAndKnowledge:milestoneLibrary.filters.primaryCategory.description'
+      ),
+      tagLabel: i18next.t(
+        'helpAndKnowledge:milestoneLibrary.filters.primaryCategory.tagLabel'
       ),
       options: uniqueCategoryNames.map(categoryName => ({
         label: categoryName,
@@ -53,9 +40,16 @@ const getMilestoneFilters = (
     },
     {
       key: 'facilitatedByRole',
-      label: i18next.t('helpAndKnowledge:milestoneLibrary.filters.role'),
-      fieldLabel: i18next.t(
-        'helpAndKnowledge:milestoneLibrary.filters.facilitatedByRole'
+      label: i18next.t(
+        'helpAndKnowledge:milestoneLibrary.filters.facilitatedByRole.heading'
+      ),
+      description: i18next.t(
+        'helpAndKnowledge:milestoneLibrary.filters.facilitatedByRole.description'
+      ),
+      tagLabel: upperFirst(
+        i18next.t(
+          'helpAndKnowledge:milestoneLibrary.filters.facilitatedByRole.tagLabel'
+        )
       ),
       options: uniqueFacilitatedByRoles.map(facilitatedByRole => ({
         label: i18next.t(
@@ -65,10 +59,7 @@ const getMilestoneFilters = (
       })),
       displayShowAll: false
     }
-  ] as const satisfies MilestoneFilterObject;
+  ];
 };
-
-export type MilestoneFilters = ReturnType<typeof getMilestoneFilters>;
-export type MilestoneFilter = MilestoneFilters[number];
 
 export default getMilestoneFilters;

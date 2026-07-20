@@ -2692,10 +2692,16 @@ const helpAndKnowledge = {
     returnToHome: 'Return to MINT home',
     learnAboutThisMilestone: 'Learn about this milestone',
     filters: {
-      primaryCategory: 'primary category',
-      category: 'Category',
-      facilitatedByRole: 'Facilitated by',
-      role: 'role'
+      primaryCategory: {
+        heading: 'primary category',
+        tagLabel: 'Category',
+        description: 'This filters by the "Category" field.'
+      },
+      facilitatedByRole: {
+        heading: 'facilitated by',
+        tagLabel: 'Role',
+        description: 'This filters by the "Facilitated by" field.'
+      }
     },
     noResults: {
       heading: 'There are no results that match your filters.',

@@ -2,27 +2,36 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, Fieldset } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { MtoFacilitator } from 'gql/generated/graphql';
 
 import FieldGroup from 'components/FieldGroup';
 import HelpText from 'components/HelpText';
 
-import { MilestoneFilter } from '../MilestoneFilterModal/getMilestoneFilters';
+export type FilterGroupType = {
+  key: string;
+  label: string;
+  description: string;
+  tagLabel: string;
+  options: {
+    label: string;
+    value: string;
+  }[];
+  displayShowAll: boolean;
+};
 
-type MilestoneFilterGroupProps = {
-  filterGroup: MilestoneFilter;
-  selectedFilters: (string | MtoFacilitator)[];
-  setSelectedFilters: (filters: (string | MtoFacilitator)[]) => void;
+type FilterGroupProps = {
+  filterGroup: FilterGroupType;
+  selectedFilters: string[];
+  setSelectedFilters: (filters: string[]) => void;
 };
 
 /**
- * Displays a filter group with checkboxes for each option.
+ * Displays a filter group with checkboxes or time pickers for each option.
  */
-const MilestoneFilterGroup = ({
+const FilterGroup = ({
   filterGroup,
   selectedFilters,
   setSelectedFilters
-}: MilestoneFilterGroupProps) => {
+}: FilterGroupProps) => {
   const { t } = useTranslation('general');
 
   /**
@@ -48,7 +57,7 @@ const MilestoneFilterGroup = ({
     }
   };
 
-  const toggleFilterOption = (option: string | MtoFacilitator) => {
+  const toggleFilterOption = (option: string) => {
     if (selectedFilters.includes(option)) {
       setSelectedFilters(selectedFilters.filter(filter => filter !== option));
     } else {
@@ -63,11 +72,9 @@ const MilestoneFilterGroup = ({
           {t('filter.filterGroupHeading', { groupName: filterGroup.label })}
         </h3>
       </legend>
-      <HelpText>
-        {t('filter.filterGroupDescription', {
-          groupName: filterGroup.fieldLabel
-        })}
-      </HelpText>
+
+      <HelpText>{filterGroup.description}</HelpText>
+
       <FieldGroup
         className={classNames('mint-filter-group__options margin-top-105', {
           'grid-row': filterGroup.displayShowAll
@@ -83,6 +90,7 @@ const MilestoneFilterGroup = ({
             checked={showAllIsChecked}
           />
         )}
+
         {filterGroup.options.map(option => (
           <Checkbox
             className={classNames({
@@ -104,4 +112,4 @@ const MilestoneFilterGroup = ({
   );
 };
 
-export default MilestoneFilterGroup;
+export default FilterGroup;

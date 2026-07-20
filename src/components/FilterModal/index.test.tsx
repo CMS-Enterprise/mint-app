@@ -2,15 +2,17 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { MtoFacilitator } from 'gql/generated/graphql';
 
-import { MilestoneFilters } from './getMilestoneFilters';
-import MilestoneFilterModal, { MilestoneSelectedFilters } from '.';
+import { FilterGroupType } from 'components/FilterGroup';
 
-describe('MilestoneFilterModal', () => {
-  const mockFilters: MilestoneFilters = [
+import FilterModal from '.';
+
+describe('FilterModal', () => {
+  const mockFilters: FilterGroupType[] = [
     {
       key: 'categoryName',
       label: 'primary category',
-      fieldLabel: 'Category',
+      description: 'This filters by the "Category" field.',
+      tagLabel: 'Category',
       options: [
         { label: 'Category 1', value: 'Category 1' },
         { label: 'Category 2', value: 'Category 2' }
@@ -20,7 +22,8 @@ describe('MilestoneFilterModal', () => {
     {
       key: 'facilitatedByRole',
       label: 'role',
-      fieldLabel: 'Facilitated by role',
+      description: 'This filters by the "Facilitated by" field.',
+      tagLabel: 'Role',
       options: [
         { label: 'Model team', value: MtoFacilitator.MODEL_TEAM },
         { label: 'IT Lead', value: MtoFacilitator.IT_LEAD }
@@ -29,7 +32,7 @@ describe('MilestoneFilterModal', () => {
     }
   ];
 
-  const defaultAppliedFilters: MilestoneSelectedFilters = {
+  const defaultAppliedFilters = {
     categoryName: [],
     facilitatedByRole: []
   };
@@ -45,7 +48,7 @@ describe('MilestoneFilterModal', () => {
 
   it('opens and closes the modal from filter button and close icon', () => {
     render(
-      <MilestoneFilterModal
+      <FilterModal
         filters={mockFilters}
         appliedFilters={defaultAppliedFilters}
         setAppliedFilters={vi.fn()}
@@ -66,13 +69,13 @@ describe('MilestoneFilterModal', () => {
   });
 
   it('clears filters when Clear All is clicked', () => {
-    const appliedFilters: MilestoneSelectedFilters = {
+    const appliedFilters = {
       categoryName: ['Category 1'],
       facilitatedByRole: [MtoFacilitator.MODEL_TEAM]
     };
 
     render(
-      <MilestoneFilterModal
+      <FilterModal
         filters={mockFilters}
         appliedFilters={appliedFilters}
         setAppliedFilters={setAppliedFilters}
@@ -98,7 +101,7 @@ describe('MilestoneFilterModal', () => {
 
   it('applies current filters and closes modal when Apply Filter is clicked', () => {
     render(
-      <MilestoneFilterModal
+      <FilterModal
         filters={mockFilters}
         appliedFilters={defaultAppliedFilters}
         setAppliedFilters={setAppliedFilters}
@@ -125,7 +128,7 @@ describe('MilestoneFilterModal', () => {
 
   it('selects all options in a group when Show all is checked and applies them', () => {
     render(
-      <MilestoneFilterModal
+      <FilterModal
         filters={mockFilters}
         appliedFilters={defaultAppliedFilters}
         setAppliedFilters={setAppliedFilters}
@@ -151,7 +154,7 @@ describe('MilestoneFilterModal', () => {
 
   it('displays Apply filter when 0 or 1 filter is selected', () => {
     render(
-      <MilestoneFilterModal
+      <FilterModal
         filters={mockFilters}
         appliedFilters={defaultAppliedFilters}
         setAppliedFilters={setAppliedFilters}
@@ -165,13 +168,13 @@ describe('MilestoneFilterModal', () => {
   });
 
   it('displays apply button with filter count when 2+ filters are selected', () => {
-    const appliedFilters: MilestoneSelectedFilters = {
+    const appliedFilters = {
       categoryName: ['Category 1'],
       facilitatedByRole: [MtoFacilitator.MODEL_TEAM]
     };
 
     render(
-      <MilestoneFilterModal
+      <FilterModal
         filters={mockFilters}
         appliedFilters={appliedFilters}
         setAppliedFilters={setAppliedFilters}
