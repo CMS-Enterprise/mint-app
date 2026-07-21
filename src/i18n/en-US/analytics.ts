@@ -72,6 +72,12 @@ const analytics = {
   adminOnly: 'Admin only',
   downloadAll: 'Download all',
   selectDateRange: 'Select date range',
+  dateRange: {
+    heading: 'Configure report download',
+    description:
+      'Select the date range of CTAT tickets you would like to include in this download. MINT will include all tickets within the selected date range as a part of your download.',
+    subHeading: 'Ticket submission date range'
+  },
   mintAnalytics: 'MINT analytics',
   mintAnalyticsDescription: 'Charts and graphs of current statistics for MINT.',
   mtoCategorySummary: 'MTO category summary',
