@@ -21,6 +21,12 @@ export const reports: Record<
     description:
       'This report downloads a csv of basic model details, including: model name, Model Lead, CMMI group, and start and end dates.',
     formatExcel: 'Format: CSV'
+  },
+  ctat: {
+    heading: 'Contract assistance requests',
+    description:
+      'This report downloads a csv of all tickets submitted to the Contract Technical Assistance Team (CTAT).',
+    formatExcel: 'Format: CSV'
   }
 };
 
@@ -63,6 +69,9 @@ const analytics = {
   formatExcel: 'Format: Excel',
   formatCSV: 'Format: CSV',
   download: 'Download',
+  adminOnly: 'Admin only',
+  downloadAll: 'Download all',
+  selectDateRange: 'Select date range',
   mintAnalytics: 'MINT analytics',
   mintAnalyticsDescription: 'Charts and graphs of current statistics for MINT.',
   mtoCategorySummary: 'MTO category summary',
