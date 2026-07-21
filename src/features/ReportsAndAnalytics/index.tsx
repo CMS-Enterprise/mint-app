@@ -57,6 +57,8 @@ import tables from 'i18n/en-US/modelPlan/tables';
 import { formatDateUtc } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
+import DateRangeModal from './_components/DateRangeModal';
+
 export type ReportsType =
   | 'mtoMilestoneSummary'
   | 'allModels'
@@ -113,6 +115,8 @@ const ReportsAndAnalytics = () => {
   const [isDownloadingAllCharts, setIsDownloadingAllCharts] =
     useState<boolean>(false);
 
+  const [isDateRangeModalOpen, setIsDateRangeModalOpen] = useState(false);
+
   // Fetch all data for CSV export of all model plans
   const { fetchAllData } = useFetchCSVData();
 
@@ -168,6 +172,13 @@ const ReportsAndAnalytics = () => {
 
   return (
     <MainContent className="mint-body-normal">
+      {isDateRangeModalOpen && (
+        <DateRangeModal
+          isModalOpen={isDateRangeModalOpen}
+          closeModal={() => setIsDateRangeModalOpen(false)}
+        />
+      )}
+
       <GridContainer>
         <h1 className="margin-top-10 margin-bottom-2">{t('heading')}</h1>
 
@@ -262,7 +273,9 @@ const ReportsAndAnalytics = () => {
                           data-testid="select-time-range-button"
                           unstyled
                           className="deep-underline"
-                          onClick={() => {}}
+                          onClick={() => {
+                            setIsDateRangeModalOpen(true);
+                          }}
                         >
                           {t('selectDateRange')}
                         </Button>
