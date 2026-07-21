@@ -52,6 +52,7 @@ import PageLoading from 'components/PageLoading';
 import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFetchCSVData from 'hooks/useFetchCSVData';
+import useFetchCTATReport from 'hooks/useFetchCtatReport';
 import { reports } from 'i18n/en-US/analytics';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { formatDateUtc } from 'utils/date';
@@ -120,6 +121,9 @@ const ReportsAndAnalytics = () => {
   // Fetch all data for CSV export of all model plans
   const { fetchAllData } = useFetchCSVData();
 
+  // Fetch CTAT report data for CSV export
+  const { fetchCTATReport } = useFetchCTATReport();
+
   const { data, loading, error } = useGetAnalyticsSummaryQuery();
 
   const analyticsData = data?.analytics || ({} as any);
@@ -144,6 +148,21 @@ const ReportsAndAnalytics = () => {
   } else if (selectedChart === 'changesPerModelOtherData') {
     chartData = getChangesByOtherData(analyticsData.changesPerModelOtherData);
   }
+
+  const handleDownloadReport = (reportKey: ReportsType) => {
+    if (reportKey === 'mtoMilestoneSummary') {
+      downloadMTOMilestoneSummary(
+        mtoMilestoneSummaryData,
+        'MINT-MTO_Milestone_Summary.xlsx'
+      );
+    } else if (reportKey === 'allModels') {
+      fetchAllData(ModelShareSection.ALL);
+    } else if (reportKey === 'basicModelInfo') {
+      fetchAllData('basicModelInfo');
+    } else if (reportKey === 'ctat') {
+      fetchCTATReport();
+    }
+  };
 
   // Onclick handler for downloading multiple charts as PDF
   const downloadMultipleChartsPDF = async () => {
@@ -208,7 +227,12 @@ const ReportsAndAnalytics = () => {
           <Grid desktop={{ col: 12 }}>
             <Grid row gap={1}>
               {sortedReports.map(reportKey => (
-                <Grid desktop={{ col: 4 }} tablet={{ col: 6 }} key={reportKey}>
+                <Grid
+                  desktop={{ col: 4 }}
+                  tablet={{ col: 6 }}
+                  key={reportKey}
+                  className="display-flex"
+                >
                   <Card
                     containerProps={{
                       className: 'radius-md padding-0 margin-0',
@@ -252,16 +276,7 @@ const ReportsAndAnalytics = () => {
                         disabled={mtoMilestoneSummaryLoading}
                         data-testid={`download-${reportKey}-button`}
                         onClick={() => {
-                          if (reportKey === 'mtoMilestoneSummary') {
-                            downloadMTOMilestoneSummary(
-                              mtoMilestoneSummaryData,
-                              'MINT-MTO_Milestone_Summary.xlsx'
-                            );
-                          } else if (reportKey === 'allModels') {
-                            fetchAllData(ModelShareSection.ALL);
-                          } else if (reportKey === 'basicModelInfo') {
-                            fetchAllData('basicModelInfo');
-                          }
+                          handleDownloadReport(reportKey as ReportsType);
                         }}
                       >
                         {t(reportKey === 'ctat' ? 'downloadAll' : 'download')}

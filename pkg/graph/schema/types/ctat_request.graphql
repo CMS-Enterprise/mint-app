@@ -188,7 +188,7 @@ type CTATRequest {
   """
   submittedDts: Time!
   """
-  How long until the CTAT request was closed
+  How long from the CTAT request was submitted to closed
   """
   daysFromSubmittedToCompleted: Int
   """
