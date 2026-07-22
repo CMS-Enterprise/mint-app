@@ -118,6 +118,9 @@ const ReportsAndAnalytics = () => {
 
   const [isDateRangeModalOpen, setIsDateRangeModalOpen] = useState(false);
 
+  const [downloadingReport, setDownloadingReport] =
+    useState<ReportsType | null>(null);
+
   // Fetch all data for CSV export of all model plans
   const { fetchAllData } = useFetchCSVData();
 
@@ -149,18 +152,24 @@ const ReportsAndAnalytics = () => {
     chartData = getChangesByOtherData(analyticsData.changesPerModelOtherData);
   }
 
-  const handleDownloadReport = (reportKey: ReportsType) => {
-    if (reportKey === 'mtoMilestoneSummary') {
-      downloadMTOMilestoneSummary(
-        mtoMilestoneSummaryData,
-        'MINT-MTO_Milestone_Summary.xlsx'
-      );
-    } else if (reportKey === 'allModels') {
-      fetchAllData(ModelShareSection.ALL);
-    } else if (reportKey === 'basicModelInfo') {
-      fetchAllData('basicModelInfo');
-    } else if (reportKey === 'ctat') {
-      fetchCTATReport();
+  const handleDownloadReport = async (reportKey: ReportsType) => {
+    setDownloadingReport(reportKey);
+
+    try {
+      if (reportKey === 'mtoMilestoneSummary') {
+        await downloadMTOMilestoneSummary(
+          mtoMilestoneSummaryData,
+          'MINT-MTO_Milestone_Summary.xlsx'
+        );
+      } else if (reportKey === 'allModels') {
+        await fetchAllData(ModelShareSection.ALL);
+      } else if (reportKey === 'basicModelInfo') {
+        await fetchAllData('basicModelInfo');
+      } else if (reportKey === 'ctat') {
+        await fetchCTATReport();
+      }
+    } finally {
+      setDownloadingReport(null);
     }
   };
 
@@ -280,6 +289,10 @@ const ReportsAndAnalytics = () => {
                         }}
                       >
                         {t(reportKey === 'ctat' ? 'downloadAll' : 'download')}
+
+                        {downloadingReport === reportKey && (
+                          <Spinner size="small" />
+                        )}
                       </Button>
 
                       {reportKey === 'ctat' && (

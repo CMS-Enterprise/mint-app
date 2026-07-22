@@ -53,7 +53,7 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
             data-testid="grid"
           >
             <div
-              class="tablet:grid-col-6 desktop:grid-col-4"
+              class="tablet:grid-col-6 desktop:grid-col-4 display-flex"
               data-testid="grid"
             >
               <li
@@ -103,7 +103,7 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
               </li>
             </div>
             <div
-              class="tablet:grid-col-6 desktop:grid-col-4"
+              class="tablet:grid-col-6 desktop:grid-col-4 display-flex"
               data-testid="grid"
             >
               <li
@@ -153,7 +153,7 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
               </li>
             </div>
             <div
-              class="tablet:grid-col-6 desktop:grid-col-4"
+              class="tablet:grid-col-6 desktop:grid-col-4 display-flex"
               data-testid="grid"
             >
               <li
