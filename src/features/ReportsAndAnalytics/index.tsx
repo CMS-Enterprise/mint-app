@@ -52,7 +52,7 @@ import PageLoading from 'components/PageLoading';
 import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFetchCSVData from 'hooks/useFetchCSVData';
-import useFetchCTATReport from 'hooks/useFetchCTATReport';
+import useFetchCTATReport from 'hooks/useTest';
 import { reports } from 'i18n/en-US/analytics';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { formatDateUtc } from 'utils/date';

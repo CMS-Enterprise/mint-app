@@ -1,4 +1,4 @@
-import { filterAndSortCTATData, isWithinRange } from '../useFetchCTATReport';
+import { filterAndSortCTATData, isWithinRange } from '../useTest';
 
 describe('CTAT report utils', () => {
   describe('isWithinRange', () => {
