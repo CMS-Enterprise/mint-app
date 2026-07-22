@@ -1,0 +1,11 @@
+enum PrepareForClearanceStatus {
+  CANNOT_START
+  READY
+  IN_PROGRESS
+  READY_FOR_CLEARANCE
+}
+
+type PrepareForClearance {
+  status: PrepareForClearanceStatus!
+  latestClearanceDts: Time
+}

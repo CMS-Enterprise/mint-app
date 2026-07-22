@@ -1,0 +1,100 @@
+enum MTOCommonSolutionKey {
+  INNOVATION
+  ACO_OS
+  APPS
+  CDX
+  CCW
+  CMS_BOX
+  CMS_QUALTRICS
+  CBOSC
+  CPI_VETTING
+  EFT
+  EDFR
+  GOVDELIVERY
+  GS
+  HDR
+  HPMS
+  HIGLAS
+  IPC
+  IDR
+  LDG
+  LV
+  MARX
+  OUTLOOK_MAILBOX
+  QV
+  RMADA
+  ARS
+  CONNECT
+  LOI
+  POST_PORTAL
+  RFA
+  SHARED_SYSTEMS
+  BCDA
+  ISP
+  MIDS
+  MODEL_SPACE
+  CDAC
+  RREG
+  FFRDC
+  ARDS
+  T_MISS
+  EPPE
+  DSEP
+  AMS
+  IC_LANDING
+  RASS
+  DDPS
+  OACT
+  QPP
+  PAM
+  NCQA
+  MS_FORMS
+  RESDAC_CMDS
+  OVERLAPS_OPERATIONS_WORKGROUP
+  HETS
+  MCBS
+}
+
+enum MTOSolutionType {
+  IT_SYSTEM
+  CONTRACTOR
+  CROSS_CUTTING_GROUP
+  OTHER
+}
+enum MTOCommonSolutionSubject {
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_ACO_AND_KIDNEY_MODELS
+  APPLICATIONS_AND_PARTICIPANT_INTERACTION_NON_ACO_MODELS
+  MEDICARE_FEE_FOR_SERVICE
+  CONTRACT_VEHICLES
+  LEARNING
+  QUALITY
+  COMMUNICATION_TOOLS_AND_HELP_DESK
+  MEDICARE_ADVANTAGE_AND_PART_D
+  PAYMENTS_AND_FINANCIALS
+  DATA
+  LEGAL
+  EVALUATION_AND_REVIEW
+}
+
+type MTOCommonSolution {
+  #DB Fields
+  name: String!
+  key: MTOCommonSolutionKey!
+  type: MTOSolutionType!
+  subjects: [MTOCommonSolutionSubject!]!
+  contractors: [MTOCommonSolutionContractor!]!
+  systemOwners: [MTOCommonSolutionSystemOwner!]!
+  filterView: ModelViewFilter
+
+  #Custom Resolvers
+  """
+  Has this common solution been added to the MTO for a model plan? It is only evaluated when evaluated at the parent level, in the context of a model plan
+  """
+  isAdded: Boolean!
+  contactInformation: MTOCommonSolutionContactInformation!
+  modelUsage: [ModelPlanAndMTOCommonSolution!]!
+}
+
+extend type Query {
+  mtoCommonSolutions: [MTOCommonSolution!]! @hasRole(role: MINT_USER)
+}

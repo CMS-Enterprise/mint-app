@@ -1,0 +1,6 @@
+"""
+Represents key contact category base translation data
+"""
+type KeyContactCategoryTranslation {
+  name: TranslationField! @goTag(key: "db", value: "name")
+}

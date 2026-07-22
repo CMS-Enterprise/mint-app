@@ -1,0 +1,6 @@
+"""
+Represents MTO Milestone Note translation data
+"""
+type MTOMilestoneNoteTranslation {
+  content: TranslationField! @goTag(key: "db", value: "content")
+}
