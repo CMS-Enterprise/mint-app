@@ -23,7 +23,7 @@ type UseFetchCTATReport = {
   ) => Promise<GetAllCtatRequestsQueryResult>;
 };
 
-const isWithinRange = (createdDts: string, range: CTATDateRange) => {
+export const isWithinRange = (createdDts: string, range: CTATDateRange) => {
   const created = new Date(createdDts).getTime();
 
   if (
@@ -36,24 +36,32 @@ const isWithinRange = (createdDts: string, range: CTATDateRange) => {
   return true;
 };
 
-const formatCTATCsv = (data: CTATReportData[], range?: CTATDateRange) => {
-  const hasRange = range?.startDate && range?.endDate;
-
+export const filterAndSortCTATData = (
+  data: CTATReportData[],
+  range?: CTATDateRange
+) => {
   const sortedData = [...data].sort(
     (a, b) => Date.parse(a.createdDts) - Date.parse(b.createdDts)
   );
+
+  if (range?.startDate && range?.endDate) {
+    return sortedData.filter(row => isWithinRange(row.createdDts, range));
+  }
+  return sortedData;
+};
+
+const formatCTATCsv = (data: CTATReportData[], range?: CTATDateRange) => {
+  const hasRange = range?.startDate && range?.endDate;
 
   const exportFilename = hasRange
     ? `MINT-Contract_assistance_requests_${range.startDate.split('T')[0]}_to_${range.endDate.split('T')[0]}.csv`
     : 'MINT-Contract_assistance_requests.csv';
 
-  const filteredData = hasRange
-    ? sortedData.filter(row => isWithinRange(row.createdDts, range))
-    : sortedData;
+  const processedData = filterAndSortCTATData(data, range);
 
   const parser = new Parser({ fields: csvFieldsCTAT });
 
-  const csv = parser.parse(filteredData);
+  const csv = parser.parse(processedData);
 
   downloadFile(csv, exportFilename);
 };

@@ -5,7 +5,7 @@ import { Button } from '@trussworks/react-uswds';
 import DateTimePicker from 'components/DateTimePicker';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
-import useFetchCTATReport from 'hooks/useFetchCtatReport';
+import useFetchCTATReport from 'hooks/useFetchCTATReport';
 
 const DateRangeModal = ({
   isModalOpen,
