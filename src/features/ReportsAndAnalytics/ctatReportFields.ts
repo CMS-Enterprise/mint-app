@@ -1,4 +1,4 @@
-import { CTATReportData } from 'hooks/useTest';
+import { CTATReportData } from 'hooks/useFetchCTATReport';
 import {
   cmmiDivisions,
   cmmiGroups,
