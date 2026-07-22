@@ -1,4 +1,8 @@
-import { filterAndSortCTATData, isWithinRange } from '../useFetchCTATReport';
+import {
+  CTATReportData,
+  filterAndSortCTATData,
+  isWithinRange
+} from '../useFetchCTATReport';
 
 describe('CTAT report utils', () => {
   describe('isWithinRange', () => {
@@ -47,7 +51,9 @@ describe('CTAT report utils', () => {
         { id: '3', createdDts: '2026-07-20T10:00:00Z' }
       ];
 
-      expect(filterAndSortCTATData(mockData as any)).toEqual(expectedData);
+      expect(
+        filterAndSortCTATData(mockData as unknown as CTATReportData[])
+      ).toEqual(expectedData);
     });
 
     it('filters out data outside the range and sorts chronologically', () => {
@@ -58,9 +64,9 @@ describe('CTAT report utils', () => {
 
       const expectedData = [{ id: '2', createdDts: '2026-07-15T10:00:00Z' }];
 
-      expect(filterAndSortCTATData(mockData as any, range)).toEqual(
-        expectedData
-      );
+      expect(
+        filterAndSortCTATData(mockData as unknown as CTATReportData[], range)
+      ).toEqual(expectedData);
     });
   });
 });

@@ -402,7 +402,7 @@ export type CtatRequest = {
   dateAssistanceNeededBy?: Maybe<Scalars['Time']['output']>;
   /** How long from assignment to completion for the CTAT request */
   daysFromAssignedToCompleted?: Maybe<Scalars['Int']['output']>;
-  /** How long from the CTAT request was submitted to closed */
+  /** How long from when the CTAT request was submitted until it was closed */
   daysFromSubmittedToCompleted?: Maybe<Scalars['Int']['output']>;
   describeHelpNeeded?: Maybe<Scalars['String']['output']>;
   humanReadableID: Scalars['String']['output'];
