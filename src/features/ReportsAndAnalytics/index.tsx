@@ -282,13 +282,20 @@ const ReportsAndAnalytics = () => {
                       <Button
                         type="button"
                         className="margin-right-2"
-                        disabled={mtoMilestoneSummaryLoading}
+                        disabled={
+                          mtoMilestoneSummaryLoading ||
+                          downloadingReport === reportKey
+                        }
                         data-testid={`download-${reportKey}-button`}
                         onClick={() => {
                           handleDownloadReport(reportKey as ReportsType);
                         }}
                       >
-                        {t(reportKey === 'ctat' ? 'downloadAll' : 'download')}
+                        {downloadingReport === reportKey
+                          ? t('loading')
+                          : t(
+                              reportKey === 'ctat' ? 'downloadAll' : 'download'
+                            )}
 
                         {downloadingReport === reportKey && (
                           <Spinner size="small" />
