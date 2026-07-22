@@ -68,6 +68,45 @@ jobs:
             ${{ matrix.service_name }}.cache-from=type=gha,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
             ${{ matrix.service_name }}.cache-to=type=gha,mode=max,scope=${{ env.GIT_REF_NAME }}-${{ matrix.service_name }}
 
+  ecr_scan_smoke_test:
+    if: ${{ inputs.skip_tests == false && github.event_name == 'pull_request' && github.event.pull_request.draft == true }}
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+      - name: Configure AWS credentials
+        id: aws_credentials
+        uses: aws-actions/configure-aws-credentials@v6.2.2
+        continue-on-error: true
+        with:
+          role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
+      - name: Find latest mint-backend image tag
+        id: latest_image
+        if: ${{ steps.aws_credentials.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          image_tag="$(aws ecr describe-images \
+            --repository-name mint-backend \
+            --query 'reverse(sort_by(imageDetails[?imageTags && length(imageTags) > `0`], &imagePushedAt))[0].imageTags[0]' \
+            --output text)"
+
+          if [[ -z "$image_tag" || "$image_tag" == "None" ]]; then
+            echo "No tagged mint-backend image found"
+            exit 1
+          fi
+
+          echo "Using mint-backend:${image_tag}"
+          echo "image_tag=${image_tag}" >> "$GITHUB_OUTPUT"
+      - name: Check for vulnerability scan findings
+        if: ${{ steps.latest_image.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          timeout 10m ./scripts/check_ecr_findings.sh "mint-backend" "${{ steps.latest_image.outputs.image_tag }}"
+
   # This is largely a copy of build_frontend_assets, but it doesn't use an `environment` block
   build_frontend_assets:
     if: ${{ inputs.skip_tests == false }}
