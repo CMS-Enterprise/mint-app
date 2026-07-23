@@ -319,47 +319,60 @@ const CustomDate = () => {
                       />
 
                       {watch('dateType') === CustomTimelineDateType.SINGLE && (
-                        <Controller
-                          name="startDate"
-                          control={control}
-                          rules={{
-                            required: true,
-                            validate: value => value !== undefined
-                          }}
-                          render={({
-                            field: { ref: childRef, ...childField }
-                          }) => (
-                            <FormGroup className="margin-top-05 margin-left-4 margin-bottom-2">
-                              <Label
-                                htmlFor="startDate"
-                                className="text-bold maxw-none margin-bottom-1"
-                                requiredMarker
+                        <div>
+                          <Controller
+                            name="startDate"
+                            control={control}
+                            rules={{
+                              required: true,
+                              validate: value => value !== undefined
+                            }}
+                            render={({
+                              field: { ref: childRef, ...childField }
+                            }) => (
+                              <FormGroup className="margin-top-05 margin-left-4 margin-bottom-2">
+                                <Label
+                                  htmlFor="startDate"
+                                  className="text-bold maxw-none margin-bottom-1"
+                                  requiredMarker
+                                >
+                                  {customDateMiscT('date')}
+                                </Label>
+
+                                <HelpText className="usa-hint margin-bottom-1">
+                                  {generalT('datePlaceholder')}
+                                </HelpText>
+
+                                <DateTimePicker
+                                  id="startDate"
+                                  name="startDate"
+                                  className="desktop:grid-col-6 padding-right-4"
+                                  value={childField.value}
+                                  onChange={date => {
+                                    setValue('startDate', date || '', {
+                                      shouldDirty: true,
+                                      shouldValidate: true
+                                    });
+                                  }}
+                                  alertText={false}
+                                  alertIcon={false}
+                                  isClearable
+                                />
+                              </FormGroup>
+                            )}
+                          />
+
+                          {isDateInPast(watch('startDate')) &&
+                            defaultValues?.startDate !== watch('startDate') && (
+                              <Alert
+                                type="warning"
+                                className="margin-top-0"
+                                headingLevel="h4"
                               >
-                                {customDateMiscT('date')}
-                              </Label>
-
-                              <HelpText className="usa-hint margin-bottom-1">
-                                {generalT('datePlaceholder')}
-                              </HelpText>
-
-                              <DateTimePicker
-                                id="startDate"
-                                name="startDate"
-                                className="desktop:grid-col-6 padding-right-4"
-                                value={childField.value}
-                                onChange={date => {
-                                  setValue('startDate', date || '', {
-                                    shouldDirty: true,
-                                    shouldValidate: true
-                                  });
-                                }}
-                                alertText
-                                alertIcon={false}
-                                isClearable
-                              />
-                            </FormGroup>
-                          )}
-                        />
+                                {miscellaneousT('dateWarning')}
+                              </Alert>
+                            )}
+                        </div>
                       )}
 
                       <Radio

@@ -611,12 +611,23 @@ const Timeline = () => {
                           />
                         )}
 
+                        <div className="margin-top-2 margin-bottom-3">
+                          <Button type="submit">
+                            {miscellaneousT('save')}
+                          </Button>
+                        </div>
+
                         <Button
                           type="button"
                           className="usa-button usa-button--unstyled"
-                          onClick={() =>
-                            navigate(`/models/${modelID}/collaboration-area`)
-                          }
+                          onClick={() => {
+                            if (formikRef.current) {
+                              formikRef.current.values =
+                                formikRef.current.initialValues;
+                            }
+
+                            navigate(`/models/${modelID}/collaboration-area`);
+                          }}
                         >
                           <Icon.ArrowBack
                             className="margin-right-1"
@@ -624,7 +635,7 @@ const Timeline = () => {
                             aria-label="back"
                           />
 
-                          {miscellaneousT('returnToCollaborationArea')}
+                          {timelineMiscT('dontUpdate')}
                         </Button>
                       </MINTForm>
                     </div>
