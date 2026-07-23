@@ -340,7 +340,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
-	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
+	retPlan, err := storage.ModelPlanUpdate(store, logger, existingPlan)
 	if err != nil {
 		return nil, err
 	}

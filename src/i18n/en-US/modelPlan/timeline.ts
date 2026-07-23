@@ -137,6 +137,17 @@ export const timeline: TranslationTimeline = {
     formType: TranslationFormType.TEXTAREA,
     order: 1.09
   },
+  customDatesNote: {
+    gqlField: 'customDatesNote',
+    goField: 'CustomDatesNote',
+    dbField: 'custom_dates_note',
+    label: 'Notes',
+    isNote: true,
+    parentReferencesLabel: 'Additional model dates',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.095
+  },
   wrapUpEnds: {
     gqlField: 'wrapUpEnds',
     goField: 'WrapUpEnds',
@@ -213,7 +224,23 @@ export const timelineMisc: Record<string, string> = {
   heading: 'Model timeline',
   description:
     'Add all your essential model dates, such as when you anticipate completing your ICIP, going through clearance, announcing the model, and when it will be active. As you iterate on the plans for your model, please be sure to keep this space up-to-date.',
+  addAdditionalDatesInfo:
+    'The basic model timeline includes key model dates such as clearance or the model performance period. Some models may have other significant dates that need to be documented. You may add additional dates using the button below.',
+  addADate: 'Add a date',
+  timelineInfo:
+    'Please be sure that any dates listed here are reflected in the clearance calendar, if applicable. Contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email> if you have any questions.',
   needHelpDiscussion: 'Need help figuring out dates?',
+  basicHighLevelTimeline: 'Basic high level timeline',
+  datesFormatsInfo: 'All date formats are mm/dd/yyyy',
+  additionalModelDates: 'Additional model dates',
+  additionalModelDatesInfo:
+    'Some models may have other significant dates that need to be documented. You may add additional dates using the button at the top of this page.',
+  noAdditionalModelDates:
+    'There are not currently any additional dates listed for this model.',
+  editCustomDate: 'Edit date information',
+  removeCustomDate: 'Remove date',
+  startDate: 'Start date',
+  endDate: 'End date',
   clearanceHeading: 'Review model timeline',
   previousNames: 'Previous model names',
   validDate: 'Please use a valid date format',
@@ -229,7 +256,6 @@ export const timelineMisc: Record<string, string> = {
     'When the model will be active beginning with the go-live date',
   milestonesInfo:
     'Please be sure that the dates listed here are updated in the clearance calendar, if applicable. Contact the MINT Team at {{-email}} if you have any questions.',
-  dontUpdate: 'Don’t update and return to model collaboration area',
   editDates: 'Edit dates'
 };
 

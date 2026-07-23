@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Alert,
   Button,
@@ -8,6 +8,7 @@ import {
   Grid,
   GridContainer,
   Icon,
+  Link,
   ProcessList,
   ProcessListHeading,
   ProcessListItem
@@ -28,7 +29,6 @@ import AskAQuestion from 'components/AskAQuestion';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import ConfirmLeave from 'components/ConfirmLeave';
 import MINTDatePicker from 'components/DatePicker';
-import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
 import MINTForm from 'components/MINTForm';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -38,12 +38,14 @@ import ReadyForReview from 'components/ReadyForReview';
 import useHandleMutation from 'hooks/useHandleMutation';
 import { isDateInPast } from 'utils/date';
 
+import AdditionalModelDates from './_components/AdditionalModelDates';
+
 import './index.scss';
 
 type TimelineFormType = GetTimelineQuery['modelPlan']['timeline'];
 
 // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
-type InitialValueType = Omit<
+export type InitialValueType = Omit<
   TimelineFormType,
   | 'readyForReviewByUserAccount'
   | 'readyForReviewDts'
@@ -81,10 +83,12 @@ const Timeline = () => {
     performancePeriodStarts,
     performancePeriodEnds,
     highLevelNote,
+    customDatesNote,
     wrapUpEnds,
     readyForReviewByUserAccount,
     readyForReviewDts,
-    status
+    status,
+    customTimelineDates
   } = (data?.modelPlan?.timeline || {}) as TimelineFormType;
 
   const modelType = data?.modelPlan?.basics?.modelType || [];
@@ -120,7 +124,12 @@ const Timeline = () => {
     performancePeriodEnds: performancePeriodEnds ?? null,
     wrapUpEnds: wrapUpEnds ?? null,
     highLevelNote: highLevelNote ?? '',
-    status
+    customDatesNote: customDatesNote ?? '',
+    status,
+    customTimelineDates: [...(customTimelineDates ?? [])].sort(
+      (a, b) =>
+        new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+    )
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -161,6 +170,32 @@ const Timeline = () => {
               {timelineMiscT('description')}
             </p>
 
+            <div className="border border-base-light padding-2 margin-bottom-3">
+              <p className="margin-top-0 mint-body-normal text-base-darkest">
+                {timelineMiscT('addAdditionalDatesInfo')}
+              </p>
+
+              <Button
+                type="button"
+                onClick={() =>
+                  navigate(
+                    `/models/${modelID}/collaboration-area/model-timeline/customDate/new`
+                  )
+                }
+              >
+                {timelineMiscT('addADate')}
+              </Button>
+            </div>
+
+            <MINTAlert type="info" slim>
+              <Trans
+                i18nKey="timelineMisc:timelineInfo"
+                components={{
+                  email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+                }}
+              />
+            </MINTAlert>
+
             {/*
         Conditional render the entire form here to load async data properly on a hard browser refresh
         Naviagting to this component through react-router-dom however properly loads the async data into the Truss datepickers
@@ -181,13 +216,8 @@ const Timeline = () => {
                 innerRef={formikRef}
               >
                 {(formikProps: FormikProps<InitialValueType>) => {
-                  const {
-                    handleSubmit,
-                    setErrors,
-                    setFieldError,
-                    setFieldValue,
-                    values
-                  } = formikProps;
+                  const { handleSubmit, setFieldError, setFieldValue, values } =
+                    formikProps;
 
                   const handleOnBlur = (
                     e: React.ChangeEvent<HTMLInputElement>,
@@ -219,22 +249,20 @@ const Timeline = () => {
                         }}
                       >
                         <Fieldset disabled={!!error || loading}>
-                          <MINTAlert type="info" slim>
-                            <Trans i18nKey="timelineInfo">
-                              Please be sure that the dates listed here are
-                              updated in the clearance calendar, if applicable.
-                              Contact the MINT Team at{' '}
-                              <ExternalLink
-                                href="mailto:MINTTeam@cms.hhs.gov"
-                                inlineText
-                              >
-                                MINTTeam@cms.hhs.gov
-                              </ExternalLink>{' '}
-                              if you have any questions.
-                            </Trans>
-                          </MINTAlert>
+                          <div className="margin-bottom-3">
+                            <PageHeading
+                              headingLevel="h2"
+                              className="margin-top-0 margin-bottom-1"
+                            >
+                              {timelineMiscT('basicHighLevelTimeline')}
+                            </PageHeading>
 
-                          <ProcessList className="read-only-model-plan__timeline maxw-full margin-left-neg-105  ">
+                            <span className="mint-body-normal text-base-dark">
+                              {timelineMiscT('datesFormatsInfo')}
+                            </span>
+                          </div>
+
+                          <ProcessList className="read-only-model-plan__timeline maxw-full margin-left-neg-105">
                             <ProcessListItem className="read-only-model-plan__timeline__list-item maxw-full">
                               <ProcessListHeading
                                 type="h5"
@@ -370,7 +398,7 @@ const Timeline = () => {
                                     components={{
                                       link1: (
                                         <Link
-                                          to={`/models/${modelID}/collaboration-area/model-plan`}
+                                          href={`/models/${modelID}/collaboration-area/model-plan`}
                                         >
                                           Model Plan
                                         </Link>
@@ -549,44 +577,55 @@ const Timeline = () => {
                           <AddNote
                             id="ModelType-HighLevelNote"
                             field="highLevelNote"
+                            className="margin-top-0"
+                          />
+                        </Fieldset>
+
+                        <Fieldset disabled={!!error || loading}>
+                          <AdditionalModelDates
+                            initialCustomDates={
+                              initialValues.customTimelineDates
+                            }
+                            customTimelineDates={values.customTimelineDates}
+                            onBlur={handleOnBlur}
                           />
 
-                          {!loading && values.status && (
-                            <ReadyForReview
-                              id="timeline-status"
-                              field="status"
-                              sectionName={timelineMiscT('heading')}
-                              status={values.status}
-                              setFieldValue={setFieldValue}
-                              readyForReviewBy={
-                                readyForReviewByUserAccount?.commonName
-                              }
-                              readyForReviewDts={readyForReviewDts}
-                            />
-                          )}
-
-                          <div className="margin-top-2 margin-bottom-3">
-                            <Button type="submit" onClick={() => setErrors({})}>
-                              {miscellaneousT('save')}
-                            </Button>
-                          </div>
-
-                          <Button
-                            type="button"
-                            className="usa-button usa-button--unstyled"
-                            onClick={() =>
-                              navigate(`/models/${modelID}/collaboration-area`)
-                            }
-                          >
-                            <Icon.ArrowBack
-                              className="margin-right-1"
-                              aria-hidden
-                              aria-label="back"
-                            />
-
-                            {timelineMiscT('dontUpdate')}
-                          </Button>
+                          <AddNote
+                            id="ModelType-customDatesNote"
+                            field="customDatesNote"
+                            className="margin-y-0"
+                          />
                         </Fieldset>
+
+                        {!loading && values.status && (
+                          <ReadyForReview
+                            id="timeline-status"
+                            field="status"
+                            sectionName={timelineMiscT('heading')}
+                            status={values.status}
+                            setFieldValue={setFieldValue}
+                            readyForReviewBy={
+                              readyForReviewByUserAccount?.commonName
+                            }
+                            readyForReviewDts={readyForReviewDts}
+                          />
+                        )}
+
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--unstyled"
+                          onClick={() =>
+                            navigate(`/models/${modelID}/collaboration-area`)
+                          }
+                        >
+                          <Icon.ArrowBack
+                            className="margin-right-1"
+                            aria-hidden
+                            aria-label="back"
+                          />
+
+                          {miscellaneousT('returnToCollaborationArea')}
+                        </Button>
                       </MINTForm>
                     </div>
                   );

@@ -2,11 +2,13 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
@@ -45,6 +47,19 @@ func UpdatePlanTimeline(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) (*models.PlanTimeline, error) {
+	if principal.Account() == nil {
+		return nil, errors.New("unexpected nil principal account in UpdatePlanTimeline")
+	}
+	// check for custom dates ahead of time, we need it removed before any `ApplyChanges` calls happen
+	var customTimelineUpdates []*model.CustomTimelineDateUpdateDatesInput
+	if val, ok := changes["customTimelineDates"]; ok {
+		delete(changes, "customTimelineDates")
+		customTimelineUpdates, ok = val.([]*model.CustomTimelineDateUpdateDatesInput)
+		if !ok {
+			customTimelineUpdates = nil
+		}
+	}
+
 	// Get existing planTimeline
 	existing, err := store.PlanTimelineGetByID(store, logger, id)
 	if err != nil {
@@ -76,30 +91,77 @@ func UpdatePlanTimeline(
 		return nil, err
 	}
 
-	if len(datesChanged) > 0 {
-		resetSuggestedPhaseChanges := map[string]interface{}{
-			"previousSuggestedPhase": nil,
+	var customTimelineDateChanges []email.CustomTimelineDateChange
+
+	planTimeline, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
+
+		if len(datesChanged) > 0 {
+			resetSuggestedPhaseChanges := map[string]interface{}{
+				"previousSuggestedPhase": nil,
+			}
+
+			err = BaseStructPreUpdate(
+				logger,
+				modelPlan,
+				resetSuggestedPhaseChanges,
+				principal,
+				store,
+				true,
+				true,
+			)
+			if err != nil {
+				return nil, err
+			}
+
+			_, mpUpdateErr := storage.ModelPlanUpdate(tx, logger, modelPlan)
+			if mpUpdateErr != nil {
+				return nil, mpUpdateErr
+			}
 		}
 
-		err = BaseStructPreUpdate(
-			logger,
-			modelPlan,
-			resetSuggestedPhaseChanges,
-			principal,
-			store,
-			true,
-			true,
-		)
+		err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
 		if err != nil {
 			return nil, err
 		}
 
-		_, mpUpdateErr := store.ModelPlanUpdate(logger, modelPlan)
-		if mpUpdateErr != nil {
-			return nil, mpUpdateErr
+		updatedTimeline, err := store.PlanTimelineUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, fmt.Errorf("failed to update timeline: %w", err)
 		}
+
+		// update custom dates separately
+		customTimelineUpdateIDs, dedupedCustomTimelineUpdates := getDedupedCustomTimelineDateUpdates(customTimelineUpdates)
+		if len(dedupedCustomTimelineUpdates) > 0 {
+
+			existingCustomTimelineDates, errs := loaders.CustomTimelineDate.ByID.LoadMany(ctx, customTimelineUpdateIDs)
+			if errs != nil {
+				if len(errs) > 0 {
+					return nil, errs[0]
+				}
+
+				return nil, errors.New("problem getting existing custom timeline dates when updating plan timeline")
+			}
+
+			updatedCustomTimelineDates, err := storage.CustomTimelineDateUpdateDatesByIDs(tx, principal.Account().ID, dedupedCustomTimelineUpdates)
+			if err != nil {
+				return nil, err
+			}
+
+			customTimelineDateChanges = buildCustomTimelineDateChanges(
+				customTimelineUpdateIDs,
+				existingCustomTimelineDates,
+				updatedCustomTimelineDates,
+			)
+		}
+
+		return updatedTimeline, nil
+	})
+
+	if err != nil {
+		return nil, err
 	}
 
+	// send email after all DB
 	if emailService != nil &&
 		len(addressBook.ModelPlanDateChangedRecipients) > 0 {
 		err2 := processPlanTimelineChangedDates(
@@ -107,8 +169,8 @@ func UpdatePlanTimeline(
 			logger,
 			store,
 			principal,
-			changes,
-			existing,
+			datesChanged,
+			customTimelineDateChanges,
 			emailService,
 			addressBook,
 			modelPlan,
@@ -121,19 +183,7 @@ func UpdatePlanTimeline(
 		}
 	}
 
-	err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
-	if err != nil {
-		return nil, err
-	}
-
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTimeline, error) {
-		updatedTimeline, err := store.PlanTimelineUpdate(tx, logger, existing)
-		if err != nil {
-			return nil, fmt.Errorf("failed to update timeline: %w", err)
-		}
-
-		return updatedTimeline, nil
-	})
+	return planTimeline, nil
 }
 
 func PlanTimelineGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {

@@ -25,6 +25,36 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
+// CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate
+type CustomTimelineDateCreateInput struct {
+	ModelPlanID uuid.UUID                     `json:"modelPlanID"`
+	Title       string                        `json:"title"`
+	Description *string                       `json:"description,omitempty"`
+	DateType    models.CustomTimelineDateType `json:"dateType"`
+	StartDate   time.Time                     `json:"startDate"`
+	EndDate     *time.Time                    `json:"endDate,omitempty"`
+}
+
+// Represents custom timeline date translation data
+type CustomTimelineDateTranslation struct {
+	Title       models.TranslationField            `json:"title" db:"title"`
+	Description models.TranslationField            `json:"description" db:"description"`
+	DateType    models.TranslationFieldWithOptions `json:"dateType" db:"date_type"`
+	StartDate   models.TranslationField            `json:"startDate" db:"start_date"`
+	EndDate     models.TranslationField            `json:"endDate" db:"end_date"`
+}
+
+// CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
+// (this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
+type CustomTimelineDateUpdateDatesInput struct {
+	ID          uuid.UUID                      `json:"id"`
+	StartDate   *time.Time                     `json:"startDate,omitempty"`
+	EndDate     *time.Time                     `json:"endDate,omitempty"`
+	Title       *string                        `json:"title,omitempty"`
+	Description *string                        `json:"description,omitempty"`
+	DateType    *models.CustomTimelineDateType `json:"dateType,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
@@ -837,6 +867,7 @@ type PlanTimelineTranslation struct {
 	PerformancePeriodEnds   models.TranslationField            `json:"performancePeriodEnds" db:"performance_period_ends"`
 	WrapUpEnds              models.TranslationField            `json:"wrapUpEnds" db:"wrap_up_ends"`
 	HighLevelNote           models.TranslationField            `json:"highLevelNote" db:"high_level_note"`
+	CustomDatesNote         models.TranslationField            `json:"customDatesNote" db:"custom_dates_note"`
 	ReadyForReviewBy        models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts       models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	ReadyForClearanceBy     models.TranslationField            `json:"readyForClearanceBy" db:"ready_for_clearance_by"`

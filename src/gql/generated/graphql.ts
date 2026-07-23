@@ -344,6 +344,70 @@ export type CurrentUser = {
   notifications: UserNotifications;
 };
 
+export type CustomTimelineDate = {
+  __typename: 'CustomTimelineDate';
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  dateType: CustomTimelineDateType;
+  description?: Maybe<Scalars['String']['output']>;
+  endDate?: Maybe<Scalars['Time']['output']>;
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+  startDate: Scalars['Time']['output'];
+  title: Scalars['String']['output'];
+};
+
+export type CustomTimelineDateChanges = {
+  dateType?: InputMaybe<CustomTimelineDateType>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['Time']['input']>;
+  startDate?: InputMaybe<Scalars['Time']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate */
+export type CustomTimelineDateCreateInput = {
+  dateType: CustomTimelineDateType;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['Time']['input']>;
+  modelPlanID: Scalars['UUID']['input'];
+  startDate: Scalars['Time']['input'];
+  title: Scalars['String']['input'];
+};
+
+/** Represents custom timeline date translation data */
+export type CustomTimelineDateTranslation = {
+  __typename: 'CustomTimelineDateTranslation';
+  dateType: TranslationFieldWithOptions;
+  description: TranslationField;
+  endDate: TranslationField;
+  startDate: TranslationField;
+  title: TranslationField;
+};
+
+/** The selected date type for a Custom Timeline Date. */
+export enum CustomTimelineDateType {
+  RANGE = 'RANGE',
+  SINGLE = 'SINGLE'
+}
+
+/**
+ * CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
+ * (this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
+ */
+export type CustomTimelineDateUpdateDatesInput = {
+  dateType?: InputMaybe<CustomTimelineDateType>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  endDate?: InputMaybe<Scalars['Time']['input']>;
+  id: Scalars['UUID']['input'];
+  startDate?: InputMaybe<Scalars['Time']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type DailyDigestCompleteActivityMeta = {
   __typename: 'DailyDigestCompleteActivityMeta';
   analyzedAudits: Array<AnalyzedAudit>;
@@ -2103,6 +2167,7 @@ export type Mutation = {
   addPlanFavorite: PlanFavorite;
   agreeToNDA: NdaInfo;
   archiveMTOCommonMilestone: MtoCommonMilestone;
+  createCustomTimelineDate: CustomTimelineDate;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2133,6 +2198,7 @@ export type Mutation = {
    */
   createStandardCategories: Scalars['Boolean']['output'];
   createTemplateToMTO: ApplyTemplateResult;
+  deleteCustomTimelineDate: CustomTimelineDate;
   deleteKeyContact: KeyContact;
   deleteKeyContactCategory: KeyContactCategory;
   /**
@@ -2182,6 +2248,7 @@ export type Mutation = {
   shareModelPlan: Scalars['Boolean']['output'];
   unlockAllLockableSections: Array<LockableSectionLockStatus>;
   unlockLockableSection: Scalars['Boolean']['output'];
+  updateCustomTimelineDate: CustomTimelineDate;
   /**
    * This will update linked existing models, and relatede model plans for given model plan and fieldName.
    * The fieldName allows it so you can create links for multiple sections of the model plan
@@ -2231,6 +2298,12 @@ export type MutationAgreeToNdaArgs = {
 /** Mutations definition for the schema */
 export type MutationArchiveMtoCommonMilestoneArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateCustomTimelineDateArgs = {
+  input: CustomTimelineDateCreateInput;
 };
 
 
@@ -2406,6 +2479,12 @@ export type MutationCreateTemplateToMtoArgs = {
 
 
 /** Mutations definition for the schema */
+export type MutationDeleteCustomTimelineDateArgs = {
+  id: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
 export type MutationDeleteKeyContactArgs = {
   id: Scalars['UUID']['input'];
 };
@@ -2569,6 +2648,13 @@ export type MutationUnlockAllLockableSectionsArgs = {
 export type MutationUnlockLockableSectionArgs = {
   modelPlanID: Scalars['UUID']['input'];
   section: LockableSection;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationUpdateCustomTimelineDateArgs = {
+  changes: CustomTimelineDateChanges;
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -4644,6 +4730,8 @@ export type PlanTimeline = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
+  customDatesNote?: Maybe<Scalars['String']['output']>;
+  customTimelineDates: Array<CustomTimelineDate>;
   datesAddedCount: Scalars['Int']['output'];
   highLevelNote?: Maybe<Scalars['String']['output']>;
   id: Scalars['UUID']['output'];
@@ -4676,6 +4764,8 @@ export type PlanTimelineChanges = {
   clearanceEnds?: InputMaybe<Scalars['Time']['input']>;
   clearanceStarts?: InputMaybe<Scalars['Time']['input']>;
   completeICIP?: InputMaybe<Scalars['Time']['input']>;
+  customDatesNote?: InputMaybe<Scalars['String']['input']>;
+  customTimelineDates?: InputMaybe<Array<CustomTimelineDateUpdateDatesInput>>;
   highLevelNote?: InputMaybe<Scalars['String']['input']>;
   performancePeriodEnds?: InputMaybe<Scalars['Time']['input']>;
   performancePeriodStarts?: InputMaybe<Scalars['Time']['input']>;
@@ -4692,6 +4782,7 @@ export type PlanTimelineTranslation = {
   clearanceEnds: TranslationField;
   clearanceStarts: TranslationField;
   completeICIP: TranslationField;
+  customDatesNote: TranslationField;
   highLevelNote: TranslationField;
   performancePeriodEnds: TranslationField;
   performancePeriodStarts: TranslationField;
@@ -4744,6 +4835,7 @@ export type Query = {
   /** Get a deduplicated, alphabetized category/subcategory list sourced from template categories */
   commonCategories: Array<CommonCategory>;
   currentUser: CurrentUser;
+  customTimelineDate: CustomTimelineDate;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
@@ -4798,6 +4890,12 @@ export type QueryAnalyzedAuditsArgs = {
 export type QueryAuditChangesArgs = {
   primaryKey: Scalars['UUID']['input'];
   tableName: TableName;
+};
+
+
+/** Query definition for the schema */
+export type QueryCustomTimelineDateArgs = {
+  id: Scalars['UUID']['input'];
 };
 
 
@@ -5130,6 +5228,7 @@ export type SubscriptionOnLockableSectionLocksChangedArgs = {
 export enum TableName {
   ACTIVITY = 'activity',
   ANALYZED_AUDIT = 'analyzed_audit',
+  CUSTOM_TIMELINE_DATES = 'custom_timeline_dates',
   DISCUSSION_REPLY = 'discussion_reply',
   EXISTING_MODEL = 'existing_model',
   EXISTING_MODEL_LINK = 'existing_model_link',
@@ -7192,12 +7291,41 @@ export type CreateShareModelPlanMutationVariables = Exact<{
 
 export type CreateShareModelPlanMutation = { __typename: 'Mutation', shareModelPlan: boolean };
 
+export type CreateCustomDateMutationVariables = Exact<{
+  input: CustomTimelineDateCreateInput;
+}>;
+
+
+export type CreateCustomDateMutation = { __typename: 'Mutation', createCustomTimelineDate: { __typename: 'CustomTimelineDate', id: UUID } };
+
+export type DeleteCustomDateMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type DeleteCustomDateMutation = { __typename: 'Mutation', deleteCustomTimelineDate: { __typename: 'CustomTimelineDate', id: UUID, title: string, description?: string | null, dateType: CustomTimelineDateType, startDate: Time, endDate?: Time | null } };
+
+export type GetCustomDateQueryVariables = Exact<{
+  id: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCustomDateQuery = { __typename: 'Query', customTimelineDate: { __typename: 'CustomTimelineDate', id: UUID, title: string, description?: string | null, dateType: CustomTimelineDateType, startDate: Time, endDate?: Time | null } };
+
+export type UpdateCustomDateMutationVariables = Exact<{
+  id: Scalars['UUID']['input'];
+  changes: CustomTimelineDateChanges;
+}>;
+
+
+export type UpdateCustomDateMutation = { __typename: 'Mutation', updateCustomTimelineDate: { __typename: 'CustomTimelineDate', id: UUID } };
+
 export type GetTimelineQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
 
 
-export type GetTimelineQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, modelType: Array<ModelType>, modelTypeOther?: string | null }, timeline: { __typename: 'PlanTimeline', id: UUID, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, wrapUpEnds?: Time | null, readyForReviewDts?: Time | null, createdDts: Time, modifiedDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null } } };
+export type GetTimelineQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string, basics: { __typename: 'PlanBasics', id: UUID, modelType: Array<ModelType>, modelTypeOther?: string | null }, timeline: { __typename: 'PlanTimeline', id: UUID, completeICIP?: Time | null, clearanceStarts?: Time | null, clearanceEnds?: Time | null, announced?: Time | null, applicationsStart?: Time | null, applicationsEnd?: Time | null, performancePeriodStarts?: Time | null, performancePeriodEnds?: Time | null, highLevelNote?: string | null, customDatesNote?: string | null, wrapUpEnds?: Time | null, readyForReviewDts?: Time | null, createdDts: Time, modifiedDts?: Time | null, status: TaskStatus, readyForReviewByUserAccount?: { __typename: 'UserAccount', id: UUID, commonName: string } | null, customTimelineDates: Array<{ __typename: 'CustomTimelineDate', id: UUID, title: string, description?: string | null, dateType: CustomTimelineDateType, startDate: Time, endDate?: Time | null }> } } };
 
 export type UpdateTimelineMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -18570,6 +18698,159 @@ export function useCreateShareModelPlanMutation(baseOptions?: Apollo.MutationHoo
 export type CreateShareModelPlanMutationHookResult = ReturnType<typeof useCreateShareModelPlanMutation>;
 export type CreateShareModelPlanMutationResult = Apollo.MutationResult<CreateShareModelPlanMutation>;
 export type CreateShareModelPlanMutationOptions = Apollo.BaseMutationOptions<CreateShareModelPlanMutation, CreateShareModelPlanMutationVariables>;
+export const CreateCustomDateDocument = gql`
+    mutation CreateCustomDate($input: CustomTimelineDateCreateInput!) {
+  createCustomTimelineDate(input: $input) {
+    id
+  }
+}
+    `;
+export type CreateCustomDateMutationFn = Apollo.MutationFunction<CreateCustomDateMutation, CreateCustomDateMutationVariables>;
+
+/**
+ * __useCreateCustomDateMutation__
+ *
+ * To run a mutation, you first call `useCreateCustomDateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCustomDateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCustomDateMutation, { data, loading, error }] = useCreateCustomDateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCustomDateMutation(baseOptions?: Apollo.MutationHookOptions<CreateCustomDateMutation, CreateCustomDateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCustomDateMutation, CreateCustomDateMutationVariables>(CreateCustomDateDocument, options);
+      }
+export type CreateCustomDateMutationHookResult = ReturnType<typeof useCreateCustomDateMutation>;
+export type CreateCustomDateMutationResult = Apollo.MutationResult<CreateCustomDateMutation>;
+export type CreateCustomDateMutationOptions = Apollo.BaseMutationOptions<CreateCustomDateMutation, CreateCustomDateMutationVariables>;
+export const DeleteCustomDateDocument = gql`
+    mutation DeleteCustomDate($id: UUID!) {
+  deleteCustomTimelineDate(id: $id) {
+    id
+    title
+    description
+    dateType
+    startDate
+    endDate
+  }
+}
+    `;
+export type DeleteCustomDateMutationFn = Apollo.MutationFunction<DeleteCustomDateMutation, DeleteCustomDateMutationVariables>;
+
+/**
+ * __useDeleteCustomDateMutation__
+ *
+ * To run a mutation, you first call `useDeleteCustomDateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCustomDateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCustomDateMutation, { data, loading, error }] = useDeleteCustomDateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCustomDateMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCustomDateMutation, DeleteCustomDateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCustomDateMutation, DeleteCustomDateMutationVariables>(DeleteCustomDateDocument, options);
+      }
+export type DeleteCustomDateMutationHookResult = ReturnType<typeof useDeleteCustomDateMutation>;
+export type DeleteCustomDateMutationResult = Apollo.MutationResult<DeleteCustomDateMutation>;
+export type DeleteCustomDateMutationOptions = Apollo.BaseMutationOptions<DeleteCustomDateMutation, DeleteCustomDateMutationVariables>;
+export const GetCustomDateDocument = gql`
+    query GetCustomDate($id: UUID!) {
+  customTimelineDate(id: $id) {
+    id
+    title
+    description
+    dateType
+    startDate
+    endDate
+  }
+}
+    `;
+
+/**
+ * __useGetCustomDateQuery__
+ *
+ * To run a query within a React component, call `useGetCustomDateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomDateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCustomDateQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCustomDateQuery(baseOptions: Apollo.QueryHookOptions<GetCustomDateQuery, GetCustomDateQueryVariables> & ({ variables: GetCustomDateQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCustomDateQuery, GetCustomDateQueryVariables>(GetCustomDateDocument, options);
+      }
+export function useGetCustomDateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCustomDateQuery, GetCustomDateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCustomDateQuery, GetCustomDateQueryVariables>(GetCustomDateDocument, options);
+        }
+// @ts-ignore
+export function useGetCustomDateSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCustomDateQuery, GetCustomDateQueryVariables>): Apollo.UseSuspenseQueryResult<GetCustomDateQuery, GetCustomDateQueryVariables>;
+export function useGetCustomDateSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCustomDateQuery, GetCustomDateQueryVariables>): Apollo.UseSuspenseQueryResult<GetCustomDateQuery | undefined, GetCustomDateQueryVariables>;
+export function useGetCustomDateSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCustomDateQuery, GetCustomDateQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCustomDateQuery, GetCustomDateQueryVariables>(GetCustomDateDocument, options);
+        }
+export type GetCustomDateQueryHookResult = ReturnType<typeof useGetCustomDateQuery>;
+export type GetCustomDateLazyQueryHookResult = ReturnType<typeof useGetCustomDateLazyQuery>;
+export type GetCustomDateSuspenseQueryHookResult = ReturnType<typeof useGetCustomDateSuspenseQuery>;
+export type GetCustomDateQueryResult = Apollo.QueryResult<GetCustomDateQuery, GetCustomDateQueryVariables>;
+export const UpdateCustomDateDocument = gql`
+    mutation UpdateCustomDate($id: UUID!, $changes: CustomTimelineDateChanges!) {
+  updateCustomTimelineDate(id: $id, changes: $changes) {
+    id
+  }
+}
+    `;
+export type UpdateCustomDateMutationFn = Apollo.MutationFunction<UpdateCustomDateMutation, UpdateCustomDateMutationVariables>;
+
+/**
+ * __useUpdateCustomDateMutation__
+ *
+ * To run a mutation, you first call `useUpdateCustomDateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCustomDateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCustomDateMutation, { data, loading, error }] = useUpdateCustomDateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      changes: // value for 'changes'
+ *   },
+ * });
+ */
+export function useUpdateCustomDateMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCustomDateMutation, UpdateCustomDateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCustomDateMutation, UpdateCustomDateMutationVariables>(UpdateCustomDateDocument, options);
+      }
+export type UpdateCustomDateMutationHookResult = ReturnType<typeof useUpdateCustomDateMutation>;
+export type UpdateCustomDateMutationResult = Apollo.MutationResult<UpdateCustomDateMutation>;
+export type UpdateCustomDateMutationOptions = Apollo.BaseMutationOptions<UpdateCustomDateMutation, UpdateCustomDateMutationVariables>;
 export const GetTimelineDocument = gql`
     query GetTimeline($id: UUID!) {
   modelPlan(id: $id) {
@@ -18591,6 +18872,7 @@ export const GetTimelineDocument = gql`
       performancePeriodStarts
       performancePeriodEnds
       highLevelNote
+      customDatesNote
       wrapUpEnds
       readyForReviewByUserAccount {
         ...ReadyForReviewUserFragment
@@ -18599,6 +18881,14 @@ export const GetTimelineDocument = gql`
       createdDts
       modifiedDts
       status
+      customTimelineDates {
+        id
+        title
+        description
+        dateType
+        startDate
+        endDate
+      }
     }
   }
 }
@@ -18854,5 +19144,9 @@ export const TypedUpdateClearanceTimelineDocument = {"kind":"Document","definiti
 export const TypedUpdatePrepareForClearanceDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdatePrepareForClearance"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"basicsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"basicsChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBasicsChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"characteristicsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"characteristicsChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanGeneralCharacteristicsChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProvidersID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProvidersChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanParticipantsAndProvidersChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"beneficiariesID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"benficiariesChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBeneficiariesChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearningID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearningChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanOpsEvalAndLearningChanges"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"paymentsID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"paymentsChanges"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanPaymentsChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanBasics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"basicsID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"basicsChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanGeneralCharacteristics"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"characteristicsID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"characteristicsChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanParticipantsAndProviders"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProvidersID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"participantsAndProvidersChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanBeneficiaries"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"beneficiariesID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"benficiariesChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanOpsEvalAndLearning"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearningID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"opsEvalAndLearningChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"updatePlanPayments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"paymentsID"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"paymentsChanges"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForClearanceDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<UpdatePrepareForClearanceMutation, UpdatePrepareForClearanceMutationVariables>;
 export const TypedGetModelSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelSummary"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"mostRecentEdit"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"date"}}]}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"isFavorite"}},{"kind":"Field","name":{"kind":"Name","value":"echimpCRsAndTDLs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpCR"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"EChimpTDL"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}}]}},{"kind":"Field","name":{"kind":"Name","value":"generalCharacteristics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"keyCharacteristics"}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeline"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelSummaryQuery, GetModelSummaryQueryVariables>;
 export const TypedCreateShareModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateShareModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelViewFilter"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelShareSection"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelShareSection"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"shareModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"viewFilter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"viewFilter"}}},{"kind":"Argument","name":{"kind":"Name","value":"modelShareSection"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelShareSection"}}},{"kind":"Argument","name":{"kind":"Name","value":"usernames"},"value":{"kind":"Variable","name":{"kind":"Name","value":"usernames"}}},{"kind":"Argument","name":{"kind":"Name","value":"optionalMessage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"optionalMessage"}}}]}]}}]} as unknown as DocumentNode<CreateShareModelPlanMutation, CreateShareModelPlanMutationVariables>;
-export const TypedGetTimelineDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTimeline"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeline"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReadyForReviewUserFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReadyForReviewUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]} as unknown as DocumentNode<GetTimelineQuery, GetTimelineQueryVariables>;
+export const TypedCreateCustomDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCustomDate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CustomTimelineDateCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createCustomTimelineDate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateCustomDateMutation, CreateCustomDateMutationVariables>;
+export const TypedDeleteCustomDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteCustomDate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteCustomTimelineDate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"dateType"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}}]}}]}}]} as unknown as DocumentNode<DeleteCustomDateMutation, DeleteCustomDateMutationVariables>;
+export const TypedGetCustomDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCustomDate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"customTimelineDate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"dateType"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}}]}}]}}]} as unknown as DocumentNode<GetCustomDateQuery, GetCustomDateQueryVariables>;
+export const TypedUpdateCustomDateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCustomDate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CustomTimelineDateChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCustomTimelineDate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateCustomDateMutation, UpdateCustomDateMutationVariables>;
+export const TypedGetTimelineDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetTimeline"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}}]}},{"kind":"Field","name":{"kind":"Name","value":"timeline"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"completeICIP"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceStarts"}},{"kind":"Field","name":{"kind":"Name","value":"clearanceEnds"}},{"kind":"Field","name":{"kind":"Name","value":"announced"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsStart"}},{"kind":"Field","name":{"kind":"Name","value":"applicationsEnd"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodStarts"}},{"kind":"Field","name":{"kind":"Name","value":"performancePeriodEnds"}},{"kind":"Field","name":{"kind":"Name","value":"highLevelNote"}},{"kind":"Field","name":{"kind":"Name","value":"customDatesNote"}},{"kind":"Field","name":{"kind":"Name","value":"wrapUpEnds"}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ReadyForReviewUserFragment"}}]}},{"kind":"Field","name":{"kind":"Name","value":"readyForReviewDts"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"customTimelineDates"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"dateType"}},{"kind":"Field","name":{"kind":"Name","value":"startDate"}},{"kind":"Field","name":{"kind":"Name","value":"endDate"}}]}}]}}]}}]}},{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ReadyForReviewUserFragment"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"UserAccount"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}}]} as unknown as DocumentNode<GetTimelineQuery, GetTimelineQueryVariables>;
 export const TypedUpdateTimelineDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateTimeline"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanTimelineChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanTimeline"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateTimelineMutation, UpdateTimelineMutationVariables>;
