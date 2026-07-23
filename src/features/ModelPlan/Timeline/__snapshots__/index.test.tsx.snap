@@ -1103,7 +1103,7 @@ exports[`Model Timeline page > renders without errors and matches snapshot 1`] =
                 <button
                   class="usa-button"
                   data-testid="button"
-                  type="button"
+                  type="submit"
                 >
                   Save
                 </button>

@@ -612,12 +612,7 @@ const Timeline = () => {
                         )}
 
                         <div className="margin-top-2 margin-bottom-3">
-                          <Button
-                            type="button"
-                            onClick={() =>
-                              navigate(`/models/${modelID}/collaboration-area`)
-                            }
-                          >
+                          <Button type="submit">
                             {miscellaneousT('save')}
                           </Button>
                         </div>
