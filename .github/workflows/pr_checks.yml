@@ -13,6 +13,15 @@ jobs:
   run_tests:
     uses: ./.github/workflows/run_tests.yml
     secrets: inherit
+
+  build_application_images:
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft == true && github.event.pull_request.head.repo.full_name == github.repository }}
+    needs: run_tests
+    uses: ./.github/workflows/build_application_images.yml
+    permissions:
+      id-token: write
+      contents: read
+    secrets: inherit
   
   # For merge queue, just pass immediately (tests already validated in PR)
   merge_queue_pass:
