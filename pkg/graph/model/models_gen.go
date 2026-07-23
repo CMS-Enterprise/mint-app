@@ -25,6 +25,32 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
+// Input for uploading a supporting document for a CTAT request.
+type CTATRequestDocumentInput struct {
+	FileData graphql.Upload `json:"fileData"`
+}
+
+// Input for creating a CTAT request.
+type CTATRequestInput struct {
+	CmmiGroup                 models.CTATCMMIGroupOption       `json:"cmmiGroup"`
+	CmmiGroupOther            *string                          `json:"cmmiGroupOther,omitempty"`
+	CmmiDivision              *models.CTATCMMIDivisionOption   `json:"cmmiDivision,omitempty"`
+	CmmiDivisionOther         *string                          `json:"cmmiDivisionOther,omitempty"`
+	RelatedMINTModels         []uuid.UUID                      `json:"relatedMINTModels,omitempty"`
+	ContractActivityType      *models.CTATContractActivityType `json:"contractActivityType,omitempty"`
+	ContractActivityTypeOther *string                          `json:"contractActivityTypeOther,omitempty"`
+	ContractName              *string                          `json:"contractName,omitempty"`
+	ContractNumber            *string                          `json:"contractNumber,omitempty"`
+	ContractType              *models.CTATContractType         `json:"contractType,omitempty"`
+	ContractTypeOther         *string                          `json:"contractTypeOther,omitempty"`
+	TypeOfHelpNeeded          []models.CTATHelpNeededType      `json:"typeOfHelpNeeded"`
+	TypeOfHelpNeededOther     *string                          `json:"typeOfHelpNeededOther,omitempty"`
+	DescribeHelpNeeded        string                           `json:"describeHelpNeeded"`
+	RequestUrgency            models.CTATRequestUrgency        `json:"requestUrgency"`
+	DateAssistanceNeededBy    time.Time                        `json:"dateAssistanceNeededBy"`
+	SupportingDocuments       []*CTATRequestDocumentInput      `json:"supportingDocuments,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`

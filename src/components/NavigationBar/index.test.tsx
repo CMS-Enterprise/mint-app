@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { GetPollNotificationsDocument } from 'gql/generated/graphql';
 
 import NavigationBar, { getActiveTab, navLinks } from './index';
@@ -109,9 +109,42 @@ describe('The NavigationBar component', () => {
       expect(getByText(linkTitle)).toBeInTheDocument();
     });
 
+    expect(getByTestId('navmenu__help')).toBeInTheDocument();
+
     await waitFor(() => {
       expect(getByTestId('has-notifications')).toBeInTheDocument();
     });
+  });
+
+  it('opens the Help submenu from the navigation bar', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <NavigationBar
+              expandMobileSideNav={() => null}
+              isMobile={false}
+              signout={() => null}
+              userName="A11Y"
+            />
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByTestId } = render(
+      <MockedProvider mocks={notificationsMock} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    fireEvent.click(getByTestId('navmenu__help'));
+
+    expect(getByTestId('navmenu__help-contractAssistance')).toBeInTheDocument();
   });
 });
 

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -26,6 +27,12 @@ func main() {
 	sendPlanDiscussionCreatedTestEmail(emailService, addressBook)
 	sendPlanDiscussionTaggedUserTestEmail(emailService, addressBook)
 	sendPlanDiscussionTaggedSolutionTestEmail(emailService, addressBook)
+
+	// CTAT emails
+	sendCTATSubmittedTestEmail(emailService, addressBook)
+	sendCTATSubmittedAdminTestEmail(emailService, addressBook)
+	sendCTATUpdateTestEmail(emailService, addressBook)
+	sendCTATUpdateAdminTestEmail(emailService, addressBook)
 
 	//DiscussionReply email
 	sendDiscussionReplyOriginatorTestEmail(emailService, addressBook)
@@ -109,6 +116,7 @@ func initializeAddressBook() email.AddressBook {
 	return email.AddressBook{
 		DefaultSender: "test@mint.dev.cms.gov",
 		MINTTeamEmail: "test.team@mint.dev.cms.gov",
+		CTATTeamEmail: "test.ctat.team@mint.dev.cms.gov",
 		DevTeamEmail:  "test.dev.team@mint.dev.cms.gov",
 
 		ModelPlanDateChangedRecipients: []string{
@@ -241,6 +249,235 @@ func sendModelPlanCreatedEmailTest(
 		emailBody,
 	)
 	noErr(err)
+}
+
+func sendCTATSubmittedTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
+	}, ", ")
+
+	subjectContent := email.CTATSubmittedSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATSubmittedBodyContent{
+		ClientAddress:          emailService.GetConfig().GetClientAddress(),
+		CTATTicketID:           "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		TicketNumber:           "CTAT-021",
+		RequesterName:          "Betty Alpha",
+		RequesterEmail:         "betty.alpha@mint.dev.cms.gov",
+		CMMIGroup:              fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+		CMMIDivision:           fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
+		RelatedMINTModels:      "Plan With CRs and TDLs 1, Test Model Plan",
+		ContractActivityType:   fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
+		ContractName:           "BTAL CTAT Request Example Contract",
+		ContractType:           fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
+		TypeOfHelpNeeded:       typeOfHelpNeeded,
+		DescribeHelpNeeded:     "Bruno example request for CTAT assistance without supporting documents.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh.Humanize(),
+		DateAssistanceNeededBy: "06/30/2026",
+		UploadedFiles:          "ctat-request-upload.txt, ctat-background-notes.pdf",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.Submitted.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{bodyContent.RequesterEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendCTATUpdateTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
+	}, ", ")
+
+	subjectContent := email.CTATUpdateSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATUpdateBodyContent{
+		Status:                    models.CTATStatusInProgress.Humanize(),
+		StatusUpdated:             true,
+		AssignedTeamMemberUpdated: true,
+		AssignedTeamMemberName:    "Audrey Abrams",
+		AssignedTeamMemberEmail:   "audrey.abrams@mint.dev.cms.gov",
+		ProgressNotesUpdated:      true,
+		ProgressNotes:             "We reviewed the request and scheduled follow-up office hours to walk through the next steps.",
+		ResolutionUpdated:         false,
+		Resolution:                "",
+		ClientAddress:             emailService.GetConfig().GetClientAddress(),
+		CTATTicketID:              "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		TicketNumber:              "CTAT-021",
+		RequesterName:             "Betty Alpha",
+		RequesterEmail:            "betty.alpha@mint.dev.cms.gov",
+		CMMIGroup:                 fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+		CMMIDivision:              fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
+		RelatedMINTModels:         "Plan With CRs and TDLs 1, Test Model Plan",
+		ContractActivityType:      fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
+		ContractName:              "BTAL CTAT Request Example Contract",
+		ContractType:              fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
+		TypeOfHelpNeeded:          typeOfHelpNeeded,
+		DescribeHelpNeeded:        "Bruno example request for CTAT assistance without supporting documents.",
+		RequestUrgency:            models.CTATRequestUrgencyHigh.Humanize(),
+		DateAssistanceNeededBy:    "06/30/2026",
+		UploadedFiles:             "ctat-request-upload.txt, ctat-background-notes.pdf",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.Update.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{bodyContent.RequesterEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendCTATSubmittedAdminTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
+	}, ", ")
+
+	subjectContent := email.CTATSubmittedAdminSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATSubmittedAdminBodyContent{
+		ClientAddress:          emailService.GetConfig().GetClientAddress(),
+		CTATTicketID:           "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		TicketNumber:           "CTAT-021",
+		RequesterName:          "Betty Alpha",
+		RequesterEmail:         "betty.alpha@mint.dev.cms.gov",
+		CMMIGroup:              fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+		CMMIDivision:           fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
+		RelatedMINTModels:      "Plan With CRs and TDLs 1, Test Model Plan",
+		ContractActivityType:   fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
+		ContractName:           "BTAL CTAT Request Example Contract",
+		ContractType:           fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
+		TypeOfHelpNeeded:       typeOfHelpNeeded,
+		DescribeHelpNeeded:     "Bruno example request for CTAT assistance without supporting documents.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh.Humanize(),
+		DateAssistanceNeededBy: "06/30/2026",
+		UploadedFiles:          "ctat-request-upload.txt, ctat-background-notes.pdf",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.SubmittedAdmin.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.CTATTeamEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendCTATUpdateAdminTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
+	}, ", ")
+
+	subjectContent := email.CTATUpdateAdminSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATUpdateAdminBodyContent{
+		CTATUpdateBodyContent: email.CTATUpdateBodyContent{
+			Status:                    models.CTATStatusInProgress.Humanize(),
+			StatusUpdated:             true,
+			AssignedTeamMemberUpdated: true,
+			AssignedTeamMemberName:    "Audrey Abrams",
+			AssignedTeamMemberEmail:   "audrey.abrams@mint.dev.cms.gov",
+			ProgressNotesUpdated:      true,
+			ProgressNotes:             "We reviewed the request and scheduled follow-up office hours to walk through the next steps.",
+			ResolutionUpdated:         false,
+			Resolution:                "",
+			ClientAddress:             emailService.GetConfig().GetClientAddress(),
+			CTATTicketID:              "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+			TicketNumber:              "CTAT-021",
+			RequesterName:             "Betty Alpha",
+			RequesterEmail:            "betty.alpha@mint.dev.cms.gov",
+			CMMIGroup:                 fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+			CMMIDivision:              fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
+			RelatedMINTModels:         "Plan With CRs and TDLs 1, Test Model Plan",
+			ContractActivityType:      fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
+			ContractName:              "BTAL CTAT Request Example Contract",
+			ContractType:              fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
+			TypeOfHelpNeeded:          typeOfHelpNeeded,
+			DescribeHelpNeeded:        "Bruno example request for CTAT assistance without supporting documents.",
+			RequestUrgency:            models.CTATRequestUrgencyHigh.Humanize(),
+			DateAssistanceNeededBy:    "06/30/2026",
+			UploadedFiles:             "ctat-request-upload.txt, ctat-background-notes.pdf",
+		},
+		AdminName: "CTAT Team",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.UpdateAdmin.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.CTATTeamEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+
+	if len(bodyContent.AssignedTeamMemberEmail) > 0 {
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			[]string{bodyContent.AssignedTeamMemberEmail},
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+		)
+		noErr(err)
+	}
 }
 
 func sendModelPlanShareTest(

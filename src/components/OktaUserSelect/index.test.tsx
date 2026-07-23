@@ -1,5 +1,6 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
+import { screen, waitFor } from '@testing-library/react';
 import { SearchOktaUsersDocument } from 'gql/generated/graphql';
 import setup from 'tests/util';
 
@@ -56,5 +57,30 @@ describe('OktaUserSelect', () => {
 
     // Check that select field displays correct value
     expect(input).toHaveValue('Adeline Aarons (adeline.aarons@local.fake)');
+  });
+
+  it('does not show no results when a user is pre-selected', async () => {
+    setup(
+      <MockedProvider mocks={[]}>
+        <OktaUserSelect
+          id="cedarContactSelect"
+          name="cedarContactSelect"
+          value={{
+            username: 'MWIN',
+            displayName: 'Mace Windu',
+            email: 'mace.windu@cms.hhs.gov'
+          }}
+          onChange={() => null}
+        />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('combobox')).toHaveValue(
+        'Mace Windu (mace.windu@cms.hhs.gov)'
+      );
+    });
+
+    expect(screen.queryByText('No results found')).not.toBeInTheDocument();
   });
 });

@@ -91,7 +91,7 @@ exports[`MailboxAndTeamMemberModal Component > matches snapshot 1`] = `
             This field searches CMS’ EUA database.
           </span>
           <div
-            class="margin-top-1 cedar-contact-select maxw-none usa-combo-box cedar-contact-select__loading css-b62m3t-container"
+            class="margin-top-1 cedar-contact-select maxw-none usa-combo-box css-b62m3t-container"
             id="team-member-name"
           >
             <span
@@ -106,7 +106,7 @@ exports[`MailboxAndTeamMemberModal Component > matches snapshot 1`] = `
               role="log"
             />
             <div
-              class="cedar-contact-select__control cedar-contact-select__control--menu-is-open css-79rxjr-control"
+              class="cedar-contact-select__control css-79rxjr-control"
             >
               <div
                 class="cedar-contact-select__value-container cedar-contact-select__value-container--has-value css-hlgwow"
@@ -118,8 +118,7 @@ exports[`MailboxAndTeamMemberModal Component > matches snapshot 1`] = `
                   <input
                     aria-activedescendant=""
                     aria-autocomplete="list"
-                    aria-controls="react-select-team-member-name-listbox"
-                    aria-expanded="true"
+                    aria-expanded="false"
                     aria-haspopup="true"
                     aria-labelledby="label-team-member-name"
                     autocapitalize="none"
@@ -139,12 +138,6 @@ exports[`MailboxAndTeamMemberModal Component > matches snapshot 1`] = `
               <div
                 class="cedar-contact-select__indicators css-1wy0on6"
               >
-                <span
-                  aria-valuetext="Loading"
-                  class="mint-spinner mint-spinner--small margin-right-1"
-                  data-testid="spinner"
-                  role="progressbar"
-                />
                 <button
                   aria-label="Clear selection"
                   class="usa-button--unstyled"
@@ -189,30 +182,6 @@ exports[`MailboxAndTeamMemberModal Component > matches snapshot 1`] = `
                       d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
                     />
                   </svg>
-                </div>
-              </div>
-            </div>
-            <div
-              class="cedar-contact-select__menu css-1v1oxpf-menu"
-            >
-              <div
-                aria-multiselectable="false"
-                class="cedar-contact-select__menu-list css-1t1p7p"
-                id="react-select-team-member-name-listbox"
-                role="listbox"
-              >
-                <div
-                  class="cedar-contact-select__menu-notice cedar-contact-select__menu-notice--no-options css-1elr36m"
-                >
-                  <button
-                    aria-label="No results found"
-                    class="usa-button--unstyled text-no-underline text-black"
-                    id="no-results"
-                    tabindex="0"
-                    type="button"
-                  >
-                    No results found
-                  </button>
                 </div>
               </div>
             </div>

@@ -1,0 +1,273 @@
+"""
+The contract type selected for a CTAT record.
+"""
+enum CTATContractType {
+  COST_PLUS_FIXED_FEE
+  COST_REIMBURSEMENT
+  FIRM_FIXED_PRICE
+  INCENTIVE_CONTRACT
+  TIME_AND_MATERIALS
+  OTHER
+}
+
+"""
+The contract activity type selected for a CTAT record.
+"""
+enum CTATContractActivityType {
+  EVALUATION
+  IMPLEMENTATION
+  LEARNING
+  TECHNICAL_ASSISTANCE
+  OTHER
+}
+
+"""
+The urgency selected for a CTAT request.
+"""
+enum CTATRequestUrgency {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+"""
+The status assigned to a CTAT request.
+"""
+enum CTATStatus {
+  IN_PROGRESS
+  NEW
+  ASSIGNED
+  CLOSED
+}
+
+"""
+The selected CMMI group for a CTAT record.
+"""
+enum CTATCMMIGroupOption {
+  BSG
+  LDG
+  PCMG
+  PPG
+  RREG
+  SCMG
+  SPHG
+  OTHER
+}
+
+"""
+The selected CMMI division for a CTAT record.
+"""
+enum CTATCMMIDivisionOption {
+  BSG_DBOM
+  BSG_DCCS
+  BSG_DSSOS
+  BSG_DTS
+  LDG_DMLS
+  LDG_DAN
+  PCMG_DAPC
+  PCMG_DHCPM
+  PCMG_DSPM
+  PCMG_DAPM
+  PCMG_DPM
+  PPG_DAPMI
+  PPG_DDA
+  PPG_DESP
+  PPG_DPMS
+  RREG_DHSR
+  RREG_DPAR
+  RREG_DSPR
+  RREG_DRAM
+  SCMG_DHPI
+  SCMG_DFR
+  SCMG_DSI
+  SCMG_DDI
+  SPHG_DMPM
+  SPHG_DHII
+  SPHG_DPHII
+  SPHG_DHCD
+  SPHG_DSBI
+  OTHER
+}
+
+"""
+The selected type of help needed for a CTAT record.
+"""
+enum CTATHelpNeededType {
+  CALM_SYSTEM_REQUISITION_SUPPORT
+  PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING
+  POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING
+  COR_TRANSCRIPT_REVIEW
+  DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS
+  DEPARTMENTAL_EFFICIENCY_REVIEW_DER
+  GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF
+  GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA
+  GUIDANCE_ON_MARKET_RESEARCH
+  GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING
+  INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION
+  POLITICAL_APPOINTEE_APPROVAL_PAA
+  REQUEST_FOR_CONTRACT_MEMO_RFC
+  REQUEST_FOR_INFORMATION_RFI
+  REQUEST_FOR_PROPOSAL_RFP
+  REQUEST_FOR_QUOTATION_RFQ
+  SOW_SOO_PWS_DEVELOPMENT
+  CONTRACTOR_PERFORMANCE_MANAGEMENT
+  DATA_USE_AGREEMENT_DUA
+  DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION
+  DOCUMENTING_AND_SUBMITTING_CPARS
+  ENTERPRISE_USER_ADMINISTRATION_EUA_JOB_CODES
+  FOREIGN_NATIONAL_MANAGEMENT_SYSTEM_FNMS
+  IDENTITY_AND_CREDENTIALING_TOOL_ICT
+  INVOICE_PROCESSING_PLATFORM_IPP
+  MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE
+  POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION
+  OTHER
+}
+
+type CTATRequest {
+  id: UUID!
+  humanReadableID: String!
+  humanReadableIDNumber: Int!
+  requester: UUID!
+  requesterUserAccount: UserAccount!
+
+  status: CTATStatus
+  """
+  The UUID of the user who completed the request
+  """
+  completedBy: UUID
+
+  """
+  The user who completed the request
+  """
+  completedByUserAccount: UserAccount
+
+  """
+  The timestamp when the request was completed
+  """
+  completedDts: Time
+  assignedAdmin: UUID
+  assignedAdminUserAccount: UserAccount
+  """
+  Tracks the first time an admin was assigned to the request. It is nil if no admin has been assigned yet. It does not change if the admin is unassigned or reassigned.
+  """
+  adminAssignedDts: Time
+  notes: String
+  resolution: String
+
+  cmmiGroup: CTATCMMIGroupOption
+  cmmiGroupOther: String
+  cmmiDivision: CTATCMMIDivisionOption
+  cmmiDivisionOther: String
+  relatedMINTModels: [ModelPlan!]
+  contractActivityType: CTATContractActivityType
+  contractActivityTypeOther: String
+  contractName: String
+  contractNumber: String
+  contractType: CTATContractType
+  contractTypeOther: String
+  typeOfHelpNeeded: [CTATHelpNeededType!]!
+  typeOfHelpNeededOther: String
+  describeHelpNeeded: String
+  requestUrgency: CTATRequestUrgency
+  dateAssistanceNeededBy: Time
+  supportingDocuments: [CTATRequestDocument!]!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  """
+  A convenience field, this is the same as created by
+  """
+  submittedBy: UUID!
+  """
+  A convenience field, this is the same as created by
+  """
+  submittedByUserAccount: UserAccount!
+  """
+  A convenience field, this is the same as created at
+  """
+  submittedDts: Time!
+  """
+  How long until the CTAT request was closed
+  """
+  daysFromSubmittedToCompleted: Int
+  """
+  How long from assignment to completion for the CTAT request
+  """
+  daysFromAssignedToCompleted: Int
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+CTATRequestsTableDataRequester contains the requests for the table information for a requester
+"""
+type CTATRequestsTableDataRequester {
+  ctatRequests: [CTATRequest!]!
+}
+
+"""
+CTATRequestsTableData contains the requests and the request count for the table information for an admin
+"""
+type CTATRequestsTableData {
+  ctatRequests: [CTATRequest!]!
+  count: Int!
+}
+
+"""
+Input for uploading a supporting document for a CTAT request.
+"""
+input CTATRequestDocumentInput {
+  fileData: Upload!
+}
+
+"""
+Input for creating a CTAT request.
+"""
+input CTATRequestInput {
+  cmmiGroup: CTATCMMIGroupOption!
+  cmmiGroupOther: String
+  cmmiDivision: CTATCMMIDivisionOption
+  cmmiDivisionOther: String
+  relatedMINTModels: [UUID!]
+  contractActivityType: CTATContractActivityType
+  contractActivityTypeOther: String
+  contractName: String
+  contractNumber: String
+  contractType: CTATContractType
+  contractTypeOther: String
+  typeOfHelpNeeded: [CTATHelpNeededType!]!
+  typeOfHelpNeededOther: String
+  describeHelpNeeded: String!
+  requestUrgency: CTATRequestUrgency!
+  dateAssistanceNeededBy: Time!
+  supportingDocuments: [CTATRequestDocumentInput!]
+}
+
+"""
+Input for an admin update to a CTAT request.
+"""
+input CTATAdminUpdateInput @goModel(model: "map[string]interface{}") {
+  status: CTATStatus
+  assignedAdmin: String
+  notes: String
+  resolution: String
+}
+
+extend type Query {
+  ctatRequest(id: UUID!): CTATRequest!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+  ctatRequestsRequester: CTATRequestsTableDataRequester!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+  ctatRequests: CTATRequestsTableData! @hasRole(role: MINT_ASSESSMENT)
+}
+
+extend type Mutation {
+  createCTATRequest(input: CTATRequestInput!): CTATRequest!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+  adminUpdateCTATRequest(
+    id: UUID!
+    changes: CTATAdminUpdateInput!
+  ): CTATRequest! @hasRole(role: MINT_ASSESSMENT)
+}

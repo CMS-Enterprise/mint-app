@@ -11,6 +11,25 @@
     @media screen and (min-width: $desktop) {
       width: 50%;
     }
+
+    &--fixed {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__fixed-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__scroll-container {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
   }
 
   &__wide-content {
