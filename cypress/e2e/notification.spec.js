@@ -260,7 +260,7 @@ describe('Notification Center', () => {
         .should('have.value', '05/23/2025');
 
       cy.clickOutside();
-      cy.contains('button', 'Return to model collaboration area').click();
+      cy.contains('button', 'Save').click();
       cy.wait(500);
 
       // Comment out since currently need to wait for too long for below notification to show
@@ -389,7 +389,7 @@ describe('Notification Center', () => {
 
       cy.clickOutside();
 
-      cy.contains('button', 'Return to model collaboration area').click();
+      cy.contains('button', 'Save').click();
 
       cy.get('[data-testid="page-loading"]').should('not.exist');
 
