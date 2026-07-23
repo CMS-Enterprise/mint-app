@@ -321,42 +321,53 @@ func sendDateChangedEmailsTest(
 	)
 
 	t1, _ := time.Parse(time.RFC3339, "2024-01-01T00:00:00Z")
+	unchangedBasicSingleDate, _ := time.Parse(time.RFC3339, "2024-03-01T00:00:00Z")
+	unchangedBasicRangeStart, _ := time.Parse(time.RFC3339, "2024-04-01T00:00:00Z")
+	unchangedBasicRangeEnd, _ := time.Parse(time.RFC3339, "2024-04-30T00:00:00Z")
 	oldCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-09-01T00:00:00Z")
 	newCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-10-01T00:00:00Z")
 	oldCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-01-01T00:00:00Z")
 	oldCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-06-30T00:00:00Z")
 	newCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-02-01T00:00:00Z")
 	newCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-07-31T00:00:00Z")
+	unchangedCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-11-01T00:00:00Z")
+	unchangedCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-12-01T00:00:00Z")
+	unchangedCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-12-31T00:00:00Z")
 	customSingleDateDescription := "A custom single date for this model plan timeline."
 	customDateRangeDescription := "A custom date range for this model plan timeline."
+	unchangedCustomSingleDateDescription := "A custom single date with no date change."
+	unchangedCustomDateRangeDescription := "A custom date range with no date change."
 	dateChangeSlice := []email.DateChange{
 		{
 			Field:     "Complete ICIP",
 			IsChanged: true,
 			NewDate:   &t1,
-		}, {
+		},
+		{
 			Field:         "Clearance",
 			IsRange:       true,
 			IsChanged:     true,
 			NewRangeStart: &t1,
 			NewRangeEnd:   &t1,
-		}, {
-			Field:     "Announce model",
-			IsChanged: true,
-			NewDate:   &t1,
-		}, {
+		},
+		{
+			Field:   "Announce model",
+			OldDate: &unchangedBasicSingleDate,
+		},
+		{
 			Field:         "Application period",
 			IsRange:       true,
 			IsChanged:     true,
 			NewRangeStart: &t1,
 			NewRangeEnd:   &t1,
-		}, {
+		},
+		{
 			Field:         "Performance period",
-			IsChanged:     true,
 			IsRange:       true,
-			NewRangeStart: &t1,
-			NewRangeEnd:   &t1,
-		}, {
+			OldRangeStart: &unchangedBasicRangeStart,
+			OldRangeEnd:   &unchangedBasicRangeEnd,
+		},
+		{
 			Field:     "Model wrap-up end date",
 			IsChanged: true,
 			NewDate:   &t1,
@@ -380,6 +391,19 @@ func sendDateChangedEmailsTest(
 			OldEndDate:   &oldCustomRangeEnd,
 			NewStartDate: &newCustomRangeStart,
 			NewEndDate:   &newCustomRangeEnd,
+		},
+		{
+			Title:        "Unchanged custom single date title",
+			Description:  &unchangedCustomSingleDateDescription,
+			IsRange:      false,
+			OldStartDate: &unchangedCustomSingleDate,
+		},
+		{
+			Title:        "Unchanged custom date range title",
+			Description:  &unchangedCustomDateRangeDescription,
+			IsRange:      true,
+			OldStartDate: &unchangedCustomRangeStart,
+			OldEndDate:   &unchangedCustomRangeEnd,
 		},
 	}
 
