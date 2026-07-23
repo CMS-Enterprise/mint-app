@@ -12,9 +12,10 @@ func TestModelPlanDateChangedTemplateSections(t *testing.T) {
 	description := "A custom date for this model plan timeline."
 
 	tests := []struct {
-		name                      string
-		dateChanges               []DateChange
-		customTimelineDateChanges []CustomTimelineDateChange
+		name                         string
+		dateChanges                  []DateChange
+		customTimelineDateChanges    []CustomTimelineDateChange
+		shouldShowAdditionalTimeline bool
 	}{
 		{
 			name: "date changes only shows basic timeline",
@@ -37,6 +38,7 @@ func TestModelPlanDateChangedTemplateSections(t *testing.T) {
 					NewStartDate: &nextDate,
 				},
 			},
+			shouldShowAdditionalTimeline: true,
 		},
 		{
 			name: "both change types show both timeline sections",
@@ -56,9 +58,10 @@ func TestModelPlanDateChangedTemplateSections(t *testing.T) {
 					NewStartDate: &nextDate,
 				},
 			},
+			shouldShowAdditionalTimeline: true,
 		},
 		{
-			name: "no changes still shows both timeline sections",
+			name: "no custom timeline dates hides additional model dates",
 		},
 	}
 
@@ -81,7 +84,7 @@ func TestModelPlanDateChangedTemplateSections(t *testing.T) {
 			}
 
 			assertContains(t, body, "Basic high level timeline", true)
-			assertContains(t, body, "Additional model dates", true)
+			assertContains(t, body, "Additional model dates", tt.shouldShowAdditionalTimeline)
 		})
 	}
 }

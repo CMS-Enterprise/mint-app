@@ -44,38 +44,40 @@
   </p>
 {{end}}
 
-<br/>
-<br/>
-
-<h3>Additional model dates</h3>
-
-{{range .CustomTimelineDateChanges}}
+{{if .CustomTimelineDateChanges}}
   <br/>
-  <p>
-    <strong>{{.Title}}</strong>
-    {{if .Description}}
-      <br/>
-      {{.Description}}
-    {{end}}
+  <br/>
+
+  <h3>Additional model dates</h3>
+
+  {{range .CustomTimelineDateChanges}}
     <br/>
-      {{if .IsRange}}
-          {{if .IsChanged}}
-            <span style="color: #D54309; text-decoration: line-through;">
-              {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}<br/>
-            </span>
-            {{template "date" .NewStartDate}} - {{template "date" .NewEndDate}}
-          {{else}}
-            {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}
-          {{end}}
-      {{else}}
-          {{if .IsChanged}}
-            <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldStartDate}}</span> &nbsp; {{template "date" .NewStartDate}}
-          {{else}}
-            {{template "date" .OldStartDate}}
-          {{end}}
+    <p>
+      <strong>{{.Title}}</strong>
+      {{if .Description}}
+        <br/>
+        {{.Description}}
       {{end}}
       <br/>
-  </p>
+        {{if .IsRange}}
+            {{if .IsChanged}}
+              <span style="color: #D54309; text-decoration: line-through;">
+                {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}<br/>
+              </span>
+              {{template "date" .NewStartDate}} - {{template "date" .NewEndDate}}
+            {{else}}
+              {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}
+            {{end}}
+        {{else}}
+            {{if .IsChanged}}
+              <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldStartDate}}</span> &nbsp; {{template "date" .NewStartDate}}
+            {{else}}
+              {{template "date" .OldStartDate}}
+            {{end}}
+        {{end}}
+        <br/>
+    </p>
+  {{end}}
 {{end}}
 
 <br/>
