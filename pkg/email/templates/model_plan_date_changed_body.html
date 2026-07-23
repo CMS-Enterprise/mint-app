@@ -15,70 +15,67 @@
 <h2>Dates updated for {{.ModelName}}</h2>
 <p>One or more dates have been updated for this model.</p>
 
-<!-- only render section if there are basic timeline date changes -->
-{{if .DateChanges}}
-  <br/>
-  <br/>
-  <h3>Basic high level timeline</h3>
+<br/>
+<br/>
+<h3>Basic high level timeline</h3>
 
-  {{range .DateChanges}}
+{{range .DateChanges}}
+  <br/>
+  <p>
+    <b>{{.Field}}</b>
     <br/>
-    <p>
-      <b>{{.Field}}</b>
-      <br/>
-        {{if .IsRange}}
-            {{if .IsChanged}}
-              <span style="color: #D54309; text-decoration: line-through;">
-                {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}<br/>
-              </span>
-              {{template "date" .NewRangeStart}} - {{template "date" .NewRangeEnd}}
-            {{else}}
-              {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}
-            {{end}}
-        {{else}}
-            {{if .IsChanged}}
-              <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldDate}}</span> &nbsp; {{template "date" .NewDate}}
-            {{else}}
-              {{template "date" .OldDate}}
-            {{end}}
-        {{end}}
-      <br/>
-    </p>
-  {{end}}
+      {{if .IsRange}}
+          {{if .IsChanged}}
+            <span style="color: #D54309; text-decoration: line-through;">
+              {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}<br/>
+            </span>
+            {{template "date" .NewRangeStart}} - {{template "date" .NewRangeEnd}}
+          {{else}}
+            {{template "date" .OldRangeStart}} - {{template "date" .OldRangeEnd}}
+          {{end}}
+      {{else}}
+          {{if .IsChanged}}
+            <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldDate}}</span> &nbsp; {{template "date" .NewDate}}
+          {{else}}
+            {{template "date" .OldDate}}
+          {{end}}
+      {{end}}
+    <br/>
+  </p>
 {{end}}
 
-<!-- only render section if there are custom timeline date changes -->
-{{if .CustomTimelineDateChanges}}
-  <br/>
-  <br/>
+<br/>
+<br/>
 
-  <h3>Additional model dates</h3>
+<h3>Additional model dates</h3>
 
-  {{range .CustomTimelineDateChanges}}
+{{range .CustomTimelineDateChanges}}
+  <br/>
+  <p>
+    <strong>{{.Title}}</strong>
+    {{if .Description}}
+      <br/>
+      {{.Description}}
+    {{end}}
     <br/>
-    <p>
-      <strong>{{.Title}}</strong>
-      {{if .Description}}
-        <br/>
-        {{.Description}}
-      {{end}}
-      <br/>
-      <span style="color: #D54309; text-decoration: line-through;">
-        {{if .IsRange}}
-          {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}
-        {{else}}
-          {{template "date" .OldStartDate}}
-        {{end}}
-      </span>
-      <br/>
       {{if .IsRange}}
-        {{template "date" .NewStartDate}} - {{template "date" .NewEndDate}}
+          {{if .IsChanged}}
+            <span style="color: #D54309; text-decoration: line-through;">
+              {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}<br/>
+            </span>
+            {{template "date" .NewStartDate}} - {{template "date" .NewEndDate}}
+          {{else}}
+            {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}
+          {{end}}
       {{else}}
-        {{template "date" .NewStartDate}}
+          {{if .IsChanged}}
+            <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldStartDate}}</span> &nbsp; {{template "date" .NewStartDate}}
+          {{else}}
+            {{template "date" .OldStartDate}}
+          {{end}}
       {{end}}
       <br/>
-    </p>
-  {{end}}
+  </p>
 {{end}}
 
 <br/>
