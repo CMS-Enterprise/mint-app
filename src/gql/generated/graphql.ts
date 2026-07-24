@@ -402,7 +402,7 @@ export type CtatRequest = {
   dateAssistanceNeededBy?: Maybe<Scalars['Time']['output']>;
   /** How long from assignment to completion for the CTAT request */
   daysFromAssignedToCompleted?: Maybe<Scalars['Int']['output']>;
-  /** How long until the CTAT request was closed */
+  /** How long from when the CTAT request was submitted until it was closed */
   daysFromSubmittedToCompleted?: Maybe<Scalars['Int']['output']>;
   describeHelpNeeded?: Maybe<Scalars['String']['output']>;
   humanReadableID: Scalars['String']['output'];
@@ -6188,6 +6188,11 @@ export type UpdateIddocQuestionnaireMutationVariables = Exact<{
 
 export type UpdateIddocQuestionnaireMutation = { __typename: 'Mutation', updateIDDOCQuestionnaire: { __typename: 'IDDOCQuestionnaire', id: UUID } };
 
+export type GetAllCtatRequestsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllCtatRequestsQuery = { __typename: 'Query', ctatRequests: { __typename: 'CTATRequestsTableData', ctatRequests: Array<{ __typename: 'CTATRequest', createdDts: Time, status?: CtatStatus | null, adminAssignedDts?: Time | null, notes?: string | null, resolution?: string | null, cmmiGroup?: CtatcmmiGroupOption | null, cmmiGroupOther?: string | null, cmmiDivision?: CtatcmmiDivisionOption | null, cmmiDivisionOther?: string | null, contractActivityType?: CtatContractActivityType | null, contractActivityTypeOther?: string | null, contractName?: string | null, contractNumber?: string | null, contractType?: CtatContractType | null, contractTypeOther?: string | null, typeOfHelpNeeded: Array<CtatHelpNeededType>, typeOfHelpNeededOther?: string | null, describeHelpNeeded?: string | null, requestUrgency?: CtatRequestUrgency | null, dateAssistanceNeededBy?: Time | null, completedDts?: Time | null, daysFromSubmittedToCompleted?: number | null, assignedAdminUserAccount?: { __typename: 'UserAccount', username: string, givenName: string, familyName: string, commonName: string, email: string } | null, requesterUserAccount: { __typename: 'UserAccount', givenName: string, familyName: string, commonName: string, email: string }, relatedMINTModels?: Array<{ __typename: 'ModelPlan', id: UUID, modelName: string }> | null, supportingDocuments: Array<{ __typename: 'CTATRequestDocument', id: UUID, fileName: string }> }> } };
+
 export type GetAnalyticsSummaryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -8138,6 +8143,92 @@ export function useUpdateIddocQuestionnaireMutation(baseOptions?: Apollo.Mutatio
 export type UpdateIddocQuestionnaireMutationHookResult = ReturnType<typeof useUpdateIddocQuestionnaireMutation>;
 export type UpdateIddocQuestionnaireMutationResult = Apollo.MutationResult<UpdateIddocQuestionnaireMutation>;
 export type UpdateIddocQuestionnaireMutationOptions = Apollo.BaseMutationOptions<UpdateIddocQuestionnaireMutation, UpdateIddocQuestionnaireMutationVariables>;
+export const GetAllCtatRequestsDocument = gql`
+    query GetAllCTATRequests {
+  ctatRequests {
+    ctatRequests {
+      createdDts
+      status
+      assignedAdminUserAccount {
+        username
+        givenName
+        familyName
+        commonName
+        email
+      }
+      adminAssignedDts
+      notes
+      resolution
+      requesterUserAccount {
+        givenName
+        familyName
+        commonName
+        email
+      }
+      cmmiGroup
+      cmmiGroupOther
+      cmmiDivision
+      cmmiDivisionOther
+      relatedMINTModels {
+        id
+        modelName
+      }
+      contractActivityType
+      contractActivityTypeOther
+      contractName
+      contractNumber
+      contractType
+      contractTypeOther
+      typeOfHelpNeeded
+      typeOfHelpNeededOther
+      describeHelpNeeded
+      requestUrgency
+      dateAssistanceNeededBy
+      supportingDocuments {
+        id
+        fileName
+      }
+      completedDts
+      daysFromSubmittedToCompleted
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllCtatRequestsQuery__
+ *
+ * To run a query within a React component, call `useGetAllCtatRequestsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllCtatRequestsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllCtatRequestsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllCtatRequestsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>(GetAllCtatRequestsDocument, options);
+      }
+export function useGetAllCtatRequestsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>(GetAllCtatRequestsDocument, options);
+        }
+// @ts-ignore
+export function useGetAllCtatRequestsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>;
+export function useGetAllCtatRequestsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>): Apollo.UseSuspenseQueryResult<GetAllCtatRequestsQuery | undefined, GetAllCtatRequestsQueryVariables>;
+export function useGetAllCtatRequestsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>(GetAllCtatRequestsDocument, options);
+        }
+export type GetAllCtatRequestsQueryHookResult = ReturnType<typeof useGetAllCtatRequestsQuery>;
+export type GetAllCtatRequestsLazyQueryHookResult = ReturnType<typeof useGetAllCtatRequestsLazyQuery>;
+export type GetAllCtatRequestsSuspenseQueryHookResult = ReturnType<typeof useGetAllCtatRequestsSuspenseQuery>;
+export type GetAllCtatRequestsQueryResult = Apollo.QueryResult<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>;
 export const GetAnalyticsSummaryDocument = gql`
     query GetAnalyticsSummary {
   analytics {
@@ -19262,6 +19353,7 @@ export const TypedGetIddocQuestionnaireMonitoringDocument = {"kind":"Document","
 export const TypedGetIddocQuestionnaireOperationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIDDOCQuestionnaireOperations"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"iddocQuestionnaire"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentified"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedDetail"}},{"kind":"Field","name":{"kind":"Name","value":"technicalContactsIdentifiedNote"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfo"}},{"kind":"Field","name":{"kind":"Name","value":"captureParticipantInfoNote"}},{"kind":"Field","name":{"kind":"Name","value":"icdOwner"}},{"kind":"Field","name":{"kind":"Name","value":"draftIcdDueDate"}},{"kind":"Field","name":{"kind":"Name","value":"icdNote"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetIddocQuestionnaireOperationsQuery, GetIddocQuestionnaireOperationsQueryVariables>;
 export const TypedGetIddocQuestionnaireTestingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIDDOCQuestionnaireTesting"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"questionnaires"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"iddocQuestionnaire"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"uatNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"stcNeeds"}},{"kind":"Field","name":{"kind":"Name","value":"testingTimelines"}},{"kind":"Field","name":{"kind":"Name","value":"testingNote"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileTypes"}},{"kind":"Field","name":{"kind":"Name","value":"dataMonitoringFileOther"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseType"}},{"kind":"Field","name":{"kind":"Name","value":"dataResponseFileFrequency"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetIddocQuestionnaireTestingQuery, GetIddocQuestionnaireTestingQueryVariables>;
 export const TypedUpdateIddocQuestionnaireDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateIDDOCQuestionnaire"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IDDOCQuestionnaireChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateIDDOCQuestionnaire"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateIddocQuestionnaireMutation, UpdateIddocQuestionnaireMutationVariables>;
+export const TypedGetAllCtatRequestsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllCTATRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ctatRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ctatRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"assignedAdminUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"adminAssignedDts"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"resolution"}},{"kind":"Field","name":{"kind":"Name","value":"requesterUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroup"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroupOther"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiDivision"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiDivisionOther"}},{"kind":"Field","name":{"kind":"Name","value":"relatedMINTModels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contractActivityType"}},{"kind":"Field","name":{"kind":"Name","value":"contractActivityTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractName"}},{"kind":"Field","name":{"kind":"Name","value":"contractNumber"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"contractTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeededOther"}},{"kind":"Field","name":{"kind":"Name","value":"describeHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"requestUrgency"}},{"kind":"Field","name":{"kind":"Name","value":"dateAssistanceNeededBy"}},{"kind":"Field","name":{"kind":"Name","value":"supportingDocuments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"completedDts"}},{"kind":"Field","name":{"kind":"Name","value":"daysFromSubmittedToCompleted"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllCtatRequestsQuery, GetAllCtatRequestsQueryVariables>;
 export const TypedGetAnalyticsSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAnalyticsSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"analytics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"changesPerModel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"changesPerModelBySection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"tableName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"changesPerModelOtherData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfChanges"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfRecordChanges"}}]}},{"kind":"Field","name":{"kind":"Name","value":"modelsByStatus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfModels"}}]}},{"kind":"Field","name":{"kind":"Name","value":"numberOfFollowersPerModel"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfFollowers"}}]}},{"kind":"Field","name":{"kind":"Name","value":"numberOfModelsOverTime"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"monthYear"}},{"kind":"Field","name":{"kind":"Name","value":"numberOfModels"}}]}}]}}]}}]} as unknown as DocumentNode<GetAnalyticsSummaryQuery, GetAnalyticsSummaryQueryVariables>;
 export const TypedGetMtoMilestoneSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMTOMilestoneSummary"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"EnumValue","value":"INCLUDE_ALL"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"mtoMatrix"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"milestones"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"mtoCommonMilestoneID"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"riskIndicator"}},{"kind":"Field","name":{"kind":"Name","value":"needBy"}},{"kind":"Field","name":{"kind":"Name","value":"responsibleComponent"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedBy"}},{"kind":"Field","name":{"kind":"Name","value":"facilitatedByOther"}},{"kind":"Field","name":{"kind":"Name","value":"assignedToPlanCollaborator"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"notes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetMtoMilestoneSummaryQuery, GetMtoMilestoneSummaryQueryVariables>;
 export const TypedGetAllBasicsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllBasics"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"nameHistory"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"DESC"}}]},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"demoCode"}},{"kind":"Field","name":{"kind":"Name","value":"amsModelID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"additionalModelCategories"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"modelTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<GetAllBasicsQuery, GetAllBasicsQueryVariables>;

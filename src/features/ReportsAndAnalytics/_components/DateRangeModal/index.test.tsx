@@ -3,6 +3,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import i18next from 'i18next';
+import MockedProvider from 'tests/MockedProvider';
 
 import DateRangeModal from './index';
 
@@ -14,7 +15,11 @@ describe('DateRangeModal', () => {
       [
         {
           path: '/',
-          element: <DateRangeModal isModalOpen closeModal={() => {}} />
+          element: (
+            <MockedProvider mocks={[]} addTypename={false}>
+              <DateRangeModal isModalOpen closeModal={() => {}} />
+            </MockedProvider>
+          )
         }
       ],
       { initialEntries: ['/'] }
@@ -39,13 +44,21 @@ describe('DateRangeModal', () => {
       [
         {
           path: '/',
-          element: <DateRangeModal isModalOpen closeModal={() => {}} />
+          element: (
+            <MockedProvider mocks={[]} addTypename={false}>
+              <DateRangeModal isModalOpen closeModal={() => {}} />
+            </MockedProvider>
+          )
         }
       ],
       { initialEntries: ['/'] }
     );
 
-    const { baseElement } = render(<RouterProvider router={router} />);
+    const { baseElement } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
     expect(baseElement).toMatchSnapshot();
   });
 });

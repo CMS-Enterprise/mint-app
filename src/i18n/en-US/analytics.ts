@@ -69,6 +69,7 @@ const analytics = {
   formatExcel: 'Format: Excel',
   formatCSV: 'Format: CSV',
   download: 'Download',
+  loading: 'Loading',
   adminOnly: 'Admin only',
   downloadAll: 'Download all',
   selectDateRange: 'Select date range',

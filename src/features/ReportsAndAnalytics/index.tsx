@@ -52,6 +52,7 @@ import PageLoading from 'components/PageLoading';
 import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFetchCSVData from 'hooks/useFetchCSVData';
+import useFetchCTATReport from 'hooks/useFetchCTATReport';
 import { reports } from 'i18n/en-US/analytics';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { formatDateUtc } from 'utils/date';
@@ -117,8 +118,14 @@ const ReportsAndAnalytics = () => {
 
   const [isDateRangeModalOpen, setIsDateRangeModalOpen] = useState(false);
 
+  const [downloadingReport, setDownloadingReport] =
+    useState<ReportsType | null>(null);
+
   // Fetch all data for CSV export of all model plans
   const { fetchAllData } = useFetchCSVData();
+
+  // Fetch CTAT report data for CSV export
+  const { fetchCTATReport } = useFetchCTATReport();
 
   const { data, loading, error } = useGetAnalyticsSummaryQuery();
 
@@ -144,6 +151,27 @@ const ReportsAndAnalytics = () => {
   } else if (selectedChart === 'changesPerModelOtherData') {
     chartData = getChangesByOtherData(analyticsData.changesPerModelOtherData);
   }
+
+  const handleDownloadReport = async (reportKey: ReportsType) => {
+    setDownloadingReport(reportKey);
+
+    try {
+      if (reportKey === 'mtoMilestoneSummary') {
+        await downloadMTOMilestoneSummary(
+          mtoMilestoneSummaryData,
+          'MINT-MTO_Milestone_Summary.xlsx'
+        );
+      } else if (reportKey === 'allModels') {
+        await fetchAllData(ModelShareSection.ALL);
+      } else if (reportKey === 'basicModelInfo') {
+        await fetchAllData('basicModelInfo');
+      } else if (reportKey === 'ctat') {
+        await fetchCTATReport();
+      }
+    } finally {
+      setDownloadingReport(null);
+    }
+  };
 
   // Onclick handler for downloading multiple charts as PDF
   const downloadMultipleChartsPDF = async () => {
@@ -208,7 +236,12 @@ const ReportsAndAnalytics = () => {
           <Grid desktop={{ col: 12 }}>
             <Grid row gap={1}>
               {sortedReports.map(reportKey => (
-                <Grid desktop={{ col: 4 }} tablet={{ col: 6 }} key={reportKey}>
+                <Grid
+                  desktop={{ col: 4 }}
+                  tablet={{ col: 6 }}
+                  key={reportKey}
+                  className="display-flex"
+                >
                   <Card
                     containerProps={{
                       className: 'radius-md padding-0 margin-0',
@@ -249,22 +282,24 @@ const ReportsAndAnalytics = () => {
                       <Button
                         type="button"
                         className="margin-right-2"
-                        disabled={mtoMilestoneSummaryLoading}
+                        disabled={
+                          mtoMilestoneSummaryLoading ||
+                          downloadingReport === reportKey
+                        }
                         data-testid={`download-${reportKey}-button`}
                         onClick={() => {
-                          if (reportKey === 'mtoMilestoneSummary') {
-                            downloadMTOMilestoneSummary(
-                              mtoMilestoneSummaryData,
-                              'MINT-MTO_Milestone_Summary.xlsx'
-                            );
-                          } else if (reportKey === 'allModels') {
-                            fetchAllData(ModelShareSection.ALL);
-                          } else if (reportKey === 'basicModelInfo') {
-                            fetchAllData('basicModelInfo');
-                          }
+                          handleDownloadReport(reportKey as ReportsType);
                         }}
                       >
-                        {t(reportKey === 'ctat' ? 'downloadAll' : 'download')}
+                        {downloadingReport === reportKey
+                          ? t('loading')
+                          : t(
+                              reportKey === 'ctat' ? 'downloadAll' : 'download'
+                            )}
+
+                        {downloadingReport === reportKey && (
+                          <Spinner size="small" />
+                        )}
                       </Button>
 
                       {reportKey === 'ctat' && (

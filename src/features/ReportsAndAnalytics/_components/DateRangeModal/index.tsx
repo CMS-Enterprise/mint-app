@@ -5,6 +5,7 @@ import { Button } from '@trussworks/react-uswds';
 import DateTimePicker from 'components/DateTimePicker';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import useFetchCTATReport from 'hooks/useFetchCTATReport';
 
 const DateRangeModal = ({
   isModalOpen,
@@ -15,6 +16,9 @@ const DateRangeModal = ({
 }) => {
   const { t: analyticsT } = useTranslation('analytics');
   const { t: generalT } = useTranslation('general');
+
+  // Fetch CTAT report data for CSV export
+  const { fetchCTATReport } = useFetchCTATReport();
 
   const [startDate, setStartDate] = useState('');
 
@@ -88,7 +92,7 @@ const DateRangeModal = ({
             className="margin-right-3 margin-top-0"
             disabled={isDownloadDisabled}
             onClick={() => {
-              //     console.log('download CTAT report', { startDate, endDate });
+              fetchCTATReport({ startDate, endDate });
               closeModal();
             }}
           >
