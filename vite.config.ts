@@ -12,6 +12,7 @@ export default defineConfig({
     outDir: 'build',
     // Node modules that use `require` statements need to be transpiled to use `import`
     // One of the problematic modules is (at time of writing) @okta/okta-signin-widget
+    // TODO(MINT-3761): remove this comment (and reassess commonjsOptions) once @okta/okta-signin-widget is removed.
     commonjsOptions: {
       transformMixedEsModules: true
     }

@@ -8,9 +8,13 @@ import DevLogin from 'wrappers/AuthenticationWrapper/DevLogin';
 import Alert from 'components/Alert';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+// TODO(MINT-3761): remove OktaSignInWidget import/usage once redirect login is permanent.
 import OktaSignInWidget from 'components/OktaSignInWidget';
+import Spinner from 'components/Spinner';
 import { localAuthStorageKey } from 'constants/localAuth';
-import { isLocalAuthEnabled } from 'utils/auth';
+// TODO(MINT-3761): remove isOktaRedirectLoginEnabled gating once redirect login is permanent
+// (always redirect; drop the widget fallback branch below).
+import { isLocalAuthEnabled, isOktaRedirectLoginEnabled } from 'utils/auth';
 
 import './index.scss';
 
@@ -24,13 +28,19 @@ const Login = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const redirectLoginEnabled = isOktaRedirectLoginEnabled();
+  const preferLocalAuth =
+    isLocalAuthEnabled() &&
+    new URLSearchParams(location.search).get('local') === 'true';
 
   if (isLocalAuthEnabled() && window.localStorage[localAuthStorageKey]) {
     defaultAuth = JSON.parse(
       window.localStorage[localAuthStorageKey]
     ).favorLocalAuth;
   }
-  const [isLocalAuth, setIsLocalAuth] = useState(defaultAuth);
+  const [isLocalAuth, setIsLocalAuth] = useState(
+    defaultAuth || preferLocalAuth
+  );
 
   const handleUseLocalAuth = () => {
     setIsLocalAuth(true);
@@ -62,6 +72,19 @@ const Login = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState?.isAuthenticated]);
 
+  // Redirect-login path: bounce unauthenticated Okta users to the hosted login page.
+  // Skip when the developer opted into local auth via ?local=true.
+  useEffect(() => {
+    if (!redirectLoginEnabled || isLocalAuth) {
+      return;
+    }
+    if (!authState || authState.isPending || authState.isAuthenticated) {
+      return;
+    }
+
+    oktaAuth.signInWithRedirect();
+  }, [authState, isLocalAuth, oktaAuth, redirectLoginEnabled]);
+
   if (isLocalAuthEnabled() && isLocalAuth) {
     return (
       <MainContent className="grid-container margin-top-4">
@@ -70,6 +93,19 @@ const Login = () => {
     );
   }
 
+  // Redirect path: brief spinner while the browser leaves for Okta/ELP.
+  // Local-auth entry (when redirect is enabled): /signin?local=true
+  if (redirectLoginEnabled) {
+    return (
+      <MainContent className="grid-container">
+        <div className="margin-y-8 text-center">
+          <Spinner size="large" center />
+        </div>
+      </MainContent>
+    );
+  }
+
+  // TODO(MINT-3761): remove this entire widget fallback return once redirect login is permanent.
   return (
     <MainContent className="grid-container">
       {isLocalAuthEnabled() && (
