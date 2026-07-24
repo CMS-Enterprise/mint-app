@@ -247,6 +247,11 @@ export const doubleBatchedTables: TableName[] = [
   TableName.MTO_CATEGORY
 ];
 
+const timelineTables: TableName[] = [
+  TableName.PLAN_TIMELINE,
+  TableName.CUSTOM_TIMELINE_DATES
+];
+
 // Fields that are connected to other tables
 export const connectedFields: HiddenFieldTypes[] = [
   {
@@ -590,11 +595,6 @@ export const isMTOChange = (
 ): boolean =>
   queryString === TypeOfChange.MODEL_TO_OPERATIONS &&
   mtoTables.includes(audit.tableName);
-
-const timelineTables: TableName[] = [
-  TableName.PLAN_TIMELINE,
-  TableName.CUSTOM_TIMELINE_DATES
-];
 
 export const isTimelineChange = (
   queryString: string,
