@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import {
   Button,
   Card,
@@ -10,6 +11,7 @@ import {
   Grid,
   GridContainer,
   Header,
+  Icon,
   Link,
   PrimaryNav,
   Select
@@ -30,6 +32,7 @@ import {
   useGetAnalyticsSummaryQuery,
   useGetMtoMilestoneSummaryQuery
 } from 'gql/generated/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import {
   Bar,
   BarChart,
@@ -41,6 +44,7 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import CheckboxField from 'components/CheckboxField';
 import MainContent from 'components/MainContent';
@@ -51,11 +55,15 @@ import useFetchCSVData from 'hooks/useFetchCSVData';
 import { reports } from 'i18n/en-US/analytics';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { formatDateUtc } from 'utils/date';
+import { isAssessment } from 'utils/user';
+
+import DateRangeModal from './_components/DateRangeModal';
 
 export type ReportsType =
   | 'mtoMilestoneSummary'
   | 'allModels'
-  | 'basicModelInfo';
+  | 'basicModelInfo'
+  | 'ctat';
 
 const ReportsAndAnalytics = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -64,7 +72,15 @@ const ReportsAndAnalytics = () => {
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
-  const sortedReports = Object.keys(reports).sort((a, b) => a.localeCompare(b));
+  const flags = useFlags();
+  const { groups } = useSelector((state: AppState) => state.auth);
+  const isAssessmentTeam = isAssessment(groups, flags);
+
+  const filteredReports = Object.keys(reports).filter(report =>
+    isAssessmentTeam ? true : report !== 'ctat'
+  );
+
+  const sortedReports = filteredReports.sort((a, b) => a.localeCompare(b));
 
   // Responsive margins and height for the chart
   const chartMargins = useMemo(() => {
@@ -98,6 +114,8 @@ const ReportsAndAnalytics = () => {
 
   const [isDownloadingAllCharts, setIsDownloadingAllCharts] =
     useState<boolean>(false);
+
+  const [isDateRangeModalOpen, setIsDateRangeModalOpen] = useState(false);
 
   // Fetch all data for CSV export of all model plans
   const { fetchAllData } = useFetchCSVData();
@@ -154,6 +172,13 @@ const ReportsAndAnalytics = () => {
 
   return (
     <MainContent className="mint-body-normal">
+      {isDateRangeModalOpen && (
+        <DateRangeModal
+          isModalOpen={isDateRangeModalOpen}
+          closeModal={() => setIsDateRangeModalOpen(false)}
+        />
+      )}
+
       <GridContainer>
         <h1 className="margin-top-10 margin-bottom-2">{t('heading')}</h1>
 
@@ -199,6 +224,19 @@ const ReportsAndAnalytics = () => {
                       </h3>
                     </CardHeader>
 
+                    {reportKey === 'ctat' && (
+                      <div className="margin-top-2 margin-bottom-1 margin-left-3 bg-info-lighter padding-y-05 padding-x-1 radius-md display-flex flex-align-center width-fit-content">
+                        <Icon.Security
+                          className="text-info-darker margin-right-05"
+                          size={3}
+                          aria-hidden
+                        />
+                        <span className="text-info-darker line-height-body-1">
+                          {t('adminOnly')}
+                        </span>
+                      </div>
+                    )}
+
                     <CardBody className="padding-x-3 ">
                       <p>{t(reports[reportKey as ReportsType].description)}</p>
 
@@ -207,7 +245,7 @@ const ReportsAndAnalytics = () => {
                       </p>
                     </CardBody>
 
-                    <CardFooter className="padding-3">
+                    <CardFooter className="padding-3 display-flex">
                       <Button
                         type="button"
                         className="margin-right-2"
@@ -226,8 +264,22 @@ const ReportsAndAnalytics = () => {
                           }
                         }}
                       >
-                        {t('download')}
+                        {t(reportKey === 'ctat' ? 'downloadAll' : 'download')}
                       </Button>
+
+                      {reportKey === 'ctat' && (
+                        <Button
+                          type="button"
+                          data-testid="select-time-range-button"
+                          unstyled
+                          className="deep-underline"
+                          onClick={() => {
+                            setIsDateRangeModalOpen(true);
+                          }}
+                        >
+                          {t('selectDateRange')}
+                        </Button>
+                      )}
                     </CardFooter>
                   </Card>
                 </Grid>
