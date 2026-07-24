@@ -135,12 +135,18 @@ export const ChangeHeader = ({
 
   // Custom timeline audits
   if (changeRecordType === 'customTimelineUpdate') {
+    const translatedTitle = changeRecord.translatedFields.find(
+      field => field.fieldName === 'title'
+    );
+    const customTimelineTitleFromMeta =
+      changeRecord.metaData && isGenericWithMetaData(changeRecord.metaData)
+        ? changeRecord.metaData.relationContent
+        : undefined;
     const customTimelineTitle =
-      changeRecord.action === DatabaseOperation.DELETE
-        ? t('customTimelineRemovedTitle')
-        : changeRecord.translatedFields.find(
-            field => field.fieldName === 'title'
-          )?.newTranslated;
+      translatedTitle?.newTranslated ||
+      translatedTitle?.oldTranslated ||
+      customTimelineTitleFromMeta ||
+      t('customTimelineRemovedTitle');
 
     return (
       <Trans

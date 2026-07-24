@@ -491,6 +491,136 @@ func (suite *TAuditSuite) TestMTOMilestoneMetaDataGet() {
 	})
 }
 
+func (suite *TAuditSuite) TestCustomTimelineDateMetaDataGet() {
+	plan := suite.createModelPlan("test model plan for custom timeline date meta data")
+	customTimelineDateTitleDB := "custom timeline date title in database"
+
+	customTimelineDate := suite.createCustomTimelineDate(plan.ID, customTimelineDateTitleDB)
+
+	customTimelineDateTitleNew := "new custom timeline date title"
+	customTimelineDateTitleOld := "old custom timeline date title"
+
+	newChanges := models.AuditFields{
+		"title": models.AuditField{
+			New: customTimelineDateTitleNew,
+			Old: nil,
+		},
+	}
+
+	oldChanges := models.AuditFields{
+		"title": models.AuditField{
+			New: nil,
+			Old: customTimelineDateTitleOld,
+		},
+	}
+	emptyChanges := models.AuditFields{}
+
+	suite.Run("Custom timeline date meta data prioritizes data from changes set (new field on insert)", func() {
+		customTimelineDateMeta, metaDataType, err := CustomTimelineDateMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, customTimelineDate.ID, newChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(customTimelineDateMeta) {
+			suite.EqualValues("title", customTimelineDateMeta.Relation)
+			if suite.NotNil(customTimelineDateMeta.RelationContent) {
+				suite.EqualValues(customTimelineDateTitleNew, *customTimelineDateMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Custom timeline date meta data prioritizes data from changes set (old field on delete)", func() {
+		customTimelineDateMeta, metaDataType, err := CustomTimelineDateMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, customTimelineDate.ID, oldChanges, models.DBOpDelete)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+
+		if suite.NotNil(customTimelineDateMeta) {
+			suite.EqualValues("title", customTimelineDateMeta.Relation)
+			if suite.NotNil(customTimelineDateMeta.RelationContent) {
+				suite.EqualValues(customTimelineDateTitleOld, *customTimelineDateMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("Custom timeline date meta data gets data from db if not in change set", func() {
+		customTimelineDateMeta, metaDataType, err := CustomTimelineDateMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, customTimelineDate.ID, emptyChanges, models.DBOpInsert)
+		suite.NoError(err)
+		if suite.NotNil(metaDataType) {
+			suite.EqualValues(models.TAMetaGeneric, *metaDataType)
+		}
+		if suite.NotNil(customTimelineDateMeta) {
+			suite.EqualValues("title", customTimelineDateMeta.Relation)
+			if suite.NotNil(customTimelineDateMeta.RelationContent) {
+				suite.EqualValues(customTimelineDateTitleDB, *customTimelineDateMeta.RelationContent)
+			}
+		}
+	})
+	suite.Run("A delete or truncate without a title in the changes object will error", func() {
+		customTimelineDateMeta, metaDataType, err := CustomTimelineDateMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, customTimelineDate.ID, emptyChanges, models.DBOpDelete)
+		suite.Error(err)
+		suite.Nil(customTimelineDateMeta)
+		suite.Nil(metaDataType)
+
+	})
+	suite.Run("Custom timeline date meta data doesn't fail when field isn't present in change set for update", func() {
+		customTimelineDateMeta, metaDataType, err := CustomTimelineDateMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, customTimelineDate.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(customTimelineDateMeta) {
+			suite.EqualValues(customTimelineDateTitleDB, *customTimelineDateMeta.RelationContent)
+		}
+	})
+	suite.Run("Custom timeline date meta data doesn't fail when field isn't present in change set for update and record is missing", func() {
+
+		suite.deleteCustomTimelineDate(customTimelineDate.ID)
+
+		customTimelineDateMeta, metaDataType, err := CustomTimelineDateMetaDataGet(suite.testConfigs.Context, suite.testConfigs.Store, customTimelineDate.ID, emptyChanges, models.DBOpUpdate)
+		suite.NoError(err)
+		suite.NotNil(metaDataType)
+
+		if suite.NotNil(customTimelineDateMeta) {
+			suite.Nil(customTimelineDateMeta.RelationContent)
+		}
+	})
+}
+
+func (suite *TAuditSuite) TestSetTranslatedAuditTableSpecificMetaDataForCustomTimelineDate() {
+	plan := suite.createModelPlan("test model plan for custom timeline date translated audit metadata")
+	customTimelineDate := suite.createCustomTimelineDate(plan.ID, "custom timeline date title")
+	customTimelineDateTitle := "custom timeline date title from audit changes"
+	changes := models.AuditFields{
+		"title": models.AuditField{
+			New: customTimelineDateTitle,
+			Old: nil,
+		},
+	}
+
+	tAuditWithFields := &models.TranslatedAuditWithTranslatedFields{}
+	auditChange := &models.AuditChange{
+		TableName:  models.TNCustomTimelineDates,
+		PrimaryKey: customTimelineDate.ID,
+		Fields:     changes,
+	}
+
+	modified, err := SetTranslatedAuditTableSpecificMetaData(suite.testConfigs.Context, suite.testConfigs.Store, tAuditWithFields, auditChange, models.DBOpUpdate)
+	suite.NoError(err)
+	suite.True(modified)
+	if suite.NotNil(tAuditWithFields.MetaDataType) {
+		suite.EqualValues(models.TAMetaGeneric, *tAuditWithFields.MetaDataType)
+	}
+
+	customTimelineDateMeta, ok := tAuditWithFields.MetaData.(*models.TranslatedAuditMetaGeneric)
+	if suite.True(ok) && suite.NotNil(customTimelineDateMeta) {
+		suite.EqualValues(models.TNCustomTimelineDates, customTimelineDateMeta.TableName)
+		suite.EqualValues("title", customTimelineDateMeta.Relation)
+		if suite.NotNil(customTimelineDateMeta.RelationContent) {
+			suite.EqualValues(customTimelineDateTitle, *customTimelineDateMeta.RelationContent)
+		}
+	}
+}
+
 func (suite *TAuditSuite) TestMTOSolutionMetaDataGet() {
 	plan := suite.createModelPlan("test model plan for solution meta data")
 	solutionNameDB := "solutionName in database"
