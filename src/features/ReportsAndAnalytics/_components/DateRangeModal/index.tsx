@@ -24,7 +24,8 @@ const DateRangeModal = ({
 
   const [endDate, setEndDate] = useState('');
 
-  const isDownloadDisabled = !startDate || !endDate;
+  const isDownloadDisabled =
+    !startDate || !endDate || new Date(startDate) > new Date(endDate);
 
   return (
     <Modal
