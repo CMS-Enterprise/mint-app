@@ -77,7 +77,7 @@ describe('The model timeline form', () => {
       .type('05/23/2065')
       .should('have.value', '05/23/2065');
 
-    cy.contains('button', 'Return to model collaboration area').click();
+    cy.contains('button', 'Save').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/collaboration-area/);
