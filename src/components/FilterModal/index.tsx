@@ -3,28 +3,15 @@ import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { Button, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { MtoFacilitator } from 'gql/generated/graphql';
 
-import MilestoneFilterGroup from '../MilestoneFilterGroup';
-
-import { MilestoneFilters } from './getMilestoneFilters';
+import FilterGroup, { FilterGroupType } from 'components/FilterGroup';
 
 import './index.scss';
 
-export type MilestoneSelectedFilters = {
-  categoryName: string[];
-  facilitatedByRole: MtoFacilitator[];
-};
-
-const emptyFilters: MilestoneSelectedFilters = {
-  categoryName: [],
-  facilitatedByRole: []
-};
-
-type MilestoneFilterModalProps = {
-  filters: MilestoneFilters;
-  appliedFilters: MilestoneSelectedFilters;
-  setAppliedFilters: (filters: MilestoneSelectedFilters) => void;
+type FilterModalProps<T extends Record<string, string[]>> = {
+  filters: FilterGroupType[];
+  appliedFilters: T;
+  setAppliedFilters: (filters: T) => void;
 };
 
 /**
@@ -32,16 +19,19 @@ type MilestoneFilterModalProps = {
  *
  * Includes the "Filter" button to open the modal.
  */
-const MilestoneFilterModal = ({
+const FilterModal = <T extends Record<string, string[]>>({
   filters,
   appliedFilters,
   setAppliedFilters
-}: MilestoneFilterModalProps) => {
+}: FilterModalProps<T>) => {
   const { t } = useTranslation('general');
   const [isOpen, setIsOpen] = useState(false);
 
-  const [selectedFilters, setSelectedFilters] =
-    useState<MilestoneSelectedFilters>(appliedFilters);
+  const [selectedFilters, setSelectedFilters] = useState<T>(appliedFilters);
+
+  const emptyFilters = Object.keys(appliedFilters).reduce((acc, filterKey) => {
+    return { ...acc, [filterKey]: [] };
+  }, {} as T);
 
   useEffect(() => {
     if (isOpen) {
@@ -54,21 +44,20 @@ const MilestoneFilterModal = ({
     setIsOpen(false);
   };
 
-  const appliedFiltersCount =
-    selectedFilters.categoryName.length +
-    selectedFilters.facilitatedByRole.length;
+  const appliedFiltersCount = Object.values(selectedFilters).reduce(
+    (count, filtersArray) => count + filtersArray.length,
+    0
+  );
 
-  const isApplyDisabled =
-    selectedFilters.categoryName.length ===
-      appliedFilters.categoryName.length &&
-    selectedFilters.facilitatedByRole.length ===
-      appliedFilters.facilitatedByRole.length &&
-    selectedFilters.categoryName.every(category =>
-      appliedFilters.categoryName.includes(category)
-    ) &&
-    selectedFilters.facilitatedByRole.every(role =>
-      appliedFilters.facilitatedByRole.includes(role)
+  const isApplyDisabled = Object.keys(appliedFilters).every(key => {
+    const selected = selectedFilters[key];
+    const applied = appliedFilters[key];
+
+    return (
+      selected.length === applied.length &&
+      selected.every(val => applied.includes(val))
     );
+  });
 
   const applyFiltersLabel =
     appliedFiltersCount < 2
@@ -116,7 +105,7 @@ const MilestoneFilterModal = ({
             style={{ maxHeight: '600px' }}
           >
             {filters.map(filter => (
-              <MilestoneFilterGroup
+              <FilterGroup
                 key={filter.key}
                 filterGroup={filter}
                 selectedFilters={selectedFilters[filter.key]}
@@ -153,4 +142,4 @@ const MilestoneFilterModal = ({
   );
 };
 
-export default MilestoneFilterModal;
+export default FilterModal;

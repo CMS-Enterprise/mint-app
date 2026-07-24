@@ -12,12 +12,15 @@ import classNames from 'classnames';
 import MilestonePanel from 'features/MilestoneLibrary/MilestonePanel';
 import {
   GetMtoAllCommonMilestonesQuery,
-  GetMtoMilestonesQuery
+  GetMtoMilestonesQuery,
+  MtoFacilitator
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import Expire from 'components/Expire';
+import FilterModal from 'components/FilterModal';
+import FilterTags from 'components/FilterTags';
 import UswdsReactLink from 'components/LinkWrapper';
 import Sidepanel from 'components/Sidepanel';
 import GlobalClientFilter from 'components/TableFilter';
@@ -29,11 +32,12 @@ import usePagination from 'hooks/usePagination';
 import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import MilestoneCard from '../MilestoneCard';
-import MilestoneFilterModal, {
-  MilestoneSelectedFilters
-} from '../MilestoneFilter/MilestoneFilterModal';
-import getMilestoneFilters from '../MilestoneFilter/MilestoneFilterModal/getMilestoneFilters';
-import MilestoneFilterTags from '../MilestoneFilterTags';
+import getMilestoneFilters from '../MilestoneFilter/getMilestoneFilters';
+
+export type MilestoneSelectedFilters = {
+  categoryName: string[];
+  facilitatedByRole: MtoFacilitator[];
+};
 
 const searchMilestones = (
   query: string,
@@ -284,7 +288,7 @@ const MilestoneCardGroup = ({
           <Grid row>
             <Grid className="display-flex flex-wrap flex-align-center margin-bottom-3">
               {showFilters && (
-                <MilestoneFilterModal
+                <FilterModal
                   filters={filterOptions}
                   appliedFilters={appliedFilters}
                   setAppliedFilters={setAppliedFilters}
@@ -304,7 +308,8 @@ const MilestoneCardGroup = ({
             </Grid>
 
             {showFilters && (
-              <MilestoneFilterTags
+              <FilterTags
+                filters={filterOptions}
                 appliedFilters={appliedFilters}
                 setAppliedFilters={setAppliedFilters}
                 className="margin-top-2"
