@@ -77,6 +77,7 @@ const changeHistory = {
   sections: {
     model_plan: 'Model plan',
     plan_timeline: 'Model timeline',
+    custom_timeline_dates: 'Additional model dates',
     plan_basics: 'Model basics',
     plan_general_characteristics: 'General characteristics',
     plan_participants_and_providers: 'Participants and providers',

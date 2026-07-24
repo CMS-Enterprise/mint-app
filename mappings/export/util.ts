@@ -9,6 +9,7 @@ import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
 import collaborator from '../../src/i18n/en-US/modelPlan/collaborators';
 import crs from '../../src/i18n/en-US/modelPlan/crs';
+import { customDate } from '../../src/i18n/en-US/modelPlan/customDate';
 import dataExchangeApproach from '../../src/i18n/en-US/modelPlan/dataExchangeApproach';
 import discussion from '../../src/i18n/en-US/modelPlan/discussions';
 import document from '../../src/i18n/en-US/modelPlan/documents';
@@ -29,9 +30,13 @@ import operationalSolution from '../../src/i18n/en-US/modelPlan/solutions';
 import tdls from '../../src/i18n/en-US/modelPlan/tdls';
 import {
   getKeys,
-  TranslationFieldProperties,
-  TranslationPlanSection
+  TranslationFieldProperties
 } from '../../src/types/translation';
+
+type TranslationExportSection = Record<
+  string,
+  TranslationFieldProperties & Record<string, any>
+>;
 
 export const translationSections = {
   key_contact: keyContact,
@@ -57,6 +62,7 @@ export const translationSections = {
   plan_document_solution_link: documentSolutionLink,
   data_exchange_approach: dataExchangeApproach,
   mto_info: mtoInfo,
+  custom_timeline_dates: customDate,
   mto_milestone_note: mtoMilestoneNote
 };
 
@@ -93,7 +99,7 @@ export const filterUnneededField = (
 // Checks translation questions for 'otherParentField'
 // Replaces gql field residing in 'otherParentField' with the dbField of the referenced parent
 export const mapOtherParentFieldToDBField = (
-  planSection: TranslationPlanSection
+  planSection: TranslationExportSection
 ) => {
   const formattedSection = { ...planSection };
   getKeys(formattedSection).forEach(field => {
@@ -104,7 +110,7 @@ export const mapOtherParentFieldToDBField = (
     // If 'otherParentField' exists, replace gql field with dbField
     if (filteredObj.otherParentField) {
       const parentObj = planSection[
-        filteredObj.otherParentField as keyof TranslationPlanSection
+        filteredObj.otherParentField
       ] as TranslationFieldProperties;
       filteredObj.otherParentField = parentObj.dbField;
     }
@@ -141,14 +147,14 @@ export const mapOtherParentFieldToDBField = (
 
 // Processes translation data in prep for BE use for export
 export const processDataMapping = (
-  translations: typeof translationSections
+  translations: Record<string, TranslationExportSection>
 ) => {
   const formattedTranslation: any = {};
 
-  getKeys(translations).forEach((section: keyof typeof translationSections) => {
+  getKeys(translations).forEach(section => {
     formattedTranslation[section] = {};
 
-    const planSection = translations[section] as TranslationPlanSection;
+    const planSection = translations[section];
 
     const formattedOtherParentFields =
       mapOtherParentFieldToDBField(planSection);

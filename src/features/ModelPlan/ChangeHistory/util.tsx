@@ -59,6 +59,7 @@ export type ChangeType =
 export type TranslationTables =
   | TableName.MODEL_PLAN
   | TableName.PLAN_TIMELINE
+  | TableName.CUSTOM_TIMELINE_DATES
   | TableName.PLAN_BASICS
   | TableName.PLAN_GENERAL_CHARACTERISTICS
   | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
@@ -590,6 +591,18 @@ export const isMTOChange = (
   queryString === TypeOfChange.MODEL_TO_OPERATIONS &&
   mtoTables.includes(audit.tableName);
 
+const timelineTables: TableName[] = [
+  TableName.PLAN_TIMELINE,
+  TableName.CUSTOM_TIMELINE_DATES
+];
+
+export const isTimelineChange = (
+  queryString: string,
+  audit: ChangeRecordType
+): boolean =>
+  queryString === TypeOfChange.MODEL_TIMELINE &&
+  timelineTables.includes(audit.tableName);
+
 export const filterQueryAudits = (
   queryString: string,
   groupedAudits: ChangeRecordType[][]
@@ -610,6 +623,10 @@ export const filterQueryAudits = (
       }
 
       if (isMTOChange(queryString, audit)) {
+        return true;
+      }
+
+      if (isTimelineChange(queryString, audit)) {
         return true;
       }
 

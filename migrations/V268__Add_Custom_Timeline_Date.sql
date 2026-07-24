@@ -1,3 +1,6 @@
+ALTER TYPE TABLE_NAME ADD VALUE 'custom_timeline_dates';
+COMMIT;
+
 CREATE TYPE CUSTOM_TIMELINE_DATE_TYPE AS ENUM (
     'SINGLE',
     'RANGE'
@@ -28,4 +31,13 @@ CREATE TABLE IF NOT EXISTS custom_timeline_dates (
             AND end_date IS NULL
         )
     )
+);
+
+SELECT audit.AUDIT_TABLE(
+    'public',
+    'custom_timeline_dates',
+    'id',
+    'model_plan_id',
+    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
+    '{*}'::TEXT[]
 );

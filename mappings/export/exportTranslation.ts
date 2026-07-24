@@ -12,6 +12,7 @@ import basics from '../../src/i18n/en-US/modelPlan/basics';
 import beneficiaries from '../../src/i18n/en-US/modelPlan/beneficiaries';
 import collaborators from '../../src/i18n/en-US/modelPlan/collaborators';
 import crs from '../../src/i18n/en-US/modelPlan/crs';
+import { customDate } from '../../src/i18n/en-US/modelPlan/customDate';
 import dataExchangeApproach from '../../src/i18n/en-US/modelPlan/dataExchangeApproach';
 import discussions from '../../src/i18n/en-US/modelPlan/discussions';
 import documents from '../../src/i18n/en-US/modelPlan/documents';
@@ -74,6 +75,7 @@ export const translationSections = {
   mto_common_solution_contractor: mtoCommonSolutionContractor,
   mto_category: mtoCategory,
   mto_milestone_note: mtoMilestoneNote,
+  custom_timeline_dates: customDate,
   model_plan_mto_template_link: modelPlanMtoTemplateLink
 };
 
