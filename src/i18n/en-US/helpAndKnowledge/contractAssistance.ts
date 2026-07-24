@@ -191,7 +191,7 @@ const contractAssistance = {
       },
       supportingDocuments: {
         label: 'Supporting documents',
-        hint: 'Upload any documentation that will help CTAT better understand your request.'
+        hint: 'Upload any documentation that will help CTAT better understand your request. Maximum file size 32 mb.'
       },
       other: {
         helpNeededType: 'Please specify the type of help needed'
