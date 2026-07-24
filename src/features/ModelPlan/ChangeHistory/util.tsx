@@ -40,6 +40,7 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
+  | 'customTimelineUpdate'
   | 'questionnaireTaskListStatusUpdate'
   | 'mtoStatusUpdate'
   | 'teamUpdate'
@@ -838,6 +839,10 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'taskListStatusUpdate';
   }
 
+  if (change.tableName === TableName.CUSTOM_TIMELINE_DATES) {
+    return 'customTimelineUpdate';
+  }
+
   if (
     change.tableName === TableName.MTO_INFO &&
     change.translatedFields.find(
@@ -935,6 +940,9 @@ export const getHeaderText = (change: ChangeRecordType): string => {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       }
       break;
+    case 'customTimelineUpdate':
+      headerText = i18next.t(`changeHistory:customTimelineUpdate`);
+      break;
     case 'mtoStatusUpdate':
       headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       break;
@@ -991,11 +999,36 @@ export const getActionText = (change: ChangeRecordType): string => {
     case 'mtoNoteUpdate':
       actionText = i18next.t(`changeHistory:noteUpdateType.${change.action}`);
       break;
+    case 'customTimelineUpdate':
+      actionText = i18next.t(
+        `changeHistory:customTimelineChangeType.${change.action}`
+      );
+      break;
     default:
       break;
   }
 
   return actionText;
+};
+
+export const getInOrToOrFrom = (change: ChangeRecordType): string => {
+  let inOrToOrFromText: string = '';
+
+  switch (change.action) {
+    case DatabaseOperation.INSERT:
+      inOrToOrFromText = i18next.t('changeHistory:toFromIn.INSERT');
+      break;
+    case DatabaseOperation.UPDATE:
+      inOrToOrFromText = i18next.t('changeHistory:toFromIn.UPDATE');
+      break;
+    case DatabaseOperation.DELETE:
+      inOrToOrFromText = i18next.t('changeHistory:toFromIn.DELETE');
+      break;
+    default:
+      break;
+  }
+
+  return inOrToOrFromText;
 };
 
 export const isInitialCreatedSection = (

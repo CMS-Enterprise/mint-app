@@ -22,6 +22,7 @@ import {
   documentType,
   getActionText,
   getHeaderText,
+  getInOrToOrFrom,
   getNestedActionText,
   hiddenFields,
   identifyChangeType,
@@ -122,6 +123,33 @@ export const ChangeHeader = ({
         values={{
           section: t(`sections.${changeRecord.tableName}`),
           status,
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
+  // Custom timeline audits
+  if (changeRecordType === 'customTimelineUpdate') {
+    const customTimelineTitle =
+      changeRecord.action === DatabaseOperation.DELETE
+        ? t('customTimelineRemovedTitle')
+        : changeRecord.translatedFields.find(
+            field => field.fieldName === 'title'
+          )?.newTranslated;
+
+    return (
+      <Trans
+        i18nKey={getHeaderText(changeRecord)}
+        shouldUnescape
+        values={{
+          action: getActionText(changeRecord),
+          customTimelineTitle,
+          toFromIn: getInOrToOrFrom(changeRecord),
           date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
           time: formatTime(changeRecord.date)
         }}
@@ -597,9 +625,13 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
     changeRecordType === 'operationalNeedUpdate' ||
     changeRecordType === 'mtoNoteUpdate';
 
+  const customTimelineAudit: boolean =
+    changeRecordType === 'customTimelineUpdate' &&
+    changeRecord.action !== DatabaseOperation.DELETE;
+
   // Determine if the change record should be expanded to show more data
   const showMoreData: boolean =
-    uploadAudit || changeRecordType === 'standardUpdate';
+    uploadAudit || customTimelineAudit || changeRecordType === 'standardUpdate';
 
   // Determines if the change record should show a list of translated fields before expanding
   const renderList: boolean =
