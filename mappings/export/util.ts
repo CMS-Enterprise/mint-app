@@ -30,13 +30,9 @@ import operationalSolution from '../../src/i18n/en-US/modelPlan/solutions';
 import tdls from '../../src/i18n/en-US/modelPlan/tdls';
 import {
   getKeys,
+  TranslationConfigType,
   TranslationFieldProperties
 } from '../../src/types/translation';
-
-type TranslationExportSection = Record<
-  string,
-  TranslationFieldProperties & Record<string, any>
->;
 
 export const translationSections = {
   key_contact: keyContact,
@@ -99,11 +95,11 @@ export const filterUnneededField = (
 // Checks translation questions for 'otherParentField'
 // Replaces gql field residing in 'otherParentField' with the dbField of the referenced parent
 export const mapOtherParentFieldToDBField = (
-  planSection: TranslationExportSection
+  planSection: Record<string, TranslationConfigType<any, any>>
 ) => {
   const formattedSection = { ...planSection };
   getKeys(formattedSection).forEach(field => {
-    const fieldObj = planSection[field] as any;
+    const fieldObj = planSection[field];
 
     const filteredObj = filterUnneededField(fieldObj, unneededFields);
 
@@ -147,7 +143,7 @@ export const mapOtherParentFieldToDBField = (
 
 // Processes translation data in prep for BE use for export
 export const processDataMapping = (
-  translations: Record<string, TranslationExportSection>
+  translations: Record<string, Record<string, TranslationConfigType<any, any>>>
 ) => {
   const formattedTranslation: any = {};
 
