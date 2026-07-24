@@ -168,6 +168,8 @@ func (suite *ResolverSuite) TestCustomTimelineDateUpdateAppliesChangesAndClearsE
 		changes,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
 	)
 
 	suite.NoError(err)
@@ -202,6 +204,8 @@ func (suite *ResolverSuite) TestCustomTimelineDateUpdateRangeRequiresEndDate() {
 		changes,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
 	)
 
 	suite.Error(err)

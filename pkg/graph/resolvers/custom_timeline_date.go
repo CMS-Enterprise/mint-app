@@ -231,6 +231,8 @@ func CustomTimelineDateUpdate(
 	changes map[string]any,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) (*models.CustomTimelineDate, error) {
 	if principal.Account() == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
@@ -255,7 +257,75 @@ func CustomTimelineDateUpdate(
 		return nil, err
 	}
 
-	return storage.CustomTimelineDateUpdate(store, &customTimelineDate)
+	updatedCustomTimelineDate, err := storage.CustomTimelineDateUpdate(store, &customTimelineDate)
+	if err != nil {
+		return nil, err
+	}
+
+	processCustomTimelineDateUpdatedEmails(
+		ctx,
+		logger,
+		store,
+		principal,
+		emailService,
+		addressBook,
+		existing,
+		updatedCustomTimelineDate,
+	)
+
+	return updatedCustomTimelineDate, nil
+}
+
+func processCustomTimelineDateUpdatedEmails(
+	ctx context.Context,
+	logger *zap.Logger,
+	store *storage.Store,
+	principal authentication.Principal,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	existingCustomTimelineDate *models.CustomTimelineDate,
+	updatedCustomTimelineDate *models.CustomTimelineDate,
+) {
+	if emailService == nil || existingCustomTimelineDate == nil || updatedCustomTimelineDate == nil {
+		return
+	}
+
+	if len(addressBook.ModelPlanDateChangedRecipients) == 0 {
+		return
+	}
+
+	customTimelineDateChange := buildCustomTimelineDateChange(existingCustomTimelineDate, updatedCustomTimelineDate)
+	if !customTimelineDateChange.IsChanged {
+		return
+	}
+
+	modelPlan, err := loaders.ModelPlan.GetByID.Load(ctx, updatedCustomTimelineDate.ModelPlanID)
+	if err != nil {
+		logger.Error("failed to load model plan for custom timeline date updated email",
+			zap.Error(err),
+			zap.String("customTimelineDateID", updatedCustomTimelineDate.ID.String()),
+			zap.String("modelPlanID", updatedCustomTimelineDate.ModelPlanID.String()),
+		)
+		return
+	}
+
+	if err := processPlanTimelineChangedDates(
+		ctx,
+		logger,
+		store,
+		principal,
+		map[string]email.DateChange{},
+		[]email.CustomTimelineDateChange{customTimelineDateChange},
+		emailService,
+		addressBook,
+		modelPlan,
+	); err != nil {
+		logger.Error("failed to process custom timeline date updated email",
+			zap.Error(err),
+			zap.String("customTimelineDateID", updatedCustomTimelineDate.ID.String()),
+			zap.String("modelPlanID", updatedCustomTimelineDate.ModelPlanID.String()),
+		)
+	}
 }
 
 // CustomTimelineDateGetByIDLOADER returns a custom timeline date by its provided ID.

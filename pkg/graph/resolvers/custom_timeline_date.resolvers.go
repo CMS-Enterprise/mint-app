@@ -36,7 +36,7 @@ func (r *mutationResolver) UpdateCustomTimelineDate(ctx context.Context, id uuid
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return CustomTimelineDateUpdate(ctx, logger, id, changes, principal, r.store)
+	return CustomTimelineDateUpdate(ctx, logger, id, changes, principal, r.store, r.emailService, r.addressBook)
 }
 
 // DeleteCustomTimelineDate is the resolver for the deleteCustomTimelineDate field.
