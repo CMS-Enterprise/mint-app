@@ -41,3 +41,6 @@ SELECT audit.AUDIT_TABLE(
     '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
     '{*}'::TEXT[]
 );
+
+ALTER TABLE plan_timeline
+ADD COLUMN custom_dates_note ZERO_STRING;
