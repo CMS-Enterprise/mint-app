@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import {
   Button,
   Card,
@@ -10,6 +11,7 @@ import {
   Grid,
   GridContainer,
   Header,
+  Icon,
   Link,
   PrimaryNav,
   Select
@@ -30,6 +32,7 @@ import {
   useGetAnalyticsSummaryQuery,
   useGetMtoMilestoneSummaryQuery
 } from 'gql/generated/graphql';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import {
   Bar,
   BarChart,
@@ -41,6 +44,7 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
+import { AppState } from 'stores/reducers/rootReducer';
 
 import CheckboxField from 'components/CheckboxField';
 import MainContent from 'components/MainContent';
@@ -48,14 +52,19 @@ import PageLoading from 'components/PageLoading';
 import Spinner from 'components/Spinner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFetchCSVData from 'hooks/useFetchCSVData';
+import useFetchCTATReport from 'hooks/useFetchCTATReport';
 import { reports } from 'i18n/en-US/analytics';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { formatDateUtc } from 'utils/date';
+import { isAssessment } from 'utils/user';
+
+import DateRangeModal from './_components/DateRangeModal';
 
 export type ReportsType =
   | 'mtoMilestoneSummary'
   | 'allModels'
-  | 'basicModelInfo';
+  | 'basicModelInfo'
+  | 'ctat';
 
 const ReportsAndAnalytics = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -64,7 +73,15 @@ const ReportsAndAnalytics = () => {
   const isTablet = useCheckResponsiveScreen('tablet', 'smaller');
   const isMobile = useCheckResponsiveScreen('mobile', 'smaller');
 
-  const sortedReports = Object.keys(reports).sort((a, b) => a.localeCompare(b));
+  const flags = useFlags();
+  const { groups } = useSelector((state: AppState) => state.auth);
+  const isAssessmentTeam = isAssessment(groups, flags);
+
+  const filteredReports = Object.keys(reports).filter(report =>
+    isAssessmentTeam ? true : report !== 'ctat'
+  );
+
+  const sortedReports = filteredReports.sort((a, b) => a.localeCompare(b));
 
   // Responsive margins and height for the chart
   const chartMargins = useMemo(() => {
@@ -99,8 +116,16 @@ const ReportsAndAnalytics = () => {
   const [isDownloadingAllCharts, setIsDownloadingAllCharts] =
     useState<boolean>(false);
 
+  const [isDateRangeModalOpen, setIsDateRangeModalOpen] = useState(false);
+
+  const [downloadingReport, setDownloadingReport] =
+    useState<ReportsType | null>(null);
+
   // Fetch all data for CSV export of all model plans
   const { fetchAllData } = useFetchCSVData();
+
+  // Fetch CTAT report data for CSV export
+  const { fetchCTATReport } = useFetchCTATReport();
 
   const { data, loading, error } = useGetAnalyticsSummaryQuery();
 
@@ -126,6 +151,27 @@ const ReportsAndAnalytics = () => {
   } else if (selectedChart === 'changesPerModelOtherData') {
     chartData = getChangesByOtherData(analyticsData.changesPerModelOtherData);
   }
+
+  const handleDownloadReport = async (reportKey: ReportsType) => {
+    setDownloadingReport(reportKey);
+
+    try {
+      if (reportKey === 'mtoMilestoneSummary') {
+        await downloadMTOMilestoneSummary(
+          mtoMilestoneSummaryData,
+          'MINT-MTO_Milestone_Summary.xlsx'
+        );
+      } else if (reportKey === 'allModels') {
+        await fetchAllData(ModelShareSection.ALL);
+      } else if (reportKey === 'basicModelInfo') {
+        await fetchAllData('basicModelInfo');
+      } else if (reportKey === 'ctat') {
+        await fetchCTATReport();
+      }
+    } finally {
+      setDownloadingReport(null);
+    }
+  };
 
   // Onclick handler for downloading multiple charts as PDF
   const downloadMultipleChartsPDF = async () => {
@@ -154,6 +200,13 @@ const ReportsAndAnalytics = () => {
 
   return (
     <MainContent className="mint-body-normal">
+      {isDateRangeModalOpen && (
+        <DateRangeModal
+          isModalOpen={isDateRangeModalOpen}
+          closeModal={() => setIsDateRangeModalOpen(false)}
+        />
+      )}
+
       <GridContainer>
         <h1 className="margin-top-10 margin-bottom-2">{t('heading')}</h1>
 
@@ -183,7 +236,12 @@ const ReportsAndAnalytics = () => {
           <Grid desktop={{ col: 12 }}>
             <Grid row gap={1}>
               {sortedReports.map(reportKey => (
-                <Grid desktop={{ col: 4 }} tablet={{ col: 6 }} key={reportKey}>
+                <Grid
+                  desktop={{ col: 4 }}
+                  tablet={{ col: 6 }}
+                  key={reportKey}
+                  className="display-flex"
+                >
                   <Card
                     containerProps={{
                       className: 'radius-md padding-0 margin-0',
@@ -199,6 +257,19 @@ const ReportsAndAnalytics = () => {
                       </h3>
                     </CardHeader>
 
+                    {reportKey === 'ctat' && (
+                      <div className="margin-top-2 margin-bottom-1 margin-left-3 bg-info-lighter padding-y-05 padding-x-1 radius-md display-flex flex-align-center width-fit-content">
+                        <Icon.Security
+                          className="text-info-darker margin-right-05"
+                          size={3}
+                          aria-hidden
+                        />
+                        <span className="text-info-darker line-height-body-1">
+                          {t('adminOnly')}
+                        </span>
+                      </div>
+                    )}
+
                     <CardBody className="padding-x-3 ">
                       <p>{t(reports[reportKey as ReportsType].description)}</p>
 
@@ -207,27 +278,43 @@ const ReportsAndAnalytics = () => {
                       </p>
                     </CardBody>
 
-                    <CardFooter className="padding-3">
+                    <CardFooter className="padding-3 display-flex">
                       <Button
                         type="button"
                         className="margin-right-2"
-                        disabled={mtoMilestoneSummaryLoading}
+                        disabled={
+                          mtoMilestoneSummaryLoading ||
+                          downloadingReport === reportKey
+                        }
                         data-testid={`download-${reportKey}-button`}
                         onClick={() => {
-                          if (reportKey === 'mtoMilestoneSummary') {
-                            downloadMTOMilestoneSummary(
-                              mtoMilestoneSummaryData,
-                              'MINT-MTO_Milestone_Summary.xlsx'
-                            );
-                          } else if (reportKey === 'allModels') {
-                            fetchAllData(ModelShareSection.ALL);
-                          } else if (reportKey === 'basicModelInfo') {
-                            fetchAllData('basicModelInfo');
-                          }
+                          handleDownloadReport(reportKey as ReportsType);
                         }}
                       >
-                        {t('download')}
+                        {downloadingReport === reportKey
+                          ? t('loading')
+                          : t(
+                              reportKey === 'ctat' ? 'downloadAll' : 'download'
+                            )}
+
+                        {downloadingReport === reportKey && (
+                          <Spinner size="small" />
+                        )}
                       </Button>
+
+                      {reportKey === 'ctat' && (
+                        <Button
+                          type="button"
+                          data-testid="select-time-range-button"
+                          unstyled
+                          className="deep-underline"
+                          onClick={() => {
+                            setIsDateRangeModalOpen(true);
+                          }}
+                        >
+                          {t('selectDateRange')}
+                        </Button>
+                      )}
                     </CardFooter>
                   </Card>
                 </Grid>

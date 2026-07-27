@@ -141,7 +141,8 @@ export const documentsMisc = {
   },
   requiredHint: 'Fields marked with an asterisk (',
   requiredHint2: ') are required.',
-  fileTypes: 'Select a PDF, DOC, DOCX, XLS, XLSX, PPT, or PPTX',
+  fileTypes:
+    'Select a PDF, DOC, DOCX, XLS, XLSX, PPT, or PPTX. Maximum file size 32 mb.',
   uploadError: {
     heading: 'There is a problem',
     body: 'Something went wrong with MINT. Please try refreshing the page or try again later.'
