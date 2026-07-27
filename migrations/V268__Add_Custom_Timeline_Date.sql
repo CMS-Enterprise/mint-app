@@ -8,7 +8,7 @@ CREATE TYPE CUSTOM_TIMELINE_DATE_TYPE AS ENUM (
 
 CREATE TABLE IF NOT EXISTS custom_timeline_date (
     id UUID PRIMARY KEY NOT NULL,
-    model_plan_id UUID NOT NULL REFERENCES model_plan(id),
+    model_plan_id UUID NOT NULL REFERENCES model_plan(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
     description ZERO_STRING,
     date_type CUSTOM_TIMELINE_DATE_TYPE NOT NULL,
