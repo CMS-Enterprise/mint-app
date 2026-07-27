@@ -1,4 +1,4 @@
-INSERT INTO custom_timeline_dates (
+INSERT INTO custom_timeline_date (
     id,
     model_plan_id,
     title,

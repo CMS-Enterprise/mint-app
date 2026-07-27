@@ -68,7 +68,7 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 		return MTOCommonSolutionContractorTranslation()
 	case models.TNPlanTimeline:
 		return PlanTimelineTranslation()
-	case models.TNCustomTimelineDates:
+	case models.TNCustomTimelineDate:
 		return CustomTimelineDateTranslation()
 	case models.TNMTOMilestoneNote:
 		return MTOMilestoneNoteTranslation()

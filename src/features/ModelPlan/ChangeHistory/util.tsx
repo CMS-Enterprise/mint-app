@@ -60,7 +60,7 @@ export type ChangeType =
 export type TranslationTables =
   | TableName.MODEL_PLAN
   | TableName.PLAN_TIMELINE
-  | TableName.CUSTOM_TIMELINE_DATES
+  | TableName.CUSTOM_TIMELINE_DATE
   | TableName.PLAN_BASICS
   | TableName.PLAN_GENERAL_CHARACTERISTICS
   | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
@@ -250,7 +250,7 @@ export const doubleBatchedTables: TableName[] = [
 
 const timelineTables: TableName[] = [
   TableName.PLAN_TIMELINE,
-  TableName.CUSTOM_TIMELINE_DATES
+  TableName.CUSTOM_TIMELINE_DATE
 ];
 
 // Fields that are connected to other tables
@@ -839,7 +839,7 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'taskListStatusUpdate';
   }
 
-  if (change.tableName === TableName.CUSTOM_TIMELINE_DATES) {
+  if (change.tableName === TableName.CUSTOM_TIMELINE_DATE) {
     return 'customTimelineUpdate';
   }
 

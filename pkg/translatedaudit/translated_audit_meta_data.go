@@ -269,7 +269,7 @@ func CustomTimelineDateMetaDataGet(ctx context.Context, store *storage.Store, cu
 		}
 	}
 
-	meta := models.NewTranslatedAuditMetaGeneric(models.TNCustomTimelineDates, 0, "title", title)
+	meta := models.NewTranslatedAuditMetaGeneric(models.TNCustomTimelineDate, 0, "title", title)
 	metaType := models.TAMetaGeneric
 	return &meta, &metaType, nil
 }
@@ -535,7 +535,7 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 		if err != nil {
 			return true, err
 		}
-	case models.TNCustomTimelineDates:
+	case models.TNCustomTimelineDate:
 		metaData, metaDataType, err := CustomTimelineDateMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
 		metaDataInterface = metaData
 		metaDataTypeGlobal = metaDataType

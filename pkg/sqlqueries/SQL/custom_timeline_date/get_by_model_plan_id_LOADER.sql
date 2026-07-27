@@ -4,16 +4,16 @@ WITH QUERIED_IDS AS (
 )
 
 SELECT
-    custom_timeline_dates.id,
-    custom_timeline_dates.model_plan_id,
-    custom_timeline_dates.title,
-    custom_timeline_dates.description,
-    custom_timeline_dates.date_type,
-    custom_timeline_dates.start_date,
-    custom_timeline_dates.end_date,
-    custom_timeline_dates.created_by,
-    custom_timeline_dates.created_dts,
-    custom_timeline_dates.modified_by,
-    custom_timeline_dates.modified_dts
-FROM custom_timeline_dates
-INNER JOIN QUERIED_IDS AS qIDs ON custom_timeline_dates.model_plan_id = qIDs.model_plan_id;
+    custom_timeline_date.id,
+    custom_timeline_date.model_plan_id,
+    custom_timeline_date.title,
+    custom_timeline_date.description,
+    custom_timeline_date.date_type,
+    custom_timeline_date.start_date,
+    custom_timeline_date.end_date,
+    custom_timeline_date.created_by,
+    custom_timeline_date.created_dts,
+    custom_timeline_date.modified_by,
+    custom_timeline_date.modified_dts
+FROM custom_timeline_date
+INNER JOIN QUERIED_IDS AS qIDs ON custom_timeline_date.model_plan_id = qIDs.model_plan_id;

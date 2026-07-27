@@ -1,4 +1,4 @@
-UPDATE custom_timeline_dates AS ctd
+UPDATE custom_timeline_date AS ctd
 SET
     start_date = COALESCE(updates.start_date, ctd.start_date),
     end_date = updates.end_date,

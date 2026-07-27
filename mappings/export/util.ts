@@ -58,7 +58,7 @@ export const translationSections = {
   plan_document_solution_link: documentSolutionLink,
   data_exchange_approach: dataExchangeApproach,
   mto_info: mtoInfo,
-  custom_timeline_dates: customDate,
+  custom_timeline_date: customDate,
   mto_milestone_note: mtoMilestoneNote
 };
 

@@ -599,7 +599,7 @@ func (suite *TAuditSuite) TestSetTranslatedAuditTableSpecificMetaDataForCustomTi
 
 	tAuditWithFields := &models.TranslatedAuditWithTranslatedFields{}
 	auditChange := &models.AuditChange{
-		TableName:  models.TNCustomTimelineDates,
+		TableName:  models.TNCustomTimelineDate,
 		PrimaryKey: customTimelineDate.ID,
 		Fields:     changes,
 	}
@@ -613,7 +613,7 @@ func (suite *TAuditSuite) TestSetTranslatedAuditTableSpecificMetaDataForCustomTi
 
 	customTimelineDateMeta, ok := tAuditWithFields.MetaData.(*models.TranslatedAuditMetaGeneric)
 	if suite.True(ok) && suite.NotNil(customTimelineDateMeta) {
-		suite.EqualValues(models.TNCustomTimelineDates, customTimelineDateMeta.TableName)
+		suite.EqualValues(models.TNCustomTimelineDate, customTimelineDateMeta.TableName)
 		suite.EqualValues("title", customTimelineDateMeta.Relation)
 		if suite.NotNil(customTimelineDateMeta.RelationContent) {
 			suite.EqualValues(customTimelineDateTitle, *customTimelineDateMeta.RelationContent)

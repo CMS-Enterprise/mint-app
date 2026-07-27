@@ -1,4 +1,4 @@
-ALTER TYPE TABLE_NAME ADD VALUE 'custom_timeline_dates';
+ALTER TYPE TABLE_NAME ADD VALUE 'custom_timeline_date';
 COMMIT;
 
 CREATE TYPE CUSTOM_TIMELINE_DATE_TYPE AS ENUM (
@@ -6,7 +6,7 @@ CREATE TYPE CUSTOM_TIMELINE_DATE_TYPE AS ENUM (
     'RANGE'
 );
 
-CREATE TABLE IF NOT EXISTS custom_timeline_dates (
+CREATE TABLE IF NOT EXISTS custom_timeline_date (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL REFERENCES model_plan(id),
     title TEXT NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS custom_timeline_dates (
     modified_dts TIMESTAMP WITH TIME ZONE,
     -- require `end_date` if `date_type` is `RANGE`
     -- forbid `end_date` if `date_type` is `SINGLE`
-    CONSTRAINT custom_timeline_dates_date_type_end_date CHECK (
+    CONSTRAINT custom_timeline_date_date_type_end_date CHECK (
         (
             date_type = 'RANGE'
             AND end_date IS NOT NULL
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS custom_timeline_dates (
 
 SELECT audit.AUDIT_TABLE(
     'public',
-    'custom_timeline_dates',
+    'custom_timeline_date',
     'id',
     'model_plan_id',
     '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],

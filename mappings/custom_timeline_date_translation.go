@@ -8,7 +8,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
 
-//go:embed translation/custom_timeline_dates.json
+//go:embed translation/custom_timeline_date.json
 var customTimelineDatesJSON []byte
 
 // CustomTimelineDateTranslation provides the translation for custom timeline dates.

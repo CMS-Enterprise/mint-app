@@ -75,7 +75,7 @@ export const translationSections = {
   mto_common_solution_contractor: mtoCommonSolutionContractor,
   mto_category: mtoCategory,
   mto_milestone_note: mtoMilestoneNote,
-  custom_timeline_dates: customDate,
+  custom_timeline_date: customDate,
   model_plan_mto_template_link: modelPlanMtoTemplateLink
 };
 

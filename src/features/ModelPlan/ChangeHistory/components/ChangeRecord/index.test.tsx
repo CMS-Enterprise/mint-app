@@ -57,7 +57,7 @@ describe('ChangeRecord', () => {
   it('uses generic metadata for custom timeline date-only updates', () => {
     const customTimelineDateRecord: ChangeRecordType = {
       id: 'bfbf2c34-7e6c-4c12-9d97-605e3aa3aace',
-      tableName: TableName.CUSTOM_TIMELINE_DATES,
+      tableName: TableName.CUSTOM_TIMELINE_DATE,
       date: '2024-04-22T13:55:13.725192Z',
       action: DatabaseOperation.UPDATE,
       translatedFields: [
@@ -80,7 +80,7 @@ describe('ChangeRecord', () => {
       metaData: {
         __typename: 'TranslatedAuditMetaGeneric',
         version: 0,
-        tableName: TableName.CUSTOM_TIMELINE_DATES,
+        tableName: TableName.CUSTOM_TIMELINE_DATE,
         relation: 'title',
         relationContent: 'Custom date title'
       },
