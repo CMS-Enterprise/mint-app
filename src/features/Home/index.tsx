@@ -321,19 +321,21 @@ const Home = () => {
                     </UswdsReactLink>
                   </SummaryBox>
 
-                  <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-0">
-                    <p className="margin-0 margin-bottom-1">
-                      {t('contractAssistanceSummaryBox.copy')}
-                    </p>
+                  {flags.ctatEnabled && (
+                    <SummaryBox className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-0">
+                      <p className="margin-0 margin-bottom-1">
+                        {t('contractAssistanceSummaryBox.copy')}
+                      </p>
 
-                    <UswdsReactLink
-                      className="usa-button usa-button--outline"
-                      variant="unstyled"
-                      to="/help-and-knowledge/contract-assistance"
-                    >
-                      {t('contractAssistanceSummaryBox.cta')}
-                    </UswdsReactLink>
-                  </SummaryBox>
+                      <UswdsReactLink
+                        className="usa-button usa-button--outline"
+                        variant="unstyled"
+                        to="/help-and-knowledge/contract-assistance"
+                      >
+                        {t('contractAssistanceSummaryBox.cta')}
+                      </UswdsReactLink>
+                    </SummaryBox>
+                  )}
                 </div>
               )}
 

@@ -26,9 +26,12 @@ import { mapCtatRequestsToContractAssistanceTickets } from './utils';
 const ContractAssistancePage = () => {
   const { t } = useTranslation('contractAssistance');
   const { t: hkcT } = useTranslation('helpAndKnowledge');
+
   const { groups } = useSelector((state: AppState) => state.auth);
   const flags = useFlags();
+
   const isAssessmentTeam = isAssessment(groups, flags);
+
   const { ticketId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -71,6 +74,10 @@ const ContractAssistancePage = () => {
 
   const loading = requesterLoading || (isAssessmentTeam && adminLoading);
   const error = requesterError || adminError;
+
+  if (!flags.ctatEnabled) {
+    return <NotFound />;
+  }
 
   if (loading) {
     return <PageLoading />;

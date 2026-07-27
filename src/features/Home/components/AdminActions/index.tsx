@@ -8,6 +8,7 @@ import {
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
@@ -15,6 +16,8 @@ import { tArray } from 'utils/translation';
 
 const AdminActions = () => {
   const { t } = useTranslation('adminActions');
+
+  const flags = useFlags();
 
   const [isExpanded, setIsExpanded] = useState(true);
 
@@ -24,6 +27,12 @@ const AdminActions = () => {
     cta: string;
     route: string;
   }>('adminActions:actions');
+
+  const filteredActionsList = flags.ctatEnabled
+    ? actionsList
+    : actionsList.filter(
+        action => action.route !== '/help-and-knowledge/contract-assistance'
+      );
 
   return (
     <SummaryBox className="bg-info-lighter border-1px border-info-light radius-md padding-3">
@@ -58,11 +67,11 @@ const AdminActions = () => {
       </div>
       {isExpanded && (
         <div id="admin-actions-content" className="margin-top-2">
-          {actionsList.map((section, index) => (
+          {filteredActionsList.map((section, index) => (
             <SummaryBoxContent
               key={section.header}
               className={classNames(
-                index < actionsList.length - 1 && 'margin-bottom-3'
+                index < filteredActionsList.length - 1 && 'margin-bottom-3'
               )}
             >
               <h4 className="margin-0 margin-bottom-1 line-height-sans-2">

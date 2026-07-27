@@ -23,6 +23,14 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 const mockStore = configureMockStore();
 const store = mockStore({ auth: { euaId: 'MINT' } });
 
+vi.mock('launchdarkly-react-client-sdk', () => ({
+  useFlags: () => {
+    return {
+      ctatEnabled: true
+    };
+  }
+}));
+
 describe('ReportsAndAnalytics', () => {
   beforeEach(() => {
     vi.clearAllMocks();

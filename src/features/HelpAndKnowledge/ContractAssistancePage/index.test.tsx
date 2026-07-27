@@ -91,6 +91,14 @@ const renderPage = (
   );
 };
 
+vi.mock('launchdarkly-react-client-sdk', () => ({
+  useFlags: () => {
+    return {
+      ctatEnabled: true
+    };
+  }
+}));
+
 describe('ContractAssistancePage', () => {
   it('renders admin ticket management for assessment team', async () => {
     renderPage(assessmentStore);
