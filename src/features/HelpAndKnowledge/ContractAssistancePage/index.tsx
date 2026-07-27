@@ -46,14 +46,14 @@ const ContractAssistancePage = () => {
     data: requesterData,
     loading: requesterLoading,
     error: requesterError
-  } = useGetCtatRequestsRequesterQuery();
+  } = useGetCtatRequestsRequesterQuery({ skip: !flags.ctatEnabled });
 
   const {
     data: adminData,
     loading: adminLoading,
     error: adminError
   } = useGetCtatRequestsAdminQuery({
-    skip: !isAssessmentTeam
+    skip: !isAssessmentTeam || !flags.ctatEnabled
   });
 
   const userTickets = useMemo(
