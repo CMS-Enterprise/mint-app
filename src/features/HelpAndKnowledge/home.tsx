@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
@@ -36,11 +36,15 @@ export const HelpAndKnowledgeHome = () => {
 
   const isCTATEnabled = flags.ctatEnabled;
 
-  const filteredJumpToLinks = isCTATEnabled
-    ? JUMP_TO_LINKS_I18NKEYS
-    : JUMP_TO_LINKS_I18NKEYS.filter(
-        linkI18nkey => linkI18nkey !== 'contractAssistance:hkcJumpToLabel'
-      );
+  const filteredJumpToLinks = useMemo(
+    () =>
+      isCTATEnabled
+        ? JUMP_TO_LINKS_I18NKEYS
+        : JUMP_TO_LINKS_I18NKEYS.filter(
+            linkI18nkey => linkI18nkey !== 'contractAssistance:hkcJumpToLabel'
+          ),
+    [isCTATEnabled]
+  );
 
   // This handles when there's # in url and scroll to section
   useEffect(() => {
