@@ -1,4 +1,4 @@
-DELETE FROM custom_timeline_dates
+DELETE FROM custom_timeline_date
 WHERE id = :id
 RETURNING
     id,

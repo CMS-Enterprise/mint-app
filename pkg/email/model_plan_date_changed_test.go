@@ -15,7 +15,6 @@ func TestModelPlanDateChangedTemplateSections(t *testing.T) {
 		name                         string
 		dateChanges                  []DateChange
 		customTimelineDateChanges    []CustomTimelineDateChange
-		shouldShowBasicTimeline      bool
 		shouldShowAdditionalTimeline bool
 	}{
 		{
@@ -27,7 +26,6 @@ func TestModelPlanDateChangedTemplateSections(t *testing.T) {
 					NewDate:   &date,
 				},
 			},
-			shouldShowBasicTimeline: true,
 		},
 		{
 			name: "custom timeline date changes only shows additional model dates",
@@ -60,11 +58,10 @@ func TestModelPlanDateChangedTemplateSections(t *testing.T) {
 					NewStartDate: &nextDate,
 				},
 			},
-			shouldShowBasicTimeline:      true,
 			shouldShowAdditionalTimeline: true,
 		},
 		{
-			name: "no changes hides both timeline sections",
+			name: "no custom timeline dates hides additional model dates",
 		},
 	}
 
@@ -86,8 +83,66 @@ func TestModelPlanDateChangedTemplateSections(t *testing.T) {
 				t.Fatalf("unexpected template render error: %v", err)
 			}
 
-			assertContains(t, body, "Basic high level timeline", tt.shouldShowBasicTimeline)
+			assertContains(t, body, "Basic high level timeline", true)
 			assertContains(t, body, "Additional model dates", tt.shouldShowAdditionalTimeline)
+		})
+	}
+}
+
+func TestModelPlanDateChangedTemplateCustomTimelineDateChangeRendering(t *testing.T) {
+	oldDate := time.Date(2026, 9, 1, 0, 0, 0, 0, time.UTC)
+	newDate := time.Date(2026, 10, 1, 0, 0, 0, 0, time.UTC)
+
+	tests := []struct {
+		name                 string
+		customTimelineChange CustomTimelineDateChange
+		shouldShowOldChanged bool
+		shouldShowNewDate    bool
+	}{
+		{
+			name: "changed custom timeline date shows old struck through and new date",
+			customTimelineChange: CustomTimelineDateChange{
+				IsChanged:    true,
+				Title:        "Custom single date title",
+				OldStartDate: &oldDate,
+				NewStartDate: &newDate,
+			},
+			shouldShowOldChanged: true,
+			shouldShowNewDate:    true,
+		},
+		{
+			name: "unchanged custom timeline date only shows current date",
+			customTimelineChange: CustomTimelineDateChange{
+				IsChanged:    false,
+				Title:        "Custom single date title",
+				OldStartDate: &oldDate,
+				NewStartDate: &newDate,
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, body, err := ModelPlan.DateChanged.GetContent(
+				ModelPlanDateChangedSubjectContent{
+					ModelName: "Test Model",
+				},
+				ModelPlanDateChangedBodyContent{
+					ClientAddress: "localhost:3005",
+					ModelName:     "Test Model",
+					ModelID:       "00000000-0000-0000-0000-000000000000",
+					CustomTimelineDateChanges: []CustomTimelineDateChange{
+						tt.customTimelineChange,
+					},
+				},
+			)
+			if err != nil {
+				t.Fatalf("unexpected template render error: %v", err)
+			}
+
+			assertContains(t, body, "09/01/2026", true)
+			assertContains(t, body, `<span style="color: #D54309; text-decoration: line-through;">`, tt.shouldShowOldChanged)
+			assertContains(t, body, "10/01/2026", tt.shouldShowNewDate)
 		})
 	}
 }

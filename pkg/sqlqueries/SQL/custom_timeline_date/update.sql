@@ -1,4 +1,4 @@
-UPDATE custom_timeline_dates
+UPDATE custom_timeline_date
 SET
     model_plan_id = :model_plan_id,
     title = :title,

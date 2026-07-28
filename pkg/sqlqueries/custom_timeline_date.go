@@ -29,7 +29,7 @@ type customTimelineDateScripts struct {
 	Delete                 string
 }
 
-// CustomTimelineDate houses all the SQL scripts for the custom_timeline_dates table.
+// CustomTimelineDate houses all the SQL scripts for the custom_timeline_date table.
 var CustomTimelineDate = customTimelineDateScripts{
 	Create:                 customTimelineDateCreateSQL,
 	GetByIDLoader:          customTimelineDateGetByIDLoaderSQL,

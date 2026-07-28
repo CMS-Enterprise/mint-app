@@ -803,6 +803,44 @@ func TestBuildCustomTimelineDateChangesReturnsOnlyChangedDates(t *testing.T) {
 	}
 }
 
+func TestBuildCustomTimelineDateChangesIgnoresTitleAndDescriptionOnlyChanges(t *testing.T) {
+	modelPlanID := uuid.New()
+	createdBy := uuid.New()
+	id := uuid.New()
+	startDate := time.Date(2026, 5, 1, 0, 0, 0, 0, time.UTC)
+	oldDescription := "Old custom timeline date description"
+	newDescription := "New custom timeline date description"
+
+	existingCustomTimelineDate := testCustomTimelineDate(
+		id,
+		createdBy,
+		modelPlanID,
+		"Old title",
+		&oldDescription,
+		models.CustomTimelineDateTypeSingle,
+		startDate,
+		nil,
+	)
+	updatedCustomTimelineDate := testCustomTimelineDate(
+		id,
+		createdBy,
+		modelPlanID,
+		"New title",
+		&newDescription,
+		models.CustomTimelineDateTypeSingle,
+		startDate,
+		nil,
+	)
+
+	changes := buildCustomTimelineDateChanges(
+		[]uuid.UUID{id},
+		[]*models.CustomTimelineDate{existingCustomTimelineDate},
+		[]*models.CustomTimelineDate{updatedCustomTimelineDate},
+	)
+
+	assert.Empty(t, changes)
+}
+
 func TestBuildCustomTimelineDateChangesSkipsNilUpdates(t *testing.T) {
 	id := uuid.New()
 

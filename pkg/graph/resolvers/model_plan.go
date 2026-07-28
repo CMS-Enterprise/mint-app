@@ -56,6 +56,7 @@ var ModelPlanRecentEditTables = []models.TableName{
 	//exclude suggestedMilestone
 
 	models.TNPlanTimeline,
+	models.TNCustomTimelineDate,
 }
 
 // ModelPlanRecentEditsExcludedFields is a list of fields that are excluded from the recent edits query for model plans.
