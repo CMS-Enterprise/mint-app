@@ -4,6 +4,14 @@ import { fireEvent, render } from '@testing-library/react';
 
 import AdminActions from './index';
 
+vi.mock('launchdarkly-react-client-sdk', () => ({
+  useFlags: () => {
+    return {
+      ctatEnabled: true
+    };
+  }
+}));
+
 describe('AdminActions Component', () => {
   it('renders correctly', () => {
     const router = createMemoryRouter(

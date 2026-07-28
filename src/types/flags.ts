@@ -7,6 +7,7 @@ export type Flags = {
   modelsApproachingClearanceEnabled: boolean;
   mintAnalyticsEnabled: boolean;
   sandbox: boolean;
+  ctatEnabled: boolean;
 };
 
 export type FlagsState = {

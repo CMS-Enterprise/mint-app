@@ -78,7 +78,7 @@ const ReportsAndAnalytics = () => {
   const isAssessmentTeam = isAssessment(groups, flags);
 
   const filteredReports = Object.keys(reports).filter(report =>
-    isAssessmentTeam ? true : report !== 'ctat'
+    isAssessmentTeam && flags.ctatEnabled ? true : report !== 'ctat'
   );
 
   const sortedReports = filteredReports.sort((a, b) => a.localeCompare(b));

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import useOutsideClick from 'hooks/useOutsideClick';
 
@@ -57,13 +58,21 @@ type HelpNavMenuProps = {
 
 const HelpNavMenu = ({ isMobile, expandMobileSideNav }: HelpNavMenuProps) => {
   const { t } = useTranslation();
-  const { pathname, hash } = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
 
+  const flags = useFlags();
+
+  const { pathname, hash } = useLocation();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const menuRef = useRef<HTMLDivElement>(null);
   useOutsideClick(menuRef, () => setIsOpen(false));
 
   const isActive = isHelpNavActive(pathname);
+
+  const filteredHelpSubmenuLinks = flags.ctatEnabled
+    ? helpSubmenuLinks
+    : helpSubmenuLinks.filter(item => item.label !== 'contractAssistance');
 
   const handleToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -115,7 +124,7 @@ const HelpNavMenu = ({ isMobile, expandMobileSideNav }: HelpNavMenuProps) => {
             'mint-nav__submenu--mobile': isMobile
           })}
         >
-          {helpSubmenuLinks.map(item => (
+          {filteredHelpSubmenuLinks.map(item => (
             <li key={item.link} className="mint-nav__submenu-item">
               <NavLink
                 to={item.link}

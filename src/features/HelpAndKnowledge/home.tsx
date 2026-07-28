@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -31,6 +32,20 @@ export const HelpAndKnowledgeHome = () => {
 
   const { hash } = useLocation();
 
+  const flags = useFlags();
+
+  const isCTATEnabled = flags.ctatEnabled;
+
+  const filteredJumpToLinks = useMemo(
+    () =>
+      isCTATEnabled
+        ? JUMP_TO_LINKS_I18NKEYS
+        : JUMP_TO_LINKS_I18NKEYS.filter(
+            linkI18nkey => linkI18nkey !== 'contractAssistance:hkcJumpToLabel'
+          ),
+    [isCTATEnabled]
+  );
+
   // This handles when there's # in url and scroll to section
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -54,7 +69,7 @@ export const HelpAndKnowledgeHome = () => {
   useEffect(() => {
     let rafId: number | null = null;
 
-    const targetIds = JUMP_TO_LINKS_I18NKEYS.map(key =>
+    const targetIds = filteredJumpToLinks.map(key =>
       convertToLowercaseAndDashes(t(key))
     );
 
@@ -92,7 +107,7 @@ export const HelpAndKnowledgeHome = () => {
       if (rafId !== null) cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [t]);
+  }, [t, filteredJumpToLinks]);
 
   return (
     <MainContent>
@@ -114,7 +129,7 @@ export const HelpAndKnowledgeHome = () => {
               <p className="text-bold margin-0 text-no-wrap">{t('jumpTo')}:</p>
             </div>
             <div className="display-flex flex-wrap" style={{ rowGap: '12px' }}>
-              {JUMP_TO_LINKS_I18NKEYS.map((linkI18nkey, index) => (
+              {filteredJumpToLinks.map((linkI18nkey, index) => (
                 <div key={linkI18nkey}>
                   <UswdsReactLink
                     key={linkI18nkey}
@@ -123,7 +138,7 @@ export const HelpAndKnowledgeHome = () => {
                   >
                     {t(linkI18nkey)}
                   </UswdsReactLink>
-                  {index < JUMP_TO_LINKS_I18NKEYS.length - 1 && (
+                  {index < filteredJumpToLinks.length - 1 && (
                     <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
                   )}
                 </div>
@@ -148,13 +163,15 @@ export const HelpAndKnowledgeHome = () => {
         <ResourcesByCategory />
       </GridContainer>
 
-      <ContractAssistanceSection />
+      {isCTATEnabled && <ContractAssistanceSection />}
 
       <div className="bg-base-lightest padding-y-6 padding-bottom-8">
         <MilestoneLibrarySection />
+
         <GridContainer>
           <Divider className="margin-top-5 margin-bottom-4" />
         </GridContainer>
+
         <SolutionCategories />
       </div>
 
