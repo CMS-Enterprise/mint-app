@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Alert } from 'components/Alert';
 import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
-import { statuses } from 'i18n/en-US/ctatRequest';
+import { statuses } from 'i18n/en-US/helpAndKnowledge/contractAssistance';
 import {
   getColumnSortStatus,
   getHeaderSortIcon,
@@ -44,7 +44,7 @@ const ContractAssistanceTicketsTable = ({
   adminTab = 'all',
   onTicketClick
 }: ContractAssistanceTicketsTableProps) => {
-  const { t } = useTranslation('contractAssistance');
+  const { t } = useTranslation('contractAssistanceMisc');
   const isAdmin = variant === 'admin';
 
   const translationPrefix = isAdmin

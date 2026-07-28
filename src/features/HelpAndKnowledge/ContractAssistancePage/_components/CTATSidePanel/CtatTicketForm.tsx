@@ -52,7 +52,7 @@ import {
   helpNeededTypesPostAward,
   helpNeededTypesPreAward,
   requestUrgencies
-} from 'i18n/en-US/ctatRequest';
+} from 'i18n/en-US/helpAndKnowledge/contractAssistance';
 
 import SupportingDocumentsUpload from './SupportingDocumentsUpload';
 

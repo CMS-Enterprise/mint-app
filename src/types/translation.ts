@@ -18,6 +18,14 @@ import {
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
+  CtatcmmiDivisionOption,
+  CtatcmmiGroupOption,
+  CtatContractActivityType,
+  CtatContractType,
+  CtatHelpNeededType,
+  CtatRequestTranslation,
+  CtatRequestUrgency,
+  CtatStatus,
   CustomTimelineDateTranslation,
   CustomTimelineDateType,
   DataExchangeApproachStatus,
@@ -1639,4 +1647,41 @@ type TranslationKeyContactCategoryCustomGQL = Omit<
 
 export type TranslationKeyContactCategoryCustom = {
   [K in keyof TranslationKeyContactCategoryCustomGQL]: TranslationKeyContactCategoryCustomForm[K]; // FE form type
+};
+
+// CTAT Request - Change History purposes only
+export type TranslationCTATRequestForm = {
+  // Request form
+  requester: TranslationFieldProperties;
+  cmmiGroup: TranslationFieldPropertiesWithOptions<CtatcmmiGroupOption>;
+  cmmiGroupOther: TranslationFieldProperties;
+  cmmiDivision: TranslationFieldPropertiesWithOptions<CtatcmmiDivisionOption>;
+  cmmiDivisionOther: TranslationFieldProperties;
+  relatedMINTModels: TranslationFieldProperties;
+  contractActivityType: TranslationFieldPropertiesWithOptions<CtatContractActivityType>;
+  contractActivityTypeOther: TranslationFieldProperties;
+  contractName: TranslationFieldProperties;
+  contractNumber: TranslationFieldProperties;
+  contractType: TranslationFieldPropertiesWithOptions<CtatContractType>;
+  contractTypeOther: TranslationFieldProperties;
+  typeOfHelpNeeded: TranslationFieldPropertiesWithOptions<CtatHelpNeededType>;
+  typeOfHelpNeededOther: TranslationFieldProperties;
+  describeHelpNeeded: TranslationFieldProperties;
+  requestUrgency: TranslationFieldPropertiesWithOptions<CtatRequestUrgency>;
+  dateAssistanceNeededBy: TranslationFieldProperties;
+
+  // Ticket management form
+  status: TranslationFieldPropertiesWithOptions<CtatStatus>;
+  assignedAdmin: TranslationFieldProperties;
+  notes: TranslationFieldProperties;
+  resolution: TranslationFieldProperties;
+};
+
+type TranslationCTATRequestGQL = Omit<
+  CtatRequestTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationCTATRequest = {
+  [K in keyof TranslationCTATRequestGQL]: TranslationCTATRequestForm[K]; // FE form type
 };

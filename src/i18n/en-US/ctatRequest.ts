@@ -1,3 +1,5 @@
+import { TranslationCTATRequest } from 'types/translation';
+
 import {
   CtatcmmiDivisionOption,
   CtatcmmiGroupOption,
@@ -5,8 +7,11 @@ import {
   CtatContractType,
   CtatHelpNeededType,
   CtatRequestUrgency,
-  CtatStatus
-} from 'gql/generated/graphql';
+  CtatStatus,
+  TableName,
+  TranslationDataType,
+  TranslationFormType
+} from '../../gql/generated/graphql';
 
 type CtatRealGroupOption =
   | CtatcmmiGroupOption.BSG
@@ -268,16 +273,239 @@ export const divisionOptionsByGroup: Record<
   ]
 };
 
-const ctatRequest = {
-  cmmiGroups,
-  cmmiDivisions,
-  contractActivityTypes,
-  contractTypes,
-  helpNeededTypes,
-  helpNeededGroupLabels,
-  requestUrgencies,
-  statuses,
-  divisionOptionsByGroup
+const ctatRequest: TranslationCTATRequest = {
+  requester: {
+    gqlField: 'requester',
+    goField: 'Requester',
+    dbField: 'requester',
+    label: 'Requester',
+    sublabel:
+      'This field is automatically populated based on your MINT user account.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.01
+  },
+  cmmiGroup: {
+    gqlField: 'cmmiGroup',
+    goField: 'CmmiGroup',
+    dbField: 'cmmi_group',
+    label: 'CMMI group',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: cmmiGroups,
+    optionsRelatedInfo: {
+      OTHER: 'cmmiGroupOther'
+    },
+    order: 1.02
+  },
+  cmmiGroupOther: {
+    gqlField: 'cmmiGroupOther',
+    goField: 'CmmiGroupOther',
+    dbField: 'cmmi_group_other',
+    label: 'Describe other',
+    sublabel: 'Please describe your "Other" CMMI group.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.021
+  },
+  cmmiDivision: {
+    gqlField: 'cmmiDivision',
+    goField: 'CmmiDivision',
+    dbField: 'cmmi_division',
+    label: 'CMMI division',
+    sublabel: 'Select your CMMI group before selecting your division.',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: cmmiDivisions,
+    optionsRelatedInfo: {
+      OTHER: 'cmmiDivisionOther'
+    },
+    order: 1.03
+  },
+  cmmiDivisionOther: {
+    gqlField: 'cmmiDivisionOther',
+    goField: 'CmmiDivisionOther',
+    dbField: 'cmmi_division_other',
+    label: 'Describe other',
+    sublabel: 'Please describe your "Other" division.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.031
+  },
+  relatedMINTModels: {
+    gqlField: 'relatedMINTModels',
+    goField: 'RelatedMINTModels',
+    dbField: 'related_mint_models',
+    label: 'Model or demonstration',
+    sublabel:
+      'If applicable, select the model(s) associated with this assistance request. Only models listed in MINT will appear in this list. Select all that apply.',
+    multiSelectLabel: 'Selected models',
+    tableReference: TableName.CTAT_REQUEST_MODEL_PLAN_LINK,
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.MULTISELECT,
+    order: 1.04
+  },
+  contractActivityType: {
+    gqlField: 'contractActivityType',
+    goField: 'ContractActivityType',
+    dbField: 'contract_activity_type',
+    label: 'Contract activity type',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: contractActivityTypes,
+    optionsRelatedInfo: {
+      OTHER: 'contractActivityTypeOther'
+    },
+    order: 1.05
+  },
+  contractActivityTypeOther: {
+    gqlField: 'contractActivityTypeOther',
+    goField: 'ContractActivityTypeOther',
+    dbField: 'contract_activity_type_other',
+    label: 'Describe other',
+    sublabel: 'Please describe your "Other" contract activity type.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.051
+  },
+  contractName: {
+    gqlField: 'contractName',
+    goField: 'ContractName',
+    dbField: 'contract_name',
+    label: 'Contract name',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.06
+  },
+  contractNumber: {
+    gqlField: 'contractNumber',
+    goField: 'ContractNumber',
+    dbField: 'contract_number',
+    label: 'Contract number (if applicable)',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.07
+  },
+  contractType: {
+    gqlField: 'contractType',
+    goField: 'ContractType',
+    dbField: 'contract_type',
+    label: 'Contract type',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: contractTypes,
+    optionsRelatedInfo: {
+      OTHER: 'contractTypeOther'
+    },
+    order: 1.08
+  },
+  contractTypeOther: {
+    gqlField: 'contractTypeOther',
+    goField: 'ContractTypeOther',
+    dbField: 'contract_type_other',
+    label: 'Describe other',
+    sublabel: 'Please describe your "Other" contract type.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.081
+  },
+  typeOfHelpNeeded: {
+    gqlField: 'typeOfHelpNeeded',
+    goField: 'TypeOfHelpNeeded',
+    dbField: 'type_of_help_needed',
+    label: 'Type of help needed',
+    multiSelectLabel: 'Selected help types',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.MULTISELECT,
+    options: helpNeededTypes,
+    optionsRelatedInfo: {
+      [CtatHelpNeededType.OTHER]: 'typeOfHelpNeededOther'
+    },
+    order: 1.09
+  },
+  typeOfHelpNeededOther: {
+    gqlField: 'typeOfHelpNeededOther',
+    goField: 'TypeOfHelpNeededOther',
+    dbField: 'type_of_help_needed_other',
+    label: 'Please specify the type of help needed',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.091
+  },
+  describeHelpNeeded: {
+    gqlField: 'describeHelpNeeded',
+    goField: 'DescribeHelpNeeded',
+    dbField: 'describe_help_needed',
+    label: 'Describe the type of assistance you need.',
+    sublabel:
+      'Add additional detail about the help you need. If you selected "Other" in the previous question, please explain.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 1.1
+  },
+  requestUrgency: {
+    gqlField: 'requestUrgency',
+    goField: 'RequestUrgency',
+    dbField: 'request_urgency',
+    label: 'Request urgency',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: requestUrgencies,
+    order: 1.11
+  },
+  dateAssistanceNeededBy: {
+    gqlField: 'dateAssistanceNeededBy',
+    goField: 'DateAssistanceNeededBy',
+    dbField: 'date_assistance_needed_by',
+    label: 'When do you need assistance by?',
+    sublabel: 'mm/dd/yyyy',
+    dataType: TranslationDataType.DATE,
+    formType: TranslationFormType.DATEPICKER,
+    order: 1.12
+  },
+  status: {
+    gqlField: 'status',
+    goField: 'Status',
+    dbField: 'status',
+    label: 'Status',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: statuses,
+    order: 2.01
+  },
+  assignedAdmin: {
+    gqlField: 'assignedAdmin',
+    goField: 'AssignedAdmin',
+    dbField: 'assigned_admin',
+    label: 'Assigned admin team member',
+    sublabel:
+      'Look up the admin team member you wish to assign this ticket to. You may look up by name or EUA ID.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 2.02
+  },
+  notes: {
+    gqlField: 'notes',
+    goField: 'Notes',
+    dbField: 'notes',
+    label: 'Progress notes',
+    sublabel:
+      'Add any notes about your progress on this ticket. Once saved, these notes are viewable by the requester, who will receive an email update alerting them to your changes.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.03
+  },
+  resolution: {
+    gqlField: 'resolution',
+    goField: 'Resolution',
+    dbField: 'resolution',
+    label: 'Resolution',
+    sublabel:
+      'Document the final outcome of this ticket. Once saved, this resolution is viewable by the requester, who will receive an email update alerting them to the new resolution.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 2.04
+  }
 };
 
 export default ctatRequest;

@@ -14,7 +14,7 @@ type UserSubmittedTicketsSectionProps = {
 const UserSubmittedTicketsSection = ({
   tickets
 }: UserSubmittedTicketsSectionProps) => {
-  const { t } = useTranslation('contractAssistance');
+  const { t } = useTranslation('contractAssistanceMisc');
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();

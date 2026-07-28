@@ -6,7 +6,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
 const ContractAssistanceSection = () => {
-  const { t } = useTranslation('contractAssistance');
+  const { t } = useTranslation('contractAssistanceMisc');
 
   return (
     <div

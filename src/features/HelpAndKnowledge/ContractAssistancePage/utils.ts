@@ -8,7 +8,7 @@ import {
 import {
   helpNeededTypeDisplayOverrides,
   helpNeededTypes
-} from 'i18n/en-US/ctatRequest';
+} from 'i18n/en-US/helpAndKnowledge/contractAssistance';
 import { formatDateLocal } from 'utils/date';
 
 import { ADMIN_TABS, AdminTab, ContractAssistanceTicket } from './constants';

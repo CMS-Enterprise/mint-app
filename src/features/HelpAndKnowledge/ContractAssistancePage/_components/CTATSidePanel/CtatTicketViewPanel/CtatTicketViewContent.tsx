@@ -29,7 +29,7 @@ import {
   contractTypes,
   requestUrgencies,
   statuses
-} from 'i18n/en-US/ctatRequest';
+} from 'i18n/en-US/helpAndKnowledge/contractAssistance';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 

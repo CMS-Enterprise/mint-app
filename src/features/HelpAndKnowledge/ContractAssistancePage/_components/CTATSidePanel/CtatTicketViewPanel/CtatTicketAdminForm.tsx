@@ -26,7 +26,7 @@ import toastSuccess from 'components/ToastSuccess';
 import { getStatusAlertBody } from 'contexts/ErrorContext';
 import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 import { OktaUserType } from 'hooks/useOktaUserLookup';
-import { statuses } from 'i18n/en-US/ctatRequest';
+import { statuses } from 'i18n/en-US/helpAndKnowledge/contractAssistance';
 import dirtyInput from 'utils/formUtil';
 
 const STATUS_OPTIONS = [

@@ -1,0 +1,40 @@
+"""
+Represents CTAT request translation data
+"""
+type CTATRequestTranslation {
+  # Request form
+  requester: TranslationField! @goTag(key: "db", value: "requester")
+  cmmiGroup: TranslationFieldWithOptions! @goTag(key: "db", value: "cmmi_group")
+  cmmiGroupOther: TranslationField! @goTag(key: "db", value: "cmmi_group_other")
+  cmmiDivision: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "cmmi_division")
+  cmmiDivisionOther: TranslationField!
+    @goTag(key: "db", value: "cmmi_division_other")
+  relatedMINTModels: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
+  contractActivityType: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "contract_activity_type")
+  contractActivityTypeOther: TranslationField!
+    @goTag(key: "db", value: "contract_activity_type_other")
+  contractName: TranslationField! @goTag(key: "db", value: "contract_name")
+  contractNumber: TranslationField! @goTag(key: "db", value: "contract_number")
+  contractType: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "contract_type")
+  contractTypeOther: TranslationField!
+    @goTag(key: "db", value: "contract_type_other")
+  typeOfHelpNeeded: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "type_of_help_needed")
+  typeOfHelpNeededOther: TranslationField!
+    @goTag(key: "db", value: "type_of_help_needed_other")
+  describeHelpNeeded: TranslationField!
+    @goTag(key: "db", value: "describe_help_needed")
+  requestUrgency: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "request_urgency")
+  dateAssistanceNeededBy: TranslationField!
+    @goTag(key: "db", value: "date_assistance_needed_by")
+
+  # Ticket management form
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  assignedAdmin: TranslationField! @goTag(key: "db", value: "assigned_admin")
+  notes: TranslationField! @goTag(key: "db", value: "notes")
+  resolution: TranslationField! @goTag(key: "db", value: "resolution")
+}

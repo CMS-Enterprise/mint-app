@@ -21,14 +21,14 @@ import MilestoneLibrarySection from './MilestoneLibrarySection';
 
 const JUMP_TO_LINKS_I18NKEYS = [
   'helpResourcesAndLinks',
-  'contractAssistance:hkcJumpToLabel',
+  'contractAssistanceMisc:hkcJumpToLabel',
   'milestoneLibrary.hkcJumpToLabel',
   'operationalSolutionsAndITSystems',
   'keyContactDirectory.jumpToLabel'
 ];
 
 export const HelpAndKnowledgeHome = () => {
-  const { t } = useTranslation(['helpAndKnowledge', 'contractAssistance']);
+  const { t } = useTranslation('helpAndKnowledge');
 
   const { hash } = useLocation();
 

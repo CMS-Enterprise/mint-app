@@ -8,7 +8,7 @@ import {
   helpNeededTypes,
   requestUrgencies,
   statuses
-} from 'i18n/en-US/ctatRequest';
+} from 'i18n/en-US/helpAndKnowledge/contractAssistance';
 import { formatDateUtc } from 'utils/date';
 
 type CTATCSVField = {
