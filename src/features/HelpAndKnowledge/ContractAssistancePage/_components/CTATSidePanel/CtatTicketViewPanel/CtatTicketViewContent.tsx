@@ -137,7 +137,10 @@ const CtatTicketViewContent = ({
   setIsDirty,
   onSubmitted
 }: CtatTicketViewContentProps) => {
-  const { t } = useTranslation('contractAssistance');
+  const { t: contractAssistanceMiscT } = useTranslation(
+    'contractAssistanceMisc'
+  );
+
   const isClosed = ticket.status === CtatStatus.CLOSED;
 
   const assignedMemberDisplay = formatUserDisplay(
@@ -159,7 +162,7 @@ const CtatTicketViewContent = ({
         {ticket.humanReadableID}
       </PageHeading>
       <p className="margin-top-0 margin-bottom-4">
-        {t('ctatViewPanel.submittedOn', {
+        {contractAssistanceMiscT('ctatViewPanel.submittedOn', {
           date: formatDateLocal(ticket.createdDts, 'MM/dd/yyyy')
         })}
       </p>
@@ -187,42 +190,48 @@ const CtatTicketViewContent = ({
             headingLevel="h3"
             className="margin-top-0 margin-bottom-3"
           >
-            {t('ctatViewPanel.progressHeading')}
+            {contractAssistanceMiscT('ctatViewPanel.progressHeading')}
           </PageHeading>
 
           <DetailField
-            label={t('table.status')}
+            label={contractAssistanceMiscT('table.status')}
             definition={ticket.status ? statuses[ticket.status] : ''}
           />
 
           <DetailField
-            label={t('ctatViewPanel.assignedMember')}
+            label={contractAssistanceMiscT('ctatViewPanel.assignedMember')}
             definition={
               assignedMemberDisplay || (
-                <EmptyValue>{t('ctatViewPanel.empty.notAssigned')}</EmptyValue>
+                <EmptyValue>
+                  {contractAssistanceMiscT('ctatViewPanel.empty.notAssigned')}
+                </EmptyValue>
               )
             }
           />
 
           <DetailField
-            label={t('ctatViewPanel.progressNotes')}
+            label={contractAssistanceMiscT('ctatViewPanel.progressNotes')}
             definition={
               ticket.notes?.trim() ? (
                 ticket.notes
               ) : (
-                <EmptyValue>{t('ctatViewPanel.empty.noNotes')}</EmptyValue>
+                <EmptyValue>
+                  {contractAssistanceMiscT('ctatViewPanel.empty.noNotes')}
+                </EmptyValue>
               )
             }
           />
 
           <DetailField
-            label={t('ctatViewPanel.resolution')}
+            label={contractAssistanceMiscT('ctatViewPanel.resolution')}
             className="margin-bottom-0"
             definition={
               ticket.resolution?.trim() ? (
                 ticket.resolution
               ) : (
-                <EmptyValue>{t('ctatViewPanel.empty.noResolution')}</EmptyValue>
+                <EmptyValue>
+                  {contractAssistanceMiscT('ctatViewPanel.empty.noResolution')}
+                </EmptyValue>
               )
             }
           />
@@ -230,32 +239,38 @@ const CtatTicketViewContent = ({
       )}
 
       <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
-        {t('ctatViewPanel.ticketDetailsHeading')}
+        {contractAssistanceMiscT('ctatViewPanel.ticketDetailsHeading')}
       </PageHeading>
 
       <DetailField
-        label={t('ctatSidePanel.fields.requester.label')}
+        label={contractAssistanceMiscT('ctatSidePanel.fields.requester.label')}
         definition={requesterDisplay}
       />
 
       <DetailField
-        label={t('ctatSidePanel.fields.cmmiGroup.label')}
+        label={contractAssistanceMiscT('ctatSidePanel.fields.cmmiGroup.label')}
         definition={ticket.cmmiGroup ? cmmiGroups[ticket.cmmiGroup] : ''}
       />
 
       {ticket.cmmiGroup === CtatcmmiGroupOption.OTHER && (
         <DetailField
-          label={t('ctatSidePanel.fields.cmmiGroup.otherLabel')}
+          label={contractAssistanceMiscT(
+            'ctatSidePanel.fields.cmmiGroup.otherLabel'
+          )}
           definition={
             ticket.cmmiGroupOther?.trim() || (
-              <EmptyValue>{t('ctatViewPanel.empty.noContractName')}</EmptyValue>
+              <EmptyValue>
+                {contractAssistanceMiscT('ctatViewPanel.empty.noContractName')}
+              </EmptyValue>
             )
           }
         />
       )}
 
       <DetailField
-        label={t('ctatSidePanel.fields.cmmiDivision.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.cmmiDivision.label'
+        )}
         definition={
           ticket.cmmiDivision ? cmmiDivisions[ticket.cmmiDivision] : ''
         }
@@ -263,17 +278,23 @@ const CtatTicketViewContent = ({
 
       {ticket.cmmiDivision === CtatcmmiDivisionOption.OTHER && (
         <DetailField
-          label={t('ctatSidePanel.fields.cmmiDivision.otherLabel')}
+          label={contractAssistanceMiscT(
+            'ctatSidePanel.fields.cmmiDivision.otherLabel'
+          )}
           definition={
             ticket.cmmiDivisionOther?.trim() || (
-              <EmptyValue>{t('ctatViewPanel.empty.noContractName')}</EmptyValue>
+              <EmptyValue>
+                {contractAssistanceMiscT('ctatViewPanel.empty.noContractName')}
+              </EmptyValue>
             )
           }
         />
       )}
 
       <DetailField
-        label={t('ctatSidePanel.fields.modelOrDemonstration.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.modelOrDemonstration.label'
+        )}
         definition={
           ticket.relatedMINTModels?.length ? (
             <ul className="margin-top-0 margin-bottom-0 padding-left-3">
@@ -287,26 +308,32 @@ const CtatTicketViewContent = ({
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {t('ctatViewPanel.viewModelInMint')}
+                      {contractAssistanceMiscT('ctatViewPanel.viewModelInMint')}
                     </UswdsReactLink>
                   </div>
                 </li>
               ))}
             </ul>
           ) : (
-            <EmptyValue>{t('ctatViewPanel.empty.noModel')}</EmptyValue>
+            <EmptyValue>
+              {contractAssistanceMiscT('ctatViewPanel.empty.noModel')}
+            </EmptyValue>
           )
         }
       />
 
       <DetailField
-        label={t('ctatSidePanel.fields.contractActivityType.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.contractActivityType.label'
+        )}
         definition={
           ticket.contractActivityType ? (
             contractActivityTypes[ticket.contractActivityType]
           ) : (
             <EmptyValue>
-              {t('ctatViewPanel.empty.noContractActivityType')}
+              {contractAssistanceMiscT(
+                'ctatViewPanel.empty.noContractActivityType'
+              )}
             </EmptyValue>
           )
         }
@@ -314,11 +341,15 @@ const CtatTicketViewContent = ({
 
       {ticket.contractActivityType === CtatContractActivityType.OTHER && (
         <DetailField
-          label={t('ctatSidePanel.fields.contractActivityType.otherLabel')}
+          label={contractAssistanceMiscT(
+            'ctatSidePanel.fields.contractActivityType.otherLabel'
+          )}
           definition={
             ticket.contractActivityTypeOther?.trim() || (
               <EmptyValue>
-                {t('ctatViewPanel.empty.noContractActivityType')}
+                {contractAssistanceMiscT(
+                  'ctatViewPanel.empty.noContractActivityType'
+                )}
               </EmptyValue>
             )
           }
@@ -326,74 +357,100 @@ const CtatTicketViewContent = ({
       )}
 
       <DetailField
-        label={t('ctatSidePanel.fields.contractName.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.contractName.label'
+        )}
         definition={
           ticket.contractName?.trim() ? (
             ticket.contractName
           ) : (
-            <EmptyValue>{t('ctatViewPanel.empty.noContractName')}</EmptyValue>
+            <EmptyValue>
+              {contractAssistanceMiscT('ctatViewPanel.empty.noContractName')}
+            </EmptyValue>
           )
         }
       />
 
       <DetailField
-        label={t('ctatSidePanel.fields.contractNumber.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.contractNumber.label'
+        )}
         definition={
           ticket.contractNumber?.trim() ? (
             ticket.contractNumber
           ) : (
-            <EmptyValue>{t('ctatViewPanel.empty.noContractNumber')}</EmptyValue>
+            <EmptyValue>
+              {contractAssistanceMiscT('ctatViewPanel.empty.noContractNumber')}
+            </EmptyValue>
           )
         }
       />
 
       <DetailField
-        label={t('ctatSidePanel.fields.contractType.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.contractType.label'
+        )}
         definition={
           ticket.contractType ? (
             contractTypes[ticket.contractType]
           ) : (
-            <EmptyValue>{t('ctatViewPanel.empty.noContractType')}</EmptyValue>
+            <EmptyValue>
+              {contractAssistanceMiscT('ctatViewPanel.empty.noContractType')}
+            </EmptyValue>
           )
         }
       />
 
       {ticket.contractType === CtatContractType.OTHER && (
         <DetailField
-          label={t('ctatSidePanel.fields.contractType.otherLabel')}
+          label={contractAssistanceMiscT(
+            'ctatSidePanel.fields.contractType.otherLabel'
+          )}
           definition={
             ticket.contractTypeOther?.trim() || (
-              <EmptyValue>{t('ctatViewPanel.empty.noContractType')}</EmptyValue>
+              <EmptyValue>
+                {contractAssistanceMiscT('ctatViewPanel.empty.noContractType')}
+              </EmptyValue>
             )
           }
         />
       )}
 
       <DetailField
-        label={t('ctatSidePanel.fields.helpNeededType.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.helpNeededType.label'
+        )}
         definition={helpTypesDisplay}
       />
 
       <DetailField
-        label={t('ctatSidePanel.fields.assistanceDescription.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.assistanceDescription.label'
+        )}
         definition={
           ticket.describeHelpNeeded?.trim() ? (
             ticket.describeHelpNeeded
           ) : (
-            <EmptyValue>{t('ctatViewPanel.empty.noNotes')}</EmptyValue>
+            <EmptyValue>
+              {contractAssistanceMiscT('ctatViewPanel.empty.noNotes')}
+            </EmptyValue>
           )
         }
       />
 
       <DetailField
-        label={t('ctatSidePanel.fields.requestUrgency.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.requestUrgency.label'
+        )}
         definition={
           ticket.requestUrgency ? requestUrgencies[ticket.requestUrgency] : ''
         }
       />
 
       <DetailField
-        label={t('ctatSidePanel.fields.assistanceNeededBy.label')}
+        label={contractAssistanceMiscT(
+          'ctatSidePanel.fields.assistanceNeededBy.label'
+        )}
         definition={
           ticket.dateAssistanceNeededBy
             ? formatDateLocal(ticket.dateAssistanceNeededBy, 'MM/dd/yyyy')
@@ -402,7 +459,7 @@ const CtatTicketViewContent = ({
       />
 
       <DetailField
-        label={t('ctatViewPanel.uploadedDocuments')}
+        label={contractAssistanceMiscT('ctatViewPanel.uploadedDocuments')}
         definition={
           ticket.supportingDocuments?.length ? (
             <ul className="margin-top-0 margin-bottom-0 padding-left-0 usa-list usa-list--unstyled">
@@ -413,7 +470,9 @@ const CtatTicketViewContent = ({
               ))}
             </ul>
           ) : (
-            <EmptyValue>{t('ctatViewPanel.empty.noDocuments')}</EmptyValue>
+            <EmptyValue>
+              {contractAssistanceMiscT('ctatViewPanel.empty.noDocuments')}
+            </EmptyValue>
           )
         }
       />
@@ -421,17 +480,33 @@ const CtatTicketViewContent = ({
       {!isClosed && !isAdmin && (
         <SummaryBox>
           <SummaryBoxHeading headingLevel="h3" className="margin-bottom-1">
-            {t('ctatSidePanel.whatHappensNext.heading')}
+            {contractAssistanceMiscT('ctatSidePanel.whatHappensNext.heading')}
           </SummaryBoxHeading>
           <SummaryBoxContent>
             <p className="margin-top-0 margin-bottom-1">
-              {t('ctatSidePanel.whatHappensNext.intro')}
+              {contractAssistanceMiscT('ctatSidePanel.whatHappensNext.intro')}
             </p>
             <ul className="margin-top-0 margin-bottom-0">
-              <li>{t('ctatSidePanel.whatHappensNext.bullet1')}</li>
-              <li>{t('ctatSidePanel.whatHappensNext.bullet2')}</li>
-              <li>{t('ctatSidePanel.whatHappensNext.bullet3')}</li>
-              <li>{t('ctatSidePanel.whatHappensNext.bullet4')}</li>
+              <li>
+                {contractAssistanceMiscT(
+                  'ctatSidePanel.whatHappensNext.bullet1'
+                )}
+              </li>
+              <li>
+                {contractAssistanceMiscT(
+                  'ctatSidePanel.whatHappensNext.bullet2'
+                )}
+              </li>
+              <li>
+                {contractAssistanceMiscT(
+                  'ctatSidePanel.whatHappensNext.bullet3'
+                )}
+              </li>
+              <li>
+                {contractAssistanceMiscT(
+                  'ctatSidePanel.whatHappensNext.bullet4'
+                )}
+              </li>
             </ul>
           </SummaryBoxContent>
         </SummaryBox>

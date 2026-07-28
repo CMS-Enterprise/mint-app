@@ -15,7 +15,9 @@ const CtatSidePanel = ({
   isOpen: boolean;
   closeModal: () => void;
 }) => {
-  const { t } = useTranslation('contractAssistance');
+  const { t: contractAssistanceMiscT } = useTranslation(
+    'contractAssistanceMisc'
+  );
 
   const submitted = useRef<boolean>(false);
 
@@ -50,7 +52,7 @@ const CtatSidePanel = ({
         disabled={disabledSubmitBtn}
         className="margin-right-3 margin-top-0"
       >
-        {t('ctatSidePanel.submitTicket')}
+        {contractAssistanceMiscT('ctatSidePanel.submitTicket')}
       </Button>
       <Button
         type="button"
@@ -58,7 +60,7 @@ const CtatSidePanel = ({
         unstyled
         onClick={closePanel}
       >
-        {t('ctatSidePanel.cancel')}
+        {contractAssistanceMiscT('ctatSidePanel.cancel')}
       </Button>
     </div>
   );
@@ -68,9 +70,9 @@ const CtatSidePanel = ({
       <Sidepanel
         isOpen={isOpen}
         closeModal={closePanel}
-        ariaLabel={t('ctatSidePanel.modalHeading')}
+        ariaLabel={contractAssistanceMiscT('ctatSidePanel.modalHeading')}
         testid="ctat-sidepanel"
-        modalHeading={t('ctatSidePanel.modalHeading')}
+        modalHeading={contractAssistanceMiscT('ctatSidePanel.modalHeading')}
         footer={footer}
         fixed
       >
@@ -92,11 +94,11 @@ const CtatSidePanel = ({
           headingLevel="h3"
           className="margin-top-neg-2 margin-bottom-1"
         >
-          {t('ctatSidePanel.leaveConfirm.heading')}
+          {contractAssistanceMiscT('ctatSidePanel.leaveConfirm.heading')}
         </PageHeading>
 
         <p className="margin-top-2 margin-bottom-3">
-          {t('ctatSidePanel.leaveConfirm.description')}
+          {contractAssistanceMiscT('ctatSidePanel.leaveConfirm.description')}
         </p>
 
         <Button
@@ -108,11 +110,11 @@ const CtatSidePanel = ({
             handleCloseModal();
           }}
         >
-          {t('ctatSidePanel.leaveConfirm.confirm')}
+          {contractAssistanceMiscT('ctatSidePanel.leaveConfirm.confirm')}
         </Button>
 
         <Button type="button" unstyled onClick={() => setLeavePage(false)}>
-          {t('ctatSidePanel.leaveConfirm.dontLeave')}
+          {contractAssistanceMiscT('ctatSidePanel.leaveConfirm.dontLeave')}
         </Button>
       </Modal>
     </>

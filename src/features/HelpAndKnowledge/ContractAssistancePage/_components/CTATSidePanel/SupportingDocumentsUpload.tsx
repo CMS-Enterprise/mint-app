@@ -18,7 +18,9 @@ const isSameFile = (left: File, right: File) =>
 const SupportingDocumentsUpload = ({
   control
 }: SupportingDocumentsUploadProps) => {
-  const { t } = useTranslation('contractAssistance');
+  const { t: contractAssistanceMiscT } = useTranslation(
+    'contractAssistanceMisc'
+  );
 
   return (
     <Controller
@@ -50,7 +52,9 @@ const SupportingDocumentsUpload = ({
             onChange={addFiles}
             onBlur={() => null}
             inputProps={{
-              'aria-label': t('ctatSidePanel.fields.supportingDocuments.label')
+              'aria-label': contractAssistanceMiscT(
+                'ctatSidePanel.fields.supportingDocuments.label'
+              )
             }}
           />
         );

@@ -82,7 +82,9 @@ const CtatTicketAdminForm = ({
   setIsDirty,
   onSubmitted
 }: CtatTicketAdminFormProps) => {
-  const { t } = useTranslation('contractAssistance');
+  const { t: contractAssistanceMiscT } = useTranslation(
+    'contractAssistanceMisc'
+  );
 
   const initialValues = useMemo(() => buildInitialValues(ticket), [ticket]);
   const [selectedAdmin, setSelectedAdmin] = useState<OktaUserType | null>(() =>
@@ -126,7 +128,7 @@ const CtatTicketAdminForm = ({
     setCurrentErrorMeta({
       overrideMessage: getStatusAlertBody({
         type: 'error',
-        message: t('ctatAdminPanel.error')
+        message: contractAssistanceMiscT('ctatAdminPanel.error')
       })
     });
 
@@ -171,7 +173,7 @@ const CtatTicketAdminForm = ({
             headingLevel="h3"
             className="margin-top-0 margin-bottom-3"
           >
-            {t('ctatViewPanel.progressHeading')}
+            {contractAssistanceMiscT('ctatViewPanel.progressHeading')}
           </PageHeading>
 
           <Fieldset className="usa-fieldset margin-top-0 margin-bottom-0">
@@ -184,7 +186,7 @@ const CtatTicketAdminForm = ({
                     htmlFor="ctat-admin-status"
                     className="maxw-none text-bold"
                   >
-                    {t('table.status')}
+                    {contractAssistanceMiscT('table.status')}
                   </Label>
                   <Select
                     {...field}
@@ -215,13 +217,17 @@ const CtatTicketAdminForm = ({
                     id="label-ctat-admin-assigned-member"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatAdminPanel.assignedMember.label')}
+                    {contractAssistanceMiscT(
+                      'ctatAdminPanel.assignedMember.label'
+                    )}
                   </Label>
                   <HelpText
                     id="hint-ctat-admin-assigned-member"
                     className="margin-top-05"
                   >
-                    {t('ctatAdminPanel.assignedMember.hint')}
+                    {contractAssistanceMiscT(
+                      'ctatAdminPanel.assignedMember.hint'
+                    )}
                   </HelpText>
                   <OktaUserSelect
                     id="ctat-admin-assigned-member"
@@ -249,10 +255,12 @@ const CtatTicketAdminForm = ({
                     htmlFor="ctat-admin-progress-notes"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatViewPanel.progressNotes')}
+                    {contractAssistanceMiscT('ctatViewPanel.progressNotes')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {t('ctatAdminPanel.progressNotes.hint')}
+                    {contractAssistanceMiscT(
+                      'ctatAdminPanel.progressNotes.hint'
+                    )}
                   </HelpText>
                   <TextAreaField
                     {...field}
@@ -274,10 +282,10 @@ const CtatTicketAdminForm = ({
                     htmlFor="ctat-admin-resolution"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatViewPanel.resolution')}
+                    {contractAssistanceMiscT('ctatViewPanel.resolution')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {t('ctatAdminPanel.resolution.hint')}
+                    {contractAssistanceMiscT('ctatAdminPanel.resolution.hint')}
                   </HelpText>
                   <TextAreaField
                     {...field}
