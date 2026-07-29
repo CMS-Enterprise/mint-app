@@ -10,6 +10,7 @@ export default gql(/* GraphQL */ `
         modelType
         modelTypeOther
       }
+
       timeline {
         id
         completeICIP
@@ -21,6 +22,7 @@ export default gql(/* GraphQL */ `
         performancePeriodStarts
         performancePeriodEnds
         highLevelNote
+        customDatesNote
         wrapUpEnds
         readyForReviewByUserAccount {
           ...ReadyForReviewUserFragment
@@ -29,6 +31,14 @@ export default gql(/* GraphQL */ `
         createdDts
         modifiedDts
         status
+        customTimelineDates {
+          id
+          title
+          description
+          dateType
+          startDate
+          endDate
+        }
       }
     }
   }

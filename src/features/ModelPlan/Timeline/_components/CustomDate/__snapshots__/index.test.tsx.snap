@@ -1,0 +1,219 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CustomDate > matches the snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content padding-top-2"
+    data-testid="model-plan-timeline-custom-date"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="margin-bottom-5"
+      >
+        <h2
+          aria-live="polite"
+          class="mint-h1 margin-bottom-0"
+          tabindex="-1"
+        >
+          Add a date
+        </h2>
+        <p
+          class="mint-body-large text-base-dark margin-top-0 margin-bottom-2"
+        >
+          Add a custom date or date range to your model timeline.
+        </p>
+        <div>
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              aria-label="back"
+              class="usa-icon deep-underline"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Don’t add a date and return to model timeline
+          </button>
+        </div>
+      </div>
+      <p
+        class="text-base margin-top-0 margin-bottom-3"
+      >
+        Fields marked with an asterisk ( 
+        <span
+          class="text-error"
+        >
+          *
+        </span>
+         ) are required.
+      </p>
+      <div
+        class="tablet:grid-col-9 desktop:grid-col-9"
+        data-testid="grid"
+      >
+        <form
+          class="usa-form maxw-none padding-bottom-6"
+          data-testid="custom-date-form"
+          id="custom-date-form"
+        >
+          <fieldset
+            class="usa-fieldset"
+            data-testid="fieldset"
+          >
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label maxw-none margin-bottom-0 text-bold"
+                data-testid="label"
+                for="date-title"
+              >
+                Date title 
+                <abbr
+                  class="usa-hint usa-hint--required"
+                  title="required"
+                >
+                  *
+                </abbr>
+              </label>
+              <input
+                class="usa-input"
+                data-testid="date-title"
+                id="date-title"
+                name="title"
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-3"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label maxw-none margin-bottom-0 text-bold"
+                data-testid="label"
+                for="date-description"
+              >
+                Date description
+              </label>
+              <textarea
+                aria-labelledby="label-date-description hint-date-description"
+                class="usa-textarea"
+                data-testid="date-description"
+                id="date-description"
+                name="description"
+              />
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-bold maxw-none margin-bottom-0"
+                data-testid="label"
+                for="SINGLE"
+              >
+                Date type 
+                <abbr
+                  class="usa-hint usa-hint--required"
+                  title="required"
+                >
+                  *
+                </abbr>
+              </label>
+              <div
+                class="usa-radio margin-right-1"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  data-testid="SINGLE"
+                  id="SINGLE"
+                  name="dateType"
+                  type="radio"
+                  value="SINGLE"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="SINGLE"
+                >
+                  Single date
+                </label>
+              </div>
+              <div
+                class="usa-radio margin-right-1"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  data-testid="RANGE"
+                  id="RANGE"
+                  name="dateType"
+                  type="radio"
+                  value="RANGE"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="RANGE"
+                >
+                  Date range
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <button
+            class="usa-button usa-button margin-top-4 margin-bottom-2"
+            data-testid="button"
+            disabled=""
+            type="submit"
+          >
+            Save date
+          </button>
+          <div>
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                aria-label="back"
+                class="usa-icon deep-underline"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              Don’t add a date and return to model timeline
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

@@ -193,6 +193,30 @@ func (suite *TAuditSuite) createMTOMilestone(modelPlanID uuid.UUID, name string,
 	return retSol
 }
 
+// createCustomTimelineDate creates a custom timeline date using the store. It is just for testing
+func (suite *TAuditSuite) createCustomTimelineDate(modelPlanID uuid.UUID, title string, preHooks ...func(*models.CustomTimelineDate)) *models.CustomTimelineDate {
+
+	customTimelineDateToCreate := models.NewCustomTimelineDate(suite.testConfigs.Principal.UserAccount.ID, modelPlanID)
+	customTimelineDateToCreate.Title = title
+	customTimelineDateToCreate.DateType = models.CustomTimelineDateTypeSingle
+	customTimelineDateToCreate.StartDate = time.Now().UTC()
+	for _, preHook := range preHooks {
+		preHook(customTimelineDateToCreate)
+	}
+	retCustomTimelineDate, err := storage.CustomTimelineDateCreate(suite.testConfigs.Store, customTimelineDateToCreate)
+	suite.NoError(err)
+	return retCustomTimelineDate
+}
+
+// deleteCustomTimelineDate deletes a custom timeline date using the store. It is just for testing
+func (suite *TAuditSuite) deleteCustomTimelineDate(customTimelineDateID uuid.UUID) {
+	err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+		_, err := storage.CustomTimelineDateDelete(tx, suite.testConfigs.Principal.UserAccount.ID, customTimelineDateID)
+		return err
+	})
+	suite.NoError(err)
+}
+
 // createMTOCategory creates an MTO Category using the store. It is just for testing
 func (suite *TAuditSuite) createMTOCategory(modelPlanID uuid.UUID, name string, parentCategoryID *uuid.UUID, preHooks ...func(*models.MTOCategory)) *models.MTOCategory {
 

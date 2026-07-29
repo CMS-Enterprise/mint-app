@@ -41,6 +41,7 @@ import collaborationArea from './modelPlan/collaborationArea';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
 import crs from './modelPlan/crs';
 import crtdlsMisc from './modelPlan/crtdlsMisc';
+import { customDate, customDateMisc } from './modelPlan/customDate';
 import dataExchangeApproach, {
   dataExchangeApproachMisc
 } from './modelPlan/dataExchangeApproach';
@@ -175,6 +176,8 @@ const enUS = {
   solutions,
   timeline,
   timelineMisc,
+  customDate,
+  customDateMisc,
   additionalQuestionnaires,
   operationalSolutionSubtasks,
   opSolutionsMisc,

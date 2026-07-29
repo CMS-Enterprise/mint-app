@@ -305,6 +305,30 @@ type ComplexityRoot struct {
 		Notifications           func(childComplexity int) int
 	}
 
+	CustomTimelineDate struct {
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		DateType              func(childComplexity int) int
+		Description           func(childComplexity int) int
+		EndDate               func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		StartDate             func(childComplexity int) int
+		Title                 func(childComplexity int) int
+	}
+
+	CustomTimelineDateTranslation struct {
+		DateType    func(childComplexity int) int
+		Description func(childComplexity int) int
+		EndDate     func(childComplexity int) int
+		StartDate   func(childComplexity int) int
+		Title       func(childComplexity int) int
+	}
+
 	DailyDigestCompleteActivityMeta struct {
 		AnalyzedAudits func(childComplexity int) int
 		Date           func(childComplexity int) int
@@ -1098,6 +1122,7 @@ type ComplexityRoot struct {
 		AgreeToNda                            func(childComplexity int, agree bool) int
 		ArchiveMTOCommonMilestone             func(childComplexity int, id uuid.UUID) int
 		CreateCTATRequest                     func(childComplexity int, input model.CTATRequestInput) int
+		CreateCustomTimelineDate              func(childComplexity int, input model.CustomTimelineDateCreateInput) int
 		CreateDiscussionReply                 func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateKeyContactCategory              func(childComplexity int, name string) int
 		CreateKeyContactMailbox               func(childComplexity int, mailboxTitle string, mailboxAddress string, subjectArea string, subjectCategoryID uuid.UUID) int
@@ -1120,6 +1145,7 @@ type ComplexityRoot struct {
 		CreatePlanTdl                         func(childComplexity int, input model.PlanTDLCreateInput) int
 		CreateStandardCategories              func(childComplexity int, modelPlanID uuid.UUID) int
 		CreateTemplateToMto                   func(childComplexity int, modelPlanID uuid.UUID, templateID uuid.UUID) int
+		DeleteCustomTimelineDate              func(childComplexity int, id uuid.UUID) int
 		DeleteKeyContact                      func(childComplexity int, id uuid.UUID) int
 		DeleteKeyContactCategory              func(childComplexity int, id uuid.UUID) int
 		DeleteMTOCategory                     func(childComplexity int, id uuid.UUID) int
@@ -1147,6 +1173,7 @@ type ComplexityRoot struct {
 		ShareModelPlan                        func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, modelShareSection *models.ModelShareSection, usernames []string, optionalMessage *string) int
 		UnlockAllLockableSections             func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockLockableSection                 func(childComplexity int, modelPlanID uuid.UUID, section models.LockableSection) int
+		UpdateCustomTimelineDate              func(childComplexity int, id uuid.UUID, changes map[string]any) int
 		UpdateExistingModelLinks              func(childComplexity int, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) int
 		UpdateIDDOCQuestionnaire              func(childComplexity int, id uuid.UUID, changes map[string]any) int
 		UpdateKeyContact                      func(childComplexity int, id uuid.UUID, changes map[string]any) int
@@ -2292,6 +2319,8 @@ type ComplexityRoot struct {
 		CreatedBy                      func(childComplexity int) int
 		CreatedByUserAccount           func(childComplexity int) int
 		CreatedDts                     func(childComplexity int) int
+		CustomDatesNote                func(childComplexity int) int
+		CustomTimelineDates            func(childComplexity int) int
 		DatesAddedCount                func(childComplexity int) int
 		HighLevelNote                  func(childComplexity int) int
 		ID                             func(childComplexity int) int
@@ -2319,6 +2348,7 @@ type ComplexityRoot struct {
 		ClearanceEnds           func(childComplexity int) int
 		ClearanceStarts         func(childComplexity int) int
 		CompleteIcip            func(childComplexity int) int
+		CustomDatesNote         func(childComplexity int) int
 		HighLevelNote           func(childComplexity int) int
 		PerformancePeriodEnds   func(childComplexity int) int
 		PerformancePeriodStarts func(childComplexity int) int
@@ -2344,6 +2374,7 @@ type ComplexityRoot struct {
 		CtatRequests                      func(childComplexity int) int
 		CtatRequestsRequester             func(childComplexity int) int
 		CurrentUser                       func(childComplexity int) int
+		CustomTimelineDate                func(childComplexity int, id uuid.UUID) int
 		ExistingModelCollection           func(childComplexity int) int
 		ExistingModelLink                 func(childComplexity int, id uuid.UUID) int
 		KeyContact                        func(childComplexity int, id uuid.UUID) int
@@ -2970,6 +3001,9 @@ type ModelsToOperationMatrixResolver interface {
 type MutationResolver interface {
 	CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error)
 	AdminUpdateCTATRequest(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CTATRequest, error)
+	CreateCustomTimelineDate(ctx context.Context, input model.CustomTimelineDateCreateInput) (*models.CustomTimelineDate, error)
+	UpdateCustomTimelineDate(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CustomTimelineDate, error)
+	DeleteCustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error)
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
 	UpdateIDDOCQuestionnaire(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.IDDOCQuestionnaire, error)
@@ -3215,6 +3249,8 @@ type PlanTaskResolver interface {
 type PlanTimelineResolver interface {
 	UpcomingTimelineDate(ctx context.Context, obj *models.PlanTimeline) (*model.UpcomingTimelineDate, error)
 	DatesAddedCount(ctx context.Context, obj *models.PlanTimeline) (int, error)
+
+	CustomTimelineDates(ctx context.Context, obj *models.PlanTimeline) ([]*models.CustomTimelineDate, error)
 }
 type QueryResolver interface {
 	Analytics(ctx context.Context) (*models.AnalyticsSummary, error)
@@ -3224,6 +3260,7 @@ type QueryResolver interface {
 	CtatRequestsRequester(ctx context.Context) (*models.CTATRequestsTableDataRequester, error)
 	CtatRequests(ctx context.Context) (*models.CTATRequestsTableData, error)
 	CurrentUser(ctx context.Context) (*models.CurrentUser, error)
+	CustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error)
 	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error)
@@ -4208,6 +4245,116 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.CurrentUser.Notifications(childComplexity), true
+
+	case "CustomTimelineDate.createdBy":
+		if e.ComplexityRoot.CustomTimelineDate.CreatedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.CreatedBy(childComplexity), true
+	case "CustomTimelineDate.createdByUserAccount":
+		if e.ComplexityRoot.CustomTimelineDate.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.CreatedByUserAccount(childComplexity), true
+	case "CustomTimelineDate.createdDts":
+		if e.ComplexityRoot.CustomTimelineDate.CreatedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.CreatedDts(childComplexity), true
+	case "CustomTimelineDate.dateType":
+		if e.ComplexityRoot.CustomTimelineDate.DateType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.DateType(childComplexity), true
+	case "CustomTimelineDate.description":
+		if e.ComplexityRoot.CustomTimelineDate.Description == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.Description(childComplexity), true
+	case "CustomTimelineDate.endDate":
+		if e.ComplexityRoot.CustomTimelineDate.EndDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.EndDate(childComplexity), true
+	case "CustomTimelineDate.id":
+		if e.ComplexityRoot.CustomTimelineDate.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.ID(childComplexity), true
+	case "CustomTimelineDate.modelPlanID":
+		if e.ComplexityRoot.CustomTimelineDate.ModelPlanID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.ModelPlanID(childComplexity), true
+	case "CustomTimelineDate.modifiedBy":
+		if e.ComplexityRoot.CustomTimelineDate.ModifiedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.ModifiedBy(childComplexity), true
+	case "CustomTimelineDate.modifiedByUserAccount":
+		if e.ComplexityRoot.CustomTimelineDate.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.ModifiedByUserAccount(childComplexity), true
+	case "CustomTimelineDate.modifiedDts":
+		if e.ComplexityRoot.CustomTimelineDate.ModifiedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.ModifiedDts(childComplexity), true
+	case "CustomTimelineDate.startDate":
+		if e.ComplexityRoot.CustomTimelineDate.StartDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.StartDate(childComplexity), true
+	case "CustomTimelineDate.title":
+		if e.ComplexityRoot.CustomTimelineDate.Title == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDate.Title(childComplexity), true
+
+	case "CustomTimelineDateTranslation.dateType":
+		if e.ComplexityRoot.CustomTimelineDateTranslation.DateType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDateTranslation.DateType(childComplexity), true
+	case "CustomTimelineDateTranslation.description":
+		if e.ComplexityRoot.CustomTimelineDateTranslation.Description == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDateTranslation.Description(childComplexity), true
+	case "CustomTimelineDateTranslation.endDate":
+		if e.ComplexityRoot.CustomTimelineDateTranslation.EndDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDateTranslation.EndDate(childComplexity), true
+	case "CustomTimelineDateTranslation.startDate":
+		if e.ComplexityRoot.CustomTimelineDateTranslation.StartDate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDateTranslation.StartDate(childComplexity), true
+	case "CustomTimelineDateTranslation.title":
+		if e.ComplexityRoot.CustomTimelineDateTranslation.Title == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CustomTimelineDateTranslation.Title(childComplexity), true
 
 	case "DailyDigestCompleteActivityMeta.analyzedAudits":
 		if e.ComplexityRoot.DailyDigestCompleteActivityMeta.AnalyzedAudits == nil {
@@ -7828,6 +7975,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateCTATRequest(childComplexity, args["input"].(model.CTATRequestInput)), true
+	case "Mutation.createCustomTimelineDate":
+		if e.ComplexityRoot.Mutation.CreateCustomTimelineDate == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createCustomTimelineDate_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateCustomTimelineDate(childComplexity, args["input"].(model.CustomTimelineDateCreateInput)), true
 	case "Mutation.createDiscussionReply":
 		if e.ComplexityRoot.Mutation.CreateDiscussionReply == nil {
 			break
@@ -8070,6 +8228,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateTemplateToMto(childComplexity, args["modelPlanID"].(uuid.UUID), args["templateID"].(uuid.UUID)), true
+	case "Mutation.deleteCustomTimelineDate":
+		if e.ComplexityRoot.Mutation.DeleteCustomTimelineDate == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deleteCustomTimelineDate_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.DeleteCustomTimelineDate(childComplexity, args["id"].(uuid.UUID)), true
 	case "Mutation.deleteKeyContact":
 		if e.ComplexityRoot.Mutation.DeleteKeyContact == nil {
 			break
@@ -8362,6 +8531,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UnlockLockableSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(models.LockableSection)), true
+	case "Mutation.updateCustomTimelineDate":
+		if e.ComplexityRoot.Mutation.UpdateCustomTimelineDate == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateCustomTimelineDate_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateCustomTimelineDate(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]any)), true
 	case "Mutation.updateExistingModelLinks":
 		if e.ComplexityRoot.Mutation.UpdateExistingModelLinks == nil {
 			break
@@ -14733,6 +14913,18 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanTimeline.CreatedDts(childComplexity), true
+	case "PlanTimeline.customDatesNote":
+		if e.ComplexityRoot.PlanTimeline.CustomDatesNote == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanTimeline.CustomDatesNote(childComplexity), true
+	case "PlanTimeline.customTimelineDates":
+		if e.ComplexityRoot.PlanTimeline.CustomTimelineDates == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanTimeline.CustomTimelineDates(childComplexity), true
 	case "PlanTimeline.datesAddedCount":
 		if e.ComplexityRoot.PlanTimeline.DatesAddedCount == nil {
 			break
@@ -14878,6 +15070,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanTimelineTranslation.CompleteIcip(childComplexity), true
+	case "PlanTimelineTranslation.customDatesNote":
+		if e.ComplexityRoot.PlanTimelineTranslation.CustomDatesNote == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanTimelineTranslation.CustomDatesNote(childComplexity), true
 	case "PlanTimelineTranslation.highLevelNote":
 		if e.ComplexityRoot.PlanTimelineTranslation.HighLevelNote == nil {
 			break
@@ -15009,6 +15207,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.CurrentUser(childComplexity), true
+	case "Query.customTimelineDate":
+		if e.ComplexityRoot.Query.CustomTimelineDate == nil {
+			break
+		}
+
+		args, err := ec.field_Query_customTimelineDate_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Query.CustomTimelineDate(childComplexity, args["id"].(uuid.UUID)), true
 	case "Query.existingModelCollection":
 		if e.ComplexityRoot.Query.ExistingModelCollection == nil {
 			break
@@ -17298,6 +17507,9 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputCTATAdminUpdateInput,
 		ec.unmarshalInputCTATRequestDocumentInput,
 		ec.unmarshalInputCTATRequestInput,
+		ec.unmarshalInputCustomTimelineDateChanges,
+		ec.unmarshalInputCustomTimelineDateCreateInput,
+		ec.unmarshalInputCustomTimelineDateUpdateDatesInput,
 		ec.unmarshalInputDiscussionReplyCreateInput,
 		ec.unmarshalInputIDDOCQuestionnaireChanges,
 		ec.unmarshalInputKeyContactUpdateChanges,
@@ -18096,6 +18308,79 @@ type CurrentUser {
 
 extend type Query {
   currentUser: CurrentUser!
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/custom_timeline_date.graphql", Input: `"""
+The selected date type for a Custom Timeline Date.
+"""
+enum CustomTimelineDateType {
+  SINGLE
+  RANGE
+}
+
+type CustomTimelineDate {
+  id: UUID!
+  modelPlanID: UUID!
+  title: String!
+  description: String
+  dateType: CustomTimelineDateType!
+  startDate: Time!
+  endDate: Time
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate
+"""
+input CustomTimelineDateCreateInput {
+  modelPlanID: UUID!
+  title: String!
+  description: String
+  dateType: CustomTimelineDateType!
+  startDate: Time!
+  endDate: Time
+}
+
+input CustomTimelineDateChanges @goModel(model: "map[string]interface{}") {
+  title: String
+  description: String
+  dateType: CustomTimelineDateType
+  startDate: Time
+  endDate: Time
+}
+
+extend type Query {
+  customTimelineDate(id: UUID!): CustomTimelineDate!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createCustomTimelineDate(
+    input: CustomTimelineDateCreateInput!
+  ): CustomTimelineDate! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  updateCustomTimelineDate(
+    id: UUID!
+    changes: CustomTimelineDateChanges!
+  ): CustomTimelineDate! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  deleteCustomTimelineDate(id: UUID!): CustomTimelineDate!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/custom_timeline_date_translation.graphql", Input: `"""
+Represents custom timeline date translation data
+"""
+type CustomTimelineDateTranslation {
+  title: TranslationField! @goTag(key: "db", value: "title")
+  description: TranslationField! @goTag(key: "db", value: "description")
+  dateType: TranslationFieldWithOptions! @goTag(key: "db", value: "date_type")
+  startDate: TranslationField! @goTag(key: "db", value: "start_date")
+  endDate: TranslationField! @goTag(key: "db", value: "end_date")
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/directives.graphql", Input: `directive @hasRole(role: Role!) on FIELD_DEFINITION
@@ -23128,6 +23413,7 @@ type PlanTimeline {
   performancePeriodEnds: Time
   wrapUpEnds: Time
   highLevelNote: String
+  customDatesNote: String
 
   upcomingTimelineDate: UpcomingTimelineDate
   datesAddedCount: Int!
@@ -23147,6 +23433,23 @@ type PlanTimeline {
   readyForClearanceDts: Time
 
   status: TaskStatus!
+
+  customTimelineDates: [CustomTimelineDate!]!
+}
+
+"""
+CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
+(this is a different type than ` + "`" + `CustomTimelineDateChanges` + "`" + `, which allows for date updates but also title/desc in a different flow)
+"""
+input CustomTimelineDateUpdateDatesInput {
+  id: UUID!
+  startDate: Time
+  endDate: Time
+
+  # unused - needed for UI parity
+  title: String
+  description: String
+  dateType: CustomTimelineDateType
 }
 
 """
@@ -23165,7 +23468,10 @@ input PlanTimelineChanges @goModel(model: "map[string]interface{}") {
   performancePeriodEnds: Time
   wrapUpEnds: Time
   highLevelNote: String
+  customDatesNote: String
   status: TaskStatusInput
+
+  customTimelineDates: [CustomTimelineDateUpdateDatesInput!]
 }
 
 extend type Mutation {
@@ -23192,6 +23498,8 @@ type PlanTimelineTranslation {
     @goTag(key: "db", value: "performance_period_ends")
   wrapUpEnds: TranslationField! @goTag(key: "db", value: "wrap_up_ends")
   highLevelNote: TranslationField! @goTag(key: "db", value: "high_level_note")
+  customDatesNote: TranslationField!
+    @goTag(key: "db", value: "custom_dates_note")
 
   readyForReviewBy: TranslationField!
     @goTag(key: "db", value: "ready_for_review_by")
@@ -23555,6 +23863,7 @@ enum TableName {
   possible_operational_solution_contact
   tag
   plan_timeline
+  custom_timeline_date
   translated_audit
   translated_audit_field
   translated_audit_queue
@@ -24855,6 +25164,38 @@ func (ec *executionContext) childFields_CurrentUser(ctx context.Context, field g
 		return ec.fieldContext_CurrentUser_leadModelPlanCount(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type CurrentUser", field.Name)
+}
+
+func (ec *executionContext) childFields_CustomTimelineDate(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_CustomTimelineDate_id(ctx, field)
+	case "modelPlanID":
+		return ec.fieldContext_CustomTimelineDate_modelPlanID(ctx, field)
+	case "title":
+		return ec.fieldContext_CustomTimelineDate_title(ctx, field)
+	case "description":
+		return ec.fieldContext_CustomTimelineDate_description(ctx, field)
+	case "dateType":
+		return ec.fieldContext_CustomTimelineDate_dateType(ctx, field)
+	case "startDate":
+		return ec.fieldContext_CustomTimelineDate_startDate(ctx, field)
+	case "endDate":
+		return ec.fieldContext_CustomTimelineDate_endDate(ctx, field)
+	case "createdBy":
+		return ec.fieldContext_CustomTimelineDate_createdBy(ctx, field)
+	case "createdByUserAccount":
+		return ec.fieldContext_CustomTimelineDate_createdByUserAccount(ctx, field)
+	case "createdDts":
+		return ec.fieldContext_CustomTimelineDate_createdDts(ctx, field)
+	case "modifiedBy":
+		return ec.fieldContext_CustomTimelineDate_modifiedBy(ctx, field)
+	case "modifiedByUserAccount":
+		return ec.fieldContext_CustomTimelineDate_modifiedByUserAccount(ctx, field)
+	case "modifiedDts":
+		return ec.fieldContext_CustomTimelineDate_modifiedDts(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type CustomTimelineDate", field.Name)
 }
 
 func (ec *executionContext) childFields_DateChange(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
@@ -27155,6 +27496,8 @@ func (ec *executionContext) childFields_PlanTimeline(ctx context.Context, field 
 		return ec.fieldContext_PlanTimeline_wrapUpEnds(ctx, field)
 	case "highLevelNote":
 		return ec.fieldContext_PlanTimeline_highLevelNote(ctx, field)
+	case "customDatesNote":
+		return ec.fieldContext_PlanTimeline_customDatesNote(ctx, field)
 	case "upcomingTimelineDate":
 		return ec.fieldContext_PlanTimeline_upcomingTimelineDate(ctx, field)
 	case "datesAddedCount":
@@ -27185,6 +27528,8 @@ func (ec *executionContext) childFields_PlanTimeline(ctx context.Context, field 
 		return ec.fieldContext_PlanTimeline_readyForClearanceDts(ctx, field)
 	case "status":
 		return ec.fieldContext_PlanTimeline_status(ctx, field)
+	case "customTimelineDates":
+		return ec.fieldContext_PlanTimeline_customTimelineDates(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type PlanTimeline", field.Name)
 }
@@ -28061,6 +28406,20 @@ func (ec *executionContext) field_Mutation_createCTATRequest_args(ctx context.Co
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_createCustomTimelineDate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (model.CustomTimelineDateCreateInput, error) {
+			return ec.unmarshalNCustomTimelineDateCreateInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCustomTimelineDateCreateInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_createDiscussionReply_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -28681,6 +29040,20 @@ func (ec *executionContext) field_Mutation_createTemplateToMTO_args(ctx context.
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_deleteCustomTimelineDate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_deleteKeyContactCategory_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -29130,6 +29503,28 @@ func (ec *executionContext) field_Mutation_unlockLockableSection_args(ctx contex
 		return nil, err
 	}
 	args["section"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateCustomTimelineDate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["id"] = arg0
+	arg1, err := graphql.ProcessArgField(ctx, rawArgs, "changes",
+		func(ctx context.Context, v any) (map[string]any, error) {
+			return ec.unmarshalNCustomTimelineDateChanges2map(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["changes"] = arg1
 	return args, nil
 }
 
@@ -29764,6 +30159,20 @@ func (ec *executionContext) field_Query_auditChanges_args(ctx context.Context, r
 }
 
 func (ec *executionContext) field_Query_ctatRequest_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_customTimelineDate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
@@ -33840,6 +34249,483 @@ func (ec *executionContext) _CurrentUser_leadModelPlanCount(ctx context.Context,
 }
 func (ec *executionContext) fieldContext_CurrentUser_leadModelPlanCount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("CurrentUser", field, true, true, errors.New("field of type Int does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_id(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_id(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_modelPlanID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModelPlanID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_modelPlanID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_title(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_title(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Title, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_title(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_description(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_description(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Description, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_dateType(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_dateType(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.DateType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.CustomTimelineDateType) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDateType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateType(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_dateType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type CustomTimelineDateType does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_startDate(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_startDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.StartDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v time.Time) graphql.Marshaler {
+			return ec.marshalNTime2timeᚐTime(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_startDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_endDate(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_endDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.EndDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *time.Time) graphql.Marshaler {
+			return ec.marshalOTime2ᚖtimeᚐTime(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_endDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_createdBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_createdBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_createdByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_createdByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CustomTimelineDate",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CustomTimelineDate_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_createdDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v time.Time) graphql.Marshaler {
+			return ec.marshalNTime2timeᚐTime(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_createdDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_modifiedBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+			return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_modifiedBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDate_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_modifiedByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_modifiedByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CustomTimelineDate",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CustomTimelineDate_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.CustomTimelineDate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDate_modifiedDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *time.Time) graphql.Marshaler {
+			return ec.marshalOTime2ᚖtimeᚐTime(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDate_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CustomTimelineDate", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _CustomTimelineDateTranslation_title(ctx context.Context, field graphql.CollectedField, obj *model.CustomTimelineDateTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDateTranslation_title(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Title, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDateTranslation_title(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CustomTimelineDateTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CustomTimelineDateTranslation_description(ctx context.Context, field graphql.CollectedField, obj *model.CustomTimelineDateTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDateTranslation_description(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Description, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDateTranslation_description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CustomTimelineDateTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CustomTimelineDateTranslation_dateType(ctx context.Context, field graphql.CollectedField, obj *model.CustomTimelineDateTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDateTranslation_dateType(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.DateType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDateTranslation_dateType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CustomTimelineDateTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CustomTimelineDateTranslation_startDate(ctx context.Context, field graphql.CollectedField, obj *model.CustomTimelineDateTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDateTranslation_startDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.StartDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDateTranslation_startDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CustomTimelineDateTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CustomTimelineDateTranslation_endDate(ctx context.Context, field graphql.CollectedField, obj *model.CustomTimelineDateTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CustomTimelineDateTranslation_endDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.EndDate, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CustomTimelineDateTranslation_endDate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CustomTimelineDateTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
 }
 
 func (ec *executionContext) _DailyDigestCompleteActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.DailyDigestCompleteActivityMeta) (ret graphql.Marshaler) {
@@ -49280,6 +50166,192 @@ func (ec *executionContext) fieldContext_Mutation_adminUpdateCTATRequest(ctx con
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_adminUpdateCTATRequest_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createCustomTimelineDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreateCustomTimelineDate(ctx, fc.Args["input"].(model.CustomTimelineDateCreateInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CustomTimelineDate(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createCustomTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateCustomTimelineDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateCustomTimelineDate(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CustomTimelineDate(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateCustomTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deleteCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deleteCustomTimelineDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeleteCustomTimelineDate(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deleteCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CustomTimelineDate(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deleteCustomTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -81575,6 +82647,29 @@ func (ec *executionContext) fieldContext_PlanTimeline_highLevelNote(_ context.Co
 	return graphql.NewScalarFieldContext("PlanTimeline", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
+func (ec *executionContext) _PlanTimeline_customDatesNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanTimeline) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanTimeline_customDatesNote(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CustomDatesNote, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_PlanTimeline_customDatesNote(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("PlanTimeline", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
 func (ec *executionContext) _PlanTimeline_upcomingTimelineDate(ctx context.Context, field graphql.CollectedField, obj *models.PlanTimeline) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -81965,6 +83060,38 @@ func (ec *executionContext) fieldContext_PlanTimeline_status(_ context.Context, 
 	return graphql.NewScalarFieldContext("PlanTimeline", field, false, false, errors.New("field of type TaskStatus does not have child fields"))
 }
 
+func (ec *executionContext) _PlanTimeline_customTimelineDates(ctx context.Context, field graphql.CollectedField, obj *models.PlanTimeline) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanTimeline_customTimelineDates(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.PlanTimeline().CustomTimelineDates(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.CustomTimelineDate) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDate2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanTimeline_customTimelineDates(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTimeline",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CustomTimelineDate(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanTimelineTranslation_completeICIP(ctx context.Context, field graphql.CollectedField, obj *model.PlanTimelineTranslation) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -82273,6 +83400,38 @@ func (ec *executionContext) _PlanTimelineTranslation_highLevelNote(ctx context.C
 	)
 }
 func (ec *executionContext) fieldContext_PlanTimelineTranslation_highLevelNote(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTimelineTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanTimelineTranslation_customDatesNote(ctx context.Context, field graphql.CollectedField, obj *model.PlanTimelineTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanTimelineTranslation_customDatesNote(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CustomDatesNote, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanTimelineTranslation_customDatesNote(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanTimelineTranslation",
 		Field:      field,
@@ -82855,6 +84014,68 @@ func (ec *executionContext) fieldContext_Query_currentUser(_ context.Context, fi
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_CurrentUser(ctx, field)
 		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_customTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_customTimelineDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().CustomTimelineDate(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_customTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CustomTimelineDate(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_customTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
 	}
 	return fc, nil
 }
@@ -93777,6 +94998,195 @@ func (ec *executionContext) unmarshalInputCTATRequestInput(ctx context.Context, 
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputCustomTimelineDateChanges(ctx context.Context, obj any) (map[string]any, error) {
+	var it map[string]any
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"title", "description", "dateType", "startDate", "endDate"}
+	it = make(map[string]any, len(asMap))
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "title":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["title"] = data
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["description"] = data
+		case "dateType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateType"))
+			data, err := ec.unmarshalOCustomTimelineDateType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateType(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["dateType"] = data
+		case "startDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("startDate"))
+			data, err := ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["startDate"] = data
+		case "endDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("endDate"))
+			data, err := ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["endDate"] = data
+		}
+	}
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputCustomTimelineDateCreateInput(ctx context.Context, obj any) (model.CustomTimelineDateCreateInput, error) {
+	var it model.CustomTimelineDateCreateInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"modelPlanID", "title", "description", "dateType", "startDate", "endDate"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "modelPlanID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ModelPlanID = data
+		case "title":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Title = data
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Description = data
+		case "dateType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateType"))
+			data, err := ec.unmarshalNCustomTimelineDateType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateType(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DateType = data
+		case "startDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("startDate"))
+			data, err := ec.unmarshalNTime2timeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StartDate = data
+		case "endDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("endDate"))
+			data, err := ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.EndDate = data
+		}
+	}
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputCustomTimelineDateUpdateDatesInput(ctx context.Context, obj any) (model.CustomTimelineDateUpdateDatesInput, error) {
+	var it model.CustomTimelineDateUpdateDatesInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"id", "startDate", "endDate", "title", "description", "dateType"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "id":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ID = data
+		case "startDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("startDate"))
+			data, err := ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StartDate = data
+		case "endDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("endDate"))
+			data, err := ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.EndDate = data
+		case "title":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Title = data
+		case "description":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("description"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Description = data
+		case "dateType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateType"))
+			data, err := ec.unmarshalOCustomTimelineDateType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateType(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DateType = data
+		}
+	}
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context.Context, obj any) (model.DiscussionReplyCreateInput, error) {
 	var it model.DiscussionReplyCreateInput
 	if obj == nil {
@@ -97742,7 +99152,7 @@ func (ec *executionContext) unmarshalInputPlanTimelineChanges(ctx context.Contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"completeICIP", "clearanceStarts", "clearanceEnds", "announced", "applicationsStart", "applicationsEnd", "performancePeriodStarts", "performancePeriodEnds", "wrapUpEnds", "highLevelNote", "status"}
+	fieldsInOrder := [...]string{"completeICIP", "clearanceStarts", "clearanceEnds", "announced", "applicationsStart", "applicationsEnd", "performancePeriodStarts", "performancePeriodEnds", "wrapUpEnds", "highLevelNote", "customDatesNote", "status", "customTimelineDates"}
 	it = make(map[string]any, len(asMap))
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
@@ -97820,6 +99230,13 @@ func (ec *executionContext) unmarshalInputPlanTimelineChanges(ctx context.Contex
 				return it, err
 			}
 			it["highLevelNote"] = data
+		case "customDatesNote":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("customDatesNote"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["customDatesNote"] = data
 		case "status":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
 			data, err := ec.unmarshalOTaskStatusInput2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskStatusInput(ctx, v)
@@ -97827,6 +99244,13 @@ func (ec *executionContext) unmarshalInputPlanTimelineChanges(ctx context.Contex
 				return it, err
 			}
 			it["status"] = data
+		case "customTimelineDates":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("customTimelineDates"))
+			data, err := ec.unmarshalOCustomTimelineDateUpdateDatesInput2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCustomTimelineDateUpdateDatesInputᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["customTimelineDates"] = data
 		}
 	}
 	return it, nil
@@ -100643,6 +102067,228 @@ func (ec *executionContext) _CurrentUser(ctx context.Context, sel ast.SelectionS
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var customTimelineDateImplementors = []string{"CustomTimelineDate"}
+
+func (ec *executionContext) _CustomTimelineDate(ctx context.Context, sel ast.SelectionSet, obj *models.CustomTimelineDate) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, customTimelineDateImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CustomTimelineDate")
+		case "id":
+			out.Values[i] = ec._CustomTimelineDate_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._CustomTimelineDate_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "title":
+			out.Values[i] = ec._CustomTimelineDate_title(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "description":
+			out.Values[i] = ec._CustomTimelineDate_description(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "dateType":
+			out.Values[i] = ec._CustomTimelineDate_dateType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "startDate":
+			out.Values[i] = ec._CustomTimelineDate_startDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "endDate":
+			out.Values[i] = ec._CustomTimelineDate_endDate(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdBy":
+			out.Values[i] = ec._CustomTimelineDate_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._CustomTimelineDate_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._CustomTimelineDate_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._CustomTimelineDate_modifiedBy(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._CustomTimelineDate_modifiedByUserAccount(ctx, field, obj)
+				if res == graphql.RequiredNull {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._CustomTimelineDate_modifiedDts(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var customTimelineDateTranslationImplementors = []string{"CustomTimelineDateTranslation"}
+
+func (ec *executionContext) _CustomTimelineDateTranslation(ctx context.Context, sel ast.SelectionSet, obj *model.CustomTimelineDateTranslation) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, customTimelineDateTranslationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CustomTimelineDateTranslation")
+		case "title":
+			out.Values[i] = ec._CustomTimelineDateTranslation_title(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "description":
+			out.Values[i] = ec._CustomTimelineDateTranslation_description(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "dateType":
+			out.Values[i] = ec._CustomTimelineDateTranslation_dateType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "startDate":
+			out.Values[i] = ec._CustomTimelineDateTranslation_startDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "endDate":
+			out.Values[i] = ec._CustomTimelineDateTranslation_endDate(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -109501,6 +111147,27 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "adminUpdateCTATRequest":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_adminUpdateCTATRequest(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createCustomTimelineDate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createCustomTimelineDate(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateCustomTimelineDate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateCustomTimelineDate(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deleteCustomTimelineDate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deleteCustomTimelineDate(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -120287,6 +121954,11 @@ func (ec *executionContext) _PlanTimeline(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "customDatesNote":
+			out.Values[i] = ec._PlanTimeline_customDatesNote(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "upcomingTimelineDate":
 			field := field
 
@@ -120560,6 +122232,44 @@ func (ec *executionContext) _PlanTimeline(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "customTimelineDates":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanTimeline_customTimelineDates(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -120640,6 +122350,11 @@ func (ec *executionContext) _PlanTimelineTranslation(ctx context.Context, sel as
 			}
 		case "highLevelNote":
 			out.Values[i] = ec._PlanTimelineTranslation_highLevelNote(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "customDatesNote":
+			out.Values[i] = ec._PlanTimelineTranslation_customDatesNote(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -120894,6 +122609,28 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_currentUser(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "customTimelineDate":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_customTimelineDate(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -126950,6 +128687,68 @@ func (ec *executionContext) marshalNCurrentUser2ᚖgithubᚗcomᚋcmsᚑenterpri
 	return ec._CurrentUser(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNCustomTimelineDate2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx context.Context, sel ast.SelectionSet, v models.CustomTimelineDate) graphql.Marshaler {
+	return ec._CustomTimelineDate(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNCustomTimelineDate2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.CustomTimelineDate) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx context.Context, sel ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._CustomTimelineDate(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNCustomTimelineDateChanges2map(ctx context.Context, v any) (map[string]any, error) {
+	res, err := ec.unmarshalInputCustomTimelineDateChanges(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNCustomTimelineDateCreateInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCustomTimelineDateCreateInput(ctx context.Context, v any) (model.CustomTimelineDateCreateInput, error) {
+	res, err := ec.unmarshalInputCustomTimelineDateCreateInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNCustomTimelineDateType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateType(ctx context.Context, v any) (models.CustomTimelineDateType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.CustomTimelineDateType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNCustomTimelineDateType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateType(ctx context.Context, sel ast.SelectionSet, v models.CustomTimelineDateType) graphql.Marshaler {
+	_ = sel
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNCustomTimelineDateUpdateDatesInput2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCustomTimelineDateUpdateDatesInput(ctx context.Context, v any) (*model.CustomTimelineDateUpdateDatesInput, error) {
+	res, err := ec.unmarshalInputCustomTimelineDateUpdateDatesInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNDataExchangeApproachStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproachStatus(ctx context.Context, v any) (models.DataExchangeApproachStatus, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.DataExchangeApproachStatus(tmp)
@@ -132196,6 +133995,42 @@ func (ec *executionContext) marshalOContractorSupportType2ᚕgithubᚗcomᚋcms�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOCustomTimelineDateType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateType(ctx context.Context, v any) (*models.CustomTimelineDateType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.CustomTimelineDateType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOCustomTimelineDateType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateType(ctx context.Context, sel ast.SelectionSet, v *models.CustomTimelineDateType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	_ = sel
+	_ = ctx
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
+func (ec *executionContext) unmarshalOCustomTimelineDateUpdateDatesInput2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCustomTimelineDateUpdateDatesInputᚄ(ctx context.Context, v any) ([]*model.CustomTimelineDateUpdateDatesInput, error) {
+	if v == nil {
+		return nil, nil
+	}
+	vSlice := graphql.CoerceList(v)
+	var err error
+	res := make([]*model.CustomTimelineDateUpdateDatesInput, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNCustomTimelineDateUpdateDatesInput2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCustomTimelineDateUpdateDatesInput(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
 func (ec *executionContext) unmarshalODataExchangeApproachMarkedCompleteNotificationType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDataExchangeApproachMarkedCompleteNotificationType(ctx context.Context, v any) (*models.DataExchangeApproachMarkedCompleteNotificationType, error) {
