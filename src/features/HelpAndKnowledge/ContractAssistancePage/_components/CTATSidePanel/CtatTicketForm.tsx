@@ -24,7 +24,9 @@ import {
   useGetModelPlansBaseQuery,
   useGetUserInfoQuery
 } from 'gql/generated/graphql';
+import GetCtatRequestsAdmin from 'gql/operations/CTAT/GetCtatRequestsAdmin';
 import GetCtatRequestsRequester from 'gql/operations/CTAT/GetCtatRequestsRequester';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
@@ -48,6 +50,7 @@ import {
   helpNeededTypesPostAward,
   helpNeededTypesPreAward
 } from 'i18n/en-US/helpAndKnowledge/contractAssistance';
+import { isAssessment } from 'utils/user';
 
 import SupportingDocumentsUpload from './SupportingDocumentsUpload';
 
@@ -123,10 +126,19 @@ const CtatTicketForm = ({
     requestUrgency: requestUrgencyConfig
   } = usePlanTranslation('contractAssistance');
 
-  const { euaId } = useSelector((state: AppState) => state.auth);
+  const { euaId, groups } = useSelector((state: AppState) => state.auth);
+
+  const flags = useFlags();
+
+  const isAssessmentTeam = isAssessment(groups, flags);
+
+  const refetchQueries = isAssessmentTeam
+    ? // This handles when an assessment team member submits a ticket, it will update the ticket lists for both tables.
+      [{ query: GetCtatRequestsRequester }, { query: GetCtatRequestsAdmin }]
+    : [{ query: GetCtatRequestsRequester }];
 
   const [createCTATRequest] = useCreateCtatRequestMutation({
-    refetchQueries: [{ query: GetCtatRequestsRequester }]
+    refetchQueries
   });
 
   const { data: userData, loading: userLoading } = useGetUserInfoQuery({
