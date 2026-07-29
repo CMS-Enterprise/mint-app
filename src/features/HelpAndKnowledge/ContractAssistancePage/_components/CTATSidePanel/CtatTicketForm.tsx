@@ -1053,14 +1053,10 @@ const CtatTicketForm = ({
                 htmlFor="ctat-supporting-documents"
                 className="maxw-none text-bold"
               >
-                {contractAssistanceMiscT(
-                  'ctatSidePanel.fields.supportingDocuments.label'
-                )}
+                {contractAssistanceT('supportingDocuments.label')}
               </Label>
               <HelpText className="margin-top-05">
-                {contractAssistanceMiscT(
-                  'ctatSidePanel.fields.supportingDocuments.hint'
-                )}
+                {contractAssistanceT('supportingDocuments.sublabel')}
               </HelpText>
               <SupportingDocumentsUpload control={control} />
             </FormGroup>

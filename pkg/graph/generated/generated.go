@@ -303,6 +303,7 @@ type ComplexityRoot struct {
 		Requester                 func(childComplexity int) int
 		Resolution                func(childComplexity int) int
 		Status                    func(childComplexity int) int
+		SupportingDocuments       func(childComplexity int) int
 		TypeOfHelpNeeded          func(childComplexity int) int
 		TypeOfHelpNeededOther     func(childComplexity int) int
 	}
@@ -4320,6 +4321,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.CTATRequestTranslation.Status(childComplexity), true
+	case "CTATRequestTranslation.supportingDocuments":
+		if e.ComplexityRoot.CTATRequestTranslation.SupportingDocuments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.SupportingDocuments(childComplexity), true
 	case "CTATRequestTranslation.typeOfHelpNeeded":
 		if e.ComplexityRoot.CTATRequestTranslation.TypeOfHelpNeeded == nil {
 			break
@@ -18479,7 +18486,7 @@ type CTATRequestTranslation {
     @goTag(key: "db", value: "request_urgency")
   dateAssistanceNeededBy: TranslationField!
     @goTag(key: "db", value: "date_assistance_needed_by")
-
+  supportingDocuments: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
   # Ticket management form
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
   assignedAdmin: TranslationField! @goTag(key: "db", value: "assigned_admin")
@@ -34691,6 +34698,38 @@ func (ec *executionContext) _CTATRequestTranslation_dateAssistanceNeededBy(ctx c
 	)
 }
 func (ec *executionContext) fieldContext_CTATRequestTranslation_dateAssistanceNeededBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_supportingDocuments(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_supportingDocuments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.SupportingDocuments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_supportingDocuments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "CTATRequestTranslation",
 		Field:      field,
@@ -102699,6 +102738,11 @@ func (ec *executionContext) _CTATRequestTranslation(ctx context.Context, sel ast
 			}
 		case "dateAssistanceNeededBy":
 			out.Values[i] = ec._CTATRequestTranslation_dateAssistanceNeededBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "supportingDocuments":
+			out.Values[i] = ec._CTATRequestTranslation_supportingDocuments(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}

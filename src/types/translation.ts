@@ -1671,6 +1671,7 @@ export type TranslationContractAssistanceForm = {
   describeHelpNeeded: TranslationFieldProperties;
   requestUrgency: TranslationFieldPropertiesWithOptions<CtatRequestUrgency>;
   dateAssistanceNeededBy: TranslationFieldProperties;
+  supportingDocuments: TranslationFieldProperties;
 
   // Ticket management form
   status: TranslationFieldPropertiesWithOptions<CtatStatus>;

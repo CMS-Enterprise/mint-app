@@ -500,6 +500,7 @@ export type CtatRequestTranslation = {
   requester: TranslationField;
   resolution: TranslationField;
   status: TranslationFieldWithOptions;
+  supportingDocuments: TranslationField;
   typeOfHelpNeeded: TranslationFieldWithOptions;
   typeOfHelpNeededOther: TranslationField;
 };

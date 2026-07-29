@@ -464,6 +464,17 @@ const contractAssistance: TranslationContractAssistance = {
     formType: TranslationFormType.DATEPICKER,
     order: 1.12
   },
+  supportingDocuments: {
+    gqlField: 'supportingDocuments',
+    goField: 'SupportingDocuments',
+    dbField: 'supporting_documents',
+    label: 'Supporting documents',
+    sublabel:
+      'Upload any documentation that will help CTAT better understand your request. Maximum file size 32 mb.',
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXT,
+    order: 1.13
+  },
   status: {
     gqlField: 'status',
     goField: 'Status',
@@ -633,12 +644,6 @@ const contractAssistanceMisc = {
     },
     selectDefault: '- Select -',
     charactersAllowed: '500 characters allowed',
-    fields: {
-      supportingDocuments: {
-        label: 'Supporting documents',
-        hint: 'Upload any documentation that will help CTAT better understand your request. Maximum file size 32 mb.'
-      }
-    },
     whatHappensNext: {
       heading: 'What happens next?',
       intro: 'After you submit your ticket:',

@@ -99,6 +99,7 @@ type CTATRequestTranslation struct {
 	DescribeHelpNeeded        models.TranslationField            `json:"describeHelpNeeded" db:"describe_help_needed"`
 	RequestUrgency            models.TranslationFieldWithOptions `json:"requestUrgency" db:"request_urgency"`
 	DateAssistanceNeededBy    models.TranslationField            `json:"dateAssistanceNeededBy" db:"date_assistance_needed_by"`
+	SupportingDocuments       models.TranslationField            `json:"supportingDocuments"`
 	Status                    models.TranslationFieldWithOptions `json:"status" db:"status"`
 	AssignedAdmin             models.TranslationField            `json:"assignedAdmin" db:"assigned_admin"`
 	Notes                     models.TranslationField            `json:"notes" db:"notes"`

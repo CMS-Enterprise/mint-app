@@ -31,7 +31,7 @@ type CTATRequestTranslation {
     @goTag(key: "db", value: "request_urgency")
   dateAssistanceNeededBy: TranslationField!
     @goTag(key: "db", value: "date_assistance_needed_by")
-
+  supportingDocuments: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
   # Ticket management form
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
   assignedAdmin: TranslationField! @goTag(key: "db", value: "assigned_admin")
