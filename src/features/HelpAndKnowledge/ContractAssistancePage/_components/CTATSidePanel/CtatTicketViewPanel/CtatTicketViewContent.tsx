@@ -22,14 +22,7 @@ import {
 } from 'components/DescriptionGroup';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
-import {
-  cmmiDivisions,
-  cmmiGroups,
-  contractActivityTypes,
-  contractTypes,
-  requestUrgencies,
-  statuses
-} from 'i18n/en-US/helpAndKnowledge/contractAssistance';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 
@@ -142,6 +135,15 @@ const CtatTicketViewContent = ({
     'contractAssistanceMisc'
   );
 
+  const {
+    status: statusConfig,
+    cmmiGroup: cmmiGroupConfig,
+    cmmiDivision: cmmiDivisionConfig,
+    contractActivityType: contractActivityTypeConfig,
+    contractType: contractTypeConfig,
+    requestUrgency: requestUrgencyConfig
+  } = usePlanTranslation('contractAssistance');
+
   const isClosed = ticket.status === CtatStatus.CLOSED;
 
   const assignedMemberDisplay = formatUserDisplay(
@@ -196,7 +198,9 @@ const CtatTicketViewContent = ({
 
           <DetailField
             label={contractAssistanceT('status.label')}
-            definition={ticket.status ? statuses[ticket.status] : ''}
+            definition={
+              ticket.status ? statusConfig.options[ticket.status] : ''
+            }
           />
 
           <DetailField
@@ -250,7 +254,9 @@ const CtatTicketViewContent = ({
 
       <DetailField
         label={contractAssistanceT('cmmiGroup.label')}
-        definition={ticket.cmmiGroup ? cmmiGroups[ticket.cmmiGroup] : ''}
+        definition={
+          ticket.cmmiGroup ? cmmiGroupConfig.options[ticket.cmmiGroup] : ''
+        }
       />
 
       {ticket.cmmiGroup === CtatcmmiGroupOption.OTHER && (
@@ -269,7 +275,9 @@ const CtatTicketViewContent = ({
       <DetailField
         label={contractAssistanceT('cmmiDivision.label')}
         definition={
-          ticket.cmmiDivision ? cmmiDivisions[ticket.cmmiDivision] : ''
+          ticket.cmmiDivision
+            ? cmmiDivisionConfig.options[ticket.cmmiDivision]
+            : ''
         }
       />
 
@@ -319,7 +327,7 @@ const CtatTicketViewContent = ({
         label={contractAssistanceT('contractActivityType.label')}
         definition={
           ticket.contractActivityType ? (
-            contractActivityTypes[ticket.contractActivityType]
+            contractActivityTypeConfig.options[ticket.contractActivityType]
           ) : (
             <EmptyValue>
               {contractAssistanceMiscT(
@@ -375,7 +383,7 @@ const CtatTicketViewContent = ({
         label={contractAssistanceT('contractType.label')}
         definition={
           ticket.contractType ? (
-            contractTypes[ticket.contractType]
+            contractTypeConfig.options[ticket.contractType]
           ) : (
             <EmptyValue>
               {contractAssistanceMiscT('ctatViewPanel.empty.noContractType')}
@@ -418,7 +426,9 @@ const CtatTicketViewContent = ({
       <DetailField
         label={contractAssistanceT('requestUrgency.label')}
         definition={
-          ticket.requestUrgency ? requestUrgencies[ticket.requestUrgency] : ''
+          ticket.requestUrgency
+            ? requestUrgencyConfig.options[ticket.requestUrgency]
+            : ''
         }
       />
 

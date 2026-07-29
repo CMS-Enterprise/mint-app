@@ -1,4 +1,4 @@
-import { TranslationCTATRequest } from 'types/translation';
+import { TranslationContractAssistance } from 'types/translation';
 
 import {
   CtatcmmiDivisionOption,
@@ -273,7 +273,7 @@ export const divisionOptionsByGroup: Record<
   ]
 };
 
-const ctatRequest: TranslationCTATRequest = {
+const ctatRequest: TranslationContractAssistance = {
   requester: {
     gqlField: 'requester',
     goField: 'Requester',

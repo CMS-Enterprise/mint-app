@@ -39,19 +39,14 @@ import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { getStatusAlertBody } from 'contexts/ErrorContext';
 import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import {
-  cmmiDivisions,
-  cmmiGroups,
-  contractActivityTypes,
-  contractTypes,
   divisionOptionsByGroup,
   helpNeededGroupLabels,
   helpNeededTypeDisplayOverrides,
-  helpNeededTypes,
   helpNeededTypesOther,
   helpNeededTypesPostAward,
-  helpNeededTypesPreAward,
-  requestUrgencies
+  helpNeededTypesPreAward
 } from 'i18n/en-US/helpAndKnowledge/contractAssistance';
 
 import SupportingDocumentsUpload from './SupportingDocumentsUpload';
@@ -119,6 +114,15 @@ const CtatTicketForm = ({
     'contractAssistanceMisc'
   );
 
+  const {
+    cmmiGroup: cmmiGroupConfig,
+    cmmiDivision: cmmiDivisionConfig,
+    contractActivityType: contractActivityTypeConfig,
+    contractType: contractTypeConfig,
+    typeOfHelpNeeded: typeOfHelpNeededConfig,
+    requestUrgency: requestUrgencyConfig
+  } = usePlanTranslation('contractAssistance');
+
   const { euaId } = useSelector((state: AppState) => state.auth);
 
   const [createCTATRequest] = useCreateCtatRequestMutation({
@@ -162,8 +166,11 @@ const CtatTicketForm = ({
 
   const cmmiGroupOptions = useMemo(
     () =>
-      Object.entries(cmmiGroups).map(([value, label]) => ({ value, label })),
-    []
+      Object.entries(cmmiGroupConfig.options).map(([value, label]) => ({
+        value,
+        label
+      })),
+    [cmmiGroupConfig]
   );
 
   const cmmiDivisionOptions = useMemo(() => {
@@ -179,40 +186,42 @@ const CtatTicketForm = ({
     return [
       ...divisions.map(division => ({
         value: division,
-        label: cmmiDivisions[division]
+        label: cmmiDivisionConfig.options[division]
       })),
       {
         value: CtatcmmiDivisionOption.OTHER,
-        label: cmmiDivisions[CtatcmmiDivisionOption.OTHER]
+        label: cmmiDivisionConfig.options[CtatcmmiDivisionOption.OTHER]
       }
     ];
-  }, [isCmmiDivisionRequired, selectedCmmiGroup]);
+  }, [isCmmiDivisionRequired, selectedCmmiGroup, cmmiDivisionConfig]);
 
   const contractActivityTypeOptions = useMemo(
     () =>
-      Object.entries(contractActivityTypes).map(([value, label]) => ({
-        value,
-        label
-      })),
-    []
+      Object.entries(contractActivityTypeConfig.options).map(
+        ([value, label]) => ({
+          value,
+          label
+        })
+      ),
+    [contractActivityTypeConfig]
   );
 
   const contractTypeOptions = useMemo(
     () =>
-      Object.entries(contractTypes).map(([value, label]) => ({
+      Object.entries(contractTypeConfig.options).map(([value, label]) => ({
         value,
         label
       })),
-    []
+    [contractTypeConfig]
   );
 
   const requestUrgencyOptions = useMemo(
     () =>
-      Object.entries(requestUrgencies).map(([value, label]) => ({
+      Object.entries(requestUrgencyConfig.options).map(([value, label]) => ({
         value,
         label
       })),
-    []
+    [requestUrgencyConfig]
   );
 
   const modelPlanOptions = useMemo(
@@ -230,7 +239,7 @@ const CtatTicketForm = ({
         label: helpNeededGroupLabels.preAward,
         options: helpNeededTypesPreAward.map(key => ({
           value: key,
-          label: helpNeededTypes[key],
+          label: typeOfHelpNeededConfig.options[key],
           readonlyLabel: helpNeededTypeDisplayOverrides[key]
         }))
       },
@@ -238,7 +247,7 @@ const CtatTicketForm = ({
         label: helpNeededGroupLabels.postAward,
         options: helpNeededTypesPostAward.map(key => ({
           value: key,
-          label: helpNeededTypes[key],
+          label: typeOfHelpNeededConfig.options[key],
           readonlyLabel: helpNeededTypeDisplayOverrides[key]
         }))
       },
@@ -246,12 +255,12 @@ const CtatTicketForm = ({
         label: helpNeededGroupLabels.other,
         options: helpNeededTypesOther.map(key => ({
           value: key,
-          label: helpNeededTypes[key],
+          label: typeOfHelpNeededConfig.options[key],
           readonlyLabel: helpNeededTypeDisplayOverrides[key]
         }))
       }
     ],
-    []
+    [typeOfHelpNeededConfig]
   );
 
   const requesterDisplayName = useMemo(() => {

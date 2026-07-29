@@ -1558,6 +1558,7 @@ export type TranslationPlan = {
   mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCustom;
   mtoMilestoneNote: TranslationMTOMilestoneNoteCustom;
   mtoCommonMilestone: TranslationMTOCommonMilestoneCustom;
+  contractAssistance: TranslationContractAssistance;
 };
 
 export type TranslationPlanSection =
@@ -1598,7 +1599,8 @@ export enum PlanSection {
   MTO_SOLUTION = 'mtoSolution',
   MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner',
   MTO_MILESTONE_NOTE = 'mtoMilestoneNote',
-  MTO_COMMON_MILESTONE = 'mtoCommonMilestone'
+  MTO_COMMON_MILESTONE = 'mtoCommonMilestone',
+  CONTRACT_ASSISTANCE = 'contractAssistance'
 }
 
 // Model Plan MTO Template Link - Change History purposes only
@@ -1649,8 +1651,8 @@ export type TranslationKeyContactCategoryCustom = {
   [K in keyof TranslationKeyContactCategoryCustomGQL]: TranslationKeyContactCategoryCustomForm[K]; // FE form type
 };
 
-// CTAT Request - Change History purposes only
-export type TranslationCTATRequestForm = {
+// CTAT - Change History purposes only
+export type TranslationContractAssistanceForm = {
   // Request form
   requester: TranslationFieldProperties;
   cmmiGroup: TranslationFieldPropertiesWithOptions<CtatcmmiGroupOption>;
@@ -1677,11 +1679,11 @@ export type TranslationCTATRequestForm = {
   resolution: TranslationFieldProperties;
 };
 
-type TranslationCTATRequestGQL = Omit<
+type TranslationContractAssistanceGQL = Omit<
   CtatRequestTranslation, // graphql gen type
   '__typename'
 >;
 
-export type TranslationCTATRequest = {
-  [K in keyof TranslationCTATRequestGQL]: TranslationCTATRequestForm[K]; // FE form type
+export type TranslationContractAssistance = {
+  [K in keyof TranslationContractAssistanceGQL]: TranslationContractAssistanceForm[K]; // FE form type
 };
