@@ -1,7 +1,7 @@
 {
   "title": {
     "gqlField": "title",
-    "goField": "title",
+    "goField": "Title",
     "dbField": "title",
     "label": "Date title",
     "dataType": "STRING",
@@ -10,7 +10,7 @@
   },
   "description": {
     "gqlField": "description",
-    "goField": "description",
+    "goField": "Description",
     "dbField": "description",
     "label": "Date description",
     "dataType": "STRING",

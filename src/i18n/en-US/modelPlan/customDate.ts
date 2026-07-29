@@ -8,7 +8,7 @@ import {
 export const customDate: TranslationCustomDate = {
   title: {
     gqlField: 'title',
-    goField: 'title',
+    goField: 'Title',
     dbField: 'title',
     label: 'Date title',
     dataType: TranslationDataType.STRING,
@@ -17,7 +17,7 @@ export const customDate: TranslationCustomDate = {
   },
   description: {
     gqlField: 'description',
-    goField: 'description',
+    goField: 'Description',
     dbField: 'description',
     label: 'Date description',
     dataType: TranslationDataType.STRING,
