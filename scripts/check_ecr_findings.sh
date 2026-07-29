@@ -38,10 +38,10 @@ while true; do
     # If we get here, it means exit code was 0, and we can check the scan status
     scanStatus=$(echo "$scanFindings" | jq -r '.imageScanStatus.status')
 
-    if [[ "$scanStatus" == "PENDING" ]]; then
+    if [[ "$scanStatus" == "PENDING" || "$scanStatus" == "IN_PROGRESS" ]]; then
         echo "Scan in progress..."
         sleep 10  # Wait before retrying, indicating the scan is still pending
-    elif [[ "$scanStatus" == "ACTIVE" ]]; then
+    elif [[ "$scanStatus" == "ACTIVE" || "$scanStatus" == "COMPLETE" ]]; then
         echo "Scan complete"
 
         # Print the full scanFindings JSON
