@@ -1,6 +1,7 @@
 import { MockedResponse } from '@apollo/client/testing';
 import { KeyContactCategoryType } from 'features/HelpAndKnowledge/KeyContactDirectory/_components/CategoryModal';
 import {
+  CustomTimelineDateType,
   DataExchangeApproachStatus,
   GetAllKeyContactCategoriesDocument,
   GetAllKeyContactCategoriesQuery,
@@ -20,6 +21,8 @@ import {
   GetCommonSolutionsAndCategoriesDocument,
   GetCommonSolutionsAndCategoriesQuery,
   GetCommonSolutionsAndCategoriesQueryVariables,
+  GetCustomDateDocument,
+  GetCustomDateQuery,
   GetEchimpCrandTdlDocument,
   GetEchimpCrandTdlQuery,
   GetEchimpCrandTdlQueryVariables,
@@ -113,6 +116,33 @@ const modelPlanData: GetModelPlansType = [
       __typename: 'TranslatedAudit',
       id: '64252',
       date: '2022-08-23T04:00:00Z'
+    }
+  }
+];
+
+export const customDateID: string = 'test123';
+
+export const customDateMockData: GetCustomDateQuery['customTimelineDate'] = {
+  __typename: 'CustomTimelineDate',
+  id: customDateID,
+  title: 'My Custom Date',
+  description: 'Description of my custom date',
+  dateType: CustomTimelineDateType.SINGLE,
+  startDate: '2026-11-11',
+  endDate: null
+};
+
+export const customDateMocks = [
+  {
+    request: {
+      query: GetCustomDateDocument,
+      variables: { id: customDateID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        customTimelineDate: customDateMockData
+      }
     }
   }
 ];
