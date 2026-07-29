@@ -82,6 +82,7 @@ const CtatTicketAdminForm = ({
   setIsDirty,
   onSubmitted
 }: CtatTicketAdminFormProps) => {
+  const { t: contractAssistanceT } = useTranslation('contractAssistance');
   const { t: contractAssistanceMiscT } = useTranslation(
     'contractAssistanceMisc'
   );
@@ -186,7 +187,7 @@ const CtatTicketAdminForm = ({
                     htmlFor="ctat-admin-status"
                     className="maxw-none text-bold"
                   >
-                    {contractAssistanceMiscT('table.status')}
+                    {contractAssistanceT('status.label')}
                   </Label>
                   <Select
                     {...field}
@@ -217,17 +218,13 @@ const CtatTicketAdminForm = ({
                     id="label-ctat-admin-assigned-member"
                     className="maxw-none text-bold"
                   >
-                    {contractAssistanceMiscT(
-                      'ctatAdminPanel.assignedMember.label'
-                    )}
+                    {contractAssistanceT('assignedAdmin.label')}
                   </Label>
                   <HelpText
                     id="hint-ctat-admin-assigned-member"
                     className="margin-top-05"
                   >
-                    {contractAssistanceMiscT(
-                      'ctatAdminPanel.assignedMember.hint'
-                    )}
+                    {contractAssistanceT('assignedAdmin.sublabel')}
                   </HelpText>
                   <OktaUserSelect
                     id="ctat-admin-assigned-member"
@@ -255,12 +252,10 @@ const CtatTicketAdminForm = ({
                     htmlFor="ctat-admin-progress-notes"
                     className="maxw-none text-bold"
                   >
-                    {contractAssistanceMiscT('ctatViewPanel.progressNotes')}
+                    {contractAssistanceT('notes.label')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {contractAssistanceMiscT(
-                      'ctatAdminPanel.progressNotes.hint'
-                    )}
+                    {contractAssistanceT('notes.sublabel')}
                   </HelpText>
                   <TextAreaField
                     {...field}
@@ -282,10 +277,10 @@ const CtatTicketAdminForm = ({
                     htmlFor="ctat-admin-resolution"
                     className="maxw-none text-bold"
                   >
-                    {contractAssistanceMiscT('ctatViewPanel.resolution')}
+                    {contractAssistanceT('resolution.label')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {contractAssistanceMiscT('ctatAdminPanel.resolution.hint')}
+                    {contractAssistanceT('resolution.sublabel')}
                   </HelpText>
                   <TextAreaField
                     {...field}

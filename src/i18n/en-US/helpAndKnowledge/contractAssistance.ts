@@ -414,6 +414,7 @@ const contractAssistance: TranslationCTATRequest = {
     goField: 'TypeOfHelpNeeded',
     dbField: 'type_of_help_needed',
     label: 'Type of help needed',
+    sublabel: 'Select all that apply.',
     multiSelectLabel: 'Selected help types',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.MULTISELECT,
@@ -582,8 +583,6 @@ const contractAssistanceMisc = {
     progressHeading: 'Ticket progress and resolution',
     ticketDetailsHeading: 'Ticket details',
     assignedMember: 'Assigned contract assistance team member',
-    progressNotes: 'Progress notes',
-    resolution: 'Resolution',
     uploadedDocuments: 'Uploaded documents',
     viewModelInMint: 'View model in MINT',
     empty: {
@@ -600,16 +599,6 @@ const contractAssistanceMisc = {
   },
 
   ctatAdminPanel: {
-    assignedMember: {
-      label: 'Assigned admin team member',
-      hint: 'Look up the admin team member you wish to assign this ticket to. You may look up by name or EUA ID.'
-    },
-    progressNotes: {
-      hint: 'Add any notes about your progress on this ticket. Once saved, these notes are viewable by the requester, who will receive an email update alerting them to your changes.'
-    },
-    resolution: {
-      hint: 'Document the final outcome of this ticket. Once saved, this resolution is viewable by the requester, who will receive an email update alerting them to the new resolution.'
-    },
     saveChanges: 'Save changes',
     success:
       'You have updated a contract assistance ticket (<bold>{{ticketId}}</bold>).',
@@ -642,69 +631,12 @@ const contractAssistanceMisc = {
       confirm: 'Leave without saving',
       dontLeave: 'Stay on page'
     },
+    selectDefault: '- Select -',
+    charactersAllowed: '500 characters allowed',
     fields: {
-      requester: {
-        label: 'Requester',
-        hint: 'This field is automatically populated based on your MINT user account.'
-      },
-      cmmiGroup: {
-        label: 'CMMI group',
-        selectDefault: '-Select-',
-        otherLabel: 'Describe other',
-        otherHint: 'Please describe your "Other" CMMI group.'
-      },
-      cmmiDivision: {
-        label: 'CMMI division',
-        hint: 'Select your CMMI group before selecting your division.',
-        selectDefault: '-Select-',
-        otherLabel: 'Describe other',
-        otherHint: 'Please describe your "Other" division.'
-      },
-      modelOrDemonstration: {
-        label: 'Model or demonstration',
-        hint: 'If applicable, select the model(s) associated with this assistance request. Only models listed in MINT will appear in this list. Select all that apply.'
-      },
-      contractActivityType: {
-        label: 'Contract activity type',
-        selectDefault: '-Select-',
-        otherLabel: 'Describe other',
-        otherHint: 'Please describe your "Other" contract activity type.'
-      },
-      contractName: {
-        label: 'Contract name'
-      },
-      contractNumber: {
-        label: 'Contract number (if applicable)'
-      },
-      contractType: {
-        label: 'Contract type',
-        selectDefault: '-Select-',
-        otherLabel: 'Describe other',
-        otherHint: 'Please describe your "Other" contract type.'
-      },
-      helpNeededType: {
-        label: 'Type of help needed',
-        hint: 'Select all that apply.'
-      },
-      assistanceDescription: {
-        label: 'Describe the type of assistance you need.',
-        hint: 'Add additional detail about the help you need. If you selected "Other" in the previous question, please explain.',
-        charactersAllowed: '500 characters allowed'
-      },
-      requestUrgency: {
-        label: 'Request urgency',
-        selectDefault: '-Select-'
-      },
-      assistanceNeededBy: {
-        label: 'When do you need assistance by?',
-        hint: 'mm/dd/yyyy'
-      },
       supportingDocuments: {
         label: 'Supporting documents',
         hint: 'Upload any documentation that will help CTAT better understand your request. Maximum file size 32 mb.'
-      },
-      other: {
-        helpNeededType: 'Please specify the type of help needed'
       }
     },
     whatHappensNext: {
