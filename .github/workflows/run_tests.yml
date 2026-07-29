@@ -332,7 +332,7 @@ jobs:
           cd /usr/local/bin
           wget -O swagger https://github.com/go-swagger/go-swagger/releases/download/v0.28.0/swagger_linux_amd64
           chmod +x swagger
-      - uses: actions/setup-python@v6 # Python is required for pre-commit/action
+      - uses: actions/setup-python@v7 # Python is required for pre-commit/action
         with:
           python-version: '3.9'
       - name: Pre-commit checks
