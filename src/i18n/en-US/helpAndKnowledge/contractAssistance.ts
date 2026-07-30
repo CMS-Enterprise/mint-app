@@ -281,6 +281,7 @@ const contractAssistance: TranslationContractAssistance = {
     label: 'Requester',
     sublabel:
       'This field is automatically populated based on your MINT user account.',
+    exportLabel: 'Requester name and email',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.01
@@ -304,6 +305,7 @@ const contractAssistance: TranslationContractAssistance = {
     dbField: 'cmmi_group_other',
     label: 'Describe other',
     sublabel: 'Please describe your "Other" CMMI group.',
+    exportLabel: 'Other CMMI group',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.021
@@ -328,6 +330,7 @@ const contractAssistance: TranslationContractAssistance = {
     dbField: 'cmmi_division_other',
     label: 'Describe other',
     sublabel: 'Please describe your "Other" division.',
+    exportLabel: 'Other CMMI division',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.031
@@ -340,6 +343,8 @@ const contractAssistance: TranslationContractAssistance = {
     sublabel:
       'If applicable, select the model(s) associated with this assistance request. Only models listed in MINT will appear in this list. Select all that apply.',
     multiSelectLabel: 'Selected models',
+    exportLabel: 'Model(s) or demonstration(s)',
+    flattenNestedData: 'modelName',
     tableReference: TableName.CTAT_REQUEST_MODEL_PLAN_LINK,
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.MULTISELECT,
@@ -364,6 +369,7 @@ const contractAssistance: TranslationContractAssistance = {
     dbField: 'contract_activity_type_other',
     label: 'Describe other',
     sublabel: 'Please describe your "Other" contract activity type.',
+    exportLabel: 'Other contract activity type',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.051
@@ -382,6 +388,7 @@ const contractAssistance: TranslationContractAssistance = {
     goField: 'ContractNumber',
     dbField: 'contract_number',
     label: 'Contract number (if applicable)',
+    exportLabel: 'Contract number',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.07
@@ -405,6 +412,7 @@ const contractAssistance: TranslationContractAssistance = {
     dbField: 'contract_type_other',
     label: 'Describe other',
     sublabel: 'Please describe your "Other" contract type.',
+    exportLabel: ' Other contract type',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.081
@@ -429,6 +437,7 @@ const contractAssistance: TranslationContractAssistance = {
     goField: 'TypeOfHelpNeededOther',
     dbField: 'type_of_help_needed_other',
     label: 'Please specify the type of help needed',
+    exportLabel: 'Other help type',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.091
@@ -459,6 +468,7 @@ const contractAssistance: TranslationContractAssistance = {
     goField: 'DateAssistanceNeededBy',
     dbField: 'date_assistance_needed_by',
     label: 'When do you need assistance by?',
+    exportLabel: 'Need by date',
     sublabel: 'mm/dd/yyyy',
     dataType: TranslationDataType.DATE,
     formType: TranslationFormType.DATEPICKER,
@@ -471,6 +481,7 @@ const contractAssistance: TranslationContractAssistance = {
     label: 'Supporting documents',
     sublabel:
       'Upload any documentation that will help CTAT better understand your request. Maximum file size 32 mb.',
+    flattenNestedData: 'fileName',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.13
@@ -656,6 +667,13 @@ const contractAssistanceMisc = {
       bullet4:
         'you may continue to check on the status of your ticket from the contract assistance page in the MINT Help and Knowledge Center'
     }
+  },
+
+  reportHeaders: {
+    dateSubmitted: 'Date submitted',
+    dateAssigned: 'Date assigned',
+    dateClosed: 'Date closed',
+    daysFromSubmittedToCompleted: 'Days from submission to close'
   }
 };
 
