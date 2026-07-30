@@ -33,6 +33,7 @@ func main() {
 	// Model plan emails
 	sendModelPlanShareTest(emailService, addressBook)
 	sendDateChangedEmailsTest(emailService, addressBook)
+	sendCustomTimelineDateCreatedEmailTest(emailService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, addressBook)
 	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, addressBook)
 	sendTestIddocQuestionnaireMarkedCompleteEmail(emailService, addressBook)
@@ -320,37 +321,89 @@ func sendDateChangedEmailsTest(
 	)
 
 	t1, _ := time.Parse(time.RFC3339, "2024-01-01T00:00:00Z")
+	unchangedBasicSingleDate, _ := time.Parse(time.RFC3339, "2024-03-01T00:00:00Z")
+	unchangedBasicRangeStart, _ := time.Parse(time.RFC3339, "2024-04-01T00:00:00Z")
+	unchangedBasicRangeEnd, _ := time.Parse(time.RFC3339, "2024-04-30T00:00:00Z")
+	oldCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-09-01T00:00:00Z")
+	newCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-10-01T00:00:00Z")
+	oldCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-01-01T00:00:00Z")
+	oldCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-06-30T00:00:00Z")
+	newCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-02-01T00:00:00Z")
+	newCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-07-31T00:00:00Z")
+	unchangedCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-11-01T00:00:00Z")
+	unchangedCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-12-01T00:00:00Z")
+	unchangedCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-12-31T00:00:00Z")
+	customSingleDateDescription := "A custom single date for this model plan timeline."
+	customDateRangeDescription := "A custom date range for this model plan timeline."
+	unchangedCustomSingleDateDescription := "A custom single date with no date change."
+	unchangedCustomDateRangeDescription := "A custom date range with no date change."
 	dateChangeSlice := []email.DateChange{
 		{
 			Field:     "Complete ICIP",
 			IsChanged: true,
 			NewDate:   &t1,
-		}, {
+		},
+		{
 			Field:         "Clearance",
 			IsRange:       true,
 			IsChanged:     true,
 			NewRangeStart: &t1,
 			NewRangeEnd:   &t1,
-		}, {
-			Field:     "Announce model",
-			IsChanged: true,
-			NewDate:   &t1,
-		}, {
+		},
+		{
+			Field:   "Announce model",
+			OldDate: &unchangedBasicSingleDate,
+		},
+		{
 			Field:         "Application period",
 			IsRange:       true,
 			IsChanged:     true,
 			NewRangeStart: &t1,
 			NewRangeEnd:   &t1,
-		}, {
+		},
+		{
 			Field:         "Performance period",
-			IsChanged:     true,
 			IsRange:       true,
-			NewRangeStart: &t1,
-			NewRangeEnd:   &t1,
-		}, {
+			OldRangeStart: &unchangedBasicRangeStart,
+			OldRangeEnd:   &unchangedBasicRangeEnd,
+		},
+		{
 			Field:     "Model wrap-up end date",
 			IsChanged: true,
 			NewDate:   &t1,
+		},
+	}
+	customTimelineDateChangeSlice := []email.CustomTimelineDateChange{
+		{
+			IsChanged:    true,
+			Title:        "Custom single date title",
+			Description:  &customSingleDateDescription,
+			IsRange:      false,
+			OldStartDate: &oldCustomSingleDate,
+			NewStartDate: &newCustomSingleDate,
+		},
+		{
+			IsChanged:    true,
+			Title:        "Custom date range title",
+			Description:  &customDateRangeDescription,
+			IsRange:      true,
+			OldStartDate: &oldCustomRangeStart,
+			OldEndDate:   &oldCustomRangeEnd,
+			NewStartDate: &newCustomRangeStart,
+			NewEndDate:   &newCustomRangeEnd,
+		},
+		{
+			Title:        "Unchanged custom single date title",
+			Description:  &unchangedCustomSingleDateDescription,
+			IsRange:      false,
+			OldStartDate: &unchangedCustomSingleDate,
+		},
+		{
+			Title:        "Unchanged custom date range title",
+			Description:  &unchangedCustomDateRangeDescription,
+			IsRange:      true,
+			OldStartDate: &unchangedCustomRangeStart,
+			OldEndDate:   &unchangedCustomRangeEnd,
 		},
 	}
 
@@ -358,13 +411,50 @@ func sendDateChangedEmailsTest(
 		ModelName: modelPlan.ModelName,
 	}
 	bodyContent := email.ModelPlanDateChangedBodyContent{
-		ClientAddress: emailService.GetConfig().GetClientAddress(),
-		ModelName:     modelPlan.ModelName,
-		ModelID:       modelPlan.GetModelPlanID().String(),
-		DateChanges:   dateChangeSlice,
+		ClientAddress:             emailService.GetConfig().GetClientAddress(),
+		ModelName:                 modelPlan.ModelName,
+		ModelID:                   modelPlan.GetModelPlanID().String(),
+		DateChanges:               dateChangeSlice,
+		CustomTimelineDateChanges: customTimelineDateChangeSlice,
 	}
 
 	emailSubject, emailBody, err := email.ModelPlan.DateChanged.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		addressBook.ModelPlanDateChangedRecipients,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendCustomTimelineDateCreatedEmailTest(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	modelPlan := models.NewModelPlan(
+		uuid.Nil,
+		"Test Model Plan",
+	)
+
+	subjectContent := email.CustomTimelineDateCreatedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+	bodyContent := email.CustomTimelineDateCreatedBodyContent{
+		ClientAddress:                 emailService.GetConfig().GetClientAddress(),
+		ModelName:                     modelPlan.ModelName,
+		ModelID:                       modelPlan.GetModelPlanID().String(),
+		UserName:                      "Test User",
+		CustomTimelineDateTitle:       "Custom timeline date",
+		CustomTimelineDateDescription: "A custom date for this model plan timeline.",
+		CustomTimelineDate:            "09/01/2026",
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.CustomTimelineDateCreated.GetContent(subjectContent, bodyContent)
 	noErr(err)
 
 	err = emailService.Send(
