@@ -4,10 +4,32 @@ import (
 	"github.com/google/uuid"
 )
 
+type DiscussionTopicType string
+
+const (
+	DiscussionTopicTypeModelPlanAll                             DiscussionTopicType = "MODEL_PLAN_ALL"
+	DiscussionTopicTypeModelPlanModelBasics                     DiscussionTopicType = "MODEL_PLAN_MODEL_BASICS"
+	DiscussionTopicTypeModelPlanGeneralCharacteristics          DiscussionTopicType = "MODEL_PLAN_GENERAL_CHARACTERISTICS"
+	DiscussionTopicTypeModelPlanParticipantsAndProviders        DiscussionTopicType = "MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS"
+	DiscussionTopicTypeModelPlanBeneficiaries                   DiscussionTopicType = "MODEL_PLAN_BENEFICIARIES"
+	DiscussionTopicTypeModelPlanOperationsEvaluationAndLearning DiscussionTopicType = "MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING"
+	DiscussionTopicTypeModelPlanPayment                         DiscussionTopicType = "MODEL_PLAN_PAYMENT"
+	DiscussionTopicTypeModelTimeline                            DiscussionTopicType = "MODEL_TIMELINE"
+	DiscussionTopicTypeDataExchangeApproach                     DiscussionTopicType = "DATA_EXCHANGE_APPROACH"
+	DiscussionTopicTypeWaiverAssessmentSurvey                   DiscussionTopicType = "WAIVER_ASSESSMENT_SURVEY"
+	DiscussionTopicType4iAcoOsQuestionnaire                     DiscussionTopicType = "_4I_ACO_OS_QUESTIONNAIRE"
+	DiscussionTopicTypeModelToOperationsMatrixMto               DiscussionTopicType = "MODEL_TO_OPERATIONS_MATRIX_MTO"
+	DiscussionTopicTypeDocuments                                DiscussionTopicType = "DOCUMENTS"
+	DiscussionTopicTypeContracts                                DiscussionTopicType = "CONTRACTS"
+	DiscussionTopicTypeFfsCrsAndTdls                            DiscussionTopicType = "FFS_CRS_AND_TDLS"
+	DiscussionTopicTypeOther                                    DiscussionTopicType = "OTHER"
+)
+
 // PlanDiscussion represents a discussion that a user has about a model plan
 type PlanDiscussion struct {
 	baseStruct
 	modelPlanRelation
+	Topic               DiscussionTopicType `json:"topic" db:"topic"`
 	Content             TaggedHTML          `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`

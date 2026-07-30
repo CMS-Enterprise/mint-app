@@ -467,6 +467,7 @@ type PlanDataExchangeApproachTranslation struct {
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
 	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
+	Topic               models.DiscussionTopicType `json:"topic"`
 	Content             models.TaggedHTML          `json:"content"`
 	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`

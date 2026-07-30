@@ -580,6 +580,25 @@ export type DiscussionRoleSelection = {
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
 
+export enum DiscussionTopicType {
+  CONTRACTS = 'CONTRACTS',
+  DATA_EXCHANGE_APPROACH = 'DATA_EXCHANGE_APPROACH',
+  DOCUMENTS = 'DOCUMENTS',
+  FFS_CRS_AND_TDLS = 'FFS_CRS_AND_TDLS',
+  MODEL_PLAN_ALL = 'MODEL_PLAN_ALL',
+  MODEL_PLAN_BENEFICIARIES = 'MODEL_PLAN_BENEFICIARIES',
+  MODEL_PLAN_GENERAL_CHARACTERISTICS = 'MODEL_PLAN_GENERAL_CHARACTERISTICS',
+  MODEL_PLAN_MODEL_BASICS = 'MODEL_PLAN_MODEL_BASICS',
+  MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING = 'MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING',
+  MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS = 'MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS',
+  MODEL_PLAN_PAYMENT = 'MODEL_PLAN_PAYMENT',
+  MODEL_TIMELINE = 'MODEL_TIMELINE',
+  MODEL_TO_OPERATIONS_MATRIX_MTO = 'MODEL_TO_OPERATIONS_MATRIX_MTO',
+  OTHER = 'OTHER',
+  WAIVER_ASSESSMENT_SURVEY = 'WAIVER_ASSESSMENT_SURVEY',
+  _4I_ACO_OS_QUESTIONNAIRE = '_4I_ACO_OS_QUESTIONNAIRE'
+}
+
 export enum DiscussionUserRole {
   CMS_SYSTEM_SERVICE_TEAM = 'CMS_SYSTEM_SERVICE_TEAM',
   IT_LEAD = 'IT_LEAD',
@@ -3504,6 +3523,7 @@ export type PlanDiscussion = {
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   replies: Array<DiscussionReply>;
+  topic: DiscussionTopicType;
   userRole?: Maybe<DiscussionUserRole>;
   userRoleDescription?: Maybe<Scalars['String']['output']>;
 };
@@ -3512,6 +3532,7 @@ export type PlanDiscussion = {
 export type PlanDiscussionCreateInput = {
   content: Scalars['TaggedHTML']['input'];
   modelPlanID: Scalars['UUID']['input'];
+  topic: DiscussionTopicType;
   userRole?: InputMaybe<DiscussionUserRole>;
   userRoleDescription?: InputMaybe<Scalars['String']['input']>;
 };

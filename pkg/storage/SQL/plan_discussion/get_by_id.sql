@@ -1,6 +1,7 @@
 SELECT
     id,
     model_plan_id,
+    topic,
     content,
     user_role,
     user_role_description,

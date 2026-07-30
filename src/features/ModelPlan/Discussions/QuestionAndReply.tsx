@@ -146,6 +146,7 @@ const QuestionAndReply = ({
       <Formik
         initialValues={{
           content: '',
+          topic: undefined,
           userRole: mostRecentUserRole || ('' as DiscussionUserRole),
           userRoleDescription: mostRecentUserRoleDescription || ''
         }}
