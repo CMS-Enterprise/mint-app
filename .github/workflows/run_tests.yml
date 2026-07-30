@@ -217,7 +217,7 @@ jobs:
     if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
     runs-on: ubuntu-latest
     continue-on-error: true
-    needs: [build_docker_images, build_frontend_assets]
+    # needs: [build_docker_images, build_frontend_assets]
     steps:
       - name: Check out code
         uses: actions/checkout@v7
