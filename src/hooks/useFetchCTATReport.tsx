@@ -119,14 +119,12 @@ export const headerFormatter = (
   fieldName: string,
   translations: TranslationContractAssistance
 ) => {
-  let translation = '';
+  let translation = fieldName;
 
   if (fieldName in translations) {
     const field =
       translations[fieldName as keyof TranslationContractAssistance];
     translation = field.exportLabel ?? field.label;
-  } else {
-    translation = `${i18next.t(`contractAssistanceMisc:reportHeaders.${fieldName}`)}`;
   }
 
   return translation;

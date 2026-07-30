@@ -18,7 +18,9 @@ const csvFieldsCTAT = (t: TFunction): (CTATCSVField | string)[] => [
     value: 'requesterUserAccount'
   },
   {
-    label: 'dateSubmitted',
+    label: t<string, {}, string>(
+      'contractAssistanceMisc:reportHeaders.dateSubmitted'
+    ),
     value: 'createdDts'
   },
   'cmmiGroup',
@@ -44,16 +46,25 @@ const csvFieldsCTAT = (t: TFunction): (CTATCSVField | string)[] => [
     value: 'assignedAdminUserAccount.commonName'
   },
   {
-    label: 'dateAssigned',
+    label: t<string, {}, string>(
+      'contractAssistanceMisc:reportHeaders.dateAssigned'
+    ),
     value: 'adminAssignedDts'
   },
   'notes',
   'resolution',
   {
-    label: 'dateClosed',
+    label: t<string, {}, string>(
+      'contractAssistanceMisc:reportHeaders.dateClosed'
+    ),
     value: 'completedDts'
   },
-  'daysFromSubmittedToCompleted'
+  {
+    label: t<string, {}, string>(
+      'contractAssistanceMisc:reportHeaders.daysFromSubmittedToCompleted'
+    ),
+    value: 'daysFromSubmittedToCompleted'
+  }
 ];
 
 export default csvFieldsCTAT;

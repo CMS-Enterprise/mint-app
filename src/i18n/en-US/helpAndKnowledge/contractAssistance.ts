@@ -412,7 +412,7 @@ const contractAssistance: TranslationContractAssistance = {
     dbField: 'contract_type_other',
     label: 'Describe other',
     sublabel: 'Please describe your "Other" contract type.',
-    exportLabel: ' Other contract type',
+    exportLabel: 'Other contract type',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.081
