@@ -3542,6 +3542,7 @@ export type PlanDiscussionTranslation = {
   __typename: 'PlanDiscussionTranslation';
   content: TranslationField;
   isAssessment: TranslationField;
+  topic: TranslationFieldWithOptions;
   userRole: TranslationFieldWithOptions;
   userRoleDescription: TranslationField;
 };

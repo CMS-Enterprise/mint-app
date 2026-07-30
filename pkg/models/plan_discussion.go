@@ -47,11 +47,13 @@ func NewPlanDiscussion(
 	principal uuid.UUID,
 	isAssessment bool,
 	modelPlanID uuid.UUID,
+	topic DiscussionTopicType,
 	content TaggedHTML,
 	userRole *DiscussionUserRole,
 	userRoleDescription *string,
 ) *PlanDiscussion {
 	return &PlanDiscussion{
+		Topic:               topic,
 		Content:             content,
 		UserRole:            userRole,
 		UserRoleDescription: userRoleDescription,

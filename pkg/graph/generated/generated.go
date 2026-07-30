@@ -1460,6 +1460,7 @@ type ComplexityRoot struct {
 	PlanDiscussionTranslation struct {
 		Content             func(childComplexity int) int
 		IsAssessment        func(childComplexity int) int
+		Topic               func(childComplexity int) int
 		UserRole            func(childComplexity int) int
 		UserRoleDescription func(childComplexity int) int
 	}
@@ -10005,6 +10006,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanDiscussionTranslation.IsAssessment(childComplexity), true
+	case "PlanDiscussionTranslation.topic":
+		if e.ComplexityRoot.PlanDiscussionTranslation.Topic == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanDiscussionTranslation.Topic(childComplexity), true
 	case "PlanDiscussionTranslation.userRole":
 		if e.ComplexityRoot.PlanDiscussionTranslation.UserRole == nil {
 			break
@@ -20421,6 +20428,7 @@ extend type Mutation {
 Represents plan discussion translation data
 """
 type PlanDiscussionTranslation {
+  topic: TranslationFieldWithOptions! @goTag(key: "db", value: "topic")
   userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
   userRoleDescription: TranslationField!
     @goTag(key: "db", value: "user_role_description")
@@ -59853,6 +59861,38 @@ func (ec *executionContext) _PlanDiscussion_modifiedDts(ctx context.Context, fie
 }
 func (ec *executionContext) fieldContext_PlanDiscussion_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("PlanDiscussion", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _PlanDiscussionTranslation_topic(ctx context.Context, field graphql.CollectedField, obj *model.PlanDiscussionTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanDiscussionTranslation_topic(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Topic, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanDiscussionTranslation_topic(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDiscussionTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
 }
 
 func (ec *executionContext) _PlanDiscussionTranslation_userRole(ctx context.Context, field graphql.CollectedField, obj *model.PlanDiscussionTranslation) (ret graphql.Marshaler) {
@@ -111239,6 +111279,11 @@ func (ec *executionContext) _PlanDiscussionTranslation(ctx context.Context, sel 
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("PlanDiscussionTranslation")
+		case "topic":
+			out.Values[i] = ec._PlanDiscussionTranslation_topic(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "userRole":
 			out.Values[i] = ec._PlanDiscussionTranslation_userRole(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

@@ -27,6 +27,7 @@ import {
   DataToSendParticipantsType,
   DataToSendToParticipants,
   DiscussionReplyTranslation,
+  DiscussionTopicType,
   DiscussionUserRole,
   DocumentType,
   EvaluationApproachType,
@@ -1048,6 +1049,7 @@ export type TranslationCollaborators = {
 
 // Discussions
 export type TranslationDiscussionsForm = {
+  topic: TranslationFieldPropertiesWithOptions<DiscussionTopicType>;
   userRole: TranslationFieldPropertiesWithOptions<DiscussionUserRole>;
   userRoleDescription: TranslationFieldProperties;
   content: TranslationFieldProperties;

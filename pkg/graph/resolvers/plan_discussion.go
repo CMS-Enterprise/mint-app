@@ -36,6 +36,7 @@ func CreatePlanDiscussion(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.ModelPlanID,
+		input.Topic,
 		input.Content,
 		input.UserRole,
 		input.UserRoleDescription,

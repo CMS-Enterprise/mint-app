@@ -2,6 +2,7 @@
 Represents plan discussion translation data
 """
 type PlanDiscussionTranslation {
+  topic: TranslationFieldWithOptions! @goTag(key: "db", value: "topic")
   userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
   userRoleDescription: TranslationField!
     @goTag(key: "db", value: "user_role_description")
