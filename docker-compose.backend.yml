@@ -80,8 +80,6 @@ services:
       - 8085:8080
       - 2350:2350
     environment:
-      - CEDAR_API_KEY
-      - CEDAR_API_URL
       - OKTA_API_URL
       - OKTA_API_TOKEN
       - HTTP_PROXY
