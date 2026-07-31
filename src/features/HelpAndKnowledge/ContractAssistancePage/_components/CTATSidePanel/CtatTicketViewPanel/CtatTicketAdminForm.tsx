@@ -142,7 +142,7 @@ const CtatTicketAdminForm = ({
       if (!response.errors) {
         toastSuccess(
           <Trans
-            i18nKey="contractAssistance:ctatAdminPanel.success"
+            i18nKey="contractAssistanceMisc:ctatAdminPanel.success"
             values={{
               ticketId: response.data?.adminUpdateCTATRequest.humanReadableID
             }}
