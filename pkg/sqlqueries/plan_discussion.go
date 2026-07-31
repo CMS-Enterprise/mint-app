@@ -43,11 +43,15 @@ type planDiscussionScripts struct {
 	GetWithNumberOfRepliesAtTimeByID string
 	// a query that returns a list of discussions for a given list of model plan ids
 	GetByModelPlanIDLoader string
-
-	Create      string
-	Update      string
-	Delete      string
-	GetByID     string
+	// Create holds the SQL to create plan discussion
+	Create string
+	// Update holds the SQL to update plan discussion
+	Update string
+	// Delete holds the SQL to delete plan discussion
+	Delete string
+	// GetByID holds the SQL to get plan discussion by ID
+	GetByID string
+	// GetUserRole holds the SQL to get most recent user role
 	GetUserRole string
 }
 
