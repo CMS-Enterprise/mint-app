@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useSearchOktaUsersQuery } from 'gql/generated/graphql';
 
-/** Cedar contact properties */
+/** Okta contact properties */
 export type OktaUserType = {
   username: string;
   displayName: string;
@@ -15,7 +15,7 @@ type OktaHookProps = {
 };
 
 /**
- * Custom hook for retrieving contacts from Cedar by common name
+ * Custom hook for retrieving contacts from OKTA by common name
  * */
 function useOktaUserLookup(
   query?: string | null,
@@ -43,13 +43,13 @@ function useOktaUserLookup(
   };
 
   /**
-   * Sorted list of contacts from CEDAR
+   * Sorted list of contacts from OKTA
    * */
   const contacts = useMemo<OktaUserType[]>(() => {
     // Prevent 'no results' message when loading
     if (loading) return previousData?.searchOktaUsers || [];
     // Sort and return contacts from query results
-    return sortCedarContacts(data?.searchOktaUsers || [], searchTerm || '');
+    return sortOktaContacts(data?.searchOktaUsers || [], searchTerm || '');
   }, [searchTerm, previousData, data?.searchOktaUsers, loading]);
 
   return { contacts, queryOktaUsers: updateQuery, loading };
@@ -58,7 +58,7 @@ function useOktaUserLookup(
 /**
  * Sort contacts based on query
  * */
-const sortCedarContacts = (
+const sortOktaContacts = (
   contacts: OktaUserType[],
   query: string
 ): OktaUserType[] => {
