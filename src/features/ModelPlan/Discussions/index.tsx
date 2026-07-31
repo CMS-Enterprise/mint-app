@@ -131,9 +131,12 @@ const Discussions = ({
         ...formikValues
       };
     } else if (discussionType === 'reply' && reply) {
+      // we do not want to include `topic` in the reply flow
+      const { topic, ...replyValues } = formikValues;
+
       payload = {
         discussionID: reply.id,
-        ...formikValues
+        ...replyValues
       };
     } else {
       return; // Currently we have no mutations when discussions is displayed
