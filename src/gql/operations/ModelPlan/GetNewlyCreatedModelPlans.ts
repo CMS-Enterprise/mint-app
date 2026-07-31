@@ -10,6 +10,7 @@ export default gql(/* GraphQL */ `
       modifiedDts
       discussions {
         id
+        topic
       }
     }
   }

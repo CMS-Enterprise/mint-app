@@ -7,6 +7,7 @@ export default gql(/* GraphQL */ `
       isCollaborator
       discussions {
         id
+        topic
         content {
           rawContent
         }
