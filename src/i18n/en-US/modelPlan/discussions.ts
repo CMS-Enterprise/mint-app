@@ -13,7 +13,7 @@ export const discussions: TranslationDiscussions = {
     label: 'Discussion topic',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
-    order: 1,
+    order: 1.001,
     options: {
       MODEL_PLAN_ALL: 'Model plan',
       MODEL_PLAN_MODEL_BASICS: 'Model basics',
