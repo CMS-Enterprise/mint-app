@@ -17,7 +17,7 @@ const (
 	DiscussionTopicTypeModelTimeline                            DiscussionTopicType = "MODEL_TIMELINE"
 	DiscussionTopicTypeDataExchangeApproach                     DiscussionTopicType = "DATA_EXCHANGE_APPROACH"
 	DiscussionTopicTypeWaiverAssessmentSurvey                   DiscussionTopicType = "WAIVER_ASSESSMENT_SURVEY"
-	DiscussionTopicType4iAcoOsQuestionnaire                     DiscussionTopicType = "_4I_ACO_OS_QUESTIONNAIRE"
+	DiscussionTopicTypeIDDOCQuestionnaire                       DiscussionTopicType = "IDDOC_QUESTIONNAIRE"
 	DiscussionTopicTypeModelToOperationsMatrixMto               DiscussionTopicType = "MODEL_TO_OPERATIONS_MATRIX_MTO"
 	DiscussionTopicTypeDocuments                                DiscussionTopicType = "DOCUMENTS"
 	DiscussionTopicTypeContracts                                DiscussionTopicType = "CONTRACTS"

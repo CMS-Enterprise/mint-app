@@ -26,7 +26,7 @@ export const discussions: TranslationDiscussions = {
       MODEL_TIMELINE: 'Timeline',
       DATA_EXCHANGE_APPROACH: 'Data exchange approach',
       WAIVER_ASSESSMENT_SURVEY: 'Waiver assessment survey',
-      _4I_ACO_OS_QUESTIONNAIRE: '4i ACO OS questionnaire',
+      IDDOC_QUESTIONNAIRE: '4i ACO OS questionnaire',
       MODEL_TO_OPERATIONS_MATRIX_MTO: 'Model-to-operations matrix',
       DOCUMENTS: 'Documents',
       CONTRACTS: 'Contracts',
