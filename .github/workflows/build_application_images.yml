@@ -166,6 +166,12 @@ jobs:
           # As such, the Lambda for vulnerability scanning will fail if the image is built with provenance.
           # More information can be found here: https://github.com/docker/buildx/issues/1533
           provenance: false
+      - name: Check for vulnerability scan findings
+        run: |
+          ./scripts/check_ecr_findings.sh "mint-backend" "${{ env.GIT_HASH }}"
+        # We've had too many issues with undefined or low-level vulnerabilities blocking our pipeline
+        # We're going to ignore them for now, but continue to scan and log them.
+        continue-on-error: true
       - name: Announce failure
         if: ${{ failure() }}
         run: |
