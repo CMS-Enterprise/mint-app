@@ -92,9 +92,8 @@ func (s *Store) ModelPlanCreate(np sqlutils.NamedPreparer, logger *zap.Logger, p
 }
 
 // ModelPlanUpdate updates a model plan
-func (s *Store) ModelPlanUpdate(logger logging.ILogger, plan *models.ModelPlan) (*models.ModelPlan, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.Update)
+func ModelPlanUpdate(np sqlutils.NamedPreparer, logger logging.ILogger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.Update)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
