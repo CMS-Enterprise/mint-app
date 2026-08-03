@@ -197,9 +197,14 @@ export const modelToOperationsMisc: Record<string, any> = {
       addCustomCategory: 'or, create a custom category'
     },
     tableFilters: {
-      tableFilters: 'Table filters:',
+      tableFilters: 'Table filters',
+      hideFilters: 'Hide filters',
+      showFilters: 'Show filters',
+      numberOfFiltersApplied: '{{-number}} filters applied',
+      filter: ' Filter',
+      quickFilters: 'Quick filters:',
       neededWithin: 'Needed within',
-      neededWithinAll: 'All',
+      neededWithinAll: 'all time',
       neededWithinPresetDays: '{{days}} days',
       hideCategoryRows: 'Hide category rows ({{count}})',
       noResults: {
