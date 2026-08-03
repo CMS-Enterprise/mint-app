@@ -26,7 +26,7 @@ import toastSuccess from 'components/ToastSuccess';
 import { getStatusAlertBody } from 'contexts/ErrorContext';
 import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 import { OktaUserType } from 'hooks/useOktaUserLookup';
-import { statuses } from 'i18n/en-US/ctatRequest';
+import { statuses } from 'i18n/en-US/helpAndKnowledge/contractAssistance';
 import dirtyInput from 'utils/formUtil';
 
 const STATUS_OPTIONS = [
@@ -82,7 +82,10 @@ const CtatTicketAdminForm = ({
   setIsDirty,
   onSubmitted
 }: CtatTicketAdminFormProps) => {
-  const { t } = useTranslation('contractAssistance');
+  const { t: contractAssistanceT } = useTranslation('contractAssistance');
+  const { t: contractAssistanceMiscT } = useTranslation(
+    'contractAssistanceMisc'
+  );
 
   const initialValues = useMemo(() => buildInitialValues(ticket), [ticket]);
   const [selectedAdmin, setSelectedAdmin] = useState<OktaUserType | null>(() =>
@@ -126,7 +129,7 @@ const CtatTicketAdminForm = ({
     setCurrentErrorMeta({
       overrideMessage: getStatusAlertBody({
         type: 'error',
-        message: t('ctatAdminPanel.error')
+        message: contractAssistanceMiscT('ctatAdminPanel.error')
       })
     });
 
@@ -139,7 +142,7 @@ const CtatTicketAdminForm = ({
       if (!response.errors) {
         toastSuccess(
           <Trans
-            i18nKey="contractAssistance:ctatAdminPanel.success"
+            i18nKey="contractAssistanceMisc:ctatAdminPanel.success"
             values={{
               ticketId: response.data?.adminUpdateCTATRequest.humanReadableID
             }}
@@ -171,7 +174,7 @@ const CtatTicketAdminForm = ({
             headingLevel="h3"
             className="margin-top-0 margin-bottom-3"
           >
-            {t('ctatViewPanel.progressHeading')}
+            {contractAssistanceMiscT('ctatViewPanel.progressHeading')}
           </PageHeading>
 
           <Fieldset className="usa-fieldset margin-top-0 margin-bottom-0">
@@ -184,7 +187,7 @@ const CtatTicketAdminForm = ({
                     htmlFor="ctat-admin-status"
                     className="maxw-none text-bold"
                   >
-                    {t('table.status')}
+                    {contractAssistanceT('status.label')}
                   </Label>
                   <Select
                     {...field}
@@ -215,13 +218,13 @@ const CtatTicketAdminForm = ({
                     id="label-ctat-admin-assigned-member"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatAdminPanel.assignedMember.label')}
+                    {contractAssistanceT('assignedAdmin.label')}
                   </Label>
                   <HelpText
                     id="hint-ctat-admin-assigned-member"
                     className="margin-top-05"
                   >
-                    {t('ctatAdminPanel.assignedMember.hint')}
+                    {contractAssistanceT('assignedAdmin.sublabel')}
                   </HelpText>
                   <OktaUserSelect
                     id="ctat-admin-assigned-member"
@@ -249,10 +252,10 @@ const CtatTicketAdminForm = ({
                     htmlFor="ctat-admin-progress-notes"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatViewPanel.progressNotes')}
+                    {contractAssistanceT('notes.label')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {t('ctatAdminPanel.progressNotes.hint')}
+                    {contractAssistanceT('notes.sublabel')}
                   </HelpText>
                   <TextAreaField
                     {...field}
@@ -274,10 +277,10 @@ const CtatTicketAdminForm = ({
                     htmlFor="ctat-admin-resolution"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatViewPanel.resolution')}
+                    {contractAssistanceT('resolution.label')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {t('ctatAdminPanel.resolution.hint')}
+                    {contractAssistanceT('resolution.sublabel')}
                   </HelpText>
                   <TextAreaField
                     {...field}

@@ -24,7 +24,9 @@ import {
   useGetModelPlansBaseQuery,
   useGetUserInfoQuery
 } from 'gql/generated/graphql';
+import GetCtatRequestsAdmin from 'gql/operations/CTAT/GetCtatRequestsAdmin';
 import GetCtatRequestsRequester from 'gql/operations/CTAT/GetCtatRequestsRequester';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
@@ -39,20 +41,16 @@ import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
 import { getStatusAlertBody } from 'contexts/ErrorContext';
 import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import {
-  cmmiDivisions,
-  cmmiGroups,
-  contractActivityTypes,
-  contractTypes,
   divisionOptionsByGroup,
   helpNeededGroupLabels,
   helpNeededTypeDisplayOverrides,
-  helpNeededTypes,
   helpNeededTypesOther,
   helpNeededTypesPostAward,
-  helpNeededTypesPreAward,
-  requestUrgencies
-} from 'i18n/en-US/ctatRequest';
+  helpNeededTypesPreAward
+} from 'i18n/en-US/helpAndKnowledge/contractAssistance';
+import { isAssessment } from 'utils/user';
 
 import SupportingDocumentsUpload from './SupportingDocumentsUpload';
 
@@ -114,11 +112,33 @@ const CtatTicketForm = ({
   setIsDirty,
   onSubmitted
 }: CtatTicketFormProps) => {
-  const { t } = useTranslation('contractAssistance');
-  const { euaId } = useSelector((state: AppState) => state.auth);
+  const { t: contractAssistanceT } = useTranslation('contractAssistance');
+  const { t: contractAssistanceMiscT } = useTranslation(
+    'contractAssistanceMisc'
+  );
+
+  const {
+    cmmiGroup: cmmiGroupConfig,
+    cmmiDivision: cmmiDivisionConfig,
+    contractActivityType: contractActivityTypeConfig,
+    contractType: contractTypeConfig,
+    typeOfHelpNeeded: typeOfHelpNeededConfig,
+    requestUrgency: requestUrgencyConfig
+  } = usePlanTranslation('contractAssistance');
+
+  const { euaId, groups } = useSelector((state: AppState) => state.auth);
+
+  const flags = useFlags();
+
+  const isAssessmentTeam = isAssessment(groups, flags);
+
+  const refetchQueries = isAssessmentTeam
+    ? // This handles when an assessment team member submits a ticket, it will update the ticket lists for both tables.
+      [{ query: GetCtatRequestsRequester }, { query: GetCtatRequestsAdmin }]
+    : [{ query: GetCtatRequestsRequester }];
 
   const [createCTATRequest] = useCreateCtatRequestMutation({
-    refetchQueries: [{ query: GetCtatRequestsRequester }]
+    refetchQueries
   });
 
   const { data: userData, loading: userLoading } = useGetUserInfoQuery({
@@ -153,13 +173,16 @@ const CtatTicketForm = ({
 
   const defaultSelectOption = {
     value: SELECT_DEFAULT,
-    label: t('ctatSidePanel.fields.cmmiGroup.selectDefault')
+    label: contractAssistanceMiscT('ctatSidePanel.selectDefault')
   };
 
   const cmmiGroupOptions = useMemo(
     () =>
-      Object.entries(cmmiGroups).map(([value, label]) => ({ value, label })),
-    []
+      Object.entries(cmmiGroupConfig.options).map(([value, label]) => ({
+        value,
+        label
+      })),
+    [cmmiGroupConfig]
   );
 
   const cmmiDivisionOptions = useMemo(() => {
@@ -175,40 +198,42 @@ const CtatTicketForm = ({
     return [
       ...divisions.map(division => ({
         value: division,
-        label: cmmiDivisions[division]
+        label: cmmiDivisionConfig.options[division]
       })),
       {
         value: CtatcmmiDivisionOption.OTHER,
-        label: cmmiDivisions[CtatcmmiDivisionOption.OTHER]
+        label: cmmiDivisionConfig.options[CtatcmmiDivisionOption.OTHER]
       }
     ];
-  }, [isCmmiDivisionRequired, selectedCmmiGroup]);
+  }, [isCmmiDivisionRequired, selectedCmmiGroup, cmmiDivisionConfig]);
 
   const contractActivityTypeOptions = useMemo(
     () =>
-      Object.entries(contractActivityTypes).map(([value, label]) => ({
-        value,
-        label
-      })),
-    []
+      Object.entries(contractActivityTypeConfig.options).map(
+        ([value, label]) => ({
+          value,
+          label
+        })
+      ),
+    [contractActivityTypeConfig]
   );
 
   const contractTypeOptions = useMemo(
     () =>
-      Object.entries(contractTypes).map(([value, label]) => ({
+      Object.entries(contractTypeConfig.options).map(([value, label]) => ({
         value,
         label
       })),
-    []
+    [contractTypeConfig]
   );
 
   const requestUrgencyOptions = useMemo(
     () =>
-      Object.entries(requestUrgencies).map(([value, label]) => ({
+      Object.entries(requestUrgencyConfig.options).map(([value, label]) => ({
         value,
         label
       })),
-    []
+    [requestUrgencyConfig]
   );
 
   const modelPlanOptions = useMemo(
@@ -226,7 +251,7 @@ const CtatTicketForm = ({
         label: helpNeededGroupLabels.preAward,
         options: helpNeededTypesPreAward.map(key => ({
           value: key,
-          label: helpNeededTypes[key],
+          label: typeOfHelpNeededConfig.options[key],
           readonlyLabel: helpNeededTypeDisplayOverrides[key]
         }))
       },
@@ -234,7 +259,7 @@ const CtatTicketForm = ({
         label: helpNeededGroupLabels.postAward,
         options: helpNeededTypesPostAward.map(key => ({
           value: key,
-          label: helpNeededTypes[key],
+          label: typeOfHelpNeededConfig.options[key],
           readonlyLabel: helpNeededTypeDisplayOverrides[key]
         }))
       },
@@ -242,12 +267,12 @@ const CtatTicketForm = ({
         label: helpNeededGroupLabels.other,
         options: helpNeededTypesOther.map(key => ({
           value: key,
-          label: helpNeededTypes[key],
+          label: typeOfHelpNeededConfig.options[key],
           readonlyLabel: helpNeededTypeDisplayOverrides[key]
         }))
       }
     ],
-    []
+    [typeOfHelpNeededConfig]
   );
 
   const requesterDisplayName = useMemo(() => {
@@ -334,7 +359,7 @@ const CtatTicketForm = ({
     setCurrentErrorMeta({
       overrideMessage: getStatusAlertBody({
         type: 'error',
-        message: t('ctatSidePanel.error')
+        message: contractAssistanceMiscT('ctatSidePanel.error')
       })
     });
 
@@ -346,7 +371,7 @@ const CtatTicketForm = ({
       if (!response.errors) {
         toastSuccess(
           <Trans
-            i18nKey={t('ctatSidePanel.success')}
+            i18nKey={contractAssistanceMiscT('ctatSidePanel.success')}
             values={{
               ticketId: response.data?.createCTATRequest.humanReadableID
             }}
@@ -372,11 +397,11 @@ const CtatTicketForm = ({
   return (
     <div className="margin-top-8 padding-8 maxw-tablet">
       <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-3">
-        {t('ctatSidePanel.newTicketHeading')}
+        {contractAssistanceMiscT('ctatSidePanel.newTicketHeading')}
       </PageHeading>
       <p className="text-base margin-top-0 margin-bottom-3">
         <Trans
-          i18nKey={t('ctatSidePanel.allFieldsRequired')}
+          i18nKey={contractAssistanceMiscT('ctatSidePanel.allFieldsRequired')}
           components={{
             s: <span className="text-secondary-dark" />
           }}
@@ -396,10 +421,10 @@ const CtatTicketForm = ({
                 className="maxw-none text-bold"
                 requiredMarker
               >
-                {t('ctatSidePanel.fields.requester.label')}
+                {contractAssistanceT('requester.label')}
               </Label>
               <HelpText className="margin-top-05">
-                {t('ctatSidePanel.fields.requester.hint')}
+                {contractAssistanceT('requester.sublabel')}
               </HelpText>
               <TextInput
                 id="ctat-requester"
@@ -414,10 +439,12 @@ const CtatTicketForm = ({
               name="cmmiGroup"
               control={control}
               rules={{
-                required: t('ctatSidePanel.validation.fillOut'),
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                ),
                 validate: value =>
                   value !== SELECT_DEFAULT ||
-                  t('ctatSidePanel.validation.fillOut')
+                  contractAssistanceMiscT('ctatSidePanel.validation.fillOut')
               }}
               render={({ field: { ref, ...field }, fieldState: { error } }) => (
                 <FormGroup
@@ -429,7 +456,7 @@ const CtatTicketForm = ({
                     className="maxw-none text-bold"
                     requiredMarker
                   >
-                    {t('ctatSidePanel.fields.cmmiGroup.label')}
+                    {contractAssistanceT('cmmiGroup.label')}
                   </Label>
                   {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                   <Select
@@ -464,7 +491,9 @@ const CtatTicketForm = ({
                 name="cmmiGroupOther"
                 control={control}
                 rules={{
-                  required: t('ctatSidePanel.validation.fillOut')
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
                 }}
                 render={({
                   field: { ref, ...field },
@@ -479,10 +508,10 @@ const CtatTicketForm = ({
                       className="maxw-none text-bold"
                       requiredMarker
                     >
-                      {t('ctatSidePanel.fields.cmmiGroup.otherLabel')}
+                      {contractAssistanceT('cmmiGroupOther.label')}
                     </Label>
                     <HelpText className="margin-top-05">
-                      {t('ctatSidePanel.fields.cmmiGroup.otherHint')}
+                      {contractAssistanceT('cmmiGroupOther.sublabel')}
                     </HelpText>
                     {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                     <TextInput
@@ -508,7 +537,7 @@ const CtatTicketForm = ({
 
                   return (
                     value !== SELECT_DEFAULT ||
-                    t('ctatSidePanel.validation.fillOut')
+                    contractAssistanceMiscT('ctatSidePanel.validation.fillOut')
                   );
                 }
               }}
@@ -522,10 +551,10 @@ const CtatTicketForm = ({
                     className="maxw-none text-bold"
                     requiredMarker={isCmmiDivisionRequired}
                   >
-                    {t('ctatSidePanel.fields.cmmiDivision.label')}
+                    {contractAssistanceT('cmmiDivision.label')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {t('ctatSidePanel.fields.cmmiDivision.hint')}
+                    {contractAssistanceT('cmmiDivision.sublabel')}
                   </HelpText>
                   {!!error && isCmmiDivisionRequired && (
                     <FieldErrorMsg>{error.message}</FieldErrorMsg>
@@ -554,7 +583,9 @@ const CtatTicketForm = ({
                 name="cmmiDivisionOther"
                 control={control}
                 rules={{
-                  required: t('ctatSidePanel.validation.fillOut')
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
                 }}
                 render={({
                   field: { ref, ...field },
@@ -569,10 +600,10 @@ const CtatTicketForm = ({
                       className="maxw-none text-bold"
                       requiredMarker
                     >
-                      {t('ctatSidePanel.fields.cmmiDivision.otherLabel')}
+                      {contractAssistanceT('cmmiDivisionOther.label')}
                     </Label>
                     <HelpText className="margin-top-05">
-                      {t('ctatSidePanel.fields.cmmiDivision.otherHint')}
+                      {contractAssistanceT('cmmiDivisionOther.sublabel')}
                     </HelpText>
                     {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                     <TextInput
@@ -596,25 +627,23 @@ const CtatTicketForm = ({
                     htmlFor="related-mint-models"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatSidePanel.fields.modelOrDemonstration.label')}
+                    {contractAssistanceT('relatedMINTModels.label')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {t('ctatSidePanel.fields.modelOrDemonstration.hint')}
+                    {contractAssistanceT('relatedMINTModels.sublabel')}
                   </HelpText>
                   <MultiSelect
                     {...field}
                     inputRef={ref}
                     id="related-mint-models"
                     inputId="related-mint-models"
-                    ariaLabel={t(
-                      'ctatSidePanel.fields.modelOrDemonstration.label'
-                    )}
-                    ariaLabelText={t(
-                      'ctatSidePanel.fields.modelOrDemonstration.label'
+                    ariaLabel={contractAssistanceT('relatedMINTModels.label')}
+                    ariaLabelText={contractAssistanceT(
+                      'relatedMINTModels.label'
                     )}
                     options={modelPlanOptions}
-                    selectedLabel={t(
-                      'ctatSidePanel.fields.modelOrDemonstration.label'
+                    selectedLabel={contractAssistanceT(
+                      'relatedMINTModels.multiSelectLabel'
                     )}
                     initialValues={watch('relatedMINTModels')}
                   />
@@ -631,7 +660,7 @@ const CtatTicketForm = ({
                     htmlFor="contract-activity-type"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatSidePanel.fields.contractActivityType.label')}
+                    {contractAssistanceT('contractActivityType.label')}
                   </Label>
                   <Select
                     {...field}
@@ -642,8 +671,8 @@ const CtatTicketForm = ({
                     {[
                       {
                         value: SELECT_DEFAULT,
-                        label: t(
-                          'ctatSidePanel.fields.contractActivityType.selectDefault'
+                        label: contractAssistanceMiscT(
+                          'ctatSidePanel.selectDefault'
                         )
                       },
                       ...contractActivityTypeOptions
@@ -663,7 +692,9 @@ const CtatTicketForm = ({
                 name="contractActivityTypeOther"
                 control={control}
                 rules={{
-                  required: t('ctatSidePanel.validation.fillOut')
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
                 }}
                 render={({
                   field: { ref, ...field },
@@ -678,12 +709,12 @@ const CtatTicketForm = ({
                       className="maxw-none text-bold"
                       requiredMarker
                     >
-                      {t(
-                        'ctatSidePanel.fields.contractActivityType.otherLabel'
-                      )}
+                      {contractAssistanceT('contractActivityTypeOther.label')}
                     </Label>
                     <HelpText className="margin-top-05">
-                      {t('ctatSidePanel.fields.contractActivityType.otherHint')}
+                      {contractAssistanceT(
+                        'contractActivityTypeOther.sublabel'
+                      )}
                     </HelpText>
                     {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                     <TextInput
@@ -707,7 +738,7 @@ const CtatTicketForm = ({
                     htmlFor="contract-name"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatSidePanel.fields.contractName.label')}
+                    {contractAssistanceT('contractName.label')}
                   </Label>
                   <TextInput
                     {...field}
@@ -729,7 +760,7 @@ const CtatTicketForm = ({
                     htmlFor="contract-number"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatSidePanel.fields.contractNumber.label')}
+                    {contractAssistanceT('contractNumber.label')}
                   </Label>
                   <TextInput
                     {...field}
@@ -751,7 +782,7 @@ const CtatTicketForm = ({
                     htmlFor="contract-type"
                     className="maxw-none text-bold"
                   >
-                    {t('ctatSidePanel.fields.contractType.label')}
+                    {contractAssistanceT('contractType.label')}
                   </Label>
                   <Select
                     {...field}
@@ -762,8 +793,8 @@ const CtatTicketForm = ({
                     {[
                       {
                         value: SELECT_DEFAULT,
-                        label: t(
-                          'ctatSidePanel.fields.contractType.selectDefault'
+                        label: contractAssistanceMiscT(
+                          'ctatSidePanel.selectDefault'
                         )
                       },
                       ...contractTypeOptions
@@ -782,7 +813,9 @@ const CtatTicketForm = ({
                 name="contractTypeOther"
                 control={control}
                 rules={{
-                  required: t('ctatSidePanel.validation.fillOut')
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
                 }}
                 render={({
                   field: { ref, ...field },
@@ -797,10 +830,10 @@ const CtatTicketForm = ({
                       className="maxw-none text-bold"
                       requiredMarker
                     >
-                      {t('ctatSidePanel.fields.contractType.otherLabel')}
+                      {contractAssistanceT('contractTypeOther.label')}
                     </Label>
                     <HelpText className="margin-top-05">
-                      {t('ctatSidePanel.fields.contractType.otherHint')}
+                      {contractAssistanceT('contractTypeOther.sublabel')}
                     </HelpText>
                     {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                     <TextInput
@@ -819,9 +852,12 @@ const CtatTicketForm = ({
               name="typeOfHelpNeeded"
               control={control}
               rules={{
-                required: t('ctatSidePanel.validation.fillOut'),
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                ),
                 validate: value =>
-                  value.length > 0 || t('ctatSidePanel.validation.fillOut')
+                  value.length > 0 ||
+                  contractAssistanceMiscT('ctatSidePanel.validation.fillOut')
               }}
               render={({ field: { ref, ...field }, fieldState: { error } }) => (
                 <FormGroup
@@ -833,10 +869,10 @@ const CtatTicketForm = ({
                     className="maxw-none text-bold"
                     requiredMarker
                   >
-                    {t('ctatSidePanel.fields.helpNeededType.label')}
+                    {contractAssistanceT('typeOfHelpNeeded.label')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {t('ctatSidePanel.fields.helpNeededType.hint')}
+                    {contractAssistanceT('typeOfHelpNeeded.sublabel')}
                   </HelpText>
                   {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                   <MultiSelect
@@ -844,14 +880,14 @@ const CtatTicketForm = ({
                     inputRef={ref}
                     id="type-of-help-needed"
                     inputId="type-of-help-needed"
-                    ariaLabel={t('ctatSidePanel.fields.helpNeededType.label')}
-                    ariaLabelText={t(
-                      'ctatSidePanel.fields.helpNeededType.label'
+                    ariaLabel={contractAssistanceT('typeOfHelpNeeded.label')}
+                    ariaLabelText={contractAssistanceT(
+                      'typeOfHelpNeeded.label'
                     )}
                     options={[]}
                     groupedOptions={groupedHelpNeededOptions}
-                    selectedLabel={t(
-                      'ctatSidePanel.fields.helpNeededType.label'
+                    selectedLabel={contractAssistanceT(
+                      'typeOfHelpNeeded.multiSelectLabel'
                     )}
                     initialValues={watch('typeOfHelpNeeded')}
                   />
@@ -864,7 +900,9 @@ const CtatTicketForm = ({
                 name="typeOfHelpNeededOther"
                 control={control}
                 rules={{
-                  required: t('ctatSidePanel.validation.fillOut')
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
                 }}
                 render={({
                   field: { ref, ...field },
@@ -879,7 +917,7 @@ const CtatTicketForm = ({
                       className="maxw-none text-bold"
                       requiredMarker
                     >
-                      {t('ctatSidePanel.fields.other.helpNeededType')}
+                      {contractAssistanceT('typeOfHelpNeededOther.label')}
                     </Label>
                     {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                     <TextInput
@@ -898,10 +936,14 @@ const CtatTicketForm = ({
               name="describeHelpNeeded"
               control={control}
               rules={{
-                required: t('ctatSidePanel.validation.fillOut'),
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                ),
                 maxLength: {
                   value: 500,
-                  message: t('ctatSidePanel.validation.fillOut')
+                  message: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
                 }
               }}
               render={({ field: { ref, ...field }, fieldState: { error } }) => (
@@ -914,10 +956,10 @@ const CtatTicketForm = ({
                     className="maxw-none text-bold"
                     requiredMarker
                   >
-                    {t('ctatSidePanel.fields.assistanceDescription.label')}
+                    {contractAssistanceT('describeHelpNeeded.label')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {t('ctatSidePanel.fields.assistanceDescription.hint')}
+                    {contractAssistanceT('describeHelpNeeded.sublabel')}
                   </HelpText>
                   {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                   <TextAreaField
@@ -929,9 +971,7 @@ const CtatTicketForm = ({
                     className="height-card"
                   />
                   <HelpText className="margin-top-05">
-                    {t(
-                      'ctatSidePanel.fields.assistanceDescription.charactersAllowed'
-                    )}
+                    {contractAssistanceMiscT('ctatSidePanel.charactersAllowed')}
                   </HelpText>
                 </FormGroup>
               )}
@@ -941,10 +981,12 @@ const CtatTicketForm = ({
               name="requestUrgency"
               control={control}
               rules={{
-                required: t('ctatSidePanel.validation.fillOut'),
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                ),
                 validate: value =>
                   value !== SELECT_DEFAULT ||
-                  t('ctatSidePanel.validation.fillOut')
+                  contractAssistanceMiscT('ctatSidePanel.validation.fillOut')
               }}
               render={({ field: { ref, ...field }, fieldState: { error } }) => (
                 <FormGroup
@@ -956,7 +998,7 @@ const CtatTicketForm = ({
                     className="maxw-none text-bold"
                     requiredMarker
                   >
-                    {t('ctatSidePanel.fields.requestUrgency.label')}
+                    {contractAssistanceT('requestUrgency.label')}
                   </Label>
                   {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                   <Select
@@ -968,8 +1010,8 @@ const CtatTicketForm = ({
                     {[
                       {
                         value: SELECT_DEFAULT,
-                        label: t(
-                          'ctatSidePanel.fields.requestUrgency.selectDefault'
+                        label: contractAssistanceMiscT(
+                          'ctatSidePanel.selectDefault'
                         )
                       },
                       ...requestUrgencyOptions
@@ -987,7 +1029,9 @@ const CtatTicketForm = ({
               name="dateAssistanceNeededBy"
               control={control}
               rules={{
-                required: t('ctatSidePanel.validation.fillOut')
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                )
               }}
               render={({ field: { ref, ...field }, fieldState: { error } }) => (
                 <FormGroup
@@ -999,10 +1043,10 @@ const CtatTicketForm = ({
                     className="maxw-none text-bold"
                     requiredMarker
                   >
-                    {t('ctatSidePanel.fields.assistanceNeededBy.label')}
+                    {contractAssistanceT('dateAssistanceNeededBy.label')}
                   </Label>
                   <HelpText className="margin-top-05">
-                    {t('ctatSidePanel.fields.assistanceNeededBy.hint')}
+                    {contractAssistanceT('dateAssistanceNeededBy.sublabel')}
                   </HelpText>
                   {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                   <DatePickerFormatted
@@ -1021,26 +1065,44 @@ const CtatTicketForm = ({
                 htmlFor="ctat-supporting-documents"
                 className="maxw-none text-bold"
               >
-                {t('ctatSidePanel.fields.supportingDocuments.label')}
+                {contractAssistanceT('supportingDocuments.label')}
               </Label>
               <HelpText className="margin-top-05">
-                {t('ctatSidePanel.fields.supportingDocuments.hint')}
+                {contractAssistanceT('supportingDocuments.sublabel')}
               </HelpText>
               <SupportingDocumentsUpload control={control} />
             </FormGroup>
 
             <Alert noIcon type="info" validation className="margin-bottom-0">
               <p className="margin-top-0 margin-bottom-1 text-bold">
-                {t('ctatSidePanel.whatHappensNext.heading')}
+                {contractAssistanceMiscT(
+                  'ctatSidePanel.whatHappensNext.heading'
+                )}
               </p>
               <p className="margin-top-0 margin-bottom-1">
-                {t('ctatSidePanel.whatHappensNext.intro')}
+                {contractAssistanceMiscT('ctatSidePanel.whatHappensNext.intro')}
               </p>
               <ul className="margin-top-0 margin-bottom-0">
-                <li>{t('ctatSidePanel.whatHappensNext.bullet1')}</li>
-                <li>{t('ctatSidePanel.whatHappensNext.bullet2')}</li>
-                <li>{t('ctatSidePanel.whatHappensNext.bullet3')}</li>
-                <li>{t('ctatSidePanel.whatHappensNext.bullet4')}</li>
+                <li>
+                  {contractAssistanceMiscT(
+                    'ctatSidePanel.whatHappensNext.bullet1'
+                  )}
+                </li>
+                <li>
+                  {contractAssistanceMiscT(
+                    'ctatSidePanel.whatHappensNext.bullet2'
+                  )}
+                </li>
+                <li>
+                  {contractAssistanceMiscT(
+                    'ctatSidePanel.whatHappensNext.bullet3'
+                  )}
+                </li>
+                <li>
+                  {contractAssistanceMiscT(
+                    'ctatSidePanel.whatHappensNext.bullet4'
+                  )}
+                </li>
               </ul>
             </Alert>
           </Fieldset>

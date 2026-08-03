@@ -283,6 +283,31 @@ type ComplexityRoot struct {
 		VirusScanned          func(childComplexity int) int
 	}
 
+	CTATRequestTranslation struct {
+		AssignedAdmin             func(childComplexity int) int
+		CmmiDivision              func(childComplexity int) int
+		CmmiDivisionOther         func(childComplexity int) int
+		CmmiGroup                 func(childComplexity int) int
+		CmmiGroupOther            func(childComplexity int) int
+		ContractActivityType      func(childComplexity int) int
+		ContractActivityTypeOther func(childComplexity int) int
+		ContractName              func(childComplexity int) int
+		ContractNumber            func(childComplexity int) int
+		ContractType              func(childComplexity int) int
+		ContractTypeOther         func(childComplexity int) int
+		DateAssistanceNeededBy    func(childComplexity int) int
+		DescribeHelpNeeded        func(childComplexity int) int
+		Notes                     func(childComplexity int) int
+		RelatedMINTModels         func(childComplexity int) int
+		RequestUrgency            func(childComplexity int) int
+		Requester                 func(childComplexity int) int
+		Resolution                func(childComplexity int) int
+		Status                    func(childComplexity int) int
+		SupportingDocuments       func(childComplexity int) int
+		TypeOfHelpNeeded          func(childComplexity int) int
+		TypeOfHelpNeededOther     func(childComplexity int) int
+	}
+
 	CTATRequestsTableData struct {
 		Count        func(childComplexity int) int
 		CtatRequests func(childComplexity int) int
@@ -4181,6 +4206,139 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.CTATRequestDocument.VirusScanned(childComplexity), true
+
+	case "CTATRequestTranslation.assignedAdmin":
+		if e.ComplexityRoot.CTATRequestTranslation.AssignedAdmin == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.AssignedAdmin(childComplexity), true
+	case "CTATRequestTranslation.cmmiDivision":
+		if e.ComplexityRoot.CTATRequestTranslation.CmmiDivision == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.CmmiDivision(childComplexity), true
+	case "CTATRequestTranslation.cmmiDivisionOther":
+		if e.ComplexityRoot.CTATRequestTranslation.CmmiDivisionOther == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.CmmiDivisionOther(childComplexity), true
+	case "CTATRequestTranslation.cmmiGroup":
+		if e.ComplexityRoot.CTATRequestTranslation.CmmiGroup == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.CmmiGroup(childComplexity), true
+	case "CTATRequestTranslation.cmmiGroupOther":
+		if e.ComplexityRoot.CTATRequestTranslation.CmmiGroupOther == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.CmmiGroupOther(childComplexity), true
+	case "CTATRequestTranslation.contractActivityType":
+		if e.ComplexityRoot.CTATRequestTranslation.ContractActivityType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.ContractActivityType(childComplexity), true
+	case "CTATRequestTranslation.contractActivityTypeOther":
+		if e.ComplexityRoot.CTATRequestTranslation.ContractActivityTypeOther == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.ContractActivityTypeOther(childComplexity), true
+	case "CTATRequestTranslation.contractName":
+		if e.ComplexityRoot.CTATRequestTranslation.ContractName == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.ContractName(childComplexity), true
+	case "CTATRequestTranslation.contractNumber":
+		if e.ComplexityRoot.CTATRequestTranslation.ContractNumber == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.ContractNumber(childComplexity), true
+	case "CTATRequestTranslation.contractType":
+		if e.ComplexityRoot.CTATRequestTranslation.ContractType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.ContractType(childComplexity), true
+	case "CTATRequestTranslation.contractTypeOther":
+		if e.ComplexityRoot.CTATRequestTranslation.ContractTypeOther == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.ContractTypeOther(childComplexity), true
+	case "CTATRequestTranslation.dateAssistanceNeededBy":
+		if e.ComplexityRoot.CTATRequestTranslation.DateAssistanceNeededBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.DateAssistanceNeededBy(childComplexity), true
+	case "CTATRequestTranslation.describeHelpNeeded":
+		if e.ComplexityRoot.CTATRequestTranslation.DescribeHelpNeeded == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.DescribeHelpNeeded(childComplexity), true
+	case "CTATRequestTranslation.notes":
+		if e.ComplexityRoot.CTATRequestTranslation.Notes == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.Notes(childComplexity), true
+	case "CTATRequestTranslation.relatedMINTModels":
+		if e.ComplexityRoot.CTATRequestTranslation.RelatedMINTModels == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.RelatedMINTModels(childComplexity), true
+	case "CTATRequestTranslation.requestUrgency":
+		if e.ComplexityRoot.CTATRequestTranslation.RequestUrgency == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.RequestUrgency(childComplexity), true
+	case "CTATRequestTranslation.requester":
+		if e.ComplexityRoot.CTATRequestTranslation.Requester == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.Requester(childComplexity), true
+	case "CTATRequestTranslation.resolution":
+		if e.ComplexityRoot.CTATRequestTranslation.Resolution == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.Resolution(childComplexity), true
+	case "CTATRequestTranslation.status":
+		if e.ComplexityRoot.CTATRequestTranslation.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.Status(childComplexity), true
+	case "CTATRequestTranslation.supportingDocuments":
+		if e.ComplexityRoot.CTATRequestTranslation.SupportingDocuments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.SupportingDocuments(childComplexity), true
+	case "CTATRequestTranslation.typeOfHelpNeeded":
+		if e.ComplexityRoot.CTATRequestTranslation.TypeOfHelpNeeded == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.TypeOfHelpNeeded(childComplexity), true
+	case "CTATRequestTranslation.typeOfHelpNeededOther":
+		if e.ComplexityRoot.CTATRequestTranslation.TypeOfHelpNeededOther == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATRequestTranslation.TypeOfHelpNeededOther(childComplexity), true
 
 	case "CTATRequestsTableData.count":
 		if e.ComplexityRoot.CTATRequestsTableData.Count == nil {
@@ -18293,6 +18451,47 @@ type CTATRequestDocument {
   modifiedBy: UUID
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/ctat_request_translation.graphql", Input: `"""
+Represents CTAT request translation data
+"""
+type CTATRequestTranslation {
+  # Request form
+  requester: TranslationField! @goTag(key: "db", value: "requester")
+  cmmiGroup: TranslationFieldWithOptions! @goTag(key: "db", value: "cmmi_group")
+  cmmiGroupOther: TranslationField! @goTag(key: "db", value: "cmmi_group_other")
+  cmmiDivision: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "cmmi_division")
+  cmmiDivisionOther: TranslationField!
+    @goTag(key: "db", value: "cmmi_division_other")
+  relatedMINTModels: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
+  contractActivityType: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "contract_activity_type")
+  contractActivityTypeOther: TranslationField!
+    @goTag(key: "db", value: "contract_activity_type_other")
+  contractName: TranslationField! @goTag(key: "db", value: "contract_name")
+  contractNumber: TranslationField! @goTag(key: "db", value: "contract_number")
+  contractType: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "contract_type")
+  contractTypeOther: TranslationField!
+    @goTag(key: "db", value: "contract_type_other")
+  typeOfHelpNeeded: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "type_of_help_needed")
+  typeOfHelpNeededOther: TranslationField!
+    @goTag(key: "db", value: "type_of_help_needed_other")
+  describeHelpNeeded: TranslationField!
+    @goTag(key: "db", value: "describe_help_needed")
+  requestUrgency: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "request_urgency")
+  dateAssistanceNeededBy: TranslationField!
+    @goTag(key: "db", value: "date_assistance_needed_by")
+  supportingDocuments: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
+  # Ticket management form
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  assignedAdmin: TranslationField! @goTag(key: "db", value: "assigned_admin")
+  notes: TranslationField! @goTag(key: "db", value: "notes")
+  resolution: TranslationField! @goTag(key: "db", value: "resolution")
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/current_user.graphql", Input: `"""
@@ -33965,6 +34164,710 @@ func (ec *executionContext) _CTATRequestDocument_modifiedDts(ctx context.Context
 }
 func (ec *executionContext) fieldContext_CTATRequestDocument_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("CTATRequestDocument", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _CTATRequestTranslation_requester(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_requester(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Requester, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_requester(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_cmmiGroup(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_cmmiGroup(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CmmiGroup, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_cmmiGroup(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_cmmiGroupOther(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_cmmiGroupOther(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CmmiGroupOther, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_cmmiGroupOther(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_cmmiDivision(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_cmmiDivision(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CmmiDivision, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_cmmiDivision(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_cmmiDivisionOther(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_cmmiDivisionOther(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CmmiDivisionOther, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_cmmiDivisionOther(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_relatedMINTModels(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_relatedMINTModels(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.RelatedMINTModels, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_relatedMINTModels(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_contractActivityType(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_contractActivityType(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ContractActivityType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_contractActivityType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_contractActivityTypeOther(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_contractActivityTypeOther(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ContractActivityTypeOther, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_contractActivityTypeOther(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_contractName(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_contractName(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ContractName, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_contractName(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_contractNumber(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_contractNumber(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ContractNumber, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_contractNumber(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_contractType(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_contractType(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ContractType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_contractType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_contractTypeOther(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_contractTypeOther(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ContractTypeOther, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_contractTypeOther(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_typeOfHelpNeeded(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_typeOfHelpNeeded(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.TypeOfHelpNeeded, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_typeOfHelpNeeded(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_typeOfHelpNeededOther(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_typeOfHelpNeededOther(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.TypeOfHelpNeededOther, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_typeOfHelpNeededOther(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_describeHelpNeeded(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_describeHelpNeeded(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.DescribeHelpNeeded, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_describeHelpNeeded(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_requestUrgency(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_requestUrgency(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.RequestUrgency, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_requestUrgency(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_dateAssistanceNeededBy(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_dateAssistanceNeededBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.DateAssistanceNeededBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_dateAssistanceNeededBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_supportingDocuments(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_supportingDocuments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.SupportingDocuments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_supportingDocuments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_status(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_status(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Status, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_assignedAdmin(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_assignedAdmin(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.AssignedAdmin, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_assignedAdmin(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_notes(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_notes(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Notes, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_notes(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATRequestTranslation_resolution(ctx context.Context, field graphql.CollectedField, obj *model.CTATRequestTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATRequestTranslation_resolution(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Resolution, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATRequestTranslation_resolution(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATRequestTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
 }
 
 func (ec *executionContext) _CTATRequestsTableData_ctatRequests(ctx context.Context, field graphql.CollectedField, obj *models.CTATRequestsTableData) (ret graphql.Marshaler) {
@@ -101719,6 +102622,149 @@ func (ec *executionContext) _CTATRequestDocument(ctx context.Context, sel ast.Se
 			out.Values[i] = ec._CTATRequestDocument_modifiedDts(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var cTATRequestTranslationImplementors = []string{"CTATRequestTranslation"}
+
+func (ec *executionContext) _CTATRequestTranslation(ctx context.Context, sel ast.SelectionSet, obj *model.CTATRequestTranslation) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, cTATRequestTranslationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CTATRequestTranslation")
+		case "requester":
+			out.Values[i] = ec._CTATRequestTranslation_requester(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "cmmiGroup":
+			out.Values[i] = ec._CTATRequestTranslation_cmmiGroup(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "cmmiGroupOther":
+			out.Values[i] = ec._CTATRequestTranslation_cmmiGroupOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "cmmiDivision":
+			out.Values[i] = ec._CTATRequestTranslation_cmmiDivision(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "cmmiDivisionOther":
+			out.Values[i] = ec._CTATRequestTranslation_cmmiDivisionOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "relatedMINTModels":
+			out.Values[i] = ec._CTATRequestTranslation_relatedMINTModels(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "contractActivityType":
+			out.Values[i] = ec._CTATRequestTranslation_contractActivityType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "contractActivityTypeOther":
+			out.Values[i] = ec._CTATRequestTranslation_contractActivityTypeOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "contractName":
+			out.Values[i] = ec._CTATRequestTranslation_contractName(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "contractNumber":
+			out.Values[i] = ec._CTATRequestTranslation_contractNumber(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "contractType":
+			out.Values[i] = ec._CTATRequestTranslation_contractType(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "contractTypeOther":
+			out.Values[i] = ec._CTATRequestTranslation_contractTypeOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "typeOfHelpNeeded":
+			out.Values[i] = ec._CTATRequestTranslation_typeOfHelpNeeded(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "typeOfHelpNeededOther":
+			out.Values[i] = ec._CTATRequestTranslation_typeOfHelpNeededOther(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "describeHelpNeeded":
+			out.Values[i] = ec._CTATRequestTranslation_describeHelpNeeded(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "requestUrgency":
+			out.Values[i] = ec._CTATRequestTranslation_requestUrgency(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "dateAssistanceNeededBy":
+			out.Values[i] = ec._CTATRequestTranslation_dateAssistanceNeededBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "supportingDocuments":
+			out.Values[i] = ec._CTATRequestTranslation_supportingDocuments(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "status":
+			out.Values[i] = ec._CTATRequestTranslation_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "assignedAdmin":
+			out.Values[i] = ec._CTATRequestTranslation_assignedAdmin(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "notes":
+			out.Values[i] = ec._CTATRequestTranslation_notes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "resolution":
+			out.Values[i] = ec._CTATRequestTranslation_resolution(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))

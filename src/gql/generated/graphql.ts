@@ -478,6 +478,33 @@ export type CtatRequestInput = {
   typeOfHelpNeededOther?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** Represents CTAT request translation data */
+export type CtatRequestTranslation = {
+  __typename: 'CTATRequestTranslation';
+  assignedAdmin: TranslationField;
+  cmmiDivision: TranslationFieldWithOptions;
+  cmmiDivisionOther: TranslationField;
+  cmmiGroup: TranslationFieldWithOptions;
+  cmmiGroupOther: TranslationField;
+  contractActivityType: TranslationFieldWithOptions;
+  contractActivityTypeOther: TranslationField;
+  contractName: TranslationField;
+  contractNumber: TranslationField;
+  contractType: TranslationFieldWithOptions;
+  contractTypeOther: TranslationField;
+  dateAssistanceNeededBy: TranslationField;
+  describeHelpNeeded: TranslationField;
+  notes: TranslationField;
+  relatedMINTModels: TranslationField;
+  requestUrgency: TranslationFieldWithOptions;
+  requester: TranslationField;
+  resolution: TranslationField;
+  status: TranslationFieldWithOptions;
+  supportingDocuments: TranslationField;
+  typeOfHelpNeeded: TranslationFieldWithOptions;
+  typeOfHelpNeededOther: TranslationField;
+};
+
 /** The urgency selected for a CTAT request. */
 export enum CtatRequestUrgency {
   HIGH = 'HIGH',

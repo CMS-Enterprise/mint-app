@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Alert } from 'components/Alert';
 import TablePageSize from 'components/TablePageSize';
 import TablePagination from 'components/TablePagination';
-import { statuses } from 'i18n/en-US/ctatRequest';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import {
   getColumnSortStatus,
   getHeaderSortIcon,
@@ -44,7 +44,9 @@ const ContractAssistanceTicketsTable = ({
   adminTab = 'all',
   onTicketClick
 }: ContractAssistanceTicketsTableProps) => {
-  const { t } = useTranslation('contractAssistance');
+  const { t } = useTranslation('contractAssistanceMisc');
+  const { status: statusConfig } = usePlanTranslation('contractAssistance');
+
   const isAdmin = variant === 'admin';
 
   const translationPrefix = isAdmin
@@ -112,7 +114,9 @@ const ContractAssistanceTicketsTable = ({
         Cell: ({ row }: { row: Row<ContractAssistanceTicket> }) => (
           <>
             <div>
-              {row.original.statusCode ? statuses[row.original.statusCode] : ''}
+              {row.original.statusCode
+                ? statusConfig.options[row.original.statusCode]
+                : ''}
             </div>
             {row.original.assigneeName && (
               <p className="margin-0 text-base-darker font-sans-xs">
@@ -123,7 +127,7 @@ const ContractAssistanceTicketsTable = ({
         )
       }
     ],
-    [t, onTicketClick, isAdmin]
+    [t, onTicketClick, isAdmin, statusConfig]
   );
 
   const {

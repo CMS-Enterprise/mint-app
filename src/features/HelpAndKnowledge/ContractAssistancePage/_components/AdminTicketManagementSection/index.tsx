@@ -24,7 +24,7 @@ type AdminTicketManagementSectionProps = {
 const AdminTicketManagementSection = ({
   tickets
 }: AdminTicketManagementSectionProps) => {
-  const { t } = useTranslation('contractAssistance');
+  const { t } = useTranslation('contractAssistanceMisc');
   const { euaId } = useSelector((state: AppState) => state.auth);
   const navigate = useNavigate();
   const location = useLocation();

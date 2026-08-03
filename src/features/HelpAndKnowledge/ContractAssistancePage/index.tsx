@@ -24,7 +24,7 @@ import UserSubmittedTicketsSection from './_components/UserSubmittedTicketsSecti
 import { mapCtatRequestsToContractAssistanceTickets } from './utils';
 
 const ContractAssistancePage = () => {
-  const { t } = useTranslation('contractAssistance');
+  const { t } = useTranslation('contractAssistanceMisc');
   const { t: hkcT } = useTranslation('helpAndKnowledge');
 
   const { groups } = useSelector((state: AppState) => state.auth);
