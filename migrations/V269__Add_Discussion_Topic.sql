@@ -17,4 +17,14 @@ CREATE TYPE DISCUSSION_TOPIC_TYPE AS ENUM (
     'OTHER'
 );
 
-ALTER TABLE plan_discussion ADD COLUMN IF NOT EXISTS topic DISCUSSION_TOPIC_TYPE NOT NULL DEFAULT 'OTHER';
+ALTER TABLE plan_discussion
+ADD COLUMN IF NOT EXISTS topic DISCUSSION_TOPIC_TYPE;
+
+-- backfill
+UPDATE plan_discussion
+SET topic = 'OTHER'
+WHERE topic IS NULL;
+
+-- set not null to enforce `topic` selection
+ALTER TABLE plan_discussion
+ALTER COLUMN topic SET NOT NULL;
