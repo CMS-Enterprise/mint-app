@@ -40,6 +40,7 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
+  | 'customTimelineUpdate'
   | 'questionnaireTaskListStatusUpdate'
   | 'mtoStatusUpdate'
   | 'teamUpdate'
@@ -59,6 +60,7 @@ export type ChangeType =
 export type TranslationTables =
   | TableName.MODEL_PLAN
   | TableName.PLAN_TIMELINE
+  | TableName.CUSTOM_TIMELINE_DATE
   | TableName.PLAN_BASICS
   | TableName.PLAN_GENERAL_CHARACTERISTICS
   | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
@@ -244,6 +246,11 @@ export const doubleBatchedTables: TableName[] = [
   TableName.MTO_MILESTONE_SOLUTION_LINK,
   TableName.MTO_MILESTONE,
   TableName.MTO_CATEGORY
+];
+
+const timelineTables: TableName[] = [
+  TableName.PLAN_TIMELINE,
+  TableName.CUSTOM_TIMELINE_DATE
 ];
 
 // Fields that are connected to other tables
@@ -590,6 +597,13 @@ export const isMTOChange = (
   queryString === TypeOfChange.MODEL_TO_OPERATIONS &&
   mtoTables.includes(audit.tableName);
 
+export const isTimelineChange = (
+  queryString: string,
+  audit: ChangeRecordType
+): boolean =>
+  queryString === TypeOfChange.MODEL_TIMELINE &&
+  timelineTables.includes(audit.tableName);
+
 export const filterQueryAudits = (
   queryString: string,
   groupedAudits: ChangeRecordType[][]
@@ -610,6 +624,10 @@ export const filterQueryAudits = (
       }
 
       if (isMTOChange(queryString, audit)) {
+        return true;
+      }
+
+      if (isTimelineChange(queryString, audit)) {
         return true;
       }
 
@@ -821,6 +839,10 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'taskListStatusUpdate';
   }
 
+  if (change.tableName === TableName.CUSTOM_TIMELINE_DATE) {
+    return 'customTimelineUpdate';
+  }
+
   if (
     change.tableName === TableName.MTO_INFO &&
     change.translatedFields.find(
@@ -918,6 +940,9 @@ export const getHeaderText = (change: ChangeRecordType): string => {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       }
       break;
+    case 'customTimelineUpdate':
+      headerText = i18next.t(`changeHistory:customTimelineUpdate`);
+      break;
     case 'mtoStatusUpdate':
       headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       break;
@@ -974,11 +999,36 @@ export const getActionText = (change: ChangeRecordType): string => {
     case 'mtoNoteUpdate':
       actionText = i18next.t(`changeHistory:noteUpdateType.${change.action}`);
       break;
+    case 'customTimelineUpdate':
+      actionText = i18next.t(
+        `changeHistory:customTimelineChangeType.${change.action}`
+      );
+      break;
     default:
       break;
   }
 
   return actionText;
+};
+
+export const getInOrToOrFrom = (change: ChangeRecordType): string => {
+  let inOrToOrFromText: string = '';
+
+  switch (change.action) {
+    case DatabaseOperation.INSERT:
+      inOrToOrFromText = i18next.t('changeHistory:toFromIn.INSERT');
+      break;
+    case DatabaseOperation.UPDATE:
+      inOrToOrFromText = i18next.t('changeHistory:toFromIn.UPDATE');
+      break;
+    case DatabaseOperation.DELETE:
+      inOrToOrFromText = i18next.t('changeHistory:toFromIn.DELETE');
+      break;
+    default:
+      break;
+  }
+
+  return inOrToOrFromText;
 };
 
 export const isInitialCreatedSection = (

@@ -18,6 +18,7 @@ type PlanTimeline struct {
 	PerformancePeriodEnds   *time.Time `json:"performancePeriodEnds" db:"performance_period_ends" statusWeight:"1"`
 	WrapUpEnds              *time.Time `json:"wrapUpEnds" db:"wrap_up_ends" statusWeight:"1"`
 	HighLevelNote           *string    `json:"highLevelNote" db:"high_level_note"`
+	CustomDatesNote         *string    `json:"customDatesNote" db:"custom_dates_note"`
 }
 
 // NewPlanTimeline returns a new timeline object
