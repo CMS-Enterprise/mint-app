@@ -12,6 +12,7 @@ import {
 import classNames from 'classnames';
 import FormatDiscussion from 'features/ModelPlan/Discussions/FormatDiscussion';
 import {
+  DiscussionTopicType,
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery
 } from 'gql/generated/graphql';
@@ -343,6 +344,7 @@ const DiscussionCard = () => {
   const discussions: DiscussionType[] = [
     {
       id: 'c5960290-81b2-4303-8249-84d334de56b3',
+      topic: DiscussionTopicType.MODEL_PLAN_ALL,
       content: {
         __typename: 'TaggedContent',
         rawContent:

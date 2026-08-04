@@ -6,6 +6,34 @@ import {
 } from '../../../gql/generated/graphql';
 
 export const discussions: TranslationDiscussions = {
+  topic: {
+    gqlField: 'topic',
+    goField: 'Topic',
+    dbField: 'topic',
+    label: 'Discussion topic',
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    order: 1.001,
+    options: {
+      MODEL_PLAN_ALL: 'Model plan',
+      MODEL_PLAN_MODEL_BASICS: 'Model basics',
+      MODEL_PLAN_GENERAL_CHARACTERISTICS: 'General characteristics',
+      MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS: 'Participants and providers',
+      MODEL_PLAN_BENEFICIARIES: 'Beneficiaries',
+      MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING:
+        'Operations, evaluation, and learning',
+      MODEL_PLAN_PAYMENT: 'Payment',
+      MODEL_TIMELINE: 'Timeline',
+      DATA_EXCHANGE_APPROACH: 'Data exchange approach',
+      WAIVER_ASSESSMENT_SURVEY: 'Waiver assessment survey',
+      IDDOC_QUESTIONNAIRE: '4i ACO OS questionnaire',
+      MODEL_TO_OPERATIONS_MATRIX_MTO: 'Model-to-operations matrix',
+      DOCUMENTS: 'Documents',
+      CONTRACTS: 'Contracts',
+      FFS_CRS_AND_TDLS: 'FFS CRs and TDLs',
+      OTHER: 'Other'
+    }
+  },
   userRole: {
     gqlField: 'userRole',
     goField: 'UserRole',

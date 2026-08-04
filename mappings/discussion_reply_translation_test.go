@@ -8,5 +8,6 @@ import (
 )
 
 func TestDiscussionReplyTranslation(t *testing.T) {
-	assertAllTranslationDataGeneric(t, DiscussionReplyTranslation, models.PlanDiscussion{}, taskListStructExcludeFields)
+	excludedFields := append(taskListStructExcludeFields, "DiscussionID")
+	assertAllTranslationDataGeneric(t, DiscussionReplyTranslation, models.DiscussionReply{}, excludedFields)
 }

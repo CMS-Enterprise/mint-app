@@ -1452,6 +1452,7 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
 		Replies               func(childComplexity int) int
+		Topic                 func(childComplexity int) int
 		UserRole              func(childComplexity int) int
 		UserRoleDescription   func(childComplexity int) int
 	}
@@ -1459,6 +1460,7 @@ type ComplexityRoot struct {
 	PlanDiscussionTranslation struct {
 		Content             func(childComplexity int) int
 		IsAssessment        func(childComplexity int) int
+		Topic               func(childComplexity int) int
 		UserRole            func(childComplexity int) int
 		UserRoleDescription func(childComplexity int) int
 	}
@@ -9973,6 +9975,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanDiscussion.Replies(childComplexity), true
+	case "PlanDiscussion.topic":
+		if e.ComplexityRoot.PlanDiscussion.Topic == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanDiscussion.Topic(childComplexity), true
 	case "PlanDiscussion.userRole":
 		if e.ComplexityRoot.PlanDiscussion.UserRole == nil {
 			break
@@ -9998,6 +10006,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanDiscussionTranslation.IsAssessment(childComplexity), true
+	case "PlanDiscussionTranslation.topic":
+		if e.ComplexityRoot.PlanDiscussionTranslation.Topic == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanDiscussionTranslation.Topic(childComplexity), true
 	case "PlanDiscussionTranslation.userRole":
 		if e.ComplexityRoot.PlanDiscussionTranslation.UserRole == nil {
 			break
@@ -20354,12 +20368,32 @@ type PlanDataExchangeApproachTranslation {
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_discussion.graphql", Input: `"""
+	{Name: "../schema/types/plan_discussion.graphql", Input: `enum DiscussionTopicType {
+  MODEL_PLAN_ALL
+  MODEL_PLAN_MODEL_BASICS
+  MODEL_PLAN_GENERAL_CHARACTERISTICS
+  MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS
+  MODEL_PLAN_BENEFICIARIES
+  MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING
+  MODEL_PLAN_PAYMENT
+  MODEL_TIMELINE
+  DATA_EXCHANGE_APPROACH
+  WAIVER_ASSESSMENT_SURVEY
+  IDDOC_QUESTIONNAIRE
+  MODEL_TO_OPERATIONS_MATRIX_MTO
+  DOCUMENTS
+  CONTRACTS
+  FFS_CRS_AND_TDLS
+  OTHER
+}
+
+"""
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion {
   id: UUID!
   modelPlanID: UUID!
+  topic: DiscussionTopicType!
   content: TaggedContent @goField(forceResolver: true)
   userRole: DiscussionUserRole
   userRoleDescription: String
@@ -20379,6 +20413,7 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 """
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
+  topic: DiscussionTopicType!
   content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
@@ -20393,6 +20428,7 @@ extend type Mutation {
 Represents plan discussion translation data
 """
 type PlanDiscussionTranslation {
+  topic: TranslationFieldWithOptions! @goTag(key: "db", value: "topic")
   userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
   userRoleDescription: TranslationField!
     @goTag(key: "db", value: "user_role_description")
@@ -25605,6 +25641,8 @@ func (ec *executionContext) childFields_PlanDiscussion(ctx context.Context, fiel
 		return ec.fieldContext_PlanDiscussion_id(ctx, field)
 	case "modelPlanID":
 		return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
+	case "topic":
+		return ec.fieldContext_PlanDiscussion_topic(ctx, field)
 	case "content":
 		return ec.fieldContext_PlanDiscussion_content(ctx, field)
 	case "userRole":
@@ -59513,6 +59551,29 @@ func (ec *executionContext) fieldContext_PlanDiscussion_modelPlanID(_ context.Co
 	return graphql.NewScalarFieldContext("PlanDiscussion", field, false, false, errors.New("field of type UUID does not have child fields"))
 }
 
+func (ec *executionContext) _PlanDiscussion_topic(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanDiscussion_topic(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Topic, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.DiscussionTopicType) graphql.Marshaler {
+			return ec.marshalNDiscussionTopicType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionTopicType(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanDiscussion_topic(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("PlanDiscussion", field, false, false, errors.New("field of type DiscussionTopicType does not have child fields"))
+}
+
 func (ec *executionContext) _PlanDiscussion_content(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -59800,6 +59861,38 @@ func (ec *executionContext) _PlanDiscussion_modifiedDts(ctx context.Context, fie
 }
 func (ec *executionContext) fieldContext_PlanDiscussion_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("PlanDiscussion", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _PlanDiscussionTranslation_topic(ctx context.Context, field graphql.CollectedField, obj *model.PlanDiscussionTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanDiscussionTranslation_topic(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Topic, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanDiscussionTranslation_topic(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDiscussionTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
 }
 
 func (ec *executionContext) _PlanDiscussionTranslation_userRole(ctx context.Context, field graphql.CollectedField, obj *model.PlanDiscussionTranslation) (ret graphql.Marshaler) {
@@ -93658,7 +93751,7 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "content", "userRole", "userRoleDescription"}
+	fieldsInOrder := [...]string{"modelPlanID", "topic", "content", "userRole", "userRoleDescription"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -93672,6 +93765,13 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 				return it, err
 			}
 			it.ModelPlanID = data
+		case "topic":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("topic"))
+			data, err := ec.unmarshalNDiscussionTopicType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionTopicType(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Topic = data
 		case "content":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
 			data, err := ec.unmarshalNTaggedHTML2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, v)
@@ -110954,6 +111054,11 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "topic":
+			out.Values[i] = ec._PlanDiscussion_topic(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "content":
 			field := field
 
@@ -111174,6 +111279,11 @@ func (ec *executionContext) _PlanDiscussionTranslation(ctx context.Context, sel 
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("PlanDiscussionTranslation")
+		case "topic":
+			out.Values[i] = ec._PlanDiscussionTranslation_topic(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "userRole":
 			out.Values[i] = ec._PlanDiscussionTranslation_userRole(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -124826,6 +124936,23 @@ func (ec *executionContext) marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsᚑente
 func (ec *executionContext) unmarshalNDiscussionReplyCreateInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyCreateInput(ctx context.Context, v any) (model.DiscussionReplyCreateInput, error) {
 	res, err := ec.unmarshalInputDiscussionReplyCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNDiscussionTopicType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionTopicType(ctx context.Context, v any) (models.DiscussionTopicType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DiscussionTopicType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDiscussionTopicType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionTopicType(ctx context.Context, sel ast.SelectionSet, v models.DiscussionTopicType) graphql.Marshaler {
+	_ = sel
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNDiscussionUserRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionUserRole(ctx context.Context, v any) (models.DiscussionUserRole, error) {

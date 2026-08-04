@@ -5,6 +5,7 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
+  DiscussionTopicType,
   DiscussionUserRole,
   GetModelPlanDiscussionsDocument,
   GetModelPlanDiscussionsQuery,
@@ -27,6 +28,7 @@ const discussionResult: GetModelPlanDiscussionsType['modelPlan'] = {
     {
       __typename: 'PlanDiscussion',
       id: '123',
+      topic: DiscussionTopicType.OTHER,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a question.'
@@ -45,6 +47,7 @@ const discussionResult: GetModelPlanDiscussionsType['modelPlan'] = {
     {
       __typename: 'PlanDiscussion',
       id: '456',
+      topic: DiscussionTopicType.MODEL_PLAN_ALL,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a second question.'

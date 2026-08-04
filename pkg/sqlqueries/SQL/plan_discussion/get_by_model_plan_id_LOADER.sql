@@ -6,6 +6,7 @@ WITH QUERIED_IDS AS (
 SELECT
     disc.id,
     disc.model_plan_id,
+    disc.topic,
     disc.content,
     disc.user_role,
     disc.user_role_description,
