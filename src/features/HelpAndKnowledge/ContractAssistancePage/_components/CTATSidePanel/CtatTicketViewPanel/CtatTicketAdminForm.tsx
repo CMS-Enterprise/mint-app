@@ -18,6 +18,7 @@ import {
 import GetCtatRequest from 'gql/operations/CTAT/GetCtatRequest';
 import GetCtatRequestsAdmin from 'gql/operations/CTAT/GetCtatRequestsAdmin';
 
+import CollapsableLink from 'components/CollapsableLink';
 import HelpText from 'components/HelpText';
 import OktaUserSelect from 'components/OktaUserSelect';
 import PageHeading from 'components/PageHeading';
@@ -28,6 +29,7 @@ import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 import { OktaUserType } from 'hooks/useOktaUserLookup';
 import { statuses } from 'i18n/en-US/helpAndKnowledge/contractAssistance';
 import dirtyInput from 'utils/formUtil';
+import { tObject } from 'utils/translation';
 
 const STATUS_OPTIONS = [
   CtatStatus.NEW,
@@ -85,6 +87,10 @@ const CtatTicketAdminForm = ({
   const { t: contractAssistanceT } = useTranslation('contractAssistance');
   const { t: contractAssistanceMiscT } = useTranslation(
     'contractAssistanceMisc'
+  );
+
+  const statusInfoConfig = tObject<string, string[]>(
+    'contractAssistanceMisc:ctatSidePanel.statusInfo'
   );
 
   const initialValues = useMemo(() => buildInitialValues(ticket), [ticket]);
@@ -204,6 +210,30 @@ const CtatTicketAdminForm = ({
                       </option>
                     ))}
                   </Select>
+
+                  <CollapsableLink
+                    id="statuses-info"
+                    className="width-full line-height-body-4"
+                    label={contractAssistanceMiscT(
+                      'ctatSidePanel.statusInfo.label'
+                    )}
+                    horizontalCaret
+                  >
+                    <ul className="margin-y-0 padding-left-3">
+                      {statusInfoConfig.statuses.map(
+                        (status: string, index: number) => (
+                          <li className="margin-bottom-1" key={status}>
+                            <Trans
+                              i18nKey={`contractAssistanceMisc:ctatSidePanel.statusInfo.statuses.${index}`}
+                              components={{
+                                bold: <strong />
+                              }}
+                            />
+                          </li>
+                        )
+                      )}
+                    </ul>
+                  </CollapsableLink>
                 </FormGroup>
               )}
             />

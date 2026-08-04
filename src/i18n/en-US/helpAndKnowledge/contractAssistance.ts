@@ -641,6 +641,15 @@ const contractAssistanceMisc = {
     modalHeading: 'Contract assistance ticket',
     allFieldsRequired:
       'Fields marked with an asterisk ( <s>*</s> ) are required.',
+    statusInfo: {
+      label: 'What do these statuses mean?',
+      statuses: [
+        '<bold>New:</bold> This ticket is newly submitted and CTAT has not yet looked at it.',
+        '<bold>Assigned:</bold> A CTAT admin has been assigned to your ticket, but has not yet started working on it.',
+        '<bold>In progress:</bold> The CTAT admin assigned to your ticket has started work on your ticket.',
+        '<bold>Closed:</bold> The CTAT admin assigned to your ticket has completed work and added a resolution to your ticket. The resolution should be documented in the “Resolution” field below.'
+      ]
+    },
     newTicketHeading: 'New ticket',
     submitTicket: 'Submit ticket',
     cancel: 'Cancel',
