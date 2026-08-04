@@ -70,10 +70,10 @@ jobs:
           provenance: false
 
   deploy_faktory:
+    if: ${{ inputs.env != 'prod' || (inputs.env == 'prod' && inputs.confirm_production_deploy == true) }}
     needs: [build_faktory_image]
     runs-on: ubuntu-latest
     environment: ${{ inputs.env }}
-    steps:
       - name: Check out code
         uses: actions/checkout@v7
       - name: Configure AWS credentials
