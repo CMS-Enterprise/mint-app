@@ -28,7 +28,7 @@ COPY pkg/ ./pkg/
 COPY mappings/ ./mappings/
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o bin/mint ./cmd/mint
 
-FROM scratch
+FROM gcr.io/distroless/base:latest
 
 WORKDIR /mint/
 

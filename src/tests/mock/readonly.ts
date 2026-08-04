@@ -173,7 +173,8 @@ const modelTimelineData: GetAllTimelineTypes = {
     commonName: 'Test User'
   },
   readyForReviewDts: '2022-06-03T19:32:24.412662Z',
-  status: TaskStatus.IN_PROGRESS
+  status: TaskStatus.IN_PROGRESS,
+  customTimelineDates: []
 };
 
 export const modelTimelineMocks: MockedResponse<

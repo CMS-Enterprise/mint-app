@@ -195,6 +195,31 @@ func (s *Seeder) SeedData() {
 			"highLevelNote":   "Some high level note",
 		},
 	)
+	customSingleDateDescription := "A sample custom single date for this model timeline."
+	s.createCustomTimelineDate(
+		planWithTimeline,
+		&model.CustomTimelineDateCreateInput{
+			ModelPlanID: planWithTimeline.ID,
+			Title:       "Custom single date",
+			Description: &customSingleDateDescription,
+			DateType:    models.CustomTimelineDateTypeSingle,
+			StartDate:   now.AddDate(0, 0, 30),
+			EndDate:     nil,
+		},
+	)
+	customDateRangeDescription := "A sample custom date range for this model timeline."
+	customDateRangeEnd := now.AddDate(0, 0, 90)
+	s.createCustomTimelineDate(
+		planWithTimeline,
+		&model.CustomTimelineDateCreateInput{
+			ModelPlanID: planWithTimeline.ID,
+			Title:       "Custom date range",
+			Description: &customDateRangeDescription,
+			DateType:    models.CustomTimelineDateTypeRange,
+			StartDate:   now.AddDate(0, 0, 60),
+			EndDate:     &customDateRangeEnd,
+		},
+	)
 	s.updateModelPlan(planWithTimeline, map[string]interface{}{
 		"abbreviation": "timeline",
 		"status":       models.ModelStatusActive,
