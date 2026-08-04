@@ -233,7 +233,7 @@ func sendPlanDiscussionTagEmails(
 				continue
 			}
 
-			err = sendPlanDiscussionTaggedSolutionEmail(emailService, addressBook, tHTML, discussionID, modelPlan, createdByUserName, createdByUserRole, soln, pocEmailAddress)
+			err = sendPlanDiscussionTaggedSolutionEmail(emailService, addressBook, tHTML, discussionID, topic, modelPlan, createdByUserName, createdByUserRole, soln, pocEmailAddress)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -297,6 +297,7 @@ func sendPlanDiscussionTaggedSolutionEmail(
 	addressBook email.AddressBook,
 	tHTML models.TaggedHTML,
 	discussionID uuid.UUID,
+	topic models.DiscussionTopicType,
 	modelPlan *models.ModelPlan,
 	createdByUserName string,
 	createdByUserRole string,
@@ -317,6 +318,7 @@ func sendPlanDiscussionTaggedSolutionEmail(
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
 		UserName:          createdByUserName,
+		Topic:             topic.Humanize(),
 		DiscussionContent: tHTML.RawContent.ToTemplate(),
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,
