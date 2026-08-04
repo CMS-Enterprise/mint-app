@@ -1,9 +1,7 @@
 const maxAttempts = 3;
 
 describe('Logging in', () => {
-  // TODO(MINT-3761): rewrite cy.login() for hosted Okta/ELP redirect login (widget DOM selectors
-  // break when VITE_OKTA_REDIRECT_LOGIN_ENABLED=true). See cypress/support/login.js.
-  it.skip(
+  it(
     'logs in with okta',
     {
       retries: {
@@ -28,7 +26,7 @@ describe('Logging in', () => {
     }
   );
 
-  it('logs in with local auth an verifies NDA', () => {
+  it('logs in with local auth and verifies NDA', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/');
 
