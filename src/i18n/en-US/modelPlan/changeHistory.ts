@@ -39,6 +39,9 @@ const changeHistory = {
     'started {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   taskStatusUpdate:
     'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
+  customTimelineUpdate:
+    '{{action}} {{customTimelineTitle}} {{toFromIn}} model timeline <datetime>on {{date}} at {{time}}</datetime>',
+  customTimelineRemovedTitle: 'a date',
   planStatusUpdate:
     'updated the status to {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   teamANSWERED:
@@ -77,6 +80,7 @@ const changeHistory = {
   sections: {
     model_plan: 'Model plan',
     plan_timeline: 'Model timeline',
+    custom_timeline_dates: 'Additional model dates',
     plan_basics: 'Model basics',
     plan_general_characteristics: 'General characteristics',
     plan_participants_and_providers: 'Participants and providers',
@@ -162,6 +166,11 @@ const changeHistory = {
     ANSWERED: 'added',
     REMOVED: 'removed',
     UPDATED: 'updated'
+  },
+  customTimelineChangeType: {
+    INSERT: 'added',
+    DELETE: 'removed',
+    UPDATE: 'updated'
   },
   changeType: {
     CREATED: 'created',
