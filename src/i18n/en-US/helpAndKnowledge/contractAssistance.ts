@@ -107,13 +107,12 @@ export const contractTypes: Record<CtatContractType, string> = {
 };
 
 export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
-  [CtatHelpNeededType.CALM_SYSTEM_REQUISITION_SUPPORT]:
-    'CALM system requisition support',
+  [CtatHelpNeededType.CALM_SYSTEM_REQUISITION_SUPPORT]: 'CALM support',
   [CtatHelpNeededType.PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING]:
     'Contract Cost Review (CCR) processing',
   [CtatHelpNeededType.POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING]:
     'Contract Cost Review (CCR) processing',
-  [CtatHelpNeededType.COR_TRANSCRIPT_REVIEW]: 'COR Transcript Review',
+  [CtatHelpNeededType.COR_TRANSCRIPT_REVIEW]: 'COR transcript review',
   [CtatHelpNeededType.DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS]:
     'Defining and documenting contract requirements',
   [CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER]:
@@ -123,7 +122,7 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.GUIDANCE_ON_JUSTIFICATION_AND_APPROVAL_JA]:
     'Guidance on Justification and Approval (J&A)',
   [CtatHelpNeededType.GUIDANCE_ON_MARKET_RESEARCH]:
-    'Guidance on Market Research',
+    'Guidance on market research',
   [CtatHelpNeededType.GUIDANCE_ON_TEP_MEMBERSHIP_SCORING_REPORTING]:
     'Guidance on Technical Evaluation Panel (TEP) membership, scoring, and/or reporting',
   [CtatHelpNeededType.INDEPENDENT_GOVERNMENT_COST_ESTIMATE_IGCE_PREPARATION]:
@@ -138,8 +137,10 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.REQUEST_FOR_QUOTATION_RFQ]: 'Request for Quotation (RFQ)',
   [CtatHelpNeededType.SOW_SOO_PWS_DEVELOPMENT]:
     'Statement of Work (SOW) / Statement of Objectives (SOO) / Performance Work Statement (PWS) development',
+  [CtatHelpNeededType.CONTRACT_CLOSEOUT_ACTIVITIES_SUPPORT]:
+    'Contract close out activities and support',
   [CtatHelpNeededType.CONTRACTOR_PERFORMANCE_MANAGEMENT]:
-    'Contractor Performance Management',
+    'Contractor performance management',
   [CtatHelpNeededType.DATA_USE_AGREEMENT_DUA]: 'Data Use Agreement (DUA)',
   [CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION]:
     'Departmental Efficiency Review (DER) Modification',
@@ -156,7 +157,9 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
   [CtatHelpNeededType.MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE]:
     'Maintaining the electronic COR (e-COR) file',
   [CtatHelpNeededType.POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION]:
-    'Political Appointee Approval (PAA) Modification',
+    'Political Appointee Approval (PAA) modification',
+  [CtatHelpNeededType.TECHNICAL_DIRECTION_LETTERS_TDLS]:
+    'Technical Direction Letters (TDLs)',
   [CtatHelpNeededType.OTHER]: 'Other'
 };
 
@@ -209,6 +212,7 @@ export const helpNeededTypesPreAward: CtatHelpNeededType[] = [
 
 export const helpNeededTypesPostAward: CtatHelpNeededType[] = [
   CtatHelpNeededType.POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING,
+  CtatHelpNeededType.CONTRACT_CLOSEOUT_ACTIVITIES_SUPPORT,
   CtatHelpNeededType.CONTRACTOR_PERFORMANCE_MANAGEMENT,
   CtatHelpNeededType.DATA_USE_AGREEMENT_DUA,
   CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION,
@@ -218,7 +222,8 @@ export const helpNeededTypesPostAward: CtatHelpNeededType[] = [
   CtatHelpNeededType.IDENTITY_AND_CREDENTIALING_TOOL_ICT,
   CtatHelpNeededType.INVOICE_PROCESSING_PLATFORM_IPP,
   CtatHelpNeededType.MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE,
-  CtatHelpNeededType.POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION
+  CtatHelpNeededType.POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION,
+  CtatHelpNeededType.TECHNICAL_DIRECTION_LETTERS_TDLS
 ];
 
 export const helpNeededTypesOther: CtatHelpNeededType[] = [
