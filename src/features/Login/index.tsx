@@ -98,7 +98,10 @@ const Login = () => {
   if (redirectLoginEnabled) {
     return (
       <MainContent className="grid-container">
-        <div className="margin-y-8 text-center">
+        <div
+          className="margin-y-8 text-center"
+          data-testid="okta-redirect-login"
+        >
           <Spinner size="large" center />
         </div>
       </MainContent>
