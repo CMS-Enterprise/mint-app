@@ -201,7 +201,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       hideFilters: 'Hide filters',
       showFilters: 'Show filters',
       numberOfFiltersApplied: '{{-number}} filters applied',
-      filter: ' Filter',
+      filter: 'Filter',
       quickFilters: 'Quick filters:',
       neededWithin: 'Needed within',
       neededWithinAll: 'all time',
