@@ -104,10 +104,15 @@ export const getDaysElapsed = (discussionCreated: string) => {
 };
 
 export const isDateInPast = (date: string | null | undefined): boolean => {
-  if (date && new Date() > new Date(date)) {
-    return true;
-  }
-  return false;
+  if (!date) return false;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const selectedDate = new Date(date);
+  selectedDate.setHours(0, 0, 0, 0);
+
+  return today > selectedDate;
 };
 
 /**

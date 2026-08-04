@@ -658,7 +658,8 @@ const contractAssistanceMisc = {
     error:
       'There was an error submitting your ticket. Please try again. If the error persists, please try again another time.',
     validation: {
-      fillOut: 'Please fill out the required field.'
+      fillOut: 'Please fill out the required field.',
+      correctDate: 'Please enter a valid date'
     },
     leaveConfirm: {
       heading: 'Are you sure you want to leave?',

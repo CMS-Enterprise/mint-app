@@ -50,6 +50,7 @@ import {
   helpNeededTypesPostAward,
   helpNeededTypesPreAward
 } from 'i18n/en-US/helpAndKnowledge/contractAssistance';
+import { isDateInPast } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
 import SupportingDocumentsUpload from './SupportingDocumentsUpload';
@@ -1031,7 +1032,15 @@ const CtatTicketForm = ({
               rules={{
                 required: contractAssistanceMiscT(
                   'ctatSidePanel.validation.fillOut'
-                )
+                ),
+                validate: value => {
+                  return (
+                    (value && !isDateInPast(value)) ||
+                    contractAssistanceMiscT(
+                      'ctatSidePanel.validation.correctDate'
+                    )
+                  );
+                }
               }}
               render={({ field: { ref, ...field }, fieldState: { error } }) => (
                 <FormGroup
@@ -1045,14 +1054,17 @@ const CtatTicketForm = ({
                   >
                     {contractAssistanceT('dateAssistanceNeededBy.label')}
                   </Label>
+
                   <HelpText className="margin-top-05">
                     {contractAssistanceT('dateAssistanceNeededBy.sublabel')}
                   </HelpText>
+
                   {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                   <DatePickerFormatted
                     id="assistance-needed-by"
                     name={field.name}
                     defaultValue={field.value}
+                    minDate={new Date().toISOString()}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                   />
