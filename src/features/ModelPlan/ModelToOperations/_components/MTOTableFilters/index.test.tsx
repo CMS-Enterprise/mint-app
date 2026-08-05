@@ -1,6 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import i18next from 'i18next';
 import { vi } from 'vitest';
 
@@ -24,6 +25,7 @@ describe('MTOTableFilters', () => {
     initialEntry: string,
     props?: React.ComponentProps<typeof MTOTableFilters>
   ) => {
+    const user = userEvent.setup();
     const router = createMemoryRouter(
       [
         {
@@ -35,17 +37,28 @@ describe('MTOTableFilters', () => {
         initialEntries: [initialEntry]
       }
     );
-    return render(<RouterProvider router={router} />);
+    render(<RouterProvider router={router} />);
+    return { user };
   };
 
   const getSelect = () => screen.getByTestId('mto-needed-within-days');
+
+  const showFilters = async (user: ReturnType<typeof userEvent.setup>) => {
+    await user.click(
+      screen.getByText(
+        i18next.t('modelToOperationsMisc:table.tableFilters.showFilters')
+      )
+    );
+  };
 
   beforeEach(() => {
     mockNavigate.mockClear();
   });
 
-  it('renders without errors', () => {
-    renderWithRouter('/matrix');
+  it('renders without errors', async () => {
+    const { user } = renderWithRouter('/matrix');
+
+    await showFilters(user);
 
     expect(
       screen.getByText(
@@ -61,8 +74,13 @@ describe('MTOTableFilters', () => {
     expect(screen.getByTestId('mto-hide-category-rows')).toBeInTheDocument();
   });
 
-  it('shows category and subcategory header count in the hide-rows label', () => {
-    renderWithRouter('/matrix', { categoryHeaderRowCount: 12 });
+  it('shows category and subcategory header count in the hide-rows label', async () => {
+    const { user } = renderWithRouter('/matrix', {
+      categoryHeaderRowCount: 12
+    });
+
+    await showFilters(user);
+
     expect(
       screen.getByRole('checkbox', {
         name: i18next.t(
@@ -73,13 +91,18 @@ describe('MTOTableFilters', () => {
     ).toBeInTheDocument();
   });
 
-  it('reflects hide-category-rows=true from the URL', () => {
-    renderWithRouter('/matrix?hide-category-rows=true');
+  it('reflects hide-category-rows=true from the URL', async () => {
+    const { user } = renderWithRouter('/matrix?hide-category-rows=true');
+
+    await showFilters(user);
+
     expect(screen.getByTestId('mto-hide-category-rows')).toBeChecked();
   });
 
-  it('checking the checkbox sets hide-category-rows=true and resets page', () => {
-    renderWithRouter('/matrix?page=4');
+  it('checking the checkbox sets hide-category-rows=true and resets page', async () => {
+    const { user } = renderWithRouter('/matrix?page=4');
+
+    await showFilters(user);
 
     fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
 
@@ -92,8 +115,10 @@ describe('MTOTableFilters', () => {
     expect(nextParams.get('page')).toBe('1');
   });
 
-  it('unchecking the checkbox sets hide-category-rows=false', () => {
-    renderWithRouter('/matrix?hide-category-rows=true');
+  it('unchecking the checkbox sets hide-category-rows=false', async () => {
+    const { user } = renderWithRouter('/matrix?hide-category-rows=true');
+
+    await showFilters(user);
 
     fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
 
@@ -102,30 +127,45 @@ describe('MTOTableFilters', () => {
     expect(nextParams.get('hide-category-rows')).toBe('false');
   });
 
-  it('disables and forces checked when a time window filter is selected', () => {
-    renderWithRouter('/matrix?needed-within-days=60&hide-category-rows=true');
+  it('disables and forces checked when a time window filter is selected', async () => {
+    const { user } = renderWithRouter(
+      '/matrix?needed-within-days=60&hide-category-rows=true'
+    );
+
+    await showFilters(user);
 
     expect(screen.getByTestId('mto-hide-category-rows')).toBeDisabled();
     expect(screen.getByTestId('mto-hide-category-rows')).toBeChecked();
   });
 
-  it('defaults to All when no filter params are present', () => {
-    renderWithRouter('/matrix');
+  it('defaults to All when no filter params are present', async () => {
+    const { user } = renderWithRouter('/matrix');
+
+    await showFilters(user);
+
     expect(getSelect()).toHaveValue('all');
   });
 
-  it('reflects needed-within-days in the URL', () => {
-    renderWithRouter('/matrix?needed-within-days=60');
+  it('reflects needed-within-days in the URL', async () => {
+    const { user } = renderWithRouter('/matrix?needed-within-days=60');
+
+    await showFilters(user);
+
     expect(getSelect()).toHaveValue('60');
   });
 
-  it('maps legacy needed-within-thirty-days=true to 30 days in the select', () => {
-    renderWithRouter('/matrix?needed-within-thirty-days=true');
+  it('maps legacy needed-within-thirty-days=true to 30 days in the select', async () => {
+    const { user } = renderWithRouter('/matrix?needed-within-thirty-days=true');
+
+    await showFilters(user);
+
     expect(getSelect()).toHaveValue('30');
   });
 
-  it('selecting 30 days sets needed-within-days and resets page', () => {
-    renderWithRouter('/matrix?page=3');
+  it('selecting 30 days sets needed-within-days and resets page', async () => {
+    const { user } = renderWithRouter('/matrix?page=3');
+
+    await showFilters(user);
 
     fireEvent.change(getSelect(), { target: { value: '30' } });
 
@@ -139,10 +179,12 @@ describe('MTOTableFilters', () => {
     expect(nextParams.get('page')).toBe('1');
   });
 
-  it('selecting All removes filter params and resets page', () => {
-    renderWithRouter(
+  it('selecting All removes filter params and resets page', async () => {
+    const { user } = renderWithRouter(
       '/matrix?page=2&needed-within-days=90&hide-category-rows=true'
     );
+
+    await showFilters(user);
 
     fireEvent.change(getSelect(), { target: { value: 'all' } });
 
@@ -152,10 +194,12 @@ describe('MTOTableFilters', () => {
     expect(nextParams.get('page')).toBe('1');
   });
 
-  it('selecting All clears legacy thirty-days param', () => {
-    renderWithRouter(
+  it('selecting All clears legacy thirty-days param', async () => {
+    const { user } = renderWithRouter(
       '/matrix?needed-within-thirty-days=true&hide-category-rows=true'
     );
+
+    await showFilters(user);
 
     fireEvent.change(getSelect(), { target: { value: 'all' } });
 
