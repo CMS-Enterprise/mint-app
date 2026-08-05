@@ -35,6 +35,7 @@ func sendPlanDiscussionTaggedUserTestEmail(
 	createdByUserName := "Test User"
 	modelName := "Test Model Plan Name"
 	modelAbbreviation := "TMPN"
+	discussionTopic := models.DiscussionTopicTypeModelPlanPayment
 	taggedUser := authentication.UserAccount{
 		Username:   &tag1EUA,
 		Email:      "aStarkTest@mint.mint",
@@ -50,6 +51,7 @@ func sendPlanDiscussionTaggedUserTestEmail(
 		models.TaggedHTML(taggedContent),
 		uuid.New(),
 		uuid.New(),
+		discussionTopic,
 		modelName,
 		modelAbbreviation,
 		&taggedUser,
@@ -66,6 +68,7 @@ func sendPlanDiscussionTaggedUserEmail(
 	tHTML models.TaggedHTML,
 	discussionID uuid.UUID,
 	modelPlanID uuid.UUID,
+	topic models.DiscussionTopicType,
 	modelPlanName string,
 	modelPlanAbbreviation string,
 	taggedUser *authentication.UserAccount,
@@ -84,6 +87,7 @@ func sendPlanDiscussionTaggedUserEmail(
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
 		UserName:          createdByUserName,
+		Topic:             topic.Humanize(),
 		DiscussionContent: tHTML.RawContent.ToTemplate(),
 		ModelID:           modelPlanID.String(),
 		ModelName:         modelPlanName,
@@ -131,6 +135,7 @@ func sendPlanDiscussionTaggedSolutionTestEmail(
 	modelName := "Test Model Plan Name"
 	modelAbbreviation := "TMPN"
 	solutionName := tag2Label
+	discussionTopic := models.DiscussionTopicTypeModelPlanPayment
 	discussionUserRoleHumanized := "Model Team"
 
 	pocEmails := []string{
@@ -145,6 +150,7 @@ func sendPlanDiscussionTaggedSolutionTestEmail(
 		models.TaggedHTML(taggedContent),
 		uuid.New(),
 		uuid.New(),
+		discussionTopic,
 		modelName,
 		modelAbbreviation,
 		solutionName,
@@ -162,6 +168,7 @@ func sendPlanDiscussionTaggedSolutionEmail(
 	tHTML models.TaggedHTML,
 	discussionID uuid.UUID,
 	modelPlanID uuid.UUID,
+	topic models.DiscussionTopicType,
 	modelPlanName string,
 	modelPlanAbbreviation string,
 	taggedSolutionName string,
@@ -182,6 +189,7 @@ func sendPlanDiscussionTaggedSolutionEmail(
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
 		UserName:          createdByUserName,
+		Topic:             topic.Humanize(),
 		DiscussionContent: tHTML.RawContent.ToTemplate(),
 		ModelID:           modelPlanID.String(),
 		ModelName:         modelPlanName,

@@ -25,6 +25,7 @@ type PlanDiscussionTaggedUserBodyContent struct {
 	ClientAddress     string
 	DiscussionID      string
 	UserName          string
+	Topic             string
 	DiscussionContent template.HTML // the rich text content of the discussion. It is written as template.HTML to allow it be rendered as HTML with the templating library
 	ModelID           string
 	ModelName         string
