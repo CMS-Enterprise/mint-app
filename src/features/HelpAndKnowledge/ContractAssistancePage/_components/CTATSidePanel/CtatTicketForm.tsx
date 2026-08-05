@@ -27,6 +27,7 @@ import {
 import GetCtatRequestsAdmin from 'gql/operations/CTAT/GetCtatRequestsAdmin';
 import GetCtatRequestsRequester from 'gql/operations/CTAT/GetCtatRequestsRequester';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { DateTime } from 'luxon';
 import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
@@ -1035,7 +1036,7 @@ const CtatTicketForm = ({
                 ),
                 validate: value => {
                   return (
-                    (value && !isDateInPast(value)) ||
+                    !isDateInPast(value) ||
                     contractAssistanceMiscT(
                       'ctatSidePanel.validation.correctDate'
                     )
@@ -1064,7 +1065,7 @@ const CtatTicketForm = ({
                     id="assistance-needed-by"
                     name={field.name}
                     defaultValue={field.value}
-                    minDate={new Date().toISOString()}
+                    minDate={DateTime.now().toISODate()}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                   />

@@ -125,12 +125,15 @@ const FileUpload = (props: FileUploadProps) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (isControlledMultiple && onRemoveFile) {
-      onRemoveFile(fileToRemove);
+    if (isControlledMultiple) {
+      if (onRemoveFile) {
+        onRemoveFile(fileToRemove);
+      }
     } else {
       setFile(undefined);
-      setInputKey(previous => previous + 1);
     }
+
+    setInputKey(previous => previous + 1);
   };
 
   const getDescriptionText = () => {
