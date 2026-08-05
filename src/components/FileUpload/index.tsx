@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { Icon } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
 type FileUploadProps = {
@@ -13,6 +14,8 @@ type FileUploadProps = {
   disabled?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
+  allowRemove?: boolean;
+  onRemoveFile?: (file: File) => void;
   ariaDescribedBy?: string;
   inputProps: React.ComponentProps<'input'>;
 };
@@ -28,6 +31,8 @@ const FileUpload = (props: FileUploadProps) => {
     disabled = false,
     onChange,
     onBlur,
+    allowRemove = false,
+    onRemoveFile,
     inputProps
   } = props;
   const { t } = useTranslation('documentsMisc');
@@ -116,6 +121,18 @@ const FileUpload = (props: FileUploadProps) => {
     onChange(e);
   };
 
+  const handleRemove = (e: React.MouseEvent, fileToRemove: File) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isControlledMultiple && onRemoveFile) {
+      onRemoveFile(fileToRemove);
+    } else {
+      setFile(undefined);
+      setInputKey(previous => previous + 1);
+    }
+  };
+
   const getDescriptionText = () => {
     if (!hasFiles) {
       return 'Select a file';
@@ -171,9 +188,26 @@ const FileUpload = (props: FileUploadProps) => {
             key={`${previewFile.name}-${previewFile.lastModified}-${previewFile.size}`}
             className="usa-file-input__preview padding-105 font-body-xs line-height-sans-1"
             aria-hidden
+            style={{
+              position: 'relative',
+              zIndex: 10,
+              pointerEvents: 'none'
+            }}
           >
             {showFileTypeIcons && <FileTypeIcon fileName={previewFile.name} />}
+
             {previewFile.name}
+
+            {allowRemove && (
+              <Icon.Close
+                className="margin-left-05 text-red font-body-lg"
+                aria-label={t('removeFile')}
+                style={{
+                  pointerEvents: 'auto'
+                }}
+                onClick={e => handleRemove(e, previewFile)}
+              />
+            )}
           </div>
         ))}
         <div className="usa-file-input__box" />

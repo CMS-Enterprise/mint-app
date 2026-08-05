@@ -40,6 +40,14 @@ const SupportingDocumentsUpload = ({
           }
         };
 
+        const removeFile = (fileToRemove: File) => {
+          const updatedFiles = files.filter(
+            existing => !isSameFile(existing, fileToRemove)
+          );
+
+          field.onChange(updatedFiles);
+        };
+
         return (
           <FileUpload
             id="ctat-supporting-documents"
@@ -49,6 +57,8 @@ const SupportingDocumentsUpload = ({
             showFileTypeIcons={false}
             onChange={addFiles}
             onBlur={() => null}
+            allowRemove
+            onRemoveFile={removeFile}
             inputProps={{
               'aria-label': contractAssistanceT('supportingDocuments.label')
             }}

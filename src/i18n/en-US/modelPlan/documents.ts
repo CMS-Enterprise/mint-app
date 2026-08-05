@@ -202,6 +202,7 @@ export const documentsMisc = {
     fileNameHelpText: 'Enter a name for your document.'
   },
   chooseFromFolder: 'choose from folder',
+  removeFile: 'Remove file',
   notValid: 'This is not a valid file type.',
   whatType: 'What type of document are you uploading?',
   documentTypes: {
