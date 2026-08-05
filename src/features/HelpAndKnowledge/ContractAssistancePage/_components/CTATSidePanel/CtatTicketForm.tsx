@@ -27,6 +27,7 @@ import {
 import GetCtatRequestsAdmin from 'gql/operations/CTAT/GetCtatRequestsAdmin';
 import GetCtatRequestsRequester from 'gql/operations/CTAT/GetCtatRequestsRequester';
 import { useFlags } from 'launchdarkly-react-client-sdk';
+import { DateTime } from 'luxon';
 import { AppState } from 'stores/reducers/rootReducer';
 
 import Alert from 'components/Alert';
@@ -50,6 +51,7 @@ import {
   helpNeededTypesPostAward,
   helpNeededTypesPreAward
 } from 'i18n/en-US/helpAndKnowledge/contractAssistance';
+import { isDateInPast } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
 import SupportingDocumentsUpload from './SupportingDocumentsUpload';
@@ -1031,7 +1033,15 @@ const CtatTicketForm = ({
               rules={{
                 required: contractAssistanceMiscT(
                   'ctatSidePanel.validation.fillOut'
-                )
+                ),
+                validate: value => {
+                  return (
+                    !isDateInPast(value) ||
+                    contractAssistanceMiscT(
+                      'ctatSidePanel.validation.correctDate'
+                    )
+                  );
+                }
               }}
               render={({ field: { ref, ...field }, fieldState: { error } }) => (
                 <FormGroup
@@ -1045,14 +1055,17 @@ const CtatTicketForm = ({
                   >
                     {contractAssistanceT('dateAssistanceNeededBy.label')}
                   </Label>
+
                   <HelpText className="margin-top-05">
                     {contractAssistanceT('dateAssistanceNeededBy.sublabel')}
                   </HelpText>
+
                   {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
                   <DatePickerFormatted
                     id="assistance-needed-by"
                     name={field.name}
                     defaultValue={field.value}
+                    minDate={DateTime.now().toISODate()}
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                   />

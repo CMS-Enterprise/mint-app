@@ -1,11 +1,15 @@
+import { DateTime } from 'luxon';
+
 const CONTRACT_NAME = 'E2E CTAT Contract';
-const HELP_TYPE_LABEL = 'Guidance on Market Research';
+const HELP_TYPE_LABEL = 'Guidance on market research';
 const ASSISTANCE_DESCRIPTION =
   'Need help with market research for an upcoming contract.';
 
 let createdTicketId;
 
 const fillRequiredCtatTicketFields = () => {
+  const typedDate = DateTime.now().plus({ days: 7 }).toFormat('MM/dd/yyyy');
+
   cy.get('#cmmi-group').select('BSG');
   cy.get('#cmmi-division').select('BSG_DBOM');
 
@@ -22,8 +26,8 @@ const fillRequiredCtatTicketFields = () => {
   cy.get('#assistance-needed-by')
     .should('be.not.disabled')
     .clear({ force: true })
-    .type('07/20/2025', { force: true });
-  cy.get('#assistance-needed-by').should('have.value', '07/20/2025');
+    .type(typedDate, { force: true });
+  cy.get('#assistance-needed-by').should('have.value', typedDate);
   cy.get('label[for="assistance-needed-by"]').click({ force: true });
 };
 

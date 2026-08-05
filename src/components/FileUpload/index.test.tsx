@@ -131,5 +131,35 @@ describe('File Upload component', () => {
 
       expect(handleChange).toHaveBeenCalled();
     });
+
+    it('calls onRemoveFile when a file is removed', () => {
+      const handleRemoveFile = vi.fn();
+      const fileOne = new File(['one'], 'first.pdf', {
+        type: 'application/pdf'
+      });
+      const fileTwo = new File(['two'], 'SupplementalNotes.pdf', {
+        type: 'application/pdf'
+      });
+
+      render(
+        <FileUpload
+          id="test-multi-file-upload"
+          name="test-multi-file-upload"
+          multiple
+          files={[fileOne, fileTwo]}
+          showFileTypeIcons={false}
+          onChange={() => {}}
+          onBlur={() => {}}
+          allowRemove
+          onRemoveFile={handleRemoveFile}
+          ariaDescribedBy=""
+          inputProps={{}}
+        />
+      );
+
+      fireEvent.click(screen.getAllByLabelText('Remove file')[0]);
+
+      expect(handleRemoveFile).toHaveBeenCalledWith(fileOne);
+    });
   });
 });

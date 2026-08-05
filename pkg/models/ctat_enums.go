@@ -228,6 +228,7 @@ const (
 	CTATHelpNeededTypeRequestForProposalRFP                            CTATHelpNeededType = "REQUEST_FOR_PROPOSAL_RFP"
 	CTATHelpNeededTypeRequestForQuotationRFQ                           CTATHelpNeededType = "REQUEST_FOR_QUOTATION_RFQ"
 	CTATHelpNeededTypeSOWSOOPWSDevelopment                             CTATHelpNeededType = "SOW_SOO_PWS_DEVELOPMENT" // #nosec G101 false positive - CTAT enum label abbreviating Statement of Work / Statement of Objectives / Performance Work Statement
+	CTATHelpNeededTypeContractCloseoutActivitiesSupport                CTATHelpNeededType = "CONTRACT_CLOSEOUT_ACTIVITIES_SUPPORT"
 	CTATHelpNeededTypeContractorPerformanceManagement                  CTATHelpNeededType = "CONTRACTOR_PERFORMANCE_MANAGEMENT"
 	CTATHelpNeededTypeDataUseAgreementDUA                              CTATHelpNeededType = "DATA_USE_AGREEMENT_DUA"
 	CTATHelpNeededTypeDepartmentEfficiencyReviewDERModification        CTATHelpNeededType = "DEPARTMENTAL_EFFICIENCY_REVIEW_DER_MODIFICATION"
@@ -238,6 +239,7 @@ const (
 	CTATHelpNeededTypeInvoiceProcessingPlatformIPP                     CTATHelpNeededType = "INVOICE_PROCESSING_PLATFORM_IPP"
 	CTATHelpNeededTypeMaintainingTheElectronicCorECORFile              CTATHelpNeededType = "MAINTAINING_THE_ELECTRONIC_COR_ECOR_FILE"
 	CTATHelpNeededTypePoliticalAppointeeApprovalPAAModification        CTATHelpNeededType = "POLITICAL_APPOINTEE_APPROVAL_PAA_MODIFICATION"
+	CTATHelpNeededTypeTechnicalDirectionLettersTDLS                    CTATHelpNeededType = "TECHNICAL_DIRECTION_LETTERS_TDLS"
 	CTATHelpNeededTypeOther                                            CTATHelpNeededType = "OTHER"
 )
 
@@ -260,6 +262,7 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeRequestForProposalRFP:                            "Request for Proposal (RFP)",
 	CTATHelpNeededTypeRequestForQuotationRFQ:                           "Request for Quotation (RFQ)",
 	CTATHelpNeededTypeSOWSOOPWSDevelopment:                             "Statement of Work (SOW) / Statement of Objectives (SOO) / Performance Work Statement (PWS) development",
+	CTATHelpNeededTypeContractCloseoutActivitiesSupport:                "Contract close out activities and support",
 	CTATHelpNeededTypeContractorPerformanceManagement:                  "Contractor Performance Management",
 	CTATHelpNeededTypeDataUseAgreementDUA:                              "Data Use Agreement (DUA)",
 	CTATHelpNeededTypeDepartmentEfficiencyReviewDERModification:        "Departmental Efficiency Review (DER) Modification",
@@ -270,6 +273,7 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeInvoiceProcessingPlatformIPP:                     "Invoice Processing Platform (IPP)",
 	CTATHelpNeededTypeMaintainingTheElectronicCorECORFile:              "Maintaining the electronic COR (e-COR) file",
 	CTATHelpNeededTypePoliticalAppointeeApprovalPAAModification:        "Political Appointee Approval (PAA) Modification",
+	CTATHelpNeededTypeTechnicalDirectionLettersTDLS:                    "Technical Direction Letters (TDLs)",
 	CTATHelpNeededTypeOther:                                            "Other",
 }
 

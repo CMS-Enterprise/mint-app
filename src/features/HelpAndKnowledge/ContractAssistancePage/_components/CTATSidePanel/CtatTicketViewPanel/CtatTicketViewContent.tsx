@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
   SummaryBox,
@@ -16,6 +16,7 @@ import {
   GetCtatRequestQuery
 } from 'gql/generated/graphql';
 
+import CollapsableLink from 'components/CollapsableLink';
 import {
   DescriptionDefinition,
   DescriptionTerm
@@ -25,6 +26,7 @@ import PageHeading from 'components/PageHeading';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
+import { tObject } from 'utils/translation';
 
 import { formatHelpTypes, formatUserDisplay } from '../../../utils';
 
@@ -144,6 +146,10 @@ const CtatTicketViewContent = ({
     requestUrgency: requestUrgencyConfig
   } = usePlanTranslation('contractAssistance');
 
+  const statusInfoConfig = tObject<string, string[]>(
+    'contractAssistanceMisc:ctatSidePanel.statusInfo'
+  );
+
   const isClosed = ticket.status === CtatStatus.CLOSED;
 
   const assignedMemberDisplay = formatUserDisplay(
@@ -198,10 +204,33 @@ const CtatTicketViewContent = ({
 
           <DetailField
             label={contractAssistanceT('status.label')}
+            className="margin-bottom-0"
             definition={
               ticket.status ? statusConfig.options[ticket.status] : ''
             }
           />
+
+          <CollapsableLink
+            id="statuses-info"
+            className="width-full line-height-body-4 margin-top-1 margin-bottom-3"
+            label={contractAssistanceMiscT('ctatSidePanel.statusInfo.label')}
+            horizontalCaret
+          >
+            <ul className="margin-y-0 padding-left-3">
+              {statusInfoConfig.statuses.map(
+                (status: string, index: number) => (
+                  <li className="margin-bottom-1" key={status}>
+                    <Trans
+                      i18nKey={`contractAssistanceMisc:ctatSidePanel.statusInfo.statuses.${index}`}
+                      components={{
+                        bold: <strong />
+                      }}
+                    />
+                  </li>
+                )
+              )}
+            </ul>
+          </CollapsableLink>
 
           <DetailField
             label={contractAssistanceMiscT('ctatViewPanel.assignedMember')}
