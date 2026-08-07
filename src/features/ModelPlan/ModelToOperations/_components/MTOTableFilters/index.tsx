@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Checkbox, Icon, Select } from '@trussworks/react-uswds';
+import {
+  MtoFacilitator,
+  useGetMtoCategoriesQuery
+} from 'gql/generated/graphql';
 
+import FilterButtonWithModal from 'components/FilterButtonWithModal';
+import PageLoading from 'components/PageLoading';
 import { Tag } from 'components/Tag';
+
+import getMTOTableFilters from './getMTOTableFilters';
 
 const FILTER_PARAM = 'needed-within-days';
 const LEGACY_FILTER_PARAM = 'needed-within-thirty-days';
@@ -30,11 +38,18 @@ export type MTOTableFiltersProps = {
   categoryHeaderRowCount?: number;
 };
 
+export type MTOTableSelectedFilters = {
+  categoryName: string[];
+  facilitatedByRole: MtoFacilitator[];
+};
+
 /** Table filter controls for the MTO milestones matrix (date window + hide header rows). */
 const MTOTableFilters = ({
   categoryHeaderRowCount = 0
 }: MTOTableFiltersProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
+
+  const { modelID = '' } = useParams<{ modelID: string }>();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -49,6 +64,45 @@ const MTOTableFilters = ({
 
   const isHideCategoryRowsChecked =
     isTimeWindowFilterActive || hideCategoryRowsFromSearchParams(params);
+
+  const appliedFilters: MTOTableSelectedFilters = useMemo(() => {
+    const searchParams = new URLSearchParams(location.search);
+
+    return {
+      categoryName: searchParams.get('category')
+        ? (searchParams.get('category') || '').split(',')
+        : [],
+      facilitatedByRole: (searchParams.get('role')
+        ? (searchParams.get('role') || '').split(',')
+        : []) as MTOTableSelectedFilters['facilitatedByRole']
+    };
+  }, [location.search]);
+
+  const setAppliedFilters = (filters: MTOTableSelectedFilters) => {
+    const newParams = new URLSearchParams(location.search);
+
+    if (filters.categoryName.length > 0) {
+      newParams.set('category', filters.categoryName.join(','));
+    } else {
+      newParams.delete('category');
+    }
+
+    if (filters.facilitatedByRole.length > 0) {
+      newParams.set('role', filters.facilitatedByRole.join(','));
+    } else {
+      newParams.delete('role');
+    }
+
+    // Reset pagination when filters change
+    newParams.delete('page');
+
+    navigate({ search: newParams.toString() }, { replace: true });
+  };
+
+  const { data: mtoCategoriesData, loading: mtoCategoriesLoading } =
+    useGetMtoCategoriesQuery({
+      variables: { id: modelID }
+    });
 
   const handleTimeWindowFilterChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -78,6 +132,20 @@ const MTOTableFilters = ({
     next.set(HIDE_CATEGORY_ROWS_PARAM, e.target.checked ? 'true' : 'false');
     navigate({ search: next.toString() }, { replace: true });
   };
+
+  const mtoCategories = useMemo(
+    () => mtoCategoriesData?.modelPlan?.mtoMatrix?.categories || [],
+    [mtoCategoriesData]
+  );
+
+  const filterOptions = useMemo(
+    () => getMTOTableFilters(mtoCategories),
+    [mtoCategories]
+  );
+
+  if (mtoCategoriesLoading) {
+    return <PageLoading testId="mto-table-filters" />;
+  }
 
   return (
     <div className="border-1px radius-md border-gray-10 padding-3 margin-bottom-1">
@@ -120,14 +188,11 @@ const MTOTableFilters = ({
           className="display-flex flex-align-center margin-bottom-3 maxh-5"
           style={{ gap: '1.5rem' }}
         >
-          <Button
-            type="button"
-            className="usa-button usa-button--outline width-fit-content text-decoration-none margin-right-0"
-            onClick={() => {}}
-          >
-            <Icon.FilterList className="margin-right-05" aria-hidden />
-            {t('table.tableFilters.filter')}
-          </Button>
+          <FilterButtonWithModal
+            filters={filterOptions}
+            appliedFilters={appliedFilters}
+            setAppliedFilters={setAppliedFilters}
+          />
 
           <p className="margin-y-0 text-bold line-height-sans-2">
             {t('table.tableFilters.quickFilters')}

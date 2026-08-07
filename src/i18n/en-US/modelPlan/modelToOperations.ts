@@ -202,6 +202,19 @@ export const modelToOperationsMisc: Record<string, any> = {
       showFilters: 'Show filters',
       numberOfFiltersApplied: '{{-number}} filters applied',
       filter: 'Filter',
+      filterOptions: {
+        primaryCategory: {
+          label: 'By primary category',
+          description: 'This filters by the “Category” field.',
+          tagLabel: 'Category'
+        },
+
+        facilitatedByRole: {
+          label: 'By role',
+          description: 'This filters by the “Facilitated by” field.',
+          tagLabel: 'Role'
+        }
+      },
       quickFilters: 'Quick filters:',
       neededWithin: 'Needed within',
       neededWithinAll: 'all time',
