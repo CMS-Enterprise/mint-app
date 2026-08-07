@@ -4,9 +4,9 @@ import { MtoFacilitator } from 'gql/generated/graphql';
 
 import { FilterGroupType } from 'components/FilterGroup';
 
-import FilterModal from '.';
+import FilterButtonWithModal from '.';
 
-describe('FilterModal', () => {
+describe('FilterButtonWithModal', () => {
   const mockFilters: FilterGroupType[] = [
     {
       key: 'categoryName',
@@ -48,7 +48,7 @@ describe('FilterModal', () => {
 
   it('opens and closes the modal from filter button and close icon', () => {
     render(
-      <FilterModal
+      <FilterButtonWithModal
         filters={mockFilters}
         appliedFilters={defaultAppliedFilters}
         setAppliedFilters={vi.fn()}
@@ -75,7 +75,7 @@ describe('FilterModal', () => {
     };
 
     render(
-      <FilterModal
+      <FilterButtonWithModal
         filters={mockFilters}
         appliedFilters={appliedFilters}
         setAppliedFilters={setAppliedFilters}
@@ -101,7 +101,7 @@ describe('FilterModal', () => {
 
   it('applies current filters and closes modal when Apply Filter is clicked', () => {
     render(
-      <FilterModal
+      <FilterButtonWithModal
         filters={mockFilters}
         appliedFilters={defaultAppliedFilters}
         setAppliedFilters={setAppliedFilters}
@@ -128,7 +128,7 @@ describe('FilterModal', () => {
 
   it('selects all options in a group when Show all is checked and applies them', () => {
     render(
-      <FilterModal
+      <FilterButtonWithModal
         filters={mockFilters}
         appliedFilters={defaultAppliedFilters}
         setAppliedFilters={setAppliedFilters}
@@ -154,7 +154,7 @@ describe('FilterModal', () => {
 
   it('displays Apply filter when 0 or 1 filter is selected', () => {
     render(
-      <FilterModal
+      <FilterButtonWithModal
         filters={mockFilters}
         appliedFilters={defaultAppliedFilters}
         setAppliedFilters={setAppliedFilters}
@@ -174,7 +174,7 @@ describe('FilterModal', () => {
     };
 
     render(
-      <FilterModal
+      <FilterButtonWithModal
         filters={mockFilters}
         appliedFilters={appliedFilters}
         setAppliedFilters={setAppliedFilters}

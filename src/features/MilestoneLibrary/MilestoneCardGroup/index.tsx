@@ -19,7 +19,7 @@ import {
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import Expire from 'components/Expire';
-import FilterModal from 'components/FilterModal';
+import FilterButtonWithModal from 'components/FilterButtonWithModal';
 import FilterTags from 'components/FilterTags';
 import UswdsReactLink from 'components/LinkWrapper';
 import Sidepanel from 'components/Sidepanel';
@@ -288,7 +288,7 @@ const MilestoneCardGroup = ({
           <Grid row>
             <Grid className="display-flex flex-wrap flex-align-center margin-bottom-3">
               {showFilters && (
-                <FilterModal
+                <FilterButtonWithModal
                   filters={filterOptions}
                   appliedFilters={appliedFilters}
                   setAppliedFilters={setAppliedFilters}

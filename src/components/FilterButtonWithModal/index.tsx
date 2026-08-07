@@ -19,7 +19,7 @@ type FilterModalProps<T extends Record<string, string[]>> = {
  *
  * Includes the "Filter" button to open the modal.
  */
-const FilterModal = <T extends Record<string, string[]>>({
+const FilterButtonModal = <T extends Record<string, string[]>>({
   filters,
   appliedFilters,
   setAppliedFilters
@@ -142,4 +142,4 @@ const FilterModal = <T extends Record<string, string[]>>({
   );
 };
 
-export default FilterModal;
+export default FilterButtonModal;
