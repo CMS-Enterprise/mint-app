@@ -26,6 +26,7 @@ type PlanTaskNewAvailableBodyContent struct {
 	ModelID       string
 	ModelName     string
 	TaskList      []string
+	IsModelLead   bool
 }
 
 type planTaskEmails struct {
