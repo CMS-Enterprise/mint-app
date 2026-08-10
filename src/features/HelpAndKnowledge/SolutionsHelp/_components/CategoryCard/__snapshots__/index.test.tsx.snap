@@ -7,7 +7,7 @@ exports[`Operational Solution Category Card > matches snapshot 1`] = `
     data-testid="Card"
   >
     <div
-      class="usa-card__container"
+      class="usa-card__container shadow-3"
     >
       <div
         class="usa-card__header text-bold padding-y-0 flex-2"

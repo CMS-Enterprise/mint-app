@@ -22,6 +22,9 @@ const CategoryCard = ({ className, categoryKey }: CategoryCardProps) => {
         className,
         'radius-sm width-full operational-solution-help__category'
       )}
+      containerProps={{
+        className: 'shadow-3'
+      }}
     >
       <CardHeader className="text-bold padding-y-0 flex-2">
         {t(`categories.${categoryKey}.header`)}

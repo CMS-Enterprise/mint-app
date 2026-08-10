@@ -25,6 +25,58 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
+// Input for uploading a supporting document for a CTAT request.
+type CTATRequestDocumentInput struct {
+	FileData graphql.Upload `json:"fileData"`
+}
+
+// Input for creating a CTAT request.
+type CTATRequestInput struct {
+	CmmiGroup                 models.CTATCMMIGroupOption       `json:"cmmiGroup"`
+	CmmiGroupOther            *string                          `json:"cmmiGroupOther,omitempty"`
+	CmmiDivision              *models.CTATCMMIDivisionOption   `json:"cmmiDivision,omitempty"`
+	CmmiDivisionOther         *string                          `json:"cmmiDivisionOther,omitempty"`
+	RelatedMINTModels         []uuid.UUID                      `json:"relatedMINTModels,omitempty"`
+	ContractActivityType      *models.CTATContractActivityType `json:"contractActivityType,omitempty"`
+	ContractActivityTypeOther *string                          `json:"contractActivityTypeOther,omitempty"`
+	ContractName              *string                          `json:"contractName,omitempty"`
+	ContractNumber            *string                          `json:"contractNumber,omitempty"`
+	ContractType              *models.CTATContractType         `json:"contractType,omitempty"`
+	ContractTypeOther         *string                          `json:"contractTypeOther,omitempty"`
+	TypeOfHelpNeeded          []models.CTATHelpNeededType      `json:"typeOfHelpNeeded"`
+	TypeOfHelpNeededOther     *string                          `json:"typeOfHelpNeededOther,omitempty"`
+	DescribeHelpNeeded        string                           `json:"describeHelpNeeded"`
+	RequestUrgency            models.CTATRequestUrgency        `json:"requestUrgency"`
+	DateAssistanceNeededBy    time.Time                        `json:"dateAssistanceNeededBy"`
+	SupportingDocuments       []*CTATRequestDocumentInput      `json:"supportingDocuments,omitempty"`
+}
+
+// Represents CTAT request translation data
+type CTATRequestTranslation struct {
+	Requester                 models.TranslationField            `json:"requester" db:"requester"`
+	CmmiGroup                 models.TranslationFieldWithOptions `json:"cmmiGroup" db:"cmmi_group"`
+	CmmiGroupOther            models.TranslationField            `json:"cmmiGroupOther" db:"cmmi_group_other"`
+	CmmiDivision              models.TranslationFieldWithOptions `json:"cmmiDivision" db:"cmmi_division"`
+	CmmiDivisionOther         models.TranslationField            `json:"cmmiDivisionOther" db:"cmmi_division_other"`
+	RelatedMINTModels         models.TranslationField            `json:"relatedMINTModels"`
+	ContractActivityType      models.TranslationFieldWithOptions `json:"contractActivityType" db:"contract_activity_type"`
+	ContractActivityTypeOther models.TranslationField            `json:"contractActivityTypeOther" db:"contract_activity_type_other"`
+	ContractName              models.TranslationField            `json:"contractName" db:"contract_name"`
+	ContractNumber            models.TranslationField            `json:"contractNumber" db:"contract_number"`
+	ContractType              models.TranslationFieldWithOptions `json:"contractType" db:"contract_type"`
+	ContractTypeOther         models.TranslationField            `json:"contractTypeOther" db:"contract_type_other"`
+	TypeOfHelpNeeded          models.TranslationFieldWithOptions `json:"typeOfHelpNeeded" db:"type_of_help_needed"`
+	TypeOfHelpNeededOther     models.TranslationField            `json:"typeOfHelpNeededOther" db:"type_of_help_needed_other"`
+	DescribeHelpNeeded        models.TranslationField            `json:"describeHelpNeeded" db:"describe_help_needed"`
+	RequestUrgency            models.TranslationFieldWithOptions `json:"requestUrgency" db:"request_urgency"`
+	DateAssistanceNeededBy    models.TranslationField            `json:"dateAssistanceNeededBy" db:"date_assistance_needed_by"`
+	SupportingDocuments       models.TranslationField            `json:"supportingDocuments"`
+	Status                    models.TranslationFieldWithOptions `json:"status" db:"status"`
+	AssignedAdmin             models.TranslationField            `json:"assignedAdmin" db:"assigned_admin"`
+	Notes                     models.TranslationField            `json:"notes" db:"notes"`
+	Resolution                models.TranslationField            `json:"resolution" db:"resolution"`
+}
+
 // CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate
 type CustomTimelineDateCreateInput struct {
 	ModelPlanID uuid.UUID                     `json:"modelPlanID"`

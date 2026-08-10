@@ -1,0 +1,1128 @@
+import React, { useEffect, useMemo } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import {
+  Fieldset,
+  Form,
+  FormGroup,
+  Label,
+  Select,
+  TextInput
+} from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
+import {
+  CtatcmmiDivisionOption,
+  CtatcmmiGroupOption,
+  CtatContractActivityType,
+  CtatContractType,
+  CtatHelpNeededType,
+  CtatRequestInput,
+  CtatRequestUrgency,
+  ModelPlanFilter,
+  useCreateCtatRequestMutation,
+  useGetModelPlansBaseQuery,
+  useGetUserInfoQuery
+} from 'gql/generated/graphql';
+import GetCtatRequestsAdmin from 'gql/operations/CTAT/GetCtatRequestsAdmin';
+import GetCtatRequestsRequester from 'gql/operations/CTAT/GetCtatRequestsRequester';
+import { useFlags } from 'launchdarkly-react-client-sdk';
+import { DateTime } from 'luxon';
+import { AppState } from 'stores/reducers/rootReducer';
+
+import Alert from 'components/Alert';
+import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import DatePickerFormatted from 'components/DatePickerFormatted';
+import FieldErrorMsg from 'components/FieldErrorMsg';
+import HelpText from 'components/HelpText';
+import MultiSelect from 'components/MultiSelect';
+import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
+import TextAreaField from 'components/TextAreaField';
+import toastSuccess from 'components/ToastSuccess';
+import { getStatusAlertBody } from 'contexts/ErrorContext';
+import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import {
+  divisionOptionsByGroup,
+  helpNeededGroupLabels,
+  helpNeededTypeDisplayOverrides,
+  helpNeededTypesOther,
+  helpNeededTypesPostAward,
+  helpNeededTypesPreAward
+} from 'i18n/en-US/helpAndKnowledge/contractAssistance';
+import { isDateInPast } from 'utils/date';
+import { isAssessment } from 'utils/user';
+
+import SupportingDocumentsUpload from './SupportingDocumentsUpload';
+
+const SELECT_DEFAULT = 'default';
+
+const isCmmiGroupRequiringDivision = (cmmiGroup: string) =>
+  cmmiGroup !== SELECT_DEFAULT && cmmiGroup !== CtatcmmiGroupOption.OTHER;
+
+export type CtatTicketFormValues = {
+  cmmiGroup: string;
+  cmmiGroupOther: string;
+  cmmiDivision: string;
+  cmmiDivisionOther: string;
+  relatedMINTModels: string[];
+  contractActivityType: string;
+  contractActivityTypeOther: string;
+  contractName: string;
+  contractNumber: string;
+  contractType: string;
+  contractTypeOther: string;
+  typeOfHelpNeeded: CtatHelpNeededType[];
+  typeOfHelpNeededOther: string;
+  describeHelpNeeded: string;
+  requestUrgency: string;
+  dateAssistanceNeededBy: string;
+  supportingDocuments: File[];
+};
+
+type CtatTicketFormProps = {
+  closeModal: () => void;
+  setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDirty: (isDirty: boolean) => void;
+  onSubmitted: () => void;
+};
+
+const defaultFormValues: CtatTicketFormValues = {
+  cmmiGroup: SELECT_DEFAULT,
+  cmmiGroupOther: '',
+  cmmiDivision: SELECT_DEFAULT,
+  cmmiDivisionOther: '',
+  relatedMINTModels: [],
+  contractActivityType: SELECT_DEFAULT,
+  contractActivityTypeOther: '',
+  contractName: '',
+  contractNumber: '',
+  contractType: SELECT_DEFAULT,
+  contractTypeOther: '',
+  typeOfHelpNeeded: [],
+  typeOfHelpNeededOther: '',
+  describeHelpNeeded: '',
+  requestUrgency: SELECT_DEFAULT,
+  dateAssistanceNeededBy: '',
+  supportingDocuments: []
+};
+
+const CtatTicketForm = ({
+  closeModal,
+  setDisableButton,
+  setIsDirty,
+  onSubmitted
+}: CtatTicketFormProps) => {
+  const { t: contractAssistanceT } = useTranslation('contractAssistance');
+  const { t: contractAssistanceMiscT } = useTranslation(
+    'contractAssistanceMisc'
+  );
+
+  const {
+    cmmiGroup: cmmiGroupConfig,
+    cmmiDivision: cmmiDivisionConfig,
+    contractActivityType: contractActivityTypeConfig,
+    contractType: contractTypeConfig,
+    typeOfHelpNeeded: typeOfHelpNeededConfig,
+    requestUrgency: requestUrgencyConfig
+  } = usePlanTranslation('contractAssistance');
+
+  const { euaId, groups } = useSelector((state: AppState) => state.auth);
+
+  const flags = useFlags();
+
+  const isAssessmentTeam = isAssessment(groups, flags);
+
+  const refetchQueries = isAssessmentTeam
+    ? // This handles when an assessment team member submits a ticket, it will update the ticket lists for both tables.
+      [{ query: GetCtatRequestsRequester }, { query: GetCtatRequestsAdmin }]
+    : [{ query: GetCtatRequestsRequester }];
+
+  const [createCTATRequest] = useCreateCtatRequestMutation({
+    refetchQueries
+  });
+
+  const { data: userData, loading: userLoading } = useGetUserInfoQuery({
+    variables: { username: euaId },
+    skip: !euaId
+  });
+
+  const { data: modelPlansData, loading: modelPlansLoading } =
+    useGetModelPlansBaseQuery({
+      variables: { filter: ModelPlanFilter.INCLUDE_ALL }
+    });
+
+  const methods = useForm<CtatTicketFormValues>({
+    defaultValues: defaultFormValues,
+    mode: 'onChange',
+    criteriaMode: 'all'
+  });
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    getValues,
+    clearErrors,
+    formState: { isSubmitting, isDirty, isValid }
+  } = methods;
+
+  const selectedCmmiGroup = watch('cmmiGroup');
+  const isCmmiDivisionRequired =
+    isCmmiGroupRequiringDivision(selectedCmmiGroup);
+
+  const defaultSelectOption = {
+    value: SELECT_DEFAULT,
+    label: contractAssistanceMiscT('ctatSidePanel.selectDefault')
+  };
+
+  const cmmiGroupOptions = useMemo(
+    () =>
+      Object.entries(cmmiGroupConfig.options).map(([value, label]) => ({
+        value,
+        label
+      })),
+    [cmmiGroupConfig]
+  );
+
+  const cmmiDivisionOptions = useMemo(() => {
+    if (!isCmmiDivisionRequired) {
+      return [];
+    }
+
+    const divisions =
+      divisionOptionsByGroup[
+        selectedCmmiGroup as keyof typeof divisionOptionsByGroup
+      ] || [];
+
+    return [
+      ...divisions.map(division => ({
+        value: division,
+        label: cmmiDivisionConfig.options[division]
+      })),
+      {
+        value: CtatcmmiDivisionOption.OTHER,
+        label: cmmiDivisionConfig.options[CtatcmmiDivisionOption.OTHER]
+      }
+    ];
+  }, [isCmmiDivisionRequired, selectedCmmiGroup, cmmiDivisionConfig]);
+
+  const contractActivityTypeOptions = useMemo(
+    () =>
+      Object.entries(contractActivityTypeConfig.options).map(
+        ([value, label]) => ({
+          value,
+          label
+        })
+      ),
+    [contractActivityTypeConfig]
+  );
+
+  const contractTypeOptions = useMemo(
+    () =>
+      Object.entries(contractTypeConfig.options).map(([value, label]) => ({
+        value,
+        label
+      })),
+    [contractTypeConfig]
+  );
+
+  const requestUrgencyOptions = useMemo(
+    () =>
+      Object.entries(requestUrgencyConfig.options).map(([value, label]) => ({
+        value,
+        label
+      })),
+    [requestUrgencyConfig]
+  );
+
+  const modelPlanOptions = useMemo(
+    () =>
+      (modelPlansData?.modelPlanCollection || []).map(model => ({
+        value: model.id,
+        label: model.modelName
+      })),
+    [modelPlansData]
+  );
+
+  const groupedHelpNeededOptions = useMemo(
+    () => [
+      {
+        label: helpNeededGroupLabels.preAward,
+        options: helpNeededTypesPreAward.map(key => ({
+          value: key,
+          label: typeOfHelpNeededConfig.options[key],
+          readonlyLabel: helpNeededTypeDisplayOverrides[key]
+        }))
+      },
+      {
+        label: helpNeededGroupLabels.postAward,
+        options: helpNeededTypesPostAward.map(key => ({
+          value: key,
+          label: typeOfHelpNeededConfig.options[key],
+          readonlyLabel: helpNeededTypeDisplayOverrides[key]
+        }))
+      },
+      {
+        label: helpNeededGroupLabels.other,
+        options: helpNeededTypesOther.map(key => ({
+          value: key,
+          label: typeOfHelpNeededConfig.options[key],
+          readonlyLabel: helpNeededTypeDisplayOverrides[key]
+        }))
+      }
+    ],
+    [typeOfHelpNeededConfig]
+  );
+
+  const requesterDisplayName = useMemo(() => {
+    const account = userData?.userAccount;
+    if (!account) return '';
+
+    const name =
+      account.commonName ||
+      [account.givenName, account.familyName].filter(Boolean).join(' ');
+
+    if (account.email) {
+      return `${name} (${account.email})`;
+    }
+
+    return name;
+  }, [userData]);
+
+  useEffect(() => {
+    setIsDirty(isDirty);
+  }, [isDirty, setIsDirty]);
+
+  useEffect(() => {
+    if (!isCmmiDivisionRequired) {
+      clearErrors(['cmmiDivision', 'cmmiDivisionOther']);
+    }
+  }, [isCmmiDivisionRequired, clearErrors]);
+
+  useEffect(() => {
+    setDisableButton(!isValid || isSubmitting);
+  }, [isValid, isSubmitting, setDisableButton]);
+
+  const buildMutationInput = (
+    formData: CtatTicketFormValues
+  ): CtatRequestInput => ({
+    cmmiGroup: formData.cmmiGroup as CtatcmmiGroupOption,
+    cmmiGroupOther:
+      formData.cmmiGroup === CtatcmmiGroupOption.OTHER
+        ? formData.cmmiGroupOther
+        : null,
+    cmmiDivision:
+      formData.cmmiDivision !== SELECT_DEFAULT
+        ? (formData.cmmiDivision as CtatcmmiDivisionOption)
+        : null,
+    cmmiDivisionOther:
+      formData.cmmiDivision === CtatcmmiDivisionOption.OTHER
+        ? formData.cmmiDivisionOther
+        : null,
+    relatedMINTModels: formData.relatedMINTModels.length
+      ? formData.relatedMINTModels
+      : null,
+    contractActivityType:
+      formData.contractActivityType !== SELECT_DEFAULT
+        ? (formData.contractActivityType as CtatContractActivityType)
+        : null,
+    contractActivityTypeOther:
+      formData.contractActivityType === CtatContractActivityType.OTHER
+        ? formData.contractActivityTypeOther
+        : null,
+    contractName: formData.contractName || null,
+    contractNumber: formData.contractNumber || null,
+    contractType:
+      formData.contractType !== SELECT_DEFAULT
+        ? (formData.contractType as CtatContractType)
+        : null,
+    contractTypeOther:
+      formData.contractType === CtatContractType.OTHER
+        ? formData.contractTypeOther
+        : null,
+    typeOfHelpNeeded: formData.typeOfHelpNeeded,
+    typeOfHelpNeededOther: formData.typeOfHelpNeeded.includes(
+      CtatHelpNeededType.OTHER
+    )
+      ? formData.typeOfHelpNeededOther
+      : null,
+    describeHelpNeeded: formData.describeHelpNeeded,
+    requestUrgency: formData.requestUrgency as CtatRequestUrgency,
+    dateAssistanceNeededBy: formData.dateAssistanceNeededBy,
+    supportingDocuments: formData.supportingDocuments.map(file => ({
+      fileData: file
+    }))
+  });
+
+  const onSubmit = (formData: CtatTicketFormValues) => {
+    setCurrentErrorMeta({
+      overrideMessage: getStatusAlertBody({
+        type: 'error',
+        message: contractAssistanceMiscT('ctatSidePanel.error')
+      })
+    });
+
+    createCTATRequest({
+      variables: {
+        input: buildMutationInput(formData)
+      }
+    }).then(response => {
+      if (!response.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={contractAssistanceMiscT('ctatSidePanel.success')}
+            values={{
+              ticketId: response.data?.createCTATRequest.humanReadableID
+            }}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
+        );
+        onSubmitted();
+        closeModal();
+      }
+    });
+  };
+
+  if (userLoading || modelPlansLoading) {
+    return <PageLoading />;
+  }
+
+  if (!userData?.userAccount) {
+    return <NotFound />;
+  }
+
+  return (
+    <div className="margin-top-8 padding-8 maxw-tablet">
+      <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-3">
+        {contractAssistanceMiscT('ctatSidePanel.newTicketHeading')}
+      </PageHeading>
+      <p className="text-base margin-top-0 margin-bottom-3">
+        <Trans
+          i18nKey={contractAssistanceMiscT('ctatSidePanel.allFieldsRequired')}
+          components={{
+            s: <span className="text-secondary-dark" />
+          }}
+        />
+      </p>
+      <FormProvider {...methods}>
+        <ConfirmLeaveRHF />
+        <Form
+          id="ctat-ticket-form"
+          className="maxw-none padding-bottom-10"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Fieldset disabled={isSubmitting}>
+            <FormGroup className="margin-top-0 margin-bottom-3">
+              <Label
+                htmlFor="ctat-requester"
+                className="maxw-none text-bold"
+                requiredMarker
+              >
+                {contractAssistanceT('requester.label')}
+              </Label>
+              <HelpText className="margin-top-05">
+                {contractAssistanceT('requester.sublabel')}
+              </HelpText>
+              <TextInput
+                id="ctat-requester"
+                name="requester"
+                type="text"
+                value={requesterDisplayName}
+                disabled
+              />
+            </FormGroup>
+
+            <Controller
+              name="cmmiGroup"
+              control={control}
+              rules={{
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                ),
+                validate: value =>
+                  value !== SELECT_DEFAULT ||
+                  contractAssistanceMiscT('ctatSidePanel.validation.fillOut')
+              }}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <FormGroup
+                  error={!!error}
+                  className="margin-top-0 margin-bottom-3"
+                >
+                  <Label
+                    htmlFor="cmmi-group"
+                    className="maxw-none text-bold"
+                    requiredMarker
+                  >
+                    {contractAssistanceT('cmmiGroup.label')}
+                  </Label>
+                  {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                  <Select
+                    {...field}
+                    inputRef={ref}
+                    id="cmmi-group"
+                    value={field.value}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                      const newGroup = e.target.value;
+                      field.onChange(e);
+                      setValue('cmmiDivision', SELECT_DEFAULT);
+                      setValue('cmmiDivisionOther', '');
+                      setValue('cmmiGroupOther', '');
+
+                      if (newGroup === CtatcmmiGroupOption.OTHER) {
+                        clearErrors(['cmmiDivision', 'cmmiDivisionOther']);
+                      }
+                    }}
+                  >
+                    {[defaultSelectOption, ...cmmiGroupOptions].map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+              )}
+            />
+
+            {selectedCmmiGroup === CtatcmmiGroupOption.OTHER && (
+              <Controller
+                name="cmmiGroupOther"
+                control={control}
+                rules={{
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor="cmmi-group-other"
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {contractAssistanceT('cmmiGroupOther.label')}
+                    </Label>
+                    <HelpText className="margin-top-05">
+                      {contractAssistanceT('cmmiGroupOther.sublabel')}
+                    </HelpText>
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                    <TextInput
+                      {...field}
+                      inputRef={ref}
+                      id="cmmi-group-other"
+                      type="text"
+                      value={field.value || ''}
+                    />
+                  </FormGroup>
+                )}
+              />
+            )}
+
+            <Controller
+              name="cmmiDivision"
+              control={control}
+              rules={{
+                validate: value => {
+                  if (!isCmmiGroupRequiringDivision(getValues('cmmiGroup'))) {
+                    return true;
+                  }
+
+                  return (
+                    value !== SELECT_DEFAULT ||
+                    contractAssistanceMiscT('ctatSidePanel.validation.fillOut')
+                  );
+                }
+              }}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <FormGroup
+                  error={!!error && isCmmiDivisionRequired}
+                  className="margin-top-0 margin-bottom-3"
+                >
+                  <Label
+                    htmlFor="cmmi-division"
+                    className="maxw-none text-bold"
+                    requiredMarker={isCmmiDivisionRequired}
+                  >
+                    {contractAssistanceT('cmmiDivision.label')}
+                  </Label>
+                  <HelpText className="margin-top-05">
+                    {contractAssistanceT('cmmiDivision.sublabel')}
+                  </HelpText>
+                  {!!error && isCmmiDivisionRequired && (
+                    <FieldErrorMsg>{error.message}</FieldErrorMsg>
+                  )}
+                  <Select
+                    {...field}
+                    inputRef={ref}
+                    id="cmmi-division"
+                    value={field.value}
+                    disabled={!isCmmiDivisionRequired}
+                  >
+                    {[defaultSelectOption, ...cmmiDivisionOptions].map(
+                      option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      )
+                    )}
+                  </Select>
+                </FormGroup>
+              )}
+            />
+
+            {watch('cmmiDivision') === CtatcmmiDivisionOption.OTHER && (
+              <Controller
+                name="cmmiDivisionOther"
+                control={control}
+                rules={{
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor="cmmi-division-other"
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {contractAssistanceT('cmmiDivisionOther.label')}
+                    </Label>
+                    <HelpText className="margin-top-05">
+                      {contractAssistanceT('cmmiDivisionOther.sublabel')}
+                    </HelpText>
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                    <TextInput
+                      {...field}
+                      inputRef={ref}
+                      id="cmmi-division-other"
+                      type="text"
+                      value={field.value || ''}
+                    />
+                  </FormGroup>
+                )}
+              />
+            )}
+
+            <Controller
+              name="relatedMINTModels"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-0 margin-bottom-3">
+                  <Label
+                    htmlFor="related-mint-models"
+                    className="maxw-none text-bold"
+                  >
+                    {contractAssistanceT('relatedMINTModels.label')}
+                  </Label>
+                  <HelpText className="margin-top-05">
+                    {contractAssistanceT('relatedMINTModels.sublabel')}
+                  </HelpText>
+                  <MultiSelect
+                    {...field}
+                    inputRef={ref}
+                    id="related-mint-models"
+                    inputId="related-mint-models"
+                    ariaLabel={contractAssistanceT('relatedMINTModels.label')}
+                    ariaLabelText={contractAssistanceT(
+                      'relatedMINTModels.label'
+                    )}
+                    options={modelPlanOptions}
+                    selectedLabel={contractAssistanceT(
+                      'relatedMINTModels.multiSelectLabel'
+                    )}
+                    initialValues={watch('relatedMINTModels')}
+                  />
+                </FormGroup>
+              )}
+            />
+
+            <Controller
+              name="contractActivityType"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-0 margin-bottom-3">
+                  <Label
+                    htmlFor="contract-activity-type"
+                    className="maxw-none text-bold"
+                  >
+                    {contractAssistanceT('contractActivityType.label')}
+                  </Label>
+                  <Select
+                    {...field}
+                    inputRef={ref}
+                    id="contract-activity-type"
+                    value={field.value}
+                  >
+                    {[
+                      {
+                        value: SELECT_DEFAULT,
+                        label: contractAssistanceMiscT(
+                          'ctatSidePanel.selectDefault'
+                        )
+                      },
+                      ...contractActivityTypeOptions
+                    ].map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+              )}
+            />
+
+            {watch('contractActivityType') ===
+              CtatContractActivityType.OTHER && (
+              <Controller
+                name="contractActivityTypeOther"
+                control={control}
+                rules={{
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor="contract-activity-type-other"
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {contractAssistanceT('contractActivityTypeOther.label')}
+                    </Label>
+                    <HelpText className="margin-top-05">
+                      {contractAssistanceT(
+                        'contractActivityTypeOther.sublabel'
+                      )}
+                    </HelpText>
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                    <TextInput
+                      {...field}
+                      inputRef={ref}
+                      id="contract-activity-type-other"
+                      type="text"
+                      value={field.value || ''}
+                    />
+                  </FormGroup>
+                )}
+              />
+            )}
+
+            <Controller
+              name="contractName"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-0 margin-bottom-3">
+                  <Label
+                    htmlFor="contract-name"
+                    className="maxw-none text-bold"
+                  >
+                    {contractAssistanceT('contractName.label')}
+                  </Label>
+                  <TextInput
+                    {...field}
+                    inputRef={ref}
+                    id="contract-name"
+                    type="text"
+                    value={field.value || ''}
+                  />
+                </FormGroup>
+              )}
+            />
+
+            <Controller
+              name="contractNumber"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-0 margin-bottom-3">
+                  <Label
+                    htmlFor="contract-number"
+                    className="maxw-none text-bold"
+                  >
+                    {contractAssistanceT('contractNumber.label')}
+                  </Label>
+                  <TextInput
+                    {...field}
+                    inputRef={ref}
+                    id="contract-number"
+                    type="text"
+                    value={field.value || ''}
+                  />
+                </FormGroup>
+              )}
+            />
+
+            <Controller
+              name="contractType"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-top-0 margin-bottom-3">
+                  <Label
+                    htmlFor="contract-type"
+                    className="maxw-none text-bold"
+                  >
+                    {contractAssistanceT('contractType.label')}
+                  </Label>
+                  <Select
+                    {...field}
+                    inputRef={ref}
+                    id="contract-type"
+                    value={field.value}
+                  >
+                    {[
+                      {
+                        value: SELECT_DEFAULT,
+                        label: contractAssistanceMiscT(
+                          'ctatSidePanel.selectDefault'
+                        )
+                      },
+                      ...contractTypeOptions
+                    ].map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+              )}
+            />
+
+            {watch('contractType') === CtatContractType.OTHER && (
+              <Controller
+                name="contractTypeOther"
+                control={control}
+                rules={{
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor="contract-type-other"
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {contractAssistanceT('contractTypeOther.label')}
+                    </Label>
+                    <HelpText className="margin-top-05">
+                      {contractAssistanceT('contractTypeOther.sublabel')}
+                    </HelpText>
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                    <TextInput
+                      {...field}
+                      inputRef={ref}
+                      id="contract-type-other"
+                      type="text"
+                      value={field.value || ''}
+                    />
+                  </FormGroup>
+                )}
+              />
+            )}
+
+            <Controller
+              name="typeOfHelpNeeded"
+              control={control}
+              rules={{
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                ),
+                validate: value =>
+                  value.length > 0 ||
+                  contractAssistanceMiscT('ctatSidePanel.validation.fillOut')
+              }}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <FormGroup
+                  error={!!error}
+                  className="margin-top-0 margin-bottom-3"
+                >
+                  <Label
+                    htmlFor="type-of-help-needed"
+                    className="maxw-none text-bold"
+                    requiredMarker
+                  >
+                    {contractAssistanceT('typeOfHelpNeeded.label')}
+                  </Label>
+                  <HelpText className="margin-top-05">
+                    {contractAssistanceT('typeOfHelpNeeded.sublabel')}
+                  </HelpText>
+                  {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                  <MultiSelect
+                    {...field}
+                    inputRef={ref}
+                    id="type-of-help-needed"
+                    inputId="type-of-help-needed"
+                    ariaLabel={contractAssistanceT('typeOfHelpNeeded.label')}
+                    ariaLabelText={contractAssistanceT(
+                      'typeOfHelpNeeded.label'
+                    )}
+                    options={[]}
+                    groupedOptions={groupedHelpNeededOptions}
+                    selectedLabel={contractAssistanceT(
+                      'typeOfHelpNeeded.multiSelectLabel'
+                    )}
+                    initialValues={watch('typeOfHelpNeeded')}
+                  />
+                </FormGroup>
+              )}
+            />
+
+            {watch('typeOfHelpNeeded').includes(CtatHelpNeededType.OTHER) && (
+              <Controller
+                name="typeOfHelpNeededOther"
+                control={control}
+                rules={{
+                  required: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
+                }}
+                render={({
+                  field: { ref, ...field },
+                  fieldState: { error }
+                }) => (
+                  <FormGroup
+                    error={!!error}
+                    className="margin-top-0 margin-bottom-3"
+                  >
+                    <Label
+                      htmlFor="type-of-help-needed-other"
+                      className="maxw-none text-bold"
+                      requiredMarker
+                    >
+                      {contractAssistanceT('typeOfHelpNeededOther.label')}
+                    </Label>
+                    {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                    <TextInput
+                      {...field}
+                      inputRef={ref}
+                      id="type-of-help-needed-other"
+                      type="text"
+                      value={field.value || ''}
+                    />
+                  </FormGroup>
+                )}
+              />
+            )}
+
+            <Controller
+              name="describeHelpNeeded"
+              control={control}
+              rules={{
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                ),
+                maxLength: {
+                  value: 500,
+                  message: contractAssistanceMiscT(
+                    'ctatSidePanel.validation.fillOut'
+                  )
+                }
+              }}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <FormGroup
+                  error={!!error}
+                  className="margin-top-0 margin-bottom-3"
+                >
+                  <Label
+                    htmlFor="describe-help-needed"
+                    className="maxw-none text-bold"
+                    requiredMarker
+                  >
+                    {contractAssistanceT('describeHelpNeeded.label')}
+                  </Label>
+                  <HelpText className="margin-top-05">
+                    {contractAssistanceT('describeHelpNeeded.sublabel')}
+                  </HelpText>
+                  {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                  <TextAreaField
+                    {...field}
+                    inputRef={ref}
+                    id="describe-help-needed"
+                    value={field.value || ''}
+                    maxLength={500}
+                    className="height-card"
+                  />
+                  <HelpText className="margin-top-05">
+                    {contractAssistanceMiscT('ctatSidePanel.charactersAllowed')}
+                  </HelpText>
+                </FormGroup>
+              )}
+            />
+
+            <Controller
+              name="requestUrgency"
+              control={control}
+              rules={{
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                ),
+                validate: value =>
+                  value !== SELECT_DEFAULT ||
+                  contractAssistanceMiscT('ctatSidePanel.validation.fillOut')
+              }}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <FormGroup
+                  error={!!error}
+                  className="margin-top-0 margin-bottom-3"
+                >
+                  <Label
+                    htmlFor="request-urgency"
+                    className="maxw-none text-bold"
+                    requiredMarker
+                  >
+                    {contractAssistanceT('requestUrgency.label')}
+                  </Label>
+                  {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                  <Select
+                    {...field}
+                    inputRef={ref}
+                    id="request-urgency"
+                    value={field.value}
+                  >
+                    {[
+                      {
+                        value: SELECT_DEFAULT,
+                        label: contractAssistanceMiscT(
+                          'ctatSidePanel.selectDefault'
+                        )
+                      },
+                      ...requestUrgencyOptions
+                    ].map(option => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </Select>
+                </FormGroup>
+              )}
+            />
+
+            <Controller
+              name="dateAssistanceNeededBy"
+              control={control}
+              rules={{
+                required: contractAssistanceMiscT(
+                  'ctatSidePanel.validation.fillOut'
+                ),
+                validate: value => {
+                  return (
+                    !isDateInPast(value) ||
+                    contractAssistanceMiscT(
+                      'ctatSidePanel.validation.correctDate'
+                    )
+                  );
+                }
+              }}
+              render={({ field: { ref, ...field }, fieldState: { error } }) => (
+                <FormGroup
+                  error={!!error}
+                  className="margin-top-0 margin-bottom-3"
+                >
+                  <Label
+                    htmlFor="assistance-needed-by"
+                    className="maxw-none text-bold"
+                    requiredMarker
+                  >
+                    {contractAssistanceT('dateAssistanceNeededBy.label')}
+                  </Label>
+
+                  <HelpText className="margin-top-05">
+                    {contractAssistanceT('dateAssistanceNeededBy.sublabel')}
+                  </HelpText>
+
+                  {!!error && <FieldErrorMsg>{error.message}</FieldErrorMsg>}
+                  <DatePickerFormatted
+                    id="assistance-needed-by"
+                    name={field.name}
+                    defaultValue={field.value}
+                    minDate={DateTime.now().toISODate()}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                  />
+                </FormGroup>
+              )}
+            />
+
+            <FormGroup className="margin-top-0 margin-bottom-6">
+              <Label
+                htmlFor="ctat-supporting-documents"
+                className="maxw-none text-bold"
+              >
+                {contractAssistanceT('supportingDocuments.label')}
+              </Label>
+              <HelpText className="margin-top-05">
+                {contractAssistanceT('supportingDocuments.sublabel')}
+              </HelpText>
+              <SupportingDocumentsUpload control={control} />
+            </FormGroup>
+
+            <Alert noIcon type="info" validation className="margin-bottom-0">
+              <p className="margin-top-0 margin-bottom-1 text-bold">
+                {contractAssistanceMiscT(
+                  'ctatSidePanel.whatHappensNext.heading'
+                )}
+              </p>
+              <p className="margin-top-0 margin-bottom-1">
+                {contractAssistanceMiscT('ctatSidePanel.whatHappensNext.intro')}
+              </p>
+              <ul className="margin-top-0 margin-bottom-0">
+                <li>
+                  {contractAssistanceMiscT(
+                    'ctatSidePanel.whatHappensNext.bullet1'
+                  )}
+                </li>
+                <li>
+                  {contractAssistanceMiscT(
+                    'ctatSidePanel.whatHappensNext.bullet2'
+                  )}
+                </li>
+                <li>
+                  {contractAssistanceMiscT(
+                    'ctatSidePanel.whatHappensNext.bullet3'
+                  )}
+                </li>
+                <li>
+                  {contractAssistanceMiscT(
+                    'ctatSidePanel.whatHappensNext.bullet4'
+                  )}
+                </li>
+              </ul>
+            </Alert>
+          </Fieldset>
+        </Form>
+      </FormProvider>
+    </div>
+  );
+};
+
+export default CtatTicketForm;
