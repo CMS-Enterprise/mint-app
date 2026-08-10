@@ -214,7 +214,6 @@ const (
 	CTATHelpNeededTypeCalmSystemRequisitionSupport                     CTATHelpNeededType = "CALM_SYSTEM_REQUISITION_SUPPORT"
 	CTATHelpNeededTypePreAwardContractCostReviewCCRProcessing          CTATHelpNeededType = "PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING"
 	CTATHelpNeededTypePostAwardContractCostReviewCCRProcessing         CTATHelpNeededType = "POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING"
-	CTATHelpNeededTypeCORTranscriptReview                              CTATHelpNeededType = "COR_TRANSCRIPT_REVIEW"
 	CTATHelpNeededTypeDefiningAndDocumentingContractRequirements       CTATHelpNeededType = "DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS"
 	CTATHelpNeededTypeDepartmentEfficiencyReviewDER                    CTATHelpNeededType = "DEPARTMENTAL_EFFICIENCY_REVIEW_DER"
 	CTATHelpNeededTypeGuidanceOnDeterminationsAndFindingsDF            CTATHelpNeededType = "GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF"
@@ -248,7 +247,6 @@ var ctatHelpNeededTypeHumanized = map[CTATHelpNeededType]string{
 	CTATHelpNeededTypeCalmSystemRequisitionSupport:                     "CALM system requisition support",
 	CTATHelpNeededTypePreAwardContractCostReviewCCRProcessing:          "Contract Cost Review (CCR) processing - Pre-award",
 	CTATHelpNeededTypePostAwardContractCostReviewCCRProcessing:         "Contract Cost Review (CCR) processing - Post-award",
-	CTATHelpNeededTypeCORTranscriptReview:                              "COR Transcript Review",
 	CTATHelpNeededTypeDefiningAndDocumentingContractRequirements:       "Defining and documenting contract requirements",
 	CTATHelpNeededTypeDepartmentEfficiencyReviewDER:                    "Departmental Efficiency Review (DER)",
 	CTATHelpNeededTypeGuidanceOnDeterminationsAndFindingsDF:            "Guidance on Determinations & Findings (D&F)",

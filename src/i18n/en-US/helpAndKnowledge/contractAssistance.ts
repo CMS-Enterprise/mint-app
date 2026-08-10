@@ -112,7 +112,6 @@ export const helpNeededTypes: Record<CtatHelpNeededType, string> = {
     'Contract Cost Review (CCR) processing',
   [CtatHelpNeededType.POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING]:
     'Contract Cost Review (CCR) processing',
-  [CtatHelpNeededType.COR_TRANSCRIPT_REVIEW]: 'COR transcript review',
   [CtatHelpNeededType.DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS]:
     'Defining and documenting contract requirements',
   [CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER]:
@@ -194,7 +193,6 @@ export const helpNeededGroupLabels = {
 export const helpNeededTypesPreAward: CtatHelpNeededType[] = [
   CtatHelpNeededType.CALM_SYSTEM_REQUISITION_SUPPORT,
   CtatHelpNeededType.PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING,
-  CtatHelpNeededType.COR_TRANSCRIPT_REVIEW,
   CtatHelpNeededType.DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS,
   CtatHelpNeededType.DEPARTMENTAL_EFFICIENCY_REVIEW_DER,
   CtatHelpNeededType.GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF,

@@ -75,7 +75,6 @@ CREATE TYPE CTAT_HELP_NEEDED_TYPE AS ENUM (
     'CALM_SYSTEM_REQUISITION_SUPPORT',
     'PRE_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING',
     'POST_AWARD_CONTRACT_COST_REVIEW_CCR_PROCESSING',
-    'COR_TRANSCRIPT_REVIEW',
     'DEFINING_AND_DOCUMENTING_CONTRACT_REQUIREMENTS',
     'DEPARTMENTAL_EFFICIENCY_REVIEW_DER',
     'GUIDANCE_ON_DETERMINATIONS_AND_FINDINGS_DF',
@@ -110,6 +109,6 @@ CREATE TYPE CTAT_HELP_NEEDED_TYPE AS ENUM (
 -- PostgreSQL also does not allow a brand-new enum value to be used in the same transaction
 -- where it was added. We follow the existing repo pattern from V209 by committing the enum
 -- additions first, then continuing with the rest of the migration.
-ALTER TYPE table_name ADD VALUE 'ctat_request';
-ALTER TYPE table_name ADD VALUE 'ctat_request_document';
-ALTER TYPE table_name ADD VALUE 'ctat_request_model_plan_link';
+ALTER TYPE TABLE_NAME ADD VALUE 'ctat_request';
+ALTER TYPE TABLE_NAME ADD VALUE 'ctat_request_document';
+ALTER TYPE TABLE_NAME ADD VALUE 'ctat_request_model_plan_link';
