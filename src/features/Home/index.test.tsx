@@ -45,6 +45,14 @@ vi.mock('@okta/okta-react', () => ({
   }
 }));
 
+vi.mock('launchdarkly-react-client-sdk', () => ({
+  useFlags: () => {
+    return {
+      ctatEnabled: true
+    };
+  }
+}));
+
 const settingsMock: MockedResponse<
   GetHomepageSettingsQuery,
   GetHomepageSettingsQueryVariables

@@ -18,6 +18,14 @@ import {
   ComplexityCalculationLevelType,
   ConfidenceType,
   ContractorSupportType,
+  CtatcmmiDivisionOption,
+  CtatcmmiGroupOption,
+  CtatContractActivityType,
+  CtatContractType,
+  CtatHelpNeededType,
+  CtatRequestTranslation,
+  CtatRequestUrgency,
+  CtatStatus,
   CustomTimelineDateTranslation,
   CustomTimelineDateType,
   DataExchangeApproachStatus,
@@ -1550,6 +1558,7 @@ export type TranslationPlan = {
   mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCustom;
   mtoMilestoneNote: TranslationMTOMilestoneNoteCustom;
   mtoCommonMilestone: TranslationMTOCommonMilestoneCustom;
+  contractAssistance: TranslationContractAssistance;
 };
 
 export type TranslationPlanSection =
@@ -1590,7 +1599,8 @@ export enum PlanSection {
   MTO_SOLUTION = 'mtoSolution',
   MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner',
   MTO_MILESTONE_NOTE = 'mtoMilestoneNote',
-  MTO_COMMON_MILESTONE = 'mtoCommonMilestone'
+  MTO_COMMON_MILESTONE = 'mtoCommonMilestone',
+  CONTRACT_ASSISTANCE = 'contractAssistance'
 }
 
 // Model Plan MTO Template Link - Change History purposes only
@@ -1639,4 +1649,42 @@ type TranslationKeyContactCategoryCustomGQL = Omit<
 
 export type TranslationKeyContactCategoryCustom = {
   [K in keyof TranslationKeyContactCategoryCustomGQL]: TranslationKeyContactCategoryCustomForm[K]; // FE form type
+};
+
+// CTAT - Change History purposes only
+export type TranslationContractAssistanceForm = {
+  // Request form
+  requester: TranslationFieldProperties;
+  cmmiGroup: TranslationFieldPropertiesWithOptions<CtatcmmiGroupOption>;
+  cmmiGroupOther: TranslationFieldProperties;
+  cmmiDivision: TranslationFieldPropertiesWithOptions<CtatcmmiDivisionOption>;
+  cmmiDivisionOther: TranslationFieldProperties;
+  relatedMINTModels: TranslationFieldProperties;
+  contractActivityType: TranslationFieldPropertiesWithOptions<CtatContractActivityType>;
+  contractActivityTypeOther: TranslationFieldProperties;
+  contractName: TranslationFieldProperties;
+  contractNumber: TranslationFieldProperties;
+  contractType: TranslationFieldPropertiesWithOptions<CtatContractType>;
+  contractTypeOther: TranslationFieldProperties;
+  typeOfHelpNeeded: TranslationFieldPropertiesWithOptions<CtatHelpNeededType>;
+  typeOfHelpNeededOther: TranslationFieldProperties;
+  describeHelpNeeded: TranslationFieldProperties;
+  requestUrgency: TranslationFieldPropertiesWithOptions<CtatRequestUrgency>;
+  dateAssistanceNeededBy: TranslationFieldProperties;
+  supportingDocuments: TranslationFieldProperties;
+
+  // Ticket management form
+  status: TranslationFieldPropertiesWithOptions<CtatStatus>;
+  assignedAdmin: TranslationFieldProperties;
+  notes: TranslationFieldProperties;
+  resolution: TranslationFieldProperties;
+};
+
+type TranslationContractAssistanceGQL = Omit<
+  CtatRequestTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationContractAssistance = {
+  [K in keyof TranslationContractAssistanceGQL]: TranslationContractAssistanceForm[K]; // FE form type
 };
