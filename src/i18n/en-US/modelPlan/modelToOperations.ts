@@ -208,11 +208,37 @@ export const modelToOperationsMisc: Record<string, any> = {
           description: 'This filters by the “Category” field.',
           tagLabel: 'Category'
         },
-
         facilitatedByRole: {
           label: 'By role',
           description: 'This filters by the “Facilitated by” field.',
           tagLabel: 'Role'
+        },
+        neededByDate: {
+          label: 'By date',
+          description:
+            'This filters by the “Need by” field. View milestones that need to be completed within a certain date range.',
+          tagLabel: 'Need by date range'
+        },
+        status: {
+          label: 'By status',
+          description: 'This filters by the “Status” field.',
+          tagLabel: 'Status'
+        },
+        riskIndicator: {
+          label: 'By risk level',
+          description: 'This filters by the risk indicator.',
+          tagLabel: 'Risk'
+        },
+        otherFilters: {
+          label: 'Other filters',
+          description: '',
+          tagLabel: 'Other',
+          options: [
+            'Milestones with no solution selected',
+            'Custom milestones only',
+            'Draft milestones only',
+            'Hide category rows'
+          ]
         }
       },
       quickFilters: 'Quick filters:',

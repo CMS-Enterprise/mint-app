@@ -4,6 +4,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Checkbox, Icon, Select } from '@trussworks/react-uswds';
 import {
   MtoFacilitator,
+  MtoMilestoneStatus,
+  MtoRiskIndicator,
   useGetMtoCategoriesQuery
 } from 'gql/generated/graphql';
 
@@ -41,6 +43,9 @@ export type MTOTableFiltersProps = {
 export type MTOTableSelectedFilters = {
   categoryName: string[];
   facilitatedByRole: MtoFacilitator[];
+  status: MtoMilestoneStatus[];
+  riskIndicator: MtoRiskIndicator[];
+  otherFilters: string[];
 };
 
 /** Table filter controls for the MTO milestones matrix (date window + hide header rows). */
@@ -74,7 +79,16 @@ const MTOTableFilters = ({
         : [],
       facilitatedByRole: (searchParams.get('role')
         ? (searchParams.get('role') || '').split(',')
-        : []) as MTOTableSelectedFilters['facilitatedByRole']
+        : []) as MTOTableSelectedFilters['facilitatedByRole'],
+      status: (searchParams.get('status')
+        ? (searchParams.get('status') || '').split(',')
+        : []) as MTOTableSelectedFilters['status'],
+      riskIndicator: (searchParams.get('risk')
+        ? (searchParams.get('risk') || '').split(',')
+        : []) as MTOTableSelectedFilters['riskIndicator'],
+      otherFilters: searchParams.get('other')
+        ? (searchParams.get('other') || '').split(',')
+        : []
     };
   }, [location.search]);
 
