@@ -41,7 +41,8 @@ export const HelpAndKnowledgeHome = () => {
       isCTATEnabled
         ? JUMP_TO_LINKS_I18NKEYS
         : JUMP_TO_LINKS_I18NKEYS.filter(
-            linkI18nkey => linkI18nkey !== 'contractAssistance:hkcJumpToLabel'
+            linkI18nkey =>
+              linkI18nkey !== 'contractAssistanceMisc:hkcJumpToLabel'
           ),
     [isCTATEnabled]
   );
