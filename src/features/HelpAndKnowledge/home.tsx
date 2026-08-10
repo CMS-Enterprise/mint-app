@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { GridContainer, SummaryBox } from '@trussworks/react-uswds';
+import { useFlags } from 'launchdarkly-react-client-sdk';
 
+import Divider from 'components/Divider';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
-import MilestoneLibrarySection from './_components/MilestoneLibrarySection';
 import ArticlePageInfo from './Articles/_components/ArticlePageInfo';
 import HelpCardGroup from './Articles/_components/HelpCardGroup';
 import ResourcesByCategory from './Articles/_components/ResourcesByCategory';
 import SolutionCategories from './SolutionsHelp/_components/SolutionCategories';
 import { homeArticles } from './Articles';
+import ContractAssistanceSection from './ContractAssistanceSection';
 import KeyContactDirectory from './KeyContactDirectory';
+import MilestoneLibrarySection from './MilestoneLibrarySection';
 
 const JUMP_TO_LINKS_I18NKEYS = [
   'helpResourcesAndLinks',
+  'contractAssistanceMisc:hkcJumpToLabel',
   'milestoneLibrary.hkcJumpToLabel',
   'operationalSolutionsAndITSystems',
   'keyContactDirectory.jumpToLabel'
@@ -27,6 +31,20 @@ export const HelpAndKnowledgeHome = () => {
   const { t } = useTranslation('helpAndKnowledge');
 
   const { hash } = useLocation();
+
+  const flags = useFlags();
+
+  const isCTATEnabled = flags.ctatEnabled;
+
+  const filteredJumpToLinks = useMemo(
+    () =>
+      isCTATEnabled
+        ? JUMP_TO_LINKS_I18NKEYS
+        : JUMP_TO_LINKS_I18NKEYS.filter(
+            linkI18nkey => linkI18nkey !== 'contractAssistance:hkcJumpToLabel'
+          ),
+    [isCTATEnabled]
+  );
 
   // This handles when there's # in url and scroll to section
   useEffect(() => {
@@ -51,7 +69,7 @@ export const HelpAndKnowledgeHome = () => {
   useEffect(() => {
     let rafId: number | null = null;
 
-    const targetIds = JUMP_TO_LINKS_I18NKEYS.map(key =>
+    const targetIds = filteredJumpToLinks.map(key =>
       convertToLowercaseAndDashes(t(key))
     );
 
@@ -89,7 +107,7 @@ export const HelpAndKnowledgeHome = () => {
       if (rafId !== null) cancelAnimationFrame(rafId);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [t]);
+  }, [t, filteredJumpToLinks]);
 
   return (
     <MainContent>
@@ -106,24 +124,26 @@ export const HelpAndKnowledgeHome = () => {
             {t('description')}
           </div>
 
-          <div>
-            <p className="display-inline text-bold margin-right-2">
-              {t('jumpTo')}:
-            </p>
-            {JUMP_TO_LINKS_I18NKEYS.map((linkI18nkey, index) => (
-              <div className="display-inline" key={linkI18nkey}>
-                <UswdsReactLink
-                  key={linkI18nkey}
-                  to={`#${convertToLowercaseAndDashes(t(linkI18nkey))}`} // 👈 Just the hash for same-page jumping
-                  className="usa-link"
-                >
-                  {t(linkI18nkey)}
-                </UswdsReactLink>
-                {index < JUMP_TO_LINKS_I18NKEYS.length - 1 && (
-                  <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
-                )}
-              </div>
-            ))}
+          <div className="display-flex">
+            <div className="flex-shrink-0 margin-right-2">
+              <p className="text-bold margin-0 text-no-wrap">{t('jumpTo')}:</p>
+            </div>
+            <div className="display-flex flex-wrap" style={{ rowGap: '12px' }}>
+              {filteredJumpToLinks.map((linkI18nkey, index) => (
+                <div key={linkI18nkey}>
+                  <UswdsReactLink
+                    key={linkI18nkey}
+                    to={`#${convertToLowercaseAndDashes(t(linkI18nkey))}`} // 👈 Just the hash for same-page jumping
+                    className="usa-link"
+                  >
+                    {t(linkI18nkey)}
+                  </UswdsReactLink>
+                  {index < filteredJumpToLinks.length - 1 && (
+                    <div className="display-inline height-full width-1px border-left border-width-1px border-base-light margin-x-2" />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </GridContainer>
       </SummaryBox>
@@ -143,9 +163,17 @@ export const HelpAndKnowledgeHome = () => {
         <ResourcesByCategory />
       </GridContainer>
 
-      <MilestoneLibrarySection />
+      {isCTATEnabled && <ContractAssistanceSection />}
 
-      <SolutionCategories />
+      <div className="bg-base-lightest padding-y-6 padding-bottom-8">
+        <MilestoneLibrarySection />
+
+        <GridContainer>
+          <Divider className="margin-top-5 margin-bottom-4" />
+        </GridContainer>
+
+        <SolutionCategories />
+      </div>
 
       <KeyContactDirectory />
     </MainContent>

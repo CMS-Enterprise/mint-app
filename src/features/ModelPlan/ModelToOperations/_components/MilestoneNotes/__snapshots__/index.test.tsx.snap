@@ -40,7 +40,7 @@ exports[`MilestoneNotes > renders heading and note count, opens sidepanel to add
       <button
         aria-controls="milestone-notes"
         aria-expanded="true"
-        class="usa-button usa-button--unstyled mint-no-print"
+        class="usa-button usa-button--unstyled mint-no-print text-bold"
         data-testid="milestone-notes"
         type="button"
       >
