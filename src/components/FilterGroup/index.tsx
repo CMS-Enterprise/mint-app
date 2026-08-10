@@ -68,9 +68,7 @@ const FilterGroup = ({
   return (
     <Fieldset className="mint-filter-group font-body-sm margin-bottom-2 border-bottom-1px border-base-light padding-bottom-4">
       <legend>
-        <h3 className="margin-y-1">
-          {t('filter.filterGroupHeading', { groupName: filterGroup.label })}
-        </h3>
+        <h3 className="margin-y-1">{filterGroup.label}</h3>
       </legend>
 
       <HelpText>{filterGroup.description}</HelpText>

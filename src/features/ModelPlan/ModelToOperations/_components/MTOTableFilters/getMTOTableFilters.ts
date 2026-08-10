@@ -7,6 +7,28 @@ import { tArray, tObject } from 'utils/translation';
 type Category =
   GetMtoCategoriesQuery['modelPlan']['mtoMatrix']['categories'][0];
 
+const BASE_I18N = 'modelToOperationsMisc:table.tableFilters.filterOptions';
+
+const buildFilterGroup = (
+  key: string,
+  filedKey: string,
+  options: { label: string; value: string }[],
+  displayShowAll: boolean = false
+): FilterGroupType => ({
+  key,
+  label: i18next.t(`${BASE_I18N}.${filedKey}.label`),
+  description: i18next.t(`${BASE_I18N}.${filedKey}.description`),
+  tagLabel: i18next.t(`${BASE_I18N}.${filedKey}.tagLabel`),
+  options,
+  displayShowAll
+});
+
+const formatOptionsFromI18n = (obj: Record<string, string>, basePath: string) =>
+  Object.keys(obj).map(key => ({
+    label: i18next.t(`${basePath}.${key}`),
+    value: key
+  }));
+
 /**
  * Returns the MTO milestone table filter options
  */
@@ -19,106 +41,40 @@ const getMTOTableFilters = (categories: Category[]): FilterGroupType[] => {
     a.localeCompare(b)
   );
 
-  const facilitatedByOptions = tObject<MtoFacilitator>(
+  const categoryOptions = uniqueCategoryNames.map(name => ({
+    label: name,
+    value: name
+  }));
+
+  const facilitatedByOptions = formatOptionsFromI18n(
+    tObject<MtoFacilitator>('mtoMilestone:facilitatedBy.options'),
     'mtoMilestone:facilitatedBy.options'
   );
 
-  const statuses = tObject<string>('mtoMilestone:status.options');
-
-  const riskIndicators = tObject<string>('mtoMilestone:riskIndicator.options');
-
-  const otherFilters = tArray<string>(
-    'modelToOperationsMisc:table.tableFilters.filterOptions.otherFilters.options'
+  const statusOptions = formatOptionsFromI18n(
+    tObject<string>('mtoMilestone:status.options'),
+    'mtoMilestone:status.options'
   );
 
+  const riskIndicatorOptions = formatOptionsFromI18n(
+    tObject<string>('mtoMilestone:riskIndicator.options'),
+    'mtoMilestone:riskIndicator.options'
+  );
+
+  const otherFilterOptions = tArray<string>(
+    `${BASE_I18N}.otherFilters.options`
+  ).map(filter => ({ label: filter, value: filter }));
+
   return [
-    {
-      key: 'categoryName',
-      label: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.primaryCategory.label'
-      ),
-      description: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.primaryCategory.description'
-      ),
-      tagLabel: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.primaryCategory.tagLabel'
-      ),
-      options: uniqueCategoryNames.map(categoryName => ({
-        label: categoryName,
-        value: categoryName
-      })),
-      displayShowAll: true
-    },
-    {
-      key: 'facilitatedByRole',
-      label: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.facilitatedByRole.label'
-      ),
-      description: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.facilitatedByRole.description'
-      ),
-      tagLabel: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.facilitatedByRole.tagLabel'
-      ),
-      options: Object.keys(facilitatedByOptions).map(facilitatedByRole => ({
-        label: i18next.t(
-          `mtoMilestone:facilitatedBy.options.${facilitatedByRole}`
-        ),
-        value: facilitatedByRole
-      })),
-      displayShowAll: false
-    },
-    {
-      key: 'status',
-      label: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.status.label'
-      ),
-      description: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.status.description'
-      ),
-      tagLabel: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.status.tagLabel'
-      ),
-      options: Object.keys(statuses).map(status => ({
-        label: i18next.t(`mtoMilestone:status.options.${status}`),
-        value: status
-      })),
-      displayShowAll: false
-    },
-    {
-      key: 'riskIndicator',
-      label: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.riskIndicator.label'
-      ),
-      description: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.riskIndicator.description'
-      ),
-      tagLabel: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.riskIndicator.tagLabel'
-      ),
-      options: Object.keys(riskIndicators).map(riskIndicator => ({
-        label: i18next.t(`mtoMilestone:riskIndicator.options.${riskIndicator}`),
-        value: riskIndicator
-      })),
-      displayShowAll: false
-    },
-    {
-      key: 'otherFilters',
-      label: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.otherFilters.label'
-      ),
-      description: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.otherFilters.description'
-      ),
-      tagLabel: i18next.t(
-        'modelToOperationsMisc:table.tableFilters.filterOptions.otherFilters.tagLabel'
-      ),
-      options: otherFilters.map(filter => ({
-        label: filter,
-        value: filter
-      })),
-      displayShowAll: false
-    }
+    buildFilterGroup('categoryName', 'primaryCategory', categoryOptions, true),
+    buildFilterGroup(
+      'facilitatedByRole',
+      'facilitatedByRole',
+      facilitatedByOptions
+    ),
+    buildFilterGroup('status', 'status', statusOptions),
+    buildFilterGroup('riskIndicator', 'riskIndicator', riskIndicatorOptions),
+    buildFilterGroup('otherFilters', 'otherFilters', otherFilterOptions)
   ];
 };
 
