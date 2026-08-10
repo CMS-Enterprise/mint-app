@@ -21,6 +21,10 @@ import usingSolutionLibrary from './helpAndKnowledge/Articles/usingSolutionLibra
 import usingSolutionsAndITSystemsTable from './helpAndKnowledge/Articles/usingSolutionsAndITSystemsTable';
 import usingTableActions from './helpAndKnowledge/Articles/usingTableActions';
 import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
+import {
+  contractAssistance,
+  contractAssistanceMisc
+} from './helpAndKnowledge/contractAssistance';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import keyContact, { keyContactMisc } from './helpAndKnowledge/keyContact';
 import keyContactCategory, {
@@ -201,6 +205,8 @@ const enUS = {
   // Help and Knowledge Center Articles
   evaluatingDataExchangeApproach,
   getAccess,
+  contractAssistance,
+  contractAssistanceMisc,
   helpAndKnowledge,
   highLevelProjectPlans,
   modelPlanOverview,
