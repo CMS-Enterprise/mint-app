@@ -25,6 +25,46 @@ const (
 	DiscussionTopicTypeOther                                    DiscussionTopicType = "OTHER"
 )
 
+// Humanize converts the discussion topic enum to human readable text.
+func (r DiscussionTopicType) Humanize() string {
+	switch r {
+	case DiscussionTopicTypeModelPlanAll:
+		return "Model Plan (all)"
+	case DiscussionTopicTypeModelPlanModelBasics:
+		return "Model Plan (Model basics)"
+	case DiscussionTopicTypeModelPlanGeneralCharacteristics:
+		return "Model Plan (General characteristics)"
+	case DiscussionTopicTypeModelPlanParticipantsAndProviders:
+		return "Model Plan (Participants and providers)"
+	case DiscussionTopicTypeModelPlanBeneficiaries:
+		return "Model Plan (Beneficiaries)"
+	case DiscussionTopicTypeModelPlanOperationsEvaluationAndLearning:
+		return "Model Plan (Operations, evaluation, and learning)"
+	case DiscussionTopicTypeModelPlanPayment:
+		return "Model Plan (Payment)"
+	case DiscussionTopicTypeModelTimeline:
+		return "Model timeline"
+	case DiscussionTopicTypeDataExchangeApproach:
+		return "Data exchange approach"
+	case DiscussionTopicTypeWaiverAssessmentSurvey:
+		return "Waiver assessment survey"
+	case DiscussionTopicTypeIDDOCQuestionnaire:
+		return "4i and ACO-OS questionnaire"
+	case DiscussionTopicTypeModelToOperationsMatrixMto:
+		return "Model-to-operations matrix (MTO)"
+	case DiscussionTopicTypeDocuments:
+		return "Documents"
+	case DiscussionTopicTypeContracts:
+		return "Contracts"
+	case DiscussionTopicTypeFfsCrsAndTdls:
+		return "FFS CRs and TDLs"
+	case DiscussionTopicTypeOther:
+		return "Other"
+	default:
+		return "Other"
+	}
+}
+
 // PlanDiscussion represents a discussion that a user has about a model plan
 type PlanDiscussion struct {
 	baseStruct

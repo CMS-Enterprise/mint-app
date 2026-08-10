@@ -20,6 +20,7 @@ type DiscussionReplyCreatedOriginatorSubject struct {
 type DiscussionReplyCreatedOriginatorBody struct {
 	ClientAddress     string
 	DiscussionID      string
+	Topic             string
 	DiscussionContent template.HTML // rich text with tagging etc
 	ModelID           string
 	ModelName         string
