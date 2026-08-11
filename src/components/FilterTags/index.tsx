@@ -96,7 +96,7 @@ const FilterTags = <T extends Record<string, string[]>>({
         {filters.flatMap(filter =>
           (appliedFilters[filter.key] ?? []).map(value => {
             const optionLabel =
-              filter.options.find(option => option.value === value)?.label ??
+              filter.options?.find(option => option.value === value)?.label ??
               value;
 
             return (

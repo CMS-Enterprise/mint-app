@@ -213,10 +213,17 @@ export const modelToOperationsMisc: Record<string, any> = {
           description: 'This filters by the “Facilitated by” field.',
           tagLabel: 'Role'
         },
-        neededByDate: {
+        neededByDateRange: {
           label: 'By date',
           description:
             'This filters by the “Need by” field. View milestones that need to be completed within a certain date range.',
+          options: {
+            allTime: 'All time',
+            next30Days: 'next 30 days',
+            next60Days: 'next 60 days',
+            next90Days: 'next 90 days',
+            customDateRange: 'Custom date range'
+          },
           tagLabel: 'Need by date range'
         },
         status: {
@@ -244,8 +251,6 @@ export const modelToOperationsMisc: Record<string, any> = {
       },
       quickFilters: 'Quick filters:',
       neededWithin: 'Needed within',
-      neededWithinAll: 'all time',
-      neededWithinPresetDays: '{{days}} days',
       hideCategoryRows: 'Hide category rows ({{count}})',
       noResults: {
         header: 'There are no milestones that match the selected filter(s).',

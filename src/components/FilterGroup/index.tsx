@@ -11,11 +11,12 @@ export type FilterGroupType = {
   label: string;
   description?: string;
   tagLabel: string;
-  options: {
+  options?: {
     label: string;
     value: string;
   }[];
   displayShowAll: boolean;
+  customFilterComponent?: React.ReactNode;
 };
 
 type FilterGroupProps = {
@@ -41,17 +42,19 @@ const FilterGroup = ({
   const showAllIsChecked = useMemo(
     () =>
       filterGroup.displayShowAll &&
-      selectedFilters.length === filterGroup.options.length,
+      selectedFilters.length === (filterGroup.options?.length || 0),
     [
       filterGroup.displayShowAll,
       selectedFilters.length,
-      filterGroup.options.length
+      filterGroup.options?.length
     ]
   );
 
   const handleSetShowAll = (value: boolean) => {
     if (value) {
-      setSelectedFilters(filterGroup.options.map(option => option.value));
+      setSelectedFilters(
+        (filterGroup.options || []).map(option => option.value)
+      );
     } else {
       setSelectedFilters([]);
     }
@@ -91,7 +94,7 @@ const FilterGroup = ({
           />
         )}
 
-        {filterGroup.options.map(option => (
+        {filterGroup.options?.map(option => (
           <Checkbox
             className={classNames({
               'grid-col-6 padding-right-05 bg-transparent':
@@ -107,6 +110,8 @@ const FilterGroup = ({
             disabled={showAllIsChecked}
           />
         ))}
+
+        {filterGroup.customFilterComponent}
       </FieldGroup>
     </Fieldset>
   );

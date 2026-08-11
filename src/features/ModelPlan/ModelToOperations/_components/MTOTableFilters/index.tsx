@@ -12,25 +12,16 @@ import {
 import FilterButtonWithModal from 'components/FilterButtonWithModal';
 import PageLoading from 'components/PageLoading';
 import { Tag } from 'components/Tag';
+import { convertToUppercaseAndUnderscore } from 'utils/modelPlan';
+import { tObject } from 'utils/translation';
+
+import MTOTableDateFilter from '../MTOTableDateFilter';
 
 import getMTOTableFilters from './getMTOTableFilters';
 
-const FILTER_PARAM = 'needed-within-days';
-const LEGACY_FILTER_PARAM = 'needed-within-thirty-days';
+export const QUICK_FILTER_PARAM = 'needed-by-date-range';
 const HIDE_CATEGORY_ROWS_PARAM = 'hide-category-rows';
-
-const DATE_PRESET_STRINGS: number[] = [30, 60, 90];
-
-const selectValueFromSearchParams = (params: URLSearchParams): string => {
-  if (params.get(LEGACY_FILTER_PARAM) === 'true') {
-    return '30';
-  }
-  const paramValue = params.get(FILTER_PARAM);
-  if (paramValue && DATE_PRESET_STRINGS.includes(Number(paramValue))) {
-    return paramValue;
-  }
-  return 'all';
-};
+const DEFAULT_QUICK_FILTER_OPTION = 'ALL_TIME';
 
 const hideCategoryRowsFromSearchParams = (params: URLSearchParams): boolean =>
   params.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
@@ -43,6 +34,7 @@ export type MTOTableFiltersProps = {
 type MTOTableSelectedFilters = {
   category: string[];
   role: MtoFacilitator[];
+  neededByDate: string[];
   status: MtoMilestoneStatus[];
   risk: MtoRiskIndicator[];
   other: string[];
@@ -53,6 +45,9 @@ const MTOTableFilters = ({
   categoryHeaderRowCount = 0
 }: MTOTableFiltersProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const neededWithinDateOptionsConfig = tObject<string>(
+    'modelToOperationsMisc:table.tableFilters.filterOptions.neededByDateRange.options'
+  );
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -60,15 +55,28 @@ const MTOTableFilters = ({
   const navigate = useNavigate();
 
   const [filtersTableOpen, setFiltersTableOpen] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [appliedFiltersCount, setAppliedFiltersCount] = useState(0);
 
   const params = new URLSearchParams(location.search);
-  const selectValue = selectValueFromSearchParams(params);
-  const isTimeWindowFilterActive = selectValue !== 'all';
+
+  const selectValue =
+    params.get(QUICK_FILTER_PARAM) || DEFAULT_QUICK_FILTER_OPTION;
+
+  const isTimeWindowFilterActive =
+    selectValue !== null && selectValue !== DEFAULT_QUICK_FILTER_OPTION;
 
   const isHideCategoryRowsChecked =
     isTimeWindowFilterActive || hideCategoryRowsFromSearchParams(params);
+
+  const quickDateFilterOptions = useMemo(() => {
+    const presetOptions = Object.keys(neededWithinDateOptionsConfig).filter(
+      value => value !== 'customDateRange'
+    );
+
+    return presetOptions.map(option => ({
+      label: neededWithinDateOptionsConfig[option].toLowerCase(),
+      value: convertToUppercaseAndUnderscore(option)
+    }));
+  }, [neededWithinDateOptionsConfig]);
 
   const appliedFilters: MTOTableSelectedFilters = useMemo(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -80,6 +88,7 @@ const MTOTableFilters = ({
     return {
       category: getArray('category'),
       role: getArray<MTOTableSelectedFilters['role']>('role'),
+      neededByDate: getArray('neededByDate'),
       status: getArray<MTOTableSelectedFilters['status']>('status'),
       risk: getArray<MTOTableSelectedFilters['risk']>('risk'),
       other: getArray('other')
@@ -102,6 +111,13 @@ const MTOTableFilters = ({
     navigate({ search: newParams.toString() }, { replace: true });
   };
 
+  const appliedFiltersCount = useMemo(() => {
+    return Object.values(appliedFilters).reduce((totalCount, filterArray) => {
+      const validItems = filterArray.filter(Boolean);
+      return totalCount + validItems.length;
+    }, 0);
+  }, [appliedFilters]);
+
   const { data: mtoCategoriesData, loading: mtoCategoriesLoading } =
     useGetMtoCategoriesQuery({
       variables: { id: modelID }
@@ -112,15 +128,16 @@ const MTOTableFilters = ({
   ) => {
     const next = new URLSearchParams(location.search);
     next.set('page', '1');
-    next.delete(FILTER_PARAM);
-    next.delete(LEGACY_FILTER_PARAM);
-    next.delete(HIDE_CATEGORY_ROWS_PARAM);
 
     const { value } = e.target;
-    if (DATE_PRESET_STRINGS.includes(Number(value))) {
-      next.set(FILTER_PARAM, value);
 
-      // Set hide category rows to true if time window filter is active
+    if (value === DEFAULT_QUICK_FILTER_OPTION) {
+      next.delete(QUICK_FILTER_PARAM);
+      next.delete(HIDE_CATEGORY_ROWS_PARAM);
+    }
+
+    if (value !== DEFAULT_QUICK_FILTER_OPTION) {
+      next.set(QUICK_FILTER_PARAM, convertToUppercaseAndUnderscore(value));
       next.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
     }
 
@@ -142,7 +159,7 @@ const MTOTableFilters = ({
   );
 
   const filterOptions = useMemo(
-    () => getMTOTableFilters(mtoCategories),
+    () => getMTOTableFilters(mtoCategories, <MTOTableDateFilter />),
     [mtoCategories]
   );
 
@@ -216,16 +233,13 @@ const MTOTableFilters = ({
               className="margin-top-0"
               id="mto-needed-within-days"
               data-testid="mto-needed-within-days"
-              name={FILTER_PARAM}
+              name={QUICK_FILTER_PARAM}
               value={selectValue}
               onChange={handleTimeWindowFilterChange}
             >
-              <option value="all">
-                {t('table.tableFilters.neededWithinAll')}
-              </option>
-              {DATE_PRESET_STRINGS.map(days => (
-                <option key={`needed-within-days--${days}`} value={days}>
-                  {t('table.tableFilters.neededWithinPresetDays', { days })}
+              {quickDateFilterOptions.map(({ value, label }) => (
+                <option key={`needed-within-days-${value}`} value={value}>
+                  {label}
                 </option>
               ))}
             </Select>

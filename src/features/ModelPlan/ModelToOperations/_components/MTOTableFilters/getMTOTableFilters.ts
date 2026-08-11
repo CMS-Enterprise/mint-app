@@ -1,7 +1,9 @@
+import { ReactNode } from 'react';
 import { GetMtoCategoriesQuery, MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import { FilterGroupType } from 'components/FilterGroup';
+import { convertToUppercaseAndUnderscore } from 'utils/modelPlan';
 import { tObject } from 'utils/translation';
 
 type Category =
@@ -31,7 +33,10 @@ const formatOptionsFromConfig = (obj: Record<string, string>) =>
 /**
  * Returns the MTO milestone table filter options
  */
-const getMTOTableFilters = (categories: Category[]): FilterGroupType[] => {
+const getMTOTableFilters = (
+  categories: Category[],
+  dateComponent: ReactNode
+): FilterGroupType[] => {
   const categoryWithNames = categories.filter(
     category => category.name !== 'Uncategorized'
   );
@@ -45,12 +50,21 @@ const getMTOTableFilters = (categories: Category[]): FilterGroupType[] => {
   const categoryOptions = uniqueCategoryNames.map(name => ({
     label: name,
     // convert category name like 'Model closeout or extension' to 'MODEL_CLOSEOUT_OR_EXTENSION' for query param
-    value: name.replaceAll(' ', '_').toUpperCase()
+    value: convertToUppercaseAndUnderscore(name)
   }));
 
   const facilitatedByOptions = formatOptionsFromConfig(
     tObject<MtoFacilitator>('mtoMilestone:facilitatedBy.options')
   );
+
+  const neededByDateRange: FilterGroupType = {
+    key: 'neededByDateRange',
+    label: i18next.t(`${BASE_I18N}.neededByDateRange.label`),
+    description: i18next.t(`${BASE_I18N}.neededByDateRange.description`),
+    tagLabel: i18next.t(`${BASE_I18N}.neededByDateRange.tagLabel`),
+    customFilterComponent: dateComponent,
+    displayShowAll: false
+  };
 
   const statusOptions = formatOptionsFromConfig(
     tObject<string>('mtoMilestone:status.options')
@@ -67,6 +81,7 @@ const getMTOTableFilters = (categories: Category[]): FilterGroupType[] => {
   return [
     buildFilterGroup('category', categoryOptions, true),
     buildFilterGroup('role', facilitatedByOptions),
+    neededByDateRange,
     buildFilterGroup('status', statusOptions),
     buildFilterGroup('risk', riskIndicatorOptions),
     buildFilterGroup('other', otherFilterOptions)
