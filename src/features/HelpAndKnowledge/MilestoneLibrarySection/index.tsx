@@ -11,7 +11,6 @@ const MilestoneLibrarySection = () => {
   return (
     <div
       id={convertToLowercaseAndDashes(t('milestoneLibrary.hkcJumpToLabel'))}
-      className="padding-y-4 padding-bottom-6 bg-base-lightest"
       style={{ scrollMarginTop: '3.5rem' }}
     >
       <GridContainer>

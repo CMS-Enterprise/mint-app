@@ -1,0 +1,19 @@
+.contract-assistance-tickets-table-container--admin {
+  // Overrides #main-content .usa-pagination__button in TablePagination/index.scss
+  .usa-pagination__button:not(.usa-current) {
+    background-color: transparent !important;
+  }
+}
+
+.contract-assistance-tickets-table {
+  table-layout: fixed;
+}
+
+.contract-assistance-tickets-table--admin {
+  .usa-alert .usa-alert__body  {
+    background-color: white !important;
+  }
+  td {
+    background-color: transparent !important;
+  }
+}
