@@ -84,6 +84,9 @@ jobs:
         run: |
           touch .envrc.local
           echo "export FLAG_SOURCE=FILE" >> .envrc.local
+          # cy.login() covers hosted Okta/ELP redirect; bake the flag into the e2e asset build.
+          # TODO(MINT-3761): remove once redirect login is permanent (always on).
+          echo "export VITE_OKTA_REDIRECT_LOGIN_ENABLED=true" >> .envrc.local
           echo "export OKTA_TEST_USERNAME='${{ secrets.OKTA_TEST_USERNAME }}'" >> .envrc.local
           echo "export OKTA_TEST_PASSWORD='${{ secrets.OKTA_TEST_PASSWORD }}'" >> .envrc.local
           echo "export OKTA_TEST_SECRET='${{ secrets.OKTA_TEST_SECRET }}'" >> .envrc.local

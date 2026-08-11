@@ -1,3 +1,5 @@
+// TODO(MINT-3761): remove this component (and its SCSS) once VITE_OKTA_REDIRECT_LOGIN_ENABLED is
+// permanently on and the embedded Sign-In Widget rollback path is no longer needed.
 // src/OktaSignInWidget.js
 // okta-signin-widget has no typescript support yet.  If becomes available, install and remove disable
 import React, { useEffect, useRef } from 'react';
