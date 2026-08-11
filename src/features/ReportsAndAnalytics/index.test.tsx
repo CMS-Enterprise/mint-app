@@ -1,10 +1,14 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 import { analyticsSummaryMock, mockAnalyticsData } from 'tests/mock/general';
 import { mtoMilestoneSummaryMock } from 'tests/mock/mto';
 import { expect, it } from 'vitest';
+
+import { ASSESSMENT } from 'constants/jobCodes';
 
 import { getChangesByOtherData, getChangesBySection } from './util';
 import ReportsAndAnalytics from '.';
@@ -14,6 +18,17 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn()
+}));
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: { euaId: 'MINT' } });
+
+vi.mock('launchdarkly-react-client-sdk', () => ({
+  useFlags: () => {
+    return {
+      ctatEnabled: true
+    };
+  }
 }));
 
 describe('ReportsAndAnalytics', () => {
@@ -38,7 +53,9 @@ describe('ReportsAndAnalytics', () => {
       <MockedProvider
         mocks={[...analyticsSummaryMock, ...mtoMilestoneSummaryMock]}
       >
-        <RouterProvider router={router} />
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
       </MockedProvider>
     );
 
@@ -47,6 +64,50 @@ describe('ReportsAndAnalytics', () => {
     });
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders ctat report for assessment users', async () => {
+    const assessmentStore = mockStore({
+      auth: { euaId: 'MINT', groups: [ASSESSMENT] }
+    });
+
+    render(
+      <MockedProvider
+        mocks={[...analyticsSummaryMock, ...mtoMilestoneSummaryMock]}
+      >
+        <Provider store={assessmentStore}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Changes per model')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByText('Contract assistance requests')
+    ).toBeInTheDocument();
+  });
+
+  it('renders without ctat report for non-assessment users', async () => {
+    render(
+      <MockedProvider
+        mocks={[...analyticsSummaryMock, ...mtoMilestoneSummaryMock]}
+      >
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Changes per model')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.queryByText('Contract assistance requests')
+    ).not.toBeInTheDocument();
   });
 
   it('returns cumulative changes by section', async () => {

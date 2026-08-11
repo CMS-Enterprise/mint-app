@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ContractAssistanceSection > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-primary-darker text-white padding-y-6"
+    id="contract-assistance"
+    style="scroll-margin-top: 3.5rem;"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <h2
+        class="margin-0"
+      >
+        Contract assistance
+      </h2>
+      <p
+        class="margin-top-1 margin-bottom-3 font-body-md line-height-sans-4 text-light"
+      >
+        Need contract-related help for your model? Raise a ticket to get help from the Contract Technical Assistance Team (CTAT). CTAT can assist with a variety of contracting needs including requirements gathering, Independent Government Cost Estimate (IGCE) preparation, Requests for Proposal (RFPs), guidance on market research, and more.
+      </p>
+      <a
+        class="usa-button usa-button--outline bg-white text-primary-darker shadow-none"
+        data-discover="true"
+        href="/help-and-knowledge/contract-assistance"
+      >
+        Create and manage help tickets
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

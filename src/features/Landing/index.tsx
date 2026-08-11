@@ -20,6 +20,7 @@ import { DateTime } from 'luxon';
 import UswdsReactLink from 'components/LinkWrapper';
 import NDABanner from 'components/NDABanner';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import { isOktaRedirectLoginEnabled } from 'utils/auth';
 import { tArray } from 'utils/translation';
 
 import { useOktaSession } from '../../contexts/OktaSessionContext';
@@ -71,8 +72,10 @@ export const LandingHeader = () => {
         </p>
 
         <span className="hide-print">
-          {/* If a user has an active okta session, replace router link with a button that automicatally authenticates the user for MINT.  Bypasses /signin */}
-          {hasSession ? (
+          {/* Redirect login (or an existing Okta session): go straight to Okta/ELP. */}
+          {/* TODO(MINT-3761): remove isOktaRedirectLoginEnabled() check once redirect login is permanent
+              (always use signInWithRedirect; drop the /signin link fallback). */}
+          {hasSession || isOktaRedirectLoginEnabled() ? (
             <Button
               type="button"
               className="bg-mint-cool-vivid text-white width-auto"

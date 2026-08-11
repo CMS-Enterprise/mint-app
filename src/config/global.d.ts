@@ -1,5 +1,6 @@
 import { Flags } from '../types/flags';
 
+// TODO(MINT-3761): remove these Okta Sign-In Widget module declarations once the package is removed.
 declare module '@okta/okta-signin-widget';
 declare module '@okta/okta-signin-widget/dist/js/okta-sign-in.min';
 declare module 'launchdarkly-js-sdk-common' {
