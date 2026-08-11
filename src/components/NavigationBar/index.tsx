@@ -5,6 +5,8 @@ import { GridContainer, Icon, PrimaryNav } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { useGetPollNotificationsQuery } from 'gql/generated/graphql';
 
+import HelpNavMenu from './HelpNavMenu';
+
 import './index.scss';
 
 export type NavigationProps = {
@@ -27,10 +29,6 @@ export const navLinks = [
   {
     link: '/reports-and-analytics',
     label: 'reportsAndAnalytics'
-  },
-  {
-    link: '/help-and-knowledge',
-    label: 'help'
   }
 ];
 
@@ -106,6 +104,13 @@ const NavigationBar = ({
     </div>
   ));
 
+  const helpNavMenu = (
+    <HelpNavMenu
+      isMobile={isMobile}
+      expandMobileSideNav={expandMobileSideNav}
+    />
+  );
+
   const notificationLink = (
     <div className="mint-nav">
       <NavLink
@@ -157,7 +162,9 @@ const NavigationBar = ({
     </div>
   );
 
-  const navItemsWithNotification = primaryLinks.concat(notificationLink);
+  const navItemsWithNotification = primaryLinks
+    .concat(helpNavMenu)
+    .concat(notificationLink);
 
   const userLinks = (
     <div className="mint-nav__signout-container">

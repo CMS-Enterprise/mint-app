@@ -2,6 +2,13 @@ const header = {
   addSystem: 'IT Governance',
   add508Request: 'Section 508',
   help: 'Help',
+  helpSubmenu: {
+    allHelpResourcesAndLinks: 'All help resources and links',
+    contractAssistance: 'Contract assistance',
+    milestoneLibrary: 'Milestone library',
+    operationalSolutions: 'Library of solutions and IT systems',
+    contactDirectory: 'Contact directory'
+  },
   home: 'Home',
   models: 'Models',
   reportsAndAnalytics: 'Reports',
