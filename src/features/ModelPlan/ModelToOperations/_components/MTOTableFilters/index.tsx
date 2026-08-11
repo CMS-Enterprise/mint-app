@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Checkbox, Icon, Select } from '@trussworks/react-uswds';
@@ -162,6 +162,20 @@ const MTOTableFilters = ({
     () => getMTOTableFilters(mtoCategories, <MTOTableDateFilter />),
     [mtoCategories]
   );
+
+  useEffect(() => {
+    if (
+      appliedFiltersCount !== 0 ||
+      isTimeWindowFilterActive ||
+      isHideCategoryRowsChecked
+    ) {
+      setFiltersTableOpen(true);
+    }
+  }, [
+    appliedFiltersCount,
+    isTimeWindowFilterActive,
+    isHideCategoryRowsChecked
+  ]);
 
   if (mtoCategoriesLoading) {
     return <PageLoading testId="mto-table-filters" />;
