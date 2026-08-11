@@ -26,7 +26,7 @@ describe('Logging in', () => {
     }
   );
 
-  it('logs in with local auth an verifies NDA', () => {
+  it('logs in with local auth and verifies NDA', () => {
     cy.localLogin({ name: 'MINT' });
     cy.visit('/');
 
