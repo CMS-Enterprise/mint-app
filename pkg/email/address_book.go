@@ -8,6 +8,9 @@ type AddressBook struct {
 	// MINTTeamEmail is the email address of the MINT team
 	MINTTeamEmail string
 
+	// CTATTeamEmail is the email address of the CTAT team
+	CTATTeamEmail string
+
 	// DevTeamEmail is the email address of the MINT development team
 	DevTeamEmail string
 

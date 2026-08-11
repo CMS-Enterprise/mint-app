@@ -27,6 +27,7 @@ exports[`Sidepanel > matches snapshot 1`] = `
         tabindex="-1"
       >
         <div
+          class=""
           data-testid="testid"
         >
           <div
