@@ -104,10 +104,13 @@ export const getDaysElapsed = (discussionCreated: string) => {
 };
 
 export const isDateInPast = (date: string | null | undefined): boolean => {
-  if (date && new Date() > new Date(date)) {
-    return true;
-  }
-  return false;
+  if (!date) return false;
+
+  const today = DateTime.now().setZone('UTC').startOf('day');
+
+  const selectedDate = DateTime.fromISO(date, { zone: 'UTC' });
+
+  return today > selectedDate;
 };
 
 /**

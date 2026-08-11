@@ -1,0 +1,26 @@
+"""
+A supporting document attached to a CTAT request.
+"""
+type CTATRequestDocument {
+  id: UUID!
+  ctatRequestId: UUID!
+
+  url: String
+
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  restricted: Boolean!
+  fileName: String!
+  fileSize: Int!
+  downloadUrl: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
