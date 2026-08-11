@@ -144,6 +144,10 @@ const customHome = {
     previewHeading: 'Preview',
     emptyPreview: 'Preview copy will appear here.'
   },
+  contractAssistanceSummaryBox: {
+    copy: 'Need help with contracting activities?',
+    cta: 'Start a contract assistance ticket'
+  },
   allModels: {
     copy: 'Don’t see the model you’re looking for?',
     cta: 'View all models',

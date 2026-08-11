@@ -141,7 +141,8 @@ export const documentsMisc = {
   },
   requiredHint: 'Fields marked with an asterisk (',
   requiredHint2: ') are required.',
-  fileTypes: 'Select a PDF, DOC, DOCX, XLS, XLSX, PPT, or PPTX',
+  fileTypes:
+    'Select a PDF, DOC, DOCX, XLS, XLSX, PPT, or PPTX. Maximum file size 32 mb.',
   uploadError: {
     heading: 'There is a problem',
     body: 'Something went wrong with MINT. Please try refreshing the page or try again later.'
@@ -187,6 +188,9 @@ export const documentsMisc = {
   documentUpload: 'Document upload',
   selectedFile: 'Selected file',
   changeFile: 'Change file',
+  oneFileSelected: '1 file selected',
+  filesSelected: '{{count}} files selected',
+  changeFiles: 'Change files',
   ariaLabelChangeFile: '-- Click to change file',
   fileSelected: 'File <1>{{file}}</1> selected.',
   dragFile: 'Drag file here or ',
@@ -198,6 +202,7 @@ export const documentsMisc = {
     fileNameHelpText: 'Enter a name for your document.'
   },
   chooseFromFolder: 'choose from folder',
+  removeFile: 'Remove file',
   notValid: 'This is not a valid file type.',
   whatType: 'What type of document are you uploading?',
   documentTypes: {
