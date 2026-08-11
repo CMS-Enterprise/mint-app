@@ -209,6 +209,10 @@ const notifications = {
           {
             name: 'incorrectModelStatus',
             copy: 'When MINT detects an incorrect model status'
+          },
+          {
+            name: 'newTaskAdded',
+            copy: 'When new tasks are available for a model'
           }
         ]
       },
@@ -276,6 +280,7 @@ const notifications = {
       activityType: {
         INCORRECT_MODEL_STATUS: 'when MINT detects an incorrect model status',
         NEW_MODEL_PLAN: 'when a new Model Plan is created',
+        NEW_TASK_ADDED: 'when new tasks are available for a model',
         NEW_DISCUSSION_ADDED: 'when a new discussion is added',
         DATES_CHANGED: 'when model dates change',
         DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:

@@ -18,8 +18,11 @@ describe('VerifyEmailParams Util', () => {
     const result2 = verifyEmailParams('NEW_DISCUSSION_ADDED');
     expect(result2).toEqual(true);
 
-    const result3 = verifyEmailParams('INVALID_PARAM');
-    expect(result3).toEqual(false);
+    const result3 = verifyEmailParams('NEW_TASK_ADDED');
+    expect(result3).toEqual(true);
+
+    const result4 = verifyEmailParams('INVALID_PARAM');
+    expect(result4).toEqual(false);
   });
 });
 
