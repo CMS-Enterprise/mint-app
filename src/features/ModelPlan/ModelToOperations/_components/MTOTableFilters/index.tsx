@@ -40,12 +40,12 @@ export type MTOTableFiltersProps = {
   categoryHeaderRowCount?: number;
 };
 
-export type MTOTableSelectedFilters = {
-  categoryName: string[];
-  facilitatedByRole: MtoFacilitator[];
+type MTOTableSelectedFilters = {
+  category: string[];
+  role: MtoFacilitator[];
   status: MtoMilestoneStatus[];
-  riskIndicator: MtoRiskIndicator[];
-  otherFilters: string[];
+  risk: MtoRiskIndicator[];
+  other: string[];
 };
 
 /** Table filter controls for the MTO milestones matrix (date window + hide header rows). */
@@ -73,40 +73,29 @@ const MTOTableFilters = ({
   const appliedFilters: MTOTableSelectedFilters = useMemo(() => {
     const searchParams = new URLSearchParams(location.search);
 
+    function getArray<T = string[]>(key: string): T {
+      return (searchParams.get(key)?.split(',') || []) as T;
+    }
+
     return {
-      categoryName: searchParams.get('category')
-        ? (searchParams.get('category') || '').split(',')
-        : [],
-      facilitatedByRole: (searchParams.get('role')
-        ? (searchParams.get('role') || '').split(',')
-        : []) as MTOTableSelectedFilters['facilitatedByRole'],
-      status: (searchParams.get('status')
-        ? (searchParams.get('status') || '').split(',')
-        : []) as MTOTableSelectedFilters['status'],
-      riskIndicator: (searchParams.get('risk')
-        ? (searchParams.get('risk') || '').split(',')
-        : []) as MTOTableSelectedFilters['riskIndicator'],
-      otherFilters: searchParams.get('other')
-        ? (searchParams.get('other') || '').split(',')
-        : []
+      category: getArray('category'),
+      role: getArray<MTOTableSelectedFilters['role']>('role'),
+      status: getArray<MTOTableSelectedFilters['status']>('status'),
+      risk: getArray<MTOTableSelectedFilters['risk']>('risk'),
+      other: getArray('other')
     };
   }, [location.search]);
 
   const setAppliedFilters = (filters: MTOTableSelectedFilters) => {
     const newParams = new URLSearchParams(location.search);
 
-    if (filters.categoryName.length > 0) {
-      newParams.set('category', filters.categoryName.join(','));
-    } else {
-      newParams.delete('category');
-    }
-
-    if (filters.facilitatedByRole.length > 0) {
-      newParams.set('role', filters.facilitatedByRole.join(','));
-    } else {
-      newParams.delete('role');
-    }
-
+    Object.entries(filters).forEach(([key, values]) => {
+      if (values && values.length > 0) {
+        newParams.set(key, values.join(','));
+      } else {
+        newParams.delete(key);
+      }
+    });
     // Reset pagination when filters change
     newParams.delete('page');
 

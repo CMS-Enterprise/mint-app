@@ -203,12 +203,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       numberOfFiltersApplied: '{{-number}} filters applied',
       filter: 'Filter',
       filterOptions: {
-        primaryCategory: {
+        category: {
           label: 'By primary category',
           description: 'This filters by the “Category” field.',
           tagLabel: 'Category'
         },
-        facilitatedByRole: {
+        role: {
           label: 'By role',
           description: 'This filters by the “Facilitated by” field.',
           tagLabel: 'Role'
@@ -224,21 +224,22 @@ export const modelToOperationsMisc: Record<string, any> = {
           description: 'This filters by the “Status” field.',
           tagLabel: 'Status'
         },
-        riskIndicator: {
+        risk: {
           label: 'By risk level',
           description: 'This filters by the risk indicator.',
           tagLabel: 'Risk'
         },
-        otherFilters: {
+        other: {
           label: 'Other filters',
           description: '',
           tagLabel: 'Other',
-          options: [
-            'Milestones with no solution selected',
-            'Custom milestones only',
-            'Draft milestones only',
-            'Hide category rows'
-          ]
+          options: {
+            MILESTONES_WITH_NO_SOLUTION_SELECTED:
+              'Milestones with no solution selected',
+            CUSTOM_MILESTONES_ONLY: 'Custom milestones only',
+            DRAFT_MILESTONES_ONLY: 'Draft milestones only',
+            HIDE_CATEGORY_ROWS: 'Hide category rows'
+          }
         }
       },
       quickFilters: 'Quick filters:',

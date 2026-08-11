@@ -9,7 +9,7 @@ import HelpText from 'components/HelpText';
 export type FilterGroupType = {
   key: string;
   label: string;
-  description: string;
+  description?: string;
   tagLabel: string;
   options: {
     label: string;
@@ -71,7 +71,9 @@ const FilterGroup = ({
         <h3 className="margin-y-1">{filterGroup.label}</h3>
       </legend>
 
-      <HelpText>{filterGroup.description}</HelpText>
+      {filterGroup.description && (
+        <HelpText>{filterGroup.description}</HelpText>
+      )}
 
       <FieldGroup
         className={classNames('mint-filter-group__options margin-top-105', {
