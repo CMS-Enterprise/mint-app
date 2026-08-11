@@ -42,7 +42,7 @@ const TablePageSize = ({
   return (
     <div className={classNames}>
       <Select
-        className="margin-top-0 width-auto"
+        className="margin-top-0 width-auto bg-transparent"
         id="table-page-size"
         data-testid="table-page-size"
         name="tablePageSize"

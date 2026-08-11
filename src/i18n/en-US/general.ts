@@ -92,7 +92,9 @@ const general = {
     applyFilterWithCount: 'Apply {{count}} filters',
     clearAll: 'Clear all',
     showAll: 'Show all',
-    removeFilter: 'Remove {{filter}} filter'
+    removeFilter: 'Remove {{filter}} filter',
+    startDate: 'Start date',
+    endDate: 'End date'
   }
 };
 

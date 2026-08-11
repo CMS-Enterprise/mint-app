@@ -3,7 +3,6 @@
 exports[`MilestoneLibrarySection > matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="padding-y-4 padding-bottom-6 bg-base-lightest"
     id="milestone-library"
     style="scroll-margin-top: 3.5rem;"
   >
