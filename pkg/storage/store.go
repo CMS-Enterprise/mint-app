@@ -95,6 +95,16 @@ func NewStore(
 
 	db.SetMaxOpenConns(dbConfig.MaxConnections)
 
+	// database/sql pools connections indefinitely by default, so a connection can sit idle
+	// long enough for intermediate infra (NLB/security group/conntrack idle timeouts, the same
+	// class of issue fixed for the Faktory pool in pkg/worker/worker.go) to silently drop it.
+	// The pure-Go lib/pq driver has no way to set TCP keepalives via the DSN, so the only
+	// mitigation is to stop handing back connections that have been idle long enough to risk
+	// being dead; recycling them proactively surfaces a fresh dial instead of an EOF/broken pipe
+	// on the query that happens to draw the stale connection.
+	db.SetConnMaxIdleTime(2 * time.Minute)
+	db.SetConnMaxLifetime(30 * time.Minute)
+
 	return &Store{
 		db:        db,
 		clock:     clock.New(),
