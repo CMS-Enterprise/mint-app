@@ -24,17 +24,19 @@ const MTOTableDateFilter = ({
 
   const isCustomMode = selectedFilters.length === 2;
 
-  const customStart = isCustomMode ? selectedFilters[0] : '';
-  const customEnd = isCustomMode ? selectedFilters[1] : '';
+  const [customStart = '', customEnd = ''] = isCustomMode
+    ? selectedFilters
+    : [];
 
-  let selectedDropdownValue = 'ALL_TIME';
-
-  if (isCustomMode) {
-    selectedDropdownValue = 'CUSTOM_DATE_RANGE';
-  } else if (selectedFilters.length === 1) {
-    // eslint-disable-next-line prefer-destructuring
-    selectedDropdownValue = selectedFilters[0];
-  }
+  const selectedDropdownValue = useMemo(() => {
+    if (isCustomMode) {
+      return 'CUSTOM_DATE_RANGE';
+    }
+    if (selectedFilters.length === 1) {
+      return selectedFilters[0];
+    }
+    return 'ALL_TIME';
+  }, [isCustomMode, selectedFilters]);
 
   const dateFilterOptions = useMemo(() => {
     return Object.keys(neededWithinDateOptionsConfig).map(option => ({
@@ -73,6 +75,7 @@ const MTOTableDateFilter = ({
         className="margin-y-3 tablet:grid-col-8"
         id="mto-filter-by-date"
         data-testid="mto-filter-by-date"
+        aria-label={neededWithinDateOptionsConfig.label}
         name={DATE_FILTER_PARAM}
         value={selectedDropdownValue}
         onChange={handleFilterTypeChange}

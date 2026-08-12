@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Button, Checkbox, Icon, Select } from '@trussworks/react-uswds';
 import {
   MtoFacilitator,
@@ -8,32 +8,30 @@ import {
   MtoRiskIndicator,
   useGetMtoCategoriesQuery
 } from 'gql/generated/graphql';
-import { DateTime } from 'luxon';
 
 import FilterButtonWithModal from 'components/FilterButtonWithModal';
 import PageLoading from 'components/PageLoading';
 import { Tag } from 'components/Tag';
-import {
-  convertCamelCaseToKebabCase,
-  convertToUppercaseAndUnderscore
-} from 'utils/modelPlan';
+import { convertToUppercaseAndUnderscore } from 'utils/modelPlan';
 import { tObject } from 'utils/translation';
 
+import {
+  buildSearchParamsFromFilters,
+  countAppliedFilters,
+  parseAppliedFilters
+} from './_utils';
 import getMTOTableFilters from './getMTOTableFilters';
 
 export const DATE_FILTER_PARAM = 'needed-by-date-range';
-const HIDE_CATEGORY_ROWS_PARAM = 'hide-category-rows';
+export const HIDE_CATEGORY_ROWS_PARAM = 'hide-category-rows';
 const DEFAULT_QUICK_FILTER_OPTION = 'ALL_TIME';
-
-const hideCategoryRowsFromSearchParams = (params: URLSearchParams): boolean =>
-  params.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
 
 export type MTOTableFiltersProps = {
   /** Number of category and subcategory header rows hidden when the checkbox is checked. */
   categoryHeaderRowCount?: number;
 };
 
-type MTOTableSelectedFilters = {
+export type MTOTableSelectedFilters = {
   category: string[];
   role: MtoFacilitator[];
   neededByDateRange: string[];
@@ -52,22 +50,19 @@ const MTOTableFilters = ({
   );
 
   const { modelID = '' } = useParams<{ modelID: string }>();
-
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [filtersTableOpen, setFiltersTableOpen] = useState(false);
 
-  const params = new URLSearchParams(location.search);
-
   const selectValue =
-    params.get(DATE_FILTER_PARAM) || DEFAULT_QUICK_FILTER_OPTION;
+    searchParams.get(DATE_FILTER_PARAM) || DEFAULT_QUICK_FILTER_OPTION;
 
   const isTimeWindowFilterActive =
     selectValue !== null && selectValue !== DEFAULT_QUICK_FILTER_OPTION;
 
   const isHideCategoryRowsChecked =
-    isTimeWindowFilterActive || hideCategoryRowsFromSearchParams(params);
+    isTimeWindowFilterActive ||
+    searchParams.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
 
   const quickDateFilterOptions = useMemo(() => {
     const presetOptions = Object.keys(neededWithinDateOptionsConfig).filter(
@@ -80,134 +75,25 @@ const MTOTableFilters = ({
     }));
   }, [neededWithinDateOptionsConfig]);
 
-  const appliedFilters: MTOTableSelectedFilters = useMemo(() => {
-    const searchParams = new URLSearchParams(location.search);
+  const appliedFilters = useMemo(
+    () => parseAppliedFilters(searchParams),
+    [searchParams]
+  );
 
-    function getArray<T = string[]>(key: string): T {
-      return (searchParams.get(key)?.split(',') || []) as T;
-    }
-    const dateRangeQuery = searchParams.get(DATE_FILTER_PARAM);
-    const startDateQuery = searchParams.get('startDate');
-    const endDateQuery = searchParams.get('endDate');
-
-    let neededByDateRangeArray: string[] = [];
-    if (dateRangeQuery) {
-      neededByDateRangeArray = [dateRangeQuery]; // e.g., ['NEXT_30_DAYS']
-    } else if (startDateQuery && endDateQuery) {
-      neededByDateRangeArray = [startDateQuery, endDateQuery]; // e.g., ['2026-07-01', '2026-08-01']
-    }
-
-    return {
-      category: getArray('category'),
-      role: getArray<MTOTableSelectedFilters['role']>('role'),
-      neededByDateRange: neededByDateRangeArray,
-      status: getArray<MTOTableSelectedFilters['status']>('status'),
-      risk: getArray<MTOTableSelectedFilters['risk']>('risk'),
-      other: getArray('other')
-    };
-  }, [location.search]);
+  const appliedFiltersCount = useMemo(
+    () => countAppliedFilters(appliedFilters),
+    [appliedFilters]
+  );
 
   const setAppliedFilters = (filters: MTOTableSelectedFilters) => {
-    const newParams = new URLSearchParams(location.search);
-    let hasAnyFilters = false;
-
-    Object.entries(filters).forEach(([key, values]) => {
-      if (key === 'neededByDateRange') {
-        newParams.delete(DATE_FILTER_PARAM);
-        newParams.delete('startDate');
-        newParams.delete('endDate');
-        // preset date range like NEXT_30_DAYS
-        if (values.length === 1) {
-          newParams.set(DATE_FILTER_PARAM, values[0]);
-          hasAnyFilters = true;
-          // custom date range with start and end dates
-        } else if (values.length === 2) {
-          const isValidStart = DateTime.fromISO(values[0]).isValid;
-          const isValidEnd = DateTime.fromISO(values[1]).isValid;
-
-          if (isValidStart && isValidEnd) {
-            newParams.set('startDate', values[0]);
-            newParams.set('endDate', values[1]);
-            hasAnyFilters = true;
-          }
-        }
-      } else if (values && values.length > 0) {
-        newParams.set(convertCamelCaseToKebabCase(key), values.join(','));
-        hasAnyFilters = true;
-      } else {
-        newParams.delete(convertCamelCaseToKebabCase(key));
-      }
-    });
-
-    if (hasAnyFilters) {
-      newParams.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
-    } else {
-      newParams.delete(HIDE_CATEGORY_ROWS_PARAM);
-    }
-
-    // Reset pagination when filters change
-    newParams.delete('page');
-
-    navigate({ search: newParams.toString() }, { replace: true });
+    const nextParams = buildSearchParamsFromFilters(filters, searchParams);
+    setSearchParams(nextParams, { replace: true });
   };
-
-  const appliedFiltersCount = useMemo(() => {
-    return Object.entries(appliedFilters).reduce(
-      (totalCount, [key, filterArray]) => {
-        const validItems = filterArray.filter(Boolean);
-
-        if (validItems.length === 0) {
-          return totalCount;
-        }
-
-        // The date filter should count as 1, startDate + endDate should not count as 2
-        if (key === 'neededByDateRange') {
-          return totalCount + 1;
-        }
-
-        return totalCount + validItems.length;
-      },
-      0
-    );
-  }, [appliedFilters]);
 
   const { data: mtoCategoriesData, loading: mtoCategoriesLoading } =
     useGetMtoCategoriesQuery({
       variables: { id: modelID }
     });
-
-  const handleTimeWindowFilterChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const next = new URLSearchParams(location.search);
-
-    next.set('page', '1');
-    next.delete('startDate');
-    next.delete('endDate');
-
-    const { value } = e.target;
-
-    if (value === DEFAULT_QUICK_FILTER_OPTION) {
-      next.delete(DATE_FILTER_PARAM);
-      next.delete(HIDE_CATEGORY_ROWS_PARAM);
-    }
-
-    if (value !== DEFAULT_QUICK_FILTER_OPTION) {
-      next.set(DATE_FILTER_PARAM, convertToUppercaseAndUnderscore(value));
-      next.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
-    }
-
-    navigate({ search: next.toString() }, { replace: true });
-  };
-
-  const handleHideCategoryRowsChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const next = new URLSearchParams(location.search);
-    next.set('page', '1');
-    next.set(HIDE_CATEGORY_ROWS_PARAM, e.target.checked ? 'true' : 'false');
-    navigate({ search: next.toString() }, { replace: true });
-  };
 
   const mtoCategories = useMemo(
     () => mtoCategoriesData?.modelPlan?.mtoMatrix?.categories || [],
@@ -218,6 +104,43 @@ const MTOTableFilters = ({
     () => getMTOTableFilters(mtoCategories),
     [mtoCategories]
   );
+
+  const handleTimeWindowFilterChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const nextParams = new URLSearchParams(searchParams);
+
+    nextParams.set('page', '1');
+    nextParams.delete('startDate');
+    nextParams.delete('endDate');
+
+    const { value } = e.target;
+
+    if (value === DEFAULT_QUICK_FILTER_OPTION) {
+      nextParams.delete(DATE_FILTER_PARAM);
+      nextParams.delete(HIDE_CATEGORY_ROWS_PARAM);
+    }
+
+    if (value !== DEFAULT_QUICK_FILTER_OPTION) {
+      nextParams.set(DATE_FILTER_PARAM, convertToUppercaseAndUnderscore(value));
+      nextParams.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
+    }
+
+    setSearchParams(nextParams, { replace: true });
+  };
+
+  const handleHideCategoryRowsChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const nextParams = new URLSearchParams(searchParams);
+
+    nextParams.set('page', '1');
+    nextParams.set(
+      HIDE_CATEGORY_ROWS_PARAM,
+      e.target.checked ? 'true' : 'false'
+    );
+    setSearchParams(nextParams, { replace: true });
+  };
 
   useEffect(() => {
     if (
