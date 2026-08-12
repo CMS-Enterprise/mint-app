@@ -66,9 +66,11 @@ const FilterButtonWithModal = <T extends Record<string, string[]>>({
     const selected = selectedFilters[key];
     const applied = appliedFilters[key];
 
+    const nonEmptySelected = selected.filter(Boolean);
+
     return (
-      selected.length === applied.length &&
-      selected.every(val => applied.includes(val))
+      nonEmptySelected.length === applied.length &&
+      nonEmptySelected.every(val => applied.includes(val))
     );
   });
 

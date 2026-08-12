@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Select } from '@trussworks/react-uswds';
 import { DateTime } from 'luxon';
@@ -22,17 +22,19 @@ const MTOTableDateFilter = ({
     'modelToOperationsMisc:table.tableFilters.filterOptions.neededByDateRange.options'
   );
 
-  const isInitiallyCustom = selectedFilters.length === 2;
-  const initialPreset =
-    selectedFilters.length === 1 ? selectedFilters[0] : 'ALL_TIME';
+  const isCustomMode = selectedFilters.length === 2;
 
-  const [isCustomMode, setIsCustomMode] = useState(isInitiallyCustom);
-  const [customStart, setCustomStart] = useState<string>(
-    isInitiallyCustom ? selectedFilters[0] : ''
-  );
-  const [customEnd, setCustomEnd] = useState<string>(
-    isInitiallyCustom ? selectedFilters[1] : ''
-  );
+  const customStart = isCustomMode ? selectedFilters[0] : '';
+  const customEnd = isCustomMode ? selectedFilters[1] : '';
+
+  let selectedDropdownValue = 'ALL_TIME';
+
+  if (isCustomMode) {
+    selectedDropdownValue = 'CUSTOM_DATE_RANGE';
+  } else if (selectedFilters.length === 1) {
+    // eslint-disable-next-line prefer-destructuring
+    selectedDropdownValue = selectedFilters[0];
+  }
 
   const dateFilterOptions = useMemo(() => {
     return Object.keys(neededWithinDateOptionsConfig).map(option => ({
@@ -41,46 +43,14 @@ const MTOTableDateFilter = ({
     }));
   }, [neededWithinDateOptionsConfig]);
 
-  //   const selectedDropdownValue = useMemo(() => {
-  //     if (!selectedFilters || selectedFilters.length === 0) return 'ALL_TIME';
-
-  //     if (selectedFilters.length === 2) return 'CUSTOM_DATE_RANGE';
-
-  //     const selectedValue = selectedFilters[0];
-
-  //     if (
-  //       selectedValue === 'CUSTOM_DATE_RANGE' ||
-  //       dateFilterOptions.some(opt => opt.value === selectedValue)
-  //     ) {
-  //       return selectedValue;
-  //     }
-
-  //     return 'CUSTOM_DATE_RANGE';
-  //   }, [selectedFilters, dateFilterOptions]);
-  const selectedDropdownValue = isCustomMode
-    ? 'CUSTOM_DATE_RANGE'
-    : initialPreset;
-
-  const disableCustomRange = selectedDropdownValue !== 'CUSTOM_DATE_RANGE';
-
-  const startDate =
-    disableCustomRange || selectedFilters[0] === 'CUSTOM_DATE_RANGE'
-      ? undefined
-      : selectedFilters[0];
-  const endDate = disableCustomRange ? undefined : selectedFilters[1];
-
   const handleFilterTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = e.target.value;
-    setSelectedFilters([selectedOption]);
 
     if (selectedOption === 'CUSTOM_DATE_RANGE') {
-      setIsCustomMode(true);
-      setSelectedFilters([]);
+      setSelectedFilters(['', '']);
     } else if (selectedOption === 'ALL_TIME') {
-      setIsCustomMode(false);
       setSelectedFilters([]);
     } else {
-      setIsCustomMode(false);
       setSelectedFilters([selectedOption]);
     }
   };
@@ -94,14 +64,7 @@ const MTOTableDateFilter = ({
     const newStart = isStart ? dateOnly || '' : customStart;
     const newEnd = !isStart ? dateOnly || '' : customEnd;
 
-    setCustomStart(newStart);
-    setCustomEnd(newEnd);
-
-    if (newStart && newEnd) {
-      setSelectedFilters?.([newStart, newEnd]);
-    } else {
-      setSelectedFilters?.([]);
-    }
+    setSelectedFilters([newStart, newEnd]);
   };
 
   return (
@@ -130,11 +93,12 @@ const MTOTableDateFilter = ({
           <p className="margin-0 text-base">{generalT('datePicker.format')}</p>
 
           <DatePickerFormatted
+            key={`start-${isCustomMode}`}
             id="startDate"
             name="startDate"
-            defaultValue={startDate}
+            defaultValue={customStart}
             onChange={date => handleCustomDateChange(true, date)}
-            disabled={disableCustomRange}
+            disabled={!isCustomMode}
             suppressMilliseconds
           />
         </Grid>
@@ -147,11 +111,12 @@ const MTOTableDateFilter = ({
           <p className="margin-0 text-base">{generalT('datePicker.format')}</p>
 
           <DatePickerFormatted
+            key={`end-${isCustomMode}`}
             id="endDate"
             name="endDate"
-            defaultValue={endDate}
+            defaultValue={customEnd}
             onChange={date => handleCustomDateChange(false, date)}
-            disabled={disableCustomRange}
+            disabled={!isCustomMode}
             suppressMilliseconds
           />
         </Grid>

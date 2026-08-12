@@ -8,6 +8,7 @@ import {
   MtoRiskIndicator,
   useGetMtoCategoriesQuery
 } from 'gql/generated/graphql';
+import { DateTime } from 'luxon';
 
 import FilterButtonWithModal from 'components/FilterButtonWithModal';
 import PageLoading from 'components/PageLoading';
@@ -115,14 +116,20 @@ const MTOTableFilters = ({
         newParams.delete(DATE_FILTER_PARAM);
         newParams.delete('startDate');
         newParams.delete('endDate');
-
+        // preset date range like NEXT_30_DAYS
         if (values.length === 1) {
           newParams.set(DATE_FILTER_PARAM, values[0]);
           hasAnyFilters = true;
+          // custom date range with start and end dates
         } else if (values.length === 2) {
-          newParams.set('startDate', values[0]);
-          newParams.set('endDate', values[1]);
-          hasAnyFilters = true;
+          const isValidStart = DateTime.fromISO(values[0]).isValid;
+          const isValidEnd = DateTime.fromISO(values[1]).isValid;
+
+          if (isValidStart && isValidEnd) {
+            newParams.set('startDate', values[0]);
+            newParams.set('endDate', values[1]);
+            hasAnyFilters = true;
+          }
         }
       } else if (values && values.length > 0) {
         newParams.set(convertCamelCaseToKebabCase(key), values.join(','));
