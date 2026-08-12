@@ -1,59 +1,65 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import i18next from 'i18next';
-import { vi } from 'vitest';
+import { categoryMock, modelID } from 'tests/mock/mto';
+import MockedProvider from 'tests/MockedProvider';
 
-import MTOTableFilters from './index';
-
-const mockNavigate = vi.fn();
-
-vi.mock('react-router-dom', async () => {
-  const actual =
-    await vi.importActual<typeof import('react-router-dom')>(
-      'react-router-dom'
-    );
-  return {
-    ...actual,
-    useNavigate: () => mockNavigate
-  };
-});
+import MTOTableFilters, { DATE_FILTER_PARAM } from './index';
 
 describe('MTOTableFilters', () => {
+  let router: ReturnType<typeof createMemoryRouter>;
+
   const renderWithRouter = (
-    initialEntry: string,
+    params: string,
     props?: React.ComponentProps<typeof MTOTableFilters>
   ) => {
     const user = userEvent.setup();
-    const router = createMemoryRouter(
+    router = createMemoryRouter(
       [
         {
-          path: '/matrix',
+          path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
           element: <MTOTableFilters {...props} />
         }
       ],
       {
-        initialEntries: [initialEntry]
+        initialEntries: [
+          `/models/${modelID}/collaboration-area/model-to-operations${params}`
+        ]
       }
     );
-    render(<RouterProvider router={router} />);
+
+    render(
+      <MockedProvider mocks={[...categoryMock]}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
     return { user };
+  };
+
+  const waitForDataToLoad = async () => {
+    await waitFor(() => {
+      expect(screen.queryByTestId('page-loading')).not.toBeInTheDocument();
+    });
+  };
+
+  const getRouterSearchParams = (): URLSearchParams => {
+    return new URLSearchParams(router.state.location.search);
   };
 
   const getSelect = () => screen.getByTestId('mto-needed-within-days');
 
   const showFilters = async (user: ReturnType<typeof userEvent.setup>) => {
-    await user.click(
-      screen.getByText(
-        i18next.t('modelToOperationsMisc:table.tableFilters.showFilters')
-      )
+    await waitForDataToLoad();
+    const showBtn = screen.queryByText(
+      i18next.t('modelToOperationsMisc:table.tableFilters.showFilters')
     );
+    if (showBtn) {
+      await user.click(showBtn);
+    }
   };
-
-  beforeEach(() => {
-    mockNavigate.mockClear();
-  });
 
   it('renders without errors', async () => {
     const { user } = renderWithRouter('/matrix');
@@ -104,15 +110,11 @@ describe('MTOTableFilters', () => {
 
     await showFilters(user);
 
-    fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
+    await user.click(screen.getByTestId('mto-hide-category-rows'));
 
-    expect(mockNavigate).toHaveBeenCalledWith(expect.any(Object), {
-      replace: true
-    });
-    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
-    const nextParams = new URLSearchParams(search);
-    expect(nextParams.get('hide-category-rows')).toBe('true');
-    expect(nextParams.get('page')).toBe('1');
+    const searchParams = getRouterSearchParams();
+    expect(searchParams.get('hide-category-rows')).toBe('true');
+    expect(searchParams.get('page')).toBe('1');
   });
 
   it('unchecking the checkbox sets hide-category-rows=false', async () => {
@@ -120,16 +122,15 @@ describe('MTOTableFilters', () => {
 
     await showFilters(user);
 
-    fireEvent.click(screen.getByTestId('mto-hide-category-rows'));
+    await user.click(screen.getByTestId('mto-hide-category-rows'));
 
-    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
-    const nextParams = new URLSearchParams(search);
-    expect(nextParams.get('hide-category-rows')).toBe('false');
+    const searchParams = getRouterSearchParams();
+    expect(searchParams.get('hide-category-rows')).toBe('false');
   });
 
   it('disables and forces checked when a time window filter is selected', async () => {
     const { user } = renderWithRouter(
-      '/matrix?needed-within-days=60&hide-category-rows=true'
+      `/matrix?${DATE_FILTER_PARAM}=NEXT_30_DAYS&hide-category-rows=true`
     );
 
     await showFilters(user);
@@ -138,73 +139,48 @@ describe('MTOTableFilters', () => {
     expect(screen.getByTestId('mto-hide-category-rows')).toBeChecked();
   });
 
-  it('defaults to All when no filter params are present', async () => {
+  it('defaults to ALL_TIME when no filter params are present', async () => {
     const { user } = renderWithRouter('/matrix');
 
     await showFilters(user);
 
-    expect(getSelect()).toHaveValue('all');
+    expect(getSelect()).toHaveValue('ALL_TIME');
   });
 
-  it('reflects needed-within-days in the URL', async () => {
-    const { user } = renderWithRouter('/matrix?needed-within-days=60');
+  it('reflects needed-by-date-range in the URL', async () => {
+    const { user } = renderWithRouter(
+      `/matrix?${DATE_FILTER_PARAM}=NEXT_30_DAYS`
+    );
 
     await showFilters(user);
 
-    expect(getSelect()).toHaveValue('60');
+    expect(getSelect()).toHaveValue('NEXT_30_DAYS');
   });
 
-  it('maps legacy needed-within-thirty-days=true to 30 days in the select', async () => {
-    const { user } = renderWithRouter('/matrix?needed-within-thirty-days=true');
-
-    await showFilters(user);
-
-    expect(getSelect()).toHaveValue('30');
-  });
-
-  it('selecting 30 days sets needed-within-days and resets page', async () => {
+  it('selecting NEXT_30_DAYS sets needed-by-date-range and resets page', async () => {
     const { user } = renderWithRouter('/matrix?page=3');
 
     await showFilters(user);
 
-    fireEvent.change(getSelect(), { target: { value: '30' } });
+    await user.selectOptions(getSelect(), 'NEXT_30_DAYS');
 
-    expect(mockNavigate).toHaveBeenCalledWith(expect.any(Object), {
-      replace: true
-    });
-    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
-    const nextParams = new URLSearchParams(search);
-    expect(nextParams.get('needed-within-days')).toBe('30');
-    expect(nextParams.get('hide-category-rows')).toBe('true');
-    expect(nextParams.get('page')).toBe('1');
+    const searchParams = getRouterSearchParams();
+    expect(searchParams.get(DATE_FILTER_PARAM)).toBe('NEXT_30_DAYS');
+    expect(searchParams.get('hide-category-rows')).toBe('true');
+    expect(searchParams.get('page')).toBe('1');
   });
 
-  it('selecting All removes filter params and resets page', async () => {
+  it('selecting ALL_TIME removes filter params and resets page', async () => {
     const { user } = renderWithRouter(
-      '/matrix?page=2&needed-within-days=90&hide-category-rows=true'
+      `/matrix?page=2&${DATE_FILTER_PARAM}=NEXT_30_DAYS&hide-category-rows=true`
     );
 
     await showFilters(user);
 
-    fireEvent.change(getSelect(), { target: { value: 'all' } });
+    await user.selectOptions(getSelect(), 'ALL_TIME');
 
-    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
-    const nextParams = new URLSearchParams(search);
-    expect(nextParams.get('needed-within-days')).toBeNull();
-    expect(nextParams.get('page')).toBe('1');
-  });
-
-  it('selecting All clears legacy thirty-days param', async () => {
-    const { user } = renderWithRouter(
-      '/matrix?needed-within-thirty-days=true&hide-category-rows=true'
-    );
-
-    await showFilters(user);
-
-    fireEvent.change(getSelect(), { target: { value: 'all' } });
-
-    const { search } = mockNavigate.mock.calls[0][0] as { search: string };
-    const nextParams = new URLSearchParams(search);
-    expect(nextParams.get('needed-within-thirty-days')).toBeNull();
+    const searchParams = getRouterSearchParams();
+    expect(searchParams.get(DATE_FILTER_PARAM)).toBeNull();
+    expect(searchParams.get('page')).toBe('1');
   });
 });

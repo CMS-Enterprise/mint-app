@@ -17,6 +17,7 @@ const MTOTableDateFilter = ({
   setSelectedFilters: (filters: string[]) => void;
 }) => {
   const { t: generalT } = useTranslation('general');
+  const { t: modelToOperationsMiscT } = useTranslation('modelToOperationsMisc');
 
   const neededWithinDateOptionsConfig = tObject<string>(
     'modelToOperationsMisc:table.tableFilters.filterOptions.neededByDateRange.options'
@@ -28,15 +29,9 @@ const MTOTableDateFilter = ({
     ? selectedFilters
     : [];
 
-  const selectedDropdownValue = useMemo(() => {
-    if (isCustomMode) {
-      return 'CUSTOM_DATE_RANGE';
-    }
-    if (selectedFilters.length === 1) {
-      return selectedFilters[0];
-    }
-    return 'ALL_TIME';
-  }, [isCustomMode, selectedFilters]);
+  const selectedDropdownValue = isCustomMode
+    ? 'CUSTOM_DATE_RANGE'
+    : selectedFilters[0] || 'ALL_TIME';
 
   const dateFilterOptions = useMemo(() => {
     return Object.keys(neededWithinDateOptionsConfig).map(option => ({
@@ -61,7 +56,7 @@ const MTOTableDateFilter = ({
     isStart: boolean,
     date: string | undefined
   ) => {
-    const dateOnly = date ? DateTime.fromISO(date).toISODate() : '';
+    const dateOnly = date ? (DateTime.fromISO(date).toISODate() ?? '') : '';
 
     const newStart = isStart ? dateOnly || '' : customStart;
     const newEnd = !isStart ? dateOnly || '' : customEnd;
@@ -75,7 +70,9 @@ const MTOTableDateFilter = ({
         className="margin-y-3 tablet:grid-col-8"
         id="mto-filter-by-date"
         data-testid="mto-filter-by-date"
-        aria-label={neededWithinDateOptionsConfig.label}
+        aria-label={modelToOperationsMiscT(
+          'table.tableFilters.filterOptions.neededByDateRange.label'
+        )}
         name={DATE_FILTER_PARAM}
         value={selectedDropdownValue}
         onChange={handleFilterTypeChange}
