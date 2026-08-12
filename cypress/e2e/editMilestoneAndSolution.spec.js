@@ -3,6 +3,8 @@
  * (MINT-3691) and the milestone editor from the solution editor (MINT-3692).
  */
 
+import { aliasQuery } from '../support/graphql-test-utils';
+
 describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
   const modelPlanName = 'Model Plan for MTO testing';
   const milestoneName = 'MilestoneCategory 0A';
@@ -70,30 +72,45 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
   });
 
   it('edits milestone details from solution panel with solution context', () => {
-    cy.contains('button', 'Solutions and IT systems').click({ force: true });
-    cy.get('table').within(() => {
-      cy.get('td')
-        .contains(solutionName)
-        .closest('tr')
-        .within(() => {
-          cy.contains('Edit details').click({ force: true });
-        });
+    cy.intercept('POST', '/api/graph/query', req => {
+      aliasQuery(req, 'GetMTOSolutionsAndMilestones');
+      aliasQuery(req, 'GetMTOSolution');
+      aliasQuery(req, 'GetMTOMilestone');
     });
 
-    cy.get('[data-testid="edit-solution-sidepanel"]').within(() => {
-      cy.contains('button', 'Edit milestone').first().click({ force: true });
+    cy.contains('button', 'Solutions and IT systems').click({ force: true });
+
+    cy.location('search').should('include', 'view=solutions');
+    cy.wait('@GetMTOSolutionsAndMilestones')
+      .its('response.statusCode')
+      .should('eq', 200);
+    cy.contains('table thead button', /^Solution$/).should('be.visible');
+
+    cy.contains('tbody tr', solutionName).within(() => {
+      cy.contains('button', 'Edit details').click({ force: true });
     });
+
+    cy.location('search').should('include', 'edit-solution=');
+    cy.wait('@GetMTOSolution').its('response.statusCode').should('eq', 200);
+    cy.get('[data-testid="edit-solution-sidepanel"]')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('button', 'Edit milestone').first().click({ force: true });
+      });
 
     cy.location('search').should('include', 'edit-solution=');
     cy.location('search').should('include', 'edit-milestone=');
     cy.location('search').should('include', 'source=solution');
+    cy.wait('@GetMTOMilestone').its('response.statusCode').should('eq', 200);
 
-    cy.get('[data-testid="edit-milestone-sidepanel"]').within(() => {
-      cy.contains('h4', 'Back to solution details').should('be.visible');
-      cy.get('h2').should('contain.text', milestoneName);
-      cy.contains('button', 'Remove milestone').should('not.exist');
-      cy.contains('button', 'Add a milestone note').should('not.exist');
-    });
+    cy.get('[data-testid="edit-milestone-sidepanel"]')
+      .should('be.visible')
+      .within(() => {
+        cy.contains('h4', 'Back to solution details').should('be.visible');
+        cy.get('h2').should('contain.text', milestoneName);
+        cy.contains('button', 'Remove milestone').should('not.exist');
+        cy.contains('button', 'Add a milestone note').should('not.exist');
+      });
 
     cy.get('[data-testid="edit-milestone-sidepanel"]').within(() => {
       cy.get('div#responsible-component').within(() => {
