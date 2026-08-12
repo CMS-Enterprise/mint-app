@@ -113,12 +113,14 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
       });
 
     cy.get('[data-testid="edit-milestone-sidepanel"]').within(() => {
-      cy.get('div#responsible-component').within(() => {
-        cy.get("input[type='text']").click({ force: true });
-        cy.get('[data-testid="option-FCHCO"]').click({ force: true });
-      });
+      cy.get('#responsible-component')
+        .should('be.visible')
+        .click({ force: true })
+        .type('fch{enter}', { force: true });
 
-      cy.get('#responsible-component-tags li').should('contain.text', 'FCHCO');
+      cy.get('[data-testid="multiselect-tag--FCHCO"]')
+        .should('be.visible')
+        .and('contain.text', 'FCHCO');
     });
 
     cy.contains('button', 'Save and return to solution details')
