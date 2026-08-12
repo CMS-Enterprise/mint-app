@@ -85,11 +85,21 @@ const MTOTableFilters = ({
     function getArray<T = string[]>(key: string): T {
       return (searchParams.get(key)?.split(',') || []) as T;
     }
+    const dateRangeQuery = searchParams.get(DATE_FILTER_PARAM);
+    const startDateQuery = searchParams.get('startDate');
+    const endDateQuery = searchParams.get('endDate');
+
+    let neededByDateRangeArray: string[] = [];
+    if (dateRangeQuery) {
+      neededByDateRangeArray = [dateRangeQuery]; // e.g., ['NEXT_30_DAYS']
+    } else if (startDateQuery && endDateQuery) {
+      neededByDateRangeArray = [startDateQuery, endDateQuery]; // e.g., ['2026-07-01', '2026-08-01']
+    }
 
     return {
       category: getArray('category'),
       role: getArray<MTOTableSelectedFilters['role']>('role'),
-      neededByDateRange: getArray(DATE_FILTER_PARAM),
+      neededByDateRange: neededByDateRangeArray,
       status: getArray<MTOTableSelectedFilters['status']>('status'),
       risk: getArray<MTOTableSelectedFilters['risk']>('risk'),
       other: getArray('other')
@@ -98,14 +108,36 @@ const MTOTableFilters = ({
 
   const setAppliedFilters = (filters: MTOTableSelectedFilters) => {
     const newParams = new URLSearchParams(location.search);
+    let hasAnyFilters = false;
 
     Object.entries(filters).forEach(([key, values]) => {
-      if (values && values.length > 0) {
+      if (key === 'neededByDateRange') {
+        newParams.delete(DATE_FILTER_PARAM);
+        newParams.delete('startDate');
+        newParams.delete('endDate');
+
+        if (values.length === 1) {
+          newParams.set(DATE_FILTER_PARAM, values[0]);
+          hasAnyFilters = true;
+        } else if (values.length === 2) {
+          newParams.set('startDate', values[0]);
+          newParams.set('endDate', values[1]);
+          hasAnyFilters = true;
+        }
+      } else if (values && values.length > 0) {
         newParams.set(convertCamelCaseToKebabCase(key), values.join(','));
+        hasAnyFilters = true;
       } else {
         newParams.delete(convertCamelCaseToKebabCase(key));
       }
     });
+
+    if (hasAnyFilters) {
+      newParams.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
+    } else {
+      newParams.delete(HIDE_CATEGORY_ROWS_PARAM);
+    }
+
     // Reset pagination when filters change
     newParams.delete('page');
 
@@ -113,10 +145,23 @@ const MTOTableFilters = ({
   };
 
   const appliedFiltersCount = useMemo(() => {
-    return Object.values(appliedFilters).reduce((totalCount, filterArray) => {
-      const validItems = filterArray.filter(Boolean);
-      return totalCount + validItems.length;
-    }, 0);
+    return Object.entries(appliedFilters).reduce(
+      (totalCount, [key, filterArray]) => {
+        const validItems = filterArray.filter(Boolean);
+
+        if (validItems.length === 0) {
+          return totalCount;
+        }
+
+        // The date filter should count as 1, startDate + endDate should not count as 2
+        if (key === 'neededByDateRange') {
+          return totalCount + 1;
+        }
+
+        return totalCount + validItems.length;
+      },
+      0
+    );
   }, [appliedFilters]);
 
   const { data: mtoCategoriesData, loading: mtoCategoriesLoading } =
@@ -128,7 +173,10 @@ const MTOTableFilters = ({
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const next = new URLSearchParams(location.search);
+
     next.set('page', '1');
+    next.delete('startDate');
+    next.delete('endDate');
 
     const { value } = e.target;
 

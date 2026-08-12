@@ -44,8 +44,21 @@ const FilterButtonWithModal = <T extends Record<string, string[]>>({
     setIsOpen(false);
   };
 
-  const appliedFiltersCount = Object.values(selectedFilters).reduce(
-    (count, filtersArray) => count + filtersArray.length,
+  const appliedFiltersCount = Object.entries(selectedFilters).reduce(
+    (count, [key, filtersArray]) => {
+      const validItems = filtersArray.filter(Boolean);
+
+      if (validItems.length === 0) {
+        return count;
+      }
+
+      // The date filter should count as 1, startDate + endDate should not count as 2
+      if (key === 'neededByDateRange') {
+        return count + 1;
+      }
+
+      return count + validItems.length;
+    },
     0
   );
 

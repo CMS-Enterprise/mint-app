@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Select } from '@trussworks/react-uswds';
+import { DateTime } from 'luxon';
 
 import DatePickerFormatted from 'components/DatePickerFormatted';
 import { convertToUppercaseAndUnderscore } from 'utils/modelPlan';
@@ -21,6 +22,18 @@ const MTOTableDateFilter = ({
     'modelToOperationsMisc:table.tableFilters.filterOptions.neededByDateRange.options'
   );
 
+  const isInitiallyCustom = selectedFilters.length === 2;
+  const initialPreset =
+    selectedFilters.length === 1 ? selectedFilters[0] : 'ALL_TIME';
+
+  const [isCustomMode, setIsCustomMode] = useState(isInitiallyCustom);
+  const [customStart, setCustomStart] = useState<string>(
+    isInitiallyCustom ? selectedFilters[0] : ''
+  );
+  const [customEnd, setCustomEnd] = useState<string>(
+    isInitiallyCustom ? selectedFilters[1] : ''
+  );
+
   const dateFilterOptions = useMemo(() => {
     return Object.keys(neededWithinDateOptionsConfig).map(option => ({
       label: neededWithinDateOptionsConfig[option],
@@ -28,22 +41,25 @@ const MTOTableDateFilter = ({
     }));
   }, [neededWithinDateOptionsConfig]);
 
-  const selectedDropdownValue = useMemo(() => {
-    if (!selectedFilters || selectedFilters.length === 0) return 'ALL_TIME';
+  //   const selectedDropdownValue = useMemo(() => {
+  //     if (!selectedFilters || selectedFilters.length === 0) return 'ALL_TIME';
 
-    if (selectedFilters.length === 2) return 'CUSTOM_DATE_RANGE';
+  //     if (selectedFilters.length === 2) return 'CUSTOM_DATE_RANGE';
 
-    const selectedValue = selectedFilters[0];
+  //     const selectedValue = selectedFilters[0];
 
-    if (
-      selectedValue === 'CUSTOM_DATE_RANGE' ||
-      dateFilterOptions.some(opt => opt.value === selectedValue)
-    ) {
-      return selectedValue;
-    }
+  //     if (
+  //       selectedValue === 'CUSTOM_DATE_RANGE' ||
+  //       dateFilterOptions.some(opt => opt.value === selectedValue)
+  //     ) {
+  //       return selectedValue;
+  //     }
 
-    return 'CUSTOM_DATE_RANGE';
-  }, [selectedFilters, dateFilterOptions]);
+  //     return 'CUSTOM_DATE_RANGE';
+  //   }, [selectedFilters, dateFilterOptions]);
+  const selectedDropdownValue = isCustomMode
+    ? 'CUSTOM_DATE_RANGE'
+    : initialPreset;
 
   const disableCustomRange = selectedDropdownValue !== 'CUSTOM_DATE_RANGE';
 
@@ -56,20 +72,35 @@ const MTOTableDateFilter = ({
   const handleFilterTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = e.target.value;
     setSelectedFilters([selectedOption]);
+
+    if (selectedOption === 'CUSTOM_DATE_RANGE') {
+      setIsCustomMode(true);
+      setSelectedFilters([]);
+    } else if (selectedOption === 'ALL_TIME') {
+      setIsCustomMode(false);
+      setSelectedFilters([]);
+    } else {
+      setIsCustomMode(false);
+      setSelectedFilters([selectedOption]);
+    }
   };
 
   const handleCustomDateChange = (
     isStart: boolean,
     date: string | undefined
   ) => {
-    const newDate = date || '';
-    const currentStart = startDate || '';
-    const currentEnd = endDate || '';
+    const dateOnly = date ? DateTime.fromISO(date).toISODate() : '';
 
-    if (isStart) {
-      setSelectedFilters([newDate, currentEnd]);
+    const newStart = isStart ? dateOnly || '' : customStart;
+    const newEnd = !isStart ? dateOnly || '' : customEnd;
+
+    setCustomStart(newStart);
+    setCustomEnd(newEnd);
+
+    if (newStart && newEnd) {
+      setSelectedFilters?.([newStart, newEnd]);
     } else {
-      setSelectedFilters([currentStart, newDate]);
+      setSelectedFilters?.([]);
     }
   };
 
