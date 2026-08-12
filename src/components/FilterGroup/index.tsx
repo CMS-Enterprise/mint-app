@@ -16,7 +16,10 @@ export type FilterGroupType = {
     value: string;
   }[];
   displayShowAll: boolean;
-  customFilterComponent?: React.ReactNode;
+  CustomComponent?: React.ComponentType<{
+    selectedFilters: string[];
+    setSelectedFilters: (filters: string[]) => void;
+  }>;
 };
 
 type FilterGroupProps = {
@@ -34,6 +37,8 @@ const FilterGroup = ({
   setSelectedFilters
 }: FilterGroupProps) => {
   const { t } = useTranslation('general');
+
+  const { CustomComponent } = filterGroup;
 
   /**
    * Determines if the "Show All" checkbox should be checked based on the selected filters.
@@ -111,7 +116,12 @@ const FilterGroup = ({
           />
         ))}
 
-        {filterGroup.customFilterComponent}
+        {CustomComponent && (
+          <CustomComponent
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+          />
+        )}
       </FieldGroup>
     </Fieldset>
   );

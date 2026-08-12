@@ -12,14 +12,15 @@ import {
 import FilterButtonWithModal from 'components/FilterButtonWithModal';
 import PageLoading from 'components/PageLoading';
 import { Tag } from 'components/Tag';
-import { convertToUppercaseAndUnderscore } from 'utils/modelPlan';
+import {
+  convertCamelCaseToKebabCase,
+  convertToUppercaseAndUnderscore
+} from 'utils/modelPlan';
 import { tObject } from 'utils/translation';
-
-import MTOTableDateFilter from '../MTOTableDateFilter';
 
 import getMTOTableFilters from './getMTOTableFilters';
 
-export const QUICK_FILTER_PARAM = 'needed-by-date-range';
+export const DATE_FILTER_PARAM = 'needed-by-date-range';
 const HIDE_CATEGORY_ROWS_PARAM = 'hide-category-rows';
 const DEFAULT_QUICK_FILTER_OPTION = 'ALL_TIME';
 
@@ -34,7 +35,7 @@ export type MTOTableFiltersProps = {
 type MTOTableSelectedFilters = {
   category: string[];
   role: MtoFacilitator[];
-  neededByDate: string[];
+  neededByDateRange: string[];
   status: MtoMilestoneStatus[];
   risk: MtoRiskIndicator[];
   other: string[];
@@ -59,7 +60,7 @@ const MTOTableFilters = ({
   const params = new URLSearchParams(location.search);
 
   const selectValue =
-    params.get(QUICK_FILTER_PARAM) || DEFAULT_QUICK_FILTER_OPTION;
+    params.get(DATE_FILTER_PARAM) || DEFAULT_QUICK_FILTER_OPTION;
 
   const isTimeWindowFilterActive =
     selectValue !== null && selectValue !== DEFAULT_QUICK_FILTER_OPTION;
@@ -88,7 +89,7 @@ const MTOTableFilters = ({
     return {
       category: getArray('category'),
       role: getArray<MTOTableSelectedFilters['role']>('role'),
-      neededByDate: getArray('neededByDate'),
+      neededByDateRange: getArray(DATE_FILTER_PARAM),
       status: getArray<MTOTableSelectedFilters['status']>('status'),
       risk: getArray<MTOTableSelectedFilters['risk']>('risk'),
       other: getArray('other')
@@ -100,9 +101,9 @@ const MTOTableFilters = ({
 
     Object.entries(filters).forEach(([key, values]) => {
       if (values && values.length > 0) {
-        newParams.set(key, values.join(','));
+        newParams.set(convertCamelCaseToKebabCase(key), values.join(','));
       } else {
-        newParams.delete(key);
+        newParams.delete(convertCamelCaseToKebabCase(key));
       }
     });
     // Reset pagination when filters change
@@ -132,12 +133,12 @@ const MTOTableFilters = ({
     const { value } = e.target;
 
     if (value === DEFAULT_QUICK_FILTER_OPTION) {
-      next.delete(QUICK_FILTER_PARAM);
+      next.delete(DATE_FILTER_PARAM);
       next.delete(HIDE_CATEGORY_ROWS_PARAM);
     }
 
     if (value !== DEFAULT_QUICK_FILTER_OPTION) {
-      next.set(QUICK_FILTER_PARAM, convertToUppercaseAndUnderscore(value));
+      next.set(DATE_FILTER_PARAM, convertToUppercaseAndUnderscore(value));
       next.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
     }
 
@@ -159,7 +160,7 @@ const MTOTableFilters = ({
   );
 
   const filterOptions = useMemo(
-    () => getMTOTableFilters(mtoCategories, <MTOTableDateFilter />),
+    () => getMTOTableFilters(mtoCategories),
     [mtoCategories]
   );
 
@@ -247,7 +248,7 @@ const MTOTableFilters = ({
               className="margin-top-0"
               id="mto-needed-within-days"
               data-testid="mto-needed-within-days"
-              name={QUICK_FILTER_PARAM}
+              name={DATE_FILTER_PARAM}
               value={selectValue}
               onChange={handleTimeWindowFilterChange}
             >

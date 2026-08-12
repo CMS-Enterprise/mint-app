@@ -1,10 +1,11 @@
-import { ReactNode } from 'react';
 import { GetMtoCategoriesQuery, MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import { FilterGroupType } from 'components/FilterGroup';
 import { convertToUppercaseAndUnderscore } from 'utils/modelPlan';
 import { tObject } from 'utils/translation';
+
+import MTOTableDateFilter from '../MTOTableDateFilter';
 
 type Category =
   GetMtoCategoriesQuery['modelPlan']['mtoMatrix']['categories'][0];
@@ -33,10 +34,7 @@ const formatOptionsFromConfig = (obj: Record<string, string>) =>
 /**
  * Returns the MTO milestone table filter options
  */
-const getMTOTableFilters = (
-  categories: Category[],
-  dateComponent: ReactNode
-): FilterGroupType[] => {
+const getMTOTableFilters = (categories: Category[]): FilterGroupType[] => {
   const categoryWithNames = categories.filter(
     category => category.name !== 'Uncategorized'
   );
@@ -62,8 +60,8 @@ const getMTOTableFilters = (
     label: i18next.t(`${BASE_I18N}.neededByDateRange.label`),
     description: i18next.t(`${BASE_I18N}.neededByDateRange.description`),
     tagLabel: i18next.t(`${BASE_I18N}.neededByDateRange.tagLabel`),
-    customFilterComponent: dateComponent,
-    displayShowAll: false
+    displayShowAll: false,
+    CustomComponent: MTOTableDateFilter
   };
 
   const statusOptions = formatOptionsFromConfig(
