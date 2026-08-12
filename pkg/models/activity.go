@@ -25,6 +25,8 @@ const (
 	ActivityNewDiscussionAdded                 ActivityType = "NEW_DISCUSSION_ADDED"
 	ActivityIDDOCQuestionnaireCompleted        ActivityType = "IDDOC_QUESTIONNAIRE_COMPLETED"
 	ActivityIncorrectModelStatus               ActivityType = "INCORRECT_MODEL_STATUS"
+	ActivityNewTaskAdded                       ActivityType = "NEW_TASK_ADDED"
+	ActivityTaskCompleted                      ActivityType = "TASK_COMPLETED"
 )
 
 // activityMetaDataTypeMap maps ActivityType to the corresponding ActivityMetaData struct type

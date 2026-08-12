@@ -2818,6 +2818,7 @@ type ComplexityRoot struct {
 		NewTaskAdded                                       func(childComplexity int) int
 		TaggedInDiscussion                                 func(childComplexity int) int
 		TaggedInDiscussionReply                            func(childComplexity int) int
+		TaskCompleted                                      func(childComplexity int) int
 		UserID                                             func(childComplexity int) int
 	}
 
@@ -3372,6 +3373,7 @@ type UserNotificationPreferencesResolver interface {
 	ModelPlanShared(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	NewModelPlan(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	NewTaskAdded(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+	TaskCompleted(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	DatesChanged(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 
 	DataExchangeApproachMarkedComplete(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
@@ -17563,6 +17565,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.UserNotificationPreferences.TaggedInDiscussionReply(childComplexity), true
+	case "UserNotificationPreferences.taskCompleted":
+		if e.ComplexityRoot.UserNotificationPreferences.TaskCompleted == nil {
+			break
+		}
+
+		return e.ComplexityRoot.UserNotificationPreferences.TaskCompleted(childComplexity), true
 	case "UserNotificationPreferences.userID":
 		if e.ComplexityRoot.UserNotificationPreferences.UserID == nil {
 			break
@@ -17830,6 +17838,7 @@ enum ActivityType {
   IDDOC_QUESTIONNAIRE_COMPLETED
   INCORRECT_MODEL_STATUS
   NEW_TASK_ADDED
+  TASK_COMPLETED
 }
 
 enum DateChangeFieldType {
@@ -24864,6 +24873,8 @@ type UserNotificationPreferences {
 
   newTaskAdded: [UserNotificationPreferenceFlag!]!
 
+  taskCompleted: [UserNotificationPreferenceFlag!]!
+
   datesChanged: [UserNotificationPreferenceFlag!]!
   datesChangedNotificationType: DatesChangedNotificationType
 
@@ -24906,6 +24917,8 @@ input UserNotificationPreferencesChanges
   newModelPlan: [UserNotificationPreferenceFlag!]
 
   newTaskAdded: [UserNotificationPreferenceFlag!]
+
+  taskCompleted: [UserNotificationPreferenceFlag!]
 
   datesChanged: [UserNotificationPreferenceFlag!]
   datesChangedNotificationType: DatesChangedNotificationType
@@ -28277,6 +28290,8 @@ func (ec *executionContext) childFields_UserNotificationPreferences(ctx context.
 		return ec.fieldContext_UserNotificationPreferences_newModelPlan(ctx, field)
 	case "newTaskAdded":
 		return ec.fieldContext_UserNotificationPreferences_newTaskAdded(ctx, field)
+	case "taskCompleted":
+		return ec.fieldContext_UserNotificationPreferences_taskCompleted(ctx, field)
 	case "datesChanged":
 		return ec.fieldContext_UserNotificationPreferences_datesChanged(ctx, field)
 	case "datesChangedNotificationType":
@@ -93858,6 +93873,29 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_newTaskAdde
 	return graphql.NewScalarFieldContext("UserNotificationPreferences", field, true, true, errors.New("field of type UserNotificationPreferenceFlag does not have child fields"))
 }
 
+func (ec *executionContext) _UserNotificationPreferences_taskCompleted(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_UserNotificationPreferences_taskCompleted(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.UserNotificationPreferences().TaskCompleted(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []models.UserNotificationPreferenceFlag) graphql.Marshaler {
+			return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_UserNotificationPreferences_taskCompleted(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("UserNotificationPreferences", field, true, true, errors.New("field of type UserNotificationPreferenceFlag does not have child fields"))
+}
+
 func (ec *executionContext) _UserNotificationPreferences_datesChanged(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -100374,7 +100412,7 @@ func (ec *executionContext) unmarshalInputUserNotificationPreferencesChanges(ctx
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"dailyDigestComplete", "addedAsCollaborator", "taggedInDiscussion", "taggedInDiscussionReply", "newDiscussionReply", "modelPlanShared", "newModelPlan", "newTaskAdded", "datesChanged", "datesChangedNotificationType", "dataExchangeApproachMarkedComplete", "dataExchangeApproachMarkedCompleteNotificationType", "newDiscussionAdded", "newDiscussionAddedNotificationType", "iddocQuestionnaireComplete", "iddocQuestionnaireCompletedNotificationType", "incorrectModelStatus", "mtoReadyForReview", "mtoReadyForReviewNotificationType"}
+	fieldsInOrder := [...]string{"dailyDigestComplete", "addedAsCollaborator", "taggedInDiscussion", "taggedInDiscussionReply", "newDiscussionReply", "modelPlanShared", "newModelPlan", "newTaskAdded", "taskCompleted", "datesChanged", "datesChangedNotificationType", "dataExchangeApproachMarkedComplete", "dataExchangeApproachMarkedCompleteNotificationType", "newDiscussionAdded", "newDiscussionAddedNotificationType", "iddocQuestionnaireComplete", "iddocQuestionnaireCompletedNotificationType", "incorrectModelStatus", "mtoReadyForReview", "mtoReadyForReviewNotificationType"}
 	it = make(map[string]any, len(asMap))
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
@@ -100438,6 +100476,13 @@ func (ec *executionContext) unmarshalInputUserNotificationPreferencesChanges(ctx
 				return it, err
 			}
 			it["newTaskAdded"] = data
+		case "taskCompleted":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("taskCompleted"))
+			data, err := ec.unmarshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["taskCompleted"] = data
 		case "datesChanged":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("datesChanged"))
 			data, err := ec.unmarshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, v)
@@ -127769,6 +127814,44 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 					}
 				}()
 				res = ec._UserNotificationPreferences_newTaskAdded(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "taskCompleted":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_taskCompleted(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}

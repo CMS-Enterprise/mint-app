@@ -153,7 +153,8 @@ export const UnsubscribableActivities = {
   MTO_READY_FOR_REVIEW: 'mtoReadyForReview',
   NEW_DISCUSSION_ADDED: 'newDiscussionAdded',
   NEW_MODEL_PLAN: 'newModelPlan',
-  NEW_TASK_ADDED: 'newTaskAdded'
+  NEW_TASK_ADDED: 'newTaskAdded',
+  TASK_COMPLETED: 'taskCompleted'
 } as const;
 
 export type UnsubscribableActivityType = keyof typeof UnsubscribableActivities;

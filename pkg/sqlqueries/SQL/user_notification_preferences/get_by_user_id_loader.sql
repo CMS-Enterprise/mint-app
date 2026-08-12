@@ -19,6 +19,7 @@ SELECT
     UNP.model_plan_shared,
     UNP.new_model_plan,
     UNP.new_task_added,
+    UNP.task_completed,
     UNP.dates_changed,
     UNP.dates_changed_notification_type,
     UNP.data_exchange_approach_marked_complete,

@@ -14,4 +14,4 @@ COMMENT ON COLUMN user_notification_preferences.new_task_added
 IS 'Notification preference for when new tasks are added.';
 
 COMMENT ON COLUMN user_notification_preferences.task_completed
-IS 'Notification preference for when a task is completed.'
+IS 'Notification preference for when a task is completed.';
