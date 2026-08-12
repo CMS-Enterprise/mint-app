@@ -35,3 +35,37 @@ func TestPlanTaskNewAvailableTemplate(t *testing.T) {
 	assertContains(t, body, clientAddress+"/notifications/settings?unsubscribe_email=NEW_TASK_ADDED", true)
 	assertContains(t, body, `href="`+clientAddress+`/notifications/settings"`, true)
 }
+
+func TestPlanTaskCompletedTemplate(t *testing.T) {
+	clientAddress := "https://mint.cms.gov"
+	modelID := "00000000-0000-0000-0000-000000000000"
+
+	subject, body, err := PlanTask.Completed.GetContent(
+		PlanTaskCompletedSubjectContent{
+			ModelName: "Test Model Plan",
+		},
+		PlanTaskCompletedBodyContent{
+			ClientAddress: clientAddress,
+			ModelID:       modelID,
+			ModelName:     "Test Model Plan",
+			TaskName:      "Task 1",
+			IsModelLead:   true,
+		},
+	)
+
+	if err != nil {
+		t.Fatalf("unexpected template render error: %v", err)
+	}
+
+	if subject != "A task has been completed for your model (Test Model Plan)" {
+		t.Fatalf("expected subject %q, got %q", "A task has been completed for your model (Test Model Plan)", subject)
+	}
+
+	assertContains(t, body, "A task was completed for your model.", true)
+	assertContains(t, body, "<li>Task 1</li>", true)
+	assertContains(t, body, clientAddress+"/models/"+modelID+"/collaboration-area/tasks?tab=completed", true)
+	assertContains(t, body, clientAddress+"/models/"+modelID+"/collaboration-area/collaborators", true)
+	assertContains(t, body, clientAddress+"/notifications/settings?unsubscribe_email=TASK_COMPLETED", true)
+	assertContains(t, body, `href="`+clientAddress+`/notifications/settings"`, true)
+	assertContains(t, body, clientAddress+"/how-to-get-access", true)
+}
