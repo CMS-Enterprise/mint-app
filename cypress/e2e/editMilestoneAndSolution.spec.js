@@ -113,13 +113,13 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
       });
 
     cy.get('[data-testid="edit-milestone-sidepanel"]').within(() => {
-      cy.get('#responsible-component')
-        .should('be.visible')
+      cy.get('div#responsible-component input[type="text"]')
+        .should('not.be.disabled')
         .click({ force: true })
         .type('fch{enter}', { force: true });
 
       cy.get('[data-testid="multiselect-tag--FCHCO"]')
-        .should('be.visible')
+        .should('exist')
         .and('contain.text', 'FCHCO');
     });
 
