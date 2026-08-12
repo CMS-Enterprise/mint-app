@@ -1,0 +1,43 @@
+{{template "shared_header.html"}}
+{{template "shared_non_mint_mailbox_header.html" .}}
+
+<p>There are new tasks for your model {{.ModelName}}.</p>
+
+<br>
+
+<p>New tasks:</p>
+<ul>
+  {{range $task := .TaskList}}
+    <li>{{$task}}</li>
+  {{end}}
+</ul>
+
+<br>
+
+<a href="{{.ClientAddress}}/models/{{.ModelID}}/collaboration-area/tasks?tab=current">Go to tasks</a>
+
+<br>
+
+<p>MINT offers reminders for key model activities in the form of tasks in your model collaboration area. Some tasks are automatically marked as complete based on interactions and content within MINT, while other tasks may be manually marked as complete.</p>
+
+<br>
+
+<p>If you have questions about MINT, please contact the MINT team at
+  <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>.
+</p>
+
+{{if .IsModelLead}}
+<br>
+
+<p>You're receiving this notification because you are listed as the Model Lead for {{.ModelName}}. If this is incorrect, please <a href="{{.ClientAddress}}/models/{{.ModelID}}/collaboration-area/collaborators">update the model team</a>.</p>
+{{end}}
+
+<br>
+
+<p>You are currently subscribed to notifications about new tasks. If you no longer wish to receive these email notifications, please <a style="font-weight: normal" href="{{.ClientAddress}}/notifications/settings?unsubscribe_email=NEW_TASK_ADDED">unsubscribe</a> or change your <a style="font-weight: normal" href="{{.ClientAddress}}/notifications/settings">notification settings</a>. Regardless of your settings, you will continue to receive these notifications for models where you are the Model Lead.</p>
+
+<br>
+<br>
+
+{{template "shared_access_banner.html" .}}
+{{template "shared_footer.html"}}

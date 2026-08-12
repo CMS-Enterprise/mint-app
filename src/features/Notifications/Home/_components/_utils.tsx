@@ -152,7 +152,8 @@ export const UnsubscribableActivities = {
   INCORRECT_MODEL_STATUS: 'incorrectModelStatus',
   MTO_READY_FOR_REVIEW: 'mtoReadyForReview',
   NEW_DISCUSSION_ADDED: 'newDiscussionAdded',
-  NEW_MODEL_PLAN: 'newModelPlan'
+  NEW_MODEL_PLAN: 'newModelPlan',
+  NEW_TASK_ADDED: 'newTaskAdded'
 } as const;
 
 export type UnsubscribableActivityType = keyof typeof UnsubscribableActivities;
