@@ -1,6 +1,8 @@
 {{template "shared_header.html"}}
 {{template "shared_non_mint_mailbox_header.html" .}}
 
+<hr>
+
 <p>A task was completed for your model.</p>
 
 <br>
@@ -12,7 +14,7 @@
 
 <br>
 
-<a href="{{.ClientAddress}}/models/{{.ModelID}}/collaboration-area/tasks?tab=completed">Go to completed tasks</a>
+<p><a href="{{.ClientAddress}}/models/{{.ModelID}}/collaboration-area/tasks?tab=completed">Go to completed tasks</a></p>
 
 <br>
 
@@ -23,6 +25,8 @@
 <p>If you have questions about MINT or tasks for your model, please contact the MINT team at
   <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>.
 </p>
+
+<hr>
 
 {{if .IsModelLead}}
 <br>
