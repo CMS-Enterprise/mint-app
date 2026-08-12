@@ -7,7 +7,6 @@ import (
 
 	"github.com/samber/lo"
 	"github.com/spf13/viper"
-	"golang.org/x/exp/maps"
 
 	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
@@ -57,6 +56,7 @@ var ModelPlanRecentEditTables = []models.TableName{
 	//exclude suggestedMilestone
 
 	models.TNPlanTimeline,
+	models.TNCustomTimelineDate,
 }
 
 // ModelPlanRecentEditsExcludedFields is a list of fields that are excluded from the recent edits query for model plans.
@@ -341,7 +341,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
-	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
+	retPlan, err := storage.ModelPlanUpdate(store, logger, existingPlan)
 	if err != nil {
 		return nil, err
 	}
@@ -415,10 +415,13 @@ func ModelPlansWithEchimpCRAndTDLS(ctx context.Context, echimpS3Client *s3.S3Cli
 		return nil, err
 	}
 	if data == nil {
-		return nil, nil
+		return []*models.ModelPlan{}, nil
 	}
 
-	modelPlanIDs := maps.Keys(data.CrsAndTDLsByModelPlanID)
+	modelPlanIDs := data.ReadModelPlanIDsWithCRsAndTDLs()
+	if len(modelPlanIDs) < 1 {
+		return []*models.ModelPlan{}, nil
+	}
 
 	return storage.ModelPlansGetByModePlanIDsLOADER(store, logger, modelPlanIDs)
 

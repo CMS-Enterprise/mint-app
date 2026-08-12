@@ -2,9 +2,13 @@ package worker
 
 import (
 	"context"
+	"fmt"
+	"net"
+	"time"
 
 	"go.uber.org/zap"
 
+	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
@@ -146,6 +150,23 @@ func (w *Worker) Work() {
 	// Setup Manager
 	mgr.Concurrency = w.Connections
 
+	// Faktory sits behind an AWS Network Load Balancer, which silently drops any TCP
+	// connection idle for longer than its fixed ~350s timeout (NLBs have no configurable
+	// idle_timeout setting, unlike ALBs). The faktory client's default dialer enables TCP
+	// keepalive but never sets an explicit period, so it falls back to OS/Go defaults that
+	// aren't guaranteed to probe more often than that window. Pooled connections that sit
+	// idle between cron ticks can get silently dropped by the NLB and then fail with
+	// "write: broken pipe" the next time they're used. Building the pool with a dialer that
+	// sets an explicit keepalive period well under 350s keeps pooled connections alive.
+	pool, err := faktory.NewPoolWithDialer(mgr.Concurrency+2, &net.Dialer{
+		Timeout:   1 * time.Second,
+		KeepAlive: 120 * time.Second,
+	})
+	if err != nil {
+		panic(fmt.Errorf("failed to create faktory connection pool: %w", err))
+	}
+	mgr.Pool = pool
+
 	// pull jobs from these queues, in this order of precedence
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
 	mgr.Use(FaktoryLoggerMiddleware())
@@ -167,7 +188,7 @@ func (w *Worker) Work() {
 	}
 
 	// Run the manager with the shared context
-	err := mgr.RunWithContext(ctx)
+	err = mgr.RunWithContext(ctx)
 	if err != nil {
 		panic(err)
 	}

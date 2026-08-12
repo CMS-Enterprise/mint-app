@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
 import './index.scss';
@@ -10,15 +9,8 @@ type PageWrapperProps = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const PageWrapper = ({ className, children, ...props }: PageWrapperProps) => {
-  const { pathname } = useLocation();
-
   return (
-    <div
-      className={classNames('mint-page-wrapper', className, {
-        'display-none': pathname === '/implicit/callback' // Hide the app/page wrapper on the implicit callback route
-      })}
-      {...props}
-    >
+    <div className={classNames('mint-page-wrapper', className)} {...props}>
       {children}
     </div>
   );

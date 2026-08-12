@@ -135,6 +135,10 @@ const customHome = {
     copy: 'Have a new model or demonstration?',
     cta: 'Add a new model to MINT'
   },
+  contractAssistanceSummaryBox: {
+    copy: 'Need help with contracting activities?',
+    cta: 'Start a contract assistance ticket'
+  },
   allModels: {
     copy: 'Don’t see the model you’re looking for?',
     cta: 'View all models',

@@ -21,6 +21,10 @@ import usingSolutionLibrary from './helpAndKnowledge/Articles/usingSolutionLibra
 import usingSolutionsAndITSystemsTable from './helpAndKnowledge/Articles/usingSolutionsAndITSystemsTable';
 import usingTableActions from './helpAndKnowledge/Articles/usingTableActions';
 import utilizingSolutions from './helpAndKnowledge/Articles/utilizingSolutions';
+import {
+  contractAssistance,
+  contractAssistanceMisc
+} from './helpAndKnowledge/contractAssistance';
 import helpAndKnowledge from './helpAndKnowledge/helpAndKnowledge';
 import keyContact, { keyContactMisc } from './helpAndKnowledge/keyContact';
 import keyContactCategory, {
@@ -40,6 +44,7 @@ import collaborationArea from './modelPlan/collaborationArea';
 import { collaborators, collaboratorsMisc } from './modelPlan/collaborators';
 import crs from './modelPlan/crs';
 import crtdlsMisc from './modelPlan/crtdlsMisc';
+import { customDate, customDateMisc } from './modelPlan/customDate';
 import dataExchangeApproach, {
   dataExchangeApproachMisc
 } from './modelPlan/dataExchangeApproach';
@@ -172,6 +177,8 @@ const enUS = {
   solutions,
   timeline,
   timelineMisc,
+  customDate,
+  customDateMisc,
   additionalQuestionnaires,
   operationalSolutionSubtasks,
   opSolutionsMisc,
@@ -198,6 +205,8 @@ const enUS = {
   // Help and Knowledge Center Articles
   evaluatingDataExchangeApproach,
   getAccess,
+  contractAssistance,
+  contractAssistanceMisc,
   helpAndKnowledge,
   highLevelProjectPlans,
   modelPlanOverview,

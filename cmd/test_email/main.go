@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -27,12 +28,19 @@ func main() {
 	sendPlanDiscussionTaggedUserTestEmail(emailService, addressBook)
 	sendPlanDiscussionTaggedSolutionTestEmail(emailService, addressBook)
 
+	// CTAT emails
+	sendCTATSubmittedTestEmail(emailService, addressBook)
+	sendCTATSubmittedAdminTestEmail(emailService, addressBook)
+	sendCTATUpdateTestEmail(emailService, addressBook)
+	sendCTATUpdateAdminTestEmail(emailService, addressBook)
+
 	//DiscussionReply email
 	sendDiscussionReplyOriginatorTestEmail(emailService, addressBook)
 
 	// Model plan emails
 	sendModelPlanShareTest(emailService, addressBook)
 	sendDateChangedEmailsTest(emailService, addressBook)
+	sendCustomTimelineDateCreatedEmailTest(emailService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, addressBook)
 	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, addressBook)
 	sendTestIddocQuestionnaireMarkedCompleteEmail(emailService, addressBook)
@@ -109,6 +117,7 @@ func initializeAddressBook() email.AddressBook {
 	return email.AddressBook{
 		DefaultSender: "test@mint.dev.cms.gov",
 		MINTTeamEmail: "test.team@mint.dev.cms.gov",
+		CTATTeamEmail: "test.ctat.team@mint.dev.cms.gov",
 		DevTeamEmail:  "test.dev.team@mint.dev.cms.gov",
 
 		ModelPlanDateChangedRecipients: []string{
@@ -243,6 +252,235 @@ func sendModelPlanCreatedEmailTest(
 	noErr(err)
 }
 
+func sendCTATSubmittedTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
+	}, ", ")
+
+	subjectContent := email.CTATSubmittedSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATSubmittedBodyContent{
+		ClientAddress:          emailService.GetConfig().GetClientAddress(),
+		CTATTicketID:           "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		TicketNumber:           "CTAT-021",
+		RequesterName:          "Betty Alpha",
+		RequesterEmail:         "betty.alpha@mint.dev.cms.gov",
+		CMMIGroup:              fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+		CMMIDivision:           fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
+		RelatedMINTModels:      "Plan With CRs and TDLs 1, Test Model Plan",
+		ContractActivityType:   fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
+		ContractName:           "BTAL CTAT Request Example Contract",
+		ContractType:           fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
+		TypeOfHelpNeeded:       typeOfHelpNeeded,
+		DescribeHelpNeeded:     "Bruno example request for CTAT assistance without supporting documents.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh.Humanize(),
+		DateAssistanceNeededBy: "06/30/2026",
+		UploadedFiles:          "ctat-request-upload.txt, ctat-background-notes.pdf",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.Submitted.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{bodyContent.RequesterEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendCTATUpdateTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
+	}, ", ")
+
+	subjectContent := email.CTATUpdateSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATUpdateBodyContent{
+		Status:                    models.CTATStatusInProgress.Humanize(),
+		StatusUpdated:             true,
+		AssignedTeamMemberUpdated: true,
+		AssignedTeamMemberName:    "Audrey Abrams",
+		AssignedTeamMemberEmail:   "audrey.abrams@mint.dev.cms.gov",
+		ProgressNotesUpdated:      true,
+		ProgressNotes:             "We reviewed the request and scheduled follow-up office hours to walk through the next steps.",
+		ResolutionUpdated:         false,
+		Resolution:                "",
+		ClientAddress:             emailService.GetConfig().GetClientAddress(),
+		CTATTicketID:              "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		TicketNumber:              "CTAT-021",
+		RequesterName:             "Betty Alpha",
+		RequesterEmail:            "betty.alpha@mint.dev.cms.gov",
+		CMMIGroup:                 fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+		CMMIDivision:              fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
+		RelatedMINTModels:         "Plan With CRs and TDLs 1, Test Model Plan",
+		ContractActivityType:      fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
+		ContractName:              "BTAL CTAT Request Example Contract",
+		ContractType:              fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
+		TypeOfHelpNeeded:          typeOfHelpNeeded,
+		DescribeHelpNeeded:        "Bruno example request for CTAT assistance without supporting documents.",
+		RequestUrgency:            models.CTATRequestUrgencyHigh.Humanize(),
+		DateAssistanceNeededBy:    "06/30/2026",
+		UploadedFiles:             "ctat-request-upload.txt, ctat-background-notes.pdf",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.Update.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{bodyContent.RequesterEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendCTATSubmittedAdminTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
+	}, ", ")
+
+	subjectContent := email.CTATSubmittedAdminSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATSubmittedAdminBodyContent{
+		ClientAddress:          emailService.GetConfig().GetClientAddress(),
+		CTATTicketID:           "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		TicketNumber:           "CTAT-021",
+		RequesterName:          "Betty Alpha",
+		RequesterEmail:         "betty.alpha@mint.dev.cms.gov",
+		CMMIGroup:              fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+		CMMIDivision:           fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
+		RelatedMINTModels:      "Plan With CRs and TDLs 1, Test Model Plan",
+		ContractActivityType:   fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
+		ContractName:           "BTAL CTAT Request Example Contract",
+		ContractType:           fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
+		TypeOfHelpNeeded:       typeOfHelpNeeded,
+		DescribeHelpNeeded:     "Bruno example request for CTAT assistance without supporting documents.",
+		RequestUrgency:         models.CTATRequestUrgencyHigh.Humanize(),
+		DateAssistanceNeededBy: "06/30/2026",
+		UploadedFiles:          "ctat-request-upload.txt, ctat-background-notes.pdf",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.SubmittedAdmin.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.CTATTeamEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendCTATUpdateAdminTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	typeOfHelpNeeded := strings.Join([]string{
+		models.CTATHelpNeededTypeRequestForInformationRFI.Humanize(),
+		fmt.Sprintf(
+			"%s (%s)",
+			models.CTATHelpNeededTypeOther.Humanize(),
+			"Assistance drafting evaluation criteria for a new workstream",
+		),
+	}, ", ")
+
+	subjectContent := email.CTATUpdateAdminSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATUpdateAdminBodyContent{
+		CTATUpdateBodyContent: email.CTATUpdateBodyContent{
+			Status:                    models.CTATStatusInProgress.Humanize(),
+			StatusUpdated:             true,
+			AssignedTeamMemberUpdated: true,
+			AssignedTeamMemberName:    "Audrey Abrams",
+			AssignedTeamMemberEmail:   "audrey.abrams@mint.dev.cms.gov",
+			ProgressNotesUpdated:      true,
+			ProgressNotes:             "We reviewed the request and scheduled follow-up office hours to walk through the next steps.",
+			ResolutionUpdated:         false,
+			Resolution:                "",
+			ClientAddress:             emailService.GetConfig().GetClientAddress(),
+			CTATTicketID:              "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+			TicketNumber:              "CTAT-021",
+			RequesterName:             "Betty Alpha",
+			RequesterEmail:            "betty.alpha@mint.dev.cms.gov",
+			CMMIGroup:                 fmt.Sprintf("%s (%s)", models.CTATCMMIGroupOptionOther.Humanize(), "Cross-CMMI Strategic Operations"),
+			CMMIDivision:              fmt.Sprintf("%s (%s)", models.CTATCMMIDivisionOptionOther.Humanize(), "Division of Innovation Partnerships (PPG/DIP)"),
+			RelatedMINTModels:         "Plan With CRs and TDLs 1, Test Model Plan",
+			ContractActivityType:      fmt.Sprintf("%s (%s)", models.CTATContractActivityTypeOther.Humanize(), "Acquisition strategy support"),
+			ContractName:              "BTAL CTAT Request Example Contract",
+			ContractType:              fmt.Sprintf("%s (%s)", models.CTATContractTypeOther.Humanize(), "Blanket Purchase Agreement"),
+			TypeOfHelpNeeded:          typeOfHelpNeeded,
+			DescribeHelpNeeded:        "Bruno example request for CTAT assistance without supporting documents.",
+			RequestUrgency:            models.CTATRequestUrgencyHigh.Humanize(),
+			DateAssistanceNeededBy:    "06/30/2026",
+			UploadedFiles:             "ctat-request-upload.txt, ctat-background-notes.pdf",
+		},
+		AdminName: "CTAT Team",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.UpdateAdmin.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.CTATTeamEmail},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+
+	if len(bodyContent.AssignedTeamMemberEmail) > 0 {
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			[]string{bodyContent.AssignedTeamMemberEmail},
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+		)
+		noErr(err)
+	}
+}
+
 func sendModelPlanShareTest(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
@@ -320,37 +558,89 @@ func sendDateChangedEmailsTest(
 	)
 
 	t1, _ := time.Parse(time.RFC3339, "2024-01-01T00:00:00Z")
+	unchangedBasicSingleDate, _ := time.Parse(time.RFC3339, "2024-03-01T00:00:00Z")
+	unchangedBasicRangeStart, _ := time.Parse(time.RFC3339, "2024-04-01T00:00:00Z")
+	unchangedBasicRangeEnd, _ := time.Parse(time.RFC3339, "2024-04-30T00:00:00Z")
+	oldCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-09-01T00:00:00Z")
+	newCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-10-01T00:00:00Z")
+	oldCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-01-01T00:00:00Z")
+	oldCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-06-30T00:00:00Z")
+	newCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-02-01T00:00:00Z")
+	newCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-07-31T00:00:00Z")
+	unchangedCustomSingleDate, _ := time.Parse(time.RFC3339, "2026-11-01T00:00:00Z")
+	unchangedCustomRangeStart, _ := time.Parse(time.RFC3339, "2026-12-01T00:00:00Z")
+	unchangedCustomRangeEnd, _ := time.Parse(time.RFC3339, "2026-12-31T00:00:00Z")
+	customSingleDateDescription := "A custom single date for this model plan timeline."
+	customDateRangeDescription := "A custom date range for this model plan timeline."
+	unchangedCustomSingleDateDescription := "A custom single date with no date change."
+	unchangedCustomDateRangeDescription := "A custom date range with no date change."
 	dateChangeSlice := []email.DateChange{
 		{
 			Field:     "Complete ICIP",
 			IsChanged: true,
 			NewDate:   &t1,
-		}, {
+		},
+		{
 			Field:         "Clearance",
 			IsRange:       true,
 			IsChanged:     true,
 			NewRangeStart: &t1,
 			NewRangeEnd:   &t1,
-		}, {
-			Field:     "Announce model",
-			IsChanged: true,
-			NewDate:   &t1,
-		}, {
+		},
+		{
+			Field:   "Announce model",
+			OldDate: &unchangedBasicSingleDate,
+		},
+		{
 			Field:         "Application period",
 			IsRange:       true,
 			IsChanged:     true,
 			NewRangeStart: &t1,
 			NewRangeEnd:   &t1,
-		}, {
+		},
+		{
 			Field:         "Performance period",
-			IsChanged:     true,
 			IsRange:       true,
-			NewRangeStart: &t1,
-			NewRangeEnd:   &t1,
-		}, {
+			OldRangeStart: &unchangedBasicRangeStart,
+			OldRangeEnd:   &unchangedBasicRangeEnd,
+		},
+		{
 			Field:     "Model wrap-up end date",
 			IsChanged: true,
 			NewDate:   &t1,
+		},
+	}
+	customTimelineDateChangeSlice := []email.CustomTimelineDateChange{
+		{
+			IsChanged:    true,
+			Title:        "Custom single date title",
+			Description:  &customSingleDateDescription,
+			IsRange:      false,
+			OldStartDate: &oldCustomSingleDate,
+			NewStartDate: &newCustomSingleDate,
+		},
+		{
+			IsChanged:    true,
+			Title:        "Custom date range title",
+			Description:  &customDateRangeDescription,
+			IsRange:      true,
+			OldStartDate: &oldCustomRangeStart,
+			OldEndDate:   &oldCustomRangeEnd,
+			NewStartDate: &newCustomRangeStart,
+			NewEndDate:   &newCustomRangeEnd,
+		},
+		{
+			Title:        "Unchanged custom single date title",
+			Description:  &unchangedCustomSingleDateDescription,
+			IsRange:      false,
+			OldStartDate: &unchangedCustomSingleDate,
+		},
+		{
+			Title:        "Unchanged custom date range title",
+			Description:  &unchangedCustomDateRangeDescription,
+			IsRange:      true,
+			OldStartDate: &unchangedCustomRangeStart,
+			OldEndDate:   &unchangedCustomRangeEnd,
 		},
 	}
 
@@ -358,13 +648,50 @@ func sendDateChangedEmailsTest(
 		ModelName: modelPlan.ModelName,
 	}
 	bodyContent := email.ModelPlanDateChangedBodyContent{
-		ClientAddress: emailService.GetConfig().GetClientAddress(),
-		ModelName:     modelPlan.ModelName,
-		ModelID:       modelPlan.GetModelPlanID().String(),
-		DateChanges:   dateChangeSlice,
+		ClientAddress:             emailService.GetConfig().GetClientAddress(),
+		ModelName:                 modelPlan.ModelName,
+		ModelID:                   modelPlan.GetModelPlanID().String(),
+		DateChanges:               dateChangeSlice,
+		CustomTimelineDateChanges: customTimelineDateChangeSlice,
 	}
 
 	emailSubject, emailBody, err := email.ModelPlan.DateChanged.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		addressBook.ModelPlanDateChangedRecipients,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendCustomTimelineDateCreatedEmailTest(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	modelPlan := models.NewModelPlan(
+		uuid.Nil,
+		"Test Model Plan",
+	)
+
+	subjectContent := email.CustomTimelineDateCreatedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+	bodyContent := email.CustomTimelineDateCreatedBodyContent{
+		ClientAddress:                 emailService.GetConfig().GetClientAddress(),
+		ModelName:                     modelPlan.ModelName,
+		ModelID:                       modelPlan.GetModelPlanID().String(),
+		UserName:                      "Test User",
+		CustomTimelineDateTitle:       "Custom timeline date",
+		CustomTimelineDateDescription: "A custom date for this model plan timeline.",
+		CustomTimelineDate:            "09/01/2026",
+	}
+
+	emailSubject, emailBody, err := email.ModelPlan.CustomTimelineDateCreated.GetContent(subjectContent, bodyContent)
 	noErr(err)
 
 	err = emailService.Send(

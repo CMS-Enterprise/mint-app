@@ -13,6 +13,8 @@ const general = {
   edit: 'Edit',
   remove: 'Remove',
   pageLoading: 'Loading the page',
+  // TODO(MINT-3761): remove oktaWidget once the Sign-In Widget is removed.
+  // oktaErrorMessage is still used by Login (widget path) and OktaLoginCallback.
   oktaWidget: 'Sign in with your EUA or IDM credentials.',
   oktaErrorMessage: {
     noPermission:
@@ -92,7 +94,9 @@ const general = {
     applyFilterWithCount: 'Apply {{count}} filters',
     clearAll: 'Clear all',
     showAll: 'Show all',
-    removeFilter: 'Remove {{filter}} filter'
+    removeFilter: 'Remove {{filter}} filter',
+    startDate: 'Start date',
+    endDate: 'End date'
   }
 };
 

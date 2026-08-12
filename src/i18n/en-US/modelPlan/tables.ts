@@ -3,9 +3,19 @@ import { EnumTranslation, TableName } from '../../../gql/generated/graphql';
 export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   [TableName.ACTIVITY]: { generalName: 'Activities' },
   [TableName.ANALYZED_AUDIT]: { generalName: 'Analyzed audits' },
+  [TableName.CUSTOM_TIMELINE_DATE]: { generalName: 'Custom timeline dates' },
   [TableName.DISCUSSION_REPLY]: {
     generalName: 'Replies',
     groupedName: 'Discussions'
+  },
+  [TableName.CTAT_REQUEST]: {
+    generalName: 'CTAT requests'
+  },
+  [TableName.CTAT_REQUEST_DOCUMENT]: {
+    generalName: 'CTAT request documents'
+  },
+  [TableName.CTAT_REQUEST_MODEL_PLAN_LINK]: {
+    generalName: 'CTAT request model plan links'
   },
   [TableName.EXISTING_MODEL]: { generalName: 'Existing models' },
   [TableName.EXISTING_MODEL_LINK]: {

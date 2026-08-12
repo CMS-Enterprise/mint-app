@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/google/uuid"
@@ -33,10 +34,27 @@ func TestGetECHIMPCrAndTDLCache(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, cache)
 
-	assert.NotEmpty(t, cache.CRs)
-	assert.NotEmpty(t, cache.TDls)
-	assert.NotEmpty(t, cache.AllCrsAndTDLs)
+	assert.NotEmpty(t, cache.crs)
+	assert.NotEmpty(t, cache.tdls)
+	assert.NotEmpty(t, cache.allCrsAndTDLs)
 	assert.False(t, cache.lastChecked.IsZero())
+}
+
+func TestCacheRefreshContextIgnoresCancellationAndKeepsValues(t *testing.T) {
+	type contextKey string
+	key := contextKey("key")
+	ctx, cancel := context.WithCancel(context.WithValue(context.Background(), key, "value"))
+	cancel()
+
+	refreshCtx := cacheRefreshContext(ctx)
+
+	assert.Equal(t, "value", refreshCtx.Value(key))
+	assert.NoError(t, refreshCtx.Err())
+	select {
+	case <-refreshCtx.Done():
+		t.Fatal("refresh context should not inherit cancellation")
+	default:
+	}
 }
 
 func newECHIMPTestConfig(t *testing.T) *viper.Viper {
@@ -89,8 +107,10 @@ func newECHIMPTestClient(t *testing.T) *s3.S3Client {
 func resetECHIMPCache(t *testing.T) {
 	t.Helper()
 
-	CRAndTDLCache = nil
+	crAndTDLCacheInstance = nil
+	crAndTDLCacheOnce = sync.Once{}
 	t.Cleanup(func() {
-		CRAndTDLCache = nil
+		crAndTDLCacheInstance = nil
+		crAndTDLCacheOnce = sync.Once{}
 	})
 }

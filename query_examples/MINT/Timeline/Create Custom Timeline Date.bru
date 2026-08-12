@@ -1,0 +1,58 @@
+meta {
+  name: Create Custom Timeline Date
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: inherit
+}
+
+body:graphql {
+  mutation CreateCustomTimelineDate($input: CustomTimelineDateCreateInput!) {
+    createCustomTimelineDate(input: $input) {
+      id
+      modelPlanID
+      title
+      description
+      dateType
+      startDate
+      endDate
+      createdBy
+      createdByUserAccount {
+        id
+        commonName
+      }
+      createdDts
+      modifiedBy
+      modifiedByUserAccount {
+        id
+        commonName
+      }
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "input": {
+      "modelPlanID": "{{modelPlanID}}",
+      "title": "Custom timeline date",
+      "description": "A custom date for this model plan timeline.",
+      "dateType": "SINGLE",
+      "startDate": "2026-09-01T00:00:00Z",
+      "endDate": null
+    }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.createCustomTimelineDate
+  
+  let customTimelineDateID = responseData.id
+
+  bru.setVar("customTimelineDateID", customTimelineDateID);
+}
