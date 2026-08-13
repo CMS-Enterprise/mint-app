@@ -87,11 +87,6 @@ const MTOTableFilters = ({
     [appliedFilters]
   );
 
-  const appliedFilterTags = useMemo(
-    () => transformFilterTagValues(appliedFilters),
-    [appliedFilters]
-  );
-
   const setAppliedFilters = (filters: MTOTableSelectedFilters) => {
     const nextParams = buildSearchParamsFromFilters(filters, searchParams);
     setSearchParams(nextParams, { replace: true });
@@ -111,6 +106,27 @@ const MTOTableFilters = ({
     () => getMTOTableFilters(mtoCategories),
     [mtoCategories]
   );
+
+  /** Custom Date range requires these transforming.
+   * it needs to be displayed as startDate=MM/DD/YYYY&endDate=MM/DD/YYYY in the URL,
+   * but displayed as MM/DD/YYYY - MM/DD/YYYY in the filter tag.
+   * When none date range filter is clicked, we feed the original data back to setAppliedFilters to rebuild params correctly,
+   * otherwise the URL will be set with MM/DD/YYYY - MM/DD/YYYY.
+   */
+  const appliedFilterTags = useMemo(
+    () => transformFilterTagValues(appliedFilters),
+    [appliedFilters]
+  );
+
+  const handleFilterTagsChange = (updatedTags: MTOTableSelectedFilters) => {
+    setAppliedFilters({
+      ...updatedTags,
+      neededByDateRange:
+        updatedTags.neededByDateRange.length === 0
+          ? []
+          : appliedFilters.neededByDateRange
+    });
+  };
 
   const handleTimeWindowFilterChange = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -269,7 +285,7 @@ const MTOTableFilters = ({
         <FilterTags
           filters={filterOptions}
           appliedFilters={appliedFilterTags}
-          setAppliedFilters={setAppliedFilters}
+          setAppliedFilters={handleFilterTagsChange}
           className="margin-top-2"
         />
       )}
