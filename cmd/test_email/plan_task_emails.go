@@ -41,3 +41,35 @@ func sendPlanTaskNewAvailableTestEmail(
 	)
 	noErr(err)
 }
+
+func sendPlanTaskCompletedTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	modelID := uuid.New()
+	modelName := "Test Model Plan"
+
+	subjectContent := email.PlanTaskCompletedSubjectContent{
+		ModelName: modelName,
+	}
+	bodyContent := email.PlanTaskCompletedBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ModelID:       modelID.String(),
+		ModelName:     modelName,
+		TaskName:      "Task 1",
+		IsModelLead:   true,
+	}
+
+	emailSubject, emailBody, err := email.PlanTask.Completed.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		[]string{addressBook.DefaultSender},
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}

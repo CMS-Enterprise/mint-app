@@ -21,8 +21,11 @@ describe('VerifyEmailParams Util', () => {
     const result3 = verifyEmailParams('NEW_TASK_ADDED');
     expect(result3).toEqual(true);
 
-    const result4 = verifyEmailParams('INVALID_PARAM');
-    expect(result4).toEqual(false);
+    const result4 = verifyEmailParams('TASK_COMPLETED');
+    expect(result4).toEqual(true);
+
+    const result5 = verifyEmailParams('INVALID_PARAM');
+    expect(result5).toEqual(false);
   });
 });
 

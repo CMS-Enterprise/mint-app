@@ -42,6 +42,7 @@ func main() {
 	sendDateChangedEmailsTest(emailService, addressBook)
 	sendCustomTimelineDateCreatedEmailTest(emailService, addressBook)
 	sendPlanTaskNewAvailableTestEmail(emailService, addressBook)
+	sendPlanTaskCompletedTestEmail(emailService, addressBook)
 	sendCollaboratorAddedEmailTest(emailService, addressBook)
 	sendDataExchangeApproachMarkedCompleteEmailNotificationTest(emailService, addressBook)
 	sendTestIddocQuestionnaireMarkedCompleteEmail(emailService, addressBook)

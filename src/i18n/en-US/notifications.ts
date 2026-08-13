@@ -224,6 +224,10 @@ const notifications = {
             copy: 'When new tasks are available for a model'
           },
           {
+            name: 'taskCompleted',
+            copy: 'When a task is completed'
+          },
+          {
             name: 'datesChanged',
             copy: 'When model dates change',
             modelSpecific: 'whichModelTypes',
@@ -281,6 +285,7 @@ const notifications = {
         INCORRECT_MODEL_STATUS: 'when MINT detects an incorrect model status',
         NEW_MODEL_PLAN: 'when a new Model Plan is created',
         NEW_TASK_ADDED: 'when new tasks are available for a model',
+        TASK_COMPLETED: 'when a task is completed',
         NEW_DISCUSSION_ADDED: 'when a new discussion is added',
         DATES_CHANGED: 'when model dates change',
         DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:

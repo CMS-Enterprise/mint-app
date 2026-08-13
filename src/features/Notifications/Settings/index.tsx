@@ -130,6 +130,7 @@ const NotificationSettings = () => {
     incorrectModelStatus,
     newModelPlan,
     newTaskAdded,
+    taskCompleted,
     datesChanged,
     datesChangedNotificationType,
     dataExchangeApproachMarkedComplete,
@@ -150,6 +151,7 @@ const NotificationSettings = () => {
       modelPlanShared: modelPlanShared ?? [],
       newModelPlan: newModelPlan ?? [],
       newTaskAdded: newTaskAdded ?? [],
+      taskCompleted: taskCompleted ?? [],
       datesChanged: datesChanged ?? [],
       datesChangedNotificationType,
       dataExchangeApproachMarkedComplete:

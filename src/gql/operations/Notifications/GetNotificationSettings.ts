@@ -14,6 +14,7 @@ export default gql(/* GraphQL */ `
         modelPlanShared
         newModelPlan
         newTaskAdded
+        taskCompleted
         datesChanged
         newDiscussionAddedNotificationType
         datesChangedNotificationType
