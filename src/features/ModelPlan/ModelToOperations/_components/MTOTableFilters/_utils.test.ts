@@ -1,4 +1,4 @@
-import { MtoMilestoneStatus } from 'gql/generated/graphql';
+import { MtoFacilitator, MtoMilestoneStatus } from 'gql/generated/graphql';
 
 import {
   buildSearchParamsFromFilters,
@@ -87,7 +87,7 @@ describe('MTOTableFilters Utils', () => {
       const filters: MTOTableSelectedFilters = {
         ...emptyFilters,
         category: ['CAT_1', 'CAT_2'],
-        role: ['FACILITATOR' as any]
+        role: [MtoFacilitator.IT_LEAD]
       };
 
       const params = buildSearchParamsFromFilters(
@@ -96,7 +96,7 @@ describe('MTOTableFilters Utils', () => {
       );
 
       expect(params.get('category')).toBe('CAT_1,CAT_2');
-      expect(params.get('role')).toBe('FACILITATOR');
+      expect(params.get('role')).toBe(MtoFacilitator.IT_LEAD);
       expect(params.get(HIDE_CATEGORY_ROWS_PARAM)).toBe('true');
     });
 
@@ -169,7 +169,7 @@ describe('MTOTableFilters Utils', () => {
       const filters: MTOTableSelectedFilters = {
         ...emptyFilters,
         category: ['CAT_1', 'CAT_2'],
-        status: ['IN_PROGRESS' as any]
+        status: [MtoMilestoneStatus.IN_PROGRESS]
       };
 
       expect(countAppliedFilters(filters)).toBe(3);
