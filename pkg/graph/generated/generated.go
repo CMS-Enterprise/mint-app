@@ -3026,14 +3026,6 @@ type ModelsToOperationMatrixResolver interface {
 	Info(ctx context.Context, obj *models.ModelsToOperationMatrix) (*models.MTOInfo, error)
 }
 type MutationResolver interface {
-	CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error)
-	AdminUpdateCTATRequest(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CTATRequest, error)
-	CreateCustomTimelineDate(ctx context.Context, input model.CustomTimelineDateCreateInput) (*models.CustomTimelineDate, error)
-	UpdateCustomTimelineDate(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CustomTimelineDate, error)
-	DeleteCustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error)
-	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
-	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
-	UpdateIDDOCQuestionnaire(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.IDDOCQuestionnaire, error)
 	CreateKeyContactMailbox(ctx context.Context, mailboxTitle string, mailboxAddress string, subjectArea string, subjectCategoryID uuid.UUID) (*models.KeyContact, error)
 	CreateKeyContactUser(ctx context.Context, userName string, subjectArea string, subjectCategoryID uuid.UUID) (*models.KeyContact, error)
 	UpdateKeyContact(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.KeyContact, error)
@@ -3044,9 +3036,26 @@ type MutationResolver interface {
 	LockLockableSection(ctx context.Context, modelPlanID uuid.UUID, section models.LockableSection) (bool, error)
 	UnlockLockableSection(ctx context.Context, modelPlanID uuid.UUID, section models.LockableSection) (bool, error)
 	UnlockAllLockableSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error)
+	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
+	CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error)
+	AdminUpdateCTATRequest(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CTATRequest, error)
+	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
 	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.ModelPlan, error)
 	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, modelShareSection *models.ModelShareSection, usernames []string, optionalMessage *string) (bool, error)
+	AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
+	DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
+	CreatePlanCr(ctx context.Context, input model.PlanCRCreateInput) (*models.PlanCR, error)
+	UpdatePlanCr(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanCR, error)
+	DeletePlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
+	CreatePlanTdl(ctx context.Context, input model.PlanTDLCreateInput) (*models.PlanTDL, error)
+	UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanTDL, error)
+	DeletePlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
+	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
+	CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error)
+	UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error)
+	LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error)
+	DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error)
 	MarkMTOReadyForReview(ctx context.Context, modelPlanID uuid.UUID, readyForReview bool) (*models.MTOInfo, error)
 	CreateMTOCategory(ctx context.Context, modelPlanID uuid.UUID, name string, parentID *uuid.UUID) (*models.MTOCategory, error)
 	RenameMTOCategory(ctx context.Context, id uuid.UUID, name string) (*models.MTOCategory, error)
@@ -3079,36 +3088,27 @@ type MutationResolver interface {
 	UpdateMTOSolution(ctx context.Context, id uuid.UUID, changes map[string]any, milestoneLinks *model.MTOMilestoneLinks) (*models.MTOSolution, error)
 	DeleteMTOSolution(ctx context.Context, id uuid.UUID) (bool, error)
 	CreateTemplateToMto(ctx context.Context, modelPlanID uuid.UUID, templateID uuid.UUID) (*model.ApplyTemplateResult, error)
-	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanBasics, error)
 	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanBeneficiaries, error)
-	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
-	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
-	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
-	CreatePlanCr(ctx context.Context, input model.PlanCRCreateInput) (*models.PlanCR, error)
-	UpdatePlanCr(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanCR, error)
-	DeletePlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
-	UpdatePlanDataExchangeApproach(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanDataExchangeApproach, error)
-	CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error)
-	UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error)
-	LinkNewPlanDocument(ctx context.Context, input model.PlanDocumentLinkInput) (*models.PlanDocument, error)
-	DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error)
-	AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
-	DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanOpsEvalAndLearning, error)
 	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanParticipantsAndProviders, error)
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanPayments, error)
-	CreatePlanTdl(ctx context.Context, input model.PlanTDLCreateInput) (*models.PlanTDL, error)
-	UpdatePlanTdl(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanTDL, error)
-	DeletePlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
+	UpdateIDDOCQuestionnaire(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.IDDOCQuestionnaire, error)
+	UpdatePlanDataExchangeApproach(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanDataExchangeApproach, error)
+	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
+	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
+	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
+	CreateCustomTimelineDate(ctx context.Context, input model.CustomTimelineDateCreateInput) (*models.CustomTimelineDate, error)
+	UpdateCustomTimelineDate(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CustomTimelineDate, error)
+	DeleteCustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error)
 	UpdatePlanTimeline(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanTimeline, error)
-	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
-	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
 	MarkNotificationAsRead(ctx context.Context, notificationID uuid.UUID) (*models.UserNotification, error)
 	MarkAllNotificationsAsRead(ctx context.Context) ([]*models.UserNotification, error)
 	UpdateUserNotificationPreferences(ctx context.Context, changes map[string]any) (*models.UserNotificationPreferences, error)
 	UpdateUserViewCustomization(ctx context.Context, changes map[string]any) (*models.UserViewCustomization, error)
+	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
+	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
 }
 type NewDiscussionRepliedActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.ModelPlan, error)
@@ -3280,28 +3280,31 @@ type PlanTimelineResolver interface {
 	CustomTimelineDates(ctx context.Context, obj *models.PlanTimeline) ([]*models.CustomTimelineDate, error)
 }
 type QueryResolver interface {
-	Analytics(ctx context.Context) (*models.AnalyticsSummary, error)
-	AnalyzedAudits(ctx context.Context, dateAnalyzed time.Time) ([]*models.AnalyzedAudit, error)
 	AuditChanges(ctx context.Context, tableName models.TableName, primaryKey uuid.UUID) ([]*models.AuditChange, error)
-	CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error)
-	CtatRequestsRequester(ctx context.Context) (*models.CTATRequestsTableDataRequester, error)
-	CtatRequests(ctx context.Context) (*models.CTATRequestsTableData, error)
-	CurrentUser(ctx context.Context) (*models.CurrentUser, error)
-	CustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error)
-	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
-	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
-	ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error)
 	KeyContacts(ctx context.Context) ([]*models.KeyContact, error)
 	KeyContact(ctx context.Context, id uuid.UUID) (*models.KeyContact, error)
 	KeyContactCategory(ctx context.Context) ([]*models.KeyContactCategory, error)
 	KeyContactCategoryByID(ctx context.Context, id uuid.UUID) (*models.KeyContactCategory, error)
 	KeyContactCategoriesByIds(ctx context.Context, ids []uuid.UUID) ([]*models.KeyContactCategory, error)
+	Analytics(ctx context.Context) (*models.AnalyticsSummary, error)
 	LockableSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error)
+	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
+	CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error)
+	CtatRequestsRequester(ctx context.Context) (*models.CTATRequestsTableDataRequester, error)
+	CtatRequests(ctx context.Context) (*models.CTATRequestsTableData, error)
+	AnalyzedAudits(ctx context.Context, dateAnalyzed time.Time) ([]*models.AnalyzedAudit, error)
+	TranslatedAuditCollection(ctx context.Context, modelPlanID uuid.UUID, limit *int, offset *int) ([]*models.TranslatedAudit, error)
+	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
+	ExistingModelLink(ctx context.Context, id uuid.UUID) (*models.ExistingModelLink, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	ModelPlanCollection(ctx context.Context, filter model.ModelPlanFilter) ([]*models.ModelPlan, error)
 	ModelPlansByComponentGroup(ctx context.Context, key models.ComponentGroup) ([]*models.ModelPlanAndGroup, error)
 	ModelPlansByMTOSolutionKey(ctx context.Context, solutionKey models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error)
 	ModelPlansByStatusGroup(ctx context.Context, statusGroup models.ModelPlanStatusGroup) ([]*models.ModelPlan, error)
+	PlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
+	PlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
+	MostRecentDiscussionRoleSelection(ctx context.Context) (*models.DiscussionRoleSelection, error)
+	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
 	MtoCommonMilestones(ctx context.Context) ([]*models.MTOCommonMilestone, error)
 	CommonCategories(ctx context.Context) ([]*models.CommonCategory, error)
 	MtoCommonSolutions(ctx context.Context) ([]*models.MTOCommonSolution, error)
@@ -3312,13 +3315,10 @@ type QueryResolver interface {
 	MtoSolution(ctx context.Context, id uuid.UUID) (*models.MTOSolution, error)
 	MtoTemplates(ctx context.Context, keys []models.MTOTemplateKey) ([]*models.MTOTemplate, error)
 	MtoTemplate(ctx context.Context, id *uuid.UUID, key *models.MTOTemplateKey) (*models.MTOTemplate, error)
-	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
-	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
-	PlanCr(ctx context.Context, id uuid.UUID) (*models.PlanCR, error)
-	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
 	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
-	PlanTdl(ctx context.Context, id uuid.UUID) (*models.PlanTDL, error)
-	TranslatedAuditCollection(ctx context.Context, modelPlanID uuid.UUID, limit *int, offset *int) ([]*models.TranslatedAudit, error)
+	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
+	CustomTimelineDate(ctx context.Context, id uuid.UUID) (*models.CustomTimelineDate, error)
+	CurrentUser(ctx context.Context) (*models.CurrentUser, error)
 	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
 	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
 	UserViewCustomization(ctx context.Context) (*models.UserViewCustomization, error)
@@ -17818,200 +17818,40 @@ Mutations definition for the schema
 """
 type Mutation
 `, BuiltIn: false},
-	{Name: "../schema/types/activity.graphql", Input: `"""
-ActivityType represents the possible activities that happen in application that might result in a notification
-"""
-enum ActivityType {
-  DAILY_DIGEST_COMPLETE
-  ADDED_AS_COLLABORATOR
-  TAGGED_IN_DISCUSSION
-  TAGGED_IN_DISCUSSION_REPLY
-  NEW_DISCUSSION_REPLY
-  MODEL_PLAN_SHARED
-  NEW_MODEL_PLAN
-  DATES_CHANGED
-  DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
-  MTO_READY_FOR_REVIEW
-  NEW_DISCUSSION_ADDED
-  IDDOC_QUESTIONNAIRE_COMPLETED
-  INCORRECT_MODEL_STATUS
+	{Name: "../schema/types/audits/audit_change.graphql", Input: `type AuditChange {
+  id: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  tableName: TableName!
+  action: String!
+  fields: Map!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
 }
 
-enum DateChangeFieldType {
-  COMPLETE_ICIP
-  CLEARANCE
-  ANNOUNCED
-  APPLICATIONS
-  PERFORMANCE_PERIOD
-  WRAP_UP_ENDS
+extend type Query {
+  auditChanges(tableName: TableName!, primaryKey: UUID!): [AuditChange!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
-
-"""
-ActivityMetaData is a type that represents all the data that can be captured in an Activity
-"""
-union ActivityMetaData =
-  | TaggedInPlanDiscussionActivityMeta
-  | TaggedInDiscussionReplyActivityMeta
-  | DailyDigestCompleteActivityMeta
-  | NewDiscussionRepliedActivityMeta
-  | AddedAsCollaboratorMeta
-  | ModelPlanSharedActivityMeta
-  | NewModelPlanActivityMeta
-  | DatesChangedActivityMeta
-  | PlanDataExchangeApproachMarkedCompleteActivityMeta
-  | MTOReadyForReviewActivityMeta
-  | IddocQuestionnaireCompletedActivityMeta
-  | NewDiscussionAddedActivityMeta
-  | IncorrectModelStatusActivityMeta
-
-type AddedAsCollaboratorMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  collaboratorID: UUID!
-  collaborator: PlanCollaborator!
-}
-
-type TaggedInPlanDiscussionActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  discussionID: UUID!
-  discussion: PlanDiscussion!
-  content: String!
-}
-
-type TaggedInDiscussionReplyActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  discussionID: UUID!
-  discussion: PlanDiscussion!
-  replyID: UUID!
-  reply: DiscussionReply!
-  content: String!
-}
-
-type IddocQuestionnaireCompletedActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-}
-
-type ModelPlanSharedActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  optionalMessage: String
-}
-
-type NewDiscussionRepliedActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  discussionID: UUID!
-  discussion: PlanDiscussion!
-  replyID: UUID!
-  reply: DiscussionReply!
-  content: String!
-}
-
-type DailyDigestCompleteActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanIDs: [UUID!]!
-  analyzedAudits: [AnalyzedAudit!]!
-  userID: UUID!
-  date: Time!
-}
-
-type NewModelPlanActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-}
-
-type DateChange {
-  isChanged: Boolean!
-  field: DateChangeFieldType!
-  isRange: Boolean!
-  oldDate: Time
-  newDate: Time
-  oldRangeStart: Time
-  oldRangeEnd: Time
-  newRangeStart: Time
-  newRangeEnd: Time
-}
-
-type DatesChangedActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  dateChanges: [DateChange!]!
-}
-
-type PlanDataExchangeApproachMarkedCompleteActivityMeta {
-  version: Int!
-  type: ActivityType!
-  dataExchangeApproachID: UUID!
-  dataExchangeApproach: PlanDataExchangeApproach!
-  modelPlan: ModelPlan!
-  markedCompleteBy: UUID!
-  markedCompleteByUserAccount: UserAccount!
-}
-
-type NewDiscussionAddedActivityMeta {
-  version: Int!
-  type: ActivityType!
-  discussionID: UUID!
-  userName: String!
-  modelPlanID: UUID!
-  modelPlanName: String!
-  modelAbbreviation: String!
-  role: String!
-  content: String!
-}
-
-type MTOReadyForReviewActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  mtoInfoID: UUID!
-  mtoInfo: MTOInfo!
-  markedReadyForReview: UUID!
-  markedReadyForReviewByUserAccount: UserAccount!
-}
-
-type IncorrectModelStatusActivityMeta {
-  version: Int!
-  type: ActivityType!
-  modelPlanID: UUID!
-  modelPlan: ModelPlan!
-  phaseSuggestion: PhaseSuggestion!
-  currentStatus: String!
-  modelPlanName: String!
-}
-
-"""
-Activity represents an event that happened in the application that could result in a notification.
-"""
-type Activity {
+`, BuiltIn: false},
+	{Name: "../schema/types/contact_directory/key_contact.graphql", Input: `type KeyContact {
   id: UUID!
-  actorID: UUID!
-  actorUserAccount: UserAccount!
-  entityID: UUID!
-  activityType: ActivityType!
-  metaData: ActivityMetaData!
 
+  # Note that this is dependent on if team or not a team
+  userID: UUID
+  userAccount: UserAccount
+
+  name: String!
+  email: String!
+
+  mailboxTitle: String
+  mailboxAddress: String
+
+  subjectCategoryID: UUID!
+  subjectArea: String!
+
+  # Metadata columns
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -18019,8 +17859,100 @@ type Activity {
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
+
+"""
+Input for updating a key contact.
+Only subject category, subject area, and mailbox title can be changed.
+"""
+input KeyContactUpdateChanges @goModel(model: "map[string]interface{}") {
+  subjectCategoryID: UUID
+  subjectArea: String
+  mailboxTitle: String
+}
+
+extend type Query {
+  # List all key contacts
+  keyContacts: [KeyContact!]!
+
+  # Get a single key contact by id
+  keyContact(id: UUID!): KeyContact! @hasRole(role: MINT_ASSESSMENT)
+}
+
+extend type Mutation {
+  createKeyContactMailbox(
+    mailboxTitle: String!
+    mailboxAddress: String!
+    subjectArea: String!
+    subjectCategoryID: UUID!
+  ): KeyContact! @hasRole(role: MINT_ASSESSMENT)
+
+  createKeyContactUser(
+    userName: String!
+    subjectArea: String!
+    subjectCategoryID: UUID!
+  ): KeyContact! @hasRole(role: MINT_ASSESSMENT)
+
+  updateKeyContact(id: UUID!, changes: KeyContactUpdateChanges!): KeyContact!
+    @hasRole(role: MINT_ASSESSMENT)
+
+  deleteKeyContact(id: UUID!): KeyContact! @hasRole(role: MINT_ASSESSMENT)
+}
 `, BuiltIn: false},
-	{Name: "../schema/types/analytics.graphql", Input: `"""
+	{Name: "../schema/types/contact_directory/key_contact_category.graphql", Input: `type KeyContactCategory {
+  id: UUID!
+  name: String!
+
+  #Resolvers
+  keyContacts: [KeyContact!]!
+
+  # Metadata columns
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Query {
+  keyContactCategory: [KeyContactCategory!]!
+  keyContactCategoryById(id: UUID!): KeyContactCategory!
+  keyContactCategoriesByIds(ids: [UUID!]!): [KeyContactCategory!]!
+}
+
+extend type Mutation {
+  createKeyContactCategory(name: String!): KeyContactCategory!
+    @hasRole(role: MINT_ASSESSMENT)
+
+  updateKeyContactCategory(id: UUID!, name: String!): KeyContactCategory!
+    @hasRole(role: MINT_ASSESSMENT)
+
+  deleteKeyContactCategory(id: UUID!): KeyContactCategory!
+    @hasRole(role: MINT_ASSESSMENT)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/contact_directory/key_contact_category_translation.graphql", Input: `"""
+Represents key contact category base translation data
+"""
+type KeyContactCategoryTranslation {
+  name: TranslationField! @goTag(key: "db", value: "name")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/contact_directory/key_contact_translation.graphql", Input: `"""
+Represents key contact base translation data
+"""
+type KeyContactTranslation {
+  subjectCategoryID: TranslationField!
+    @goTag(key: "db", value: "subject_category_id")
+  name: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
+  email: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
+  mailboxTitle: TranslationField! @goTag(key: "db", value: "mailbox_title")
+  mailboxAddress: TranslationField! @goTag(key: "db", value: "mailbox_address")
+  userId: TranslationField! @goTag(key: "db", value: "user_id")
+  subjectArea: TranslationField! @goTag(key: "db", value: "subject_area")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/core/analytics.graphql", Input: `"""
 Analytics data types for various model plan metrics and statistics
 """
 type ModelChangesAnalytics {
@@ -18081,16 +18013,447 @@ extend type Query {
   analytics: AnalyticsSummary! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/analyzed_audit.graphql", Input: `"""
-Analyzed Audit Represents data about changes that have happened in a model plan, saved in an a
-"""
-type AnalyzedAudit {
-  id: UUID!
-  modelPlanID: UUID!
+	{Name: "../schema/types/core/directives.graphql", Input: `directive @hasRole(role: Role!) on FIELD_DEFINITION
 
-  modelName: String!
-  date: Time!
-  changes: AnalyzedAuditChange!
+directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
+
+# https://gqlgen.com/config/#inline-config-with-directives
+directive @goModel(
+  model: String
+  models: [String!]
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
+directive @goTag(
+  key: String!
+  value: String
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+
+directive @goField(
+  forceResolver: Boolean
+  name: String
+  omittable: Boolean
+  type: String
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+`, BuiltIn: false},
+	{Name: "../schema/types/core/launch_darkly_settings.graphql", Input: `"""
+The current user's Launch Darkly key
+"""
+type LaunchDarklySettings {
+  userKey: String!
+  signedHash: String!
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/core/lockable_sections.graphql", Input: `enum ChangeType {
+  ADDED
+  UPDATED
+  REMOVED
+}
+
+enum ActionType {
+  """
+  A normal flow action
+  """
+  NORMAL
+
+  """
+  An administrative action
+  """
+  ADMIN
+}
+
+# LockableSection represents any section of the application that a user can uniquely hold a lock on.
+# It _largely_ (currently) maps to the sections of the Task List, but also includes Data Exchange, which notably isn't part of the Task List.
+enum LockableSection {
+  BASICS
+  GENERAL_CHARACTERISTICS
+  PARTICIPANTS_AND_PROVIDERS
+  BENEFICIARIES
+  OPERATIONS_EVALUATION_AND_LEARNING
+  PAYMENT
+  PREPARE_FOR_CLEARANCE
+  DATA_EXCHANGE_APPROACH
+  IDDOC_QUESTIONNAIRE
+  MODELS_TO_OPERATION_MATRIX
+  TIMELINE
+}
+
+type LockableSectionLockStatusChanged {
+  changeType: ChangeType!
+  lockStatus: LockableSectionLockStatus!
+  actionType: ActionType!
+}
+
+type LockableSectionLockStatus {
+  modelPlanID: UUID!
+  section: LockableSection!
+  lockedByUserAccount: UserAccount!
+  isAssessment: Boolean!
+}
+
+extend type Query {
+  lockableSectionLocks(modelPlanID: UUID!): [LockableSectionLockStatus!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  lockLockableSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
+    @hasRole(role: MINT_USER)
+
+  unlockLockableSection(
+    modelPlanID: UUID!
+    section: LockableSection!
+  ): Boolean! @hasRole(role: MINT_USER)
+
+  unlockAllLockableSections(modelPlanID: UUID!): [LockableSectionLockStatus!]!
+    @hasRole(role: MINT_ASSESSMENT)
+}
+
+type Subscription {
+  onLockableSectionLocksChanged(
+    modelPlanID: UUID!
+  ): LockableSectionLockStatusChanged! @hasRole(role: MINT_USER)
+
+  onLockLockableSectionContext(
+    modelPlanID: UUID!
+  ): LockableSectionLockStatusChanged! @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/core/nda_info.graphql", Input: `"""
+NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
+"""
+type NDAInfo {
+  agreed: Boolean!
+  agreedDts: Time
+}
+
+extend type Query {
+  ndaInfo: NDAInfo! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  agreeToNDA(agree: Boolean! = true): NDAInfo!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/core/scalars.graphql", Input: `"""
+UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
+"""
+scalar UUID
+
+"""
+Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
+"""
+scalar Time
+
+"""
+Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
+"""
+scalar Map
+
+"""
+TaggedHTML represents an input type for HTML that could also include tags that reference another entity
+"""
+scalar TaggedHTML
+
+"""
+https://gqlgen.com/reference/file-upload/
+Represents a multipart file upload
+"""
+scalar Upload
+
+"""
+https://gqlgen.com/reference/scalars/#any
+Maps an arbitrary GraphQL value to a interface{} Go type.
+"""
+scalar Any
+`, BuiltIn: false},
+	{Name: "../schema/types/core/shared_enums.graphql", Input: `enum FrequencyType {
+  ANNUALLY
+  SEMIANNUALLY
+  QUARTERLY
+  MONTHLY
+  CONTINUALLY
+  OTHER
+}
+
+enum YesNoOtherType {
+  YES
+  NO
+  OTHER
+}
+
+enum OverlapType {
+  YES_NEED_POLICIES
+  YES_NO_ISSUES
+  NO
+}
+
+enum TaskStatus {
+  READY
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  READY_FOR_CLEARANCE
+}
+
+enum ConfidenceType {
+  NOT_AT_ALL
+  SLIGHTLY
+  FAIRLY
+  COMPLETELY
+}
+
+enum TaskStatusInput {
+  IN_PROGRESS
+  READY_FOR_REVIEW
+  READY_FOR_CLEARANCE
+}
+
+enum TaskListSection {
+  BASICS
+  GENERAL_CHARACTERISTICS
+  PARTICIPANTS_AND_PROVIDERS
+  BENEFICIARIES
+  OPERATIONS_EVALUATION_AND_LEARNING
+  PAYMENT
+  PREPARE_FOR_CLEARANCE
+}
+# Region : Operational Need and Solutions, these will be removed after MTO is fully migrated
+
+enum OperationalNeedKey {
+  MANAGE_CD
+  REV_COL_BIDS
+  UPDATE_CONTRACT
+  RECRUIT_PARTICIPANTS
+  REV_SCORE_APP
+  APP_SUPPORT_CON
+  COMM_W_PART
+  MANAGE_PROV_OVERLAP
+  MANAGE_BEN_OVERLAP
+  HELPDESK_SUPPORT
+  IDDOC_SUPPORT
+  ESTABLISH_BENCH
+  PROCESS_PART_APPEALS
+  ACQUIRE_AN_EVAL_CONT
+  DATA_TO_MONITOR
+  DATA_TO_SUPPORT_EVAL
+  CLAIMS_BASED_MEASURES
+  QUALITY_PERFORMANCE_SCORES
+  SEND_REPDATA_TO_PART
+  ACQUIRE_A_LEARN_CONT
+  PART_TO_PART_COLLAB
+  EDUCATE_BENEF
+  ADJUST_FFS_CLAIMS
+  MANAGE_FFS_EXCL_PAYMENTS
+  MAKE_NON_CLAIMS_BASED_PAYMENTS
+  COMPUTE_SHARED_SAVINGS_PAYMENT
+  RECOVER_PAYMENTS
+  SIGN_PARTICIPATION_AGREEMENTS
+  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY
+  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR
+  IT_PLATFORM_FOR_LEARNING
+  ACQUIRE_AN_IMP_CONT
+  ACQUIRE_A_PRE_IMP_CONT
+  ACQUIRE_A_DATA_AGG_CONT
+  SEND_DASHBOARDS_REPORTS_TO_PART
+  SEND_DATA_VIA_API_TO_PART
+  SEND_RAW_FILES_TO_PART
+  SIGN_COOPERATIVE_AGREEMENTS
+}
+
+enum OperationalSolutionSubtaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
+enum OpSolutionStatus {
+  NOT_STARTED
+  ONBOARDING
+  BACKLOG
+  IN_PROGRESS
+  COMPLETED
+  AT_RISK
+}
+
+enum OperationalSolutionKey {
+  INNOVATION
+  ACO_OS
+  APPS
+  CDX
+  CCW
+  CMS_BOX
+  CMS_QUALTRICS
+  CBOSC
+  CONTRACTOR
+  CPI_VETTING
+  CROSS_MODEL_CONTRACT
+  EFT
+  EXISTING_CMS_DATA_AND_PROCESS
+  EDFR
+  GOVDELIVERY
+  GS
+  HDR
+  HPMS
+  HIGLAS
+  IPC
+  IDR
+  INTERNAL_STAFF
+  LDG
+  LV
+  MARX
+  OTHER_NEW_PROCESS
+  OUTLOOK_MAILBOX
+  QV
+  RMADA
+  ARS
+  CONNECT
+  LOI
+  POST_PORTAL
+  RFA
+  SHARED_SYSTEMS
+  BCDA
+  ISP
+  MIDS
+  MODEL_SPACE
+}
+
+#endregion : Operational Need and Solutions, these will be removed after MTO is fully migrated
+
+enum DiscussionUserRole {
+  CMS_SYSTEM_SERVICE_TEAM
+  LEADERSHIP
+  MEDICARE_ADMINISTRATIVE_CONTRACTOR
+  MINT_TEAM
+  IT_LEAD
+  MODEL_LEAD
+  MODEL_TEAM
+  SHARED_SYSTEM_MAINTAINER
+  SOLUTION_ARCHITECT
+  NONE_OF_THE_ABOVE
+}
+
+"""
+A user role associated with a job code
+"""
+enum Role {
+  """
+  A basic MINT user
+  """
+  MINT_USER
+
+  """
+  A MINT assessment team user
+  """
+  MINT_ASSESSMENT
+
+  """
+  A MINT MAC user
+  """
+  MINT_MAC
+}
+
+"""
+These represent all the possible tables in the database, in the public schema.
+"""
+enum TableName {
+  activity
+  analyzed_audit
+  discussion_reply
+  ctat_request
+  ctat_request_document
+  ctat_request_model_plan_link
+  existing_model
+  existing_model_link
+  iddoc_questionnaire
+  model_plan
+  nda_agreement
+  operational_need
+  operational_solution
+  operational_solution_subtask
+  plan_basics
+  plan_beneficiaries
+  plan_collaborator
+  plan_cr
+  plan_data_exchange_approach
+  plan_discussion
+  plan_document
+  plan_document_solution_link
+  plan_favorite
+  plan_general_characteristics
+  plan_ops_eval_and_learning
+  plan_participants_and_providers
+  plan_payments
+  plan_tdl
+  possible_need_solution_link
+  possible_operational_need
+  possible_operational_solution
+  possible_operational_solution_contact
+  tag
+  plan_timeline
+  custom_timeline_date
+  translated_audit
+  translated_audit_field
+  translated_audit_queue
+  user_account
+  user_notification
+  user_notification_preferences
+  user_view_customization
+
+  mto_category
+  mto_milestone
+  mto_solution
+  mto_milestone_solution_link
+  mto_info
+  mto_common_milestone
+  mto_common_solution
+  mto_common_solution_contact
+  mto_milestone_note
+
+  mto_template
+  mto_template_category
+  mto_template_milestone
+  mto_template_solution
+  mto_template_milestone_solution_link
+  model_plan_mto_template_link
+
+  key_contact
+  key_contact_category
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/core/tag.graphql", Input: `enum TagType {
+  USER_ACCOUNT
+  POSSIBLE_SOLUTION
+  MTO_COMMON_SOLUTION
+}
+
+"""
+TaggedEntity is the actual object represented by a tag in the data base.
+"""
+union TaggedEntity = UserAccount | MTOCommonSolution
+
+"""
+TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
+"""
+type TaggedContent {
+  """
+  RawContent is HTML. It is sanitized on the backend
+  """
+  rawContent: String!
+  tags: [Tag!]!
+}
+
+"""
+Tag represents an entity tagged in the database
+"""
+type Tag {
+  id: UUID!
+  tagType: TagType!
+  taggedField: String!
+  taggedContentTable: String!
+  taggedContentID: UUID!
+  entityUUID: UUID
+  entityIntID: Int
+
+  entity: TaggedEntity
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -18099,74 +18462,307 @@ type AnalyzedAudit {
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
+`, BuiltIn: false},
+	{Name: "../schema/types/core/translation.graphql", Input: `# Base types that represents FE translation structure
+# Translations are exported from FE for change history, and mapped to these types on the BE
 
-type AnalyzedAuditChange {
-  modelPlan: AnalyzedModelPlan
-  documents: AnalyzedDocuments
-  crTdls: AnalyzedCrTdls
-  planSections: AnalyzedPlanSections
-  modelLeads: AnalyzedModelLeads
-  planDiscussions: AnalyzedPlanDiscussions
+"""
+Represents the data type of the translation field
+"""
+enum TranslationDataType {
+  STRING
+  NUMBER
+  BOOLEAN
+  DATE
+  ENUM
+  OBJECT
+  UUID
 }
-type AnalyzedModelPlan {
+
+"""
+Represents the FORM type of the translation field
+"""
+enum TranslationFormType {
+  TEXT
+  TEXTAREA
+  NUMBER
+  BOOLEAN
+  RADIO
+  CHECKBOX
+  SELECT
+  MULTISELECT
+  DATEPICKER
+  RANGEINPUT
+}
+
+"""
+Represents a translation question with no options
+"""
+type TranslationField {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
   """
-  This represents the oldName
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
   """
-  oldName: String
-  statusChanges: [String]
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
 }
 
-type AnalyzedDocuments {
-  count: Int
+"""
+Represents a translation question with options
+"""
+type TranslationFieldWithOptions {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  options: Map!
+  exportOptions: Map
 }
 
-type AnalyzedCrTdls {
-  activity: Boolean
-}
-type AnalyzedPlanSections {
-  updated: [TableName!]!
-  readyForReview: [TableName!]!
-  readyForClearance: [TableName!]!
-  dataExchangeApproachMarkedComplete: Boolean
+"""
+Represents a translation question with no options and a parent
+"""
+type TranslationFieldWithParent {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  parentRelation: TranslationField!
 }
 
-type AnalyzedModelLeads {
-  added: [AnalyzedModelLeadInfo!]!
+"""
+Represents a translation question with options and child/children
+"""
+type TranslationFieldWithOptionsAndChildren {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  options: Map!
+  exportOptions: Map
+  childRelation: Map!
 }
 
-type AnalyzedPlanDiscussions {
-  activity: Boolean
+"""
+Represents a translation question with options and parent
+"""
+type TranslationFieldWithOptionsAndParent {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  options: Map!
+  exportOptions: Map
+  parentRelation: TranslationFieldWithOptionsAndChildren!
 }
 
-type AnalyzedModelLeadInfo {
-  id: UUID!
-  userAccount: UserAccount!
-  commonName: String!
+"""
+Represents a translation question with options and parent and children
+"""
+type TranslationFieldWithParentAndChildren {
+  gqlField: String!
+  goField: String!
+  dbField: String!
+  label: String!
+  readonlyLabel: String
+  sublabel: String
+  multiSelectLabel: String
+  isArray: Boolean
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+  isNote: Boolean
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  order: Float!
+  """
+  Is a question a followup to another that doesn't designate it's own readonly question/line
+  """
+  isOtherType: Boolean
+  """
+  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
+  """
+  otherParentField: String
+  """
+  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
+  """
+  parentReferencesLabel: String
+  """
+  Labels specifically for export/change history.  Takes priority over all other labels
+  """
+  exportLabel: String
+  """
+  Table reference for fields that are of dataType UUID and reference a table in the database
+  """
+  tableReference: TableName
+  options: Map!
+  exportOptions: Map
+  parentRelation: TranslationFieldWithOptionsAndChildren!
+  childRelation: Map!
 }
 
-extend type Query {
-  analyzedAudits(dateAnalyzed: Time!): [AnalyzedAudit!]!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+"""
+Represents a translation of enum values.  generalName is the human readable name of the enum value, groupedName is an optional field if usually referenced by a difference table/name
+"""
+type EnumTranslation {
+  generalName: String!
+  groupedName: String
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/audit_change.graphql", Input: `type AuditChange {
-  id: Int!
-  primaryKey: UUID!
-  foreignKey: UUID
-  tableName: TableName!
-  action: String!
-  fields: Map!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-extend type Query {
-  auditChanges(tableName: TableName!, primaryKey: UUID!): [AuditChange!]!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/ctat_request.graphql", Input: `"""
+	{Name: "../schema/types/ctat/ctat_request.graphql", Input: `"""
 The contract type selected for a CTAT record.
 """
 enum CTATContractType {
@@ -18441,7 +19037,7 @@ extend type Mutation {
   ): CTATRequest! @hasRole(role: MINT_ASSESSMENT)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/ctat_request_document.graphql", Input: `"""
+	{Name: "../schema/types/ctat/ctat_request_document.graphql", Input: `"""
 A supporting document attached to a CTAT request.
 """
 type CTATRequestDocument {
@@ -18468,7 +19064,7 @@ type CTATRequestDocument {
   modifiedDts: Time
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/ctat_request_translation.graphql", Input: `"""
+	{Name: "../schema/types/ctat/ctat_request_translation.graphql", Input: `"""
 Represents CTAT request translation data
 """
 type CTATRequestTranslation {
@@ -18509,37 +19105,72 @@ type CTATRequestTranslation {
   resolution: TranslationField! @goTag(key: "db", value: "resolution")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/current_user.graphql", Input: `"""
-The current user of the application
+	{Name: "../schema/types/legacy_translations/operational_need_translation.graphql", Input: `"""
+Represents operational need translation data
 """
-type CurrentUser {
-  launchDarkly: LaunchDarklySettings!
-  account: UserAccount!
-  notifications: UserNotifications!
-  notificationPreferences: UserNotificationPreferences!
-  leadModelPlanCount: Int!
-}
-
-extend type Query {
-  currentUser: CurrentUser!
+type OperationalNeedTranslation {
+  """
+  Name comes from the possible operational need table. It is not returned in an audit
+  """
+  name: TranslationField! @goTag(key: "db", value: "need_name")
+  nameOther: TranslationField! @goTag(key: "db", value: "name_other")
+  """
+  Key comes from the possible operational need table. It is not returned in an audit
+  """
+  key: TranslationFieldWithOptions! @goTag(key: "db", value: "need_key")
+  needed: TranslationFieldWithOptions! @goTag(key: "db", value: "needed")
+  section: TranslationFieldWithOptions! @goTag(key: "db", value: "section")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/custom_timeline_date.graphql", Input: `"""
-The selected date type for a Custom Timeline Date.
+	{Name: "../schema/types/legacy_translations/operational_solution_subtask_translation.graphql", Input: `"""
+Represents operational solution subtask translation data
 """
-enum CustomTimelineDateType {
-  SINGLE
-  RANGE
+type OperationalSolutionSubtaskTranslation {
+  name: TranslationField! @goTag(key: "db", value: "name")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
-
-type CustomTimelineDate {
+`, BuiltIn: false},
+	{Name: "../schema/types/legacy_translations/operational_solution_translation.graphql", Input: `"""
+Represents operational solution translation data
+"""
+type OperationalSolutionTranslation {
+  """
+  Name comes from the possible operational solution table. It is not returned in an audit
+  """
+  name: TranslationField! @goTag(key: "db", value: "sol_name")
+  nameOther: TranslationField! @goTag(key: "db", value: "name_other")
+  isOther: TranslationFieldWithOptions! @goTag(key: "db", value: "is_other")
+  otherHeader: TranslationField! @goTag(key: "db", value: "other_header")
+  pocName: TranslationField! @goTag(key: "db", value: "poc_name")
+  pocEmail: TranslationField! @goTag(key: "db", value: "poc_email")
+  mustStartDts: TranslationField! @goTag(key: "db", value: "must_start_dts")
+  mustFinishDts: TranslationField! @goTag(key: "db", value: "must_finish_dts")
+  needed: TranslationFieldWithOptions! @goTag(key: "db", value: "needed")
+  """
+  Key comes from the possible operational solution table. It is not returned in an audit
+  """
+  key: TranslationFieldWithOptions! @goTag(key: "db", value: "sol_key")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/legacy_translations/plan_document_solution_link_translation.graphql", Input: `"""
+Represents document solution link translation data
+"""
+type PlanDocumentSolutionLinkTranslation {
+  solutionID: TranslationField! @goTag(key: "db", value: "solution_id")
+  documentID: TranslationField! @goTag(key: "db", value: "document_id")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/change_history/analyzed_audit.graphql", Input: `"""
+Analyzed Audit Represents data about changes that have happened in a model plan, saved in an a
+"""
+type AnalyzedAudit {
   id: UUID!
   modelPlanID: UUID!
-  title: String!
-  description: String
-  dateType: CustomTimelineDateType!
-  startDate: Time!
-  endDate: Time
+
+  modelName: String!
+  date: Time!
+  changes: AnalyzedAuditChange!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -18549,86 +19180,309 @@ type CustomTimelineDate {
   modifiedDts: Time
 }
 
-"""
-CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate
-"""
-input CustomTimelineDateCreateInput {
-  modelPlanID: UUID!
-  title: String!
-  description: String
-  dateType: CustomTimelineDateType!
-  startDate: Time!
-  endDate: Time
+type AnalyzedAuditChange {
+  modelPlan: AnalyzedModelPlan
+  documents: AnalyzedDocuments
+  crTdls: AnalyzedCrTdls
+  planSections: AnalyzedPlanSections
+  modelLeads: AnalyzedModelLeads
+  planDiscussions: AnalyzedPlanDiscussions
+}
+type AnalyzedModelPlan {
+  """
+  This represents the oldName
+  """
+  oldName: String
+  statusChanges: [String]
 }
 
-input CustomTimelineDateChanges @goModel(model: "map[string]interface{}") {
-  title: String
-  description: String
-  dateType: CustomTimelineDateType
-  startDate: Time
-  endDate: Time
+type AnalyzedDocuments {
+  count: Int
+}
+
+type AnalyzedCrTdls {
+  activity: Boolean
+}
+type AnalyzedPlanSections {
+  updated: [TableName!]!
+  readyForReview: [TableName!]!
+  readyForClearance: [TableName!]!
+  dataExchangeApproachMarkedComplete: Boolean
+}
+
+type AnalyzedModelLeads {
+  added: [AnalyzedModelLeadInfo!]!
+}
+
+type AnalyzedPlanDiscussions {
+  activity: Boolean
+}
+
+type AnalyzedModelLeadInfo {
+  id: UUID!
+  userAccount: UserAccount!
+  commonName: String!
 }
 
 extend type Query {
-  customTimelineDate(id: UUID!): CustomTimelineDate!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-
-extend type Mutation {
-  createCustomTimelineDate(
-    input: CustomTimelineDateCreateInput!
-  ): CustomTimelineDate! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  updateCustomTimelineDate(
-    id: UUID!
-    changes: CustomTimelineDateChanges!
-  ): CustomTimelineDate! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-  deleteCustomTimelineDate(id: UUID!): CustomTimelineDate!
+  analyzedAudits(dateAnalyzed: Time!): [AnalyzedAudit!]!
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/custom_timeline_date_translation.graphql", Input: `"""
-Represents custom timeline date translation data
+	{Name: "../schema/types/model_collaboration/change_history/translated_audit.graphql", Input: `"""
+TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit
 """
-type CustomTimelineDateTranslation {
-  title: TranslationField! @goTag(key: "db", value: "title")
-  description: TranslationField! @goTag(key: "db", value: "description")
-  dateType: TranslationFieldWithOptions! @goTag(key: "db", value: "date_type")
-  startDate: TranslationField! @goTag(key: "db", value: "start_date")
-  endDate: TranslationField! @goTag(key: "db", value: "end_date")
+union TranslatedAuditMetaData =
+  | TranslatedAuditMetaBaseStruct
+  | TranslatedAuditMetaGeneric
+  | TranslatedAuditMetaDiscussionReply
+  | TranslatedAuditMetaOperationalNeed
+  | TranslatedAuditMetaOperationalSolution
+  | TranslatedAuditMetaOperationalSolutionSubtask
+  | TranslatedAuditMetaDocumentSolutionLink
+  | TranslatedAuditMetaMTOCategory
+
+type TranslatedAuditMetaBaseStruct {
+  version: Int!
+  tableName: TableName!
 }
-`, BuiltIn: false},
-	{Name: "../schema/types/directives.graphql", Input: `directive @hasRole(role: Role!) on FIELD_DEFINITION
+type TranslatedAuditMetaGeneric {
+  version: Int!
+  tableName: TableName!
+  relation: String!
+  """
+  Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated
+  """
+  relationContent: String
+}
 
-directive @hasAnyRole(roles: [Role!]!) on FIELD_DEFINITION
-
-# https://gqlgen.com/config/#inline-config-with-directives
-directive @goModel(
-  model: String
-  models: [String!]
-) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
-
-directive @goTag(
-  key: String!
-  value: String
-) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
-
-directive @goField(
-  forceResolver: Boolean
-  name: String
-  omittable: Boolean
-  type: String
-) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
-`, BuiltIn: false},
-	{Name: "../schema/types/discussion_reply.graphql", Input: `"""
-DiscussionReply represents a discussion reply
 """
-type DiscussionReply {
-  id: UUID!
+TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for a discussion reply
+"""
+type TranslatedAuditMetaDiscussionReply {
+  version: Int!
+  tableName: TableName!
   discussionID: UUID!
-  content: TaggedContent @goField(forceResolver: true)
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-  isAssessment: Boolean!
+  discussionContent: String!
+  numberOfReplies: Int!
+}
+
+"""
+TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for an operational need
+"""
+type TranslatedAuditMetaOperationalNeed {
+  version: Int!
+  tableName: TableName!
+  needName: String!
+  isOther: Boolean!
+}
+"""
+TranslatedAuditMetaOperationalSolution is the meta data type that is provided when a translated audit is for an operational solution
+"""
+type TranslatedAuditMetaOperationalSolution {
+  version: Int!
+  tableName: TableName!
+  solutionName: String!
+  solutionOtherHeader: String
+  solutionIsOther: Boolean!
+  numberOfSubtasks: Int!
+  needName: String!
+  needIsOther: Boolean!
+  """
+  SolutionStatus is the translated value for the type of solution
+  """
+  solutionStatus: String!
+  solutionMustStart: Time
+  solutionMustFinish: Time
+}
+"""
+TranslatedAuditMetaOperationalSolutionSubtask is the meta data type that is provided when a translated audit is for an operational solution subtask
+"""
+type TranslatedAuditMetaOperationalSolutionSubtask {
+  version: Int!
+  tableName: TableName!
+  solutionName: String!
+  solutionOtherHeader: String
+  solutionIsOther: Boolean!
+  numberOfSubtasks: Int!
+  needName: String!
+  needIsOther: Boolean!
+  """
+  The name of the subtask. If a subtask is updated, and then deleted before being translated, it is possible for this field to be nil.
+  """
+  subtaskName: String
+}
+
+"""
+TranslatedAuditMetaDocumentSolutionLink is the meta data type for a document solution link
+"""
+type TranslatedAuditMetaDocumentSolutionLink {
+  version: Int!
+  tableName: TableName!
+  solutionName: String!
+  solutionOtherHeader: String
+  solutionIsOther: Boolean!
+  needName: String!
+  needIsOther: Boolean!
+
+  # These fields are only present if the document wasn't deleted
+
+  """
+  Document Name will be present if the document is still present and not deleted
+  """
+  documentName: String
+  """
+  Document type is the translated value of the document type enum
+  """
+  documentType: String
+  documentOtherType: String
+  documentNote: String
+  """
+  Document URL will only be visible if the user is a collaborator, or has assessment permission
+  """
+  documentURL: String
+  """
+  Document Visibility is the translated value of the restricted bool for a document
+  """
+  documentVisibility: String
+  documentRestricted: Boolean
+
+  """
+  Document ID  will always be present, regardless of if a document was deleted or not
+  """
+  documentID: UUID!
+}
+"""
+TranslatedAuditMetaMTOCategory is the meta data for when an MTO Category is audited
+"""
+type TranslatedAuditMetaMTOCategory {
+  version: Int!
+  tableName: TableName!
+
+  categoryName: String
+
+  isSubCategory: Boolean!
+  parentCategoryID: UUID
+  parentCategoryName: String
+}
+
+enum TranslatedAuditMetaDataType {
+  GENERIC
+  BASE
+  DISCUSSION_REPLY
+  OPERATIONAL_NEED
+  OPERATIONAL_SOLUTION
+  OPERATIONAL_SOLUTION_SUBTASK
+  DOCUMENT_SOLUTION_LINK
+  MTO_CATEGORY
+}
+
+enum DatabaseOperation {
+  INSERT
+  UPDATE
+  DELETE
+  TRUNCATE
+}
+
+"""
+TranslatedAudit represent a point in time change made to part of application.
+"""
+type TranslatedAudit {
+  id: UUID!
+  modelPlanID: UUID!
+
+  tableID: Int!
+  tableName: TableName!
+  primaryKey: UUID!
+
+  date: Time!
+  action: DatabaseOperation!
+
+  """
+  Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user
+  """
+  restricted: Boolean!
+
+  actorID: UUID!
+  """
+  The Common name of the actor who made the changes. This comes from the user account table.
+  """
+  actorName: String!
+  """
+  The id of the audit.Change record that was translated.
+  """
+  changeID: Int! # This points to a specific audit change.
+  """
+  The type of meta data that is stored for this record
+  """
+  metaDataType: TranslatedAuditMetaDataType
+  """
+  The actual meta data stored for this record
+  """
+  metaData: TranslatedAuditMetaData
+
+  """
+  The specific fields that were changed by the transaction
+  """
+  translatedFields: [TranslatedAuditField!]!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+enum AuditFieldChangeType {
+  ANSWERED
+  UPDATED
+  REMOVED
+  """
+  This type should not appear for all intents and purposes. It shows up if a value changes from null to empty array or vice versa.
+  """
+  UNCHANGED
+}
+
+enum TranslationQuestionType {
+  OTHER
+  NOTE
+}
+
+type TranslatedAuditField {
+  id: UUID!
+  translatedAuditID: UUID!
+
+  """
+  This represents whether a field was answered, updated, or had the answer removed
+  """
+  changeType: AuditFieldChangeType!
+
+  dataType: TranslationDataType!
+  formType: TranslationFormType!
+
+  fieldName: String!
+  fieldNameTranslated: String!
+  """
+  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
+  """
+  fieldOrder: Float!
+  """
+  The label for the parent question that this question refers to
+  """
+  referenceLabel: String
+  """
+  Specifies if this is a specific category of question. Needed for conditionally rendering note details etc
+  """
+  questionType: TranslationQuestionType
+  """
+  Translated Label for questions that are no longer applicable
+  """
+  notApplicableQuestions: [String!]
+
+  old: Any
+  oldTranslated: Any
+  new: Any
+  newTranslated: Any
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -18638,82 +19492,22 @@ type DiscussionReply {
   modifiedDts: Time
 }
 
-"""
-DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
-"""
-input DiscussionReplyCreateInput {
-  discussionID: UUID!
-  content: TaggedHTML!
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
-
-extend type Mutation {
-  createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/discussion_reply_translation.graphql", Input: `"""
-Represents discussion reply translation data
-"""
-type DiscussionReplyTranslation {
-  userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
-  userRoleDescription: TranslationField!
-    @goTag(key: "db", value: "user_role_description")
-  content: TranslationField! @goTag(key: "db", value: "content")
-  isAssessment: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "is_assessment")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/discussion_role_selection.graphql", Input: `type DiscussionRoleSelection {
-  userRole: DiscussionUserRole!
-  userRoleDescription: String
-}
-
 extend type Query {
-  mostRecentDiscussionRoleSelection: DiscussionRoleSelection
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  """
+  TranslatedAuditCollection returns a collection of translated audits, with access dependant on who is viewing the audits.
+  if a user has privileged access, they will see audit changes that are restricted, otherwise only unrestricted
+  Optional Params
+      limit: this controls how many records will be returned at once. A null entry will return all records
+      offset: how many records to skip before returning results. If null, no records will be skipped.
+  """
+  translatedAuditCollection(
+    modelPlanID: UUID!
+    limit: Int
+    offset: Int
+  ): [TranslatedAudit!] @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/echimp.graphql", Input: `type EChimpCR {
-  id: String! # This is "crNumber" under the hood, but it's aliased as "id" here for the sake of GQL/Apollo caching
-  versionNum: String!
-  initiator: String
-  firstName: String
-  lastName: String
-  title: String
-  sensitiveFlag: Boolean
-  implementationDate: String
-  """
-  CRSummary is rich text in HTML format, in practice, the data is not tagged.
-  We use the TaggedContent type as we don't have another use for a plain HTML type.
-  """
-  crSummary: TaggedContent
-  crStatus: String
-  emergencyCrFlag: Boolean
-  relatedCrNumbers: String
-  relatedCrTdlNumbers: String
-  associatedModelUids: UUID
-}
-
-type EChimpTDL {
-  id: String! # This is "tdlNumber" under the hood, but it's aliased as "id" here for the sake of GQL/Apollo caching
-  versionNum: String!
-  initiator: String
-  firstName: String
-  lastName: String
-  title: String
-  issuedDate: String # TODO Convert to "Time" type if possible
-  status: String
-  associatedModelUids: UUID
-}
-
-# """
-# EChimpCRAndTDLS is a type that represents CRS and TDLS so they can be returned together in graphql
-# """
-union EChimpCRAndTDLS = EChimpCR | EChimpTDL
-`, BuiltIn: false},
-	{Name: "../schema/types/existing_model.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/core_model_plan/existing_model.graphql", Input: `"""
 ExistingModel represents a model that already exists outside of the scope of MINT
 """
 type ExistingModel {
@@ -18746,7 +19540,7 @@ extend type Query {
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/existing_model_link.graphql", Input: `enum ExisitingModelLinkFieldType {
+	{Name: "../schema/types/model_collaboration/core_model_plan/existing_model_link.graphql", Input: `enum ExisitingModelLinkFieldType {
   GEN_CHAR_RESEMBLES_EXISTING_MODEL_WHICH
   GEN_CHAR_PARTICIPATION_EXISTING_MODEL_WHICH
 }
@@ -18797,7 +19591,7 @@ extend type Mutation {
   ): ExistingModelLinks! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/existing_model_link_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/core_model_plan/existing_model_link_translation.graphql", Input: `"""
 Represents existing model link translation data
 """
 type ExistingModelLinkTranslation {
@@ -18808,448 +19602,7 @@ type ExistingModelLinkTranslation {
   fieldName: TranslationFieldWithOptions! @goTag(key: "db", value: "field_name")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/iddoc_questionnaire.graphql", Input: `"""
-IDDOCQuestionnaireStatus represents the work completion status of an IDDOC questionnaire.
-Does not include NOT_NEEDED - use taskListStatus for display purposes.
-"""
-enum IDDOCQuestionnaireStatus {
-  READY
-  IN_PROGRESS
-  COMPLETE
-}
-
-"""
-IDDOCQuestionnaireTaskListStatus represents the combined status for task list display.
-Combines the needed field with work status to provide a unified view.
-"""
-enum IDDOCQuestionnaireTaskListStatus {
-  NOT_NEEDED
-  READY
-  IN_PROGRESS
-  COMPLETE
-}
-
-"""
-IDDOCFileType represents the types of files that can be exchanged
-"""
-enum IDDOCFileType {
-  BENEFICIARY
-  PROVIDER
-  PART_A
-  PART_B
-  OTHER
-}
-
-"""
-IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
-"""
-enum IDDOCFullTimeOrIncrementalType {
-  FULL_TIME
-  INCREMENTAL
-}
-
-"""
-IDDOCQuestionnaire represents the IDDOC questionnaire for a model plan
-"""
-type IDDOCQuestionnaire {
-  id: UUID!
-  modelPlanID: UUID!
-
-  # IDDOCQuestionnaire fields
-  #Page 1 Operations
-  technicalContactsIdentified: Boolean
-  technicalContactsIdentifiedDetail: String
-  technicalContactsIdentifiedNote: String
-  captureParticipantInfo: Boolean
-  captureParticipantInfoNote: String
-  icdOwner: String
-  draftIcdDueDate: Time
-  icdNote: String
-
-  #Page 2 Testing
-  uatNeeds: String
-  stcNeeds: String
-  testingTimelines: String
-  testingNote: String
-  dataMonitoringFileTypes: [IDDOCFileType!]!
-  dataMonitoringFileOther: String
-  dataResponseType: String
-  dataResponseFileFrequency: String
-
-  #Page 3 Monitoring
-  dataFullTimeOrIncremental: IDDOCFullTimeOrIncrementalType
-  eftSetUp: Boolean
-  unsolicitedAdjustmentsIncluded: Boolean
-  dataFlowDiagramsNeeded: Boolean
-  produceBenefitEnhancementFiles: Boolean
-  fileNamingConventions: String
-  dataMonitoringNote: String
-
-  # IDDOCQuestionnaire Metadata
-  """
-  Whether the IDDOC questionnaire is needed/required for this model plan.
-  Determined by business rules (database triggers) based on OEL settings, solutions, and milestones.
-  This is a stored field, not computed.
-  """
-  needed: Boolean!
-
-  """
-  The UUID of the user who completed the questionnaire
-  """
-  completedBy: UUID
-
-  """
-  The user who completed the questionnaire
-  """
-  completedByUserAccount: UserAccount
-
-  """
-  The timestamp when the questionnaire was completed
-  """
-  completedDts: Time
-
-  """
-  Convenience field indicating whether the questionnaire has been marked as complete.
-  Computed from status field: true when status is COMPLETE.
-  """
-  isComplete: Boolean!
-
-  """
-  The work completion status of the IDDOC questionnaire (READY, IN_PROGRESS, COMPLETE).
-  Represents user progress on the questionnaire, independent of whether it's needed.
-  """
-  status: IDDOCQuestionnaireStatus!
-
-  """
-  Computed status for display in task lists.
-  Returns NOT_NEEDED when needed=false, otherwise returns the actual work status.
-  """
-  taskListStatus: IDDOCQuestionnaireTaskListStatus!
-
-  # Model Metadata
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-input IDDOCQuestionnaireChanges @goModel(model: "map[string]interface{}") {
-  #Page 1 Operations
-  technicalContactsIdentified: Boolean
-  technicalContactsIdentifiedDetail: String
-  technicalContactsIdentifiedNote: String
-  captureParticipantInfo: Boolean
-  captureParticipantInfoNote: String
-  icdOwner: String
-  draftIcdDueDate: Time
-  icdNote: String
-
-  #Page 2 Testing
-  uatNeeds: String
-  stcNeeds: String
-  testingTimelines: String
-  testingNote: String
-  dataMonitoringFileTypes: [IDDOCFileType!]
-  dataMonitoringFileOther: String
-  dataResponseType: String
-  dataResponseFileFrequency: String
-
-  #Page 3 Monitoring
-  dataFullTimeOrIncremental: IDDOCFullTimeOrIncrementalType
-  eftSetUp: Boolean
-  unsolicitedAdjustmentsIncluded: Boolean
-  dataFlowDiagramsNeeded: Boolean
-  produceBenefitEnhancementFiles: Boolean
-  fileNamingConventions: String
-  dataMonitoringNote: String
-
-  # Convenience fields for controlling status
-  # Note: 'needed' is NOT included - it's read-only and controlled by triggers
-  isComplete: Boolean
-
-  # Completion metadata
-  completedBy: UUID
-}
-
-extend type Mutation {
-  updateIDDOCQuestionnaire(
-    id: UUID!
-    changes: IDDOCQuestionnaireChanges!
-  ): IDDOCQuestionnaire! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/iddoc_questionnaire_translation.graphql", Input: `"""
-Represents IDDOC questionnaire translation data
-"""
-type IddocQuestionnaireTranslation {
-  # General fields
-  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
-  """
-  TaskListStatus is a convenivence field calculated from status and needed fields. It isn't in the database.
-  """
-  taskListStatus: TranslationFieldWithOptions!
-  needed: TranslationFieldWithOptionsAndChildren!
-    @goTag(key: "db", value: "needed")
-
-  #Page 1
-  technicalContactsIdentified: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "technical_contacts_identified")
-  technicalContactsIdentifiedDetail: TranslationField!
-    @goTag(key: "db", value: "technical_contacts_identified_detail")
-  technicalContactsIdentifiedNote: TranslationField!
-    @goTag(key: "db", value: "technical_contacts_identified_note")
-  captureParticipantInfo: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "capture_participant_info")
-  captureParticipantInfoNote: TranslationField!
-    @goTag(key: "db", value: "capture_participant_info_note")
-  icdOwner: TranslationFieldWithParent! @goTag(key: "db", value: "icd_owner")
-  draftIcdDueDate: TranslationFieldWithParent!
-    @goTag(key: "db", value: "draft_icd_due_date")
-  icdNote: TranslationField! @goTag(key: "db", value: "icd_note")
-
-  #Page 2
-  uatNeeds: TranslationFieldWithParent! @goTag(key: "db", value: "uat_needs")
-  stcNeeds: TranslationFieldWithParent! @goTag(key: "db", value: "stc_needs")
-  testingTimelines: TranslationFieldWithParent!
-    @goTag(key: "db", value: "testing_timelines")
-  testingNote: TranslationField! @goTag(key: "db", value: "testing_note")
-  dataMonitoringFileTypes: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "data_monitoring_file_types")
-  dataMonitoringFileOther: TranslationField!
-    @goTag(key: "db", value: "data_monitoring_file_other")
-  dataResponseType: TranslationFieldWithParent!
-    @goTag(key: "db", value: "data_response_type")
-  dataResponseFileFrequency: TranslationFieldWithParent!
-    @goTag(key: "db", value: "data_response_file_frequency")
-
-  #Page 3
-  dataFullTimeOrIncremental: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "data_full_time_or_incremental")
-  eftSetUp: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "eft_set_up")
-  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "unsolicited_adjustments_included")
-  dataFlowDiagramsNeeded: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "data_flow_diagrams_needed")
-  produceBenefitEnhancementFiles: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "produce_benefit_enhancement_files")
-  fileNamingConventions: TranslationFieldWithParent!
-    @goTag(key: "db", value: "file_naming_conventions")
-  dataMonitoringNote: TranslationField!
-    @goTag(key: "db", value: "data_monitoring_note")
-  """
-  IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
-  """
-  isComplete: TranslationFieldWithOptions!
-
-  # Metadata fields
-  completedBy: TranslationField! @goTag(key: "db", value: "completed_by")
-  completedDts: TranslationField! @goTag(key: "db", value: "completed_dts")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/key_contact.graphql", Input: `type KeyContact {
-  id: UUID!
-
-  # Note that this is dependent on if team or not a team
-  userID: UUID
-  userAccount: UserAccount
-
-  name: String!
-  email: String!
-
-  mailboxTitle: String
-  mailboxAddress: String
-
-  subjectCategoryID: UUID!
-  subjectArea: String!
-
-  # Metadata columns
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-Input for updating a key contact.
-Only subject category, subject area, and mailbox title can be changed.
-"""
-input KeyContactUpdateChanges @goModel(model: "map[string]interface{}") {
-  subjectCategoryID: UUID
-  subjectArea: String
-  mailboxTitle: String
-}
-
-extend type Query {
-  # List all key contacts
-  keyContacts: [KeyContact!]!
-
-  # Get a single key contact by id
-  keyContact(id: UUID!): KeyContact! @hasRole(role: MINT_ASSESSMENT)
-}
-
-extend type Mutation {
-  createKeyContactMailbox(
-    mailboxTitle: String!
-    mailboxAddress: String!
-    subjectArea: String!
-    subjectCategoryID: UUID!
-  ): KeyContact! @hasRole(role: MINT_ASSESSMENT)
-
-  createKeyContactUser(
-    userName: String!
-    subjectArea: String!
-    subjectCategoryID: UUID!
-  ): KeyContact! @hasRole(role: MINT_ASSESSMENT)
-
-  updateKeyContact(id: UUID!, changes: KeyContactUpdateChanges!): KeyContact!
-    @hasRole(role: MINT_ASSESSMENT)
-
-  deleteKeyContact(id: UUID!): KeyContact! @hasRole(role: MINT_ASSESSMENT)
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/key_contact_category.graphql", Input: `type KeyContactCategory {
-  id: UUID!
-  name: String!
-
-  #Resolvers
-  keyContacts: [KeyContact!]!
-
-  # Metadata columns
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-extend type Query {
-  keyContactCategory: [KeyContactCategory!]!
-  keyContactCategoryById(id: UUID!): KeyContactCategory!
-  keyContactCategoriesByIds(ids: [UUID!]!): [KeyContactCategory!]!
-}
-
-extend type Mutation {
-  createKeyContactCategory(name: String!): KeyContactCategory!
-    @hasRole(role: MINT_ASSESSMENT)
-
-  updateKeyContactCategory(id: UUID!, name: String!): KeyContactCategory!
-    @hasRole(role: MINT_ASSESSMENT)
-
-  deleteKeyContactCategory(id: UUID!): KeyContactCategory!
-    @hasRole(role: MINT_ASSESSMENT)
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/key_contact_category_translation.graphql", Input: `"""
-Represents key contact category base translation data
-"""
-type KeyContactCategoryTranslation {
-  name: TranslationField! @goTag(key: "db", value: "name")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/key_contact_translation.graphql", Input: `"""
-Represents key contact base translation data
-"""
-type KeyContactTranslation {
-  subjectCategoryID: TranslationField!
-    @goTag(key: "db", value: "subject_category_id")
-  name: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
-  email: TranslationField! #Note: This field does not represent a database field, rather it's returned from a query
-  mailboxTitle: TranslationField! @goTag(key: "db", value: "mailbox_title")
-  mailboxAddress: TranslationField! @goTag(key: "db", value: "mailbox_address")
-  userId: TranslationField! @goTag(key: "db", value: "user_id")
-  subjectArea: TranslationField! @goTag(key: "db", value: "subject_area")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/launch_darkly_settings.graphql", Input: `"""
-The current user's Launch Darkly key
-"""
-type LaunchDarklySettings {
-  userKey: String!
-  signedHash: String!
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/lockable_sections.graphql", Input: `enum ChangeType {
-  ADDED
-  UPDATED
-  REMOVED
-}
-
-enum ActionType {
-  """
-  A normal flow action
-  """
-  NORMAL
-
-  """
-  An administrative action
-  """
-  ADMIN
-}
-
-# LockableSection represents any section of the application that a user can uniquely hold a lock on.
-# It _largely_ (currently) maps to the sections of the Task List, but also includes Data Exchange, which notably isn't part of the Task List.
-enum LockableSection {
-  BASICS
-  GENERAL_CHARACTERISTICS
-  PARTICIPANTS_AND_PROVIDERS
-  BENEFICIARIES
-  OPERATIONS_EVALUATION_AND_LEARNING
-  PAYMENT
-  PREPARE_FOR_CLEARANCE
-  DATA_EXCHANGE_APPROACH
-  IDDOC_QUESTIONNAIRE
-  MODELS_TO_OPERATION_MATRIX
-  TIMELINE
-}
-
-type LockableSectionLockStatusChanged {
-  changeType: ChangeType!
-  lockStatus: LockableSectionLockStatus!
-  actionType: ActionType!
-}
-
-type LockableSectionLockStatus {
-  modelPlanID: UUID!
-  section: LockableSection!
-  lockedByUserAccount: UserAccount!
-  isAssessment: Boolean!
-}
-
-extend type Query {
-  lockableSectionLocks(modelPlanID: UUID!): [LockableSectionLockStatus!]!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-
-extend type Mutation {
-  lockLockableSection(modelPlanID: UUID!, section: LockableSection!): Boolean!
-    @hasRole(role: MINT_USER)
-
-  unlockLockableSection(
-    modelPlanID: UUID!
-    section: LockableSection!
-  ): Boolean! @hasRole(role: MINT_USER)
-
-  unlockAllLockableSections(modelPlanID: UUID!): [LockableSectionLockStatus!]!
-    @hasRole(role: MINT_ASSESSMENT)
-}
-
-type Subscription {
-  onLockableSectionLocksChanged(
-    modelPlanID: UUID!
-  ): LockableSectionLockStatusChanged! @hasRole(role: MINT_USER)
-
-  onLockLockableSectionContext(
-    modelPlanID: UUID!
-  ): LockableSectionLockStatusChanged! @hasRole(role: MINT_USER)
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/model_plan.graphql", Input: `enum ModelPlanFilter {
+	{Name: "../schema/types/model_collaboration/core_model_plan/model_plan.graphql", Input: `enum ModelPlanFilter {
   INCLUDE_ALL
   COLLAB_ONLY
   WITH_CR_TDLS
@@ -19427,7 +19780,7 @@ extend type Mutation {
   ): Boolean! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/model_plan_and_group.graphql", Input: `type ModelPlanAndGroup {
+	{Name: "../schema/types/model_collaboration/core_model_plan/model_plan_and_group.graphql", Input: `type ModelPlanAndGroup {
   key: ComponentGroup!
   modelPlanID: UUID!
   modelPlan: ModelPlan!
@@ -19438,7 +19791,7 @@ extend type Query {
     @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/model_plan_and_solution.graphql", Input: `enum GeneralStatus {
+	{Name: "../schema/types/model_collaboration/core_model_plan/model_plan_and_solution.graphql", Input: `enum GeneralStatus {
   PLANNED
   ACTIVE
   ENDED
@@ -19462,7 +19815,7 @@ extend type Query {
   ): [ModelPlanAndMTOCommonSolution!]! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/model_plan_by_status_group.graphql", Input: `enum ModelPlanStatusGroup {
+	{Name: "../schema/types/model_collaboration/core_model_plan/model_plan_by_status_group.graphql", Input: `enum ModelPlanStatusGroup {
   PRE_CLEARANCE
   IN_CLEARANCE
   CLEARED
@@ -19478,7 +19831,7 @@ extend type Query {
     @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/model_plan_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/core_model_plan/model_plan_translation.graphql", Input: `"""
 Represents model plan base translation data
 """
 type ModelPlanTranslation {
@@ -19491,7 +19844,412 @@ type ModelPlanTranslation {
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto.graphql", Input: `# ModelsToOperationMatrix Notes:
+	{Name: "../schema/types/model_collaboration/core_model_plan/plan_favorite.graphql", Input: `type PlanFavorite {
+  id: UUID!
+  modelPlanID: UUID!
+  userID: UUID!
+  userAccount: UserAccount!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Mutation {
+  addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/crs_and_tdls/echimp.graphql", Input: `type EChimpCR {
+  id: String! # This is "crNumber" under the hood, but it's aliased as "id" here for the sake of GQL/Apollo caching
+  versionNum: String!
+  initiator: String
+  firstName: String
+  lastName: String
+  title: String
+  sensitiveFlag: Boolean
+  implementationDate: String
+  """
+  CRSummary is rich text in HTML format, in practice, the data is not tagged.
+  We use the TaggedContent type as we don't have another use for a plain HTML type.
+  """
+  crSummary: TaggedContent
+  crStatus: String
+  emergencyCrFlag: Boolean
+  relatedCrNumbers: String
+  relatedCrTdlNumbers: String
+  associatedModelUids: UUID
+}
+
+type EChimpTDL {
+  id: String! # This is "tdlNumber" under the hood, but it's aliased as "id" here for the sake of GQL/Apollo caching
+  versionNum: String!
+  initiator: String
+  firstName: String
+  lastName: String
+  title: String
+  issuedDate: String # TODO Convert to "Time" type if possible
+  status: String
+  associatedModelUids: UUID
+}
+
+# """
+# EChimpCRAndTDLS is a type that represents CRS and TDLS so they can be returned together in graphql
+# """
+union EChimpCRAndTDLS = EChimpCR | EChimpTDL
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/crs_and_tdls/plan_cr.graphql", Input: `type PlanCR {
+  id: UUID!
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
+  title: String!
+  note: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input PlanCRCreateInput {
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  dateImplemented: Time!
+  title: String!
+  note: String
+}
+
+input PlanCRChanges @goModel(model: "map[string]interface{}") {
+  idNumber: String
+  dateInitiated: Time
+  dateImplemented: Time
+  title: String
+  note: String
+}
+
+extend type Query {
+  planCR(id: UUID!): PlanCR! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createPlanCR(input: PlanCRCreateInput!): PlanCR! @hasRole(role: MINT_USER)
+
+  updatePlanCR(id: UUID!, changes: PlanCRChanges!): PlanCR!
+    @hasRole(role: MINT_USER)
+
+  deletePlanCR(id: UUID!): PlanCR! @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/crs_and_tdls/plan_cr_translation.graphql", Input: `"""
+Represents plan cr translation data
+"""
+type PlanCRTranslation {
+  idNumber: TranslationField! @goTag(key: "db", value: "id_number")
+  title: TranslationField! @goTag(key: "db", value: "title")
+  dateInitiated: TranslationField! @goTag(key: "db", value: "date_initiated")
+  dateImplemented: TranslationField!
+    @goTag(key: "db", value: "date_implemented")
+  note: TranslationField! @goTag(key: "db", value: "note")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/crs_and_tdls/plan_tdl.graphql", Input: `type PlanTDL {
+  id: UUID!
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  title: String!
+  note: String
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input PlanTDLCreateInput {
+  modelPlanID: UUID!
+
+  idNumber: String!
+  dateInitiated: Time!
+  title: String!
+  note: String
+}
+
+input PlanTDLChanges @goModel(model: "map[string]interface{}") {
+  idNumber: String
+  dateInitiated: Time
+  title: String
+  note: String
+}
+
+extend type Query {
+  planTDL(id: UUID!): PlanTDL! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createPlanTDL(input: PlanTDLCreateInput!): PlanTDL! @hasRole(role: MINT_USER)
+
+  updatePlanTDL(id: UUID!, changes: PlanTDLChanges!): PlanTDL!
+    @hasRole(role: MINT_USER)
+
+  deletePlanTDL(id: UUID!): PlanTDL! @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/crs_and_tdls/plan_tdl_translation.graphql", Input: `"""
+Represents plan tdl translation data
+"""
+type PlanTDLTranslation {
+  idNumber: TranslationField! @goTag(key: "db", value: "id_number")
+  title: TranslationField! @goTag(key: "db", value: "title")
+  dateInitiated: TranslationField! @goTag(key: "db", value: "date_initiated")
+  note: TranslationField! @goTag(key: "db", value: "note")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/discussions/discussion_reply.graphql", Input: `"""
+DiscussionReply represents a discussion reply
+"""
+type DiscussionReply {
+  id: UUID!
+  discussionID: UUID!
+  content: TaggedContent @goField(forceResolver: true)
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+  isAssessment: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
+"""
+input DiscussionReplyCreateInput {
+  discussionID: UUID!
+  content: TaggedHTML!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+}
+
+extend type Mutation {
+  createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/discussions/discussion_reply_translation.graphql", Input: `"""
+Represents discussion reply translation data
+"""
+type DiscussionReplyTranslation {
+  userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
+  userRoleDescription: TranslationField!
+    @goTag(key: "db", value: "user_role_description")
+  content: TranslationField! @goTag(key: "db", value: "content")
+  isAssessment: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "is_assessment")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/discussions/discussion_role_selection.graphql", Input: `type DiscussionRoleSelection {
+  userRole: DiscussionUserRole!
+  userRoleDescription: String
+}
+
+extend type Query {
+  mostRecentDiscussionRoleSelection: DiscussionRoleSelection
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/discussions/plan_discussion.graphql", Input: `enum DiscussionTopicType {
+  MODEL_PLAN_ALL
+  MODEL_PLAN_MODEL_BASICS
+  MODEL_PLAN_GENERAL_CHARACTERISTICS
+  MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS
+  MODEL_PLAN_BENEFICIARIES
+  MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING
+  MODEL_PLAN_PAYMENT
+  MODEL_TIMELINE
+  DATA_EXCHANGE_APPROACH
+  WAIVER_ASSESSMENT_SURVEY
+  IDDOC_QUESTIONNAIRE
+  MODEL_TO_OPERATIONS_MATRIX_MTO
+  DOCUMENTS
+  CONTRACTS
+  FFS_CRS_AND_TDLS
+  OTHER
+}
+
+"""
+PlanDiscussion represents plan discussion
+"""
+type PlanDiscussion {
+  id: UUID!
+  modelPlanID: UUID!
+  topic: DiscussionTopicType!
+  content: TaggedContent @goField(forceResolver: true)
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+  replies: [DiscussionReply!]!
+  isAssessment: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+"""
+input PlanDiscussionCreateInput {
+  modelPlanID: UUID!
+  topic: DiscussionTopicType!
+  content: TaggedHTML!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+}
+
+extend type Mutation {
+  createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/discussions/plan_discussion_translation.graphql", Input: `"""
+Represents plan discussion translation data
+"""
+type PlanDiscussionTranslation {
+  topic: TranslationFieldWithOptions! @goTag(key: "db", value: "topic")
+  userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
+  userRoleDescription: TranslationField!
+    @goTag(key: "db", value: "user_role_description")
+  content: TranslationField! @goTag(key: "db", value: "content")
+  isAssessment: TranslationField! @goTag(key: "db", value: "is_assessment")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/documents/plan_document.graphql", Input: `enum DocumentType {
+  CONCEPT_PAPER
+  POLICY_PAPER
+  ICIP_DRAFT
+  MARKET_RESEARCH
+  DESIGN_PARAMETERS_MEMO
+  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION
+  OTHER
+}
+
+"""
+PlanDocument represents a document on a plan
+"""
+type PlanDocument {
+  id: UUID!
+  modelPlanID: UUID!
+
+  """
+  If isLink = true, then this is a URL to a linked document, not an uploaded document
+  """
+  isLink: Boolean!
+  """
+  URL is the link that must be provided if this is a link instead of an uploaded document
+  """
+  url: String
+
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  restricted: Boolean!
+  fileName: String!
+  fileSize: Int!
+  documentType: DocumentType!
+  otherType: String
+  optionalNotes: String
+  downloadUrl: String
+  deletedAt: Time
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanDocumentInput
+"""
+input PlanDocumentInput {
+  modelPlanID: UUID!
+  fileData: Upload!
+  documentType: DocumentType!
+  restricted: Boolean!
+  otherTypeDescription: String
+  optionalNotes: String
+}
+
+"""
+PlanDocumentLinkInput
+"""
+input PlanDocumentLinkInput {
+  modelPlanID: UUID!
+  url: String!
+  name: String!
+  documentType: DocumentType!
+  restricted: Boolean!
+  otherTypeDescription: String
+  optionalNotes: String
+}
+
+extend type Query {
+  planDocument(id: UUID!): PlanDocument!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
+    @hasRole(role: MINT_USER)
+
+  linkNewPlanDocument(input: PlanDocumentLinkInput!): PlanDocument!
+    @hasRole(role: MINT_USER)
+
+  deletePlanDocument(id: UUID!): Int! @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/documents/plan_document_translation.graphql", Input: `"""
+Represents plan document translation data
+"""
+type PlanDocumentTranslation {
+  isLink: TranslationField! @goTag(key: "db", value: "is_link")
+  url: TranslationField! @goTag(key: "db", value: "url")
+  fileName: TranslationField! @goTag(key: "db", value: "file_name")
+  documentType: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "document_type")
+  otherType: TranslationField! @goTag(key: "db", value: "other_type")
+  fileType: TranslationField! @goTag(key: "db", value: "file_type")
+  restricted: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "restricted")
+  optionalNotes: TranslationField! @goTag(key: "db", value: "optional_notes")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/mto/mto.graphql", Input: `# ModelsToOperationMatrix Notes:
 # - There's purposefully no ` + "`" + `Milestones` + "`" + ` query right now, since there's currently no need to query milestones outside the scope of a Category
 type ModelsToOperationMatrix {
   categories: [MTOCategory!]! # Categories is at the top level because you _can_ have empty categories
@@ -19565,7 +20323,7 @@ extend type Mutation {
     @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_category.graphql", Input: `type MTOCategory {
+	{Name: "../schema/types/model_collaboration/mto/mto_category.graphql", Input: `type MTOCategory {
   # DB Fields
   id: UUID!
   name: String!
@@ -19637,7 +20395,7 @@ extend type Mutation {
   deleteMTOCategory(id: UUID!): Boolean! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_category_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_category_translation.graphql", Input: `"""
 Represents MTO Category translation data
 """
 type MTOCategoryTranslation {
@@ -19646,7 +20404,7 @@ type MTOCategoryTranslation {
   parentID: TranslationField! @goTag(key: "db", value: "parent_id")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_common_milestone.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_common_milestone.graphql", Input: `"""
 CommonCategory represents a common category and its subcategories
 """
 type CommonCategory {
@@ -19730,7 +20488,7 @@ extend type Mutation {
     @hasRole(role: MINT_ASSESSMENT)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_common_milestone_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_common_milestone_translation.graphql", Input: `"""
 Represents MTO Common Milestone translation data
 """
 type MTOCommonMilestoneTranslation {
@@ -19746,7 +20504,7 @@ type MTOCommonMilestoneTranslation {
   commonSolutions: TranslationFieldWithOptions! #Note: This field does not represent a database field, rather it's returned from a query
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_common_solution.graphql", Input: `enum MTOCommonSolutionKey {
+	{Name: "../schema/types/model_collaboration/mto/mto_common_solution.graphql", Input: `enum MTOCommonSolutionKey {
   INNOVATION
   ACO_OS
   APPS
@@ -19847,7 +20605,7 @@ extend type Query {
   mtoCommonSolutions: [MTOCommonSolution!]! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_common_solution_contact.graphql", Input: `type MTOCommonSolutionContact {
+	{Name: "../schema/types/model_collaboration/mto/mto_common_solution_contact.graphql", Input: `type MTOCommonSolutionContact {
   id: UUID!
   key: MTOCommonSolutionKey!
 
@@ -19930,7 +20688,7 @@ extend type Mutation {
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_common_solution_contact_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_common_solution_contact_translation.graphql", Input: `"""
 Represents a translation of a contact for a common solution
 """
 type MTOCommonSolutionContactTranslation {
@@ -19947,7 +20705,7 @@ type MTOCommonSolutionContactTranslation {
     @goTag(key: "db", value: "receive_emails")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_common_solution_contractor.graphql", Input: `type MTOCommonSolutionContractor {
+	{Name: "../schema/types/model_collaboration/mto/mto_common_solution_contractor.graphql", Input: `type MTOCommonSolutionContractor {
   id: UUID!
   key: MTOCommonSolutionKey!
 
@@ -19994,7 +20752,7 @@ extend type Mutation {
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_common_solution_contractor_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_common_solution_contractor_translation.graphql", Input: `"""
 Represents a translation of a contractor for a common solution
 """
 type MTOCommonSolutionContractorTranslation {
@@ -20003,7 +20761,7 @@ type MTOCommonSolutionContractorTranslation {
   contractorName: TranslationField! @goTag(key: "db", value: "contractor_name")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_common_solution_system_owner.graphql", Input: `type MTOCommonSolutionSystemOwner {
+	{Name: "../schema/types/model_collaboration/mto/mto_common_solution_system_owner.graphql", Input: `type MTOCommonSolutionSystemOwner {
   id: UUID!
   key: MTOCommonSolutionKey!
 
@@ -20086,7 +20844,7 @@ extend type Mutation {
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_common_solution_system_owner_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_common_solution_system_owner_translation.graphql", Input: `"""
 Represents a translation of a system/business owner for a common solution
 """
 type MTOCommonSolutionSystemOwnerTranslation {
@@ -20096,7 +20854,7 @@ type MTOCommonSolutionSystemOwnerTranslation {
     @goTag(key: "db", value: "cms_component")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_info.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_info.graphql", Input: `"""
 This holds information specific to a models to operation matrix
 """
 type MTOInfo {
@@ -20115,7 +20873,7 @@ type MTOInfo {
   modifiedDts: Time
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_info_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_info_translation.graphql", Input: `"""
 Represents mto info translation data
 """
 type MTOInfoTranslation {
@@ -20125,7 +20883,7 @@ type MTOInfoTranslation {
     @goTag(key: "db", value: "ready_for_review_dts")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_milestone.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_milestone.graphql", Input: `"""
 The possible statuses of Milestone.
 """
 enum MTOMilestoneStatus {
@@ -20267,7 +21025,7 @@ extend type Query {
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_milestone_note.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_milestone_note.graphql", Input: `"""
 MTOMilestoneNote represents a note for a milestone
 """
 type MTOMilestoneNote {
@@ -20310,14 +21068,14 @@ extend type Mutation {
   deleteMTOMilestoneNote(id: UUID!): MTOMilestoneNote! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_milestone_note_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_milestone_note_translation.graphql", Input: `"""
 Represents MTO Milestone Note translation data
 """
 type MTOMilestoneNoteTranslation {
   content: TranslationField! @goTag(key: "db", value: "content")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_milestone_solution_link_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_milestone_solution_link_translation.graphql", Input: `"""
 Represents MTO Milestone Solution Link translation data
 """
 type MTOMilestoneSolutionLinkTranslation {
@@ -20325,7 +21083,7 @@ type MTOMilestoneSolutionLinkTranslation {
   solutionID: TranslationField! @goTag(key: "db", value: "solution_id")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_milestone_suggestion_reason.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_milestone_suggestion_reason.graphql", Input: `"""
 MilestoneSuggestionReasons is an aggregate type that represents the suggestion context for
 a common milestone in the context of a specific model plan.
 """
@@ -20374,7 +21132,7 @@ type MilestoneSuggestionReason {
   answer: String
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_milestone_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_milestone_translation.graphql", Input: `"""
 Represents MTO Custom Milestone translation data
 """
 type MTOMilestoneTranslation {
@@ -20401,7 +21159,7 @@ type MTOMilestoneTranslation {
   notes: TranslationField! @goTag(key: "db", value: "notes")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_model_plan_template_link_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_model_plan_template_link_translation.graphql", Input: `"""
 Represents Model Plan MTO Template Link translation data
 """
 type ModelPlanMTOTemplateLinkTranslation {
@@ -20410,7 +21168,7 @@ type ModelPlanMTOTemplateLinkTranslation {
   appliedDate: TranslationField! @goTag(key: "db", value: "applied_date")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_solution.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_solution.graphql", Input: `"""
 The possible statuses of a Solution.
 """
 enum MTOSolutionStatus {
@@ -20497,7 +21255,7 @@ extend type Query {
   mtoSolution(id: UUID!): MTOSolution! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_solution_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/mto/mto_solution_translation.graphql", Input: `"""
 Represents MTO Custom Solution translation data
 """
 type MTOSolutionTranslation {
@@ -20517,7 +21275,7 @@ type MTOSolutionTranslation {
   milestones: TranslationField! @goTag(key: "db", value: "milestones")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/mto_template.graphql", Input: `# Mirror of DB enum MTOTemplateKey
+	{Name: "../schema/types/model_collaboration/mto/mto_template.graphql", Input: `# Mirror of DB enum MTOTemplateKey
 enum MTOTemplateKey {
   ACO_AND_KIDNEY_MODELS
   EPISODE_PRIMARY_CARE_AND_NON_ACO_MODELS
@@ -20645,72 +21403,7 @@ extend type Mutation {
   ): ApplyTemplateResult!
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/nda_info.graphql", Input: `"""
-NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
-"""
-type NDAInfo {
-  agreed: Boolean!
-  agreedDts: Time
-}
-
-extend type Query {
-  ndaInfo: NDAInfo! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-
-extend type Mutation {
-  agreeToNDA(agree: Boolean! = true): NDAInfo!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/operational_need_translation.graphql", Input: `"""
-Represents operational need translation data
-"""
-type OperationalNeedTranslation {
-  """
-  Name comes from the possible operational need table. It is not returned in an audit
-  """
-  name: TranslationField! @goTag(key: "db", value: "need_name")
-  nameOther: TranslationField! @goTag(key: "db", value: "name_other")
-  """
-  Key comes from the possible operational need table. It is not returned in an audit
-  """
-  key: TranslationFieldWithOptions! @goTag(key: "db", value: "need_key")
-  needed: TranslationFieldWithOptions! @goTag(key: "db", value: "needed")
-  section: TranslationFieldWithOptions! @goTag(key: "db", value: "section")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/operational_solution_subtask_translation.graphql", Input: `"""
-Represents operational solution subtask translation data
-"""
-type OperationalSolutionSubtaskTranslation {
-  name: TranslationField! @goTag(key: "db", value: "name")
-  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/operational_solution_translation.graphql", Input: `"""
-Represents operational solution translation data
-"""
-type OperationalSolutionTranslation {
-  """
-  Name comes from the possible operational solution table. It is not returned in an audit
-  """
-  name: TranslationField! @goTag(key: "db", value: "sol_name")
-  nameOther: TranslationField! @goTag(key: "db", value: "name_other")
-  isOther: TranslationFieldWithOptions! @goTag(key: "db", value: "is_other")
-  otherHeader: TranslationField! @goTag(key: "db", value: "other_header")
-  pocName: TranslationField! @goTag(key: "db", value: "poc_name")
-  pocEmail: TranslationField! @goTag(key: "db", value: "poc_email")
-  mustStartDts: TranslationField! @goTag(key: "db", value: "must_start_dts")
-  mustFinishDts: TranslationField! @goTag(key: "db", value: "must_finish_dts")
-  needed: TranslationFieldWithOptions! @goTag(key: "db", value: "needed")
-  """
-  Key comes from the possible operational solution table. It is not returned in an audit
-  """
-  key: TranslationFieldWithOptions! @goTag(key: "db", value: "sol_key")
-  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_basics.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_basics.graphql", Input: `"""
 Represents plan basics
 """
 type PlanBasics {
@@ -20810,7 +21503,7 @@ extend type Mutation {
     @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_basics_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_basics_translation.graphql", Input: `"""
 Represents plan basics translation data
 """
 type PlanBasicsTranslation {
@@ -20843,7 +21536,7 @@ type PlanBasicsTranslation {
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_beneficiaries.graphql", Input: `enum BeneficiariesType {
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_beneficiaries.graphql", Input: `enum BeneficiariesType {
   MEDICARE_FFS
   MEDICARE_ADVANTAGE
   MEDICARE_PART_D
@@ -20983,7 +21676,7 @@ extend type Mutation {
   ): PlanBeneficiaries! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_beneficiaries_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_beneficiaries_translation.graphql", Input: `"""
 Represents plan beneficiaries translation data
 """
 type PlanBeneficiariesTranslation {
@@ -21063,542 +21756,7 @@ type PlanBeneficiariesTranslation {
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_collaborator.graphql", Input: `enum TeamRole {
-  MODEL_LEAD
-  MODEL_TEAM
-  SENIOR_ADVISOR
-  LEADERSHIP
-  LEARNING
-  EVALUATION
-  IT_LEAD
-  QUALITY
-  OACT
-  PAYMENT
-  CM_FFS_COUNTERPART
-  COR
-  SOLUTION_ARCHITECT
-}
-
-"""
-PlanCollaborator represents a collaborator on a plan
-"""
-type PlanCollaborator {
-  id: UUID!
-  modelPlanID: UUID!
-  userID: UUID!
-  userAccount: UserAccount!
-  teamRoles: [TeamRole!]!
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
-"""
-input PlanCollaboratorCreateInput {
-  modelPlanID: UUID!
-  userName: String!
-  teamRoles: [TeamRole!]!
-}
-
-extend type Query {
-  planCollaboratorByID(id: UUID!): PlanCollaborator!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-
-extend type Mutation {
-  createPlanCollaborator(
-    input: PlanCollaboratorCreateInput!
-  ): PlanCollaborator! @hasRole(role: MINT_USER)
-
-  updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
-    @hasRole(role: MINT_USER)
-
-  deletePlanCollaborator(id: UUID!): PlanCollaborator! @hasRole(role: MINT_USER)
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_collaborator_translations.graphql", Input: `"""
-Represents plan collaborator translation data
-"""
-type PlanCollaboratorTranslation {
-  username: TranslationField! @goTag(key: "db", value: "user_account.username")
-  userID: TranslationField! @goTag(key: "db", value: "user_id")
-  teamRoles: TranslationFieldWithOptions! @goTag(key: "db", value: "team_roles")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_cr.graphql", Input: `type PlanCR {
-  id: UUID!
-  modelPlanID: UUID!
-
-  idNumber: String!
-  dateInitiated: Time!
-  dateImplemented: Time # Required in the API, but can be nullable for historical entries before we migrated CRs and TDLs as different types
-  title: String!
-  note: String
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-input PlanCRCreateInput {
-  modelPlanID: UUID!
-
-  idNumber: String!
-  dateInitiated: Time!
-  dateImplemented: Time!
-  title: String!
-  note: String
-}
-
-input PlanCRChanges @goModel(model: "map[string]interface{}") {
-  idNumber: String
-  dateInitiated: Time
-  dateImplemented: Time
-  title: String
-  note: String
-}
-
-extend type Query {
-  planCR(id: UUID!): PlanCR! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-
-extend type Mutation {
-  createPlanCR(input: PlanCRCreateInput!): PlanCR! @hasRole(role: MINT_USER)
-
-  updatePlanCR(id: UUID!, changes: PlanCRChanges!): PlanCR!
-    @hasRole(role: MINT_USER)
-
-  deletePlanCR(id: UUID!): PlanCR! @hasRole(role: MINT_USER)
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_cr_translation.graphql", Input: `"""
-Represents plan cr translation data
-"""
-type PlanCRTranslation {
-  idNumber: TranslationField! @goTag(key: "db", value: "id_number")
-  title: TranslationField! @goTag(key: "db", value: "title")
-  dateInitiated: TranslationField! @goTag(key: "db", value: "date_initiated")
-  dateImplemented: TranslationField!
-    @goTag(key: "db", value: "date_implemented")
-  note: TranslationField! @goTag(key: "db", value: "note")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_data_exchange_approach.graphql", Input: `enum DataToCollectFromParticipants {
-  BANKING_INFORMATION_TO_MAKE_NON_CLAIMS_BASED_PAYMENTS
-  CLINICAL_DATA
-  COLLECT_BIDS_AND_PLAN_INFORMATION
-  COOPERATIVE_AGREEMENT_APPLICATION
-  DECARBONIZATION_DATA
-  EXPANDED_DEMOGRAPHICS_DATA
-  FEE_FOR_SERVICE_CLAIMS_AND_APPLY_MODEL_RULES
-  LEARNING_SYSTEM_METRICS
-  PARTICIPANT_AGREEMENT
-  PARTICIPANT_AGREEMENT_LETTER_OF_INTENT
-  PARTICIPANT_AGREEMENT_REQUEST_FOR_APPLICATION
-  PARTICIPANT_REPORTED_DATA
-  PARTICIPANT_REPORTED_QUALITY_MEASURES
-  PROVIDER_PARTICIPANT_ROSTER
-  REPORTS_FROM_PARTICIPANTS
-  SOCIAL_DETERMINANTS_OF_HEALTH
-  SURVEY
-  OTHER
-}
-
-enum DataToSendToParticipants {
-  DATA_FEEDBACK_DASHBOARD
-  NON_CLAIMS_BASED_PAYMENTS
-  OPERATIONS_DATA
-  PARTIALLY_ADJUSTED_CLAIMS_DATA
-  RAW_CLAIMS_DATA
-  DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS
-}
-
-enum AnticipatedMultiPayerDataAvailabilityUseCase {
-  MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION
-  SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING
-  FILL_GAPS_IN_CARE_ALERTING_AND_REPORTS
-}
-
-enum MultiSourceDataToCollect {
-  COMMERCIAL_CLAIMS
-  LAB_DATA
-  MANUFACTURER
-  MEDICAID_CLAIMS
-  MEDICARE_CLAIMS
-  PATIENT_REGISTRY
-  OTHER
-}
-
-enum DataExchangeApproachStatus {
-  READY
-  IN_PROGRESS
-  COMPLETE
-}
-
-type PlanDataExchangeApproach {
-  id: UUID!
-  modelPlanID: UUID!
-
-  dataToCollectFromParticipants: [DataToCollectFromParticipants!]!
-  dataToCollectFromParticipantsReportsDetails: String
-  dataToCollectFromParticipantsOther: String
-  dataWillNotBeCollectedFromParticipants: Boolean
-  dataToCollectFromParticipantsNote: String
-
-  dataToSendToParticipants: [DataToSendToParticipants!]!
-  dataToSendToParticipantsNote: String
-
-  doesNeedToMakeMultiPayerDataAvailable: Boolean
-  anticipatedMultiPayerDataAvailabilityUseCase: [AnticipatedMultiPayerDataAvailabilityUseCase!]!
-  doesNeedToMakeMultiPayerDataAvailableNote: String
-
-  doesNeedToCollectAndAggregateMultiSourceData: Boolean
-  multiSourceDataToCollect: [MultiSourceDataToCollect!]!
-  multiSourceDataToCollectOther: String
-  doesNeedToCollectAndAggregateMultiSourceDataNote: String
-
-  willImplementNewDataExchangeMethods: Boolean
-  newDataExchangeMethodsDescription: String
-  newDataExchangeMethodsNote: String
-
-  additionalDataExchangeConsiderationsDescription: String
-
-  # Metadata fields
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-  isDataExchangeApproachComplete: Boolean!
-  markedCompleteBy: UUID
-  markedCompleteByUserAccount: UserAccount
-  markedCompleteDts: Time
-
-  status: DataExchangeApproachStatus!
-}
-
-input PlanDataExchangeApproachChanges
-  @goModel(model: "map[string]interface{}") {
-  dataToCollectFromParticipants: [DataToCollectFromParticipants!]
-  dataToCollectFromParticipantsReportsDetails: String
-  dataToCollectFromParticipantsOther: String
-  dataWillNotBeCollectedFromParticipants: Boolean
-  dataToCollectFromParticipantsNote: String
-
-  dataToSendToParticipants: [DataToSendToParticipants!]
-  dataToSendToParticipantsNote: String
-
-  doesNeedToMakeMultiPayerDataAvailable: Boolean
-  anticipatedMultiPayerDataAvailabilityUseCase: [AnticipatedMultiPayerDataAvailabilityUseCase!]
-  doesNeedToMakeMultiPayerDataAvailableNote: String
-
-  doesNeedToCollectAndAggregateMultiSourceData: Boolean
-  multiSourceDataToCollect: [MultiSourceDataToCollect!]
-  multiSourceDataToCollectOther: String
-  doesNeedToCollectAndAggregateMultiSourceDataNote: String
-
-  willImplementNewDataExchangeMethods: Boolean
-  newDataExchangeMethodsDescription: String
-  newDataExchangeMethodsNote: String
-
-  additionalDataExchangeConsiderationsDescription: String
-
-  isDataExchangeApproachComplete: Boolean
-}
-
-extend type Mutation {
-  updatePlanDataExchangeApproach(
-    id: UUID!
-    changes: PlanDataExchangeApproachChanges!
-  ): PlanDataExchangeApproach! @hasRole(role: MINT_USER)
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_data_exchange_approach_translation.graphql", Input: `"""
-Represents plan data exchange approach translation data
-"""
-type PlanDataExchangeApproachTranslation {
-  #Page 2
-  dataToCollectFromParticipants: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "data_to_collect_from_participants")
-  dataToCollectFromParticipantsReportsDetails: TranslationField!
-    @goTag(
-      key: "db"
-      value: "data_to_collect_from_participants_reports_details"
-    )
-  dataToCollectFromParticipantsOther: TranslationField!
-    @goTag(key: "db", value: "data_to_collect_from_participants_other")
-  dataWillNotBeCollectedFromParticipants: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "data_will_not_be_collected_from_participants")
-  dataToCollectFromParticipantsNote: TranslationField!
-    @goTag(key: "db", value: "data_to_collect_from_participants_note")
-  dataToSendToParticipants: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "data_to_send_to_participants")
-  dataToSendToParticipantsNote: TranslationField!
-    @goTag(key: "db", value: "data_to_send_to_participants_note")
-
-  #Page 3
-  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldWithOptionsAndChildren!
-    @goTag(key: "db", value: "does_need_to_make_multi_payer_data_available")
-  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldWithOptionsAndParent!
-    @goTag(
-      key: "db"
-      value: "anticipated_multi_payer_data_availability_use_case"
-    )
-  doesNeedToMakeMultiPayerDataAvailableNote: TranslationField!
-    @goTag(
-      key: "db"
-      value: "does_need_to_make_multi_payer_data_available_note"
-    )
-  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldWithOptionsAndChildren!
-    @goTag(
-      key: "db"
-      value: "does_need_to_collect_and_aggregate_multi_source_data"
-    )
-  multiSourceDataToCollect: TranslationFieldWithOptionsAndParent!
-    @goTag(key: "db", value: "multi_source_data_to_collect")
-  multiSourceDataToCollectOther: TranslationField!
-    @goTag(key: "db", value: "multi_source_data_to_collect_other")
-  doesNeedToCollectAndAggregateMultiSourceDataNote: TranslationField!
-    @goTag(
-      key: "db"
-      value: "does_need_to_collect_and_aggregate_multi_source_data_note"
-    )
-
-  # Page 4
-  willImplementNewDataExchangeMethods: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "will_implement_new_data_exchange_methods")
-  newDataExchangeMethodsDescription: TranslationField!
-    @goTag(key: "db", value: "new_data_exchange_methods_description")
-  newDataExchangeMethodsNote: TranslationField!
-    @goTag(key: "db", value: "new_data_exchange_methods_note")
-  additionalDataExchangeConsiderationsDescription: TranslationField!
-    @goTag(
-      key: "db"
-      value: "additional_data_exchange_considerations_description"
-    )
-  isDataExchangeApproachComplete: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "is_data_exchange_approach_complete")
-
-  # Metadata fields
-  markedCompleteBy: TranslationField!
-    @goTag(key: "db", value: "marked_complete_by")
-  markedCompleteDts: TranslationField!
-    @goTag(key: "db", value: "marked_complete_dts")
-  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_discussion.graphql", Input: `enum DiscussionTopicType {
-  MODEL_PLAN_ALL
-  MODEL_PLAN_MODEL_BASICS
-  MODEL_PLAN_GENERAL_CHARACTERISTICS
-  MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS
-  MODEL_PLAN_BENEFICIARIES
-  MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING
-  MODEL_PLAN_PAYMENT
-  MODEL_TIMELINE
-  DATA_EXCHANGE_APPROACH
-  WAIVER_ASSESSMENT_SURVEY
-  IDDOC_QUESTIONNAIRE
-  MODEL_TO_OPERATIONS_MATRIX_MTO
-  DOCUMENTS
-  CONTRACTS
-  FFS_CRS_AND_TDLS
-  OTHER
-}
-
-"""
-PlanDiscussion represents plan discussion
-"""
-type PlanDiscussion {
-  id: UUID!
-  modelPlanID: UUID!
-  topic: DiscussionTopicType!
-  content: TaggedContent @goField(forceResolver: true)
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-  replies: [DiscussionReply!]!
-  isAssessment: Boolean!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
-"""
-input PlanDiscussionCreateInput {
-  modelPlanID: UUID!
-  topic: DiscussionTopicType!
-  content: TaggedHTML!
-  userRole: DiscussionUserRole
-  userRoleDescription: String
-}
-
-extend type Mutation {
-  createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_discussion_translation.graphql", Input: `"""
-Represents plan discussion translation data
-"""
-type PlanDiscussionTranslation {
-  topic: TranslationFieldWithOptions! @goTag(key: "db", value: "topic")
-  userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
-  userRoleDescription: TranslationField!
-    @goTag(key: "db", value: "user_role_description")
-  content: TranslationField! @goTag(key: "db", value: "content")
-  isAssessment: TranslationField! @goTag(key: "db", value: "is_assessment")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_document.graphql", Input: `enum DocumentType {
-  CONCEPT_PAPER
-  POLICY_PAPER
-  ICIP_DRAFT
-  MARKET_RESEARCH
-  DESIGN_PARAMETERS_MEMO
-  OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION
-  OTHER
-}
-
-"""
-PlanDocument represents a document on a plan
-"""
-type PlanDocument {
-  id: UUID!
-  modelPlanID: UUID!
-
-  """
-  If isLink = true, then this is a URL to a linked document, not an uploaded document
-  """
-  isLink: Boolean!
-  """
-  URL is the link that must be provided if this is a link instead of an uploaded document
-  """
-  url: String
-
-  fileType: String!
-  bucket: String!
-  fileKey: String!
-  virusScanned: Boolean!
-  virusClean: Boolean!
-  restricted: Boolean!
-  fileName: String!
-  fileSize: Int!
-  documentType: DocumentType!
-  otherType: String
-  optionalNotes: String
-  downloadUrl: String
-  deletedAt: Time
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-"""
-PlanDocumentInput
-"""
-input PlanDocumentInput {
-  modelPlanID: UUID!
-  fileData: Upload!
-  documentType: DocumentType!
-  restricted: Boolean!
-  otherTypeDescription: String
-  optionalNotes: String
-}
-
-"""
-PlanDocumentLinkInput
-"""
-input PlanDocumentLinkInput {
-  modelPlanID: UUID!
-  url: String!
-  name: String!
-  documentType: DocumentType!
-  restricted: Boolean!
-  otherTypeDescription: String
-  optionalNotes: String
-}
-
-extend type Query {
-  planDocument(id: UUID!): PlanDocument!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-
-extend type Mutation {
-  uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
-    @hasRole(role: MINT_USER)
-
-  linkNewPlanDocument(input: PlanDocumentLinkInput!): PlanDocument!
-    @hasRole(role: MINT_USER)
-
-  deletePlanDocument(id: UUID!): Int! @hasRole(role: MINT_USER)
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_document_solution_link_translation.graphql", Input: `"""
-Represents document solution link translation data
-"""
-type PlanDocumentSolutionLinkTranslation {
-  solutionID: TranslationField! @goTag(key: "db", value: "solution_id")
-  documentID: TranslationField! @goTag(key: "db", value: "document_id")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_document_translation.graphql", Input: `"""
-Represents plan document translation data
-"""
-type PlanDocumentTranslation {
-  isLink: TranslationField! @goTag(key: "db", value: "is_link")
-  url: TranslationField! @goTag(key: "db", value: "url")
-  fileName: TranslationField! @goTag(key: "db", value: "file_name")
-  documentType: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "document_type")
-  otherType: TranslationField! @goTag(key: "db", value: "other_type")
-  fileType: TranslationField! @goTag(key: "db", value: "file_type")
-  restricted: TranslationFieldWithOptions!
-    @goTag(key: "db", value: "restricted")
-  optionalNotes: TranslationField! @goTag(key: "db", value: "optional_notes")
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_favorite.graphql", Input: `type PlanFavorite {
-  id: UUID!
-  modelPlanID: UUID!
-  userID: UUID!
-  userAccount: UserAccount!
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-extend type Mutation {
-  addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-
-  deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/plan_general_characteristics.graphql", Input: `enum AgencyOrStateHelpType {
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_general_characteristics.graphql", Input: `enum AgencyOrStateHelpType {
   YES_STATE
   YES_AGENCY_IDEAS
   YES_AGENCY_IAA
@@ -21989,7 +22147,7 @@ extend type Mutation {
   ): PlanGeneralCharacteristics! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_general_characteristics_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_general_characteristics_translation.graphql", Input: `"""
 Represents plan general characteristics translation data
 """
 type PlanGeneralCharacteristicsTranslation {
@@ -22154,7 +22312,7 @@ type PlanGeneralCharacteristicsTranslation {
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_ops_eval_and_learning.graphql", Input: `enum StakeholdersType {
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_ops_eval_and_learning.graphql", Input: `enum StakeholdersType {
   BENEFICIARIES
   COMMUNITY_ORGANIZATIONS
   PARTICIPANTS
@@ -22443,7 +22601,7 @@ extend type Mutation {
   ): PlanOpsEvalAndLearning! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_ops_eval_and_learning_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_ops_eval_and_learning_translation.graphql", Input: `"""
 Represents plan ops eval and learning translation data
 """
 type PlanOpsEvalAndLearningTranslation {
@@ -22617,7 +22775,7 @@ type PlanOpsEvalAndLearningTranslation {
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_participants_and_providers.graphql", Input: `enum ParticipantsType {
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_participants_and_providers.graphql", Input: `enum ParticipantsType {
   MEDICARE_PROVIDERS
   ENTITIES
   CONVENER
@@ -22902,7 +23060,7 @@ extend type Mutation {
   ): PlanParticipantsAndProviders! @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_participants_and_providers_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_participants_and_providers_translation.graphql", Input: `"""
 Represents plan participants and providers translation data
 """
 type PlanParticipantsAndProvidersTranslation {
@@ -23051,7 +23209,7 @@ type PlanParticipantsAndProvidersTranslation {
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_payments.graphql", Input: `enum FundingSource {
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_payments.graphql", Input: `enum FundingSource {
   PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
   MEDICARE_PART_A_HI_TRUST_FUND
   MEDICARE_PART_B_SMI_TRUST_FUND
@@ -23324,7 +23482,7 @@ extend type Mutation {
     @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_payments_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/plan_payments_translation.graphql", Input: `"""
 Represents payments translation data
 """
 type PlanPaymentsTranslation {
@@ -23524,7 +23682,473 @@ type PlanPaymentsTranslation {
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_task.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/plan_task_list_sections/prepare_for_clearance.graphql", Input: `enum PrepareForClearanceStatus {
+  CANNOT_START
+  READY
+  IN_PROGRESS
+  READY_FOR_CLEARANCE
+}
+
+type PrepareForClearance {
+  status: PrepareForClearanceStatus!
+  latestClearanceDts: Time
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/questionnaires/iddoc_questionnaire.graphql", Input: `"""
+IDDOCQuestionnaireStatus represents the work completion status of an IDDOC questionnaire.
+Does not include NOT_NEEDED - use taskListStatus for display purposes.
+"""
+enum IDDOCQuestionnaireStatus {
+  READY
+  IN_PROGRESS
+  COMPLETE
+}
+
+"""
+IDDOCQuestionnaireTaskListStatus represents the combined status for task list display.
+Combines the needed field with work status to provide a unified view.
+"""
+enum IDDOCQuestionnaireTaskListStatus {
+  NOT_NEEDED
+  READY
+  IN_PROGRESS
+  COMPLETE
+}
+
+"""
+IDDOCFileType represents the types of files that can be exchanged
+"""
+enum IDDOCFileType {
+  BENEFICIARY
+  PROVIDER
+  PART_A
+  PART_B
+  OTHER
+}
+
+"""
+IDDOCFullTimeOrIncrementalType represents the types of data monitoring frequency
+"""
+enum IDDOCFullTimeOrIncrementalType {
+  FULL_TIME
+  INCREMENTAL
+}
+
+"""
+IDDOCQuestionnaire represents the IDDOC questionnaire for a model plan
+"""
+type IDDOCQuestionnaire {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # IDDOCQuestionnaire fields
+  #Page 1 Operations
+  technicalContactsIdentified: Boolean
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
+  icdOwner: String
+  draftIcdDueDate: Time
+  icdNote: String
+
+  #Page 2 Testing
+  uatNeeds: String
+  stcNeeds: String
+  testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [IDDOCFileType!]!
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
+
+  #Page 3 Monitoring
+  dataFullTimeOrIncremental: IDDOCFullTimeOrIncrementalType
+  eftSetUp: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+  dataMonitoringNote: String
+
+  # IDDOCQuestionnaire Metadata
+  """
+  Whether the IDDOC questionnaire is needed/required for this model plan.
+  Determined by business rules (database triggers) based on OEL settings, solutions, and milestones.
+  This is a stored field, not computed.
+  """
+  needed: Boolean!
+
+  """
+  The UUID of the user who completed the questionnaire
+  """
+  completedBy: UUID
+
+  """
+  The user who completed the questionnaire
+  """
+  completedByUserAccount: UserAccount
+
+  """
+  The timestamp when the questionnaire was completed
+  """
+  completedDts: Time
+
+  """
+  Convenience field indicating whether the questionnaire has been marked as complete.
+  Computed from status field: true when status is COMPLETE.
+  """
+  isComplete: Boolean!
+
+  """
+  The work completion status of the IDDOC questionnaire (READY, IN_PROGRESS, COMPLETE).
+  Represents user progress on the questionnaire, independent of whether it's needed.
+  """
+  status: IDDOCQuestionnaireStatus!
+
+  """
+  Computed status for display in task lists.
+  Returns NOT_NEEDED when needed=false, otherwise returns the actual work status.
+  """
+  taskListStatus: IDDOCQuestionnaireTaskListStatus!
+
+  # Model Metadata
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input IDDOCQuestionnaireChanges @goModel(model: "map[string]interface{}") {
+  #Page 1 Operations
+  technicalContactsIdentified: Boolean
+  technicalContactsIdentifiedDetail: String
+  technicalContactsIdentifiedNote: String
+  captureParticipantInfo: Boolean
+  captureParticipantInfoNote: String
+  icdOwner: String
+  draftIcdDueDate: Time
+  icdNote: String
+
+  #Page 2 Testing
+  uatNeeds: String
+  stcNeeds: String
+  testingTimelines: String
+  testingNote: String
+  dataMonitoringFileTypes: [IDDOCFileType!]
+  dataMonitoringFileOther: String
+  dataResponseType: String
+  dataResponseFileFrequency: String
+
+  #Page 3 Monitoring
+  dataFullTimeOrIncremental: IDDOCFullTimeOrIncrementalType
+  eftSetUp: Boolean
+  unsolicitedAdjustmentsIncluded: Boolean
+  dataFlowDiagramsNeeded: Boolean
+  produceBenefitEnhancementFiles: Boolean
+  fileNamingConventions: String
+  dataMonitoringNote: String
+
+  # Convenience fields for controlling status
+  # Note: 'needed' is NOT included - it's read-only and controlled by triggers
+  isComplete: Boolean
+
+  # Completion metadata
+  completedBy: UUID
+}
+
+extend type Mutation {
+  updateIDDOCQuestionnaire(
+    id: UUID!
+    changes: IDDOCQuestionnaireChanges!
+  ): IDDOCQuestionnaire! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/questionnaires/iddoc_questionnaire_translation.graphql", Input: `"""
+Represents IDDOC questionnaire translation data
+"""
+type IddocQuestionnaireTranslation {
+  # General fields
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  """
+  TaskListStatus is a convenivence field calculated from status and needed fields. It isn't in the database.
+  """
+  taskListStatus: TranslationFieldWithOptions!
+  needed: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "needed")
+
+  #Page 1
+  technicalContactsIdentified: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "technical_contacts_identified")
+  technicalContactsIdentifiedDetail: TranslationField!
+    @goTag(key: "db", value: "technical_contacts_identified_detail")
+  technicalContactsIdentifiedNote: TranslationField!
+    @goTag(key: "db", value: "technical_contacts_identified_note")
+  captureParticipantInfo: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "capture_participant_info")
+  captureParticipantInfoNote: TranslationField!
+    @goTag(key: "db", value: "capture_participant_info_note")
+  icdOwner: TranslationFieldWithParent! @goTag(key: "db", value: "icd_owner")
+  draftIcdDueDate: TranslationFieldWithParent!
+    @goTag(key: "db", value: "draft_icd_due_date")
+  icdNote: TranslationField! @goTag(key: "db", value: "icd_note")
+
+  #Page 2
+  uatNeeds: TranslationFieldWithParent! @goTag(key: "db", value: "uat_needs")
+  stcNeeds: TranslationFieldWithParent! @goTag(key: "db", value: "stc_needs")
+  testingTimelines: TranslationFieldWithParent!
+    @goTag(key: "db", value: "testing_timelines")
+  testingNote: TranslationField! @goTag(key: "db", value: "testing_note")
+  dataMonitoringFileTypes: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "data_monitoring_file_types")
+  dataMonitoringFileOther: TranslationField!
+    @goTag(key: "db", value: "data_monitoring_file_other")
+  dataResponseType: TranslationFieldWithParent!
+    @goTag(key: "db", value: "data_response_type")
+  dataResponseFileFrequency: TranslationFieldWithParent!
+    @goTag(key: "db", value: "data_response_file_frequency")
+
+  #Page 3
+  dataFullTimeOrIncremental: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "data_full_time_or_incremental")
+  eftSetUp: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "eft_set_up")
+  unsolicitedAdjustmentsIncluded: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "unsolicited_adjustments_included")
+  dataFlowDiagramsNeeded: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "data_flow_diagrams_needed")
+  produceBenefitEnhancementFiles: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "produce_benefit_enhancement_files")
+  fileNamingConventions: TranslationFieldWithParent!
+    @goTag(key: "db", value: "file_naming_conventions")
+  dataMonitoringNote: TranslationField!
+    @goTag(key: "db", value: "data_monitoring_note")
+  """
+  IsComplete is a convenivence field calculated from completedBy fields. It isn't in the database.
+  """
+  isComplete: TranslationFieldWithOptions!
+
+  # Metadata fields
+  completedBy: TranslationField! @goTag(key: "db", value: "completed_by")
+  completedDts: TranslationField! @goTag(key: "db", value: "completed_dts")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/questionnaires/plan_data_exchange_approach.graphql", Input: `enum DataToCollectFromParticipants {
+  BANKING_INFORMATION_TO_MAKE_NON_CLAIMS_BASED_PAYMENTS
+  CLINICAL_DATA
+  COLLECT_BIDS_AND_PLAN_INFORMATION
+  COOPERATIVE_AGREEMENT_APPLICATION
+  DECARBONIZATION_DATA
+  EXPANDED_DEMOGRAPHICS_DATA
+  FEE_FOR_SERVICE_CLAIMS_AND_APPLY_MODEL_RULES
+  LEARNING_SYSTEM_METRICS
+  PARTICIPANT_AGREEMENT
+  PARTICIPANT_AGREEMENT_LETTER_OF_INTENT
+  PARTICIPANT_AGREEMENT_REQUEST_FOR_APPLICATION
+  PARTICIPANT_REPORTED_DATA
+  PARTICIPANT_REPORTED_QUALITY_MEASURES
+  PROVIDER_PARTICIPANT_ROSTER
+  REPORTS_FROM_PARTICIPANTS
+  SOCIAL_DETERMINANTS_OF_HEALTH
+  SURVEY
+  OTHER
+}
+
+enum DataToSendToParticipants {
+  DATA_FEEDBACK_DASHBOARD
+  NON_CLAIMS_BASED_PAYMENTS
+  OPERATIONS_DATA
+  PARTIALLY_ADJUSTED_CLAIMS_DATA
+  RAW_CLAIMS_DATA
+  DATA_WILL_NOT_BE_SENT_TO_PARTICIPANTS
+}
+
+enum AnticipatedMultiPayerDataAvailabilityUseCase {
+  MORE_COMPETENT_ALERT_DISCHARGE_TRANSFER_NOTIFICATION
+  SUPPLY_MULTI_PAYER_CLAIMS_COST_UTIL_AND_QUALITY_REPORTING
+  FILL_GAPS_IN_CARE_ALERTING_AND_REPORTS
+}
+
+enum MultiSourceDataToCollect {
+  COMMERCIAL_CLAIMS
+  LAB_DATA
+  MANUFACTURER
+  MEDICAID_CLAIMS
+  MEDICARE_CLAIMS
+  PATIENT_REGISTRY
+  OTHER
+}
+
+enum DataExchangeApproachStatus {
+  READY
+  IN_PROGRESS
+  COMPLETE
+}
+
+type PlanDataExchangeApproach {
+  id: UUID!
+  modelPlanID: UUID!
+
+  dataToCollectFromParticipants: [DataToCollectFromParticipants!]!
+  dataToCollectFromParticipantsReportsDetails: String
+  dataToCollectFromParticipantsOther: String
+  dataWillNotBeCollectedFromParticipants: Boolean
+  dataToCollectFromParticipantsNote: String
+
+  dataToSendToParticipants: [DataToSendToParticipants!]!
+  dataToSendToParticipantsNote: String
+
+  doesNeedToMakeMultiPayerDataAvailable: Boolean
+  anticipatedMultiPayerDataAvailabilityUseCase: [AnticipatedMultiPayerDataAvailabilityUseCase!]!
+  doesNeedToMakeMultiPayerDataAvailableNote: String
+
+  doesNeedToCollectAndAggregateMultiSourceData: Boolean
+  multiSourceDataToCollect: [MultiSourceDataToCollect!]!
+  multiSourceDataToCollectOther: String
+  doesNeedToCollectAndAggregateMultiSourceDataNote: String
+
+  willImplementNewDataExchangeMethods: Boolean
+  newDataExchangeMethodsDescription: String
+  newDataExchangeMethodsNote: String
+
+  additionalDataExchangeConsiderationsDescription: String
+
+  # Metadata fields
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+  isDataExchangeApproachComplete: Boolean!
+  markedCompleteBy: UUID
+  markedCompleteByUserAccount: UserAccount
+  markedCompleteDts: Time
+
+  status: DataExchangeApproachStatus!
+}
+
+input PlanDataExchangeApproachChanges
+  @goModel(model: "map[string]interface{}") {
+  dataToCollectFromParticipants: [DataToCollectFromParticipants!]
+  dataToCollectFromParticipantsReportsDetails: String
+  dataToCollectFromParticipantsOther: String
+  dataWillNotBeCollectedFromParticipants: Boolean
+  dataToCollectFromParticipantsNote: String
+
+  dataToSendToParticipants: [DataToSendToParticipants!]
+  dataToSendToParticipantsNote: String
+
+  doesNeedToMakeMultiPayerDataAvailable: Boolean
+  anticipatedMultiPayerDataAvailabilityUseCase: [AnticipatedMultiPayerDataAvailabilityUseCase!]
+  doesNeedToMakeMultiPayerDataAvailableNote: String
+
+  doesNeedToCollectAndAggregateMultiSourceData: Boolean
+  multiSourceDataToCollect: [MultiSourceDataToCollect!]
+  multiSourceDataToCollectOther: String
+  doesNeedToCollectAndAggregateMultiSourceDataNote: String
+
+  willImplementNewDataExchangeMethods: Boolean
+  newDataExchangeMethodsDescription: String
+  newDataExchangeMethodsNote: String
+
+  additionalDataExchangeConsiderationsDescription: String
+
+  isDataExchangeApproachComplete: Boolean
+}
+
+extend type Mutation {
+  updatePlanDataExchangeApproach(
+    id: UUID!
+    changes: PlanDataExchangeApproachChanges!
+  ): PlanDataExchangeApproach! @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/questionnaires/plan_data_exchange_approach_translation.graphql", Input: `"""
+Represents plan data exchange approach translation data
+"""
+type PlanDataExchangeApproachTranslation {
+  #Page 2
+  dataToCollectFromParticipants: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "data_to_collect_from_participants")
+  dataToCollectFromParticipantsReportsDetails: TranslationField!
+    @goTag(
+      key: "db"
+      value: "data_to_collect_from_participants_reports_details"
+    )
+  dataToCollectFromParticipantsOther: TranslationField!
+    @goTag(key: "db", value: "data_to_collect_from_participants_other")
+  dataWillNotBeCollectedFromParticipants: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "data_will_not_be_collected_from_participants")
+  dataToCollectFromParticipantsNote: TranslationField!
+    @goTag(key: "db", value: "data_to_collect_from_participants_note")
+  dataToSendToParticipants: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "data_to_send_to_participants")
+  dataToSendToParticipantsNote: TranslationField!
+    @goTag(key: "db", value: "data_to_send_to_participants_note")
+
+  #Page 3
+  doesNeedToMakeMultiPayerDataAvailable: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "does_need_to_make_multi_payer_data_available")
+  anticipatedMultiPayerDataAvailabilityUseCase: TranslationFieldWithOptionsAndParent!
+    @goTag(
+      key: "db"
+      value: "anticipated_multi_payer_data_availability_use_case"
+    )
+  doesNeedToMakeMultiPayerDataAvailableNote: TranslationField!
+    @goTag(
+      key: "db"
+      value: "does_need_to_make_multi_payer_data_available_note"
+    )
+  doesNeedToCollectAndAggregateMultiSourceData: TranslationFieldWithOptionsAndChildren!
+    @goTag(
+      key: "db"
+      value: "does_need_to_collect_and_aggregate_multi_source_data"
+    )
+  multiSourceDataToCollect: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "multi_source_data_to_collect")
+  multiSourceDataToCollectOther: TranslationField!
+    @goTag(key: "db", value: "multi_source_data_to_collect_other")
+  doesNeedToCollectAndAggregateMultiSourceDataNote: TranslationField!
+    @goTag(
+      key: "db"
+      value: "does_need_to_collect_and_aggregate_multi_source_data_note"
+    )
+
+  # Page 4
+  willImplementNewDataExchangeMethods: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "will_implement_new_data_exchange_methods")
+  newDataExchangeMethodsDescription: TranslationField!
+    @goTag(key: "db", value: "new_data_exchange_methods_description")
+  newDataExchangeMethodsNote: TranslationField!
+    @goTag(key: "db", value: "new_data_exchange_methods_note")
+  additionalDataExchangeConsiderationsDescription: TranslationField!
+    @goTag(
+      key: "db"
+      value: "additional_data_exchange_considerations_description"
+    )
+  isDataExchangeApproachComplete: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "is_data_exchange_approach_complete")
+
+  # Metadata fields
+  markedCompleteBy: TranslationField!
+    @goTag(key: "db", value: "marked_complete_by")
+  markedCompleteDts: TranslationField!
+    @goTag(key: "db", value: "marked_complete_dts")
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/questionnaires/questionnaires.graphql", Input: `"""
+Questionnaires groups all questionnaire-related fields for a model plan
+"""
+type Questionnaires {
+  iddocQuestionnaire: IDDOCQuestionnaire!
+  dataExchangeApproach: PlanDataExchangeApproach!
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/tasks/plan_task.graphql", Input: `"""
 PlanTask represents a task on a model plan (e.g. model plan details, MTO, data exchange).
 """
 type PlanTask {
@@ -23571,14 +24195,89 @@ enum PlanTaskState {
   COMPLETE
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_tdl.graphql", Input: `type PlanTDL {
+	{Name: "../schema/types/model_collaboration/team/plan_collaborator.graphql", Input: `enum TeamRole {
+  MODEL_LEAD
+  MODEL_TEAM
+  SENIOR_ADVISOR
+  LEADERSHIP
+  LEARNING
+  EVALUATION
+  IT_LEAD
+  QUALITY
+  OACT
+  PAYMENT
+  CM_FFS_COUNTERPART
+  COR
+  SOLUTION_ARCHITECT
+}
+
+"""
+PlanCollaborator represents a collaborator on a plan
+"""
+type PlanCollaborator {
   id: UUID!
   modelPlanID: UUID!
+  userID: UUID!
+  userAccount: UserAccount!
+  teamRoles: [TeamRole!]!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
 
-  idNumber: String!
-  dateInitiated: Time!
+"""
+PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
+"""
+input PlanCollaboratorCreateInput {
+  modelPlanID: UUID!
+  userName: String!
+  teamRoles: [TeamRole!]!
+}
+
+extend type Query {
+  planCollaboratorByID(id: UUID!): PlanCollaborator!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+
+extend type Mutation {
+  createPlanCollaborator(
+    input: PlanCollaboratorCreateInput!
+  ): PlanCollaborator! @hasRole(role: MINT_USER)
+
+  updatePlanCollaborator(id: UUID!, newRoles: [TeamRole!]!): PlanCollaborator!
+    @hasRole(role: MINT_USER)
+
+  deletePlanCollaborator(id: UUID!): PlanCollaborator! @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/team/plan_collaborator_translations.graphql", Input: `"""
+Represents plan collaborator translation data
+"""
+type PlanCollaboratorTranslation {
+  username: TranslationField! @goTag(key: "db", value: "user_account.username")
+  userID: TranslationField! @goTag(key: "db", value: "user_id")
+  teamRoles: TranslationFieldWithOptions! @goTag(key: "db", value: "team_roles")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/timeline/custom_timeline_date.graphql", Input: `"""
+The selected date type for a Custom Timeline Date.
+"""
+enum CustomTimelineDateType {
+  SINGLE
+  RANGE
+}
+
+type CustomTimelineDate {
+  id: UUID!
+  modelPlanID: UUID!
   title: String!
-  note: String
+  description: String
+  dateType: CustomTimelineDateType!
+  startDate: Time!
+  endDate: Time
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -23588,46 +24287,55 @@ enum PlanTaskState {
   modifiedDts: Time
 }
 
-input PlanTDLCreateInput {
+"""
+CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate
+"""
+input CustomTimelineDateCreateInput {
   modelPlanID: UUID!
-
-  idNumber: String!
-  dateInitiated: Time!
   title: String!
-  note: String
+  description: String
+  dateType: CustomTimelineDateType!
+  startDate: Time!
+  endDate: Time
 }
 
-input PlanTDLChanges @goModel(model: "map[string]interface{}") {
-  idNumber: String
-  dateInitiated: Time
+input CustomTimelineDateChanges @goModel(model: "map[string]interface{}") {
   title: String
-  note: String
+  description: String
+  dateType: CustomTimelineDateType
+  startDate: Time
+  endDate: Time
 }
 
 extend type Query {
-  planTDL(id: UUID!): PlanTDL! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  customTimelineDate(id: UUID!): CustomTimelineDate!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 
 extend type Mutation {
-  createPlanTDL(input: PlanTDLCreateInput!): PlanTDL! @hasRole(role: MINT_USER)
-
-  updatePlanTDL(id: UUID!, changes: PlanTDLChanges!): PlanTDL!
-    @hasRole(role: MINT_USER)
-
-  deletePlanTDL(id: UUID!): PlanTDL! @hasRole(role: MINT_USER)
+  createCustomTimelineDate(
+    input: CustomTimelineDateCreateInput!
+  ): CustomTimelineDate! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  updateCustomTimelineDate(
+    id: UUID!
+    changes: CustomTimelineDateChanges!
+  ): CustomTimelineDate! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+  deleteCustomTimelineDate(id: UUID!): CustomTimelineDate!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_tdl_translation.graphql", Input: `"""
-Represents plan tdl translation data
+	{Name: "../schema/types/model_collaboration/timeline/custom_timeline_date_translation.graphql", Input: `"""
+Represents custom timeline date translation data
 """
-type PlanTDLTranslation {
-  idNumber: TranslationField! @goTag(key: "db", value: "id_number")
+type CustomTimelineDateTranslation {
   title: TranslationField! @goTag(key: "db", value: "title")
-  dateInitiated: TranslationField! @goTag(key: "db", value: "date_initiated")
-  note: TranslationField! @goTag(key: "db", value: "note")
+  description: TranslationField! @goTag(key: "db", value: "description")
+  dateType: TranslationFieldWithOptions! @goTag(key: "db", value: "date_type")
+  startDate: TranslationField! @goTag(key: "db", value: "start_date")
+  endDate: TranslationField! @goTag(key: "db", value: "end_date")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_timeline.graphql", Input: `type UpcomingTimelineDate {
+	{Name: "../schema/types/model_collaboration/timeline/plan_timeline.graphql", Input: `type UpcomingTimelineDate {
   date: Time!
   dateField: String!
 }
@@ -23715,7 +24423,7 @@ extend type Mutation {
     @hasRole(role: MINT_USER)
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/plan_timline_translation.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/timeline/plan_timeline_translation.graphql", Input: `"""
 Represents plan timeline translation data
 """
 type PlanTimelineTranslation {
@@ -23748,627 +24456,199 @@ type PlanTimelineTranslation {
   status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/prepare_for_clearance.graphql", Input: `enum PrepareForClearanceStatus {
-  CANNOT_START
-  READY
-  IN_PROGRESS
-  READY_FOR_CLEARANCE
+	{Name: "../schema/types/notifications/activity.graphql", Input: `"""
+ActivityType represents the possible activities that happen in application that might result in a notification
+"""
+enum ActivityType {
+  DAILY_DIGEST_COMPLETE
+  ADDED_AS_COLLABORATOR
+  TAGGED_IN_DISCUSSION
+  TAGGED_IN_DISCUSSION_REPLY
+  NEW_DISCUSSION_REPLY
+  MODEL_PLAN_SHARED
+  NEW_MODEL_PLAN
+  DATES_CHANGED
+  DATA_EXCHANGE_APPROACH_MARKED_COMPLETE
+  MTO_READY_FOR_REVIEW
+  NEW_DISCUSSION_ADDED
+  IDDOC_QUESTIONNAIRE_COMPLETED
+  INCORRECT_MODEL_STATUS
 }
 
-type PrepareForClearance {
-  status: PrepareForClearanceStatus!
-  latestClearanceDts: Time
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/questionnaires.graphql", Input: `"""
-Questionnaires groups all questionnaire-related fields for a model plan
-"""
-type Questionnaires {
-  iddocQuestionnaire: IDDOCQuestionnaire!
-  dataExchangeApproach: PlanDataExchangeApproach!
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/report_a_problem.graphql", Input: `enum ReportAProblemSection {
-  READ_VIEW
-  TASK_LIST
-  IT_SOLUTIONS
-  HELP_CENTER
-  OTHER
-}
-
-enum ReportAProblemSeverity {
-  PREVENTED_TASK
-  DELAYED_TASK
-  MINOR
-  OTHER
-}
-
-input ReportAProblemInput {
-  isAnonymousSubmission: Boolean!
-  allowContact: Boolean
-  section: ReportAProblemSection
-  sectionOther: String
-  whatDoing: String
-  whatWentWrong: String
-  severity: ReportAProblemSeverity
-  severityOther: String
-}
-
-extend type Mutation {
-  reportAProblem(input: ReportAProblemInput!): Boolean!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/scalars.graphql", Input: `"""
-UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
-"""
-scalar UUID
-
-"""
-Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
-"""
-scalar Time
-
-"""
-Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
-"""
-scalar Map
-
-"""
-TaggedHTML represents an input type for HTML that could also include tags that reference another entity
-"""
-scalar TaggedHTML
-
-"""
-https://gqlgen.com/reference/file-upload/
-Represents a multipart file upload
-"""
-scalar Upload
-
-"""
-https://gqlgen.com/reference/scalars/#any
-Maps an arbitrary GraphQL value to a interface{} Go type.
-"""
-scalar Any
-`, BuiltIn: false},
-	{Name: "../schema/types/send_feedback_email.graphql", Input: `enum MintUses {
-  VIEW_MODEL
-  EDIT_MODEL
-  SHARE_MODEL
-  TRACK_SOLUTIONS
-  CONTRIBUTE_DISCUSSIONS
-  VIEW_HELP
-  OTHER
-}
-
-enum EaseOfUse {
-  AGREE
-  DISAGREE
-  UNSURE
-}
-
-enum SatisfactionLevel {
-  VERY_SATISFIED
-  SATISFIED
-  NEUTRAL
-  DISSATISFIED
-  VERY_DISSATISFIED
+enum DateChangeFieldType {
+  COMPLETE_ICIP
+  CLEARANCE
+  ANNOUNCED
+  APPLICATIONS
+  PERFORMANCE_PERIOD
+  WRAP_UP_ENDS
 }
 
 """
-The inputs to the user feedback form
+ActivityMetaData is a type that represents all the data that can be captured in an Activity
 """
-input SendFeedbackEmailInput {
-  isAnonymousSubmission: Boolean!
-  allowContact: Boolean
-  cmsRole: String
-  mintUsedFor: [MintUses!]
-  mintUsedForOther: String
-  systemEasyToUse: EaseOfUse
-  systemEasyToUseOther: String
-  howSatisfied: SatisfactionLevel
-  howCanWeImprove: String
-}
+union ActivityMetaData =
+  | TaggedInPlanDiscussionActivityMeta
+  | TaggedInDiscussionReplyActivityMeta
+  | DailyDigestCompleteActivityMeta
+  | NewDiscussionRepliedActivityMeta
+  | AddedAsCollaboratorMeta
+  | ModelPlanSharedActivityMeta
+  | NewModelPlanActivityMeta
+  | DatesChangedActivityMeta
+  | PlanDataExchangeApproachMarkedCompleteActivityMeta
+  | MTOReadyForReviewActivityMeta
+  | IddocQuestionnaireCompletedActivityMeta
+  | NewDiscussionAddedActivityMeta
+  | IncorrectModelStatusActivityMeta
 
-extend type Mutation {
-  """
-  This mutation sends feedback about the MINT product to the MINT team
-  """
-  sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/shared_enums.graphql", Input: `enum FrequencyType {
-  ANNUALLY
-  SEMIANNUALLY
-  QUARTERLY
-  MONTHLY
-  CONTINUALLY
-  OTHER
-}
-
-enum YesNoOtherType {
-  YES
-  NO
-  OTHER
-}
-
-enum OverlapType {
-  YES_NEED_POLICIES
-  YES_NO_ISSUES
-  NO
-}
-
-enum TaskStatus {
-  READY
-  IN_PROGRESS
-  READY_FOR_REVIEW
-  READY_FOR_CLEARANCE
-}
-
-enum ConfidenceType {
-  NOT_AT_ALL
-  SLIGHTLY
-  FAIRLY
-  COMPLETELY
-}
-
-enum TaskStatusInput {
-  IN_PROGRESS
-  READY_FOR_REVIEW
-  READY_FOR_CLEARANCE
-}
-
-enum TaskListSection {
-  BASICS
-  GENERAL_CHARACTERISTICS
-  PARTICIPANTS_AND_PROVIDERS
-  BENEFICIARIES
-  OPERATIONS_EVALUATION_AND_LEARNING
-  PAYMENT
-  PREPARE_FOR_CLEARANCE
-}
-# Region : Operational Need and Solutions, these will be removed after MTO is fully migrated
-
-enum OperationalNeedKey {
-  MANAGE_CD
-  REV_COL_BIDS
-  UPDATE_CONTRACT
-  RECRUIT_PARTICIPANTS
-  REV_SCORE_APP
-  APP_SUPPORT_CON
-  COMM_W_PART
-  MANAGE_PROV_OVERLAP
-  MANAGE_BEN_OVERLAP
-  HELPDESK_SUPPORT
-  IDDOC_SUPPORT
-  ESTABLISH_BENCH
-  PROCESS_PART_APPEALS
-  ACQUIRE_AN_EVAL_CONT
-  DATA_TO_MONITOR
-  DATA_TO_SUPPORT_EVAL
-  CLAIMS_BASED_MEASURES
-  QUALITY_PERFORMANCE_SCORES
-  SEND_REPDATA_TO_PART
-  ACQUIRE_A_LEARN_CONT
-  PART_TO_PART_COLLAB
-  EDUCATE_BENEF
-  ADJUST_FFS_CLAIMS
-  MANAGE_FFS_EXCL_PAYMENTS
-  MAKE_NON_CLAIMS_BASED_PAYMENTS
-  COMPUTE_SHARED_SAVINGS_PAYMENT
-  RECOVER_PAYMENTS
-  SIGN_PARTICIPATION_AGREEMENTS
-  VET_PROVIDERS_FOR_PROGRAM_INTEGRITY
-  UTILIZE_QUALITY_MEASURES_DEVELOPMENT_CONTRACTOR
-  IT_PLATFORM_FOR_LEARNING
-  ACQUIRE_AN_IMP_CONT
-  ACQUIRE_A_PRE_IMP_CONT
-  ACQUIRE_A_DATA_AGG_CONT
-  SEND_DASHBOARDS_REPORTS_TO_PART
-  SEND_DATA_VIA_API_TO_PART
-  SEND_RAW_FILES_TO_PART
-  SIGN_COOPERATIVE_AGREEMENTS
-}
-
-enum OperationalSolutionSubtaskStatus {
-  TODO
-  IN_PROGRESS
-  DONE
-}
-enum OpSolutionStatus {
-  NOT_STARTED
-  ONBOARDING
-  BACKLOG
-  IN_PROGRESS
-  COMPLETED
-  AT_RISK
-}
-
-enum OperationalSolutionKey {
-  INNOVATION
-  ACO_OS
-  APPS
-  CDX
-  CCW
-  CMS_BOX
-  CMS_QUALTRICS
-  CBOSC
-  CONTRACTOR
-  CPI_VETTING
-  CROSS_MODEL_CONTRACT
-  EFT
-  EXISTING_CMS_DATA_AND_PROCESS
-  EDFR
-  GOVDELIVERY
-  GS
-  HDR
-  HPMS
-  HIGLAS
-  IPC
-  IDR
-  INTERNAL_STAFF
-  LDG
-  LV
-  MARX
-  OTHER_NEW_PROCESS
-  OUTLOOK_MAILBOX
-  QV
-  RMADA
-  ARS
-  CONNECT
-  LOI
-  POST_PORTAL
-  RFA
-  SHARED_SYSTEMS
-  BCDA
-  ISP
-  MIDS
-  MODEL_SPACE
-}
-
-#endregion : Operational Need and Solutions, these will be removed after MTO is fully migrated
-
-enum DiscussionUserRole {
-  CMS_SYSTEM_SERVICE_TEAM
-  LEADERSHIP
-  MEDICARE_ADMINISTRATIVE_CONTRACTOR
-  MINT_TEAM
-  IT_LEAD
-  MODEL_LEAD
-  MODEL_TEAM
-  SHARED_SYSTEM_MAINTAINER
-  SOLUTION_ARCHITECT
-  NONE_OF_THE_ABOVE
-}
-
-"""
-A user role associated with a job code
-"""
-enum Role {
-  """
-  A basic MINT user
-  """
-  MINT_USER
-
-  """
-  A MINT assessment team user
-  """
-  MINT_ASSESSMENT
-
-  """
-  A MINT MAC user
-  """
-  MINT_MAC
-}
-
-"""
-These represent all the possible tables in the database, in the public schema.
-"""
-enum TableName {
-  activity
-  analyzed_audit
-  discussion_reply
-  ctat_request
-  ctat_request_document
-  ctat_request_model_plan_link
-  existing_model
-  existing_model_link
-  iddoc_questionnaire
-  model_plan
-  nda_agreement
-  operational_need
-  operational_solution
-  operational_solution_subtask
-  plan_basics
-  plan_beneficiaries
-  plan_collaborator
-  plan_cr
-  plan_data_exchange_approach
-  plan_discussion
-  plan_document
-  plan_document_solution_link
-  plan_favorite
-  plan_general_characteristics
-  plan_ops_eval_and_learning
-  plan_participants_and_providers
-  plan_payments
-  plan_tdl
-  possible_need_solution_link
-  possible_operational_need
-  possible_operational_solution
-  possible_operational_solution_contact
-  tag
-  plan_timeline
-  custom_timeline_date
-  translated_audit
-  translated_audit_field
-  translated_audit_queue
-  user_account
-  user_notification
-  user_notification_preferences
-  user_view_customization
-
-  mto_category
-  mto_milestone
-  mto_solution
-  mto_milestone_solution_link
-  mto_info
-  mto_common_milestone
-  mto_common_solution
-  mto_common_solution_contact
-  mto_milestone_note
-
-  mto_template
-  mto_template_category
-  mto_template_milestone
-  mto_template_solution
-  mto_template_milestone_solution_link
-  model_plan_mto_template_link
-
-  key_contact
-  key_contact_category
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/tag.graphql", Input: `enum TagType {
-  USER_ACCOUNT
-  POSSIBLE_SOLUTION
-  MTO_COMMON_SOLUTION
-}
-
-"""
-TaggedEntity is the actual object represented by a tag in the data base.
-"""
-union TaggedEntity = UserAccount | MTOCommonSolution
-
-"""
-TaggedContent represents content that has a tag in it. It is composed of the raw tag text, as well as the array of possible tags
-"""
-type TaggedContent {
-  """
-  RawContent is HTML. It is sanitized on the backend
-  """
-  rawContent: String!
-  tags: [Tag!]!
-}
-
-"""
-Tag represents an entity tagged in the database
-"""
-type Tag {
-  id: UUID!
-  tagType: TagType!
-  taggedField: String!
-  taggedContentTable: String!
-  taggedContentID: UUID!
-  entityUUID: UUID
-  entityIntID: Int
-
-  entity: TaggedEntity
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/translated_audit.graphql", Input: `"""
-TranslatedAuditMetaData is a type that represents all the data that can be captured in a Translated audit
-"""
-union TranslatedAuditMetaData =
-  | TranslatedAuditMetaBaseStruct
-  | TranslatedAuditMetaGeneric
-  | TranslatedAuditMetaDiscussionReply
-  | TranslatedAuditMetaOperationalNeed
-  | TranslatedAuditMetaOperationalSolution
-  | TranslatedAuditMetaOperationalSolutionSubtask
-  | TranslatedAuditMetaDocumentSolutionLink
-  | TranslatedAuditMetaMTOCategory
-
-type TranslatedAuditMetaBaseStruct {
+type AddedAsCollaboratorMeta {
   version: Int!
-  tableName: TableName!
-}
-type TranslatedAuditMetaGeneric {
-  version: Int!
-  tableName: TableName!
-  relation: String!
-  """
-  Relation content can be nil under certain situations, for example if a record was deleted before the audit was translated
-  """
-  relationContent: String
-}
-
-"""
-TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for a discussion reply
-"""
-type TranslatedAuditMetaDiscussionReply {
-  version: Int!
-  tableName: TableName!
-  discussionID: UUID!
-  discussionContent: String!
-  numberOfReplies: Int!
-}
-
-"""
-TranslatedAuditMetaDiscussionReply is the meta data type that is provided when a translated audit is for an operational need
-"""
-type TranslatedAuditMetaOperationalNeed {
-  version: Int!
-  tableName: TableName!
-  needName: String!
-  isOther: Boolean!
-}
-"""
-TranslatedAuditMetaOperationalSolution is the meta data type that is provided when a translated audit is for an operational solution
-"""
-type TranslatedAuditMetaOperationalSolution {
-  version: Int!
-  tableName: TableName!
-  solutionName: String!
-  solutionOtherHeader: String
-  solutionIsOther: Boolean!
-  numberOfSubtasks: Int!
-  needName: String!
-  needIsOther: Boolean!
-  """
-  SolutionStatus is the translated value for the type of solution
-  """
-  solutionStatus: String!
-  solutionMustStart: Time
-  solutionMustFinish: Time
-}
-"""
-TranslatedAuditMetaOperationalSolutionSubtask is the meta data type that is provided when a translated audit is for an operational solution subtask
-"""
-type TranslatedAuditMetaOperationalSolutionSubtask {
-  version: Int!
-  tableName: TableName!
-  solutionName: String!
-  solutionOtherHeader: String
-  solutionIsOther: Boolean!
-  numberOfSubtasks: Int!
-  needName: String!
-  needIsOther: Boolean!
-  """
-  The name of the subtask. If a subtask is updated, and then deleted before being translated, it is possible for this field to be nil.
-  """
-  subtaskName: String
-}
-
-"""
-TranslatedAuditMetaDocumentSolutionLink is the meta data type for a document solution link
-"""
-type TranslatedAuditMetaDocumentSolutionLink {
-  version: Int!
-  tableName: TableName!
-  solutionName: String!
-  solutionOtherHeader: String
-  solutionIsOther: Boolean!
-  needName: String!
-  needIsOther: Boolean!
-
-  # These fields are only present if the document wasn't deleted
-
-  """
-  Document Name will be present if the document is still present and not deleted
-  """
-  documentName: String
-  """
-  Document type is the translated value of the document type enum
-  """
-  documentType: String
-  documentOtherType: String
-  documentNote: String
-  """
-  Document URL will only be visible if the user is a collaborator, or has assessment permission
-  """
-  documentURL: String
-  """
-  Document Visibility is the translated value of the restricted bool for a document
-  """
-  documentVisibility: String
-  documentRestricted: Boolean
-
-  """
-  Document ID  will always be present, regardless of if a document was deleted or not
-  """
-  documentID: UUID!
-}
-"""
-TranslatedAuditMetaMTOCategory is the meta data for when an MTO Category is audited
-"""
-type TranslatedAuditMetaMTOCategory {
-  version: Int!
-  tableName: TableName!
-
-  categoryName: String
-
-  isSubCategory: Boolean!
-  parentCategoryID: UUID
-  parentCategoryName: String
-}
-
-enum TranslatedAuditMetaDataType {
-  GENERIC
-  BASE
-  DISCUSSION_REPLY
-  OPERATIONAL_NEED
-  OPERATIONAL_SOLUTION
-  OPERATIONAL_SOLUTION_SUBTASK
-  DOCUMENT_SOLUTION_LINK
-  MTO_CATEGORY
-}
-
-enum DatabaseOperation {
-  INSERT
-  UPDATE
-  DELETE
-  TRUNCATE
-}
-
-"""
-TranslatedAudit represent a point in time change made to part of application.
-"""
-type TranslatedAudit {
-  id: UUID!
+  type: ActivityType!
   modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  collaboratorID: UUID!
+  collaborator: PlanCollaborator!
+}
 
-  tableID: Int!
-  tableName: TableName!
-  primaryKey: UUID!
+type TaggedInPlanDiscussionActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  discussionID: UUID!
+  discussion: PlanDiscussion!
+  content: String!
+}
 
+type TaggedInDiscussionReplyActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  discussionID: UUID!
+  discussion: PlanDiscussion!
+  replyID: UUID!
+  reply: DiscussionReply!
+  content: String!
+}
+
+type IddocQuestionnaireCompletedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+}
+
+type ModelPlanSharedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  optionalMessage: String
+}
+
+type NewDiscussionRepliedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  discussionID: UUID!
+  discussion: PlanDiscussion!
+  replyID: UUID!
+  reply: DiscussionReply!
+  content: String!
+}
+
+type DailyDigestCompleteActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanIDs: [UUID!]!
+  analyzedAudits: [AnalyzedAudit!]!
+  userID: UUID!
   date: Time!
-  action: DatabaseOperation!
+}
 
-  """
-  Restricted denotes if this audit should only be visible to users with specific permissions. Currently, that means they are a collaborator or an assessment user
-  """
-  restricted: Boolean!
+type NewModelPlanActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+}
 
+type DateChange {
+  isChanged: Boolean!
+  field: DateChangeFieldType!
+  isRange: Boolean!
+  oldDate: Time
+  newDate: Time
+  oldRangeStart: Time
+  oldRangeEnd: Time
+  newRangeStart: Time
+  newRangeEnd: Time
+}
+
+type DatesChangedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  dateChanges: [DateChange!]!
+}
+
+type PlanDataExchangeApproachMarkedCompleteActivityMeta {
+  version: Int!
+  type: ActivityType!
+  dataExchangeApproachID: UUID!
+  dataExchangeApproach: PlanDataExchangeApproach!
+  modelPlan: ModelPlan!
+  markedCompleteBy: UUID!
+  markedCompleteByUserAccount: UserAccount!
+}
+
+type NewDiscussionAddedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  discussionID: UUID!
+  userName: String!
+  modelPlanID: UUID!
+  modelPlanName: String!
+  modelAbbreviation: String!
+  role: String!
+  content: String!
+}
+
+type MTOReadyForReviewActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  mtoInfoID: UUID!
+  mtoInfo: MTOInfo!
+  markedReadyForReview: UUID!
+  markedReadyForReviewByUserAccount: UserAccount!
+}
+
+type IncorrectModelStatusActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  phaseSuggestion: PhaseSuggestion!
+  currentStatus: String!
+  modelPlanName: String!
+}
+
+"""
+Activity represents an event that happened in the application that could result in a notification.
+"""
+type Activity {
+  id: UUID!
   actorID: UUID!
-  """
-  The Common name of the actor who made the changes. This comes from the user account table.
-  """
-  actorName: String!
-  """
-  The id of the audit.Change record that was translated.
-  """
-  changeID: Int! # This points to a specific audit change.
-  """
-  The type of meta data that is stored for this record
-  """
-  metaDataType: TranslatedAuditMetaDataType
-  """
-  The actual meta data stored for this record
-  """
-  metaData: TranslatedAuditMetaData
-
-  """
-  The specific fields that were changed by the transaction
-  """
-  translatedFields: [TranslatedAuditField!]!
+  actorUserAccount: UserAccount!
+  entityID: UUID!
+  activityType: ActivityType!
+  metaData: ActivityMetaData!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -24377,414 +24657,8 @@ type TranslatedAudit {
   modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
-enum AuditFieldChangeType {
-  ANSWERED
-  UPDATED
-  REMOVED
-  """
-  This type should not appear for all intents and purposes. It shows up if a value changes from null to empty array or vice versa.
-  """
-  UNCHANGED
-}
-
-enum TranslationQuestionType {
-  OTHER
-  NOTE
-}
-
-type TranslatedAuditField {
-  id: UUID!
-  translatedAuditID: UUID!
-
-  """
-  This represents whether a field was answered, updated, or had the answer removed
-  """
-  changeType: AuditFieldChangeType!
-
-  dataType: TranslationDataType!
-  formType: TranslationFormType!
-
-  fieldName: String!
-  fieldNameTranslated: String!
-  """
-  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
-  """
-  fieldOrder: Float!
-  """
-  The label for the parent question that this question refers to
-  """
-  referenceLabel: String
-  """
-  Specifies if this is a specific category of question. Needed for conditionally rendering note details etc
-  """
-  questionType: TranslationQuestionType
-  """
-  Translated Label for questions that are no longer applicable
-  """
-  notApplicableQuestions: [String!]
-
-  old: Any
-  oldTranslated: Any
-  new: Any
-  newTranslated: Any
-
-  createdBy: UUID!
-  createdByUserAccount: UserAccount!
-  createdDts: Time!
-  modifiedBy: UUID
-  modifiedByUserAccount: UserAccount
-  modifiedDts: Time
-}
-
-extend type Query {
-  """
-  TranslatedAuditCollection returns a collection of translated audits, with access dependant on who is viewing the audits.
-  if a user has privileged access, they will see audit changes that are restricted, otherwise only unrestricted
-  Optional Params
-      limit: this controls how many records will be returned at once. A null entry will return all records
-      offset: how many records to skip before returning results. If null, no records will be skipped.
-  """
-  translatedAuditCollection(
-    modelPlanID: UUID!
-    limit: Int
-    offset: Int
-  ): [TranslatedAudit!] @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
 `, BuiltIn: false},
-	{Name: "../schema/types/translation.graphql", Input: `# Base types that represents FE translation structure
-# Translations are exported from FE for change history, and mapped to these types on the BE
-
-"""
-Represents the data type of the translation field
-"""
-enum TranslationDataType {
-  STRING
-  NUMBER
-  BOOLEAN
-  DATE
-  ENUM
-  OBJECT
-  UUID
-}
-
-"""
-Represents the FORM type of the translation field
-"""
-enum TranslationFormType {
-  TEXT
-  TEXTAREA
-  NUMBER
-  BOOLEAN
-  RADIO
-  CHECKBOX
-  SELECT
-  MULTISELECT
-  DATEPICKER
-  RANGEINPUT
-}
-
-"""
-Represents a translation question with no options
-"""
-type TranslationField {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  dataType: TranslationDataType!
-  formType: TranslationFormType!
-  isNote: Boolean
-  """
-  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
-  """
-  order: Float!
-  """
-  Is a question a followup to another that doesn't designate it's own readonly question/line
-  """
-  isOtherType: Boolean
-  """
-  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-  """
-  otherParentField: String
-  """
-  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-  """
-  parentReferencesLabel: String
-  """
-  Labels specifically for export/change history.  Takes priority over all other labels
-  """
-  exportLabel: String
-  """
-  Table reference for fields that are of dataType UUID and reference a table in the database
-  """
-  tableReference: TableName
-}
-
-"""
-Represents a translation question with options
-"""
-type TranslationFieldWithOptions {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  dataType: TranslationDataType!
-  formType: TranslationFormType!
-  isNote: Boolean
-  """
-  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
-  """
-  order: Float!
-  """
-  Is a question a followup to another that doesn't designate it's own readonly question/line
-  """
-  isOtherType: Boolean
-  """
-  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-  """
-  otherParentField: String
-  """
-  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-  """
-  parentReferencesLabel: String
-  """
-  Labels specifically for export/change history.  Takes priority over all other labels
-  """
-  exportLabel: String
-  """
-  Table reference for fields that are of dataType UUID and reference a table in the database
-  """
-  tableReference: TableName
-  options: Map!
-  exportOptions: Map
-}
-
-"""
-Represents a translation question with no options and a parent
-"""
-type TranslationFieldWithParent {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  dataType: TranslationDataType!
-  formType: TranslationFormType!
-  isNote: Boolean
-  """
-  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
-  """
-  order: Float!
-  """
-  Is a question a followup to another that doesn't designate it's own readonly question/line
-  """
-  isOtherType: Boolean
-  """
-  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-  """
-  otherParentField: String
-  """
-  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-  """
-  parentReferencesLabel: String
-  """
-  Labels specifically for export/change history.  Takes priority over all other labels
-  """
-  exportLabel: String
-  """
-  Table reference for fields that are of dataType UUID and reference a table in the database
-  """
-  tableReference: TableName
-  parentRelation: TranslationField!
-}
-
-"""
-Represents a translation question with options and child/children
-"""
-type TranslationFieldWithOptionsAndChildren {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  dataType: TranslationDataType!
-  formType: TranslationFormType!
-  isNote: Boolean
-  """
-  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
-  """
-  order: Float!
-  """
-  Is a question a followup to another that doesn't designate it's own readonly question/line
-  """
-  isOtherType: Boolean
-  """
-  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-  """
-  otherParentField: String
-  """
-  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-  """
-  parentReferencesLabel: String
-  """
-  Labels specifically for export/change history.  Takes priority over all other labels
-  """
-  exportLabel: String
-  """
-  Table reference for fields that are of dataType UUID and reference a table in the database
-  """
-  tableReference: TableName
-  options: Map!
-  exportOptions: Map
-  childRelation: Map!
-}
-
-"""
-Represents a translation question with options and parent
-"""
-type TranslationFieldWithOptionsAndParent {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  dataType: TranslationDataType!
-  formType: TranslationFormType!
-  isNote: Boolean
-  """
-  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
-  """
-  order: Float!
-  """
-  Is a question a followup to another that doesn't designate it's own readonly question/line
-  """
-  isOtherType: Boolean
-  """
-  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-  """
-  otherParentField: String
-  """
-  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-  """
-  parentReferencesLabel: String
-  """
-  Labels specifically for export/change history.  Takes priority over all other labels
-  """
-  exportLabel: String
-  """
-  Table reference for fields that are of dataType UUID and reference a table in the database
-  """
-  tableReference: TableName
-  options: Map!
-  exportOptions: Map
-  parentRelation: TranslationFieldWithOptionsAndChildren!
-}
-
-"""
-Represents a translation question with options and parent and children
-"""
-type TranslationFieldWithParentAndChildren {
-  gqlField: String!
-  goField: String!
-  dbField: String!
-  label: String!
-  readonlyLabel: String
-  sublabel: String
-  multiSelectLabel: String
-  isArray: Boolean
-  dataType: TranslationDataType!
-  formType: TranslationFormType!
-  isNote: Boolean
-  """
-  Designates the order of the question in the form.  Uses integer as page and question order uses hundreths place.  Ex: 1.01, 1.02, 2.01, 2.02
-  """
-  order: Float!
-  """
-  Is a question a followup to another that doesn't designate it's own readonly question/line
-  """
-  isOtherType: Boolean
-  """
-  Field name for the parent question for fields that represent Other, Please specify, etc.  Used in change history to render parent question for context
-  """
-  otherParentField: String
-  """
-  Label for fields that reference more than one parent - Ex: Notes - 'Note for Model Basics'
-  """
-  parentReferencesLabel: String
-  """
-  Labels specifically for export/change history.  Takes priority over all other labels
-  """
-  exportLabel: String
-  """
-  Table reference for fields that are of dataType UUID and reference a table in the database
-  """
-  tableReference: TableName
-  options: Map!
-  exportOptions: Map
-  parentRelation: TranslationFieldWithOptionsAndChildren!
-  childRelation: Map!
-}
-
-"""
-Represents a translation of enum values.  generalName is the human readable name of the enum value, groupedName is an optional field if usually referenced by a difference table/name
-"""
-type EnumTranslation {
-  generalName: String!
-  groupedName: String
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/user_account.graphql", Input: `type UserAccount {
-  id: UUID!
-  username: String!
-  isEUAID: Boolean
-  commonName: String!
-  locale: String!
-  email: String!
-  givenName: String!
-  familyName: String!
-  zoneInfo: String!
-  hasLoggedIn: Boolean
-}
-
-extend type Query {
-  userAccount(username: String!): UserAccount!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/user_info.graphql", Input: `"""
-Represents a person response from the Okta API
-"""
-type UserInfo {
-  firstName: String!
-  lastName: String!
-  displayName: String!
-  email: String!
-  username: String!
-}
-
-extend type Query {
-  searchOktaUsers(searchTerm: String!): [UserInfo!]!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/user_notification.graphql", Input: `"""
+	{Name: "../schema/types/notifications/user_notification.graphql", Input: `"""
 UserNotification represents a notification about a specific Activity
 """
 type UserNotification {
@@ -24833,7 +24707,7 @@ extend type Mutation {
   markAllNotificationsAsRead: [UserNotification!]!
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/user_notification_preferences.graphql", Input: `enum UserNotificationPreferenceFlag {
+	{Name: "../schema/types/notifications/user_notification_preferences.graphql", Input: `enum UserNotificationPreferenceFlag {
   IN_APP
   EMAIL
 }
@@ -24954,7 +24828,56 @@ extend type Mutation {
   ): UserNotificationPreferences!
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/user_view_customization.graphql", Input: `enum ViewCustomizationType {
+	{Name: "../schema/types/users/current_user.graphql", Input: `"""
+The current user of the application
+"""
+type CurrentUser {
+  launchDarkly: LaunchDarklySettings!
+  account: UserAccount!
+  notifications: UserNotifications!
+  notificationPreferences: UserNotificationPreferences!
+  leadModelPlanCount: Int!
+}
+
+extend type Query {
+  currentUser: CurrentUser!
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/users/user_account.graphql", Input: `type UserAccount {
+  id: UUID!
+  username: String!
+  isEUAID: Boolean
+  commonName: String!
+  locale: String!
+  email: String!
+  givenName: String!
+  familyName: String!
+  zoneInfo: String!
+  hasLoggedIn: Boolean
+}
+
+extend type Query {
+  userAccount(username: String!): UserAccount!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/users/user_info.graphql", Input: `"""
+Represents a person response from the Okta API
+"""
+type UserInfo {
+  firstName: String!
+  lastName: String!
+  displayName: String!
+  email: String!
+  username: String!
+}
+
+extend type Query {
+  searchOktaUsers(searchTerm: String!): [UserInfo!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/users/user_view_customization.graphql", Input: `enum ViewCustomizationType {
   MY_MODEL_PLANS
   ALL_MODEL_PLANS
   FOLLOWED_MODELS
@@ -25009,6 +24932,83 @@ extend type Mutation {
   updateUserViewCustomization(
     changes: UserViewCustomizationChanges!
   ): UserViewCustomization! @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/utility/report_a_problem.graphql", Input: `enum ReportAProblemSection {
+  READ_VIEW
+  TASK_LIST
+  IT_SOLUTIONS
+  HELP_CENTER
+  OTHER
+}
+
+enum ReportAProblemSeverity {
+  PREVENTED_TASK
+  DELAYED_TASK
+  MINOR
+  OTHER
+}
+
+input ReportAProblemInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  section: ReportAProblemSection
+  sectionOther: String
+  whatDoing: String
+  whatWentWrong: String
+  severity: ReportAProblemSeverity
+  severityOther: String
+}
+
+extend type Mutation {
+  reportAProblem(input: ReportAProblemInput!): Boolean!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/utility/send_feedback_email.graphql", Input: `enum MintUses {
+  VIEW_MODEL
+  EDIT_MODEL
+  SHARE_MODEL
+  TRACK_SOLUTIONS
+  CONTRIBUTE_DISCUSSIONS
+  VIEW_HELP
+  OTHER
+}
+
+enum EaseOfUse {
+  AGREE
+  DISAGREE
+  UNSURE
+}
+
+enum SatisfactionLevel {
+  VERY_SATISFIED
+  SATISFIED
+  NEUTRAL
+  DISSATISFIED
+  VERY_DISSATISFIED
+}
+
+"""
+The inputs to the user feedback form
+"""
+input SendFeedbackEmailInput {
+  isAnonymousSubmission: Boolean!
+  allowContact: Boolean
+  cmsRole: String
+  mintUsedFor: [MintUses!]
+  mintUsedForOther: String
+  systemEasyToUse: EaseOfUse
+  systemEasyToUseOther: String
+  howSatisfied: SatisfactionLevel
+  howCanWeImprove: String
+}
+
+extend type Mutation {
+  """
+  This mutation sends feedback about the MINT product to the MINT team
+  """
+  sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
 }
 `, BuiltIn: false},
 }
@@ -50990,502 +50990,6 @@ func (ec *executionContext) fieldContext_ModelsToOperationMatrix_info(_ context.
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createCTATRequest(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_createCTATRequest(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().CreateCTATRequest(ctx, fc.Args["input"].(model.CTATRequestInput))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
-				if err != nil {
-					var zeroVal *models.CTATRequest
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.CTATRequest
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequest) graphql.Marshaler {
-			return ec.marshalNCTATRequest2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequest(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_createCTATRequest(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CTATRequest(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createCTATRequest_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_adminUpdateCTATRequest(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_adminUpdateCTATRequest(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().AdminUpdateCTATRequest(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ASSESSMENT")
-				if err != nil {
-					var zeroVal *models.CTATRequest
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.CTATRequest
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequest) graphql.Marshaler {
-			return ec.marshalNCTATRequest2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequest(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_adminUpdateCTATRequest(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CTATRequest(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_adminUpdateCTATRequest_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_createCustomTimelineDate(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().CreateCustomTimelineDate(ctx, fc.Args["input"].(model.CustomTimelineDateCreateInput))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.CustomTimelineDate
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.CustomTimelineDate
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
-			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_createCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CustomTimelineDate(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createCustomTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updateCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_updateCustomTimelineDate(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().UpdateCustomTimelineDate(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.CustomTimelineDate
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.CustomTimelineDate
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
-			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_updateCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CustomTimelineDate(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateCustomTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deleteCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_deleteCustomTimelineDate(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().DeleteCustomTimelineDate(ctx, fc.Args["id"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.CustomTimelineDate
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.CustomTimelineDate
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
-			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_deleteCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CustomTimelineDate(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deleteCustomTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_createDiscussionReply(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().CreateDiscussionReply(ctx, fc.Args["input"].(model.DiscussionReplyCreateInput))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.DiscussionReply
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.DiscussionReply
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.DiscussionReply) graphql.Marshaler {
-			return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_DiscussionReply(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createDiscussionReply_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_updateExistingModelLinks(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().UpdateExistingModelLinks(ctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["fieldName"].(models.ExisitingModelLinkFieldType), fc.Args["existingModelIDs"].([]int), fc.Args["currentModelPlanIDs"].([]uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.ExistingModelLinks
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.ExistingModelLinks
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.ExistingModelLinks) graphql.Marshaler {
-			return ec.marshalNExistingModelLinks2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLinks(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_ExistingModelLinks(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateExistingModelLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updateIDDOCQuestionnaire(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_updateIDDOCQuestionnaire(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().UpdateIDDOCQuestionnaire(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
-				if err != nil {
-					var zeroVal *models.IDDOCQuestionnaire
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.IDDOCQuestionnaire
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.IDDOCQuestionnaire) graphql.Marshaler {
-			return ec.marshalNIDDOCQuestionnaire2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐIDDOCQuestionnaire(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_updateIDDOCQuestionnaire(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_IDDOCQuestionnaire(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateIDDOCQuestionnaire_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_createKeyContactMailbox(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -52106,6 +51610,254 @@ func (ec *executionContext) fieldContext_Mutation_unlockAllLockableSections(ctx 
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_agreeToNDA(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_agreeToNDA(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().AgreeToNda(ctx, fc.Args["agree"].(bool))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *model.NDAInfo
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *model.NDAInfo
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *model.NDAInfo) graphql.Marshaler {
+			return ec.marshalNNDAInfo2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNDAInfo(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_agreeToNDA(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_NDAInfo(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_agreeToNDA_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createCTATRequest(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createCTATRequest(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreateCTATRequest(ctx, fc.Args["input"].(model.CTATRequestInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
+				if err != nil {
+					var zeroVal *models.CTATRequest
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CTATRequest
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequest) graphql.Marshaler {
+			return ec.marshalNCTATRequest2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequest(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createCTATRequest(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CTATRequest(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createCTATRequest_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_adminUpdateCTATRequest(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_adminUpdateCTATRequest(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().AdminUpdateCTATRequest(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ASSESSMENT")
+				if err != nil {
+					var zeroVal *models.CTATRequest
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.CTATRequest
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequest) graphql.Marshaler {
+			return ec.marshalNCTATRequest2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequest(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_adminUpdateCTATRequest(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CTATRequest(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_adminUpdateCTATRequest_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateExistingModelLinks(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateExistingModelLinks(ctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["fieldName"].(models.ExisitingModelLinkFieldType), fc.Args["existingModelIDs"].([]int), fc.Args["currentModelPlanIDs"].([]uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.ExistingModelLinks
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.ExistingModelLinks
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.ExistingModelLinks) graphql.Marshaler {
+			return ec.marshalNExistingModelLinks2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLinks(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_ExistingModelLinks(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateExistingModelLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -52286,6 +52038,812 @@ func (ec *executionContext) fieldContext_Mutation_shareModelPlan(ctx context.Con
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_shareModelPlan_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_addPlanFavorite(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().AddPlanFavorite(ctx, fc.Args["modelPlanID"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.PlanFavorite
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.PlanFavorite
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanFavorite) graphql.Marshaler {
+			return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanFavorite(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_addPlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deletePlanFavorite(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeletePlanFavorite(ctx, fc.Args["modelPlanID"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.PlanFavorite
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.PlanFavorite
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanFavorite) graphql.Marshaler {
+			return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanFavorite(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createPlanCR(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreatePlanCr(ctx, fc.Args["input"].(model.PlanCRCreateInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanCR
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanCR
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCR) graphql.Marshaler {
+			return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanCR(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createPlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updatePlanCR(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdatePlanCr(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanCR
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanCR
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCR) graphql.Marshaler {
+			return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanCR(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deletePlanCR(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeletePlanCr(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanCR
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanCR
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCR) graphql.Marshaler {
+			return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanCR(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createPlanTDL(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreatePlanTdl(ctx, fc.Args["input"].(model.PlanTDLCreateInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanTDL
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanTDL
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTDL) graphql.Marshaler {
+			return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanTDL(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createPlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updatePlanTDL(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdatePlanTdl(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanTDL
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanTDL
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTDL) graphql.Marshaler {
+			return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanTDL(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deletePlanTDL(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeletePlanTdl(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanTDL
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanTDL
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTDL) graphql.Marshaler {
+			return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanTDL(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createDiscussionReply(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreateDiscussionReply(ctx, fc.Args["input"].(model.DiscussionReplyCreateInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.DiscussionReply
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.DiscussionReply
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.DiscussionReply) graphql.Marshaler {
+			return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_DiscussionReply(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createDiscussionReply_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createPlanDiscussion(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreatePlanDiscussion(ctx, fc.Args["input"].(model.PlanDiscussionCreateInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.PlanDiscussion
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.PlanDiscussion
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDiscussion) graphql.Marshaler {
+			return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanDiscussion(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createPlanDiscussion_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_uploadNewPlanDocument(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UploadNewPlanDocument(ctx, fc.Args["input"].(model.PlanDocumentInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanDocument
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanDocument
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
+			return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanDocument(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_uploadNewPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_linkNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_linkNewPlanDocument(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().LinkNewPlanDocument(ctx, fc.Args["input"].(model.PlanDocumentLinkInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanDocument
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanDocument
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
+			return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_linkNewPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanDocument(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_linkNewPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deletePlanDocument(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeletePlanDocument(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal int
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal int
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v int) graphql.Marshaler {
+			return ec.marshalNInt2int(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deletePlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -54258,68 +54816,6 @@ func (ec *executionContext) fieldContext_Mutation_createTemplateToMTO(ctx contex
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_agreeToNDA(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_agreeToNDA(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().AgreeToNda(ctx, fc.Args["agree"].(bool))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *model.NDAInfo
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *model.NDAInfo
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *model.NDAInfo) graphql.Marshaler {
-			return ec.marshalNNDAInfo2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNDAInfo(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_agreeToNDA(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_NDAInfo(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_agreeToNDA_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -54438,812 +54934,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanBeneficiaries_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_createPlanCollaborator(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().CreatePlanCollaborator(ctx, fc.Args["input"].(model.PlanCollaboratorCreateInput))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.PlanCollaborator
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanCollaborator
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCollaborator) graphql.Marshaler {
-			return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanCollaborator(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_updatePlanCollaborator(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().UpdatePlanCollaborator(ctx, fc.Args["id"].(uuid.UUID), fc.Args["newRoles"].([]models.TeamRole))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.PlanCollaborator
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanCollaborator
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCollaborator) graphql.Marshaler {
-			return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanCollaborator(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_deletePlanCollaborator(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().DeletePlanCollaborator(ctx, fc.Args["id"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.PlanCollaborator
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanCollaborator
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCollaborator) graphql.Marshaler {
-			return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanCollaborator(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_createPlanCR(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().CreatePlanCr(ctx, fc.Args["input"].(model.PlanCRCreateInput))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.PlanCR
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanCR
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCR) graphql.Marshaler {
-			return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_createPlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanCR(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_updatePlanCR(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().UpdatePlanCr(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.PlanCR
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanCR
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCR) graphql.Marshaler {
-			return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_updatePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanCR(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_deletePlanCR(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().DeletePlanCr(ctx, fc.Args["id"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.PlanCR
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanCR
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCR) graphql.Marshaler {
-			return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_deletePlanCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanCR(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updatePlanDataExchangeApproach(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_updatePlanDataExchangeApproach(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().UpdatePlanDataExchangeApproach(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.PlanDataExchangeApproach
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanDataExchangeApproach
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDataExchangeApproach) graphql.Marshaler {
-			return ec.marshalNPlanDataExchangeApproach2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDataExchangeApproach(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_updatePlanDataExchangeApproach(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanDataExchangeApproach(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanDataExchangeApproach_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_createPlanDiscussion(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().CreatePlanDiscussion(ctx, fc.Args["input"].(model.PlanDiscussionCreateInput))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.PlanDiscussion
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.PlanDiscussion
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDiscussion) graphql.Marshaler {
-			return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanDiscussion(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanDiscussion_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_uploadNewPlanDocument(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().UploadNewPlanDocument(ctx, fc.Args["input"].(model.PlanDocumentInput))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.PlanDocument
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanDocument
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
-			return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanDocument(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_uploadNewPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_linkNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_linkNewPlanDocument(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().LinkNewPlanDocument(ctx, fc.Args["input"].(model.PlanDocumentLinkInput))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal *models.PlanDocument
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanDocument
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
-			return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_linkNewPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanDocument(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_linkNewPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_deletePlanDocument(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().DeletePlanDocument(ctx, fc.Args["id"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-				if err != nil {
-					var zeroVal int
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal int
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v int) graphql.Marshaler {
-			return ec.marshalNInt2int(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_deletePlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_addPlanFavorite(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().AddPlanFavorite(ctx, fc.Args["modelPlanID"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.PlanFavorite
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.PlanFavorite
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanFavorite) graphql.Marshaler {
-			return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanFavorite(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_addPlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_deletePlanFavorite(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().DeletePlanFavorite(ctx, fc.Args["modelPlanID"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.PlanFavorite
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.PlanFavorite
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanFavorite) graphql.Marshaler {
-			return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanFavorite(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -55498,52 +55188,52 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Mutation_updateIDDOCQuestionnaire(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
 		ec.OperationContext,
 		field,
 		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_createPlanTDL(ctx, field)
+			return ec.fieldContext_Mutation_updateIDDOCQuestionnaire(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
 			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().CreatePlanTdl(ctx, fc.Args["input"].(model.PlanTDLCreateInput))
+			return ec.Resolvers.Mutation().UpdateIDDOCQuestionnaire(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
 		},
 		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
 			directive0 := next
 
 			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
 				if err != nil {
-					var zeroVal *models.PlanTDL
+					var zeroVal *models.IDDOCQuestionnaire
 					return zeroVal, err
 				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanTDL
-					return zeroVal, errors.New("directive hasRole is not implemented")
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.IDDOCQuestionnaire
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
 				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
 			}
 
 			next = directive1
 			return next
 		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTDL) graphql.Marshaler {
-			return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v *models.IDDOCQuestionnaire) graphql.Marshaler {
+			return ec.marshalNIDDOCQuestionnaire2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐIDDOCQuestionnaire(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
-func (ec *executionContext) fieldContext_Mutation_createPlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updateIDDOCQuestionnaire(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanTDL(ctx, field)
+			return ec.childFields_IDDOCQuestionnaire(ctx, field)
 		},
 	}
 	defer func() {
@@ -55553,24 +55243,24 @@ func (ec *executionContext) fieldContext_Mutation_createPlanTDL(ctx context.Cont
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updateIDDOCQuestionnaire_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Mutation_updatePlanDataExchangeApproach(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
 		ec.OperationContext,
 		field,
 		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_updatePlanTDL(ctx, field)
+			return ec.fieldContext_Mutation_updatePlanDataExchangeApproach(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
 			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().UpdatePlanTdl(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
+			return ec.Resolvers.Mutation().UpdatePlanDataExchangeApproach(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
 		},
 		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
 			directive0 := next
@@ -55578,11 +55268,11 @@ func (ec *executionContext) _Mutation_updatePlanTDL(ctx context.Context, field g
 			directive1 := func(ctx context.Context) (any, error) {
 				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 				if err != nil {
-					var zeroVal *models.PlanTDL
+					var zeroVal *models.PlanDataExchangeApproach
 					return zeroVal, err
 				}
 				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanTDL
+					var zeroVal *models.PlanDataExchangeApproach
 					return zeroVal, errors.New("directive hasRole is not implemented")
 				}
 				return ec.Directives.HasRole(ctx, nil, directive0, role)
@@ -55591,21 +55281,21 @@ func (ec *executionContext) _Mutation_updatePlanTDL(ctx context.Context, field g
 			next = directive1
 			return next
 		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTDL) graphql.Marshaler {
-			return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDataExchangeApproach) graphql.Marshaler {
+			return ec.marshalNPlanDataExchangeApproach2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDataExchangeApproach(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
-func (ec *executionContext) fieldContext_Mutation_updatePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updatePlanDataExchangeApproach(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanTDL(ctx, field)
+			return ec.childFields_PlanDataExchangeApproach(ctx, field)
 		},
 	}
 	defer func() {
@@ -55615,24 +55305,24 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanTDL(ctx context.Cont
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updatePlanDataExchangeApproach_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
 		ec.OperationContext,
 		field,
 		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_deletePlanTDL(ctx, field)
+			return ec.fieldContext_Mutation_createPlanCollaborator(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
 			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().DeletePlanTdl(ctx, fc.Args["id"].(uuid.UUID))
+			return ec.Resolvers.Mutation().CreatePlanCollaborator(ctx, fc.Args["input"].(model.PlanCollaboratorCreateInput))
 		},
 		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
 			directive0 := next
@@ -55640,11 +55330,11 @@ func (ec *executionContext) _Mutation_deletePlanTDL(ctx context.Context, field g
 			directive1 := func(ctx context.Context) (any, error) {
 				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 				if err != nil {
-					var zeroVal *models.PlanTDL
+					var zeroVal *models.PlanCollaborator
 					return zeroVal, err
 				}
 				if ec.Directives.HasRole == nil {
-					var zeroVal *models.PlanTDL
+					var zeroVal *models.PlanCollaborator
 					return zeroVal, errors.New("directive hasRole is not implemented")
 				}
 				return ec.Directives.HasRole(ctx, nil, directive0, role)
@@ -55653,21 +55343,21 @@ func (ec *executionContext) _Mutation_deletePlanTDL(ctx context.Context, field g
 			next = directive1
 			return next
 		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTDL) graphql.Marshaler {
-			return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCollaborator) graphql.Marshaler {
+			return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
-func (ec *executionContext) fieldContext_Mutation_deletePlanTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanTDL(ctx, field)
+			return ec.childFields_PlanCollaborator(ctx, field)
 		},
 	}
 	defer func() {
@@ -55677,7 +55367,317 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanTDL(ctx context.Cont
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deletePlanTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_createPlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updatePlanCollaborator(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdatePlanCollaborator(ctx, fc.Args["id"].(uuid.UUID), fc.Args["newRoles"].([]models.TeamRole))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanCollaborator
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanCollaborator
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCollaborator) graphql.Marshaler {
+			return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanCollaborator(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deletePlanCollaborator(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeletePlanCollaborator(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanCollaborator
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanCollaborator
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCollaborator) graphql.Marshaler {
+			return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanCollaborator(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanCollaborator_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createCustomTimelineDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreateCustomTimelineDate(ctx, fc.Args["input"].(model.CustomTimelineDateCreateInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CustomTimelineDate(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createCustomTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateCustomTimelineDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateCustomTimelineDate(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CustomTimelineDate(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateCustomTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deleteCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_deleteCustomTimelineDate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().DeleteCustomTimelineDate(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CustomTimelineDate
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_deleteCustomTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CustomTimelineDate(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deleteCustomTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -55740,112 +55740,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanTimeline(ctx context
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanTimeline_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_reportAProblem(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_reportAProblem(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().ReportAProblem(ctx, fc.Args["input"].(model.ReportAProblemInput))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal bool
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal bool
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
-			return ec.marshalNBoolean2bool(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_reportAProblem(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_reportAProblem_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_sendFeedbackEmail(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().SendFeedbackEmail(ctx, fc.Args["input"].(model.SendFeedbackEmailInput))
-		},
-		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
-			return ec.marshalNBoolean2bool(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -56028,6 +55922,112 @@ func (ec *executionContext) fieldContext_Mutation_updateUserViewCustomization(ct
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updateUserViewCustomization_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_reportAProblem(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_reportAProblem(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().ReportAProblem(ctx, fc.Args["input"].(model.ReportAProblemInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal bool
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal bool
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_reportAProblem(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_reportAProblem_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_sendFeedbackEmail(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().SendFeedbackEmail(ctx, fc.Args["input"].(model.SendFeedbackEmailInput))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -84647,118 +84647,6 @@ func (ec *executionContext) fieldContext_PrepareForClearance_latestClearanceDts(
 	return graphql.NewScalarFieldContext("PrepareForClearance", field, false, false, errors.New("field of type Time does not have child fields"))
 }
 
-func (ec *executionContext) _Query_analytics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_analytics(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.Query().Analytics(ctx)
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
-				if err != nil {
-					var zeroVal *models.AnalyticsSummary
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.AnalyticsSummary
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.AnalyticsSummary) graphql.Marshaler {
-			return ec.marshalNAnalyticsSummary2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐAnalyticsSummary(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_analytics(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_AnalyticsSummary(ctx, field)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_analyzedAudits(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().AnalyzedAudits(ctx, fc.Args["dateAnalyzed"].(time.Time))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal []*models.AnalyzedAudit
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal []*models.AnalyzedAudit
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v []*models.AnalyzedAudit) graphql.Marshaler {
-			return ec.marshalNAnalyzedAudit2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditᚄ(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_AnalyzedAudit(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_analyzedAudits_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Query_auditChanges(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -84815,424 +84703,6 @@ func (ec *executionContext) fieldContext_Query_auditChanges(ctx context.Context,
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_auditChanges_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_ctatRequest(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_ctatRequest(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().CtatRequest(ctx, fc.Args["id"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
-				if err != nil {
-					var zeroVal *models.CTATRequest
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.CTATRequest
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequest) graphql.Marshaler {
-			return ec.marshalNCTATRequest2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequest(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_ctatRequest(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CTATRequest(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_ctatRequest_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_ctatRequestsRequester(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_ctatRequestsRequester(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.Query().CtatRequestsRequester(ctx)
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
-				if err != nil {
-					var zeroVal *models.CTATRequestsTableDataRequester
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.CTATRequestsTableDataRequester
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequestsTableDataRequester) graphql.Marshaler {
-			return ec.marshalNCTATRequestsTableDataRequester2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequestsTableDataRequester(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_ctatRequestsRequester(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CTATRequestsTableDataRequester(ctx, field)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_ctatRequests(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_ctatRequests(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.Query().CtatRequests(ctx)
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ASSESSMENT")
-				if err != nil {
-					var zeroVal *models.CTATRequestsTableData
-					return zeroVal, err
-				}
-				if ec.Directives.HasRole == nil {
-					var zeroVal *models.CTATRequestsTableData
-					return zeroVal, errors.New("directive hasRole is not implemented")
-				}
-				return ec.Directives.HasRole(ctx, nil, directive0, role)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequestsTableData) graphql.Marshaler {
-			return ec.marshalNCTATRequestsTableData2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequestsTableData(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_ctatRequests(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CTATRequestsTableData(ctx, field)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_currentUser(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.Query().CurrentUser(ctx)
-		},
-		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CurrentUser) graphql.Marshaler {
-			return ec.marshalNCurrentUser2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCurrentUser(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_currentUser(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CurrentUser(ctx, field)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_customTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_customTimelineDate(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().CustomTimelineDate(ctx, fc.Args["id"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.CustomTimelineDate
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.CustomTimelineDate
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
-			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_customTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_CustomTimelineDate(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_customTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_mostRecentDiscussionRoleSelection(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.Query().MostRecentDiscussionRoleSelection(ctx)
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.DiscussionRoleSelection
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.DiscussionRoleSelection
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.DiscussionRoleSelection) graphql.Marshaler {
-			return ec.marshalODiscussionRoleSelection2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx, selections, v)
-		},
-		true,
-		false,
-	)
-}
-func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_DiscussionRoleSelection(ctx, field)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_existingModelCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_existingModelCollection(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.Query().ExistingModelCollection(ctx)
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal []*models.ExistingModel
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal []*models.ExistingModel
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v []*models.ExistingModel) graphql.Marshaler {
-			return ec.marshalNExistingModel2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelᚄ(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_existingModelCollection(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_ExistingModel(ctx, field)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_existingModelLink(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_existingModelLink(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().ExistingModelLink(ctx, fc.Args["id"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.ExistingModelLink
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.ExistingModelLink
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.ExistingModelLink) graphql.Marshaler {
-			return ec.marshalNExistingModelLink2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLink(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_existingModelLink(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_ExistingModelLink(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_existingModelLink_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -85453,6 +84923,56 @@ func (ec *executionContext) fieldContext_Query_keyContactCategoriesByIds(ctx con
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_analytics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_analytics(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.Query().Analytics(ctx)
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
+				if err != nil {
+					var zeroVal *models.AnalyticsSummary
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.AnalyticsSummary
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.AnalyticsSummary) graphql.Marshaler {
+			return ec.marshalNAnalyticsSummary2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐAnalyticsSummary(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_analytics(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_AnalyticsSummary(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_lockableSectionLocks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -85509,6 +85029,454 @@ func (ec *executionContext) fieldContext_Query_lockableSectionLocks(ctx context.
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_lockableSectionLocks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_ndaInfo(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_ndaInfo(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.Query().NdaInfo(ctx)
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *model.NDAInfo
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *model.NDAInfo
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *model.NDAInfo) graphql.Marshaler {
+			return ec.marshalNNDAInfo2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNDAInfo(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_ndaInfo(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_NDAInfo(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_ctatRequest(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_ctatRequest(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().CtatRequest(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
+				if err != nil {
+					var zeroVal *models.CTATRequest
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CTATRequest
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequest) graphql.Marshaler {
+			return ec.marshalNCTATRequest2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequest(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_ctatRequest(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CTATRequest(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_ctatRequest_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_ctatRequestsRequester(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_ctatRequestsRequester(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.Query().CtatRequestsRequester(ctx)
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
+				if err != nil {
+					var zeroVal *models.CTATRequestsTableDataRequester
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CTATRequestsTableDataRequester
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequestsTableDataRequester) graphql.Marshaler {
+			return ec.marshalNCTATRequestsTableDataRequester2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequestsTableDataRequester(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_ctatRequestsRequester(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CTATRequestsTableDataRequester(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_ctatRequests(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_ctatRequests(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.Query().CtatRequests(ctx)
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ASSESSMENT")
+				if err != nil {
+					var zeroVal *models.CTATRequestsTableData
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.CTATRequestsTableData
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATRequestsTableData) graphql.Marshaler {
+			return ec.marshalNCTATRequestsTableData2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequestsTableData(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_ctatRequests(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CTATRequestsTableData(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_analyzedAudits(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().AnalyzedAudits(ctx, fc.Args["dateAnalyzed"].(time.Time))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal []*models.AnalyzedAudit
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal []*models.AnalyzedAudit
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.AnalyzedAudit) graphql.Marshaler {
+			return ec.marshalNAnalyzedAudit2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐAnalyzedAuditᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_analyzedAudits(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_AnalyzedAudit(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_analyzedAudits_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_translatedAuditCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_translatedAuditCollection(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().TranslatedAuditCollection(ctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["limit"].(*int), fc.Args["offset"].(*int))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal []*models.TranslatedAudit
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal []*models.TranslatedAudit
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.TranslatedAudit) graphql.Marshaler {
+			return ec.marshalOTranslatedAudit2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditᚄ(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Query_translatedAuditCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslatedAudit(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_translatedAuditCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_existingModelCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_existingModelCollection(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.Query().ExistingModelCollection(ctx)
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal []*models.ExistingModel
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal []*models.ExistingModel
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.ExistingModel) graphql.Marshaler {
+			return ec.marshalNExistingModel2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_existingModelCollection(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_ExistingModel(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_existingModelLink(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_existingModelLink(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().ExistingModelLink(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.ExistingModelLink
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.ExistingModelLink
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.ExistingModelLink) graphql.Marshaler {
+			return ec.marshalNExistingModelLink2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLink(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_existingModelLink(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_ExistingModelLink(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_existingModelLink_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -85819,6 +85787,242 @@ func (ec *executionContext) fieldContext_Query_modelPlansByStatusGroup(ctx conte
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_modelPlansByStatusGroup_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_planCR(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().PlanCr(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.PlanCR
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.PlanCR
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCR) graphql.Marshaler {
+			return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_planCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanCR(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_planTDL(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().PlanTdl(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.PlanTDL
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.PlanTDL
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTDL) graphql.Marshaler {
+			return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_planTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanTDL(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_mostRecentDiscussionRoleSelection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_mostRecentDiscussionRoleSelection(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.Query().MostRecentDiscussionRoleSelection(ctx)
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.DiscussionRoleSelection
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.DiscussionRoleSelection
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.DiscussionRoleSelection) graphql.Marshaler {
+			return ec.marshalODiscussionRoleSelection2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionRoleSelection(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Query_mostRecentDiscussionRoleSelection(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_DiscussionRoleSelection(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_planDocument(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().PlanDocument(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.PlanDocument
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.PlanDocument
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
+			return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanDocument(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -86373,16 +86577,17 @@ func (ec *executionContext) fieldContext_Query_mtoTemplate(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_ndaInfo(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Query_planPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
 		ec.OperationContext,
 		field,
 		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_ndaInfo(ctx, field)
+			return ec.fieldContext_Query_planPayments(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.Query().NdaInfo(ctx)
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().PlanPayments(ctx, fc.Args["id"].(uuid.UUID))
 		},
 		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
 			directive0 := next
@@ -86390,11 +86595,11 @@ func (ec *executionContext) _Query_ndaInfo(ctx context.Context, field graphql.Co
 			directive1 := func(ctx context.Context) (any, error) {
 				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
 				if err != nil {
-					var zeroVal *model.NDAInfo
+					var zeroVal *models.PlanPayments
 					return zeroVal, err
 				}
 				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *model.NDAInfo
+					var zeroVal *models.PlanPayments
 					return zeroVal, errors.New("directive hasAnyRole is not implemented")
 				}
 				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
@@ -86403,22 +86608,33 @@ func (ec *executionContext) _Query_ndaInfo(ctx context.Context, field graphql.Co
 			next = directive1
 			return next
 		},
-		func(ctx context.Context, selections ast.SelectionSet, v *model.NDAInfo) graphql.Marshaler {
-			return ec.marshalNNDAInfo2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNDAInfo(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanPayments) graphql.Marshaler {
+			return ec.marshalNPlanPayments2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
-func (ec *executionContext) fieldContext_Query_ndaInfo(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_NDAInfo(ctx, field)
+			return ec.childFields_PlanPayments(ctx, field)
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planPayments_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
 	}
 	return fc, nil
 }
@@ -86485,17 +86701,17 @@ func (ec *executionContext) fieldContext_Query_planCollaboratorByID(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_planCR(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Query_customTimelineDate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
 		ec.OperationContext,
 		field,
 		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_planCR(ctx, field)
+			return ec.fieldContext_Query_customTimelineDate(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
 			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().PlanCr(ctx, fc.Args["id"].(uuid.UUID))
+			return ec.Resolvers.Query().CustomTimelineDate(ctx, fc.Args["id"].(uuid.UUID))
 		},
 		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
 			directive0 := next
@@ -86503,11 +86719,11 @@ func (ec *executionContext) _Query_planCR(ctx context.Context, field graphql.Col
 			directive1 := func(ctx context.Context) (any, error) {
 				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
 				if err != nil {
-					var zeroVal *models.PlanCR
+					var zeroVal *models.CustomTimelineDate
 					return zeroVal, err
 				}
 				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.PlanCR
+					var zeroVal *models.CustomTimelineDate
 					return zeroVal, errors.New("directive hasAnyRole is not implemented")
 				}
 				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
@@ -86516,21 +86732,21 @@ func (ec *executionContext) _Query_planCR(ctx context.Context, field graphql.Col
 			next = directive1
 			return next
 		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanCR) graphql.Marshaler {
-			return ec.marshalNPlanCR2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CustomTimelineDate) graphql.Marshaler {
+			return ec.marshalNCustomTimelineDate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
-func (ec *executionContext) fieldContext_Query_planCR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_customTimelineDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanCR(ctx, field)
+			return ec.childFields_CustomTimelineDate(ctx, field)
 		},
 	}
 	defer func() {
@@ -86540,257 +86756,41 @@ func (ec *executionContext) fieldContext_Query_planCR(ctx context.Context, field
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planCR_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_customTimelineDate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_planDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
 		ec.OperationContext,
 		field,
 		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_planDocument(ctx, field)
+			return ec.fieldContext_Query_currentUser(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().PlanDocument(ctx, fc.Args["id"].(uuid.UUID))
+			return ec.Resolvers.Query().CurrentUser(ctx)
 		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.PlanDocument
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.PlanDocument
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
-			return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, selections, v)
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CurrentUser) graphql.Marshaler {
+			return ec.marshalNCurrentUser2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCurrentUser(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
-func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_currentUser(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanDocument(ctx, field)
+			return ec.childFields_CurrentUser(ctx, field)
 		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_planPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_planPayments(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().PlanPayments(ctx, fc.Args["id"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.PlanPayments
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.PlanPayments
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanPayments) graphql.Marshaler {
-			return ec.marshalNPlanPayments2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanPayments(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planPayments_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_planTDL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_planTDL(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().PlanTdl(ctx, fc.Args["id"].(uuid.UUID))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal *models.PlanTDL
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal *models.PlanTDL
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTDL) graphql.Marshaler {
-			return ec.marshalNPlanTDL2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_Query_planTDL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_PlanTDL(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planTDL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_translatedAuditCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Query_translatedAuditCollection(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().TranslatedAuditCollection(ctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["limit"].(*int), fc.Args["offset"].(*int))
-		},
-		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
-			directive0 := next
-
-			directive1 := func(ctx context.Context) (any, error) {
-				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
-				if err != nil {
-					var zeroVal []*models.TranslatedAudit
-					return zeroVal, err
-				}
-				if ec.Directives.HasAnyRole == nil {
-					var zeroVal []*models.TranslatedAudit
-					return zeroVal, errors.New("directive hasAnyRole is not implemented")
-				}
-				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
-			}
-
-			next = directive1
-			return next
-		},
-		func(ctx context.Context, selections ast.SelectionSet, v []*models.TranslatedAudit) graphql.Marshaler {
-			return ec.marshalOTranslatedAudit2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslatedAuditᚄ(ctx, selections, v)
-		},
-		true,
-		false,
-	)
-}
-func (ec *executionContext) fieldContext_Query_translatedAuditCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.childFields_TranslatedAudit(ctx, field)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_translatedAuditCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return fc, err
 	}
 	return fc, nil
 }
@@ -112284,62 +112284,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Mutation")
-		case "createCTATRequest":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createCTATRequest(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "adminUpdateCTATRequest":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_adminUpdateCTATRequest(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createCustomTimelineDate":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createCustomTimelineDate(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updateCustomTimelineDate":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateCustomTimelineDate(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deleteCustomTimelineDate":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deleteCustomTimelineDate(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createDiscussionReply":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createDiscussionReply(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updateExistingModelLinks":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateExistingModelLinks(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updateIDDOCQuestionnaire":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateIDDOCQuestionnaire(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "createKeyContactMailbox":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createKeyContactMailbox(ctx, field)
@@ -112410,6 +112354,34 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "agreeToNDA":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_agreeToNDA(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createCTATRequest":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createCTATRequest(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "adminUpdateCTATRequest":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_adminUpdateCTATRequest(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateExistingModelLinks":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateExistingModelLinks(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "createModelPlan":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createModelPlan(ctx, field)
@@ -112427,6 +112399,97 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "shareModelPlan":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_shareModelPlan(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "addPlanFavorite":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_addPlanFavorite(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanFavorite":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanFavorite(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createPlanCR":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanCR(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanCR":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanCR(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanCR":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanCR(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createPlanTDL":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanTDL(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanTDL":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanTDL(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanTDL":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanTDL(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createDiscussionReply":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createDiscussionReply(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createPlanDiscussion":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanDiscussion(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "uploadNewPlanDocument":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_uploadNewPlanDocument(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "linkNewPlanDocument":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_linkNewPlanDocument(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanDocument":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanDocument(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -112655,13 +112718,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "agreeToNDA":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_agreeToNDA(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
 		case "updatePlanBasics":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBasics(ctx, field)
@@ -112672,97 +112728,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updatePlanBeneficiaries":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBeneficiaries(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createPlanCollaborator":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanCollaborator(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updatePlanCollaborator":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanCollaborator(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanCollaborator":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanCollaborator(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createPlanCR":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanCR(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updatePlanCR":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanCR(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanCR":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanCR(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "updatePlanDataExchangeApproach":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanDataExchangeApproach(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "createPlanDiscussion":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanDiscussion(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "uploadNewPlanDocument":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_uploadNewPlanDocument(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "linkNewPlanDocument":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_linkNewPlanDocument(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanDocument":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanDocument(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "addPlanFavorite":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_addPlanFavorite(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "deletePlanFavorite":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanFavorite(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -112795,23 +112760,58 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "createPlanTDL":
+		case "updateIDDOCQuestionnaire":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanTDL(ctx, field)
+				return ec._Mutation_updateIDDOCQuestionnaire(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "updatePlanTDL":
+		case "updatePlanDataExchangeApproach":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanTDL(ctx, field)
+				return ec._Mutation_updatePlanDataExchangeApproach(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "deletePlanTDL":
+		case "createPlanCollaborator":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deletePlanTDL(ctx, field)
+				return ec._Mutation_createPlanCollaborator(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updatePlanCollaborator":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanCollaborator(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deletePlanCollaborator":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanCollaborator(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createCustomTimelineDate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createCustomTimelineDate(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateCustomTimelineDate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateCustomTimelineDate(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "deleteCustomTimelineDate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deleteCustomTimelineDate(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -112819,20 +112819,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updatePlanTimeline":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanTimeline(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "reportAProblem":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_reportAProblem(ctx, field)
-			})
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
-			}
-		case "sendFeedbackEmail":
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_sendFeedbackEmail(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -112861,6 +112847,20 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updateUserViewCustomization":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateUserViewCustomization(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "reportAProblem":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_reportAProblem(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "sendFeedbackEmail":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_sendFeedbackEmail(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -123624,50 +123624,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
-		case "analytics":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_analytics(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "analyzedAudits":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_analyzedAudits(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "auditChanges":
 			field := field
 
@@ -123678,182 +123634,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_auditChanges(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "ctatRequest":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_ctatRequest(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "ctatRequestsRequester":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_ctatRequestsRequester(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "ctatRequests":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_ctatRequests(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "currentUser":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_currentUser(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "customTimelineDate":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_customTimelineDate(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "mostRecentDiscussionRoleSelection":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_mostRecentDiscussionRoleSelection(ctx, field)
-				if res == graphql.RequiredNull {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "existingModelCollection":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_existingModelCollection(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "existingModelLink":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_existingModelLink(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -123976,6 +123756,28 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "analytics":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_analytics(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "lockableSectionLocks":
 			field := field
 
@@ -123986,6 +123788,182 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_lockableSectionLocks(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "ndaInfo":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_ndaInfo(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "ctatRequest":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_ctatRequest(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "ctatRequestsRequester":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_ctatRequestsRequester(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "ctatRequests":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_ctatRequests(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "analyzedAudits":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_analyzedAudits(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "translatedAuditCollection":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_translatedAuditCollection(ctx, field)
+				if res == graphql.RequiredNull {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "existingModelCollection":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_existingModelCollection(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "existingModelLink":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_existingModelLink(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -124096,6 +124074,94 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_modelPlansByStatusGroup(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "planCR":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planCR(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "planTDL":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planTDL(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "mostRecentDiscussionRoleSelection":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_mostRecentDiscussionRoleSelection(ctx, field)
+				if res == graphql.RequiredNull {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "planDocument":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planDocument(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -124328,7 +124394,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "ndaInfo":
+		case "planPayments":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -124337,7 +124403,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_ndaInfo(ctx, field)
+				res = ec._Query_planPayments(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -124372,7 +124438,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "planCR":
+		case "customTimelineDate":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -124381,7 +124447,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_planCR(ctx, field)
+				res = ec._Query_customTimelineDate(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -124394,7 +124460,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "planDocument":
+		case "currentUser":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -124403,74 +124469,8 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_planDocument(ctx, field)
+				res = ec._Query_currentUser(ctx, field)
 				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "planPayments":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_planPayments(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "planTDL":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_planTDL(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx,
-					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "translatedAuditCollection":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_translatedAuditCollection(ctx, field)
-				if res == graphql.RequiredNull {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
 				return res
