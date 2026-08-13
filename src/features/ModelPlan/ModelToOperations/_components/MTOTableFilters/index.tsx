@@ -10,6 +10,7 @@ import {
 } from 'gql/generated/graphql';
 
 import FilterButtonWithModal from 'components/FilterButtonWithModal';
+import FilterTags from 'components/FilterTags';
 import PageLoading from 'components/PageLoading';
 import { Tag } from 'components/Tag';
 import { convertToUppercaseAndUnderscore } from 'utils/modelPlan';
@@ -18,7 +19,8 @@ import { tObject } from 'utils/translation';
 import {
   buildSearchParamsFromFilters,
   countAppliedFilters,
-  parseAppliedFilters
+  parseAppliedFilters,
+  transformFilterTagValues
 } from './_utils';
 import getMTOTableFilters from './getMTOTableFilters';
 
@@ -66,7 +68,7 @@ const MTOTableFilters = ({
 
   const quickDateFilterOptions = useMemo(() => {
     const presetOptions = Object.keys(neededWithinDateOptionsConfig).filter(
-      value => value !== 'customDateRange'
+      value => value !== 'CUSTOM_DATE_RANGE'
     );
 
     return presetOptions.map(option => ({
@@ -82,6 +84,11 @@ const MTOTableFilters = ({
 
   const appliedFiltersCount = useMemo(
     () => countAppliedFilters(appliedFilters),
+    [appliedFilters]
+  );
+
+  const appliedFilterTags = useMemo(
+    () => transformFilterTagValues(appliedFilters),
     [appliedFilters]
   );
 
@@ -225,6 +232,7 @@ const MTOTableFilters = ({
             <Select
               className="margin-top-0"
               id="mto-needed-within-days"
+              style={{ minWidth: '12rem' }}
               data-testid="mto-needed-within-days"
               name={DATE_FILTER_PARAM}
               value={selectValue}
@@ -256,6 +264,15 @@ const MTOTableFilters = ({
       )}
 
       <div>Place holder for search bar</div>
+
+      {filtersTableOpen && (
+        <FilterTags
+          filters={filterOptions}
+          appliedFilters={appliedFilterTags}
+          setAppliedFilters={setAppliedFilters}
+          className="margin-top-2"
+        />
+      )}
     </div>
   );
 };

@@ -218,11 +218,11 @@ export const modelToOperationsMisc: Record<string, any> = {
           description:
             'This filters by the “Need by” field. View milestones that need to be completed within a certain date range.',
           options: {
-            allTime: 'All time',
-            next30Days: 'next 30 days',
-            next60Days: 'next 60 days',
-            next90Days: 'next 90 days',
-            customDateRange: 'Custom date range'
+            ALL_TIME: 'All time',
+            NEXT_30_DAYS: 'Next 30 days',
+            NEXT_60_DAYS: 'Next 60 days',
+            NEXT_90_DAYS: 'Next 90 days',
+            CUSTOM_DATE_RANGE: 'Custom date range'
           },
           tagLabel: 'Need by date range'
         },

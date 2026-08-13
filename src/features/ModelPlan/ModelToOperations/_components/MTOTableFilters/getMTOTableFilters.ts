@@ -60,6 +60,9 @@ const getMTOTableFilters = (categories: Category[]): FilterGroupType[] => {
     label: i18next.t(`${BASE_I18N}.neededByDateRange.label`),
     description: i18next.t(`${BASE_I18N}.neededByDateRange.description`),
     tagLabel: i18next.t(`${BASE_I18N}.neededByDateRange.tagLabel`),
+    options: formatOptionsFromConfig(
+      tObject<string>(`${BASE_I18N}.neededByDateRange.options`)
+    ), // options here are used for filter tags
     displayShowAll: false,
     CustomComponent: MTOTableDateFilter
   };

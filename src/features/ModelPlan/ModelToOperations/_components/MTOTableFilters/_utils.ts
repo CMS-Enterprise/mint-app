@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 
+import { formatDateLocal } from 'utils/date';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import {
@@ -107,4 +108,16 @@ export const countAppliedFilters = (
 
     return totalCount + (key === 'neededByDateRange' ? 1 : validItems.length);
   }, 0);
+};
+
+// For date range filter, we want to display a single tag with the range.
+export const transformFilterTagValues = (filters: MTOTableSelectedFilters) => {
+  const transformedDateRange =
+    filters.neededByDateRange.length === 2
+      ? [
+          `${formatDateLocal(filters.neededByDateRange[0], 'MM/dd/yyyy')} - ${formatDateLocal(filters.neededByDateRange[1], 'MM/dd/yyyy')}`
+        ]
+      : filters.neededByDateRange;
+
+  return { ...filters, neededByDateRange: transformedDateRange };
 };

@@ -2,7 +2,8 @@ import {
   buildSearchParamsFromFilters,
   countAppliedFilters,
   getArrayFromParams,
-  parseAppliedFilters
+  parseAppliedFilters,
+  transformFilterTagValues
 } from './_utils';
 import {
   DATE_FILTER_PARAM,
@@ -194,6 +195,59 @@ describe('MTOTableFilters Utils', () => {
       };
 
       expect(countAppliedFilters(filters)).toBe(1);
+    });
+  });
+
+  describe('transformFilterTagValues', () => {
+    it('transforms an array of two dates into a single formatted date range string', () => {
+      const mockFilters = {
+        status: ['APPROVED'],
+        neededByDateRange: ['2026-08-01', '2026-09-01']
+      };
+
+      const result = transformFilterTagValues(mockFilters as any);
+
+      expect(result).toEqual({
+        status: ['APPROVED'],
+        neededByDateRange: ['08/01/2026 - 09/01/2026']
+      });
+    });
+
+    it('returns neededByDateRange unchanged when given an empty array', () => {
+      const mockFilters = {
+        status: ['SUBMITTED'],
+        neededByDateRange: []
+      };
+
+      const result = transformFilterTagValues(mockFilters as any);
+
+      expect(result).toEqual({
+        status: ['SUBMITTED'],
+        neededByDateRange: []
+      });
+    });
+
+    it('returns neededByDateRange unchanged if array length is not 2', () => {
+      const mockFiltersWithOneDate = {
+        neededByDateRange: ['2026-08-01']
+      };
+
+      const result = transformFilterTagValues(mockFiltersWithOneDate as any);
+
+      expect(result.neededByDateRange).toEqual(['2026-08-01']);
+    });
+
+    it('preserves all other properties in the filters object', () => {
+      const mockFilters = {
+        category: ['EQUIPMENT'],
+        status: ['PENDING'],
+        neededByDateRange: ['2026-01-01', '2026-01-02']
+      };
+
+      const result = transformFilterTagValues(mockFilters as any);
+
+      expect(result).toHaveProperty('category', ['EQUIPMENT']);
+      expect(result).toHaveProperty('status', ['PENDING']);
     });
   });
 });

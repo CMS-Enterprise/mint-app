@@ -99,22 +99,26 @@ const FilterGroup = ({
           />
         )}
 
-        {filterGroup.options?.map(option => (
-          <Checkbox
-            className={classNames({
-              'grid-col-6 padding-right-05 bg-transparent':
-                filterGroup.displayShowAll
-            })}
-            key={option.value}
-            id={option.value}
-            name={option.value}
-            onChange={() => toggleFilterOption(option.value)}
-            label={option.label}
-            value={option.value}
-            checked={showAllIsChecked || selectedFilters.includes(option.value)}
-            disabled={showAllIsChecked}
-          />
-        ))}
+        {!CustomComponent &&
+          filterGroup.options &&
+          filterGroup.options.map(option => (
+            <Checkbox
+              className={classNames({
+                'grid-col-6 padding-right-05 bg-transparent':
+                  filterGroup.displayShowAll
+              })}
+              key={option.value}
+              id={option.value}
+              name={option.value}
+              onChange={() => toggleFilterOption(option.value)}
+              label={option.label}
+              value={option.value}
+              checked={
+                showAllIsChecked || selectedFilters.includes(option.value)
+              }
+              disabled={showAllIsChecked}
+            />
+          ))}
 
         {CustomComponent && (
           <CustomComponent
