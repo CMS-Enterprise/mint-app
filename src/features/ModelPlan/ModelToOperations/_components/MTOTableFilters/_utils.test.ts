@@ -1,3 +1,5 @@
+import { MtoMilestoneStatus } from 'gql/generated/graphql';
+
 import {
   buildSearchParamsFromFilters,
   countAppliedFilters,
@@ -201,53 +203,77 @@ describe('MTOTableFilters Utils', () => {
   describe('transformFilterTagValues', () => {
     it('transforms an array of two dates into a single formatted date range string', () => {
       const mockFilters = {
-        status: ['APPROVED'],
-        neededByDateRange: ['2026-08-01', '2026-09-01']
+        status: [MtoMilestoneStatus.IN_PROGRESS],
+        neededByDateRange: ['2026-08-01', '2026-09-01'],
+        category: [],
+        role: [],
+        risk: [],
+        other: []
       };
 
-      const result = transformFilterTagValues(mockFilters as any);
+      const result = transformFilterTagValues(mockFilters);
 
       expect(result).toEqual({
-        status: ['APPROVED'],
-        neededByDateRange: ['08/01/2026 - 09/01/2026']
+        status: [MtoMilestoneStatus.IN_PROGRESS],
+        neededByDateRange: ['08/01/2026 - 09/01/2026'],
+        category: [],
+        role: [],
+        risk: [],
+        other: []
       });
     });
 
     it('returns neededByDateRange unchanged when given an empty array', () => {
       const mockFilters = {
-        status: ['SUBMITTED'],
-        neededByDateRange: []
+        status: [MtoMilestoneStatus.COMPLETED],
+        neededByDateRange: [],
+        category: [],
+        role: [],
+        risk: [],
+        other: []
       };
 
-      const result = transformFilterTagValues(mockFilters as any);
+      const result = transformFilterTagValues(mockFilters);
 
       expect(result).toEqual({
-        status: ['SUBMITTED'],
-        neededByDateRange: []
+        status: [MtoMilestoneStatus.COMPLETED],
+        neededByDateRange: [],
+        category: [],
+        role: [],
+        risk: [],
+        other: []
       });
     });
 
     it('returns neededByDateRange unchanged if array length is not 2', () => {
       const mockFiltersWithOneDate = {
-        neededByDateRange: ['2026-08-01']
+        neededByDateRange: ['Next 30 days'],
+        status: [],
+        category: [],
+        role: [],
+        risk: [],
+        other: []
       };
 
-      const result = transformFilterTagValues(mockFiltersWithOneDate as any);
+      const result = transformFilterTagValues(mockFiltersWithOneDate);
 
-      expect(result.neededByDateRange).toEqual(['2026-08-01']);
+      expect(result.neededByDateRange).toEqual(['Next 30 days']);
     });
 
     it('preserves all other properties in the filters object', () => {
       const mockFilters = {
-        category: ['EQUIPMENT'],
-        status: ['PENDING'],
-        neededByDateRange: ['2026-01-01', '2026-01-02']
+        category: [],
+        status: [MtoMilestoneStatus.COMPLETED],
+        neededByDateRange: ['2026-01-01', '2026-01-02'],
+        role: [],
+        risk: [],
+        other: []
       };
 
-      const result = transformFilterTagValues(mockFilters as any);
+      const result = transformFilterTagValues(mockFilters);
 
-      expect(result).toHaveProperty('category', ['EQUIPMENT']);
-      expect(result).toHaveProperty('status', ['PENDING']);
+      expect(result).toHaveProperty('category', []);
+      expect(result).toHaveProperty('status', [MtoMilestoneStatus.COMPLETED]);
     });
   });
 });
