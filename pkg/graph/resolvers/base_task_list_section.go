@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
@@ -25,7 +27,7 @@ func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSe
 	// MODEL_PLAN task progression: if any section is first edited, mark the MODEL_PLAN task IN_PROGRESS
 	if oldStatus == models.TaskReady && tls.GetStatus() == models.TaskInProgress {
 		modelPlanID := tls.GetModelPlanID()
-		err = UpdatePlanTaskStatusOnModelPlanStarted(store, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStatusOnModelPlanStarted(context.Background(), store, logger, modelPlanID, principal, store)
 		if err != nil {
 			return err
 		}

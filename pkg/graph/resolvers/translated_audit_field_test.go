@@ -19,7 +19,7 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 		"status":       models.ModelStatusIcipComplete,
 		"archived":     true,
 	}
-	_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
+	_, err := ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 
 	suite.NoError(err)
 

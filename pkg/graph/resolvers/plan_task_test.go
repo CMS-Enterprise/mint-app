@@ -316,6 +316,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planForDEACleared.ID,
 			map[string]interface{}{"status": models.ModelStatusCleared},
@@ -348,6 +349,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 	suite.Run("status transitions on model plan update set appropriate tasks COMPLETE", func() {
 		// When model status changes to CLEARED: MODEL_PLAN and DATA_EXCHANGE tasks COMPLETE
 		_, err := ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			plan.ID,
 			map[string]interface{}{"status": models.ModelStatusCleared},
@@ -370,6 +372,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		// When model status regresses from CLEARED to an earlier status:
 		// MODEL_PLAN should return to IN_PROGRESS, while DATA_EXCHANGE remains COMPLETE if DEA is still COMPLETE.
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			plan.ID,
 			map[string]interface{}{"status": models.ModelStatusInternalCmmiClearance},
@@ -391,6 +394,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 
 		// When model status changes to ACTIVE: MTO task COMPLETE
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			plan.ID,
 			map[string]interface{}{"status": models.ModelStatusActive},
@@ -409,6 +413,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		// When model status regresses from ACTIVE to an earlier status:
 		// MTO task should return to IN_PROGRESS if MTO data exists.
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			plan.ID,
 			map[string]interface{}{"status": models.ModelStatusAnnounced},
@@ -429,6 +434,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		planWithoutMTOData := suite.createModelPlan("Plan For Active Regression Without MTO Data")
 
 		_, err := ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planWithoutMTOData.ID,
 			map[string]interface{}{"status": models.ModelStatusActive},
@@ -440,6 +446,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planWithoutMTOData.ID,
 			map[string]interface{}{"status": models.ModelStatusAnnounced},
@@ -460,6 +467,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		planForRegression := suite.createModelPlan("Plan For DEA Regression")
 
 		_, err := ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planForRegression.ID,
 			map[string]interface{}{"status": models.ModelStatusCleared},
@@ -471,6 +479,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planForRegression.ID,
 			map[string]interface{}{"status": models.ModelStatusInternalCmmiClearance},

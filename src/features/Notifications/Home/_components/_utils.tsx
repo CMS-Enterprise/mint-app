@@ -18,6 +18,7 @@ import {
   PlanDataExchangeApproachMarkedCompleteActivityMeta,
   TaggedInDiscussionReplyActivityMeta,
   TaggedInPlanDiscussionActivityMeta,
+  TaskCompletedActivityMeta,
   UserNotificationPreferenceFlag
 } from 'gql/generated/graphql';
 
@@ -115,6 +116,13 @@ export const isMTOReadyForReview = (
   return data.__typename === 'MTOReadyForReviewActivityMeta';
 };
 
+export const isTaskCompleted = (
+  data: ActivityMetaData
+): data is TaskCompletedActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TaskCompletedActivityMeta';
+};
+
 export const getNavUrl = (metaData: ActivityMetaData) => {
   switch (metaData.__typename) {
     case 'AddedAsCollaboratorMeta':
@@ -133,6 +141,9 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
 
     case 'MTOReadyForReviewActivityMeta':
       return `/models/${metaData.modelPlanID}/read-view/milestones`;
+
+    case 'TaskCompletedActivityMeta':
+      return `/models/${metaData.modelPlanID}/collaboration-area/tasks?tab=completed`;
 
     case 'TaggedInPlanDiscussionActivityMeta':
     case 'TaggedInDiscussionReplyActivityMeta':
@@ -192,7 +203,8 @@ const activityI18nKeybases = {
   IddocQuestionnaireCompletedActivityMeta:
     'notifications:index.activityType.IDDOC_QUESTIONNAIRE_COMPLETED',
   MTOReadyForReviewActivityMeta:
-    'notifications:index.activityType.MTO_READY_FOR_REVIEW'
+    'notifications:index.activityType.MTO_READY_FOR_REVIEW',
+  TaskCompletedActivityMeta: 'notifications:index.activityType.TASK_COMPLETED'
 };
 
 export const activityText = (data: ActivityMetaData) => {

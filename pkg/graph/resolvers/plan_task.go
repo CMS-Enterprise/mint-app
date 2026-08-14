@@ -12,6 +12,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -29,6 +30,7 @@ func PlanTaskGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) 
 }
 
 func updatePlanTaskStatusByKey(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
@@ -94,38 +96,55 @@ func updatePlanTaskStatusByKey(
 	}
 
 	if didTransitionToComplete {
-		trySendPlanTaskCompletedEmailNotification(np, logger, store, modelPlanID, task, emailService, addressBook)
+		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, task, principal, emailService, addressBook)
 	}
 
 	return nil
 }
 
-func trySendPlanTaskCompletedEmailNotification(
+func trySendPlanTaskCompletedNotifications(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	store *storage.Store,
 	modelPlanID uuid.UUID,
 	task *models.PlanTask,
+	principal authentication.Principal,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) {
-	if emailService == nil {
-		return
-	}
-
 	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
-		logger.Error("failed to send task completed email notification", zap.Error(err))
+		logger.Error("failed to create task completed notifications", zap.Error(err))
 		return
 	}
 
 	recipients, err := storage.UserAccountGetNotificationPreferencesForTaskCompleted(np, modelPlanID)
 	if err != nil {
-		logger.Error("failed to get task completed email notification preferences", zap.Error(err))
+		logger.Error("failed to get task completed notification preferences", zap.Error(err))
 		return
 	}
 
-	emailRecipients, _ := models.FilterNotificationPreferences(recipients)
+	emailRecipients, inAppRecipients := models.FilterNotificationPreferences(recipients)
+	if len(inAppRecipients) > 0 {
+		_, err = notifications.ActivityTaskCompletedCreate(
+			ctx,
+			principal.Account().ID,
+			np,
+			inAppRecipients,
+			modelPlanID,
+			task,
+			principal.Account().ID,
+		)
+		if err != nil {
+			logger.Error("failed to create task completed in-app notification", zap.Error(err))
+		}
+	}
+
+	if emailService == nil {
+		return
+	}
+
 	receiverEmails := make([]string, 0, len(emailRecipients))
 	for _, recipient := range emailRecipients {
 		if recipient.Email != "" {

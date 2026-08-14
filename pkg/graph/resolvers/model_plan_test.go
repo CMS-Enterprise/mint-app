@@ -48,7 +48,7 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 		"status":       models.ModelStatusIcipComplete,
 		"archived":     true,
 	}
-	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{}) // update plan with new user "UPDT"
+	result, err := ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{}) // update plan with new user "UPDT"
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, result.ID)
@@ -236,7 +236,7 @@ func (suite *ResolverSuite) TestModelPlanNameHistory() {
 		changes := map[string]interface{}{
 			"modelName": modelNames[i],
 		}
-		_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
+		_, err := ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 		suite.NoError(err)
 	}
 
@@ -373,6 +373,7 @@ func (suite *ResolverSuite) TestModelPlansGetByFavoritedWithArchival() {
 		"archived": true,
 	}
 	_, err = ModelPlanUpdate(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		archivedPlan.ID,
 		changes,

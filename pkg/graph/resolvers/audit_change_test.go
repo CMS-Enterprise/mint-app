@@ -16,7 +16,7 @@ func (suite *ResolverSuite) TestAuditChangeCollectionByIDAndTable() {
 		changes := map[string]interface{}{
 			"modelName": modelNames[i],
 		}
-		_, err = ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
+		_, err = ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 		suite.NoError(err)
 	}
 

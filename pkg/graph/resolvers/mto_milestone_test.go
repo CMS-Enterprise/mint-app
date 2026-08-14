@@ -484,6 +484,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_AddBySolutionI
 
 	solType := models.MTOSolutionTypeOther
 	sol, err := MTOSolutionCreateCustom(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -571,6 +572,7 @@ func (suite *ResolverSuite) TestMTOMilestoneUpdateLinkedSolutions_UnlinkBySoluti
 
 	solType := models.MTOSolutionTypeOther
 	sol, err := MTOSolutionCreateCustom(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

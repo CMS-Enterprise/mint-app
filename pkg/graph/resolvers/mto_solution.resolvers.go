@@ -50,6 +50,7 @@ func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPla
 	principal := appcontext.Principal(ctx)
 
 	return MTOSolutionCreateCustom(
+		ctx,
 		logger,
 		principal,
 		r.store,

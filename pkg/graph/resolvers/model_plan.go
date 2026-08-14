@@ -328,6 +328,7 @@ func sendModelPlanCreatedEmail(
 
 // ModelPlanUpdate implements resolver logic to update a model plan
 func ModelPlanUpdate(
+	ctx context.Context,
 	logger *zap.Logger,
 	id uuid.UUID,
 	changes map[string]interface{},
@@ -356,7 +357,7 @@ func ModelPlanUpdate(
 
 	// Plan tasks: CLEARED model status completes MODEL_PLAN and DATA_EXCHANGE tasks
 	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
-		updErr := UpdatePlanTaskStatusOnModelCleared(store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStatusOnModelCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -365,7 +366,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress DATA_EXCHANGE and MODEL_PLAN tasks if model status moves backwards from CLEARED
 	if oldStatus == models.ModelStatusCleared &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(store, logger, retPlan.ID, principal, store)
+		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(ctx, store, logger, retPlan.ID, principal, store)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -373,7 +374,7 @@ func ModelPlanUpdate(
 
 	// Plan tasks: ACTIVE model status completes MTO task
 	if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
-		updErr := UpdatePlanTaskStatusOnModelActive(store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStatusOnModelActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -381,7 +382,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress MTO task if model status moves backwards from ACTIVE
 	if oldStatus == models.ModelStatusActive &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusActive) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(store, logger, retPlan.ID, principal, store)
+		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(ctx, store, logger, retPlan.ID, principal, store)
 		if updErr != nil {
 			return nil, updErr
 		}

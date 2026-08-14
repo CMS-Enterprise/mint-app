@@ -62,7 +62,7 @@ func MTOSolutionUpdate(
 		}
 
 		// MTO task progression: when MTO is started, mark task IN_PROGRESS
-		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, updatedSolution.ModelPlanID, principal, store)
+		err = UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, updatedSolution.ModelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -88,6 +88,7 @@ func MTOSolutionUpdate(
 
 // MTOSolutionCreateCustom uses the provided information to create a new MTOSolution
 func MTOSolutionCreateCustom(
+	ctx context.Context,
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
@@ -126,7 +127,7 @@ func MTOSolutionCreateCustom(
 		}
 
 		// MTO task progression: creating solution data counts as starting the MTO
-		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -184,7 +185,7 @@ func MTOSolutionCreateCommon(
 		}
 
 		// MTO task progression: creating solution data counts as starting the MTO
-		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -301,7 +302,7 @@ func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authen
 		}
 
 		// MTO task regression: recalculate task after deleting MTO data.
-		if err := UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+		if err := UpdatePlanTaskStatusOnMTODataDeleted(ctx, tx, logger, existing.ModelPlanID, principal, store); err != nil {
 			return fmt.Errorf("unable to recalculate MTO task after deleting solution. Err %w", err)
 		}
 		return nil

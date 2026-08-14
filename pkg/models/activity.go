@@ -45,6 +45,7 @@ var activityMetaDataTypeMap = map[ActivityType]func() ActivityMetaData{
 	ActivityMTOReadyForReview:                  func() ActivityMetaData { return &MTOReadyForReviewActivityMeta{} },
 	ActivityIDDOCQuestionnaireCompleted:        func() ActivityMetaData { return &IddocQuestionnaireCompletedActivityMeta{} },
 	ActivityIncorrectModelStatus:               func() ActivityMetaData { return &IncorrectModelStatusActivityMeta{} },
+	ActivityTaskCompleted:                      func() ActivityMetaData { return &TaskCompletedActivityMeta{} },
 }
 
 // Activity represents a discrete event that has happened in the application that might be notifiable.
