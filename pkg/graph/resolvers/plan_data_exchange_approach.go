@@ -111,7 +111,15 @@ func PlanDataExchangeApproachUpdate(
 
 			// DATA_EXCHANGE task progression: when approach is marked COMPLETE, mark DATA_EXCHANGE task COMPLETE
 			if deaChangedToComplete {
-				updErr := UpdatePlanTaskStatusOnDataExchangeApproachComplete(tx, logger, existing.ModelPlanID, principal, store)
+				updErr := UpdatePlanTaskStatusOnDataExchangeApproachComplete(
+					tx,
+					logger,
+					existing.ModelPlanID,
+					principal,
+					store,
+					emailService,
+					emailAddressBook,
+				)
 				if updErr != nil {
 					return nil, updErr
 				}

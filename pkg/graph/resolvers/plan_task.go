@@ -9,8 +9,10 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -34,6 +36,8 @@ func updatePlanTaskStatusByKey(
 	newStatus models.PlanTaskStatus,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(np, logger, []uuid.UUID{modelPlanID})
 	if err != nil {
@@ -60,6 +64,7 @@ func updatePlanTaskStatusByKey(
 		return nil
 	}
 
+	didTransitionToComplete := task.Status != models.PlanTaskStatusComplete && newStatus == models.PlanTaskStatusComplete
 	task.Status = newStatus
 
 	if newStatus == models.PlanTaskStatusComplete {
@@ -84,5 +89,95 @@ func updatePlanTaskStatusByKey(
 	}
 
 	_, err = storage.PlanTaskUpdate(np, logger, task)
-	return err
+	if err != nil {
+		return err
+	}
+
+	if didTransitionToComplete {
+		trySendPlanTaskCompletedEmailNotification(np, logger, store, modelPlanID, task, emailService, addressBook)
+	}
+
+	return nil
+}
+
+func trySendPlanTaskCompletedEmailNotification(
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	store *storage.Store,
+	modelPlanID uuid.UUID,
+	task *models.PlanTask,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	if emailService == nil {
+		return
+	}
+
+	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	if err != nil {
+		logger.Error("failed to send task completed email notification", zap.Error(err))
+		return
+	}
+
+	recipients, err := storage.UserAccountGetNotificationPreferencesForTaskCompleted(np, modelPlanID)
+	if err != nil {
+		logger.Error("failed to get task completed email notification preferences", zap.Error(err))
+		return
+	}
+
+	emailRecipients, _ := models.FilterNotificationPreferences(recipients)
+	receiverEmails := make([]string, 0, len(emailRecipients))
+	for _, recipient := range emailRecipients {
+		if recipient.Email != "" {
+			receiverEmails = append(receiverEmails, recipient.Email)
+		}
+	}
+	if len(receiverEmails) == 0 {
+		return
+	}
+
+	subjectContent := email.PlanTaskCompletedSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+	bodyContent := email.PlanTaskCompletedBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ModelID:       modelPlanID.String(),
+		ModelName:     modelPlan.ModelName,
+		TaskName:      planTaskKeyEmailName(task.Key),
+		IsModelLead:   false,
+	}
+
+	emailSubject, emailBody, err := email.PlanTask.Completed.GetContent(subjectContent, bodyContent)
+	if err != nil {
+		logger.Error("failed to build task completed email notification", zap.Error(err))
+		return
+	}
+
+	go func() {
+		err := emailService.Send(
+			addressBook.DefaultSender,
+			[]string{},
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+			oddmail.WithBCC(receiverEmails),
+		)
+		if err != nil {
+			logger.Error("failed to send task completed email notification", zap.Error(err))
+		}
+	}()
+}
+
+func planTaskKeyEmailName(key models.PlanTaskKey) string {
+	switch key {
+	case models.PlanTaskKeyModelPlan:
+		return "Model Plan"
+	case models.PlanTaskKeyDataExchange:
+		return "Data exchange approach"
+	case models.PlanTaskKeyMto:
+		return "Model-to-operations matrix (MTO)"
+	default:
+		return string(key)
+	}
 }

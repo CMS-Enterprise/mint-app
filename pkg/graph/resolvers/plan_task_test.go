@@ -321,6 +321,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			map[string]interface{}{"status": models.ModelStatusCleared},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -351,6 +353,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			map[string]interface{}{"status": models.ModelStatusCleared},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -371,6 +375,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			map[string]interface{}{"status": models.ModelStatusInternalCmmiClearance},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -390,6 +396,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			map[string]interface{}{"status": models.ModelStatusActive},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -406,6 +414,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			map[string]interface{}{"status": models.ModelStatusAnnounced},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -424,6 +434,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			map[string]interface{}{"status": models.ModelStatusActive},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -433,6 +445,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			map[string]interface{}{"status": models.ModelStatusAnnounced},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -451,6 +465,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			map[string]interface{}{"status": models.ModelStatusCleared},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -460,6 +476,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			map[string]interface{}{"status": models.ModelStatusInternalCmmiClearance},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 

@@ -3,6 +3,7 @@ package resolvers
 import (
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -18,7 +19,7 @@ func (suite *ResolverSuite) TestTranslatedAuditFieldCollectionGetByTranslatedAud
 		"status":       models.ModelStatusIcipComplete,
 		"archived":     true,
 	}
-	_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 
 	suite.NoError(err)
 
