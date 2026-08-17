@@ -9,13 +9,17 @@ import HelpText from 'components/HelpText';
 export type FilterGroupType = {
   key: string;
   label: string;
-  description: string;
+  description?: string;
   tagLabel: string;
-  options: {
+  options?: {
     label: string;
     value: string;
   }[];
   displayShowAll: boolean;
+  CustomComponent?: React.ComponentType<{
+    selectedFilters: string[];
+    setSelectedFilters: (filters: string[]) => void;
+  }>;
 };
 
 type FilterGroupProps = {
@@ -34,6 +38,8 @@ const FilterGroup = ({
 }: FilterGroupProps) => {
   const { t } = useTranslation('general');
 
+  const { CustomComponent } = filterGroup;
+
   /**
    * Determines if the "Show All" checkbox should be checked based on the selected filters.
    * @returns true if all options in group are selected and `filterGroup.displayShowAll` is true.
@@ -41,17 +47,19 @@ const FilterGroup = ({
   const showAllIsChecked = useMemo(
     () =>
       filterGroup.displayShowAll &&
-      selectedFilters.length === filterGroup.options.length,
+      selectedFilters.length === (filterGroup.options?.length || 0),
     [
       filterGroup.displayShowAll,
       selectedFilters.length,
-      filterGroup.options.length
+      filterGroup.options?.length
     ]
   );
 
   const handleSetShowAll = (value: boolean) => {
     if (value) {
-      setSelectedFilters(filterGroup.options.map(option => option.value));
+      setSelectedFilters(
+        (filterGroup.options || []).map(option => option.value)
+      );
     } else {
       setSelectedFilters([]);
     }
@@ -68,12 +76,12 @@ const FilterGroup = ({
   return (
     <Fieldset className="mint-filter-group font-body-sm margin-bottom-2 border-bottom-1px border-base-light padding-bottom-4">
       <legend>
-        <h3 className="margin-y-1">
-          {t('filter.filterGroupHeading', { groupName: filterGroup.label })}
-        </h3>
+        <h3 className="margin-y-1">{filterGroup.label}</h3>
       </legend>
 
-      <HelpText>{filterGroup.description}</HelpText>
+      {filterGroup.description && (
+        <HelpText>{filterGroup.description}</HelpText>
+      )}
 
       <FieldGroup
         className={classNames('mint-filter-group__options margin-top-105', {
@@ -91,22 +99,33 @@ const FilterGroup = ({
           />
         )}
 
-        {filterGroup.options.map(option => (
-          <Checkbox
-            className={classNames({
-              'grid-col-6 padding-right-05 bg-transparent':
-                filterGroup.displayShowAll
-            })}
-            key={option.value}
-            id={option.value}
-            name={option.value}
-            onChange={() => toggleFilterOption(option.value)}
-            label={option.label}
-            value={option.value}
-            checked={showAllIsChecked || selectedFilters.includes(option.value)}
-            disabled={showAllIsChecked}
+        {!CustomComponent &&
+          filterGroup.options &&
+          filterGroup.options.map(option => (
+            <Checkbox
+              className={classNames({
+                'grid-col-6 padding-right-05 bg-transparent':
+                  filterGroup.displayShowAll
+              })}
+              key={option.value}
+              id={option.value}
+              name={option.value}
+              onChange={() => toggleFilterOption(option.value)}
+              label={option.label}
+              value={option.value}
+              checked={
+                showAllIsChecked || selectedFilters.includes(option.value)
+              }
+              disabled={showAllIsChecked}
+            />
+          ))}
+
+        {CustomComponent && (
+          <CustomComponent
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
           />
-        ))}
+        )}
       </FieldGroup>
     </Fieldset>
   );

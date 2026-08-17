@@ -1,3 +1,4 @@
+import { DATE_FILTER_PARAM } from 'features/ModelPlan/ModelToOperations/_components/MTOTableFilters';
 import type { GetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
 
 import { isNeededWithinDays } from 'utils/date';
@@ -41,14 +42,14 @@ export type NeededWithinWindowDays = 30 | 60 | 90;
 export const parseNeededWithinDaysFromSearchParams = (
   params: URLSearchParams
 ): NeededWithinWindowDays | null => {
-  // Legacy URL flag from before `needed-within-days`; equivalent to a 30-day window.
-  if (params.get('needed-within-thirty-days') === 'true') {
-    return 30;
+  const raw = params.get(DATE_FILTER_PARAM); // needed-by-date-range=NEXT_30_DAYS
+
+  const dateRange = raw?.split('_')[1];
+
+  if (dateRange === '30' || dateRange === '60' || dateRange === '90') {
+    return Number(dateRange) as NeededWithinWindowDays;
   }
-  const raw = params.get('needed-within-days');
-  if (raw === '30' || raw === '60' || raw === '90') {
-    return Number(raw) as NeededWithinWindowDays;
-  }
+
   return null;
 };
 

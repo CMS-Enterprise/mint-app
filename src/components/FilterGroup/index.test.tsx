@@ -40,11 +40,7 @@ describe('FilterGroup', () => {
     );
 
     expect(
-      screen.getByRole('heading', {
-        name: i18next.t('general:filter.filterGroupHeading', {
-          groupName: filterGroup.label
-        })
-      })
+      screen.getByRole('heading', { name: filterGroup.label })
     ).toBeInTheDocument();
 
     expect(

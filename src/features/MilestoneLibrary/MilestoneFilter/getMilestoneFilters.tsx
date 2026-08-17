@@ -5,7 +5,7 @@ import { upperFirst } from 'lodash';
 import { FilterGroupType } from 'components/FilterGroup';
 
 /**
- * Returns the `categoryName` and `facilitatedByRole` milestone filters for use in the `FilterModal` component
+ * Returns the `categoryName` and `facilitatedByRole` milestone filters for use in the `FilterButtonWithModal` component
  */
 const getMilestoneFilters = (
   /** Milestones currently being displayed after applying any other filters or search criteria */

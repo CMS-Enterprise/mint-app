@@ -1,33 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Button, Checkbox, Icon, Select } from '@trussworks/react-uswds';
+import {
+  MtoFacilitator,
+  MtoMilestoneStatus,
+  MtoRiskIndicator,
+  useGetMtoCategoriesQuery
+} from 'gql/generated/graphql';
 
+import FilterButtonWithModal from 'components/FilterButtonWithModal';
+import FilterTags from 'components/FilterTags';
+import PageLoading from 'components/PageLoading';
 import { Tag } from 'components/Tag';
+import { convertToUppercaseAndUnderscore } from 'utils/modelPlan';
+import { tObject } from 'utils/translation';
 
-const FILTER_PARAM = 'needed-within-days';
-const LEGACY_FILTER_PARAM = 'needed-within-thirty-days';
-const HIDE_CATEGORY_ROWS_PARAM = 'hide-category-rows';
+import {
+  buildSearchParamsFromFilters,
+  countAppliedFilters,
+  parseAppliedFilters,
+  transformFilterTagValues
+} from './_utils';
+import getMTOTableFilters from './getMTOTableFilters';
 
-const DATE_PRESET_STRINGS: number[] = [30, 60, 90];
-
-const selectValueFromSearchParams = (params: URLSearchParams): string => {
-  if (params.get(LEGACY_FILTER_PARAM) === 'true') {
-    return '30';
-  }
-  const paramValue = params.get(FILTER_PARAM);
-  if (paramValue && DATE_PRESET_STRINGS.includes(Number(paramValue))) {
-    return paramValue;
-  }
-  return 'all';
-};
-
-const hideCategoryRowsFromSearchParams = (params: URLSearchParams): boolean =>
-  params.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
+export const DATE_FILTER_PARAM = 'needed-by-date-range';
+export const HIDE_CATEGORY_ROWS_PARAM = 'hide-category-rows';
+const DEFAULT_QUICK_FILTER_OPTION = 'ALL_TIME';
 
 export type MTOTableFiltersProps = {
   /** Number of category and subcategory header rows hidden when the checkbox is checked. */
   categoryHeaderRowCount?: number;
+};
+
+export type MTOTableSelectedFilters = {
+  category: string[];
+  role: MtoFacilitator[];
+  neededByDateRange: string[];
+  status: MtoMilestoneStatus[];
+  risk: MtoRiskIndicator[];
+  other: string[];
 };
 
 /** Table filter controls for the MTO milestones matrix (date window + hide header rows). */
@@ -35,49 +47,141 @@ const MTOTableFilters = ({
   categoryHeaderRowCount = 0
 }: MTOTableFiltersProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
+  const neededWithinDateOptionsConfig = tObject<string>(
+    'modelToOperationsMisc:table.tableFilters.filterOptions.neededByDateRange.options'
+  );
 
-  const location = useLocation();
-  const navigate = useNavigate();
+  const { modelID = '' } = useParams<{ modelID: string }>();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [filtersTableOpen, setFiltersTableOpen] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [appliedFiltersCount, setAppliedFiltersCount] = useState(0);
 
-  const params = new URLSearchParams(location.search);
-  const selectValue = selectValueFromSearchParams(params);
-  const isTimeWindowFilterActive = selectValue !== 'all';
+  const selectValue =
+    searchParams.get(DATE_FILTER_PARAM) || DEFAULT_QUICK_FILTER_OPTION;
+
+  const isTimeWindowFilterActive =
+    selectValue !== null && selectValue !== DEFAULT_QUICK_FILTER_OPTION;
 
   const isHideCategoryRowsChecked =
-    isTimeWindowFilterActive || hideCategoryRowsFromSearchParams(params);
+    isTimeWindowFilterActive ||
+    searchParams.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
+
+  const quickDateFilterOptions = useMemo(() => {
+    const presetOptions = Object.keys(neededWithinDateOptionsConfig).filter(
+      value => value !== 'CUSTOM_DATE_RANGE'
+    );
+
+    return presetOptions.map(option => ({
+      label: neededWithinDateOptionsConfig[option].toLowerCase(),
+      value: convertToUppercaseAndUnderscore(option)
+    }));
+  }, [neededWithinDateOptionsConfig]);
+
+  const appliedFilters = useMemo(
+    () => parseAppliedFilters(searchParams),
+    [searchParams]
+  );
+
+  const appliedFiltersCount = useMemo(
+    () => countAppliedFilters(appliedFilters),
+    [appliedFilters]
+  );
+
+  const setAppliedFilters = (filters: MTOTableSelectedFilters) => {
+    const nextParams = buildSearchParamsFromFilters(filters, searchParams);
+    setSearchParams(nextParams, { replace: true });
+  };
+
+  const { data: mtoCategoriesData, loading: mtoCategoriesLoading } =
+    useGetMtoCategoriesQuery({
+      variables: { id: modelID }
+    });
+
+  const mtoCategories = useMemo(
+    () => mtoCategoriesData?.modelPlan?.mtoMatrix?.categories || [],
+    [mtoCategoriesData]
+  );
+
+  const filterOptions = useMemo(
+    () => getMTOTableFilters(mtoCategories),
+    [mtoCategories]
+  );
+
+  /** Custom Date range requires these transforming.
+   * it needs to be displayed as startDate=MM/DD/YYYY&endDate=MM/DD/YYYY in the URL,
+   * but displayed as MM/DD/YYYY - MM/DD/YYYY in the filter tag.
+   * When none date range filter is clicked, we feed the original data back to setAppliedFilters to rebuild params correctly,
+   * otherwise the URL will be set with MM/DD/YYYY - MM/DD/YYYY.
+   */
+  const appliedFilterTags = useMemo(
+    () => transformFilterTagValues(appliedFilters),
+    [appliedFilters]
+  );
+
+  const handleFilterTagsChange = (updatedTags: MTOTableSelectedFilters) => {
+    setAppliedFilters({
+      ...updatedTags,
+      neededByDateRange:
+        updatedTags.neededByDateRange.length === 0
+          ? []
+          : appliedFilters.neededByDateRange
+    });
+  };
 
   const handleTimeWindowFilterChange = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const next = new URLSearchParams(location.search);
-    next.set('page', '1');
-    next.delete(FILTER_PARAM);
-    next.delete(LEGACY_FILTER_PARAM);
-    next.delete(HIDE_CATEGORY_ROWS_PARAM);
+    const nextParams = new URLSearchParams(searchParams);
+
+    nextParams.set('page', '1');
+    nextParams.delete('startDate');
+    nextParams.delete('endDate');
 
     const { value } = e.target;
-    if (DATE_PRESET_STRINGS.includes(Number(value))) {
-      next.set(FILTER_PARAM, value);
 
-      // Set hide category rows to true if time window filter is active
-      next.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
+    if (value === DEFAULT_QUICK_FILTER_OPTION) {
+      nextParams.delete(DATE_FILTER_PARAM);
+      nextParams.delete(HIDE_CATEGORY_ROWS_PARAM);
     }
 
-    navigate({ search: next.toString() }, { replace: true });
+    if (value !== DEFAULT_QUICK_FILTER_OPTION) {
+      nextParams.set(DATE_FILTER_PARAM, convertToUppercaseAndUnderscore(value));
+      nextParams.set(HIDE_CATEGORY_ROWS_PARAM, 'true');
+    }
+
+    setSearchParams(nextParams, { replace: true });
   };
 
   const handleHideCategoryRowsChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const next = new URLSearchParams(location.search);
-    next.set('page', '1');
-    next.set(HIDE_CATEGORY_ROWS_PARAM, e.target.checked ? 'true' : 'false');
-    navigate({ search: next.toString() }, { replace: true });
+    const nextParams = new URLSearchParams(searchParams);
+
+    nextParams.set('page', '1');
+    nextParams.set(
+      HIDE_CATEGORY_ROWS_PARAM,
+      e.target.checked ? 'true' : 'false'
+    );
+    setSearchParams(nextParams, { replace: true });
   };
+
+  useEffect(() => {
+    if (
+      appliedFiltersCount !== 0 ||
+      isTimeWindowFilterActive ||
+      isHideCategoryRowsChecked
+    ) {
+      setFiltersTableOpen(true);
+    }
+  }, [
+    appliedFiltersCount,
+    isTimeWindowFilterActive,
+    isHideCategoryRowsChecked
+  ]);
+
+  if (mtoCategoriesLoading) {
+    return <PageLoading testId="mto-table-filters" />;
+  }
 
   return (
     <div className="border-1px radius-md border-gray-10 padding-3 margin-bottom-1">
@@ -120,14 +224,11 @@ const MTOTableFilters = ({
           className="display-flex flex-align-center margin-bottom-3 maxh-5"
           style={{ gap: '1.5rem' }}
         >
-          <Button
-            type="button"
-            className="usa-button usa-button--outline width-fit-content text-decoration-none margin-right-0"
-            onClick={() => {}}
-          >
-            <Icon.FilterList className="margin-right-05" aria-hidden />
-            {t('table.tableFilters.filter')}
-          </Button>
+          <FilterButtonWithModal
+            filters={filterOptions}
+            appliedFilters={appliedFilters}
+            setAppliedFilters={setAppliedFilters}
+          />
 
           <p className="margin-y-0 text-bold line-height-sans-2">
             {t('table.tableFilters.quickFilters')}
@@ -147,17 +248,15 @@ const MTOTableFilters = ({
             <Select
               className="margin-top-0"
               id="mto-needed-within-days"
+              style={{ minWidth: '12rem' }}
               data-testid="mto-needed-within-days"
-              name={FILTER_PARAM}
+              name={DATE_FILTER_PARAM}
               value={selectValue}
               onChange={handleTimeWindowFilterChange}
             >
-              <option value="all">
-                {t('table.tableFilters.neededWithinAll')}
-              </option>
-              {DATE_PRESET_STRINGS.map(days => (
-                <option key={`needed-within-days--${days}`} value={days}>
-                  {t('table.tableFilters.neededWithinPresetDays', { days })}
+              {quickDateFilterOptions.map(({ value, label }) => (
+                <option key={`needed-within-days-${value}`} value={value}>
+                  {label}
                 </option>
               ))}
             </Select>
@@ -181,6 +280,15 @@ const MTOTableFilters = ({
       )}
 
       <div>Place holder for search bar</div>
+
+      {filtersTableOpen && (
+        <FilterTags
+          filters={filterOptions}
+          appliedFilters={appliedFilterTags}
+          setAppliedFilters={handleFilterTagsChange}
+          className="margin-top-2"
+        />
+      )}
     </div>
   );
 };

@@ -2693,12 +2693,12 @@ const helpAndKnowledge = {
     learnAboutThisMilestone: 'Learn about this milestone',
     filters: {
       primaryCategory: {
-        heading: 'primary category',
+        heading: 'By primary category',
         tagLabel: 'Category',
         description: 'This filters by the "Category" field.'
       },
       facilitatedByRole: {
-        heading: 'facilitated by',
+        heading: 'By role',
         tagLabel: 'Role',
         description: 'This filters by the "Facilitated by" field.'
       }

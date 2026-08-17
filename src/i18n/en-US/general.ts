@@ -81,7 +81,10 @@ const general = {
   datePicker: {
     label: 'Date picker',
     open: 'Open date picker',
-    warning: 'Date is in the past'
+    warning: 'Date is in the past',
+    fromDate: 'From',
+    toDate: 'To',
+    format: 'mm/dd/yyyy'
   },
   filter: {
     title: 'Filter',

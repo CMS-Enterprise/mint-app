@@ -202,10 +202,55 @@ export const modelToOperationsMisc: Record<string, any> = {
       showFilters: 'Show filters',
       numberOfFiltersApplied: '{{-number}} filters applied',
       filter: 'Filter',
+      filterOptions: {
+        category: {
+          label: 'By primary category',
+          description: 'This filters by the “Category” field.',
+          tagLabel: 'Category'
+        },
+        role: {
+          label: 'By role',
+          description: 'This filters by the “Facilitated by” field.',
+          tagLabel: 'Role'
+        },
+        neededByDateRange: {
+          label: 'By date',
+          description:
+            'This filters by the “Need by” field. View milestones that need to be completed within a certain date range.',
+          options: {
+            ALL_TIME: 'All time',
+            NEXT_30_DAYS: 'Next 30 days',
+            NEXT_60_DAYS: 'Next 60 days',
+            NEXT_90_DAYS: 'Next 90 days',
+            CUSTOM_DATE_RANGE: 'Custom date range'
+          },
+          tagLabel: 'Need by date range'
+        },
+        status: {
+          label: 'By status',
+          description: 'This filters by the “Status” field.',
+          tagLabel: 'Status'
+        },
+        risk: {
+          label: 'By risk level',
+          description: 'This filters by the risk indicator.',
+          tagLabel: 'Risk'
+        },
+        other: {
+          label: 'Other filters',
+          description: '',
+          tagLabel: 'Other',
+          options: {
+            MILESTONES_WITH_NO_SOLUTION_SELECTED:
+              'Milestones with no solution selected',
+            CUSTOM_MILESTONES_ONLY: 'Custom milestones only',
+            DRAFT_MILESTONES_ONLY: 'Draft milestones only',
+            HIDE_CATEGORY_ROWS: 'Hide category rows'
+          }
+        }
+      },
       quickFilters: 'Quick filters:',
       neededWithin: 'Needed within',
-      neededWithinAll: 'all time',
-      neededWithinPresetDays: '{{days}} days',
       hideCategoryRows: 'Hide category rows ({{count}})',
       noResults: {
         header: 'There are no milestones that match the selected filter(s).',
