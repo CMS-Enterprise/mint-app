@@ -662,7 +662,10 @@ describe('Notification Center', () => {
         .should('eq', 200);
 
       cy.get('#is-complete').should('not.be.disabled');
-      cy.ensureChecked('#is-complete', 'label[for="is-complete"]');
+      cy.ensureChecked(
+        '#is-complete',
+        '.usa-checkbox__label[for="is-complete"]'
+      );
       cy.get('#is-complete').should('be.checked');
 
       cy.contains('button', 'Save and return to questionnaires').click();
