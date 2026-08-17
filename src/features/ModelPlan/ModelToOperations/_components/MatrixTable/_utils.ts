@@ -109,6 +109,27 @@ const isMilestoneNeededWithinRange = (
   return false;
 };
 
+const isMilestoneMatchOtherFilters = (
+  filterKeys: string[],
+  milestone: MilestoneType
+) => {
+  return filterKeys.some(filterKey => {
+    switch (filterKey) {
+      case 'MILESTONES_WITH_NO_SOLUTION_SELECTED':
+        return !milestone.solutions || milestone.solutions.length === 0;
+
+      case 'CUSTOM_MILESTONES_ONLY':
+        return milestone.mtoCommonMilestoneID === undefined;
+
+      case 'DRAFT_MILESTONES_ONLY':
+        return milestone.isDraft === true;
+
+      default:
+        return false;
+    }
+  });
+};
+
 // Filter milestones base on applied filters, remove subcategories that have no milestones after filtering
 export const filterMilestones = (
   filters: MTOTableSelectedFilters,
@@ -145,7 +166,9 @@ export const filterMilestones = (
               filters.neededByDateRange
             );
 
-          // Other Filter Match
+          const isOtherMatch =
+            filters.other.length > 0 &&
+            isMilestoneMatchOtherFilters(filters.other, milestone);
 
           // Return true if the milestone matches ANY active filter group
           return (
@@ -153,7 +176,8 @@ export const filterMilestones = (
             isRiskMatch ||
             isRoleMatch ||
             isCategoryMatch ||
-            isDateMatch
+            isDateMatch ||
+            isOtherMatch
           );
         });
 
