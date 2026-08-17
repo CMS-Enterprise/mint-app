@@ -189,7 +189,7 @@ func (w *Worker) Work() {
 	// mgr.Terminate() a chance to run and close the pooled Faktory connections. Those
 	// connections then linger on the Faktory server until it reaps them itself, and repeated
 	// deploys without that cleanup accumulate until the server hits its connection limit.
-	ctx, stop := signal.NotifyContext(ctx, syscall.SIGTERM, syscall.SIGINT)
+	ctx, stop := workerShutdownContext(ctx)
 	defer stop()
 
 	// Register jobs using JobWrapper
@@ -205,4 +205,11 @@ func (w *Worker) Work() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+// workerShutdownContext returns a context that is canceled when the process receives
+// SIGTERM or SIGINT, so that mgr.RunWithContext can shut down gracefully instead of
+// running until the process is forcibly killed.
+func workerShutdownContext(ctx context.Context) (context.Context, context.CancelFunc) {
+	return signal.NotifyContext(ctx, syscall.SIGTERM, syscall.SIGINT)
 }
