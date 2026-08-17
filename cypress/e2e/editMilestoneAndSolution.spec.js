@@ -23,6 +23,7 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
       'include',
       '/collaboration-area/model-to-operations/matrix'
     );
+    cy.location('search').should('include', 'view=milestones');
   });
 
   it('edits solution details from milestone panel with milestone context', () => {
