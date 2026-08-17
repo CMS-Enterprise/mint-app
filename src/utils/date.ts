@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime, Interval } from 'luxon';
 
 type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy' | 'MMMM yyyy';
 
@@ -144,4 +144,19 @@ export const isNeededWithinDays = (
   dayAfterWindowEnd.setUTCDate(dayAfterWindowEnd.getUTCDate() + days + 1);
 
   return needByDate >= todayStart && needByDate < dayAfterWindowEnd;
+};
+
+/**
+ * Returns true if the given ISO date string falls within the given range.
+ */
+export const isDateWithinRange = (
+  date: string,
+  startDate: string,
+  endDate: string
+): boolean => {
+  const target = DateTime.fromISO(date);
+  const start = DateTime.fromISO(startDate).startOf('day');
+  const end = DateTime.fromISO(endDate).endOf('day');
+
+  return Interval.fromDateTimes(start, end).contains(target);
 };

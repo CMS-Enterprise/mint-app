@@ -252,6 +252,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       quickFilters: 'Quick filters:',
       neededWithin: 'Needed within',
       hideCategoryRows: 'Hide category rows ({{count}})',
+      resultsCount: '{{-count}} result',
+      resultsCount_other: '{{-count}} results',
       noResults: {
         header: 'There are no milestones that match the selected filter(s).',
         content:
