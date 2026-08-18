@@ -5,6 +5,8 @@ import { isDateWithinRange, isNeededWithinDays } from 'utils/date';
 
 import type { CategoryType, MilestoneType, SubCategoryType } from './columns';
 
+const NEEDED_WITHIN_DAYS_WINDOW: readonly number[] = [30, 60, 90] as const;
+
 /**
  * Type for the MTO matrix categories array from the GetModelToOperationsMatrix query.
  */
@@ -97,9 +99,17 @@ const isMilestoneNeededWithinRange = (
 
   // Handle preset ranges like NEXT_30_DAYS, NEXT_60_DAYS, NEXT_90_DAYS
   if (filterRange.length === 1) {
-    const neededWithinDays = filterRange[0].split('_')[1];
-    return isNeededWithinDays(milestoneDate, Number(neededWithinDays));
+    const neededWithinDays = Number(filterRange[0].split('_')[1]);
+
+    const notValidDays =
+      Number.isNaN(neededWithinDays) ||
+      !NEEDED_WITHIN_DAYS_WINDOW.includes(neededWithinDays);
+
+    return notValidDays
+      ? false
+      : isNeededWithinDays(milestoneDate, neededWithinDays);
   }
+
   // Handle custom filter range : ['2024-06-01','2024-06-30']
   if (filterRange.length === 2) {
     const [startDate, endDate] = filterRange;

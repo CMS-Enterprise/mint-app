@@ -154,9 +154,14 @@ export const isDateWithinRange = (
   startDate: string,
   endDate: string
 ): boolean => {
-  const target = DateTime.fromISO(date);
-  const start = DateTime.fromISO(startDate).startOf('day');
-  const end = DateTime.fromISO(endDate).endOf('day');
+  const target = DateTime.fromISO(date, { zone: 'UTC' });
+  const start = DateTime.fromISO(startDate, { zone: 'UTC' }).startOf('day');
+  const end = DateTime.fromISO(endDate, { zone: 'UTC' }).endOf('day');
 
-  return Interval.fromDateTimes(start, end).contains(target);
+  if (!target.isValid || !start.isValid || !end.isValid) {
+    return false;
+  }
+  const interval = Interval.fromDateTimes(start, end);
+
+  return interval.isValid ? interval.contains(target) : false;
 };

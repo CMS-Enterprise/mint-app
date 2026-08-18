@@ -831,8 +831,9 @@ const MTOTable = ({
                       // Reset pagination to the first page when the page size changes
                       setSearchParams(
                         prev => {
-                          prev.set('page', '1');
-                          return prev;
+                          const nextParams = new URLSearchParams(prev);
+                          nextParams.set('page', '1');
+                          return nextParams;
                         },
                         { replace: true }
                       );
