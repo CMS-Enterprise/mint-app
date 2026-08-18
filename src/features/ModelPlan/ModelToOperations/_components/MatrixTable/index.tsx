@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
 import { Button, Link } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -34,12 +34,12 @@ import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 import ActionMenu from '../ActionsMenu';
+import { parseAppliedFilters } from '../MTOTableFilters/_utils';
 
 import {
-  filterMilestonesNeededWithinDays,
+  filterMilestones,
   flattenToSingleCategory,
-  GetModelToOperationsMatrixCategoryType,
-  parseNeededWithinDaysFromSearchParams
+  GetModelToOperationsMatrixCategoryType
 } from './_utils';
 import {
   CategoryType,
@@ -71,9 +71,8 @@ const MTOTable = ({
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const navigate = useNavigate();
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { clearMessage } = useMessage();
 
@@ -95,19 +94,18 @@ const MTOTable = ({
     [queryData?.modelPlan.mtoMatrix]
   );
 
-  const neededWithinDays = useMemo(
-    () =>
-      parseNeededWithinDaysFromSearchParams(
-        new URLSearchParams(location.search)
-      ),
-    [location.search]
+  const appliedFilters = useMemo(
+    () => parseAppliedFilters(searchParams),
+    [searchParams]
   );
 
-  const isTimeWindowFilterActive = neededWithinDays !== null;
+  const hasActiveFilters = Object.values(appliedFilters).some(
+    filterArray => filterArray.length > 0
+  );
 
-  /** Hide category/subcategory rows if time window or "hide category rows" filters are active */
+  /** Hide category/subcategory rows if has any filters or "hide category rows" filters are active */
   const tableMilestonesOnlyLayout =
-    isTimeWindowFilterActive || params.get('hide-category-rows') === 'true';
+    hasActiveFilters || searchParams.get('hide-category-rows') === 'true';
 
   /**
    * Formats data for table based on any applied filters.
@@ -121,16 +119,18 @@ const MTOTable = ({
       return data;
     }
 
-    // If time window filter is active, filter the data to only include milestones that are needed within the selected window
-    if (neededWithinDays !== null) {
-      data = filterMilestonesNeededWithinDays(formattedData, neededWithinDays);
+    // If any filter is active, filter the data to only include milestones that fit
+    if (hasActiveFilters) {
+      data = filterMilestones(appliedFilters, formattedData);
     }
 
     const flattened = flattenToSingleCategory(data);
 
-    // If there are milestones and a time window filter is active, sort the milestones by need by date
-    if (flattened.length > 0 && neededWithinDays !== null) {
-      flattened[0].subCategories[0].milestones.sort(
+    // If there are milestones and a filter is active, sort the milestones by need by date
+    const targetSubCategory = flattened[0]?.subCategories[0];
+
+    if (flattened.length > 0 && hasActiveFilters) {
+      targetSubCategory.milestones = [...targetSubCategory.milestones].sort(
         (a, b) =>
           new Date(a.needBy ?? '').getTime() -
           new Date(b.needBy ?? '').getTime()
@@ -138,7 +138,12 @@ const MTOTable = ({
     }
 
     return flattened;
-  }, [formattedData, neededWithinDays, tableMilestonesOnlyLayout]);
+  }, [
+    appliedFilters,
+    formattedData,
+    hasActiveFilters,
+    tableMilestonesOnlyLayout
+  ]);
 
   const [initLocation] = useState<string>(location.pathname);
 
@@ -693,7 +698,7 @@ const MTOTable = ({
               closeRoute={initLocation}
             />
           )}
-          {isTimeWindowFilterActive && itemLength === 0 ? (
+          {hasActiveFilters && itemLength === 0 ? (
             <Alert
               type="info"
               heading={t(
@@ -721,89 +726,96 @@ const MTOTable = ({
               </span>
             </Alert>
           ) : (
-            <DndProvider backend={HTML5Backend}>
-              <div
-                className="display-block"
-                style={{
-                  width: '100%',
-                  minWidth: '100%',
-                  overflow: 'auto',
-                  borderBottom: '1px solid black',
-                  marginBottom: '.75rem'
-                }}
-              >
-                <TopScrollContainer>
-                  <table
-                    style={{
-                      width: '100%',
-                      borderCollapse: 'collapse'
-                    }}
-                  >
-                    <thead>
-                      <tr>
-                        {filteredColumns.map((column, index) => (
-                          <th
-                            key={column.accessor}
-                            style={{
-                              borderBottom: '1px solid black',
-                              padding: '1rem',
-                              paddingLeft: index === 0 ? '.5rem' : '0px',
-                              paddingBottom: '.25rem',
-                              width: column.width,
-                              minWidth: column.width,
-                              maxWidth: column.width
-                            }}
-                          >
-                            {column.canSort !== false ? (
-                              <button
-                                className={classNames(
-                                  'usa-button usa-button--unstyled position-relative display-block'
-                                )}
-                                onClick={() => {
-                                  const isSorted =
-                                    sortCount % 3 === 1 || sortCount % 3 === 0;
-                                  const isSortedDesc = sortCount % 3 === 1;
+            <div>
+              {hasActiveFilters && (
+                <div className="margin-top-3 margin-bottom-2">
+                  {t('table.tableFilters.resultsCount', { count: itemLength })}
+                </div>
+              )}
+              <DndProvider backend={HTML5Backend}>
+                <div
+                  className="display-block"
+                  style={{
+                    width: '100%',
+                    minWidth: '100%',
+                    overflow: 'auto',
+                    borderBottom: '1px solid black',
+                    marginBottom: '.75rem'
+                  }}
+                >
+                  <TopScrollContainer>
+                    <table
+                      style={{
+                        width: '100%',
+                        borderCollapse: 'collapse'
+                      }}
+                    >
+                      <thead>
+                        <tr>
+                          {filteredColumns.map((column, index) => (
+                            <th
+                              key={column.accessor}
+                              style={{
+                                borderBottom: '1px solid black',
+                                padding: '1rem',
+                                paddingLeft: index === 0 ? '.5rem' : '0px',
+                                paddingBottom: '.25rem',
+                                width: column.width,
+                                minWidth: column.width,
+                                maxWidth: column.width
+                              }}
+                            >
+                              {column.canSort !== false ? (
+                                <button
+                                  className={classNames(
+                                    'usa-button usa-button--unstyled position-relative display-block'
+                                  )}
+                                  onClick={() => {
+                                    const isSorted =
+                                      sortCount % 3 === 1 ||
+                                      sortCount % 3 === 0;
+                                    const isSortedDesc = sortCount % 3 === 1;
 
-                                  setCurrentColumn(index);
-                                  setSortCount(sortCount + 1);
-                                  setColumnSort(prev => {
-                                    const newColumnSort = [...prev];
-                                    newColumnSort[index] = {
-                                      isSorted,
-                                      isSortedDesc,
-                                      sortColumn: column.accessor
-                                    };
-                                    return newColumnSort;
-                                  });
-                                }}
-                                type="button"
-                              >
-                                {column.Header}
-                                {getHeaderSortIcon(columnSort[index], true)}
-                              </button>
-                            ) : (
-                              <span
-                                className={classNames(
-                                  'usa-button usa-button--unstyled position-relative display-block',
-                                  {
-                                    'text-no-underline text-black':
-                                      column.Header ===
-                                      t('modelToOperationsMisc:table.actions')
-                                  }
-                                )}
-                              >
-                                {column.Header}
-                              </span>
-                            )}
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>{renderCategories()}</tbody>
-                  </table>{' '}
-                </TopScrollContainer>
-              </div>
-
+                                    setCurrentColumn(index);
+                                    setSortCount(sortCount + 1);
+                                    setColumnSort(prev => {
+                                      const newColumnSort = [...prev];
+                                      newColumnSort[index] = {
+                                        isSorted,
+                                        isSortedDesc,
+                                        sortColumn: column.accessor
+                                      };
+                                      return newColumnSort;
+                                    });
+                                  }}
+                                  type="button"
+                                >
+                                  {column.Header}
+                                  {getHeaderSortIcon(columnSort[index], true)}
+                                </button>
+                              ) : (
+                                <span
+                                  className={classNames(
+                                    'usa-button usa-button--unstyled position-relative display-block',
+                                    {
+                                      'text-no-underline text-black':
+                                        column.Header ===
+                                        t('modelToOperationsMisc:table.actions')
+                                    }
+                                  )}
+                                >
+                                  {column.Header}
+                                </span>
+                              )}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>{renderCategories()}</tbody>
+                    </table>{' '}
+                  </TopScrollContainer>
+                </div>
+              </DndProvider>
               <div className="mint-no-print">
                 <div className="display-flex">
                   {totalPages > 0 && Pagination}
@@ -817,16 +829,19 @@ const MTOTable = ({
                     suffix={t('modelToOperationsMisc:table.milestones')}
                     onChange={() => {
                       // Reset pagination to the first page when the page size changes
-                      params.set('page', '1');
-                      navigate(
-                        { search: params.toString() },
+                      setSearchParams(
+                        prev => {
+                          const nextParams = new URLSearchParams(prev);
+                          nextParams.set('page', '1');
+                          return nextParams;
+                        },
                         { replace: true }
                       );
                     }}
                   />
                 </div>
               </div>
-            </DndProvider>
+            </div>
           )}
         </MTOSolutionPanelProvider>
       </MTOMilestonePanelProvider>

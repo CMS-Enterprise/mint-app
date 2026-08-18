@@ -107,8 +107,8 @@ const FilterGroup = ({
                 'grid-col-6 padding-right-05 bg-transparent':
                   filterGroup.displayShowAll
               })}
-              key={option.value}
-              id={option.value}
+              key={`${filterGroup.key}-${option.value}`}
+              id={`${filterGroup.key}-${option.value}`}
               name={option.value}
               onChange={() => toggleFilterOption(option.value)}
               label={option.label}

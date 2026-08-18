@@ -244,14 +244,15 @@ export const modelToOperationsMisc: Record<string, any> = {
             MILESTONES_WITH_NO_SOLUTION_SELECTED:
               'Milestones with no solution selected',
             CUSTOM_MILESTONES_ONLY: 'Custom milestones only',
-            DRAFT_MILESTONES_ONLY: 'Draft milestones only',
-            HIDE_CATEGORY_ROWS: 'Hide category rows'
+            DRAFT_MILESTONES_ONLY: 'Draft milestones only'
           }
         }
       },
       quickFilters: 'Quick filters:',
       neededWithin: 'Needed within',
       hideCategoryRows: 'Hide category rows ({{count}})',
+      resultsCount: '{{-count}} result',
+      resultsCount_other: '{{-count}} results',
       noResults: {
         header: 'There are no milestones that match the selected filter(s).',
         content:

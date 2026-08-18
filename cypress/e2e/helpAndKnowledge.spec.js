@@ -29,10 +29,10 @@ describe('Help and Knowledge Center', () => {
     cy.contains('button', 'Filter').click();
 
     cy.get('.mint-filter-modal').within(() => {
-      // Find #Learning input, then click its label sibling so the checkbox toggles.
+      // Find #categoryName-Learning input, then click its label sibling so the checkbox toggles.
       cy.get('.mint-filter-group')
         .first()
-        .find('#Learning')
+        .find('#categoryName-Learning')
         .siblings('label')
         .scrollIntoView()
         .click();

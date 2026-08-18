@@ -1,9 +1,11 @@
-import { DATE_FILTER_PARAM } from 'features/ModelPlan/ModelToOperations/_components/MTOTableFilters';
+import { MTOTableSelectedFilters } from 'features/ModelPlan/ModelToOperations/_components/MTOTableFilters';
 import type { GetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
 
-import { isNeededWithinDays } from 'utils/date';
+import { isDateWithinRange, isNeededWithinDays } from 'utils/date';
 
 import type { CategoryType, MilestoneType, SubCategoryType } from './columns';
+
+const NEEDED_WITHIN_DAYS_WINDOW: readonly number[] = [30, 60, 90] as const;
 
 /**
  * Type for the MTO matrix categories array from the GetModelToOperationsMatrix query.
@@ -35,56 +37,6 @@ export const countMtoCategoryHeaderRows = (
 
     return total + 1 + (category.subCategories?.length ?? 0);
   }, 0);
-};
-
-export type NeededWithinWindowDays = 30 | 60 | 90;
-
-export const parseNeededWithinDaysFromSearchParams = (
-  params: URLSearchParams
-): NeededWithinWindowDays | null => {
-  const raw = params.get(DATE_FILTER_PARAM); // needed-by-date-range=NEXT_30_DAYS
-
-  const dateRange = raw?.split('_')[1];
-
-  if (dateRange === '30' || dateRange === '60' || dateRange === '90') {
-    return Number(dateRange) as NeededWithinWindowDays;
-  }
-
-  return null;
-};
-
-/**
- * Filters the category tree to only include milestones whose needBy date
- * is within the next `days` calendar days (UTC). Drops empty subcategories and categories.
- */
-export const filterMilestonesNeededWithinDays = (
-  categoryData: CategoryType[],
-  days: NeededWithinWindowDays
-): CategoryType[] => {
-  const categoriesWithFilteredSubcategories = categoryData.map(category => {
-    const subCategoriesWithFilteredMilestones = category.subCategories.map(
-      subCategory => ({
-        ...subCategory,
-        milestones: subCategory.milestones.filter(milestone =>
-          isNeededWithinDays(milestone.needBy, days)
-        )
-      })
-    );
-
-    const filteredSubCategoriesWithMilestones =
-      subCategoriesWithFilteredMilestones.filter(
-        subCategory => subCategory.milestones.length > 0
-      );
-
-    return {
-      ...category,
-      subCategories: filteredSubCategoriesWithMilestones
-    };
-  });
-
-  return categoriesWithFilteredSubcategories.filter(
-    category => category.subCategories.length > 0
-  );
 };
 
 /**
@@ -135,4 +87,128 @@ export const flattenToSingleCategory = (
   };
 
   return [singleCategory];
+};
+
+const isMilestoneNeededWithinRange = (
+  milestoneDate: string,
+  filterRange: string[]
+) => {
+  if (!milestoneDate) {
+    return false;
+  }
+
+  // Handle preset ranges like NEXT_30_DAYS, NEXT_60_DAYS, NEXT_90_DAYS
+  if (filterRange.length === 1) {
+    const neededWithinDays = Number(filterRange[0].split('_')[1]);
+
+    const notValidDays =
+      Number.isNaN(neededWithinDays) ||
+      !NEEDED_WITHIN_DAYS_WINDOW.includes(neededWithinDays);
+
+    return notValidDays
+      ? false
+      : isNeededWithinDays(milestoneDate, neededWithinDays);
+  }
+
+  // Handle custom filter range : ['2024-06-01','2024-06-30']
+  if (filterRange.length === 2) {
+    const [startDate, endDate] = filterRange;
+    return isDateWithinRange(milestoneDate, startDate, endDate);
+  }
+
+  return false;
+};
+
+const isMilestoneMatchOtherFilters = (
+  filterKeys: string[],
+  milestone: MilestoneType
+) => {
+  return filterKeys.some(filterKey => {
+    switch (filterKey) {
+      case 'MILESTONES_WITH_NO_SOLUTION_SELECTED':
+        return !milestone.solutions || milestone.solutions.length === 0;
+
+      case 'CUSTOM_MILESTONES_ONLY':
+        return milestone.mtoCommonMilestoneID === undefined;
+
+      case 'DRAFT_MILESTONES_ONLY':
+        return milestone.isDraft === true;
+
+      default:
+        return false;
+    }
+  });
+};
+
+// Filter milestones base on applied filters, remove subcategories that have no milestones after filtering
+export const filterMilestones = (
+  filters: MTOTableSelectedFilters,
+  categoryData: CategoryType[]
+): CategoryType[] => {
+  const filteredCategories = categoryData.map(category => {
+    const categoryWithFilteredMilestones = category.subCategories.map(
+      subCategory => {
+        // Filter Milestones against all applied rules
+        const filteredMilestones = subCategory.milestones.filter(milestone => {
+          const isStatusMatch =
+            filters.status.length > 0 &&
+            filters.status.includes(milestone.status);
+
+          const isRiskMatch =
+            filters.risk.length > 0 &&
+            filters.risk.includes(milestone.riskIndicator);
+
+          const isRoleMatch =
+            filters.role.length > 0 &&
+            milestone.facilitatedBy?.some(role => filters.role.includes(role));
+
+          const isCategoryMatch =
+            filters.category.length > 0 &&
+            filters.category.some(
+              filterCat =>
+                filterCat.toLowerCase() === category.name?.toLowerCase()
+            );
+
+          const isDateMatch =
+            filters.neededByDateRange.length > 0 &&
+            isMilestoneNeededWithinRange(
+              milestone.needBy ?? '',
+              filters.neededByDateRange
+            );
+
+          const isOtherMatch =
+            filters.other.length > 0 &&
+            isMilestoneMatchOtherFilters(filters.other, milestone);
+
+          // Return true if the milestone matches ANY active filter group
+          return (
+            isStatusMatch ||
+            isRiskMatch ||
+            isRoleMatch ||
+            isCategoryMatch ||
+            isDateMatch ||
+            isOtherMatch
+          );
+        });
+
+        return {
+          ...subCategory,
+          milestones: filteredMilestones
+        };
+      }
+    );
+
+    const subCategoriesWithMilestones = categoryWithFilteredMilestones.filter(
+      subCategory => subCategory.milestones.length > 0
+    );
+
+    return {
+      ...category,
+      subCategories: subCategoriesWithMilestones
+    };
+  });
+
+  return filteredCategories.filter(
+    category => category.subCategories.length > 0
+  );
 };

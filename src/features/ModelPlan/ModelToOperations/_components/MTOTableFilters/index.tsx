@@ -56,16 +56,6 @@ const MTOTableFilters = ({
 
   const [filtersTableOpen, setFiltersTableOpen] = useState(false);
 
-  const selectValue =
-    searchParams.get(DATE_FILTER_PARAM) || DEFAULT_QUICK_FILTER_OPTION;
-
-  const isTimeWindowFilterActive =
-    selectValue !== null && selectValue !== DEFAULT_QUICK_FILTER_OPTION;
-
-  const isHideCategoryRowsChecked =
-    isTimeWindowFilterActive ||
-    searchParams.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
-
   const quickDateFilterOptions = useMemo(() => {
     const presetOptions = Object.keys(neededWithinDateOptionsConfig).filter(
       value => value !== 'CUSTOM_DATE_RANGE'
@@ -91,6 +81,15 @@ const MTOTableFilters = ({
     const nextParams = buildSearchParamsFromFilters(filters, searchParams);
     setSearchParams(nextParams, { replace: true });
   };
+
+  const isHideCategoryParamActive =
+    searchParams.get(HIDE_CATEGORY_ROWS_PARAM) === 'true';
+
+  const isHideCategoryRowsChecked =
+    appliedFiltersCount > 0 || isHideCategoryParamActive;
+
+  const selectValue =
+    searchParams.get(DATE_FILTER_PARAM) || DEFAULT_QUICK_FILTER_OPTION;
 
   const { data: mtoCategoriesData, loading: mtoCategoriesLoading } =
     useGetMtoCategoriesQuery({
@@ -166,18 +165,10 @@ const MTOTableFilters = ({
   };
 
   useEffect(() => {
-    if (
-      appliedFiltersCount !== 0 ||
-      isTimeWindowFilterActive ||
-      isHideCategoryRowsChecked
-    ) {
+    if (appliedFiltersCount > 0 || isHideCategoryParamActive) {
       setFiltersTableOpen(true);
     }
-  }, [
-    appliedFiltersCount,
-    isTimeWindowFilterActive,
-    isHideCategoryRowsChecked
-  ]);
+  }, [appliedFiltersCount, isHideCategoryParamActive]);
 
   if (mtoCategoriesLoading) {
     return <PageLoading testId="mto-table-filters" />;
@@ -272,7 +263,7 @@ const MTOTableFilters = ({
             label={t('table.tableFilters.hideCategoryRows', {
               count: categoryHeaderRowCount
             })}
-            disabled={isTimeWindowFilterActive}
+            disabled={appliedFiltersCount > 0}
             checked={isHideCategoryRowsChecked}
             onChange={handleHideCategoryRowsChange}
           />
