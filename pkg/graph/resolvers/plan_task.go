@@ -141,13 +141,16 @@ func trySendPlanTaskCompletedNotifications(
 		}
 	}
 
-	// collct our leads vs non-leads
 	var (
 		leadRecipients    []*models.UserAccountAndNotificationPreferences
 		nonLeadRecipients []*models.UserAccountAndNotificationPreferences
 	)
 	for _, recipient := range recipients {
 		if modelLeadByUserID[recipient.ID] {
+			recipient.PreferenceFlags = models.UserNotificationPreferenceFlags{
+				models.UserNotificationPreferenceInApp,
+				models.UserNotificationPreferenceEmail,
+			}
 			leadRecipients = append(leadRecipients, recipient)
 		} else {
 			nonLeadRecipients = append(nonLeadRecipients, recipient)
