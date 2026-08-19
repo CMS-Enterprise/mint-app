@@ -145,13 +145,25 @@ func trySendPlanTaskCompletedNotifications(
 		return
 	}
 
-	receiverEmails := make([]string, 0, len(emailRecipients))
+	modelLeadByUserID, err := getPlanTaskModelLeadByUserID(logger, store, modelPlanID)
+	if err != nil {
+		logger.Error("failed to get task completed model lead recipients", zap.Error(err))
+		return
+	}
+
+	modelLeadEmails := []string{}
+	nonModelLeadEmails := make([]string, 0, len(emailRecipients))
 	for _, recipient := range emailRecipients {
-		if recipient.Email != "" {
-			receiverEmails = append(receiverEmails, recipient.Email)
+		if recipient.Email == "" {
+			continue
+		}
+		if modelLeadByUserID[recipient.ID] {
+			modelLeadEmails = append(modelLeadEmails, recipient.Email)
+		} else {
+			nonModelLeadEmails = append(nonModelLeadEmails, recipient.Email)
 		}
 	}
-	if len(receiverEmails) == 0 {
+	if len(modelLeadEmails) == 0 && len(nonModelLeadEmails) == 0 {
 		return
 	}
 
@@ -163,29 +175,74 @@ func trySendPlanTaskCompletedNotifications(
 		ModelID:       modelPlanID.String(),
 		ModelName:     modelPlan.ModelName,
 		TaskName:      planTaskKeyEmailName(task.Key),
-		IsModelLead:   false,
 	}
 
-	emailSubject, emailBody, err := email.PlanTask.Completed.GetContent(subjectContent, bodyContent)
-	if err != nil {
-		logger.Error("failed to build task completed email notification", zap.Error(err))
-		return
-	}
-
-	go func() {
-		err := emailService.Send(
-			addressBook.DefaultSender,
-			[]string{},
-			nil,
-			emailSubject,
-			"text/html",
-			emailBody,
-			oddmail.WithBCC(receiverEmails),
-		)
+	// send email to model lead
+	if len(modelLeadEmails) > 0 {
+		bodyContent.IsModelLead = true
+		emailSubject, emailBody, err := email.PlanTask.Completed.GetContent(subjectContent, bodyContent)
 		if err != nil {
-			logger.Error("failed to send task completed email notification", zap.Error(err))
+			logger.Error("failed to build task completed email notification", zap.Error(err))
+		} else {
+			go func() {
+				err := emailService.Send(
+					addressBook.DefaultSender,
+					[]string{},
+					nil,
+					emailSubject,
+					"text/html",
+					emailBody,
+					oddmail.WithBCC(modelLeadEmails),
+				)
+				if err != nil {
+					logger.Error("failed to send task completed email notification", zap.Error(err))
+				}
+			}()
 		}
-	}()
+	}
+
+	// send email to non-model leads
+	if len(nonModelLeadEmails) > 0 {
+		bodyContent.IsModelLead = false
+		emailSubject, emailBody, err := email.PlanTask.Completed.GetContent(subjectContent, bodyContent)
+		if err != nil {
+			logger.Error("failed to build task completed email notification", zap.Error(err))
+		} else {
+			go func() {
+				err := emailService.Send(
+					addressBook.DefaultSender,
+					[]string{},
+					nil,
+					emailSubject,
+					"text/html",
+					emailBody,
+					oddmail.WithBCC(nonModelLeadEmails),
+				)
+				if err != nil {
+					logger.Error("failed to send task completed email notification", zap.Error(err))
+				}
+			}()
+		}
+	}
+}
+
+func getPlanTaskModelLeadByUserID(logger *zap.Logger, store *storage.Store, modelPlanID uuid.UUID) (map[uuid.UUID]bool, error) {
+	collaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	modelLeadByUserID := make(map[uuid.UUID]bool, len(collaborators))
+	for _, collaborator := range collaborators {
+		for _, teamRole := range collaborator.TeamRoles {
+			if models.TeamRole(teamRole) == models.TeamRoleModelLead {
+				modelLeadByUserID[collaborator.UserID] = true
+				break
+			}
+		}
+	}
+
+	return modelLeadByUserID, nil
 }
 
 func planTaskKeyEmailName(key models.PlanTaskKey) string {
