@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"net"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"go.uber.org/zap"
@@ -181,15 +183,33 @@ func (w *Worker) Work() {
 	userFunction := userhelpers.UserAccountGetByIDLOADER
 	ctx = appcontext.WithUserAccountService(ctx, userFunction)
 
+	// RunWithContext only shuts down when its context is canceled - it otherwise ignores OS
+	// signals entirely (unlike mgr.Run()). Without this, ECS's SIGTERM on every deploy/task
+	// replacement goes unhandled and the process is eventually SIGKILLed, which never gives
+	// mgr.Terminate() a chance to run and close the pooled Faktory connections. Those
+	// connections then linger on the Faktory server until it reaps them itself, and repeated
+	// deploys without that cleanup accumulate until the server hits its connection limit.
+	ctx, stop := workerShutdownContext(ctx)
+	defer stop()
+
 	// Register jobs using JobWrapper
 	for _, job := range w.getJobWrappers(ctx) {
 		zapLogger.Info("registering job", zap.String("job_name", job.Name))
 		mgr.Register(job.Name, JobWithPanicProtection(job.Job))
 	}
 
-	// Run the manager with the shared context
+	// Run the manager with the shared context; canceling ctx above (via SIGTERM/SIGINT)
+	// makes RunWithContext call mgr.Terminate(), which drains in-flight jobs and closes
+	// the connection pool before this returns.
 	err = mgr.RunWithContext(ctx)
 	if err != nil {
 		panic(err)
 	}
+}
+
+// workerShutdownContext returns a context that is canceled when the process receives
+// SIGTERM or SIGINT, so that mgr.RunWithContext can shut down gracefully instead of
+// running until the process is forcibly killed.
+func workerShutdownContext(ctx context.Context) (context.Context, context.CancelFunc) {
+	return signal.NotifyContext(ctx, syscall.SIGTERM, syscall.SIGINT)
 }

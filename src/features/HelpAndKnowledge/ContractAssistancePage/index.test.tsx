@@ -141,7 +141,7 @@ describe('ContractAssistancePage', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders the DCCS Contract Summary Page link', async () => {
+  it('renders the CTAT E-library link', async () => {
     renderPage(nonAssessmentStore);
 
     await waitFor(() => {
@@ -150,7 +150,7 @@ describe('ContractAssistancePage', () => {
       ).toBeInTheDocument();
     });
     expect(
-      screen.getByText('Visit the DCCS Contract Summary Page on SharePoint')
+      screen.getByText('Visit the CTAT E-library on SharePoint')
     ).toBeInTheDocument();
   });
 

@@ -55,14 +55,14 @@ exports[`ContractAssistancePage > matches snapshot 1`] = `
       <p
         class="mint-body-medium margin-top-0 margin-bottom-2"
       >
-        For additional acquisition support and guidance, visit the DCCS Contract Summary Page, which provides acquisition support for both pre-award and post-award activities, including documents, templates, and resources. 
+        For additional acquisition support and guidance, visit the CTAT E-library, which provides acquisition support for both pre-award and post-award activities, including documents, templates, and resources. 
         <span
           class="usa-link pointer"
           role="button"
           tabindex="0"
         >
           <span>
-            Visit the DCCS Contract Summary Page on SharePoint
+            Visit the CTAT E-library on SharePoint
             <svg
               aria-label="launch"
               class="usa-icon margin-left-05 top-05"
