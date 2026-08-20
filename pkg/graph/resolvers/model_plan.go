@@ -5,30 +5,26 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/samber/lo"
-	"github.com/spf13/viper"
-
-	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
-	"github.com/cms-enterprise/mint-app/pkg/notifications"
-	"github.com/cms-enterprise/mint-app/pkg/s3"
-
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
+	"github.com/samber/lo"
+	"github.com/spf13/viper"
 	"go.uber.org/zap"
-
-	"github.com/cms-enterprise/mint-app/pkg/email"
-	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
-	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
-
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
-	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // ModelPlanRecentEditTables is a list of tables that are used to determine the most recent edits to a model plan.
@@ -366,7 +362,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress DATA_EXCHANGE and MODEL_PLAN tasks if model status moves backwards from CLEARED
 	if oldStatus == models.ModelStatusCleared &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(ctx, store, logger, retPlan.ID, principal, store)
+		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -382,7 +378,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress MTO task if model status moves backwards from ACTIVE
 	if oldStatus == models.ModelStatusActive &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusActive) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(ctx, store, logger, retPlan.ID, principal, store)
+		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}

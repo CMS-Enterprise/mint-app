@@ -258,6 +258,16 @@ func UserAccountGetNotificationPreferencesForTaskCompleted(
 	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesTaskCompleted, arg)
 }
 
+// UserAccountGetNotificationPreferencesForNewTaskAdded returns a collection of
+// user accounts that should be notified when a plan task becomes available
+func UserAccountGetNotificationPreferencesForNewTaskAdded(
+	np sqlutils.NamedPreparer,
+	modelPlanID uuid.UUID,
+) ([]*models.UserAccountAndNotificationPreferences, error) {
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
+	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesNewTaskAdded, arg)
+}
+
 // UserAccountGetLeadModelPlanCount returns the count of model plans where the user is a lead.
 func UserAccountGetLeadModelPlanCount(np sqlutils.NamedPreparer, userID uuid.UUID) (int, error) {
 	arg := map[string]interface{}{

@@ -24,7 +24,7 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 	// Create and delete a discussion to test the translated audit for plan discussion
 
 	catForPlan2 := suite.createMTOCategory("test category for changes", plan2.ID, nil)
-	err := MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, catForPlan2.ID)
+	err := MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, catForPlan2.ID, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	plan3 := suite.createModelPlan("test plan for changes3")
@@ -328,7 +328,7 @@ func (suite *ResolverSuite) TestTranslateAuditMilestoneSolutionLinkDeletedWhenMi
 
 	// Deleting the milestone cascade-deletes the link, producing two audit records:
 	// one for mto_milestone (DELETE) and one for mto_milestone_solution_link (DELETE).
-	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, milestone.ID)
+	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, milestone.ID, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	// dangerousTranslateAllQueuedTranslatedAudits calls suite.NoError internally, so any
@@ -368,7 +368,7 @@ func (suite *ResolverSuite) TestTranslateAuditMilestoneSolutionLinkDeletedWhenSo
 
 	// Deleting the solution cascade-deletes the link; the milestone still exists so the primary
 	// foreign key path (milestone_id → mto_milestone → model_plan_id) should resolve correctly.
-	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, solutions[0].ID)
+	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, solutions[0].ID, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	translatedAudits := suite.dangerousQueueAndTranslateAllAudits()

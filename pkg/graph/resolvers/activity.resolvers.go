@@ -92,6 +92,16 @@ func (r *newModelPlanActivityMetaResolver) ModelPlan(ctx context.Context, obj *m
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
 
+// ModelPlan is the resolver for the modelPlan field.
+func (r *newTaskAddedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.NewTaskAddedActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// PlanTask is the resolver for the planTask field.
+func (r *newTaskAddedActivityMetaResolver) PlanTask(ctx context.Context, obj *models.NewTaskAddedActivityMeta) (*models.PlanTask, error) {
+	return PlanTaskGetByIDLOADER(ctx, obj.PlanTaskID)
+}
+
 // DataExchangeApproach is the resolver for the dataExchangeApproach field.
 func (r *planDataExchangeApproachMarkedCompleteActivityMetaResolver) DataExchangeApproach(ctx context.Context, obj *models.PlanDataExchangeApproachMarkedCompleteActivityMeta) (*models.PlanDataExchangeApproach, error) {
 	return PlanDataExchangeApproachGetByModelPlanIDLoader(ctx, obj.ModelPlanID)
@@ -198,6 +208,11 @@ func (r *Resolver) NewModelPlanActivityMeta() generated.NewModelPlanActivityMeta
 	return &newModelPlanActivityMetaResolver{r}
 }
 
+// NewTaskAddedActivityMeta returns generated.NewTaskAddedActivityMetaResolver implementation.
+func (r *Resolver) NewTaskAddedActivityMeta() generated.NewTaskAddedActivityMetaResolver {
+	return &newTaskAddedActivityMetaResolver{r}
+}
+
 // PlanDataExchangeApproachMarkedCompleteActivityMeta returns generated.PlanDataExchangeApproachMarkedCompleteActivityMetaResolver implementation.
 func (r *Resolver) PlanDataExchangeApproachMarkedCompleteActivityMeta() generated.PlanDataExchangeApproachMarkedCompleteActivityMetaResolver {
 	return &planDataExchangeApproachMarkedCompleteActivityMetaResolver{r}
@@ -229,6 +244,7 @@ type (
 	modelPlanSharedActivityMetaResolver                        struct{ *Resolver }
 	newDiscussionRepliedActivityMetaResolver                   struct{ *Resolver }
 	newModelPlanActivityMetaResolver                           struct{ *Resolver }
+	newTaskAddedActivityMetaResolver                           struct{ *Resolver }
 	planDataExchangeApproachMarkedCompleteActivityMetaResolver struct{ *Resolver }
 	taggedInDiscussionReplyActivityMetaResolver                struct{ *Resolver }
 	taggedInPlanDiscussionActivityMetaResolver                 struct{ *Resolver }

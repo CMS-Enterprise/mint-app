@@ -77,12 +77,14 @@ func UpdatePlanTaskStatusOnModelNoLongerCleared(
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	modelPlanStatus, err := calculateModelPlanTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
-	if err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store, nil, email.AddressBook{}); err != nil {
+	if err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store, emailService, addressBook); err != nil {
 		return err
 	}
 
@@ -91,7 +93,7 @@ func UpdatePlanTaskStatusOnModelNoLongerCleared(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, nil, email.AddressBook{})
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
 }
 
 func calculateModelPlanTaskStatus(
@@ -220,13 +222,15 @@ func UpdatePlanTaskStatusOnDataExchangeApproachNoLongerComplete(
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	dataExchangeStatus, err := calculateDataExchangeTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, nil, email.AddressBook{})
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
 }
 
 func calculateDataExchangeTaskStatus(
@@ -306,13 +310,15 @@ func UpdatePlanTaskStatusOnMTODataDeleted(
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	mtoStatus, err := calculateMTOTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, nil, email.AddressBook{})
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, emailService, addressBook)
 }
 
 // UpdatePlanTaskStatusOnModelNoLongerActive runs when model plan status regresses from ACTIVE.
@@ -323,13 +329,15 @@ func UpdatePlanTaskStatusOnModelNoLongerActive(
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	mtoStatus, err := calculateMTOTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, nil, email.AddressBook{})
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, emailService, addressBook)
 }
 
 func calculateMTOTaskStatus(

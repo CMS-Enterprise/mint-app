@@ -67,6 +67,7 @@ func updatePlanTaskStatusByKey(
 		return nil
 	}
 
+	didTransitionToDo := task.Status != models.PlanTaskStatusToDo && newStatus == models.PlanTaskStatusToDo
 	didTransitionToComplete := task.Status != models.PlanTaskStatusComplete && newStatus == models.PlanTaskStatusComplete
 	task.Status = newStatus
 
@@ -99,8 +100,169 @@ func updatePlanTaskStatusByKey(
 	if didTransitionToComplete {
 		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, task, principal, emailService, addressBook)
 	}
+	if didTransitionToDo {
+		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, task, principal, emailService, addressBook)
+	}
 
 	return nil
+}
+
+// planTaskNotificationRecipientsByRole gets lists of both all model leads (regardless of settings) and non-model-leads (respecting settings) for notification purposes
+func planTaskNotificationRecipientsByRole(
+	logger *zap.Logger,
+	store *storage.Store,
+	modelPlanID uuid.UUID,
+	recipients []*models.UserAccountAndNotificationPreferences,
+) ([]*models.UserAccountAndNotificationPreferences, []*models.UserAccountAndNotificationPreferences, error) {
+	collaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	modelLeadByUserID := map[uuid.UUID]bool{}
+	for _, collaborator := range collaborators {
+		teamRoles := models.ConvertEnums[models.TeamRole](collaborator.TeamRoles)
+		if lo.Contains(teamRoles, models.TeamRoleModelLead) {
+			modelLeadByUserID[collaborator.UserID] = true
+		}
+	}
+
+	var (
+		leadRecipients    []*models.UserAccountAndNotificationPreferences
+		nonLeadRecipients []*models.UserAccountAndNotificationPreferences
+	)
+	for _, recipient := range recipients {
+		if modelLeadByUserID[recipient.ID] {
+			// force model leads to receive notifications, they cannot opt out of notifications where they are model leads
+			recipient.PreferenceFlags = models.UserNotificationPreferenceFlags{
+				models.UserNotificationPreferenceInApp,
+				models.UserNotificationPreferenceEmail,
+			}
+			leadRecipients = append(leadRecipients, recipient)
+		} else {
+			nonLeadRecipients = append(nonLeadRecipients, recipient)
+		}
+	}
+
+	return leadRecipients, nonLeadRecipients, nil
+}
+
+func trySendPlanTaskNewAvailableNotifications(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	store *storage.Store,
+	modelPlanID uuid.UUID,
+	task *models.PlanTask,
+	principal authentication.Principal,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	if err != nil {
+		logger.Error("failed to create new task available notifications", zap.Error(err))
+		return
+	}
+
+	recipients, err := storage.UserAccountGetNotificationPreferencesForNewTaskAdded(np, modelPlanID)
+	if err != nil {
+		logger.Error("failed to get new task available notification preferences", zap.Error(err))
+		return
+	}
+
+	leadRecipients, nonLeadRecipients, err := planTaskNotificationRecipientsByRole(logger, store, modelPlanID, recipients)
+	if err != nil {
+		logger.Error("failed to get new task available model lead recipients", zap.Error(err))
+		return
+	}
+
+	nonLeadEmailRecipients, nonLeadInAppRecipients := models.FilterNotificationPreferences(nonLeadRecipients)
+	inAppRecipients := append(leadRecipients, nonLeadInAppRecipients...)
+	if len(inAppRecipients) > 0 {
+		_, err = notifications.ActivityNewTaskAddedCreate(
+			ctx,
+			principal.Account().ID,
+			np,
+			inAppRecipients,
+			modelPlanID,
+			task,
+		)
+		if err != nil {
+			logger.Error("failed to create new task available in-app notification", zap.Error(err))
+		}
+	}
+
+	if emailService == nil {
+		return
+	}
+
+	leadEmails := lo.FilterMap(leadRecipients, func(recipient *models.UserAccountAndNotificationPreferences, _ int) (string, bool) {
+		return recipient.Email, recipient.Email != ""
+	})
+
+	nonLeadEmails := lo.FilterMap(nonLeadEmailRecipients, func(recipient *models.UserAccountAndNotificationPreferences, _ int) (string, bool) {
+		return recipient.Email, recipient.Email != ""
+	})
+
+	if len(leadEmails) == 0 && len(nonLeadEmails) == 0 {
+		return
+	}
+
+	subjectContent := email.PlanTaskNewAvailableSubjectContent{
+		ModelName: modelPlan.ModelName,
+	}
+	bodyContent := email.PlanTaskNewAvailableBodyContent{
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ModelID:       modelPlanID.String(),
+		ModelName:     modelPlan.ModelName,
+		TaskList:      []string{planTaskKeyEmailName(task.Key)},
+	}
+
+	if len(leadEmails) > 0 {
+		bodyContent.IsModelLead = true
+		emailSubject, emailBody, err := email.PlanTask.NewAvailable.GetContent(subjectContent, bodyContent)
+		if err != nil {
+			logger.Error("failed to build new task available model lead email notification", zap.Error(err))
+		} else {
+			go func() {
+				err := emailService.Send(
+					addressBook.DefaultSender,
+					[]string{},
+					nil,
+					emailSubject,
+					"text/html",
+					emailBody,
+					oddmail.WithBCC(leadEmails),
+				)
+				if err != nil {
+					logger.Error("failed to send new task available model lead email notification", zap.Error(err))
+				}
+			}()
+		}
+	}
+
+	if len(nonLeadEmails) > 0 {
+		bodyContent.IsModelLead = false
+		emailSubject, emailBody, err := email.PlanTask.NewAvailable.GetContent(subjectContent, bodyContent)
+		if err != nil {
+			logger.Error("failed to build new task available email notification", zap.Error(err))
+		} else {
+			go func() {
+				err := emailService.Send(
+					addressBook.DefaultSender,
+					[]string{},
+					nil,
+					emailSubject,
+					"text/html",
+					emailBody,
+					oddmail.WithBCC(nonLeadEmails),
+				)
+				if err != nil {
+					logger.Error("failed to send new task available email notification", zap.Error(err))
+				}
+			}()
+		}
+	}
 }
 
 func trySendPlanTaskCompletedNotifications(
@@ -126,35 +288,10 @@ func trySendPlanTaskCompletedNotifications(
 		return
 	}
 
-	collaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+	leadRecipients, nonLeadRecipients, err := planTaskNotificationRecipientsByRole(logger, store, modelPlanID, recipients)
 	if err != nil {
 		logger.Error("failed to get task completed model lead recipients", zap.Error(err))
 		return
-	}
-
-	// map collaborators for use later
-	modelLeadByUserID := map[uuid.UUID]bool{}
-	for _, collaborator := range collaborators {
-		teamRoles := models.ConvertEnums[models.TeamRole](collaborator.TeamRoles)
-		if lo.Contains(teamRoles, models.TeamRoleModelLead) {
-			modelLeadByUserID[collaborator.UserID] = true
-		}
-	}
-
-	var (
-		leadRecipients    []*models.UserAccountAndNotificationPreferences
-		nonLeadRecipients []*models.UserAccountAndNotificationPreferences
-	)
-	for _, recipient := range recipients {
-		if modelLeadByUserID[recipient.ID] {
-			recipient.PreferenceFlags = models.UserNotificationPreferenceFlags{
-				models.UserNotificationPreferenceInApp,
-				models.UserNotificationPreferenceEmail,
-			}
-			leadRecipients = append(leadRecipients, recipient)
-		} else {
-			nonLeadRecipients = append(nonLeadRecipients, recipient)
-		}
 	}
 
 	// we only want to filter our non-leads. all leads receive these notifications regardless of their settings

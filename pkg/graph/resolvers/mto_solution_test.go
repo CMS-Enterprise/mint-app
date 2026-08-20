@@ -6,9 +6,8 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
-
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
@@ -204,7 +203,7 @@ func (suite *ResolverSuite) TestCreateCommonSolutionAndLinkMilestones() {
 	}
 
 	// finally, delete the solution and ensure the links are removed (due to the `ON CASCADE DELETE`)
-	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, solution.ID)
+	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, solution.ID, nil, email.AddressBook{})
 	suite.NoError(err)
 	milestonesAfterDelete, err := MTOMilestoneGetBySolutionIDLOADER(suite.testConfigs.Context, solution.ID)
 	suite.NoError(err)

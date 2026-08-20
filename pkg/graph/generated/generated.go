@@ -69,6 +69,7 @@ type ResolverRoot interface {
 	Mutation() MutationResolver
 	NewDiscussionRepliedActivityMeta() NewDiscussionRepliedActivityMetaResolver
 	NewModelPlanActivityMeta() NewModelPlanActivityMetaResolver
+	NewTaskAddedActivityMeta() NewTaskAddedActivityMetaResolver
 	PlanBasics() PlanBasicsResolver
 	PlanBeneficiaries() PlanBeneficiariesResolver
 	PlanCollaborator() PlanCollaboratorResolver
@@ -1260,6 +1261,16 @@ type ComplexityRoot struct {
 	NewModelPlanActivityMeta struct {
 		ModelPlan   func(childComplexity int) int
 		ModelPlanID func(childComplexity int) int
+		Type        func(childComplexity int) int
+		Version     func(childComplexity int) int
+	}
+
+	NewTaskAddedActivityMeta struct {
+		ModelPlan   func(childComplexity int) int
+		ModelPlanID func(childComplexity int) int
+		PlanTask    func(childComplexity int) int
+		PlanTaskID  func(childComplexity int) int
+		TaskKey     func(childComplexity int) int
 		Type        func(childComplexity int) int
 		Version     func(childComplexity int) int
 	}
@@ -3132,6 +3143,11 @@ type NewDiscussionRepliedActivityMetaResolver interface {
 }
 type NewModelPlanActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.NewModelPlanActivityMeta) (*models.ModelPlan, error)
+}
+type NewTaskAddedActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.NewTaskAddedActivityMeta) (*models.ModelPlan, error)
+
+	PlanTask(ctx context.Context, obj *models.NewTaskAddedActivityMeta) (*models.PlanTask, error)
 }
 type PlanBasicsResolver interface {
 	AdditionalModelCategories(ctx context.Context, obj *models.PlanBasics) ([]models.ModelCategory, error)
@@ -9158,6 +9174,49 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.NewModelPlanActivityMeta.Version(childComplexity), true
+
+	case "NewTaskAddedActivityMeta.modelPlan":
+		if e.ComplexityRoot.NewTaskAddedActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.ComplexityRoot.NewTaskAddedActivityMeta.ModelPlan(childComplexity), true
+	case "NewTaskAddedActivityMeta.modelPlanID":
+		if e.ComplexityRoot.NewTaskAddedActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.NewTaskAddedActivityMeta.ModelPlanID(childComplexity), true
+	case "NewTaskAddedActivityMeta.planTask":
+		if e.ComplexityRoot.NewTaskAddedActivityMeta.PlanTask == nil {
+			break
+		}
+
+		return e.ComplexityRoot.NewTaskAddedActivityMeta.PlanTask(childComplexity), true
+	case "NewTaskAddedActivityMeta.planTaskID":
+		if e.ComplexityRoot.NewTaskAddedActivityMeta.PlanTaskID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.NewTaskAddedActivityMeta.PlanTaskID(childComplexity), true
+	case "NewTaskAddedActivityMeta.taskKey":
+		if e.ComplexityRoot.NewTaskAddedActivityMeta.TaskKey == nil {
+			break
+		}
+
+		return e.ComplexityRoot.NewTaskAddedActivityMeta.TaskKey(childComplexity), true
+	case "NewTaskAddedActivityMeta.type":
+		if e.ComplexityRoot.NewTaskAddedActivityMeta.Type == nil {
+			break
+		}
+
+		return e.ComplexityRoot.NewTaskAddedActivityMeta.Type(childComplexity), true
+	case "NewTaskAddedActivityMeta.version":
+		if e.ComplexityRoot.NewTaskAddedActivityMeta.Version == nil {
+			break
+		}
+
+		return e.ComplexityRoot.NewTaskAddedActivityMeta.Version(childComplexity), true
 
 	case "OperationalNeedTranslation.key":
 		if e.ComplexityRoot.OperationalNeedTranslation.Key == nil {
@@ -24558,6 +24617,7 @@ union ActivityMetaData =
   | IddocQuestionnaireCompletedActivityMeta
   | NewDiscussionAddedActivityMeta
   | IncorrectModelStatusActivityMeta
+  | NewTaskAddedActivityMeta
   | TaskCompletedActivityMeta
 
 type AddedAsCollaboratorMeta {
@@ -24707,6 +24767,16 @@ type TaskCompletedActivityMeta {
   taskKey: PlanTaskKey!
   completedBy: UUID!
   completedByUserAccount: UserAccount!
+}
+
+type NewTaskAddedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  planTaskID: UUID!
+  planTask: PlanTask!
+  taskKey: PlanTaskKey!
 }
 
 """
@@ -56700,6 +56770,185 @@ func (ec *executionContext) fieldContext_NewModelPlanActivityMeta_modelPlan(_ co
 		},
 	}
 	return fc, nil
+}
+
+func (ec *executionContext) _NewTaskAddedActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.NewTaskAddedActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_NewTaskAddedActivityMeta_version(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Version, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v int) graphql.Marshaler {
+			return ec.marshalNInt2int(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_NewTaskAddedActivityMeta_version(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("NewTaskAddedActivityMeta", field, false, false, errors.New("field of type Int does not have child fields"))
+}
+
+func (ec *executionContext) _NewTaskAddedActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.NewTaskAddedActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_NewTaskAddedActivityMeta_type(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Type, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.ActivityType) graphql.Marshaler {
+			return ec.marshalNActivityType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_NewTaskAddedActivityMeta_type(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("NewTaskAddedActivityMeta", field, false, false, errors.New("field of type ActivityType does not have child fields"))
+}
+
+func (ec *executionContext) _NewTaskAddedActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.NewTaskAddedActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_NewTaskAddedActivityMeta_modelPlanID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModelPlanID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_NewTaskAddedActivityMeta_modelPlanID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("NewTaskAddedActivityMeta", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _NewTaskAddedActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.NewTaskAddedActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_NewTaskAddedActivityMeta_modelPlan(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.NewTaskAddedActivityMeta().ModelPlan(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.ModelPlan) graphql.Marshaler {
+			return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_NewTaskAddedActivityMeta_modelPlan(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewTaskAddedActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_ModelPlan(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewTaskAddedActivityMeta_planTaskID(ctx context.Context, field graphql.CollectedField, obj *models.NewTaskAddedActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_NewTaskAddedActivityMeta_planTaskID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.PlanTaskID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_NewTaskAddedActivityMeta_planTaskID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("NewTaskAddedActivityMeta", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _NewTaskAddedActivityMeta_planTask(ctx context.Context, field graphql.CollectedField, obj *models.NewTaskAddedActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_NewTaskAddedActivityMeta_planTask(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.NewTaskAddedActivityMeta().PlanTask(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTask) graphql.Marshaler {
+			return ec.marshalNPlanTask2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTask(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_NewTaskAddedActivityMeta_planTask(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NewTaskAddedActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanTask(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NewTaskAddedActivityMeta_taskKey(ctx context.Context, field graphql.CollectedField, obj *models.NewTaskAddedActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_NewTaskAddedActivityMeta_taskKey(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.TaskKey, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.PlanTaskKey) graphql.Marshaler {
+			return ec.marshalNPlanTaskKey2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTaskKey(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_NewTaskAddedActivityMeta_taskKey(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("NewTaskAddedActivityMeta", field, false, false, errors.New("field of type PlanTaskKey does not have child fields"))
 }
 
 func (ec *executionContext) _OperationalNeedTranslation_name(ctx context.Context, field graphql.CollectedField, obj *model.OperationalNeedTranslation) (ret graphql.Marshaler) {
@@ -100960,6 +101209,11 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 			return graphql.Null
 		}
 		return ec._PlanDataExchangeApproachMarkedCompleteActivityMeta(ctx, sel, obj)
+	case *models.NewTaskAddedActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._NewTaskAddedActivityMeta(ctx, sel, obj)
 	case *models.NewModelPlanActivityMeta:
 		if obj == nil {
 			return graphql.Null
@@ -113566,6 +113820,140 @@ func (ec *executionContext) _NewModelPlanActivityMeta(ctx context.Context, sel a
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var newTaskAddedActivityMetaImplementors = []string{"NewTaskAddedActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _NewTaskAddedActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.NewTaskAddedActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, newTaskAddedActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("NewTaskAddedActivityMeta")
+		case "version":
+			out.Values[i] = ec._NewTaskAddedActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._NewTaskAddedActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._NewTaskAddedActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._NewTaskAddedActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "planTaskID":
+			out.Values[i] = ec._NewTaskAddedActivityMeta_planTaskID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "planTask":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._NewTaskAddedActivityMeta_planTask(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "taskKey":
+			out.Values[i] = ec._NewTaskAddedActivityMeta_taskKey(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

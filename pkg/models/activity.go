@@ -45,6 +45,7 @@ var activityMetaDataTypeMap = map[ActivityType]func() ActivityMetaData{
 	ActivityMTOReadyForReview:                  func() ActivityMetaData { return &MTOReadyForReviewActivityMeta{} },
 	ActivityIDDOCQuestionnaireCompleted:        func() ActivityMetaData { return &IddocQuestionnaireCompletedActivityMeta{} },
 	ActivityIncorrectModelStatus:               func() ActivityMetaData { return &IncorrectModelStatusActivityMeta{} },
+	ActivityNewTaskAdded:                       func() ActivityMetaData { return &NewTaskAddedActivityMeta{} },
 	ActivityTaskCompleted:                      func() ActivityMetaData { return &TaskCompletedActivityMeta{} },
 }
 

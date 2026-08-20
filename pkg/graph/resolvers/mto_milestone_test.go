@@ -350,7 +350,7 @@ func (suite *ResolverSuite) TestCreateMilestoneSolutionLinks() {
 	suite.Len(milestoneSolutionLinks, 2)
 
 	// finally, delete the milestone and ensure the links are removed (due to the `ON CASCADE DELETE`)
-	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, milestone.ID)
+	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, milestone.ID, nil, email.AddressBook{})
 	suite.NoError(err)
 	milestoneSolutionLinksAfterDelete, err := storage.MTOMilestoneSolutionLinkGetByMilestoneID(
 		suite.testConfigs.Store,
