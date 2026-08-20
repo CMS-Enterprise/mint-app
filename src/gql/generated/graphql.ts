@@ -4975,11 +4975,12 @@ export type PlanTask = {
   status: PlanTaskStatus;
 };
 
-/** PlanTaskKey identifies which of the three plan tasks this row represents. */
+/** PlanTaskKey identifies which of the plan tasks this row represents. */
 export enum PlanTaskKey {
   DATA_EXCHANGE = 'DATA_EXCHANGE',
   MODEL_PLAN = 'MODEL_PLAN',
-  MTO = 'MTO'
+  MTO = 'MTO',
+  TWO_PAGER = 'TWO_PAGER'
 }
 
 /** PlanTaskState is computed from PlanTaskStatus for display. */
