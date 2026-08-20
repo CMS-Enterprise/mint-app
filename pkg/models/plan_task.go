@@ -12,7 +12,7 @@ type PlanTask struct {
 	Status PlanTaskStatus `json:"status" db:"status"`
 }
 
-// PlanTaskKey is an enum representing the type of task (MODEL_PLAN, MTO, DATA_EXCHANGE, TWO_PAGER)
+// PlanTaskKey is an enum representing the type of task
 type PlanTaskKey string
 
 // These constants represent the possible values of a PlanTaskKey
