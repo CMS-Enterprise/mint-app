@@ -253,7 +253,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       hideCategoryRows: 'Hide category rows ({{count}})',
       resultsCount: '{{-count}} result',
       resultsCount_other: '{{-count}} results',
-      forSearch: 'for "<bold>{{-query}}</bold>"',
+      forSearch: 'for "<bold>{{query}}</bold>"',
       noResults: {
         content:
           'There are no milestones that match your filter selections and/or search terms. Please double-check your selections and try again.'
