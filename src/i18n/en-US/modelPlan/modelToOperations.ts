@@ -251,13 +251,12 @@ export const modelToOperationsMisc: Record<string, any> = {
       quickFilters: 'Quick filters:',
       neededWithin: 'Needed within',
       hideCategoryRows: 'Hide category rows ({{count}})',
-      resultsCount: '{{-count}} result',
+      resultsCount: '{{-count}} resul',
       resultsCount_other: '{{-count}} results',
+      forSearch: 'for "<bold>{{-query}}</bold>"',
       noResults: {
-        header: 'There are no milestones that match the selected filter(s).',
         content:
-          'Please double-check your filter or try again. If you believe a milestone should be listed here, please contact the MINT Team at ',
-        emailLinkAriaLabel: 'Send email to MINT Team'
+          'There are no milestones that match your filter selections and/or search terms. Please double-check your selections and try again.'
       }
     },
     alert: {

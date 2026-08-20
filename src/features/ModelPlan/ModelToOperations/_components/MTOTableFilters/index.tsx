@@ -12,6 +12,7 @@ import {
 import FilterButtonWithModal from 'components/FilterButtonWithModal';
 import FilterTags from 'components/FilterTags';
 import PageLoading from 'components/PageLoading';
+import GlobalClientFilter from 'components/TableFilter';
 import { Tag } from 'components/Tag';
 import { convertToUppercaseAndUnderscore } from 'utils/modelPlan';
 import { tObject } from 'utils/translation';
@@ -31,6 +32,8 @@ const DEFAULT_QUICK_FILTER_OPTION = 'ALL_TIME';
 export type MTOTableFiltersProps = {
   /** Number of category and subcategory header rows hidden when the checkbox is checked. */
   categoryHeaderRowCount?: number;
+  searchQuery: string;
+  setSearchQuery: (value: string) => void;
 };
 
 export type MTOTableSelectedFilters = {
@@ -44,7 +47,9 @@ export type MTOTableSelectedFilters = {
 
 /** Table filter controls for the MTO milestones matrix (date window + hide header rows). */
 const MTOTableFilters = ({
-  categoryHeaderRowCount = 0
+  categoryHeaderRowCount = 0,
+  searchQuery,
+  setSearchQuery
 }: MTOTableFiltersProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const neededWithinDateOptionsConfig = tObject<string>(
@@ -270,7 +275,13 @@ const MTOTableFilters = ({
         </div>
       )}
 
-      <div>Place holder for search bar</div>
+      <GlobalClientFilter
+        className="margin-bottom-4 maxw-none width-mobile-lg"
+        tableID={t('table.tableFilters.tableFilters')}
+        tableName={t('table.tableFilters.tableFilters')}
+        globalFilter={searchQuery}
+        setGlobalFilter={setSearchQuery}
+      />
 
       {filtersTableOpen && (
         <FilterTags

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
-import { Button, Link } from '@trussworks/react-uswds';
+import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
@@ -39,7 +39,8 @@ import { parseAppliedFilters } from '../MTOTableFilters/_utils';
 import {
   filterMilestones,
   flattenToSingleCategory,
-  GetModelToOperationsMatrixCategoryType
+  GetModelToOperationsMatrixCategoryType,
+  searchMilestones
 } from './_utils';
 import {
   CategoryType,
@@ -58,11 +59,13 @@ export type { GetModelToOperationsMatrixCategoryType } from './_utils';
 
 const MTOTable = ({
   queryData,
+  searchQuery = '',
   loading,
   error,
   readView = false
 }: {
   queryData?: GetModelToOperationsMatrixQuery;
+  searchQuery?: string;
   loading: boolean;
   error?: ApolloError;
   readView?: boolean;
@@ -99,13 +102,17 @@ const MTOTable = ({
     [searchParams]
   );
 
+  const hasSearch = Boolean(searchQuery?.trim());
+
   const hasActiveFilters = Object.values(appliedFilters).some(
     filterArray => filterArray.length > 0
   );
 
+  const hasSearchOrFilters = hasSearch || hasActiveFilters;
+
   /** Hide category/subcategory rows if has any filters or "hide category rows" filters are active */
   const tableMilestonesOnlyLayout =
-    hasActiveFilters || searchParams.get('hide-category-rows') === 'true';
+    hasSearchOrFilters || searchParams.get('hide-category-rows') === 'true';
 
   /**
    * Formats data for table based on any applied filters.
@@ -119,18 +126,21 @@ const MTOTable = ({
       return data;
     }
 
+    // If search term is present, filter the data to only include milestones that match the search term
+    if (hasSearch) {
+      data = searchMilestones(searchQuery, formattedData);
+    }
+
     // If any filter is active, filter the data to only include milestones that fit
     if (hasActiveFilters) {
-      data = filterMilestones(appliedFilters, formattedData);
+      data = filterMilestones(appliedFilters, data);
     }
 
     const flattened = flattenToSingleCategory(data);
 
     // If there are milestones and a filter is active, sort the milestones by need by date
-    const targetSubCategory = flattened[0]?.subCategories[0];
-
-    if (flattened.length > 0 && hasActiveFilters) {
-      targetSubCategory.milestones = [...targetSubCategory.milestones].sort(
+    if (flattened.length > 0 && hasSearchOrFilters) {
+      flattened[0].subCategories[0].milestones.sort(
         (a, b) =>
           new Date(a.needBy ?? '').getTime() -
           new Date(b.needBy ?? '').getTime()
@@ -142,6 +152,9 @@ const MTOTable = ({
     appliedFilters,
     formattedData,
     hasActiveFilters,
+    hasSearch,
+    hasSearchOrFilters,
+    searchQuery,
     tableMilestonesOnlyLayout
   ]);
 
@@ -698,128 +711,130 @@ const MTOTable = ({
               closeRoute={initLocation}
             />
           )}
-          {hasActiveFilters && itemLength === 0 ? (
-            <Alert
-              type="info"
-              heading={t(
-                'modelToOperationsMisc:table.tableFilters.noResults.header'
-              )}
-              className="margin-top-3"
-            >
-              <span className="mandatory-fields-alert__text">
-                <span>
-                  {t(
-                    'modelToOperationsMisc:table.tableFilters.noResults.content'
-                  )}
-                </span>
-                <Link
-                  aria-label={t(
-                    'modelToOperationsMisc:table.tableFilters.noResults.emailLinkAriaLabel'
-                  )}
-                  className="line-height-body-5"
-                  href="mailto:MINTTeam@cms.hhs.gov"
-                  target="_blank"
-                >
-                  MINTTeam@cms.hhs.gov
-                </Link>
-                .
-              </span>
-            </Alert>
-          ) : (
-            <div>
-              {hasActiveFilters && (
-                <div className="margin-top-3 margin-bottom-2">
-                  {t('table.tableFilters.resultsCount', { count: itemLength })}
-                </div>
-              )}
-              <DndProvider backend={HTML5Backend}>
-                <div
-                  className="display-block"
-                  style={{
-                    width: '100%',
-                    minWidth: '100%',
-                    overflow: 'auto',
-                    borderBottom: '1px solid black',
-                    marginBottom: '.75rem'
-                  }}
-                >
-                  <TopScrollContainer>
-                    <table
-                      style={{
-                        width: '100%',
-                        borderCollapse: 'collapse'
-                      }}
-                    >
-                      <thead>
+
+          <div>
+            {hasSearchOrFilters && (
+              <div className="margin-top-3 margin-bottom-2">
+                {t('table.tableFilters.resultsCount', { count: itemLength })}{' '}
+                {searchQuery && (
+                  <Trans
+                    i18nKey="modelToOperationsMisc:table.tableFilters.forSearch"
+                    values={{ query: searchQuery }}
+                    components={{
+                      bold: <span className="text-bold" />
+                    }}
+                  />
+                )}
+              </div>
+            )}
+
+            <DndProvider backend={HTML5Backend}>
+              <div
+                className="display-block"
+                style={{
+                  width: '100%',
+                  minWidth: '100%',
+                  overflow: 'auto',
+                  borderBottom: itemLength === 0 ? '' : '1px solid black',
+                  marginBottom: '.75rem'
+                }}
+              >
+                <TopScrollContainer>
+                  <table
+                    style={{
+                      width: '100%',
+                      borderCollapse: 'collapse'
+                    }}
+                  >
+                    <thead>
+                      <tr>
+                        {filteredColumns.map((column, index) => (
+                          <th
+                            key={column.accessor}
+                            style={{
+                              borderBottom: '1px solid black',
+                              padding: '1rem',
+                              paddingLeft: index === 0 ? '.5rem' : '0px',
+                              paddingBottom: '.25rem',
+                              width: column.width,
+                              minWidth: column.width,
+                              maxWidth: column.width
+                            }}
+                          >
+                            {column.canSort !== false ? (
+                              <button
+                                className={classNames(
+                                  'usa-button usa-button--unstyled position-relative display-block'
+                                )}
+                                onClick={() => {
+                                  const isSorted =
+                                    sortCount % 3 === 1 || sortCount % 3 === 0;
+                                  const isSortedDesc = sortCount % 3 === 1;
+
+                                  setCurrentColumn(index);
+                                  setSortCount(sortCount + 1);
+                                  setColumnSort(prev => {
+                                    const newColumnSort = [...prev];
+                                    newColumnSort[index] = {
+                                      isSorted,
+                                      isSortedDesc,
+                                      sortColumn: column.accessor
+                                    };
+                                    return newColumnSort;
+                                  });
+                                }}
+                                type="button"
+                              >
+                                {column.Header}
+                                {getHeaderSortIcon(columnSort[index], true)}
+                              </button>
+                            ) : (
+                              <span
+                                className={classNames(
+                                  'usa-button usa-button--unstyled position-relative display-block',
+                                  {
+                                    'text-no-underline text-black':
+                                      column.Header ===
+                                      t('modelToOperationsMisc:table.actions')
+                                  }
+                                )}
+                              >
+                                {column.Header}
+                              </span>
+                            )}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {hasSearchOrFilters && itemLength === 0 ? (
                         <tr>
-                          {filteredColumns.map((column, index) => (
-                            <th
-                              key={column.accessor}
-                              style={{
-                                borderBottom: '1px solid black',
-                                padding: '1rem',
-                                paddingLeft: index === 0 ? '.5rem' : '0px',
-                                paddingBottom: '.25rem',
-                                width: column.width,
-                                minWidth: column.width,
-                                maxWidth: column.width
-                              }}
+                          <td colSpan={filteredColumns.length}>
+                            <Alert
+                              type="info"
+                              className="margin-top-2 mandatory-fields-alert__text"
+                              slim
                             >
-                              {column.canSort !== false ? (
-                                <button
-                                  className={classNames(
-                                    'usa-button usa-button--unstyled position-relative display-block'
-                                  )}
-                                  onClick={() => {
-                                    const isSorted =
-                                      sortCount % 3 === 1 ||
-                                      sortCount % 3 === 0;
-                                    const isSortedDesc = sortCount % 3 === 1;
-
-                                    setCurrentColumn(index);
-                                    setSortCount(sortCount + 1);
-                                    setColumnSort(prev => {
-                                      const newColumnSort = [...prev];
-                                      newColumnSort[index] = {
-                                        isSorted,
-                                        isSortedDesc,
-                                        sortColumn: column.accessor
-                                      };
-                                      return newColumnSort;
-                                    });
-                                  }}
-                                  type="button"
-                                >
-                                  {column.Header}
-                                  {getHeaderSortIcon(columnSort[index], true)}
-                                </button>
-                              ) : (
-                                <span
-                                  className={classNames(
-                                    'usa-button usa-button--unstyled position-relative display-block',
-                                    {
-                                      'text-no-underline text-black':
-                                        column.Header ===
-                                        t('modelToOperationsMisc:table.actions')
-                                    }
-                                  )}
-                                >
-                                  {column.Header}
-                                </span>
+                              {t(
+                                'modelToOperationsMisc:table.tableFilters.noResults.content'
                               )}
-                            </th>
-                          ))}
+                            </Alert>
+                          </td>
                         </tr>
-                      </thead>
-                      <tbody>{renderCategories()}</tbody>
-                    </table>{' '}
-                  </TopScrollContainer>
-                </div>
-              </DndProvider>
-              <div className="mint-no-print">
-                <div className="display-flex">
-                  {totalPages > 0 && Pagination}
+                      ) : (
+                        renderCategories()
+                      )}
+                    </tbody>
+                  </table>
+                </TopScrollContainer>
+              </div>
+            </DndProvider>
+            <div className="mint-no-print">
+              <div className="display-flex">
+                {totalPages > 0 && Pagination}
 
+                {itemLength > 0 && (
                   <TablePageSize
                     className="margin-left-auto desktop:grid-col-auto"
                     pageSize={itemsPerPage}
@@ -839,10 +854,10 @@ const MTOTable = ({
                       );
                     }}
                   />
-                </div>
+                )}
               </div>
             </div>
-          )}
+          </div>
         </MTOSolutionPanelProvider>
       </MTOMilestonePanelProvider>
     </>

@@ -1,5 +1,9 @@
+import i18next from 'config/i18n';
 import { MTOTableSelectedFilters } from 'features/ModelPlan/ModelToOperations/_components/MTOTableFilters';
-import type { GetModelToOperationsMatrixQuery } from 'gql/generated/graphql';
+import type {
+  GetModelToOperationsMatrixQuery,
+  MtoFacilitator
+} from 'gql/generated/graphql';
 
 import { isDateWithinRange, isNeededWithinDays } from 'utils/date';
 
@@ -209,6 +213,71 @@ export const filterMilestones = (
   });
 
   return filteredCategories.filter(
+    category => category.subCategories.length > 0
+  );
+};
+
+const matchRoleLabels = (
+  milestoneRoles: MtoFacilitator[],
+  searchTerm: string
+) => {
+  if (!milestoneRoles || milestoneRoles.length === 0) {
+    return false;
+  }
+
+  const combinedRoleLabels = milestoneRoles
+    .map(role => i18next.t(`mtoMilestone:facilitatedBy.options.${role}`))
+    .join(' ')
+    .toLowerCase();
+
+  const searchTokens = searchTerm.split(/\s+/).filter(Boolean);
+
+  return searchTokens.every(token => combinedRoleLabels.includes(token));
+};
+
+export const searchMilestones = (
+  searchTerm: string,
+  categoryData: CategoryType[]
+): CategoryType[] => {
+  const query = searchTerm.trim().toLowerCase();
+
+  const searchedCategories = categoryData.map(category => {
+    const subCategoriesWithSearchedMilestones = category.subCategories.map(
+      subCategory => {
+        const matchingMilestones = subCategory.milestones.filter(milestone => {
+          const isNameMatch = milestone.name?.toLowerCase().includes(query);
+
+          const isRoleMatch = matchRoleLabels(
+            milestone.facilitatedBy ?? [],
+            query
+          );
+
+          const isSolutionMatch = milestone.solutions?.some(solution =>
+            solution.name?.toLowerCase().includes(query)
+          );
+
+          return isNameMatch || isRoleMatch || isSolutionMatch;
+        });
+
+        return {
+          ...subCategory,
+          milestones: matchingMilestones
+        };
+      }
+    );
+
+    const activeSubCategories = subCategoriesWithSearchedMilestones.filter(
+      subCategory => subCategory.milestones.length > 0
+    );
+
+    return {
+      ...category,
+      subCategories: activeSubCategories
+    };
+  });
+
+  // Prune top-level categories with no active subcategories
+  return searchedCategories.filter(
     category => category.subCategories.length > 0
   );
 };
