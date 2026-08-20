@@ -135,6 +135,21 @@ func (r *taggedInPlanDiscussionActivityMetaResolver) Discussion(ctx context.Cont
 	return PlanDiscussionGetByID(ctx, r.store, logger, obj.DiscussionID)
 }
 
+// ModelPlan is the resolver for the modelPlan field.
+func (r *taskCompletedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.TaskCompletedActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// PlanTask is the resolver for the planTask field.
+func (r *taskCompletedActivityMetaResolver) PlanTask(ctx context.Context, obj *models.TaskCompletedActivityMeta) (*models.PlanTask, error) {
+	return PlanTaskGetByIDLOADER(ctx, obj.PlanTaskID)
+}
+
+// CompletedByUserAccount is the resolver for the completedByUserAccount field.
+func (r *taskCompletedActivityMetaResolver) CompletedByUserAccount(ctx context.Context, obj *models.TaskCompletedActivityMeta) (*authentication.UserAccount, error) {
+	return UserAccountGetByIDLOADER(ctx, obj.CompletedBy)
+}
+
 // Activity returns generated.ActivityResolver implementation.
 func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
@@ -198,6 +213,11 @@ func (r *Resolver) TaggedInPlanDiscussionActivityMeta() generated.TaggedInPlanDi
 	return &taggedInPlanDiscussionActivityMetaResolver{r}
 }
 
+// TaskCompletedActivityMeta returns generated.TaskCompletedActivityMetaResolver implementation.
+func (r *Resolver) TaskCompletedActivityMeta() generated.TaskCompletedActivityMetaResolver {
+	return &taskCompletedActivityMetaResolver{r}
+}
+
 type (
 	activityResolver                                           struct{ *Resolver }
 	addedAsCollaboratorMetaResolver                            struct{ *Resolver }
@@ -212,4 +232,5 @@ type (
 	planDataExchangeApproachMarkedCompleteActivityMetaResolver struct{ *Resolver }
 	taggedInDiscussionReplyActivityMetaResolver                struct{ *Resolver }
 	taggedInPlanDiscussionActivityMetaResolver                 struct{ *Resolver }
+	taskCompletedActivityMetaResolver                          struct{ *Resolver }
 )

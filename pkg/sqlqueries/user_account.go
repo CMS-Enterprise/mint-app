@@ -38,6 +38,9 @@ var userAccountGetNotificationPreferencesIDDOCQuestionnaireCompleted string
 //go:embed SQL/user_account/get_notification_preferences_mto_ready_for_review.sql
 var userAccountGetNotificationPreferencesMTOReadyForReview string
 
+//go:embed SQL/user_account/get_notification_preferences_task_completed.sql
+var userAccountGetNotificationPreferencesTaskCompleted string
+
 //go:embed SQL/user_account/get_lead_model_plan_count.sql
 var userAccountGetLeadModelPlanCount string
 
@@ -54,6 +57,7 @@ type userAccountScripts struct {
 	GetNotificationPreferencesDiscussionAdded                    string
 	GetNotificationPreferencesIDDOCQuestionnaireCompleted        string
 	GetNotificationPreferencesMTOReadyForReview                  string
+	GetNotificationPreferencesTaskCompleted                      string
 	GetLeadModelPlanCount                                        string
 }
 
@@ -71,5 +75,6 @@ var UserAccount = userAccountScripts{
 	GetNotificationPreferencesDiscussionAdded:                    userAccountGetNotificationPreferencesDiscussionAdded,
 	GetNotificationPreferencesIDDOCQuestionnaireCompleted:        userAccountGetNotificationPreferencesIDDOCQuestionnaireCompleted,
 	GetNotificationPreferencesMTOReadyForReview:                  userAccountGetNotificationPreferencesMTOReadyForReview,
+	GetNotificationPreferencesTaskCompleted:                      userAccountGetNotificationPreferencesTaskCompleted,
 	GetLeadModelPlanCount:                                        userAccountGetLeadModelPlanCount,
 }

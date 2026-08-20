@@ -90,6 +90,10 @@ const notifications = {
       MTO_READY_FOR_REVIEW: {
         text: ' marked the model-to-operations matrix (MTO) for {{-modelName}} as ready for review.',
         cta: 'View MTO'
+      },
+      TASK_COMPLETED: {
+        text: ' completed a task for {{-modelName}}.',
+        cta: 'View completed tasks'
       }
     },
     dailyDigest: {

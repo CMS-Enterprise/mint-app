@@ -191,6 +191,20 @@ export default gql(/* GraphQL */ `
                   commonName
                 }
               }
+              ... on TaskCompletedActivityMeta {
+                version
+                type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
+                planTaskID
+                taskKey
+                completedBy
+                completedByUserAccount {
+                  commonName
+                }
+              }
             }
           }
         }

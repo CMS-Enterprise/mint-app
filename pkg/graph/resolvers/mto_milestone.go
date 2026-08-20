@@ -49,7 +49,7 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 		}
 
 		// MTO task progression: creating milestone data counts as starting the MTO
-		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -143,7 +143,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		}
 
 		// MTO task progression: creating milestone data counts as starting the MTO
-		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -238,7 +238,7 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 	}
 
 	// MTO task progression: creating milestone data counts as starting the MTO
-	err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+	err = UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -309,7 +309,7 @@ func MTOMilestoneUpdate(
 		}
 
 		// MTO task progression: when MTO is started, mark task IN_PROGRESS
-		err := UpdatePlanTaskStatusOnMTOStarted(tx, logger, updated.ModelPlanID, principal, store)
+		err := UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, updated.ModelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -390,7 +390,7 @@ func MTOMilestoneDelete(ctx context.Context, logger *zap.Logger, principal authe
 		}
 
 		// MTO task regression: recalculate task after deleting MTO data.
-		if err := UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+		if err := UpdatePlanTaskStatusOnMTODataDeleted(ctx, tx, logger, existing.ModelPlanID, principal, store); err != nil {
 			return fmt.Errorf("unable to recalculate MTO task after deleting milestone. Err %w", err)
 		}
 		return nil
@@ -503,7 +503,7 @@ func MTOMilestoneUpdateLinkedSolutions(
 		retSolutions = currentLinkedSolutions
 
 		// MTO task progression: if linking creates MTO data, mark task IN_PROGRESS
-		updErr := UpdatePlanTaskStatusOnMTOStarted(tx, logger, milestone.ModelPlanID, principal, store)
+		updErr := UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, milestone.ModelPlanID, principal, store)
 		if updErr != nil {
 			return updErr
 		}

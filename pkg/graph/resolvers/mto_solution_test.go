@@ -226,6 +226,7 @@ func (suite *ResolverSuite) TestMTOSolutionUpdateLinkedMilestoness_AddByMileston
 
 	solType := models.MTOSolutionTypeOther
 	sol, err := MTOSolutionCreateCustom(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,

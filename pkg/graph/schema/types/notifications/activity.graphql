@@ -45,6 +45,7 @@ union ActivityMetaData =
   | IddocQuestionnaireCompletedActivityMeta
   | NewDiscussionAddedActivityMeta
   | IncorrectModelStatusActivityMeta
+  | TaskCompletedActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -181,6 +182,18 @@ type IncorrectModelStatusActivityMeta {
   phaseSuggestion: PhaseSuggestion!
   currentStatus: String!
   modelPlanName: String!
+}
+
+type TaskCompletedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  planTaskID: UUID!
+  planTask: PlanTask!
+  taskKey: PlanTaskKey!
+  completedBy: UUID!
+  completedByUserAccount: UserAccount!
 }
 
 """

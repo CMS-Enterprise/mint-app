@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -110,7 +111,7 @@ func (suite *ResolverSuite) TestTranslatedAuditCollectionGetByModelPlanID() {
 		"status":       models.ModelStatusIcipComplete,
 		"archived":     true,
 	}
-	_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, err := ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	translatedAudits, err := TranslatedAuditCollectionGetByModelPlanID(
@@ -165,7 +166,7 @@ func (suite *ResolverSuite) TestTranslateAudit() {
 		"status":       models.ModelStatusIcipComplete,
 		"archived":     true,
 	}
-	_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, err := ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 
 	suite.NoError(err)
 
