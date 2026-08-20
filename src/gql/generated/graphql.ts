@@ -2491,6 +2491,12 @@ export type Mutation = {
   markMTOReadyForReview: MtoInfo;
   /** Marks a single notification as read. It requires that the notification be owned by the context of the user sending this request, or it will fail */
   markNotificationAsRead: UserNotification;
+  /**
+   * Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
+   * aren't calculated from other model state (currently just TWO_PAGER) can be set this way; other
+   * keys will return an error.
+   */
+  markPlanTaskComplete: PlanTask;
   mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
   /**
    * Allows you to rename an MTO category. Notably, name is the only field that can be updated.
@@ -2870,6 +2876,14 @@ export type MutationMarkMtoReadyForReviewArgs = {
 /** Mutations definition for the schema */
 export type MutationMarkNotificationAsReadArgs = {
   notificationID: Scalars['UUID']['input'];
+};
+
+
+/** Mutations definition for the schema */
+export type MutationMarkPlanTaskCompleteArgs = {
+  isComplete: Scalars['Boolean']['input'];
+  key: PlanTaskKey;
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
