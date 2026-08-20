@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Pagination as TrussPagination } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -49,99 +49,61 @@ const usePagination = <T extends any[]>({
 
   const pageParam = withQueryParams ? params.get(withQueryParams) : undefined;
 
-  const defaultPage = pageParam ? Number(pageParam) : 1;
-
-  // Current page number
-  const [currentPageNum, setCurrentPageNum] = useState<number>(defaultPage);
-
   const itemsLength = itemLength || items.length;
 
   // Total number of pages
-  const [pageCount, setPageCount] = useState<number>(
-    Math.floor(itemsLength / itemsPerPage)
-  );
+  const pageCount = Math.max(1, Math.ceil(itemsLength / itemsPerPage));
+
+  // Read directly from URL
+  const urlPage = pageParam ? Number(pageParam) : null;
+
+  // page number when withQueryParams is not provided
+  const [localPage, setLocalPage] = useState(1);
+
+  const activePage = urlPage ?? localPage;
+
+  // Current page number, either from URL or local state
+  const currentPageNum = Math.min(Math.max(1, activePage), pageCount);
 
   // Current items to dsiplay on the current page - contains search and sort data
-  const [currentItems, setCurrentItems] = useState(
-    sliceFn
-      ? sliceFn(items, currentPageNum - 1, itemsPerPage)
+  const currentItems = useMemo(() => {
+    const pageIndex = currentPageNum - 1;
+
+    return sliceFn
+      ? sliceFn(items, pageIndex, itemsPerPage)
       : items.slice(
-          (currentPageNum - 1) * itemsPerPage,
-          (currentPageNum - 1) * itemsPerPage + itemsPerPage
-        )
-  );
+          pageIndex * itemsPerPage,
+          pageIndex * itemsPerPage + itemsPerPage
+        );
+  }, [items, currentPageNum, itemsPerPage, sliceFn]);
 
-  // Update the audit changes when the data is loaded.
-  useEffect(() => {
-    if (!loading) {
-      setCurrentPageNum(defaultPage);
+  const [prevItems, setPrevItems] = useState(items);
+  const [prevItemsPerPage, setPrevItemsPerPage] = useState(itemsPerPage);
 
-      // Set the page count to one if the items length is less than the items per page / search and no results
-      let pageCountCalc = Math.ceil(itemsLength / itemsPerPage);
-      if (pageCountCalc === 0) {
-        pageCountCalc = 1;
-      }
-      setPageCount(pageCountCalc);
-    }
-  }, [
-    loading,
-    itemsLength,
-    itemsPerPage,
-    params,
-    withQueryParams,
-    defaultPage
-  ]);
+  // Reset page to 1 when items or itemsPerPage change
+  if (items !== prevItems || itemsPerPage !== prevItemsPerPage) {
+    setPrevItems(items);
+    setPrevItemsPerPage(itemsPerPage);
+    setLocalPage(1); // reset params should be handled by parent component
+  }
 
-  // Update the current items when the page offset changes.
-  useEffect(() => {
-    setCurrentItems(
-      sliceFn
-        ? sliceFn(items, currentPageNum - 1, itemsPerPage)
-        : items.slice(
-            (currentPageNum - 1) * itemsPerPage,
-            (currentPageNum - 1) * itemsPerPage + itemsPerPage
-          )
-    );
-    let pageCountCalc = Math.ceil(itemsLength / itemsPerPage);
-    if (pageCountCalc === 0) {
-      pageCountCalc = 1;
-    }
-    setPageCount(pageCountCalc);
-  }, [items, currentPageNum, setPageCount, itemsPerPage, sliceFn, itemsLength]);
-
-  const handleNext = () => {
-    const nextPage = currentPageNum + 1;
-
+  const updatePage = (nextPage: number) => {
     if (withQueryParams) {
       params.set(withQueryParams, nextPage.toString());
       navigate({ search: params.toString() });
+    } else {
+      setLocalPage(nextPage);
     }
-
-    setCurrentPageNum(nextPage);
   };
 
-  const handlePrevious = () => {
-    const prevPage = currentPageNum - 1;
+  const handleNext = () => updatePage(currentPageNum + 1);
 
-    if (withQueryParams) {
-      params.set(withQueryParams, prevPage.toString());
-      navigate({ search: params.toString() });
-    }
-
-    setCurrentPageNum(prevPage);
-  };
+  const handlePrevious = () => updatePage(currentPageNum - 1);
 
   const handlePageNumber = (
-    event: React.MouseEvent<HTMLButtonElement>,
+    _event: React.MouseEvent<HTMLButtonElement>,
     pageNum: number
-  ) => {
-    if (withQueryParams) {
-      params.set(withQueryParams, pageNum.toString());
-      navigate({ search: params.toString() });
-    }
-
-    setCurrentPageNum(pageNum);
-  };
+  ) => updatePage(pageNum);
 
   const pageOffset = (currentPageNum - 1) * itemsPerPage;
 
