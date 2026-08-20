@@ -23,6 +23,20 @@ const (
 	PlanTaskKeyTwoPager     PlanTaskKey = "TWO_PAGER"
 )
 
+// manuallyMarkablePlanTaskKeys are the PlanTaskKeys whose status is set directly by a user,
+// rather than calculated from other model state. MODEL_PLAN, MTO, and DATA_EXCHANGE are
+// recalculated automatically (see plan_task_status_updates.go) and must not be included here,
+// or a manual mark could be silently overwritten the next time their calculated status runs.
+var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
+	PlanTaskKeyTwoPager: true,
+}
+
+// IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user
+// (e.g. via a "mark complete" action) rather than calculated from other model state.
+func (k PlanTaskKey) IsManuallyMarkable() bool {
+	return manuallyMarkablePlanTaskKeys[k]
+}
+
 // PlanTaskStatus is an enum representing the lifecycle status of a task
 type PlanTaskStatus string
 

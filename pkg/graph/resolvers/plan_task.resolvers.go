@@ -8,11 +8,21 @@ package resolvers
 import (
 	"context"
 
+	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// MarkPlanTaskComplete is the resolver for the markPlanTaskComplete field.
+func (r *mutationResolver) MarkPlanTaskComplete(ctx context.Context, modelPlanID uuid.UUID, key models.PlanTaskKey, isComplete bool) (*models.PlanTask, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return PlanTaskMarkComplete(logger, modelPlanID, key, isComplete, principal, r.store)
+}
 
 // State is the resolver for the state field.
 func (r *planTaskResolver) State(ctx context.Context, obj *models.PlanTask) (model.PlanTaskState, error) {
