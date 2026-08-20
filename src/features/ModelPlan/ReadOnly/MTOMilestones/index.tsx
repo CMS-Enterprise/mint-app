@@ -95,6 +95,7 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
             categoryHeaderRowCount={categoryHeaderRowCount}
             searchQuery={searchQuery}
             setSearchQuery={handleSearchChange}
+            readView
           />
           <MTOTable
             queryData={data}

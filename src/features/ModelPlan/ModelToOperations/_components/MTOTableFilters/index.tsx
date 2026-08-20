@@ -34,6 +34,7 @@ export type MTOTableFiltersProps = {
   categoryHeaderRowCount?: number;
   searchQuery: string;
   setSearchQuery: (value: string) => void;
+  readView?: boolean;
 };
 
 export type MTOTableSelectedFilters = {
@@ -49,7 +50,8 @@ export type MTOTableSelectedFilters = {
 const MTOTableFilters = ({
   categoryHeaderRowCount = 0,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  readView = false
 }: MTOTableFiltersProps) => {
   const { t } = useTranslation('modelToOperationsMisc');
   const neededWithinDateOptionsConfig = tObject<string>(
@@ -217,80 +219,97 @@ const MTOTableFilters = ({
 
       {filtersTableOpen && (
         <div
-          className="display-flex flex-align-center margin-bottom-3 maxh-5"
+          className={`margin-bottom-3 ${
+            readView ? 'display-block' : 'display-flex flex-align-center'
+          }`}
           style={{ gap: '1.5rem' }}
         >
-          <FilterButtonWithModal
-            filters={filterOptions}
-            appliedFilters={appliedFilters}
-            setAppliedFilters={setAppliedFilters}
-          />
-
-          <p className="margin-y-0 text-bold line-height-sans-2">
-            {t('table.tableFilters.quickFilters')}
-          </p>
+          {!readView && (
+            <FilterButtonWithModal
+              filters={filterOptions}
+              appliedFilters={appliedFilters}
+              setAppliedFilters={setAppliedFilters}
+            />
+          )}
 
           <div
-            className="display-flex flex-align-center"
-            style={{ gap: '0.5rem' }}
+            className={`display-flex flex-align-center flex-wrap ${readView ? 'margin-bottom-2' : ''}`}
+            style={{ gap: '1.5rem' }}
           >
-            <label
-              className="usa-label margin-top-0 margin-bottom-0 text-normal"
-              htmlFor="mto-needed-within-days"
-              style={{ whiteSpace: 'nowrap' }}
+            <p className="margin-y-0 text-bold line-height-sans-2">
+              {t('table.tableFilters.quickFilters')}
+            </p>
+
+            <div
+              className="display-flex flex-align-center"
+              style={{ gap: '0.5rem' }}
             >
-              {t('table.tableFilters.neededWithin')}
-            </label>
-            <Select
-              className="margin-top-0"
-              id="mto-needed-within-days"
-              style={{ minWidth: '12rem' }}
-              data-testid="mto-needed-within-days"
-              name={DATE_FILTER_PARAM}
-              value={selectValue}
-              onChange={handleTimeWindowFilterChange}
-            >
-              {quickDateFilterOptions.map(({ value, label }) => (
-                <option key={`needed-within-days-${value}`} value={value}>
-                  {label}
-                </option>
-              ))}
-            </Select>
+              <label
+                className="usa-label margin-top-0 margin-bottom-0 text-normal"
+                htmlFor="mto-needed-within-days"
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                {t('table.tableFilters.neededWithin')}
+              </label>
+              <Select
+                className="margin-top-0"
+                id="mto-needed-within-days"
+                style={{ minWidth: '12rem' }}
+                data-testid="mto-needed-within-days"
+                name={DATE_FILTER_PARAM}
+                value={selectValue}
+                onChange={handleTimeWindowFilterChange}
+              >
+                {quickDateFilterOptions.map(({ value, label }) => (
+                  <option key={`needed-within-days-${value}`} value={value}>
+                    {label}
+                  </option>
+                ))}
+              </Select>
+            </div>
+
+            <div className="border-left-2px border-base-light height-2" />
+
+            <Checkbox
+              id="mto-hide-category-rows"
+              className="margin-bottom-1"
+              data-testid="mto-hide-category-rows"
+              name={HIDE_CATEGORY_ROWS_PARAM}
+              label={t('table.tableFilters.hideCategoryRows', {
+                count: categoryHeaderRowCount
+              })}
+              disabled={appliedFiltersCount > 0}
+              checked={isHideCategoryRowsChecked}
+              onChange={handleHideCategoryRowsChange}
+            />
           </div>
 
-          <div className="border-left-2px border-base-light margin-x-1 height-2" />
-
-          <Checkbox
-            id="mto-hide-category-rows"
-            className="margin-bottom-1"
-            data-testid="mto-hide-category-rows"
-            name={HIDE_CATEGORY_ROWS_PARAM}
-            label={t('table.tableFilters.hideCategoryRows', {
-              count: categoryHeaderRowCount
-            })}
-            disabled={appliedFiltersCount > 0}
-            checked={isHideCategoryRowsChecked}
-            onChange={handleHideCategoryRowsChange}
-          />
+          {readView && (
+            <FilterButtonWithModal
+              filters={filterOptions}
+              appliedFilters={appliedFilters}
+              setAppliedFilters={setAppliedFilters}
+            />
+          )}
         </div>
       )}
-
-      <GlobalClientFilter
-        className="margin-bottom-4 maxw-none width-mobile-lg"
-        tableID={t('table.tableFilters.tableFilters')}
-        tableName={t('table.tableFilters.tableFilters')}
-        globalFilter={searchQuery}
-        setGlobalFilter={setSearchQuery}
-      />
 
       {filtersTableOpen && (
         <FilterTags
           filters={filterOptions}
           appliedFilters={appliedFilterTags}
           setAppliedFilters={handleFilterTagsChange}
-          className="margin-top-2"
+          className="margin-bottom-3"
         />
       )}
+
+      <GlobalClientFilter
+        className="maxw-mobile-lg maxh-none height-5"
+        tableID={t('table.tableFilters.tableFilters')}
+        tableName={t('table.tableFilters.tableFilters')}
+        globalFilter={searchQuery}
+        setGlobalFilter={setSearchQuery}
+      />
     </div>
   );
 };
