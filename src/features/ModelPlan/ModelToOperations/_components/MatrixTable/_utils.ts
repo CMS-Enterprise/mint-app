@@ -170,7 +170,8 @@ export const filterMilestones = (
             filters.category.length > 0 &&
             filters.category.some(
               filterCat =>
-                filterCat.toLowerCase() === category.name?.toLowerCase()
+                filterCat.replace(/_/g, ' ').toLowerCase() ===
+                category.name?.toLowerCase()
             );
 
           const isDateMatch =

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Pagination as TrussPagination } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -42,6 +42,8 @@ const usePagination = <T extends any[]>({
   const location = useLocation();
   const navigate = useNavigate();
 
+  const prevItemsRef = useRef(items);
+
   // Query parameters
   const params = useMemo(() => {
     return new URLSearchParams(location.search);
@@ -55,7 +57,10 @@ const usePagination = <T extends any[]>({
   const pageCount = Math.max(1, Math.ceil(itemsLength / itemsPerPage));
 
   // Read directly from URL
-  const urlPage = pageParam ? Number(pageParam) : null;
+  const urlPage =
+    Number.isFinite(Number(pageParam)) && Number(pageParam) > 0
+      ? Number(pageParam)
+      : null;
 
   // page number when withQueryParams is not provided
   const [localPage, setLocalPage] = useState(1);
@@ -77,16 +82,6 @@ const usePagination = <T extends any[]>({
         );
   }, [items, currentPageNum, itemsPerPage, sliceFn]);
 
-  const [prevItems, setPrevItems] = useState(items);
-  const [prevItemsPerPage, setPrevItemsPerPage] = useState(itemsPerPage);
-
-  // Reset page to 1 when items or itemsPerPage change
-  if (items !== prevItems || itemsPerPage !== prevItemsPerPage) {
-    setPrevItems(items);
-    setPrevItemsPerPage(itemsPerPage);
-    setLocalPage(1); // reset params should be handled by parent component
-  }
-
   const updatePage = (nextPage: number) => {
     if (withQueryParams) {
       params.set(withQueryParams, nextPage.toString());
@@ -106,6 +101,18 @@ const usePagination = <T extends any[]>({
   ) => updatePage(pageNum);
 
   const pageOffset = (currentPageNum - 1) * itemsPerPage;
+
+  // Reset page to 1 when items change
+  useEffect(() => {
+    // skip on initial load
+    if (prevItemsRef.current !== items) {
+      prevItemsRef.current = items;
+
+      if (!withQueryParams) {
+        setLocalPage(1); // reset params should be handled by parent component
+      }
+    }
+  }, [items, withQueryParams]);
 
   return {
     currentItems: currentItems as T,

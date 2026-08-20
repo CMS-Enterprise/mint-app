@@ -62,7 +62,7 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
   };
 
   if (loading && !modelToOperationsMatrix) {
-    <PageLoading />;
+    return <PageLoading />;
   }
 
   if (error || !modelToOperationsMatrix) {

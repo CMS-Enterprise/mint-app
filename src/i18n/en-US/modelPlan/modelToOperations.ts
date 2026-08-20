@@ -251,7 +251,7 @@ export const modelToOperationsMisc: Record<string, any> = {
       quickFilters: 'Quick filters:',
       neededWithin: 'Needed within',
       hideCategoryRows: 'Hide category rows ({{count}})',
-      resultsCount: '{{-count}} resul',
+      resultsCount: '{{-count}} result',
       resultsCount_other: '{{-count}} results',
       forSearch: 'for "<bold>{{-query}}</bold>"',
       noResults: {

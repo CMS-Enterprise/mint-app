@@ -305,7 +305,7 @@ const MTOTableFilters = ({
 
       <GlobalClientFilter
         className="maxw-mobile-lg maxh-none height-5"
-        tableID={t('table.tableFilters.tableFilters')}
+        tableID="mto-table-filters"
         tableName={t('table.tableFilters.tableFilters')}
         globalFilter={searchQuery}
         setGlobalFilter={setSearchQuery}
