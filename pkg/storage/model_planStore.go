@@ -4,21 +4,16 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/lib/pq"
-
-	"github.com/cms-enterprise/mint-app/pkg/logging"
-	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
-
-	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
-
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/apperrors"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
-
-	_ "embed"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
+	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
 func ModelPlansGetByModePlanIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.ModelPlan, error) {
@@ -30,6 +25,19 @@ func ModelPlansGetByModePlanIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, 
 	if err != nil {
 		return nil, err
 	}
+	return res, nil
+}
+
+func ModelPlansGetByCTATRequestIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, ctatRequestIDs []uuid.UUID) ([]*models.ModelPlanWithCTATRequestID, error) {
+	args := map[string]any{
+		"ctat_request_ids": pq.Array(ctatRequestIDs),
+	}
+
+	res, err := sqlutils.SelectProcedure[models.ModelPlanWithCTATRequestID](np, sqlqueries.ModelPlan.GetByCTATRequestIDLoader, args)
+	if err != nil {
+		return nil, err
+	}
+
 	return res, nil
 }
 
@@ -92,9 +100,8 @@ func (s *Store) ModelPlanCreate(np sqlutils.NamedPreparer, logger *zap.Logger, p
 }
 
 // ModelPlanUpdate updates a model plan
-func (s *Store) ModelPlanUpdate(logger logging.ILogger, plan *models.ModelPlan) (*models.ModelPlan, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.Update)
+func ModelPlanUpdate(np sqlutils.NamedPreparer, logger logging.ILogger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.Update)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),

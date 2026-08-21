@@ -8,7 +8,7 @@ import {
   useParams
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { LoginCallback, useOktaAuth } from '@okta/okta-react';
+import { useOktaAuth } from '@okta/okta-react';
 import AccessibilityStatement from 'features/AccessibilityStatement';
 import Cookies from 'features/Cookies';
 import FeedbackReceived from 'features/Feedback/FeedbackReceived';
@@ -47,6 +47,7 @@ import paymentRoutes from 'features/ModelPlan/TaskList/Payment';
 import { prepareForClearanceRoutes } from 'features/ModelPlan/TaskList/PrepareForClearance';
 import Tasks from 'features/ModelPlan/Tasks';
 import Timeline from 'features/ModelPlan/Timeline';
+import CustomDate from 'features/ModelPlan/Timeline/_components/CustomDate';
 import Unfollow from 'features/ModelPlan/Unfollow';
 import UnlockAllSections from 'features/ModelPlan/UnlockAllSections';
 import NDA from 'features/NDA';
@@ -68,6 +69,7 @@ import UserInfoWrapper from 'wrappers/UserInfoWrapper';
 
 import Footer from 'components/Footer';
 import Header from 'components/Header';
+import OktaLoginCallback from 'components/OktaLoginCallback';
 import PageWrapper from 'components/PageWrapper';
 import ProtectedRoute from 'components/ProtectedRoute';
 import TaskListBannerAlert from 'components/TaskListBannerAlert';
@@ -329,6 +331,22 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      {
+        path: '/models/:modelID/collaboration-area/model-timeline/customDate/new',
+        element: (
+          <ProtectedRoute>
+            <CustomDate />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/models/:modelID/collaboration-area/model-timeline/customDate/:customDateID',
+        element: (
+          <ProtectedRoute>
+            <CustomDate />
+          </ProtectedRoute>
+        )
+      },
       // Additional questionnaire Routes
       {
         path: '/models/:modelID/collaboration-area/additional-questionnaires',
@@ -529,7 +547,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/implicit/callback',
-        element: <LoginCallback />
+        element: <OktaLoginCallback />
       },
       // 404
       {

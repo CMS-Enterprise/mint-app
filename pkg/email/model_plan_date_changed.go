@@ -29,11 +29,27 @@ type DateChange struct {
 	OldRangeStart, OldRangeEnd, NewRangeStart, NewRangeEnd *time.Time
 }
 
+// CustomTimelineDateChange defines the parameters necessary for parsing custom timeline date changes.
+type CustomTimelineDateChange struct {
+	IsChanged bool
+
+	Title       string
+	Description *string
+
+	IsRange bool
+
+	OldStartDate *time.Time
+	OldEndDate   *time.Time
+	NewStartDate *time.Time
+	NewEndDate   *time.Time
+}
+
 // ModelPlanDateChangedBodyContent defines the parameters necessary for the corresponding email body
 type ModelPlanDateChangedBodyContent struct {
-	ClientAddress string
-	ModelName     string
-	ModelID       string
-	DateChanges   []DateChange
-	ShowFooter    bool
+	ClientAddress             string
+	ModelName                 string
+	ModelID                   string
+	DateChanges               []DateChange
+	CustomTimelineDateChanges []CustomTimelineDateChange
+	ShowFooter                bool
 }

@@ -1,7 +1,12 @@
 # This image is used for production only.
 # In local development, we use `faktory-ent` directly in our docker-compose.yml
 
-FROM docker.contribsys.com/contribsys/faktory-ent:1.6.0
+FROM docker.contribsys.com/contribsys/faktory-ent:1.9.4
+
+# 1.9.4 is Contribsys's current release (":latest" resolves to the same digest), but it
+# ships Alpine OS packages with known CVEs. Patch them here until Contribsys cuts a new
+# build; see mint-infra Wiz findings for aws-cms-cmmi-mint-infra/mint-faktory.
+RUN apk update && apk upgrade --no-cache
 
 COPY faktory_entrypoint.sh ./
 

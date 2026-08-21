@@ -6,6 +6,14 @@ import { HelpArticle } from '../..';
 
 import RelatedArticle from './index';
 
+vi.mock('launchdarkly-react-client-sdk', () => ({
+  useFlags: () => {
+    return {
+      ctatEnabled: true
+    };
+  }
+}));
+
 describe('RelatedArticle', () => {
   it('matches the snapshot', () => {
     const router = createMemoryRouter(

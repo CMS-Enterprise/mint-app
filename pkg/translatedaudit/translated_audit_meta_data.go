@@ -241,6 +241,39 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 	return &meta, &metaType, nil
 }
 
+// CustomTimelineDateMetaDataGet relies on the changes field to return title information. If not available, it will attempt to fetch a custom timeline date to get its current title.
+func CustomTimelineDateMetaDataGet(ctx context.Context, store *storage.Store, customTimelineDateID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+
+	var title *string
+	titleChange, titleFieldPresent := changesFields["title"]
+
+	if titleFieldPresent {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			title = new(fmt.Sprint(titleChange.Old))
+		} else {
+			title = new(fmt.Sprint(titleChange.New))
+		}
+	} else {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			return nil, nil, fmt.Errorf("there wasn't a title present for this custom timeline date, unable to generate metadata for this entry. Custom Timeline Date %v", customTimelineDateID)
+		}
+
+		customTimelineDate, err := loaders.CustomTimelineDate.ByID.Load(ctx, customTimelineDateID)
+		if err != nil {
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+				return nil, nil, fmt.Errorf("there was an issue getting meta data for custom timeline date. err %w", err)
+			}
+			title = nil
+		} else {
+			title = &customTimelineDate.Title
+		}
+	}
+
+	meta := models.NewTranslatedAuditMetaGeneric(models.TNCustomTimelineDate, 0, "title", title)
+	metaType := models.TAMetaGeneric
+	return &meta, &metaType, nil
+}
+
 // MTOMilestoneNoteMetaDataGet relies on the changes field to return content and milestone information. If not available, it will attempt to fetch a milestone note to get its current content and related milestone name.
 func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, milestoneNoteID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 
@@ -497,6 +530,13 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 		}
 	case models.TNMTOMilestone:
 		metaData, metaDataType, err := MTOMilestoneMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
+	case models.TNCustomTimelineDate:
+		metaData, metaDataType, err := CustomTimelineDateMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
 		metaDataInterface = metaData
 		metaDataTypeGlobal = metaDataType
 		if err != nil {

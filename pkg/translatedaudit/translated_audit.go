@@ -40,6 +40,11 @@ var unTranslatedTables = []models.TableName{
 	models.TNKeyContact,
 	models.TNKeyContactCategory,
 
+	// we don't translate CTAT tables
+	models.TNCTATRequest,
+	models.TNCTATRequestDocument,
+	models.TNCTATRequestModelPlanLink,
+
 	// legacy Operational Need/Solution tables that are no longer being translated ( though audited for historical purposes)
 	models.TNOperationalNeed,
 	models.TNOperationalSolution,

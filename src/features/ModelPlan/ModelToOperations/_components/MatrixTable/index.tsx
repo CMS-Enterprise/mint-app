@@ -243,7 +243,7 @@ const MTOTable = ({
   };
 
   useEffect(() => {
-    localStorage.setItem(
+    window.localStorage.setItem(
       `mto-matrix-expanded-rows-${modelID}`,
       JSON.stringify(expandedRows)
     );
@@ -267,7 +267,7 @@ const MTOTable = ({
 
   // Update local storage when row length changes
   useEffect(() => {
-    localStorage.setItem(
+    window.localStorage.setItem(
       `mto-matrix-row-length-${modelID}`,
       JSON.stringify(itemsPerPage)
     );

@@ -1,3 +1,5 @@
+import { aliasQuery } from '../support/graphql-test-utils';
+
 describe('Notification Center', () => {
   describe('MINT Assessment User Tests', () => {
     beforeEach(() => {
@@ -598,6 +600,10 @@ describe('Notification Center', () => {
     });
 
     it('testing IDDOC Questionnaire is marked Complete Notification', () => {
+      cy.intercept('POST', '/api/graph/query', req => {
+        aliasQuery(req, 'GetIDDOCQuestionnaireMonitoring');
+      });
+
       // Check the IDDOC questionnaire in-app checkbox
       cy.get(
         '[data-testid="notification-setting-in-app-iddocQuestionnaireComplete"]'
@@ -651,10 +657,16 @@ describe('Notification Center', () => {
         .should('not.be.disabled')
         .click({ force: true });
 
-      cy.get('#is-complete')
-        .should('not.be.disabled')
-        .check({ force: true })
-        .should('be.checked');
+      cy.wait('@GetIDDOCQuestionnaireMonitoring')
+        .its('response.statusCode')
+        .should('eq', 200);
+
+      cy.get('#is-complete').should('not.be.disabled');
+      cy.ensureChecked(
+        '#is-complete',
+        '.usa-checkbox__label[for="is-complete"]'
+      );
+      cy.get('#is-complete').should('be.checked');
 
       cy.contains('button', 'Save and return to questionnaires').click();
 
