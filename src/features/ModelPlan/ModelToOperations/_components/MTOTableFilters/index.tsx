@@ -212,7 +212,7 @@ const MTOTableFilters = ({
 
         <Tag className="bg-primary-lighter radius-lg padding-y-1 padding-x-2 margin-0 text-bold">
           {t('table.tableFilters.numberOfFiltersApplied', {
-            number: appliedFiltersCount
+            count: appliedFiltersCount
           })}
         </Tag>
       </div>

@@ -200,7 +200,8 @@ export const modelToOperationsMisc: Record<string, any> = {
       tableFilters: 'Table filters',
       hideFilters: 'Hide filters',
       showFilters: 'Show filters',
-      numberOfFiltersApplied: '{{-number}} filters applied',
+      numberOfFiltersApplied: '{{count}} filter applied',
+      numberOfFiltersApplied_other: '{{count}} filters applied',
       filter: 'Filter',
       filterOptions: {
         category: {
