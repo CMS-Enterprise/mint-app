@@ -3266,12 +3266,6 @@ type PlanPaymentsResolver interface {
 }
 type PlanTaskResolver interface {
 	State(ctx context.Context, obj *models.PlanTask) (model.PlanTaskState, error)
-
-	CompletedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error)
-
-	CreatedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error)
-
-	ModifiedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error)
 }
 type PlanTimelineResolver interface {
 	UpcomingTimelineDate(ctx context.Context, obj *models.PlanTimeline) (*model.UpcomingTimelineDate, error)
@@ -24134,13 +24128,13 @@ type PlanTask {
   status: PlanTaskStatus!
   state: PlanTaskState! @goField(forceResolver: true)
   completedBy: UUID
-  completedByUserAccount: UserAccount @goField(forceResolver: true)
+  completedByUserAccount: UserAccount
   completedDts: Time
   createdBy: UUID!
-  createdByUserAccount: UserAccount! @goField(forceResolver: true)
+  createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
-  modifiedByUserAccount: UserAccount @goField(forceResolver: true)
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -83192,7 +83186,7 @@ func (ec *executionContext) _PlanTask_completedByUserAccount(ctx context.Context
 			return ec.fieldContext_PlanTask_completedByUserAccount(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.PlanTask().CompletedByUserAccount(ctx, obj)
+			return obj.CompletedByUserAccount(ctx)
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
@@ -83207,7 +83201,7 @@ func (ec *executionContext) fieldContext_PlanTask_completedByUserAccount(_ conte
 		Object:     "PlanTask",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_UserAccount(ctx, field)
 		},
@@ -83270,7 +83264,7 @@ func (ec *executionContext) _PlanTask_createdByUserAccount(ctx context.Context, 
 			return ec.fieldContext_PlanTask_createdByUserAccount(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.PlanTask().CreatedByUserAccount(ctx, obj)
+			return obj.CreatedByUserAccount(ctx)
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
@@ -83285,7 +83279,7 @@ func (ec *executionContext) fieldContext_PlanTask_createdByUserAccount(_ context
 		Object:     "PlanTask",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_UserAccount(ctx, field)
 		},
@@ -83348,7 +83342,7 @@ func (ec *executionContext) _PlanTask_modifiedByUserAccount(ctx context.Context,
 			return ec.fieldContext_PlanTask_modifiedByUserAccount(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.PlanTask().ModifiedByUserAccount(ctx, obj)
+			return obj.ModifiedByUserAccount(ctx)
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
@@ -83363,7 +83357,7 @@ func (ec *executionContext) fieldContext_PlanTask_modifiedByUserAccount(_ contex
 		Object:     "PlanTask",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_UserAccount(ctx, field)
 		},

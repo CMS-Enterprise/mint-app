@@ -600,9 +600,8 @@ func planTasksByKey(tasks []*models.PlanTask) map[models.PlanTaskKey]*models.Pla
 }
 
 func (suite *ResolverSuite) TestPlanTaskCompletedByUserAccountResolver() {
-	r := &planTaskResolver{&Resolver{}}
-
-	// When CompletedBy is not set, resolver should return nil without error
+	// When CompletedBy is not set, the embedded completedByRelation method (auto-bound by
+	// gqlgen, see plan_task.graphql) should return nil without error
 	task := models.NewPlanTask(
 		uuid.New(),
 		uuid.New(),
@@ -610,7 +609,7 @@ func (suite *ResolverSuite) TestPlanTaskCompletedByUserAccountResolver() {
 		models.PlanTaskStatusToDo,
 	)
 
-	account, err := r.CompletedByUserAccount(suite.testConfigs.Context, task)
+	account, err := task.CompletedByUserAccount(suite.testConfigs.Context)
 	suite.NoError(err)
 	suite.Nil(account)
 }
