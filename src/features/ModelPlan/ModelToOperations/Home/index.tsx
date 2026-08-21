@@ -82,6 +82,22 @@ const MTOHome = () => {
 
   const [isExportModalOpen, setIsExportModalOpen] = useState<boolean>(false);
 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchChange = (input: string) => {
+    setSearchQuery(input);
+    const currentParams = new URLSearchParams(location.search);
+
+    const currentPageNum = currentParams.get('page');
+
+    // Reset page to 1 whenever search query changes and the current page is not 1
+    if (currentPageNum && currentPageNum !== '1') {
+      currentParams.set('page', '1');
+
+      navigate({ search: currentParams.toString() }, { replace: true });
+    }
+  };
+
   useEffect(() => {
     if (viewparam && mtoOptions.includes(viewparam as MTOOption)) {
       setCurrentView(viewparam as MTOOption);
@@ -264,9 +280,12 @@ const MTOHome = () => {
                           <MTOTableActions />
                           <MTOTableFilters
                             categoryHeaderRowCount={categoryHeaderRowCount}
+                            searchQuery={searchQuery}
+                            setSearchQuery={handleSearchChange}
                           />
                           <MTOTable
                             queryData={data}
+                            searchQuery={searchQuery}
                             loading={dataAvalilable}
                             error={error}
                           />

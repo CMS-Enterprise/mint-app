@@ -289,6 +289,7 @@ const MilestoneCardGroup = ({
             <Grid className="display-flex flex-wrap flex-align-center margin-bottom-3">
               {showFilters && (
                 <FilterButtonWithModal
+                  className="margin-right-1"
                   filters={filterOptions}
                   appliedFilters={appliedFilters}
                   setAppliedFilters={setAppliedFilters}

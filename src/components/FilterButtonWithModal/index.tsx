@@ -12,6 +12,7 @@ type FilterModalProps<T extends Record<string, string[]>> = {
   filters: FilterGroupType[];
   appliedFilters: T;
   setAppliedFilters: (filters: T) => void;
+  className?: string;
 };
 
 /**
@@ -22,7 +23,8 @@ type FilterModalProps<T extends Record<string, string[]>> = {
 const FilterButtonWithModal = <T extends Record<string, string[]>>({
   filters,
   appliedFilters,
-  setAppliedFilters
+  setAppliedFilters,
+  className
 }: FilterModalProps<T>) => {
   const { t } = useTranslation('general');
   const [isOpen, setIsOpen] = useState(false);
@@ -81,7 +83,12 @@ const FilterButtonWithModal = <T extends Record<string, string[]>>({
 
   return (
     <>
-      <Button type="button" onClick={() => setIsOpen(true)} outline>
+      <Button
+        type="button"
+        onClick={() => setIsOpen(true)}
+        outline
+        className={className || 'margin-x-0'}
+      >
         <Icon.FilterList aria-hidden />
         {t('filter.title')}
       </Button>

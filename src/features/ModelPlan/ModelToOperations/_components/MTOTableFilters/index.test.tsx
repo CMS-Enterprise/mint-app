@@ -20,7 +20,13 @@ describe('MTOTableFilters', () => {
       [
         {
           path: '/models/:modelID/collaboration-area/model-to-operations/matrix',
-          element: <MTOTableFilters {...props} />
+          element: (
+            <MTOTableFilters
+              searchQuery=""
+              setSearchQuery={() => {}}
+              {...props}
+            />
+          )
         }
       ],
       {
@@ -82,7 +88,9 @@ describe('MTOTableFilters', () => {
 
   it('shows category and subcategory header count in the hide-rows label', async () => {
     const { user } = renderWithRouter('/matrix', {
-      categoryHeaderRowCount: 12
+      categoryHeaderRowCount: 12,
+      searchQuery: '',
+      setSearchQuery: () => {}
     });
 
     await showFilters(user);
@@ -182,5 +190,44 @@ describe('MTOTableFilters', () => {
     const searchParams = getRouterSearchParams();
     expect(searchParams.get(DATE_FILTER_PARAM)).toBeNull();
     expect(searchParams.get('page')).toBe('1');
+  });
+
+  it('renders the search input with initial searchQuery value', async () => {
+    const { user } = renderWithRouter('/matrix', {
+      searchQuery: 'initial query',
+      setSearchQuery: () => {}
+    });
+
+    await showFilters(user);
+
+    expect(screen.getByRole('searchbox')).toHaveValue('initial query');
+  });
+
+  it('calls setSearchQuery when the user types in the search input', async () => {
+    const setSearchQuery = vi.fn();
+    const { user } = renderWithRouter('/matrix', {
+      searchQuery: '',
+      setSearchQuery
+    });
+
+    await showFilters(user);
+
+    await user.type(screen.getByRole('searchbox'), 'test query');
+
+    expect(setSearchQuery).toHaveBeenCalled();
+  });
+
+  it('clears the search query when input is emptied', async () => {
+    const setSearchQuery = vi.fn();
+    const { user } = renderWithRouter('/matrix', {
+      searchQuery: 'existing',
+      setSearchQuery
+    });
+
+    await showFilters(user);
+
+    await user.clear(screen.getByRole('searchbox'));
+
+    expect(setSearchQuery).toHaveBeenCalledWith('');
   });
 });
