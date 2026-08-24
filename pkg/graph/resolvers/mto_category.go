@@ -9,8 +9,10 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -48,7 +50,14 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 }
 
 // MTOCategoryDelete removes an MTOCategory or SubCategory
-func MTOCategoryDelete(logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
+func MTOCategoryDelete(
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
+	id uuid.UUID,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
@@ -70,7 +79,7 @@ func MTOCategoryDelete(logger *zap.Logger, principal authentication.Principal, s
 		}
 
 		// MTO task regression: recalculate task after deleting MTO data.
-		if err = UpdatePlanTaskStatusOnMTODataDeleted(context.Background(), tx, logger, existing.ModelPlanID, principal, store); err != nil {
+		if err = UpdatePlanTaskStatusOnMTODataDeleted(context.Background(), tx, logger, existing.ModelPlanID, principal, store, emailService, addressBook); err != nil {
 			return fmt.Errorf("unable to recalculate MTO task after deleting category. Err %w", err)
 		}
 

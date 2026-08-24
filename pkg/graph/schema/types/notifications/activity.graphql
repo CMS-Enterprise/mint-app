@@ -45,6 +45,7 @@ union ActivityMetaData =
   | IddocQuestionnaireCompletedActivityMeta
   | NewDiscussionAddedActivityMeta
   | IncorrectModelStatusActivityMeta
+  | NewTaskAddedActivityMeta
   | TaskCompletedActivityMeta
 
 type AddedAsCollaboratorMeta {
@@ -194,6 +195,16 @@ type TaskCompletedActivityMeta {
   taskKey: PlanTaskKey!
   completedBy: UUID!
   completedByUserAccount: UserAccount!
+}
+
+type NewTaskAddedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  planTaskID: UUID!
+  planTask: PlanTask!
+  taskKey: PlanTaskKey!
 }
 
 """

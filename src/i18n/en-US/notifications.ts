@@ -91,6 +91,10 @@ const notifications = {
         text: ' marked the model-to-operations matrix (MTO) for {{-modelName}} as ready for review.',
         cta: 'View MTO'
       },
+      NEW_TASK_ADDED: {
+        text: ' has a new task available for {{-modelName}}.',
+        cta: 'View current tasks'
+      },
       TASK_COMPLETED: {
         text: ' completed a task for {{-modelName}}.',
         cta: 'View completed tasks'
