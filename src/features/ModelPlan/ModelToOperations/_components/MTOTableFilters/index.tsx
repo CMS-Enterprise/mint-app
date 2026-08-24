@@ -30,8 +30,6 @@ export const HIDE_CATEGORY_ROWS_PARAM = 'hide-category-rows';
 const DEFAULT_QUICK_FILTER_OPTION = 'ALL_TIME';
 
 export type MTOTableFiltersProps = {
-  /** Number of category and subcategory header rows hidden when the checkbox is checked. */
-  categoryHeaderRowCount?: number;
   searchQuery: string;
   setSearchQuery: (value: string) => void;
   readView?: boolean;
@@ -48,7 +46,6 @@ export type MTOTableSelectedFilters = {
 
 /** Table filter controls for the MTO milestones matrix (date window + hide header rows). */
 const MTOTableFilters = ({
-  categoryHeaderRowCount = 0,
   searchQuery,
   setSearchQuery,
   readView = false
@@ -275,9 +272,7 @@ const MTOTableFilters = ({
               className="margin-bottom-1"
               data-testid="mto-hide-category-rows"
               name={HIDE_CATEGORY_ROWS_PARAM}
-              label={t('table.tableFilters.hideCategoryRows', {
-                count: categoryHeaderRowCount
-              })}
+              label={t('table.tableFilters.hideCategoryRows')}
               disabled={appliedFiltersCount > 0}
               checked={isHideCategoryRowsChecked}
               onChange={handleHideCategoryRowsChange}

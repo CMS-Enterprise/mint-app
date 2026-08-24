@@ -88,7 +88,6 @@ describe('MTOTableFilters', () => {
 
   it('shows category and subcategory header count in the hide-rows label', async () => {
     const { user } = renderWithRouter('/matrix', {
-      categoryHeaderRowCount: 12,
       searchQuery: '',
       setSearchQuery: () => {}
     });
@@ -98,8 +97,7 @@ describe('MTOTableFilters', () => {
     expect(
       screen.getByRole('checkbox', {
         name: i18next.t(
-          'modelToOperationsMisc:table.tableFilters.hideCategoryRows',
-          { count: 12 }
+          'modelToOperationsMisc:table.tableFilters.hideCategoryRows'
         )
       })
     ).toBeInTheDocument();

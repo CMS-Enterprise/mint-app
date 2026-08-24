@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useSearchParams } from 'react-router-dom';
 import MTOTable from 'features/ModelPlan/ModelToOperations/_components/MatrixTable';
-import { countMtoCategoryHeaderRows } from 'features/ModelPlan/ModelToOperations/_components/MatrixTable/_utils';
 import MTOTableFilters from 'features/ModelPlan/ModelToOperations/_components/MTOTableFilters';
 import { NotFoundPartial } from 'features/NotFound';
 import {
@@ -36,10 +35,6 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
     ({} as GetModelToOperationsMatrixQuery['modelPlan']['mtoMatrix']);
 
   const mtoNotStarted = modelToOperationsMatrix.status === MtoStatus.READY;
-
-  const categoryHeaderRowCount = countMtoCategoryHeaderRows(
-    modelToOperationsMatrix?.categories
-  );
 
   const handleSearchChange = (input: string) => {
     setSearchQuery(input);
@@ -92,7 +87,6 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
       ) : (
         <>
           <MTOTableFilters
-            categoryHeaderRowCount={categoryHeaderRowCount}
             searchQuery={searchQuery}
             setSearchQuery={handleSearchChange}
             readView
