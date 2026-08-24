@@ -93,11 +93,11 @@ const notifications = {
       },
       NEW_TASK_ADDED: {
         text: ' added a new task for {{-modelName}}.',
-        cta: 'View current tasks'
+        cta: 'View tasks'
       },
       TASK_COMPLETED: {
         text: ' marked a task as complete for {{-modelName}}.',
-        cta: 'View completed tasks'
+        cta: 'View tasks'
       }
     },
     dailyDigest: {
