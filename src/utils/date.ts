@@ -141,7 +141,7 @@ export const isNeededWithinDays = (
 
   const cutoffDate = DateTime.utc().plus({ days }).endOf('day');
 
-  return needByDate < cutoffDate;
+  return needByDate <= cutoffDate;
 };
 
 /**
