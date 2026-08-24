@@ -92,11 +92,11 @@ const notifications = {
         cta: 'View MTO'
       },
       NEW_TASK_ADDED: {
-        text: ' has a new task available for {{-modelName}}.',
+        text: ' added a new task for {{-modelName}}.',
         cta: 'View current tasks'
       },
       TASK_COMPLETED: {
-        text: ' completed a task for {{-modelName}}.',
+        text: ' marked a task as complete for {{-modelName}}.',
         cta: 'View completed tasks'
       }
     },
