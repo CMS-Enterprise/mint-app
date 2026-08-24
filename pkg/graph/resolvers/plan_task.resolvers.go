@@ -8,11 +8,20 @@ package resolvers
 import (
 	"context"
 
-	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/google/uuid"
+
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// MarkPlanTaskComplete is the resolver for the markPlanTaskComplete field.
+func (r *mutationResolver) MarkPlanTaskComplete(ctx context.Context, modelPlanID uuid.UUID, key models.PlanTaskKey, isComplete bool) (*models.PlanTask, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return PlanTaskMarkComplete(ctx, logger, modelPlanID, key, isComplete, principal, r.store, r.emailService, r.addressBook)
+}
 
 // State is the resolver for the state field.
 func (r *planTaskResolver) State(ctx context.Context, obj *models.PlanTask) (model.PlanTaskState, error) {
@@ -23,22 +32,6 @@ func (r *planTaskResolver) State(ctx context.Context, obj *models.PlanTask) (mod
 		return model.PlanTaskStateComplete, nil
 	}
 	return model.PlanTaskStateToDo, nil
-}
-
-// CompletedByUserAccount is the resolver for the completedByUserAccount field.
-func (r *planTaskResolver) CompletedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error) {
-	return nil, nil
-}
-
-// CreatedByUserAccount is the resolver for the createdByUserAccount field.
-func (r *planTaskResolver) CreatedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error) {
-	// Stub: return empty account so frontend can test until user loader is wired.
-	return &authentication.UserAccount{}, nil
-}
-
-// ModifiedByUserAccount is the resolver for the modifiedByUserAccount field.
-func (r *planTaskResolver) ModifiedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error) {
-	return nil, nil
 }
 
 // PlanTask returns generated.PlanTaskResolver implementation.
