@@ -553,82 +553,6 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                   </div>
                 </div>
               </div>
-            </fieldset>
-            <fieldset
-              class="usa-fieldset"
-              data-testid="fieldset"
-            >
-              <div
-                class="mobile:grid-col-6"
-                data-testid="grid"
-              >
-                <h4
-                  class="margin-bottom-0 margin-top-5"
-                >
-                  Additional notifications
-                </h4>
-              </div>
-              <div>
-                <div
-                  class="grid-row flex-align-start"
-                  data-testid="grid"
-                >
-                  <div
-                    class="mobile:grid-col-6"
-                    data-testid="grid"
-                  >
-                    <p
-                      class="text-wrap margin-y-105"
-                    >
-                      When a new Model Plan is created
-                    </p>
-                  </div>
-                  <div
-                    class="mobile:grid-col-3"
-                    data-testid="grid"
-                  >
-                    <div
-                      class="usa-checkbox padding-left-2"
-                      data-testid="checkbox"
-                    >
-                      <input
-                        class="usa-checkbox__input"
-                        data-testid="notification-setting-email-newModelPlan"
-                        id="notification-setting-email-newModelPlan"
-                        name="newModelPlan"
-                        type="checkbox"
-                        value="EMAIL"
-                      />
-                      <label
-                        class="usa-checkbox__label"
-                        for="notification-setting-email-newModelPlan"
-                      />
-                    </div>
-                  </div>
-                  <div
-                    class="mobile:grid-col-3"
-                    data-testid="grid"
-                  >
-                    <div
-                      class="usa-checkbox padding-left-2"
-                      data-testid="checkbox"
-                    >
-                      <input
-                        class="usa-checkbox__input"
-                        data-testid="notification-setting-in-app-newModelPlan"
-                        id="notification-setting-in-app-newModelPlan"
-                        name="newModelPlan"
-                        type="checkbox"
-                        value="IN_APP"
-                      />
-                      <label
-                        class="usa-checkbox__label"
-                        for="notification-setting-in-app-newModelPlan"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div>
                 <div
                   class="grid-row flex-align-start"
@@ -746,6 +670,82 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                       <label
                         class="usa-checkbox__label"
                         for="notification-setting-in-app-taskCompleted"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
+            >
+              <div
+                class="mobile:grid-col-6"
+                data-testid="grid"
+              >
+                <h4
+                  class="margin-bottom-0 margin-top-5"
+                >
+                  Additional notifications
+                </h4>
+              </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When a new Model Plan is created
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-newModelPlan"
+                        id="notification-setting-email-newModelPlan"
+                        name="newModelPlan"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-newModelPlan"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-newModelPlan"
+                        id="notification-setting-in-app-newModelPlan"
+                        name="newModelPlan"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-newModelPlan"
                       />
                     </div>
                   </div>
