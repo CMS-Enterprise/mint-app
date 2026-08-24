@@ -2644,7 +2644,7 @@ const externalResources: Partial<Record<HelpArticle, CardInfoType>> = {
   [HelpArticle.COR_GUIDANCE_AND_TEMPLATES]: {
     title: 'COR Guidance and Templates',
     description:
-      'For Acquisition support and guidance, visit the DCCS Contract Summary Page, which provides acquisition support for both pre-award and post-award activities, including documents, templates, and resources.'
+      'For acquisition support and guidance, visit the CTAT E-library, which provides acquisition support for both pre-award and post-award activities, including documents, templates, and resources.'
   }
 };
 
