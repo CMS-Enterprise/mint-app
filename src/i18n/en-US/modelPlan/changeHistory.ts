@@ -52,8 +52,6 @@ const changeHistory = {
     '{{action}} {{collaborator}} from the model team <datetime>on {{date}} at {{time}}</datetime>',
   plan_discussionAnswered:
     'started a Discussion <datetime>on {{date}} at {{time}}</datetime>',
-  plan_discussionAnswered_withTopic:
-    'started a Discussion about {{topic}} <datetime>on {{date}} at {{time}}</datetime>',
   discussion_replyAnswered:
     'replied to a Discussion <datetime>on {{date}} at {{time}}</datetime>',
   documentBatchUpdate:
@@ -79,6 +77,7 @@ const changeHistory = {
     '{{action}} {{toForFrom}} milestone <bold>{{milestoneName}}</bold>',
   replyCount: '{{count}} earlier reply not shown',
   replyCount_other: '{{count}} earlier replies not shown',
+  discussionTopic: 'Topic: {{topic}}',
   sections: {
     model_plan: 'Model plan',
     plan_timeline: 'Model timeline',

@@ -98,7 +98,7 @@ describe('ChangeRecord', () => {
     ).toBeInTheDocument();
   });
 
-  it('displays the discussion topic in the change history header', () => {
+  it('displays discussion content and reveals the topic in details', () => {
     const discussionRecord: ChangeRecordType = {
       id: 'c3a8c2e1-1d4b-4e2a-9f11-2b0d8c6e9a01',
       tableName: TableName.PLAN_DISCUSSION,
@@ -140,16 +140,21 @@ describe('ChangeRecord', () => {
       __typename: 'TranslatedAudit'
     };
 
-    const { getByText } = render(
+    const { getByText, queryByText } = render(
       <MockedProvider>
         <ChangeRecord changeRecord={discussionRecord} index={1} />
       </MockedProvider>
     );
 
-    expect(
-      getByText(/started a Discussion about Model basics/)
-    ).toBeInTheDocument();
+    expect(getByText(/started a Discussion/)).toBeInTheDocument();
+    expect(queryByText(/about Model basics/)).not.toBeInTheDocument();
     expect(getByText(/How do I get started?/)).toBeInTheDocument();
+    expect(queryByText('Topic: Model basics')).not.toBeInTheDocument();
+
+    fireEvent.click(getByText('Show details'));
+
+    expect(getByText('Topic: Model basics')).toBeInTheDocument();
+    expect(getByText('Hide details')).toBeInTheDocument();
   });
 
   it('toggles details when "showDetails" and "hideDetails" are clicked', () => {

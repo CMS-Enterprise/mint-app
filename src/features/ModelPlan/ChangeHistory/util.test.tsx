@@ -1052,31 +1052,6 @@ describe('util.tsx', () => {
       );
     });
 
-    it('should include the topic in plan discussion header text', () => {
-      const change: ChangeRecordType = {
-        __typename: 'TranslatedAudit',
-        id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
-        tableName: TableName.PLAN_DISCUSSION,
-        date: '2024-06-07T19:14:30.145659Z',
-        action: DatabaseOperation.INSERT,
-        actorName: 'John Doe',
-        translatedFields: [
-          {
-            fieldName: 'topic',
-            newTranslated: 'Model basics',
-            changeType: AuditFieldChangeType.ANSWERED
-          }
-        ] as TranslatedAuditField[]
-      };
-
-      const result = getHeaderText(change);
-      expect(result).toBe(
-        i18next.t('changeHistory:plan_discussionAnswered_withTopic', {
-          topic: 'Model basics'
-        })
-      );
-    });
-
     it('should return documentUpdate for plan document change', () => {
       const change: ChangeRecordType = {
         __typename: 'TranslatedAudit',
