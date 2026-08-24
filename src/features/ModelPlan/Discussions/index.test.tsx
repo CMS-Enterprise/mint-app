@@ -200,7 +200,7 @@ describe('Discussion Component', () => {
     });
 
     expect(
-      screen.queryByRole('combobox', { name: /Discussion topic/i })
+      screen.queryByRole('combobox', { name: /topic/i })
     ).not.toBeInTheDocument();
 
     const roleSelect = screen.getByRole('combobox', {
@@ -246,20 +246,20 @@ describe('Discussion Component', () => {
     userEvent.click(screen.getByRole('button', { name: /Start a discussion/i }));
 
     await waitFor(() => {
-      expect(
-        screen.getByRole('combobox', { name: /Discussion topic/i })
-      ).toBeInTheDocument();
+      expect(screen.getByRole('combobox', { name: /topic/i })).toBeInTheDocument();
     });
 
-    const topicSelect = screen.getByRole('combobox', {
-      name: /Discussion topic/i
-    });
+    const topicSelect = screen.getByRole('combobox', { name: /topic/i });
 
     userEvent.selectOptions(topicSelect, [DiscussionTopicType.MODEL_PLAN_ALL]);
 
     await waitFor(() => {
       expect(topicSelect).toHaveValue(DiscussionTopicType.MODEL_PLAN_ALL);
     });
+
+    expect(
+      screen.queryByText('Waiver assessment survey')
+    ).not.toBeInTheDocument();
 
     expect(screen.getByRole('button', { name: /Save discussion/i })).toBeDisabled();
   });

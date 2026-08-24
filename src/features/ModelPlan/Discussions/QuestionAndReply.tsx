@@ -10,6 +10,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Formik, FormikProps } from 'formik';
 import {
+  DiscussionTopicType,
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery,
   useGetMostRecentRoleSelectionQuery
@@ -296,13 +297,19 @@ const QuestionAndReply = ({
                           {`-${discussionsMiscT('select')}-`}
                         </option>
 
-                        {getKeys(topicConfig.options).map(topic => {
-                          return (
-                            <option key={topic} value={topic}>
-                              {topicConfig.options[topic]}
-                            </option>
-                          );
-                        })}
+                        {getKeys(topicConfig.options)
+                          .filter(
+                            topic =>
+                              topic !==
+                              DiscussionTopicType.WAIVER_ASSESSMENT_SURVEY
+                          )
+                          .map(topic => {
+                            return (
+                              <option key={topic} value={topic}>
+                                {topicConfig.options[topic]}
+                              </option>
+                            );
+                          })}
                       </Field>
                     </FieldGroup>
                   )}
