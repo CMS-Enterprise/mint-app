@@ -44,6 +44,21 @@ func (k PlanTaskKey) IsManuallyMarkable() bool {
 	return manuallyMarkablePlanTaskKeys[k]
 }
 
+// planTaskActivationTriggers maps a manually-markable PlanTaskKey to the PlanTaskKey it activates
+// (moves from UPCOMING to TO_DO) the moment the triggering key is marked complete. Activation is a
+// one-way transition: the target task is never moved back to UPCOMING, even if the triggering task
+// is later marked incomplete again (see PlanTaskMarkComplete in pkg/graph/resolvers/plan_task.go).
+var planTaskActivationTriggers = map[PlanTaskKey]PlanTaskKey{
+	PlanTaskKeyTwoPager: PlanTaskKeySixPager,
+}
+
+// ActivationTarget returns the PlanTaskKey that should activate (move from UPCOMING to TO_DO) when k
+// is marked complete, if one is configured.
+func (k PlanTaskKey) ActivationTarget() (PlanTaskKey, bool) {
+	target, ok := planTaskActivationTriggers[k]
+	return target, ok
+}
+
 // PlanTaskStatus is an enum representing the lifecycle status of a task
 type PlanTaskStatus string
 

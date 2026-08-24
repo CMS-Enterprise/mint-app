@@ -92,6 +92,9 @@ func updatePlanTaskStatusByKey(
 // model state and updated via updatePlanTaskStatusByKey's other callers, manually-markable keys
 // (see models.PlanTaskKey.IsManuallyMarkable) have no calculated status and are only ever changed
 // by direct user action, so a key is rejected here if it isn't on that allow-list.
+//
+// Marking a key complete may also activate another task (see models.PlanTaskKey.ActivationTarget),
+// moving it from UPCOMING to TO_DO.
 func PlanTaskMarkComplete(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
@@ -110,6 +113,58 @@ func PlanTaskMarkComplete(
 	}
 
 	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
-		return updatePlanTaskStatusByKey(tx, logger, modelPlanID, key, newStatus, principal, store)
+		task, err := updatePlanTaskStatusByKey(tx, logger, modelPlanID, key, newStatus, principal, store)
+		if err != nil {
+			return nil, err
+		}
+
+		if isComplete {
+			if targetKey, ok := key.ActivationTarget(); ok {
+				if err := activateUpcomingPlanTask(tx, logger, modelPlanID, targetKey, principal, store); err != nil {
+					return nil, err
+				}
+			}
+		}
+
+		return task, nil
 	})
+}
+
+// activateUpcomingPlanTask moves a plan task from UPCOMING to TO_DO. It is a no-op if the task isn't
+// currently UPCOMING (already activated, or has otherwise progressed) or doesn't exist yet, since
+// activation must never regress a task that has already moved on.
+func activateUpcomingPlanTask(
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
+	principal authentication.Principal,
+	store *storage.Store,
+) error {
+	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(np, logger, []uuid.UUID{modelPlanID})
+	if err != nil {
+		return err
+	}
+
+	var target *models.PlanTask
+	for _, t := range tasks {
+		if t.Key == key {
+			target = t
+			break
+		}
+	}
+	if target == nil {
+		logger.Warn(
+			"plan task activation target not found, skipping",
+			zap.String("modelPlanID", modelPlanID.String()),
+			zap.String("key", string(key)),
+		)
+		return nil
+	}
+	if target.Status != models.PlanTaskStatusUpcoming {
+		return nil
+	}
+
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, key, models.PlanTaskStatusToDo, principal, store)
+	return err
 }
