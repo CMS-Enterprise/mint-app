@@ -229,11 +229,11 @@ const notifications = {
           },
           {
             name: 'newTaskAdded',
-            copy: 'When new tasks are available for a model'
+            copy: 'When there is a new task for your model'
           },
           {
             name: 'taskCompleted',
-            copy: 'When a task is completed'
+            copy: 'When a task has been completed for your model'
           },
           {
             name: 'datesChanged',

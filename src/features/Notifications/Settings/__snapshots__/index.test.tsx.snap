@@ -641,7 +641,7 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                     <p
                       class="text-wrap margin-y-105"
                     >
-                      When new tasks are available for a model
+                      When there is a new task for your model
                     </p>
                   </div>
                   <div
@@ -702,7 +702,7 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                     <p
                       class="text-wrap margin-y-105"
                     >
-                      When a task is completed
+                      When a task has been completed for your model
                     </p>
                   </div>
                   <div
