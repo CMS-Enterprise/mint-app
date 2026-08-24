@@ -63,12 +63,17 @@ const QuestionAndReply = ({
   const { t: repliesT } = useTranslation('replies');
   const { t: h } = useTranslation('general');
 
-  const { userRole: userRoleConfig } = usePlanTranslation('discussions');
+  const { userRole: userRoleConfig, topic: topicConfig } =
+    usePlanTranslation('discussions');
 
   const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
-    content: Yup.string().trim().required(`Please enter a ${renderType}`)
+    content: Yup.string().trim().required(`Please enter a ${renderType}`),
+    topic:
+      renderType === 'question'
+        ? Yup.string().required('Please select a discussion topic')
+        : Yup.string().notRequired()
   });
 
   const { data, loading, error } = useGetMostRecentRoleSelectionQuery();
@@ -261,6 +266,47 @@ const QuestionAndReply = ({
                     )}
                   </FieldGroup>
 
+                  {renderType === 'question' && (
+                    <FieldGroup
+                      scrollElement="discussion-topic"
+                      error={!!flatErrors.topic}
+                    >
+                      <Label htmlFor="discussion-topic" className="text-normal">
+                        {discussionsT('topic.label')}
+                        <RequiredAsterisk />
+                      </Label>
+
+                      <p className="margin-top-0 text-base">
+                        {discussionsT('topic.sublabel')}
+                      </p>
+
+                      <FieldErrorMsg>{flatErrors.topic}</FieldErrorMsg>
+
+                      <Field
+                        as={Select}
+                        id="discussion-topic"
+                        name="topic"
+                        disabled={loading}
+                        value={values.topic || ''}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          setFieldValue('topic', e.target.value);
+                        }}
+                      >
+                        <option key="default-select" disabled value="">
+                          {`-${discussionsMiscT('select')}-`}
+                        </option>
+
+                        {getKeys(topicConfig.options).map(topic => {
+                          return (
+                            <option key={topic} value={topic}>
+                              {topicConfig.options[topic]}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </FieldGroup>
+                  )}
+
                   <FieldGroup
                     scrollElement="content"
                     error={!!flatErrors.content}
@@ -328,6 +374,7 @@ const QuestionAndReply = ({
                         isSubmitting ||
                         !values.content ||
                         !values.userRole ||
+                        (renderType === 'question' && !values.topic) ||
                         (values.userRole ===
                           DiscussionUserRole.NONE_OF_THE_ABOVE &&
                           !values.userRoleDescription)

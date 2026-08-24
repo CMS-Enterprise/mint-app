@@ -10,7 +10,9 @@ export const discussions: TranslationDiscussions = {
     gqlField: 'topic',
     goField: 'Topic',
     dbField: 'topic',
-    label: 'Discussion topic',
+    label: 'Topic',
+    sublabel:
+      "Choose which section of MINT's model information you are asking about. This can help others to better answer your question.",
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     order: 1.001,
