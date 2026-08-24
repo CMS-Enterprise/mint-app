@@ -907,6 +907,14 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   return 'standardUpdate';
 };
 
+export const getDiscussionTopic = (change: ChangeRecordType): string => {
+  const topic = change.translatedFields.find(
+    field => field.fieldName === 'topic'
+  )?.newTranslated;
+
+  return typeof topic === 'string' ? topic : '';
+};
+
 export const getHeaderText = (change: ChangeRecordType): string => {
   let headerText: string = '';
 
@@ -949,9 +957,18 @@ export const getHeaderText = (change: ChangeRecordType): string => {
     case 'teamUpdate':
       headerText = i18next.t(`changeHistory:team${teamChangeType}`);
       break;
-    case 'discussionUpdate':
-      headerText = i18next.t(`changeHistory:${change.tableName}Answered`);
+    case 'discussionUpdate': {
+      const topic = getDiscussionTopic(change);
+      if (change.tableName === TableName.PLAN_DISCUSSION && topic) {
+        headerText = i18next.t(
+          'changeHistory:plan_discussionAnswered_withTopic',
+          { topic }
+        );
+      } else {
+        headerText = i18next.t(`changeHistory:${change.tableName}Answered`);
+      }
       break;
+    }
     case 'cRUpdate':
     case 'tDLUpdate':
       headerText = i18next.t('changeHistory:crTdlUpdate');
