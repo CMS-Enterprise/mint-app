@@ -23,6 +23,26 @@ const (
 	PlanTaskKeyTwoPager     PlanTaskKey = "TWO_PAGER"
 )
 
+// manuallyMarkablePlanTaskKeys are the PlanTaskKeys whose status is set directly by a user via
+// PlanTaskMarkComplete (pkg/graph/resolvers/plan_task.go) and the markPlanTaskComplete mutation,
+// rather than calculated from other model state. MODEL_PLAN, MTO, and DATA_EXCHANGE are
+// recalculated automatically (see pkg/graph/resolvers/plan_task_status_updates.go) and must not be
+// included here, or a manual mark could be silently overwritten the next time their calculated
+// status runs.
+//
+// Adding a new task key generally means touching three places: this map (only if it's manually
+// markable), the seeding list in ModelPlanCreate (pkg/graph/resolvers/model_plan.go), and either a
+// new calculated-status function in plan_task_status_updates.go or reuse of PlanTaskMarkComplete.
+var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
+	PlanTaskKeyTwoPager: true,
+}
+
+// IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user
+// (e.g. via a "mark complete" action) rather than calculated from other model state.
+func (k PlanTaskKey) IsManuallyMarkable() bool {
+	return manuallyMarkablePlanTaskKeys[k]
+}
+
 // PlanTaskStatus is an enum representing the lifecycle status of a task
 type PlanTaskStatus string
 

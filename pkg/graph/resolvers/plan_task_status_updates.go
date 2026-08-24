@@ -14,6 +14,13 @@ import (
 // Plan task status updates: MODEL_PLAN, DATA_EXCHANGE, and MTO rows in plan_task are updated from
 // multiple resolvers. This file is the source of truth for *when* each UpdatePlanTaskStatusOn* runs.
 //
+// Not every PlanTaskKey is calculated here. Some (e.g. TWO_PAGER) have no calculated status and are
+// only ever changed by direct user action, via PlanTaskMarkComplete (plan_task.go) and the
+// markPlanTaskComplete mutation. Whether a key is calculated (belongs in this file) or manually
+// markable (goes through PlanTaskMarkComplete instead) is decided by
+// models.PlanTaskKey.IsManuallyMarkable (pkg/models/plan_task.go) — add new calculated keys to a
+// function here, and new manually-markable keys to that allow-list, not both.
+//
 // Task status logic:
 //
 //	MODEL_PLAN
@@ -34,7 +41,8 @@ func UpdatePlanTaskStatusOnModelPlanStarted(
 	principal authentication.Principal,
 	store *storage.Store,
 ) error {
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusInProgress, principal, store)
+	_, err := updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusInProgress, principal, store)
+	return err
 }
 
 // UpdatePlanTaskStatusOnModelCleared runs when model plan status becomes CLEARED: MODEL_PLAN and DATA_EXCHANGE tasks complete.
@@ -49,7 +57,7 @@ func UpdatePlanTaskStatusOnModelCleared(
 	if err != nil {
 		return err
 	}
-	if err := updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store); err != nil {
+	if _, err := updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store); err != nil {
 		return err
 	}
 
@@ -57,7 +65,8 @@ func UpdatePlanTaskStatusOnModelCleared(
 	if err != nil {
 		return err
 	}
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return err
 }
 
 // UpdatePlanTaskStatusOnModelNoLongerCleared runs when model plan status regresses from CLEARED:
@@ -73,7 +82,7 @@ func UpdatePlanTaskStatusOnModelNoLongerCleared(
 	if err != nil {
 		return err
 	}
-	if err := updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store); err != nil {
+	if _, err := updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store); err != nil {
 		return err
 	}
 
@@ -82,7 +91,8 @@ func UpdatePlanTaskStatusOnModelNoLongerCleared(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return err
 }
 
 func calculateModelPlanTaskStatus(
@@ -179,7 +189,8 @@ func UpdatePlanTaskStatusOnDataExchangeApproachStarted(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return err
 }
 
 // UpdatePlanTaskStatusOnDataExchangeApproachComplete runs when the data exchange approach status changes to COMPLETE.
@@ -195,7 +206,8 @@ func UpdatePlanTaskStatusOnDataExchangeApproachComplete(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return err
 }
 
 // UpdatePlanTaskStatusOnDataExchangeApproachNoLongerComplete runs when DEA status regresses from COMPLETE:
@@ -212,7 +224,8 @@ func UpdatePlanTaskStatusOnDataExchangeApproachNoLongerComplete(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return err
 }
 
 func calculateDataExchangeTaskStatus(
@@ -261,7 +274,8 @@ func UpdatePlanTaskStatusOnMTOStarted(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	return err
 }
 
 // UpdatePlanTaskStatusOnModelActive runs when model plan status changes to ACTIVE: MTO task completes.
@@ -277,7 +291,8 @@ func UpdatePlanTaskStatusOnModelActive(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	return err
 }
 
 // UpdatePlanTaskStatusOnMTODataDeleted recalculates and applies MTO task status when MTO data is deleted.
@@ -293,7 +308,8 @@ func UpdatePlanTaskStatusOnMTODataDeleted(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	return err
 }
 
 // UpdatePlanTaskStatusOnModelNoLongerActive runs when model plan status regresses from ACTIVE.
@@ -309,7 +325,8 @@ func UpdatePlanTaskStatusOnModelNoLongerActive(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	_, err = updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	return err
 }
 
 func calculateMTOTaskStatus(

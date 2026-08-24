@@ -7,13 +7,13 @@ type PlanTask {
   status: PlanTaskStatus!
   state: PlanTaskState! @goField(forceResolver: true)
   completedBy: UUID
-  completedByUserAccount: UserAccount @goField(forceResolver: true)
+  completedByUserAccount: UserAccount
   completedDts: Time
   createdBy: UUID!
-  createdByUserAccount: UserAccount! @goField(forceResolver: true)
+  createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
-  modifiedByUserAccount: UserAccount @goField(forceResolver: true)
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
@@ -44,4 +44,17 @@ PlanTaskState is computed from PlanTaskStatus for display.
 enum PlanTaskState {
   TO_DO
   COMPLETE
+}
+
+extend type Mutation {
+  """
+  Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
+  aren't calculated from other model state (currently just TWO_PAGER) can be set this way; other
+  keys will return an error.
+  """
+  markPlanTaskComplete(
+    modelPlanID: UUID!
+    key: PlanTaskKey!
+    isComplete: Boolean!
+  ): PlanTask! @hasRole(role: MINT_USER)
 }
