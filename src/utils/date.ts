@@ -127,7 +127,7 @@ export const convertDateToISOString = (date: Date | null) => {
 };
 
 /**
- * Returns true if the given ISO date string falls within the next `days` calendar days (UTC),
+ * Returns true if the given ISO date string falls within the next `days` calendar days (UTC), or before today,
  * inclusive of today through the end of the Nth day (same window rule as the former 30-day helper).
  */
 export const isNeededWithinDays = (
@@ -136,17 +136,12 @@ export const isNeededWithinDays = (
 ): boolean => {
   if (needBy == null) return false;
 
-  const needByDate = new Date(needBy);
-  if (Number.isNaN(needByDate.getTime())) return false;
+  const needByDate = DateTime.fromISO(needBy, { zone: 'utc' });
+  if (!needByDate.isValid) return false;
 
-  const now = new Date();
-  const todayStart = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
-  );
-  const dayAfterWindowEnd = new Date(todayStart);
-  dayAfterWindowEnd.setUTCDate(dayAfterWindowEnd.getUTCDate() + days + 1);
+  const cutoffDate = DateTime.utc().plus({ days }).endOf('day');
 
-  return needByDate >= todayStart && needByDate < dayAfterWindowEnd;
+  return needByDate <= cutoffDate;
 };
 
 /**
