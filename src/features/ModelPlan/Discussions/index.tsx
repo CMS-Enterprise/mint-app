@@ -21,6 +21,7 @@ import { useErrorMessage } from 'contexts/ErrorContext';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
+import { getDefaultDiscussionTopicFromPath } from './getDefaultDiscussionTopicFromPath';
 import QuestionAndReply from './QuestionAndReply';
 
 import './index.scss';
@@ -60,6 +61,8 @@ const Discussions = ({
   const queryParams = useMemo(() => {
     return new URLSearchParams(location.search);
   }, [location.search]);
+
+  const defaultTopic = getDefaultDiscussionTopicFromPath(location.pathname);
 
   const { data, loading, error, refetch } = useGetModelPlanDiscussionsQuery({
     variables: {
@@ -341,6 +344,7 @@ const Discussions = ({
           queryParams={queryParams}
           setInitQuestion={setInitQuestion}
           setDiscussionType={setDiscussionType}
+          defaultTopic={defaultTopic}
         />
       </>
     );
@@ -366,6 +370,7 @@ const Discussions = ({
                     closeModal={() => setIsDiscussionOpen(false)}
                     handleCreateDiscussion={handleCreateDiscussion}
                     reply={reply}
+                    defaultTopic={defaultTopic}
                   />
                 </>
               )}

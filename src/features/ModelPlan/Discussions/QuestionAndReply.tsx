@@ -46,6 +46,7 @@ type QuestionAndReplyProps = {
   setDiscussionReplyID?: (value: string | null | undefined) => void;
   setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
   setInitQuestion?: (value: boolean) => void;
+  defaultTopic?: DiscussionTopicType;
 };
 
 const QuestionAndReply = ({
@@ -57,7 +58,8 @@ const QuestionAndReply = ({
   reply,
   setDiscussionReplyID,
   setDiscussionType,
-  setInitQuestion
+  setInitQuestion,
+  defaultTopic
 }: QuestionAndReplyProps) => {
   const { t: discussionsT } = useTranslation('discussions');
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
@@ -118,6 +120,13 @@ const QuestionAndReply = ({
             <DiscussionUserInfo discussionTopic={reply} />
 
             <div className="margin-left-5">
+              {'topic' in reply && reply.topic && (
+                <p className="margin-top-1 margin-bottom-0 text-base">
+                  {discussionsMiscT('topicReadOnly', {
+                    topic: topicConfig.options[reply.topic]
+                  })}
+                </p>
+              )}
               <MentionTextArea
                 id={`mention-${discussionReplyID}`}
                 editable={false}
@@ -152,7 +161,7 @@ const QuestionAndReply = ({
       <Formik
         initialValues={{
           content: '',
-          topic: undefined,
+          topic: defaultTopic,
           userRole: mostRecentUserRole || ('' as DiscussionUserRole),
           userRoleDescription: mostRecentUserRoleDescription || ''
         }}

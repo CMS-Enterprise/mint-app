@@ -156,6 +156,7 @@ export const discussionsMisc: Record<string, string | NestedTranslation> = {
   alreadyAnswered:
     '“{{-question}}” has already been answered. You can view it in the answered questions below.',
   select: 'Select',
+  topicReadOnly: 'Topic: {{topic}}',
   userRole: {
     CMS_SYSTEM_SERVICE_TEAM: 'CMS System/Service Team',
     LEADERSHIP: 'Leadership',
