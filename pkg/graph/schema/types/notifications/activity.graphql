@@ -15,6 +15,8 @@ enum ActivityType {
   NEW_DISCUSSION_ADDED
   IDDOC_QUESTIONNAIRE_COMPLETED
   INCORRECT_MODEL_STATUS
+  NEW_TASK_ADDED
+  TASK_COMPLETED
 }
 
 enum DateChangeFieldType {
@@ -43,6 +45,8 @@ union ActivityMetaData =
   | IddocQuestionnaireCompletedActivityMeta
   | NewDiscussionAddedActivityMeta
   | IncorrectModelStatusActivityMeta
+  | NewTaskAddedActivityMeta
+  | TaskCompletedActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -179,6 +183,28 @@ type IncorrectModelStatusActivityMeta {
   phaseSuggestion: PhaseSuggestion!
   currentStatus: String!
   modelPlanName: String!
+}
+
+type TaskCompletedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  planTaskID: UUID!
+  planTask: PlanTask!
+  taskKey: PlanTaskKey!
+  completedBy: UUID!
+  completedByUserAccount: UserAccount!
+}
+
+type NewTaskAddedActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  planTaskID: UUID!
+  planTask: PlanTask!
+  taskKey: PlanTaskKey!
 }
 
 """
