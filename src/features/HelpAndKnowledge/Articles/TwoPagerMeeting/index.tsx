@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import {
+  Accordion,
   Grid,
   GridContainer,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
+import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
@@ -15,18 +16,27 @@ import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/Soluti
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
-import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import ScrollLink from 'components/ScrollLink';
 import useModalSolutionState from 'hooks/useModalSolutionState';
 import { formatDateUtc } from 'utils/date';
-import { tArray } from 'utils/translation';
+import { tArray, tObject } from 'utils/translation';
 
 import KeyResourcesCards from '../_components/KeyResourcesCards';
 import NeedHelp from '../_components/NeedHelp';
 import { ArticleCategories, HelpArticle } from '..';
+
+type AccordionItemsConfigType = {
+  title: string;
+  content: {
+    intro: string;
+    label?: string;
+    list?: string[];
+    summary?: string;
+  };
+};
 
 export const convertToLowercaseAndDashes = (string: string) =>
   string.toLowerCase().replace(/\s+/g, '-');
@@ -34,15 +44,7 @@ export const convertToLowercaseAndDashes = (string: string) =>
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
 
-  const location = useLocation();
-
-  const [initLocation] = useState<string>(location.pathname);
-
   const { prevPathname, selectedSolution, loading } = useModalSolutionState();
-
-  const ldgRoute = `${initLocation}${location.search}${
-    location.search ? '&' : '?'
-  }solution=learning-and-diffusion-group&section=about`;
 
   const summaryboxListItems: string[] = tArray(
     'twoPageMeeting:summaryBox.list'
@@ -52,16 +54,55 @@ const TwoPagerMeeting = () => {
     'twoPageMeeting:about.summarybox.list'
   );
 
-  const contractorParagraphs: string[] = tArray(
-    'twoPageMeeting:templateGuidance.contractorParagraph'
+  const accordionItemsConfig = tObject<string, AccordionItemsConfigType>(
+    'twoPageMeeting:templateGuidance.accordionItems'
   );
 
-  const additionalResourceTips: string[] = tArray(
-    'twoPageMeeting:templateGuidance.summarybox.tips.list'
-  );
+  const accordionItemKeys = Object.keys(accordionItemsConfig);
 
-  const crossCutListItems: string[] = tArray(
-    'twoPageMeeting:templateGuidance.crossCut.list'
+  const accordionItems: AccordionItemProps[] = accordionItemKeys.map(
+    (key, index) => {
+      const itemConfig = accordionItemsConfig[key];
+
+      return {
+        title: itemConfig.title,
+        content: (
+          <div>
+            <Trans
+              i18nKey={itemConfig.content.intro}
+              components={{
+                italic: (
+                  <p className="text-italic text-base-darkest margin-y-0" />
+                )
+              }}
+            />
+
+            {itemConfig.content.label && (
+              <div className="margin-y-1">
+                <span>{itemConfig.content.label}</span>
+
+                {itemConfig.content.list && (
+                  <ul className="padding-left-4 margin-top-0">
+                    {itemConfig.content.list.map((listItem: string) => (
+                      <li key={listItem} className="list-item">
+                        {listItem}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+
+            {itemConfig.content.summary && (
+              <Trans i18nKey={itemConfig.content.summary} />
+            )}
+          </div>
+        ),
+        expanded: index === 0,
+        headingLevel: 'h4',
+        id: `${convertToLowercaseAndDashes(itemConfig.title)}`
+      };
+    }
   );
 
   const exampleList: { copy: string; href: string }[] = tArray(
@@ -162,7 +203,6 @@ const TwoPagerMeeting = () => {
                 {twoPageMeetingT('about.introParagraph')}
               </p>
               <p className="margin-top-0 margin-bottom-3 line-height-normal">
-                {' '}
                 {twoPageMeetingT('about.note')}
               </p>
 
@@ -209,89 +249,17 @@ const TwoPagerMeeting = () => {
               id={convertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.2')
               )}
-              className="margin-bottom-5 scroll-target"
+              className="margin-bottom-3 scroll-target"
             >
-              <h2 className="margin-bottom-3">
+              <h2 className="margin-top-0 margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.2')}
               </h2>
 
-              <p className="margin-top-0 margin-bottom-3 line-height-normal">
-                {twoPageMeetingT('additionalResources.intro')}
-              </p>
-
-              <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('additionalResources.contractor')}
-              </h3>
-
-              {contractorParagraphs.map(k => (
-                <p
-                  key={k}
-                  className="line-height-normal margin-top-0 margin-bottom-3"
-                >
-                  {k}
-                </p>
-              ))}
-
-              <SummaryBox className="padding-3 margin-bottom-3">
-                <SummaryBoxHeading
-                  headingLevel="h3"
-                  className="margin-bottom-2"
-                >
-                  {twoPageMeetingT(
-                    'additionalResources.summarybox.tips.heading'
-                  )}
-                </SummaryBoxHeading>
-
-                <SummaryBoxContent>
-                  <p className="margin-y-0">
-                    {twoPageMeetingT(
-                      'additionalResources.summarybox.tips.firstParagraph'
-                    )}
-                  </p>
-
-                  <ul className="margin-y-0 padding-left-6">
-                    {additionalResourceTips.map(k => (
-                      <li key={k} className="line-height-normal">
-                        {k}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <p className="margin-y-0">
-                    {twoPageMeetingT(
-                      'additionalResources.summarybox.tips.footer'
-                    )}
-                  </p>
-                </SummaryBoxContent>
-              </SummaryBox>
-
-              <h3 className="margin-top-0 margin-bottom-1">
-                {twoPageMeetingT('additionalResources.crossCut.heading')}
-              </h3>
-
-              <p className="line-height-normal margin-y-0">
-                {twoPageMeetingT('additionalResources.crossCut.copy')}
-              </p>
-
-              <ul className="margin-y-0 padding-left-6">
-                {crossCutListItems.map(k => (
-                  <li key={k} className="line-height-normal">
-                    <Trans
-                      i18nKey={k}
-                      components={{
-                        ml: (
-                          <UswdsReactLink
-                            className="usa-button usa-button--unstyled"
-                            to={ldgRoute}
-                          >
-                            {k}
-                          </UswdsReactLink>
-                        )
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
+              <Accordion
+                bordered={false}
+                multiselectable
+                items={accordionItems}
+              />
             </div>
 
             {/* Example papers section */}
