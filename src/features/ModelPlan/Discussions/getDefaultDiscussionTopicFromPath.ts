@@ -11,12 +11,24 @@ const modelPlanSectionTopics: Record<string, DiscussionTopicType> = {
   payment: DiscussionTopicType.MODEL_PLAN_PAYMENT
 };
 
-const otherPathTopics: Record<string, DiscussionTopicType> = {
-  '/collaboration-area/model-timeline': DiscussionTopicType.MODEL_TIMELINE,
-  '/data-exchange-approach': DiscussionTopicType.DATA_EXCHANGE_APPROACH,
-  '/iddoc-questionnaire': DiscussionTopicType.IDDOC_QUESTIONNAIRE,
-  '/model-to-operations': DiscussionTopicType.MODEL_TO_OPERATIONS_MATRIX_MTO
-};
+const collaborationAreaPathTopics: [RegExp, DiscussionTopicType][] = [
+  [
+    /\/collaboration-area\/model-timeline(?:\/|$)/,
+    DiscussionTopicType.MODEL_TIMELINE
+  ],
+  [
+    /\/collaboration-area\/additional-questionnaires\/data-exchange-approach(?:\/|$)/,
+    DiscussionTopicType.DATA_EXCHANGE_APPROACH
+  ],
+  [
+    /\/collaboration-area\/additional-questionnaires\/iddoc-questionnaire(?:\/|$)/,
+    DiscussionTopicType.IDDOC_QUESTIONNAIRE
+  ],
+  [
+    /\/collaboration-area\/model-to-operations(?:\/|$)/,
+    DiscussionTopicType.MODEL_TO_OPERATIONS_MATRIX_MTO
+  ]
+];
 
 const getDefaultDiscussionTopicFromPath = (
   pathname: string
@@ -29,11 +41,11 @@ const getDefaultDiscussionTopicFromPath = (
     return modelPlanSectionTopics[modelPlanSection];
   }
 
-  const otherPath = Object.keys(otherPathTopics).find(segment =>
-    pathname.includes(segment)
+  const match = collaborationAreaPathTopics.find(([pattern]) =>
+    pattern.test(pathname)
   );
 
-  return otherPath ? otherPathTopics[otherPath] : undefined;
+  return match?.[1];
 };
 
 export default getDefaultDiscussionTopicFromPath;
