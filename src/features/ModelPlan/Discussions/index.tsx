@@ -21,7 +21,7 @@ import { useErrorMessage } from 'contexts/ErrorContext';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
-import { getDefaultDiscussionTopicFromPath } from './getDefaultDiscussionTopicFromPath';
+import getDefaultDiscussionTopicFromPath from './getDefaultDiscussionTopicFromPath';
 import QuestionAndReply from './QuestionAndReply';
 
 import './index.scss';

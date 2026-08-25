@@ -1,13 +1,11 @@
 import { DiscussionTopicType } from 'gql/generated/graphql';
 
-import { getDefaultDiscussionTopicFromPath } from './getDefaultDiscussionTopicFromPath';
+import getDefaultDiscussionTopicFromPath from './getDefaultDiscussionTopicFromPath';
 
 describe('getDefaultDiscussionTopicFromPath', () => {
   it('returns undefined for collaboration area and model plan overview', () => {
     expect(
-      getDefaultDiscussionTopicFromPath(
-        '/models/abc/collaboration-area'
-      )
+      getDefaultDiscussionTopicFromPath('/models/abc/collaboration-area')
     ).toBeUndefined();
     expect(
       getDefaultDiscussionTopicFromPath(
@@ -34,6 +32,12 @@ describe('getDefaultDiscussionTopicFromPath', () => {
         '/models/abc/collaboration-area/model-plan/payment/recover-payment'
       )
     ).toBe(DiscussionTopicType.MODEL_PLAN_PAYMENT);
+
+    expect(
+      getDefaultDiscussionTopicFromPath(
+        '/models/abc/collaboration-area/task-list/characteristics'
+      )
+    ).toBe(DiscussionTopicType.MODEL_PLAN_GENERAL_CHARACTERISTICS);
   });
 
   it('maps timeline, data exchange, iddoc, and MTO', () => {
