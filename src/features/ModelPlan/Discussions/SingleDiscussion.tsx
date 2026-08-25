@@ -6,6 +6,7 @@ import { GetModelPlanDiscussionsQuery } from 'gql/generated/graphql';
 import { DateTime } from 'luxon';
 
 import MentionTextArea from 'components/MentionTextArea';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getDaysElapsed } from 'utils/date';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
@@ -35,6 +36,7 @@ const SingleDiscussion = ({
   replies
 }: SingleDiscussionProps) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
+  const { topic: topicConfig } = usePlanTranslation('discussions');
 
   const latestDate = [...replies].reduce(
     (pre: any, cur: any) => (Date.parse(pre) > Date.parse(cur) ? pre : cur),
@@ -55,6 +57,14 @@ const SingleDiscussion = ({
           'mint-discussions__not-connected': !connected
         })}
       >
+        {discussion.topic && (
+          <p className="margin-top-1 margin-bottom-0 text-base">
+            {discussionsMiscT('topicReadOnly', {
+              topic: topicConfig.options[discussion.topic]
+            })}
+          </p>
+        )}
+
         <MentionTextArea
           id={`mention-editor-${index}`}
           editable={false}
