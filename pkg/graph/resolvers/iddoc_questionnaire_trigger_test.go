@@ -92,7 +92,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnSolution() {
 	suite.Equal(models.IDDOCQuestionnaireReady, iddocQuestionnaire.Status, "Status should remain models.IDDOCQuestionnaireReady (not affected by trigger)")
 
 	// Delete the INNOVATION solution - this should trigger the IDDOC questionnaire needed field to become false
-	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, innovationSolution.ID)
+	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, innovationSolution.ID, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	// Reload the IDDOC questionnaire and verify that needed is now false (due to the database trigger)
@@ -164,7 +164,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerOnMilestone() {
 	suite.Equal(models.IDDOCQuestionnaireReady, iddocQuestionnaire.Status, "Status should remain models.IDDOCQuestionnaireReady (not affected by trigger)")
 
 	// Delete the IDDOC_SUPPORT milestone - this should trigger the IDDOC questionnaire needed field to become false
-	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, iddocSupportMilestone.ID)
+	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, iddocSupportMilestone.ID, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	// Reload the IDDOC questionnaire and verify that needed is now false (due to the database trigger)
@@ -220,7 +220,7 @@ func (suite *ResolverSuite) TestIDDOCQuestionnaireNeededTriggerMultipleCondition
 	suite.Equal(models.IDDOCQuestionnaireReady, iddocQuestionnaire.Status, "Status should remain models.IDDOCQuestionnaireReady")
 
 	// Remove the INNOVATION solution - IDDOC questionnaire should still be needed because iddoc_support is true
-	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, innovationSolution.ID)
+	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, innovationSolution.ID, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	iddocQuestionnaire, err = IDDOCQuestionnaireGetByModelPlanIDLoader(suite.testConfigs.Context, plan.ID)
