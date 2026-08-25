@@ -20,7 +20,7 @@ import (
 func (r *mutationResolver) MarkPlanTaskComplete(ctx context.Context, modelPlanID uuid.UUID, key models.PlanTaskKey, isComplete bool) (*models.PlanTask, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return PlanTaskMarkComplete(logger, modelPlanID, key, isComplete, principal, r.store)
+	return PlanTaskMarkComplete(ctx, logger, modelPlanID, key, isComplete, principal, r.store, r.emailService, r.addressBook)
 }
 
 // State is the resolver for the state field.
