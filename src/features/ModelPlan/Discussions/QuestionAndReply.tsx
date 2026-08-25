@@ -27,7 +27,7 @@ import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
-import { DISCUSSION_TOPICS_HIDDEN_FROM_UI } from './discussionTopicConstants';
+import DISCUSSION_TOPICS_HIDDEN_FROM_UI from './discussionTopicConstants';
 import {
   getDiscussionFormValidationErrors,
   isDiscussionFormSubmittable
