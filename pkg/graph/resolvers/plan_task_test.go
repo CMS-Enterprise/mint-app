@@ -3,14 +3,20 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"strings"
+	"sync"
+	"time"
 
+	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
-
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
 func (suite *ResolverSuite) TestPlanTaskStateResolver() {
@@ -57,12 +63,15 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 
 	// mark the TWO_PAGER task complete
 	updated, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		plan.ID,
 		models.PlanTaskKeyTwoPager,
 		true,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
 	)
 	suite.NoError(err)
 	if suite.NotNil(updated) {
@@ -78,12 +87,15 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 
 	// mark it back to TO_DO
 	updated, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
 		plan.ID,
 		models.PlanTaskKeyTwoPager,
 		false,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
 	)
 	suite.NoError(err)
 	if suite.NotNil(updated) {
@@ -107,12 +119,15 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
 		models.PlanTaskKeyDataExchange,
 	} {
 		updated, err := PlanTaskMarkComplete(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			plan.ID,
 			key,
 			true,
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.Error(err, "expected key %s to be rejected as not manually markable", key)
 		suite.Nil(updated)
@@ -274,6 +289,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
 			category.ID,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -390,11 +407,14 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planForDEACleared.ID,
 			map[string]interface{}{"status": models.ModelStatusCleared},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -420,11 +440,14 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 	suite.Run("status transitions on model plan update set appropriate tasks COMPLETE", func() {
 		// When model status changes to CLEARED: MODEL_PLAN and DATA_EXCHANGE tasks COMPLETE
 		_, err := ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			plan.ID,
 			map[string]interface{}{"status": models.ModelStatusCleared},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -440,11 +463,14 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		// When model status regresses from CLEARED to an earlier status:
 		// MODEL_PLAN should return to IN_PROGRESS, while DATA_EXCHANGE remains COMPLETE if DEA is still COMPLETE.
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			plan.ID,
 			map[string]interface{}{"status": models.ModelStatusInternalCmmiClearance},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -459,11 +485,14 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 
 		// When model status changes to ACTIVE: MTO task COMPLETE
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			plan.ID,
 			map[string]interface{}{"status": models.ModelStatusActive},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -475,11 +504,14 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		// When model status regresses from ACTIVE to an earlier status:
 		// MTO task should return to IN_PROGRESS if MTO data exists.
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			plan.ID,
 			map[string]interface{}{"status": models.ModelStatusAnnounced},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -493,20 +525,26 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		planWithoutMTOData := suite.createModelPlan("Plan For Active Regression Without MTO Data")
 
 		_, err := ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planWithoutMTOData.ID,
 			map[string]interface{}{"status": models.ModelStatusActive},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planWithoutMTOData.ID,
 			map[string]interface{}{"status": models.ModelStatusAnnounced},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -520,20 +558,26 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		planForRegression := suite.createModelPlan("Plan For DEA Regression")
 
 		_, err := ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planForRegression.ID,
 			map[string]interface{}{"status": models.ModelStatusCleared},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
 		_, err = ModelPlanUpdate(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
 			planForRegression.ID,
 			map[string]interface{}{"status": models.ModelStatusInternalCmmiClearance},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 
@@ -597,6 +641,314 @@ func planTasksByKey(tasks []*models.PlanTask) map[models.PlanTaskKey]*models.Pla
 		taskByKey[t.Key] = t
 	}
 	return taskByKey
+}
+
+func (suite *ResolverSuite) TestTrySendPlanTaskNewAvailableNotificationsEmailRecipients() {
+	plan := suite.createModelPlan("Plan For New Task Available Email Recipients")
+	optedInCollaborator := suite.createPlanCollaborator(plan, "NTAE", []models.TeamRole{models.TeamRoleLeadership})
+	optedOutCollaborator := suite.createPlanCollaborator(plan, "NTAN", []models.TeamRole{models.TeamRoleLeadership})
+	optedInPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "NTAE")
+
+	_, err := UserNotificationPreferencesUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		optedInPrincipal,
+		suite.testConfigs.Store,
+		map[string]interface{}{
+			"newTaskAdded": models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceEmail},
+		},
+	)
+	suite.NoError(err)
+
+	mockController := gomock.NewController(suite.T())
+	defer mockController.Finish()
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailService.EXPECT().GetConfig().Return(&oddmail.GoSimpleMailServiceConfig{
+		ClientAddress: "http://localhost:3005",
+	}).AnyTimes()
+
+	type sentEmail struct {
+		body string
+		bcc  []string
+	}
+	var (
+		mu         sync.Mutex
+		wg         sync.WaitGroup
+		sentEmails []sentEmail
+	)
+	wg.Add(2)
+	mockEmailService.EXPECT().
+		Send(
+			gomock.Eq("unit-test-execution@mint.cms.gov"),
+			gomock.Eq([]string{}),
+			gomock.Nil(),
+			gomock.Any(),
+			gomock.Eq("text/html"),
+			gomock.Any(),
+			gomock.Any(),
+		).
+		DoAndReturn(func(_ string, _, _ []string, _, _ string, body string, opts ...oddmail.EmailOption) error {
+			var emailOptions oddmail.EmailOptions
+			for _, opt := range opts {
+				opt(&emailOptions)
+			}
+
+			mu.Lock()
+			sentEmails = append(sentEmails, sentEmail{
+				body: body,
+				bcc:  emailOptions.BccAddresses,
+			})
+			mu.Unlock()
+			wg.Done()
+			return nil
+		}).
+		Times(2)
+
+	trySendPlanTaskNewAvailableNotifications(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		plan.ID,
+		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
+		suite.testConfigs.Principal,
+		mockEmailService,
+		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+	)
+
+	done := make(chan struct{})
+	go func() {
+		wg.Wait()
+		close(done)
+	}()
+	select {
+	case <-done:
+	case <-time.After(2 * time.Second):
+		suite.FailNow("timed out waiting for new task available emails to send")
+	}
+
+	suite.Len(sentEmails, 2)
+
+	leadEmail := suite.testConfigs.Principal.Account().Email
+	nonLeadEmail, err := optedInCollaborator.UserAccount(suite.testConfigs.Context)
+	suite.NoError(err)
+	optedOutEmail, err := optedOutCollaborator.UserAccount(suite.testConfigs.Context)
+	suite.NoError(err)
+
+	for _, sent := range sentEmails {
+		if strings.Contains(sent.body, "listed as the Model Lead") {
+			suite.ElementsMatch([]string{leadEmail}, sent.bcc)
+		} else {
+			suite.ElementsMatch([]string{nonLeadEmail.Email}, sent.bcc)
+			suite.NotContains(sent.bcc, optedOutEmail.Email)
+		}
+	}
+}
+
+func (suite *ResolverSuite) TestUpdatePlanTaskStatusToDoSendsNewAvailableInAppNotification() {
+	plan := suite.createModelPlan("Plan For New Task Available In-App")
+	suite.createPlanCollaborator(plan, "NTAI", []models.TeamRole{models.TeamRoleLeadership})
+	suite.createPlanCollaborator(plan, "NTAX", []models.TeamRole{models.TeamRoleLeadership})
+	optedInPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "NTAI")
+	optedOutPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "NTAX")
+
+	_, err := UserNotificationPreferencesUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		optedInPrincipal,
+		suite.testConfigs.Store,
+		map[string]interface{}{
+			"newTaskAdded": models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
+		},
+	)
+	suite.NoError(err)
+
+	_, err = updatePlanTaskStatusByKey(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyModelPlan,
+		models.PlanTaskStatusComplete,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	leadBefore := suite.numUnreadNotifications(suite.testConfigs.Principal)
+	optedInBefore := suite.numUnreadNotifications(optedInPrincipal)
+	optedOutBefore := suite.numUnreadNotifications(optedOutPrincipal)
+
+	_, err = updatePlanTaskStatusByKey(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyModelPlan,
+		models.PlanTaskStatusToDo,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	suite.Equal(leadBefore+1, suite.numUnreadNotifications(suite.testConfigs.Principal))
+	suite.Equal(optedInBefore+1, suite.numUnreadNotifications(optedInPrincipal))
+	suite.Equal(optedOutBefore, suite.numUnreadNotifications(optedOutPrincipal))
+}
+
+func (suite *ResolverSuite) TestTrySendPlanTaskCompletedNotificationsEmailRecipients() {
+	plan := suite.createModelPlan("Plan For Task Completed Email Recipients")
+	optedInCollaborator := suite.createPlanCollaborator(plan, "TCEM", []models.TeamRole{models.TeamRoleLeadership})
+	optedOutCollaborator := suite.createPlanCollaborator(plan, "TCNO", []models.TeamRole{models.TeamRoleLeadership})
+	optedInPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "TCEM")
+
+	_, err := UserNotificationPreferencesUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		optedInPrincipal,
+		suite.testConfigs.Store,
+		map[string]interface{}{
+			"taskCompleted": models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceEmail},
+		},
+	)
+	suite.NoError(err)
+
+	mockController := gomock.NewController(suite.T())
+	defer mockController.Finish()
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailService.EXPECT().GetConfig().Return(&oddmail.GoSimpleMailServiceConfig{
+		ClientAddress: "http://localhost:3005",
+	}).AnyTimes()
+
+	type sentEmail struct {
+		body string
+		bcc  []string
+	}
+	var (
+		mu         sync.Mutex
+		wg         sync.WaitGroup
+		sentEmails []sentEmail
+	)
+	wg.Add(2)
+	mockEmailService.EXPECT().
+		Send(
+			gomock.Eq("unit-test-execution@mint.cms.gov"),
+			gomock.Eq([]string{}),
+			gomock.Nil(),
+			gomock.Any(),
+			gomock.Eq("text/html"),
+			gomock.Any(),
+			gomock.Any(),
+		).
+		DoAndReturn(func(_ string, _, _ []string, _, _ string, body string, opts ...oddmail.EmailOption) error {
+			var emailOptions oddmail.EmailOptions
+			for _, opt := range opts {
+				opt(&emailOptions)
+			}
+
+			mu.Lock()
+			sentEmails = append(sentEmails, sentEmail{
+				body: body,
+				bcc:  emailOptions.BccAddresses,
+			})
+			mu.Unlock()
+			wg.Done()
+			return nil
+		}).
+		Times(2)
+
+	trySendPlanTaskCompletedNotifications(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		plan.ID,
+		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
+		suite.testConfigs.Principal,
+		mockEmailService,
+		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+	)
+
+	done := make(chan struct{})
+	go func() {
+		wg.Wait()
+		close(done)
+	}()
+	select {
+	case <-done:
+	case <-time.After(2 * time.Second):
+		suite.FailNow("timed out waiting for task completed emails to send")
+	}
+
+	suite.Len(sentEmails, 2)
+
+	leadEmail := suite.testConfigs.Principal.Account().Email
+	nonLeadEmail, err := optedInCollaborator.UserAccount(suite.testConfigs.Context)
+	suite.NoError(err)
+	optedOutEmail, err := optedOutCollaborator.UserAccount(suite.testConfigs.Context)
+	suite.NoError(err)
+
+	for _, sent := range sentEmails {
+		if strings.Contains(sent.body, "listed as the Model Lead") {
+			suite.ElementsMatch([]string{leadEmail}, sent.bcc)
+		} else {
+			suite.ElementsMatch([]string{nonLeadEmail.Email}, sent.bcc)
+			suite.NotContains(sent.bcc, optedOutEmail.Email)
+		}
+	}
+}
+
+func (suite *ResolverSuite) TestTrySendPlanTaskCompletedNotificationsInAppRecipients() {
+	plan := suite.createModelPlan("Plan For Task Completed In-App Recipients")
+	suite.createPlanCollaborator(plan, "TCIA", []models.TeamRole{models.TeamRoleLeadership})
+	suite.createPlanCollaborator(plan, "TCIX", []models.TeamRole{models.TeamRoleLeadership})
+	optedInPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "TCIA")
+	optedOutPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "TCIX")
+
+	_, err := UserNotificationPreferencesUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		optedInPrincipal,
+		suite.testConfigs.Store,
+		map[string]interface{}{
+			"taskCompleted": models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
+		},
+	)
+	suite.NoError(err)
+
+	leadBefore := suite.numUnreadNotifications(suite.testConfigs.Principal)
+	optedInBefore := suite.numUnreadNotifications(optedInPrincipal)
+	optedOutBefore := suite.numUnreadNotifications(optedOutPrincipal)
+
+	trySendPlanTaskCompletedNotifications(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		suite.testConfigs.Store,
+		plan.ID,
+		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
+		suite.testConfigs.Principal,
+		nil,
+		email.AddressBook{},
+	)
+
+	suite.Equal(leadBefore+1, suite.numUnreadNotifications(suite.testConfigs.Principal))
+	suite.Equal(optedInBefore+1, suite.numUnreadNotifications(optedInPrincipal))
+	suite.Equal(optedOutBefore, suite.numUnreadNotifications(optedOutPrincipal))
+}
+
+func (suite *ResolverSuite) numUnreadNotifications(principal *authentication.ApplicationPrincipal) int {
+	userNotifications, err := notifications.UserNotificationCollectionGetByUser(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		principal,
+	)
+	suite.NoError(err)
+	return userNotifications.NumUnreadNotifications()
 }
 
 func (suite *ResolverSuite) TestPlanTaskCompletedByUserAccountResolver() {

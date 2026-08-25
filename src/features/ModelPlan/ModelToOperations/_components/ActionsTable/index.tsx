@@ -55,7 +55,7 @@ const MTOTableActions = () => {
 
   return (
     <>
-      <div className="border-1px radius-md border-gray-10 padding-3">
+      <div className="border-1px radius-md border-gray-10 padding-3 margin-bottom-3">
         <div className="action-bar display-flex">
           <p className="margin-y-0 text-bold">
             {t('table.tableActions.tableActions')}

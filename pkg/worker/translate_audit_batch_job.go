@@ -103,7 +103,7 @@ func CreateTranslatedAuditBatch[T logging.ChainableErrorOrWarnLogger[T]](w *Work
 		return nil
 	})
 	if err != nil {
-		logger.Error("error creating translated audit jobs", zap.Error(err))
+		logger.ErrorOrWarn("error creating translated audit jobs", zap.Error(err))
 		return err
 	}
 
