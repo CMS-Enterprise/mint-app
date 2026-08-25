@@ -163,7 +163,9 @@ const QuestionAndReply = ({
         }}
         enableReinitialize
         onSubmit={handleCreateDiscussion}
-        validate={values => getDiscussionFormValidationErrors(values, renderType)}
+        validate={values =>
+          getDiscussionFormValidationErrors(values, renderType)
+        }
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
