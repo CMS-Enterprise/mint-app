@@ -14,7 +14,7 @@ describe('Discussion Center', () => {
     cy.contains('button', 'Save discussion').should('be.disabled');
 
     cy.get('#discussion-topic').should('not.be.disabled');
-    cy.get('#discussion-topic').select('Model basics');
+    cy.get('#discussion-topic').select('Model Plan (Model basics)');
 
     cy.get('#user-role').should('not.be.disabled');
 
@@ -44,6 +44,8 @@ describe('Discussion Center', () => {
     cy.contains('label', 'Type your reply');
 
     cy.get('#discussion-topic').should('not.exist');
+
+    cy.contains('Topic: Model Plan (Model basics)');
 
     cy.contains('button', 'Save reply').should('be.disabled');
 

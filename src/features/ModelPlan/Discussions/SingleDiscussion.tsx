@@ -6,21 +6,22 @@ import { GetModelPlanDiscussionsQuery } from 'gql/generated/graphql';
 import { DateTime } from 'luxon';
 
 import MentionTextArea from 'components/MentionTextArea';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { getDaysElapsed } from 'utils/date';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
 
-type discussionsMiscType =
+type DiscussionType =
   GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
 type ReplyType =
   GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type SingleDiscussionProps = {
-  discussion: discussionsMiscType | ReplyType;
+  discussion: DiscussionType;
   index: number;
   connected?: boolean;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
-  setReply: (discussion: discussionsMiscType | ReplyType) => void;
+  setReply: (discussion: DiscussionType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
   replies: ReplyType[];
 };
@@ -35,6 +36,7 @@ const SingleDiscussion = ({
   replies
 }: SingleDiscussionProps) => {
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
+  const { topic: topicConfig } = usePlanTranslation('discussions');
 
   const latestDate = [...replies].reduce(
     (pre: any, cur: any) => (Date.parse(pre) > Date.parse(cur) ? pre : cur),
@@ -55,6 +57,14 @@ const SingleDiscussion = ({
           'mint-discussions__not-connected': !connected
         })}
       >
+        {discussion.topic && (
+          <p className="margin-top-1 margin-bottom-0 text-base">
+            {discussionsMiscT('topicReadOnly', {
+              topic: topicConfig.options[discussion.topic]
+            })}
+          </p>
+        )}
+
         <MentionTextArea
           id={`mention-editor-${index}`}
           editable={false}

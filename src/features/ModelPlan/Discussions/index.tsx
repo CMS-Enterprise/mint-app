@@ -21,14 +21,13 @@ import { useErrorMessage } from 'contexts/ErrorContext';
 
 import DiscussionModalWrapper from './DiscussionModalWrapper';
 import FormatDiscussion from './FormatDiscussion';
+import getDefaultDiscussionTopicFromPath from './getDefaultDiscussionTopicFromPath';
 import QuestionAndReply from './QuestionAndReply';
 
 import './index.scss';
 
 type DiscussionType =
   GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
-type ReplyType =
-  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 export type DiscussionsProps = {
   modelID: string;
@@ -60,6 +59,8 @@ const Discussions = ({
   const queryParams = useMemo(() => {
     return new URLSearchParams(location.search);
   }, [location.search]);
+
+  const defaultTopic = getDefaultDiscussionTopicFromPath(location.pathname);
 
   const { data, loading, error, refetch } = useGetModelPlanDiscussionsQuery({
     variables: {
@@ -95,7 +96,7 @@ const Discussions = ({
   );
 
   // State and setter used for containing the related question when replying
-  const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
+  const [reply, setReply] = useState<DiscussionType | null>(null);
 
   // Hook used to open reply form if discussionID present
   useEffect(() => {
@@ -336,11 +337,13 @@ const Discussions = ({
           renderType={discussionType}
           handleCreateDiscussion={handleCreateDiscussion}
           reply={reply}
+          parentDiscussionTopic={reply?.topic ?? undefined}
           discussionReplyID={discussionReplyID}
           setDiscussionReplyID={setDiscussionReplyID}
           queryParams={queryParams}
           setInitQuestion={setInitQuestion}
           setDiscussionType={setDiscussionType}
+          defaultTopic={defaultTopic}
         />
       </>
     );
@@ -366,6 +369,8 @@ const Discussions = ({
                     closeModal={() => setIsDiscussionOpen(false)}
                     handleCreateDiscussion={handleCreateDiscussion}
                     reply={reply}
+                    parentDiscussionTopic={reply?.topic ?? undefined}
+                    defaultTopic={defaultTopic}
                   />
                 </>
               )}
