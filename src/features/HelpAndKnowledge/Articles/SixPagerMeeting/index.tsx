@@ -161,7 +161,7 @@ const SixPagerMeeting = () => {
 
               <p>{sixPageMeetingT('keyResources.description')}</p>
 
-              <KeyResourcesCards />
+              <KeyResourcesCards articleKey="sixPageMeeting" />
             </div>
 
             <div

@@ -1,30 +1,41 @@
 const twoPageMeeting = {
   title: 'About 2-page concept papers and review meetings',
-  lastUpdatedDate: '2025-08-25',
+  lastUpdatedDate: '2026-08-25',
   description:
     'Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.',
+  templateInfo: {
+    text: 'Much of the content below is also accessible in the 2-page concept paper template. <link1>Download the template from SharePoint</link1>',
+    link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx'
+  },
   summaryBox: {
     title: 'Sections of this article',
     list: [
       'Key resources for model teams writing 2-page concept papers',
       'About 2-page concept papers',
-      'Additional resources available to model teams',
-      'How 2-page concept papers are reviewed'
+      'Template guidance',
+      'Example 2-page concept papers'
     ]
   },
   keyResources: {
     introParagraph:
-      'Visit the CMMI Strategy Refresh SharePoint site to access additional model development resources including those that will help with the creation of 2-page and 6-page concept papers.',
-    cards: {
-      strategyRefresh: {
-        heading: 'Strategy Refresh SharePoint site',
-        link1: 'Go to the Strategy Refresh landing page',
-        link2: 'Go to the Resources page'
+      'Visit the CMMI SharePoint site to access additional model development resources including those that will help with the creation of 2-page and 6-page concept papers.',
+    cardOne: {
+      heading: 'Helpful SharePoint links',
+      linkOne: {
+        text: 'CMMI New Model Design Library',
+        link: 'https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx'
       },
-      twoPageTemplate: {
-        heading: '2-page concept paper template',
-        copy: 'Download the template from the Strategy Refresh SharePoint site.',
-        link: 'Go to the template on SharePoint'
+      linkTwo: {
+        text: 'New Model Operational Handbook',
+        link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Forms/AllItems.aspx'
+      }
+    },
+    cardTwo: {
+      heading: '2-page concept paper template',
+      hint: 'Download the template from SharePoint.',
+      linkOne: {
+        text: 'Go to the template on SharePoint',
+        link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx'
       }
     }
   },
@@ -152,7 +163,7 @@ const twoPageMeeting = {
       }
     }
   },
-  additionalResources: {
+  templateGuidance: {
     intro:
       'This early in the process, it can be hard for model teams to know exactly what they’ll need regarding contractor support during the model concept, design, and development phases.',
     contractor: 'Pipeline contractors',
@@ -191,7 +202,7 @@ const twoPageMeeting = {
       ]
     }
   },
-  reviewMeeting: {
+  examplePapers: {
     intro:
       'After division and group leadership have reviewed and approved the 2-page concept paper, a review meeting with CMMI FO is scheduled. This review meeting is a key step to moving a model concept forward in the process.',
     tipbox: {

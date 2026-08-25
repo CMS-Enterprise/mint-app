@@ -80,23 +80,23 @@ const TwoPagerMeeting = () => {
   );
 
   const contractorParagraphs: string[] = tArray(
-    'twoPageMeeting:additionalResources.contractorParagraph'
+    'twoPageMeeting:templateGuidance.contractorParagraph'
   );
 
   const additionalResourceTips: string[] = tArray(
-    'twoPageMeeting:additionalResources.summarybox.tips.list'
+    'twoPageMeeting:templateGuidance.summarybox.tips.list'
   );
 
   const crossCutListItems: string[] = tArray(
-    'twoPageMeeting:additionalResources.crossCut.list'
+    'twoPageMeeting:templateGuidance.crossCut.list'
   );
 
   const reviewTipsList: string[] = tArray(
-    'twoPageMeeting:reviewMeeting.tipbox.list'
+    'twoPageMeeting:examplePapers.tipbox.list'
   );
 
   const outcomesList: string[] = tArray(
-    'twoPageMeeting:reviewMeeting.outcomes.list'
+    'twoPageMeeting:examplePapers.outcomes.list'
   );
 
   const exampleSummaryBoxList: ExampleSummaryBoxListType = tObject(
@@ -136,6 +136,19 @@ const TwoPagerMeeting = () => {
               {twoPageMeetingT('description')}
             </p>
 
+            <Alert type="info" slim className="margin-bottom-4">
+              <Trans
+                i18nKey="twoPageMeeting:templateInfo.text"
+                components={{
+                  link1: (
+                    <ExternalLink href={twoPageMeetingT('templateInfo.link')}>
+                      {' '}
+                    </ExternalLink>
+                  )
+                }}
+              />
+            </Alert>
+
             <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2">
               <SummaryBoxHeading headingLevel="h3">
                 {twoPageMeetingT('summaryBox.title')}
@@ -168,7 +181,7 @@ const TwoPagerMeeting = () => {
                 {twoPageMeetingT('keyResources.introParagraph')}
               </p>
 
-              <KeyResourcesCards />
+              <KeyResourcesCards articleKey="twoPageMeeting" />
             </div>
 
             <div

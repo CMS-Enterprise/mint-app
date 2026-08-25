@@ -4,8 +4,14 @@ import { Card, CardBody, CardGroup, CardHeader } from '@trussworks/react-uswds';
 
 import ExternalLink from 'components/ExternalLink';
 
-const KeyResourcesCards = () => {
+type articleKey = 'twoPageMeeting' | 'sixPageMeeting';
+
+const KeyResourcesCards = ({ articleKey }: { articleKey: articleKey }) => {
+  const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
   const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
+
+  const translationT =
+    articleKey === 'twoPageMeeting' ? twoPageMeetingT : sixPageMeetingT;
 
   return (
     <CardGroup>
@@ -18,23 +24,23 @@ const KeyResourcesCards = () => {
       >
         <CardHeader className="padding-0">
           <h4 className="line-height-body-4 margin-bottom-05">
-            {sixPageMeetingT('keyResources.cardOne.heading')}
+            {translationT('keyResources.cardOne.heading')}
           </h4>
         </CardHeader>
 
         <CardBody className="padding-0">
           <ExternalLink
             className="mint-body-normal"
-            href={sixPageMeetingT('keyResources.cardOne.linkOne.link')}
+            href={translationT('keyResources.cardOne.linkOne.link')}
           >
-            {sixPageMeetingT('keyResources.cardOne.linkOne.text')}
+            {translationT('keyResources.cardOne.linkOne.text')}
           </ExternalLink>
 
           <ExternalLink
             className="mint-body-normal"
-            href={sixPageMeetingT('keyResources.cardOne.linkTwo.link')}
+            href={translationT('keyResources.cardOne.linkTwo.link')}
           >
-            {sixPageMeetingT('keyResources.cardOne.linkTwo.text')}
+            {translationT('keyResources.cardOne.linkTwo.text')}
           </ExternalLink>
         </CardBody>
       </Card>
@@ -48,20 +54,20 @@ const KeyResourcesCards = () => {
       >
         <CardHeader className="padding-0">
           <h4 className="line-height-body-4 margin-bottom-05">
-            {sixPageMeetingT('keyResources.cardTwo.heading')}
+            {translationT('keyResources.cardTwo.heading')}
           </h4>
 
           <p className="margin-y-0 text-base mint-body-normal">
-            {sixPageMeetingT('keyResources.cardTwo.hint')}
+            {translationT('keyResources.cardTwo.hint')}
           </p>
         </CardHeader>
 
         <CardBody className="padding-0">
           <ExternalLink
             className="mint-body-normal"
-            href={sixPageMeetingT('keyResources.cardTwo.linkOne.link')}
+            href={translationT('keyResources.cardTwo.linkOne.link')}
           >
-            {sixPageMeetingT('keyResources.cardTwo.linkOne.text')}
+            {translationT('keyResources.cardTwo.linkOne.text')}
           </ExternalLink>
         </CardBody>
       </Card>
