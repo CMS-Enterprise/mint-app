@@ -37,8 +37,6 @@ import { DiscussionFormPropTypes } from '.';
 
 type DiscussionType =
   GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
-type ReplyType =
-  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type QuestionAndReplyProps = {
   closeModal?: () => void;
@@ -46,7 +44,8 @@ type QuestionAndReplyProps = {
   handleCreateDiscussion: (formikValues: DiscussionFormPropTypes) => void;
   queryParams?: URLSearchParams;
   renderType: 'question' | 'reply';
-  reply?: DiscussionType | ReplyType | null;
+  reply?: DiscussionType | null;
+  parentDiscussionTopic?: DiscussionTopicType;
   setDiscussionReplyID?: (value: string | null | undefined) => void;
   setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
   setInitQuestion?: (value: boolean) => void;
@@ -60,6 +59,7 @@ const QuestionAndReply = ({
   queryParams,
   renderType,
   reply,
+  parentDiscussionTopic,
   setDiscussionReplyID,
   setDiscussionType,
   setInitQuestion,
@@ -116,10 +116,10 @@ const QuestionAndReply = ({
             <DiscussionUserInfo discussionTopic={reply} />
 
             <div className="margin-left-5">
-              {'topic' in reply && reply.topic && (
+              {parentDiscussionTopic && (
                 <p className="margin-top-1 margin-bottom-0 text-base">
                   {discussionsMiscT('topicReadOnly', {
-                    topic: topicConfig.options[reply.topic]
+                    topic: topicConfig.options[parentDiscussionTopic]
                   })}
                 </p>
               )}
@@ -132,7 +132,7 @@ const QuestionAndReply = ({
           </div>
 
           <Replies
-            originalDiscussion={reply as DiscussionType}
+            originalDiscussion={reply}
             discussionReplyID={discussionReplyID}
           />
 

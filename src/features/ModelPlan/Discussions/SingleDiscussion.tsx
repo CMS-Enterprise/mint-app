@@ -10,17 +10,17 @@ import { getDaysElapsed } from 'utils/date';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
 
-type discussionsMiscType =
+type DiscussionType =
   GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
 type ReplyType =
   GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type SingleDiscussionProps = {
-  discussion: discussionsMiscType | ReplyType;
+  discussion: DiscussionType;
   index: number;
   connected?: boolean;
   setDiscussionType: (a: 'question' | 'reply' | 'discussion') => void;
-  setReply: (discussion: discussionsMiscType | ReplyType) => void;
+  setReply: (discussion: DiscussionType) => void;
   setIsDiscussionOpen?: (value: boolean) => void;
   replies: ReplyType[];
 };
