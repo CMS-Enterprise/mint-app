@@ -4,7 +4,7 @@ const twoPageMeeting = {
   description:
     'Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.',
   templateInfo: {
-    text: 'Much of the content below is also accessible in the 2-page concept paper template. <link1>Download the template from SharePoint</link1>',
+    text: 'Much of the content below is also accessible in the 2-page concept paper template. <el>Download the template from SharePoint</el>',
     link: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx'
   },
   summaryBox: {
@@ -41,126 +41,21 @@ const twoPageMeeting = {
   },
   about: {
     introParagraph:
-      'A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below, and should include general descriptions. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.',
-    alert:
-      'Much of the content below is also accessible in the 6-page concept paper template. <el>Download it from the Strategy Refresh SharePoint site</el>',
-    link: 'Download it from the Strategy Refresh SharePoint site',
-    stepOne: {
-      heading: '1. Proposed model overview and goals',
-      copy: '2-page concept papers will:',
-      items: {
-        brief: {
-          text: 'Briefly discuss the problem the model intends to address, including a description of the:',
-          list: [
-            'Causes and enablers of the problem',
-            'Magnitude/scope of the problem',
-            'Population(s) affected',
-            'Why a CMMI model (i.e. why can’t CM/CMCS do it? Why do we need 1115A authority?)',
-            'How a model may address the problem',
-            'How a model may address prevention, empowerment, and choice and competition, as well as priority questions in the delivery and organization of care or in CMS operations'
-          ]
-        },
-        describe:
-          'Describe the preliminary theory of change for the model including a statement of the model aim with an initial driver diagram in consultation with LDG, RREG and the Quality Vertical that shows how the model will address the problem and questions above',
-        include:
-          'Include the beneficiary perspective regarding the need for the model',
-        provide:
-          'Provide background or context on whether the proposed model has previously been tested or is a follow-on model, incorporates learnings from external stakeholders, and/or where concept originated (e.g. private sector, academia, state or regional efforts)'
-      }
-    },
-    stepTwo: {
-      heading: '2. High-level description of model elements',
-      copy: '2-page concept papers will:',
-      items: {
-        list: [
-          'Provide a high-level overview of key model design elements including: target population, payment approach, geography, and key quality domains',
-          'Model scale high-level potential impacts based on size/intervention'
-        ]
-      }
-    },
-    stepThree: {
-      heading:
-        '3. Preliminary analysis of the proposed model relative to selection criteria',
-      italics:
-        'Not all of these may be answerable early in model development/consideration',
-      copy: '2-page concept papers may address the following criteria:',
-      list: [
-        {
-          text: '<bold>Alignment</bold>: Describe how the model would advance CMMI’s strategic objectives:',
-          numberedList: [
-            'Promote evidence-based prevention',
-            'Empower people with information',
-            'Drive competition and consumer choice',
-            'Protecting the Federal taxpayer'
-          ]
-        },
-        {
-          text: '<bold>Impact</bold>: Potential for the model to impact the following dimensions:',
-          list: [
-            'Participation – number and types of providers, beneficiaries, potential participation if scaled.',
-            'Outcomes – expected improvements in quality.',
-            'Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries.'
-          ]
-        },
-        {
-          text: '<bold>Feasibility</bold>: Consider likelihood of successful execution of the model including operational complexity, legal considerations, CMMI staffing, evaluation challenges, participant interest, and potential for scaling.'
-        },
-        {
-          text: '<bold>Technology</bold>: Explain how the model with advance adoption of new technologies. Specify what existing internal technological capabilities will be leveraged for the model, and what new technical capabilities will need to be built.'
-        },
-        {
-          text: '<bold>Innovation</bold>: Model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy.'
-        },
-        {
-          text: '<bold>Interested parties</bold>: Include brief description of any engagement or advocacy by interested parties, including Congress, on the model concept.'
-        }
-      ]
-    },
+      'The 2-pager is an early concept development and decision-screening tool. It is intended to help teams frame a model idea clearly enough for leadership to assess whether the concept should move forward, be refined, or stop early. Not every element will be fully answerable at this stage. Responses should be directional, concise, and grounded in the best available evidence and operational judgment.',
+    note: 'Note: As teams begin drafting a 2-pager, they should consult group leadership and the Front Office early to support alignment and efficient use of staff time and other resources.',
+
     summarybox: {
-      tips: {
-        heading: 'Tips for model teams',
-        firstParagraph:
-          'Focus on concept, research, gaps, and goals​. Clearly articulate the problem the model is solving for and its goals​. Ask yourself the following questions while writing:',
-        list1: [
-          'What does success look like?',
-          'What will improve for patients?',
-          'How will the care experience be different?',
-          'What do we want providers/payers to change?'
-        ],
-        secondParagraph: 'Lessons learned from past successful model concepts:',
-        list2: [
-          'Think about building on existing work',
-          'Pay attention to interested party interests and ideas',
-          'Build connections with other parts of CMS and HHS',
-          'Be prepared for opportunities'
-        ],
-        footer:
-          'Visit the <bold>Strategy Refresh SharePoint site</bold> for additional guidance and helpful resources such as the 2-page concept paper template.'
-      },
-      exampleSummaryBox: {
-        heading: 'Example 2-page concept papers',
-        text: 'While all models are different, and therefore the content within a 2-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.',
-        list: {
-          one: {
-            copy: 'AHEAD 2-page concept paper',
-            href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739'
-          },
-          two: {
-            copy: 'Enhancing Oncology Model 2-page concept paper',
-            href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20AOC)%202-pager_October%202021_v2%20clean.docx?d=w4bd1ac8e332c42659f7e4330b519794a'
-          },
-          three: {
-            copy: 'Innovation in Behavioral Health 2-pager concept paper',
-            href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Innovation%20in%20Behavioral%20Health%20(formerly%20BHI)%20Model%202-pager_FINAL.docx?d=wf5dc9e25276945278f98c2c8efc31e16'
-          },
-          four: {
-            copy: 'Making Care Primary 2-pager concept paper',
-            href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/New%20Primary%20Care%20Model%20Concept%202-pager%20Final%20for%20FO.docx?d=webcc03b8baa74b11bc9cd28c264a6178'
-          }
-        },
-        footer: 'To view the links above, you will need access to the ',
-        footerLink: 'Model Resources area of SharePoint.'
-      }
+      heading: 'General drafting guidance',
+      list: [
+        'Keep responses high level and strategic; this is not a full design document.',
+        'Use plain language and make the causal logic easy to follow.',
+        'Be specific where possible, especially on the problem, intervention, target population, expected outcomes, and major risks.',
+        'Where details are still under development, identify the core hypothesis or working assumption rather than leaving sections blank.',
+        'Draw on relevant internal and external learnings, including prior CMMI models, private-sector approaches, state-based eVorts, academic evidence, and stakeholder input.',
+        'Keep the answers succinct and within the 2-page limit.'
+      ],
+      footer:
+        'Visit <el>SharePoint</el> for additional guidance and helpful resources such as the 2-page concept paper template.'
     }
   },
   templateGuidance: {
@@ -203,70 +98,18 @@ const twoPageMeeting = {
     }
   },
   examplePapers: {
-    intro:
-      'After division and group leadership have reviewed and approved the 2-page concept paper, a review meeting with CMMI FO is scheduled. This review meeting is a key step to moving a model concept forward in the process.',
-    tipbox: {
-      copy: 'Suggestions for having a successful 2-page review meeting:',
-      list: [
-        'Before the meeting, attach your 2-page concept paper to the calendar invite for your meeting with CMMI FO. We also recommend uploading your concept paper to your model collaboration area within MINT. This will allow other CMS staff involved in the model development process to begin preparing as early as possible for their work with your model team.',
-        'Come prepared to discuss your model concept with the CMMI FO and receive feedback.',
-        'If you think you’ll need a pipeline contractor, flag this during the meeting. CMMI FO may have a preference for which contractor to use and will ultimately need to approve the request.'
-      ]
-    },
-    criteria: {
-      heading: 'Model selection criteria',
-      copy: 'These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.',
-      table: {
-        header: ['Criteria', 'Description', 'Scoring parameter'],
-        content: [
-          {
-            criteria: 'Alignment',
-            description:
-              'Model supports or advances one (or more) of the five strategy pillars:​ Drive accountable care, advance healthy living, support innovation, address affordability, partner to achieve system transformation',
-            score:
-              '<bold>Yes/No</bold>Model does not move forward if it does not align with any pillar of the strategy'
-          },
-          {
-            criteria: 'Impact',
-            description:
-              '<paragraph>Model effect as a function of participation and the potential for health system transformation</paragraph><ul><li>Participation: number of providers, beneficiaries, Medicare spending, Medicaid spending​</li><li>Transformation, including: cost reduction, quality improvement, delivery system change​​</li></ul>',
-            score:
-              '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
-          },
-          {
-            criteria: 'Feasibility',
-            description:
-              'Likelihood of successful execution of the model, including any operational or legal feasibility limitations. Potential for adoption and scaling by non-participants',
-            score:
-              '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
-          },
-          {
-            criteria: 'Diversity',
-            description:
-              'Innovation in a dimension (e.g., payment model), provider type, patient population, mechanisms of transformation',
-            score:
-              '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
-          },
-          {
-            criteria: 'OA/HHS support',
-            description:
-              'The extent to which the model is supported by OA/HHS and will achieve CMS/HHS clearance​',
-            score:
-              '<bold>Yes/No</bold>Model does not move forward if it is unlikely to clear OA/HHS'
-          }
-        ]
+    introParagraph:
+      'While all models are different, and therefore the content within a 2-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.',
+    exampleList: [
+      {
+        copy: 'ACCESS 2-page concept paper and documents',
+        href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/AHEAD%20Concept%20Paper.docx?d=w9bd3973322384706a0207c756f773739'
+      },
+      {
+        copy: 'PACE UP! 2-page concept paper and documents',
+        href: 'https://share.cms.gov/center/cmmi/SR/ModelDev/Submitted%20Two%20Pagers/Enhancing%20Oncology%20Model%20(formerly%20AOC)%202-pager_October%202021_v2%20clean.docx?d=w4bd1ac8e332c42659f7e4330b519794a'
       }
-    },
-
-    outcomes: {
-      heading: 'Possible outcomes',
-      copy: 'After the review meeting, the CMMI FO may direct you in one of the following directions:',
-      list: [
-        '<bold>Continue iterating:</bold> Since the 2-page review meeting is still pretty high level in terms of model design, the CMMI FO may have suggestions for the team to iterate on. In this case, model teams may be asked to come back for another 2-page review after they’ve had time to ideate and address feedback from the FO. Some concepts require multiple rounds of iteration, so model teams shouldn’t be discouraged if their concept isn’t approved the first time around.',
-        '<bold>Approval:</bold> If the CMMI FO decides the model concept is feasible, they will approve the 2-page concept paper. Model teams will then work on ironing out additional details of their model design as they work to write their 6-page concept paper. They may work with cross-cutting groups to write their 6-page concept paper. If they haven’t already started filling out a Model Plan within MINT, this is often a great time to start that. Many of the details that will go into a 6-page concept paper are also asked within the Model Plan. A Model Plan in MINT is a useful way to help communicate concepts and implementation details with other groups across CMS who assist with various aspects of development and implementation of models.',
-        '<bold>Pause:</bold> Sometimes the CMMI FO will not approve a concept paper or will ask the model team to pause work. This is nothing to worry about, as sometimes priorities within the Center can shift, and certain concepts may no longer align. When this happens, concepts will often be saved for future development.'
-      ]
-    }
+    ]
   },
   footerSummaryBox: {
     title: 'Need help?',
