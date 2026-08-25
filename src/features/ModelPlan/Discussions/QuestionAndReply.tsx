@@ -15,7 +15,6 @@ import {
   GetModelPlanDiscussionsQuery,
   useGetMostRecentRoleSelectionQuery
 } from 'gql/generated/graphql';
-import * as Yup from 'yup';
 
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
@@ -28,6 +27,11 @@ import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
+import { DISCUSSION_TOPICS_HIDDEN_FROM_UI } from './discussionTopicConstants';
+import {
+  getDiscussionFormValidationErrors,
+  isDiscussionFormSubmittable
+} from './isDiscussionFormSubmittable';
 import Replies from './Replies';
 import { DiscussionFormPropTypes } from '.';
 
@@ -70,14 +74,6 @@ const QuestionAndReply = ({
     usePlanTranslation('discussions');
 
   const navigate = useNavigate();
-
-  const validationSchema = Yup.object().shape({
-    content: Yup.string().trim().required(`Please enter a ${renderType}`),
-    topic:
-      renderType === 'question'
-        ? Yup.string().required('Please select a discussion topic')
-        : Yup.string().notRequired()
-  });
 
   const { data, loading, error } = useGetMostRecentRoleSelectionQuery();
 
@@ -167,7 +163,7 @@ const QuestionAndReply = ({
         }}
         enableReinitialize
         onSubmit={handleCreateDiscussion}
-        validationSchema={validationSchema}
+        validate={values => getDiscussionFormValidationErrors(values, renderType)}
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
@@ -309,8 +305,7 @@ const QuestionAndReply = ({
                         {getKeys(topicConfig.options)
                           .filter(
                             topic =>
-                              topic !==
-                              DiscussionTopicType.WAIVER_ASSESSMENT_SURVEY
+                              !DISCUSSION_TOPICS_HIDDEN_FROM_UI.includes(topic)
                           )
                           .map(topic => {
                             return (
@@ -388,12 +383,7 @@ const QuestionAndReply = ({
                       type="submit"
                       disabled={
                         isSubmitting ||
-                        !values.content ||
-                        !values.userRole ||
-                        (renderType === 'question' && !values.topic) ||
-                        (values.userRole ===
-                          DiscussionUserRole.NONE_OF_THE_ABOVE &&
-                          !values.userRoleDescription)
+                        !isDiscussionFormSubmittable(values, renderType)
                       }
                       onClick={() => setErrors({})}
                     >
