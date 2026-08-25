@@ -3,24 +3,50 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { MtoFacilitator } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
-import { MilestoneSelectedFilters } from '../MilestoneFilter/MilestoneFilterModal';
+import { FilterGroupType } from 'components/FilterGroup';
 
-import MilestoneFilterTags from '.';
+import FilterTags from '.';
 
-const appliedFilters: MilestoneSelectedFilters = {
+const filters: FilterGroupType[] = [
+  {
+    key: 'categoryName',
+    label: 'primary category',
+    description: 'This filters by the "Category" field.',
+    tagLabel: 'Category',
+    options: [
+      { label: 'Category 1', value: 'Category 1' },
+      { label: 'Category 2', value: 'Category 2' }
+    ],
+    displayShowAll: true
+  },
+  {
+    key: 'facilitatedByRole',
+    label: 'role',
+    description: 'This filters by the "Facilitated by" field.',
+    tagLabel: 'Role',
+    options: [
+      { label: 'Model team', value: MtoFacilitator.MODEL_TEAM },
+      { label: 'IT Lead', value: MtoFacilitator.IT_LEAD }
+    ],
+    displayShowAll: false
+  }
+];
+
+const appliedFilters = {
   categoryName: ['Category 1'],
   facilitatedByRole: [MtoFacilitator.MODEL_TEAM]
 };
 
-describe('MilestoneFilterTags', () => {
-  const defaultAppliedFilters: MilestoneSelectedFilters = {
+describe('FilterTags', () => {
+  const defaultAppliedFilters = {
     categoryName: [],
     facilitatedByRole: []
   };
 
   it('does not render when no filters are applied', () => {
     const { container } = render(
-      <MilestoneFilterTags
+      <FilterTags
+        filters={filters}
         appliedFilters={defaultAppliedFilters}
         setAppliedFilters={vi.fn()}
       />
@@ -31,7 +57,8 @@ describe('MilestoneFilterTags', () => {
 
   it('displays applied filters and clear all button', () => {
     render(
-      <MilestoneFilterTags
+      <FilterTags
+        filters={filters}
         appliedFilters={appliedFilters}
         setAppliedFilters={vi.fn()}
       />
@@ -44,6 +71,7 @@ describe('MilestoneFilterTags', () => {
       screen.getByRole('listitem', { name: 'Category: Category 1' })
     ).toBeInTheDocument();
 
+    // Maps the applied value to its option label
     expect(
       screen.getByRole('listitem', { name: 'Role: Model team' })
     ).toBeInTheDocument();
@@ -59,7 +87,8 @@ describe('MilestoneFilterTags', () => {
     const setAppliedFilters = vi.fn();
 
     render(
-      <MilestoneFilterTags
+      <FilterTags
+        filters={filters}
         appliedFilters={appliedFilters}
         setAppliedFilters={setAppliedFilters}
       />

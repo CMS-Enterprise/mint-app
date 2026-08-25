@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { ApolloError } from '@apollo/client';
-import { Button, Link } from '@trussworks/react-uswds';
+import { Button } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { findSolutionByRouteParam } from 'features/HelpAndKnowledge/SolutionsHelp';
 import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
@@ -34,12 +34,13 @@ import usePagination from 'hooks/usePagination';
 import { getHeaderSortIcon } from 'utils/tableSort';
 
 import ActionMenu from '../ActionsMenu';
+import { parseAppliedFilters } from '../MTOTableFilters/_utils';
 
 import {
-  filterMilestonesNeededWithinDays,
+  filterMilestones,
   flattenToSingleCategory,
   GetModelToOperationsMatrixCategoryType,
-  parseNeededWithinDaysFromSearchParams
+  searchMilestones
 } from './_utils';
 import {
   CategoryType,
@@ -58,11 +59,13 @@ export type { GetModelToOperationsMatrixCategoryType } from './_utils';
 
 const MTOTable = ({
   queryData,
+  searchQuery = '',
   loading,
   error,
   readView = false
 }: {
   queryData?: GetModelToOperationsMatrixQuery;
+  searchQuery?: string;
   loading: boolean;
   error?: ApolloError;
   readView?: boolean;
@@ -71,9 +74,8 @@ const MTOTable = ({
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const navigate = useNavigate();
   const location = useLocation();
-  const params = new URLSearchParams(location.search);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { clearMessage } = useMessage();
 
@@ -95,19 +97,22 @@ const MTOTable = ({
     [queryData?.modelPlan.mtoMatrix]
   );
 
-  const neededWithinDays = useMemo(
-    () =>
-      parseNeededWithinDaysFromSearchParams(
-        new URLSearchParams(location.search)
-      ),
-    [location.search]
+  const appliedFilters = useMemo(
+    () => parseAppliedFilters(searchParams),
+    [searchParams]
   );
 
-  const isTimeWindowFilterActive = neededWithinDays !== null;
+  const hasSearch = Boolean(searchQuery?.trim());
 
-  /** Hide category/subcategory rows if time window or "hide category rows" filters are active */
+  const hasActiveFilters = Object.values(appliedFilters).some(
+    filterArray => filterArray.length > 0
+  );
+
+  const hasSearchOrFilters = hasSearch || hasActiveFilters;
+
+  /** Hide category/subcategory rows if has any filters or "hide category rows" filters are active */
   const tableMilestonesOnlyLayout =
-    isTimeWindowFilterActive || params.get('hide-category-rows') === 'true';
+    hasSearchOrFilters || searchParams.get('hide-category-rows') === 'true';
 
   /**
    * Formats data for table based on any applied filters.
@@ -121,15 +126,20 @@ const MTOTable = ({
       return data;
     }
 
-    // If time window filter is active, filter the data to only include milestones that are needed within the selected window
-    if (neededWithinDays !== null) {
-      data = filterMilestonesNeededWithinDays(formattedData, neededWithinDays);
+    // If search term is present, filter the data to only include milestones that match the search term
+    if (hasSearch) {
+      data = searchMilestones(searchQuery, formattedData);
+    }
+
+    // If any filter is active, filter the data to only include milestones that fit
+    if (hasActiveFilters) {
+      data = filterMilestones(appliedFilters, data);
     }
 
     const flattened = flattenToSingleCategory(data);
 
-    // If there are milestones and a time window filter is active, sort the milestones by need by date
-    if (flattened.length > 0 && neededWithinDays !== null) {
+    // If there are milestones and a filter is active, sort the milestones by need by date
+    if (flattened.length > 0 && hasSearchOrFilters) {
       flattened[0].subCategories[0].milestones.sort(
         (a, b) =>
           new Date(a.needBy ?? '').getTime() -
@@ -138,7 +148,15 @@ const MTOTable = ({
     }
 
     return flattened;
-  }, [formattedData, neededWithinDays, tableMilestonesOnlyLayout]);
+  }, [
+    appliedFilters,
+    formattedData,
+    hasActiveFilters,
+    hasSearch,
+    hasSearchOrFilters,
+    searchQuery,
+    tableMilestonesOnlyLayout
+  ]);
 
   const [initLocation] = useState<string>(location.pathname);
 
@@ -693,34 +711,23 @@ const MTOTable = ({
               closeRoute={initLocation}
             />
           )}
-          {isTimeWindowFilterActive && itemLength === 0 ? (
-            <Alert
-              type="info"
-              heading={t(
-                'modelToOperationsMisc:table.tableFilters.noResults.header'
-              )}
-              className="margin-top-3"
-            >
-              <span className="mandatory-fields-alert__text">
-                <span>
-                  {t(
-                    'modelToOperationsMisc:table.tableFilters.noResults.content'
-                  )}
-                </span>
-                <Link
-                  aria-label={t(
-                    'modelToOperationsMisc:table.tableFilters.noResults.emailLinkAriaLabel'
-                  )}
-                  className="line-height-body-5"
-                  href="mailto:MINTTeam@cms.hhs.gov"
-                  target="_blank"
-                >
-                  MINTTeam@cms.hhs.gov
-                </Link>
-                .
-              </span>
-            </Alert>
-          ) : (
+
+          <div>
+            {hasSearchOrFilters && (
+              <div className="margin-top-3 margin-bottom-2">
+                {t('table.tableFilters.resultsCount', { count: itemLength })}{' '}
+                {searchQuery && (
+                  <Trans
+                    i18nKey="modelToOperationsMisc:table.tableFilters.forSearch"
+                    values={{ query: searchQuery }}
+                    components={{
+                      bold: <span className="text-bold" />
+                    }}
+                  />
+                )}
+              </div>
+            )}
+
             <DndProvider backend={HTML5Backend}>
               <div
                 className="display-block"
@@ -728,7 +735,7 @@ const MTOTable = ({
                   width: '100%',
                   minWidth: '100%',
                   overflow: 'auto',
-                  borderBottom: '1px solid black',
+                  borderBottom: itemLength === 0 ? '' : '1px solid black',
                   marginBottom: '.75rem'
                 }}
               >
@@ -799,15 +806,35 @@ const MTOTable = ({
                         ))}
                       </tr>
                     </thead>
-                    <tbody>{renderCategories()}</tbody>
-                  </table>{' '}
+
+                    <tbody>
+                      {hasSearchOrFilters && itemLength === 0 ? (
+                        <tr>
+                          <td colSpan={filteredColumns.length}>
+                            <Alert
+                              type="info"
+                              className="margin-top-2 mandatory-fields-alert__text"
+                              slim
+                            >
+                              {t(
+                                'modelToOperationsMisc:table.tableFilters.noResults.content'
+                              )}
+                            </Alert>
+                          </td>
+                        </tr>
+                      ) : (
+                        renderCategories()
+                      )}
+                    </tbody>
+                  </table>
                 </TopScrollContainer>
               </div>
+            </DndProvider>
+            <div className="mint-no-print">
+              <div className="display-flex">
+                {totalPages > 0 && Pagination}
 
-              <div className="mint-no-print">
-                <div className="display-flex">
-                  {totalPages > 0 && Pagination}
-
+                {itemLength > 0 && (
                   <TablePageSize
                     className="margin-left-auto desktop:grid-col-auto"
                     pageSize={itemsPerPage}
@@ -817,17 +844,20 @@ const MTOTable = ({
                     suffix={t('modelToOperationsMisc:table.milestones')}
                     onChange={() => {
                       // Reset pagination to the first page when the page size changes
-                      params.set('page', '1');
-                      navigate(
-                        { search: params.toString() },
+                      setSearchParams(
+                        prev => {
+                          const nextParams = new URLSearchParams(prev);
+                          nextParams.set('page', '1');
+                          return nextParams;
+                        },
                         { replace: true }
                       );
                     }}
                   />
-                </div>
+                )}
               </div>
-            </DndProvider>
-          )}
+            </div>
+          </div>
         </MTOSolutionPanelProvider>
       </MTOMilestonePanelProvider>
     </>

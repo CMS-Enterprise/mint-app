@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import MTOTable from 'features/ModelPlan/ModelToOperations/_components/MatrixTable';
-import { countMtoCategoryHeaderRows } from 'features/ModelPlan/ModelToOperations/_components/MatrixTable/_utils';
 import MTOTableFilters from 'features/ModelPlan/ModelToOperations/_components/MTOTableFilters';
 import { NotFoundPartial } from 'features/NotFound';
 import {
@@ -21,6 +20,10 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
 
   const { modelID: modelIDFromParams } = useParams();
 
+  const [, setParams] = useSearchParams();
+
+  const [searchQuery, setSearchQuery] = useState('');
+
   const { data, loading, error } = useGetModelToOperationsMatrixQuery({
     variables: {
       id: modelID || modelIDFromParams || ''
@@ -33,12 +36,28 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
 
   const mtoNotStarted = modelToOperationsMatrix.status === MtoStatus.READY;
 
-  const categoryHeaderRowCount = countMtoCategoryHeaderRows(
-    modelToOperationsMatrix?.categories
-  );
+  const handleSearchChange = (input: string) => {
+    setSearchQuery(input);
+
+    setParams(
+      prev => {
+        const currentPage = prev.get('page');
+
+        // Reset page to 1 whenever search query changes and the current page is not 1
+        if (currentPage && currentPage !== '1') {
+          const next = new URLSearchParams(prev);
+          next.set('page', '1');
+          return next;
+        }
+
+        return prev;
+      },
+      { replace: true }
+    );
+  };
 
   if (loading && !modelToOperationsMatrix) {
-    <PageLoading />;
+    return <PageLoading />;
   }
 
   if (error || !modelToOperationsMatrix) {
@@ -67,8 +86,18 @@ const ReadOnlyMTOMilestones = ({ modelID }: { modelID?: string }) => {
         </Alert>
       ) : (
         <>
-          <MTOTableFilters categoryHeaderRowCount={categoryHeaderRowCount} />
-          <MTOTable queryData={data} loading={loading} error={error} readView />
+          <MTOTableFilters
+            searchQuery={searchQuery}
+            setSearchQuery={handleSearchChange}
+            readView
+          />
+          <MTOTable
+            queryData={data}
+            loading={loading}
+            searchQuery={searchQuery}
+            error={error}
+            readView
+          />
         </>
       )}
     </div>
