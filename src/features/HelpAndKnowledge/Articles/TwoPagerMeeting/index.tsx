@@ -93,7 +93,7 @@ const TwoPagerMeeting = () => {
             )}
           </div>
         ),
-        expanded: index === 0,
+        expanded: true,
         headingLevel: 'h4',
         id: `${convertToLowercaseAndDashes(itemConfig.title)}`
       };
@@ -215,7 +215,9 @@ const TwoPagerMeeting = () => {
                           <ExternalLink
                             inlineText
                             className="margin-right-0"
-                            href="https://share.cms.gov/center/cmmi/SR/SitePages/Home.aspx"
+                            href={twoPageMeetingT(
+                              'about.summarybox.footerLink'
+                            )}
                           >
                             {' '}
                           </ExternalLink>
