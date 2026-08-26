@@ -161,7 +161,7 @@ const TwoPagerMeeting = () => {
               )}
               className="margin-bottom-2 scroll-target"
             >
-              <h2 className="margin-top-0margin-bottom-3">
+              <h2 className="margin-top-0 margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.0')}
               </h2>
 

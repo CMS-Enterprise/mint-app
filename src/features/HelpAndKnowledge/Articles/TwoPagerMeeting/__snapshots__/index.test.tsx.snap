@@ -235,7 +235,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           id="key-resources-for-model-teams-writing-2-page-concept-papers"
         >
           <h2
-            class="margin-top-0margin-bottom-3"
+            class="margin-top-0 margin-bottom-3"
           >
             Key resources for model teams writing 2-page concept papers
           </h2>
@@ -441,7 +441,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   <li
                     class="line-height-normal"
                   >
-                    Draw on relevant internal and external learnings, including prior CMMI models, private-sector approaches, state-based eVorts, academic evidence, and stakeholder input.
+                    Draw on relevant internal and external learnings, including prior CMMI models, private-sector approaches, state-based efforts, academic evidence, and stakeholder input.
                   </li>
                   <li
                     class="line-height-normal"

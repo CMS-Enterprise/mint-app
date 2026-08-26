@@ -4,9 +4,9 @@ import { Card, CardBody, CardGroup, CardHeader } from '@trussworks/react-uswds';
 
 import ExternalLink from 'components/ExternalLink';
 
-type articleKey = 'twoPageMeeting' | 'sixPageMeeting';
+type ArticleKey = 'twoPageMeeting' | 'sixPageMeeting';
 
-const KeyResourcesCards = ({ articleKey }: { articleKey: articleKey }) => {
+const KeyResourcesCards = ({ articleKey }: { articleKey: ArticleKey }) => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
   const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
 

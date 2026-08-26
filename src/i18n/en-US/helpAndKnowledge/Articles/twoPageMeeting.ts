@@ -50,7 +50,7 @@ const twoPageMeeting = {
         'Use plain language and make the causal logic easy to follow.',
         'Be specific where possible, especially on the problem, intervention, target population, expected outcomes, and major risks.',
         'Where details are still under development, identify the core hypothesis or working assumption rather than leaving sections blank.',
-        'Draw on relevant internal and external learnings, including prior CMMI models, private-sector approaches, state-based eVorts, academic evidence, and stakeholder input.',
+        'Draw on relevant internal and external learnings, including prior CMMI models, private-sector approaches, state-based efforts, academic evidence, and stakeholder input.',
         'Keep the answers succinct and within the 2-page limit.'
       ],
       footer:
