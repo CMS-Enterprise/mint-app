@@ -3,7 +3,7 @@ const twoPageMeeting = {
   lastUpdatedDate: '2026-08-26',
   description:
     'Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.',
-  templateInfo: {
+  contentInfo: {
     text: 'Much of the content below is also accessible in the 2-page concept paper template. <el>Download the template from SharePoint</el>',
     link: 'https://cmsgovonline.sharepoint.com/:w:/r/sites/cms-sharepoint-CMMI-Home/New%20Model%20Design%20Templates/2_Pager%20Template_June%202026.docx?d=wac67be0d30d140cc8f3bb57f1de21221&csf=1&web=1&e=yKMhgM'
   },

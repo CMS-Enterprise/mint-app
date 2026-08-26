@@ -124,10 +124,10 @@ const TwoPagerMeeting = () => {
 
               <Alert type="info" slim className="margin-bottom-4">
                 <Trans
-                  i18nKey="twoPageMeeting:templateInfo.text"
+                  i18nKey="twoPageMeeting:contentInfo.text"
                   components={{
                     el: (
-                      <ExternalLink href={twoPageMeetingT('templateInfo.link')}>
+                      <ExternalLink href={twoPageMeetingT('contentInfo.link')}>
                         {' '}
                       </ExternalLink>
                     )
