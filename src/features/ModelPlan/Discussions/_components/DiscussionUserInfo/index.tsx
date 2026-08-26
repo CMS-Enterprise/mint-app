@@ -39,7 +39,7 @@ const DiscussionUserInfo = ({
               connected ? 'dui__userRole--connected' : ''
             }`}
           >
-            <p className="margin-y-0 padding-bottom-1 text-base position-relative">
+            <p className="margin-bottom-0 margin-top-neg-1 text-base">
               {discussionTopic.userRole === DiscussionUserRole.NONE_OF_THE_ABOVE
                 ? discussionTopic.userRoleDescription
                 : discussionsMiscT(`userRole.${discussionTopic.userRole}`)}
