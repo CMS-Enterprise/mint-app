@@ -523,7 +523,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             >
               <button
                 aria-controls="question-1:-high-level-description-of-model-elements"
-                aria-expanded="false"
+                aria-expanded="true"
                 class="usa-accordion__button"
                 data-testid="accordionButton_question-1:-high-level-description-of-model-elements"
                 type="button"
@@ -534,7 +534,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-accordion__content usa-prose"
               data-testid="accordionItem_question-1:-high-level-description-of-model-elements"
-              hidden=""
               id="question-1:-high-level-description-of-model-elements"
             >
               <div>
@@ -584,7 +583,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             >
               <button
                 aria-controls="question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
-                aria-expanded="false"
+                aria-expanded="true"
                 class="usa-accordion__button"
                 data-testid="accordionButton_question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
                 type="button"
@@ -595,7 +594,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-accordion__content usa-prose"
               data-testid="accordionItem_question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
-              hidden=""
               id="question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
             >
               <div>
@@ -650,7 +648,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             >
               <button
                 aria-controls="question-3:-what-target-population-will-this-model-serve?"
-                aria-expanded="false"
+                aria-expanded="true"
                 class="usa-accordion__button"
                 data-testid="accordionButton_question-3:-what-target-population-will-this-model-serve?"
                 type="button"
@@ -661,7 +659,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-accordion__content usa-prose"
               data-testid="accordionItem_question-3:-what-target-population-will-this-model-serve?"
-              hidden=""
               id="question-3:-what-target-population-will-this-model-serve?"
             >
               <div>
@@ -716,7 +713,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             >
               <button
                 aria-controls="question-4:-who-are-the-target-model-participants?"
-                aria-expanded="false"
+                aria-expanded="true"
                 class="usa-accordion__button"
                 data-testid="accordionButton_question-4:-who-are-the-target-model-participants?"
                 type="button"
@@ -727,7 +724,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-accordion__content usa-prose"
               data-testid="accordionItem_question-4:-who-are-the-target-model-participants?"
-              hidden=""
               id="question-4:-who-are-the-target-model-participants?"
             >
               <div>
@@ -772,7 +768,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             >
               <button
                 aria-controls="question-5:-what-are-the-proposed-cost-measures?"
-                aria-expanded="false"
+                aria-expanded="true"
                 class="usa-accordion__button"
                 data-testid="accordionButton_question-5:-what-are-the-proposed-cost-measures?"
                 type="button"
@@ -783,7 +779,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-accordion__content usa-prose"
               data-testid="accordionItem_question-5:-what-are-the-proposed-cost-measures?"
-              hidden=""
               id="question-5:-what-are-the-proposed-cost-measures?"
             >
               <div>
@@ -833,7 +828,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             >
               <button
                 aria-controls="question-6:-what-is-the-model’s-primary-quality-goals?"
-                aria-expanded="false"
+                aria-expanded="true"
                 class="usa-accordion__button"
                 data-testid="accordionButton_question-6:-what-is-the-model’s-primary-quality-goals?"
                 type="button"
@@ -844,7 +839,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-accordion__content usa-prose"
               data-testid="accordionItem_question-6:-what-is-the-model’s-primary-quality-goals?"
-              hidden=""
               id="question-6:-what-is-the-model’s-primary-quality-goals?"
             >
               <div>
@@ -884,7 +878,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             >
               <button
                 aria-controls="question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
-                aria-expanded="false"
+                aria-expanded="true"
                 class="usa-accordion__button"
                 data-testid="accordionButton_question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
                 type="button"
@@ -895,7 +889,6 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             <div
               class="usa-accordion__content usa-prose"
               data-testid="accordionItem_question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
-              hidden=""
               id="question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
             >
               <div>
@@ -1078,7 +1071,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
         <div
           class="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4"
         >
-          Last updated 08/25/2026
+          Last updated 08/26/2026
         </div>
       </div>
     </div>
