@@ -91,7 +91,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     Key resources for model teams writing 6-page concept papers
                     <svg
                       aria-label="forward"
-                      class="usa-icon margin-left-1"
+                      class="usa-icon"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -116,7 +116,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     Model Plans in MINT
                     <svg
                       aria-label="forward"
-                      class="usa-icon margin-left-1"
+                      class="usa-icon"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -141,7 +141,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     About 6-page concept papers
                     <svg
                       aria-label="forward"
-                      class="usa-icon margin-left-1"
+                      class="usa-icon"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -166,7 +166,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     Additional resources available to model teams
                     <svg
                       aria-label="forward"
-                      class="usa-icon margin-left-1"
+                      class="usa-icon"
                       focusable="false"
                       height="1em"
                       role="img"
@@ -191,7 +191,7 @@ exports[`SixPagerMeeting > matches the snapshot 1`] = `
                     How 6-page concept papers are reviewed
                     <svg
                       aria-label="forward"
-                      class="usa-icon margin-left-1"
+                      class="usa-icon"
                       focusable="false"
                       height="1em"
                       role="img"
