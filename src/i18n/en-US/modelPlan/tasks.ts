@@ -8,6 +8,7 @@ const tasks = {
   breadcrumb: 'Tasks',
   heading: 'Current tasks',
   state: {
+    [PlanTaskState.UPCOMING]: 'Upcoming',
     [PlanTaskState.TO_DO]: 'To do',
     [PlanTaskState.COMPLETE]: 'Complete'
   },

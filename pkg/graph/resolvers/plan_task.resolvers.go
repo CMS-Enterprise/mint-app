@@ -28,10 +28,14 @@ func (r *planTaskResolver) State(ctx context.Context, obj *models.PlanTask) (mod
 	if obj == nil {
 		return model.PlanTaskStateToDo, nil
 	}
-	if obj.Status == models.PlanTaskStatusComplete {
+	switch obj.Status {
+	case models.PlanTaskStatusComplete:
 		return model.PlanTaskStateComplete, nil
+	case models.PlanTaskStatusUpcoming:
+		return model.PlanTaskStateUpcoming, nil
+	default:
+		return model.PlanTaskStateToDo, nil
 	}
-	return model.PlanTaskStateToDo, nil
 }
 
 // PlanTask returns generated.PlanTaskResolver implementation.
