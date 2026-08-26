@@ -8,6 +8,7 @@ export default gql(/* GraphQL */ `
       date
       action
       actorName
+      isAssessment
       translatedFields {
         id
         changeType
