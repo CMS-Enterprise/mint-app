@@ -1,5 +1,7 @@
 package resolvers
 
+import "github.com/cms-enterprise/mint-app/pkg/email"
+
 // AuditChangeCollectionByIDAndTable returns changes based on table name and primary key
 func (suite *ResolverSuite) TestAuditChangeCollectionByIDAndTable() {
 
@@ -14,7 +16,7 @@ func (suite *ResolverSuite) TestAuditChangeCollectionByIDAndTable() {
 		changes := map[string]interface{}{
 			"modelName": modelNames[i],
 		}
-		_, err = ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+		_, err = ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 		suite.NoError(err)
 	}
 

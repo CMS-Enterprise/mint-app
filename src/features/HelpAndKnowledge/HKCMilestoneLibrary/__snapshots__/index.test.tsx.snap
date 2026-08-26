@@ -89,7 +89,7 @@ exports[`HKC Milestone library Component > renders correctly and matches snapsho
             data-testid="grid"
           >
             <button
-              class="usa-button usa-button--outline"
+              class="usa-button usa-button--outline margin-right-1"
               data-testid="button"
               type="button"
             >

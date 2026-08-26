@@ -22,6 +22,8 @@ type UserNotificationPreferences struct {
 	NewDiscussionReply                                 UserNotificationPreferenceFlags                     `json:"newDiscussionReply" db:"new_discussion_reply"`
 	ModelPlanShared                                    UserNotificationPreferenceFlags                     `json:"modelPlanShared" db:"model_plan_shared"`
 	NewModelPlan                                       UserNotificationPreferenceFlags                     `json:"newModelPlan" db:"new_model_plan"`
+	NewTaskAdded                                       UserNotificationPreferenceFlags                     `json:"newTaskAdded" db:"new_task_added"`
+	TaskCompleted                                      UserNotificationPreferenceFlags                     `json:"taskCompleted" db:"task_completed"`
 	NewDiscussionAdded                                 UserNotificationPreferenceFlags                     `json:"newDiscussionAdded" db:"new_discussion_added"`
 	NewDiscussionAddedNotificationType                 *NewDiscussionAddedNotificationType                 `json:"newDiscussionAddedNotificationType" db:"new_discussion_added_notification_type"`
 	DatesChanged                                       UserNotificationPreferenceFlags                     `json:"datesChanged" db:"dates_changed"`
@@ -49,6 +51,8 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		NewDiscussionReply:                 DefaultUserNotificationPreferencesFlags(),
 		ModelPlanShared:                    DefaultUserNotificationPreferencesFlags(),
 		NewModelPlan:                       EmptyUserNotificationPreferencesFlags(),
+		NewTaskAdded:                       EmptyUserNotificationPreferencesFlags(),
+		TaskCompleted:                      EmptyUserNotificationPreferencesFlags(),
 		NewDiscussionAdded:                 DefaultUserNotificationPreferencesFlags(),
 		DatesChanged:                       EmptyUserNotificationPreferencesFlags(),
 		DataExchangeApproachMarkedComplete: EmptyUserNotificationPreferencesFlags(),

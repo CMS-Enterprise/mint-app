@@ -48,6 +48,8 @@ const notificationPreferences: NotificationPerferenceType = {
     UserNotificationPreferenceFlag.IN_APP
   ],
   newModelPlan: [],
+  newTaskAdded: [UserNotificationPreferenceFlag.EMAIL],
+  taskCompleted: [UserNotificationPreferenceFlag.EMAIL],
   datesChanged: [],
   datesChangedNotificationType: null,
   dataExchangeApproachMarkedComplete: [
@@ -122,6 +124,14 @@ describe('Notification Settings Page', () => {
       ).not.toBeChecked();
 
       expect(
+        screen.getByTestId('notification-setting-email-newTaskAdded')
+      ).toBeChecked();
+
+      expect(
+        screen.getByTestId('notification-setting-email-taskCompleted')
+      ).toBeChecked();
+
+      expect(
         screen.getByTestId('notification-setting-email-datesChanged')
       ).not.toBeChecked();
 
@@ -140,6 +150,12 @@ describe('Notification Settings Page', () => {
       screen.getByTestId('notification-setting-email-newModelPlan')
     );
     await user.click(
+      screen.getByTestId('notification-setting-email-newTaskAdded')
+    );
+    await user.click(
+      screen.getByTestId('notification-setting-email-taskCompleted')
+    );
+    await user.click(
       screen.getByTestId('notification-setting-email-datesChanged')
     );
 
@@ -155,6 +171,14 @@ describe('Notification Settings Page', () => {
       expect(
         screen.getByTestId('notification-setting-email-newModelPlan')
       ).toBeChecked();
+
+      expect(
+        screen.getByTestId('notification-setting-email-newTaskAdded')
+      ).not.toBeChecked();
+
+      expect(
+        screen.getByTestId('notification-setting-email-taskCompleted')
+      ).not.toBeChecked();
 
       expect(
         screen.getByTestId('notification-setting-email-datesChanged')

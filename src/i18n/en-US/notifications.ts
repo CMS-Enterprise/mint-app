@@ -90,6 +90,14 @@ const notifications = {
       MTO_READY_FOR_REVIEW: {
         text: ' marked the model-to-operations matrix (MTO) for {{-modelName}} as ready for review.',
         cta: 'View MTO'
+      },
+      NEW_TASK_ADDED: {
+        text: ' added a new task for {{-modelName}}.',
+        cta: 'View tasks'
+      },
+      TASK_COMPLETED: {
+        text: ' marked a task as complete for {{-modelName}}.',
+        cta: 'View tasks'
       }
     },
     dailyDigest: {
@@ -209,6 +217,14 @@ const notifications = {
           {
             name: 'incorrectModelStatus',
             copy: 'When MINT detects an incorrect model status'
+          },
+          {
+            name: 'newTaskAdded',
+            copy: 'When there is a new task for your model'
+          },
+          {
+            name: 'taskCompleted',
+            copy: 'When a task has been completed for your model'
           }
         ]
       },
@@ -276,6 +292,8 @@ const notifications = {
       activityType: {
         INCORRECT_MODEL_STATUS: 'when MINT detects an incorrect model status',
         NEW_MODEL_PLAN: 'when a new Model Plan is created',
+        NEW_TASK_ADDED: 'when new tasks are available for a model',
+        TASK_COMPLETED: 'when a task is completed',
         NEW_DISCUSSION_ADDED: 'when a new discussion is added',
         DATES_CHANGED: 'when model dates change',
         DATA_EXCHANGE_APPROACH_MARKED_COMPLETE:
