@@ -8,11 +8,10 @@ package resolvers
 import (
 	"context"
 
-	"github.com/google/uuid"
-
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/google/uuid"
 )
 
 // TranslatedAuditCollection is the resolver for the translatedAuditCollection field.
@@ -20,6 +19,11 @@ func (r *queryResolver) TranslatedAuditCollection(ctx context.Context, modelPlan
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	return TranslatedAuditCollectionGetByModelPlanID(ctx, r.store, logger, principal, modelPlanID, limit, offset)
+}
+
+// IsAssessment is the resolver for the isAssessment field.
+func (r *translatedAuditResolver) IsAssessment(ctx context.Context, obj *models.TranslatedAudit) (bool, error) {
+	return TranslatedAuditActorIsAssessment(ctx, obj)
 }
 
 // TranslatedFields is the resolver for the translatedFields field.

@@ -104,6 +104,10 @@ func devUserContext(ctx context.Context, authHeader string, store *storage.Store
 	if err != nil {
 		return nil, err
 	}
+	userAccount, err = userhelpers.SyncLoggedInUserIsAssessment(store, userAccount, princ.JobCodeASSESSMENT)
+	if err != nil {
+		return nil, err
+	}
 	princ.UserAccount = userAccount
 
 	return appcontext.WithPrincipal(ctx, princ), nil

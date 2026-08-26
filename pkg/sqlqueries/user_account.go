@@ -20,6 +20,9 @@ var userAccountInsertByUsername string
 //go:embed SQL/user_account/update_by_username.sql
 var userAccountUpdateByUsername string
 
+//go:embed SQL/user_account/update_is_assessment.sql
+var userAccountUpdateIsAssessment string
+
 //go:embed SQL/user_account/get_notification_preferences_new_model_plan.sql
 var userNotificationPreferencesNewModelPlan string
 
@@ -48,6 +51,7 @@ type userAccountScripts struct {
 	GetByIDLOADER                                                string
 	InsertByUsername                                             string
 	UpdateByUsername                                             string
+	UpdateIsAssessment                                           string
 	GetNotificationPreferencesNewModelPlan                       string
 	GetNotificationRecipientsDatesChanged                        string
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete string
@@ -65,6 +69,7 @@ var UserAccount = userAccountScripts{
 	GetByIDLOADER:                          userAccountGetByIDLOADER,
 	InsertByUsername:                       userAccountInsertByUsername,
 	UpdateByUsername:                       userAccountUpdateByUsername,
+	UpdateIsAssessment:                     userAccountUpdateIsAssessment,
 	GetNotificationPreferencesNewModelPlan: userNotificationPreferencesNewModelPlan,
 	GetNotificationRecipientsDatesChanged:  userAccountGetNotificationRecipientsDatesChanged,
 	GetNotificationPreferencesDataExchangeApproachMarkedComplete: userAccountGetNotificationPreferencesDataExchangeApproachMarkedComplete,

@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -15,6 +16,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 	"github.com/cms-enterprise/mint-app/pkg/translatedaudit"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTableNames() {
@@ -380,4 +382,79 @@ func (suite *ResolverSuite) TestTranslateAuditMilestoneSolutionLinkDeletedWhenSo
 		suite.Equal(plan.ID, ta.ModelPlanID,
 			"translated audit for table %s must reference the correct model plan", ta.TableName)
 	}
+}
+
+func (suite *ResolverSuite) TestTranslatedAuditActorIsAssessment() {
+	plan := suite.createModelPlan("assessment star plan")
+	ctx := suite.testConfigs.Context
+	store := suite.testConfigs.Store
+
+	offTeam := suite.getTestPrincipal(store, "ASMT")
+	updatedOffTeam, err := userhelpers.SyncLoggedInUserIsAssessment(store, offTeam.UserAccount, true)
+	suite.NoError(err)
+	suite.True(updatedOffTeam.IsAssessment)
+
+	offTeamAudit := models.NewTranslatedAuditChange(
+		offTeam.Account().ID,
+		offTeam.Account().ID,
+		plan.ID,
+		time.Now(),
+		1,
+		1,
+		uuid.New(),
+		models.DBOpUpdate,
+	)
+	offTeamAudit.ActorName = "ASMT Doe"
+	isAssessment, err := TranslatedAuditActorIsAssessment(ctx, &offTeamAudit)
+	suite.NoError(err)
+	suite.True(isAssessment)
+
+	onTeam, err := userhelpers.SyncLoggedInUserIsAssessment(store, suite.testConfigs.Principal.UserAccount, true)
+	suite.NoError(err)
+	suite.True(onTeam.IsAssessment)
+	onTeamAudit := models.NewTranslatedAuditChange(
+		onTeam.ID,
+		onTeam.ID,
+		plan.ID,
+		time.Now(),
+		1,
+		1,
+		uuid.New(),
+		models.DBOpUpdate,
+	)
+	onTeamAudit.ActorName = onTeam.CommonName
+	isAssessment, err = TranslatedAuditActorIsAssessment(ctx, &onTeamAudit)
+	suite.NoError(err)
+	suite.False(isAssessment)
+
+	basicOffTeam := suite.getTestPrincipal(store, "BASIC")
+	basicAudit := models.NewTranslatedAuditChange(
+		basicOffTeam.Account().ID,
+		basicOffTeam.Account().ID,
+		plan.ID,
+		time.Now(),
+		1,
+		1,
+		uuid.New(),
+		models.DBOpUpdate,
+	)
+	basicAudit.ActorName = "BASIC Doe"
+	isAssessment, err = TranslatedAuditActorIsAssessment(ctx, &basicAudit)
+	suite.NoError(err)
+	suite.False(isAssessment)
+
+	systemAudit := models.NewTranslatedAuditChange(
+		constants.GetSystemAccountUUID(),
+		constants.GetSystemAccountUUID(),
+		plan.ID,
+		time.Now(),
+		1,
+		1,
+		uuid.New(),
+		models.DBOpUpdate,
+	)
+	systemAudit.ActorName = "MINT"
+	isAssessment, err = TranslatedAuditActorIsAssessment(ctx, &systemAudit)
+	suite.NoError(err)
+	suite.False(isAssessment)
 }

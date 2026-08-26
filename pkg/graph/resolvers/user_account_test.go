@@ -7,6 +7,7 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // UserAccountGetByUsername returns a user account by it's EUAID
@@ -20,6 +21,24 @@ func (suite *ResolverSuite) TestUserAccountGetByUsername() {
 	suite.EqualValues(princ1.UserAccount.CommonName, account.CommonName)
 	suite.EqualValues(princ1.UserAccount.Email, account.Email)
 
+}
+
+func (suite *ResolverSuite) TestSyncLoggedInUserIsAssessment() {
+	princ := suite.getTestPrincipal(suite.testConfigs.Store, "ASMTFLAG")
+	suite.False(princ.UserAccount.IsAssessment)
+
+	updated, err := userhelpers.SyncLoggedInUserIsAssessment(suite.testConfigs.Store, princ.UserAccount, true)
+	suite.NoError(err)
+	suite.True(updated.IsAssessment)
+
+	unchanged, err := userhelpers.SyncLoggedInUserIsAssessment(suite.testConfigs.Store, updated, true)
+	suite.NoError(err)
+	suite.Equal(updated.ID, unchanged.ID)
+	suite.True(unchanged.IsAssessment)
+
+	cleared, err := userhelpers.SyncLoggedInUserIsAssessment(suite.testConfigs.Store, unchanged, false)
+	suite.NoError(err)
+	suite.False(cleared.IsAssessment)
 }
 
 // UserAccountGetByIDLOADER returns a user account by it's internal ID, utilizing a data loader

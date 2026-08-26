@@ -9,6 +9,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -72,4 +73,27 @@ func TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx context.Context,
 func MTOTranslatedAuditsGetByModelPlanID(ctx context.Context, store *storage.Store, logger *zap.Logger, principal authentication.Principal, modelPlanID uuid.UUID, limit *int, offset *int) ([]*models.TranslatedAudit, error) {
 	numberOfRecords := 1
 	return TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx, store, logger, principal, modelPlanID, models.MTOTables, &numberOfRecords, nil)
+}
+
+// TranslatedAuditActorIsAssessment returns true when the actor currently has the Assessment job code
+// and is not a collaborator on the model plan. System / MINT actors never receive the Assessment star.
+func TranslatedAuditActorIsAssessment(ctx context.Context, obj *models.TranslatedAudit) (bool, error) {
+	if obj.ActorID == constants.GetSystemAccountUUID() || obj.ActorName == "MINT" {
+		return false, nil
+	}
+
+	account, err := UserAccountGetByIDLOADER(ctx, obj.ActorID)
+	if err != nil {
+		return false, err
+	}
+	if account == nil || !account.IsAssessment {
+		return false, nil
+	}
+
+	isCollaborator, err := IsPlanCollaborator(ctx, obj.ActorID, obj.ModelPlanID)
+	if err != nil {
+		return false, err
+	}
+
+	return !isCollaborator, nil
 }
