@@ -258,7 +258,7 @@ const TwoPagerMeeting = () => {
               id={convertToLowercaseAndDashes(
                 twoPageMeetingT('summaryBox.list.3')
               )}
-              className="margin-bottom-6 scroll-target border border-gray-10 shadow-2px radius-md padding-3"
+              className="margin-bottom-6 scroll-target border border-gray-10 shadow-2 radius-md padding-3"
             >
               <h2 className="margin-top-0 margin-bottom-3">
                 {twoPageMeetingT('summaryBox.list.3')}

@@ -952,7 +952,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           </div>
         </div>
         <div
-          class="margin-bottom-6 scroll-target border border-gray-10 shadow-2px radius-md padding-3"
+          class="margin-bottom-6 scroll-target border border-gray-10 shadow-2 radius-md padding-3"
           id="example-2-page-concept-papers"
         >
           <h2
