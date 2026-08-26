@@ -1,0 +1,2 @@
+ALTER TABLE user_account
+ADD COLUMN is_assessment BOOLEAN NOT NULL DEFAULT FALSE;
