@@ -136,17 +136,20 @@ const TwoPagerMeeting = () => {
               </Alert>
 
               <SummaryBox className="bg-base-lightest border-0 radius-0 margin-top-0 padding-y-2 padding-x-2">
-                <SummaryBoxHeading headingLevel="h3">
+                <SummaryBoxHeading
+                  headingLevel="h3"
+                  className="margin-bottom-1"
+                >
                   {twoPageMeetingT('summaryBox.title')}
                 </SummaryBoxHeading>
                 <SummaryBoxContent>
-                  <ul className="margin-y-0">
-                    {summaryboxListItems.map(k => (
-                      <li
-                        key={convertToLowercaseAndDashes(k)}
-                        className="margin-top-05 margin-bottom-1"
-                      >
-                        <ScrollLink scrollTo={k} />
+                  <ul
+                    className="margin-y-0 display-flex flex-column"
+                    style={{ gap: '0.5rem' }}
+                  >
+                    {summaryboxListItems.map(section => (
+                      <li key={convertToLowercaseAndDashes(section)}>
+                        <ScrollLink scrollTo={section} />
                       </li>
                     ))}
                   </ul>

@@ -115,7 +115,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               class="usa-summary-box__body"
             >
               <h3
-                class="usa-summary-box__heading"
+                class="usa-summary-box__heading margin-bottom-1"
               >
                 Sections of this article
               </h3>
@@ -123,11 +123,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 class="usa-summary-box__text"
               >
                 <ul
-                  class="margin-y-0"
+                  class="margin-y-0 display-flex flex-column"
+                  style="gap: 0.5rem;"
                 >
-                  <li
-                    class="margin-top-05 margin-bottom-1"
-                  >
+                  <li>
                     <button
                       class="usa-button usa-button--unstyled"
                       data-testid="button"
@@ -136,7 +135,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       Key resources for model teams writing 2-page concept papers
                       <svg
                         aria-label="forward"
-                        class="usa-icon margin-left-1"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -150,9 +149,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       </svg>
                     </button>
                   </li>
-                  <li
-                    class="margin-top-05 margin-bottom-1"
-                  >
+                  <li>
                     <button
                       class="usa-button usa-button--unstyled"
                       data-testid="button"
@@ -161,7 +158,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       About 2-page concept papers
                       <svg
                         aria-label="forward"
-                        class="usa-icon margin-left-1"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -175,9 +172,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       </svg>
                     </button>
                   </li>
-                  <li
-                    class="margin-top-05 margin-bottom-1"
-                  >
+                  <li>
                     <button
                       class="usa-button usa-button--unstyled"
                       data-testid="button"
@@ -186,7 +181,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       Template guidance
                       <svg
                         aria-label="forward"
-                        class="usa-icon margin-left-1"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -200,9 +195,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       </svg>
                     </button>
                   </li>
-                  <li
-                    class="margin-top-05 margin-bottom-1"
-                  >
+                  <li>
                     <button
                       class="usa-button usa-button--unstyled"
                       data-testid="button"
@@ -211,7 +204,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       Example 2-page concept papers
                       <svg
                         aria-label="forward"
-                        class="usa-icon margin-left-1"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -1135,7 +1128,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 data-testid="CardBody"
               >
                 <p>
-                  Once CMMI Front Office (FO) has endorsed the 2-page model concept and Group Director(s) has signed off, work can begin on the 6-page model overview. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
+                  Once CMMI Front Office (FO) has endorsed the 2-page model concept and Group Director(s) have signed off, work can begin on the 6-page model overview. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.
                 </p>
               </div>
               <div
