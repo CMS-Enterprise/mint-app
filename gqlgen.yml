@@ -83,3 +83,7 @@ models:
         resolver: false
       taskListStatus:
         resolver: false
+  TranslatedAudit:
+    fields:
+      isAssessment:
+        resolver: true

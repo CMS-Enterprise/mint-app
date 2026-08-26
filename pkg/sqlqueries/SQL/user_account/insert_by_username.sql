@@ -9,7 +9,8 @@ INSERT INTO user_account
     given_name,
     family_name,
     zone_info,
-    has_logged_in
+    has_logged_in,
+    is_assessment
 )
 VALUES (
     :id,
@@ -21,7 +22,8 @@ VALUES (
     :given_name,
     :family_name,
     :zone_info,
-    :has_logged_in
+    :has_logged_in,
+    :is_assessment
 )
 RETURNING
     id,
@@ -33,4 +35,5 @@ RETURNING
     given_name,
     family_name,
     zone_info,
-    has_logged_in;
+    has_logged_in,
+    is_assessment;

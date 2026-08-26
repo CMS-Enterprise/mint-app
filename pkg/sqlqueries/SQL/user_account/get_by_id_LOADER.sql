@@ -16,7 +16,8 @@ SELECT
     user_account.given_name,
     user_account.family_name,
     user_account.zone_info,
-    user_account.has_logged_in
+    user_account.has_logged_in,
+    user_account.is_assessment
 
 FROM QUERIED_IDS AS qIDs
 INNER JOIN user_account ON user_account.id = qIDs.id
