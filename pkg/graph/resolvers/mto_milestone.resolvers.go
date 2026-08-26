@@ -90,7 +90,7 @@ func (r *mutationResolver) DeleteMTOMilestone(ctx context.Context, id uuid.UUID)
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return true, MTOMilestoneDelete(ctx, logger, principal, r.store, id)
+	return true, MTOMilestoneDelete(ctx, logger, principal, r.store, id, r.emailService, r.addressBook)
 }
 
 // MtoMilestoneUpdateLinkedSolutions is the resolver for the mtoMilestoneUpdateLinkedSolutions field.

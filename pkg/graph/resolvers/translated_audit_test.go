@@ -8,6 +8,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -25,7 +26,7 @@ func (suite *ResolverSuite) TestTranslatedAuditGetMostRecentByModelPlanIDAndTabl
 	// Create and delete a discussion to test the translated audit for plan discussion
 
 	catForPlan2 := suite.createMTOCategory("test category for changes", plan2.ID, nil)
-	err := MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, catForPlan2.ID)
+	err := MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, catForPlan2.ID, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	plan3 := suite.createModelPlan("test plan for changes3")
@@ -112,7 +113,7 @@ func (suite *ResolverSuite) TestTranslatedAuditCollectionGetByModelPlanID() {
 		"status":       models.ModelStatusIcipComplete,
 		"archived":     true,
 	}
-	_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, err := ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	translatedAudits, err := TranslatedAuditCollectionGetByModelPlanID(
@@ -167,7 +168,7 @@ func (suite *ResolverSuite) TestTranslateAudit() {
 		"status":       models.ModelStatusIcipComplete,
 		"archived":     true,
 	}
-	_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store)
+	_, err := ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, planChanges, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 
 	suite.NoError(err)
 
@@ -329,7 +330,7 @@ func (suite *ResolverSuite) TestTranslateAuditMilestoneSolutionLinkDeletedWhenMi
 
 	// Deleting the milestone cascade-deletes the link, producing two audit records:
 	// one for mto_milestone (DELETE) and one for mto_milestone_solution_link (DELETE).
-	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, milestone.ID)
+	err = MTOMilestoneDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, milestone.ID, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	// dangerousTranslateAllQueuedTranslatedAudits calls suite.NoError internally, so any
@@ -369,7 +370,7 @@ func (suite *ResolverSuite) TestTranslateAuditMilestoneSolutionLinkDeletedWhenSo
 
 	// Deleting the solution cascade-deletes the link; the milestone still exists so the primary
 	// foreign key path (milestone_id → mto_milestone → model_plan_id) should resolve correctly.
-	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, solutions[0].ID)
+	err = MTOSolutionDelete(suite.testConfigs.Context, suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, solutions[0].ID, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	translatedAudits := suite.dangerousQueueAndTranslateAllAudits()

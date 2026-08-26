@@ -49,6 +49,7 @@ func (r *mutationResolver) CreateMTOSolutionCustom(ctx context.Context, modelPla
 	principal := appcontext.Principal(ctx)
 
 	return MTOSolutionCreateCustom(
+		ctx,
 		logger,
 		principal,
 		r.store,
@@ -92,7 +93,7 @@ func (r *mutationResolver) UpdateMTOSolution(ctx context.Context, id uuid.UUID, 
 func (r *mutationResolver) DeleteMTOSolution(ctx context.Context, id uuid.UUID) (bool, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	err := MTOSolutionDelete(ctx, logger, principal, r.store, id)
+	err := MTOSolutionDelete(ctx, logger, principal, r.store, id, r.emailService, r.addressBook)
 	if err != nil {
 		return false, err
 	}

@@ -303,7 +303,7 @@ func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogge
 	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
 		err = fmt.Errorf("unable to get model plan for model plan id %s. Err %w", modelPlanID, err)
-		logger.Error(err.Error(), zap.Error(err))
+		logger.ErrorOrWarn(err.Error(), zap.Error(err))
 		return err
 	}
 
