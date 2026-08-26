@@ -113,6 +113,9 @@ func updatePlanTaskStatusByKey(
 // model state and updated via updatePlanTaskStatusByKey's other callers, manually-markable keys
 // (see models.PlanTaskKey.IsManuallyMarkable) have no calculated status and are only ever changed
 // by direct user action, so a key is rejected here if it isn't on that allow-list.
+//
+// Marking a key complete may also activate another task (see models.PlanTaskKey.ActivationTarget),
+// moving it from UPCOMING to TO_DO.
 func PlanTaskMarkComplete(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -134,8 +137,63 @@ func PlanTaskMarkComplete(
 	}
 
 	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
-		return updatePlanTaskStatusByKey(ctx, tx, logger, modelPlanID, key, newStatus, principal, store, emailService, addressBook)
+		task, err := updatePlanTaskStatusByKey(ctx, tx, logger, modelPlanID, key, newStatus, principal, store, emailService, addressBook)
+		if err != nil {
+			return nil, err
+		}
+
+		if isComplete {
+			if targetKey, ok := key.ActivationTarget(); ok {
+				if err := activateUpcomingPlanTask(ctx, tx, logger, modelPlanID, targetKey, principal, store, emailService, addressBook); err != nil {
+					return nil, err
+				}
+			}
+		}
+
+		return task, nil
 	})
+}
+
+// activateUpcomingPlanTask moves a plan task from UPCOMING to TO_DO. It is a no-op if the task isn't
+// currently UPCOMING (already activated, or has otherwise progressed) or doesn't exist yet, since
+// activation must never regress a task that has already moved on.
+func activateUpcomingPlanTask(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
+	principal authentication.Principal,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
+	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(np, logger, []uuid.UUID{modelPlanID})
+	if err != nil {
+		return err
+	}
+
+	var target *models.PlanTask
+	for _, t := range tasks {
+		if t.Key == key {
+			target = t
+			break
+		}
+	}
+	if target == nil {
+		logger.Warn(
+			"plan task activation target not found, skipping",
+			zap.String("modelPlanID", modelPlanID.String()),
+			zap.String("key", string(key)),
+		)
+		return nil
+	}
+	if target.Status != models.PlanTaskStatusUpcoming {
+		return nil
+	}
+
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, key, models.PlanTaskStatusToDo, principal, store, emailService, addressBook)
+	return err
 }
 
 // planTaskNotificationRecipientsByRole gets lists of both all model leads (regardless of settings) and non-model-leads (respecting settings) for notification purposes
@@ -428,6 +486,8 @@ func planTaskKeyEmailName(key models.PlanTaskKey) string {
 		return "Model-to-operations matrix (MTO)"
 	case models.PlanTaskKeyTwoPager:
 		return "2-pager review"
+	case models.PlanTaskKeySixPager:
+		return "6-pager review"
 	default:
 		return string(key)
 	}

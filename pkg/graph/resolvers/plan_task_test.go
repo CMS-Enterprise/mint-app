@@ -110,6 +110,49 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 	suite.Nil(task.CompletedDts)
 }
 
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
+	plan := suite.createModelPlan("Plan For Six Pager Activation")
+
+	sixPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStatusUpcoming, sixPagerTask.Status)
+
+	// marking TWO_PAGER complete activates SIX_PAGER from UPCOMING to TO_DO
+	_, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+	suite.Nil(sixPagerTask.CompletedBy)
+	suite.Nil(sixPagerTask.CompletedDts)
+
+	// marking TWO_PAGER back to incomplete does not revert SIX_PAGER's activation (one-way)
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
 	plan := suite.createModelPlan("Plan For Rejected Manual Task Marking")
 
@@ -145,19 +188,24 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 
 	tasks, err := PlanTaskGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Len(tasks, 4)
+	suite.Len(tasks, 5)
 
 	taskByKey := planTasksByKey(tasks)
 	suite.NotNil(taskByKey[models.PlanTaskKeyModelPlan])
 	suite.NotNil(taskByKey[models.PlanTaskKeyMto])
 	suite.NotNil(taskByKey[models.PlanTaskKeyDataExchange])
 	suite.NotNil(taskByKey[models.PlanTaskKeyTwoPager])
+	suite.NotNil(taskByKey[models.PlanTaskKeySixPager])
 
 	for _, t := range tasks {
 		suite.Equal(plan.ID, t.ModelPlanID)
-		suite.Equal(models.PlanTaskStatusToDo, t.Status)
 		suite.Nil(t.CompletedBy)
 		suite.Nil(t.CompletedDts)
+		if t.Key == models.PlanTaskKeySixPager {
+			suite.Equal(models.PlanTaskStatusUpcoming, t.Status)
+		} else {
+			suite.Equal(models.PlanTaskStatusToDo, t.Status)
+		}
 	}
 }
 
