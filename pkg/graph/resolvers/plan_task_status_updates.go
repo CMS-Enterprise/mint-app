@@ -1,11 +1,15 @@
 package resolvers
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -28,28 +32,32 @@ import (
 
 // UpdatePlanTaskStatusOnModelPlanStarted runs when a model plan section goes from READY to IN_PROGRESS.
 func UpdatePlanTaskStatusOnModelPlanStarted(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
 ) error {
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusInProgress, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusInProgress, principal, store, nil, email.AddressBook{})
 }
 
 // UpdatePlanTaskStatusOnModelCleared runs when model plan status becomes CLEARED: MODEL_PLAN and DATA_EXCHANGE tasks complete.
 func UpdatePlanTaskStatusOnModelCleared(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	modelPlanStatus, err := calculateModelPlanTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
-	if err := updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store); err != nil {
+	if err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store, emailService, addressBook); err != nil {
 		return err
 	}
 
@@ -57,23 +65,26 @@ func UpdatePlanTaskStatusOnModelCleared(
 	if err != nil {
 		return err
 	}
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
 }
 
 // UpdatePlanTaskStatusOnModelNoLongerCleared runs when model plan status regresses from CLEARED:
 // MODEL_PLAN and DATA_EXCHANGE tasks are recalculated from current section/DEA/model status.
 func UpdatePlanTaskStatusOnModelNoLongerCleared(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	modelPlanStatus, err := calculateModelPlanTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
-	if err := updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store); err != nil {
+	if err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store, emailService, addressBook); err != nil {
 		return err
 	}
 
@@ -82,7 +93,7 @@ func UpdatePlanTaskStatusOnModelNoLongerCleared(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
 }
 
 func calculateModelPlanTaskStatus(
@@ -168,6 +179,7 @@ func calculateModelPlanTaskStatus(
 
 // UpdatePlanTaskStatusOnDataExchangeApproachStarted runs when DEA status changes to IN_PROGRESS.
 func UpdatePlanTaskStatusOnDataExchangeApproachStarted(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
@@ -179,40 +191,46 @@ func UpdatePlanTaskStatusOnDataExchangeApproachStarted(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, nil, email.AddressBook{})
 }
 
 // UpdatePlanTaskStatusOnDataExchangeApproachComplete runs when the data exchange approach status changes to COMPLETE.
 func UpdatePlanTaskStatusOnDataExchangeApproachComplete(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	dataExchangeStatus, err := calculateDataExchangeTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
 }
 
 // UpdatePlanTaskStatusOnDataExchangeApproachNoLongerComplete runs when DEA status regresses from COMPLETE:
 // DATA_EXCHANGE task is recalculated from current DEA/model status.
 func UpdatePlanTaskStatusOnDataExchangeApproachNoLongerComplete(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	dataExchangeStatus, err := calculateDataExchangeTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
 }
 
 func calculateDataExchangeTaskStatus(
@@ -250,6 +268,7 @@ func calculateDataExchangeTaskStatus(
 
 // UpdatePlanTaskStatusOnMTOStarted runs when MTO-related data is created or updated.
 func UpdatePlanTaskStatusOnMTOStarted(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
@@ -261,55 +280,64 @@ func UpdatePlanTaskStatusOnMTOStarted(
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, nil, email.AddressBook{})
 }
 
 // UpdatePlanTaskStatusOnModelActive runs when model plan status changes to ACTIVE: MTO task completes.
 func UpdatePlanTaskStatusOnModelActive(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	mtoStatus, err := calculateMTOTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, emailService, addressBook)
 }
 
 // UpdatePlanTaskStatusOnMTODataDeleted recalculates and applies MTO task status when MTO data is deleted.
 func UpdatePlanTaskStatusOnMTODataDeleted(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	mtoStatus, err := calculateMTOTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, emailService, addressBook)
 }
 
 // UpdatePlanTaskStatusOnModelNoLongerActive runs when model plan status regresses from ACTIVE.
 func UpdatePlanTaskStatusOnModelNoLongerActive(
+	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
 ) error {
 	mtoStatus, err := calculateMTOTaskStatus(np, logger, modelPlanID, store)
 	if err != nil {
 		return err
 	}
 
-	return updatePlanTaskStatusByKey(np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store)
+	return updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, emailService, addressBook)
 }
 
 func calculateMTOTaskStatus(

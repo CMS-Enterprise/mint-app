@@ -324,7 +324,8 @@ describe('Notification Center', () => {
 
       // Navigate back to home to add a new model to MINT
       cy.get('[aria-label="Home"]').click();
-      cy.url().should('include', '/');
+      cy.location('pathname').should('eq', '/');
+      cy.get('[data-testid="homepage"]').should('be.visible');
 
       cy.contains('a', 'Add a new model to MINT').click();
       cy.contains('h1', 'Add a new model to MINT');

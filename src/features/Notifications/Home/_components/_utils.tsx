@@ -15,9 +15,11 @@ import {
   NewDiscussionAddedActivityMeta,
   NewDiscussionRepliedActivityMeta,
   NewModelPlanActivityMeta,
+  NewTaskAddedActivityMeta,
   PlanDataExchangeApproachMarkedCompleteActivityMeta,
   TaggedInDiscussionReplyActivityMeta,
   TaggedInPlanDiscussionActivityMeta,
+  TaskCompletedActivityMeta,
   UserNotificationPreferenceFlag
 } from 'gql/generated/graphql';
 
@@ -115,6 +117,20 @@ export const isMTOReadyForReview = (
   return data.__typename === 'MTOReadyForReviewActivityMeta';
 };
 
+export const isTaskCompleted = (
+  data: ActivityMetaData
+): data is TaskCompletedActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'TaskCompletedActivityMeta';
+};
+
+export const isNewTaskAdded = (
+  data: ActivityMetaData
+): data is NewTaskAddedActivityMeta => {
+  /* eslint no-underscore-dangle: 0 */
+  return data.__typename === 'NewTaskAddedActivityMeta';
+};
+
 export const getNavUrl = (metaData: ActivityMetaData) => {
   switch (metaData.__typename) {
     case 'AddedAsCollaboratorMeta':
@@ -134,6 +150,12 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
     case 'MTOReadyForReviewActivityMeta':
       return `/models/${metaData.modelPlanID}/read-view/milestones`;
 
+    case 'NewTaskAddedActivityMeta':
+      return `/models/${metaData.modelPlanID}/collaboration-area/tasks?tab=current`;
+
+    case 'TaskCompletedActivityMeta':
+      return `/models/${metaData.modelPlanID}/collaboration-area/tasks?tab=completed`;
+
     case 'TaggedInPlanDiscussionActivityMeta':
     case 'TaggedInDiscussionReplyActivityMeta':
     case 'NewDiscussionAddedActivityMeta':
@@ -152,7 +174,9 @@ export const UnsubscribableActivities = {
   INCORRECT_MODEL_STATUS: 'incorrectModelStatus',
   MTO_READY_FOR_REVIEW: 'mtoReadyForReview',
   NEW_DISCUSSION_ADDED: 'newDiscussionAdded',
-  NEW_MODEL_PLAN: 'newModelPlan'
+  NEW_MODEL_PLAN: 'newModelPlan',
+  NEW_TASK_ADDED: 'newTaskAdded',
+  TASK_COMPLETED: 'taskCompleted'
 } as const;
 
 export type UnsubscribableActivityType = keyof typeof UnsubscribableActivities;
@@ -190,7 +214,9 @@ const activityI18nKeybases = {
   IddocQuestionnaireCompletedActivityMeta:
     'notifications:index.activityType.IDDOC_QUESTIONNAIRE_COMPLETED',
   MTOReadyForReviewActivityMeta:
-    'notifications:index.activityType.MTO_READY_FOR_REVIEW'
+    'notifications:index.activityType.MTO_READY_FOR_REVIEW',
+  NewTaskAddedActivityMeta: 'notifications:index.activityType.NEW_TASK_ADDED',
+  TaskCompletedActivityMeta: 'notifications:index.activityType.TASK_COMPLETED'
 };
 
 export const activityText = (data: ActivityMetaData) => {

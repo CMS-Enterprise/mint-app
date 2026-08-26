@@ -9,8 +9,10 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -39,7 +41,7 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	}
 
 	// MTO task progression: creating MTO data counts as starting the MTO
-	err = UpdatePlanTaskStatusOnMTOStarted(store, logger, modelPlanID, principal, store)
+	err = UpdatePlanTaskStatusOnMTOStarted(ctx, store, logger, modelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +50,14 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 }
 
 // MTOCategoryDelete removes an MTOCategory or SubCategory
-func MTOCategoryDelete(logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
+func MTOCategoryDelete(
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
+	id uuid.UUID,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
@@ -70,7 +79,7 @@ func MTOCategoryDelete(logger *zap.Logger, principal authentication.Principal, s
 		}
 
 		// MTO task regression: recalculate task after deleting MTO data.
-		if err = UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+		if err = UpdatePlanTaskStatusOnMTODataDeleted(context.Background(), tx, logger, existing.ModelPlanID, principal, store, emailService, addressBook); err != nil {
 			return fmt.Errorf("unable to recalculate MTO task after deleting category. Err %w", err)
 		}
 
@@ -105,7 +114,7 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 	}
 
 	// MTO task progression: editing category data counts as starting the MTO
-	err = UpdatePlanTaskStatusOnMTOStarted(store, logger, updated.ModelPlanID, principal, store)
+	err = UpdatePlanTaskStatusOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +173,7 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	}
 
 	// MTO task progression: editing category data counts as starting the MTO
-	err = UpdatePlanTaskStatusOnMTOStarted(store, logger, updated.ModelPlanID, principal, store)
+	err = UpdatePlanTaskStatusOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -273,7 +282,7 @@ func MTOCreateStandardCategories(ctx context.Context, logger *zap.Logger, princi
 		}
 
 		// MTO task progression: creating standard category data counts as starting the MTO
-		err := UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		err := UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return err
 		}

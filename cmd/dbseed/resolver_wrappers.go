@@ -51,7 +51,7 @@ func (s *Seeder) createModelPlan(
 // It will always update the model plan with the principal value of the Model Plan's "createdBy"
 func (s *Seeder) updateModelPlan(mp *models.ModelPlan, changes map[string]interface{}) *models.ModelPlan {
 	princ := s.getTestPrincipalByUUID(mp.CreatedBy)
-	updated, err := resolvers.ModelPlanUpdate(s.Config.Logger, mp.ID, changes, princ, s.Config.Store)
+	updated, err := resolvers.ModelPlanUpdate(s.Config.Context, s.Config.Logger, mp.ID, changes, princ, s.Config.Store, nil, email.AddressBook{})
 	if err != nil {
 		panic(err)
 	}

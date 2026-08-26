@@ -54,6 +54,10 @@ type UserNotificationPreferences {
 
   newModelPlan: [UserNotificationPreferenceFlag!]!
 
+  newTaskAdded: [UserNotificationPreferenceFlag!]!
+
+  taskCompleted: [UserNotificationPreferenceFlag!]!
+
   datesChanged: [UserNotificationPreferenceFlag!]!
   datesChangedNotificationType: DatesChangedNotificationType
 
@@ -94,6 +98,10 @@ input UserNotificationPreferencesChanges
   modelPlanShared: [UserNotificationPreferenceFlag!]
 
   newModelPlan: [UserNotificationPreferenceFlag!]
+
+  newTaskAdded: [UserNotificationPreferenceFlag!]
+
+  taskCompleted: [UserNotificationPreferenceFlag!]
 
   datesChanged: [UserNotificationPreferenceFlag!]
   datesChangedNotificationType: DatesChangedNotificationType
