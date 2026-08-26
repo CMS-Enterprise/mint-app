@@ -31,6 +31,7 @@ describe('filterUtil.tsx', () => {
       }
     ],
     actorName: 'John Doe',
+    isAssessment: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -54,6 +55,7 @@ describe('filterUtil.tsx', () => {
       }
     ],
     actorName: 'Jane Smith',
+    isAssessment: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -77,6 +79,7 @@ describe('filterUtil.tsx', () => {
       }
     ],
     actorName: 'Bob Johnson',
+    isAssessment: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -97,7 +100,8 @@ describe('filterUtil.tsx', () => {
       const duplicateChange: ChangeRecordType = {
         ...mockChangeRecord,
         id: 'test-id-4',
-        actorName: 'John Doe'
+        actorName: 'John Doe',
+        isAssessment: false
       };
 
       const changes: ChangeRecordType[][] = [

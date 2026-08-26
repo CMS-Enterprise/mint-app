@@ -61,6 +61,7 @@ const changeHistoryMock = [
               }
             ],
             actorName: 'MINT Doe',
+            isAssessment: false,
             __typename: 'TranslatedAudit'
           }
         ]

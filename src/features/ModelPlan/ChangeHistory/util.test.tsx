@@ -59,6 +59,7 @@ const sortData: ChangeRecordType[][] = [
         }
       ],
       actorName: 'Cosmo Kramer',
+      isAssessment: false,
       __typename: 'TranslatedAudit'
     }
   ],
@@ -83,6 +84,7 @@ const sortData: ChangeRecordType[][] = [
         }
       ],
       actorName: 'MINT Doe',
+      isAssessment: false,
       __typename: 'TranslatedAudit'
     }
   ]
@@ -127,6 +129,7 @@ describe('util.tsx', () => {
             }
           ],
           actorName: 'MINT Doe',
+          isAssessment: false,
           __typename: 'TranslatedAudit'
         }
       ],
@@ -151,6 +154,7 @@ describe('util.tsx', () => {
             }
           ],
           actorName: 'MINT Doe',
+          isAssessment: false,
           __typename: 'TranslatedAudit'
         }
       ]
@@ -197,6 +201,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       }
     ];
@@ -221,6 +226,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       }
     ]);
@@ -261,6 +267,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       }
     ];
@@ -285,6 +292,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       },
       {
@@ -307,6 +315,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       }
     ]);
@@ -334,6 +343,7 @@ describe('util.tsx', () => {
         }
       ],
       actorName: 'MINT Doe',
+      isAssessment: false,
       __typename: 'TranslatedAudit'
     };
     expect(identifyChangeType(change)).toBe('taskListStatusUpdate');
@@ -361,6 +371,7 @@ describe('util.tsx', () => {
         }
       ],
       actorName: 'MINT Doe',
+      isAssessment: false,
       __typename: 'TranslatedAudit'
     };
     const changeType: ChangeType = 'taskListStatusUpdate';
@@ -390,6 +401,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       }
     ];
@@ -401,6 +413,7 @@ describe('util.tsx', () => {
         action: DatabaseOperation.INSERT,
         translatedFields: [],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       }
     ]);
@@ -433,6 +446,7 @@ describe('util.tsx', () => {
               }
             ],
             actorName: 'Cosmo Kramer',
+            isAssessment: false,
             __typename: 'TranslatedAudit'
           }
         ]
@@ -459,6 +473,7 @@ describe('util.tsx', () => {
               }
             ],
             actorName: 'MINT Doe',
+            isAssessment: false,
             __typename: 'TranslatedAudit'
           }
         ]
@@ -526,6 +541,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'Cosmo Kramer',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       },
       {
@@ -548,6 +564,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       },
       {
@@ -570,6 +587,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       }
     ];
@@ -615,6 +633,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'Cosmo Kramer',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       },
       {
@@ -636,6 +655,7 @@ describe('util.tsx', () => {
           }
         ],
         actorName: 'MINT Doe',
+        isAssessment: false,
         __typename: 'TranslatedAudit'
       }
     ];
@@ -661,6 +681,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.INSERT,
         actorName: 'MINT Doe',
+        isAssessment: false,
         translatedFields: [
           {
             __typename: 'TranslatedAuditField',
@@ -704,6 +725,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.INSERT,
         actorName: 'MINT Doe',
+        isAssessment: false,
         translatedFields: [
           {
             __typename: 'TranslatedAuditField',
@@ -754,6 +776,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.INSERT,
         actorName: 'MINT Doe',
+        isAssessment: false,
         translatedFields: [
           {
             __typename: 'TranslatedAuditField',
@@ -804,6 +827,7 @@ describe('util.tsx', () => {
       date: '2024-06-07T19:14:30.145659Z',
       action: DatabaseOperation.UPDATE,
       actorName: 'MINT Doe',
+      isAssessment: false,
       translatedFields: [
         {
           __typename: 'TranslatedAuditField',
@@ -850,6 +874,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: [
           {
             fieldName: 'team_roles',
@@ -875,6 +900,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.INSERT,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: []
       };
 
@@ -892,6 +918,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: []
       };
 
@@ -909,6 +936,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: []
       };
 
@@ -926,6 +954,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: []
       };
 
@@ -945,6 +974,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: []
       };
 
@@ -962,6 +992,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.INSERT,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: [
           { fieldName: 'status', old: null, new: 'active' }
         ] as TranslatedAuditField[]
@@ -978,6 +1009,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: [
           { fieldName: 'status', old: 'inactive', new: 'active' }
         ] as TranslatedAuditField[]
@@ -994,6 +1026,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: [
           { fieldName: 'status', newTranslated: 'In progress' }
         ] as TranslatedAuditField[]
@@ -1010,6 +1043,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: [
           {
             fieldName: 'team_roles',
@@ -1036,6 +1070,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: [
           {
             fieldName: 'team_roles',
@@ -1060,6 +1095,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: [
           {
             fieldName: 'team_roles',
@@ -1082,6 +1118,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: [
           {
             fieldName: 'team_roles',
@@ -1104,6 +1141,7 @@ describe('util.tsx', () => {
         date: '2024-06-07T19:14:30.145659Z',
         action: DatabaseOperation.UPDATE,
         actorName: 'John Doe',
+        isAssessment: false,
         translatedFields: [
           {
             fieldName: 'team_roles',
@@ -1168,6 +1206,7 @@ describe('util.tsx', () => {
       date: '2024-06-07T19:14:30.145659Z',
       action: DatabaseOperation.INSERT,
       actorName: 'MINT Doe',
+      isAssessment: false,
       translatedFields: [
         {
           __typename: 'TranslatedAuditField',

@@ -20,6 +20,7 @@ describe('ChangeRecord', () => {
       date: '2024-06-06T21:54:49.713741Z',
       action: DatabaseOperation.INSERT,
       actorName: 'QWER Doe',
+      isAssessment: false,
       translatedFields: [
         {
           __typename: 'TranslatedAuditField',
@@ -74,6 +75,7 @@ describe('ChangeRecord', () => {
       date: '2024-06-06T21:54:49.713245Z',
       action: DatabaseOperation.INSERT,
       actorName: 'QWER Doe',
+      isAssessment: false,
       translatedFields: [
         {
           __typename: 'TranslatedAuditField',
@@ -122,6 +124,19 @@ describe('ChangeRecord', () => {
       }
     }
   ];
+
+  it('shows the assessment star avatar when isAssessment is true', () => {
+    const { getByTestId } = render(
+      <BatchRecord
+        changeRecords={mockChangeRecord.map(record => ({
+          ...record,
+          isAssessment: true
+        }))}
+        index={1}
+      />
+    );
+    expect(getByTestId('avatar--assessment')).toBeInTheDocument();
+  });
 
   it('matches snapshot', async () => {
     const { asFragment } = render(

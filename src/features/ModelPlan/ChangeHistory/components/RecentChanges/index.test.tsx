@@ -49,6 +49,7 @@ const mocks = [
               }
             ],
             actorName: 'MINT Doe',
+            isAssessment: false,
             __typename: 'TranslatedAudit'
           }
         ]
@@ -107,7 +108,7 @@ describe('RecentChanges', () => {
       }
     );
 
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
@@ -117,6 +118,7 @@ describe('RecentChanges', () => {
     expect(getByText(/MINT Doe/i)).toBeInTheDocument();
     expect(getByText(/April 22, 2024/i)).toBeInTheDocument();
     expect(getByText(/1:55 pm/i)).toBeInTheDocument();
+    expect(getByTestId('avatar--basic')).toBeInTheDocument();
   });
 
   it('matches snapshot', async () => {

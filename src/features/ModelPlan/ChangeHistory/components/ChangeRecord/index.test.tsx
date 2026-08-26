@@ -34,6 +34,7 @@ describe('ChangeRecord', () => {
       }
     ],
     actorName: 'MINT Doe',
+    isAssessment: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -86,6 +87,7 @@ describe('ChangeRecord', () => {
         relationContent: 'Custom date title'
       },
       actorName: 'MINT Doe',
+      isAssessment: false,
       __typename: 'TranslatedAudit'
     };
 
@@ -137,6 +139,7 @@ describe('ChangeRecord', () => {
         }
       ],
       actorName: 'MINT Doe',
+      isAssessment: false,
       __typename: 'TranslatedAudit'
     };
 
@@ -169,6 +172,23 @@ describe('ChangeRecord', () => {
 
     fireEvent.click(hideDetailsButton);
     expect(showDetailsButton).toBeInTheDocument();
+  });
+
+  it('shows the assessment star avatar when isAssessment is true', () => {
+    const { getByTestId } = render(
+      <ChangeRecord
+        changeRecord={{ ...mockChangeRecord, isAssessment: true }}
+        index={1}
+      />
+    );
+    expect(getByTestId('avatar--assessment')).toBeInTheDocument();
+  });
+
+  it('shows initials when isAssessment is false', () => {
+    const { getByTestId } = render(
+      <ChangeRecord changeRecord={mockChangeRecord} index={1} />
+    );
+    expect(getByTestId('avatar--basic')).toBeInTheDocument();
   });
 
   it('matches snapshot', async () => {

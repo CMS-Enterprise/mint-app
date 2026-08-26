@@ -40,6 +40,7 @@ console.error = vi.fn();
       }
     ],
     actorName: 'John Doe',
+    isAssessment: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -259,7 +260,8 @@ console.error = vi.fn();
       [
         {
           ...mockChangeRecord,
-          actorName: 'External User'
+          actorName: 'External User',
+          isAssessment: false
         }
       ]
     ];

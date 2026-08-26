@@ -380,8 +380,9 @@ export const ChangeHeader = ({
             labelPosition="bottom"
             setParentOpen={setOpen}
             styleLeftBar={false}
+            childClassName="padding-top-0"
           >
-            <div className="margin-bottom-neg-1 padding-left-3 change-record__answer margin-top-neg-2">
+            <div className="margin-bottom-neg-1 padding-left-3 change-record__answer">
               {replyCount > 0 && (
                 <div className="padding-bottom-1 text-italic">
                   {t('replyCount', {
@@ -671,6 +672,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
         <AvatarCircle
           user={changeRecord.actorName}
           className="margin-right-1 flex-align-self-start"
+          isAssessment={changeRecord.isAssessment}
         />
         <span
           className={classNames(
