@@ -12,15 +12,12 @@ import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accor
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
-import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
 import ScrollLink from 'components/ScrollLink';
-import useModalSolutionState from 'hooks/useModalSolutionState';
 import { formatDateUtc } from 'utils/date';
 import { tArray, tObject } from 'utils/translation';
 
@@ -43,8 +40,6 @@ export const convertToLowercaseAndDashes = (string: string) =>
 
 const TwoPagerMeeting = () => {
   const { t: twoPageMeetingT } = useTranslation('twoPageMeeting');
-
-  const { prevPathname, selectedSolution, loading } = useModalSolutionState();
 
   const summaryboxListItems: string[] = tArray(
     'twoPageMeeting:summaryBox.list'
@@ -109,20 +104,8 @@ const TwoPagerMeeting = () => {
     'twoPageMeeting:examplePapers.exampleList'
   );
 
-  if (loading) {
-    return <PageLoading />;
-  }
-
   return (
     <>
-      {selectedSolution && (
-        <SolutionDetailsModal
-          solution={selectedSolution}
-          openedFrom={prevPathname}
-          closeRoute="/help-and-knowledge/about-2-page-concept-papers-and-review-meetings"
-        />
-      )}
-
       <MainContent>
         <GridContainer>
           <Grid>
