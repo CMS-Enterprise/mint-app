@@ -199,6 +199,12 @@ describe('Discussion Component', () => {
       ).toBeInTheDocument();
     });
 
+    expect(
+      screen.queryByRole('combobox', { name: /topic/i })
+    ).not.toBeInTheDocument();
+
+    expect(getByText('Topic: Other')).toBeInTheDocument();
+
     const roleSelect = screen.getByRole('combobox', {
       name: /Your role/i
     });
@@ -207,6 +213,102 @@ describe('Discussion Component', () => {
 
     await waitFor(async () => {
       expect(roleSelect).toHaveValue(DiscussionUserRole.MINT_TEAM);
+    });
+  });
+
+  it('requires a topic when starting a new discussion', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/task-list',
+          element: <Discussions modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/task-list'
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={mocks}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /Start a discussion/i })
+      ).toBeInTheDocument();
+    });
+
+    userEvent.click(
+      screen.getByRole('button', { name: /Start a discussion/i })
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('combobox', { name: /topic/i })
+      ).toBeInTheDocument();
+    });
+
+    const topicSelect = screen.getByRole('combobox', { name: /topic/i });
+
+    userEvent.selectOptions(topicSelect, [DiscussionTopicType.MODEL_PLAN_ALL]);
+
+    await waitFor(() => {
+      expect(topicSelect).toHaveValue(DiscussionTopicType.MODEL_PLAN_ALL);
+    });
+
+    expect(
+      screen.queryByText('Waiver assessment survey')
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.getByRole('button', { name: /Save discussion/i })
+    ).toBeDisabled();
+  });
+
+  it('prefills topic when starting a discussion from a model plan section', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/model-plan/characteristics',
+          element: <Discussions modelID={modelID} />
+        }
+      ],
+      {
+        initialEntries: [
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area/model-plan/characteristics'
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={mocks}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole('button', { name: /Start a discussion/i })
+      ).toBeInTheDocument();
+    });
+
+    userEvent.click(
+      screen.getByRole('button', { name: /Start a discussion/i })
+    );
+
+    await waitFor(() => {
+      expect(screen.getByRole('combobox', { name: /topic/i })).toHaveValue(
+        DiscussionTopicType.MODEL_PLAN_GENERAL_CHARACTERISTICS
+      );
     });
   });
 
