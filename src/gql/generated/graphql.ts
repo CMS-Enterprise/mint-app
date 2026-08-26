@@ -5007,6 +5007,7 @@ export enum PlanTaskKey {
   DATA_EXCHANGE = 'DATA_EXCHANGE',
   MODEL_PLAN = 'MODEL_PLAN',
   MTO = 'MTO',
+  SIX_PAGER = 'SIX_PAGER',
   TWO_PAGER = 'TWO_PAGER'
 }
 

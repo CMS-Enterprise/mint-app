@@ -24296,6 +24296,7 @@ enum PlanTaskKey {
   MTO
   DATA_EXCHANGE
   TWO_PAGER
+  SIX_PAGER
 }
 
 """

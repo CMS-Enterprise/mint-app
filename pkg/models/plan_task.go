@@ -21,6 +21,7 @@ const (
 	PlanTaskKeyMto          PlanTaskKey = "MTO"
 	PlanTaskKeyDataExchange PlanTaskKey = "DATA_EXCHANGE"
 	PlanTaskKeyTwoPager     PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeySixPager     PlanTaskKey = "SIX_PAGER"
 )
 
 // manuallyMarkablePlanTaskKeys are the PlanTaskKeys whose status is set directly by a user via
