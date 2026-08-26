@@ -10,6 +10,7 @@ SELECT
     file_size,
     restricted,
     document_type,
+    plan_task_id,
     other_type,
     optional_notes,
     is_link,

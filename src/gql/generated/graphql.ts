@@ -3854,6 +3854,7 @@ export type PlanDocument = {
   modifiedDts?: Maybe<Scalars['Time']['output']>;
   optionalNotes?: Maybe<Scalars['String']['output']>;
   otherType?: Maybe<Scalars['String']['output']>;
+  planTaskID?: Maybe<Scalars['UUID']['output']>;
   restricted: Scalars['Boolean']['output'];
   /** URL is the link that must be provided if this is a link instead of an uploaded document */
   url?: Maybe<Scalars['String']['output']>;
@@ -3868,6 +3869,7 @@ export type PlanDocumentInput = {
   modelPlanID: Scalars['UUID']['input'];
   optionalNotes?: InputMaybe<Scalars['String']['input']>;
   otherTypeDescription?: InputMaybe<Scalars['String']['input']>;
+  planTaskID?: InputMaybe<Scalars['UUID']['input']>;
   restricted: Scalars['Boolean']['input'];
 };
 
@@ -3878,6 +3880,7 @@ export type PlanDocumentLinkInput = {
   name: Scalars['String']['input'];
   optionalNotes?: InputMaybe<Scalars['String']['input']>;
   otherTypeDescription?: InputMaybe<Scalars['String']['input']>;
+  planTaskID?: InputMaybe<Scalars['UUID']['input']>;
   restricted: Scalars['Boolean']['input'];
   url: Scalars['String']['input'];
 };
@@ -6571,21 +6574,21 @@ export type GetModelPlanDocumentsQueryVariables = Exact<{
 }>;
 
 
-export type GetModelPlanDocumentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean, documents: Array<{ __typename: 'PlanDocument', id: UUID, virusScanned: boolean, virusClean: boolean, fileName: string, fileType: string, downloadUrl?: string | null, restricted: boolean, documentType: DocumentType, createdDts: Time, optionalNotes?: string | null, otherType?: string | null, isLink: boolean, url?: string | null }> } };
+export type GetModelPlanDocumentsQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, isCollaborator: boolean, documents: Array<{ __typename: 'PlanDocument', id: UUID, virusScanned: boolean, virusClean: boolean, fileName: string, fileType: string, downloadUrl?: string | null, restricted: boolean, documentType: DocumentType, planTaskID?: UUID | null, createdDts: Time, optionalNotes?: string | null, otherType?: string | null, isLink: boolean, url?: string | null }> } };
 
 export type LinkNewPlanDocumentMutationVariables = Exact<{
   input: PlanDocumentLinkInput;
 }>;
 
 
-export type LinkNewPlanDocumentMutation = { __typename: 'Mutation', linkNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
+export type LinkNewPlanDocumentMutation = { __typename: 'Mutation', linkNewPlanDocument: { __typename: 'PlanDocument', id: UUID, planTaskID?: UUID | null } };
 
 export type UploadNewPlanDocumentMutationVariables = Exact<{
   input: PlanDocumentInput;
 }>;
 
 
-export type UploadNewPlanDocumentMutation = { __typename: 'Mutation', uploadNewPlanDocument: { __typename: 'PlanDocument', id: UUID } };
+export type UploadNewPlanDocumentMutation = { __typename: 'Mutation', uploadNewPlanDocument: { __typename: 'PlanDocument', id: UUID, planTaskID?: UUID | null } };
 
 export type AddPlanFavoriteMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];
@@ -10059,6 +10062,7 @@ export const GetModelPlanDocumentsDocument = gql`
       downloadUrl
       restricted
       documentType
+      planTaskID
       createdDts
       optionalNotes
       otherType
@@ -10108,6 +10112,7 @@ export const LinkNewPlanDocumentDocument = gql`
     mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {
   linkNewPlanDocument(input: $input) {
     id
+    planTaskID
   }
 }
     `;
@@ -10141,6 +10146,7 @@ export const UploadNewPlanDocumentDocument = gql`
     mutation UploadNewPlanDocument($input: PlanDocumentInput!) {
   uploadNewPlanDocument(input: $input) {
     id
+    planTaskID
   }
 }
     `;
@@ -19775,9 +19781,9 @@ export const TypedGetModelPlanDiscussionsDocument = {"kind":"Document","definiti
 export const TypedGetMostRecentRoleSelectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMostRecentRoleSelection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mostRecentDiscussionRoleSelection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userRole"}},{"kind":"Field","name":{"kind":"Name","value":"userRoleDescription"}}]}}]}}]} as unknown as DocumentNode<GetMostRecentRoleSelectionQuery, GetMostRecentRoleSelectionQueryVariables>;
 export const TypedDeleteModelPlanDocumentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteModelPlanDocument"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePlanDocument"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}]}}]} as unknown as DocumentNode<DeleteModelPlanDocumentMutation, DeleteModelPlanDocumentMutationVariables>;
 export const TypedGetModelPlanDocumentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanDocument"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"planDocument"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}},{"kind":"Field","name":{"kind":"Name","value":"bucket"}},{"kind":"Field","name":{"kind":"Name","value":"fileKey"}},{"kind":"Field","name":{"kind":"Name","value":"virusScanned"}},{"kind":"Field","name":{"kind":"Name","value":"virusClean"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileSize"}},{"kind":"Field","name":{"kind":"Name","value":"restricted"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"otherType"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]} as unknown as DocumentNode<GetModelPlanDocumentQuery, GetModelPlanDocumentQueryVariables>;
-export const TypedGetModelPlanDocumentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanDocuments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"virusScanned"}},{"kind":"Field","name":{"kind":"Name","value":"virusClean"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}},{"kind":"Field","name":{"kind":"Name","value":"downloadUrl"}},{"kind":"Field","name":{"kind":"Name","value":"restricted"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"optionalNotes"}},{"kind":"Field","name":{"kind":"Name","value":"otherType"}},{"kind":"Field","name":{"kind":"Name","value":"isLink"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>;
-export const TypedLinkNewPlanDocumentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LinkNewPlanDocument"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanDocumentLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"linkNewPlanDocument"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<LinkNewPlanDocumentMutation, LinkNewPlanDocumentMutationVariables>;
-export const TypedUploadNewPlanDocumentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UploadNewPlanDocument"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanDocumentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uploadNewPlanDocument"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>;
+export const TypedGetModelPlanDocumentsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlanDocuments"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isCollaborator"}},{"kind":"Field","name":{"kind":"Name","value":"documents"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"virusScanned"}},{"kind":"Field","name":{"kind":"Name","value":"virusClean"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}},{"kind":"Field","name":{"kind":"Name","value":"downloadUrl"}},{"kind":"Field","name":{"kind":"Name","value":"restricted"}},{"kind":"Field","name":{"kind":"Name","value":"documentType"}},{"kind":"Field","name":{"kind":"Name","value":"planTaskID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"optionalNotes"}},{"kind":"Field","name":{"kind":"Name","value":"otherType"}},{"kind":"Field","name":{"kind":"Name","value":"isLink"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]} as unknown as DocumentNode<GetModelPlanDocumentsQuery, GetModelPlanDocumentsQueryVariables>;
+export const TypedLinkNewPlanDocumentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LinkNewPlanDocument"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanDocumentLinkInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"linkNewPlanDocument"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"planTaskID"}}]}}]}}]} as unknown as DocumentNode<LinkNewPlanDocumentMutation, LinkNewPlanDocumentMutationVariables>;
+export const TypedUploadNewPlanDocumentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UploadNewPlanDocument"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanDocumentInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uploadNewPlanDocument"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"planTaskID"}}]}}]}}]} as unknown as DocumentNode<UploadNewPlanDocumentMutation, UploadNewPlanDocumentMutationVariables>;
 export const TypedAddPlanFavoriteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddPlanFavorite"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addPlanFavorite"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"userID"}}]}}]}}]} as unknown as DocumentNode<AddPlanFavoriteMutation, AddPlanFavoriteMutationVariables>;
 export const TypedDeletePlanFavoriteDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeletePlanFavorite"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deletePlanFavorite"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"userID"}}]}}]}}]} as unknown as DocumentNode<DeletePlanFavoriteMutation, DeletePlanFavoriteMutationVariables>;
 export const TypedCreatReportAProblemDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatReportAProblem"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ReportAProblemInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"reportAProblem"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<CreatReportAProblemMutation, CreatReportAProblemMutationVariables>;

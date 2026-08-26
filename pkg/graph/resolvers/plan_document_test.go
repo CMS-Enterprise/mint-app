@@ -44,6 +44,31 @@ func (suite *ResolverSuite) TestPlanDocumentCreate() {
 	suite.Nil(document.DeletedAt)
 }
 
+func (suite *ResolverSuite) TestPlanDocumentCreateWithPlanTaskID() {
+	plan := suite.createModelPlan("Plan with Task Document")
+	planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	reader := bytes.NewReader([]byte("Some test file contents"))
+
+	input := &model.PlanDocumentInput{
+		ModelPlanID: plan.ID,
+		FileData: graphql.Upload{
+			File:        reader,
+			Filename:    "six-pager.docx",
+			Size:        reader.Size(),
+			ContentType: "application/msword",
+		},
+		Restricted:   false,
+		DocumentType: models.DocumentTypeConceptPaper,
+		PlanTaskID:   &planTask.ID,
+	}
+	document, err := PlanDocumentCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+
+	if suite.NotNil(document.PlanTaskID) {
+		suite.Equal(planTask.ID, *document.PlanTaskID)
+	}
+}
+
 func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 	plan := suite.createModelPlan("Plan with Documents")
 
@@ -74,6 +99,19 @@ func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 	suite.Nil(document.OptionalNotes.Ptr())
 	suite.Nil(document.DeletedAt)
 
+	suite.Run("can attribute linked document to a plan task", func() {
+		planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+		input.URL = url
+		input.Name = "Six pager link"
+		input.PlanTaskID = &planTask.ID
+
+		linkedDocument, err := PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.NoError(err)
+		if suite.NotNil(linkedDocument.PlanTaskID) {
+			suite.Equal(planTask.ID, *linkedDocument.PlanTaskID)
+		}
+	})
+
 	suite.Run("Invalid urls will cause an error", func() {
 		input.URL = "Hello"
 
@@ -94,6 +132,29 @@ func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 		_, err = PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 		suite.Error(err)
 	})
+}
+
+func (suite *ResolverSuite) TestPlanDocumentCreateRejectsPlanTaskFromDifferentModelPlan() {
+	plan := suite.createModelPlan("Plan with Wrong Task Document")
+	otherPlan := suite.createModelPlan("Other Plan with Task")
+	otherPlanTask := suite.getPlanTaskByKey(otherPlan.ID, models.PlanTaskKeySixPager)
+	reader := bytes.NewReader([]byte("Some test file contents"))
+
+	input := &model.PlanDocumentInput{
+		ModelPlanID: plan.ID,
+		FileData: graphql.Upload{
+			File:        reader,
+			Filename:    "six-pager.docx",
+			Size:        reader.Size(),
+			ContentType: "application/msword",
+		},
+		Restricted:   false,
+		DocumentType: models.DocumentTypeConceptPaper,
+		PlanTaskID:   &otherPlanTask.ID,
+	}
+	document, err := PlanDocumentCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.Error(err)
+	suite.Nil(document)
 }
 
 func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {

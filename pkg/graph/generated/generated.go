@@ -1600,6 +1600,7 @@ type ComplexityRoot struct {
 		ModifiedDts           func(childComplexity int) int
 		OptionalNotes         func(childComplexity int) int
 		OtherType             func(childComplexity int) int
+		PlanTaskID            func(childComplexity int) int
 		Restricted            func(childComplexity int) int
 		URL                   func(childComplexity int) int
 		VirusClean            func(childComplexity int) int
@@ -10874,6 +10875,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanDocument.OtherType(childComplexity), true
+	case "PlanDocument.planTaskID":
+		if e.ComplexityRoot.PlanDocument.PlanTaskID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanDocument.PlanTaskID(childComplexity), true
 	case "PlanDocument.restricted":
 		if e.ComplexityRoot.PlanDocument.Restricted == nil {
 			break
@@ -20301,6 +20308,7 @@ type PlanDocument {
   fileName: String!
   fileSize: Int!
   documentType: DocumentType!
+  planTaskID: UUID
   otherType: String
   optionalNotes: String
   downloadUrl: String
@@ -20322,6 +20330,7 @@ input PlanDocumentInput {
   fileData: Upload!
   documentType: DocumentType!
   restricted: Boolean!
+  planTaskID: UUID
   otherTypeDescription: String
   optionalNotes: String
 }
@@ -20335,6 +20344,7 @@ input PlanDocumentLinkInput {
   name: String!
   documentType: DocumentType!
   restricted: Boolean!
+  planTaskID: UUID
   otherTypeDescription: String
   optionalNotes: String
 }
@@ -27046,6 +27056,8 @@ func (ec *executionContext) childFields_PlanDocument(ctx context.Context, field 
 		return ec.fieldContext_PlanDocument_fileSize(ctx, field)
 	case "documentType":
 		return ec.fieldContext_PlanDocument_documentType(ctx, field)
+	case "planTaskID":
+		return ec.fieldContext_PlanDocument_planTaskID(ctx, field)
 	case "otherType":
 		return ec.fieldContext_PlanDocument_otherType(ctx, field)
 	case "optionalNotes":
@@ -64326,6 +64338,29 @@ func (ec *executionContext) fieldContext_PlanDocument_documentType(_ context.Con
 	return graphql.NewScalarFieldContext("PlanDocument", field, false, false, errors.New("field of type DocumentType does not have child fields"))
 }
 
+func (ec *executionContext) _PlanDocument_planTaskID(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanDocument_planTaskID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.PlanTaskID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+			return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_PlanDocument_planTaskID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("PlanDocument", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
 func (ec *executionContext) _PlanDocument_otherType(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -98472,7 +98507,7 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "fileData", "documentType", "restricted", "otherTypeDescription", "optionalNotes"}
+	fieldsInOrder := [...]string{"modelPlanID", "fileData", "documentType", "restricted", "planTaskID", "otherTypeDescription", "optionalNotes"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -98507,6 +98542,13 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 				return it, err
 			}
 			it.Restricted = data
+		case "planTaskID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("planTaskID"))
+			data, err := ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PlanTaskID = data
 		case "otherTypeDescription":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("otherTypeDescription"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -98537,7 +98579,7 @@ func (ec *executionContext) unmarshalInputPlanDocumentLinkInput(ctx context.Cont
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "url", "name", "documentType", "restricted", "otherTypeDescription", "optionalNotes"}
+	fieldsInOrder := [...]string{"modelPlanID", "url", "name", "documentType", "restricted", "planTaskID", "otherTypeDescription", "optionalNotes"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -98579,6 +98621,13 @@ func (ec *executionContext) unmarshalInputPlanDocumentLinkInput(ctx context.Cont
 				return it, err
 			}
 			it.Restricted = data
+		case "planTaskID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("planTaskID"))
+			data, err := ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PlanTaskID = data
 		case "otherTypeDescription":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("otherTypeDescription"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -117251,6 +117300,11 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 		case "documentType":
 			out.Values[i] = ec._PlanDocument_documentType(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "planTaskID":
+			out.Values[i] = ec._PlanDocument_planTaskID(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "otherType":
