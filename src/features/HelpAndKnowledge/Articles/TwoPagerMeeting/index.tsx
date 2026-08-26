@@ -77,7 +77,7 @@ const TwoPagerMeeting = () => {
                 <span>{itemConfig.content.label}</span>
 
                 {itemConfig.content.list && (
-                  <ul className="padding-left-4 margin-top-0">
+                  <ul className="padding-left-3 margin-top-0">
                     {itemConfig.content.list.map((listItem: string) => (
                       <li key={listItem} className="list-item">
                         {listItem}
@@ -144,11 +144,14 @@ const TwoPagerMeeting = () => {
                 </SummaryBoxHeading>
                 <SummaryBoxContent>
                   <ul
-                    className="margin-y-0 display-flex flex-column"
+                    className="margin-y-0 display-flex flex-column padding-left-4"
                     style={{ gap: '0.5rem' }}
                   >
                     {summaryboxListItems.map(section => (
-                      <li key={convertToLowercaseAndDashes(section)}>
+                      <li
+                        key={convertToLowercaseAndDashes(section)}
+                        className="padding-left-05"
+                      >
                         <ScrollLink scrollTo={section} />
                       </li>
                     ))}
@@ -201,7 +204,7 @@ const TwoPagerMeeting = () => {
                 </SummaryBoxHeading>
 
                 <SummaryBoxContent>
-                  <ul className="margin-top-0 margin-bottom-2 padding-left-6">
+                  <ul className="margin-top-0 margin-bottom-2 padding-left-3">
                     {aboutTipsList.map(item => (
                       <li key={item} className="line-height-normal">
                         {item}
@@ -265,11 +268,11 @@ const TwoPagerMeeting = () => {
                 {twoPageMeetingT('examplePapers.introParagraph')}
               </p>
 
-              <ul className="margin-y-0 padding-left-3">
+              <ul className="margin-y-0 padding-left-4">
                 {exampleList.map(item => (
                   <li
                     key={item.copy}
-                    className="line-height-normal margin-bottom-1"
+                    className="line-height-normal margin-bottom-1 padding-left-05"
                   >
                     <ExternalLink
                       href={item.href}

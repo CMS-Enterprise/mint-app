@@ -123,10 +123,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 class="usa-summary-box__text"
               >
                 <ul
-                  class="margin-y-0 display-flex flex-column"
+                  class="margin-y-0 display-flex flex-column padding-left-4"
                   style="gap: 0.5rem;"
                 >
-                  <li>
+                  <li
+                    class="padding-left-05"
+                  >
                     <button
                       class="usa-button usa-button--unstyled"
                       data-testid="button"
@@ -149,7 +151,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       </svg>
                     </button>
                   </li>
-                  <li>
+                  <li
+                    class="padding-left-05"
+                  >
                     <button
                       class="usa-button usa-button--unstyled"
                       data-testid="button"
@@ -172,7 +176,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       </svg>
                     </button>
                   </li>
-                  <li>
+                  <li
+                    class="padding-left-05"
+                  >
                     <button
                       class="usa-button usa-button--unstyled"
                       data-testid="button"
@@ -195,7 +201,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       </svg>
                     </button>
                   </li>
-                  <li>
+                  <li
+                    class="padding-left-05"
+                  >
                     <button
                       class="usa-button usa-button--unstyled"
                       data-testid="button"
@@ -409,7 +417,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                 class="usa-summary-box__text"
               >
                 <ul
-                  class="margin-top-0 margin-bottom-2 padding-left-6"
+                  class="margin-top-0 margin-bottom-2 padding-left-3"
                 >
                   <li
                     class="line-height-normal"
@@ -542,7 +550,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-4 margin-top-0"
+                    class="padding-left-3 margin-top-0"
                   >
                     <li
                       class="list-item"
@@ -602,7 +610,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-4 margin-top-0"
+                    class="padding-left-3 margin-top-0"
                   >
                     <li
                       class="list-item"
@@ -667,7 +675,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-4 margin-top-0"
+                    class="padding-left-3 margin-top-0"
                   >
                     <li
                       class="list-item"
@@ -732,7 +740,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-4 margin-top-0"
+                    class="padding-left-3 margin-top-0"
                   >
                     <li
                       class="list-item"
@@ -787,7 +795,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-4 margin-top-0"
+                    class="padding-left-3 margin-top-0"
                   >
                     <li
                       class="list-item"
@@ -847,7 +855,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-4 margin-top-0"
+                    class="padding-left-3 margin-top-0"
                   >
                     <li
                       class="list-item"
@@ -897,7 +905,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-4 margin-top-0"
+                    class="padding-left-3 margin-top-0"
                   >
                     <li
                       class="list-item"
@@ -958,10 +966,10 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
             While all models are different, and therefore the content within a 2-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.
           </p>
           <ul
-            class="margin-y-0 padding-left-3"
+            class="margin-y-0 padding-left-4"
           >
             <li
-              class="line-height-normal margin-bottom-1"
+              class="line-height-normal margin-bottom-1 padding-left-05"
             >
               <button
                 class="usa-button usa-button--unstyled text-no-underline"
@@ -991,7 +999,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               </button>
             </li>
             <li
-              class="line-height-normal margin-bottom-1"
+              class="line-height-normal margin-bottom-1 padding-left-05"
             >
               <button
                 class="usa-button usa-button--unstyled text-no-underline"
