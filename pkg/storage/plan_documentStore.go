@@ -149,6 +149,56 @@ func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 	return documents, err
 }
 
+// PlanDocumentsReadByPlanTaskID reads plan documents attributed to a plan task.
+func (s *Store) PlanDocumentsReadByPlanTaskID(logger *zap.Logger, planTaskID uuid.UUID, s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByPlanTaskID)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	var documents []*models.PlanDocument
+	err = stmt.Select(&documents, utilitysql.CreateIDQueryMap(planTaskID))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, planTaskID)
+	}
+
+	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, planTaskID)
+	}
+
+	err = logIfNoRowsFetched(logger, planTaskID, documents)
+	return documents, err
+}
+
+// PlanDocumentsReadByPlanTaskIDNotRestricted reads non-restricted plan documents attributed to a plan task.
+func (s *Store) PlanDocumentsReadByPlanTaskIDNotRestricted(
+	logger *zap.Logger,
+	planTaskID uuid.UUID,
+	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
+
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByPlanTaskIDNotRestricted)
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	var documents []*models.PlanDocument
+	err = stmt.Select(&documents, utilitysql.CreateIDQueryMap(planTaskID))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, planTaskID)
+	}
+
+	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, planTaskID)
+	}
+
+	err = logIfNoRowsFetched(logger, planTaskID, documents)
+	return documents, err
+}
+
 func planDocumentsUpdateVirusScanStatuses(s3Client *s3.S3Client, documents []*models.PlanDocument) error {
 	var errorGroup errgroup.Group
 	for documentIndex := range documents {

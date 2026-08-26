@@ -34,6 +34,14 @@ func (r *planTaskResolver) State(ctx context.Context, obj *models.PlanTask) (mod
 	return model.PlanTaskStateToDo, nil
 }
 
+// Documents is the resolver for the documents field.
+func (r *planTaskResolver) Documents(ctx context.Context, obj *models.PlanTask) ([]*models.PlanDocument, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return PlanDocumentsReadByPlanTaskID(logger, obj, principal, r.store, r.fileUploadS3Client)
+}
+
 // PlanTask returns generated.PlanTaskResolver implementation.
 func (r *Resolver) PlanTask() generated.PlanTaskResolver { return &planTaskResolver{r} }
 

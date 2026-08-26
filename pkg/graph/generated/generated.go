@@ -2339,6 +2339,7 @@ type ComplexityRoot struct {
 		CreatedBy              func(childComplexity int) int
 		CreatedByUserAccount   func(childComplexity int) int
 		CreatedDts             func(childComplexity int) int
+		Documents              func(childComplexity int) int
 		ID                     func(childComplexity int) int
 		Key                    func(childComplexity int) int
 		ModifiedBy             func(childComplexity int) int
@@ -3298,6 +3299,7 @@ type PlanPaymentsResolver interface {
 }
 type PlanTaskResolver interface {
 	State(ctx context.Context, obj *models.PlanTask) (model.PlanTaskState, error)
+	Documents(ctx context.Context, obj *models.PlanTask) ([]*models.PlanDocument, error)
 }
 type PlanTimelineResolver interface {
 	UpcomingTimelineDate(ctx context.Context, obj *models.PlanTimeline) (*model.UpcomingTimelineDate, error)
@@ -15071,6 +15073,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanTask.CreatedDts(childComplexity), true
+	case "PlanTask.documents":
+		if e.ComplexityRoot.PlanTask.Documents == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanTask.Documents(childComplexity), true
 	case "PlanTask.id":
 		if e.ComplexityRoot.PlanTask.ID == nil {
 			break
@@ -24287,6 +24295,7 @@ type PlanTask {
   key: PlanTaskKey!
   status: PlanTaskStatus!
   state: PlanTaskState! @goField(forceResolver: true)
+  documents: [PlanDocument!]! @goField(forceResolver: true)
   completedBy: UUID
   completedByUserAccount: UserAccount
   completedDts: Time
@@ -27866,6 +27875,8 @@ func (ec *executionContext) childFields_PlanTask(ctx context.Context, field grap
 		return ec.fieldContext_PlanTask_status(ctx, field)
 	case "state":
 		return ec.fieldContext_PlanTask_state(ctx, field)
+	case "documents":
+		return ec.fieldContext_PlanTask_documents(ctx, field)
 	case "completedBy":
 		return ec.fieldContext_PlanTask_completedBy(ctx, field)
 	case "completedByUserAccount":
@@ -83557,6 +83568,38 @@ func (ec *executionContext) fieldContext_PlanTask_state(_ context.Context, field
 	return graphql.NewScalarFieldContext("PlanTask", field, true, true, errors.New("field of type PlanTaskState does not have child fields"))
 }
 
+func (ec *executionContext) _PlanTask_documents(ctx context.Context, field graphql.CollectedField, obj *models.PlanTask) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanTask_documents(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.PlanTask().Documents(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.PlanDocument) graphql.Marshaler {
+			return ec.marshalNPlanDocument2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanTask_documents(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTask",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanDocument(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanTask_completedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanTask) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -123716,6 +123759,44 @@ func (ec *executionContext) _PlanTask(ctx context.Context, sel ast.SelectionSet,
 					}
 				}()
 				res = ec._PlanTask_state(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "documents":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanTask_documents(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}

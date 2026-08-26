@@ -1,0 +1,27 @@
+SELECT
+    id,
+    model_plan_id,
+    file_type,
+    bucket,
+    file_key,
+    virus_scanned,
+    virus_clean,
+    file_name,
+    file_size,
+    restricted,
+    document_type,
+    plan_task_id,
+    other_type,
+    optional_notes,
+    is_link,
+    url,
+    deleted_at,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts
+FROM plan_document
+WHERE
+    plan_task_id = :id
+    AND restricted = FALSE
+    AND deleted_at IS NULL;
