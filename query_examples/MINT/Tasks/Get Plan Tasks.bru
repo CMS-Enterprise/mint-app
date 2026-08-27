@@ -26,6 +26,12 @@ body:graphql {
               key
               status
               state
+              documents {
+                  id
+                  fileName
+                  documentType
+                  planTaskID
+              }
               completedBy
               completedByUserAccount {
                   id
@@ -40,5 +46,13 @@ body:graphql {
 body:graphql:vars {
   {
     "id": "{{modelPlanID}}"
+  }
+}
+
+tests {
+  let tasks = res.getBody().data.modelPlan.tasks
+  
+  if (tasks.length > 0) {
+    bru.setVar("planTaskID", tasks[0].id);
   }
 }
