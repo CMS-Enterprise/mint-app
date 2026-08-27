@@ -2516,27 +2516,26 @@ type ComplexityRoot struct {
 	}
 
 	TranslatedAudit struct {
-		Action                      func(childComplexity int) int
-		ActorID                     func(childComplexity int) int
-		ActorName                   func(childComplexity int) int
-		ChangeID                    func(childComplexity int) int
-		CreatedBy                   func(childComplexity int) int
-		CreatedByUserAccount        func(childComplexity int) int
-		CreatedDts                  func(childComplexity int) int
-		Date                        func(childComplexity int) int
-		ID                          func(childComplexity int) int
-		IsAssessmentNotCollaborator func(childComplexity int) int
-		MetaData                    func(childComplexity int) int
-		MetaDataType                func(childComplexity int) int
-		ModelPlanID                 func(childComplexity int) int
-		ModifiedBy                  func(childComplexity int) int
-		ModifiedByUserAccount       func(childComplexity int) int
-		ModifiedDts                 func(childComplexity int) int
-		PrimaryKey                  func(childComplexity int) int
-		Restricted                  func(childComplexity int) int
-		TableID                     func(childComplexity int) int
-		TableName                   func(childComplexity int) int
-		TranslatedFields            func(childComplexity int) int
+		Action                func(childComplexity int) int
+		ActorID               func(childComplexity int) int
+		ActorName             func(childComplexity int) int
+		ChangeID              func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		Date                  func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		MetaData              func(childComplexity int) int
+		MetaDataType          func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		PrimaryKey            func(childComplexity int) int
+		Restricted            func(childComplexity int) int
+		TableID               func(childComplexity int) int
+		TableName             func(childComplexity int) int
+		TranslatedFields      func(childComplexity int) int
 	}
 
 	TranslatedAuditField struct {
@@ -3389,8 +3388,6 @@ type TaskCompletedActivityMetaResolver interface {
 	CompletedByUserAccount(ctx context.Context, obj *models.TaskCompletedActivityMeta) (*authentication.UserAccount, error)
 }
 type TranslatedAuditResolver interface {
-	IsAssessmentNotCollaborator(ctx context.Context, obj *models.TranslatedAudit) (bool, error)
-
 	TranslatedFields(ctx context.Context, obj *models.TranslatedAudit) ([]*models.TranslatedAuditField, error)
 }
 type TranslatedAuditFieldResolver interface {
@@ -16142,12 +16139,6 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.TranslatedAudit.ID(childComplexity), true
-	case "TranslatedAudit.isAssessmentNotCollaborator":
-		if e.ComplexityRoot.TranslatedAudit.IsAssessmentNotCollaborator == nil {
-			break
-		}
-
-		return e.ComplexityRoot.TranslatedAudit.IsAssessmentNotCollaborator(childComplexity), true
 	case "TranslatedAudit.metaData":
 		if e.ComplexityRoot.TranslatedAudit.MetaData == nil {
 			break
@@ -19567,11 +19558,6 @@ type TranslatedAudit {
   The Common name of the actor who made the changes. This comes from the user account table.
   """
   actorName: String!
-  """
-  True when the actor currently has the Assessment job code and is not a collaborator on the model plan.
-  This is computed at query time and can change if the actor joins the team or loses Assessment.
-  """
-  isAssessmentNotCollaborator: Boolean!
   """
   The id of the audit.Change record that was translated.
   """
@@ -28056,8 +28042,6 @@ func (ec *executionContext) childFields_TranslatedAudit(ctx context.Context, fie
 		return ec.fieldContext_TranslatedAudit_actorID(ctx, field)
 	case "actorName":
 		return ec.fieldContext_TranslatedAudit_actorName(ctx, field)
-	case "isAssessmentNotCollaborator":
-		return ec.fieldContext_TranslatedAudit_isAssessmentNotCollaborator(ctx, field)
 	case "changeID":
 		return ec.fieldContext_TranslatedAudit_changeID(ctx, field)
 	case "metaDataType":
@@ -88888,29 +88872,6 @@ func (ec *executionContext) fieldContext_TranslatedAudit_actorName(_ context.Con
 	return graphql.NewScalarFieldContext("TranslatedAudit", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
-func (ec *executionContext) _TranslatedAudit_isAssessmentNotCollaborator(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAudit) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_TranslatedAudit_isAssessmentNotCollaborator(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.TranslatedAudit().IsAssessmentNotCollaborator(ctx, obj)
-		},
-		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
-			return ec.marshalNBoolean2bool(ctx, selections, v)
-		},
-		true,
-		true,
-	)
-}
-func (ec *executionContext) fieldContext_TranslatedAudit_isAssessmentNotCollaborator(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	return graphql.NewScalarFieldContext("TranslatedAudit", field, true, true, errors.New("field of type Boolean does not have child fields"))
-}
-
 func (ec *executionContext) _TranslatedAudit_changeID(ctx context.Context, field graphql.CollectedField, obj *models.TranslatedAudit) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -126386,44 +126347,6 @@ func (ec *executionContext) _TranslatedAudit(ctx context.Context, sel ast.Select
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
-		case "isAssessmentNotCollaborator":
-			field := field
-
-			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._TranslatedAudit_isAssessmentNotCollaborator(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&fs.Invalids, 1)
-				}
-				return res
-			}
-
-			if field.IsDeferred() {
-				deferredFieldSet.AddField(field)
-				fieldIndex := len(deferredFieldSet.Values) - 1
-				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
-					return innerFunc(ctx, deferredFieldSet)
-				})
-
-				for _, deferrable := range field.Deferrables {
-					view, ok := deferLabelToView[deferrable.Label]
-					if !ok {
-						view = deferredFieldSet.NewView()
-						deferLabelToView[deferrable.Label] = view
-					}
-					view.AddIndices(fieldIndex)
-				}
-
-				// don't run the out.Concurrently() call below
-				out.Values[i] = graphql.Null
-				continue
-			}
-
-			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "changeID":
 			out.Values[i] = ec._TranslatedAudit_changeID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

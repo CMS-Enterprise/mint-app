@@ -42,10 +42,7 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
     <Card className="mini-change-record">
       <Grid row className="padding-2" style={{ wordWrap: 'break-word' }}>
         <Grid desktop={{ col: 2 }} tablet={{ col: 1 }} mobileLg={{ col: 1 }}>
-          <AvatarCircle
-            user={changeRecords[0].actorName}
-            isAssessment={changeRecords[0].isAssessmentNotCollaborator}
-          />
+          <AvatarCircle user={changeRecords[0].actorName} />
         </Grid>
 
         <Grid desktop={{ col: 10 }} tablet={{ col: 11 }} mobileLg={{ col: 11 }}>

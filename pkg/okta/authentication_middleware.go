@@ -211,11 +211,6 @@ func (f MiddlewareFactory) newPrincipal(ctx context.Context) (*authentication.Ap
 		return nil, err
 	}
 
-	userAccount, err = userhelpers.SyncLoggedInUserIsAssessment(f.Store, userAccount, jcAssessment)
-	if err != nil {
-		return nil, err
-	}
-
 	return &authentication.ApplicationPrincipal{
 		Username:          strings.ToUpper(euaID),
 		JobCodeUSER:       jcUser,

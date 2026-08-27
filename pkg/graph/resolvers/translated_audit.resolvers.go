@@ -22,11 +22,6 @@ func (r *queryResolver) TranslatedAuditCollection(ctx context.Context, modelPlan
 	return TranslatedAuditCollectionGetByModelPlanID(ctx, r.store, logger, principal, modelPlanID, limit, offset)
 }
 
-// IsAssessmentNotCollaborator is the resolver for the isAssessmentNotCollaborator field.
-func (r *translatedAuditResolver) IsAssessmentNotCollaborator(ctx context.Context, obj *models.TranslatedAudit) (bool, error) {
-	return TranslatedAuditActorIsAssessmentNotCollaborator(ctx, obj)
-}
-
 // TranslatedFields is the resolver for the translatedFields field.
 func (r *translatedAuditResolver) TranslatedFields(ctx context.Context, obj *models.TranslatedAudit) ([]*models.TranslatedAuditField, error) {
 	return TranslatedAuditFieldCollectionGetByTranslatedAuditID(ctx, obj.ID)

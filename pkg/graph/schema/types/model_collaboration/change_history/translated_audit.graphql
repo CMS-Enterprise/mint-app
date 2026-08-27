@@ -178,11 +178,6 @@ type TranslatedAudit {
   """
   actorName: String!
   """
-  True when the actor currently has the Assessment job code and is not a collaborator on the model plan.
-  This is computed at query time and can change if the actor joins the team or loses Assessment.
-  """
-  isAssessmentNotCollaborator: Boolean!
-  """
   The id of the audit.Change record that was translated.
   """
   changeID: Int! # This points to a specific audit change.

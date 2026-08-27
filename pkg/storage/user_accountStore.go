@@ -169,15 +169,6 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 	return user, nil
 }
 
-// UserAccountUpdateIsAssessment updates whether a user currently has the Assessment job code.
-func UserAccountUpdateIsAssessment(np sqlutils.NamedPreparer, userID uuid.UUID, isAssessment bool) (*authentication.UserAccount, error) {
-	arg := map[string]interface{}{
-		"id":            userID,
-		"is_assessment": isAssessment,
-	}
-	return sqlutils.GetProcedure[authentication.UserAccount](np, sqlqueries.UserAccount.UpdateIsAssessment, arg)
-}
-
 // UserAccountsGetNotificationRecipientsForDatesChanged returns a collection of
 // user accounts that should be notified of a change in model plan dates
 func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(

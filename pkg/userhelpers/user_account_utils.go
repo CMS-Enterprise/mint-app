@@ -86,26 +86,6 @@ func GetOrCreateUserAccount(ctx context.Context, np sqlutils.NamedPreparer, txPr
 	return updatedAccount, nil
 }
 
-// SyncLoggedInUserIsAssessment persists the authenticated user's current Assessment job code.
-// It must only be called for the logged-in user, not when creating other users' accounts.
-func SyncLoggedInUserIsAssessment(
-	np sqlutils.NamedPreparer,
-	userAccount *authentication.UserAccount,
-	isAssessment bool,
-) (*authentication.UserAccount, error) {
-	if userAccount == nil {
-		return nil, errors.New("user account is required")
-	}
-	if userAccount.IsAssessment == isAssessment {
-		return userAccount, nil
-	}
-	updatedAccount, err := storage.UserAccountUpdateIsAssessment(np, userAccount.ID, isAssessment)
-	if err != nil {
-		return nil, err
-	}
-	return updatedAccount, nil
-}
-
 // createUserAccountAndPreferences creates a user account and preferences. If the np is not a SQL utils tx, it will wrap it in a TX
 func createUserAccountAndPreferences(txPrep sqlutils.TransactionPreparer, np sqlutils.NamedPreparer, userAccount *authentication.UserAccount) (*authentication.UserAccount, error) {
 

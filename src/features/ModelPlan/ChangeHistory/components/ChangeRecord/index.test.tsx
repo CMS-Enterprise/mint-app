@@ -34,7 +34,6 @@ describe('ChangeRecord', () => {
       }
     ],
     actorName: 'MINT Doe',
-    isAssessmentNotCollaborator: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -87,7 +86,6 @@ describe('ChangeRecord', () => {
         relationContent: 'Custom date title'
       },
       actorName: 'MINT Doe',
-      isAssessmentNotCollaborator: false,
       __typename: 'TranslatedAudit'
     };
 
@@ -139,7 +137,6 @@ describe('ChangeRecord', () => {
         }
       ],
       actorName: 'MINT Doe',
-      isAssessmentNotCollaborator: false,
       __typename: 'TranslatedAudit'
     };
 
@@ -172,26 +169,6 @@ describe('ChangeRecord', () => {
 
     fireEvent.click(hideDetailsButton);
     expect(showDetailsButton).toBeInTheDocument();
-  });
-
-  it('shows the assessment star avatar when isAssessmentNotCollaborator is true', () => {
-    const { getByTestId } = render(
-      <ChangeRecord
-        changeRecord={{
-          ...mockChangeRecord,
-          isAssessmentNotCollaborator: true
-        }}
-        index={1}
-      />
-    );
-    expect(getByTestId('avatar--assessment')).toBeInTheDocument();
-  });
-
-  it('shows initials when isAssessmentNotCollaborator is false', () => {
-    const { getByTestId } = render(
-      <ChangeRecord changeRecord={mockChangeRecord} index={1} />
-    );
-    expect(getByTestId('avatar--basic')).toBeInTheDocument();
   });
 
   it('matches snapshot', async () => {

@@ -83,7 +83,3 @@ models:
         resolver: false
       taskListStatus:
         resolver: false
-  TranslatedAudit:
-    fields:
-      isAssessmentNotCollaborator:
-        resolver: true
