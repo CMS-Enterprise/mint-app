@@ -515,7 +515,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               data-testid="accordionItem_model-aim"
               id="model-aim"
             >
-              <div>
+              <div
+                class="padding-y-1"
+              >
                 This statement should summarize the essence of the model and make clear who is affected, what changes, and over what period.
               </div>
             </div>
@@ -537,7 +539,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               data-testid="accordionItem_question-1:-high-level-description-of-model-elements"
               id="question-1:-high-level-description-of-model-elements"
             >
-              <div>
+              <div
+                class="padding-y-1"
+              >
                 <p
                   class="text-italic text-base-darkest margin-y-0"
                 >
@@ -550,7 +554,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-3 margin-top-0"
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
                     <li
                       class="list-item"
@@ -597,7 +601,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               data-testid="accordionItem_question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
               id="question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
             >
-              <div>
+              <div
+                class="padding-y-1"
+              >
                 <p
                   class="text-italic text-base-darkest margin-y-0"
                 >
@@ -610,7 +616,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-3 margin-top-0"
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
                     <li
                       class="list-item"
@@ -662,7 +668,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               data-testid="accordionItem_question-3:-what-target-population-will-this-model-serve?"
               id="question-3:-what-target-population-will-this-model-serve?"
             >
-              <div>
+              <div
+                class="padding-y-1"
+              >
                 <p
                   class="text-italic text-base-darkest margin-y-0"
                 >
@@ -675,7 +683,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-3 margin-top-0"
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
                     <li
                       class="list-item"
@@ -727,7 +735,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               data-testid="accordionItem_question-4:-who-are-the-target-model-participants?"
               id="question-4:-who-are-the-target-model-participants?"
             >
-              <div>
+              <div
+                class="padding-y-1"
+              >
                 <p
                   class="text-italic text-base-darkest margin-y-0"
                 >
@@ -740,7 +750,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-3 margin-top-0"
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
                     <li
                       class="list-item"
@@ -782,7 +792,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               data-testid="accordionItem_question-5:-what-are-the-proposed-cost-measures?"
               id="question-5:-what-are-the-proposed-cost-measures?"
             >
-              <div>
+              <div
+                class="padding-y-1"
+              >
                 <p
                   class="text-italic text-base-darkest margin-y-0"
                 >
@@ -795,7 +807,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-3 margin-top-0"
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
                     <li
                       class="list-item"
@@ -842,7 +854,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               data-testid="accordionItem_question-6:-what-is-the-model’s-primary-quality-goals?"
               id="question-6:-what-is-the-model’s-primary-quality-goals?"
             >
-              <div>
+              <div
+                class="padding-y-1"
+              >
                 <p
                   class="text-italic text-base-darkest margin-y-0"
                 >
@@ -855,7 +869,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-3 margin-top-0"
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
                     <li
                       class="list-item"
@@ -892,7 +906,9 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               data-testid="accordionItem_question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
               id="question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
             >
-              <div>
+              <div
+                class="padding-y-1"
+              >
                 <p
                   class="text-italic text-base-darkest margin-y-0"
                 >
@@ -905,7 +921,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                     What to include:
                   </span>
                   <ul
-                    class="padding-left-3 margin-top-0"
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
                     <li
                       class="list-item"

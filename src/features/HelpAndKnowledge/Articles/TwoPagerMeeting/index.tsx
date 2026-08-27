@@ -62,7 +62,7 @@ const TwoPagerMeeting = () => {
       return {
         title: itemConfig.title,
         content: (
-          <div>
+          <div className="padding-y-1">
             <Trans
               i18nKey={itemConfig.content.intro}
               components={{
@@ -77,7 +77,7 @@ const TwoPagerMeeting = () => {
                 <span>{itemConfig.content.label}</span>
 
                 {itemConfig.content.list && (
-                  <ul className="padding-left-3 margin-top-0">
+                  <ul className="padding-left-3 margin-top-0 margin-bottom-1">
                     {itemConfig.content.list.map((listItem: string) => (
                       <li key={listItem} className="list-item">
                         {listItem}
