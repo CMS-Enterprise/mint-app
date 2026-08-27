@@ -49,10 +49,10 @@ body:graphql:vars {
   }
 }
 
-tests {
+script:post-response {
   let tasks = res.getBody().data.modelPlan.tasks
   
-  if (tasks.length > 0) {
-    bru.setVar("planTaskID", tasks[0].id);
-  }
+  const planTaskID = tasks[0].id;
+
+  bru.setVar("planTaskID", planTaskID);
 }
