@@ -24,7 +24,6 @@ import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tArray, tObject } from 'utils/translation';
 
 import KeyResourcesCards from '../_components/KeyResourcesCards';
-// import ModelSectionCriteriaTable from '../_components/ModelSelectionCriteriaTable';
 import NeedHelp from '../_components/NeedHelp';
 import { ArticleCategories, HelpArticle } from '..';
 
