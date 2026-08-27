@@ -1,0 +1,15 @@
+CREATE TABLE plan_task_document_link (
+    id UUID PRIMARY KEY NOT NULL,
+    plan_task_id UUID NOT NULL REFERENCES public.plan_task(id) ON DELETE CASCADE,
+    plan_document_id UUID NOT NULL REFERENCES public.plan_document(id) ON DELETE CASCADE,
+
+    --META DATA
+    created_by UUID NOT NULL REFERENCES public.user_account(id),
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by UUID REFERENCES public.user_account(id),
+    modified_dts TIMESTAMP WITH TIME ZONE,
+
+    CONSTRAINT plan_task_document_link_unique UNIQUE (plan_task_id, plan_document_id)
+);
+
+COMMENT ON TABLE plan_task_document_link IS 'Links plan tasks to plan documents.';

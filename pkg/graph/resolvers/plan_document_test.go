@@ -67,6 +67,12 @@ func (suite *ResolverSuite) TestPlanDocumentCreateWithPlanTaskID() {
 	if suite.NotNil(document.PlanTaskID) {
 		suite.Equal(planTask.ID, *document.PlanTaskID)
 	}
+
+	documents, err := PlanDocumentsReadByPlanTaskID(suite.testConfigs.Logger, planTask, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+	if suite.Len(documents, 1) {
+		suite.Equal(document.ID, documents[0].ID)
+	}
 }
 
 func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {

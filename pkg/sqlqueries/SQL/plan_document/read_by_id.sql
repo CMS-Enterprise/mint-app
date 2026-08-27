@@ -10,7 +10,12 @@ SELECT
     file_size,
     restricted,
     document_type,
-    plan_task_id,
+    (
+        SELECT link.plan_task_id
+        FROM plan_task_document_link AS link
+        WHERE link.plan_document_id = plan_document.id
+        LIMIT 1
+    ) AS plan_task_id,
     other_type,
     optional_notes,
     is_link,

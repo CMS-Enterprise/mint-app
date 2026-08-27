@@ -31,14 +31,31 @@ func (s *Store) PlanDocumentCreate(
 	inputDocument.ModifiedBy = nil
 	inputDocument.ModifiedDts = nil
 
+	tx := s.db.MustBegin()
+	defer tx.Rollback()
+
 	retDoc := &models.PlanDocument{}
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.Create)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanDocument.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
 	defer stmt.Close()
 
 	err = stmt.Get(retDoc, inputDocument)
+	if err != nil {
+		return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
+	}
+
+	if inputDocument.PlanTaskID != nil {
+		link := models.NewPlanTaskDocumentLink(inputDocument.CreatedBy, *inputDocument.PlanTaskID, retDoc.ID)
+		_, err = PlanTaskDocumentLinkCreate(tx, logger, link)
+		if err != nil {
+			return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
+		}
+		retDoc.PlanTaskID = inputDocument.PlanTaskID
+	}
+
+	err = tx.Commit()
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 	}
