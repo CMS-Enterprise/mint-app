@@ -1,25 +1,16 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
-import { possibleSolutionsMock } from 'tests/mock/mto';
-import VerboseMockedProvider from 'tests/MockedProvider';
+import { render } from '@testing-library/react';
 
 import TwoPagerMeeting from './index';
 
-const mocks = [...possibleSolutionsMock];
-
 describe('TwoPagerMeeting', () => {
-  it('matches the snapshot', async () => {
+  it('matches the snapshot', () => {
     const router = createMemoryRouter(
       [
         {
           path: '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings',
-          element: (
-            <VerboseMockedProvider mocks={mocks}>
-              <TwoPagerMeeting />
-            </VerboseMockedProvider>
-          )
+          element: <TwoPagerMeeting />
         }
       ],
       {
@@ -29,13 +20,7 @@ describe('TwoPagerMeeting', () => {
       }
     );
 
-    const { asFragment, getByTestId } = render(
-      <MockedProvider mocks={mocks}>
-        <RouterProvider router={router} />
-      </MockedProvider>
-    );
-
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    const { asFragment } = render(<RouterProvider router={router} />);
 
     expect(asFragment()).toMatchSnapshot();
   });

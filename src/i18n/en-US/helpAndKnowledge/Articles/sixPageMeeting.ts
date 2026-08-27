@@ -307,7 +307,47 @@ const sixPageMeeting = {
     modelSelectionCriteria: {
       heading: 'Model selection criteria',
       description:
-        'These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.'
+        'These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.',
+      table: {
+        header: ['Criteria', 'Description', 'Scoring parameter'],
+        content: [
+          {
+            criteria: 'Alignment',
+            description:
+              'Model supports or advances one (or more) of the five strategy pillars:​ Drive accountable care, advance healthy living, support innovation, address affordability, partner to achieve system transformation',
+            score:
+              '<bold>Yes/No</bold>Model does not move forward if it does not align with any pillar of the strategy'
+          },
+          {
+            criteria: 'Impact',
+            description:
+              '<paragraph>Model effect as a function of participation and the potential for health system transformation</paragraph><ul><li>Participation: number of providers, beneficiaries, Medicare spending, Medicaid spending​</li><li>Transformation, including: cost reduction, quality improvement, delivery system change​​</li></ul>',
+            score:
+              '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
+          },
+          {
+            criteria: 'Feasibility',
+            description:
+              'Likelihood of successful execution of the model, including any operational or legal feasibility limitations. Potential for adoption and scaling by non-participants',
+            score:
+              '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
+          },
+          {
+            criteria: 'Diversity',
+            description:
+              'Innovation in a dimension (e.g., payment model), provider type, patient population, mechanisms of transformation',
+            score:
+              '<bold>High/Medium/Low</bold>Model must score high or medium to move forward'
+          },
+          {
+            criteria: 'OA/HHS support',
+            description:
+              'The extent to which the model is supported by OA/HHS and will achieve CMS/HHS clearance​',
+            score:
+              '<bold>Yes/No</bold>Model does not move forward if it is unlikely to clear OA/HHS'
+          }
+        ]
+      }
     },
     possibleOutcomes: {
       heading: 'Possible outcomes',
