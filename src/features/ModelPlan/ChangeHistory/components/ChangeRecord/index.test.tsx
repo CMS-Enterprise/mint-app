@@ -34,7 +34,7 @@ describe('ChangeRecord', () => {
       }
     ],
     actorName: 'MINT Doe',
-    isAssessment: false,
+    isAssessmentNotCollaborator: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -87,7 +87,7 @@ describe('ChangeRecord', () => {
         relationContent: 'Custom date title'
       },
       actorName: 'MINT Doe',
-      isAssessment: false,
+      isAssessmentNotCollaborator: false,
       __typename: 'TranslatedAudit'
     };
 
@@ -139,7 +139,7 @@ describe('ChangeRecord', () => {
         }
       ],
       actorName: 'MINT Doe',
-      isAssessment: false,
+      isAssessmentNotCollaborator: false,
       __typename: 'TranslatedAudit'
     };
 
@@ -174,17 +174,20 @@ describe('ChangeRecord', () => {
     expect(showDetailsButton).toBeInTheDocument();
   });
 
-  it('shows the assessment star avatar when isAssessment is true', () => {
+  it('shows the assessment star avatar when isAssessmentNotCollaborator is true', () => {
     const { getByTestId } = render(
       <ChangeRecord
-        changeRecord={{ ...mockChangeRecord, isAssessment: true }}
+        changeRecord={{
+          ...mockChangeRecord,
+          isAssessmentNotCollaborator: true
+        }}
         index={1}
       />
     );
     expect(getByTestId('avatar--assessment')).toBeInTheDocument();
   });
 
-  it('shows initials when isAssessment is false', () => {
+  it('shows initials when isAssessmentNotCollaborator is false', () => {
     const { getByTestId } = render(
       <ChangeRecord changeRecord={mockChangeRecord} index={1} />
     );

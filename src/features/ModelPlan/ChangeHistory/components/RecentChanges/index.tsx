@@ -44,7 +44,7 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
         <Grid desktop={{ col: 2 }} tablet={{ col: 1 }} mobileLg={{ col: 1 }}>
           <AvatarCircle
             user={changeRecords[0].actorName}
-            isAssessment={changeRecords[0].isAssessment}
+            isAssessment={changeRecords[0].isAssessmentNotCollaborator}
           />
         </Grid>
 

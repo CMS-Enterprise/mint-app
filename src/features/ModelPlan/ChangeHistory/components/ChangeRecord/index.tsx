@@ -672,7 +672,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
         <AvatarCircle
           user={changeRecord.actorName}
           className="margin-right-1 flex-align-self-start"
-          isAssessment={changeRecord.isAssessment}
+          isAssessment={changeRecord.isAssessmentNotCollaborator}
         />
         <span
           className={classNames(

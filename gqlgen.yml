@@ -85,5 +85,5 @@ models:
         resolver: false
   TranslatedAudit:
     fields:
-      isAssessment:
+      isAssessmentNotCollaborator:
         resolver: true

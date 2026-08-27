@@ -512,7 +512,7 @@ const BatchRecord = ({ changeRecords, index }: ChangeRecordProps) => {
         <AvatarCircle
           user={changeRecords[0].actorName}
           className="margin-right-1 flex-align-self-start"
-          isAssessment={changeRecords[0].isAssessment}
+          isAssessment={changeRecords[0].isAssessmentNotCollaborator}
         />
         <span className={classNames('padding-top-05')}>
           <span className="text-bold">{changeRecords[0].actorName} </span>

@@ -31,7 +31,7 @@ describe('filterUtil.tsx', () => {
       }
     ],
     actorName: 'John Doe',
-    isAssessment: false,
+    isAssessmentNotCollaborator: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -55,7 +55,7 @@ describe('filterUtil.tsx', () => {
       }
     ],
     actorName: 'Jane Smith',
-    isAssessment: false,
+    isAssessmentNotCollaborator: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -79,7 +79,7 @@ describe('filterUtil.tsx', () => {
       }
     ],
     actorName: 'Bob Johnson',
-    isAssessment: false,
+    isAssessmentNotCollaborator: false,
     __typename: 'TranslatedAudit'
   };
 
@@ -101,7 +101,7 @@ describe('filterUtil.tsx', () => {
         ...mockChangeRecord,
         id: 'test-id-4',
         actorName: 'John Doe',
-        isAssessment: false
+        isAssessmentNotCollaborator: false
       };
 
       const changes: ChangeRecordType[][] = [

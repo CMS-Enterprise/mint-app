@@ -282,7 +282,7 @@ describe('The Model Plan Task List', () => {
                 }
               ],
               actorName: 'MINT Doe',
-              isAssessment: false,
+              isAssessmentNotCollaborator: false,
               __typename: 'TranslatedAudit'
             }
           ]

@@ -75,9 +75,9 @@ func MTOTranslatedAuditsGetByModelPlanID(ctx context.Context, store *storage.Sto
 	return TranslatedAuditCollectionGetByModelPlanIDAndTableNames(ctx, store, logger, principal, modelPlanID, models.MTOTables, &numberOfRecords, nil)
 }
 
-// TranslatedAuditActorIsAssessment returns true when the actor currently has the Assessment job code
-// and is not a collaborator on the model plan. System / MINT actors never receive the Assessment star.
-func TranslatedAuditActorIsAssessment(ctx context.Context, obj *models.TranslatedAudit) (bool, error) {
+// TranslatedAuditActorIsAssessmentNotCollaborator returns true when the actor currently has the
+// Assessment job code and is not a collaborator on the model plan. System / MINT actors never qualify.
+func TranslatedAuditActorIsAssessmentNotCollaborator(ctx context.Context, obj *models.TranslatedAudit) (bool, error) {
 	if obj.ActorID == constants.GetSystemAccountUUID() || obj.ActorName == "MINT" {
 		return false, nil
 	}

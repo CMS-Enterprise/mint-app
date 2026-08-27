@@ -385,7 +385,7 @@ func (suite *ResolverSuite) TestTranslateAuditMilestoneSolutionLinkDeletedWhenSo
 	}
 }
 
-func (suite *ResolverSuite) TestTranslatedAuditActorIsAssessment() {
+func (suite *ResolverSuite) TestTranslatedAuditActorIsAssessmentNotCollaborator() {
 	plan := suite.createModelPlan("assessment star plan")
 	ctx := suite.testConfigs.Context
 	store := suite.testConfigs.Store
@@ -406,7 +406,7 @@ func (suite *ResolverSuite) TestTranslatedAuditActorIsAssessment() {
 		models.DBOpUpdate,
 	)
 	offTeamAudit.ActorName = "ASMT Doe"
-	isAssessment, err := TranslatedAuditActorIsAssessment(ctx, &offTeamAudit)
+	isAssessment, err := TranslatedAuditActorIsAssessmentNotCollaborator(ctx, &offTeamAudit)
 	suite.NoError(err)
 	suite.True(isAssessment)
 
@@ -424,7 +424,7 @@ func (suite *ResolverSuite) TestTranslatedAuditActorIsAssessment() {
 		models.DBOpUpdate,
 	)
 	onTeamAudit.ActorName = onTeam.CommonName
-	isAssessment, err = TranslatedAuditActorIsAssessment(ctx, &onTeamAudit)
+	isAssessment, err = TranslatedAuditActorIsAssessmentNotCollaborator(ctx, &onTeamAudit)
 	suite.NoError(err)
 	suite.False(isAssessment)
 
@@ -440,7 +440,7 @@ func (suite *ResolverSuite) TestTranslatedAuditActorIsAssessment() {
 		models.DBOpUpdate,
 	)
 	basicAudit.ActorName = "BASIC Doe"
-	isAssessment, err = TranslatedAuditActorIsAssessment(ctx, &basicAudit)
+	isAssessment, err = TranslatedAuditActorIsAssessmentNotCollaborator(ctx, &basicAudit)
 	suite.NoError(err)
 	suite.False(isAssessment)
 
@@ -455,7 +455,7 @@ func (suite *ResolverSuite) TestTranslatedAuditActorIsAssessment() {
 		models.DBOpUpdate,
 	)
 	systemAudit.ActorName = "MINT"
-	isAssessment, err = TranslatedAuditActorIsAssessment(ctx, &systemAudit)
+	isAssessment, err = TranslatedAuditActorIsAssessmentNotCollaborator(ctx, &systemAudit)
 	suite.NoError(err)
 	suite.False(isAssessment)
 }
