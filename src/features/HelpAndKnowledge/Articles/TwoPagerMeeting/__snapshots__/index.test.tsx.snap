@@ -16,187 +16,234 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
         class=""
         data-testid="grid"
       >
-        <button
-          class="usa-button usa-button--unstyled margin-top-6"
-          data-testid="button"
-          type="button"
-        >
-          <svg
-            aria-label="close"
-            class="usa-icon margin-right-05 text-tbottom"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-            />
-          </svg>
-          Close tab
-        </button>
-        <h1
-          aria-live="polite"
-          class="mint-h1 margin-bottom-1"
-          tabindex="-1"
-        >
-          About 2-page concept papers and review meetings
-        </h1>
-        <a
-          class="usa-link width-fit-content display-block margin-bottom-1"
-          data-discover="true"
-          href="/help-and-knowledge/articles?category=model-concept-and-design"
-        >
-          <span
-            aria-label="Articles under the Model concept and design category"
-            class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
-            data-testid="tag"
-          >
-            Model concept and design
-          </span>
-        </a>
-        <p
-          class="mint-body-large line-height-large margin-top-0 margin-bottom-4"
-        >
-          Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.
-        </p>
         <div
-          class="usa-summary-box bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
-          data-testid="summary-box"
+          class="margin-bottom-4"
         >
-          <div
-            class="usa-summary-box__body"
+          <button
+            class="usa-button usa-button--unstyled margin-top-6"
+            data-testid="button"
+            type="button"
           >
-            <h3
-              class="usa-summary-box__heading"
+            <svg
+              aria-label="close"
+              class="usa-icon margin-right-05 text-tbottom"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Sections of this article
-            </h3>
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+            Close tab
+          </button>
+          <h1
+            aria-live="polite"
+            class="mint-h1 margin-bottom-1"
+            tabindex="-1"
+          >
+            About 2-page concept papers and review meetings
+          </h1>
+          <a
+            class="usa-link width-fit-content display-block margin-bottom-1"
+            data-discover="true"
+            href="/help-and-knowledge/articles?category=model-concept-and-design"
+          >
+            <span
+              aria-label="Articles under the Model concept and design category"
+              class="mint-tag article__tag bg-primary-lighter text-primary text-no-uppercase text-bold font-body-sm"
+              data-testid="tag"
+            >
+              Model concept and design
+            </span>
+          </a>
+          <p
+            class="mint-body-large line-height-large margin-top-0 margin-bottom-4"
+          >
+            Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.
+          </p>
+          <div
+            class="usa-alert usa-alert--info usa-alert--slim flex margin-bottom-4"
+            data-testid="alert"
+          >
             <div
-              class="usa-summary-box__text"
+              class="usa-alert__body"
             >
-              <ul
-                class="margin-y-0"
+              <p
+                class="usa-alert__text"
               >
-                <li
-                  class="margin-top-05 margin-bottom-1"
-                >
+                <span>
+                  Much of the content below is also accessible in the 2-page concept paper template. 
                   <button
                     class="usa-button usa-button--unstyled"
                     data-testid="button"
                     type="button"
                   >
-                    Key resources for model teams writing 2-page concept papers
-                    <svg
-                      aria-label="forward"
-                      class="usa-icon margin-left-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <span
+                      class="display-flex flex-align-center line-height-normal"
+                      style="column-gap: 0.25rem;"
                     >
-                      <path
-                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                      />
-                    </svg>
+                      Download the template from SharePoint
+                      <svg
+                        aria-label="launch"
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                        />
+                      </svg>
+                    </span>
                   </button>
-                </li>
-                <li
-                  class="margin-top-05 margin-bottom-1"
+                </span>
+              </p>
+            </div>
+          </div>
+          <div
+            class="usa-summary-box bg-base-lightest border-0 radius-0 margin-top-0 padding-y-2 padding-x-2"
+            data-testid="summary-box"
+          >
+            <div
+              class="usa-summary-box__body"
+            >
+              <h3
+                class="usa-summary-box__heading margin-bottom-1"
+              >
+                Sections of this article
+              </h3>
+              <div
+                class="usa-summary-box__text"
+              >
+                <ul
+                  class="margin-y-0 display-flex flex-column padding-left-4"
+                  style="gap: 0.5rem;"
                 >
-                  <button
-                    class="usa-button usa-button--unstyled"
-                    data-testid="button"
-                    type="button"
+                  <li
+                    class="padding-left-05"
                   >
-                    About 2-page concept papers
-                    <svg
-                      aria-label="forward"
-                      class="usa-icon margin-left-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
                     >
-                      <path
-                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                      />
-                    </svg>
-                  </button>
-                </li>
-                <li
-                  class="margin-top-05 margin-bottom-1"
-                >
-                  <button
-                    class="usa-button usa-button--unstyled"
-                    data-testid="button"
-                    type="button"
+                      Key resources for model teams writing 2-page concept papers
+                      <svg
+                        aria-label="forward"
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                  <li
+                    class="padding-left-05"
                   >
-                    Additional resources available to model teams
-                    <svg
-                      aria-label="forward"
-                      class="usa-icon margin-left-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
                     >
-                      <path
-                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                      />
-                    </svg>
-                  </button>
-                </li>
-                <li
-                  class="margin-top-05 margin-bottom-1"
-                >
-                  <button
-                    class="usa-button usa-button--unstyled"
-                    data-testid="button"
-                    type="button"
+                      About 2-page concept papers
+                      <svg
+                        aria-label="forward"
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                  <li
+                    class="padding-left-05"
                   >
-                    How 2-page concept papers are reviewed
-                    <svg
-                      aria-label="forward"
-                      class="usa-icon margin-left-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
                     >
-                      <path
-                        d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-                      />
-                    </svg>
-                  </button>
-                </li>
-              </ul>
+                      Template guidance
+                      <svg
+                        aria-label="forward"
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                  <li
+                    class="padding-left-05"
+                  >
+                    <button
+                      class="usa-button usa-button--unstyled"
+                      data-testid="button"
+                      type="button"
+                    >
+                      Example 2-page concept papers
+                      <svg
+                        aria-label="forward"
+                        class="usa-icon"
+                        focusable="false"
+                        height="1em"
+                        role="img"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
         <div
-          class="margin-bottom-5 scroll-target"
+          class="margin-bottom-2 scroll-target"
           id="key-resources-for-model-teams-writing-2-page-concept-papers"
         >
           <h2
-            class="margin-bottom-3"
+            class="margin-top-0 margin-bottom-3"
           >
             Key resources for model teams writing 2-page concept papers
           </h2>
           <p
             class="margin-top-0 margin-bottom-3 line-height-normal"
           >
-            Visit the CMMI Strategy Refresh SharePoint site to access additional model development resources including those that will help with the creation of 2-page and 6-page concept papers.
+            Visit the CMMI SharePoint site to access additional model development resources including those that will help with the creation of 2-page and 6-page concept papers.
           </p>
           <ul
             class="usa-card-group"
@@ -216,7 +263,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   <h4
                     class="line-height-body-4 margin-bottom-05"
                   >
-                    Strategy Refresh SharePoint site
+                    Helpful SharePoint links
                   </h4>
                 </div>
                 <div
@@ -232,7 +279,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
-                      Go to the Strategy Refresh landing page
+                      CMMI New Model Design Library
                       <svg
                         aria-label="launch"
                         class="usa-icon"
@@ -258,7 +305,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                       class="display-flex flex-align-center line-height-normal"
                       style="column-gap: 0.25rem;"
                     >
-                      Go to the Resources page
+                      New Model Operational Handbook
                       <svg
                         aria-label="launch"
                         class="usa-icon"
@@ -292,12 +339,12 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
                   <h4
                     class="line-height-body-4 margin-bottom-05"
                   >
-                    6-page concept paper template
+                    2-page concept paper template
                   </h4>
                   <p
                     class="margin-y-0 text-base mint-body-normal"
                   >
-                    Download the template from the Strategy Refresh SharePoint site.
+                    Download the template from SharePoint.
                   </p>
                 </div>
                 <div
@@ -336,266 +383,26 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
           </ul>
         </div>
         <div
-          class="margin-bottom-5 scroll-target"
+          class="margin-bottom-3 scroll-target"
           id="about-2-page-concept-papers"
         >
           <h2
-            class="margin-bottom-3"
+            class="margin-top-0 margin-bottom-3"
           >
             About 2-page concept papers
           </h2>
           <p
             class="margin-top-0 margin-bottom-3 line-height-normal"
           >
-            A 2-page concept paper is an overview of an early development model concept, and may or may not include all of the elements listed below, and should include general descriptions. Teams can focus on the most relevant and impactful information to help CMMI decide if a model concept should move to the next development phase. As teams are considering a 2-page concept paper, they may consult with their group leadership and the CMMI FO for early guidance and to support efficient use of staff and other resources.
+            The 2-pager is an early concept development and decision-screening tool. It is intended to help teams frame a model idea clearly enough for leadership to assess whether the concept should move forward, be refined, or stop early. Not every element will be fully answerable at this stage. Responses should be directional, concise, and grounded in the best available evidence and operational judgment.
+          </p>
+          <p
+            class="margin-top-0 margin-bottom-3 line-height-normal"
+          >
+            Note: As teams begin drafting a 2-pager, they should consult group leadership and the Front Office early to support alignment and efficient use of staff time and other resources.
           </p>
           <div
-            class="usa-alert usa-alert--info flex margin-y-3"
-            data-testid="alert"
-          >
-            <div
-              class="usa-alert__body"
-            >
-              <p
-                class="usa-alert__text"
-              >
-                <span />
-              </p>
-              <div
-                style="white-space: pre;"
-              >
-                Much of the content below is also accessible in the 6-page concept paper template. 
-                <span
-                  class="usa-link pointer"
-                  role="button"
-                  tabindex="0"
-                >
-                  <span>
-                    Download it from the Strategy Refresh SharePoint site
-                    <svg
-                      aria-label="launch"
-                      class="usa-icon margin-left-05 top-05"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                      />
-                    </svg>
-                  </span>
-                </span>
-              </div>
-              <p />
-            </div>
-          </div>
-          <h3
-            class="margin-top-0 margin-bottom-1"
-          >
-            1. Proposed model overview and goals
-          </h3>
-          <p
-            class="padding-left-3 margin-bottom-0 line-height-normal"
-          >
-            2-page concept papers will:
-          </p>
-          <ul
-            class="margin-top-0 margin-bottom-3 padding-left-6"
-          >
-            <li
-              class="line-height-normal"
-            >
-              Briefly discuss the problem the model intends to address, including a description of the:
-              <ul
-                class="margin-top-0 padding-left-2"
-              >
-                <li
-                  class="line-height-normal"
-                >
-                  Causes and enablers of the problem
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  Magnitude/scope of the problem
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  Population(s) affected
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  Why a CMMI model (i.e. why can’t CM/CMCS do it? Why do we need 1115A authority?)
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  How a model may address the problem
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  How a model may address prevention, empowerment, and choice and competition, as well as priority questions in the delivery and organization of care or in CMS operations
-                </li>
-              </ul>
-            </li>
-            <li
-              class="line-height-normal"
-            >
-              Describe the preliminary theory of change for the model including a statement of the model aim with an initial driver diagram in consultation with LDG, RREG and the Quality Vertical that shows how the model will address the problem and questions above
-            </li>
-            <li
-              class="line-height-normal"
-            >
-              Include the beneficiary perspective regarding the need for the model
-            </li>
-            <li
-              class="line-height-normal"
-            >
-              Provide background or context on whether the proposed model has previously been tested or is a follow-on model, incorporates learnings from external stakeholders, and/or where concept originated (e.g. private sector, academia, state or regional efforts)
-            </li>
-          </ul>
-          <h3
-            class="margin-top-0 margin-bottom-1"
-          >
-            2. High-level description of model elements
-          </h3>
-          <p
-            class="padding-left-3 margin-bottom-0 line-height-normal"
-          >
-            2-page concept papers will:
-          </p>
-          <ul
-            class="margin-top-0 margin-bottom-3 padding-left-6"
-          >
-            <li
-              class="line-height-normal"
-            >
-              Provide a high-level overview of key model design elements including: target population, payment approach, geography, and key quality domains
-            </li>
-            <li
-              class="line-height-normal"
-            >
-              Model scale high-level potential impacts based on size/intervention
-            </li>
-          </ul>
-          <h3
-            class="margin-top-0 margin-bottom-1"
-          >
-            3. Preliminary analysis of the proposed model relative to selection criteria
-          </h3>
-          <i
-            class="display-block margin-top-0 margin-bottom-1 padding-left-3"
-          >
-            Not all of these may be answerable early in model development/consideration
-          </i>
-          <p
-            class="padding-left-3 margin-bottom-0 line-height-normal"
-          >
-            2-page concept papers may address the following criteria:
-          </p>
-          <ul
-            class="margin-top-0 margin-bottom-5 padding-left-6"
-          >
-            <li
-              class="line-height-normal margin-bottom-05"
-            >
-              <strong>
-                Alignment
-              </strong>
-              : Describe how the model would advance CMMI’s strategic objectives:
-              <ol
-                class="padding-left-3 margin-top-05"
-              >
-                <li
-                  class="line-height-normal"
-                >
-                  Promote evidence-based prevention
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  Empower people with information
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  Drive competition and consumer choice
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  Protecting the Federal taxpayer
-                </li>
-              </ol>
-            </li>
-            <li
-              class="line-height-normal margin-bottom-05"
-            >
-              <strong>
-                Impact
-              </strong>
-              : Potential for the model to impact the following dimensions:
-              <ul
-                class="padding-left-3 margin-top-05"
-              >
-                <li
-                  class="line-height-normal"
-                >
-                  Participation – number and types of providers, beneficiaries, potential participation if scaled.
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  Outcomes – expected improvements in quality.
-                </li>
-                <li
-                  class="line-height-normal"
-                >
-                  Cost – Medicare and/or Medicaid spending (federal and state) and/or changes in out-of-pocket costs to beneficiaries.
-                </li>
-              </ul>
-            </li>
-            <li
-              class="line-height-normal margin-bottom-05"
-            >
-              <strong>
-                Feasibility
-              </strong>
-              : Consider likelihood of successful execution of the model including operational complexity, legal considerations, CMMI staffing, evaluation challenges, participant interest, and potential for scaling.
-            </li>
-            <li
-              class="line-height-normal margin-bottom-05"
-            >
-              <strong>
-                Technology
-              </strong>
-              : Explain how the model with advance adoption of new technologies. Specify what existing internal technological capabilities will be leveraged for the model, and what new technical capabilities will need to be built.
-            </li>
-            <li
-              class="line-height-normal margin-bottom-05"
-            >
-              <strong>
-                Innovation
-              </strong>
-              : Model provides or is expected to stimulate innovation in a particular dimension such as payment approach, provider type, patient population, the organization and delivery of care, or CMS payment mechanisms or policy.
-            </li>
-            <li
-              class="line-height-normal margin-bottom-05"
-            >
-              <strong>
-                Interested parties
-              </strong>
-              : Include brief description of any engagement or advocacy by interested parties, including Congress, on the model concept.
-            </li>
-          </ul>
-          <div
-            class="usa-summary-box padding-3 margin-bottom-3"
+            class="usa-summary-box padding-3"
             data-testid="summary-box"
           >
             <div
@@ -604,80 +411,56 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               <h3
                 class="usa-summary-box__heading margin-bottom-2"
               >
-                Tips for model teams
+                General drafting guidance
               </h3>
               <div
                 class="usa-summary-box__text"
               >
-                <p
-                  class="margin-y-0"
-                >
-                  Focus on concept, research, gaps, and goals​. Clearly articulate the problem the model is solving for and its goals​. Ask yourself the following questions while writing:
-                </p>
                 <ul
-                  class="margin-y-0 padding-left-6"
+                  class="margin-top-0 margin-bottom-2 padding-left-3"
                 >
                   <li
                     class="line-height-normal"
                   >
-                    What does success look like?
+                    Keep responses high level and strategic; this is not a full design document.
                   </li>
                   <li
                     class="line-height-normal"
                   >
-                    What will improve for patients?
+                    Use plain language and make the causal logic easy to follow.
                   </li>
                   <li
                     class="line-height-normal"
                   >
-                    How will the care experience be different?
+                    Be specific where possible, especially on the problem, intervention, target population, expected outcomes, and major risks.
                   </li>
                   <li
                     class="line-height-normal"
                   >
-                    What do we want providers/payers to change?
+                    Where details are still under development, identify the core hypothesis or working assumption rather than leaving sections blank.
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Draw on relevant internal and external learnings, including prior CMMI models, private-sector approaches, state-based efforts, academic evidence, and stakeholder input.
+                  </li>
+                  <li
+                    class="line-height-normal"
+                  >
+                    Keep the answers succinct and within the 2-page limit.
                   </li>
                 </ul>
                 <p
                   class="margin-y-0"
                 >
-                  Lessons learned from past successful model concepts:
-                </p>
-                <ul
-                  class="margin-top-0 margin-bottom-2 padding-left-6"
-                >
-                  <li
-                    class="line-height-normal"
-                  >
-                    Think about building on existing work
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Pay attention to interested party interests and ideas
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Build connections with other parts of CMS and HHS
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Be prepared for opportunities
-                  </li>
-                </ul>
-                <p
-                  class="margin-y-0"
-                >
-                  Visit the 
+                  Visit 
                   <span
                     class="margin-right-0 usa-link pointer"
                     role="button"
                     tabindex="0"
                   >
                     <span>
-                      Strategy Refresh SharePoint site
+                      SharePoint
                       <svg
                         aria-label="launch"
                         class="usa-icon margin-left-05 top-05"
@@ -699,605 +482,567 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
               </div>
             </div>
           </div>
-          <div
-            class="usa-summary-box padding-3 border-gray-10 bg-white shadow-2"
-            data-testid="summary-box"
+        </div>
+        <div
+          class="margin-bottom-3 scroll-target"
+          id="template-guidance"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-3"
           >
-            <div
-              class="usa-summary-box__body"
+            Template guidance
+          </h2>
+          <div
+            class="usa-accordion"
+            data-allow-multiple="true"
+            data-testid="accordion"
+          >
+            <h4
+              class="usa-accordion__heading"
             >
-              <h3
-                class="usa-summary-box__heading"
+              <button
+                aria-controls="model-aim"
+                aria-expanded="true"
+                class="usa-accordion__button"
+                data-testid="accordionButton_model-aim"
+                type="button"
               >
-                Example 2-page concept papers
-              </h3>
+                Model aim
+              </button>
+            </h4>
+            <div
+              class="usa-accordion__content usa-prose"
+              data-testid="accordionItem_model-aim"
+              id="model-aim"
+            >
               <div
-                class="usa-summary-box__text"
+                class="padding-y-1"
+              >
+                This statement should summarize the essence of the model and make clear who is affected, what changes, and over what period.
+              </div>
+            </div>
+            <h4
+              class="usa-accordion__heading"
+            >
+              <button
+                aria-controls="question-1:-high-level-description-of-model-elements"
+                aria-expanded="true"
+                class="usa-accordion__button"
+                data-testid="accordionButton_question-1:-high-level-description-of-model-elements"
+                type="button"
+              >
+                Question 1: High-level description of model elements
+              </button>
+            </h4>
+            <div
+              class="usa-accordion__content usa-prose"
+              data-testid="accordionItem_question-1:-high-level-description-of-model-elements"
+              id="question-1:-high-level-description-of-model-elements"
+            >
+              <div
+                class="padding-y-1"
               >
                 <p
+                  class="text-italic text-base-darkest margin-y-0"
+                >
+                  What is the most important problem that this model aims to solve?
+                </p>
+                <div
                   class="margin-y-1"
                 >
-                  While all models are different, and therefore the content within a 2-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.
-                </p>
-                <ul
-                  class="margin-top-0"
-                >
-                  <li
-                    class="margin-bottom-1"
-                  >
-                    <button
-                      class="usa-button usa-button--unstyled"
-                      data-testid="button"
-                      type="button"
-                    >
-                      <span
-                        class="display-flex flex-align-center line-height-normal"
-                        style="column-gap: 0.25rem;"
-                      >
-                        AHEAD 2-page concept paper
-                        <svg
-                          aria-label="launch"
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </li>
-                  <li
-                    class="margin-bottom-1"
-                  >
-                    <button
-                      class="usa-button usa-button--unstyled"
-                      data-testid="button"
-                      type="button"
-                    >
-                      <span
-                        class="display-flex flex-align-center line-height-normal"
-                        style="column-gap: 0.25rem;"
-                      >
-                        Enhancing Oncology Model 2-page concept paper
-                        <svg
-                          aria-label="launch"
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </li>
-                  <li
-                    class="margin-bottom-1"
-                  >
-                    <button
-                      class="usa-button usa-button--unstyled"
-                      data-testid="button"
-                      type="button"
-                    >
-                      <span
-                        class="display-flex flex-align-center line-height-normal"
-                        style="column-gap: 0.25rem;"
-                      >
-                        Innovation in Behavioral Health 2-pager concept paper
-                        <svg
-                          aria-label="launch"
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </li>
-                  <li
-                    class="margin-bottom-1"
-                  >
-                    <button
-                      class="usa-button usa-button--unstyled"
-                      data-testid="button"
-                      type="button"
-                    >
-                      <span
-                        class="display-flex flex-align-center line-height-normal"
-                        style="column-gap: 0.25rem;"
-                      >
-                        Making Care Primary 2-pager concept paper
-                        <svg
-                          aria-label="launch"
-                          class="usa-icon"
-                          focusable="false"
-                          height="1em"
-                          role="img"
-                          viewBox="0 0 24 24"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </li>
-                </ul>
-                <span
-                  class="margin-y-0"
-                >
-                  To view the links above, you will need access to the 
-                  <span
-                    class="usa-link pointer"
-                    role="button"
-                    tabindex="0"
-                  >
-                    <span>
-                      Model Resources area of SharePoint.
-                      <svg
-                        aria-label="launch"
-                        class="usa-icon margin-left-05 top-05"
-                        focusable="false"
-                        height="1em"
-                        role="img"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-                        />
-                      </svg>
-                    </span>
+                  <span>
+                    What to include:
                   </span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="margin-bottom-5 scroll-target"
-          id="additional-resources-available-to-model-teams"
-        >
-          <h2
-            class="margin-bottom-3"
-          >
-            Additional resources available to model teams
-          </h2>
-          <p
-            class="margin-top-0 margin-bottom-3 line-height-normal"
-          >
-            This early in the process, it can be hard for model teams to know exactly what they’ll need regarding contractor support during the model concept, design, and development phases.
-          </p>
-          <h3
-            class="margin-top-0 margin-bottom-1"
-          >
-            Pipeline contractors
-          </h3>
-          <p
-            class="line-height-normal margin-top-0 margin-bottom-3"
-          >
-            CMMI generally has two pipeline contractors available (currently MITRE and ARDS have pipeline contracts with CMMI) that can assist model teams with various needs leading up to clearance. It’s important to note, model teams need to get approval from CMMI FO to utilize one of these contractors, so it can be important for model teams to begin considering contractor involvement even as early as the 2-page concept phase.
-          </p>
-          <p
-            class="line-height-normal margin-top-0 margin-bottom-3"
-          >
-            While it is fine to use pipeline support for 2-page and 6-page concept paper work and for developing ICIP content, after the ICIP clears, model teams can no longer use pipeline funding. It can take a few months to get implementation contractor support, so plan accordingly. Model teams should work with the Division of Central Contracts Services (DCCS), the Division of Systems Support, Operation & Security (DSSOS), and the Office of Acquisition and Grants Management (OAGM) for assistance with contracting needs.
-          </p>
-          <div
-            class="usa-summary-box padding-3 margin-bottom-3"
-            data-testid="summary-box"
-          >
-            <div
-              class="usa-summary-box__body"
-            >
-              <h3
-                class="usa-summary-box__heading margin-bottom-2"
-              >
-                Tips for model teams
-              </h3>
-              <div
-                class="usa-summary-box__text"
-              >
-                <p
-                  class="margin-y-0"
-                >
-                  Not sure whether you need a pipeline contractor? Discuss the following questions with your team:
-                </p>
-                <ul
-                  class="margin-y-0 padding-left-6"
-                >
-                  <li
-                    class="line-height-normal"
-                  >
-                    Do you need an in-house expert on data? 
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Do you need help crunching numbers? 
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Do you need analytics support?
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Do you need help drafting the Innovation Center Investment Proposal (ICIP) or other documents? 
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Do you need literature review support? 
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Do you need rule-writing support?
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Do you need a clinical specialist? 
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Do you need help on a specific aspect of your model? 
-                  </li>
-                </ul>
-                <p
-                  class="margin-y-0"
-                >
-                  If the answer is yes to one or more of these questions, your model would likely benefit from utilizing a pipeline contractor.
-                </p>
-              </div>
-            </div>
-          </div>
-          <h3
-            class="margin-top-0 margin-bottom-1"
-          >
-            Cross-cutting groups
-          </h3>
-          <p
-            class="line-height-normal margin-y-0"
-          >
-            During the concept, design, and development phases of a model, there are a variety of other groups within CMMI and the larger CMS organization that can help model teams with a variety of aspects of their model. These areas of specialty include:
-          </p>
-          <ul
-            class="margin-y-0 padding-left-6"
-          >
-            <li
-              class="line-height-normal"
-            >
-              Business Services Group (BSG) - for feasibility criteria
-            </li>
-            <li
-              class="line-height-normal"
-            >
-              CMMI Front Office (FO) – for healthy living
-            </li>
-            <li
-              class="line-height-normal"
-            >
-              <a
-                class="usa-link usa-button usa-button--unstyled"
-                data-discover="true"
-                href="/help-and-knowledge/about-2-page-concept-papers-and-review-meetings?solution=learning-and-diffusion-group&section=about"
-              >
-                Learning and Diffusion Group (LDG)
-              </a>
-               - for learning
-            </li>
-            <li
-              class="line-height-normal"
-            >
-              Policy and Programs Group (PPG) - for quality and stakeholder engagement
-            </li>
-            <li
-              class="line-height-normal"
-            >
-              Research and Rapid Cycle Evaluation Group (RREG) - for evaluation
-            </li>
-          </ul>
-        </div>
-        <div
-          class="margin-bottom-5 scroll-target"
-          id="how-2-page-concept-papers-are-reviewed"
-        >
-          <h2
-            class="margin-bottom-3"
-          >
-            How 2-page concept papers are reviewed
-          </h2>
-          <p
-            class="margin-top-0 margin-bottom-3 line-height-normal"
-          >
-            After division and group leadership have reviewed and approved the 2-page concept paper, a review meeting with CMMI FO is scheduled. This review meeting is a key step to moving a model concept forward in the process.
-          </p>
-          <div
-            class="usa-summary-box padding-3 margin-bottom-3"
-            data-testid="summary-box"
-          >
-            <div
-              class="usa-summary-box__body"
-            >
-              <h3
-                class="usa-summary-box__heading margin-bottom-2"
-              >
-                Tips for model teams
-              </h3>
-              <div
-                class="usa-summary-box__text"
-              >
-                <p
-                  class="margin-y-0"
-                >
-                  Suggestions for having a successful 2-page review meeting:
-                </p>
-                <ul
-                  class="margin-y-0 padding-left-3"
-                >
-                  <li
-                    class="line-height-normal"
-                  >
-                    Before the meeting, attach your 2-page concept paper to the calendar invite for your meeting with CMMI FO. We also recommend uploading your concept paper to your model collaboration area within MINT. This will allow other CMS staff involved in the model development process to begin preparing as early as possible for their work with your model team.
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    Come prepared to discuss your model concept with the CMMI FO and receive feedback.
-                  </li>
-                  <li
-                    class="line-height-normal"
-                  >
-                    If you think you’ll need a pipeline contractor, flag this during the meeting. CMMI FO may have a preference for which contractor to use and will ultimately need to approve the request.
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <h3
-            class="margin-top-0 margin-bottom-1"
-          >
-            Model selection criteria
-          </h3>
-          <p
-            class="margin-y-0 line-height-normal"
-          >
-            These selection criteria detail how models are evaluated overall. The CMMI FO may consider these criteria in different ways and to different degrees in each review meeting and phase of the model concept and design process.
-          </p>
-          <table
-            class="usa-table usa-table--borderless width-full _fixed_1khz6_1"
-            data-testid="table"
-          >
-            <thead>
-              <tr
-                class="border-bottom-1px"
-              >
-                <th
-                  class="padding-y-1 padding-left-0"
-                  scope="col"
-                  style="min-width: 170px;"
-                >
-                  <strong>
-                    Criteria
-                  </strong>
-                </th>
-                <th
-                  class="padding-y-1 padding-left-0"
-                  scope="col"
-                  style="min-width: 170px;"
-                >
-                  <strong>
-                    Description
-                  </strong>
-                </th>
-                <th
-                  class="padding-y-1 padding-left-0"
-                  scope="col"
-                  style="min-width: 170px;"
-                >
-                  <strong>
-                    Scoring parameter
-                  </strong>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th
-                  class="text-baseline text-bold padding-left-0"
-                  scope="row"
-                >
-                  Alignment
-                </th>
-                <td
-                  class="text-baseline padding-left-0"
-                >
-                  Model supports or advances one (or more) of the five strategy pillars:​ Drive accountable care, advance healthy living, support innovation, address affordability, partner to achieve system transformation
-                </td>
-                <td
-                  class="text-baseline padding-left-0"
-                >
-                  <p
-                    class="margin-y-0 text-bold"
-                  >
-                    Yes/No
-                  </p>
-                  Model does not move forward if it does not align with any pillar of the strategy
-                </td>
-              </tr>
-              <tr>
-                <th
-                  class="text-baseline text-bold padding-left-0"
-                  scope="row"
-                >
-                  Impact
-                </th>
-                <td
-                  class="text-baseline padding-left-0"
-                >
-                  <p
-                    class="margin-y-0"
-                  >
-                    Model effect as a function of participation and the potential for health system transformation
-                  </p>
                   <ul
-                    class="margin-y-0 padding-left-3"
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
                     <li
-                      class="line-height-normal margin-bottom-05"
+                      class="list-item"
                     >
-                      Participation: number of providers, beneficiaries, Medicare spending, Medicaid spending​
+                      The specific problem, gap, or barrier in care delivery, payment, access, coordination, information, or outcomes.
                     </li>
                     <li
-                      class="line-height-normal margin-bottom-05"
+                      class="list-item"
                     >
-                      Transformation, including: cost reduction, quality improvement, delivery system change​​
+                      How the problem affects beneficiaries’ and the healthcare system.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Why this is an important or timely area for CMMI attention.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Any evidence, prior experience, stakeholder input, or market observations that suggest the problem is significant.
                     </li>
                   </ul>
-                </td>
-                <td
-                  class="text-baseline padding-left-0"
+                </div>
+                What “good” looks like at this stage: 
+                <br />
+                 A strong response defines the problem clearly, explains why it matters, and gives enough context for a reviewer to understand why the issue may warrant model development.
+              </div>
+            </div>
+            <h4
+              class="usa-accordion__heading"
+            >
+              <button
+                aria-controls="question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
+                aria-expanded="true"
+                class="usa-accordion__button"
+                data-testid="accordionButton_question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
+                type="button"
+              >
+                Question 2: What is the intervention and Theory of Action of this model?
+              </button>
+            </h4>
+            <div
+              class="usa-accordion__content usa-prose"
+              data-testid="accordionItem_question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
+              id="question-2:-what-is-the-intervention-and-theory-of-action-of-this-model?"
+            >
+              <div
+                class="padding-y-1"
+              >
+                <p
+                  class="text-italic text-base-darkest margin-y-0"
                 >
-                  <p
-                    class="margin-y-0 text-bold"
+                  Use this section to describe the core intervention and how it is expected to produce results.
+                </p>
+                <div
+                  class="margin-y-1"
+                >
+                  <span>
+                    What to include:
+                  </span>
+                  <ul
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
-                    High/Medium/Low
-                  </p>
-                  Model must score high or medium to move forward
-                </td>
-              </tr>
-              <tr>
-                <th
-                  class="text-baseline text-bold padding-left-0"
-                  scope="row"
+                    <li
+                      class="list-item"
+                    >
+                      Describe the primary CMS/CMMI intervention by focusing on what CMS is doing differently.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      The major model features or design elements.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      What behaviors the model is intended to change among participants, providers, plans, or beneficiaries.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      How those changes are expected to improve cost, and quality, access, care experience, or other targeted outcomes. Must be broader than just cost and address some area of patient care, quality, outcomes.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      What would need to be true for the model to work.
+                    </li>
+                  </ul>
+                </div>
+                What “good” looks like at this stage: 
+                <br />
+                 A strong response makes the causal pathway visible: intervention → behavior change → care delivery or system change → measurable outcomes.
+              </div>
+            </div>
+            <h4
+              class="usa-accordion__heading"
+            >
+              <button
+                aria-controls="question-3:-what-target-population-will-this-model-serve?"
+                aria-expanded="true"
+                class="usa-accordion__button"
+                data-testid="accordionButton_question-3:-what-target-population-will-this-model-serve?"
+                type="button"
+              >
+                Question 3: What target population will this model serve?
+              </button>
+            </h4>
+            <div
+              class="usa-accordion__content usa-prose"
+              data-testid="accordionItem_question-3:-what-target-population-will-this-model-serve?"
+              id="question-3:-what-target-population-will-this-model-serve?"
+            >
+              <div
+                class="padding-y-1"
+              >
+                <p
+                  class="text-italic text-base-darkest margin-y-0"
                 >
-                  Feasibility
-                </th>
-                <td
-                  class="text-baseline padding-left-0"
+                  Use this section to describe who is intended to benefit from the model.
+                </p>
+                <div
+                  class="margin-y-1"
                 >
-                  Likelihood of successful execution of the model, including any operational or legal feasibility limitations. Potential for adoption and scaling by non-participants
-                </td>
-                <td
-                  class="text-baseline padding-left-0"
-                >
-                  <p
-                    class="margin-y-0 text-bold"
+                  <span>
+                    What to include:
+                  </span>
+                  <ul
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
-                    High/Medium/Low
-                  </p>
-                  Model must score high or medium to move forward
-                </td>
-              </tr>
-              <tr>
-                <th
-                  class="text-baseline text-bold padding-left-0"
-                  scope="row"
+                    <li
+                      class="list-item"
+                    >
+                      Which Medicare and/or Medicaid beneficiaries are included.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Relevant clinical, demographic, geographic, functional, or other defining characteristics.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Why this population is appropriate for the intervention.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Any unmet needs, access issues, or outcome variations in that make this population a priority.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      If known, whether the population appears large and identifiable enough to support future implementation and evaluation (e.g. target population is difficult to identify through claims).
+                    </li>
+                  </ul>
+                </div>
+                What “good” looks like at this stage: 
+                <br />
+                 A strong response makes it easy for a reviewer to understand exactly who the model is meant to serve and why that population is the right focus.
+              </div>
+            </div>
+            <h4
+              class="usa-accordion__heading"
+            >
+              <button
+                aria-controls="question-4:-who-are-the-target-model-participants?"
+                aria-expanded="true"
+                class="usa-accordion__button"
+                data-testid="accordionButton_question-4:-who-are-the-target-model-participants?"
+                type="button"
+              >
+                Question 4: Who are the target model participants?
+              </button>
+            </h4>
+            <div
+              class="usa-accordion__content usa-prose"
+              data-testid="accordionItem_question-4:-who-are-the-target-model-participants?"
+              id="question-4:-who-are-the-target-model-participants?"
+            >
+              <div
+                class="padding-y-1"
+              >
+                <p
+                  class="text-italic text-base-darkest margin-y-0"
                 >
-                  Diversity
-                </th>
-                <td
-                  class="text-baseline padding-left-0"
+                  Use this section to identify the providers, organizations, plans, states, or other entities that would participate in the model.
+                </p>
+                <div
+                  class="margin-y-1"
                 >
-                  Innovation in a dimension (e.g., payment model), provider type, patient population, mechanisms of transformation
-                </td>
-                <td
-                  class="text-baseline padding-left-0"
-                >
-                  <p
-                    class="margin-y-0 text-bold"
+                  <span>
+                    What to include:
+                  </span>
+                  <ul
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
-                    High/Medium/Low
-                  </p>
-                  Model must score high or medium to move forward
-                </td>
-              </tr>
-              <tr>
-                <th
-                  class="text-baseline text-bold padding-left-0"
-                  scope="row"
+                    <li
+                      class="list-item"
+                    >
+                      What types of entities would be eligible to participate.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Why these are the right actors to deliver the intervention.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Is the model mandatory or voluntary.
+                    </li>
+                  </ul>
+                </div>
+                What “good” looks like at this stage: 
+                <br />
+                 A strong response shows that the proposed participants are strategically appropriate and that there is a plausible path to engaging them in the model.
+              </div>
+            </div>
+            <h4
+              class="usa-accordion__heading"
+            >
+              <button
+                aria-controls="question-5:-what-are-the-proposed-cost-measures?"
+                aria-expanded="true"
+                class="usa-accordion__button"
+                data-testid="accordionButton_question-5:-what-are-the-proposed-cost-measures?"
+                type="button"
+              >
+                Question 5: What are the proposed cost measures?
+              </button>
+            </h4>
+            <div
+              class="usa-accordion__content usa-prose"
+              data-testid="accordionItem_question-5:-what-are-the-proposed-cost-measures?"
+              id="question-5:-what-are-the-proposed-cost-measures?"
+            >
+              <div
+                class="padding-y-1"
+              >
+                <p
+                  class="text-italic text-base-darkest margin-y-0"
                 >
-                  OA/HHS support
-                </th>
-                <td
-                  class="text-baseline padding-left-0"
+                  Use this section to describe the primary effects the model is expected to have.
+                </p>
+                <div
+                  class="margin-y-1"
                 >
-                  The extent to which the model is supported by OA/HHS and will achieve CMS/HHS clearance​
-                </td>
-                <td
-                  class="text-baseline padding-left-0"
-                >
-                  <p
-                    class="margin-y-0 text-bold"
+                  <span>
+                    What to include:
+                  </span>
+                  <ul
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
                   >
-                    Yes/No
-                  </p>
-                  Model does not move forward if it is unlikely to clear OA/HHS
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <h3
-            class="margin-top-0 margin-bottom-1"
+                    <li
+                      class="list-item"
+                    >
+                      Expected effects on spending often resulting from shifts in utilization.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      What measures can be used to demonstrate the impacts of the model in evaluation.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      How the expected impacts align with the theory of action.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Are the impacts expected to be direct (within the model) or indirect (spillover/downstream).
+                    </li>
+                  </ul>
+                </div>
+                What “good” looks like at this stage: 
+                <br />
+                 A strong response identifies a small number of meaningful expected impacts on cost and explains why those impacts are plausible given the design.
+              </div>
+            </div>
+            <h4
+              class="usa-accordion__heading"
+            >
+              <button
+                aria-controls="question-6:-what-is-the-model’s-primary-quality-goals?"
+                aria-expanded="true"
+                class="usa-accordion__button"
+                data-testid="accordionButton_question-6:-what-is-the-model’s-primary-quality-goals?"
+                type="button"
+              >
+                Question 6: What is the model’s primary quality goals?
+              </button>
+            </h4>
+            <div
+              class="usa-accordion__content usa-prose"
+              data-testid="accordionItem_question-6:-what-is-the-model’s-primary-quality-goals?"
+              id="question-6:-what-is-the-model’s-primary-quality-goals?"
+            >
+              <div
+                class="padding-y-1"
+              >
+                <p
+                  class="text-italic text-base-darkest margin-y-0"
+                >
+                  Use this section to describe the primary quality goals the model is designed to address.
+                </p>
+                <div
+                  class="margin-y-1"
+                >
+                  <span>
+                    What to include:
+                  </span>
+                  <ul
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
+                  >
+                    <li
+                      class="list-item"
+                    >
+                      Expected goals.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Connection to theory of action.
+                    </li>
+                  </ul>
+                </div>
+                What “good” looks like at this stage: 
+                <br />
+                 A strong response identifies a small number of meaningful expected impacts on cost and explains why those impacts are plausible given the design.
+              </div>
+            </div>
+            <h4
+              class="usa-accordion__heading"
+            >
+              <button
+                aria-controls="question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
+                aria-expanded="true"
+                class="usa-accordion__button"
+                data-testid="accordionButton_question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
+                type="button"
+              >
+                Question 7: What are the potential risks that may prevent achieving the model’s cost or quality goals? Any other areas of consideration?
+              </button>
+            </h4>
+            <div
+              class="usa-accordion__content usa-prose"
+              data-testid="accordionItem_question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
+              id="question-7:-what-are-the-potential-risks-that-may-prevent-achieving-the-model’s-cost-or-quality-goals?-any-other-areas-of-consideration?"
+            >
+              <div
+                class="padding-y-1"
+              >
+                <p
+                  class="text-italic text-base-darkest margin-y-0"
+                >
+                  Use this section to identify what could create catastrophic failures (e.g. enrollment/attribution risk or caregiver burden management risk). Other risks will be articulated in later stage development.
+                </p>
+                <div
+                  class="margin-y-1"
+                >
+                  <span>
+                    What to include:
+                  </span>
+                  <ul
+                    class="padding-left-3 margin-top-0 margin-bottom-1"
+                  >
+                    <li
+                      class="list-item"
+                    >
+                      Risks to beneficiary access and quality of care.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Major implementation risks.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Participation or market risks.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Technology, data, legal, operational, or clearance risks.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Evaluation-related risks, such as sample size, bias, timing, or data limitations.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      External factors beyond CMMI’s control that could influence success or failure.
+                    </li>
+                    <li
+                      class="list-item"
+                    >
+                      Any early mitigation strategies or issues that require further analysis.
+                    </li>
+                  </ul>
+                </div>
+                What “good” looks like at this stage: 
+                <br />
+                 A strong response clearly and candidly identifies major vulnerabilities and risks and demonstrates a clear understanding of what remains unresolved and needs further work.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="margin-bottom-6 scroll-target border border-gray-10 shadow-2 radius-md padding-3"
+          id="example-2-page-concept-papers"
+        >
+          <h2
+            class="margin-top-0 margin-bottom-3"
           >
-            Possible outcomes
-          </h3>
+            Example 2-page concept papers
+          </h2>
           <p
-            class="margin-y-0 line-height-normal"
+            class="margin-top-0 margin-bottom-1 line-height-normal"
           >
-            After the review meeting, the CMMI FO may direct you in one of the following directions:
+            While all models are different, and therefore the content within a 2-page concept paper may vary drastically, it could be helpful for model teams or other interested parties to see examples of what previous model teams have put together in the past.
           </p>
           <ul
-            class="margin-y-0 padding-left-3"
+            class="margin-y-0 padding-left-4"
           >
             <li
-              class="line-height-normal"
+              class="line-height-normal margin-bottom-1 padding-left-05"
             >
-              <strong>
-                Continue iterating:
-              </strong>
-               Since the 2-page review meeting is still pretty high level in terms of model design, the CMMI FO may have suggestions for the team to iterate on. In this case, model teams may be asked to come back for another 2-page review after they’ve had time to ideate and address feedback from the FO. Some concepts require multiple rounds of iteration, so model teams shouldn’t be discouraged if their concept isn’t approved the first time around.
+              <button
+                class="usa-button usa-button--unstyled text-no-underline"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  ACCESS 2-page concept paper and documents
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
             </li>
             <li
-              class="line-height-normal"
+              class="line-height-normal margin-bottom-1 padding-left-05"
             >
-              <strong>
-                Approval:
-              </strong>
-               If the CMMI FO decides the model concept is feasible, they will approve the 2-page concept paper. Model teams will then work on ironing out additional details of their model design as they work to write their 6-page concept paper. They may work with cross-cutting groups to write their 6-page concept paper. If they haven’t already started filling out a Model Plan within MINT, this is often a great time to start that. Many of the details that will go into a 6-page concept paper are also asked within the Model Plan. A Model Plan in MINT is a useful way to help communicate concepts and implementation details with other groups across CMS who assist with various aspects of development and implementation of models.
-            </li>
-            <li
-              class="line-height-normal"
-            >
-              <strong>
-                Pause:
-              </strong>
-               Sometimes the CMMI FO will not approve a concept paper or will ask the model team to pause work. This is nothing to worry about, as sometimes priorities within the Center can shift, and certain concepts may no longer align. When this happens, concepts will often be saved for future development.
+              <button
+                class="usa-button usa-button--unstyled text-no-underline"
+                data-testid="button"
+                type="button"
+              >
+                <span
+                  class="display-flex flex-align-center line-height-normal"
+                  style="column-gap: 0.25rem;"
+                >
+                  PACE UP! 2-page concept paper and documents
+                  <svg
+                    aria-label="launch"
+                    class="usa-icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M19 19H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+                    />
+                  </svg>
+                </span>
+              </button>
             </li>
           </ul>
         </div>
@@ -1343,7 +1088,7 @@ exports[`TwoPagerMeeting > matches the snapshot 1`] = `
         <div
           class="text-base text-italic border-top border-gray-10 padding-top-1 margin-bottom-4"
         >
-          Last updated 08/25/2025
+          Last updated 08/26/2026
         </div>
       </div>
     </div>
