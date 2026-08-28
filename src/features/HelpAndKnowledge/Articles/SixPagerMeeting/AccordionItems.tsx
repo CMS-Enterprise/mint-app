@@ -25,18 +25,13 @@ const AccordionItems = (
     return {
       title: itemConfig.title,
       content: (
-        <div className="padding-y-1">
-          <Trans
-            i18nKey={itemConfig.content.intro}
-            components={{
-              italic: <p className="text-italic text-base-darkest margin-y-0" />
-            }}
-          />
+        <div className="padding-y-1 line-height-normal">
+          <Trans>{itemConfig.content.intro}</Trans>
 
           {itemConfig.content.hint && (
             <Alert type="info" slim className="margin-y-1">
               <Trans
-                i18nKey={itemConfig.content.hint.text}
+                defaults={itemConfig.content.hint.text}
                 components={{
                   el: (
                     <ExternalLink href={itemConfig.content.hint.link || ''}>
@@ -80,13 +75,13 @@ const AccordionItems = (
 
           {itemConfig.content.text1 && (
             <p className="margin-top-0 margin-bottom-1">
-              <Trans i18nKey={itemConfig.content.text1} />
+              <Trans>{itemConfig.content.text1}</Trans>
             </p>
           )}
 
           {itemConfig.content.text2 && (
             <p className="margin-y-0">
-              <Trans i18nKey={itemConfig.content.text2} />
+              <Trans>{itemConfig.content.text2}</Trans>
             </p>
           )}
 
@@ -106,7 +101,7 @@ const AccordionItems = (
                     className="margin-y-0"
                   >
                     <Trans
-                      i18nKey={text}
+                      defaults={text}
                       components={{
                         el1: (
                           <Link

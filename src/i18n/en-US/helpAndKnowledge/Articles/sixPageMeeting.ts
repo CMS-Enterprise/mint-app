@@ -1,6 +1,6 @@
 const sixPageMeeting = {
   title: 'About 6-page concept papers and review meetings',
-  lastUpdatedDate: '2026-08-27',
+  lastUpdatedDate: '2026-08-28',
   description:
     'Once CMMI Front Office (FO) has endorsed the 2-page model concept and Group Director(s) have signed off, work can begin on the 6-page model overview. Model teams can use this article to learn more about 6-page concept papers, access helpful resources, and ensure they are fully prepared for the 6-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 6-page concept paper phase of the process.',
   contentInfo: {
@@ -33,7 +33,7 @@ const sixPageMeeting = {
       }
     },
     cardTwo: {
-      heading: '2-page concept paper template',
+      heading: '6-page concept paper template',
       hint: 'Download the template from SharePoint.',
       linkOne: {
         text: 'Go to the template on SharePoint',
@@ -111,7 +111,7 @@ const sixPageMeeting = {
           'Question 1: What is the most important problem that this model aims to solve?',
         content: {
           intro:
-            '<italic>Use this section to explain the healthcare problem, why it matters, and why it is appropriate for model testing.</italic>',
+            '<i>Use this section to explain the healthcare problem, why it matters, and why it is appropriate for model testing.</i>',
           label: 'What to include:',
           list: [
             'The specific problem, gap, or barrier in care delivery, payment, access, coordination, information, or outcomes.',
@@ -131,7 +131,7 @@ const sixPageMeeting = {
           'Question 2: What is the intervention and Theory of Action of this model?',
         content: {
           intro:
-            '<italic>Use this section to describe the core intervention and how it is expected to produce results.</italic>',
+            '<i>Use this section to describe the core intervention and how it is expected to produce results.</i>',
           hint: {
             text: 'Use the <el>Standardized New Model Design Checklist in the 6-pager template</el> to help guide and build your response.',
             link: 'https://cmsgovonline.sharepoint.com/:w:/r/sites/cms-sharepoint-CMMI-Home/New%20Model%20Design%20Templates/6_Pager%20Template_June_2026.docx?d=w4b32e55174cf4b79b8ffef0b1d6e7bce&csf=1&web=1&e=LeMzHL'
@@ -174,7 +174,7 @@ const sixPageMeeting = {
         title: 'Question 3: What target population will this model serve?',
         content: {
           intro:
-            '<italic>Use this section to describe who is intended to benefit from the model.</italic>',
+            '<i>Use this section to describe who is intended to benefit from the model.</i>',
           label: 'What to include:',
           list: [
             'Which Medicare and/or Medicaid beneficiaries are included.',
@@ -193,7 +193,7 @@ const sixPageMeeting = {
         title: 'Question 4: Who are the target model participants?',
         content: {
           intro:
-            '<italic>Use this section to identify the entities that would participate in the model and the role they would play.</italic>',
+            '<i>Use this section to identify the entities that would participate in the model and the role they would play.</i>',
           label: 'What to include:',
           list: [
             'What types of providers, organizations, payers, states, or other entities would be eligible to participate.',
@@ -214,7 +214,7 @@ const sixPageMeeting = {
         title: 'Question 5: What are the proposed cost measures?',
         content: {
           intro:
-            '<italic>Use this section to describe the primary effects the model is expected to have.</italic>',
+            '<i>Use this section to describe the primary effects the model is expected to have.</i>',
           label: 'What to include:',
           list: [
             'Expected effects on spending often resulting from shifts in utilization.',
@@ -240,7 +240,7 @@ const sixPageMeeting = {
           'Question 6: What are the model’s primary quality goals? How do the quality goals translate to quality domains? How are the quality domains reflected in the model design, performance measures, and evaluation strategy?',
         content: {
           intro:
-            '<italic>Use this section to describe the primary quality goals the model is designed to address and fill out the table to demonstrate how the goals map to quality domains that are present in the model design, measure selection, and evaluation strategy.</italic>',
+            '<i>Use this section to describe the primary quality goals the model is designed to address and fill out the table to demonstrate how the goals map to quality domains that are present in the model design, measure selection, and evaluation strategy.</i>',
           hint: {
             text: 'The model team works with RREG to draft this section and consults with Quality Vertical to discuss the primary quality domains and how they map to the model design, measurement strategy, and evaluation strategy. Must have sign off from RREG leadership, CMO, and QV before 6-pager goes to CMMI FO.'
           },
@@ -262,7 +262,7 @@ const sixPageMeeting = {
           'Question 7: What are the potential risks that may prevent achieving the model’s cost or quality goals? Any other areas of consideration?',
         content: {
           intro:
-            '<italic>Use this section to identify major risks that would prevent the model from working as intended.</italic>',
+            '<i>Use this section to identify major risks that would prevent the model from working as intended.</i>',
           hint: {
             text: 'Consult with cross cutting groups who were identified at the 2-pager stage.'
           },
@@ -288,7 +288,7 @@ const sixPageMeeting = {
           'Question 8: Patient Journey Analysis – overview of each impacted stakeholder, impact / actions needed',
         content: {
           intro:
-            '<italic>Use this section to show how the model changes the experience of care in practice.</italic>',
+            '<i>Use this section to show how the model changes the experience of care in practice.</i>',
           hint: {
             text: 'The model team works with LDG to create and draft this analysis. Must have sign off from LDG leadership before 6-pager goes to CMMI FO.'
           },
@@ -311,7 +311,7 @@ const sixPageMeeting = {
           'Question 9: What are the strategic alignment elements? (i.e.: promote evidence-based prevention, empower people with information, and drive competition and consumer choice – max one paragraph overview)',
         content: {
           intro:
-            '<italic>Use this section to provide a concise overview of how the model aligns with CMMI’s strategic objectives.</italic>',
+            '<i>Use this section to provide a concise overview of how the model aligns with CMMI’s strategic objectives.</i>',
           hint: {
             text: 'Must have sign off from RREG leadership, CMO, and QV before 6-pager goes to CMMI FO.'
           },
@@ -333,7 +333,7 @@ const sixPageMeeting = {
           'Question 10: How does this model align with the CMMI/CMS portfolio of existing models and policies?',
         content: {
           intro:
-            '<italic>Use this section to explain how the model fits within the broader portfolio and policy landscape. (Overview of overlaps – CMMI and CMS related policies)</italic>',
+            '<i>Use this section to explain how the model fits within the broader portfolio and policy landscape. (Overview of overlaps – CMMI and CMS related policies)</i>',
           label: 'What to include:',
           list: [
             'Whether the model fills a gap, complements an existing model, or builds on prior testing.',
