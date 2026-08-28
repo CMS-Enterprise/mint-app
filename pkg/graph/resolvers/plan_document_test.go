@@ -254,3 +254,43 @@ func (suite *ResolverSuite) TestCollaboratorNonCMSCannotSeeRestrictedDocs() {
 	suite.Len(docs, 1)
 	suite.Equal(docs[0].ID, unRestrictedDoc.ID)
 }
+
+func (suite *ResolverSuite) TestNonCollaboratorCannotSeeRestrictedTaskLinkedDocs() {
+	plan := suite.createModelPlan("Plan with Task Documents")
+	planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+
+	restrictedDocInput := model.PlanDocumentLinkInput{
+		ModelPlanID:  plan.ID,
+		Name:         "Restricted six pager",
+		URL:          "https://www.example.com/restricted-six-pager",
+		Restricted:   true,
+		DocumentType: models.DocumentTypeConceptPaper,
+		PlanTaskID:   &planTask.ID,
+	}
+	_, err := PlanDocumentCreateLinked(suite.testConfigs.Logger, restrictedDocInput, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	unRestrictedDocInput := model.PlanDocumentLinkInput{
+		ModelPlanID:  plan.ID,
+		Name:         "Unrestricted six pager",
+		URL:          "https://www.example.com/unrestricted-six-pager",
+		Restricted:   false,
+		DocumentType: models.DocumentTypeConceptPaper,
+		PlanTaskID:   &planTask.ID,
+	}
+	unRestrictedDoc, err := PlanDocumentCreateLinked(suite.testConfigs.Logger, unRestrictedDocInput, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	docs, err := PlanDocumentsReadByPlanTaskID(suite.testConfigs.Logger, planTask, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+	suite.Len(docs, 2)
+
+	nonCollaborator := suite.getTestPrincipal(suite.testConfigs.Store, "NOCL")
+	nonCollaborator.JobCodeASSESSMENT = false
+
+	docs, err = PlanDocumentsReadByPlanTaskID(suite.testConfigs.Logger, planTask, nonCollaborator, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+	if suite.Len(docs, 1) {
+		suite.Equal(unRestrictedDoc.ID, docs[0].ID)
+	}
+}
