@@ -1,0 +1,56 @@
+meta {
+  name: Create Plan Document Linked With Task
+  type: graphql
+  seq: 4
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation linkNewPlanDocument ($input: PlanDocumentLinkInput!) {
+      linkNewPlanDocument (input: $input) {
+          id
+          modelPlanID
+          isLink
+          url
+          restricted
+          fileName
+          documentType
+          planTaskID
+          optionalNotes
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "input": {
+      "modelPlanID": "{{modelPlanID}}",
+      "name": "Task-attributed linked document",
+      "url": "https://www.google.com",
+      "documentType": "CONCEPT_PAPER",
+      "restricted": false,
+      "planTaskID": "{{planTaskID}}",
+      "otherTypeDescription": "This is a linked document attributed to a task",
+      "optionalNotes": "Created from Bruno to test planTaskID attribution"
+    }
+  }
+}
+
+tests {
+  let responseData = res.getBody().data.linkNewPlanDocument
+  
+  documentID = responseData.id
+  
+  bru.setVar("documentID", documentID);
+}
