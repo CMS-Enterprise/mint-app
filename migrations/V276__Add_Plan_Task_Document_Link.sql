@@ -9,7 +9,8 @@ CREATE TABLE plan_task_document_link (
     modified_by UUID REFERENCES public.user_account(id),
     modified_dts TIMESTAMP WITH TIME ZONE,
 
-    CONSTRAINT plan_task_document_link_unique UNIQUE (plan_task_id, plan_document_id)
+    CONSTRAINT plan_task_document_link_plan_document_id_unique UNIQUE (plan_document_id)
 );
 
 COMMENT ON TABLE plan_task_document_link IS 'Links plan tasks to plan documents.';
+COMMENT ON CONSTRAINT plan_task_document_link_plan_document_id_unique ON plan_task_document_link IS 'Enforces that a single plan document can be linked to at most one plan task.';
