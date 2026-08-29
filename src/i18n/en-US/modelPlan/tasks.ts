@@ -47,6 +47,26 @@ const tasks = {
       primaryAction: 'Go to Model Plan'
     }
   },
+  [PlanTaskKey.TWO_PAGER]: {
+    copy: 'Upload the 2-page concept paper for CMMI Front Office review.',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{taskID}}',
+    secondaryPath:
+      '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings',
+    secondaryAction: 'View help article',
+    [PlanTaskStatus.TO_DO]: {
+      heading: 'Upload your 2-pager',
+      primaryAction: 'Upload'
+    },
+    [PlanTaskStatus.IN_PROGRESS]: {
+      heading: 'Upload your 2-pager',
+      primaryAction: 'Continue'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading: '2-pager uploaded',
+      primaryAction: 'View documents'
+    }
+  },
   [PlanTaskKey.DATA_EXCHANGE]: {
     copy: 'Work with your IT Lead to determine how your model will exchange data so that CMMI and BSG can help with new policy or technology opportunities. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange, so detailed completion of the data exchange approach will also help the MINT Team understand how best to help you.',
     primaryPath:

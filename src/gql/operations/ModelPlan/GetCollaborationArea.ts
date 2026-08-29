@@ -14,10 +14,18 @@ export default gql(/* GraphQL */ `
       status
       taskListStatus
       tasks {
+        id
         key
         state
         status
         completedDts
+        documents {
+          id
+          fileName
+          fileType
+          documentType
+          planTaskID
+        }
       }
       isFavorite
       suggestedPhase {
