@@ -10,6 +10,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
 	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
@@ -71,6 +72,10 @@ func (c *S3Client) NewGetPresignedURL(ctx context.Context, key string) (*string,
 	req, err := withCredentialRefresh(ctx, c, func(client *s3New.Client) (*v4.PresignedHTTPRequest, error) {
 		return s3New.NewPresignClient(client).PresignGetObject(ctx, objectInput, func(options *s3New.PresignOptions) {
 			options.Expires = PresignedKeyDuration
+			options.ClientOptions = append(options.ClientOptions, func(o *s3New.Options) {
+				//Only require checksum when required.
+				o.ResponseChecksumValidation = aws.ResponseChecksumValidationWhenRequired
+			})
 		})
 	})
 	if err != nil {
@@ -180,6 +185,8 @@ func buildClient(ctx context.Context, s3Config Config) (*s3New.Client, error) {
 
 		s3Opts = append(s3Opts, func(options *s3New.Options) {
 			options.UsePathStyle = true
+			//Only require checksum when required.
+			options.ResponseChecksumValidation = aws.ResponseChecksumValidationWhenRequired
 		})
 	}
 

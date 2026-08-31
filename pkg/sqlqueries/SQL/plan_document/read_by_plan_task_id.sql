@@ -21,5 +21,7 @@ SELECT
     plan_document.modified_by,
     plan_document.modified_dts
 FROM plan_document
-LEFT JOIN plan_task_document_link AS link ON link.plan_document_id = plan_document.id
-WHERE plan_document.model_plan_id = :model_plan_id AND plan_document.restricted = FALSE
+INNER JOIN plan_task_document_link AS link ON link.plan_document_id = plan_document.id
+WHERE
+    link.plan_task_id = :id
+    AND plan_document.deleted_at IS NULL;

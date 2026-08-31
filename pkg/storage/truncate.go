@@ -32,6 +32,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNOperationalNeed),
 
 		// Plan related tables
+		string(models.TNPlanTaskDocumentLink),
 		string(models.TNPlanTask),
 		string(models.TNPlanDocumentSolutionLink),
 		string(models.TNPlanDocument),

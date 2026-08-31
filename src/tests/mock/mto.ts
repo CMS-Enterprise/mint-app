@@ -101,9 +101,11 @@ export function makePlanTasks(
 
     return {
       __typename: 'PlanTask' as const,
+      id: `${key}-task-id`,
       key,
       state: resolvedState,
       status: resolvedStatus,
+      documents: [],
       completedDts:
         overrides?.[key]?.completedDts ??
         (resolvedState === PlanTaskState.COMPLETE ||

@@ -12,10 +12,12 @@ type ContentTypes = {
 };
 
 const ModelSectionCriteriaTable = () => {
-  const headers = tArray('twoPageMeeting:reviewMeeting.criteria.table.header');
+  const headers = tArray(
+    'sixPageMeeting:howSixPagerReviewed.modelSelectionCriteria.table.header'
+  );
 
   const content = tObject(
-    'twoPageMeeting:reviewMeeting.criteria.table.content'
+    'sixPageMeeting:howSixPagerReviewed.modelSelectionCriteria.table.content'
   ) as ContentTypes[];
 
   return (
