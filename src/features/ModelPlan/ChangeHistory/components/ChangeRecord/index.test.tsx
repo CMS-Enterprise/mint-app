@@ -1,4 +1,5 @@
 import React from 'react';
+import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render } from '@testing-library/react';
 import {
   AuditFieldChangeType,
@@ -95,6 +96,65 @@ describe('ChangeRecord', () => {
     expect(
       getByText(/updated Custom date title in model timeline/)
     ).toBeInTheDocument();
+  });
+
+  it('displays discussion content and reveals the topic in details', () => {
+    const discussionRecord: ChangeRecordType = {
+      id: 'c3a8c2e1-1d4b-4e2a-9f11-2b0d8c6e9a01',
+      tableName: TableName.PLAN_DISCUSSION,
+      date: '2024-04-22T13:55:13.725192Z',
+      action: DatabaseOperation.INSERT,
+      translatedFields: [
+        {
+          id: 'a11eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'topic',
+          fieldNameTranslated: 'Discussion topic',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'MODEL_PLAN_MODEL_BASICS',
+          newTranslated: 'Model basics',
+          __typename: 'TranslatedAuditField'
+        },
+        {
+          id: 'b22eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'content',
+          fieldNameTranslated: 'Type your question or discussion topic',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'How do I get started?',
+          newTranslated: 'How do I get started?',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      actorName: 'MINT Doe',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText, queryByText } = render(
+      <MockedProvider>
+        <ChangeRecord changeRecord={discussionRecord} index={1} />
+      </MockedProvider>
+    );
+
+    expect(getByText(/started a Discussion/)).toBeInTheDocument();
+    expect(queryByText(/about Model basics/)).not.toBeInTheDocument();
+    expect(getByText(/How do I get started?/)).toBeInTheDocument();
+    expect(queryByText('Topic: Model basics')).not.toBeInTheDocument();
+
+    fireEvent.click(getByText('Show details'));
+
+    expect(getByText('Topic: Model basics')).toBeInTheDocument();
+    expect(getByText('Hide details')).toBeInTheDocument();
   });
 
   it('toggles details when "showDetails" and "hideDetails" are clicked', () => {
