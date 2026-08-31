@@ -54,7 +54,7 @@ export const helpAndKnowledgeRoutes = {
       element: <TwoPagerMeeting />
     },
     {
-      path: 'about-6-page-concept-papers-and-review-meeting',
+      path: 'about-6-page-concept-papers-and-review-meetings',
       element: <SixPagerMeeting />
     },
     {

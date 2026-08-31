@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
+  Accordion,
   Grid,
   GridContainer,
   Icon,
@@ -16,167 +12,153 @@ import {
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
-import SolutionDetailsModal from 'features/HelpAndKnowledge/SolutionsHelp/SolutionDetails/Modal';
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
 import ScrollLink from 'components/ScrollLink';
-import useModalSolutionState from 'hooks/useModalSolutionState';
 import { formatDateUtc } from 'utils/date';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
-import { tArray } from 'utils/translation';
+import { tArray, tObject } from 'utils/translation';
 
 import KeyResourcesCards from '../_components/KeyResourcesCards';
-import ModelSectionCriteriaTable from '../_components/ModelSelectionCriteriaTable';
 import NeedHelp from '../_components/NeedHelp';
-import SimpleList from '../_components/SimpleList';
 import { ArticleCategories, HelpArticle } from '..';
+
+import AccordionItems from './AccordionItems';
+
+export type AccordionItemsConfigType = {
+  title: string;
+  content: {
+    intro: string;
+    hint?: { text: string; link?: string };
+    label?: string;
+    list?: string[];
+    subList?: { [key: number]: string[] };
+    text1?: string;
+    text2?: string;
+    summary?: {
+      heading: string;
+      body: string[];
+      links?: string[];
+    };
+  };
+};
 
 const SixPagerMeeting = () => {
   const { t: sixPageMeetingT } = useTranslation('sixPageMeeting');
 
-  const location = useLocation();
+  const sections = tArray<string>('sixPageMeeting:sectionsSummaryBox.list');
 
-  const [initLocation] = useState<string>(location.pathname);
-
-  const { prevPathname, selectedSolution, loading } = useModalSolutionState();
-
-  const ldgRoute = `${initLocation}${location.search}${
-    location.search ? '&' : '?'
-  }solution=learning-and-diffusion-group&section=about`;
-
-  const sections = tArray('sixPageMeeting:summaryBox.sections');
-
-  const crossCuttingGroups = tArray('sixPageMeeting:aboutConceptPapers.items');
-
-  const conceptPaperSectionOne = tArray(
-    'sixPageMeeting:aboutConceptPapers.sectionOne.items'
+  const aboutTipsList = tArray<string>(
+    'sixPageMeeting:aboutConceptPapers.summarybox.list'
   );
 
-  const conceptPaperSectionTwo = tArray<Record<string, any>>(
-    'sixPageMeeting:aboutConceptPapers.sectionTwo.items'
+  const accordionItemsConfig = tObject<string, AccordionItemsConfigType>(
+    'sixPageMeeting:templateGuidance.accordionItems'
   );
 
-  const conceptPaperSectionThree = tArray<Record<string, any>>(
-    'sixPageMeeting:aboutConceptPapers.sectionThree.items'
-  );
+  const mappedAccordionItems = AccordionItems(accordionItemsConfig);
 
-  const conceptPaperSectionFour = tArray(
-    'sixPageMeeting:aboutConceptPapers.sectionFour.items'
+  const exampleList: { copy: string; href: string }[] = tArray(
+    'sixPageMeeting:examplePapers.exampleList'
   );
-
-  const conceptPaperSectionFive = tArray(
-    'sixPageMeeting:aboutConceptPapers.sectionFive.items'
-  );
-
-  const conceptPaperSectionSix = tArray(
-    'sixPageMeeting:aboutConceptPapers.sectionSix.items'
-  );
-
-  const conceptPaperAdditionalResources = tArray<Record<string, any>>(
-    'sixPageMeeting:aboutConceptPapers.additionalResources.items'
-  );
-
-  const tipsForModelTeamsSummary = tArray<Record<string, any>>(
-    'sixPageMeeting:aboutConceptPapers.tipsForModelTeamsSummary.items'
-  );
-
-  const example6Pager = tArray<Record<string, any>>(
-    'sixPageMeeting:aboutConceptPapers.example6Pager.items'
-  );
-
-  const tipsToLearnAdditionalResources = tArray<string>(
-    'sixPageMeeting:additionalResources.tipsSummaryBox.items'
-  );
-
-  const tipsToLearnSixPagerReviewed = tArray<string>(
-    'sixPageMeeting:howSixPagerReviewed.tipsSummaryBox.items'
-  );
-
-  const possibleOutcomes = tArray<string>(
-    'sixPageMeeting:howSixPagerReviewed.possibleOutcomes.items'
-  );
-
-  if (loading) {
-    return <PageLoading />;
-  }
 
   return (
     <>
-      {selectedSolution && (
-        <SolutionDetailsModal
-          solution={selectedSolution}
-          openedFrom={prevPathname}
-          closeRoute="/help-and-knowledge/about-6-page-concept-papers-and-review-meeting"
-        />
-      )}
-
       <MainContent className="mint-body-normal">
         <GridContainer>
           <Grid>
-            <HelpBreadcrumb text={sixPageMeetingT('title')} />
+            <div className="margin-bottom-4">
+              <HelpBreadcrumb text={sixPageMeetingT('title')} />
 
-            <PageHeading className="margin-bottom-2">
-              {sixPageMeetingT('title')}
-            </PageHeading>
+              <PageHeading className="margin-bottom-2">
+                {sixPageMeetingT('title')}
+              </PageHeading>
 
-            <HelpCategoryTag
-              type={ArticleCategories.MODEL_CONCEPT_AND_DESIGN}
-              className="margin-bottom-1"
-            />
+              <HelpCategoryTag
+                type={ArticleCategories.MODEL_CONCEPT_AND_DESIGN}
+                className="margin-bottom-1"
+              />
 
-            <p className="margin-top-0 margin-bottom-4 mint-body-large">
-              {sixPageMeetingT('description')}
-            </p>
+              <p className="margin-top-0 margin-bottom-4 mint-body-large">
+                {sixPageMeetingT('description')}
+              </p>
 
-            <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2">
-              <SummaryBoxHeading headingLevel="h3">
-                {sixPageMeetingT('summaryBox.heading')}
-              </SummaryBoxHeading>
+              <Alert type="info" slim className="margin-bottom-4">
+                <Trans
+                  i18nKey="sixPageMeeting:contentInfo.text"
+                  components={{
+                    el: (
+                      <ExternalLink href={sixPageMeetingT('contentInfo.link')}>
+                        {' '}
+                      </ExternalLink>
+                    )
+                  }}
+                />
+              </Alert>
 
-              <SummaryBoxContent>
-                <ul className="margin-y-0 padding-top-1">
-                  {sections.map(section => (
-                    <li className="margin-top-05 margin-bottom-1" key={section}>
-                      <ScrollLink scrollTo={section} />
-                    </li>
-                  ))}
-                </ul>
-              </SummaryBoxContent>
-            </SummaryBox>
+              <SummaryBox className="bg-base-lightest border-0 radius-0 margin-top-0 padding-2">
+                <SummaryBoxHeading
+                  headingLevel="h3"
+                  className="margin-bottom-1"
+                >
+                  {sixPageMeetingT('sectionsSummaryBox.heading')}
+                </SummaryBoxHeading>
+                <SummaryBoxContent>
+                  <ul
+                    className="margin-y-0 display-flex flex-column padding-left-4"
+                    style={{ gap: '0.5rem' }}
+                  >
+                    {sections.map(section => (
+                      <li
+                        key={convertToLowercaseAndDashes(section)}
+                        className="padding-left-05"
+                      >
+                        <ScrollLink scrollTo={section} />
+                      </li>
+                    ))}
+                  </ul>
+                </SummaryBoxContent>
+              </SummaryBox>
+            </div>
 
+            {/* Key resources section */}
             <div
               id={convertToLowercaseAndDashes(
-                sixPageMeetingT('summaryBox.sections.0')
+                sixPageMeetingT('sectionsSummaryBox.list.0')
               )}
-              className="margin-bottom-4 scroll-target"
+              className="margin-bottom-2 scroll-target"
             >
-              <h2 className="margin-y-4">
-                {sixPageMeetingT('keyResources.heading')}
+              <h2 className="margin-top-0 margin-bottom-3">
+                {sixPageMeetingT('sectionsSummaryBox.list.0')}
               </h2>
 
-              <p>{sixPageMeetingT('keyResources.description')}</p>
+              <p className="margin-top-0 margin-bottom-3">
+                {sixPageMeetingT('keyResources.description')}
+              </p>
 
               <KeyResourcesCards articleKey="sixPageMeeting" />
             </div>
 
+            {/* Model Plans in MINT section */}
             <div
               id={convertToLowercaseAndDashes(
-                sixPageMeetingT('summaryBox.sections.1')
+                sixPageMeetingT('sectionsSummaryBox.list.1')
               )}
-              className="scroll-target"
+              className="margin-bottom-6 scroll-target"
             >
-              <h2 className="margin-y-2 margin-bottom-3">
-                {sixPageMeetingT('modelPlansInMINT.heading')}
+              <h2 className="margin-top-0 margin-bottom-3">
+                {sixPageMeetingT('sectionsSummaryBox.list.1')}
               </h2>
 
-              <p>{sixPageMeetingT('modelPlansInMINT.description')}</p>
+              <p className="margin-top-0 margin-bottom-3">
+                {sixPageMeetingT('modelPlansInMINT.description')}
+              </p>
 
-              <SummaryBox className="padding-3 margin-y-3">
+              <SummaryBox className="padding-3 margin-y-0">
                 <SummaryBoxHeading
                   headingLevel="h3"
                   className="margin-bottom-1"
@@ -204,412 +186,109 @@ const SixPagerMeeting = () => {
               </SummaryBox>
             </div>
 
+            {/* About section */}
             <div
               id={convertToLowercaseAndDashes(
-                sixPageMeetingT('summaryBox.sections.2')
+                sixPageMeetingT('sectionsSummaryBox.list.2')
               )}
-              className="scroll-target"
+              className="margin-bottom-3 scroll-target"
             >
-              <h2 className="margin-y-3 margin-top-5">
-                {sixPageMeetingT('aboutConceptPapers.heading')}
+              <h2 className="margin-top-0 margin-bottom-3">
+                {sixPageMeetingT('sectionsSummaryBox.list.2')}
               </h2>
 
-              <p className="margin-bottom-0">
+              <p className="margin-top-0 margin-bottom-3">
                 {sixPageMeetingT('aboutConceptPapers.description')}
               </p>
 
-              <ul className="margin-y-0">
-                {crossCuttingGroups.map((item, index) => (
-                  <li key={item}>
-                    <Trans
-                      i18nKey={`aboutConceptPapers.items.${index}`}
-                      t={sixPageMeetingT}
-                      components={{
-                        link1: (
-                          <UswdsReactLink
-                            className="usa-button usa-button--unstyled"
-                            to={ldgRoute}
-                          >
-                            {' '}
-                          </UswdsReactLink>
-                        )
-                      }}
-                    />
-                  </li>
-                ))}
-              </ul>
-
-              <Alert type="info" className="margin-y-3" lessRightPadding>
-                <div>
-                  <Trans
-                    i18nKey="paperTemplateAlert"
-                    t={sixPageMeetingT}
-                    components={{
-                      link1: (
-                        <ExternalLink
-                          href="https://share.cms.gov/center/cmmi/SR/ModelDev/Model%20and%20Initiative%20Templates/2024%20Model%20Templates/Model%20Development%202-pager%20Template%205.24%20CLEAN.docx"
-                          inlineText
-                        >
-                          {' '}
-                        </ExternalLink>
-                      )
-                    }}
-                  />
-                </div>
-              </Alert>
-
-              {/* Section 1 */}
-              <SimpleList
-                list={conceptPaperSectionOne}
-                heading={sixPageMeetingT(
-                  'aboutConceptPapers.sectionOne.heading'
-                )}
-              />
-
-              {/* Section 2 */}
-              <div className="margin-bottom-3">
-                <h3 className="margin-y-0">
-                  {sixPageMeetingT('aboutConceptPapers.sectionTwo.heading')}
-                </h3>
-
-                <ul className="margin-y-0 padding-top-1">
-                  {conceptPaperSectionTwo.map(section => (
-                    <li key={section.heading}>
-                      {section.heading}
-                      <ul className="margin-y-0 padding-top-1">
-                        {section.items.map((item: string) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Section 3 */}
-              <div className="margin-bottom-3">
-                <h3 className="margin-y-0">
-                  {sixPageMeetingT('aboutConceptPapers.sectionThree.heading')}
-                </h3>
-
-                <ul className="margin-y-0 padding-top-1">
-                  {conceptPaperSectionThree.map((section, index) => (
-                    <li key={section.heading}>
-                      <Trans
-                        i18nKey={`aboutConceptPapers.sectionThree.items.${index}.heading`}
-                        t={sixPageMeetingT}
-                        components={{
-                          bold: <strong />
-                        }}
-                      />
-                      {section.items.length > 0 && (
-                        <ul className="margin-y-0 padding-top-1">
-                          {section.items.map((item: string) => (
-                            <li key={item}>{item}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Section 4 */}
-              <SimpleList
-                list={conceptPaperSectionFour}
-                heading={sixPageMeetingT(
-                  'aboutConceptPapers.sectionFour.heading'
-                )}
-              />
-
-              {/* Section 5 */}
-              <SimpleList
-                list={conceptPaperSectionFive}
-                heading={sixPageMeetingT(
-                  'aboutConceptPapers.sectionFive.heading'
-                )}
-              />
-
-              {/* Section 6 */}
-              <SimpleList
-                list={conceptPaperSectionSix}
-                heading={sixPageMeetingT(
-                  'aboutConceptPapers.sectionSix.heading'
-                )}
-              />
-
-              {/* Additional resources */}
-              <SummaryBox className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2 margin-y-0">
-                <SummaryBoxHeading headingLevel="h3">
-                  {sixPageMeetingT(
-                    'aboutConceptPapers.additionalResources.heading'
-                  )}
+              <SummaryBox className="padding-3">
+                <SummaryBoxHeading
+                  headingLevel="h3"
+                  className="margin-bottom-2"
+                >
+                  {sixPageMeetingT('aboutConceptPapers.summarybox.heading')}
                 </SummaryBoxHeading>
-
-                <SummaryBoxContent className="margin-bottom-1">
-                  <p className="margin-y-1">
-                    <Trans
-                      i18nKey="aboutConceptPapers.additionalResources.description"
-                      t={sixPageMeetingT}
-                      components={{
-                        link1: (
-                          <ExternalLink href="https://share.cms.gov/center/CMMI/SR/ModelDev/Forms/AllItems.aspx">
-                            {' '}
-                          </ExternalLink>
-                        )
-                      }}
-                    />
-                  </p>
-
-                  <div className="margin-y-0 text-bold">
-                    {conceptPaperAdditionalResources.map((section, index) => (
-                      <div key={section.heading}>
-                        {section.heading}
-                        <ul className="margin-top-0 margin-bottom-05 text-normal">
-                          {section.items.map(
-                            (item2: Record<string, string>, index2: number) => (
-                              <li key={item2.text}>
-                                <Trans
-                                  i18nKey={`aboutConceptPapers.additionalResources.items.${index}.items.${index2}.text`}
-                                  t={sixPageMeetingT}
-                                  components={{
-                                    link1: (
-                                      <ExternalLink
-                                        href={sixPageMeetingT(
-                                          `aboutConceptPapers.additionalResources.items.${index}.items.${index2}.link`
-                                        )}
-                                      >
-                                        {' '}
-                                      </ExternalLink>
-                                    )
-                                  }}
-                                />
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </SummaryBoxContent>
-              </SummaryBox>
-
-              {/* Tips for model teams */}
-              <SummaryBox className="margin-y-3">
-                <SummaryBoxHeading headingLevel="h3">
-                  {sixPageMeetingT(
-                    'aboutConceptPapers.tipsForModelTeamsSummary.heading'
-                  )}
-                </SummaryBoxHeading>
-
-                <p className="margin-bottom-0">
-                  {sixPageMeetingT(
-                    'aboutConceptPapers.tipsForModelTeamsSummary.description'
-                  )}
-                </p>
 
                 <SummaryBoxContent>
-                  <ul className="margin-y-0">
-                    {tipsForModelTeamsSummary.map((section, index) => (
-                      <li key={section.heading}>
-                        {section.heading}
-
-                        {section.items?.length > 0 && (
-                          <ul className="margin-y-0">
-                            {section.items.map((item: string) => (
-                              <li key={item}>{item}</li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
+                  <ul className="margin-top-0 margin-bottom-2 padding-left-3">
+                    {aboutTipsList.map(item => (
+                      <li key={item}>{item}</li>
                     ))}
                   </ul>
-                </SummaryBoxContent>
-              </SummaryBox>
 
-              <Grid desktop={{ col: 12 }}>
-                <Card
-                  containerProps={{
-                    className: 'radius-md shadow-2 padding-3 margin-0'
-                  }}
-                  className="width-full"
-                >
-                  <CardHeader className="padding-0">
-                    <h3 className="line-height-body-4 margin-bottom-1">
-                      {sixPageMeetingT(
-                        'aboutConceptPapers.example6Pager.heading'
-                      )}
-                    </h3>
-
-                    <p className="margin-y-0">
-                      {sixPageMeetingT(
-                        'aboutConceptPapers.example6Pager.description'
-                      )}
-                    </p>
-                  </CardHeader>
-
-                  <CardBody className="padding-0 line-height-sans-6">
-                    <ul className="margin-y-0 padding-top-1">
-                      {example6Pager.map((section, index) => (
-                        <li key={section.text} className="padding-bottom-05">
+                  <p className="margin-y-0">
+                    <Trans
+                      t={sixPageMeetingT}
+                      i18nKey="aboutConceptPapers.summarybox.footer"
+                      components={{
+                        el: (
                           <ExternalLink
+                            inlineText
+                            className="margin-right-0"
                             href={sixPageMeetingT(
-                              `aboutConceptPapers.example6Pager.items.${index}.link`
+                              'aboutConceptPapers.summarybox.footerLink'
                             )}
                           >
-                            {section.text}
-                          </ExternalLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardBody>
-
-                  <CardFooter className="padding-bottom-0 padding-x-0">
-                    <Trans
-                      i18nKey="aboutConceptPapers.example6Pager.footer"
-                      t={sixPageMeetingT}
-                      components={{
-                        link1: (
-                          <ExternalLink inlineText href="">
                             {' '}
                           </ExternalLink>
                         )
                       }}
                     />
-                  </CardFooter>
-                </Card>
-              </Grid>
-            </div>
-
-            <div
-              id={convertToLowercaseAndDashes(
-                sixPageMeetingT('summaryBox.sections.3')
-              )}
-              className="scroll-target"
-            >
-              <h2 className="margin-y-3 margin-top-6">
-                {sixPageMeetingT('additionalResources.heading')}
-              </h2>
-
-              <p>{sixPageMeetingT('additionalResources.description')}</p>
-
-              <h3 className="margin-y-2 margin-bottom-0">
-                {sixPageMeetingT(
-                  'additionalResources.pipelineContractors.heading'
-                )}
-              </h3>
-
-              <p className="text-pre-line margin-top-1">
-                {sixPageMeetingT(
-                  'additionalResources.pipelineContractors.description'
-                )}
-              </p>
-
-              {/* Tips to learn */}
-              <SummaryBox className="margin-y-3">
-                <SummaryBoxHeading headingLevel="h3">
-                  {sixPageMeetingT(
-                    'additionalResources.tipsSummaryBox.heading'
-                  )}
-                </SummaryBoxHeading>
-
-                <SummaryBoxContent>
-                  <p className="margin-bottom-0 text-pre-line">
-                    {sixPageMeetingT(
-                      'additionalResources.tipsSummaryBox.description'
-                    )}
-                  </p>
-
-                  <ul className="margin-y-0">
-                    {tipsToLearnAdditionalResources.map((section, index) => (
-                      <li key={section} className="padding-bottom-05">
-                        {section}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <p className="text-pre-line margin-y-0">
-                    {sixPageMeetingT(
-                      'additionalResources.tipsSummaryBox.footer'
-                    )}
                   </p>
                 </SummaryBoxContent>
               </SummaryBox>
             </div>
 
+            {/* Template guidance section */}
             <div
               id={convertToLowercaseAndDashes(
-                sixPageMeetingT('summaryBox.sections.4')
+                sixPageMeetingT('sectionsSummaryBox.list.3')
               )}
-              className="scroll-target"
+              className="margin-bottom-3 scroll-target"
             >
-              <h2 className="margin-y-3 margin-top-6">
-                {sixPageMeetingT('howSixPagerReviewed.heading')}
+              <h2 className="margin-top-0 margin-bottom-3">
+                {sixPageMeetingT('sectionsSummaryBox.list.3')}
               </h2>
 
-              <p>{sixPageMeetingT('howSixPagerReviewed.description')}</p>
+              <Accordion
+                bordered={false}
+                multiselectable
+                items={mappedAccordionItems}
+              />
+            </div>
 
-              {/* Tips to learn */}
-              <SummaryBox className="margin-y-3">
-                <SummaryBoxHeading headingLevel="h3">
-                  {sixPageMeetingT(
-                    'howSixPagerReviewed.tipsSummaryBox.heading'
-                  )}
-                </SummaryBoxHeading>
+            {/* Example papers section */}
+            <div
+              id={convertToLowercaseAndDashes(
+                sixPageMeetingT('sectionsSummaryBox.list.4')
+              )}
+              className="margin-bottom-6 scroll-target border border-gray-10 shadow-2 radius-md padding-3"
+            >
+              <h2 className="margin-top-0 margin-bottom-3">
+                {sixPageMeetingT('sectionsSummaryBox.list.4')}
+              </h2>
 
-                <SummaryBoxContent>
-                  <p className="margin-bottom-0 text-pre-line">
-                    {sixPageMeetingT(
-                      'howSixPagerReviewed.tipsSummaryBox.description'
-                    )}
-                  </p>
-
-                  <ul className="margin-y-0">
-                    {tipsToLearnSixPagerReviewed.map((section, index) => (
-                      <li key={section} className="padding-bottom-05">
-                        {section}
-                      </li>
-                    ))}
-                  </ul>
-                </SummaryBoxContent>
-              </SummaryBox>
-
-              <h3 className="margin-bottom-0">
-                {sixPageMeetingT(
-                  'howSixPagerReviewed.modelSelectionCriteria.heading'
-                )}
-              </h3>
-
-              <p className="margin-top-1">
-                {sixPageMeetingT(
-                  'howSixPagerReviewed.modelSelectionCriteria.description'
-                )}
+              <p className="margin-top-0 margin-bottom-1 line-height-normal">
+                {sixPageMeetingT('examplePapers.description')}
               </p>
 
-              <ModelSectionCriteriaTable />
-
-              <h3 className="margin-bottom-0 margin-top-4">
-                {sixPageMeetingT(
-                  'howSixPagerReviewed.possibleOutcomes.heading'
-                )}
-              </h3>
-
-              <p className="margin-top-1">
-                {sixPageMeetingT(
-                  'howSixPagerReviewed.possibleOutcomes.description'
-                )}
-              </p>
-
-              <ul className="margin-y-0 padding-top-1">
-                {possibleOutcomes.map((section, index) => (
-                  <li key={section}>
-                    <Trans
-                      i18nKey={`howSixPagerReviewed.possibleOutcomes.items.${index}`}
-                      t={sixPageMeetingT}
-                      components={{
-                        bold: <strong />
-                      }}
-                    />
+              <ul className="margin-y-0 padding-left-4">
+                {exampleList.map(item => (
+                  <li
+                    key={item.copy}
+                    className="line-height-normal margin-bottom-1 padding-left-05"
+                  >
+                    <UswdsReactLink
+                      to={item.href}
+                      className="text-no-underline display-flex flex-align-center"
+                      target="_blank"
+                    >
+                      {item.copy}
+                      <Icon.ArrowForward
+                        className="margin-left-1"
+                        aria-label="forward"
+                      />
+                    </UswdsReactLink>
                   </li>
                 ))}
               </ul>
