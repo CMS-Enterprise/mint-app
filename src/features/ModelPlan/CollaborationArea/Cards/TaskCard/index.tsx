@@ -35,6 +35,10 @@ type TaskStateConfig = {
 };
 
 const TASK_STATE_CONFIG: Record<PlanTaskState, TaskStateConfig> = {
+  [PlanTaskState.UPCOMING]: {
+    style: 'bg-base-lighter',
+    icon: <Icon.Schedule aria-label="Upcoming" />
+  },
   [PlanTaskState.TO_DO]: {
     style: 'bg-warning-light',
     icon: <Icon.PriorityHigh aria-label="To do" />

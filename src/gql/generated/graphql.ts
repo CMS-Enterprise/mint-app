@@ -5015,10 +5015,15 @@ export enum PlanTaskKey {
   TWO_PAGER = 'TWO_PAGER'
 }
 
-/** PlanTaskState is computed from PlanTaskStatus for display. */
+/**
+ * PlanTaskState is computed from PlanTaskStatus for display: it groups the finer-grained
+ * PlanTaskStatus into the buckets the task list UI switches on. UPCOMING maps to UPCOMING; COMPLETE
+ * maps to COMPLETE; every other status (TO_DO, IN_PROGRESS, NOT_NEEDED) maps to TO_DO.
+ */
 export enum PlanTaskState {
   COMPLETE = 'COMPLETE',
-  TO_DO = 'TO_DO'
+  TO_DO = 'TO_DO',
+  UPCOMING = 'UPCOMING'
 }
 
 /** PlanTaskStatus is stored in the database and represents the task lifecycle. */

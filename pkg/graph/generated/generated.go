@@ -24330,9 +24330,12 @@ enum PlanTaskStatus {
 }
 
 """
-PlanTaskState is computed from PlanTaskStatus for display.
+PlanTaskState is computed from PlanTaskStatus for display: it groups the finer-grained
+PlanTaskStatus into the buckets the task list UI switches on. UPCOMING maps to UPCOMING; COMPLETE
+maps to COMPLETE; every other status (TO_DO, IN_PROGRESS, NOT_NEEDED) maps to TO_DO.
 """
 enum PlanTaskState {
+  UPCOMING
   TO_DO
   COMPLETE
 }
