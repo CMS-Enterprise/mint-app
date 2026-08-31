@@ -37,7 +37,7 @@ func (w *Worker) TranslateAuditBatchJob(ctx context.Context, args ...interface{}
 
 	readyToQueueEntries, err := storage.TranslatedAuditQueueGetEntriesToQueue(w.Store)
 	if err != nil {
-		logger.Error("issue getting entries to queue for audit translation ", zap.Error(err))
+		logger.ErrorOrWarn("issue getting entries to queue for audit translation ", zap.Error(err))
 		return err
 	}
 
@@ -59,7 +59,7 @@ func QueueTranslatedAuditJob[T logging.ChainableErrorOrWarnLogger[T]](w *Worker,
 		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, logger, queueObj, constants.GetSystemAccountUUID())
 		if err != nil {
 			err := fmt.Errorf("issue saving translatedAuditQueueEntry for audit %v, queueID %s", queueObj.ChangeID, queueObj.ID)
-			logger.Error(err.Error(), zap.Error(err))
+			logger.ErrorOrWarn(err.Error(), zap.Error(err))
 			return nil, err
 		}
 
@@ -71,7 +71,7 @@ func QueueTranslatedAuditJob[T logging.ChainableErrorOrWarnLogger[T]](w *Worker,
 		err = batch.Push(job)
 		if err != nil {
 			err := fmt.Errorf("issue pushing translated audit job to batch")
-			logger.Error(err.Error(), zap.Error(err))
+			logger.ErrorOrWarn(err.Error(), zap.Error(err))
 			return nil, err
 		}
 
