@@ -153,6 +153,75 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
 }
 
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteSixPager() {
+	plan := suite.createModelPlan("Plan For Six Pager Manual Task Marking")
+
+	// SIX_PAGER starts UPCOMING and isn't activated to TO_DO until TWO_PAGER is marked complete
+	_, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	sixPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+
+	// mark the SIX_PAGER task complete
+	updated, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStatusComplete, updated.Status)
+		if suite.NotNil(updated.CompletedBy) {
+			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
+		}
+		suite.NotNil(updated.CompletedDts)
+	}
+
+	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStatusComplete, sixPagerTask.Status)
+
+	// mark it back to TO_DO
+	updated, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStatusToDo, updated.Status)
+		suite.Nil(updated.CompletedBy)
+		suite.Nil(updated.CompletedDts)
+	}
+
+	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+	suite.Nil(sixPagerTask.CompletedBy)
+	suite.Nil(sixPagerTask.CompletedDts)
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
 	plan := suite.createModelPlan("Plan For Rejected Manual Task Marking")
 
