@@ -278,12 +278,17 @@ const SixPagerMeeting = () => {
                     key={item.copy}
                     className="line-height-normal margin-bottom-1 padding-left-05"
                   >
-                    <ExternalLink
-                      href={item.href}
-                      className="text-no-underline"
+                    <UswdsReactLink
+                      to={item.href}
+                      className="text-no-underline display-flex flex-align-center"
+                      target="_blank"
                     >
                       {item.copy}
-                    </ExternalLink>
+                      <Icon.ArrowForward
+                        className="margin-left-1"
+                        aria-label="forward"
+                      />
+                    </UswdsReactLink>
                   </li>
                 ))}
               </ul>
