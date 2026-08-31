@@ -26,10 +26,12 @@ import { DocumentLinkValidationSchema } from 'validations/documentUploadSchema';
 
 const LinkDocument = ({
   solutionDetailsLink,
-  solutionID
+  solutionID,
+  planTaskID
 }: {
   solutionDetailsLink?: string;
   solutionID?: string;
+  planTaskID?: string;
 }) => {
   const { t: documentsT } = useTranslation('documents');
   const { t: documentsMiscT } = useTranslation('documentsMisc');
@@ -61,6 +63,7 @@ const LinkDocument = ({
           url,
           documentType: documentType!,
           restricted: restricted!,
+          planTaskID,
           otherTypeDescription,
           optionalNotes
         }

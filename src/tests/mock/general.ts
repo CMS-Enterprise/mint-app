@@ -222,6 +222,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
   taskListStatus: TaskStatus.IN_PROGRESS,
   tasks: [],
   modelName: 'Test',
+  abbreviation: 'TST',
   createdDts: '2022-05-12T15:01:39.190679Z',
   mostRecentEdit: {
     __typename: 'TranslatedAudit',

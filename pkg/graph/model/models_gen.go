@@ -538,6 +538,7 @@ type PlanDocumentInput struct {
 	FileData             graphql.Upload      `json:"fileData"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	Restricted           bool                `json:"restricted"`
+	PlanTaskID           *uuid.UUID          `json:"planTaskID,omitempty"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
@@ -549,6 +550,7 @@ type PlanDocumentLinkInput struct {
 	Name                 string              `json:"name"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	Restricted           bool                `json:"restricted"`
+	PlanTaskID           *uuid.UUID          `json:"planTaskID,omitempty"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }

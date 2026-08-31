@@ -6,6 +6,7 @@ type PlanTask {
   key: PlanTaskKey!
   status: PlanTaskStatus!
   state: PlanTaskState! @goField(forceResolver: true)
+  documents: [PlanDocument!]! @goField(forceResolver: true)
   completedBy: UUID
   completedByUserAccount: UserAccount
   completedDts: Time

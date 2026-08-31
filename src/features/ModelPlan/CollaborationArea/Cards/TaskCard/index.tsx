@@ -70,6 +70,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
   const baseKey = `${key}.${status}`;
   const lastEditSection = getLastEditSectionForTask(key, modelPlan);
   const sectionStartedCounter = getSectionStartedCount(modelPlan);
+  const primaryPath = t(`${key}.primaryPath`, { modelID, taskID: task.id });
 
   return (
     <Card
@@ -109,7 +110,16 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
         <Button
           type="button"
           className="margin-right-2"
-          onClick={() => navigate(t(`${key}.primaryPath`, { modelID }))}
+          onClick={() => {
+            if (key === PlanTaskKey.TWO_PAGER) {
+              navigate(primaryPath, {
+                state: { fromCollaborationArea: true, planTaskID: task.id }
+              });
+              return;
+            }
+
+            navigate(primaryPath);
+          }}
         >
           {t(`${baseKey}.primaryAction`)}
         </Button>
