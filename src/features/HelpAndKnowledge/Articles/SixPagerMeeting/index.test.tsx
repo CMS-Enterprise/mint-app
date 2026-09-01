@@ -1,24 +1,16 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
-import { possibleSolutionsMock } from 'tests/mock/mto';
-import VerboseMockedProvider from 'tests/MockedProvider';
+import { render } from '@testing-library/react';
 
 import SixPagerMeeting from './index';
 
-const mocks = [...possibleSolutionsMock];
-
 describe('SixPagerMeeting', () => {
-  it('matches the snapshot', async () => {
+  it('matches the snapshot', () => {
     const router = createMemoryRouter(
       [
         {
           path: '/',
-          element: (
-            <VerboseMockedProvider mocks={mocks}>
-              <SixPagerMeeting />
-            </VerboseMockedProvider>
-          )
+          element: <SixPagerMeeting />
         }
       ],
       {
@@ -26,11 +18,7 @@ describe('SixPagerMeeting', () => {
       }
     );
 
-    const { asFragment, getByTestId } = render(
-      <RouterProvider router={router} />
-    );
-
-    await waitForElementToBeRemoved(() => getByTestId('page-loading'));
+    const { asFragment } = render(<RouterProvider router={router} />);
 
     expect(asFragment()).toMatchSnapshot();
   });
