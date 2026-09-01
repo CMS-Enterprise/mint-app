@@ -95,7 +95,7 @@ const LinkDocument = ({
         initialValues={{
           url: '',
           name: '',
-          documentType: null,
+          documentType: planTaskID ? DocumentType.CONCEPT_PAPER : null,
           restricted: null,
           otherTypeDescription: '',
           optionalNotes: ''
