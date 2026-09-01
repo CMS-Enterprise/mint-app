@@ -56,11 +56,11 @@ func QueueTranslatedAuditJob[T logging.ChainableErrorOrWarnLogger[T]](w *Worker,
 		queueObj.Status = models.TPSQueued
 		logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
-		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, logger, queueObj, constants.GetSystemAccountUUID())
+		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(tx, logger, queueObj, constants.GetSystemAccountUUID())
 		if err != nil {
-			err := fmt.Errorf("issue saving translatedAuditQueueEntry for audit %v, queueID %s", queueObj.ChangeID, queueObj.ID)
-			logger.ErrorOrWarn(err.Error(), zap.Error(err))
-			return nil, err
+			wrappedErr := fmt.Errorf("issue saving translatedAuditQueueEntry for audit %v, queueID %s: %w", queueObj.ChangeID, queueObj.ID, err)
+			logger.ErrorOrWarn(wrappedErr.Error(), zap.Error(wrappedErr))
+			return nil, wrappedErr
 		}
 
 		// Change ID not strictly needed here, the job can get it from queue id, but this is for convenience.
@@ -70,9 +70,9 @@ func QueueTranslatedAuditJob[T logging.ChainableErrorOrWarnLogger[T]](w *Worker,
 		job.Retry = &translatedAuditJobMaxRetry
 		err = batch.Push(job)
 		if err != nil {
-			err := fmt.Errorf("issue pushing translated audit job to batch")
-			logger.ErrorOrWarn(err.Error(), zap.Error(err))
-			return nil, err
+			wrappedErr := fmt.Errorf("issue pushing translated audit job to batch: %w", err)
+			logger.ErrorOrWarn(wrappedErr.Error(), zap.Error(wrappedErr))
+			return nil, wrappedErr
 		}
 
 		logger.Info("finished queuing job.", zap.Any("queue entry", retQueueEntry))
