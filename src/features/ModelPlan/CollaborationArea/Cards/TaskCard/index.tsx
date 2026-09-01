@@ -19,7 +19,6 @@ import {
 
 import CheckboxField from 'components/CheckboxField';
 import UswdsReactLink from 'components/LinkWrapper';
-import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import LastModifiedSection from '../../_components/LastModifiedSection';
 import {
@@ -148,7 +147,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
               <CheckboxField
                 id={task.id}
                 label={t('markComplete')}
-                name={convertCamelCaseToKebabCase(t('markComplete'))}
+                name="markTaskComplete"
                 onChange={() => {}}
                 onBlur={() => {}}
                 value="true"
@@ -159,7 +158,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
               <>
                 <Icon.Undo
                   className="text-primary margin-right-1"
-                  aria-label={t('markTodo')}
+                  aria-hidden
                 />
                 <Button
                   type="button"
