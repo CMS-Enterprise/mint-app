@@ -30,7 +30,7 @@ func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interfac
 	// TODO: Implement the logic to return the models to check? Or do we check every model plan?
 	modelsToUpdate, err := w.Store.ModelPlanCollection(logger, false)
 	if err != nil {
-		logger.Error("unable to get model plan collection for the model status update batch job", zap.Error(err))
+		logger.ErrorOrWarn("unable to get model plan collection for the model status update batch job", zap.Error(err))
 		return err
 	}
 	return helper.With(func(cl *faktory.Client) error {
@@ -51,7 +51,7 @@ func CreateModelStatusUpdateBatch[T logging.ChainableErrorOrWarnLogger[T]](logge
 			err := CreateModelStatusJobInBatch(logger, w, batch, plan)
 			if err != nil {
 				err = fmt.Errorf(" error creating job for ModelStatus Update. modelPlanID %v. Err %w", plan.ID, err)
-				logger.Error("issue creating ModelStatusUpdateJob", zap.Error(err))
+				logger.ErrorOrWarn("issue creating ModelStatusUpdateJob", zap.Error(err))
 				return err
 			}
 		}
@@ -75,7 +75,7 @@ func CreateModelStatusJobInBatch[T logging.ChainableErrorOrWarnLogger[T]](logger
 	job.Retry = &modelStatusUpdateJobMaxRetry
 	err := batch.Push(job)
 	if err != nil {
-		logger.Error("issue pushing job to batch", zap.Error(err))
+		logger.ErrorOrWarn("issue pushing job to batch", zap.Error(err))
 		return err
 	}
 	logger.Info("finished queueing model status update.")
