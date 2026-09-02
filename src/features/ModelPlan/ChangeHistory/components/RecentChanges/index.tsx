@@ -15,6 +15,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import { formatDateUtc, formatTime } from 'utils/date';
 
 import {
+  isAssessmentDiscussionChange,
   isLinkingTable,
   linkingTableQuestions,
   shouldRenderExistingLinkBatch,
@@ -42,7 +43,10 @@ export const MiniChangeRecord = ({ changeRecords }: ChangeRecordProps) => {
     <Card className="mini-change-record">
       <Grid row className="padding-2" style={{ wordWrap: 'break-word' }}>
         <Grid desktop={{ col: 2 }} tablet={{ col: 1 }} mobileLg={{ col: 1 }}>
-          <AvatarCircle user={changeRecords[0].actorName} />
+          <AvatarCircle
+            user={changeRecords[0].actorName}
+            isAssessment={isAssessmentDiscussionChange(changeRecords[0])}
+          />
         </Grid>
 
         <Grid desktop={{ col: 10 }} tablet={{ col: 11 }} mobileLg={{ col: 11 }}>

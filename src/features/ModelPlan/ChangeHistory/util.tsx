@@ -915,6 +915,23 @@ export const getDiscussionTopic = (change: ChangeRecordType): string => {
   return typeof topic === 'string' ? topic : '';
 };
 
+export const isAssessmentDiscussionChange = (
+  change: ChangeRecordType
+): boolean => {
+  if (
+    change.tableName !== TableName.PLAN_DISCUSSION &&
+    change.tableName !== TableName.DISCUSSION_REPLY
+  ) {
+    return false;
+  }
+
+  const field = change.translatedFields.find(
+    f => f.fieldName === 'is_assessment'
+  );
+
+  return field?.new === 'true' || field?.new === true;
+};
+
 export const getHeaderText = (change: ChangeRecordType): string => {
   let headerText: string = '';
 
