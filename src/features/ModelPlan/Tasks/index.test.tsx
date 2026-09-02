@@ -75,7 +75,7 @@ describe('Tasks page', () => {
     });
 
     expect(screen.queryByText('Start your Model Plan')).not.toBeInTheDocument();
-    expect(screen.getByText('Upload your 2-pager')).toBeInTheDocument();
+    expect(screen.getByText('Upload 2-pager')).toBeInTheDocument();
     expect(
       screen.getByText('Start your model-to-operations matrix (MTO)')
     ).toBeInTheDocument();
@@ -119,7 +119,7 @@ describe('Tasks page', () => {
     );
 
     expect(orderedHeadings).toEqual([
-      '2-pager uploaded',
+      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Finalize your data exchange approach',
       'Keep your model-to-operations matrix (MTO) up-to-date',
       'Iterate on your Model Plan'

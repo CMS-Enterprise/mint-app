@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Button,
@@ -7,7 +7,8 @@ import {
   CardBody,
   CardFooter,
   CardHeader,
-  Icon
+  Icon,
+  Link
 } from '@trussworks/react-uswds';
 import {
   GetCollaborationAreaQuery,
@@ -16,6 +17,7 @@ import {
   PlanTaskStatus
 } from 'gql/generated/graphql';
 
+import CheckboxField from 'components/CheckboxField';
 import UswdsReactLink from 'components/LinkWrapper';
 
 import LastModifiedSection from '../../_components/LastModifiedSection';
@@ -45,6 +47,8 @@ const TASK_STATE_CONFIG: Record<PlanTaskState, TaskStateConfig> = {
   }
 };
 
+const USER_MARK_STATUS_TASKS = [PlanTaskKey.TWO_PAGER];
+
 function TaskStateTag({ state }: { state: PlanTaskState }) {
   const { t } = useTranslation('tasks');
   const { style, icon } = TASK_STATE_CONFIG[state];
@@ -70,7 +74,6 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
   const baseKey = `${key}.${status}`;
   const lastEditSection = getLastEditSectionForTask(key, modelPlan);
   const sectionStartedCounter = getSectionStartedCount(modelPlan);
-  const primaryPath = t(`${key}.primaryPath`, { modelID, taskID: task.id });
 
   return (
     <Card
@@ -85,7 +88,14 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
       </CardHeader>
 
       <CardBody>
-        <p>{t(`${key}.copy`)}</p>
+        <p>
+          <Trans
+            i18nKey={t(`${key}.copy`)}
+            components={{
+              email: <Link href={`mailto:${t(`${key}.email`)}`}> </Link>
+            }}
+          />
+        </p>
 
         {status !== PlanTaskStatus.TO_DO && (
           <div className="display-flex flex-align-center flex-wrap-wrap">
@@ -110,16 +120,14 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
         <Button
           type="button"
           className="margin-right-2"
-          onClick={() => {
-            if (key === PlanTaskKey.TWO_PAGER) {
-              navigate(primaryPath, {
-                state: { fromCollaborationArea: true, planTaskID: task.id }
-              });
-              return;
-            }
-
-            navigate(primaryPath);
-          }}
+          onClick={() =>
+            navigate(
+              t(`${key}.primaryPath`, { modelID, planTaskID: task.id }),
+              {
+                state: { fromCollaborationArea: true }
+              }
+            )
+          }
         >
           {t(`${baseKey}.primaryAction`)}
         </Button>
@@ -127,11 +135,42 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
           to={t(`${key}.secondaryPath`)}
           target="_blank"
           rel="noopener noreferrer"
-          className="usa-button usa-button--outline"
+          className="usa-button usa-button--outline margin-right-2"
           variant="unstyled"
         >
           {t(`${key}.secondaryAction`)}
         </UswdsReactLink>
+
+        {USER_MARK_STATUS_TASKS.includes(key) && (
+          <div className="display-flex flex-align-center">
+            {task.status !== PlanTaskStatus.COMPLETE && (
+              <CheckboxField
+                id={task.id}
+                label={t('markComplete')}
+                name="markTaskComplete"
+                onChange={() => {}}
+                onBlur={() => {}}
+                value="true"
+              />
+            )}
+
+            {task.status === PlanTaskStatus.COMPLETE && (
+              <>
+                <Icon.Undo
+                  className="text-primary margin-right-1"
+                  aria-hidden
+                />
+                <Button
+                  type="button"
+                  className="usa-button usa-button--unstyled deep-underline "
+                  onClick={() => {}}
+                >
+                  {t('markTodo')}
+                </Button>
+              </>
+            )}
+          </div>
+        )}
       </CardFooter>
     </Card>
   );
