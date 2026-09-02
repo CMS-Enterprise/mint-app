@@ -93,7 +93,7 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
   },
   {
     key: HelpArticle.SIX_PAGER_MEETING,
-    route: '/about-6-page-concept-papers-and-review-meeting',
+    route: '/about-6-page-concept-papers-and-review-meetings',
     translation: 'sixPageMeeting',
     type: ArticleCategories.MODEL_CONCEPT_AND_DESIGN
   },
