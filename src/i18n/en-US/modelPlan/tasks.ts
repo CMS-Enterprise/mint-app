@@ -60,17 +60,20 @@ const tasks = {
     [PlanTaskStatus.TO_DO]: {
       heading:
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
-      primaryAction: 'Upload 2-pager'
-    },
-    [PlanTaskStatus.IN_PROGRESS]: {
-      heading:
-        'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
-      primaryAction: 'Upload 2-pager'
+      primaryAction: 'Upload 2-pager',
+      success:
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
     },
     [PlanTaskStatus.COMPLETE]: {
       heading:
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
-      primaryAction: 'Upload 2-pager'
+      primaryAction: 'Upload 2-pager',
+      success:
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.',
+      error:
+        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
     }
   },
   [PlanTaskKey.DATA_EXCHANGE]: {

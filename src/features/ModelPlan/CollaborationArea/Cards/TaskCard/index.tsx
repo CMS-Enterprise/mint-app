@@ -11,14 +11,19 @@ import {
   Link
 } from '@trussworks/react-uswds';
 import {
+  GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   PlanTaskKey,
   PlanTaskState,
-  PlanTaskStatus
+  PlanTaskStatus,
+  useUpdateTaskStatusMutation
 } from 'gql/generated/graphql';
 
 import CheckboxField from 'components/CheckboxField';
 import UswdsReactLink from 'components/LinkWrapper';
+import toastSuccess from 'components/ToastSuccess';
+import { getStatusAlertBody } from 'contexts/ErrorContext';
+import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
 import LastModifiedSection from '../../_components/LastModifiedSection';
 import {
@@ -67,6 +72,7 @@ function TaskStateTag({ state }: { state: PlanTaskState }) {
 const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
   const { t } = useTranslation('tasks');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
+
   const navigate = useNavigate();
   const { modelID = '' } = useParams<{ modelID: string }>();
 
@@ -74,6 +80,44 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
   const baseKey = `${key}.${status}`;
   const lastEditSection = getLastEditSectionForTask(key, modelPlan);
   const sectionStartedCounter = getSectionStartedCount(modelPlan);
+
+  const [update] = useUpdateTaskStatusMutation();
+
+  const markTaskComplete = (markComplete: boolean) => {
+    setCurrentErrorMeta({
+      overrideMessage: getStatusAlertBody({
+        type: 'error',
+        message: t(`${baseKey}.error`)
+      })
+    });
+
+    update({
+      variables: {
+        modelPlanID: modelID,
+        key: task.key,
+        isComplete: markComplete
+      },
+      refetchQueries: [
+        {
+          query: GetCollaborationAreaDocument,
+          variables: {
+            id: modelID
+          }
+        }
+      ]
+    }).then(response => {
+      if (!response.errors) {
+        toastSuccess(
+          <Trans
+            i18nKey={t(`${baseKey}.success`)}
+            components={{
+              bold: <span className="text-bold" />
+            }}
+          />
+        );
+      }
+    });
+  };
 
   return (
     <Card
@@ -148,7 +192,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
                 id={task.id}
                 label={t('markComplete')}
                 name="markTaskComplete"
-                onChange={() => {}}
+                onChange={() => markTaskComplete(true)}
                 onBlur={() => {}}
                 value="true"
               />
@@ -163,7 +207,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
                 <Button
                   type="button"
                   className="usa-button usa-button--unstyled deep-underline "
-                  onClick={() => {}}
+                  onClick={() => markTaskComplete(false)}
                 >
                   {t('markTodo')}
                 </Button>
