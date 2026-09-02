@@ -56,7 +56,7 @@ func QueueTranslatedAuditJob[T logging.ChainableErrorOrWarnLogger[T]](w *Worker,
 		queueObj.Status = models.TPSQueued
 		logger.Info("queuing job for translated audit.", zap.Any("queue entry", queueObj))
 
-		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(tx, logger, queueObj, constants.GetSystemAccountUUID())
+		retQueueEntry, err := translatedaudit.TranslatedAuditQueueUpdate(w.Store, logger, queueObj, constants.GetSystemAccountUUID())
 		if err != nil {
 			wrappedErr := fmt.Errorf("issue saving translatedAuditQueueEntry for audit %v, queueID %s: %w", queueObj.ChangeID, queueObj.ID, err)
 			logger.ErrorOrWarn(wrappedErr.Error(), zap.Error(wrappedErr))
