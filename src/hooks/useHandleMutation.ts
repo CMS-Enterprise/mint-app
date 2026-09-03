@@ -26,8 +26,7 @@ type HandleRHFMutationConfigType = {
 };
 
 type HandleMutationConfigType =
-  | HandleFormikMutationConfigType
-  | HandleRHFMutationConfigType;
+  HandleFormikMutationConfigType | HandleRHFMutationConfigType;
 
 type ModalConfigType = {
   isModalOpen: boolean;

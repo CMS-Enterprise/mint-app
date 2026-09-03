@@ -15,5 +15,4 @@ export type Questionnaire = Omit<
 export type QuestionnaireName = keyof Omit<QuestionnairesType, '__typename'>;
 
 export type QuestionnairesStatusType =
-  | DataExchangeApproachStatus
-  | IddocQuestionnaireTaskListStatus;
+  DataExchangeApproachStatus | IddocQuestionnaireTaskListStatus;
