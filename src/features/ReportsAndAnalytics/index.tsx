@@ -61,10 +61,7 @@ import { isAssessment } from 'utils/user';
 import DateRangeModal from './_components/DateRangeModal';
 
 export type ReportsType =
-  | 'mtoMilestoneSummary'
-  | 'allModels'
-  | 'basicModelInfo'
-  | 'ctat';
+  'mtoMilestoneSummary' | 'allModels' | 'basicModelInfo' | 'ctat';
 
 const ReportsAndAnalytics = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -568,7 +565,7 @@ const ReportsAndAnalytics = () => {
                     labelFormatter={label => {
                       // Format the label (X-axis value) for date-based charts
                       if (selectedChart === 'numberOfModelsOverTime') {
-                        return formatDateUtc(label, 'MMMM yyyy');
+                        return formatDateUtc(label as string, 'MMMM yyyy');
                       }
                       return label;
                     }}

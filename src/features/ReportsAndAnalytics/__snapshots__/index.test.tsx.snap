@@ -412,6 +412,7 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
       </div>
       <div
         class="recharts-responsive-container"
+        data-testid="chart-container"
         id="analytics-chart-changesPerModel"
         style="width: 100%; height: 1000px; min-width: 0;"
       >
