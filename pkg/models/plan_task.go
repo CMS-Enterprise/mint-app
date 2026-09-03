@@ -36,6 +36,7 @@ const (
 // new calculated-status function in plan_task_status_updates.go or reuse of PlanTaskMarkComplete.
 var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
 	PlanTaskKeyTwoPager: true,
+	PlanTaskKeySixPager: true,
 }
 
 // IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user

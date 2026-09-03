@@ -2495,8 +2495,8 @@ export type Mutation = {
   markNotificationAsRead: UserNotification;
   /**
    * Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
-   * aren't calculated from other model state (currently just TWO_PAGER) can be set this way; other
-   * keys will return an error.
+   * aren't calculated from other model state (currently TWO_PAGER and SIX_PAGER) can be set this
+   * way; other keys will return an error.
    */
   markPlanTaskComplete: PlanTask;
   mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
