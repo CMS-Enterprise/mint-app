@@ -538,6 +538,7 @@ type PlanDocumentInput struct {
 	FileData             graphql.Upload      `json:"fileData"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	Restricted           bool                `json:"restricted"`
+	PlanTaskID           *uuid.UUID          `json:"planTaskID,omitempty"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
@@ -549,6 +550,7 @@ type PlanDocumentLinkInput struct {
 	Name                 string              `json:"name"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	Restricted           bool                `json:"restricted"`
+	PlanTaskID           *uuid.UUID          `json:"planTaskID,omitempty"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
@@ -3100,22 +3102,26 @@ func (e ParticipantsType) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// PlanTaskState is computed from PlanTaskStatus for display.
+// PlanTaskState is computed from PlanTaskStatus for display: it groups the finer-grained
+// PlanTaskStatus into the buckets the task list UI switches on. UPCOMING maps to UPCOMING; COMPLETE
+// maps to COMPLETE; every other status (TO_DO, IN_PROGRESS, NOT_NEEDED) maps to TO_DO.
 type PlanTaskState string
 
 const (
+	PlanTaskStateUpcoming PlanTaskState = "UPCOMING"
 	PlanTaskStateToDo     PlanTaskState = "TO_DO"
 	PlanTaskStateComplete PlanTaskState = "COMPLETE"
 )
 
 var AllPlanTaskState = []PlanTaskState{
+	PlanTaskStateUpcoming,
 	PlanTaskStateToDo,
 	PlanTaskStateComplete,
 }
 
 func (e PlanTaskState) IsValid() bool {
 	switch e {
-	case PlanTaskStateToDo, PlanTaskStateComplete:
+	case PlanTaskStateUpcoming, PlanTaskStateToDo, PlanTaskStateComplete:
 		return true
 	}
 	return false

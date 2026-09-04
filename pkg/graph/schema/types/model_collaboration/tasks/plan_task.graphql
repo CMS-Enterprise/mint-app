@@ -6,24 +6,27 @@ type PlanTask {
   key: PlanTaskKey!
   status: PlanTaskStatus!
   state: PlanTaskState! @goField(forceResolver: true)
+  documents: [PlanDocument!]! @goField(forceResolver: true)
   completedBy: UUID
-  completedByUserAccount: UserAccount @goField(forceResolver: true)
+  completedByUserAccount: UserAccount
   completedDts: Time
   createdBy: UUID!
-  createdByUserAccount: UserAccount! @goField(forceResolver: true)
+  createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
-  modifiedByUserAccount: UserAccount @goField(forceResolver: true)
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
 """
-PlanTaskKey identifies which of the three plan tasks this row represents.
+PlanTaskKey identifies which of the plan tasks this row represents.
 """
 enum PlanTaskKey {
   MODEL_PLAN
   MTO
   DATA_EXCHANGE
+  TWO_PAGER
+  SIX_PAGER
 }
 
 """
@@ -38,9 +41,25 @@ enum PlanTaskStatus {
 }
 
 """
-PlanTaskState is computed from PlanTaskStatus for display.
+PlanTaskState is computed from PlanTaskStatus for display: it groups the finer-grained
+PlanTaskStatus into the buckets the task list UI switches on. UPCOMING maps to UPCOMING; COMPLETE
+maps to COMPLETE; every other status (TO_DO, IN_PROGRESS, NOT_NEEDED) maps to TO_DO.
 """
 enum PlanTaskState {
+  UPCOMING
   TO_DO
   COMPLETE
+}
+
+extend type Mutation {
+  """
+  Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
+  aren't calculated from other model state (currently TWO_PAGER and SIX_PAGER) can be set this
+  way; other keys will return an error.
+  """
+  markPlanTaskComplete(
+    modelPlanID: UUID!
+    key: PlanTaskKey!
+    isComplete: Boolean!
+  ): PlanTask! @hasRole(role: MINT_USER)
 }

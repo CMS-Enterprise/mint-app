@@ -1,0 +1,58 @@
+meta {
+  name: Get Plan Tasks
+  type: graphql
+  seq: 1
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query modelPlan ($id: UUID!) {
+      modelPlan (id: $id) {
+          id
+          modelName
+          tasks {
+              id
+              key
+              status
+              state
+              documents {
+                  id
+                  fileName
+                  documentType
+                  planTaskID
+              }
+              completedBy
+              completedByUserAccount {
+                  id
+                  username
+              }
+              completedDts
+          }
+      }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}"
+  }
+}
+
+script:post-response {
+  let tasks = res.getBody().data.modelPlan.tasks
+  
+  const planTaskID = tasks[0].id;
+
+  bru.setVar("planTaskID", planTaskID);
+}
