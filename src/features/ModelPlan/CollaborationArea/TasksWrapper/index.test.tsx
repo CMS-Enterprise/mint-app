@@ -8,6 +8,7 @@ import {
   planTasksWithModelPlanComplete,
   planTasksWithModelPlanInProgress
 } from 'tests/mock/mto';
+import MockedProvider from 'tests/MockedProvider';
 import setup from 'tests/util';
 
 import TasksWrapper from './index';
@@ -29,7 +30,11 @@ describe('TasksWrapper', () => {
       { initialEntries: [`/models/${modelID}/collaboration-area`] }
     );
 
-    const { findByText, getByText } = setup(<RouterProvider router={router} />);
+    const { findByText, getByText } = setup(
+      <MockedProvider mocks={[]}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
 
     await findByText('Start your Model Plan');
     expect(getByText('Previous')).toBeInTheDocument();
@@ -54,7 +59,9 @@ describe('TasksWrapper', () => {
     );
 
     const { findByText, getByText, queryByText } = setup(
-      <RouterProvider router={router} />
+      <MockedProvider mocks={[]}>
+        <RouterProvider router={router} />
+      </MockedProvider>
     );
 
     await findByText('To do');
@@ -79,7 +86,11 @@ describe('TasksWrapper', () => {
       { initialEntries: [`/models/${modelID}/collaboration-area`] }
     );
 
-    const { findByText, getByText } = setup(<RouterProvider router={router} />);
+    const { findByText, getByText } = setup(
+      <MockedProvider mocks={[]}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
 
     await findByText('Iterate on your Model Plan');
     expect(getByText('Continue')).toBeInTheDocument();
@@ -113,7 +124,11 @@ describe('TasksWrapper', () => {
       { initialEntries: [`/models/${modelID}/collaboration-area`] }
     );
 
-    const { findByText } = setup(<RouterProvider router={router} />);
+    const { findByText } = setup(
+      <MockedProvider mocks={[]}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
 
     expect(
       await findByText(/Most recent edit on 05\/12\/2022 by/)
