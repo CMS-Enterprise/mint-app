@@ -907,6 +907,14 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   return 'standardUpdate';
 };
 
+export const getDiscussionTopic = (change: ChangeRecordType): string => {
+  const topic = change.translatedFields.find(
+    field => field.fieldName === 'topic'
+  )?.newTranslated;
+
+  return typeof topic === 'string' ? topic : '';
+};
+
 export const getHeaderText = (change: ChangeRecordType): string => {
   let headerText: string = '';
 

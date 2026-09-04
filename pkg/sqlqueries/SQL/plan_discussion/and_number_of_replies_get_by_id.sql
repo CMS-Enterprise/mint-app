@@ -1,6 +1,7 @@
 SELECT
     plan_discussion.id,
     plan_discussion.model_plan_id,
+    plan_discussion.topic,
     plan_discussion.content,
     plan_discussion.user_role,
     plan_discussion.user_role_description,

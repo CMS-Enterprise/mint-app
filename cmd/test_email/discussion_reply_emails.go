@@ -13,6 +13,7 @@ func sendDiscussionReplyOriginatorEmail(
 	addressBook email.AddressBook,
 	DiscussionContent models.TaggedHTML,
 	discussionID uuid.UUID,
+	topic models.DiscussionTopicType,
 	modelPlanID uuid.UUID,
 	modelPlanName string,
 	modelPlanAbbreviation string,
@@ -39,6 +40,7 @@ func sendDiscussionReplyOriginatorEmail(
 	bodyContent := email.DiscussionReplyCreatedOriginatorBody{
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
+		Topic:             topic.Humanize(),
 		DiscussionContent: DiscussionContent.RawContent.ToTemplate(),
 		ModelID:           modelPlanID.String(),
 		ModelName:         modelPlanName,
@@ -90,6 +92,7 @@ func sendDiscussionReplyOriginatorTestEmail(
 	createdByUserEmail := "TestUser@test.com"
 	modelName := "Test Model Plan Name"
 	modelAbbreviation := "TMPN"
+	discussionTopic := models.DiscussionTopicTypeModelPlanPayment
 
 	replies := []email.DiscussionReplyEmailContent{ // This should be sorted that it is newest to oldest
 		{
@@ -119,6 +122,7 @@ func sendDiscussionReplyOriginatorTestEmail(
 		addressBook,
 		models.TaggedHTML(taggedContent),
 		uuid.New(),
+		discussionTopic,
 		uuid.New(),
 		modelName,
 		modelAbbreviation,

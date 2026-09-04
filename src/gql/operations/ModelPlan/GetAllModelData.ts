@@ -608,6 +608,7 @@ export default gql(/* GraphQL */ `
       }
       discussions {
         id
+        topic
         isAssessment
         content {
           rawContent

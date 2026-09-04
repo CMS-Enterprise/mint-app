@@ -4,6 +4,7 @@ export default gql(/* GraphQL */ `
   mutation CreateModelPlanDiscussion($input: PlanDiscussionCreateInput!) {
     createPlanDiscussion(input: $input) {
       id
+      topic
       content {
         rawContent
       }

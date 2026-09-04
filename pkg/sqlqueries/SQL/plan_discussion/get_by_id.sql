@@ -1,8 +1,7 @@
-DELETE FROM plan_discussion
-WHERE id = :id
-RETURNING
+SELECT
     id,
     model_plan_id,
+    topic,
     content,
     user_role,
     user_role_description,
@@ -10,4 +9,6 @@ RETURNING
     created_by,
     created_dts,
     modified_by,
-    modified_dts;
+    modified_dts
+FROM plan_discussion
+WHERE id = :id
