@@ -38,6 +38,7 @@ func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName str
 		3,
 		models.DocumentTypeOther,
 		false,
+		nil,
 		zero.StringFrom("test doc"),
 		zero.StringFrom(""),
 		false,

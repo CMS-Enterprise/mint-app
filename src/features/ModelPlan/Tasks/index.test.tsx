@@ -70,11 +70,12 @@ describe('Tasks page', () => {
     renderWithMock(planTasksWithModelPlanComplete);
 
     await waitFor(() => {
-      expect(screen.getByText('Current tasks (2)')).toBeInTheDocument();
+      expect(screen.getByText('Current tasks (3)')).toBeInTheDocument();
       expect(screen.getByText('Completed tasks (1)')).toBeInTheDocument();
     });
 
     expect(screen.queryByText('Start your Model Plan')).not.toBeInTheDocument();
+    expect(screen.getByText('Upload 2-pager')).toBeInTheDocument();
     expect(
       screen.getByText('Start your model-to-operations matrix (MTO)')
     ).toBeInTheDocument();
@@ -96,13 +97,17 @@ describe('Tasks page', () => {
       [PlanTaskKey.DATA_EXCHANGE]: {
         state: PlanTaskState.COMPLETE,
         status: PlanTaskStatus.COMPLETE
+      },
+      [PlanTaskKey.TWO_PAGER]: {
+        state: PlanTaskState.COMPLETE,
+        status: PlanTaskStatus.COMPLETE
       }
     });
 
     const { container } = renderWithMock(allComplete, 'completed');
 
     await waitFor(() => {
-      expect(screen.getByText('Completed tasks (3)')).toBeInTheDocument();
+      expect(screen.getByText('Completed tasks (4)')).toBeInTheDocument();
     });
 
     const cardHeadings = container.querySelectorAll(
@@ -114,6 +119,7 @@ describe('Tasks page', () => {
     );
 
     expect(orderedHeadings).toEqual([
+      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Finalize your data exchange approach',
       'Keep your model-to-operations matrix (MTO) up-to-date',
       'Iterate on your Model Plan'

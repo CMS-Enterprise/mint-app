@@ -58,17 +58,100 @@ func (suite *ResolverSuite) TestModelPlanTasksResolver() {
 	}
 }
 
-func (suite *ResolverSuite) TestModelPlanCreateCreatesThreeTasks() {
+func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
+	plan := suite.createModelPlan("Plan For Manual Task Marking")
+
+	// mark the TWO_PAGER task complete
+	updated, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStatusComplete, updated.Status)
+		if suite.NotNil(updated.CompletedBy) {
+			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
+		}
+		suite.NotNil(updated.CompletedDts)
+	}
+
+	task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
+	suite.Equal(models.PlanTaskStatusComplete, task.Status)
+
+	// mark it back to TO_DO
+	updated, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStatusToDo, updated.Status)
+		suite.Nil(updated.CompletedBy)
+		suite.Nil(updated.CompletedDts)
+	}
+
+	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
+	suite.Equal(models.PlanTaskStatusToDo, task.Status)
+	suite.Nil(task.CompletedBy)
+	suite.Nil(task.CompletedDts)
+}
+
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
+	plan := suite.createModelPlan("Plan For Rejected Manual Task Marking")
+
+	for _, key := range []models.PlanTaskKey{
+		models.PlanTaskKeyModelPlan,
+		models.PlanTaskKeyMto,
+		models.PlanTaskKeyDataExchange,
+	} {
+		updated, err := PlanTaskMarkComplete(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			plan.ID,
+			key,
+			true,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.Error(err, "expected key %s to be rejected as not manually markable", key)
+		suite.Nil(updated)
+
+		// confirm the task was left untouched
+		task := suite.getPlanTaskByKey(plan.ID, key)
+		suite.Equal(models.PlanTaskStatusToDo, task.Status)
+		suite.Nil(task.CompletedBy)
+		suite.Nil(task.CompletedDts)
+	}
+}
+
+func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	plan := suite.createModelPlan("Plan With Default Tasks")
 
 	tasks, err := PlanTaskGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Len(tasks, 3)
+	suite.Len(tasks, 4)
 
 	taskByKey := planTasksByKey(tasks)
 	suite.NotNil(taskByKey[models.PlanTaskKeyModelPlan])
 	suite.NotNil(taskByKey[models.PlanTaskKeyMto])
 	suite.NotNil(taskByKey[models.PlanTaskKeyDataExchange])
+	suite.NotNil(taskByKey[models.PlanTaskKeyTwoPager])
 
 	for _, t := range tasks {
 		suite.Equal(plan.ID, t.ModelPlanID)
@@ -680,7 +763,7 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStatusToDoSendsNewAvailableInAppNo
 	)
 	suite.NoError(err)
 
-	err = updatePlanTaskStatusByKey(
+	_, err = updatePlanTaskStatusByKey(
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
@@ -698,7 +781,7 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStatusToDoSendsNewAvailableInAppNo
 	optedInBefore := suite.numUnreadNotifications(optedInPrincipal)
 	optedOutBefore := suite.numUnreadNotifications(optedOutPrincipal)
 
-	err = updatePlanTaskStatusByKey(
+	_, err = updatePlanTaskStatusByKey(
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
@@ -869,9 +952,8 @@ func (suite *ResolverSuite) numUnreadNotifications(principal *authentication.App
 }
 
 func (suite *ResolverSuite) TestPlanTaskCompletedByUserAccountResolver() {
-	r := &planTaskResolver{&Resolver{}}
-
-	// When CompletedBy is not set, resolver should return nil without error
+	// When CompletedBy is not set, the embedded completedByRelation method (auto-bound by
+	// gqlgen, see plan_task.graphql) should return nil without error
 	task := models.NewPlanTask(
 		uuid.New(),
 		uuid.New(),
@@ -879,7 +961,7 @@ func (suite *ResolverSuite) TestPlanTaskCompletedByUserAccountResolver() {
 		models.PlanTaskStatusToDo,
 	)
 
-	account, err := r.CompletedByUserAccount(suite.testConfigs.Context, task)
+	account, err := task.CompletedByUserAccount(suite.testConfigs.Context)
 	suite.NoError(err)
 	suite.Nil(account)
 }

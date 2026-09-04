@@ -1,0 +1,64 @@
+meta {
+  name: Create Plan Document Linked With Task
+  type: graphql
+  seq: 3
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation linkNewPlanDocument  {
+      linkNewPlanDocument (input: {
+          modelPlanID: "{{modelPlanID}}",
+          name:"2-pager concept paper",
+          url: "https://www.cms.gov",
+          documentType:CONCEPT_PAPER,
+          restricted:false,
+          planTaskID: "{{planTaskID}}",
+          otherTypeDescription:"This is just a link for testing task attribution",
+          optionalNotes:"Linked to the first TWO_PAGER task from Get Plan Tasks",
+
+      }) {
+          id
+          modelPlanID
+          planTaskID
+          isLink
+          url
+          fileType
+          bucket
+          fileKey
+          virusScanned
+          virusClean
+          restricted
+          fileName
+          fileSize
+          documentType
+          otherType
+          optionalNotes
+          downloadUrl
+          deletedAt
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+  }
+}
+
+script:post-response {
+  let responseData = res.getBody().data.linkNewPlanDocument
+
+  let documentID = responseData.id
+
+  bru.setVar("documentID", documentID);
+}

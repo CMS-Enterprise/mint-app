@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Button,
   ButtonGroup,
@@ -22,6 +22,8 @@ const AddDocument = () => {
 
   const [formState, setFormState] = useState<'upload' | 'link'>('upload');
 
+  const [searchParams] = useSearchParams();
+
   const navigate = useNavigate();
 
   const { state } = useLocation() as {
@@ -29,6 +31,8 @@ const AddDocument = () => {
       fromCollaborationArea?: boolean;
     };
   };
+
+  const planTaskID = searchParams.get('planTaskID') || undefined;
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -83,7 +87,11 @@ const AddDocument = () => {
             </Button>
           </ButtonGroup>
 
-          {formState === 'upload' ? <DocumentUpload /> : <LinkDocument />}
+          {formState === 'upload' ? (
+            <DocumentUpload planTaskID={planTaskID} />
+          ) : (
+            <LinkDocument planTaskID={planTaskID} />
+          )}
 
           <div className="display-block">
             <Button

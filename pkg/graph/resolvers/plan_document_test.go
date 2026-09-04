@@ -44,6 +44,37 @@ func (suite *ResolverSuite) TestPlanDocumentCreate() {
 	suite.Nil(document.DeletedAt)
 }
 
+func (suite *ResolverSuite) TestPlanDocumentCreateWithPlanTaskID() {
+	plan := suite.createModelPlan("Plan with Task Document")
+	planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
+	reader := bytes.NewReader([]byte("Some test file contents"))
+
+	input := &model.PlanDocumentInput{
+		ModelPlanID: plan.ID,
+		FileData: graphql.Upload{
+			File:        reader,
+			Filename:    "two-pager.docx",
+			Size:        reader.Size(),
+			ContentType: "application/msword",
+		},
+		Restricted:   false,
+		DocumentType: models.DocumentTypeConceptPaper,
+		PlanTaskID:   &planTask.ID,
+	}
+	document, err := PlanDocumentCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+
+	if suite.NotNil(document.PlanTaskID) {
+		suite.Equal(planTask.ID, *document.PlanTaskID)
+	}
+
+	documents, err := PlanDocumentsReadByPlanTaskID(suite.testConfigs.Logger, planTask, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+	if suite.Len(documents, 1) {
+		suite.Equal(document.ID, documents[0].ID)
+	}
+}
+
 func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 	plan := suite.createModelPlan("Plan with Documents")
 
@@ -74,6 +105,19 @@ func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 	suite.Nil(document.OptionalNotes.Ptr())
 	suite.Nil(document.DeletedAt)
 
+	suite.Run("can attribute linked document to a plan task", func() {
+		planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
+		input.URL = url
+		input.Name = "Two pager link"
+		input.PlanTaskID = &planTask.ID
+
+		linkedDocument, err := PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.NoError(err)
+		if suite.NotNil(linkedDocument.PlanTaskID) {
+			suite.Equal(planTask.ID, *linkedDocument.PlanTaskID)
+		}
+	})
+
 	suite.Run("Invalid urls will cause an error", func() {
 		input.URL = "Hello"
 
@@ -94,6 +138,29 @@ func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 		_, err = PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 		suite.Error(err)
 	})
+}
+
+func (suite *ResolverSuite) TestPlanDocumentCreateRejectsPlanTaskFromDifferentModelPlan() {
+	plan := suite.createModelPlan("Plan with Wrong Task Document")
+	otherPlan := suite.createModelPlan("Other Plan with Task")
+	otherPlanTask := suite.getPlanTaskByKey(otherPlan.ID, models.PlanTaskKeyTwoPager)
+	reader := bytes.NewReader([]byte("Some test file contents"))
+
+	input := &model.PlanDocumentInput{
+		ModelPlanID: plan.ID,
+		FileData: graphql.Upload{
+			File:        reader,
+			Filename:    "two-pager.docx",
+			Size:        reader.Size(),
+			ContentType: "application/msword",
+		},
+		Restricted:   false,
+		DocumentType: models.DocumentTypeConceptPaper,
+		PlanTaskID:   &otherPlanTask.ID,
+	}
+	document, err := PlanDocumentCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.Error(err)
+	suite.Nil(document)
 }
 
 func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {
@@ -186,4 +253,44 @@ func (suite *ResolverSuite) TestCollaboratorNonCMSCannotSeeRestrictedDocs() {
 	suite.NoError(err)
 	suite.Len(docs, 1)
 	suite.Equal(docs[0].ID, unRestrictedDoc.ID)
+}
+
+func (suite *ResolverSuite) TestNonCollaboratorCannotSeeRestrictedTaskLinkedDocs() {
+	plan := suite.createModelPlan("Plan with Task Documents")
+	planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
+
+	restrictedDocInput := model.PlanDocumentLinkInput{
+		ModelPlanID:  plan.ID,
+		Name:         "Restricted two pager",
+		URL:          "https://www.example.com/restricted-two-pager",
+		Restricted:   true,
+		DocumentType: models.DocumentTypeConceptPaper,
+		PlanTaskID:   &planTask.ID,
+	}
+	_, err := PlanDocumentCreateLinked(suite.testConfigs.Logger, restrictedDocInput, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	unRestrictedDocInput := model.PlanDocumentLinkInput{
+		ModelPlanID:  plan.ID,
+		Name:         "Unrestricted two pager",
+		URL:          "https://www.example.com/unrestricted-two-pager",
+		Restricted:   false,
+		DocumentType: models.DocumentTypeConceptPaper,
+		PlanTaskID:   &planTask.ID,
+	}
+	unRestrictedDoc, err := PlanDocumentCreateLinked(suite.testConfigs.Logger, unRestrictedDocInput, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	docs, err := PlanDocumentsReadByPlanTaskID(suite.testConfigs.Logger, planTask, suite.testConfigs.Principal, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+	suite.Len(docs, 2)
+
+	nonCollaborator := suite.getTestPrincipal(suite.testConfigs.Store, "NOCL")
+	nonCollaborator.JobCodeASSESSMENT = false
+
+	docs, err = PlanDocumentsReadByPlanTaskID(suite.testConfigs.Logger, planTask, nonCollaborator, suite.testConfigs.Store, suite.testConfigs.S3Client)
+	suite.NoError(err)
+	if suite.Len(docs, 1) {
+		suite.Equal(unRestrictedDoc.ID, docs[0].ID)
+	}
 }

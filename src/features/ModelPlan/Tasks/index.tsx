@@ -34,6 +34,7 @@ type TabId = 'current' | 'completed';
 // Current tasks are shown in this fixed order per requirements.
 export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
+  PlanTaskKey.TWO_PAGER,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.MTO
 ];

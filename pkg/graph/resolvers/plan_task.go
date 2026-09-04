@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
@@ -41,10 +42,10 @@ func updatePlanTaskStatusByKey(
 	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
-) error {
+) (*models.PlanTask, error) {
 	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(np, logger, []uuid.UUID{modelPlanID})
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	var task *models.PlanTask
@@ -55,7 +56,7 @@ func updatePlanTaskStatusByKey(
 		}
 	}
 	if task == nil {
-		return fmt.Errorf("plan task not found for modelPlanID %s and key %s", modelPlanID, key)
+		return nil, fmt.Errorf("plan task not found for modelPlanID %s and key %s", modelPlanID, key)
 	}
 
 	// Ensure completion metadata matches the target status before treating an update as a no-op.
@@ -64,7 +65,7 @@ func updatePlanTaskStatusByKey(
 
 	// Skip writes when status + completion metadata are already correct.
 	if task.Status == newStatus && isCompletionMetadataConsistent {
-		return nil
+		return task, nil
 	}
 
 	didTransitionToDo := task.Status != models.PlanTaskStatusToDo && newStatus == models.PlanTaskStatusToDo
@@ -89,22 +90,52 @@ func updatePlanTaskStatusByKey(
 		true,
 	)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = storage.PlanTaskUpdate(np, logger, task)
+	updatedTask, err := storage.PlanTaskUpdate(np, logger, task)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if didTransitionToComplete {
-		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, task, principal, emailService, addressBook)
+		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, updatedTask, principal, emailService, addressBook)
 	}
 	if didTransitionToDo {
-		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, task, principal, emailService, addressBook)
+		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, updatedTask, principal, emailService, addressBook)
 	}
 
-	return nil
+	return updatedTask, nil
+}
+
+// PlanTaskMarkComplete directly sets a manually-markable plan task's status to COMPLETE or TO_DO.
+// Unlike the calculated task keys (MODEL_PLAN, MTO, DATA_EXCHANGE), which are derived from other
+// model state and updated via updatePlanTaskStatusByKey's other callers, manually-markable keys
+// (see models.PlanTaskKey.IsManuallyMarkable) have no calculated status and are only ever changed
+// by direct user action, so a key is rejected here if it isn't on that allow-list.
+func PlanTaskMarkComplete(
+	ctx context.Context,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
+	isComplete bool,
+	principal authentication.Principal,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) (*models.PlanTask, error) {
+	if !key.IsManuallyMarkable() {
+		return nil, fmt.Errorf("plan task key %s can not be manually marked complete", key)
+	}
+
+	newStatus := models.PlanTaskStatusToDo
+	if isComplete {
+		newStatus = models.PlanTaskStatusComplete
+	}
+
+	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
+		return updatePlanTaskStatusByKey(ctx, tx, logger, modelPlanID, key, newStatus, principal, store, emailService, addressBook)
+	})
 }
 
 // planTaskNotificationRecipientsByRole gets lists of both all model leads (regardless of settings) and non-model-leads (respecting settings) for notification purposes
@@ -395,6 +426,8 @@ func planTaskKeyEmailName(key models.PlanTaskKey) string {
 		return "Data exchange approach"
 	case models.PlanTaskKeyMto:
 		return "Model-to-operations matrix (MTO)"
+	case models.PlanTaskKeyTwoPager:
+		return "2-pager review"
 	default:
 		return string(key)
 	}
