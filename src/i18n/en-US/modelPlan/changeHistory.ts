@@ -39,6 +39,10 @@ const changeHistory = {
     'started {{section}} <datetime>on {{date}} at {{time}}</datetime>',
   taskStatusUpdate:
     'marked {{section}} as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
+  taskCardStatusUpdate:
+    'marked a task ({{task}}) as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
+  taskCardAutoStatusUpdate:
+    'automatically moved a task ({{task}}) as {{status}} <datetime>on {{date}} at {{time}}</datetime>',
   customTimelineUpdate:
     '{{action}} {{customTimelineTitle}} {{toFromIn}} model timeline <datetime>on {{date}} at {{time}}</datetime>',
   customTimelineRemovedTitle: 'a date',

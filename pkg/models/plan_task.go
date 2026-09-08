@@ -43,6 +43,23 @@ func (k PlanTaskKey) IsManuallyMarkable() bool {
 	return manuallyMarkablePlanTaskKeys[k]
 }
 
+// planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
+// and change history. Keys without an entry fall back to their raw string value.
+var planTaskKeyDisplayNames = map[PlanTaskKey]string{
+	PlanTaskKeyModelPlan:    "Model Plan",
+	PlanTaskKeyDataExchange: "Data exchange approach",
+	PlanTaskKeyMto:          "Model-to-operations matrix (MTO)",
+	PlanTaskKeyTwoPager:     "2-pager review",
+}
+
+// DisplayName returns a short human-readable name for this task key.
+func (k PlanTaskKey) DisplayName() string {
+	if name, ok := planTaskKeyDisplayNames[k]; ok {
+		return name
+	}
+	return string(k)
+}
+
 // PlanTaskStatus is an enum representing the lifecycle status of a task
 type PlanTaskStatus string
 

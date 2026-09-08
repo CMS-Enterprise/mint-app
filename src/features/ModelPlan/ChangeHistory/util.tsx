@@ -5,6 +5,7 @@ import {
   DatabaseOperation,
   ExisitingModelLinkFieldType,
   GetChangeHistoryQuery,
+  PlanTaskKey,
   TableName,
   TranslatedAuditMetaBaseStruct,
   TranslatedAuditMetaData,
@@ -40,6 +41,7 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
+  | 'planTaskStatusUpdate'
   | 'customTimelineUpdate'
   | 'questionnaireTaskListStatusUpdate'
   | 'mtoStatusUpdate'
@@ -97,8 +99,7 @@ export type TableWithStatus =
   | TableName.PLAN_OPS_EVAL_AND_LEARNING
   | TableName.PLAN_PAYMENTS
   | TableName.PLAN_DATA_EXCHANGE_APPROACH
-  | TableName.IDDOC_QUESTIONNAIRE
-  | TableName.PLAN_TASK;
+  | TableName.IDDOC_QUESTIONNAIRE;
 
 export const isTableWithStatus = (
   tableName: TableName
@@ -112,9 +113,28 @@ export const isTableWithStatus = (
     TableName.PLAN_OPS_EVAL_AND_LEARNING,
     TableName.PLAN_PAYMENTS,
     TableName.PLAN_DATA_EXCHANGE_APPROACH,
-    TableName.IDDOC_QUESTIONNAIRE,
-    TableName.PLAN_TASK
+    TableName.IDDOC_QUESTIONNAIRE
   ].includes(tableName);
+};
+
+// PlanTaskKey values whose status is set directly by a user (e.g. via a "mark complete" action),
+// rather than calculated automatically from other model state. Mirrors
+// models.manuallyMarkablePlanTaskKeys in pkg/models/plan_task.go — keep in sync.
+const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [PlanTaskKey.TWO_PAGER];
+
+// isPlanTaskAutomaticChange determines whether a plan_task change record represents a status
+// calculated automatically (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as a side effect of
+// other edits) rather than a task the user directly marked complete/to do. Automatic changes are
+// attributed to "MINT" in change history instead of the editing user (see ChangeRecord).
+export const isPlanTaskAutomaticChange = (
+  change: ChangeRecordType
+): boolean => {
+  if (change.tableName !== TableName.PLAN_TASK) return false;
+  if (!change.metaData || !isGenericWithMetaData(change.metaData)) return false;
+
+  return !manuallyMarkablePlanTaskKeys.includes(
+    change.metaData.relation as PlanTaskKey
+  );
 };
 
 // Type guard to check generic union type
@@ -842,6 +862,14 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'taskListStatusUpdate';
   }
 
+  // If the change is a plan task (Tasks section) status update, return 'planTaskStatusUpdate'
+  if (
+    change.tableName === TableName.PLAN_TASK &&
+    change.translatedFields.find(field => field.fieldName === 'status')
+  ) {
+    return 'planTaskStatusUpdate';
+  }
+
   if (change.tableName === TableName.CUSTOM_TIMELINE_DATE) {
     return 'customTimelineUpdate';
   }
@@ -943,6 +971,11 @@ export const getHeaderText = (change: ChangeRecordType): string => {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       }
       break;
+    case 'planTaskStatusUpdate':
+      headerText = isPlanTaskAutomaticChange(change)
+        ? i18next.t(`changeHistory:taskCardAutoStatusUpdate`)
+        : i18next.t(`changeHistory:taskCardStatusUpdate`);
+      break;
     case 'customTimelineUpdate':
       headerText = i18next.t(`changeHistory:customTimelineUpdate`);
       break;
@@ -1039,7 +1072,8 @@ export const isInitialCreatedSection = (
   changeType: ChangeType
 ): boolean =>
   !!(
-    (changeType === 'taskListStatusUpdate' &&
+    ((changeType === 'taskListStatusUpdate' ||
+      changeType === 'planTaskStatusUpdate') &&
       change.translatedFields.find(
         field =>
           (field.fieldName === 'status' || field.fieldName === 'needed') &&
