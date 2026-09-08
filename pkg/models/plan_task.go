@@ -65,7 +65,7 @@ func (k PlanTaskKey) DisplayName() string {
 // used in notifications. Only keys whose heading is constant across statuses are listed here; keys
 // without an entry fall back to DisplayName().
 var planTaskKeyChangeHistoryNames = map[PlanTaskKey]string{
-	PlanTaskKeyTwoPager: "Prepare for your 2-page review meeting with CMMI Front Office (FO)",
+	PlanTaskKeyTwoPager: "Prepare for your 2-page review meeting with CMMI Front Office",
 }
 
 // ChangeHistoryDisplayName returns the task name shown in change history.

@@ -19,7 +19,7 @@ func TestPlanTaskKeyIsManuallyMarkable(t *testing.T) {
 func TestPlanTaskKeyChangeHistoryDisplayName(t *testing.T) {
 	assert.Equal(
 		t,
-		"Prepare for your 2-page review meeting with CMMI Front Office (FO)",
+		"Prepare for your 2-page review meeting with CMMI Front Office",
 		PlanTaskKeyTwoPager.ChangeHistoryDisplayName(),
 	)
 
