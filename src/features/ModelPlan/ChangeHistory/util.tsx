@@ -925,11 +925,10 @@ export const isAssessmentDiscussionChange = (
     return false;
   }
 
-  const field = change.translatedFields.find(
-    f => f.fieldName === 'is_assessment'
-  );
+  const field = change.translatedFields.find(field => field.fieldName === 'is_assessment');
 
-  return field?.new === 'true' || field?.new === true;
+  const value = field?.new ?? field?.old;
+  return value === 'true' || value === true;
 };
 
 export const getHeaderText = (change: ChangeRecordType): string => {
