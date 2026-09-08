@@ -22,7 +22,11 @@ ADD COLUMN IF NOT EXISTS topic DISCUSSION_TOPIC_TYPE;
 
 -- backfill
 UPDATE plan_discussion
-SET topic = 'OTHER'
+SET
+    topic = 'OTHER',
+    -- set modified_by for audit table trigger (attempt to use pre-existing modified_by or created_by before defaulting to system user)
+    modified_by = COALESCE(modified_by, created_by, '00000001-0001-0001-0001-000000000001'::UUID),
+    modified_dts = NOW()
 WHERE topic IS NULL;
 
 -- set not null to enforce `topic` selection
