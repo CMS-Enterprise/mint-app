@@ -393,8 +393,8 @@ export const getTranslatedFieldValue = (
   change.translatedFields.find(field => field.fieldName === fieldName)
     ?.oldTranslated;
 
-/* 
-  Returns the operation status of the solution.  
+/*
+  Returns the operation status of the solution.
   Solutions are not deleted, they are marked as not needed/needed
   Mimics the database operation based on the neeeded property
 */
@@ -925,7 +925,9 @@ export const isAssessmentDiscussionChange = (
     return false;
   }
 
-  const field = change.translatedFields.find(field => field.fieldName === 'is_assessment');
+  const field = change.translatedFields.find(
+    f => f.fieldName === 'is_assessment'
+  );
 
   const value = field?.new ?? field?.old;
   return value === 'true' || value === true;
