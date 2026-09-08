@@ -58,24 +58,99 @@ func (suite *ResolverSuite) TestModelPlanTasksResolver() {
 	}
 }
 
-func (suite *ResolverSuite) TestModelPlanCreateCreatesThreeTasks() {
+func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	plan := suite.createModelPlan("Plan With Default Tasks")
 
 	tasks, err := PlanTaskGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Len(tasks, 3)
+	suite.Len(tasks, 4)
 
 	taskByKey := planTasksByKey(tasks)
 	suite.NotNil(taskByKey[models.PlanTaskKeyModelPlan])
 	suite.NotNil(taskByKey[models.PlanTaskKeyMto])
 	suite.NotNil(taskByKey[models.PlanTaskKeyDataExchange])
+	suite.NotNil(taskByKey[models.PlanTaskKeyPrepareForClearance])
 
 	for _, t := range tasks {
 		suite.Equal(plan.ID, t.ModelPlanID)
-		suite.Equal(models.PlanTaskStatusToDo, t.Status)
 		suite.Nil(t.CompletedBy)
 		suite.Nil(t.CompletedDts)
+		if t.Key == models.PlanTaskKeyPrepareForClearance {
+			suite.Equal(models.PlanTaskStatusUpcoming, t.Status)
+		} else {
+			suite.Equal(models.PlanTaskStatusToDo, t.Status)
+		}
 	}
+}
+
+func (suite *ResolverSuite) TestPlanTaskPrepareForClearanceTrigger() {
+	suite.Run("stays UPCOMING when clearance start date isn't set", func() {
+		plan := suite.createModelPlan("Plan For Prepare For Clearance No Date")
+
+		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
+		suite.Equal(models.PlanTaskStatusUpcoming, task.Status)
+	})
+
+	suite.Run("stays UPCOMING when clearance is more than 20 days away", func() {
+		plan := suite.createModelPlan("Plan For Prepare For Clearance Far Out")
+		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, 25))
+
+		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
+		suite.Equal(models.PlanTaskStatusUpcoming, task.Status)
+	})
+
+	suite.Run("becomes TO_DO within 20 days of clearance", func() {
+		plan := suite.createModelPlan("Plan For Prepare For Clearance Within Window")
+		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, 10))
+
+		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
+		suite.Equal(models.PlanTaskStatusToDo, task.Status)
+	})
+
+	suite.Run("becomes TO_DO once the clearance date has passed", func() {
+		plan := suite.createModelPlan("Plan For Prepare For Clearance Past Date")
+		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, -1))
+
+		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
+		suite.Equal(models.PlanTaskStatusToDo, task.Status)
+	})
+
+	suite.Run("triggered status is reflected on model_plan { tasks }", func() {
+		plan := suite.createModelPlan("Plan For Prepare For Clearance Tasks Field")
+		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, 10))
+
+		r := &Resolver{store: suite.testConfigs.Store}
+		mpResolver := &modelPlanResolver{r}
+		tasks, err := mpResolver.Tasks(suite.testConfigs.Context, plan)
+		suite.NoError(err)
+
+		task := planTasksByKey(tasks)[models.PlanTaskKeyPrepareForClearance]
+		if suite.NotNil(task) {
+			suite.Equal(models.PlanTaskStatusToDo, task.Status)
+		}
+	})
+}
+
+// setClearanceStarts sets a model plan's internal clearance start date, which drives the
+// PREPARE_FOR_CLEARANCE task trigger.
+func (suite *ResolverSuite) setClearanceStarts(modelPlanID uuid.UUID, clearanceStarts time.Time) {
+	planTimeline, err := PlanTimelineGetByModelPlanIDLOADER(suite.testConfigs.Context, modelPlanID)
+	suite.NoError(err)
+
+	changes := map[string]interface{}{
+		"clearanceStarts": clearanceStarts,
+	}
+	_, err = UpdatePlanTimeline(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		planTimeline.ID,
+		changes,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
 }
 
 func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {

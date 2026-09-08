@@ -93,13 +93,20 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		// Create default tasks for the model plan
-		for _, key := range []models.PlanTaskKey{
-			models.PlanTaskKeyModelPlan,
-			models.PlanTaskKeyMto,
-			models.PlanTaskKeyDataExchange,
-		} {
-			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, key, models.PlanTaskStatusToDo)
+		// Create default tasks for the model plan. PREPARE_FOR_CLEARANCE starts UPCOMING; the resolver
+		// layer displays it as TO_DO once the plan is within models.PrepareForClearanceTriggerDays of
+		// its internal clearance start date (see PlanTaskGetByModelPlanIDLOADER).
+		defaultTasks := []struct {
+			key    models.PlanTaskKey
+			status models.PlanTaskStatus
+		}{
+			{models.PlanTaskKeyModelPlan, models.PlanTaskStatusToDo},
+			{models.PlanTaskKeyMto, models.PlanTaskStatusToDo},
+			{models.PlanTaskKeyDataExchange, models.PlanTaskStatusToDo},
+			{models.PlanTaskKeyPrepareForClearance, models.PlanTaskStatusUpcoming},
+		}
+		for _, defaultTask := range defaultTasks {
+			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, defaultTask.key, defaultTask.status)
 			_, err = storage.PlanTaskCreate(tx, logger, task)
 			if err != nil {
 				return nil, err
