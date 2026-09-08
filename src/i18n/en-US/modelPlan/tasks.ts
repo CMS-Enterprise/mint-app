@@ -58,7 +58,8 @@ const tasks = {
       '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings',
     secondaryAction: 'View help article',
     [PlanTaskStatus.TO_DO]: {
-      heading: 'Prepare for your 2-page review meeting with CMMI Front Office',
+      heading:
+        'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
       success:
         '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now complete.',
@@ -66,7 +67,8 @@ const tasks = {
         'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
     },
     [PlanTaskStatus.COMPLETE]: {
-      heading: 'Prepare for your 2-page review meeting with CMMI Front Office',
+      heading:
+        'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
       success:
         '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.',

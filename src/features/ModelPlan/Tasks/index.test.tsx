@@ -119,7 +119,7 @@ describe('Tasks page', () => {
     );
 
     expect(orderedHeadings).toEqual([
-      'Prepare for your 2-page review meeting with CMMI Front Office',
+      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Finalize your data exchange approach',
       'Keep your model-to-operations matrix (MTO) up-to-date',
       'Iterate on your Model Plan'
