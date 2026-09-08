@@ -2349,6 +2349,10 @@ type ComplexityRoot struct {
 		Status                 func(childComplexity int) int
 	}
 
+	PlanTaskTranslation struct {
+		Status func(childComplexity int) int
+	}
+
 	PlanTimeline struct {
 		Announced                      func(childComplexity int) int
 		ApplicationsEnd                func(childComplexity int) int
@@ -15122,6 +15126,13 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.PlanTask.Status(childComplexity), true
 
+	case "PlanTaskTranslation.status":
+		if e.ComplexityRoot.PlanTaskTranslation.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanTaskTranslation.Status(childComplexity), true
+
 	case "PlanTimeline.announced":
 		if e.ComplexityRoot.PlanTimeline.Announced == nil {
 			break
@@ -18540,6 +18551,7 @@ enum TableName {
   plan_ops_eval_and_learning
   plan_participants_and_providers
   plan_payments
+  plan_task
   plan_tdl
   possible_need_solution_link
   possible_operational_need
@@ -24347,6 +24359,13 @@ extend type Mutation {
     key: PlanTaskKey!
     isComplete: Boolean!
   ): PlanTask! @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/tasks/plan_task_translation.graphql", Input: `"""
+Represents plan task translation data
+"""
+type PlanTaskTranslation {
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/model_collaboration/team/plan_collaborator.graphql", Input: `enum TeamRole {
@@ -83833,6 +83852,38 @@ func (ec *executionContext) fieldContext_PlanTask_modifiedDts(_ context.Context,
 	return graphql.NewScalarFieldContext("PlanTask", field, false, false, errors.New("field of type Time does not have child fields"))
 }
 
+func (ec *executionContext) _PlanTaskTranslation_status(ctx context.Context, field graphql.CollectedField, obj *model.PlanTaskTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanTaskTranslation_status(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Status, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanTaskTranslation_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTaskTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanTimeline_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanTimeline) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -123967,6 +124018,44 @@ func (ec *executionContext) _PlanTask(ctx context.Context, sel ast.SelectionSet,
 			out.Values[i] = ec._PlanTask_modifiedDts(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var planTaskTranslationImplementors = []string{"PlanTaskTranslation"}
+
+func (ec *executionContext) _PlanTaskTranslation(ctx context.Context, sel ast.SelectionSet, obj *model.PlanTaskTranslation) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planTaskTranslationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanTaskTranslation")
+		case "status":
+			out.Values[i] = ec._PlanTaskTranslation_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))

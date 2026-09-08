@@ -85,7 +85,8 @@ export type TranslationTables =
   | TableName.OPERATIONAL_SOLUTION
   | TableName.OPERATIONAL_SOLUTION_SUBTASK
   | TableName.PLAN_DOCUMENT_SOLUTION_LINK
-  | TableName.EXISTING_MODEL_LINK;
+  | TableName.EXISTING_MODEL_LINK
+  | TableName.PLAN_TASK;
 
 export type TableWithStatus =
   | TableName.PLAN_BASICS
@@ -96,7 +97,8 @@ export type TableWithStatus =
   | TableName.PLAN_OPS_EVAL_AND_LEARNING
   | TableName.PLAN_PAYMENTS
   | TableName.PLAN_DATA_EXCHANGE_APPROACH
-  | TableName.IDDOC_QUESTIONNAIRE;
+  | TableName.IDDOC_QUESTIONNAIRE
+  | TableName.PLAN_TASK;
 
 export const isTableWithStatus = (
   tableName: TableName
@@ -110,7 +112,8 @@ export const isTableWithStatus = (
     TableName.PLAN_OPS_EVAL_AND_LEARNING,
     TableName.PLAN_PAYMENTS,
     TableName.PLAN_DATA_EXCHANGE_APPROACH,
-    TableName.IDDOC_QUESTIONNAIRE
+    TableName.IDDOC_QUESTIONNAIRE,
+    TableName.PLAN_TASK
   ].includes(tableName);
 };
 

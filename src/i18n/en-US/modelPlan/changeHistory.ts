@@ -111,7 +111,8 @@ const changeHistory = {
     plan_document_solution_link:
       'Operational solutions and implementation status tracker',
     plan_data_exchange_approach: 'Data exchange approach',
-    iddoc_questionnaire: '4i/ACO-OS questionnaire'
+    iddoc_questionnaire: '4i/ACO-OS questionnaire',
+    plan_task: 'Tasks'
   },
   self: 'self',
   showDetails: 'Show details',
