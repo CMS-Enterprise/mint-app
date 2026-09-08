@@ -60,6 +60,22 @@ func (k PlanTaskKey) DisplayName() string {
 	return string(k)
 }
 
+// planTaskKeyChangeHistoryNames are the task names shown in change history. These match the Tasks
+// list UI's card heading (src/i18n/en-US/modelPlan/tasks.ts) rather than the shorter DisplayName()
+// used in notifications. Only keys whose heading is constant across statuses are listed here; keys
+// without an entry fall back to DisplayName().
+var planTaskKeyChangeHistoryNames = map[PlanTaskKey]string{
+	PlanTaskKeyTwoPager: "Prepare for your 2-page review meeting with CMMI Front Office (FO)",
+}
+
+// ChangeHistoryDisplayName returns the task name shown in change history.
+func (k PlanTaskKey) ChangeHistoryDisplayName() string {
+	if name, ok := planTaskKeyChangeHistoryNames[k]; ok {
+		return name
+	}
+	return k.DisplayName()
+}
+
 // PlanTaskStatus is an enum representing the lifecycle status of a task
 type PlanTaskStatus string
 
