@@ -77,6 +77,7 @@ const changeHistory = {
     '{{action}} {{toForFrom}} milestone <bold>{{milestoneName}}</bold>',
   replyCount: '{{count}} earlier reply not shown',
   replyCount_other: '{{count}} earlier replies not shown',
+  discussionTopic: 'Topic: {{topic}}',
   sections: {
     model_plan: 'Model plan',
     plan_timeline: 'Model timeline',
