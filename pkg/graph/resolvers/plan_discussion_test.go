@@ -25,6 +25,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
+		Topic:               models.DiscussionTopicTypeModelPlanPayment,
 		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
@@ -43,6 +44,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(plan.ID, result.ModelPlanID)
+	suite.EqualValues(input.Topic, result.Topic)
 	suite.EqualValues(input.Content, result.Content)
 	suite.True(result.IsAssessment) // default principal for the test suite is an assessment user
 	suite.Nil(result.ModifiedBy)
@@ -57,6 +59,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	suite.NoError(err)
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
+		Topic:               models.DiscussionTopicTypeModelPlanAll,
 		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            models.DiscussionUserRolePointer(models.DiscussionRoleNoneOfTheAbove),
 		UserRoleDescription: models.StringPointer("test role"),
@@ -78,6 +81,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussionAsRegularUser() {
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(plan.ID, result.ModelPlanID)
+	suite.EqualValues(input.Topic, result.Topic)
 	suite.EqualValues(input.Content, result.Content)
 	suite.False(result.IsAssessment)
 	suite.Nil(result.ModifiedBy)
@@ -92,6 +96,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_ValidRoleNoDescription() 
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
+		Topic:               models.DiscussionTopicTypeOther,
 		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            &userRole,
 		UserRoleDescription: nil, // Description not provided for CMS_SYSTEM_SERVICE_TEAM role
@@ -127,6 +132,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_NoDescription() {
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
+		Topic:               models.DiscussionTopicTypeOther,
 		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            &userRole,
 		UserRoleDescription: nil, // Description not provided for NONE_OF_THE_ABOVE role
@@ -154,6 +160,7 @@ func (suite *ResolverSuite) TestPlanDiscussionUserRole_RoleNilDescriptionNil() {
 
 	planDiscussionInput := &model.PlanDiscussionCreateInput{
 		ModelPlanID:         plan.ID,
+		Topic:               models.DiscussionTopicTypeOther,
 		Content:             models.TaggedHTML(taggedContent),
 		UserRole:            nil, // Role not provided
 		UserRoleDescription: nil, // Description not provided
@@ -316,6 +323,7 @@ func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 	result, err := PlanDiscussionGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
 	suite.Len(result, 1)
+	suite.EqualValues(models.DiscussionTopicTypeOther, result[0].Topic)
 
 	// Check that adding another dicussion doesn't affect the first one
 	discussionTwo := suite.createPlanDiscussion(plan, "This is another test comment")
@@ -375,6 +383,9 @@ func verifyPlanDiscussionLoader(ctx context.Context, modelPlanID uuid.UUID) erro
 
 	if modelPlanID != discussions[0].ModelPlanID {
 		return fmt.Errorf("plan Discussion returned model plan ID %s, expected %s", discussions[0].ModelPlanID, modelPlanID)
+	}
+	if discussions[0].Topic != models.DiscussionTopicTypeOther {
+		return fmt.Errorf("plan Discussion returned topic %s, expected %s", discussions[0].Topic, models.DiscussionTopicTypeOther)
 	}
 	return nil
 }

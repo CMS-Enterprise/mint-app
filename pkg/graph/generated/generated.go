@@ -1569,6 +1569,7 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
 		Replies               func(childComplexity int) int
+		Topic                 func(childComplexity int) int
 		UserRole              func(childComplexity int) int
 		UserRoleDescription   func(childComplexity int) int
 	}
@@ -1576,6 +1577,7 @@ type ComplexityRoot struct {
 	PlanDiscussionTranslation struct {
 		Content             func(childComplexity int) int
 		IsAssessment        func(childComplexity int) int
+		Topic               func(childComplexity int) int
 		UserRole            func(childComplexity int) int
 		UserRoleDescription func(childComplexity int) int
 	}
@@ -10729,6 +10731,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanDiscussion.Replies(childComplexity), true
+	case "PlanDiscussion.topic":
+		if e.ComplexityRoot.PlanDiscussion.Topic == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanDiscussion.Topic(childComplexity), true
 	case "PlanDiscussion.userRole":
 		if e.ComplexityRoot.PlanDiscussion.UserRole == nil {
 			break
@@ -10754,6 +10762,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanDiscussionTranslation.IsAssessment(childComplexity), true
+	case "PlanDiscussionTranslation.topic":
+		if e.ComplexityRoot.PlanDiscussionTranslation.Topic == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanDiscussionTranslation.Topic(childComplexity), true
 	case "PlanDiscussionTranslation.userRole":
 		if e.ComplexityRoot.PlanDiscussionTranslation.UserRole == nil {
 			break
@@ -20247,12 +20261,32 @@ extend type Query {
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/model_collaboration/discussions/plan_discussion.graphql", Input: `"""
+	{Name: "../schema/types/model_collaboration/discussions/plan_discussion.graphql", Input: `enum DiscussionTopicType {
+  MODEL_PLAN_ALL
+  MODEL_PLAN_MODEL_BASICS
+  MODEL_PLAN_GENERAL_CHARACTERISTICS
+  MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS
+  MODEL_PLAN_BENEFICIARIES
+  MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING
+  MODEL_PLAN_PAYMENT
+  MODEL_TIMELINE
+  DATA_EXCHANGE_APPROACH
+  WAIVER_ASSESSMENT_SURVEY
+  IDDOC_QUESTIONNAIRE
+  MODEL_TO_OPERATIONS_MATRIX_MTO
+  DOCUMENTS
+  CONTRACTS
+  FFS_CRS_AND_TDLS
+  OTHER
+}
+
+"""
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion {
   id: UUID!
   modelPlanID: UUID!
+  topic: DiscussionTopicType!
   content: TaggedContent @goField(forceResolver: true)
   userRole: DiscussionUserRole
   userRoleDescription: String
@@ -20272,6 +20306,7 @@ PlanDiscussionCreateInput represents the necessary fields to create a plan discu
 """
 input PlanDiscussionCreateInput {
   modelPlanID: UUID!
+  topic: DiscussionTopicType!
   content: TaggedHTML!
   userRole: DiscussionUserRole
   userRoleDescription: String
@@ -20286,6 +20321,7 @@ extend type Mutation {
 Represents plan discussion translation data
 """
 type PlanDiscussionTranslation {
+  topic: TranslationFieldWithOptions! @goTag(key: "db", value: "topic")
   userRole: TranslationFieldWithOptions! @goTag(key: "db", value: "user_role")
   userRoleDescription: TranslationField!
     @goTag(key: "db", value: "user_role_description")
@@ -27029,6 +27065,8 @@ func (ec *executionContext) childFields_PlanDiscussion(ctx context.Context, fiel
 		return ec.fieldContext_PlanDiscussion_id(ctx, field)
 	case "modelPlanID":
 		return ec.fieldContext_PlanDiscussion_modelPlanID(ctx, field)
+	case "topic":
+		return ec.fieldContext_PlanDiscussion_topic(ctx, field)
 	case "content":
 		return ec.fieldContext_PlanDiscussion_content(ctx, field)
 	case "userRole":
@@ -63651,6 +63689,29 @@ func (ec *executionContext) fieldContext_PlanDiscussion_modelPlanID(_ context.Co
 	return graphql.NewScalarFieldContext("PlanDiscussion", field, false, false, errors.New("field of type UUID does not have child fields"))
 }
 
+func (ec *executionContext) _PlanDiscussion_topic(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanDiscussion_topic(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Topic, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.DiscussionTopicType) graphql.Marshaler {
+			return ec.marshalNDiscussionTopicType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionTopicType(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanDiscussion_topic(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("PlanDiscussion", field, false, false, errors.New("field of type DiscussionTopicType does not have child fields"))
+}
+
 func (ec *executionContext) _PlanDiscussion_content(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -63938,6 +63999,38 @@ func (ec *executionContext) _PlanDiscussion_modifiedDts(ctx context.Context, fie
 }
 func (ec *executionContext) fieldContext_PlanDiscussion_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("PlanDiscussion", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _PlanDiscussionTranslation_topic(ctx context.Context, field graphql.CollectedField, obj *model.PlanDiscussionTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanDiscussionTranslation_topic(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Topic, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanDiscussionTranslation_topic(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDiscussionTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
 }
 
 func (ec *executionContext) _PlanDiscussionTranslation_userRole(ctx context.Context, field graphql.CollectedField, obj *model.PlanDiscussionTranslation) (ret graphql.Marshaler) {
@@ -98549,7 +98642,7 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "content", "userRole", "userRoleDescription"}
+	fieldsInOrder := [...]string{"modelPlanID", "topic", "content", "userRole", "userRoleDescription"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -98563,6 +98656,13 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 				return it, err
 			}
 			it.ModelPlanID = data
+		case "topic":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("topic"))
+			data, err := ec.unmarshalNDiscussionTopicType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionTopicType(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Topic = data
 		case "content":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
 			data, err := ec.unmarshalNTaggedHTML2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTaggedHTML(ctx, v)
@@ -117024,6 +117124,11 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "topic":
+			out.Values[i] = ec._PlanDiscussion_topic(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "content":
 			field := field
 
@@ -117244,6 +117349,11 @@ func (ec *executionContext) _PlanDiscussionTranslation(ctx context.Context, sel 
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("PlanDiscussionTranslation")
+		case "topic":
+			out.Values[i] = ec._PlanDiscussionTranslation_topic(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "userRole":
 			out.Values[i] = ec._PlanDiscussionTranslation_userRole(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -130227,10 +130337,6 @@ func (ec *executionContext) marshalNActionType2githubᚗcomᚋcmsᚑenterprise�
 	return v
 }
 
-func (ec *executionContext) marshalNActivity2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐActivity(ctx context.Context, sel ast.SelectionSet, v models.Activity) graphql.Marshaler {
-	return ec._Activity(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNActivity2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐActivity(ctx context.Context, sel ast.SelectionSet, v *models.Activity) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -130388,10 +130494,6 @@ func (ec *executionContext) marshalNAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
-func (ec *executionContext) marshalNAnalyticsSummary2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐAnalyticsSummary(ctx context.Context, sel ast.SelectionSet, v models.AnalyticsSummary) graphql.Marshaler {
-	return ec._AnalyticsSummary(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNAnalyticsSummary2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐAnalyticsSummary(ctx context.Context, sel ast.SelectionSet, v *models.AnalyticsSummary) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -130497,10 +130599,6 @@ func (ec *executionContext) marshalNAnticipatedMultiPayerDataAvailabilityUseCase
 	}
 
 	return ret
-}
-
-func (ec *executionContext) marshalNApplyTemplateResult2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐApplyTemplateResult(ctx context.Context, sel ast.SelectionSet, v model.ApplyTemplateResult) graphql.Marshaler {
-	return ec._ApplyTemplateResult(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNApplyTemplateResult2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐApplyTemplateResult(ctx context.Context, sel ast.SelectionSet, v *model.ApplyTemplateResult) graphql.Marshaler {
@@ -130801,10 +130899,6 @@ func (ec *executionContext) marshalNCTATHelpNeededType2ᚕgithubᚗcomᚋcmsᚑe
 	return ret
 }
 
-func (ec *executionContext) marshalNCTATRequest2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequest(ctx context.Context, sel ast.SelectionSet, v models.CTATRequest) graphql.Marshaler {
-	return ec._CTATRequest(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNCTATRequest2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequestᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.CTATRequest) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
@@ -130884,10 +130978,6 @@ func (ec *executionContext) marshalNCTATRequestUrgency2githubᚗcomᚋcmsᚑente
 	return res
 }
 
-func (ec *executionContext) marshalNCTATRequestsTableData2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequestsTableData(ctx context.Context, sel ast.SelectionSet, v models.CTATRequestsTableData) graphql.Marshaler {
-	return ec._CTATRequestsTableData(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNCTATRequestsTableData2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequestsTableData(ctx context.Context, sel ast.SelectionSet, v *models.CTATRequestsTableData) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -130896,10 +130986,6 @@ func (ec *executionContext) marshalNCTATRequestsTableData2ᚖgithubᚗcomᚋcms�
 		return graphql.Null
 	}
 	return ec._CTATRequestsTableData(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNCTATRequestsTableDataRequester2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequestsTableDataRequester(ctx context.Context, sel ast.SelectionSet, v models.CTATRequestsTableDataRequester) graphql.Marshaler {
-	return ec._CTATRequestsTableDataRequester(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNCTATRequestsTableDataRequester2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATRequestsTableDataRequester(ctx context.Context, sel ast.SelectionSet, v *models.CTATRequestsTableDataRequester) graphql.Marshaler {
@@ -131122,10 +131208,6 @@ func (ec *executionContext) marshalNContractorSupportType2ᚕgithubᚗcomᚋcms�
 	return ret
 }
 
-func (ec *executionContext) marshalNCurrentUser2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v models.CurrentUser) graphql.Marshaler {
-	return ec._CurrentUser(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNCurrentUser2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v *models.CurrentUser) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -131134,10 +131216,6 @@ func (ec *executionContext) marshalNCurrentUser2ᚖgithubᚗcomᚋcmsᚑenterpri
 		return graphql.Null
 	}
 	return ec._CurrentUser(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNCustomTimelineDate2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDate(ctx context.Context, sel ast.SelectionSet, v models.CustomTimelineDate) graphql.Marshaler {
-	return ec._CustomTimelineDate(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNCustomTimelineDate2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCustomTimelineDateᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.CustomTimelineDate) graphql.Marshaler {
@@ -131443,10 +131521,6 @@ func (ec *executionContext) marshalNDateChangeFieldType2githubᚗcomᚋcmsᚑent
 	return res
 }
 
-func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {
-	return ec._DiscussionReply(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNDiscussionReply2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReplyᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.DiscussionReply) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
@@ -131476,6 +131550,23 @@ func (ec *executionContext) marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsᚑente
 func (ec *executionContext) unmarshalNDiscussionReplyCreateInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyCreateInput(ctx context.Context, v any) (model.DiscussionReplyCreateInput, error) {
 	res, err := ec.unmarshalInputDiscussionReplyCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNDiscussionTopicType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionTopicType(ctx context.Context, v any) (models.DiscussionTopicType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DiscussionTopicType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDiscussionTopicType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionTopicType(ctx context.Context, sel ast.SelectionSet, v models.DiscussionTopicType) graphql.Marshaler {
+	_ = sel
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNDiscussionUserRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionUserRole(ctx context.Context, v any) (models.DiscussionUserRole, error) {
@@ -131605,10 +131696,6 @@ func (ec *executionContext) marshalNExistingModel2ᚖgithubᚗcomᚋcmsᚑenterp
 	return ec._ExistingModel(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNExistingModelLink2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLink(ctx context.Context, sel ast.SelectionSet, v models.ExistingModelLink) graphql.Marshaler {
-	return ec._ExistingModelLink(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNExistingModelLink2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLinkᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ExistingModelLink) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
@@ -131633,10 +131720,6 @@ func (ec *executionContext) marshalNExistingModelLink2ᚖgithubᚗcomᚋcmsᚑen
 		return graphql.Null
 	}
 	return ec._ExistingModelLink(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNExistingModelLinks2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLinks(ctx context.Context, sel ast.SelectionSet, v models.ExistingModelLinks) graphql.Marshaler {
-	return ec._ExistingModelLinks(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNExistingModelLinks2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelLinks(ctx context.Context, sel ast.SelectionSet, v *models.ExistingModelLinks) graphql.Marshaler {
@@ -131990,10 +132073,6 @@ func (ec *executionContext) marshalNIDDOCFileType2ᚕgithubᚗcomᚋcmsᚑenterp
 	return ret
 }
 
-func (ec *executionContext) marshalNIDDOCQuestionnaire2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐIDDOCQuestionnaire(ctx context.Context, sel ast.SelectionSet, v models.IDDOCQuestionnaire) graphql.Marshaler {
-	return ec._IDDOCQuestionnaire(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNIDDOCQuestionnaire2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐIDDOCQuestionnaire(ctx context.Context, sel ast.SelectionSet, v *models.IDDOCQuestionnaire) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -132121,10 +132200,6 @@ func (ec *executionContext) marshalNKeyCharacteristic2ᚕgithubᚗcomᚋcmsᚑen
 	return ret
 }
 
-func (ec *executionContext) marshalNKeyContact2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐKeyContact(ctx context.Context, sel ast.SelectionSet, v models.KeyContact) graphql.Marshaler {
-	return ec._KeyContact(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNKeyContact2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐKeyContactᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.KeyContact) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
@@ -132149,10 +132224,6 @@ func (ec *executionContext) marshalNKeyContact2ᚖgithubᚗcomᚋcmsᚑenterpris
 		return graphql.Null
 	}
 	return ec._KeyContact(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNKeyContactCategory2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐKeyContactCategory(ctx context.Context, sel ast.SelectionSet, v models.KeyContactCategory) graphql.Marshaler {
-	return ec._KeyContactCategory(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNKeyContactCategory2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐKeyContactCategoryᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.KeyContactCategory) graphql.Marshaler {
@@ -132184,10 +132255,6 @@ func (ec *executionContext) marshalNKeyContactCategory2ᚖgithubᚗcomᚋcmsᚑe
 func (ec *executionContext) unmarshalNKeyContactUpdateChanges2map(ctx context.Context, v any) (map[string]any, error) {
 	res, err := ec.unmarshalInputKeyContactUpdateChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNLaunchDarklySettings2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx context.Context, sel ast.SelectionSet, v model.LaunchDarklySettings) graphql.Marshaler {
-	return ec._LaunchDarklySettings(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx context.Context, sel ast.SelectionSet, v *model.LaunchDarklySettings) graphql.Marshaler {
@@ -132257,10 +132324,6 @@ func (ec *executionContext) marshalNLockableSectionLockStatus2ᚖgithubᚗcomᚋ
 	return ec._LockableSectionLockStatus(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNLockableSectionLockStatusChanged2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLockableSectionLockStatusChanged(ctx context.Context, sel ast.SelectionSet, v model.LockableSectionLockStatusChanged) graphql.Marshaler {
-	return ec._LockableSectionLockStatusChanged(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNLockableSectionLockStatusChanged2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLockableSectionLockStatusChanged(ctx context.Context, sel ast.SelectionSet, v *model.LockableSectionLockStatusChanged) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -132271,10 +132334,6 @@ func (ec *executionContext) marshalNLockableSectionLockStatusChanged2ᚖgithub�
 	return ec._LockableSectionLockStatusChanged(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNMTOCategories2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCategories(ctx context.Context, sel ast.SelectionSet, v models.MTOCategories) graphql.Marshaler {
-	return ec._MTOCategories(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNMTOCategories2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCategories(ctx context.Context, sel ast.SelectionSet, v *models.MTOCategories) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -132283,10 +132342,6 @@ func (ec *executionContext) marshalNMTOCategories2ᚖgithubᚗcomᚋcmsᚑenterp
 		return graphql.Null
 	}
 	return ec._MTOCategories(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNMTOCategory2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCategory(ctx context.Context, sel ast.SelectionSet, v models.MTOCategory) graphql.Marshaler {
-	return ec._MTOCategory(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNMTOCategory2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCategoryᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.MTOCategory) graphql.Marshaler {
@@ -132313,10 +132368,6 @@ func (ec *executionContext) marshalNMTOCategory2ᚖgithubᚗcomᚋcmsᚑenterpri
 		return graphql.Null
 	}
 	return ec._MTOCategory(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNMTOCommonMilestone2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonMilestone(ctx context.Context, sel ast.SelectionSet, v models.MTOCommonMilestone) graphql.Marshaler {
-	return ec._MTOCommonMilestone(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNMTOCommonMilestone2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonMilestoneᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.MTOCommonMilestone) graphql.Marshaler {
@@ -132348,10 +132399,6 @@ func (ec *executionContext) marshalNMTOCommonMilestone2ᚖgithubᚗcomᚋcmsᚑe
 func (ec *executionContext) unmarshalNMTOCommonMilestoneChanges2map(ctx context.Context, v any) (map[string]any, error) {
 	res, err := ec.unmarshalInputMTOCommonMilestoneChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNMTOCommonSolution2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolution(ctx context.Context, sel ast.SelectionSet, v models.MTOCommonSolution) graphql.Marshaler {
-	return ec._MTOCommonSolution(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNMTOCommonSolution2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolutionᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.MTOCommonSolution) graphql.Marshaler {
@@ -132397,10 +132444,6 @@ func (ec *executionContext) marshalNMTOCommonSolutionCMSComponent2githubᚗcom�
 	return res
 }
 
-func (ec *executionContext) marshalNMTOCommonSolutionContact2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolutionContact(ctx context.Context, sel ast.SelectionSet, v models.MTOCommonSolutionContact) graphql.Marshaler {
-	return ec._MTOCommonSolutionContact(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNMTOCommonSolutionContact2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolutionContactᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.MTOCommonSolutionContact) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
@@ -132427,10 +132470,6 @@ func (ec *executionContext) marshalNMTOCommonSolutionContact2ᚖgithubᚗcomᚋc
 	return ec._MTOCommonSolutionContact(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNMTOCommonSolutionContactInformation2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolutionContactInformation(ctx context.Context, sel ast.SelectionSet, v models.MTOCommonSolutionContactInformation) graphql.Marshaler {
-	return ec._MTOCommonSolutionContactInformation(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNMTOCommonSolutionContactInformation2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolutionContactInformation(ctx context.Context, sel ast.SelectionSet, v *models.MTOCommonSolutionContactInformation) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -132444,10 +132483,6 @@ func (ec *executionContext) marshalNMTOCommonSolutionContactInformation2ᚖgithu
 func (ec *executionContext) unmarshalNMTOCommonSolutionContactUpdateChanges2map(ctx context.Context, v any) (map[string]any, error) {
 	res, err := ec.unmarshalInputMTOCommonSolutionContactUpdateChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNMTOCommonSolutionContractor2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolutionContractor(ctx context.Context, sel ast.SelectionSet, v models.MTOCommonSolutionContractor) graphql.Marshaler {
-	return ec._MTOCommonSolutionContractor(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNMTOCommonSolutionContractor2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolutionContractorᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.MTOCommonSolutionContractor) graphql.Marshaler {
@@ -132592,10 +132627,6 @@ func (ec *executionContext) marshalNMTOCommonSolutionSubject2ᚕgithubᚗcomᚋc
 	return ret
 }
 
-func (ec *executionContext) marshalNMTOCommonSolutionSystemOwner2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolutionSystemOwner(ctx context.Context, sel ast.SelectionSet, v models.MTOCommonSolutionSystemOwner) graphql.Marshaler {
-	return ec._MTOCommonSolutionSystemOwner(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNMTOCommonSolutionSystemOwner2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOCommonSolutionSystemOwnerᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.MTOCommonSolutionSystemOwner) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
@@ -132674,10 +132705,6 @@ func (ec *executionContext) marshalNMTOFacilitator2ᚕgithubᚗcomᚋcmsᚑenter
 	return ret
 }
 
-func (ec *executionContext) marshalNMTOInfo2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOInfo(ctx context.Context, sel ast.SelectionSet, v models.MTOInfo) graphql.Marshaler {
-	return ec._MTOInfo(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNMTOInfo2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOInfo(ctx context.Context, sel ast.SelectionSet, v *models.MTOInfo) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -132686,10 +132713,6 @@ func (ec *executionContext) marshalNMTOInfo2ᚖgithubᚗcomᚋcmsᚑenterprise�
 		return graphql.Null
 	}
 	return ec._MTOInfo(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNMTOMilestone2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOMilestone(ctx context.Context, sel ast.SelectionSet, v models.MTOMilestone) graphql.Marshaler {
-	return ec._MTOMilestone(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNMTOMilestone2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOMilestoneᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.MTOMilestone) graphql.Marshaler {
@@ -132721,10 +132744,6 @@ func (ec *executionContext) marshalNMTOMilestone2ᚖgithubᚗcomᚋcmsᚑenterpr
 func (ec *executionContext) unmarshalNMTOMilestoneChanges2map(ctx context.Context, v any) (map[string]any, error) {
 	res, err := ec.unmarshalInputMTOMilestoneChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNMTOMilestoneNote2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOMilestoneNote(ctx context.Context, sel ast.SelectionSet, v models.MTOMilestoneNote) graphql.Marshaler {
-	return ec._MTOMilestoneNote(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNMTOMilestoneNote2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOMilestoneNoteᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.MTOMilestoneNote) graphql.Marshaler {
@@ -132842,10 +132861,6 @@ func (ec *executionContext) marshalNMTORiskIndicator2githubᚗcomᚋcmsᚑenterp
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) marshalNMTOSolution2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOSolution(ctx context.Context, sel ast.SelectionSet, v models.MTOSolution) graphql.Marshaler {
-	return ec._MTOSolution(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNMTOSolution2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐMTOSolutionᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.MTOSolution) graphql.Marshaler {
@@ -133156,10 +133171,6 @@ func (ec *executionContext) marshalNMilestoneSuggestionReason2ᚖgithubᚗcomᚋ
 	return ec._MilestoneSuggestionReason(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNMilestoneSuggestionReasons2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMilestoneSuggestionReasons(ctx context.Context, sel ast.SelectionSet, v model.MilestoneSuggestionReasons) graphql.Marshaler {
-	return ec._MilestoneSuggestionReasons(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNMilestoneSuggestionReasons2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMilestoneSuggestionReasons(ctx context.Context, sel ast.SelectionSet, v *model.MilestoneSuggestionReasons) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -133414,10 +133425,6 @@ func (ec *executionContext) marshalNModelPhase2githubᚗcomᚋcmsᚑenterprise�
 	return res
 }
 
-func (ec *executionContext) marshalNModelPlan2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v models.ModelPlan) graphql.Marshaler {
-	return ec._ModelPlan(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNModelPlan2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ModelPlan) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
@@ -133648,10 +133655,6 @@ func (ec *executionContext) marshalNModelsByStatusAnalytics2ᚖgithubᚗcomᚋcm
 	return ec._ModelsByStatusAnalytics(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNModelsToOperationMatrix2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐModelsToOperationMatrix(ctx context.Context, sel ast.SelectionSet, v models.ModelsToOperationMatrix) graphql.Marshaler {
-	return ec._ModelsToOperationMatrix(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNModelsToOperationMatrix2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐModelsToOperationMatrix(ctx context.Context, sel ast.SelectionSet, v *models.ModelsToOperationMatrix) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -133707,10 +133710,6 @@ func (ec *executionContext) marshalNMultiSourceDataToCollect2ᚕgithubᚗcomᚋc
 	}
 
 	return ret
-}
-
-func (ec *executionContext) marshalNNDAInfo2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNDAInfo(ctx context.Context, sel ast.SelectionSet, v model.NDAInfo) graphql.Marshaler {
-	return ec._NDAInfo(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNNDAInfo2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNDAInfo(ctx context.Context, sel ast.SelectionSet, v *model.NDAInfo) graphql.Marshaler {
@@ -134108,10 +134107,6 @@ func (ec *executionContext) marshalNPhaseSuggestion2githubᚗcomᚋcmsᚑenterpr
 	return ec._PhaseSuggestion(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNPlanBasics2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx context.Context, sel ast.SelectionSet, v models.PlanBasics) graphql.Marshaler {
-	return ec._PlanBasics(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNPlanBasics2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx context.Context, sel ast.SelectionSet, v *models.PlanBasics) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -134127,10 +134122,6 @@ func (ec *executionContext) unmarshalNPlanBasicsChanges2map(ctx context.Context,
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNPlanBeneficiaries2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanBeneficiaries(ctx context.Context, sel ast.SelectionSet, v models.PlanBeneficiaries) graphql.Marshaler {
-	return ec._PlanBeneficiaries(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNPlanBeneficiaries2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanBeneficiaries(ctx context.Context, sel ast.SelectionSet, v *models.PlanBeneficiaries) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -134144,10 +134135,6 @@ func (ec *executionContext) marshalNPlanBeneficiaries2ᚖgithubᚗcomᚋcmsᚑen
 func (ec *executionContext) unmarshalNPlanBeneficiariesChanges2map(ctx context.Context, v any) (map[string]any, error) {
 	res, err := ec.unmarshalInputPlanBeneficiariesChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPlanCR2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCR(ctx context.Context, sel ast.SelectionSet, v models.PlanCR) graphql.Marshaler {
-	return ec._PlanCR(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPlanCR2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCRᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanCR) graphql.Marshaler {
@@ -134186,10 +134173,6 @@ func (ec *executionContext) unmarshalNPlanCRCreateInput2githubᚗcomᚋcmsᚑent
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNPlanCollaborator2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx context.Context, sel ast.SelectionSet, v models.PlanCollaborator) graphql.Marshaler {
-	return ec._PlanCollaborator(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNPlanCollaborator2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaboratorᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanCollaborator) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
@@ -134221,10 +134204,6 @@ func (ec *executionContext) unmarshalNPlanCollaboratorCreateInput2githubᚗcom�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNPlanDataExchangeApproach2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDataExchangeApproach(ctx context.Context, sel ast.SelectionSet, v models.PlanDataExchangeApproach) graphql.Marshaler {
-	return ec._PlanDataExchangeApproach(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNPlanDataExchangeApproach2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDataExchangeApproach(ctx context.Context, sel ast.SelectionSet, v *models.PlanDataExchangeApproach) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -134238,10 +134217,6 @@ func (ec *executionContext) marshalNPlanDataExchangeApproach2ᚖgithubᚗcomᚋc
 func (ec *executionContext) unmarshalNPlanDataExchangeApproachChanges2map(ctx context.Context, v any) (map[string]any, error) {
 	res, err := ec.unmarshalInputPlanDataExchangeApproachChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPlanDiscussion2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx context.Context, sel ast.SelectionSet, v models.PlanDiscussion) graphql.Marshaler {
-	return ec._PlanDiscussion(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPlanDiscussion2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussionᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanDiscussion) graphql.Marshaler {
@@ -134273,10 +134248,6 @@ func (ec *executionContext) marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsᚑenter
 func (ec *executionContext) unmarshalNPlanDiscussionCreateInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionCreateInput(ctx context.Context, v any) (model.PlanDiscussionCreateInput, error) {
 	res, err := ec.unmarshalInputPlanDiscussionCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPlanDocument2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx context.Context, sel ast.SelectionSet, v models.PlanDocument) graphql.Marshaler {
-	return ec._PlanDocument(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPlanDocument2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanDocument) graphql.Marshaler {
@@ -134315,10 +134286,6 @@ func (ec *executionContext) unmarshalNPlanDocumentLinkInput2githubᚗcomᚋcms�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNPlanFavorite2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx context.Context, sel ast.SelectionSet, v models.PlanFavorite) graphql.Marshaler {
-	return ec._PlanFavorite(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx context.Context, sel ast.SelectionSet, v *models.PlanFavorite) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -134327,10 +134294,6 @@ func (ec *executionContext) marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsᚑenterpr
 		return graphql.Null
 	}
 	return ec._PlanFavorite(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNPlanGeneralCharacteristics2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx context.Context, sel ast.SelectionSet, v models.PlanGeneralCharacteristics) graphql.Marshaler {
-	return ec._PlanGeneralCharacteristics(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPlanGeneralCharacteristics2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx context.Context, sel ast.SelectionSet, v *models.PlanGeneralCharacteristics) graphql.Marshaler {
@@ -134348,10 +134311,6 @@ func (ec *executionContext) unmarshalNPlanGeneralCharacteristicsChanges2map(ctx 
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNPlanOpsEvalAndLearning2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanOpsEvalAndLearning(ctx context.Context, sel ast.SelectionSet, v models.PlanOpsEvalAndLearning) graphql.Marshaler {
-	return ec._PlanOpsEvalAndLearning(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNPlanOpsEvalAndLearning2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanOpsEvalAndLearning(ctx context.Context, sel ast.SelectionSet, v *models.PlanOpsEvalAndLearning) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -134365,10 +134324,6 @@ func (ec *executionContext) marshalNPlanOpsEvalAndLearning2ᚖgithubᚗcomᚋcms
 func (ec *executionContext) unmarshalNPlanOpsEvalAndLearningChanges2map(ctx context.Context, v any) (map[string]any, error) {
 	res, err := ec.unmarshalInputPlanOpsEvalAndLearningChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPlanParticipantsAndProviders2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx context.Context, sel ast.SelectionSet, v models.PlanParticipantsAndProviders) graphql.Marshaler {
-	return ec._PlanParticipantsAndProviders(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPlanParticipantsAndProviders2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx context.Context, sel ast.SelectionSet, v *models.PlanParticipantsAndProviders) graphql.Marshaler {
@@ -134386,10 +134341,6 @@ func (ec *executionContext) unmarshalNPlanParticipantsAndProvidersChanges2map(ct
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNPlanPayments2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx context.Context, sel ast.SelectionSet, v models.PlanPayments) graphql.Marshaler {
-	return ec._PlanPayments(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNPlanPayments2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx context.Context, sel ast.SelectionSet, v *models.PlanPayments) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -134403,10 +134354,6 @@ func (ec *executionContext) marshalNPlanPayments2ᚖgithubᚗcomᚋcmsᚑenterpr
 func (ec *executionContext) unmarshalNPlanPaymentsChanges2map(ctx context.Context, v any) (map[string]any, error) {
 	res, err := ec.unmarshalInputPlanPaymentsChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPlanTDL2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDL(ctx context.Context, sel ast.SelectionSet, v models.PlanTDL) graphql.Marshaler {
-	return ec._PlanTDL(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPlanTDL2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTDLᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanTDL) graphql.Marshaler {
@@ -134443,10 +134390,6 @@ func (ec *executionContext) unmarshalNPlanTDLChanges2map(ctx context.Context, v 
 func (ec *executionContext) unmarshalNPlanTDLCreateInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanTDLCreateInput(ctx context.Context, v any) (model.PlanTDLCreateInput, error) {
 	res, err := ec.unmarshalInputPlanTDLCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPlanTask2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTask(ctx context.Context, sel ast.SelectionSet, v models.PlanTask) graphql.Marshaler {
-	return ec._PlanTask(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPlanTask2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTaskᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanTask) graphql.Marshaler {
@@ -134519,10 +134462,6 @@ func (ec *executionContext) marshalNPlanTaskStatus2githubᚗcomᚋcmsᚑenterpri
 	return res
 }
 
-func (ec *executionContext) marshalNPlanTimeline2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTimeline(ctx context.Context, sel ast.SelectionSet, v models.PlanTimeline) graphql.Marshaler {
-	return ec._PlanTimeline(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNPlanTimeline2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTimeline(ctx context.Context, sel ast.SelectionSet, v *models.PlanTimeline) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -134536,10 +134475,6 @@ func (ec *executionContext) marshalNPlanTimeline2ᚖgithubᚗcomᚋcmsᚑenterpr
 func (ec *executionContext) unmarshalNPlanTimelineChanges2map(ctx context.Context, v any) (map[string]any, error) {
 	res, err := ec.unmarshalInputPlanTimelineChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPrepareForClearance2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPrepareForClearance(ctx context.Context, sel ast.SelectionSet, v model.PrepareForClearance) graphql.Marshaler {
-	return ec._PrepareForClearance(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPrepareForClearance2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPrepareForClearance(ctx context.Context, sel ast.SelectionSet, v *model.PrepareForClearance) graphql.Marshaler {
@@ -134640,10 +134575,6 @@ func (ec *executionContext) marshalNProviderLeaveType2ᚕgithubᚗcomᚋcmsᚑen
 	}
 
 	return ret
-}
-
-func (ec *executionContext) marshalNQuestionnaires2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐQuestionnaires(ctx context.Context, sel ast.SelectionSet, v models.Questionnaires) graphql.Marshaler {
-	return ec._Questionnaires(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNQuestionnaires2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐQuestionnaires(ctx context.Context, sel ast.SelectionSet, v *models.Questionnaires) graphql.Marshaler {
@@ -135336,10 +135267,6 @@ func (ec *executionContext) marshalNUserInfo2ᚖgithubᚗcomᚋcmsᚑenterprise�
 	return ec._UserInfo(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNUserNotification2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotification(ctx context.Context, sel ast.SelectionSet, v models.UserNotification) graphql.Marshaler {
-	return ec._UserNotification(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNUserNotification2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.UserNotification) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
@@ -135413,10 +135340,6 @@ func (ec *executionContext) marshalNUserNotificationPreferenceFlag2ᚕgithubᚗc
 	return ret
 }
 
-func (ec *executionContext) marshalNUserNotificationPreferences2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx context.Context, sel ast.SelectionSet, v models.UserNotificationPreferences) graphql.Marshaler {
-	return ec._UserNotificationPreferences(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNUserNotificationPreferences2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferences(ctx context.Context, sel ast.SelectionSet, v *models.UserNotificationPreferences) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -135432,10 +135355,6 @@ func (ec *executionContext) unmarshalNUserNotificationPreferencesChanges2map(ctx
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNUserNotifications2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotifications(ctx context.Context, sel ast.SelectionSet, v models.UserNotifications) graphql.Marshaler {
-	return ec._UserNotifications(ctx, sel, &v)
-}
-
 func (ec *executionContext) marshalNUserNotifications2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotifications(ctx context.Context, sel ast.SelectionSet, v *models.UserNotifications) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -135444,10 +135363,6 @@ func (ec *executionContext) marshalNUserNotifications2ᚖgithubᚗcomᚋcmsᚑen
 		return graphql.Null
 	}
 	return ec._UserNotifications(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNUserViewCustomization2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserViewCustomization(ctx context.Context, sel ast.SelectionSet, v models.UserViewCustomization) graphql.Marshaler {
-	return ec._UserViewCustomization(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNUserViewCustomization2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserViewCustomization(ctx context.Context, sel ast.SelectionSet, v *models.UserViewCustomization) graphql.Marshaler {

@@ -23,9 +23,7 @@ const ScrollLink = ({
       unstyled
     >
       {scrollTo}
-      {hasIcon && (
-        <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
-      )}
+      {hasIcon && <Icon.ArrowForward aria-label="forward" />}
     </Button>
   );
 };

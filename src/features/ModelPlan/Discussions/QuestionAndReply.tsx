@@ -10,11 +10,11 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Formik, FormikProps } from 'formik';
 import {
+  DiscussionTopicType,
   DiscussionUserRole,
   GetModelPlanDiscussionsQuery,
   useGetMostRecentRoleSelectionQuery
 } from 'gql/generated/graphql';
-import * as Yup from 'yup';
 
 import { ErrorAlert, ErrorAlertMessage } from 'components/ErrorAlert';
 import FieldErrorMsg from 'components/FieldErrorMsg';
@@ -27,13 +27,16 @@ import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
+import DISCUSSION_TOPICS_HIDDEN_FROM_UI from './discussionTopicConstants';
+import {
+  getDiscussionFormValidationErrors,
+  isDiscussionFormSubmittable
+} from './isDiscussionFormSubmittable';
 import Replies from './Replies';
 import { DiscussionFormPropTypes } from '.';
 
 type DiscussionType =
   GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0];
-type ReplyType =
-  GetModelPlanDiscussionsQuery['modelPlan']['discussions'][0]['replies'][0];
 
 type QuestionAndReplyProps = {
   closeModal?: () => void;
@@ -41,10 +44,12 @@ type QuestionAndReplyProps = {
   handleCreateDiscussion: (formikValues: DiscussionFormPropTypes) => void;
   queryParams?: URLSearchParams;
   renderType: 'question' | 'reply';
-  reply?: DiscussionType | ReplyType | null;
+  reply?: DiscussionType | null;
+  parentDiscussionTopic?: DiscussionTopicType;
   setDiscussionReplyID?: (value: string | null | undefined) => void;
   setDiscussionType?: (value: 'question' | 'reply' | 'discussion') => void;
   setInitQuestion?: (value: boolean) => void;
+  defaultTopic?: DiscussionTopicType;
 };
 
 const QuestionAndReply = ({
@@ -54,22 +59,21 @@ const QuestionAndReply = ({
   queryParams,
   renderType,
   reply,
+  parentDiscussionTopic,
   setDiscussionReplyID,
   setDiscussionType,
-  setInitQuestion
+  setInitQuestion,
+  defaultTopic
 }: QuestionAndReplyProps) => {
   const { t: discussionsT } = useTranslation('discussions');
   const { t: discussionsMiscT } = useTranslation('discussionsMisc');
   const { t: repliesT } = useTranslation('replies');
   const { t: h } = useTranslation('general');
 
-  const { userRole: userRoleConfig } = usePlanTranslation('discussions');
+  const { userRole: userRoleConfig, topic: topicConfig } =
+    usePlanTranslation('discussions');
 
   const navigate = useNavigate();
-
-  const validationSchema = Yup.object().shape({
-    content: Yup.string().trim().required(`Please enter a ${renderType}`)
-  });
 
   const { data, loading, error } = useGetMostRecentRoleSelectionQuery();
 
@@ -112,6 +116,13 @@ const QuestionAndReply = ({
             <DiscussionUserInfo discussionTopic={reply} />
 
             <div className="margin-left-5">
+              {parentDiscussionTopic && (
+                <p className="margin-top-1 margin-bottom-0 text-base">
+                  {discussionsMiscT('topicReadOnly', {
+                    topic: topicConfig.options[parentDiscussionTopic]
+                  })}
+                </p>
+              )}
               <MentionTextArea
                 id={`mention-${discussionReplyID}`}
                 editable={false}
@@ -121,7 +132,7 @@ const QuestionAndReply = ({
           </div>
 
           <Replies
-            originalDiscussion={reply as DiscussionType}
+            originalDiscussion={reply}
             discussionReplyID={discussionReplyID}
           />
 
@@ -146,12 +157,15 @@ const QuestionAndReply = ({
       <Formik
         initialValues={{
           content: '',
+          topic: defaultTopic,
           userRole: mostRecentUserRole || ('' as DiscussionUserRole),
           userRoleDescription: mostRecentUserRoleDescription || ''
         }}
         enableReinitialize
         onSubmit={handleCreateDiscussion}
-        validationSchema={validationSchema}
+        validate={values =>
+          getDiscussionFormValidationErrors(values, renderType)
+        }
         validateOnBlur={false}
         validateOnChange={false}
         validateOnMount={false}
@@ -260,6 +274,52 @@ const QuestionAndReply = ({
                     )}
                   </FieldGroup>
 
+                  {renderType === 'question' && (
+                    <FieldGroup
+                      scrollElement="discussion-topic"
+                      error={!!flatErrors.topic}
+                    >
+                      <Label htmlFor="discussion-topic" className="text-normal">
+                        {discussionsT('topic.label')}
+                        <RequiredAsterisk />
+                      </Label>
+
+                      <p className="margin-top-0 text-base">
+                        {discussionsT('topic.sublabel')}
+                      </p>
+
+                      <FieldErrorMsg>{flatErrors.topic}</FieldErrorMsg>
+
+                      <Field
+                        as={Select}
+                        id="discussion-topic"
+                        name="topic"
+                        disabled={loading}
+                        value={values.topic || ''}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          setFieldValue('topic', e.target.value);
+                        }}
+                      >
+                        <option key="default-select" disabled value="">
+                          {`-${discussionsMiscT('select')}-`}
+                        </option>
+
+                        {getKeys(topicConfig.options)
+                          .filter(
+                            topic =>
+                              !DISCUSSION_TOPICS_HIDDEN_FROM_UI.includes(topic)
+                          )
+                          .map(topic => {
+                            return (
+                              <option key={topic} value={topic}>
+                                {topicConfig.options[topic]}
+                              </option>
+                            );
+                          })}
+                      </Field>
+                    </FieldGroup>
+                  )}
+
                   <FieldGroup
                     scrollElement="content"
                     error={!!flatErrors.content}
@@ -325,11 +385,7 @@ const QuestionAndReply = ({
                       type="submit"
                       disabled={
                         isSubmitting ||
-                        !values.content ||
-                        !values.userRole ||
-                        (values.userRole ===
-                          DiscussionUserRole.NONE_OF_THE_ABOVE &&
-                          !values.userRoleDescription)
+                        !isDiscussionFormSubmittable(values, renderType)
                       }
                       onClick={() => setErrors({})}
                     >

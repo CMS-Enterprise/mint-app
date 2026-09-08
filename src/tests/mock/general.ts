@@ -3,6 +3,7 @@ import { KeyContactCategoryType } from 'features/HelpAndKnowledge/KeyContactDire
 import {
   CustomTimelineDateType,
   DataExchangeApproachStatus,
+  DiscussionTopicType,
   GetAllKeyContactCategoriesDocument,
   GetAllKeyContactCategoriesQuery,
   GetAllKeyContactCategoriesQueryVariables,
@@ -319,6 +320,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     {
       __typename: 'PlanDiscussion',
       id: '123',
+      topic: DiscussionTopicType.OTHER,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a question.'
@@ -330,6 +332,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     {
       __typename: 'PlanDiscussion',
       id: '456',
+      topic: DiscussionTopicType.MODEL_PLAN_ALL,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a second question.'

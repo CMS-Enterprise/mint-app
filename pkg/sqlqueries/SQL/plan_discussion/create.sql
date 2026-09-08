@@ -1,6 +1,7 @@
 INSERT INTO plan_discussion(
     id,
     model_plan_id,
+    topic,
     content,
     user_role,
     user_role_description,
@@ -11,6 +12,7 @@ INSERT INTO plan_discussion(
 VALUES (
     :id,
     :model_plan_id,
+    :topic,
     :content,
     :user_role,
     :user_role_description,
@@ -21,6 +23,7 @@ VALUES (
 RETURNING
     id,
     model_plan_id,
+    topic,
     content,
     user_role,
     user_role_description,
