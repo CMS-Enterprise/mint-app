@@ -26,18 +26,19 @@ body:graphql {
               key
               status
               state
-              documents {
-                  id
-                  fileName
-                  documentType
-                  planTaskID
-              }
               completedBy
               completedByUserAccount {
                   id
                   username
               }
               completedDts
+              documents {
+                  id
+                  fileName
+                  fileType
+                  documentType
+                  planTaskID
+              }
           }
       }
   }
@@ -50,9 +51,10 @@ body:graphql:vars {
 }
 
 script:post-response {
-  let tasks = res.getBody().data.modelPlan.tasks
-  
-  const planTaskID = tasks[0].id;
+  const tasks = res.getBody().data.modelPlan.tasks;
+  const twoPagerTask = tasks.find(task => task.key === "TWO_PAGER");
 
-  bru.setVar("planTaskID", planTaskID);
+  if (twoPagerTask) {
+    bru.setVar("planTaskID", twoPagerTask.id);
+  }
 }

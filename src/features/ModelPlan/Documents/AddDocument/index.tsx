@@ -32,7 +32,7 @@ const AddDocument = () => {
     };
   };
 
-  const planTaskID = state?.planTaskID || searchParams.get('planTaskID') || '';
+  const planTaskID = state?.planTaskID || searchParams.get('planTaskID') || undefined;
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -88,9 +88,9 @@ const AddDocument = () => {
           </ButtonGroup>
 
           {formState === 'upload' ? (
-            <DocumentUpload planTaskID={planTaskID || undefined} />
+            <DocumentUpload planTaskID={planTaskID} />
           ) : (
-            <LinkDocument planTaskID={planTaskID || undefined} />
+            <LinkDocument planTaskID={planTaskID} />
           )}
 
           <div className="display-block">
