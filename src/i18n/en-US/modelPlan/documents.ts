@@ -10,7 +10,7 @@ export const documents: TranslationDocuments = {
     gqlField: 'fileName',
     goField: 'FileName',
     dbField: 'file_name',
-    label: 'File Name',
+    label: 'File name',
     sublabel: 'Enter a Name for your document.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,

@@ -3,7 +3,7 @@
     "gqlField": "fileName",
     "goField": "FileName",
     "dbField": "file_name",
-    "label": "File Name",
+    "label": "File name",
     "sublabel": "Enter a Name for your document.",
     "dataType": "STRING",
     "formType": "TEXT",
