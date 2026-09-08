@@ -17,23 +17,43 @@ var auditChangeGetByAuditIDWithModelPlanID string
 //go:embed SQL/audit_change/get_not_translated.sql
 var auditChangeGetNotTranslated string
 
+// auditChangeCollectionByIDAndTable returns audit changes by ID and Table
+//
+//go:embed SQL/audit_change/collection_by_id_and_table.sql
+var auditChangeCollectionByIDAndTable string
+
+// auditChangeCollectionByIDAndTableAndField returns audit changes by ID and Table and Field
+//
+//go:embed SQL/audit_change/collection_by_id_and_table_and_field.sql
+var auditChangeCollectionByIDAndTableAndField string
+
+// auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate returns audit changes by (PK or FK) and Date
+//
+//go:embed SQL/audit_change/collection_by_primary_key_or_foreign_keyand_date.sql
+var auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate string
+
 type auditChangeScripts struct {
 
 	// Holds the SQL query to return all raw audit changes for given model_plan_id and date range, including all child relations
 	CollectionGetByModelPlanIDAndDateRange string
 	// Holds the SQL to get a single change, also returning the model plan ID it is associated with
 	GetByAuditIDWithModelPlanID string
-
 	// Holds the SQL to return all audit changes that aren't queued or already translated
 	GetNotTranslated string
+	// CollectionByIDAndTable holds SQL to return audit changes by ID and Table
+	CollectionByIDAndTable string
+	// CollectionByIDAndTableAndField holds SQL to return audit changes by ID and Table and Field
+	CollectionByIDAndTableAndField string
+	// CollectionByPrimaryKeyOrForeignKeyAndDate holds SQL to return audit changes by (PK or FK) and Date
+	CollectionByPrimaryKeyOrForeignKeyAndDate string
 }
 
 // AuditChange houses all the sql for getting data for analyzed audit from the database
 var AuditChange = auditChangeScripts{
-	// Holds the SQL to get all changes associated with a model plan
-	CollectionGetByModelPlanIDAndDateRange: auditChangeCollectionGetByModelPlanIDAndDateRange,
-	// Holds the SQL to get a single change, also returning the model plan ID it is associated with
-	GetByAuditIDWithModelPlanID: auditChangeGetByAuditIDWithModelPlanID,
-	// Holds the SQL to return all audit changes that aren't queued or already translated
-	GetNotTranslated: auditChangeGetNotTranslated,
+	CollectionGetByModelPlanIDAndDateRange:    auditChangeCollectionGetByModelPlanIDAndDateRange,
+	GetByAuditIDWithModelPlanID:               auditChangeGetByAuditIDWithModelPlanID,
+	GetNotTranslated:                          auditChangeGetNotTranslated,
+	CollectionByIDAndTable:                    auditChangeCollectionByIDAndTable,
+	CollectionByIDAndTableAndField:            auditChangeCollectionByIDAndTableAndField,
+	CollectionByPrimaryKeyOrForeignKeyAndDate: auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate,
 }

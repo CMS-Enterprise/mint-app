@@ -6,6 +6,38 @@ import {
 } from '../../../gql/generated/graphql';
 
 export const discussions: TranslationDiscussions = {
+  topic: {
+    gqlField: 'topic',
+    goField: 'Topic',
+    dbField: 'topic',
+    label: 'Topic',
+    sublabel:
+      "Choose which section of MINT's model information you are asking about. This can help others to better answer your question.",
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    order: 1.001,
+    options: {
+      MODEL_PLAN_ALL: 'Model Plan (all)',
+      MODEL_PLAN_MODEL_BASICS: 'Model Plan (Model basics)',
+      MODEL_PLAN_GENERAL_CHARACTERISTICS:
+        'Model Plan (General characteristics)',
+      MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS:
+        'Model Plan (Participants and providers)',
+      MODEL_PLAN_BENEFICIARIES: 'Model Plan (Beneficiaries)',
+      MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING:
+        'Model Plan (Operations, evaluation, and learning)',
+      MODEL_PLAN_PAYMENT: 'Model Plan (Payment)',
+      MODEL_TIMELINE: 'Model timeline',
+      DATA_EXCHANGE_APPROACH: 'Data exchange approach',
+      WAIVER_ASSESSMENT_SURVEY: 'Waiver assessment survey',
+      IDDOC_QUESTIONNAIRE: '4i and ACO-OS questionnaire',
+      MODEL_TO_OPERATIONS_MATRIX_MTO: 'Model-to-operations matrix (MTO)',
+      DOCUMENTS: 'Documents',
+      CONTRACTS: 'Contracts',
+      FFS_CRS_AND_TDLS: 'FFS CRs and TDLs',
+      OTHER: 'Other'
+    }
+  },
   userRole: {
     gqlField: 'userRole',
     goField: 'UserRole',
@@ -124,6 +156,7 @@ export const discussionsMisc: Record<string, string | NestedTranslation> = {
   alreadyAnswered:
     '“{{-question}}” has already been answered. You can view it in the answered questions below.',
   select: 'Select',
+  topicReadOnly: 'Topic: {{topic}}',
   userRole: {
     CMS_SYSTEM_SERVICE_TEAM: 'CMS System/Service Team',
     LEADERSHIP: 'Leadership',
