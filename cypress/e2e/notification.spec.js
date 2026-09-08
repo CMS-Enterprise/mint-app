@@ -18,6 +18,9 @@ describe('Notification Center', () => {
 
       cy.contains('button', 'Save discussion').should('be.disabled');
 
+      cy.get('#discussion-topic').should('not.be.disabled');
+      cy.get('#discussion-topic').select('Model Plan (Model basics)');
+
       cy.get('#user-role')
         .should('not.be.disabled')
         .select('None of the above');
@@ -38,6 +41,9 @@ describe('Notification Center', () => {
 
       // Second notification
       cy.contains('button', 'Start a discussion').click();
+
+      cy.get('#discussion-topic').should('not.be.disabled');
+      cy.get('#discussion-topic').select('Model Plan (Model basics)');
 
       cy.get('#user-role')
         .should('not.be.disabled')
@@ -456,6 +462,9 @@ describe('Notification Center', () => {
 
       // Start a discussion
       cy.contains('button', 'Start a discussion').click();
+
+      cy.get('#discussion-topic').should('not.be.disabled');
+      cy.get('#discussion-topic').select('Model Plan (Model basics)');
 
       cy.get('#user-role').should('not.be.disabled').select('MINT Team');
       cy.get('#mention-editor')

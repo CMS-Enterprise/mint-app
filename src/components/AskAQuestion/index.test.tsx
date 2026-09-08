@@ -4,6 +4,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
+  DiscussionTopicType,
   DiscussionUserRole,
   GetModelPlanDiscussionsDocument,
   GetModelPlanDiscussionsQuery,
@@ -26,6 +27,7 @@ const discussionResult: GetModelPlanDiscussionsType = {
     {
       __typename: 'PlanDiscussion',
       id: '123',
+      topic: DiscussionTopicType.OTHER,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a question.'
@@ -44,6 +46,7 @@ const discussionResult: GetModelPlanDiscussionsType = {
     {
       __typename: 'PlanDiscussion',
       id: '456',
+      topic: DiscussionTopicType.MODEL_PLAN_ALL,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a second question.'

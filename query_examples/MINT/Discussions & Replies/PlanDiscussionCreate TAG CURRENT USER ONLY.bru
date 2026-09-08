@@ -20,12 +20,14 @@ body:graphql {
   mutation createPlanDiscussion{
     createPlanDiscussion(input:{
         modelPlanID: "{{modelPlanID}}"
+        topic: OTHER
         content: " <span data-type=\"mention\" tag-type=\"USER_ACCOUNT\" class=\"mention\" data-id=\"{{EUAID}}\" data-label=\"{{EUAID}}\">@{{EUAID}}</span>"
         userRole:SHARED_SYSTEM_MAINTAINER
    } ){
       
       id
       modelPlanID
+      topic
       
       content{
           rawContent
