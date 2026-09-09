@@ -4,6 +4,7 @@ import {
   Accordion,
   Grid,
   GridContainer,
+  Icon,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
@@ -15,6 +16,7 @@ import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/Rela
 
 import Alert from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import ScrollLink from 'components/ScrollLink';
@@ -274,12 +276,18 @@ const TwoPagerMeeting = () => {
                     key={item.copy}
                     className="line-height-normal margin-bottom-1 padding-left-05"
                   >
-                    <ExternalLink
-                      href={item.href}
-                      className="text-no-underline"
+                    <UswdsReactLink
+                      to={item.href}
+                      className="text-no-underline display-flex flex-align-center"
+                      target="_blank"
                     >
                       {item.copy}
-                    </ExternalLink>
+
+                      <Icon.ArrowForward
+                        className="margin-left-1"
+                        aria-label="forward"
+                      />
+                    </UswdsReactLink>
                   </li>
                 ))}
               </ul>

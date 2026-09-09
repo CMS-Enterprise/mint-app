@@ -1,0 +1,19 @@
+{
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Task status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 1.01,
+    "options": {
+      "NOT_NEEDED": "Not needed",
+      "UPCOMING": "Upcoming",
+      "TO_DO": "To do",
+      "IN_PROGRESS": "In progress",
+      "COMPLETE": "Complete"
+    },
+    "hideFromReadonly": true
+  }
+}
