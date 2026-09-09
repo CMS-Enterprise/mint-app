@@ -93,8 +93,7 @@ const DocumentUpload = ({
           file: null,
           url: null,
           name: null,
-          documentType: null,
-          planTaskID,
+          documentType: planTaskID ? DocumentType.CONCEPT_PAPER : null,
           restricted: null,
           otherTypeDescription: '',
           optionalNotes: ''

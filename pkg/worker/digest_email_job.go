@@ -69,7 +69,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 				innerLogger.Info("pushing digest email job")
 				err = batch.Push(job)
 				if err != nil {
-					innerLogger.Error(" issue pushing digest email job", zap.Error(err))
+					innerLogger.ErrorOrWarn(" issue pushing digest email job", zap.Error(err))
 					return err
 				}
 			}
@@ -130,7 +130,7 @@ func (w *Worker) DigestEmailJob(ctx context.Context, args ...interface{}) error 
 	// This is not needed currently.
 	sendErr := resolvers.DailyDigestNotificationSend(ctx, w.Store, logger, dateAnalyzed, userID, w.EmailService, w.AddressBook)
 	if sendErr != nil {
-		logger.Error("error sending daily digest notification", zap.Error(sendErr))
+		logger.ErrorOrWarn("error sending daily digest notification", zap.Error(sendErr))
 	}
 	return sendErr
 
@@ -166,7 +166,7 @@ func (w *Worker) AggregatedDigestEmailJob(ctx context.Context, args ...interface
 		w.AddressBook,
 	)
 	if err != nil {
-		logger.Error("error sending the aggregated digest email", zap.Error(err))
+		logger.ErrorOrWarn("error sending the aggregated digest email", zap.Error(err))
 		return err
 	}
 

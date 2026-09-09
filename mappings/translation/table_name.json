@@ -90,6 +90,9 @@
   "plan_payments": {
     "generalName": "Payments"
   },
+  "plan_task": {
+    "generalName": "Tasks"
+  },
   "plan_tdl": {
     "generalName": "TDLs",
     "groupedName": "FFS CRs and TDLs"

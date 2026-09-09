@@ -474,6 +474,22 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 
 }
 
+// PlanTaskMetaDataGet returns metadata identifying which task a plan_task audit is for. The raw
+// PlanTaskKey is returned as Relation (so callers, e.g. the FE, can tell whether the key is
+// manually markable by a user or calculated automatically) and a human-readable task name is
+// returned as RelationContent (for display in change history).
+func PlanTaskMetaDataGet(ctx context.Context, taskID uuid.UUID) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+	task, err := loaders.PlanTask.ByID.Load(ctx, taskID)
+	if err != nil {
+		return nil, nil, fmt.Errorf("there was an issue getting meta data for plan task. err %w", err)
+	}
+
+	name := task.Key.ChangeHistoryDisplayName()
+	meta := models.NewTranslatedAuditMetaGeneric(models.TNPlanTask, 0, string(task.Key), &name)
+	metaType := models.TAMetaGeneric
+	return &meta, &metaType, nil
+}
+
 // SetTranslatedAuditTableSpecificMetaData does table specific analysis to
 // 1. Get meta data where needed
 // 2. Set the needed restriction level of an audit.
@@ -551,6 +567,13 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 		}
 	case models.TNMTOMilestoneNote:
 		metaData, metaDataType, err := MTOMilestoneNoteMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
+	case models.TNPlanTask:
+		metaData, metaDataType, err := PlanTaskMetaDataGet(ctx, audit.PrimaryKey)
 		metaDataInterface = metaData
 		metaDataTypeGlobal = metaDataType
 		if err != nil {

@@ -213,6 +213,7 @@ enum TableName {
   plan_ops_eval_and_learning
   plan_participants_and_providers
   plan_payments
+  plan_task
   plan_tdl
   possible_need_solution_link
   possible_operational_need

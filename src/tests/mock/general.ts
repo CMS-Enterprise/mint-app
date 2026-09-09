@@ -3,6 +3,7 @@ import { KeyContactCategoryType } from 'features/HelpAndKnowledge/KeyContactDire
 import {
   CustomTimelineDateType,
   DataExchangeApproachStatus,
+  DiscussionTopicType,
   GetAllKeyContactCategoriesDocument,
   GetAllKeyContactCategoriesQuery,
   GetAllKeyContactCategoriesQueryVariables,
@@ -222,6 +223,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
   taskListStatus: TaskStatus.IN_PROGRESS,
   tasks: [],
   modelName: 'Test',
+  abbreviation: 'TST',
   createdDts: '2022-05-12T15:01:39.190679Z',
   mostRecentEdit: {
     __typename: 'TranslatedAudit',
@@ -318,6 +320,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     {
       __typename: 'PlanDiscussion',
       id: '123',
+      topic: DiscussionTopicType.OTHER,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a question.'
@@ -329,6 +332,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     {
       __typename: 'PlanDiscussion',
       id: '456',
+      topic: DiscussionTopicType.MODEL_PLAN_ALL,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a second question.'

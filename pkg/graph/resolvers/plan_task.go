@@ -304,7 +304,7 @@ func trySendPlanTaskNewAvailableNotifications(
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelID:       modelPlanID.String(),
 		ModelName:     modelPlan.ModelName,
-		TaskList:      []string{planTaskKeyEmailName(task.Key)},
+		TaskList:      []string{task.Key.DisplayName()},
 	}
 
 	if len(leadEmails) > 0 {
@@ -424,7 +424,7 @@ func trySendPlanTaskCompletedNotifications(
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelID:       modelPlanID.String(),
 		ModelName:     modelPlan.ModelName,
-		TaskName:      planTaskKeyEmailName(task.Key),
+		TaskName:      task.Key.DisplayName(),
 	}
 
 	// send lead email (one email with all leads BCC'd)
@@ -473,22 +473,5 @@ func trySendPlanTaskCompletedNotifications(
 				}
 			}()
 		}
-	}
-}
-
-func planTaskKeyEmailName(key models.PlanTaskKey) string {
-	switch key {
-	case models.PlanTaskKeyModelPlan:
-		return "Model Plan"
-	case models.PlanTaskKeyDataExchange:
-		return "Data exchange approach"
-	case models.PlanTaskKeyMto:
-		return "Model-to-operations matrix (MTO)"
-	case models.PlanTaskKeyTwoPager:
-		return "2-pager review"
-	case models.PlanTaskKeySixPager:
-		return "6-pager review"
-	default:
-		return string(key)
 	}
 }

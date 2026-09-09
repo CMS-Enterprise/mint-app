@@ -89,6 +89,7 @@ export default gql(/* GraphQL */ `
       }
       discussions {
         id
+        topic
         content {
           rawContent
         }
