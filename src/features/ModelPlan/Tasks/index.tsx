@@ -91,7 +91,9 @@ const Tasks = () => {
   const currentTasks = CURRENT_TASK_ORDER.flatMap(key => {
     const task = tasks.find(
       planTask =>
-        planTask.key === key && planTask.state !== PlanTaskState.COMPLETE
+        planTask.key === key &&
+        planTask.state !== PlanTaskState.COMPLETE &&
+        planTask.state !== PlanTaskState.UPCOMING
     );
     return task ? [task] : [];
   });
