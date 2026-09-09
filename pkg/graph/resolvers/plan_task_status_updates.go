@@ -46,7 +46,7 @@ func UpdatePlanTaskStatusOnModelPlanStarted(
 	principal authentication.Principal,
 	store *storage.Store,
 ) error {
-	_, err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusInProgress, principal, store, nil, email.AddressBook{})
+	_, err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStatusInProgress, principal, principal.Account().ID, store, nil, email.AddressBook{})
 	return err
 }
 
@@ -65,7 +65,7 @@ func UpdatePlanTaskStatusOnModelCleared(
 	if err != nil {
 		return err
 	}
-	if _, err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store, emailService, addressBook); err != nil {
+	if _, err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, principal.Account().ID, store, emailService, addressBook); err != nil {
 		return err
 	}
 
@@ -73,7 +73,7 @@ func UpdatePlanTaskStatusOnModelCleared(
 	if err != nil {
 		return err
 	}
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, principal.Account().ID, store, emailService, addressBook)
 	return err
 }
 
@@ -93,7 +93,7 @@ func UpdatePlanTaskStatusOnModelNoLongerCleared(
 	if err != nil {
 		return err
 	}
-	if _, err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, store, emailService, addressBook); err != nil {
+	if _, err := updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanStatus, principal, principal.Account().ID, store, emailService, addressBook); err != nil {
 		return err
 	}
 
@@ -102,7 +102,7 @@ func UpdatePlanTaskStatusOnModelNoLongerCleared(
 		return err
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, principal.Account().ID, store, emailService, addressBook)
 	return err
 }
 
@@ -201,7 +201,7 @@ func UpdatePlanTaskStatusOnDataExchangeApproachStarted(
 		return err
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, nil, email.AddressBook{})
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, principal.Account().ID, store, nil, email.AddressBook{})
 	return err
 }
 
@@ -221,7 +221,7 @@ func UpdatePlanTaskStatusOnDataExchangeApproachComplete(
 		return err
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, principal.Account().ID, store, emailService, addressBook)
 	return err
 }
 
@@ -242,7 +242,7 @@ func UpdatePlanTaskStatusOnDataExchangeApproachNoLongerComplete(
 		return err
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, store, emailService, addressBook)
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeStatus, principal, principal.Account().ID, store, emailService, addressBook)
 	return err
 }
 
@@ -293,7 +293,7 @@ func UpdatePlanTaskStatusOnMTOStarted(
 		return err
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, nil, email.AddressBook{})
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, principal.Account().ID, store, nil, email.AddressBook{})
 	return err
 }
 
@@ -313,7 +313,7 @@ func UpdatePlanTaskStatusOnModelActive(
 		return err
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, emailService, addressBook)
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, principal.Account().ID, store, emailService, addressBook)
 	return err
 }
 
@@ -333,7 +333,7 @@ func UpdatePlanTaskStatusOnMTODataDeleted(
 		return err
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, emailService, addressBook)
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, principal.Account().ID, store, emailService, addressBook)
 	return err
 }
 
@@ -353,7 +353,7 @@ func UpdatePlanTaskStatusOnModelNoLongerActive(
 		return err
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, store, emailService, addressBook)
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoStatus, principal, principal.Account().ID, store, emailService, addressBook)
 	return err
 }
 

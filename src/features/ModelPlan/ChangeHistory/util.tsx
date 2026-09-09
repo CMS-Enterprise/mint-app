@@ -125,20 +125,32 @@ const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [
   PlanTaskKey.SIX_PAGER
 ];
 
+// The common_name of the MINT system user account (seeded in migrations/V45), used to attribute
+// automatic changes made to a manually-markable task (see below). Mirrors the same check in
+// src/features/Notifications/Home/_components/IndividualNotification.tsx — keep in sync.
+const systemAccountCommonName = 'Mint System Account';
+
 // isPlanTaskAutomaticChange determines whether a plan_task change record represents a status
 // calculated or activated automatically (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as a side
 // effect of other edits, or SIX_PAGER activating from UPCOMING to TO_DO when TWO_PAGER is marked
 // complete) rather than a task the user directly marked complete/to do. Automatic changes are
 // attributed to "MINT" in change history instead of the editing user (see ChangeRecord).
+//
+// Keys that are never manually markable (MODEL_PLAN/MTO/DATA_EXCHANGE) are always automatic. Keys
+// that are manually markable (TWO_PAGER/SIX_PAGER) can *also* change as an automatic side effect
+// (e.g. SIX_PAGER activating) - the backend attributes that specific write to the MINT system
+// account (see activateUpcomingPlanTask in pkg/graph/resolvers/plan_task.go), so those are
+// distinguished by actorName rather than by key alone.
 export const isPlanTaskAutomaticChange = (
   change: ChangeRecordType
 ): boolean => {
   if (change.tableName !== TableName.PLAN_TASK) return false;
   if (!change.metaData || !isGenericWithMetaData(change.metaData)) return false;
 
-  return !manuallyMarkablePlanTaskKeys.includes(
-    change.metaData.relation as PlanTaskKey
-  );
+  const key = change.metaData.relation as PlanTaskKey;
+  if (!manuallyMarkablePlanTaskKeys.includes(key)) return true;
+
+  return change.actorName === systemAccountCommonName;
 };
 
 // Type guard to check generic union type
