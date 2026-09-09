@@ -11,7 +11,7 @@ export const documents: TranslationDocuments = {
     goField: 'FileName',
     dbField: 'file_name',
     label: 'File name',
-    sublabel: 'Enter a Name for your document.',
+    sublabel: 'Enter a name for your document.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXT,
     order: 1.01
