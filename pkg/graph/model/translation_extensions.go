@@ -293,6 +293,16 @@ func (ctd *CustomTimelineDateTranslation) ToMap() (map[string]models.ITranslatio
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
+func (ptt *PlanTaskTranslation) TableName() models.TableName {
+	return models.TNPlanTask
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (ptt *PlanTaskTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*ptt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
 func (t *MTOMilestoneNoteTranslation) TableName() models.TableName {
 	return models.TNMTOMilestoneNote
 }

@@ -4,6 +4,7 @@ export default gql(/* GraphQL */ `
   mutation UploadNewPlanDocument($input: PlanDocumentInput!) {
     uploadNewPlanDocument(input: $input) {
       id
+      planTaskID
     }
   }
 `);

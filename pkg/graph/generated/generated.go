@@ -1192,6 +1192,7 @@ type ComplexityRoot struct {
 		MarkAllNotificationsAsRead            func(childComplexity int) int
 		MarkMTOReadyForReview                 func(childComplexity int, modelPlanID uuid.UUID, readyForReview bool) int
 		MarkNotificationAsRead                func(childComplexity int, notificationID uuid.UUID) int
+		MarkPlanTaskComplete                  func(childComplexity int, modelPlanID uuid.UUID, key models.PlanTaskKey, isComplete bool) int
 		MtoMilestoneUpdateLinkedSolutions     func(childComplexity int, id uuid.UUID, solutionLinks model.MTOSolutionLinks) int
 		RenameMTOCategory                     func(childComplexity int, id uuid.UUID, name string) int
 		ReorderMTOCategory                    func(childComplexity int, id uuid.UUID, newOrder *int, parentID *uuid.UUID) int
@@ -1601,6 +1602,7 @@ type ComplexityRoot struct {
 		ModifiedDts           func(childComplexity int) int
 		OptionalNotes         func(childComplexity int) int
 		OtherType             func(childComplexity int) int
+		PlanTaskID            func(childComplexity int) int
 		Restricted            func(childComplexity int) int
 		URL                   func(childComplexity int) int
 		VirusClean            func(childComplexity int) int
@@ -2339,6 +2341,7 @@ type ComplexityRoot struct {
 		CreatedBy              func(childComplexity int) int
 		CreatedByUserAccount   func(childComplexity int) int
 		CreatedDts             func(childComplexity int) int
+		Documents              func(childComplexity int) int
 		ID                     func(childComplexity int) int
 		Key                    func(childComplexity int) int
 		ModifiedBy             func(childComplexity int) int
@@ -2346,6 +2349,10 @@ type ComplexityRoot struct {
 		ModifiedDts            func(childComplexity int) int
 		State                  func(childComplexity int) int
 		Status                 func(childComplexity int) int
+	}
+
+	PlanTaskTranslation struct {
+		Status func(childComplexity int) int
 	}
 
 	PlanTimeline struct {
@@ -3122,6 +3129,7 @@ type MutationResolver interface {
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanPayments, error)
 	UpdateIDDOCQuestionnaire(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.IDDOCQuestionnaire, error)
 	UpdatePlanDataExchangeApproach(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.PlanDataExchangeApproach, error)
+	MarkPlanTaskComplete(ctx context.Context, modelPlanID uuid.UUID, key models.PlanTaskKey, isComplete bool) (*models.PlanTask, error)
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
 	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRoles []models.TeamRole) (*models.PlanCollaborator, error)
 	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
@@ -3297,12 +3305,7 @@ type PlanPaymentsResolver interface {
 }
 type PlanTaskResolver interface {
 	State(ctx context.Context, obj *models.PlanTask) (model.PlanTaskState, error)
-
-	CompletedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error)
-
-	CreatedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error)
-
-	ModifiedByUserAccount(ctx context.Context, obj *models.PlanTask) (*authentication.UserAccount, error)
+	Documents(ctx context.Context, obj *models.PlanTask) ([]*models.PlanDocument, error)
 }
 type PlanTimelineResolver interface {
 	UpcomingTimelineDate(ctx context.Context, obj *models.PlanTimeline) (*model.UpcomingTimelineDate, error)
@@ -8643,6 +8646,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.MarkNotificationAsRead(childComplexity, args["notificationID"].(uuid.UUID)), true
+	case "Mutation.markPlanTaskComplete":
+		if e.ComplexityRoot.Mutation.MarkPlanTaskComplete == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_markPlanTaskComplete_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.MarkPlanTaskComplete(childComplexity, args["modelPlanID"].(uuid.UUID), args["key"].(models.PlanTaskKey), args["isComplete"].(bool)), true
 	case "Mutation.mtoMilestoneUpdateLinkedSolutions":
 		if e.ComplexityRoot.Mutation.MtoMilestoneUpdateLinkedSolutions == nil {
 			break
@@ -10881,6 +10895,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanDocument.OtherType(childComplexity), true
+	case "PlanDocument.planTaskID":
+		if e.ComplexityRoot.PlanDocument.PlanTaskID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanDocument.PlanTaskID(childComplexity), true
 	case "PlanDocument.restricted":
 		if e.ComplexityRoot.PlanDocument.Restricted == nil {
 			break
@@ -15071,6 +15091,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanTask.CreatedDts(childComplexity), true
+	case "PlanTask.documents":
+		if e.ComplexityRoot.PlanTask.Documents == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanTask.Documents(childComplexity), true
 	case "PlanTask.id":
 		if e.ComplexityRoot.PlanTask.ID == nil {
 			break
@@ -15113,6 +15139,13 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.PlanTask.Status(childComplexity), true
+
+	case "PlanTaskTranslation.status":
+		if e.ComplexityRoot.PlanTaskTranslation.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.PlanTaskTranslation.Status(childComplexity), true
 
 	case "PlanTimeline.announced":
 		if e.ComplexityRoot.PlanTimeline.Announced == nil {
@@ -18532,6 +18565,7 @@ enum TableName {
   plan_ops_eval_and_learning
   plan_participants_and_providers
   plan_payments
+  plan_task
   plan_tdl
   possible_need_solution_link
   possible_operational_need
@@ -20330,6 +20364,7 @@ type PlanDocument {
   fileName: String!
   fileSize: Int!
   documentType: DocumentType!
+  planTaskID: UUID
   otherType: String
   optionalNotes: String
   downloadUrl: String
@@ -20351,6 +20386,7 @@ input PlanDocumentInput {
   fileData: Upload!
   documentType: DocumentType!
   restricted: Boolean!
+  planTaskID: UUID
   otherTypeDescription: String
   optionalNotes: String
 }
@@ -20364,6 +20400,7 @@ input PlanDocumentLinkInput {
   name: String!
   documentType: DocumentType!
   restricted: Boolean!
+  planTaskID: UUID
   otherTypeDescription: String
   optionalNotes: String
 }
@@ -24306,24 +24343,26 @@ type PlanTask {
   key: PlanTaskKey!
   status: PlanTaskStatus!
   state: PlanTaskState! @goField(forceResolver: true)
+  documents: [PlanDocument!]! @goField(forceResolver: true)
   completedBy: UUID
-  completedByUserAccount: UserAccount @goField(forceResolver: true)
+  completedByUserAccount: UserAccount
   completedDts: Time
   createdBy: UUID!
-  createdByUserAccount: UserAccount! @goField(forceResolver: true)
+  createdByUserAccount: UserAccount!
   createdDts: Time!
   modifiedBy: UUID
-  modifiedByUserAccount: UserAccount @goField(forceResolver: true)
+  modifiedByUserAccount: UserAccount
   modifiedDts: Time
 }
 
 """
-PlanTaskKey identifies which of the three plan tasks this row represents.
+PlanTaskKey identifies which of the plan tasks this row represents.
 """
 enum PlanTaskKey {
   MODEL_PLAN
   MTO
   DATA_EXCHANGE
+  TWO_PAGER
 }
 
 """
@@ -24343,6 +24382,26 @@ PlanTaskState is computed from PlanTaskStatus for display.
 enum PlanTaskState {
   TO_DO
   COMPLETE
+}
+
+extend type Mutation {
+  """
+  Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
+  aren't calculated from other model state (currently just TWO_PAGER) can be set this way; other
+  keys will return an error.
+  """
+  markPlanTaskComplete(
+    modelPlanID: UUID!
+    key: PlanTaskKey!
+    isComplete: Boolean!
+  ): PlanTask! @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/tasks/plan_task_translation.graphql", Input: `"""
+Represents plan task translation data
+"""
+type PlanTaskTranslation {
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/model_collaboration/team/plan_collaborator.graphql", Input: `enum TeamRole {
@@ -27062,6 +27121,8 @@ func (ec *executionContext) childFields_PlanDocument(ctx context.Context, field 
 		return ec.fieldContext_PlanDocument_fileSize(ctx, field)
 	case "documentType":
 		return ec.fieldContext_PlanDocument_documentType(ctx, field)
+	case "planTaskID":
+		return ec.fieldContext_PlanDocument_planTaskID(ctx, field)
 	case "otherType":
 		return ec.fieldContext_PlanDocument_otherType(ctx, field)
 	case "optionalNotes":
@@ -27870,6 +27931,8 @@ func (ec *executionContext) childFields_PlanTask(ctx context.Context, field grap
 		return ec.fieldContext_PlanTask_status(ctx, field)
 	case "state":
 		return ec.fieldContext_PlanTask_state(ctx, field)
+	case "documents":
+		return ec.fieldContext_PlanTask_documents(ctx, field)
 	case "completedBy":
 		return ec.fieldContext_PlanTask_completedBy(ctx, field)
 	case "completedByUserAccount":
@@ -29745,6 +29808,36 @@ func (ec *executionContext) field_Mutation_markNotificationAsRead_args(ctx conte
 		return nil, err
 	}
 	args["notificationID"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_markPlanTaskComplete_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "modelPlanID",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["modelPlanID"] = arg0
+	arg1, err := graphql.ProcessArgField(ctx, rawArgs, "key",
+		func(ctx context.Context, v any) (models.PlanTaskKey, error) {
+			return ec.unmarshalNPlanTaskKey2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTaskKey(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["key"] = arg1
+	arg2, err := graphql.ProcessArgField(ctx, rawArgs, "isComplete",
+		func(ctx context.Context, v any) (bool, error) {
+			return ec.unmarshalNBoolean2bool(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["isComplete"] = arg2
 	return args, nil
 }
 
@@ -55500,6 +55593,68 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanDataExchangeApproach
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_markPlanTaskComplete(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_markPlanTaskComplete(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().MarkPlanTaskComplete(ctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["key"].(models.PlanTaskKey), fc.Args["isComplete"].(bool))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *models.PlanTask
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *models.PlanTask
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.PlanTask) graphql.Marshaler {
+			return ec.marshalNPlanTask2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTask(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_markPlanTaskComplete(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanTask(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_markPlanTaskComplete_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -64303,6 +64458,29 @@ func (ec *executionContext) _PlanDocument_documentType(ctx context.Context, fiel
 }
 func (ec *executionContext) fieldContext_PlanDocument_documentType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("PlanDocument", field, false, false, errors.New("field of type DocumentType does not have child fields"))
+}
+
+func (ec *executionContext) _PlanDocument_planTaskID(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanDocument_planTaskID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.PlanTaskID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+			return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_PlanDocument_planTaskID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("PlanDocument", field, false, false, errors.New("field of type UUID does not have child fields"))
 }
 
 func (ec *executionContext) _PlanDocument_otherType(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
@@ -83501,6 +83679,38 @@ func (ec *executionContext) fieldContext_PlanTask_state(_ context.Context, field
 	return graphql.NewScalarFieldContext("PlanTask", field, true, true, errors.New("field of type PlanTaskState does not have child fields"))
 }
 
+func (ec *executionContext) _PlanTask_documents(ctx context.Context, field graphql.CollectedField, obj *models.PlanTask) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanTask_documents(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.PlanTask().Documents(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.PlanDocument) graphql.Marshaler {
+			return ec.marshalNPlanDocument2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanTask_documents(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTask",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_PlanDocument(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanTask_completedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanTask) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -83533,7 +83743,7 @@ func (ec *executionContext) _PlanTask_completedByUserAccount(ctx context.Context
 			return ec.fieldContext_PlanTask_completedByUserAccount(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.PlanTask().CompletedByUserAccount(ctx, obj)
+			return obj.CompletedByUserAccount(ctx)
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
@@ -83548,7 +83758,7 @@ func (ec *executionContext) fieldContext_PlanTask_completedByUserAccount(_ conte
 		Object:     "PlanTask",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_UserAccount(ctx, field)
 		},
@@ -83611,7 +83821,7 @@ func (ec *executionContext) _PlanTask_createdByUserAccount(ctx context.Context, 
 			return ec.fieldContext_PlanTask_createdByUserAccount(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.PlanTask().CreatedByUserAccount(ctx, obj)
+			return obj.CreatedByUserAccount(ctx)
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
@@ -83626,7 +83836,7 @@ func (ec *executionContext) fieldContext_PlanTask_createdByUserAccount(_ context
 		Object:     "PlanTask",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_UserAccount(ctx, field)
 		},
@@ -83689,7 +83899,7 @@ func (ec *executionContext) _PlanTask_modifiedByUserAccount(ctx context.Context,
 			return ec.fieldContext_PlanTask_modifiedByUserAccount(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.PlanTask().ModifiedByUserAccount(ctx, obj)
+			return obj.ModifiedByUserAccount(ctx)
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
@@ -83704,7 +83914,7 @@ func (ec *executionContext) fieldContext_PlanTask_modifiedByUserAccount(_ contex
 		Object:     "PlanTask",
 		Field:      field,
 		IsMethod:   true,
-		IsResolver: true,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_UserAccount(ctx, field)
 		},
@@ -83733,6 +83943,38 @@ func (ec *executionContext) _PlanTask_modifiedDts(ctx context.Context, field gra
 }
 func (ec *executionContext) fieldContext_PlanTask_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("PlanTask", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _PlanTaskTranslation_status(ctx context.Context, field graphql.CollectedField, obj *model.PlanTaskTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_PlanTaskTranslation_status(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Status, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_PlanTaskTranslation_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanTaskTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
 }
 
 func (ec *executionContext) _PlanTimeline_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanTimeline) (ret graphql.Marshaler) {
@@ -98458,7 +98700,7 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "fileData", "documentType", "restricted", "otherTypeDescription", "optionalNotes"}
+	fieldsInOrder := [...]string{"modelPlanID", "fileData", "documentType", "restricted", "planTaskID", "otherTypeDescription", "optionalNotes"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -98493,6 +98735,13 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 				return it, err
 			}
 			it.Restricted = data
+		case "planTaskID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("planTaskID"))
+			data, err := ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PlanTaskID = data
 		case "otherTypeDescription":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("otherTypeDescription"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -98523,7 +98772,7 @@ func (ec *executionContext) unmarshalInputPlanDocumentLinkInput(ctx context.Cont
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "url", "name", "documentType", "restricted", "otherTypeDescription", "optionalNotes"}
+	fieldsInOrder := [...]string{"modelPlanID", "url", "name", "documentType", "restricted", "planTaskID", "otherTypeDescription", "optionalNotes"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -98565,6 +98814,13 @@ func (ec *executionContext) unmarshalInputPlanDocumentLinkInput(ctx context.Cont
 				return it, err
 			}
 			it.Restricted = data
+		case "planTaskID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("planTaskID"))
+			data, err := ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.PlanTaskID = data
 		case "otherTypeDescription":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("otherTypeDescription"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -113445,6 +113701,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
+		case "markPlanTaskComplete":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_markPlanTaskComplete(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "createPlanCollaborator":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createPlanCollaborator(ctx, field)
@@ -117240,6 +117503,11 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 		case "documentType":
 			out.Values[i] = ec._PlanDocument_documentType(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "planTaskID":
+			out.Values[i] = ec._PlanDocument_planTaskID(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "otherType":
@@ -123679,6 +123947,44 @@ func (ec *executionContext) _PlanTask(ctx context.Context, sel ast.SelectionSet,
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "documents":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanTask_documents(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "completedBy":
 			out.Values[i] = ec._PlanTask_completedBy(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
@@ -123822,6 +124128,44 @@ func (ec *executionContext) _PlanTask(ctx context.Context, sel ast.SelectionSet,
 			out.Values[i] = ec._PlanTask_modifiedDts(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var planTaskTranslationImplementors = []string{"PlanTaskTranslation"}
+
+func (ec *executionContext) _PlanTaskTranslation(ctx context.Context, sel ast.SelectionSet, obj *model.PlanTaskTranslation) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planTaskTranslationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanTaskTranslation")
+		case "status":
+			out.Values[i] = ec._PlanTaskTranslation_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))

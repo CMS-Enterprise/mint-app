@@ -33,6 +33,7 @@ type PlanDocument {
   fileName: String!
   fileSize: Int!
   documentType: DocumentType!
+  planTaskID: UUID
   otherType: String
   optionalNotes: String
   downloadUrl: String
@@ -54,6 +55,7 @@ input PlanDocumentInput {
   fileData: Upload!
   documentType: DocumentType!
   restricted: Boolean!
+  planTaskID: UUID
   otherTypeDescription: String
   optionalNotes: String
 }
@@ -67,6 +69,7 @@ input PlanDocumentLinkInput {
   name: String!
   documentType: DocumentType!
   restricted: Boolean!
+  planTaskID: UUID
   otherTypeDescription: String
   optionalNotes: String
 }
