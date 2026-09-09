@@ -61,7 +61,10 @@ import { isAssessment } from 'utils/user';
 import DateRangeModal from './_components/DateRangeModal';
 
 export type ReportsType =
-  'mtoMilestoneSummary' | 'allModels' | 'basicModelInfo' | 'ctat';
+  | 'mtoMilestoneSummary'
+  | 'allModels'
+  | 'basicModelInfo'
+  | 'ctat';
 
 const ReportsAndAnalytics = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');

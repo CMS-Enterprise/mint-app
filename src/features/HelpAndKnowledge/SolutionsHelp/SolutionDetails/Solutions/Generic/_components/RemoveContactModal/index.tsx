@@ -43,7 +43,9 @@ const RemoveContactModal = ({
   isModalOpen: boolean;
   closeModal: () => void;
   pointOfContact:
-    SolutionContactType | SolutionContractorType | SolutionSystemOwnerType;
+    | SolutionContactType
+    | SolutionContractorType
+    | SolutionSystemOwnerType;
   contactType: ContactType;
 }) => {
   const { t: contactT } = useTranslation('mtoCommonSolutionContactMisc');

@@ -24,7 +24,8 @@ export const formatListValues = <
   C extends string | keyof C
 >(
   config:
-    TranslationConfigType<T, C> | TranslationFieldPropertiesWithOptions<T>, // Translation config
+    | TranslationConfigType<T, C>
+    | TranslationFieldPropertiesWithOptions<T>, // Translation config
   value: T[] | undefined // field value/enum array
 ): string[] => {
   if (config.isArray || config.isModelLinks) return value as string[];
@@ -49,7 +50,8 @@ export const formatListOtherValues = <
   C extends string | keyof C
 >(
   config:
-    TranslationConfigType<T, C> | TranslationFieldPropertiesWithOptions<T>, // Translation config
+    | TranslationConfigType<T, C>
+    | TranslationFieldPropertiesWithOptions<T>, // Translation config
   value: T[] | undefined, // field value/enum array
   values: any // All data for the task list section returned from query
 ): (string | null | undefined)[] => {
@@ -107,7 +109,8 @@ export const formatListTooltips = <
   C extends string | keyof C
 >(
   config:
-    TranslationConfigType<T, C> | TranslationFieldPropertiesWithOptions<T>, // Translation config
+    | TranslationConfigType<T, C>
+    | TranslationFieldPropertiesWithOptions<T>, // Translation config
   value: T[] | undefined // field value/enum array
 ): (string | null | undefined)[] => {
   if (!isTranslationFieldPropertiesWithOptions(config)) return [];
