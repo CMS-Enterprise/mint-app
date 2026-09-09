@@ -27,6 +27,7 @@ import {
   getNestedActionText,
   hiddenFields,
   identifyChangeType,
+  isAssessmentDiscussionChange,
   isDiscussionReplyWithMetaData,
   isGenericWithMetaData,
   isPlanTaskAutomaticChange,
@@ -707,6 +708,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
         <AvatarCircle
           user={actorName}
           className="margin-right-1 flex-align-self-start"
+          isAssessment={isAssessmentDiscussionChange(changeRecord)}
         />
         <span
           className={classNames(

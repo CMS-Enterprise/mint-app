@@ -6,10 +6,11 @@ import {
   AuditFieldChangeType,
   DatabaseOperation,
   GetChangeHistoryDocument,
+  TableName,
   TranslationDataType
 } from 'gql/generated/graphql';
 
-import RecentChanges from '.';
+import RecentChanges, { MiniChangeRecord } from '.';
 
 const mocks = [
   {
@@ -142,5 +143,45 @@ describe('RecentChanges', () => {
       </MockedProvider>
     );
     expect(asFragment()).toMatchSnapshot();
+  });
+});
+
+describe('MiniChangeRecord', () => {
+  it('renders assessment star avatar for assessor discussion change', () => {
+    const { getByTestId } = render(
+      <MockedProvider>
+        <MiniChangeRecord
+          changeRecords={[
+            {
+              id: 'c3a8c2e1-1d4b-4e2a-9f11-2b0d8c6e9a01',
+              tableName: TableName.PLAN_DISCUSSION,
+              date: '2024-04-22T13:55:13.725192Z',
+              action: DatabaseOperation.INSERT,
+              translatedFields: [
+                {
+                  id: 'c33eceab-fbf6-433a-ba2a-fd4482c4484e',
+                  changeType: AuditFieldChangeType.ANSWERED,
+                  dataType: TranslationDataType.BOOLEAN,
+                  fieldName: 'is_assessment',
+                  fieldNameTranslated: 'Is the user an assessment user?',
+                  referenceLabel: null,
+                  questionType: null,
+                  notApplicableQuestions: null,
+                  old: null,
+                  oldTranslated: null,
+                  new: 'true',
+                  newTranslated: 'Yes',
+                  __typename: 'TranslatedAuditField'
+                }
+              ],
+              actorName: 'Assessment User',
+              __typename: 'TranslatedAudit'
+            }
+          ]}
+        />
+      </MockedProvider>
+    );
+
+    expect(getByTestId('avatar--assessment')).toBeInTheDocument();
   });
 });

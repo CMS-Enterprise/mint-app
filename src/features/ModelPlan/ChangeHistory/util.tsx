@@ -416,8 +416,8 @@ export const getTranslatedFieldValue = (
   change.translatedFields.find(field => field.fieldName === fieldName)
     ?.oldTranslated;
 
-/* 
-  Returns the operation status of the solution.  
+/*
+  Returns the operation status of the solution.
   Solutions are not deleted, they are marked as not needed/needed
   Mimics the database operation based on the neeeded property
 */
@@ -944,6 +944,24 @@ export const getDiscussionTopic = (change: ChangeRecordType): string => {
   )?.newTranslated;
 
   return typeof topic === 'string' ? topic : '';
+};
+
+export const isAssessmentDiscussionChange = (
+  change: ChangeRecordType
+): boolean => {
+  if (
+    change.tableName !== TableName.PLAN_DISCUSSION &&
+    change.tableName !== TableName.DISCUSSION_REPLY
+  ) {
+    return false;
+  }
+
+  const field = change.translatedFields.find(
+    f => f.fieldName === 'is_assessment'
+  );
+
+  const value = field?.new ?? field?.old;
+  return value === 'true' || value === true;
 };
 
 export const getHeaderText = (change: ChangeRecordType): string => {
