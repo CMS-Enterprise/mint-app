@@ -14,6 +14,7 @@ export default gql(/* GraphQL */ `
         downloadUrl
         restricted
         documentType
+        planTaskID
         createdDts
         optionalNotes
         otherType
