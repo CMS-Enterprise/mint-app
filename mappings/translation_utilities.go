@@ -74,6 +74,8 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 		return MTOMilestoneNoteTranslation()
 	case models.TNModelPlanMTOTemplateLink:
 		return ModelPlanMTOTemplateLinkTranslation()
+	case models.TNPlanTask:
+		return PlanTaskTranslation()
 
 	default:
 

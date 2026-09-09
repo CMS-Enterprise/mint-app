@@ -5026,6 +5026,12 @@ export enum PlanTaskStatus {
   UPCOMING = 'UPCOMING'
 }
 
+/** Represents plan task translation data */
+export type PlanTaskTranslation = {
+  __typename: 'PlanTaskTranslation';
+  status: TranslationFieldWithOptions;
+};
+
 /** Represents PlanTimeline */
 export type PlanTimeline = {
   __typename: 'PlanTimeline';
@@ -5588,6 +5594,7 @@ export enum TableName {
   PLAN_OPS_EVAL_AND_LEARNING = 'plan_ops_eval_and_learning',
   PLAN_PARTICIPANTS_AND_PROVIDERS = 'plan_participants_and_providers',
   PLAN_PAYMENTS = 'plan_payments',
+  PLAN_TASK = 'plan_task',
   PLAN_TDL = 'plan_tdl',
   PLAN_TIMELINE = 'plan_timeline',
   POSSIBLE_NEED_SOLUTION_LINK = 'possible_need_solution_link',

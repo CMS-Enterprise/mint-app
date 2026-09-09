@@ -35,6 +35,7 @@ import subtasks from '../../src/i18n/en-US/modelPlan/operationalSolutionSubtasks
 import opsEvalAndLearning from '../../src/i18n/en-US/modelPlan/opsEvalAndLearning';
 import participantsAndProviders from '../../src/i18n/en-US/modelPlan/participantsAndProviders';
 import payments from '../../src/i18n/en-US/modelPlan/payments';
+import planTaskTranslation from '../../src/i18n/en-US/modelPlan/planTaskTranslation';
 import replies from '../../src/i18n/en-US/modelPlan/replies';
 import operationalSolutions from '../../src/i18n/en-US/modelPlan/solutions';
 import tables from '../../src/i18n/en-US/modelPlan/tables';
@@ -76,7 +77,8 @@ export const translationSections = {
   mto_category: mtoCategory,
   mto_milestone_note: mtoMilestoneNote,
   custom_timeline_date: customDate,
-  model_plan_mto_template_link: modelPlanMtoTemplateLink
+  model_plan_mto_template_link: modelPlanMtoTemplateLink,
+  plan_task: planTaskTranslation
 };
 
 export const parseTypscriptToJSON = (translations: any, outputFile: string) => {

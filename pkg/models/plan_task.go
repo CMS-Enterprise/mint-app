@@ -59,6 +59,41 @@ func (k PlanTaskKey) ActivationTarget() (PlanTaskKey, bool) {
 	return target, ok
 }
 
+// planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
+// and change history. Keys without an entry fall back to their raw string value.
+var planTaskKeyDisplayNames = map[PlanTaskKey]string{
+	PlanTaskKeyModelPlan:    "Model Plan",
+	PlanTaskKeyDataExchange: "Data exchange approach",
+	PlanTaskKeyMto:          "Model-to-operations matrix (MTO)",
+	PlanTaskKeyTwoPager:     "2-pager review",
+	PlanTaskKeySixPager:     "6-pager review",
+}
+
+// DisplayName returns a short human-readable name for this task key.
+func (k PlanTaskKey) DisplayName() string {
+	if name, ok := planTaskKeyDisplayNames[k]; ok {
+		return name
+	}
+	return string(k)
+}
+
+// planTaskKeyChangeHistoryNames are the task names shown in change history. These match the Tasks
+// list UI's card heading rather than the shorter DisplayName() used in notifications. Only keys
+// whose heading is constant across statuses are listed here; keys without an entry fall back to
+// DisplayName().
+var planTaskKeyChangeHistoryNames = map[PlanTaskKey]string{
+	PlanTaskKeyTwoPager: "Prepare for your 2-page review meeting with CMMI Front Office (FO)",
+	PlanTaskKeySixPager: "Prepare for your 6-page review meeting with CMMI Front Office (FO)",
+}
+
+// ChangeHistoryDisplayName returns the task name shown in change history.
+func (k PlanTaskKey) ChangeHistoryDisplayName() string {
+	if name, ok := planTaskKeyChangeHistoryNames[k]; ok {
+		return name
+	}
+	return k.DisplayName()
+}
+
 // PlanTaskStatus is an enum representing the lifecycle status of a task
 type PlanTaskStatus string
 

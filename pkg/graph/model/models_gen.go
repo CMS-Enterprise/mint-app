@@ -907,6 +907,11 @@ type PlanTDLTranslation struct {
 	Note          models.TranslationField `json:"note" db:"note"`
 }
 
+// Represents plan task translation data
+type PlanTaskTranslation struct {
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
+}
+
 // Represents plan timeline translation data
 type PlanTimelineTranslation struct {
 	CompleteIcip            models.TranslationField            `json:"completeICIP" db:"complete_icip"`
