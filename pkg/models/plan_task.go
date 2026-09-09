@@ -36,6 +36,7 @@ const (
 // new calculated-status function in plan_task_status_updates.go or reuse of PlanTaskMarkComplete.
 var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
 	PlanTaskKeyTwoPager: true,
+	PlanTaskKeySixPager: true,
 }
 
 // IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user
@@ -78,12 +79,12 @@ func (k PlanTaskKey) DisplayName() string {
 }
 
 // planTaskKeyChangeHistoryNames are the task names shown in change history. These match the Tasks
-// list UI's card heading rather than the shorter DisplayName() used in notifications. Only keys
-// whose heading is constant across statuses are listed here; keys without an entry fall back to
-// DisplayName().
+// list UI's card heading (src/i18n/en-US/modelPlan/tasks.ts) rather than the shorter DisplayName()
+// used in notifications. Only keys whose heading is constant across statuses are listed here; keys
+// without an entry fall back to DisplayName().
 var planTaskKeyChangeHistoryNames = map[PlanTaskKey]string{
-	PlanTaskKeyTwoPager: "Prepare for your 2-page review meeting with CMMI Front Office (FO)",
-	PlanTaskKeySixPager: "Prepare for your 6-page review meeting with CMMI Front Office (FO)",
+	PlanTaskKeyTwoPager: "Prepare for your 2-page review meeting with CMMI Front Office",
+	PlanTaskKeySixPager: "Prepare for your 6-page review meeting with CMMI Front Office",
 }
 
 // ChangeHistoryDisplayName returns the task name shown in change history.

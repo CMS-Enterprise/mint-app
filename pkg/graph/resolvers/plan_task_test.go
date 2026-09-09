@@ -27,11 +27,23 @@ func (suite *ResolverSuite) TestPlanTaskStateResolver() {
 	suite.NoError(err)
 	suite.Equal(model.PlanTaskStateToDo, state)
 
-	// Non-complete status should map to TO_DO state
-	taskInProgress := &models.PlanTask{Status: models.PlanTaskStatusInProgress}
-	state, err = r.State(suite.testConfigs.Context, taskInProgress)
+	// Non-complete, non-upcoming statuses should map to TO_DO state
+	for _, status := range []models.PlanTaskStatus{
+		models.PlanTaskStatusNotNeeded,
+		models.PlanTaskStatusToDo,
+		models.PlanTaskStatusInProgress,
+	} {
+		task := &models.PlanTask{Status: status}
+		state, err = r.State(suite.testConfigs.Context, task)
+		suite.NoError(err)
+		suite.Equal(model.PlanTaskStateToDo, state, "expected status %s to map to TO_DO state", status)
+	}
+
+	// UPCOMING status should map to UPCOMING state
+	taskUpcoming := &models.PlanTask{Status: models.PlanTaskStatusUpcoming}
+	state, err = r.State(suite.testConfigs.Context, taskUpcoming)
 	suite.NoError(err)
-	suite.Equal(model.PlanTaskStateToDo, state)
+	suite.Equal(model.PlanTaskStateUpcoming, state)
 
 	// COMPLETE status should map to COMPLETE state
 	taskComplete := &models.PlanTask{Status: models.PlanTaskStatusComplete}
@@ -151,6 +163,106 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 
 	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
 	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+}
+
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteSixPager() {
+	plan := suite.createModelPlan("Plan For Six Pager Manual Task Marking")
+
+	// SIX_PAGER starts UPCOMING and isn't activated to TO_DO until TWO_PAGER is marked complete
+	_, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	sixPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+
+	// mark the SIX_PAGER task complete
+	updated, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStatusComplete, updated.Status)
+		if suite.NotNil(updated.CompletedBy) {
+			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
+		}
+		suite.NotNil(updated.CompletedDts)
+	}
+
+	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStatusComplete, sixPagerTask.Status)
+
+	// mark it back to TO_DO
+	updated, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStatusToDo, updated.Status)
+		suite.Nil(updated.CompletedBy)
+		suite.Nil(updated.CompletedDts)
+	}
+
+	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+	suite.Nil(sixPagerTask.CompletedBy)
+	suite.Nil(sixPagerTask.CompletedDts)
+}
+
+// TestSixPagerStateReflectsActivation confirms the state field displayed on the 6-pager card
+// tracks its status through the UPCOMING -> TO_DO activation trigger, end to end through the
+// resolver (not just the State function in isolation).
+func (suite *ResolverSuite) TestSixPagerStateReflectsActivation() {
+	plan := suite.createModelPlan("Plan For Six Pager State Display")
+	r := &planTaskResolver{&Resolver{}}
+
+	sixPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	state, err := r.State(suite.testConfigs.Context, sixPagerTask)
+	suite.NoError(err)
+	suite.Equal(model.PlanTaskStateUpcoming, state)
+
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	state, err = r.State(suite.testConfigs.Context, sixPagerTask)
+	suite.NoError(err)
+	suite.Equal(model.PlanTaskStateToDo, state)
 }
 
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {

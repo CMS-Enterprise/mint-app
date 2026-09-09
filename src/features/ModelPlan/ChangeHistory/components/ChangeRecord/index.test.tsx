@@ -1,4 +1,5 @@
 import React from 'react';
+import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render } from '@testing-library/react';
 import {
   AuditFieldChangeType,
@@ -97,6 +98,65 @@ describe('ChangeRecord', () => {
     ).toBeInTheDocument();
   });
 
+  it('displays discussion content and reveals the topic in details', () => {
+    const discussionRecord: ChangeRecordType = {
+      id: 'c3a8c2e1-1d4b-4e2a-9f11-2b0d8c6e9a01',
+      tableName: TableName.PLAN_DISCUSSION,
+      date: '2024-04-22T13:55:13.725192Z',
+      action: DatabaseOperation.INSERT,
+      translatedFields: [
+        {
+          id: 'a11eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'topic',
+          fieldNameTranslated: 'Discussion topic',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'MODEL_PLAN_MODEL_BASICS',
+          newTranslated: 'Model basics',
+          __typename: 'TranslatedAuditField'
+        },
+        {
+          id: 'b22eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'content',
+          fieldNameTranslated: 'Type your question or discussion topic',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'How do I get started?',
+          newTranslated: 'How do I get started?',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      actorName: 'MINT Doe',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText, queryByText } = render(
+      <MockedProvider>
+        <ChangeRecord changeRecord={discussionRecord} index={1} />
+      </MockedProvider>
+    );
+
+    expect(getByText(/started a Discussion/)).toBeInTheDocument();
+    expect(queryByText(/about Model basics/)).not.toBeInTheDocument();
+    expect(getByText(/How do I get started?/)).toBeInTheDocument();
+    expect(queryByText('Topic: Model basics')).not.toBeInTheDocument();
+
+    fireEvent.click(getByText('Show details'));
+
+    expect(getByText('Topic: Model basics')).toBeInTheDocument();
+    expect(getByText('Hide details')).toBeInTheDocument();
+  });
+
   it('toggles details when "showDetails" and "hideDetails" are clicked', () => {
     const { getByText } = render(
       <ChangeRecord changeRecord={mockChangeRecord} index={1} />
@@ -116,5 +176,98 @@ describe('ChangeRecord', () => {
       <ChangeRecord changeRecord={mockChangeRecord} index={1} />
     );
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('attributes a manually-marked SIX_PAGER status change to the acting user, not MINT', () => {
+    const sixPagerRecord: ChangeRecordType = {
+      id: 'd4b7e6a1-9c2e-4f3a-8b1d-1a2b3c4d5e6f',
+      tableName: TableName.PLAN_TASK,
+      date: '2024-06-28T12:00:00.000000Z',
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          id: '9f1eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.UPDATED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'status',
+          fieldNameTranslated: 'Status',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: 'TO_DO',
+          oldTranslated: 'To do',
+          new: 'COMPLETE',
+          newTranslated: 'Complete',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      metaData: {
+        __typename: 'TranslatedAuditMetaGeneric',
+        version: 0,
+        tableName: TableName.PLAN_TASK,
+        relation: 'SIX_PAGER',
+        relationContent:
+          'Prepare for your 6-page review meeting with CMMI Front Office'
+      },
+      actorName: 'Jane McModelteam',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText, queryByText } = render(
+      <ChangeRecord changeRecord={sixPagerRecord} index={1} />
+    );
+
+    expect(getByText('Jane McModelteam')).toBeInTheDocument();
+    expect(queryByText('MINT')).not.toBeInTheDocument();
+    expect(
+      getByText(
+        /marked a task \(Prepare for your 6-page review meeting with CMMI Front Office\) as Complete/
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('attributes an automatically-calculated plan task status change to MINT', () => {
+    const autoRecord: ChangeRecordType = {
+      id: 'a1b2c3d4-5e6f-4a1b-9c2d-3e4f5a6b7c8d',
+      tableName: TableName.PLAN_TASK,
+      date: '2024-06-28T12:01:00.000000Z',
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          id: '8e1eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.UPDATED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'status',
+          fieldNameTranslated: 'Status',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: 'UPCOMING',
+          oldTranslated: 'Upcoming',
+          new: 'TO_DO',
+          newTranslated: 'To do',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      metaData: {
+        __typename: 'TranslatedAuditMetaGeneric',
+        version: 0,
+        tableName: TableName.PLAN_TASK,
+        relation: 'MODEL_PLAN',
+        relationContent: 'Model Plan'
+      },
+      actorName: 'Jane McModelteam',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText, queryByText } = render(
+      <ChangeRecord changeRecord={autoRecord} index={1} />
+    );
+
+    expect(getByText('MINT')).toBeInTheDocument();
+    expect(queryByText('Jane McModelteam')).not.toBeInTheDocument();
+    expect(
+      getByText(/automatically marked a task \(Model Plan\) as To do/)
+    ).toBeInTheDocument();
   });
 });

@@ -38,6 +38,7 @@ func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName str
 		3,
 		models.DocumentTypeOther,
 		false,
+		nil,
 		zero.StringFrom("test doc"),
 		zero.StringFrom(""),
 		false,
@@ -63,6 +64,7 @@ func (suite *TAuditSuite) createPlanDiscussion(modelPlanID uuid.UUID, content st
 
 	discussion := models.NewPlanDiscussion(suite.testConfigs.Principal.UserAccount.ID,
 		false, modelPlanID,
+		models.DiscussionTopicTypeOther,
 		models.TaggedHTML(taggedContent),
 		&discussionUserRole,
 		nil,

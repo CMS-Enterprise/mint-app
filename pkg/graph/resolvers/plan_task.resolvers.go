@@ -28,10 +28,22 @@ func (r *planTaskResolver) State(ctx context.Context, obj *models.PlanTask) (mod
 	if obj == nil {
 		return model.PlanTaskStateToDo, nil
 	}
-	if obj.Status == models.PlanTaskStatusComplete {
+	switch obj.Status {
+	case models.PlanTaskStatusComplete:
 		return model.PlanTaskStateComplete, nil
+	case models.PlanTaskStatusUpcoming:
+		return model.PlanTaskStateUpcoming, nil
+	default:
+		return model.PlanTaskStateToDo, nil
 	}
-	return model.PlanTaskStateToDo, nil
+}
+
+// Documents is the resolver for the documents field.
+func (r *planTaskResolver) Documents(ctx context.Context, obj *models.PlanTask) ([]*models.PlanDocument, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return PlanDocumentsReadByPlanTaskID(logger, obj, principal, r.store, r.fileUploadS3Client)
 }
 
 // PlanTask returns generated.PlanTaskResolver implementation.

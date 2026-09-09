@@ -4,6 +4,7 @@ export default gql(/* GraphQL */ `
   mutation LinkNewPlanDocument($input: PlanDocumentLinkInput!) {
     linkNewPlanDocument(input: $input) {
       id
+      planTaskID
     }
   }
 `);

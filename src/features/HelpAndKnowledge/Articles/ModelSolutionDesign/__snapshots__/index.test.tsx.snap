@@ -94,7 +94,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                       Add your model to MINT and start a Model Plan
                       <svg
                         aria-label="forward"
-                        class="usa-icon margin-left-1"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -123,7 +123,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                       Assemble the IT and operational team
                       <svg
                         aria-label="forward"
-                        class="usa-icon margin-left-1"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -152,7 +152,7 @@ exports[`ModelSolutionDesign > matches the snapshot 1`] = `
                       Draft a model-to-operations matrix (MTO) and identify the IT solutions for the model’s operational needs
                       <svg
                         aria-label="forward"
-                        class="usa-icon margin-left-1"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"

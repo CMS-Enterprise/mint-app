@@ -120,13 +120,16 @@ export const isTableWithStatus = (
 // PlanTaskKey values whose status is set directly by a user (e.g. via a "mark complete" action),
 // rather than calculated automatically from other model state. Mirrors
 // models.manuallyMarkablePlanTaskKeys in pkg/models/plan_task.go — keep in sync.
-const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [PlanTaskKey.TWO_PAGER];
+const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [
+  PlanTaskKey.TWO_PAGER,
+  PlanTaskKey.SIX_PAGER
+];
 
 // isPlanTaskAutomaticChange determines whether a plan_task change record represents a status
-// calculated or activated automatically (e.g. SIX_PAGER activating from UPCOMING to TO_DO when
-// TWO_PAGER is marked complete) rather than a task the user directly marked complete/to do.
-// Automatic changes are attributed to "MINT" in change history instead of the editing user (see
-// ChangeRecord).
+// calculated or activated automatically (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as a side
+// effect of other edits, or SIX_PAGER activating from UPCOMING to TO_DO when TWO_PAGER is marked
+// complete) rather than a task the user directly marked complete/to do. Automatic changes are
+// attributed to "MINT" in change history instead of the editing user (see ChangeRecord).
 export const isPlanTaskAutomaticChange = (
   change: ChangeRecordType
 ): boolean => {
@@ -937,6 +940,14 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   }
 
   return 'standardUpdate';
+};
+
+export const getDiscussionTopic = (change: ChangeRecordType): string => {
+  const topic = change.translatedFields.find(
+    field => field.fieldName === 'topic'
+  )?.newTranslated;
+
+  return typeof topic === 'string' ? topic : '';
 };
 
 export const getHeaderText = (change: ChangeRecordType): string => {

@@ -68,6 +68,7 @@ export type PlanTaskEntry =
 
 const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.MODEL_PLAN,
+  PlanTaskKey.TWO_PAGER,
   PlanTaskKey.MTO,
   PlanTaskKey.DATA_EXCHANGE
 ] as const;
@@ -101,9 +102,11 @@ export function makePlanTasks(
 
     return {
       __typename: 'PlanTask' as const,
+      id: `${key.toLowerCase()}-task-id`,
       key,
       state: resolvedState,
       status: resolvedStatus,
+      documents: [],
       completedDts:
         overrides?.[key]?.completedDts ??
         (resolvedState === PlanTaskState.COMPLETE ||

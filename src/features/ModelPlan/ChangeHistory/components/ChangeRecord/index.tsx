@@ -21,6 +21,7 @@ import {
   documentName,
   documentType,
   getActionText,
+  getDiscussionTopic,
   getHeaderText,
   getInOrToOrFrom,
   getNestedActionText,
@@ -349,6 +350,8 @@ export const ChangeHeader = ({
         ? changeRecord?.metaData.numberOfReplies - 1
         : 0;
 
+    const topic = getDiscussionTopic(changeRecord);
+
     return (
       <>
         <Trans
@@ -363,13 +366,10 @@ export const ChangeHeader = ({
           }}
         />
         <ul
-          className={classNames(
-            {
-              'change-record__discussion-expanded margin-bottom-2': isOpen,
-              'padding-left-4': !isOpen
-            },
-            'margin-y-1'
-          )}
+          className={classNames({
+            'change-record__discussion-expanded margin-top-2': isOpen,
+            'padding-left-4': !isOpen
+          })}
         >
           <li>
             <MentionTextArea
@@ -384,6 +384,22 @@ export const ChangeHeader = ({
             />
           </li>
         </ul>
+
+        {changeRecord.tableName === TableName.PLAN_DISCUSSION && topic && (
+          <CollapsableLink
+            id={changeRecord.id}
+            label={t('showDetails')}
+            closeLabel={t('hideDetails')}
+            labelPosition="bottom"
+            setParentOpen={setOpen}
+            styleLeftBar={false}
+            childClassName="padding-y-0 margin-bottom-2"
+          >
+            <div className="margin-y-1 change-record__answer">
+              {t('discussionTopic', { topic })}
+            </div>
+          </CollapsableLink>
+        )}
 
         {changeRecord.tableName === TableName.DISCUSSION_REPLY && (
           <CollapsableLink
@@ -674,9 +690,10 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
     changeRecordType === 'operationalNeedUpdate' ||
     changeRecordType === 'operationalNeedCreate';
 
-  // Automatically calculated/activated plan task changes (e.g. SIX_PAGER activating when TWO_PAGER
-  // is marked complete) are attributed to MINT rather than whichever user's action triggered it,
-  // since no one directly acted on that specific task.
+  // Automatically calculated or activated plan task changes (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE
+  // recalculating as a side effect of other edits, or SIX_PAGER activating when TWO_PAGER is marked
+  // complete) are attributed to MINT rather than whichever user's action triggered it, since no one
+  // directly acted on that specific task.
   const actorName = isPlanTaskAutomaticChange(changeRecord)
     ? 'MINT'
     : changeRecord.actorName;

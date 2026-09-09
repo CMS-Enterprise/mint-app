@@ -32,6 +32,13 @@ body:graphql {
                   username
               }
               completedDts
+              documents {
+                  id
+                  fileName
+                  fileType
+                  documentType
+                  planTaskID
+              }
           }
       }
   }
@@ -40,5 +47,14 @@ body:graphql {
 body:graphql:vars {
   {
     "id": "{{modelPlanID}}"
+  }
+}
+
+script:post-response {
+  const tasks = res.getBody().data.modelPlan.tasks;
+  const twoPagerTask = tasks.find(task => task.key === "TWO_PAGER");
+
+  if (twoPagerTask) {
+    bru.setVar("planTaskID", twoPagerTask.id);
   }
 }

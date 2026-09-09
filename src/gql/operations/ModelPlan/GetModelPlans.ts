@@ -51,6 +51,7 @@ export default gql(/* GraphQL */ `
       }
       discussions {
         id
+        topic
         replies {
           id
         }
