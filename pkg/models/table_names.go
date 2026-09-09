@@ -35,6 +35,7 @@ const (
 	TNPlanDiscussion                   TableName = "plan_discussion"
 	TNPlanDocument                     TableName = "plan_document"
 	TNPlanDocumentSolutionLink         TableName = "plan_document_solution_link"
+	TNPlanTaskDocumentLink             TableName = "plan_task_document_link"
 	TNPlanFavorite                     TableName = "plan_favorite"
 	TNPlanGeneralCharacteristics       TableName = "plan_general_characteristics"
 	TNPlanOpsEvalAndLearning           TableName = "plan_ops_eval_and_learning"

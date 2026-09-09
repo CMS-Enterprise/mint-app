@@ -28,6 +28,7 @@ type PlanDiscussionCreatedBodyContent struct {
 	ClientAddress     string
 	DiscussionID      string
 	UserName          string
+	Topic             string
 	DiscussionContent template.HTML // the rich text content of the discussion. It is written as template.HTML to allow it be rendered as HTML with the templating library
 	ModelID           string
 	ModelName         string
@@ -46,6 +47,7 @@ func NewPlanDiscussionCreatedBodyContent(
 		ClientAddress:     clientAddress,
 		DiscussionID:      planDiscussion.ID.String(),
 		UserName:          userName,
+		Topic:             planDiscussion.Topic.Humanize(),
 		DiscussionContent: planDiscussion.Content.RawContent.ToTemplate(),
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,

@@ -36,6 +36,7 @@ func CreatePlanDiscussion(
 		principal.Account().ID,
 		principal.AllowASSESSMENT(),
 		input.ModelPlanID,
+		input.Topic,
 		input.Content,
 		input.UserRole,
 		input.UserRoleDescription,
@@ -143,6 +144,7 @@ func CreatePlanDiscussion(
 				addressBook,
 				discussion.Content,
 				discussion.ID,
+				discussion.Topic,
 				modelPlan,
 				commonName,
 				userRole,
@@ -172,6 +174,7 @@ func sendPlanDiscussionTagEmails(
 	addressBook email.AddressBook,
 	tHTML models.TaggedHTML,
 	discussionID uuid.UUID,
+	topic models.DiscussionTopicType,
 	modelPlan *models.ModelPlan,
 	createdByUserName string,
 	createdByUserRole string,
@@ -204,7 +207,7 @@ func sendPlanDiscussionTagEmails(
 
 				continue
 			}
-			err = sendPlanDiscussionTaggedUserEmail(emailService, addressBook, tHTML, discussionID, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
+			err = sendPlanDiscussionTaggedUserEmail(emailService, addressBook, tHTML, discussionID, topic, modelPlan, taggedUserAccount, createdByUserName, createdByUserRole)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -230,7 +233,7 @@ func sendPlanDiscussionTagEmails(
 				continue
 			}
 
-			err = sendPlanDiscussionTaggedSolutionEmail(emailService, addressBook, tHTML, discussionID, modelPlan, createdByUserName, createdByUserRole, soln, pocEmailAddress)
+			err = sendPlanDiscussionTaggedSolutionEmail(emailService, addressBook, tHTML, discussionID, topic, modelPlan, createdByUserName, createdByUserRole, soln, pocEmailAddress)
 			if err != nil {
 				errs = append(errs, err) //non blocking
 				continue
@@ -251,6 +254,7 @@ func sendPlanDiscussionTaggedUserEmail(
 	addressBook email.AddressBook,
 	tHTML models.TaggedHTML,
 	discussionID uuid.UUID,
+	topic models.DiscussionTopicType,
 	modelPlan *models.ModelPlan,
 	taggedUser *authentication.UserAccount,
 	createdByUserName string,
@@ -269,6 +273,7 @@ func sendPlanDiscussionTaggedUserEmail(
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
 		UserName:          createdByUserName,
+		Topic:             topic.Humanize(),
 		DiscussionContent: tHTML.RawContent.ToTemplate(),
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,
@@ -292,6 +297,7 @@ func sendPlanDiscussionTaggedSolutionEmail(
 	addressBook email.AddressBook,
 	tHTML models.TaggedHTML,
 	discussionID uuid.UUID,
+	topic models.DiscussionTopicType,
 	modelPlan *models.ModelPlan,
 	createdByUserName string,
 	createdByUserRole string,
@@ -312,6 +318,7 @@ func sendPlanDiscussionTaggedSolutionEmail(
 		ClientAddress:     emailService.GetConfig().GetClientAddress(),
 		DiscussionID:      discussionID.String(),
 		UserName:          createdByUserName,
+		Topic:             topic.Humanize(),
 		DiscussionContent: tHTML.RawContent.ToTemplate(),
 		ModelID:           modelPlan.ID.String(),
 		ModelName:         modelPlan.ModelName,
@@ -513,6 +520,7 @@ func CreateDiscussionReply(
 				addressBook,
 				reply.Content,
 				reply.DiscussionID,
+				discussion.Topic,
 				modelPlan,
 				commonName,
 				reply.UserRole.Humanize(models.ValueOrEmpty(reply.UserRoleDescription)),

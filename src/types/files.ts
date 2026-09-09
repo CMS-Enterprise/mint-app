@@ -6,6 +6,7 @@ export type FileUploadForm = {
   uploadURL?: string;
   restricted: boolean | null;
   documentType: DocumentType | null;
+  planTaskID?: string;
   otherTypeDescription: string;
   optionalNotes: string;
 };
@@ -15,6 +16,7 @@ export type LinkingDocumentFormTypes = {
   url: string;
   restricted: boolean | null;
   documentType: DocumentType | null;
+  planTaskID?: string;
   otherTypeDescription: string;
   optionalNotes: string;
 };

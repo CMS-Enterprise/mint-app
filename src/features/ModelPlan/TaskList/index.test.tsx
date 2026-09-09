@@ -13,6 +13,7 @@ import {
   AuditFieldChangeType,
   DatabaseOperation,
   DataExchangeApproachStatus,
+  DiscussionTopicType,
   GetChangeHistoryDocument,
   GetModelPlanDocument,
   GetModelPlanQuery,
@@ -191,6 +192,7 @@ describe('The Model Plan Task List', () => {
       {
         __typename: 'PlanDiscussion',
         id: '123',
+        topic: DiscussionTopicType.OTHER,
         content: {
           __typename: 'TaggedContent',
           rawContent: 'This is a question.'
@@ -202,6 +204,7 @@ describe('The Model Plan Task List', () => {
       {
         __typename: 'PlanDiscussion',
         id: '456',
+        topic: DiscussionTopicType.MODEL_PLAN_ALL,
         content: {
           __typename: 'TaggedHTML',
           rawContent: 'This is a second question.'
