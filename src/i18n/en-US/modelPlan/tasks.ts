@@ -16,6 +16,7 @@ const tasks = {
   seeAllTasks: 'See all tasks',
   tabs: {
     current: 'Current tasks ({{count}})',
+    upcoming: 'Upcoming tasks ({{count}})',
     completed: 'Completed tasks ({{count}})',
     ariaLabel: 'Switch between current and completed tasks'
   },
@@ -24,6 +25,10 @@ const tasks = {
       heading: 'Nothing to do here!',
       copy: "You've completed all of the current tasks.",
       viewCompletedTasks: ' <link1>Click here</link1> to view completed tasks.'
+    },
+    upcoming: {
+      heading: 'Nothing to do here!',
+      copy: 'You’ve completed all of the upcoming tasks.'
     },
     completed: {
       heading: 'There are no completed tasks yet.',
@@ -73,6 +78,42 @@ const tasks = {
       primaryAction: 'Upload 2-pager',
       success:
         '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.',
+      error:
+        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+    }
+  },
+  [PlanTaskKey.SIX_PAGER]: {
+    copy: 'After completing your 2-page concept review meeting and receiving a green light from CMMI FO, it’s time to start your 6-pager concept paper. View the help article to understand what to include in your concept paper, access example 6-pagers, discover what other considerations to make for additional resources, and what to expect for your review meeting with CMMI FO. Please remember that 6-pager submission to FO requires sign off from QV/RREG/LDG leadership prior to submission. Team leads can utilize the email group <email>CMMINewModelDesign@cms.hhs.gov</email> to ensure all cross-cutting teams are engaged early in the process. When you finish your 6-pager, please upload it to MINT.',
+    email: 'CMMINewModelDesign@cms.hhs.gov',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}',
+    secondaryPath:
+      '/help-and-knowledge/about-6-page-concept-papers-and-review-meetings',
+    secondaryAction: 'View help article',
+    [PlanTaskStatus.UPCOMING]: {
+      heading:
+        'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 6-pager',
+      success:
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskStatus.TO_DO]: {
+      heading:
+        'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 6-pager',
+      success:
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading:
+        'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 6-pager',
+      success:
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now to-do.',
       error:
         'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
     }
