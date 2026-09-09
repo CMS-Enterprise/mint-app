@@ -46,14 +46,14 @@ func (suite *ResolverSuite) TestPlanDocumentCreate() {
 
 func (suite *ResolverSuite) TestPlanDocumentCreateWithPlanTaskID() {
 	plan := suite.createModelPlan("Plan with Task Document")
-	planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
 	reader := bytes.NewReader([]byte("Some test file contents"))
 
 	input := &model.PlanDocumentInput{
 		ModelPlanID: plan.ID,
 		FileData: graphql.Upload{
 			File:        reader,
-			Filename:    "six-pager.docx",
+			Filename:    "two-pager.docx",
 			Size:        reader.Size(),
 			ContentType: "application/msword",
 		},
@@ -106,9 +106,9 @@ func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 	suite.Nil(document.DeletedAt)
 
 	suite.Run("can attribute linked document to a plan task", func() {
-		planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+		planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
 		input.URL = url
-		input.Name = "Six pager link"
+		input.Name = "Two pager link"
 		input.PlanTaskID = &planTask.ID
 
 		linkedDocument, err := PlanDocumentCreateLinked(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -143,14 +143,14 @@ func (suite *ResolverSuite) TestPlanDocumentCreateLinked() {
 func (suite *ResolverSuite) TestPlanDocumentCreateRejectsPlanTaskFromDifferentModelPlan() {
 	plan := suite.createModelPlan("Plan with Wrong Task Document")
 	otherPlan := suite.createModelPlan("Other Plan with Task")
-	otherPlanTask := suite.getPlanTaskByKey(otherPlan.ID, models.PlanTaskKeySixPager)
+	otherPlanTask := suite.getPlanTaskByKey(otherPlan.ID, models.PlanTaskKeyTwoPager)
 	reader := bytes.NewReader([]byte("Some test file contents"))
 
 	input := &model.PlanDocumentInput{
 		ModelPlanID: plan.ID,
 		FileData: graphql.Upload{
 			File:        reader,
-			Filename:    "six-pager.docx",
+			Filename:    "two-pager.docx",
 			Size:        reader.Size(),
 			ContentType: "application/msword",
 		},
@@ -257,12 +257,12 @@ func (suite *ResolverSuite) TestCollaboratorNonCMSCannotSeeRestrictedDocs() {
 
 func (suite *ResolverSuite) TestNonCollaboratorCannotSeeRestrictedTaskLinkedDocs() {
 	plan := suite.createModelPlan("Plan with Task Documents")
-	planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	planTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
 
 	restrictedDocInput := model.PlanDocumentLinkInput{
 		ModelPlanID:  plan.ID,
-		Name:         "Restricted six pager",
-		URL:          "https://www.example.com/restricted-six-pager",
+		Name:         "Restricted two pager",
+		URL:          "https://www.example.com/restricted-two-pager",
 		Restricted:   true,
 		DocumentType: models.DocumentTypeConceptPaper,
 		PlanTaskID:   &planTask.ID,
@@ -272,8 +272,8 @@ func (suite *ResolverSuite) TestNonCollaboratorCannotSeeRestrictedTaskLinkedDocs
 
 	unRestrictedDocInput := model.PlanDocumentLinkInput{
 		ModelPlanID:  plan.ID,
-		Name:         "Unrestricted six pager",
-		URL:          "https://www.example.com/unrestricted-six-pager",
+		Name:         "Unrestricted two pager",
+		URL:          "https://www.example.com/unrestricted-two-pager",
 		Restricted:   false,
 		DocumentType: models.DocumentTypeConceptPaper,
 		PlanTaskID:   &planTask.ID,

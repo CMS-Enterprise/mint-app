@@ -14,15 +14,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-//go:embed SQL/audit_change/collection_by_id_and_table.sql
-var auditChangeCollectionByIDAndTable string
-
-//go:embed SQL/audit_change/collection_by_id_and_table_and_field.sql
-var auditChangeCollectionByIDAndTableAndField string
-
-//go:embed SQL/audit_change/collection_by_primary_key_or_foreign_keyand_date.sql
-var auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate string
-
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key from the database
 func (s *Store) AuditChangeCollectionByIDAndTable(
 	_ logging.ILogger,
@@ -32,7 +23,7 @@ func (s *Store) AuditChangeCollectionByIDAndTable(
 
 	var auditChanges []*models.AuditChange
 
-	stmt, err := s.db.PrepareNamed(auditChangeCollectionByIDAndTable)
+	stmt, err := s.db.PrepareNamed(sqlqueries.AuditChange.CollectionByIDAndTable)
 	if err != nil {
 		return nil, err
 
@@ -65,13 +56,13 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(
 ) ([]*models.AuditChange, error) {
 
 	var auditChanges []*models.AuditChange
-	orderedQuery := auditChangeCollectionByIDAndTableAndField
+
 	orderClause := "" //default to ASCENDING
 	if sortDir == models.SortDesc {
 		orderClause = " ORDER BY 1 DESC"
 	}
 
-	orderedQuery = orderedQuery + orderClause
+	orderedQuery := sqlqueries.AuditChange.CollectionByIDAndTableAndField + orderClause
 
 	stmt, err := s.db.PrepareNamed(orderedQuery)
 	if err != nil {
@@ -104,13 +95,13 @@ func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(
 ) ([]*models.AuditChange, error) {
 
 	var auditChanges []*models.AuditChange
-	orderedQuery := auditChangeCollectionByPrimaryKeyOrForeignKeyAndDate
+
 	orderClause := "" //default to ASCENDING
 	if sortDir == models.SortDesc {
 		orderClause = " ORDER BY 1 DESC"
 	}
 
-	orderedQuery = orderedQuery + orderClause
+	orderedQuery := sqlqueries.AuditChange.CollectionByPrimaryKeyOrForeignKeyAndDate + orderClause
 
 	stmt, err := s.db.PrepareNamed(orderedQuery)
 	if err != nil {

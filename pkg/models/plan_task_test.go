@@ -33,3 +33,20 @@ func TestPlanTaskKeyActivationTarget(t *testing.T) {
 		assert.False(t, ok, "expected key %s to have no activation target", key)
 	}
 }
+
+func TestPlanTaskKeyChangeHistoryDisplayName(t *testing.T) {
+	assert.Equal(
+		t,
+		"Prepare for your 2-page review meeting with CMMI Front Office",
+		PlanTaskKeyTwoPager.ChangeHistoryDisplayName(),
+	)
+	assert.Equal(
+		t,
+		"Prepare for your 6-page review meeting with CMMI Front Office",
+		PlanTaskKeySixPager.ChangeHistoryDisplayName(),
+	)
+
+	// Keys without a change-history-specific name fall back to DisplayName()
+	assert.Equal(t, PlanTaskKeyModelPlan.DisplayName(), PlanTaskKeyModelPlan.ChangeHistoryDisplayName())
+	assert.Equal(t, PlanTaskKey("NOT_A_REAL_KEY").DisplayName(), PlanTaskKey("NOT_A_REAL_KEY").ChangeHistoryDisplayName())
+}
