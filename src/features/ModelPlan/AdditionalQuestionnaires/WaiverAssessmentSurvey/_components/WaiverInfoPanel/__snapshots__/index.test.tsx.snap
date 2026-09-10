@@ -27,6 +27,7 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
         tabindex="-1"
       >
         <div
+          class=""
           data-testid="waiver-info-panel"
         >
           <div
