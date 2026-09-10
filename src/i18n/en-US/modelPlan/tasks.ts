@@ -17,7 +17,7 @@ const tasks = {
     current: 'Current tasks ({{count}})',
     upcoming: 'Upcoming tasks ({{count}})',
     completed: 'Completed tasks ({{count}})',
-    ariaLabel: 'Switch between current and completed tasks'
+    ariaLabel: 'Switch between current, upcoming, and completed tasks'
   },
   emptyState: {
     current: {
@@ -134,6 +134,35 @@ const tasks = {
     [PlanTaskState.COMPLETE]: {
       heading: 'Finalize your data exchange approach',
       primaryAction: 'Go to approach'
+    }
+  },
+  [PlanTaskKey.OA_PRESENTATION]: {
+    copy: 'Prepare your presentation materials for the Office of the Administrator (OA) review. Once your presentation is ready, upload it to MINT so the cross-cutting teams have a record of it.',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}&defaultDocumentType=OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION',
+    secondaryPath: '/help-and-knowledge',
+    secondaryAction: 'View help article',
+    [PlanTaskStatus.UPCOMING]: {
+      heading:
+        'Prepare for your presentation to the Office of the Administrator (OA)'
+    },
+    [PlanTaskStatus.TO_DO]: {
+      heading:
+        'Prepare for your presentation to the Office of the Administrator (OA)',
+      primaryAction: 'Upload OA presentation',
+      success:
+        '<bold>Prepare for your presentation to the Office of the Administrator (OA)</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading:
+        'Prepare for your presentation to the Office of the Administrator (OA)',
+      primaryAction: 'Upload OA presentation',
+      success:
+        '<bold>Prepare for your presentation to the Office of the Administrator (OA)</bold> is now to-do.',
+      error:
+        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
     }
   },
   [PlanTaskKey.MTO]: {
