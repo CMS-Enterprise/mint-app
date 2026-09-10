@@ -70,7 +70,7 @@ describe('Tasks page', () => {
     renderWithMock(planTasksWithModelPlanComplete);
 
     await waitFor(() => {
-      expect(screen.getByText('Current tasks (3)')).toBeInTheDocument();
+      expect(screen.getByText('Current tasks (4)')).toBeInTheDocument();
       expect(screen.getByText('Completed tasks (1)')).toBeInTheDocument();
     });
 
@@ -105,7 +105,8 @@ describe('Tasks page', () => {
       },
       [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: {
         state: PlanTaskState.COMPLETE,
-        status: PlanTaskStatus.COMPLETE
+        status: PlanTaskStatus.COMPLETE,
+        completedDts: '2022-01-05T00:00:00Z'
       },
       [PlanTaskKey.DATA_EXCHANGE]: {
         state: PlanTaskState.COMPLETE,
@@ -120,7 +121,7 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(allComplete, 'completed');
 
     await waitFor(() => {
-      expect(screen.getByText('Completed tasks (4)')).toBeInTheDocument();
+      expect(screen.getByText('Completed tasks (5)')).toBeInTheDocument();
     });
 
     const cardHeadings = container.querySelectorAll(
