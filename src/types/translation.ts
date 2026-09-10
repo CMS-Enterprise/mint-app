@@ -489,7 +489,9 @@ type TranslationGeneralCharacteristicsGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationGeneralCharacteristics = {
-  [K in keyof TranslationGeneralCharacteristicsGQL]: TranslationGeneralCharacteristicsForm[K]; // FE form type
+  [
+    K in keyof TranslationGeneralCharacteristicsGQL
+  ]: TranslationGeneralCharacteristicsForm[K]; // FE form type
 };
 
 // Participants and Providers
@@ -595,7 +597,9 @@ type TranslationPlanParticipantsAndProvidersGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationParticipantsAndProviders = {
-  [K in keyof TranslationPlanParticipantsAndProvidersGQL]: TranslationParticipantsAndProvidersForm[K]; // FE form type
+  [
+    K in keyof TranslationPlanParticipantsAndProvidersGQL
+  ]: TranslationParticipantsAndProvidersForm[K]; // FE form type
 };
 
 // Beneficiaries
@@ -764,7 +768,9 @@ type TranslationOpsEvalAndLearningGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationOpsEvalAndLearning = {
-  [K in keyof TranslationOpsEvalAndLearningGQL]: TranslationOpsEvalAndLearningForm[K]; // FE form type
+  [
+    K in keyof TranslationOpsEvalAndLearningGQL
+  ]: TranslationOpsEvalAndLearningForm[K]; // FE form type
 };
 
 // IDDOC Questionnaire
@@ -836,7 +842,9 @@ type TranslationIddocQuestionnaireGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationIddocQuestionnaire = {
-  [K in keyof TranslationIddocQuestionnaireGQL]: TranslationIddocQuestionnaireForm[K]; // FE form type
+  [
+    K in keyof TranslationIddocQuestionnaireGQL
+  ]: TranslationIddocQuestionnaireForm[K]; // FE form type
 };
 
 // Payments
@@ -1032,7 +1040,9 @@ type TranslationDataExchangeApproachGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationDataExchangeApproach = {
-  [K in keyof TranslationDataExchangeApproachGQL]: TranslationDataExchangeApproachForm[K]; // FE form type
+  [
+    K in keyof TranslationDataExchangeApproachGQL
+  ]: TranslationDataExchangeApproachForm[K]; // FE form type
 };
 
 // Collaborators
@@ -1185,7 +1195,9 @@ type TranslationOperationalNeedsGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationOperationalNeeds = {
-  [K in keyof TranslationOperationalNeedsGQL]: TranslationOperationalNeedsForm[K]; // FE form type
+  [
+    K in keyof TranslationOperationalNeedsGQL
+  ]: TranslationOperationalNeedsForm[K]; // FE form type
 };
 
 // Operational Solution
@@ -1213,7 +1225,9 @@ type TranslationOperationalSolutionsGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationOperationalSolutions = {
-  [K in keyof TranslationOperationalSolutionsGQL]: TranslationOperationalSolutionsForm[K]; // FE form type
+  [
+    K in keyof TranslationOperationalSolutionsGQL
+  ]: TranslationOperationalSolutionsForm[K]; // FE form type
 };
 
 // Operational Solution Subtasks
@@ -1232,7 +1246,9 @@ type TranslationOperationalSolutionSubtasksGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationOperationalSolutionSubtasks = {
-  [K in keyof TranslationOperationalSolutionSubtasksGQL]: TranslationOperationalSolutionSubtasksForm[K]; // FE form type
+  [
+    K in keyof TranslationOperationalSolutionSubtasksGQL
+  ]: TranslationOperationalSolutionSubtasksForm[K]; // FE form type
 };
 
 // Document Solution Link - Change History purposes only
@@ -1251,7 +1267,9 @@ type TranslationDocumentSolutionLinkGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationDocumentSolutionLink = {
-  [K in keyof TranslationDocumentSolutionLinkGQL]: TranslationDocumentSolutionLinkForm[K]; // FE form type
+  [
+    K in keyof TranslationDocumentSolutionLinkGQL
+  ]: TranslationDocumentSolutionLinkForm[K]; // FE form type
 };
 
 // Existing Model Link - Change History purposes only
@@ -1271,7 +1289,9 @@ type TranslationExistingModelLinkGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationExistingModelLink = {
-  [K in keyof TranslationExistingModelLinkGQL]: TranslationExistingModelLinkForm[K]; // FE form type
+  [
+    K in keyof TranslationExistingModelLinkGQL
+  ]: TranslationExistingModelLinkForm[K]; // FE form type
 };
 
 // MTO Info - Change History purposes only
@@ -1324,7 +1344,9 @@ type TranslationMTOMilestoneSolutionLinkCustomGQL = Omit<
 >;
 
 export type TranslationMTOMilestoneSolutionLinkCustom = {
-  [K in keyof TranslationMTOMilestoneSolutionLinkCustomGQL]: TranslationMTOMilestoneSolutionLinkCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationMTOMilestoneSolutionLinkCustomGQL
+  ]: TranslationMTOMilestoneSolutionLinkCustomForm[K]; // FE form type
 };
 
 // MTO Common Milestone - Change History purposes only
@@ -1348,7 +1370,9 @@ type TranslationMTOCommonMilestoneCustomGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationMTOCommonMilestoneCustom = {
-  [K in keyof TranslationMTOCommonMilestoneCustomGQL]: TranslationMTOCommonMilestoneCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationMTOCommonMilestoneCustomGQL
+  ]: TranslationMTOCommonMilestoneCustomForm[K]; // FE form type
 };
 
 // MTO Milestone - Change History purposes only
@@ -1380,7 +1404,9 @@ type TranslationMTOMilestoneCustomGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationMTOMilestoneCustom = {
-  [K in keyof TranslationMTOMilestoneCustomGQL]: TranslationMTOMilestoneCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationMTOMilestoneCustomGQL
+  ]: TranslationMTOMilestoneCustomForm[K]; // FE form type
 };
 
 // MTO Solution - Change History purposes only
@@ -1408,7 +1434,9 @@ type TranslationMTOSolutionCustomGQL = Omit<
   Create a tighter connection between BE/FE translation types
 */
 export type TranslationMTOSolutionCustom = {
-  [K in keyof TranslationMTOSolutionCustomGQL]: TranslationMTOSolutionCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationMTOSolutionCustomGQL
+  ]: TranslationMTOSolutionCustomForm[K]; // FE form type
 };
 
 // MTO Common Solution Contact - Change History purposes only
@@ -1430,7 +1458,9 @@ type TranslationMTOCommonSolutionContactCustomGQL = Omit<
 >;
 
 export type TranslationMTOCommonSolutionContactCustom = {
-  [K in keyof TranslationMTOCommonSolutionContactCustomGQL]: TransltionMTOCommonSolutionContactCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationMTOCommonSolutionContactCustomGQL
+  ]: TransltionMTOCommonSolutionContactCustomForm[K]; // FE form type
 };
 
 // MTO Common Solution Contractor - Change History purposes only
@@ -1446,7 +1476,9 @@ type TranslationMTOCommonSolutionContractorCustomGQL = Omit<
 >;
 
 export type TranslationMTOCommonSolutionContractorCustom = {
-  [K in keyof TranslationMTOCommonSolutionContractorCustomGQL]: TranslationMTOCommonSolutionContractorCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationMTOCommonSolutionContractorCustomGQL
+  ]: TranslationMTOCommonSolutionContractorCustomForm[K]; // FE form type
 };
 
 // MTO Common Solution System/Business owner - Change History purposes only
@@ -1462,7 +1494,9 @@ type TranslationMTOCommonSolutionSystemOwnerCustomGQL = Omit<
 >;
 
 export type TranslationMTOCommonSolutionSystemOwnerCustom = {
-  [K in keyof TranslationMTOCommonSolutionSystemOwnerCustomGQL]: TranslationMTOCommonSolutionSystemOwnerCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationMTOCommonSolutionSystemOwnerCustomGQL
+  ]: TranslationMTOCommonSolutionSystemOwnerCustomForm[K]; // FE form type
 };
 
 // MTO Milestone Note - Change History purposes only
@@ -1476,7 +1510,9 @@ type TranslationMTOMilestoneNoteCustomGQL = Omit<
 >;
 
 export type TranslationMTOMilestoneNoteCustom = {
-  [K in keyof TranslationMTOMilestoneNoteCustomGQL]: TranslationMTOMilestoneNoteCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationMTOMilestoneNoteCustomGQL
+  ]: TranslationMTOMilestoneNoteCustomForm[K]; // FE form type
 };
 
 // Timeline
@@ -1618,7 +1654,9 @@ type TranslationModelPlanMTOTemplateLinkCustomGQL = Omit<
 >;
 
 export type TranslationModelPlanMTOTemplateLinkCustom = {
-  [K in keyof TranslationModelPlanMTOTemplateLinkCustomGQL]: TranslationModelPlanMTOTemplateLinkCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationModelPlanMTOTemplateLinkCustomGQL
+  ]: TranslationModelPlanMTOTemplateLinkCustomForm[K]; // FE form type
 };
 
 // Key Contact - Change History purposes only
@@ -1637,7 +1675,9 @@ type TranslationKeyContactCustomGQL = Omit<
 >;
 
 export type TranslationKeyContactCustom = {
-  [K in keyof TranslationKeyContactCustomGQL]: TranslationKeyContactCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationKeyContactCustomGQL
+  ]: TranslationKeyContactCustomForm[K]; // FE form type
 };
 
 // Key Contact Category - Change History purposes only
@@ -1650,7 +1690,9 @@ type TranslationKeyContactCategoryCustomGQL = Omit<
 >;
 
 export type TranslationKeyContactCategoryCustom = {
-  [K in keyof TranslationKeyContactCategoryCustomGQL]: TranslationKeyContactCategoryCustomForm[K]; // FE form type
+  [
+    K in keyof TranslationKeyContactCategoryCustomGQL
+  ]: TranslationKeyContactCategoryCustomForm[K]; // FE form type
 };
 
 // CTAT - Change History purposes only
@@ -1688,5 +1730,7 @@ type TranslationContractAssistanceGQL = Omit<
 >;
 
 export type TranslationContractAssistance = {
-  [K in keyof TranslationContractAssistanceGQL]: TranslationContractAssistanceForm[K]; // FE form type
+  [
+    K in keyof TranslationContractAssistanceGQL
+  ]: TranslationContractAssistanceForm[K]; // FE form type
 };
