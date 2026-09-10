@@ -1,0 +1,55 @@
+enum DiscussionTopicType {
+  MODEL_PLAN_ALL
+  MODEL_PLAN_MODEL_BASICS
+  MODEL_PLAN_GENERAL_CHARACTERISTICS
+  MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS
+  MODEL_PLAN_BENEFICIARIES
+  MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING
+  MODEL_PLAN_PAYMENT
+  MODEL_TIMELINE
+  DATA_EXCHANGE_APPROACH
+  WAIVER_ASSESSMENT_SURVEY
+  IDDOC_QUESTIONNAIRE
+  MODEL_TO_OPERATIONS_MATRIX_MTO
+  DOCUMENTS
+  CONTRACTS
+  FFS_CRS_AND_TDLS
+  OTHER
+}
+
+"""
+PlanDiscussion represents plan discussion
+"""
+type PlanDiscussion {
+  id: UUID!
+  modelPlanID: UUID!
+  topic: DiscussionTopicType!
+  content: TaggedContent @goField(forceResolver: true)
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+  replies: [DiscussionReply!]!
+  isAssessment: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+"""
+input PlanDiscussionCreateInput {
+  modelPlanID: UUID!
+  topic: DiscussionTopicType!
+  content: TaggedHTML!
+  userRole: DiscussionUserRole
+  userRoleDescription: String
+}
+
+extend type Mutation {
+  createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

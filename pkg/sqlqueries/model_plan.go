@@ -35,6 +35,9 @@ var modelPlanDeleteByID string
 //go:embed SQL/model_plan/get_by_id_LOADER.sql
 var modelPlanGetByIDLoaderSQL string
 
+//go:embed SQL/model_plan/get_by_ctat_request_id_LOADER.sql
+var modelPlanGetByCTATRequestIDLoaderSQL string
+
 //go:embed SQL/model_plan/get_by_mto_common_solution_key.sql
 var modelPlanGetByMTOCommonSolutionKeySQL string
 
@@ -62,6 +65,7 @@ type modelPlanScripts struct {
 	CollectionWhereNewlyCreated      string
 	DeleteByID                       string
 	GetByIDLoader                    string
+	GetByCTATRequestIDLoader         string
 	GetByMTOSolutionKeyLoader        string
 	GetByComponentGroupLoader        string
 	CollectionWhereFavoritedByUserID string
@@ -82,6 +86,7 @@ var ModelPlan = modelPlanScripts{
 	CollectionWhereNewlyCreated:      modelPlanCollectionWhereNewlyCreatedSQL,
 	DeleteByID:                       modelPlanDeleteByID,
 	GetByIDLoader:                    modelPlanGetByIDLoaderSQL,
+	GetByCTATRequestIDLoader:         modelPlanGetByCTATRequestIDLoaderSQL,
 	GetByMTOSolutionKeyLoader:        modelPlanGetByMTOCommonSolutionKeySQL,
 	GetByComponentGroupLoader:        modelPlanGetByComponentGroupLoaderSQL,
 	CollectionWhereFavoritedByUserID: modelPlanCollectionWhereFavoritedByUserID,

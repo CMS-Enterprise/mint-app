@@ -177,3 +177,18 @@ export const convertCamelCaseToKebabCase = (str: string): string => {
     .replace(/([a-z])([A-Z])/g, '$1-$2') // Insert hyphen between lowercase and uppercase letters
     .toLowerCase(); // Convert the entire string to lowercase
 };
+
+/**
+ * Converts a string to all uppercase and underscores.
+ *
+ * @param {string} str - The string with empty spaces or camelcase to convert.
+ * @returns {string} The converted string in uppercase with underscores. used for query params.
+ */
+export const convertToUppercaseAndUnderscore = (str: string): string => {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1_$2')
+    .replace(/([a-zA-Z])(\d)/g, '$1_$2')
+    .replace(/(\d)([a-zA-Z])/g, '$1_$2')
+    .replace(/\s+/g, '_')
+    .toUpperCase();
+};

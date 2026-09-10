@@ -46,7 +46,8 @@ describe('user', () => {
             changeHistoryReleaseDate: '',
             modelsApproachingClearanceEnabled: false,
             mintAnalyticsEnabled: true,
-            sandbox: true
+            sandbox: true,
+            ctatEnabled: false
           })
         ).toBe(false);
       });

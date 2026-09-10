@@ -10,6 +10,8 @@ SELECT
     new_discussion_added_notification_type,
     model_plan_shared,
     new_model_plan,
+    new_task_added,
+    task_completed,
     dates_changed,
     dates_changed_notification_type,
     data_exchange_approach_marked_complete,

@@ -1,0 +1,134 @@
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Checkbox, Fieldset } from '@trussworks/react-uswds';
+import classNames from 'classnames';
+
+import FieldGroup from 'components/FieldGroup';
+import HelpText from 'components/HelpText';
+
+export type FilterGroupType = {
+  key: string;
+  label: string;
+  description?: string;
+  tagLabel: string;
+  options?: {
+    label: string;
+    value: string;
+  }[];
+  displayShowAll: boolean;
+  CustomComponent?: React.ComponentType<{
+    selectedFilters: string[];
+    setSelectedFilters: (filters: string[]) => void;
+  }>;
+};
+
+type FilterGroupProps = {
+  filterGroup: FilterGroupType;
+  selectedFilters: string[];
+  setSelectedFilters: (filters: string[]) => void;
+};
+
+/**
+ * Displays a filter group with checkboxes or time pickers for each option.
+ */
+const FilterGroup = ({
+  filterGroup,
+  selectedFilters,
+  setSelectedFilters
+}: FilterGroupProps) => {
+  const { t } = useTranslation('general');
+
+  const { CustomComponent } = filterGroup;
+
+  /**
+   * Determines if the "Show All" checkbox should be checked based on the selected filters.
+   * @returns true if all options in group are selected and `filterGroup.displayShowAll` is true.
+   */
+  const showAllIsChecked = useMemo(
+    () =>
+      filterGroup.displayShowAll &&
+      selectedFilters.length === (filterGroup.options?.length || 0),
+    [
+      filterGroup.displayShowAll,
+      selectedFilters.length,
+      filterGroup.options?.length
+    ]
+  );
+
+  const handleSetShowAll = (value: boolean) => {
+    if (value) {
+      setSelectedFilters(
+        (filterGroup.options || []).map(option => option.value)
+      );
+    } else {
+      setSelectedFilters([]);
+    }
+  };
+
+  const toggleFilterOption = (option: string) => {
+    if (selectedFilters.includes(option)) {
+      setSelectedFilters(selectedFilters.filter(filter => filter !== option));
+    } else {
+      setSelectedFilters([...selectedFilters, option]);
+    }
+  };
+
+  return (
+    <Fieldset className="mint-filter-group font-body-sm margin-bottom-2 border-bottom-1px border-base-light padding-bottom-4">
+      <legend>
+        <h3 className="margin-y-1">{filterGroup.label}</h3>
+      </legend>
+
+      {filterGroup.description && (
+        <HelpText>{filterGroup.description}</HelpText>
+      )}
+
+      <FieldGroup
+        className={classNames('mint-filter-group__options margin-top-105', {
+          'grid-row': filterGroup.displayShowAll
+        })}
+      >
+        {filterGroup.displayShowAll && (
+          <Checkbox
+            className="grid-col-12 bg-none"
+            id={`${filterGroup.key}-show-all`}
+            name={`${filterGroup.key}-show-all`}
+            onChange={() => handleSetShowAll(!showAllIsChecked)}
+            label={t('filter.showAll')}
+            checked={showAllIsChecked}
+          />
+        )}
+
+        {!CustomComponent &&
+          filterGroup.options &&
+          filterGroup.options.map(option => (
+            <Checkbox
+              className={classNames({
+                'grid-col-6 padding-right-05 bg-transparent':
+                  filterGroup.displayShowAll
+              })}
+              key={`${filterGroup.key}-${option.value}`}
+              id={`${filterGroup.key}-${option.value}`}
+              name={option.value}
+              onChange={() => toggleFilterOption(option.value)}
+              label={option.label}
+              value={option.value}
+              checked={
+                showAllIsChecked || selectedFilters.includes(option.value)
+              }
+              disabled={showAllIsChecked}
+            />
+          ))}
+
+        {CustomComponent && (
+          <CustomComponent
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+          />
+        )}
+      </FieldGroup>
+    </Fieldset>
+  );
+};
+
+export default FilterGroup;

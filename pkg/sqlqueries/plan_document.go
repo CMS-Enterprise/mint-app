@@ -17,6 +17,12 @@ var planDocumentGetByModelPlanIDSQL string
 //go:embed SQL/plan_document/read_by_model_plan_id_not_restricted.sql
 var planDocumentGetByModelPlanIDNotRestrictedSQL string
 
+//go:embed SQL/plan_document/read_by_plan_task_id.sql
+var planDocumentGetByPlanTaskIDSQL string
+
+//go:embed SQL/plan_document/read_by_plan_task_id_not_restricted.sql
+var planDocumentGetByPlanTaskIDNotRestrictedSQL string
+
 //go:embed SQL/plan_document/delete_by_id.sql
 var planDocumentDeleteByIDSQL string
 
@@ -26,6 +32,8 @@ type planDocumentScripts struct {
 	GetByID                       string
 	GetByModelPlanID              string
 	GetByModelPlanIDNotRestricted string
+	GetByPlanTaskID               string
+	GetByPlanTaskIDNotRestricted  string
 	DeleteByID                    string
 }
 
@@ -36,5 +44,7 @@ var PlanDocument = planDocumentScripts{
 	GetByID:                       planDocumentGetByIDSQL,
 	GetByModelPlanID:              planDocumentGetByModelPlanIDSQL,
 	GetByModelPlanIDNotRestricted: planDocumentGetByModelPlanIDNotRestrictedSQL,
+	GetByPlanTaskID:               planDocumentGetByPlanTaskIDSQL,
+	GetByPlanTaskIDNotRestricted:  planDocumentGetByPlanTaskIDNotRestrictedSQL,
 	DeleteByID:                    planDocumentDeleteByIDSQL,
 }

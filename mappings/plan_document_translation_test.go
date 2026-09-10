@@ -8,7 +8,7 @@ import (
 )
 
 func TestPlanDocumentTranslation(t *testing.T) {
-	excludedFields := append(taskListStructExcludeFields, "FileSize", "VirusScanned", "VirusClean", "DeletedAt", "Bucket", "FileKey")
+	excludedFields := append(taskListStructExcludeFields, "FileSize", "VirusScanned", "VirusClean", "DeletedAt", "Bucket", "FileKey", "PlanTaskID")
 
 	assertAllTranslationDataGeneric(t, PlanDocumentTranslation, models.PlanDocument{}, excludedFields)
 }

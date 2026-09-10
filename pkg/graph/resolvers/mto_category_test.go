@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/samber/lo"
 
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -713,7 +714,7 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_NullID() {
 	// Expectation: This should return an error indicating the category does not exist or invalid input.
 
 	invalidID := uuid.Nil
-	err := MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, invalidID)
+	err := MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, invalidID, nil, email.AddressBook{})
 	suite.Error(err, "Deleting a category with a null (uuid.Nil) ID should result in an error")
 }
 
@@ -731,7 +732,7 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_NoMilestones() {
 	suite.Equal(category.ID, catBeforeDelete.ID, "Category should exist before deletion")
 
 	// Delete the category
-	err = MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, category.ID)
+	err = MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, category.ID, nil, email.AddressBook{})
 	suite.NoError(err, "Deleting a category with no milestones should succeed")
 
 	// Confirm category no longer exists
@@ -767,7 +768,7 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_TopLevelCategory() {
 	suite.NoError(err)
 
 	// Delete the top-level category
-	err = MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, topCategory.ID)
+	err = MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, topCategory.ID, nil, email.AddressBook{})
 	suite.NoError(err, "Deleting a top-level category should succeed")
 
 	// Verify top-level category and its subcategories no longer exist
@@ -816,7 +817,7 @@ func (suite *ResolverSuite) TestMTOCategoryDelete_SubCategory() {
 	suite.NoError(err, "Creating a milestone in the subcategory should succeed")
 
 	// Delete the subcategory
-	err = MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, subCategory.ID)
+	err = MTOCategoryDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, subCategory.ID, nil, email.AddressBook{})
 	suite.NoError(err, "Deleting a subcategory should succeed")
 
 	// Verify subcategory no longer exists

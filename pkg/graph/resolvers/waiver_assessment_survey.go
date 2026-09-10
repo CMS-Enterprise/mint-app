@@ -101,7 +101,7 @@ func WaiverAssessmentSurveyUpdate(
 				return nil, err
 			}
 
-			if err := UpdatePlanTaskStatusOnWaiverAssessmentStarted(tx, logger, updated.ModelPlanID, principal, store); err != nil {
+			if err := UpdatePlanTaskStatusOnWaiverAssessmentStarted(ctx, tx, logger, updated.ModelPlanID, principal, store, emailService, emailAddressBook); err != nil {
 				return nil, err
 			}
 

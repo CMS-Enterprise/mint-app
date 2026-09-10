@@ -2,9 +2,15 @@ package worker
 
 import (
 	"context"
+	"fmt"
+	"net"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"go.uber.org/zap"
 
+	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
@@ -146,6 +152,23 @@ func (w *Worker) Work() {
 	// Setup Manager
 	mgr.Concurrency = w.Connections
 
+	// Faktory sits behind an AWS Network Load Balancer, which silently drops any TCP
+	// connection idle for longer than its fixed ~350s timeout (NLBs have no configurable
+	// idle_timeout setting, unlike ALBs). The faktory client's default dialer enables TCP
+	// keepalive but never sets an explicit period, so it falls back to OS/Go defaults that
+	// aren't guaranteed to probe more often than that window. Pooled connections that sit
+	// idle between cron ticks can get silently dropped by the NLB and then fail with
+	// "write: broken pipe" the next time they're used. Building the pool with a dialer that
+	// sets an explicit keepalive period well under 350s keeps pooled connections alive.
+	pool, err := faktory.NewPoolWithDialer(mgr.Concurrency+2, &net.Dialer{
+		Timeout:   1 * time.Second,
+		KeepAlive: 120 * time.Second,
+	})
+	if err != nil {
+		panic(fmt.Errorf("failed to create faktory connection pool: %w", err))
+	}
+	mgr.Pool = pool
+
 	// pull jobs from these queues, in this order of precedence
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
 	mgr.Use(FaktoryLoggerMiddleware())
@@ -160,15 +183,33 @@ func (w *Worker) Work() {
 	userFunction := userhelpers.UserAccountGetByIDLOADER
 	ctx = appcontext.WithUserAccountService(ctx, userFunction)
 
+	// RunWithContext only shuts down when its context is canceled - it otherwise ignores OS
+	// signals entirely (unlike mgr.Run()). Without this, ECS's SIGTERM on every deploy/task
+	// replacement goes unhandled and the process is eventually SIGKILLed, which never gives
+	// mgr.Terminate() a chance to run and close the pooled Faktory connections. Those
+	// connections then linger on the Faktory server until it reaps them itself, and repeated
+	// deploys without that cleanup accumulate until the server hits its connection limit.
+	ctx, stop := workerShutdownContext(ctx)
+	defer stop()
+
 	// Register jobs using JobWrapper
 	for _, job := range w.getJobWrappers(ctx) {
 		zapLogger.Info("registering job", zap.String("job_name", job.Name))
 		mgr.Register(job.Name, JobWithPanicProtection(job.Job))
 	}
 
-	// Run the manager with the shared context
-	err := mgr.RunWithContext(ctx)
+	// Run the manager with the shared context; canceling ctx above (via SIGTERM/SIGINT)
+	// makes RunWithContext call mgr.Terminate(), which drains in-flight jobs and closes
+	// the connection pool before this returns.
+	err = mgr.RunWithContext(ctx)
 	if err != nil {
 		panic(err)
 	}
+}
+
+// workerShutdownContext returns a context that is canceled when the process receives
+// SIGTERM or SIGINT, so that mgr.RunWithContext can shut down gracefully instead of
+// running until the process is forcibly killed.
+func workerShutdownContext(ctx context.Context) (context.Context, context.CancelFunc) {
+	return signal.NotifyContext(ctx, syscall.SIGTERM, syscall.SIGINT)
 }

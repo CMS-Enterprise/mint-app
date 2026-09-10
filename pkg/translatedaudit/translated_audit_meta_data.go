@@ -241,6 +241,39 @@ func MTOMilestoneMetaDataGet(ctx context.Context, store *storage.Store, mileston
 	return &meta, &metaType, nil
 }
 
+// CustomTimelineDateMetaDataGet relies on the changes field to return title information. If not available, it will attempt to fetch a custom timeline date to get its current title.
+func CustomTimelineDateMetaDataGet(ctx context.Context, store *storage.Store, customTimelineDateID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+
+	var title *string
+	titleChange, titleFieldPresent := changesFields["title"]
+
+	if titleFieldPresent {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			title = new(fmt.Sprint(titleChange.Old))
+		} else {
+			title = new(fmt.Sprint(titleChange.New))
+		}
+	} else {
+		if operation == models.DBOpDelete || operation == models.DBOpTruncate {
+			return nil, nil, fmt.Errorf("there wasn't a title present for this custom timeline date, unable to generate metadata for this entry. Custom Timeline Date %v", customTimelineDateID)
+		}
+
+		customTimelineDate, err := loaders.CustomTimelineDate.ByID.Load(ctx, customTimelineDateID)
+		if err != nil {
+			if !errors.Is(err, loaders.ErrRecordNotFoundForKey) {
+				return nil, nil, fmt.Errorf("there was an issue getting meta data for custom timeline date. err %w", err)
+			}
+			title = nil
+		} else {
+			title = &customTimelineDate.Title
+		}
+	}
+
+	meta := models.NewTranslatedAuditMetaGeneric(models.TNCustomTimelineDate, 0, "title", title)
+	metaType := models.TAMetaGeneric
+	return &meta, &metaType, nil
+}
+
 // MTOMilestoneNoteMetaDataGet relies on the changes field to return content and milestone information. If not available, it will attempt to fetch a milestone note to get its current content and related milestone name.
 func MTOMilestoneNoteMetaDataGet(ctx context.Context, store *storage.Store, milestoneNoteID uuid.UUID, changesFields models.AuditFields, operation models.DatabaseOperation) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
 
@@ -441,6 +474,22 @@ func MTOCategoryMetaDataGet(ctx context.Context, store *storage.Store, categoryI
 
 }
 
+// PlanTaskMetaDataGet returns metadata identifying which task a plan_task audit is for. The raw
+// PlanTaskKey is returned as Relation (so callers, e.g. the FE, can tell whether the key is
+// manually markable by a user or calculated automatically) and a human-readable task name is
+// returned as RelationContent (for display in change history).
+func PlanTaskMetaDataGet(ctx context.Context, taskID uuid.UUID) (*models.TranslatedAuditMetaGeneric, *models.TranslatedAuditMetaDataType, error) {
+	task, err := loaders.PlanTask.ByID.Load(ctx, taskID)
+	if err != nil {
+		return nil, nil, fmt.Errorf("there was an issue getting meta data for plan task. err %w", err)
+	}
+
+	name := task.Key.ChangeHistoryDisplayName()
+	meta := models.NewTranslatedAuditMetaGeneric(models.TNPlanTask, 0, string(task.Key), &name)
+	metaType := models.TAMetaGeneric
+	return &meta, &metaType, nil
+}
+
 // SetTranslatedAuditTableSpecificMetaData does table specific analysis to
 // 1. Get meta data where needed
 // 2. Set the needed restriction level of an audit.
@@ -502,6 +551,13 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 		if err != nil {
 			return true, err
 		}
+	case models.TNCustomTimelineDate:
+		metaData, metaDataType, err := CustomTimelineDateMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
 	case models.TNMTOSolution:
 		metaData, metaDataType, err := MTOSolutionMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
 		metaDataInterface = metaData
@@ -511,6 +567,13 @@ func SetTranslatedAuditTableSpecificMetaData(ctx context.Context, store *storage
 		}
 	case models.TNMTOMilestoneNote:
 		metaData, metaDataType, err := MTOMilestoneNoteMetaDataGet(ctx, store, audit.PrimaryKey, audit.Fields, operation)
+		metaDataInterface = metaData
+		metaDataTypeGlobal = metaDataType
+		if err != nil {
+			return true, err
+		}
+	case models.TNPlanTask:
+		metaData, metaDataType, err := PlanTaskMetaDataGet(ctx, audit.PrimaryKey)
 		metaDataInterface = metaData
 		metaDataTypeGlobal = metaDataType
 		if err != nil {

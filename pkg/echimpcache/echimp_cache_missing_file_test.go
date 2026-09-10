@@ -126,20 +126,20 @@ func TestRefreshCacheDoesNotPartiallyOverwriteExistingDataWhenTDLIsMissing(t *te
 
 	cache := &crAndTDLCache{
 		lastChecked:   existingLastChecked,
-		CRs:           []*models.EChimpCR{existingCR},
-		TDls:          []*models.EChimpTDL{existingTDL},
-		AllCrsAndTDLs: existingCombined,
-		CRsByModelPlanID: map[uuid.UUID][]*models.EChimpCR{
+		crs:           []*models.EChimpCR{existingCR},
+		tdls:          []*models.EChimpTDL{existingTDL},
+		allCrsAndTDLs: existingCombined,
+		crsByModelPlanID: map[uuid.UUID][]*models.EChimpCR{
 			existingModelPlanID: {existingCR},
 		},
-		TDLsByModelPlanID: map[uuid.UUID][]*models.EChimpTDL{
+		tdlsByModelPlanID: map[uuid.UUID][]*models.EChimpTDL{
 			existingModelPlanID: {existingTDL},
 		},
-		CrsAndTDLsByModelPlanID: map[uuid.UUID][]models.EChimpCRAndTDLS{
+		crsAndTDLsByModelPlanID: map[uuid.UUID][]models.EChimpCRAndTDLS{
 			existingModelPlanID: existingCombined,
 		},
-		CRByCRNumber:    map[string]*models.EChimpCR{"existing-cr": existingCR},
-		TDLsByTDLNumber: map[string]*models.EChimpTDL{"existing-tdl": existingTDL},
+		crByCRNumber:    map[string]*models.EChimpCR{"existing-cr": existingCR},
+		tdlsByTDLNumber: map[string]*models.EChimpTDL{"existing-tdl": existingTDL},
 	}
 
 	core, logs := observer.New(zap.ErrorLevel)
@@ -149,14 +149,14 @@ func TestRefreshCacheDoesNotPartiallyOverwriteExistingDataWhenTDLIsMissing(t *te
 	require.NoError(t, err)
 
 	assert.Equal(t, existingLastChecked, cache.lastChecked)
-	assert.Equal(t, []*models.EChimpCR{existingCR}, cache.CRs)
-	assert.Equal(t, []*models.EChimpTDL{existingTDL}, cache.TDls)
-	assert.Equal(t, existingCombined, cache.AllCrsAndTDLs)
-	assert.Equal(t, map[uuid.UUID][]*models.EChimpCR{existingModelPlanID: {existingCR}}, cache.CRsByModelPlanID)
-	assert.Equal(t, map[uuid.UUID][]*models.EChimpTDL{existingModelPlanID: {existingTDL}}, cache.TDLsByModelPlanID)
-	assert.Equal(t, map[uuid.UUID][]models.EChimpCRAndTDLS{existingModelPlanID: existingCombined}, cache.CrsAndTDLsByModelPlanID)
-	assert.Equal(t, map[string]*models.EChimpCR{"existing-cr": existingCR}, cache.CRByCRNumber)
-	assert.Equal(t, map[string]*models.EChimpTDL{"existing-tdl": existingTDL}, cache.TDLsByTDLNumber)
+	assert.Equal(t, []*models.EChimpCR{existingCR}, cache.crs)
+	assert.Equal(t, []*models.EChimpTDL{existingTDL}, cache.tdls)
+	assert.Equal(t, existingCombined, cache.allCrsAndTDLs)
+	assert.Equal(t, map[uuid.UUID][]*models.EChimpCR{existingModelPlanID: {existingCR}}, cache.crsByModelPlanID)
+	assert.Equal(t, map[uuid.UUID][]*models.EChimpTDL{existingModelPlanID: {existingTDL}}, cache.tdlsByModelPlanID)
+	assert.Equal(t, map[uuid.UUID][]models.EChimpCRAndTDLS{existingModelPlanID: existingCombined}, cache.crsAndTDLsByModelPlanID)
+	assert.Equal(t, map[string]*models.EChimpCR{"existing-cr": existingCR}, cache.crByCRNumber)
+	assert.Equal(t, map[string]*models.EChimpTDL{"existing-tdl": existingTDL}, cache.tdlsByTDLNumber)
 
 	entries := logs.All()
 	require.Len(t, entries, 1)

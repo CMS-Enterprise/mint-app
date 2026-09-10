@@ -4,100 +4,6 @@ import {
   PlanTaskStatus
 } from 'gql/generated/graphql';
 
-type TaskStatusButtons = Record<
-  Exclude<PlanTaskStatus, 'NOT_NEEDED' | 'UPCOMING'>,
-  {
-    heading: string;
-    primaryAction: string;
-  }
->;
-
-const taskCards: Record<
-  PlanTaskKey,
-  {
-    copy: string;
-    primaryPath: string;
-    secondaryPath: string;
-    secondaryAction: string;
-  } & TaskStatusButtons
-> = {
-  [PlanTaskKey.MODEL_PLAN]: {
-    copy: 'The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.',
-    primaryPath: '/models/{{modelID}}/collaboration-area/model-plan',
-    secondaryPath: '/help-and-knowledge/sample-model-plan',
-    secondaryAction: 'View sample Model Plan',
-    [PlanTaskStatus.TO_DO]: {
-      heading: 'Start your Model Plan',
-      primaryAction: 'Start'
-    },
-    [PlanTaskStatus.IN_PROGRESS]: {
-      heading: 'Iterate on your Model Plan',
-      primaryAction: 'Continue'
-    },
-    [PlanTaskStatus.COMPLETE]: {
-      heading: 'Iterate on your Model Plan',
-      primaryAction: 'Go to Model Plan'
-    }
-  },
-  [PlanTaskKey.DATA_EXCHANGE]: {
-    copy: 'Work with your IT Lead to determine how your model will exchange data so that CMMI and BSG can help with new policy or technology opportunities. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange, so detailed completion of the data exchange approach will also help the MINT Team understand how best to help you.',
-    primaryPath:
-      '/models/{{modelID}}/collaboration-area/additional-questionnaires/data-exchange-approach/about-completing-data-exchange',
-    secondaryPath: '/help-and-knowledge/evaluating-data-exchange-approach',
-    secondaryAction: 'View help article',
-    [PlanTaskStatus.TO_DO]: {
-      heading: 'Start your data exchange approach',
-      primaryAction: 'Start'
-    },
-    [PlanTaskStatus.IN_PROGRESS]: {
-      heading: 'Finalize your data exchange approach',
-      primaryAction: 'Continue'
-    },
-    [PlanTaskStatus.COMPLETE]: {
-      heading: 'Finalize your data exchange approach',
-      primaryAction: 'Go to approach'
-    }
-  },
-  [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: {
-    copy: 'CMMI Leadership assumes that new models will use program and payment waivers unless justified otherwise. This mandatory survey helps determine which models will use which waivers, which specific waivers are most appropriate for each model, ensures proper justification for waiver selections, and identifies instances where standard CMS authorities may be insufficient without additional waiver flexibility. ',
-    primaryPath:
-      '/models/{{modelID}}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about',
-    secondaryPath:
-      '/models/{{modelID}}/collaboration-area/additional-questionnaires',
-    secondaryAction: 'View additional questionnaires',
-    [PlanTaskStatus.TO_DO]: {
-      heading: 'Complete your waiver assessment survey',
-      primaryAction: 'Start'
-    },
-    [PlanTaskStatus.IN_PROGRESS]: {
-      heading: 'Complete your waiver assessment survey',
-      primaryAction: 'Continue'
-    },
-    [PlanTaskStatus.COMPLETE]: {
-      heading: 'Complete your waiver assessment survey',
-      primaryAction: 'Go to survey'
-    }
-  },
-  [PlanTaskKey.MTO]: {
-    copy: 'Work with your IT Lead to document model milestones or functions required for your model and choose the solutions and IT systems your model will utilize. Track your progress towards implementation, browse milestone and solution libraries, see points of contact for available solutions, and monitor deadlines. Keeping this information up-to-date will also help the MINT Team understand how best to help you.',
-    primaryPath: '/models/{{modelID}}/collaboration-area/model-to-operations',
-    secondaryPath: '/help-and-knowledge/creating-mto-matrix',
-    secondaryAction: 'View help article',
-    [PlanTaskStatus.TO_DO]: {
-      heading: 'Start your model-to-operations matrix (MTO)',
-      primaryAction: 'Start'
-    },
-    [PlanTaskStatus.IN_PROGRESS]: {
-      heading: 'Keep your model-to-operations matrix (MTO) up-to-date',
-      primaryAction: 'Continue'
-    },
-    [PlanTaskStatus.COMPLETE]: {
-      heading: 'Keep your model-to-operations matrix (MTO) up-to-date',
-      primaryAction: 'Go to MTO'
-    }
-  }
-};
-
 const tasks = {
   breadcrumb: 'Tasks',
   heading: 'Current tasks',
@@ -123,7 +29,110 @@ const tasks = {
       copy: 'Once you complete a task, it will appear here.'
     }
   },
-  ...taskCards
+  markComplete: 'Mark this task complete',
+  markTodo: 'Mark this task to do',
+  [PlanTaskKey.MODEL_PLAN]: {
+    copy: 'The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.',
+    primaryPath: '/models/{{modelID}}/collaboration-area/model-plan',
+    secondaryPath: '/help-and-knowledge/sample-model-plan',
+    secondaryAction: 'View sample Model Plan',
+    [PlanTaskStatus.TO_DO]: {
+      heading: 'Start your Model Plan',
+      primaryAction: 'Start'
+    },
+    [PlanTaskStatus.IN_PROGRESS]: {
+      heading: 'Iterate on your Model Plan',
+      primaryAction: 'Continue'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading: 'Iterate on your Model Plan',
+      primaryAction: 'Go to Model Plan'
+    }
+  },
+  [PlanTaskKey.TWO_PAGER]: {
+    copy: 'If you haven’t already begun, now is time to start drafting your 2-page concept paper. View the help article to understand what to include in your concept paper, access example 2-pagers, discover what other considerations to make at this stage of the model design process, and what to expect for your review meeting with CMMI FO. After your 2-pager is approved by FO, upload your 2-pager to MINT and notify the cross-cutting teams by sending an email to <email>CMMINewModelDesign@cms.hhs.gov</email> and attaching a copy of your 2-pager or a link to the document in MINT.',
+    email: 'CMMINewModelDesign@cms.hhs.gov',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}',
+    secondaryPath:
+      '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings',
+    secondaryAction: 'View help article',
+    [PlanTaskStatus.TO_DO]: {
+      heading:
+        'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 2-pager',
+      success:
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading:
+        'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 2-pager',
+      success:
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.',
+      error:
+        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+    }
+  },
+  [PlanTaskKey.DATA_EXCHANGE]: {
+    copy: 'Work with your IT Lead to determine how your model will exchange data so that CMMI and BSG can help with new policy or technology opportunities. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange, so detailed completion of the data exchange approach will also help the MINT Team understand how best to help you.',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/additional-questionnaires/data-exchange-approach/about-completing-data-exchange',
+    secondaryPath: '/help-and-knowledge/evaluating-data-exchange-approach',
+    secondaryAction: 'View help article',
+    [PlanTaskStatus.TO_DO]: {
+      heading: 'Start your data exchange approach',
+      primaryAction: 'Start'
+    },
+    [PlanTaskStatus.IN_PROGRESS]: {
+      heading: 'Finalize your data exchange approach',
+      primaryAction: 'Continue'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading: 'Finalize your data exchange approach',
+      primaryAction: 'Go to approach'
+    }
+  },
+  [PlanTaskKey.MTO]: {
+    copy: 'Work with your IT Lead to document model milestones or functions required for your model and choose the solutions and IT systems your model will utilize. Track your progress towards implementation, browse milestone and solution libraries, see points of contact for available solutions, and monitor deadlines. Keeping this information up-to-date will also help the MINT Team understand how best to help you.',
+    primaryPath: '/models/{{modelID}}/collaboration-area/model-to-operations',
+    secondaryPath: '/help-and-knowledge/creating-mto-matrix',
+    secondaryAction: 'View help article',
+    [PlanTaskStatus.TO_DO]: {
+      heading: 'Start your model-to-operations matrix (MTO)',
+      primaryAction: 'Start'
+    },
+    [PlanTaskStatus.IN_PROGRESS]: {
+      heading: 'Keep your model-to-operations matrix (MTO) up-to-date',
+      primaryAction: 'Continue'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading: 'Keep your model-to-operations matrix (MTO) up-to-date',
+      primaryAction: 'Go to MTO'
+    }
+  },
+  [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: {
+    copy: 'CMMI Leadership assumes that new models will use program and payment waivers unless justified otherwise. This mandatory survey helps determine which models will use which waivers, which specific waivers are most appropriate for each model, ensures proper justification for waiver selections, and identifies instances where standard CMS authorities may be insufficient without additional waiver flexibility. ',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about',
+    secondaryPath:
+      '/models/{{modelID}}/collaboration-area/additional-questionnaires',
+    secondaryAction: 'View additional questionnaires',
+    [PlanTaskStatus.TO_DO]: {
+      heading: 'Complete your waiver assessment survey',
+      primaryAction: 'Start'
+    },
+    [PlanTaskStatus.IN_PROGRESS]: {
+      heading: 'Complete your waiver assessment survey',
+      primaryAction: 'Continue'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading: 'Complete your waiver assessment survey',
+      primaryAction: 'Go to survey'
+    }
+  }
 };
 
 export default tasks;

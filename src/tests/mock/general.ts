@@ -2,7 +2,9 @@ import { MockedResponse } from '@apollo/client/testing';
 import { KeyContactCategoryType } from 'features/HelpAndKnowledge/KeyContactDirectory/_components/CategoryModal';
 import {
   CommonWaiverType,
+  CustomTimelineDateType,
   DataExchangeApproachStatus,
+  DiscussionTopicType,
   GetAllCommonWaiversDocument,
   GetAllCommonWaiversQuery,
   GetAllCommonWaiversQueryVariables,
@@ -24,6 +26,8 @@ import {
   GetCommonSolutionsAndCategoriesDocument,
   GetCommonSolutionsAndCategoriesQuery,
   GetCommonSolutionsAndCategoriesQueryVariables,
+  GetCustomDateDocument,
+  GetCustomDateQuery,
   GetEchimpCrandTdlDocument,
   GetEchimpCrandTdlQuery,
   GetEchimpCrandTdlQueryVariables,
@@ -131,6 +135,33 @@ const modelPlanData: GetModelPlansType = [
       __typename: 'TranslatedAudit',
       id: '64252',
       date: '2022-08-23T04:00:00Z'
+    }
+  }
+];
+
+export const customDateID: string = 'test123';
+
+export const customDateMockData: GetCustomDateQuery['customTimelineDate'] = {
+  __typename: 'CustomTimelineDate',
+  id: customDateID,
+  title: 'My Custom Date',
+  description: 'Description of my custom date',
+  dateType: CustomTimelineDateType.SINGLE,
+  startDate: '2026-11-11',
+  endDate: null
+};
+
+export const customDateMocks = [
+  {
+    request: {
+      query: GetCustomDateDocument,
+      variables: { id: customDateID }
+    },
+    result: {
+      data: {
+        __typename: 'Query',
+        customTimelineDate: customDateMockData
+      }
     }
   }
 ];
@@ -445,6 +476,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
   taskListStatus: TaskStatus.IN_PROGRESS,
   tasks: [],
   modelName: 'Test',
+  abbreviation: 'TST',
   createdDts: '2022-05-12T15:01:39.190679Z',
   mostRecentEdit: {
     __typename: 'TranslatedAudit',
@@ -541,6 +573,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     {
       __typename: 'PlanDiscussion',
       id: '123',
+      topic: DiscussionTopicType.OTHER,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a question.'
@@ -552,6 +585,7 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     {
       __typename: 'PlanDiscussion',
       id: '456',
+      topic: DiscussionTopicType.MODEL_PLAN_ALL,
       content: {
         __typename: 'TaggedContent',
         rawContent: 'This is a second question.'

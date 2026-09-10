@@ -21,12 +21,16 @@ import {
   documentName,
   documentType,
   getActionText,
+  getDiscussionTopic,
   getHeaderText,
+  getInOrToOrFrom,
   getNestedActionText,
   hiddenFields,
   identifyChangeType,
+  isAssessmentDiscussionChange,
   isDiscussionReplyWithMetaData,
   isGenericWithMetaData,
+  isPlanTaskAutomaticChange,
   parseArray,
   TranslationTables
 } from '../../util';
@@ -122,6 +126,67 @@ export const ChangeHeader = ({
         values={{
           section: t(`sections.${changeRecord.tableName}`),
           status,
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
+  // Plan task (Tasks section) status audits
+  if (changeRecordType === 'planTaskStatusUpdate') {
+    const status = changeRecord.translatedFields.find(
+      field => field.fieldName === 'status'
+    )?.newTranslated;
+
+    const task =
+      changeRecord.metaData && isGenericWithMetaData(changeRecord.metaData)
+        ? changeRecord.metaData.relationContent
+        : '';
+
+    return (
+      <Trans
+        i18nKey={getHeaderText(changeRecord)}
+        shouldUnescape
+        values={{
+          task,
+          status,
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
+  // Custom timeline audits
+  if (changeRecordType === 'customTimelineUpdate') {
+    const translatedTitle = changeRecord.translatedFields.find(
+      field => field.fieldName === 'title'
+    );
+    const customTimelineTitleFromMeta =
+      changeRecord.metaData && isGenericWithMetaData(changeRecord.metaData)
+        ? changeRecord.metaData.relationContent
+        : undefined;
+    const customTimelineTitle =
+      translatedTitle?.newTranslated ||
+      translatedTitle?.oldTranslated ||
+      customTimelineTitleFromMeta ||
+      t('customTimelineRemovedTitle');
+
+    return (
+      <Trans
+        i18nKey={getHeaderText(changeRecord)}
+        shouldUnescape
+        values={{
+          action: getActionText(changeRecord),
+          customTimelineTitle,
+          toFromIn: getInOrToOrFrom(changeRecord),
           date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
           time: formatTime(changeRecord.date)
         }}
@@ -286,6 +351,8 @@ export const ChangeHeader = ({
         ? changeRecord?.metaData.numberOfReplies - 1
         : 0;
 
+    const topic = getDiscussionTopic(changeRecord);
+
     return (
       <>
         <Trans
@@ -300,13 +367,10 @@ export const ChangeHeader = ({
           }}
         />
         <ul
-          className={classNames(
-            {
-              'change-record__discussion-expanded margin-bottom-2': isOpen,
-              'padding-left-4': !isOpen
-            },
-            'margin-y-1'
-          )}
+          className={classNames({
+            'change-record__discussion-expanded margin-top-2': isOpen,
+            'padding-left-4': !isOpen
+          })}
         >
           <li>
             <MentionTextArea
@@ -321,6 +385,22 @@ export const ChangeHeader = ({
             />
           </li>
         </ul>
+
+        {changeRecord.tableName === TableName.PLAN_DISCUSSION && topic && (
+          <CollapsableLink
+            id={changeRecord.id}
+            label={t('showDetails')}
+            closeLabel={t('hideDetails')}
+            labelPosition="bottom"
+            setParentOpen={setOpen}
+            styleLeftBar={false}
+            childClassName="padding-y-0 margin-bottom-2"
+          >
+            <div className="margin-y-1 change-record__answer">
+              {t('discussionTopic', { topic })}
+            </div>
+          </CollapsableLink>
+        )}
 
         {changeRecord.tableName === TableName.DISCUSSION_REPLY && (
           <CollapsableLink
@@ -597,15 +677,26 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
     changeRecordType === 'operationalNeedUpdate' ||
     changeRecordType === 'mtoNoteUpdate';
 
+  const customTimelineAudit: boolean =
+    changeRecordType === 'customTimelineUpdate' &&
+    changeRecord.action !== DatabaseOperation.DELETE;
+
   // Determine if the change record should be expanded to show more data
   const showMoreData: boolean =
-    uploadAudit || changeRecordType === 'standardUpdate';
+    uploadAudit || customTimelineAudit || changeRecordType === 'standardUpdate';
 
   // Determines if the change record should show a list of translated fields before expanding
   const renderList: boolean =
     changeRecordType === 'standardUpdate' ||
     changeRecordType === 'operationalNeedUpdate' ||
     changeRecordType === 'operationalNeedCreate';
+
+  // Automatically calculated plan task changes (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as
+  // a side effect of other edits) are attributed to MINT rather than whichever user's edit
+  // triggered the recalculation, since no one directly acted on that specific task.
+  const actorName = isPlanTaskAutomaticChange(changeRecord)
+    ? 'MINT'
+    : changeRecord.actorName;
 
   return (
     <Card className="change-record">
@@ -615,8 +706,9 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
         })}
       >
         <AvatarCircle
-          user={changeRecord.actorName}
+          user={actorName}
           className="margin-right-1 flex-align-self-start"
+          isAssessment={isAssessmentDiscussionChange(changeRecord)}
         />
         <span
           className={classNames(
@@ -626,7 +718,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
             'padding-top-05'
           )}
         >
-          <span className="text-bold">{changeRecord.actorName} </span>
+          <span className="text-bold">{actorName} </span>
 
           <ChangeHeader
             changeRecord={changeRecord}

@@ -56,6 +56,16 @@ func (r *userNotificationPreferencesResolver) NewModelPlan(ctx context.Context, 
 	return obj.NewModelPlan, nil
 }
 
+// NewTaskAdded is the resolver for the newTaskAdded field.
+func (r *userNotificationPreferencesResolver) NewTaskAdded(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.NewTaskAdded, nil
+}
+
+// TaskCompleted is the resolver for the taskCompleted field.
+func (r *userNotificationPreferencesResolver) TaskCompleted(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.TaskCompleted, nil
+}
+
 // DatesChanged is the resolver for the datesChanged field.
 func (r *userNotificationPreferencesResolver) DatesChanged(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
 	return obj.DatesChanged, nil

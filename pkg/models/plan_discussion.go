@@ -4,10 +4,72 @@ import (
 	"github.com/google/uuid"
 )
 
+type DiscussionTopicType string
+
+const (
+	DiscussionTopicTypeModelPlanAll                             DiscussionTopicType = "MODEL_PLAN_ALL"
+	DiscussionTopicTypeModelPlanModelBasics                     DiscussionTopicType = "MODEL_PLAN_MODEL_BASICS"
+	DiscussionTopicTypeModelPlanGeneralCharacteristics          DiscussionTopicType = "MODEL_PLAN_GENERAL_CHARACTERISTICS"
+	DiscussionTopicTypeModelPlanParticipantsAndProviders        DiscussionTopicType = "MODEL_PLAN_PARTICIPANTS_AND_PROVIDERS"
+	DiscussionTopicTypeModelPlanBeneficiaries                   DiscussionTopicType = "MODEL_PLAN_BENEFICIARIES"
+	DiscussionTopicTypeModelPlanOperationsEvaluationAndLearning DiscussionTopicType = "MODEL_PLAN_OPERATIONS_EVALUATION_AND_LEARNING"
+	DiscussionTopicTypeModelPlanPayment                         DiscussionTopicType = "MODEL_PLAN_PAYMENT"
+	DiscussionTopicTypeModelTimeline                            DiscussionTopicType = "MODEL_TIMELINE"
+	DiscussionTopicTypeDataExchangeApproach                     DiscussionTopicType = "DATA_EXCHANGE_APPROACH"
+	DiscussionTopicTypeWaiverAssessmentSurvey                   DiscussionTopicType = "WAIVER_ASSESSMENT_SURVEY"
+	DiscussionTopicTypeIDDOCQuestionnaire                       DiscussionTopicType = "IDDOC_QUESTIONNAIRE"
+	DiscussionTopicTypeModelToOperationsMatrixMto               DiscussionTopicType = "MODEL_TO_OPERATIONS_MATRIX_MTO"
+	DiscussionTopicTypeDocuments                                DiscussionTopicType = "DOCUMENTS"
+	DiscussionTopicTypeContracts                                DiscussionTopicType = "CONTRACTS"
+	DiscussionTopicTypeFfsCrsAndTdls                            DiscussionTopicType = "FFS_CRS_AND_TDLS"
+	DiscussionTopicTypeOther                                    DiscussionTopicType = "OTHER"
+)
+
+// Humanize converts the discussion topic enum to human readable text.
+func (r DiscussionTopicType) Humanize() string {
+	switch r {
+	case DiscussionTopicTypeModelPlanAll:
+		return "Model Plan (all)"
+	case DiscussionTopicTypeModelPlanModelBasics:
+		return "Model Plan (Model basics)"
+	case DiscussionTopicTypeModelPlanGeneralCharacteristics:
+		return "Model Plan (General characteristics)"
+	case DiscussionTopicTypeModelPlanParticipantsAndProviders:
+		return "Model Plan (Participants and providers)"
+	case DiscussionTopicTypeModelPlanBeneficiaries:
+		return "Model Plan (Beneficiaries)"
+	case DiscussionTopicTypeModelPlanOperationsEvaluationAndLearning:
+		return "Model Plan (Operations, evaluation, and learning)"
+	case DiscussionTopicTypeModelPlanPayment:
+		return "Model Plan (Payment)"
+	case DiscussionTopicTypeModelTimeline:
+		return "Model timeline"
+	case DiscussionTopicTypeDataExchangeApproach:
+		return "Data exchange approach"
+	case DiscussionTopicTypeWaiverAssessmentSurvey:
+		return "Waiver assessment survey"
+	case DiscussionTopicTypeIDDOCQuestionnaire:
+		return "4i and ACO-OS questionnaire"
+	case DiscussionTopicTypeModelToOperationsMatrixMto:
+		return "Model-to-operations matrix (MTO)"
+	case DiscussionTopicTypeDocuments:
+		return "Documents"
+	case DiscussionTopicTypeContracts:
+		return "Contracts"
+	case DiscussionTopicTypeFfsCrsAndTdls:
+		return "FFS CRs and TDLs"
+	case DiscussionTopicTypeOther:
+		return "Other"
+	default:
+		return "Other"
+	}
+}
+
 // PlanDiscussion represents a discussion that a user has about a model plan
 type PlanDiscussion struct {
 	baseStruct
 	modelPlanRelation
+	Topic               DiscussionTopicType `json:"topic" db:"topic"`
 	Content             TaggedHTML          `json:"content" db:"content"`
 	UserRole            *DiscussionUserRole `json:"userRole" db:"user_role"`
 	UserRoleDescription *string             `json:"userRoleDescription" db:"user_role_description"`
@@ -25,11 +87,13 @@ func NewPlanDiscussion(
 	principal uuid.UUID,
 	isAssessment bool,
 	modelPlanID uuid.UUID,
+	topic DiscussionTopicType,
 	content TaggedHTML,
 	userRole *DiscussionUserRole,
 	userRoleDescription *string,
 ) *PlanDiscussion {
 	return &PlanDiscussion{
+		Topic:               topic,
 		Content:             content,
 		UserRole:            userRole,
 		UserRoleDescription: userRoleDescription,

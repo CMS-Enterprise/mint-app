@@ -94,7 +94,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                       Initiate work with each operational solution team
                       <svg
                         aria-label="forward"
-                        class="usa-icon margin-left-1"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"
@@ -123,7 +123,7 @@ exports[`ModelSolutionImplementation > matches the snapshot 1`] = `
                       Track work up through implementation
                       <svg
                         aria-label="forward"
-                        class="usa-icon margin-left-1"
+                        class="usa-icon"
                         focusable="false"
                         height="1em"
                         role="img"

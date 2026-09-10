@@ -41,6 +41,9 @@ export VITE_OKTA_REDIRECT_URI="${MINT_URL}/implicit/callback"
 export VITE_API_ADDRESS="${MINT_URL}/api/v1"
 export VITE_GRAPHQL_ADDRESS="${MINT_URL}/api/graph/query"
 export VITE_LOCAL_AUTH_ENABLED="false" # Disable deploying local auth
+# Default off so deployed envs keep the widget until the redirect path is explicitly enabled.
+# TODO(MINT-3761): remove this flag once redirect login is permanent (always on).
+export VITE_OKTA_REDIRECT_LOGIN_ENABLED="${VITE_OKTA_REDIRECT_LOGIN_ENABLED:-false}"
 
 ( set -x -u ;
   yarn install --frozen-lockfile

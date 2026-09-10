@@ -39,7 +39,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 		"status":    models.ModelStatusOmbAsrfClearance,
 		"archived":  true,
 	}
-	newPlan, err := resolvers.ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	newPlan, err := resolvers.ModelPlanUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
 	suite.NoError(err)
 
 	// Add Documents

@@ -1,0 +1,6 @@
+"""
+Represents plan task translation data
+"""
+type PlanTaskTranslation {
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+}

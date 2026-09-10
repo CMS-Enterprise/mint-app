@@ -66,7 +66,7 @@ func (w *Worker) AnalyzedAuditJob(ctx context.Context, args ...interface{}) erro
 	_, err = resolvers.AnalyzeModelPlanForAnalyzedAudit(ctx, w.Store, logger, dayToAnalyze, modelPlanID)
 
 	if err != nil {
-		logger.Error("issue executing analyzed audit job", zap.Error(err))
+		logger.ErrorOrWarn("issue executing analyzed audit job", zap.Error(err))
 		return err
 	}
 	return nil
@@ -109,7 +109,7 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 				innerLogger.Info("pushing analyzed audit job")
 				err = batch.Push(job)
 				if err != nil {
-					innerLogger.Error("issue pushing the analyzed audit job", zap.Error(err))
+					innerLogger.ErrorOrWarn("issue pushing the analyzed audit job", zap.Error(err))
 					return err
 				}
 			}

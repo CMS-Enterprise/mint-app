@@ -61,6 +61,8 @@ const mockNotificationSettingsWithInApp: MockedResponse<
               UserNotificationPreferenceFlag.IN_APP,
               UserNotificationPreferenceFlag.EMAIL
             ],
+            newTaskAdded: [],
+            taskCompleted: [],
             datesChanged: [],
             newDiscussionAddedNotificationType: null,
             datesChangedNotificationType: null,
@@ -105,6 +107,8 @@ const mockNotificationSettingsWithoutInApp: MockedResponse<
             newDiscussionReply: [],
             modelPlanShared: [],
             newModelPlan: [UserNotificationPreferenceFlag.EMAIL], // No IN_APP
+            newTaskAdded: [],
+            taskCompleted: [],
             datesChanged: [],
             newDiscussionAddedNotificationType: null,
             datesChangedNotificationType: null,
@@ -149,6 +153,8 @@ const mockNotificationSettingsEmpty: MockedResponse<
             newDiscussionReply: [],
             modelPlanShared: [],
             newModelPlan: [], // Empty array
+            newTaskAdded: [],
+            taskCompleted: [],
             datesChanged: [],
             newDiscussionAddedNotificationType: null,
             datesChangedNotificationType: null,

@@ -1,3 +1,5 @@
+import { aliasQuery } from '../support/graphql-test-utils';
+
 describe('Notification Center', () => {
   describe('MINT Assessment User Tests', () => {
     beforeEach(() => {
@@ -15,6 +17,9 @@ describe('Notification Center', () => {
       cy.contains('h1', 'Start a discussion');
 
       cy.contains('button', 'Save discussion').should('be.disabled');
+
+      cy.get('#discussion-topic').should('not.be.disabled');
+      cy.get('#discussion-topic').select('Model Plan (Model basics)');
 
       cy.get('#user-role')
         .should('not.be.disabled')
@@ -36,6 +41,9 @@ describe('Notification Center', () => {
 
       // Second notification
       cy.contains('button', 'Start a discussion').click();
+
+      cy.get('#discussion-topic').should('not.be.disabled');
+      cy.get('#discussion-topic').select('Model Plan (Model basics)');
 
       cy.get('#user-role')
         .should('not.be.disabled')
@@ -316,7 +324,8 @@ describe('Notification Center', () => {
 
       // Navigate back to home to add a new model to MINT
       cy.get('[aria-label="Home"]').click();
-      cy.url().should('include', '/');
+      cy.location('pathname').should('eq', '/');
+      cy.get('[data-testid="homepage"]').should('be.visible');
 
       cy.contains('a', 'Add a new model to MINT').click();
       cy.contains('h1', 'Add a new model to MINT');
@@ -453,6 +462,9 @@ describe('Notification Center', () => {
 
       // Start a discussion
       cy.contains('button', 'Start a discussion').click();
+
+      cy.get('#discussion-topic').should('not.be.disabled');
+      cy.get('#discussion-topic').select('Model Plan (Model basics)');
 
       cy.get('#user-role').should('not.be.disabled').select('MINT Team');
       cy.get('#mention-editor')
@@ -598,6 +610,10 @@ describe('Notification Center', () => {
     });
 
     it('testing IDDOC Questionnaire is marked Complete Notification', () => {
+      cy.intercept('POST', '/api/graph/query', req => {
+        aliasQuery(req, 'GetIDDOCQuestionnaireMonitoring');
+      });
+
       // Check the IDDOC questionnaire in-app checkbox
       cy.get(
         '[data-testid="notification-setting-in-app-iddocQuestionnaireComplete"]'
@@ -651,10 +667,16 @@ describe('Notification Center', () => {
         .should('not.be.disabled')
         .click({ force: true });
 
-      cy.get('#is-complete')
-        .should('not.be.disabled')
-        .check({ force: true })
-        .should('be.checked');
+      cy.wait('@GetIDDOCQuestionnaireMonitoring')
+        .its('response.statusCode')
+        .should('eq', 200);
+
+      cy.get('#is-complete').should('not.be.disabled');
+      cy.ensureChecked(
+        '#is-complete',
+        '.usa-checkbox__label[for="is-complete"]'
+      );
+      cy.get('#is-complete').should('be.checked');
 
       cy.contains('button', 'Save and return to questionnaires').click();
 

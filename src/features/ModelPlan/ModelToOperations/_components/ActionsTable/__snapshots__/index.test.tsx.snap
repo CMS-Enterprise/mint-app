@@ -3,7 +3,7 @@
 exports[`MTO Table Actions Component > renders correctly and matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="border-1px radius-md border-gray-10 padding-3"
+    class="border-1px radius-md border-gray-10 padding-3 margin-bottom-3"
   >
     <div
       class="action-bar display-flex"

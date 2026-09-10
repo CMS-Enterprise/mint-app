@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime, Interval } from 'luxon';
 
 type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy' | 'MMMM yyyy';
 
@@ -104,10 +104,13 @@ export const getDaysElapsed = (discussionCreated: string) => {
 };
 
 export const isDateInPast = (date: string | null | undefined): boolean => {
-  if (date && new Date() > new Date(date)) {
-    return true;
-  }
-  return false;
+  if (!date) return false;
+
+  const today = DateTime.now().setZone('UTC').startOf('day');
+
+  const selectedDate = DateTime.fromISO(date, { zone: 'UTC' });
+
+  return today > selectedDate;
 };
 
 /**
@@ -124,7 +127,7 @@ export const convertDateToISOString = (date: Date | null) => {
 };
 
 /**
- * Returns true if the given ISO date string falls within the next `days` calendar days (UTC),
+ * Returns true if the given ISO date string falls within the next `days` calendar days (UTC), or before today,
  * inclusive of today through the end of the Nth day (same window rule as the former 30-day helper).
  */
 export const isNeededWithinDays = (
@@ -133,15 +136,30 @@ export const isNeededWithinDays = (
 ): boolean => {
   if (needBy == null) return false;
 
-  const needByDate = new Date(needBy);
-  if (Number.isNaN(needByDate.getTime())) return false;
+  const needByDate = DateTime.fromISO(needBy, { zone: 'utc' });
+  if (!needByDate.isValid) return false;
 
-  const now = new Date();
-  const todayStart = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
-  );
-  const dayAfterWindowEnd = new Date(todayStart);
-  dayAfterWindowEnd.setUTCDate(dayAfterWindowEnd.getUTCDate() + days + 1);
+  const cutoffDate = DateTime.utc().plus({ days }).endOf('day');
 
-  return needByDate >= todayStart && needByDate < dayAfterWindowEnd;
+  return needByDate <= cutoffDate;
+};
+
+/**
+ * Returns true if the given ISO date string falls within the given range.
+ */
+export const isDateWithinRange = (
+  date: string,
+  startDate: string,
+  endDate: string
+): boolean => {
+  const target = DateTime.fromISO(date, { zone: 'UTC' });
+  const start = DateTime.fromISO(startDate, { zone: 'UTC' }).startOf('day');
+  const end = DateTime.fromISO(endDate, { zone: 'UTC' }).endOf('day');
+
+  if (!target.isValid || !start.isValid || !end.isValid) {
+    return false;
+  }
+  const interval = Interval.fromDateTimes(start, end);
+
+  return interval.isValid ? interval.contains(target) : false;
 };
