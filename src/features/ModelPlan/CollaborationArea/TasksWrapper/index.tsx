@@ -25,7 +25,9 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
   const navigate = useNavigate();
 
   const incompleteTasks = tasks.filter(
-    incompleteTask => incompleteTask.state !== PlanTaskState.COMPLETE
+    incompleteTask =>
+      incompleteTask.state !== PlanTaskState.COMPLETE &&
+      incompleteTask.state !== PlanTaskState.UPCOMING
   );
   const orderedTasks = CURRENT_TASK_ORDER.flatMap(key => {
     const taskForKey = incompleteTasks.find(
