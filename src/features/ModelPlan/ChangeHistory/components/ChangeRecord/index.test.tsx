@@ -1,4 +1,5 @@
 import React from 'react';
+import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render } from '@testing-library/react';
 import {
   AuditFieldChangeType,
@@ -52,6 +53,195 @@ describe('ChangeRecord', () => {
       <ChangeRecord changeRecord={mockChangeRecord} index={1} />
     );
     expect(getByText('Model type')).toBeInTheDocument();
+  });
+
+  it('uses generic metadata for custom timeline date-only updates', () => {
+    const customTimelineDateRecord: ChangeRecordType = {
+      id: 'bfbf2c34-7e6c-4c12-9d97-605e3aa3aace',
+      tableName: TableName.CUSTOM_TIMELINE_DATE,
+      date: '2024-04-22T13:55:13.725192Z',
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          id: 'efad5c6d-c7e5-47a4-8981-27b14d9424c3',
+          changeType: AuditFieldChangeType.UPDATED,
+          dataType: TranslationDataType.DATE,
+          fieldName: 'start_date',
+          fieldNameTranslated: 'Start date',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: '2026-01-01T00:00:00Z',
+          oldTranslated: '01/01/2026',
+          new: '2026-02-01T00:00:00Z',
+          newTranslated: '02/01/2026',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      metaData: {
+        __typename: 'TranslatedAuditMetaGeneric',
+        version: 0,
+        tableName: TableName.CUSTOM_TIMELINE_DATE,
+        relation: 'title',
+        relationContent: 'Custom date title'
+      },
+      actorName: 'MINT Doe',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText } = render(
+      <ChangeRecord changeRecord={customTimelineDateRecord} index={1} />
+    );
+
+    expect(
+      getByText(/updated Custom date title in model timeline/)
+    ).toBeInTheDocument();
+  });
+
+  it('displays discussion content and reveals the topic in details', () => {
+    const discussionRecord: ChangeRecordType = {
+      id: 'c3a8c2e1-1d4b-4e2a-9f11-2b0d8c6e9a01',
+      tableName: TableName.PLAN_DISCUSSION,
+      date: '2024-04-22T13:55:13.725192Z',
+      action: DatabaseOperation.INSERT,
+      translatedFields: [
+        {
+          id: 'a11eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'topic',
+          fieldNameTranslated: 'Discussion topic',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'MODEL_PLAN_MODEL_BASICS',
+          newTranslated: 'Model basics',
+          __typename: 'TranslatedAuditField'
+        },
+        {
+          id: 'b22eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'content',
+          fieldNameTranslated: 'Type your question or discussion topic',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'How do I get started?',
+          newTranslated: 'How do I get started?',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      actorName: 'MINT Doe',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText, queryByText } = render(
+      <MockedProvider>
+        <ChangeRecord changeRecord={discussionRecord} index={1} />
+      </MockedProvider>
+    );
+
+    expect(getByText(/started a Discussion/)).toBeInTheDocument();
+    expect(queryByText(/about Model basics/)).not.toBeInTheDocument();
+    expect(getByText(/How do I get started?/)).toBeInTheDocument();
+    expect(queryByText('Topic: Model basics')).not.toBeInTheDocument();
+
+    fireEvent.click(getByText('Show details'));
+
+    expect(getByText('Topic: Model basics')).toBeInTheDocument();
+    expect(getByText('Hide details')).toBeInTheDocument();
+  });
+
+  it('renders assessment star avatar for assessor discussion change', () => {
+    const discussionRecord: ChangeRecordType = {
+      id: 'c3a8c2e1-1d4b-4e2a-9f11-2b0d8c6e9a01',
+      tableName: TableName.PLAN_DISCUSSION,
+      date: '2024-04-22T13:55:13.725192Z',
+      action: DatabaseOperation.INSERT,
+      translatedFields: [
+        {
+          id: 'c33eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.BOOLEAN,
+          fieldName: 'is_assessment',
+          fieldNameTranslated: 'Is the user an assessment user?',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'true',
+          newTranslated: 'Yes',
+          __typename: 'TranslatedAuditField'
+        },
+        {
+          id: 'b22eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'content',
+          fieldNameTranslated: 'Type your question or discussion topic',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'How do I get started?',
+          newTranslated: 'How do I get started?',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      actorName: 'Assessment User',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByTestId } = render(
+      <MockedProvider>
+        <ChangeRecord changeRecord={discussionRecord} index={1} />
+      </MockedProvider>
+    );
+
+    expect(getByTestId('avatar--assessment')).toBeInTheDocument();
+  });
+
+  it('renders initials avatar for non-assessor discussion change', () => {
+    const discussionRecord: ChangeRecordType = {
+      id: 'c3a8c2e1-1d4b-4e2a-9f11-2b0d8c6e9a01',
+      tableName: TableName.DISCUSSION_REPLY,
+      date: '2024-04-22T13:55:13.725192Z',
+      action: DatabaseOperation.INSERT,
+      translatedFields: [
+        {
+          id: 'b22eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'content',
+          fieldNameTranslated: 'Type your question or discussion topic',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: null,
+          oldTranslated: null,
+          new: 'A reply',
+          newTranslated: 'A reply',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      actorName: 'Regular User',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByTestId } = render(
+      <MockedProvider>
+        <ChangeRecord changeRecord={discussionRecord} index={1} />
+      </MockedProvider>
+    );
+
+    expect(getByTestId('avatar--basic')).toBeInTheDocument();
   });
 
   it('toggles details when "showDetails" and "hideDetails" are clicked', () => {

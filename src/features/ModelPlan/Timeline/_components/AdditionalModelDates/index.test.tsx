@@ -1,0 +1,136 @@
+import React from 'react';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { render } from '@testing-library/react';
+import { Formik } from 'formik';
+import { CustomTimelineDateType } from 'gql/generated/graphql';
+import MockedProvider from 'tests/MockedProvider';
+
+import AdditionalModelDates, { type CustomTimelineDates } from '.';
+
+const onSubmit = (values: any) => {};
+
+const initialValues: CustomTimelineDates = [
+  {
+    __typename: 'CustomTimelineDate',
+    id: '123',
+    title: 'title 1',
+    description: 'Im a fake description.',
+    dateType: CustomTimelineDateType.SINGLE,
+    startDate: '2026-07-09T06:00:00Z'
+  },
+  {
+    __typename: 'CustomTimelineDate',
+    id: '456',
+    title: 'second title',
+    dateType: CustomTimelineDateType.RANGE,
+    startDate: '2026-07-08T06:00:00Z',
+    endDate: '2026-07-15T06:00:00Z'
+  }
+];
+
+describe('AdditionalModelDates', () => {
+  it('renders custom dates when provided', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <Formik
+              initialValues={{ customTimelineDates: initialValues }}
+              onSubmit={onSubmit}
+            >
+              <AdditionalModelDates
+                initialCustomDates={initialValues}
+                customTimelineDates={initialValues}
+                onBlur={() => {}}
+              />
+            </Formik>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByText } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    expect(getByText('title 1')).toBeInTheDocument();
+    expect(getByText('second title')).toBeInTheDocument();
+  });
+
+  it('renders no custom dates when none are provided', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <Formik
+              initialValues={{ customTimelineDates: [] }}
+              onSubmit={onSubmit}
+            >
+              <AdditionalModelDates
+                initialCustomDates={[]}
+                customTimelineDates={[]}
+                onBlur={() => {}}
+              />
+            </Formik>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { getByText, queryByText } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    expect(
+      getByText(
+        'There are not currently any additional dates listed for this model.'
+      )
+    ).toBeInTheDocument();
+    expect(queryByText('title 1')).not.toBeInTheDocument();
+    expect(queryByText('second title')).not.toBeInTheDocument();
+  });
+
+  it('matches the snapshot', () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/',
+          element: (
+            <Formik
+              initialValues={{ customTimelineDates: initialValues }}
+              onSubmit={onSubmit}
+            >
+              <AdditionalModelDates
+                initialCustomDates={initialValues}
+                customTimelineDates={initialValues}
+                onBlur={() => {}}
+              />
+            </Formik>
+          )
+        }
+      ],
+      {
+        initialEntries: ['/']
+      }
+    );
+
+    const { asFragment } = render(
+      <MockedProvider mocks={[]} addTypename={false}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+    expect(asFragment()).toMatchSnapshot();
+  });
+});

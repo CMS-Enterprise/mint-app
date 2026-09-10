@@ -32,6 +32,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNOperationalNeed),
 
 		// Plan related tables
+		string(models.TNPlanTaskDocumentLink),
 		string(models.TNPlanTask),
 		string(models.TNPlanDocumentSolutionLink),
 		string(models.TNPlanDocument),
@@ -47,9 +48,15 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNPlanParticipantsAndProviders),
 		string(models.TNPlanOpsEvalAndLearning),
 		string(models.TNPlanPayments),
+		string(models.TNCustomTimelineDate),
 		string(models.TNPlanTimeline),
 		string(models.TNPlanCr),
 		string(models.TNPlanTdl),
+
+		// CTAT tables
+		string(models.TNCTATRequestDocument),
+		string(models.TNCTATRequestModelPlanLink),
+		string(models.TNCTATRequest),
 
 		// Other dependent tables
 		string(models.TNExistingModelLink),

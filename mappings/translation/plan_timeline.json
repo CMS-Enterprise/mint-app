@@ -84,6 +84,17 @@
     "formType": "TEXTAREA",
     "order": 3.09
   },
+  "customDatesNote": {
+    "gqlField": "customDatesNote",
+    "goField": "CustomDatesNote",
+    "dbField": "custom_dates_note",
+    "label": "Additional model dates note",
+    "isNote": true,
+    "parentReferencesLabel": "Additional model dates",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.095
+  },
   "wrapUpEnds": {
     "gqlField": "wrapUpEnds",
     "goField": "WrapUpEnds",

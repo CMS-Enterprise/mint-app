@@ -553,6 +553,128 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                   </div>
                 </div>
               </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When there is a new task for your model
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-newTaskAdded"
+                        id="notification-setting-email-newTaskAdded"
+                        name="newTaskAdded"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-newTaskAdded"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-newTaskAdded"
+                        id="notification-setting-in-app-newTaskAdded"
+                        name="newTaskAdded"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-newTaskAdded"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
+                      When a task has been completed for your model
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-taskCompleted"
+                        id="notification-setting-email-taskCompleted"
+                        name="taskCompleted"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-taskCompleted"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-taskCompleted"
+                        id="notification-setting-in-app-taskCompleted"
+                        name="taskCompleted"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-taskCompleted"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </fieldset>
             <fieldset
               class="usa-fieldset"

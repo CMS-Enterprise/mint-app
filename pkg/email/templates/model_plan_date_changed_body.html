@@ -1,13 +1,6 @@
 {{template "shared_header.html"}}
 
 {{template "shared_non_mint_mailbox_short_header.html" .}}
-<hr/>
-
-<h2>Dates updated for {{.ModelName}}</h2>
-<p>One or more dates have been updated for this model.</p>
-<br/>
-<br/>
-<h3>Anticipated high level timeline</h3>
 
 {{define "date"}}
     {{if .}}
@@ -16,6 +9,15 @@
       <i style="display: initial;">no date entered</i>
     {{end}}
 {{end}}
+
+<hr/>
+
+<h2>Dates updated for {{.ModelName}}</h2>
+<p>One or more dates have been updated for this model.</p>
+
+<br/>
+<br/>
+<h3>Basic high level timeline</h3>
 
 {{range .DateChanges}}
   <br/>
@@ -42,10 +44,48 @@
   </p>
 {{end}}
 
+{{if .CustomTimelineDateChanges}}
+  <br/>
+  <br/>
+
+  <h3>Additional model dates</h3>
+
+  {{range .CustomTimelineDateChanges}}
+    <br/>
+    <p>
+      <strong>{{.Title}}</strong>
+      {{if .Description}}
+        <br/>
+        {{.Description}}
+      {{end}}
+      <br/>
+        {{if .IsRange}}
+            {{if .IsChanged}}
+              <span style="color: #D54309; text-decoration: line-through;">
+                {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}<br/>
+              </span>
+              {{template "date" .NewStartDate}} - {{template "date" .NewEndDate}}
+            {{else}}
+              {{template "date" .OldStartDate}} - {{template "date" .OldEndDate}}
+            {{end}}
+        {{else}}
+            {{if .IsChanged}}
+              <span style="color: #D54309; text-decoration: line-through;">{{template "date" .OldStartDate}}</span> &nbsp; {{template "date" .NewStartDate}}
+            {{else}}
+              {{template "date" .OldStartDate}}
+            {{end}}
+        {{end}}
+        <br/>
+    </p>
+  {{end}}
+{{end}}
+
 <br/>
+<br/>
+
 <p>
-  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view">
-    View this model in MINT
+  <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/model-timeline">
+    View this model's timeline in MINT
   </a>
 </p>
 <br>

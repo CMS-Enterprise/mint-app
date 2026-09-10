@@ -75,6 +75,7 @@ describe('Tasks page', () => {
     });
 
     expect(screen.queryByText('Start your Model Plan')).not.toBeInTheDocument();
+    expect(screen.getByText('Upload 2-pager')).toBeInTheDocument();
     expect(
       screen.getByText('Start your model-to-operations matrix (MTO)')
     ).toBeInTheDocument();
@@ -109,6 +110,10 @@ describe('Tasks page', () => {
       [PlanTaskKey.DATA_EXCHANGE]: {
         state: PlanTaskState.COMPLETE,
         status: PlanTaskStatus.COMPLETE
+      },
+      [PlanTaskKey.TWO_PAGER]: {
+        state: PlanTaskState.COMPLETE,
+        status: PlanTaskStatus.COMPLETE
       }
     });
 
@@ -128,6 +133,7 @@ describe('Tasks page', () => {
 
     expect(orderedHeadings).toEqual([
       'Complete your waiver assessment survey',
+      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Finalize your data exchange approach',
       'Keep your model-to-operations matrix (MTO) up-to-date',
       'Iterate on your Model Plan'

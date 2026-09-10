@@ -25,6 +25,88 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
+// Input for uploading a supporting document for a CTAT request.
+type CTATRequestDocumentInput struct {
+	FileData graphql.Upload `json:"fileData"`
+}
+
+// Input for creating a CTAT request.
+type CTATRequestInput struct {
+	CmmiGroup                 models.CTATCMMIGroupOption       `json:"cmmiGroup"`
+	CmmiGroupOther            *string                          `json:"cmmiGroupOther,omitempty"`
+	CmmiDivision              *models.CTATCMMIDivisionOption   `json:"cmmiDivision,omitempty"`
+	CmmiDivisionOther         *string                          `json:"cmmiDivisionOther,omitempty"`
+	RelatedMINTModels         []uuid.UUID                      `json:"relatedMINTModels,omitempty"`
+	ContractActivityType      *models.CTATContractActivityType `json:"contractActivityType,omitempty"`
+	ContractActivityTypeOther *string                          `json:"contractActivityTypeOther,omitempty"`
+	ContractName              *string                          `json:"contractName,omitempty"`
+	ContractNumber            *string                          `json:"contractNumber,omitempty"`
+	ContractType              *models.CTATContractType         `json:"contractType,omitempty"`
+	ContractTypeOther         *string                          `json:"contractTypeOther,omitempty"`
+	TypeOfHelpNeeded          []models.CTATHelpNeededType      `json:"typeOfHelpNeeded"`
+	TypeOfHelpNeededOther     *string                          `json:"typeOfHelpNeededOther,omitempty"`
+	DescribeHelpNeeded        string                           `json:"describeHelpNeeded"`
+	RequestUrgency            models.CTATRequestUrgency        `json:"requestUrgency"`
+	DateAssistanceNeededBy    time.Time                        `json:"dateAssistanceNeededBy"`
+	SupportingDocuments       []*CTATRequestDocumentInput      `json:"supportingDocuments,omitempty"`
+}
+
+// Represents CTAT request translation data
+type CTATRequestTranslation struct {
+	Requester                 models.TranslationField            `json:"requester" db:"requester"`
+	CmmiGroup                 models.TranslationFieldWithOptions `json:"cmmiGroup" db:"cmmi_group"`
+	CmmiGroupOther            models.TranslationField            `json:"cmmiGroupOther" db:"cmmi_group_other"`
+	CmmiDivision              models.TranslationFieldWithOptions `json:"cmmiDivision" db:"cmmi_division"`
+	CmmiDivisionOther         models.TranslationField            `json:"cmmiDivisionOther" db:"cmmi_division_other"`
+	RelatedMINTModels         models.TranslationField            `json:"relatedMINTModels"`
+	ContractActivityType      models.TranslationFieldWithOptions `json:"contractActivityType" db:"contract_activity_type"`
+	ContractActivityTypeOther models.TranslationField            `json:"contractActivityTypeOther" db:"contract_activity_type_other"`
+	ContractName              models.TranslationField            `json:"contractName" db:"contract_name"`
+	ContractNumber            models.TranslationField            `json:"contractNumber" db:"contract_number"`
+	ContractType              models.TranslationFieldWithOptions `json:"contractType" db:"contract_type"`
+	ContractTypeOther         models.TranslationField            `json:"contractTypeOther" db:"contract_type_other"`
+	TypeOfHelpNeeded          models.TranslationFieldWithOptions `json:"typeOfHelpNeeded" db:"type_of_help_needed"`
+	TypeOfHelpNeededOther     models.TranslationField            `json:"typeOfHelpNeededOther" db:"type_of_help_needed_other"`
+	DescribeHelpNeeded        models.TranslationField            `json:"describeHelpNeeded" db:"describe_help_needed"`
+	RequestUrgency            models.TranslationFieldWithOptions `json:"requestUrgency" db:"request_urgency"`
+	DateAssistanceNeededBy    models.TranslationField            `json:"dateAssistanceNeededBy" db:"date_assistance_needed_by"`
+	SupportingDocuments       models.TranslationField            `json:"supportingDocuments"`
+	Status                    models.TranslationFieldWithOptions `json:"status" db:"status"`
+	AssignedAdmin             models.TranslationField            `json:"assignedAdmin" db:"assigned_admin"`
+	Notes                     models.TranslationField            `json:"notes" db:"notes"`
+	Resolution                models.TranslationField            `json:"resolution" db:"resolution"`
+}
+
+// CustomTimelineDateCreateInput represents the necessary fields to create a CustomTimelineDate
+type CustomTimelineDateCreateInput struct {
+	ModelPlanID uuid.UUID                     `json:"modelPlanID"`
+	Title       string                        `json:"title"`
+	Description *string                       `json:"description,omitempty"`
+	DateType    models.CustomTimelineDateType `json:"dateType"`
+	StartDate   time.Time                     `json:"startDate"`
+	EndDate     *time.Time                    `json:"endDate,omitempty"`
+}
+
+// Represents custom timeline date translation data
+type CustomTimelineDateTranslation struct {
+	Title       models.TranslationField            `json:"title" db:"title"`
+	Description models.TranslationField            `json:"description" db:"description"`
+	DateType    models.TranslationFieldWithOptions `json:"dateType" db:"date_type"`
+	StartDate   models.TranslationField            `json:"startDate" db:"start_date"`
+	EndDate     models.TranslationField            `json:"endDate" db:"end_date"`
+}
+
+// CustomTimelineDateUpdateDatesInput takes in optional start/end dates for bulk operations
+// (this is a different type than `CustomTimelineDateChanges`, which allows for date updates but also title/desc in a different flow)
+type CustomTimelineDateUpdateDatesInput struct {
+	ID          uuid.UUID                      `json:"id"`
+	StartDate   *time.Time                     `json:"startDate,omitempty"`
+	EndDate     *time.Time                     `json:"endDate,omitempty"`
+	Title       *string                        `json:"title,omitempty"`
+	Description *string                        `json:"description,omitempty"`
+	DateType    *models.CustomTimelineDateType `json:"dateType,omitempty"`
+}
+
 // DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 type DiscussionReplyCreateInput struct {
 	DiscussionID        uuid.UUID                  `json:"discussionID"`
@@ -437,6 +519,7 @@ type PlanDataExchangeApproachTranslation struct {
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
 	ModelPlanID         uuid.UUID                  `json:"modelPlanID"`
+	Topic               models.DiscussionTopicType `json:"topic"`
 	Content             models.TaggedHTML          `json:"content"`
 	UserRole            *models.DiscussionUserRole `json:"userRole,omitempty"`
 	UserRoleDescription *string                    `json:"userRoleDescription,omitempty"`
@@ -444,6 +527,7 @@ type PlanDiscussionCreateInput struct {
 
 // Represents plan discussion translation data
 type PlanDiscussionTranslation struct {
+	Topic               models.TranslationFieldWithOptions `json:"topic" db:"topic"`
 	UserRole            models.TranslationFieldWithOptions `json:"userRole" db:"user_role"`
 	UserRoleDescription models.TranslationField            `json:"userRoleDescription" db:"user_role_description"`
 	Content             models.TranslationField            `json:"content" db:"content"`
@@ -456,6 +540,7 @@ type PlanDocumentInput struct {
 	FileData             graphql.Upload      `json:"fileData"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	Restricted           bool                `json:"restricted"`
+	PlanTaskID           *uuid.UUID          `json:"planTaskID,omitempty"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
@@ -467,6 +552,7 @@ type PlanDocumentLinkInput struct {
 	Name                 string              `json:"name"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	Restricted           bool                `json:"restricted"`
+	PlanTaskID           *uuid.UUID          `json:"planTaskID,omitempty"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
@@ -825,6 +911,11 @@ type PlanTDLTranslation struct {
 	Note          models.TranslationField `json:"note" db:"note"`
 }
 
+// Represents plan task translation data
+type PlanTaskTranslation struct {
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
+}
+
 // Represents plan timeline translation data
 type PlanTimelineTranslation struct {
 	CompleteIcip            models.TranslationField            `json:"completeICIP" db:"complete_icip"`
@@ -837,6 +928,7 @@ type PlanTimelineTranslation struct {
 	PerformancePeriodEnds   models.TranslationField            `json:"performancePeriodEnds" db:"performance_period_ends"`
 	WrapUpEnds              models.TranslationField            `json:"wrapUpEnds" db:"wrap_up_ends"`
 	HighLevelNote           models.TranslationField            `json:"highLevelNote" db:"high_level_note"`
+	CustomDatesNote         models.TranslationField            `json:"customDatesNote" db:"custom_dates_note"`
 	ReadyForReviewBy        models.TranslationField            `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts       models.TranslationField            `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	ReadyForClearanceBy     models.TranslationField            `json:"readyForClearanceBy" db:"ready_for_clearance_by"`
@@ -963,7 +1055,7 @@ func (e *ActionType) UnmarshalGQL(v any) error {
 }
 
 func (e ActionType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ActionType) UnmarshalJSON(b []byte) error {
@@ -1024,7 +1116,7 @@ func (e *AgencyOrStateHelpType) UnmarshalGQL(v any) error {
 }
 
 func (e AgencyOrStateHelpType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *AgencyOrStateHelpType) UnmarshalJSON(b []byte) error {
@@ -1081,7 +1173,7 @@ func (e *AgreementType) UnmarshalGQL(v any) error {
 }
 
 func (e AgreementType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *AgreementType) UnmarshalJSON(b []byte) error {
@@ -1140,7 +1232,7 @@ func (e *AlternativePaymentModelType) UnmarshalGQL(v any) error {
 }
 
 func (e AlternativePaymentModelType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *AlternativePaymentModelType) UnmarshalJSON(b []byte) error {
@@ -1199,7 +1291,7 @@ func (e *AuthorityAllowance) UnmarshalGQL(v any) error {
 }
 
 func (e AuthorityAllowance) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *AuthorityAllowance) UnmarshalJSON(b []byte) error {
@@ -1268,7 +1360,7 @@ func (e *BeneficiariesType) UnmarshalGQL(v any) error {
 }
 
 func (e BeneficiariesType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *BeneficiariesType) UnmarshalJSON(b []byte) error {
@@ -1329,7 +1421,7 @@ func (e *CMMIGroup) UnmarshalGQL(v any) error {
 }
 
 func (e CMMIGroup) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *CMMIGroup) UnmarshalJSON(b []byte) error {
@@ -1392,7 +1484,7 @@ func (e *CMSCenter) UnmarshalGQL(v any) error {
 }
 
 func (e CMSCenter) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *CMSCenter) UnmarshalJSON(b []byte) error {
@@ -1451,7 +1543,7 @@ func (e *CcmInvolvmentType) UnmarshalGQL(v any) error {
 }
 
 func (e CcmInvolvmentType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *CcmInvolvmentType) UnmarshalJSON(b []byte) error {
@@ -1508,7 +1600,7 @@ func (e *ChangeType) UnmarshalGQL(v any) error {
 }
 
 func (e ChangeType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ChangeType) UnmarshalJSON(b []byte) error {
@@ -1567,7 +1659,7 @@ func (e *ContractorSupportType) UnmarshalGQL(v any) error {
 }
 
 func (e ContractorSupportType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ContractorSupportType) UnmarshalJSON(b []byte) error {
@@ -1642,7 +1734,7 @@ func (e *DataForMonitoringType) UnmarshalGQL(v any) error {
 }
 
 func (e DataForMonitoringType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *DataForMonitoringType) UnmarshalJSON(b []byte) error {
@@ -1707,7 +1799,7 @@ func (e *DataToSendParticipantsType) UnmarshalGQL(v any) error {
 }
 
 func (e DataToSendParticipantsType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *DataToSendParticipantsType) UnmarshalJSON(b []byte) error {
@@ -1764,7 +1856,7 @@ func (e *EaseOfUse) UnmarshalGQL(v any) error {
 }
 
 func (e EaseOfUse) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *EaseOfUse) UnmarshalJSON(b []byte) error {
@@ -1825,7 +1917,7 @@ func (e *EvaluationApproachType) UnmarshalGQL(v any) error {
 }
 
 func (e EvaluationApproachType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *EvaluationApproachType) UnmarshalJSON(b []byte) error {
@@ -1884,7 +1976,7 @@ func (e *GainshareArrangementEligibility) UnmarshalGQL(v any) error {
 }
 
 func (e GainshareArrangementEligibility) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *GainshareArrangementEligibility) UnmarshalJSON(b []byte) error {
@@ -1943,7 +2035,7 @@ func (e *GeographyApplication) UnmarshalGQL(v any) error {
 }
 
 func (e GeographyApplication) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *GeographyApplication) UnmarshalJSON(b []byte) error {
@@ -2000,7 +2092,7 @@ func (e *GeographyType) UnmarshalGQL(v any) error {
 }
 
 func (e GeographyType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *GeographyType) UnmarshalJSON(b []byte) error {
@@ -2073,7 +2165,7 @@ func (e *KeyCharacteristic) UnmarshalGQL(v any) error {
 }
 
 func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *KeyCharacteristic) UnmarshalJSON(b []byte) error {
@@ -2138,7 +2230,7 @@ func (e *MintUses) UnmarshalGQL(v any) error {
 }
 
 func (e MintUses) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *MintUses) UnmarshalJSON(b []byte) error {
@@ -2201,7 +2293,7 @@ func (e *ModelLearningSystemType) UnmarshalGQL(v any) error {
 }
 
 func (e ModelLearningSystemType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ModelLearningSystemType) UnmarshalJSON(b []byte) error {
@@ -2264,7 +2356,7 @@ func (e *ModelPlanFilter) UnmarshalGQL(v any) error {
 }
 
 func (e ModelPlanFilter) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ModelPlanFilter) UnmarshalJSON(b []byte) error {
@@ -2335,7 +2427,7 @@ func (e *NonClaimsBasedPayType) UnmarshalGQL(v any) error {
 }
 
 func (e NonClaimsBasedPayType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *NonClaimsBasedPayType) UnmarshalJSON(b []byte) error {
@@ -2398,7 +2490,7 @@ func (e *OpSolutionStatus) UnmarshalGQL(v any) error {
 }
 
 func (e OpSolutionStatus) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *OpSolutionStatus) UnmarshalJSON(b []byte) error {
@@ -2525,7 +2617,7 @@ func (e *OperationalNeedKey) UnmarshalGQL(v any) error {
 }
 
 func (e OperationalNeedKey) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *OperationalNeedKey) UnmarshalJSON(b []byte) error {
@@ -2654,7 +2746,7 @@ func (e *OperationalSolutionKey) UnmarshalGQL(v any) error {
 }
 
 func (e OperationalSolutionKey) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *OperationalSolutionKey) UnmarshalJSON(b []byte) error {
@@ -2711,7 +2803,7 @@ func (e *OperationalSolutionSubtaskStatus) UnmarshalGQL(v any) error {
 }
 
 func (e OperationalSolutionSubtaskStatus) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *OperationalSolutionSubtaskStatus) UnmarshalJSON(b []byte) error {
@@ -2770,7 +2862,7 @@ func (e *ParticipantCommunicationType) UnmarshalGQL(v any) error {
 }
 
 func (e ParticipantCommunicationType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ParticipantCommunicationType) UnmarshalJSON(b []byte) error {
@@ -2829,7 +2921,7 @@ func (e *ParticipantRequireFinancialGuaranteeType) UnmarshalGQL(v any) error {
 }
 
 func (e ParticipantRequireFinancialGuaranteeType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ParticipantRequireFinancialGuaranteeType) UnmarshalJSON(b []byte) error {
@@ -2896,7 +2988,7 @@ func (e *ParticipantSelectionType) UnmarshalGQL(v any) error {
 }
 
 func (e ParticipantSelectionType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ParticipantSelectionType) UnmarshalJSON(b []byte) error {
@@ -2957,7 +3049,7 @@ func (e *ParticipantsIDType) UnmarshalGQL(v any) error {
 }
 
 func (e ParticipantsIDType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ParticipantsIDType) UnmarshalJSON(b []byte) error {
@@ -3038,7 +3130,7 @@ func (e *ParticipantsType) UnmarshalGQL(v any) error {
 }
 
 func (e ParticipantsType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ParticipantsType) UnmarshalJSON(b []byte) error {
@@ -3094,7 +3186,7 @@ func (e *PlanTaskState) UnmarshalGQL(v any) error {
 }
 
 func (e PlanTaskState) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *PlanTaskState) UnmarshalJSON(b []byte) error {
@@ -3153,7 +3245,7 @@ func (e *PrepareForClearanceStatus) UnmarshalGQL(v any) error {
 }
 
 func (e PrepareForClearanceStatus) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *PrepareForClearanceStatus) UnmarshalJSON(b []byte) error {
@@ -3218,7 +3310,7 @@ func (e *ProviderAddType) UnmarshalGQL(v any) error {
 }
 
 func (e ProviderAddType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ProviderAddType) UnmarshalJSON(b []byte) error {
@@ -3281,7 +3373,7 @@ func (e *ProviderLeaveType) UnmarshalGQL(v any) error {
 }
 
 func (e ProviderLeaveType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ProviderLeaveType) UnmarshalJSON(b []byte) error {
@@ -3342,7 +3434,7 @@ func (e *ReportAProblemSection) UnmarshalGQL(v any) error {
 }
 
 func (e ReportAProblemSection) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ReportAProblemSection) UnmarshalJSON(b []byte) error {
@@ -3401,7 +3493,7 @@ func (e *ReportAProblemSeverity) UnmarshalGQL(v any) error {
 }
 
 func (e ReportAProblemSeverity) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *ReportAProblemSeverity) UnmarshalJSON(b []byte) error {
@@ -3462,7 +3554,7 @@ func (e *Role) UnmarshalGQL(v any) error {
 }
 
 func (e Role) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *Role) UnmarshalJSON(b []byte) error {
@@ -3523,7 +3615,7 @@ func (e *SatisfactionLevel) UnmarshalGQL(v any) error {
 }
 
 func (e SatisfactionLevel) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *SatisfactionLevel) UnmarshalJSON(b []byte) error {
@@ -3588,7 +3680,7 @@ func (e *SelectionMethodType) UnmarshalGQL(v any) error {
 }
 
 func (e SelectionMethodType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *SelectionMethodType) UnmarshalJSON(b []byte) error {
@@ -3653,7 +3745,7 @@ func (e *StakeholdersType) UnmarshalGQL(v any) error {
 }
 
 func (e StakeholdersType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *StakeholdersType) UnmarshalJSON(b []byte) error {
@@ -3710,7 +3802,7 @@ func (e *TaskStatusInput) UnmarshalGQL(v any) error {
 }
 
 func (e TaskStatusInput) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *TaskStatusInput) UnmarshalJSON(b []byte) error {
@@ -3767,7 +3859,7 @@ func (e *WaiverType) UnmarshalGQL(v any) error {
 }
 
 func (e WaiverType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 func (e *WaiverType) UnmarshalJSON(b []byte) error {

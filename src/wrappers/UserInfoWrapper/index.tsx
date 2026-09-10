@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactGA from 'react-ga4';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
 import GetNDA from 'gql/operations/Miscellaneous/GetNDA';
@@ -23,6 +24,7 @@ type oktaUserProps = {
 
 const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
   const { authState, oktaAuth } = useOktaAuth();
 
@@ -84,8 +86,11 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState?.isAuthenticated, data]);
 
-  // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker. Does not trigger condition for local auth/non okta development
+  // Return null until we know if the user is authenticated.  This prevents unwanted UX flicker. Does not trigger condition for local auth/non okta development.
+  // Always render on the Okta callback route — otherwise LoginCallback (and its error UI)
+  // never mounts while authState is still null, which looks like a blank page.
   if (
+    pathname !== '/implicit/callback' &&
     !window.localStorage[localAuthStorageKey] &&
     oktaAuth.authStateManager.getAuthState() === null &&
     !hasSession

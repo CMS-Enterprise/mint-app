@@ -1,0 +1,54 @@
+{{template "shared_header.html"}}
+
+<p>{{.RequesterName}} has submitted a new contract assistance ticket via the MINT Help and Knowledge Center.</p>
+
+<br/>
+
+<p><u>Ticket summary</u></p>
+<p><strong>Ticket number:</strong> {{.TicketNumber}}</p>
+<p><strong>Requester:</strong> {{.RequesterName}} ({{.RequesterEmail}})</p>
+<p><strong>CMMI group:</strong> {{.CMMIGroup}}</p>
+{{if .CMMIDivision}}
+<p><strong>CMMI division:</strong> {{.CMMIDivision}}</p>
+{{end}}
+{{if .RelatedMINTModels}}
+<p><strong>Model or demonstration:</strong> {{.RelatedMINTModels}}</p>
+{{end}}
+{{if .ContractActivityType}}
+<p><strong>Contract activity type:</strong> {{.ContractActivityType}}</p>
+{{end}}
+{{if .ContractName}}
+<p><strong>Contract name:</strong> {{.ContractName}}</p>
+{{end}}
+{{if .ContractType}}
+<p><strong>Contract type:</strong> {{.ContractType}}</p>
+{{end}}
+<p><strong>Type of help needed:</strong> {{.TypeOfHelpNeeded}}</p>
+<p><strong>Describe the type of assistance you need:</strong> {{.DescribeHelpNeeded}}</p>
+<p><strong>Request urgency:</strong> {{.RequestUrgency}}</p>
+<p><strong>When do you need assistance by:</strong> {{.DateAssistanceNeededBy}}</p>
+{{if .UploadedFiles}}
+<p><strong>Uploaded files:</strong> {{.UploadedFiles}}</p>
+{{end}}
+
+<br>
+
+<p>
+  <a href="{{.ClientAddress}}/help-and-knowledge/contract-assistance/{{.CTATTicketID}}">View and manage this ticket in MINT</a>
+</p>
+
+<br>
+
+<p>What to do next:</p>
+<ul>
+  <li>View the request in MINT and assign it to a CTAT team member.</li>
+  <li>Work with the requester to understand the needs of the request.</li>
+  <li>Keep the status of the ticket up-to-date in MINT.</li>
+  <li>Document the resolution of the ticket once the work is completed.</li>
+</ul>
+
+<hr>
+
+<p>You are receiving this email because you are a member of the Contract Technical Assistance Team (CTAT). If you believe you have received this email in error, please contact <a href="mailto:MINTTeam@cms.hhs.gov" target="_blank" style="font-weight: normal">MINTTeam@cms.hhs.gov</a>.</p>
+
+{{template "shared_footer.html"}}

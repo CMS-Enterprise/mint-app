@@ -42,5 +42,7 @@ func (r *Resolver) TranslationFieldWithParentAndChildren() generated.Translation
 	return &translationFieldWithParentAndChildrenResolver{r}
 }
 
-type translationFieldWithOptionsAndChildrenResolver struct{ *Resolver }
-type translationFieldWithParentAndChildrenResolver struct{ *Resolver }
+type (
+	translationFieldWithOptionsAndChildrenResolver struct{ *Resolver }
+	translationFieldWithParentAndChildrenResolver  struct{ *Resolver }
+)

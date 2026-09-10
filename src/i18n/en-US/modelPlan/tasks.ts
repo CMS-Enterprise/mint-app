@@ -4,23 +4,33 @@ import {
   PlanTaskStatus
 } from 'gql/generated/graphql';
 
-type TaskStatusButtons = Record<
-  Exclude<PlanTaskStatus, 'NOT_NEEDED' | 'UPCOMING'>,
-  {
-    heading: string;
-    primaryAction: string;
-  }
->;
-
-const taskCards: Record<
-  PlanTaskKey,
-  {
-    copy: string;
-    primaryPath: string;
-    secondaryPath: string;
-    secondaryAction: string;
-  } & TaskStatusButtons
-> = {
+const tasks = {
+  breadcrumb: 'Tasks',
+  heading: 'Current tasks',
+  state: {
+    [PlanTaskState.TO_DO]: 'To do',
+    [PlanTaskState.COMPLETE]: 'Complete'
+  },
+  seeAll: 'See all ({{count}})',
+  seeAllTasks: 'See all tasks',
+  tabs: {
+    current: 'Current tasks ({{count}})',
+    completed: 'Completed tasks ({{count}})',
+    ariaLabel: 'Switch between current and completed tasks'
+  },
+  emptyState: {
+    current: {
+      heading: 'Nothing to do here!',
+      copy: "You've completed all of the current tasks.",
+      viewCompletedTasks: ' <link1>Click here</link1> to view completed tasks.'
+    },
+    completed: {
+      heading: 'There are no completed tasks yet.',
+      copy: 'Once you complete a task, it will appear here.'
+    }
+  },
+  markComplete: 'Mark this task complete',
+  markTodo: 'Mark this task to do',
   [PlanTaskKey.MODEL_PLAN]: {
     copy: 'The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.',
     primaryPath: '/models/{{modelID}}/collaboration-area/model-plan',
@@ -37,6 +47,33 @@ const taskCards: Record<
     [PlanTaskStatus.COMPLETE]: {
       heading: 'Iterate on your Model Plan',
       primaryAction: 'Go to Model Plan'
+    }
+  },
+  [PlanTaskKey.TWO_PAGER]: {
+    copy: 'If you haven’t already begun, now is time to start drafting your 2-page concept paper. View the help article to understand what to include in your concept paper, access example 2-pagers, discover what other considerations to make at this stage of the model design process, and what to expect for your review meeting with CMMI FO. After your 2-pager is approved by FO, upload your 2-pager to MINT and notify the cross-cutting teams by sending an email to <email>CMMINewModelDesign@cms.hhs.gov</email> and attaching a copy of your 2-pager or a link to the document in MINT.',
+    email: 'CMMINewModelDesign@cms.hhs.gov',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}',
+    secondaryPath:
+      '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings',
+    secondaryAction: 'View help article',
+    [PlanTaskStatus.TO_DO]: {
+      heading:
+        'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 2-pager',
+      success:
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading:
+        'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 2-pager',
+      success:
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.',
+      error:
+        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
     }
   },
   [PlanTaskKey.DATA_EXCHANGE]: {
@@ -96,34 +133,6 @@ const taskCards: Record<
       primaryAction: 'Go to MTO'
     }
   }
-};
-
-const tasks = {
-  breadcrumb: 'Tasks',
-  heading: 'Current tasks',
-  state: {
-    [PlanTaskState.TO_DO]: 'To do',
-    [PlanTaskState.COMPLETE]: 'Complete'
-  },
-  seeAll: 'See all ({{count}})',
-  seeAllTasks: 'See all tasks',
-  tabs: {
-    current: 'Current tasks ({{count}})',
-    completed: 'Completed tasks ({{count}})',
-    ariaLabel: 'Switch between current and completed tasks'
-  },
-  emptyState: {
-    current: {
-      heading: 'Nothing to do here!',
-      copy: "You've completed all of the current tasks.",
-      viewCompletedTasks: ' <link1>Click here</link1> to view completed tasks.'
-    },
-    completed: {
-      heading: 'There are no completed tasks yet.',
-      copy: 'Once you complete a task, it will appear here.'
-    }
-  },
-  ...taskCards
 };
 
 export default tasks;

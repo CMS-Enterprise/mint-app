@@ -41,6 +41,12 @@ var userAccountGetNotificationPreferencesMTOReadyForReview string
 //go:embed SQL/user_account/get_notification_preferences_waiver_assessment_survey_marked_complete.sql
 var userAccountGetNotificationPreferencesWaiverAssessmentSurveyMarkedComplete string
 
+//go:embed SQL/user_account/get_notification_preferences_task_completed.sql
+var userAccountGetNotificationPreferencesTaskCompleted string
+
+//go:embed SQL/user_account/get_notification_preferences_new_task_added.sql
+var userAccountGetNotificationPreferencesNewTaskAdded string
+
 //go:embed SQL/user_account/get_lead_model_plan_count.sql
 var userAccountGetLeadModelPlanCount string
 
@@ -59,6 +65,8 @@ type userAccountScripts struct {
 	GetNotificationPreferencesMTOReadyForReview                    string
 	GetNotificationPreferencesWaiverAssessmentSurveyMarkedComplete string
 	GetLeadModelPlanCount                                          string
+	GetNotificationPreferencesTaskCompleted                        string
+	GetNotificationPreferencesNewTaskAdded                         string
 }
 
 // UserAccount houses all the sql for getting data for user account from the database
@@ -77,4 +85,6 @@ var UserAccount = userAccountScripts{
 	GetNotificationPreferencesMTOReadyForReview:                    userAccountGetNotificationPreferencesMTOReadyForReview,
 	GetNotificationPreferencesWaiverAssessmentSurveyMarkedComplete: userAccountGetNotificationPreferencesWaiverAssessmentSurveyMarkedComplete,
 	GetLeadModelPlanCount:                                          userAccountGetLeadModelPlanCount,
+	GetNotificationPreferencesTaskCompleted:                        userAccountGetNotificationPreferencesTaskCompleted,
+	GetNotificationPreferencesNewTaskAdded:                         userAccountGetNotificationPreferencesNewTaskAdded,
 }

@@ -5,31 +5,26 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/samber/lo"
-	"github.com/spf13/viper"
-	"golang.org/x/exp/maps"
-
-	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
-	"github.com/cms-enterprise/mint-app/pkg/helpers"
-	"github.com/cms-enterprise/mint-app/pkg/notifications"
-	"github.com/cms-enterprise/mint-app/pkg/s3"
-
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
+	"github.com/samber/lo"
+	"github.com/spf13/viper"
 	"go.uber.org/zap"
-
-	"github.com/cms-enterprise/mint-app/pkg/email"
-	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
-	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
-
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
-	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
+	"github.com/cms-enterprise/mint-app/pkg/echimpcache"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/notifications"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
+	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
 // ModelPlanRecentEditTables is a list of tables that are used to determine the most recent edits to a model plan.
@@ -57,6 +52,7 @@ var ModelPlanRecentEditTables = []models.TableName{
 	//exclude suggestedMilestone
 
 	models.TNPlanTimeline,
+	models.TNCustomTimelineDate,
 }
 
 // ModelPlanRecentEditsExcludedFields is a list of fields that are excluded from the recent edits query for model plans.
@@ -103,6 +99,7 @@ func ModelPlanCreate(
 			models.PlanTaskKeyMto,
 			models.PlanTaskKeyDataExchange,
 			models.PlanTaskKeyWaiverAssessmentSurvey,
+			models.PlanTaskKeyTwoPager,
 		} {
 			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, key, models.PlanTaskStatusToDo)
 			_, err = storage.PlanTaskCreate(tx, logger, task)
@@ -336,7 +333,16 @@ func sendModelPlanCreatedEmail(
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
-func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanUpdate(
+	ctx context.Context,
+	logger *zap.Logger,
+	id uuid.UUID,
+	changes map[string]interface{},
+	principal authentication.Principal,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) (*models.ModelPlan, error) {
 	// Get existing plan
 	existingPlan, err := store.ModelPlanGetByID(store, logger, id)
 	if err != nil {
@@ -350,14 +356,14 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
-	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
+	retPlan, err := storage.ModelPlanUpdate(store, logger, existingPlan)
 	if err != nil {
 		return nil, err
 	}
 
 	// Plan tasks: CLEARED model status completes MODEL_PLAN and DATA_EXCHANGE tasks
 	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
-		updErr := UpdatePlanTaskStatusOnModelCleared(store, logger, retPlan.ID, principal, store)
+		updErr := UpdatePlanTaskStatusOnModelCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -366,7 +372,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 	// Plan tasks: Regress DATA_EXCHANGE and MODEL_PLAN tasks if model status moves backwards from CLEARED
 	if oldStatus == models.ModelStatusCleared &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(store, logger, retPlan.ID, principal, store)
+		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -374,7 +380,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 
 	// Plan tasks: ACTIVE model status completes MTO task
 	if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
-		updErr := UpdatePlanTaskStatusOnModelActive(store, logger, retPlan.ID, principal, store)
+		updErr := UpdatePlanTaskStatusOnModelActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -382,7 +388,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 	// Plan tasks: Regress MTO task if model status moves backwards from ACTIVE
 	if oldStatus == models.ModelStatusActive &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusActive) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(store, logger, retPlan.ID, principal, store)
+		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -424,10 +430,13 @@ func ModelPlansWithEchimpCRAndTDLS(ctx context.Context, echimpS3Client *s3.S3Cli
 		return nil, err
 	}
 	if data == nil {
-		return nil, nil
+		return []*models.ModelPlan{}, nil
 	}
 
-	modelPlanIDs := maps.Keys(data.CrsAndTDLsByModelPlanID)
+	modelPlanIDs := data.ReadModelPlanIDsWithCRsAndTDLs()
+	if len(modelPlanIDs) < 1 {
+		return []*models.ModelPlan{}, nil
+	}
 
 	return storage.ModelPlansGetByModePlanIDsLOADER(store, logger, modelPlanIDs)
 

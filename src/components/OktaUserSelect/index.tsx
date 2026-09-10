@@ -166,7 +166,7 @@ export default function OktaUserSelect({
     value ? formatLabel(value) : undefined
   );
 
-  const [userSelected, setUserSelected] = useState(false);
+  const [userSelected, setUserSelected] = useState(() => !!value);
 
   const { debounceValue, debounceLoading } = useDebounce(
     searchTerm,
@@ -187,13 +187,29 @@ export default function OktaUserSelect({
     onChange(contact || null);
     selectedContact.current = contact?.username;
     setSearchTerm(contact ? formatLabel(contact) : '');
+    setUserSelected(!!contact);
   };
 
   useEffect(() => {
-    if (debounceValue) {
+    if (value?.username) {
+      setSearchTerm(formatLabel(value));
+      setUserSelected(true);
+      selectedContact.current = value.username;
+      return;
+    }
+
+    if (!value) {
+      setSearchTerm(undefined);
+      setUserSelected(false);
+      selectedContact.current = undefined;
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (debounceValue && !userSelected) {
       queryOktaUsers(debounceValue.split(',')[0]);
     }
-  }, [debounceValue, queryOktaUsers]);
+  }, [debounceValue, queryOktaUsers, userSelected]);
 
   // React Select styles object
   const customStyles: {

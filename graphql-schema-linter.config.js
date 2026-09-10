@@ -69,7 +69,10 @@ module.exports = {
       'KeyContactCategoryTranslation',
       'IddocQuestionnaireTranslation',
       'OperationalSolutionKey', // This is needed for the translation of the OperationalSolutionTranslation
-      'WaiverAssessmentSurveyTranslation'
+      'WaiverAssessmentSurveyTranslation',
+      'CustomTimelineDateTranslation',
+      'CTATRequestTranslation',
+      'PlanTaskTranslation'
     ],
     'enum-values-all-caps': ['TableName']
   }

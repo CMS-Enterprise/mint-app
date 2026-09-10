@@ -38,6 +38,7 @@ func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName str
 		3,
 		models.DocumentTypeOther,
 		false,
+		nil,
 		zero.StringFrom("test doc"),
 		zero.StringFrom(""),
 		false,
@@ -63,6 +64,7 @@ func (suite *TAuditSuite) createPlanDiscussion(modelPlanID uuid.UUID, content st
 
 	discussion := models.NewPlanDiscussion(suite.testConfigs.Principal.UserAccount.ID,
 		false, modelPlanID,
+		models.DiscussionTopicTypeOther,
 		models.TaggedHTML(taggedContent),
 		&discussionUserRole,
 		nil,
@@ -191,6 +193,30 @@ func (suite *TAuditSuite) createMTOMilestone(modelPlanID uuid.UUID, name string,
 	retSol, err := storage.MTOMilestoneCreate(suite.testConfigs.Store, suite.testConfigs.Logger, milestoneToCreate)
 	suite.NoError(err)
 	return retSol
+}
+
+// createCustomTimelineDate creates a custom timeline date using the store. It is just for testing
+func (suite *TAuditSuite) createCustomTimelineDate(modelPlanID uuid.UUID, title string, preHooks ...func(*models.CustomTimelineDate)) *models.CustomTimelineDate {
+
+	customTimelineDateToCreate := models.NewCustomTimelineDate(suite.testConfigs.Principal.UserAccount.ID, modelPlanID)
+	customTimelineDateToCreate.Title = title
+	customTimelineDateToCreate.DateType = models.CustomTimelineDateTypeSingle
+	customTimelineDateToCreate.StartDate = time.Now().UTC()
+	for _, preHook := range preHooks {
+		preHook(customTimelineDateToCreate)
+	}
+	retCustomTimelineDate, err := storage.CustomTimelineDateCreate(suite.testConfigs.Store, customTimelineDateToCreate)
+	suite.NoError(err)
+	return retCustomTimelineDate
+}
+
+// deleteCustomTimelineDate deletes a custom timeline date using the store. It is just for testing
+func (suite *TAuditSuite) deleteCustomTimelineDate(customTimelineDateID uuid.UUID) {
+	err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+		_, err := storage.CustomTimelineDateDelete(tx, suite.testConfigs.Principal.UserAccount.ID, customTimelineDateID)
+		return err
+	})
+	suite.NoError(err)
 }
 
 // createMTOCategory creates an MTO Category using the store. It is just for testing

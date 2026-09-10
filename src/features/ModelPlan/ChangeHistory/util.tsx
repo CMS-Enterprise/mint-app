@@ -5,6 +5,7 @@ import {
   DatabaseOperation,
   ExisitingModelLinkFieldType,
   GetChangeHistoryQuery,
+  PlanTaskKey,
   TableName,
   TranslatedAuditMetaBaseStruct,
   TranslatedAuditMetaData,
@@ -40,6 +41,8 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
+  | 'planTaskStatusUpdate'
+  | 'customTimelineUpdate'
   | 'questionnaireTaskListStatusUpdate'
   | 'mtoStatusUpdate'
   | 'teamUpdate'
@@ -59,6 +62,7 @@ export type ChangeType =
 export type TranslationTables =
   | TableName.MODEL_PLAN
   | TableName.PLAN_TIMELINE
+  | TableName.CUSTOM_TIMELINE_DATE
   | TableName.PLAN_BASICS
   | TableName.PLAN_GENERAL_CHARACTERISTICS
   | TableName.PLAN_PARTICIPANTS_AND_PROVIDERS
@@ -83,7 +87,8 @@ export type TranslationTables =
   | TableName.OPERATIONAL_SOLUTION
   | TableName.OPERATIONAL_SOLUTION_SUBTASK
   | TableName.PLAN_DOCUMENT_SOLUTION_LINK
-  | TableName.EXISTING_MODEL_LINK;
+  | TableName.EXISTING_MODEL_LINK
+  | TableName.PLAN_TASK;
 
 export type TableWithStatus =
   | TableName.PLAN_BASICS
@@ -110,6 +115,26 @@ export const isTableWithStatus = (
     TableName.PLAN_DATA_EXCHANGE_APPROACH,
     TableName.IDDOC_QUESTIONNAIRE
   ].includes(tableName);
+};
+
+// PlanTaskKey values whose status is set directly by a user (e.g. via a "mark complete" action),
+// rather than calculated automatically from other model state. Mirrors
+// models.manuallyMarkablePlanTaskKeys in pkg/models/plan_task.go — keep in sync.
+const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [PlanTaskKey.TWO_PAGER];
+
+// isPlanTaskAutomaticChange determines whether a plan_task change record represents a status
+// calculated automatically (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as a side effect of
+// other edits) rather than a task the user directly marked complete/to do. Automatic changes are
+// attributed to "MINT" in change history instead of the editing user (see ChangeRecord).
+export const isPlanTaskAutomaticChange = (
+  change: ChangeRecordType
+): boolean => {
+  if (change.tableName !== TableName.PLAN_TASK) return false;
+  if (!change.metaData || !isGenericWithMetaData(change.metaData)) return false;
+
+  return !manuallyMarkablePlanTaskKeys.includes(
+    change.metaData.relation as PlanTaskKey
+  );
 };
 
 // Type guard to check generic union type
@@ -244,6 +269,11 @@ export const doubleBatchedTables: TableName[] = [
   TableName.MTO_MILESTONE_SOLUTION_LINK,
   TableName.MTO_MILESTONE,
   TableName.MTO_CATEGORY
+];
+
+const timelineTables: TableName[] = [
+  TableName.PLAN_TIMELINE,
+  TableName.CUSTOM_TIMELINE_DATE
 ];
 
 // Fields that are connected to other tables
@@ -386,8 +416,8 @@ export const getTranslatedFieldValue = (
   change.translatedFields.find(field => field.fieldName === fieldName)
     ?.oldTranslated;
 
-/* 
-  Returns the operation status of the solution.  
+/*
+  Returns the operation status of the solution.
   Solutions are not deleted, they are marked as not needed/needed
   Mimics the database operation based on the neeeded property
 */
@@ -590,6 +620,13 @@ export const isMTOChange = (
   queryString === TypeOfChange.MODEL_TO_OPERATIONS &&
   mtoTables.includes(audit.tableName);
 
+export const isTimelineChange = (
+  queryString: string,
+  audit: ChangeRecordType
+): boolean =>
+  queryString === TypeOfChange.MODEL_TIMELINE &&
+  timelineTables.includes(audit.tableName);
+
 export const filterQueryAudits = (
   queryString: string,
   groupedAudits: ChangeRecordType[][]
@@ -610,6 +647,10 @@ export const filterQueryAudits = (
       }
 
       if (isMTOChange(queryString, audit)) {
+        return true;
+      }
+
+      if (isTimelineChange(queryString, audit)) {
         return true;
       }
 
@@ -821,6 +862,18 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'taskListStatusUpdate';
   }
 
+  // If the change is a plan task (Tasks section) status update, return 'planTaskStatusUpdate'
+  if (
+    change.tableName === TableName.PLAN_TASK &&
+    change.translatedFields.find(field => field.fieldName === 'status')
+  ) {
+    return 'planTaskStatusUpdate';
+  }
+
+  if (change.tableName === TableName.CUSTOM_TIMELINE_DATE) {
+    return 'customTimelineUpdate';
+  }
+
   if (
     change.tableName === TableName.MTO_INFO &&
     change.translatedFields.find(
@@ -885,6 +938,32 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   return 'standardUpdate';
 };
 
+export const getDiscussionTopic = (change: ChangeRecordType): string => {
+  const topic = change.translatedFields.find(
+    field => field.fieldName === 'topic'
+  )?.newTranslated;
+
+  return typeof topic === 'string' ? topic : '';
+};
+
+export const isAssessmentDiscussionChange = (
+  change: ChangeRecordType
+): boolean => {
+  if (
+    change.tableName !== TableName.PLAN_DISCUSSION &&
+    change.tableName !== TableName.DISCUSSION_REPLY
+  ) {
+    return false;
+  }
+
+  const field = change.translatedFields.find(
+    f => f.fieldName === 'is_assessment'
+  );
+
+  const value = field?.new ?? field?.old;
+  return value === 'true' || value === true;
+};
+
 export const getHeaderText = (change: ChangeRecordType): string => {
   let headerText: string = '';
 
@@ -917,6 +996,14 @@ export const getHeaderText = (change: ChangeRecordType): string => {
       } else {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       }
+      break;
+    case 'planTaskStatusUpdate':
+      headerText = isPlanTaskAutomaticChange(change)
+        ? i18next.t(`changeHistory:taskCardAutoStatusUpdate`)
+        : i18next.t(`changeHistory:taskCardStatusUpdate`);
+      break;
+    case 'customTimelineUpdate':
+      headerText = i18next.t(`changeHistory:customTimelineUpdate`);
       break;
     case 'mtoStatusUpdate':
       headerText = i18next.t(`changeHistory:taskStatusUpdate`);
@@ -974,6 +1061,11 @@ export const getActionText = (change: ChangeRecordType): string => {
     case 'mtoNoteUpdate':
       actionText = i18next.t(`changeHistory:noteUpdateType.${change.action}`);
       break;
+    case 'customTimelineUpdate':
+      actionText = i18next.t(
+        `changeHistory:customTimelineChangeType.${change.action}`
+      );
+      break;
     default:
       break;
   }
@@ -981,12 +1073,33 @@ export const getActionText = (change: ChangeRecordType): string => {
   return actionText;
 };
 
+export const getInOrToOrFrom = (change: ChangeRecordType): string => {
+  let inOrToOrFromText: string = '';
+
+  switch (change.action) {
+    case DatabaseOperation.INSERT:
+      inOrToOrFromText = i18next.t('changeHistory:toFromIn.INSERT');
+      break;
+    case DatabaseOperation.UPDATE:
+      inOrToOrFromText = i18next.t('changeHistory:toFromIn.UPDATE');
+      break;
+    case DatabaseOperation.DELETE:
+      inOrToOrFromText = i18next.t('changeHistory:toFromIn.DELETE');
+      break;
+    default:
+      break;
+  }
+
+  return inOrToOrFromText;
+};
+
 export const isInitialCreatedSection = (
   change: ChangeRecordType,
   changeType: ChangeType
 ): boolean =>
   !!(
-    (changeType === 'taskListStatusUpdate' &&
+    ((changeType === 'taskListStatusUpdate' ||
+      changeType === 'planTaskStatusUpdate') &&
       change.translatedFields.find(
         field =>
           (field.fieldName === 'status' || field.fieldName === 'needed') &&

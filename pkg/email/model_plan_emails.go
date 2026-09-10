@@ -11,6 +11,8 @@ type modelPlanEmails struct {
 	DateChanged *emailtemplates.GenEmailTemplate[ModelPlanDateChangedSubjectContent, ModelPlanDateChangedBodyContent]
 	// The email to be sent when a model plan suggested phase is sent
 	SuggestedPhase *emailtemplates.GenEmailTemplate[ModelPlanSuggestedPhaseSubjectContent, ModelPlanSuggestedPhaseBodyContent]
+	// The email to be sent when a custom timeline date is created for a model plan
+	CustomTimelineDateCreated *emailtemplates.GenEmailTemplate[CustomTimelineDateCreatedSubjectContent, CustomTimelineDateCreatedBodyContent]
 }
 
 // ModelPlan is the collection of all model plan related email templates
@@ -34,5 +36,10 @@ var ModelPlan = modelPlanEmails{
 		ModelPlanSuggestedPhaseTemplateName,
 		modelPlanSuggestedPhaseSubjectTemplate,
 		modelPlanSuggestedPhaseBodyTemplate,
+	),
+	CustomTimelineDateCreated: NewEmailTemplate[CustomTimelineDateCreatedSubjectContent, CustomTimelineDateCreatedBodyContent](
+		CustomTimelineDateCreatedTemplateName,
+		customTimelineDateCreatedSubjectTemplate,
+		customTimelineDateCreatedBodyTemplate,
 	),
 }

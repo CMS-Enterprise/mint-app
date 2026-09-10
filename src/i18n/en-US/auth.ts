@@ -19,6 +19,11 @@ const auth = {
     loading: 'Loading authentication...',
     isPending: 'Authenticating...',
     error: 'Authentication setup error. Please refresh the page.'
+  },
+  callbackError: {
+    heading: 'We could not complete your sign-in',
+    returnHome: 'Return home',
+    tryAgain: 'Try signing in again'
   }
 };
 

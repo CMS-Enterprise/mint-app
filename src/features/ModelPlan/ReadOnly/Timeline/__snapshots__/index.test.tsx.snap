@@ -43,295 +43,329 @@ exports[`Read Only Model Plan Summary -- Model timeline > matches snapshot 1`] =
         </div>
       </div>
     </div>
-    <ol
-      class="usa-process-list read-only-model-plan__timeline margin-left-neg-1"
-    >
-      <li
-        class="usa-process-list__item read-only-model-plan__timeline__list-item"
-      >
-        <p
-          class="usa-process-list__heading mint-text-normal line-height-sans-4"
-          data-testid="processListHeading"
-        >
-          Complete ICIP
-        </p>
-        <p
-          class="mint-text-normal  margin-y-0 line-height-sans-4"
-        >
-          06/03/2022
-        </p>
-      </li>
-      <li
-        class="usa-process-list__item read-only-model-plan__timeline__list-item"
-      >
-        <div
-          class="display-flex flex-align-top"
-        >
-          <p
-            class="usa-process-list__heading mint-text-normal line-height-sans-4"
-            data-testid="processListHeading"
-          >
-            Clearance
-          </p>
-          <span
-            class="margin-top-0 position-relative text-normal"
-          >
-            <span
-              class="usa-tooltip"
-              data-testid="tooltipWrapper"
-            >
-              <div
-                aria-describedby="tooltip-_r_2_"
-                class="usa-tooltip__trigger mint-no-print margin-left-05"
-                data-testid="triggerElement"
-                tabindex="0"
-              >
-                <svg
-                  aria-label="info"
-                  class="usa-icon text-base-light"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                  />
-                </svg>
-              </div>
-              <span
-                aria-hidden="true"
-                class="usa-tooltip__body"
-                data-testid="tooltipBody"
-                id="tooltip-_r_2_"
-                role="tooltip"
-                title="When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance"
-              >
-                When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance
-              </span>
-            </span>
-          </span>
-        </div>
-        <div
-          class="mobile-lg:display-flex"
-        >
-          <div
-            class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-          >
-            <p
-              class="usa-process-list__heading mint-text-normal line-height-sans-4"
-              data-testid="processListHeading"
-            >
-              Clearance start date
-            </p>
-            <p
-              class="mint-text-normal  margin-y-0 line-height-sans-4"
-            >
-              06/03/2022
-            </p>
-          </div>
-          <div
-            class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-          >
-            <p
-              class="usa-process-list__heading mint-text-normal line-height-sans-4"
-              data-testid="processListHeading"
-            >
-              Clearance end date
-            </p>
-            <p
-              class="mint-text-normal  margin-y-0 line-height-sans-4"
-            >
-              06/03/2022
-            </p>
-          </div>
-        </div>
-      </li>
-      <li
-        class="usa-process-list__item read-only-model-plan__timeline__list-item"
-      >
-        <p
-          class="usa-process-list__heading mint-text-normal line-height-sans-4"
-          data-testid="processListHeading"
-        >
-          Announce model
-        </p>
-        <p
-          class="mint-text-normal  margin-y-0 line-height-sans-4"
-        >
-          06/03/2022
-        </p>
-      </li>
-      <li
-        class="usa-process-list__item read-only-model-plan__timeline__list-item"
-      >
-        <p
-          class="usa-process-list__heading mint-text-normal line-height-sans-4"
-          data-testid="processListHeading"
-        >
-          Application period
-        </p>
-        <div
-          class="mobile-lg:display-flex"
-        >
-          <div
-            class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-          >
-            <p
-              class="usa-process-list__heading mint-text-normal line-height-sans-4"
-              data-testid="processListHeading"
-            >
-              Application start date
-            </p>
-            <p
-              class="mint-text-normal  margin-y-0 line-height-sans-4"
-            >
-              06/03/2022
-            </p>
-          </div>
-          <div
-            class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-          >
-            <p
-              class="usa-process-list__heading mint-text-normal line-height-sans-4"
-              data-testid="processListHeading"
-            >
-              Application end date
-            </p>
-            <p
-              class="mint-text-normal  margin-y-0 line-height-sans-4"
-            >
-              06/03/2022
-            </p>
-          </div>
-        </div>
-      </li>
-      <li
-        class="usa-process-list__item read-only-model-plan__timeline__list-item"
-      >
-        <div
-          class="display-flex flex-align-top"
-        >
-          <p
-            class="usa-process-list__heading mint-text-normal line-height-sans-4"
-            data-testid="processListHeading"
-          >
-            Performance period
-          </p>
-          <span
-            class="margin-top-0 position-relative text-normal"
-          >
-            <span
-              class="usa-tooltip"
-              data-testid="tooltipWrapper"
-            >
-              <div
-                aria-describedby="tooltip-_r_3_"
-                class="usa-tooltip__trigger mint-no-print margin-left-05"
-                data-testid="triggerElement"
-                tabindex="0"
-              >
-                <svg
-                  aria-label="info"
-                  class="usa-icon text-base-light"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
-                  />
-                </svg>
-              </div>
-              <span
-                aria-hidden="true"
-                class="usa-tooltip__body"
-                data-testid="tooltipBody"
-                id="tooltip-_r_3_"
-                role="tooltip"
-                title="When the model will be active beginning with the go-live date"
-              >
-                When the model will be active beginning with the go-live date
-              </span>
-            </span>
-          </span>
-        </div>
-        <div
-          class="mobile-lg:display-flex"
-        >
-          <div
-            class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-          >
-            <p
-              class="usa-process-list__heading mint-text-normal line-height-sans-4"
-              data-testid="processListHeading"
-            >
-              Performance start date
-            </p>
-            <p
-              class="mint-text-normal  margin-y-0 line-height-sans-4"
-            >
-              06/03/2022
-            </p>
-          </div>
-          <div
-            class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
-          >
-            <p
-              class="usa-process-list__heading mint-text-normal line-height-sans-4"
-              data-testid="processListHeading"
-            >
-              Performance end date
-            </p>
-            <p
-              class="mint-text-normal  margin-y-0 line-height-sans-4"
-            >
-              06/03/2022
-            </p>
-          </div>
-        </div>
-      </li>
-      <li
-        class="usa-process-list__item read-only-model-plan__timeline__list-item"
-      >
-        <p
-          class="usa-process-list__heading mint-text-normal line-height-sans-4"
-          data-testid="processListHeading"
-        >
-          Model wrap-up end date
-        </p>
-        <p
-          class="mint-text-normal  margin-y-0 line-height-sans-4"
-        >
-          06/03/2022
-        </p>
-      </li>
-    </ol>
-    <div
-      class="desktop:grid-col-12"
-      data-testid="grid"
-    >
+    <div>
       <div
-        class="read-only-section read-only-section--notes margin-bottom-3"
+        class="margin-bottom-4"
       >
-        <div
-          class="read-only-section--question"
+        <h3
+          class="margin-y-0"
         >
-          <span
-            class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+          Basic high level timeline
+        </h3>
+        <ol
+          class="usa-process-list read-only-model-plan__timeline margin-left-neg-1"
+        >
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item"
           >
-            Notes
-          </span>
-        </div>
+            <p
+              class="usa-process-list__heading mint-text-normal line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Complete ICIP
+            </p>
+            <p
+              class="mint-text-normal  margin-y-0 line-height-sans-4"
+            >
+              06/03/2022
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item"
+          >
+            <div
+              class="display-flex flex-align-top"
+            >
+              <p
+                class="usa-process-list__heading mint-text-normal line-height-sans-4"
+                data-testid="processListHeading"
+              >
+                Clearance
+              </p>
+              <span
+                class="margin-top-0 position-relative text-normal"
+              >
+                <span
+                  class="usa-tooltip"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-_r_2_"
+                    class="usa-tooltip__trigger mint-no-print margin-left-05"
+                    data-testid="triggerElement"
+                    tabindex="0"
+                  >
+                    <svg
+                      aria-label="info"
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-_r_2_"
+                    role="tooltip"
+                    title="When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance"
+                  >
+                    When the model anticipates beginning internal (CMMI) clearance through completion of OMB clearance
+                  </span>
+                </span>
+              </span>
+            </div>
+            <div
+              class="mobile-lg:display-flex"
+            >
+              <div
+                class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+              >
+                <p
+                  class="usa-process-list__heading mint-text-normal line-height-sans-4"
+                  data-testid="processListHeading"
+                >
+                  Clearance start date
+                </p>
+                <p
+                  class="mint-text-normal  margin-y-0 line-height-sans-4"
+                >
+                  06/03/2022
+                </p>
+              </div>
+              <div
+                class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+              >
+                <p
+                  class="usa-process-list__heading mint-text-normal line-height-sans-4"
+                  data-testid="processListHeading"
+                >
+                  Clearance end date
+                </p>
+                <p
+                  class="mint-text-normal  margin-y-0 line-height-sans-4"
+                >
+                  06/03/2022
+                </p>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item"
+          >
+            <p
+              class="usa-process-list__heading mint-text-normal line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Announce model
+            </p>
+            <p
+              class="mint-text-normal  margin-y-0 line-height-sans-4"
+            >
+              06/03/2022
+            </p>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item"
+          >
+            <p
+              class="usa-process-list__heading mint-text-normal line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Application period
+            </p>
+            <div
+              class="mobile-lg:display-flex"
+            >
+              <div
+                class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+              >
+                <p
+                  class="usa-process-list__heading mint-text-normal line-height-sans-4"
+                  data-testid="processListHeading"
+                >
+                  Application start date
+                </p>
+                <p
+                  class="mint-text-normal  margin-y-0 line-height-sans-4"
+                >
+                  06/03/2022
+                </p>
+              </div>
+              <div
+                class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+              >
+                <p
+                  class="usa-process-list__heading mint-text-normal line-height-sans-4"
+                  data-testid="processListHeading"
+                >
+                  Application end date
+                </p>
+                <p
+                  class="mint-text-normal  margin-y-0 line-height-sans-4"
+                >
+                  06/03/2022
+                </p>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item"
+          >
+            <div
+              class="display-flex flex-align-top"
+            >
+              <p
+                class="usa-process-list__heading mint-text-normal line-height-sans-4"
+                data-testid="processListHeading"
+              >
+                Performance period
+              </p>
+              <span
+                class="margin-top-0 position-relative text-normal"
+              >
+                <span
+                  class="usa-tooltip"
+                  data-testid="tooltipWrapper"
+                >
+                  <div
+                    aria-describedby="tooltip-_r_3_"
+                    class="usa-tooltip__trigger mint-no-print margin-left-05"
+                    data-testid="triggerElement"
+                    tabindex="0"
+                  >
+                    <svg
+                      aria-label="info"
+                      class="usa-icon text-base-light"
+                      focusable="false"
+                      height="1em"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+                      />
+                    </svg>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    class="usa-tooltip__body"
+                    data-testid="tooltipBody"
+                    id="tooltip-_r_3_"
+                    role="tooltip"
+                    title="When the model will be active beginning with the go-live date"
+                  >
+                    When the model will be active beginning with the go-live date
+                  </span>
+                </span>
+              </span>
+            </div>
+            <div
+              class="mobile-lg:display-flex"
+            >
+              <div
+                class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+              >
+                <p
+                  class="usa-process-list__heading mint-text-normal line-height-sans-4"
+                  data-testid="processListHeading"
+                >
+                  Performance start date
+                </p>
+                <p
+                  class="mint-text-normal  margin-y-0 line-height-sans-4"
+                >
+                  06/03/2022
+                </p>
+              </div>
+              <div
+                class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+              >
+                <p
+                  class="usa-process-list__heading mint-text-normal line-height-sans-4"
+                  data-testid="processListHeading"
+                >
+                  Performance end date
+                </p>
+                <p
+                  class="mint-text-normal  margin-y-0 line-height-sans-4"
+                >
+                  06/03/2022
+                </p>
+              </div>
+            </div>
+          </li>
+          <li
+            class="usa-process-list__item read-only-model-plan__timeline__list-item padding-bottom-2"
+          >
+            <p
+              class="usa-process-list__heading mint-text-normal line-height-sans-4"
+              data-testid="processListHeading"
+            >
+              Model wrap-up end date
+            </p>
+            <p
+              class="mint-text-normal  margin-y-0 line-height-sans-4"
+            >
+              06/03/2022
+            </p>
+          </li>
+        </ol>
         <div
-          class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          class="desktop:grid-col-12"
+          data-testid="grid"
         >
-          Theses are my best guess notes
+          <div
+            class="read-only-section read-only-section--notes margin-bottom-3"
+          >
+            <div
+              class="read-only-section--question"
+            >
+              <span
+                class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+              >
+                Notes
+              </span>
+            </div>
+            <div
+              class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+            >
+              Theses are my best guess notes
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3
+          class="margin-y-0"
+        >
+          Additional model dates
+        </h3>
+        <div
+          class="usa-alert usa-alert--info usa-alert--slim flex margin-top-3 margin-bottom-2"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <p
+              class="usa-alert__text"
+            >
+              <span>
+                There are not currently any additional dates listed for this model.
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -26,6 +26,7 @@ import UsingSolutionLibrary from './Articles/UsingSolutionLibrary';
 import UsingSolutionsAndITSystemsTable from './Articles/UsingSolutionsAndITSystemsTable';
 import UsingTableActions from './Articles/UsingTableActions';
 import UtilizingSolutions from './Articles/UtilizingSolutions';
+import ContractAssistancePage from './ContractAssistancePage';
 import HKCMilestoneLibrary from './HKCMilestoneLibrary';
 import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
@@ -53,7 +54,7 @@ export const helpAndKnowledgeRoutes = {
       element: <TwoPagerMeeting />
     },
     {
-      path: 'about-6-page-concept-papers-and-review-meeting',
+      path: 'about-6-page-concept-papers-and-review-meetings',
       element: <SixPagerMeeting />
     },
     {
@@ -89,6 +90,11 @@ export const helpAndKnowledgeRoutes = {
     {
       path: 'operational-planning-for-medicare-advantage-and-part-d-models',
       element: <OperationalPlanning />
+    },
+    { path: 'contract-assistance', element: <ContractAssistancePage /> },
+    {
+      path: 'contract-assistance/:ticketId',
+      element: <ContractAssistancePage />
     }
   ]
 };

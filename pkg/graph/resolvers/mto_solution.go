@@ -5,22 +5,18 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cms-enterprise/mint-app/pkg/email"
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
-	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
-
-	"github.com/jmoiron/sqlx"
-
-	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-
-	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
-
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // MTOSolutionUpdate updates the MTOSolution
@@ -62,7 +58,7 @@ func MTOSolutionUpdate(
 		}
 
 		// MTO task progression: when MTO is started, mark task IN_PROGRESS
-		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, updatedSolution.ModelPlanID, principal, store)
+		err = UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, updatedSolution.ModelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -88,6 +84,7 @@ func MTOSolutionUpdate(
 
 // MTOSolutionCreateCustom uses the provided information to create a new MTOSolution
 func MTOSolutionCreateCustom(
+	ctx context.Context,
 	logger *zap.Logger,
 	principal authentication.Principal,
 	store *storage.Store,
@@ -126,7 +123,7 @@ func MTOSolutionCreateCustom(
 		}
 
 		// MTO task progression: creating solution data counts as starting the MTO
-		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -184,7 +181,7 @@ func MTOSolutionCreateCommon(
 		}
 
 		// MTO task progression: creating solution data counts as starting the MTO
-		err = UpdatePlanTaskStatusOnMTOStarted(tx, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return nil, err
 		}
@@ -276,7 +273,15 @@ func MTOSolutionGetByIDLOADER(
 // MTOSolutionDelete deletes an MTOSolution
 // It returns an error if the principal is invalid, the solution doesn't exist, user doesn't have permissions to delete, or the delete call itself fails
 // Future Enhancement - Consider returning a *models.MTOSolution here if we want to ever access the returned data on what was deleted
-func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store, id uuid.UUID) error {
+func MTOSolutionDelete(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
+	id uuid.UUID,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
 	principalAccount := principal.Account()
 	if principalAccount == nil {
 		return fmt.Errorf("principal doesn't have an account, username %s", principal.String())
@@ -301,7 +306,7 @@ func MTOSolutionDelete(ctx context.Context, logger *zap.Logger, principal authen
 		}
 
 		// MTO task regression: recalculate task after deleting MTO data.
-		if err := UpdatePlanTaskStatusOnMTODataDeleted(tx, logger, existing.ModelPlanID, principal, store); err != nil {
+		if err := UpdatePlanTaskStatusOnMTODataDeleted(ctx, tx, logger, existing.ModelPlanID, principal, store, emailService, addressBook); err != nil {
 			return fmt.Errorf("unable to recalculate MTO task after deleting solution. Err %w", err)
 		}
 		return nil

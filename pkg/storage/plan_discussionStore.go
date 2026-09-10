@@ -17,21 +17,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
-//go:embed SQL/plan_discussion/create.sql
-var planDiscussionCreateSQL string
-
-//go:embed SQL/plan_discussion/update.sql
-var planDiscussionUpdateSQL string
-
-//go:embed SQL/plan_discussion/delete.sql
-var planDiscussionDeleteSQL string
-
-//go:embed SQL/plan_discussion/get_by_id.sql
-var planDiscussionGetByID string
-
-//go:embed SQL/plan_discussion/get_most_recent_user_role.sql
-var getUserRoleSQL string
-
 //TODO: Migrate all these queries to the sql_queries package
 
 // DiscussionReplyGetByDiscussionIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
@@ -84,7 +69,7 @@ func (s *Store) PlanDiscussionCreate(
 
 	discussion.ID = utilityuuid.ValueOrNewUUID(discussion.ID)
 
-	stmt, err := np.PrepareNamed(planDiscussionCreateSQL)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDiscussion.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
@@ -134,7 +119,7 @@ func (s *Store) PlanDiscussionUpdate(
 	discussion *models.PlanDiscussion,
 ) (*models.PlanDiscussion, error) {
 
-	stmt, err := s.db.PrepareNamed(planDiscussionUpdateSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDiscussion.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, discussion)
 	}
@@ -183,7 +168,7 @@ func (s *Store) PlanDiscussionDelete(
 		return nil, err
 	}
 
-	stmt, err := tx.PrepareNamed(planDiscussionDeleteSQL)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanDiscussion.Delete)
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +191,7 @@ func (s *Store) PlanDiscussionDelete(
 // PlanDiscussionByID retrieves the plan discussion for a given id
 func (s *Store) PlanDiscussionByID(_ *zap.Logger, id uuid.UUID) (*models.PlanDiscussion, error) {
 
-	stmt, err := s.db.PrepareNamed(planDiscussionGetByID)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDiscussion.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +277,7 @@ func (s *Store) GetMostRecentDiscussionRoleSelection(
 	userID uuid.UUID,
 ) (*models.DiscussionRoleSelection, error) {
 
-	stmt, err := s.db.PrepareNamed(getUserRoleSQL)
+	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDiscussion.GetUserRole)
 	if err != nil {
 		logger.Error("failed to prepare SQL statement", zap.Error(err))
 		return nil, err

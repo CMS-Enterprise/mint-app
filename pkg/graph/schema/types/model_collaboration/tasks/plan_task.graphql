@@ -1,0 +1,62 @@
+"""
+PlanTask represents a task on a model plan (e.g. model plan details, MTO, data exchange).
+"""
+type PlanTask {
+  id: UUID!
+  key: PlanTaskKey!
+  status: PlanTaskStatus!
+  state: PlanTaskState! @goField(forceResolver: true)
+  documents: [PlanDocument!]! @goField(forceResolver: true)
+  completedBy: UUID
+  completedByUserAccount: UserAccount
+  completedDts: Time
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+PlanTaskKey identifies which of the plan tasks this row represents.
+"""
+enum PlanTaskKey {
+  MODEL_PLAN
+  MTO
+  DATA_EXCHANGE
+  WAIVER_ASSESSMENT_SURVEY
+  TWO_PAGER
+}
+
+"""
+PlanTaskStatus is stored in the database and represents the task lifecycle.
+"""
+enum PlanTaskStatus {
+  NOT_NEEDED
+  UPCOMING
+  TO_DO
+  IN_PROGRESS
+  COMPLETE
+}
+
+"""
+PlanTaskState is computed from PlanTaskStatus for display.
+"""
+enum PlanTaskState {
+  TO_DO
+  COMPLETE
+}
+
+extend type Mutation {
+  """
+  Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
+  aren't calculated from other model state (currently just TWO_PAGER) can be set this way; other
+  keys will return an error.
+  """
+  markPlanTaskComplete(
+    modelPlanID: UUID!
+    key: PlanTaskKey!
+    isComplete: Boolean!
+  ): PlanTask! @hasRole(role: MINT_USER)
+}

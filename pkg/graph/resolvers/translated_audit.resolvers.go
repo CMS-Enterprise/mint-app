@@ -46,5 +46,7 @@ func (r *Resolver) TranslatedAuditField() generated.TranslatedAuditFieldResolver
 	return &translatedAuditFieldResolver{r}
 }
 
-type translatedAuditResolver struct{ *Resolver }
-type translatedAuditFieldResolver struct{ *Resolver }
+type (
+	translatedAuditResolver      struct{ *Resolver }
+	translatedAuditFieldResolver struct{ *Resolver }
+)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import ReactModal from 'react-modal';
 import { Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -22,6 +22,8 @@ type SidepanelProps = {
   fixed?: boolean;
   footer?: React.ReactNode;
   wideContent?: boolean;
+  /** Resets fixed panel scroll position when this value changes while open. */
+  contentScrollKey?: string;
 };
 
 const Sidepanel = ({
@@ -39,14 +41,32 @@ const Sidepanel = ({
   backButton,
   fixed = false,
   footer,
-  wideContent = false
+  wideContent = false,
+  contentScrollKey
 }: SidepanelProps) => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const resetScrollPosition = useCallback(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, []);
+
   const handleOpenModal = () => {
     noScroll.on();
+    resetScrollPosition();
     if (openModal) {
       openModal();
     }
   };
+
+  useEffect(() => {
+    if (!isOpen || !fixed || contentScrollKey === undefined) {
+      return;
+    }
+
+    resetScrollPosition();
+  }, [contentScrollKey, fixed, isOpen, resetScrollPosition]);
 
   return React.createElement(
     ReactModal as any,
@@ -55,13 +75,15 @@ const Sidepanel = ({
       overlayClassName: classNames(
         'mint-sidepanel__overlay',
         {
-          'overflow-y-auto': !showScroll,
-          'overflow-y-scroll': showScroll
+          'overflow-y-auto': !showScroll && !fixed,
+          'overflow-y-scroll': showScroll,
+          'overflow-hidden': fixed && !showScroll
         },
         overlayClassName
       ),
       className: classNames('mint-sidepanel__content', classname, {
         'overflow-hidden': fixed,
+        'mint-sidepanel__content--fixed': fixed,
         'mint-sidepanel__wide-content': wideContent
       }),
       onAfterOpen: handleOpenModal,
@@ -76,7 +98,12 @@ const Sidepanel = ({
       appElement: document.getElementById('root')! as HTMLElement,
       testId: 'side-panel'
     },
-    <div data-testid={testid}>
+    <div
+      data-testid={testid}
+      className={classNames({
+        'mint-sidepanel__fixed-layout': fixed
+      })}
+    >
       <div
         className={classNames(
           'mint-sidepanel__x-button-container display-flex text-base flex-align-center',
@@ -102,8 +129,9 @@ const Sidepanel = ({
       </div>
 
       <div
+        ref={scrollContainerRef}
         className={classNames({
-          'overflow-y-auto': fixed,
+          'mint-sidepanel__scroll-container': fixed,
           'padding-x-0': !fixed
         })}
       >

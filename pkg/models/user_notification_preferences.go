@@ -36,6 +36,8 @@ type UserNotificationPreferences struct {
 	IncorrectModelStatusNotificationType                 UserNotificationPreferenceFlags                       `json:"incorrectModelStatusNotificationType" db:"incorrect_model_status_notification_type"`
 	MTOReadyForReview                                    UserNotificationPreferenceFlags                       `json:"mtoReadyForReview" db:"mto_ready_for_review"`
 	MTOReadyForReviewNotificationType                    *MTOReadyForReviewNotificationType                    `json:"mtoReadyForReviewNotificationType" db:"mto_ready_for_review_notification_type"`
+	NewTaskAdded                                         UserNotificationPreferenceFlags                       `json:"newTaskAdded" db:"new_task_added"`
+	TaskCompleted                                        UserNotificationPreferenceFlags                       `json:"taskCompleted" db:"task_completed"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -58,6 +60,8 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		WaiverAssessmentSurveyMarkedComplete: EmptyUserNotificationPreferencesFlags(),
 		IncorrectModelStatus:                 EmptyUserNotificationPreferencesFlags(),
 		MTOReadyForReview:                    EmptyUserNotificationPreferencesFlags(),
+		NewTaskAdded:                         EmptyUserNotificationPreferencesFlags(),
+		TaskCompleted:                        EmptyUserNotificationPreferencesFlags(),
 	}
 }
 
