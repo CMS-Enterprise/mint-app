@@ -56,7 +56,7 @@ const TASK_STATE_CONFIG: Record<PlanTaskState, TaskStateConfig> = {
   }
 };
 
-const USER_MARK_STATUS_TASKS = [PlanTaskKey.TWO_PAGER];
+const USER_MARK_STATUS_TASKS = [PlanTaskKey.TWO_PAGER, PlanTaskKey.SIX_PAGER];
 
 function TaskStateTag({ state }: { state: PlanTaskState }) {
   const { t } = useTranslation('tasks');

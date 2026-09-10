@@ -12,6 +12,7 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -146,6 +147,18 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
 	suite.Nil(sixPagerTask.CompletedBy)
 	suite.Nil(sixPagerTask.CompletedDts)
+
+	// the activation itself is attributed to the MINT system account, not the user who completed
+	// TWO_PAGER, so Change History correctly shows it as an automatic change (see
+	// isPlanTaskAutomaticChange in src/features/ModelPlan/ChangeHistory/util.tsx)
+	if suite.NotNil(sixPagerTask.ModifiedBy) {
+		suite.Equal(constants.GetSystemAccountUUID(), *sixPagerTask.ModifiedBy)
+	}
+
+	twoPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
+	if suite.NotNil(twoPagerTask.ModifiedBy) {
+		suite.Equal(suite.testConfigs.Principal.Account().ID, *twoPagerTask.ModifiedBy)
+	}
 
 	// marking TWO_PAGER back to incomplete does not revert SIX_PAGER's activation (one-way)
 	_, err = PlanTaskMarkComplete(
@@ -1002,6 +1015,7 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStatusToDoSendsNewAvailableInAppNo
 		models.PlanTaskKeyModelPlan,
 		models.PlanTaskStatusComplete,
 		suite.testConfigs.Principal,
+		suite.testConfigs.Principal.Account().ID,
 		suite.testConfigs.Store,
 		nil,
 		email.AddressBook{},
@@ -1020,6 +1034,7 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStatusToDoSendsNewAvailableInAppNo
 		models.PlanTaskKeyModelPlan,
 		models.PlanTaskStatusToDo,
 		suite.testConfigs.Principal,
+		suite.testConfigs.Principal.Account().ID,
 		suite.testConfigs.Store,
 		nil,
 		email.AddressBook{},

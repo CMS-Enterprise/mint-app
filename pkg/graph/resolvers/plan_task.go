@@ -11,6 +11,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -31,6 +32,11 @@ func PlanTaskGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) 
 	return loaders.PlanTask.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
+// updatePlanTaskStatusByKey updates a plan task's status. attributedTo is who gets credited as the
+// actor for this specific change (CompletedBy/ModifiedBy) in the database and, in turn, in Change
+// History - it is usually principal.Account().ID, but callers cascading an automatic side effect
+// (see activateUpcomingPlanTask) pass the MINT system account instead, since no one directly acted
+// on that specific task. principal is always used for access control regardless of attributedTo.
 func updatePlanTaskStatusByKey(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
@@ -39,6 +45,7 @@ func updatePlanTaskStatusByKey(
 	key models.PlanTaskKey,
 	newStatus models.PlanTaskStatus,
 	principal authentication.Principal,
+	attributedTo uuid.UUID,
 	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
@@ -73,7 +80,7 @@ func updatePlanTaskStatusByKey(
 	task.Status = newStatus
 
 	if newStatus == models.PlanTaskStatusComplete {
-		task.CompletedBy = &principal.Account().ID
+		task.CompletedBy = &attributedTo
 		task.CompletedDts = helpers.PointerTo(time.Now().UTC())
 	} else {
 		task.CompletedBy = nil
@@ -92,6 +99,9 @@ func updatePlanTaskStatusByKey(
 	if err != nil {
 		return nil, err
 	}
+	// BaseStructPreUpdate sets ModifiedBy from principal; override it so the audit trigger (which
+	// reads NEW.modified_by directly) attributes this specific write to attributedTo.
+	task.ModifiedBy = &attributedTo
 
 	updatedTask, err := storage.PlanTaskUpdate(np, logger, task)
 	if err != nil {
@@ -137,7 +147,7 @@ func PlanTaskMarkComplete(
 	}
 
 	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
-		task, err := updatePlanTaskStatusByKey(ctx, tx, logger, modelPlanID, key, newStatus, principal, store, emailService, addressBook)
+		task, err := updatePlanTaskStatusByKey(ctx, tx, logger, modelPlanID, key, newStatus, principal, principal.Account().ID, store, emailService, addressBook)
 		if err != nil {
 			return nil, err
 		}
@@ -156,7 +166,9 @@ func PlanTaskMarkComplete(
 
 // activateUpcomingPlanTask moves a plan task from UPCOMING to TO_DO. It is a no-op if the task isn't
 // currently UPCOMING (already activated, or has otherwise progressed) or doesn't exist yet, since
-// activation must never regress a task that has already moved on.
+// activation must never regress a task that has already moved on. The change is attributed to the
+// MINT system account rather than principal (the user who triggered the cascade by completing
+// another task), since no one directly acted on this specific task - see updatePlanTaskStatusByKey.
 func activateUpcomingPlanTask(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
@@ -192,7 +204,7 @@ func activateUpcomingPlanTask(
 		return nil
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, key, models.PlanTaskStatusToDo, principal, store, emailService, addressBook)
+	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, key, models.PlanTaskStatusToDo, principal, constants.GetSystemAccountUUID(), store, emailService, addressBook)
 	return err
 }
 
