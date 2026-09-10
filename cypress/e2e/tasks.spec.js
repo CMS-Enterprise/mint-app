@@ -4,10 +4,10 @@ describe('Tasks page', () => {
     cy.visit('/');
   });
 
-  it('shows current tasks for Empty Plan (seed keeps three incomplete tasks)', () => {
+  it('shows current tasks for Empty Plan', () => {
     cy.enterModelPlanCollaborationArea('Empty Plan');
 
-    cy.contains('button', /See all \(4\)/).should('be.visible');
+    cy.contains('button', /See all \(5\)/).should('be.visible');
 
     cy.contains('button', /See all \(\d+\)/).click();
 
