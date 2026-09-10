@@ -126,6 +126,35 @@ describe('Tasks page', () => {
     ]);
   });
 
+  it('shows the OA presentation card under Upcoming and not under Current', async () => {
+    const tasksWithUpcomingOA = makePlanTasks({
+      [PlanTaskKey.SIX_PAGER]: {
+        state: PlanTaskState.TO_DO,
+        status: PlanTaskStatus.TO_DO
+      },
+      [PlanTaskKey.OA_PRESENTATION]: {
+        state: PlanTaskState.UPCOMING,
+        status: PlanTaskStatus.UPCOMING
+      }
+    });
+
+    renderWithMock(tasksWithUpcomingOA, 'upcoming');
+
+    await waitFor(() => {
+      expect(screen.getByText('Upcoming tasks (1)')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.getByText(
+        'Prepare for your presentation to the Office of the Administrator (OA)'
+      )
+    ).toBeInTheDocument();
+
+    expect(
+      screen.queryByText('Upload OA presentation')
+    ).not.toBeInTheDocument();
+  });
+
   it('shows completed empty state copy when there are no completed tasks', async () => {
     const { container } = renderWithMock(planTasksAllToDo, 'completed');
 
