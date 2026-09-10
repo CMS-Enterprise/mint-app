@@ -540,6 +540,7 @@ type PlanDocumentInput struct {
 	FileData             graphql.Upload      `json:"fileData"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	Restricted           bool                `json:"restricted"`
+	PlanTaskID           *uuid.UUID          `json:"planTaskID,omitempty"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
@@ -551,6 +552,7 @@ type PlanDocumentLinkInput struct {
 	Name                 string              `json:"name"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	Restricted           bool                `json:"restricted"`
+	PlanTaskID           *uuid.UUID          `json:"planTaskID,omitempty"`
 	OtherTypeDescription *string             `json:"otherTypeDescription,omitempty"`
 	OptionalNotes        *string             `json:"optionalNotes,omitempty"`
 }
@@ -907,6 +909,11 @@ type PlanTDLTranslation struct {
 	Title         models.TranslationField `json:"title" db:"title"`
 	DateInitiated models.TranslationField `json:"dateInitiated" db:"date_initiated"`
 	Note          models.TranslationField `json:"note" db:"note"`
+}
+
+// Represents plan task translation data
+type PlanTaskTranslation struct {
+	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
 }
 
 // Represents plan timeline translation data

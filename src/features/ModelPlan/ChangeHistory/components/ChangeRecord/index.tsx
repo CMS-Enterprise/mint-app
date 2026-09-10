@@ -27,8 +27,10 @@ import {
   getNestedActionText,
   hiddenFields,
   identifyChangeType,
+  isAssessmentDiscussionChange,
   isDiscussionReplyWithMetaData,
   isGenericWithMetaData,
+  isPlanTaskAutomaticChange,
   parseArray,
   TranslationTables
 } from '../../util';
@@ -123,6 +125,34 @@ export const ChangeHeader = ({
         shouldUnescape
         values={{
           section: t(`sections.${changeRecord.tableName}`),
+          status,
+          date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+          time: formatTime(changeRecord.date)
+        }}
+        components={{
+          datetime: DateSpan
+        }}
+      />
+    );
+  }
+
+  // Plan task (Tasks section) status audits
+  if (changeRecordType === 'planTaskStatusUpdate') {
+    const status = changeRecord.translatedFields.find(
+      field => field.fieldName === 'status'
+    )?.newTranslated;
+
+    const task =
+      changeRecord.metaData && isGenericWithMetaData(changeRecord.metaData)
+        ? changeRecord.metaData.relationContent
+        : '';
+
+    return (
+      <Trans
+        i18nKey={getHeaderText(changeRecord)}
+        shouldUnescape
+        values={{
+          task,
           status,
           date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
           time: formatTime(changeRecord.date)
@@ -661,6 +691,13 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
     changeRecordType === 'operationalNeedUpdate' ||
     changeRecordType === 'operationalNeedCreate';
 
+  // Automatically calculated plan task changes (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as
+  // a side effect of other edits) are attributed to MINT rather than whichever user's edit
+  // triggered the recalculation, since no one directly acted on that specific task.
+  const actorName = isPlanTaskAutomaticChange(changeRecord)
+    ? 'MINT'
+    : changeRecord.actorName;
+
   return (
     <Card className="change-record">
       <div
@@ -669,8 +706,9 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
         })}
       >
         <AvatarCircle
-          user={changeRecord.actorName}
+          user={actorName}
           className="margin-right-1 flex-align-self-start"
+          isAssessment={isAssessmentDiscussionChange(changeRecord)}
         />
         <span
           className={classNames(
@@ -680,7 +718,7 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
             'padding-top-05'
           )}
         >
-          <span className="text-bold">{changeRecord.actorName} </span>
+          <span className="text-bold">{actorName} </span>
 
           <ChangeHeader
             changeRecord={changeRecord}

@@ -22,7 +22,11 @@ ADD COLUMN IF NOT EXISTS topic DISCUSSION_TOPIC_TYPE;
 
 -- backfill
 UPDATE plan_discussion
-SET topic = 'OTHER'
+SET
+    topic = 'OTHER',
+    -- set modified_by for audit table trigger (migration backfill => system user)
+    modified_by = '00000001-0001-0001-0001-000000000001'::UUID,
+    modified_dts = NOW()
 WHERE topic IS NULL;
 
 -- set not null to enforce `topic` selection

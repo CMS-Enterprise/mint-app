@@ -103,6 +103,7 @@ func ModelPlanCreate(
 			{models.PlanTaskKeyModelPlan, models.PlanTaskStatusToDo},
 			{models.PlanTaskKeyMto, models.PlanTaskStatusToDo},
 			{models.PlanTaskKeyDataExchange, models.PlanTaskStatusToDo},
+			{models.PlanTaskKeyTwoPager, models.PlanTaskStatusToDo},
 			{models.PlanTaskKeyPrepareForClearance, models.PlanTaskStatusUpcoming},
 		}
 		for _, defaultTask := range defaultTasks {

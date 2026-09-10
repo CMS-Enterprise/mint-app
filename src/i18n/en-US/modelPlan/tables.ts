@@ -59,6 +59,7 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
     generalName: 'Participants and providers'
   },
   [TableName.PLAN_PAYMENTS]: { generalName: 'Payments' },
+  [TableName.PLAN_TASK]: { generalName: 'Tasks' },
   [TableName.PLAN_TDL]: {
     generalName: 'TDLs',
     groupedName: 'FFS CRs and TDLs'
