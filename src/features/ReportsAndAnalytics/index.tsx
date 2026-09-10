@@ -568,7 +568,10 @@ const ReportsAndAnalytics = () => {
                     labelFormatter={label => {
                       // Format the label (X-axis value) for date-based charts
                       if (selectedChart === 'numberOfModelsOverTime') {
-                        return formatDateUtc(typeof label === 'string' ? label : String(label), 'MMMM yyyy');
+                        return formatDateUtc(
+                          typeof label === 'string' ? label : String(label),
+                          'MMMM yyyy'
+                        );
                       }
                       return label;
                     }}

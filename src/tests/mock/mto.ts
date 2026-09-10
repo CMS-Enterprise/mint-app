@@ -69,7 +69,8 @@ export type PlanTaskEntry =
 const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.MTO,
-  PlanTaskKey.DATA_EXCHANGE
+  PlanTaskKey.DATA_EXCHANGE,
+  PlanTaskKey.PREPARE_FOR_CLEARANCE
 ] as const;
 
 const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
