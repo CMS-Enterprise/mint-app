@@ -1,6 +1,10 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 // PlanTask represents a task associated with a model plan
 type PlanTask struct {
@@ -17,11 +21,36 @@ type PlanTaskKey string
 
 // These constants represent the possible values of a PlanTaskKey
 const (
-	PlanTaskKeyModelPlan    PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMto          PlanTaskKey = "MTO"
-	PlanTaskKeyDataExchange PlanTaskKey = "DATA_EXCHANGE"
-	PlanTaskKeyTwoPager     PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeyModelPlan           PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto                 PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange        PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyTwoPager            PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeyPrepareForClearance PlanTaskKey = "PREPARE_FOR_CLEARANCE"
 )
+
+// PrepareForClearanceTriggerDays is how many days before a model plan's internal clearance start
+// date the PREPARE_FOR_CLEARANCE task becomes actionable.
+const PrepareForClearanceTriggerDays = 20
+
+// PrepareForClearanceTaskStatus computes the display status of the PREPARE_FOR_CLEARANCE task given
+// its stored status and the model plan's internal clearance start date. This trigger is evaluated on
+// every read rather than persisted, since it depends purely on elapsed time (now vs. clearanceStarts)
+// rather than a discrete user action. Once now is within PrepareForClearanceTriggerDays of
+// clearanceStarts, the task is TO_DO; otherwise it stays at storedStatus. A storedStatus other than
+// UPCOMING (e.g. COMPLETE, once mark-complete support exists) is left untouched, as is a plan with no
+// clearance start date set yet.
+func PrepareForClearanceTaskStatus(storedStatus PlanTaskStatus, clearanceStarts *time.Time, now time.Time) PlanTaskStatus {
+	if storedStatus != PlanTaskStatusUpcoming || clearanceStarts == nil {
+		return storedStatus
+	}
+
+	triggerDts := clearanceStarts.AddDate(0, 0, -PrepareForClearanceTriggerDays)
+	if now.Before(triggerDts) {
+		return storedStatus
+	}
+
+	return PlanTaskStatusToDo
+}
 
 // manuallyMarkablePlanTaskKeys are the PlanTaskKeys whose status is set directly by a user via
 // PlanTaskMarkComplete (pkg/graph/resolvers/plan_task.go) and the markPlanTaskComplete mutation,
@@ -46,10 +75,11 @@ func (k PlanTaskKey) IsManuallyMarkable() bool {
 // planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
 // and change history. Keys without an entry fall back to their raw string value.
 var planTaskKeyDisplayNames = map[PlanTaskKey]string{
-	PlanTaskKeyModelPlan:    "Model Plan",
-	PlanTaskKeyDataExchange: "Data exchange approach",
-	PlanTaskKeyMto:          "Model-to-operations matrix (MTO)",
-	PlanTaskKeyTwoPager:     "2-pager review",
+	PlanTaskKeyModelPlan:           "Model Plan",
+	PlanTaskKeyDataExchange:        "Data exchange approach",
+	PlanTaskKeyMto:                 "Model-to-operations matrix (MTO)",
+	PlanTaskKeyTwoPager:            "2-pager review",
+	PlanTaskKeyPrepareForClearance: "Prepare for clearance",
 }
 
 // DisplayName returns a short human-readable name for this task key.

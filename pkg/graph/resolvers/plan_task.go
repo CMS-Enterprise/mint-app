@@ -28,7 +28,44 @@ func PlanTaskGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.PlanTask,
 
 // PlanTaskGetByModelPlanIDLOADER implements resolver logic to get plan tasks by model plan ID using a data loader
 func PlanTaskGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) ([]*models.PlanTask, error) {
-	return loaders.PlanTask.ByModelPlanID.Load(ctx, modelPlanID)
+	tasks, err := loaders.PlanTask.ByModelPlanID.Load(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := applyPrepareForClearanceTrigger(ctx, modelPlanID, tasks); err != nil {
+		return nil, err
+	}
+
+	return tasks, nil
+}
+
+// applyPrepareForClearanceTrigger recalculates the PREPARE_FOR_CLEARANCE task's status in place based
+// on the model plan's internal clearance start date (see models.PrepareForClearanceTaskStatus). Unlike
+// the other plan task statuses, this isn't persisted on a write event: it depends purely on elapsed
+// time, so it's cheaper and always correct to compute it on every read instead of maintaining it with
+// a scheduled job.
+func applyPrepareForClearanceTrigger(ctx context.Context, modelPlanID uuid.UUID, tasks []*models.PlanTask) error {
+	for _, task := range tasks {
+		if task.Key != models.PlanTaskKeyPrepareForClearance {
+			continue
+		}
+
+		timeline, err := PlanTimelineGetByModelPlanIDLOADER(ctx, modelPlanID)
+		if err != nil {
+			return err
+		}
+
+		var clearanceStarts *time.Time
+		if timeline != nil {
+			clearanceStarts = timeline.ClearanceStarts
+		}
+
+		task.Status = models.PrepareForClearanceTaskStatus(task.Status, clearanceStarts, time.Now())
+		return nil
+	}
+
+	return nil
 }
 
 func updatePlanTaskStatusByKey(
