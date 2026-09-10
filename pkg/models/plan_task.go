@@ -66,9 +66,9 @@ func (k PlanTaskKey) ActivationTarget() (PlanTaskKey, bool) {
 // planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
 // and change history. Keys without an entry fall back to their raw string value.
 var planTaskKeyDisplayNames = map[PlanTaskKey]string{
-	PlanTaskKeyModelPlan:    "Model Plan",
-	PlanTaskKeyDataExchange: "Data exchange approach",
-	PlanTaskKeyMto:          "Model-to-operations matrix (MTO)",
+	PlanTaskKeyModelPlan:      "Model Plan",
+	PlanTaskKeyDataExchange:   "Data exchange approach",
+	PlanTaskKeyMto:            "Model-to-operations matrix (MTO)",
 	PlanTaskKeyTwoPager:       "2-pager review",
 	PlanTaskKeySixPager:       "6-pager review",
 	PlanTaskKeyOaPresentation: "Office of the Administrator (OA) presentation",
