@@ -8,6 +8,7 @@ import {
   GridContainer,
   Icon
 } from '@trussworks/react-uswds';
+import { DocumentType } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
@@ -29,10 +30,22 @@ const AddDocument = () => {
     state?: {
       fromCollaborationArea?: boolean;
       planTaskID?: string;
+      defaultDocumentType?: DocumentType;
     };
   };
 
-  const planTaskID = state?.planTaskID || searchParams.get('planTaskID') || '';
+  const planTaskID =
+    state?.planTaskID || searchParams.get('planTaskID') || undefined;
+
+  const defaultDocumentTypeParam = searchParams.get('defaultDocumentType');
+  const defaultDocumentType =
+    state?.defaultDocumentType ||
+    (defaultDocumentTypeParam &&
+    Object.values(DocumentType).includes(
+      defaultDocumentTypeParam as DocumentType
+    )
+      ? (defaultDocumentTypeParam as DocumentType)
+      : undefined);
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -88,7 +101,10 @@ const AddDocument = () => {
           </ButtonGroup>
 
           {formState === 'upload' ? (
-            <DocumentUpload planTaskID={planTaskID || undefined} />
+            <DocumentUpload
+              planTaskID={planTaskID}
+              defaultDocumentType={defaultDocumentType}
+            />
           ) : (
             <LinkDocument planTaskID={planTaskID || undefined} />
           )}
