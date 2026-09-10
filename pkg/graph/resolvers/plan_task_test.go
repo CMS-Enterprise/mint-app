@@ -278,6 +278,71 @@ func (suite *ResolverSuite) TestSixPagerStateReflectsActivation() {
 	suite.Equal(model.PlanTaskStateToDo, state)
 }
 
+// TestPlanTaskMarkCompleteActivatesOAPresentation confirms marking SIX_PAGER complete activates
+// OA_PRESENTATION from UPCOMING to TO_DO, that OA_PRESENTATION requires TWO_PAGER and SIX_PAGER to
+// have both been marked complete first, and that activation is one-way (reverting SIX_PAGER does
+// not revert OA_PRESENTATION).
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesOAPresentation() {
+	plan := suite.createModelPlan("Plan For OA Presentation Activation")
+
+	oaTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStatusUpcoming, oaTask.Status)
+
+	// marking TWO_PAGER complete activates SIX_PAGER, but OA_PRESENTATION remains UPCOMING until
+	// SIX_PAGER itself is marked complete
+	_, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStatusUpcoming, oaTask.Status)
+
+	// marking SIX_PAGER complete activates OA_PRESENTATION from UPCOMING to TO_DO
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStatusToDo, oaTask.Status)
+	suite.Nil(oaTask.CompletedBy)
+	suite.Nil(oaTask.CompletedDts)
+
+	// marking SIX_PAGER back to incomplete does not revert OA_PRESENTATION's activation (one-way)
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStatusToDo, oaTask.Status)
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
 	plan := suite.createModelPlan("Plan For Rejected Manual Task Marking")
 
@@ -313,7 +378,7 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 
 	tasks, err := PlanTaskGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Len(tasks, 5)
+	suite.Len(tasks, 6)
 
 	taskByKey := planTasksByKey(tasks)
 	suite.NotNil(taskByKey[models.PlanTaskKeyModelPlan])
@@ -321,12 +386,18 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	suite.NotNil(taskByKey[models.PlanTaskKeyDataExchange])
 	suite.NotNil(taskByKey[models.PlanTaskKeyTwoPager])
 	suite.NotNil(taskByKey[models.PlanTaskKeySixPager])
+	suite.NotNil(taskByKey[models.PlanTaskKeyOaPresentation])
+
+	upcomingKeys := map[models.PlanTaskKey]bool{
+		models.PlanTaskKeySixPager:       true,
+		models.PlanTaskKeyOaPresentation: true,
+	}
 
 	for _, t := range tasks {
 		suite.Equal(plan.ID, t.ModelPlanID)
 		suite.Nil(t.CompletedBy)
 		suite.Nil(t.CompletedDts)
-		if t.Key == models.PlanTaskKeySixPager {
+		if upcomingKeys[t.Key] {
 			suite.Equal(models.PlanTaskStatusUpcoming, t.Status)
 		} else {
 			suite.Equal(models.PlanTaskStatusToDo, t.Status)

@@ -17,11 +17,12 @@ type PlanTaskKey string
 
 // These constants represent the possible values of a PlanTaskKey
 const (
-	PlanTaskKeyModelPlan    PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMto          PlanTaskKey = "MTO"
-	PlanTaskKeyDataExchange PlanTaskKey = "DATA_EXCHANGE"
-	PlanTaskKeyTwoPager     PlanTaskKey = "TWO_PAGER"
-	PlanTaskKeySixPager     PlanTaskKey = "SIX_PAGER"
+	PlanTaskKeyModelPlan      PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto            PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange   PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyTwoPager       PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeySixPager       PlanTaskKey = "SIX_PAGER"
+	PlanTaskKeyOaPresentation PlanTaskKey = "OA_PRESENTATION"
 )
 
 // manuallyMarkablePlanTaskKeys are the PlanTaskKeys whose status is set directly by a user via
@@ -51,6 +52,7 @@ func (k PlanTaskKey) IsManuallyMarkable() bool {
 // is later marked incomplete again (see PlanTaskMarkComplete in pkg/graph/resolvers/plan_task.go).
 var planTaskActivationTriggers = map[PlanTaskKey]PlanTaskKey{
 	PlanTaskKeyTwoPager: PlanTaskKeySixPager,
+	PlanTaskKeySixPager: PlanTaskKeyOaPresentation,
 }
 
 // ActivationTarget returns the PlanTaskKey that should activate (move from UPCOMING to TO_DO) when k
