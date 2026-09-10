@@ -1,5 +1,17 @@
 ALTER TYPE PLAN_TASK_KEY ADD VALUE IF NOT EXISTS 'WAIVER_ASSESSMENT_SURVEY';
 
+-- Add waiver assessment survey completion notification activity type.
+ALTER TYPE ACTIVITY_TYPE ADD VALUE IF NOT EXISTS 'WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE' AFTER 'IDDOC_QUESTIONNAIRE_COMPLETED';
+
+-- Add the waiver tables to the TABLE_NAME enum used by auditing
+ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'waiver_assessment_survey';
+ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'waiver';
+ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'common_waiver';
+ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'suggested_waiver';
+
+-- commit after all enums are updated
+COMMIT;
+
 /*
 Backfill a WAIVER_ASSESSMENT_SURVEY plan_task row for every existing model plan.
 All existing plans start at TO_DO since no survey data exists yet.
@@ -27,11 +39,7 @@ WHERE NOT EXISTS (
 );
 
 
--- Add the waiver tables to the TABLE_NAME enum used by auditing
-ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'waiver_assessment_survey';
-ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'waiver';
-ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'common_waiver';
-ALTER TYPE TABLE_NAME ADD VALUE IF NOT EXISTS 'suggested_waiver';
+
 
 -- Create enum for waiver assessment survey work status
 CREATE TYPE WAIVER_ASSESSMENT_SURVEY_STATUS AS ENUM (
@@ -221,11 +229,6 @@ VALUES
 (GEN_RANDOM_UUID(), 'Medicaid Payment Waiver 4', NULL, NULL, NULL, 'MEDICAID_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID),
 (GEN_RANDOM_UUID(), 'Medicaid Payment Waiver 5', NULL, NULL, NULL, 'MEDICAID_PAYMENT', NULL, NULL, NULL, NULL, NULL, '00000001-0001-0001-0001-000000000001'::UUID);
 
--- Add waiver assessment survey completion notification activity type.
--- Must be separate from V269 because ALTER TYPE ADD VALUE cannot be referenced
--- as a literal in the same transaction.
-ALTER TYPE ACTIVITY_TYPE ADD VALUE IF NOT EXISTS 'WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE' AFTER 'IDDOC_QUESTIONNAIRE_COMPLETED';
-
 -- Notification preference type scoping waiver survey completion alerts.
 CREATE TYPE WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE_NOTIFICATION_TYPE AS ENUM (
     'ALL_MODELS',
@@ -241,9 +244,6 @@ COMMENT ON COLUMN user_notification_preferences.waiver_assessment_survey_marked_
 COMMENT ON COLUMN user_notification_preferences.waiver_assessment_survey_marked_complete_notification_type IS 'Notification preference type for when a waiver assessment survey is marked complete.';
 
 -- Register auditing for the waiver_assessment_survey and waiver tables.
--- These calls must run in a separate migration from the ALTER TYPE TABLE_NAME ADD VALUE
--- statements (V269) because PostgreSQL does not allow a newly added enum value to be
--- referenced as a literal in the same transaction.
 SELECT audit.AUDIT_TABLE(
     'public',
     'waiver_assessment_survey',
