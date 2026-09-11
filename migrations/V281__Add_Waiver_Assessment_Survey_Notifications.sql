@@ -1,6 +1,6 @@
 -- Add waiver assessment survey completion notification activity type.
--- Must be separate from V269 because ALTER TYPE ADD VALUE cannot be referenced
--- as a literal in the same transaction.
+-- NOTE: PostgreSQL enum values cannot be referenced as literals in the same transaction they are added,
+-- so any follow-on usage of 'WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE' must be in a later migration.
 ALTER TYPE ACTIVITY_TYPE ADD VALUE IF NOT EXISTS 'WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE' AFTER 'IDDOC_QUESTIONNAIRE_COMPLETED';
 
 -- Notification preference type scoping waiver survey completion alerts.
