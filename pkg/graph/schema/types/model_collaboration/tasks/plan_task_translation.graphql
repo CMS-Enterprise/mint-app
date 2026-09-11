@@ -2,5 +2,5 @@
 Represents plan task translation data
 """
 type PlanTaskTranslation {
-  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  state: TranslationFieldWithOptions! @goTag(key: "db", value: "state")
 }

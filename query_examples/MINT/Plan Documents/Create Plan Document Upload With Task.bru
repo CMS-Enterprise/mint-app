@@ -1,7 +1,7 @@
 meta {
   name: Create Plan Document Upload With Task
   type: graphql
-  seq: 4
+  seq: 7
 }
 
 post {
@@ -20,8 +20,9 @@ body:graphql {
   mutation uploadNewPlanDocument ($input: PlanDocumentInput!) {
       uploadNewPlanDocument (input: $input) {
           id
-          planTaskID
           fileName
+          documentType
+          planTaskID
       }
   }
 }

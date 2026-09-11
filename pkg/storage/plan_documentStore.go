@@ -185,7 +185,8 @@ func (s *Store) PlanDocumentsReadByPlanTaskID(logger *zap.Logger, planTaskID uui
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, planTaskID)
 	}
 
-	return documents, nil
+	err = logIfNoRowsFetched(logger, planTaskID, documents)
+	return documents, err
 }
 
 // PlanDocumentsReadByPlanTaskIDNotRestricted reads non-restricted plan documents attributed to a plan task.
@@ -211,7 +212,8 @@ func (s *Store) PlanDocumentsReadByPlanTaskIDNotRestricted(
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, planTaskID)
 	}
 
-	return documents, nil
+	err = logIfNoRowsFetched(logger, planTaskID, documents)
+	return documents, err
 }
 
 func planDocumentsUpdateVirusScanStatuses(s3Client *s3.S3Client, documents []*models.PlanDocument) error {

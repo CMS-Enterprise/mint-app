@@ -264,4 +264,147 @@ describe('ChangeRecord', () => {
     );
     expect(asFragment()).toMatchSnapshot();
   });
+
+  it('attributes a manually-marked SIX_PAGER status change to the acting user, not MINT', () => {
+    const sixPagerRecord: ChangeRecordType = {
+      id: 'd4b7e6a1-9c2e-4f3a-8b1d-1a2b3c4d5e6f',
+      tableName: TableName.PLAN_TASK,
+      date: '2024-06-28T12:00:00.000000Z',
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          id: '9f1eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.UPDATED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'state',
+          fieldNameTranslated: 'State',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: 'TO_DO',
+          oldTranslated: 'To do',
+          new: 'COMPLETE',
+          newTranslated: 'Complete',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      metaData: {
+        __typename: 'TranslatedAuditMetaGeneric',
+        version: 0,
+        tableName: TableName.PLAN_TASK,
+        relation: 'SIX_PAGER',
+        relationContent:
+          'Prepare for your 6-page review meeting with CMMI Front Office'
+      },
+      actorName: 'Jane McModelteam',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText, queryByText } = render(
+      <ChangeRecord changeRecord={sixPagerRecord} index={1} />
+    );
+
+    expect(getByText('Jane McModelteam')).toBeInTheDocument();
+    expect(queryByText('MINT')).not.toBeInTheDocument();
+    expect(
+      getByText(
+        /marked a task \(Prepare for your 6-page review meeting with CMMI Front Office\) as Complete/
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('attributes an automatically-activated SIX_PAGER status change to MINT, not the triggering user', () => {
+    const sixPagerActivationRecord: ChangeRecordType = {
+      id: 'f5c8d7b2-3a4e-4b5c-9d6e-7f8a9b0c1d2e',
+      tableName: TableName.PLAN_TASK,
+      date: '2024-06-28T12:01:00.000000Z',
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          id: 'a01eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.UPDATED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'state',
+          fieldNameTranslated: 'State',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: 'UPCOMING',
+          oldTranslated: 'Upcoming',
+          new: 'TO_DO',
+          newTranslated: 'To do',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      metaData: {
+        __typename: 'TranslatedAuditMetaGeneric',
+        version: 0,
+        tableName: TableName.PLAN_TASK,
+        relation: 'SIX_PAGER',
+        relationContent:
+          'Prepare for your 6-page review meeting with CMMI Front Office'
+      },
+      // The user who triggered the cascade by completing TWO_PAGER - the backend attributes the
+      // SIX_PAGER activation write itself to the MINT system account, not this user.
+      actorName: 'Mint System Account',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText, queryByText } = render(
+      <ChangeRecord changeRecord={sixPagerActivationRecord} index={1} />
+    );
+
+    expect(getByText('MINT')).toBeInTheDocument();
+    expect(queryByText('Mint System Account')).not.toBeInTheDocument();
+    expect(
+      getByText(
+        /automatically marked a task \(Prepare for your 6-page review meeting with CMMI Front Office\) as To do/
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('attributes an automatically-calculated plan task status change to MINT', () => {
+    const autoRecord: ChangeRecordType = {
+      id: 'a1b2c3d4-5e6f-4a1b-9c2d-3e4f5a6b7c8d',
+      tableName: TableName.PLAN_TASK,
+      date: '2024-06-28T12:01:00.000000Z',
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          id: '8e1eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.UPDATED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'state',
+          fieldNameTranslated: 'State',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: 'UPCOMING',
+          oldTranslated: 'Upcoming',
+          new: 'TO_DO',
+          newTranslated: 'To do',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      metaData: {
+        __typename: 'TranslatedAuditMetaGeneric',
+        version: 0,
+        tableName: TableName.PLAN_TASK,
+        relation: 'MODEL_PLAN',
+        relationContent: 'Model Plan'
+      },
+      actorName: 'Jane McModelteam',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText, queryByText } = render(
+      <ChangeRecord changeRecord={autoRecord} index={1} />
+    );
+
+    expect(getByText('MINT')).toBeInTheDocument();
+    expect(queryByText('Jane McModelteam')).not.toBeInTheDocument();
+    expect(
+      getByText(/automatically marked a task \(Model Plan\) as To do/)
+    ).toBeInTheDocument();
+  });
 });

@@ -41,7 +41,7 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
-  | 'planTaskStatusUpdate'
+  | 'planTaskStateUpdate'
   | 'customTimelineUpdate'
   | 'questionnaireTaskListStatusUpdate'
   | 'mtoStatusUpdate'
@@ -120,21 +120,37 @@ export const isTableWithStatus = (
 // PlanTaskKey values whose status is set directly by a user (e.g. via a "mark complete" action),
 // rather than calculated automatically from other model state. Mirrors
 // models.manuallyMarkablePlanTaskKeys in pkg/models/plan_task.go — keep in sync.
-const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [PlanTaskKey.TWO_PAGER];
+const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [
+  PlanTaskKey.TWO_PAGER,
+  PlanTaskKey.SIX_PAGER
+];
+
+// The common_name of the MINT system user account (seeded in migrations/V45), used to attribute
+// automatic changes made to a manually-markable task (see below). Mirrors the same check in
+// src/features/Notifications/Home/_components/IndividualNotification.tsx — keep in sync.
+const systemAccountCommonName = 'Mint System Account';
 
 // isPlanTaskAutomaticChange determines whether a plan_task change record represents a status
-// calculated automatically (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as a side effect of
-// other edits) rather than a task the user directly marked complete/to do. Automatic changes are
+// calculated or activated automatically (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as a side
+// effect of other edits, or SIX_PAGER activating from UPCOMING to TO_DO when TWO_PAGER is marked
+// complete) rather than a task the user directly marked complete/to do. Automatic changes are
 // attributed to "MINT" in change history instead of the editing user (see ChangeRecord).
+//
+// Keys that are never manually markable (MODEL_PLAN/MTO/DATA_EXCHANGE) are always automatic. Keys
+// that are manually markable (TWO_PAGER/SIX_PAGER) can *also* change as an automatic side effect
+// (e.g. SIX_PAGER activating) - the backend attributes that specific write to the MINT system
+// account (see activateUpcomingPlanTask in pkg/graph/resolvers/plan_task.go), so those are
+// distinguished by actorName rather than by key alone.
 export const isPlanTaskAutomaticChange = (
   change: ChangeRecordType
 ): boolean => {
   if (change.tableName !== TableName.PLAN_TASK) return false;
   if (!change.metaData || !isGenericWithMetaData(change.metaData)) return false;
 
-  return !manuallyMarkablePlanTaskKeys.includes(
-    change.metaData.relation as PlanTaskKey
-  );
+  const key = change.metaData.relation as PlanTaskKey;
+  if (!manuallyMarkablePlanTaskKeys.includes(key)) return true;
+
+  return change.actorName === systemAccountCommonName;
 };
 
 // Type guard to check generic union type
@@ -861,13 +877,12 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   ) {
     return 'taskListStatusUpdate';
   }
-
-  // If the change is a plan task (Tasks section) status update, return 'planTaskStatusUpdate'
+  // If the change is a plan task (Tasks section) state update, return 'planTaskStateUpdate'
   if (
     change.tableName === TableName.PLAN_TASK &&
-    change.translatedFields.find(field => field.fieldName === 'status')
+    change.translatedFields.find(field => field.fieldName === 'state')
   ) {
-    return 'planTaskStatusUpdate';
+    return 'planTaskStateUpdate';
   }
 
   if (change.tableName === TableName.CUSTOM_TIMELINE_DATE) {
@@ -997,7 +1012,7 @@ export const getHeaderText = (change: ChangeRecordType): string => {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       }
       break;
-    case 'planTaskStatusUpdate':
+    case 'planTaskStateUpdate':
       headerText = isPlanTaskAutomaticChange(change)
         ? i18next.t(`changeHistory:taskCardAutoStatusUpdate`)
         : i18next.t(`changeHistory:taskCardStatusUpdate`);
@@ -1098,12 +1113,15 @@ export const isInitialCreatedSection = (
   changeType: ChangeType
 ): boolean =>
   !!(
-    ((changeType === 'taskListStatusUpdate' ||
-      changeType === 'planTaskStatusUpdate') &&
+    (changeType === 'taskListStatusUpdate' &&
       change.translatedFields.find(
         field =>
           (field.fieldName === 'status' || field.fieldName === 'needed') &&
           field.old === null
+      )) ||
+    (changeType === 'planTaskStateUpdate' &&
+      change.translatedFields.find(
+        field => field.fieldName === 'state' && field.old === null
       )) ||
     identifyChangeType(change) === 'operationalNeedCreate'
   );

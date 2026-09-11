@@ -36,35 +36,35 @@ type TaskCardProps = {
   modelPlan: GetCollaborationAreaQuery['modelPlan'];
 };
 
-type TaskStateConfig = {
+type TaskStatusConfig = {
   style: string;
   icon: React.ReactNode;
 };
 
-const TASK_STATE_CONFIG: Record<PlanTaskState, TaskStateConfig> = {
-  [PlanTaskState.TO_DO]: {
+const TASK_STATUS_CONFIG: Partial<Record<PlanTaskStatus, TaskStatusConfig>> = {
+  [PlanTaskStatus.TO_DO]: {
     style: 'bg-warning-light',
     icon: <Icon.PriorityHigh aria-label="To do" />
   },
-  [PlanTaskState.COMPLETE]: {
+  [PlanTaskStatus.COMPLETE]: {
     style: 'bg-success-dark text-white',
     icon: <Icon.Check aria-label="Complete" />
   }
 };
 
-const USER_MARK_STATUS_TASKS = [PlanTaskKey.TWO_PAGER];
+const USER_MARK_STATUS_TASKS = [PlanTaskKey.TWO_PAGER, PlanTaskKey.SIX_PAGER];
 
-function TaskStateTag({ state }: { state: PlanTaskState }) {
+function TaskStatusTag({ status }: { status: PlanTaskStatus }) {
   const { t } = useTranslation('tasks');
-  const { style, icon } = TASK_STATE_CONFIG[state];
+  const config = TASK_STATUS_CONFIG[status];
 
   return (
     <div
-      className={`line-height-body-1 text-bold display-flex flex-align-center ${style}`}
+      className={`line-height-body-1 text-bold display-flex flex-align-center ${config?.style}`}
       style={{ padding: '7px 11px', gap: '0.5rem' }}
     >
-      {icon}
-      <span>{t(`state.${state}`)}</span>
+      {config?.icon}
+      <span>{t(`status.${status}`)}</span>
     </div>
   );
 }
@@ -76,8 +76,8 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
   const navigate = useNavigate();
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { key, status, state } = task;
-  const baseKey = `${key}.${status}`;
+  const { key, state, status } = task;
+  const baseKey = `${key}.${state}`;
   const lastEditSection = getLastEditSectionForTask(key, modelPlan);
   const sectionStartedCounter = getSectionStartedCount(modelPlan);
 
@@ -127,7 +127,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
       <CardHeader>
         <div className="display-flex flex-align-center flex-justify">
           <h3 className="usa-card__heading">{t(`${baseKey}.heading`)}</h3>
-          <TaskStateTag state={state} />
+          <TaskStatusTag status={status} />
         </div>
       </CardHeader>
 
@@ -141,7 +141,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
           />
         </p>
 
-        {status !== PlanTaskStatus.TO_DO && (
+        {state !== PlanTaskState.TO_DO && (
           <div className="display-flex flex-align-center flex-wrap-wrap">
             {key === PlanTaskKey.MODEL_PLAN && (
               <>
