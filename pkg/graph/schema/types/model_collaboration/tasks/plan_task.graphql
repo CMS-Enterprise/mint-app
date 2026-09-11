@@ -4,8 +4,8 @@ PlanTask represents a task on a model plan (e.g. model plan details, MTO, data e
 type PlanTask {
   id: UUID!
   key: PlanTaskKey!
-  status: PlanTaskStatus!
-  state: PlanTaskState! @goField(forceResolver: true)
+  status: PlanTaskStatus! @goField(forceResolver: true)
+  state: PlanTaskState!
   documents: [PlanDocument!]! @goField(forceResolver: true)
   completedBy: UUID
   completedByUserAccount: UserAccount
@@ -30,9 +30,9 @@ enum PlanTaskKey {
 }
 
 """
-PlanTaskStatus is stored in the database and represents the task lifecycle.
+PlanTaskState is stored in the database and represents the task lifecycle.
 """
-enum PlanTaskStatus {
+enum PlanTaskState {
   NOT_NEEDED
   UPCOMING
   TO_DO
@@ -41,12 +41,11 @@ enum PlanTaskStatus {
 }
 
 """
-PlanTaskState is computed from PlanTaskStatus for display: it groups the finer-grained
-PlanTaskStatus into the buckets the task list UI switches on. UPCOMING maps to UPCOMING; COMPLETE
-maps to COMPLETE; every other status (TO_DO, IN_PROGRESS, NOT_NEEDED) maps to TO_DO.
+PlanTaskStatus is computed from PlanTaskState for display: it collapses every state to just
+TO_DO or COMPLETE. Only COMPLETE maps to COMPLETE; every other state (NOT_NEEDED, UPCOMING,
+TO_DO, IN_PROGRESS) maps to TO_DO.
 """
-enum PlanTaskState {
-  UPCOMING
+enum PlanTaskStatus {
   TO_DO
   COMPLETE
 }

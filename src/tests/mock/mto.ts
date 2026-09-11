@@ -127,8 +127,8 @@ export const planTasksWithModelPlanComplete = makePlanTasks({
 });
 export const planTasksWithModelPlanInProgress = makePlanTasks({
   [PlanTaskKey.MODEL_PLAN]: {
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.IN_PROGRESS
+    state: PlanTaskState.IN_PROGRESS,
+    status: PlanTaskStatus.TO_DO
   }
 });
 

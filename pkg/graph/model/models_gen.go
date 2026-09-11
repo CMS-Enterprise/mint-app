@@ -913,7 +913,7 @@ type PlanTDLTranslation struct {
 
 // Represents plan task translation data
 type PlanTaskTranslation struct {
-	Status models.TranslationFieldWithOptions `json:"status" db:"status"`
+	State models.TranslationFieldWithOptions `json:"state" db:"state"`
 }
 
 // Represents plan timeline translation data
@@ -3109,53 +3109,51 @@ func (e ParticipantsType) MarshalJSON() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// PlanTaskState is computed from PlanTaskStatus for display: it groups the finer-grained
-// PlanTaskStatus into the buckets the task list UI switches on. UPCOMING maps to UPCOMING; COMPLETE
-// maps to COMPLETE; every other status (TO_DO, IN_PROGRESS, NOT_NEEDED) maps to TO_DO.
-type PlanTaskState string
+// PlanTaskStatus is computed from PlanTaskState for display: it collapses every state to just
+// TO_DO or COMPLETE. Only COMPLETE maps to COMPLETE; every other state (NOT_NEEDED, UPCOMING,
+// TO_DO, IN_PROGRESS) maps to TO_DO.
+type PlanTaskStatus string
 
 const (
-	PlanTaskStateUpcoming PlanTaskState = "UPCOMING"
-	PlanTaskStateToDo     PlanTaskState = "TO_DO"
-	PlanTaskStateComplete PlanTaskState = "COMPLETE"
+	PlanTaskStatusToDo     PlanTaskStatus = "TO_DO"
+	PlanTaskStatusComplete PlanTaskStatus = "COMPLETE"
 )
 
-var AllPlanTaskState = []PlanTaskState{
-	PlanTaskStateUpcoming,
-	PlanTaskStateToDo,
-	PlanTaskStateComplete,
+var AllPlanTaskStatus = []PlanTaskStatus{
+	PlanTaskStatusToDo,
+	PlanTaskStatusComplete,
 }
 
-func (e PlanTaskState) IsValid() bool {
+func (e PlanTaskStatus) IsValid() bool {
 	switch e {
-	case PlanTaskStateUpcoming, PlanTaskStateToDo, PlanTaskStateComplete:
+	case PlanTaskStatusToDo, PlanTaskStatusComplete:
 		return true
 	}
 	return false
 }
 
-func (e PlanTaskState) String() string {
+func (e PlanTaskStatus) String() string {
 	return string(e)
 }
 
-func (e *PlanTaskState) UnmarshalGQL(v any) error {
+func (e *PlanTaskStatus) UnmarshalGQL(v any) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = PlanTaskState(str)
+	*e = PlanTaskStatus(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid PlanTaskState", str)
+		return fmt.Errorf("%s is not a valid PlanTaskStatus", str)
 	}
 	return nil
 }
 
-func (e PlanTaskState) MarshalGQL(w io.Writer) {
+func (e PlanTaskStatus) MarshalGQL(w io.Writer) {
 	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-func (e *PlanTaskState) UnmarshalJSON(b []byte) error {
+func (e *PlanTaskStatus) UnmarshalJSON(b []byte) error {
 	s, err := strconv.Unquote(string(b))
 	if err != nil {
 		return err
@@ -3163,7 +3161,7 @@ func (e *PlanTaskState) UnmarshalJSON(b []byte) error {
 	return e.UnmarshalGQL(s)
 }
 
-func (e PlanTaskState) MarshalJSON() ([]byte, error) {
+func (e PlanTaskStatus) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil

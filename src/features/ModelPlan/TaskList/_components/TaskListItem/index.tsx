@@ -6,7 +6,7 @@ import {
   ModelStatus,
   MtoMilestoneStatus,
   MtoStatus,
-  PlanTaskState,
+  PlanTaskStatus,
   PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
@@ -35,7 +35,7 @@ export const TaskListStatusTag = ({
     | IddocQuestionnaireTaskListStatus
     | MtoStatus
     | MtoMilestoneStatus
-    | PlanTaskState
+    | PlanTaskStatus
     | undefined;
   classname?: string;
 }) => {
@@ -81,11 +81,11 @@ export const TaskListStatusTag = ({
       tagCopy = t('taskListStatus.COMPLETE');
       tagStyle = 'bg-success-dark text-white';
       break;
-    case PlanTaskState.TO_DO:
+    case PlanTaskStatus.TO_DO:
       tagCopy = t('taskListStatus.TO_DO');
       tagStyle = 'bg-info-light';
       break;
-    case PlanTaskState.COMPLETE:
+    case PlanTaskStatus.COMPLETE:
       tagCopy = t('taskListStatus.COMPLETE');
       tagStyle = 'bg-warning';
       break;

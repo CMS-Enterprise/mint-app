@@ -24,7 +24,7 @@ func (suite *NotificationsSuite) TestActivityNewTaskAddedCreate() {
 		actorID,
 		modelPlanID,
 		models.PlanTaskKeyModelPlan,
-		models.PlanTaskStatusToDo,
+		models.PlanTaskStateToDo,
 	)
 
 	testActivity, err := ActivityNewTaskAddedCreate(
