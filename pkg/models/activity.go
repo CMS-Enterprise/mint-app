@@ -35,6 +35,7 @@ const (
 var activityMetaDataTypeMap = map[ActivityType]func() ActivityMetaData{
 	ActivityDigest:                               func() ActivityMetaData { return &DailyDigestCompleteActivityMeta{} },
 	ActivityAddedAsCollaborator:                  func() ActivityMetaData { return &AddedAsCollaboratorMeta{} },
+	ActivityTaggedInDiscussion:                   func() ActivityMetaData { return &TaggedInPlanDiscussionActivityMeta{} },
 	ActivityTaggedInDiscussionReply:              func() ActivityMetaData { return &TaggedInDiscussionReplyActivityMeta{} },
 	ActivityNewDiscussionReply:                   func() ActivityMetaData { return &NewDiscussionRepliedActivityMeta{} },
 	ActivityModelPlanShared:                      func() ActivityMetaData { return &ModelPlanSharedActivityMeta{} },
