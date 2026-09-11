@@ -137,7 +137,7 @@ export const ChangeHeader = ({
   }
 
   // Plan task (Tasks section) status audits
-  if (changeRecordType === 'planTaskStatusUpdate') {
+  if (changeRecordType === 'planTaskStateUpdate') {
     const status = changeRecord.translatedFields.find(
       field => field.fieldName === 'status'
     )?.newTranslated;
