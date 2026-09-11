@@ -95,6 +95,26 @@ const tasks = {
       primaryAction: 'Go to approach'
     }
   },
+  [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: {
+    copy: 'CMMI Leadership assumes that new models will use program and payment waivers unless justified otherwise. This mandatory survey helps determine which models will use which waivers, which specific waivers are most appropriate for each model, ensures proper justification for waiver selections, and identifies instances where standard CMS authorities may be insufficient without additional waiver flexibility. ',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about',
+    secondaryPath:
+      '/models/{{modelID}}/collaboration-area/additional-questionnaires',
+    secondaryAction: 'View additional questionnaires',
+    [PlanTaskStatus.TO_DO]: {
+      heading: 'Complete your waiver assessment survey',
+      primaryAction: 'Start'
+    },
+    [PlanTaskStatus.IN_PROGRESS]: {
+      heading: 'Complete your waiver assessment survey',
+      primaryAction: 'Continue'
+    },
+    [PlanTaskStatus.COMPLETE]: {
+      heading: 'Complete your waiver assessment survey',
+      primaryAction: 'Go to survey'
+    }
+  },
   [PlanTaskKey.MTO]: {
     copy: 'Work with your IT Lead to document model milestones or functions required for your model and choose the solutions and IT systems your model will utilize. Track your progress towards implementation, browse milestone and solution libraries, see points of contact for available solutions, and monitor deadlines. Keeping this information up-to-date will also help the MINT Team understand how best to help you.',
     primaryPath: '/models/{{modelID}}/collaboration-area/model-to-operations',

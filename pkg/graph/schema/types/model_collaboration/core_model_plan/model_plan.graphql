@@ -135,6 +135,10 @@ type ModelPlan {
   # MTO Fields (START)
   mtoMatrix: ModelsToOperationMatrix!
   # MTO Fields (END)
+
+  # Waiver Fields (START)
+  waiverInfo: WaiverInfo!
+  # Waiver Fields (END)
 }
 
 """

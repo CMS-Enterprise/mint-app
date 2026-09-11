@@ -39,9 +39,10 @@ export enum BreadcrumbItemOptions {
   PAYMENTS = 'PAYMENTS',
   PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE',
   STATUS = 'STATUS',
+  TIMELINE = 'TIMELINE',
+  WAIVER_ASSESSMENT_SURVEY = 'WAIVER_ASSESSMENT_SURVEY',
   TASK_LIST = 'TASK_LIST',
-  TASKS = 'TASKS',
-  TIMELINE = 'TIMELINE'
+  TASKS = 'TASKS'
 }
 
 export interface BreadcrumbsProps {
@@ -156,6 +157,10 @@ export const commonBreadCrumbs = (
   TIMELINE: {
     text: 'timelineMisc:heading',
     url: `/models/${modelID}/collaboration-area/model-timeline`
+  },
+  WAIVER_ASSESSMENT_SURVEY: {
+    text: 'waiverAssessmentSurveyMisc:heading',
+    url: `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about`
   }
 });
 

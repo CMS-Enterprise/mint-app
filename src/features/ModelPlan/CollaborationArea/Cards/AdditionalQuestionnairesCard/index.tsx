@@ -31,7 +31,10 @@ export type AdditionalQuestionnairesCardType = {
   questionnairesData: QuestionnairesType;
 };
 
-const REQUIRED_QUESTIONNAIRES: QuestionnaireName[] = ['dataExchangeApproach'];
+const REQUIRED_QUESTIONNAIRES: QuestionnaireName[] = [
+  'dataExchangeApproach',
+  'waiverAssessmentSurvey'
+];
 
 const QuestionnaireStatusPill = ({
   status

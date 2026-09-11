@@ -3,7 +3,7 @@ import {
   LockableSectionLockStatus
 } from 'gql/generated/graphql';
 
-import { findLockedSection, LockStatus } from '.';
+import { findLockedSection, LockStatus } from 'utils/lockableSectionLinking';
 
 const locks: LockableSectionLockStatus[] = [
   {

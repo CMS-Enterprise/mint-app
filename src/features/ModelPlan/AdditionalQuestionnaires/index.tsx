@@ -23,6 +23,7 @@ import { ModelInfoContext } from 'contexts/ModelInfoContext';
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { QuestionnaireName } from 'types/questionnaires';
 import { formatDateLocal } from 'utils/date';
+import { findEffectiveLock } from 'utils/lockableSectionLinking';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import QuestionnaireListItem, {
@@ -35,11 +36,13 @@ type QuestionnaireSectionLockStatus =
 
 const questionnaireSectionMap: Partial<Record<string, LockableSection>> = {
   dataExchangeApproach: LockableSection.DATA_EXCHANGE_APPROACH,
+  waiverAssessmentSurvey: LockableSection.WAIVER_ASSESSMENT_SURVEY,
   iddocQuestionnaire: LockableSection.IDDOC_QUESTIONNAIRE
 };
 
 const QUESTIONNAIRE_DISPLAY_ORDER = [
   'dataExchangeApproach',
+  'waiverAssessmentSurvey',
   'iddocQuestionnaire'
 ] as const satisfies QuestionnaireName[];
 
@@ -68,9 +71,13 @@ const AdditionalQuestionnaires = () => {
   const getQuestionnaireLockedStatus = (
     section: string
   ): QuestionnaireSectionLockStatus | undefined => {
-    return lockableSectionLocks.find(
-      sectionLock => sectionLock.section === questionnaireSectionMap[section]
-    );
+    const lockableSection = questionnaireSectionMap[section];
+
+    if (!lockableSection) {
+      return undefined;
+    }
+
+    return findEffectiveLock(lockableSectionLocks, lockableSection);
   };
 
   if (loading) {

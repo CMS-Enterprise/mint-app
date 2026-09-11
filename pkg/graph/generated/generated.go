@@ -86,6 +86,7 @@ type ResolverRoot interface {
 	Query() QueryResolver
 	Questionnaires() QuestionnairesResolver
 	Subscription() SubscriptionResolver
+	SuggestedWaiver() SuggestedWaiverResolver
 	Tag() TagResolver
 	TaggedContent() TaggedContentResolver
 	TaggedInDiscussionReplyActivityMeta() TaggedInDiscussionReplyActivityMetaResolver
@@ -98,6 +99,10 @@ type ResolverRoot interface {
 	UserNotification() UserNotificationResolver
 	UserNotificationPreferences() UserNotificationPreferencesResolver
 	UserViewCustomization() UserViewCustomizationResolver
+	Waiver() WaiverResolver
+	WaiverAssessmentSurvey() WaiverAssessmentSurveyResolver
+	WaiverAssessmentSurveyMarkedCompleteActivityMeta() WaiverAssessmentSurveyMarkedCompleteActivityMetaResolver
+	WaiverInfo() WaiverInfoResolver
 }
 
 type DirectiveRoot struct {
@@ -322,6 +327,30 @@ type ComplexityRoot struct {
 	CommonCategory struct {
 		Name          func(childComplexity int) int
 		SubCategories func(childComplexity int) int
+	}
+
+	CommonWaiver struct {
+		CmmiWaiverPointOfContact           func(childComplexity int) int
+		CreatedBy                          func(childComplexity int) int
+		CreatedByUserAccount               func(childComplexity int) int
+		CreatedDts                         func(childComplexity int) int
+		Description                        func(childComplexity int) int
+		HasClaimsDataOrRREGAnalysis        func(childComplexity int) int
+		HasStandardizationEffort           func(childComplexity int) int
+		ID                                 func(childComplexity int) int
+		IsAnswered                         func(childComplexity int) int
+		IsSuggested                        func(childComplexity int) int
+		IsUsedInActiveModels               func(childComplexity int) int
+		ModifiedBy                         func(childComplexity int) int
+		ModifiedByUserAccount              func(childComplexity int) int
+		ModifiedDts                        func(childComplexity int) int
+		Name                               func(childComplexity int) int
+		NotUsingReason                     func(childComplexity int) int
+		ParticipationAgreementLanguageLink func(childComplexity int) int
+		WaiverFocus                        func(childComplexity int) int
+		WaiverType                         func(childComplexity int) int
+		WhatIsWaived                       func(childComplexity int) int
+		WillUseWaiver                      func(childComplexity int) int
 	}
 
 	CurrentUser struct {
@@ -1087,6 +1116,7 @@ type ComplexityRoot struct {
 		Tasks                    func(childComplexity int) int
 		Tdls                     func(childComplexity int) int
 		Timeline                 func(childComplexity int) int
+		WaiverInfo               func(childComplexity int) int
 	}
 
 	ModelPlanAndGroup struct {
@@ -1225,8 +1255,11 @@ type ComplexityRoot struct {
 		UpdatePlanPayments                    func(childComplexity int, id uuid.UUID, changes map[string]any) int
 		UpdatePlanTdl                         func(childComplexity int, id uuid.UUID, changes map[string]any) int
 		UpdatePlanTimeline                    func(childComplexity int, id uuid.UUID, changes map[string]any) int
+		UpdateSelectedWaivers                 func(childComplexity int, modelPlanID uuid.UUID, changes []*models.WaiverSelectionInput) int
 		UpdateUserNotificationPreferences     func(childComplexity int, changes map[string]any) int
 		UpdateUserViewCustomization           func(childComplexity int, changes map[string]any) int
+		UpdateWaiver                          func(childComplexity int, modelPlanID uuid.UUID, commonWaiverID uuid.UUID, changes map[string]any) int
+		UpdateWaiverAssessmentSurvey          func(childComplexity int, id uuid.UUID, changes map[string]any) int
 		UploadNewPlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
 	}
 
@@ -2416,6 +2449,8 @@ type ComplexityRoot struct {
 		AnalyzedAudits                    func(childComplexity int, dateAnalyzed time.Time) int
 		AuditChanges                      func(childComplexity int, tableName models.TableName, primaryKey uuid.UUID) int
 		CommonCategories                  func(childComplexity int) int
+		CommonWaiver                      func(childComplexity int, id uuid.UUID) int
+		CommonWaivers                     func(childComplexity int, modelPlanID *uuid.UUID) int
 		CtatRequest                       func(childComplexity int, id uuid.UUID) int
 		CtatRequests                      func(childComplexity int) int
 		CtatRequestsRequester             func(childComplexity int) int
@@ -2454,16 +2489,31 @@ type ComplexityRoot struct {
 		TranslatedAuditCollection         func(childComplexity int, modelPlanID uuid.UUID, limit *int, offset *int) int
 		UserAccount                       func(childComplexity int, username string) int
 		UserViewCustomization             func(childComplexity int) int
+		WaiverInfo                        func(childComplexity int, modelPlanID uuid.UUID) int
 	}
 
 	Questionnaires struct {
-		DataExchangeApproach func(childComplexity int) int
-		IddocQuestionnaire   func(childComplexity int) int
+		DataExchangeApproach   func(childComplexity int) int
+		IddocQuestionnaire     func(childComplexity int) int
+		WaiverAssessmentSurvey func(childComplexity int) int
 	}
 
 	Subscription struct {
 		OnLockLockableSectionContext  func(childComplexity int, modelPlanID uuid.UUID) int
 		OnLockableSectionLocksChanged func(childComplexity int, modelPlanID uuid.UUID) int
+	}
+
+	SuggestedWaiver struct {
+		CommonWaiver          func(childComplexity int) int
+		CommonWaiverID        func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
 	}
 
 	Tag struct {
@@ -2825,34 +2875,36 @@ type ComplexityRoot struct {
 	}
 
 	UserNotificationPreferences struct {
-		AddedAsCollaborator                                func(childComplexity int) int
-		CreatedBy                                          func(childComplexity int) int
-		CreatedByUserAccount                               func(childComplexity int) int
-		CreatedDts                                         func(childComplexity int) int
-		DailyDigestComplete                                func(childComplexity int) int
-		DataExchangeApproachMarkedComplete                 func(childComplexity int) int
-		DataExchangeApproachMarkedCompleteNotificationType func(childComplexity int) int
-		DatesChanged                                       func(childComplexity int) int
-		DatesChangedNotificationType                       func(childComplexity int) int
-		ID                                                 func(childComplexity int) int
-		IddocQuestionnaireComplete                         func(childComplexity int) int
-		IddocQuestionnaireCompletedNotificationType        func(childComplexity int) int
-		IncorrectModelStatus                               func(childComplexity int) int
-		MTOReadyForReviewNotificationType                  func(childComplexity int) int
-		ModelPlanShared                                    func(childComplexity int) int
-		ModifiedBy                                         func(childComplexity int) int
-		ModifiedByUserAccount                              func(childComplexity int) int
-		ModifiedDts                                        func(childComplexity int) int
-		MtoReadyForReview                                  func(childComplexity int) int
-		NewDiscussionAdded                                 func(childComplexity int) int
-		NewDiscussionAddedNotificationType                 func(childComplexity int) int
-		NewDiscussionReply                                 func(childComplexity int) int
-		NewModelPlan                                       func(childComplexity int) int
-		NewTaskAdded                                       func(childComplexity int) int
-		TaggedInDiscussion                                 func(childComplexity int) int
-		TaggedInDiscussionReply                            func(childComplexity int) int
-		TaskCompleted                                      func(childComplexity int) int
-		UserID                                             func(childComplexity int) int
+		AddedAsCollaborator                                  func(childComplexity int) int
+		CreatedBy                                            func(childComplexity int) int
+		CreatedByUserAccount                                 func(childComplexity int) int
+		CreatedDts                                           func(childComplexity int) int
+		DailyDigestComplete                                  func(childComplexity int) int
+		DataExchangeApproachMarkedComplete                   func(childComplexity int) int
+		DataExchangeApproachMarkedCompleteNotificationType   func(childComplexity int) int
+		DatesChanged                                         func(childComplexity int) int
+		DatesChangedNotificationType                         func(childComplexity int) int
+		ID                                                   func(childComplexity int) int
+		IddocQuestionnaireComplete                           func(childComplexity int) int
+		IddocQuestionnaireCompletedNotificationType          func(childComplexity int) int
+		IncorrectModelStatus                                 func(childComplexity int) int
+		MTOReadyForReviewNotificationType                    func(childComplexity int) int
+		ModelPlanShared                                      func(childComplexity int) int
+		ModifiedBy                                           func(childComplexity int) int
+		ModifiedByUserAccount                                func(childComplexity int) int
+		ModifiedDts                                          func(childComplexity int) int
+		MtoReadyForReview                                    func(childComplexity int) int
+		NewDiscussionAdded                                   func(childComplexity int) int
+		NewDiscussionAddedNotificationType                   func(childComplexity int) int
+		NewDiscussionReply                                   func(childComplexity int) int
+		NewModelPlan                                         func(childComplexity int) int
+		NewTaskAdded                                         func(childComplexity int) int
+		TaggedInDiscussion                                   func(childComplexity int) int
+		TaggedInDiscussionReply                              func(childComplexity int) int
+		TaskCompleted                                        func(childComplexity int) int
+		UserID                                               func(childComplexity int) int
+		WaiverAssessmentSurveyMarkedComplete                 func(childComplexity int) int
+		WaiverAssessmentSurveyMarkedCompleteNotificationType func(childComplexity int) int
 	}
 
 	UserNotifications struct {
@@ -2874,6 +2926,124 @@ type ComplexityRoot struct {
 		UserAccount           func(childComplexity int) int
 		UserID                func(childComplexity int) int
 		ViewCustomization     func(childComplexity int) int
+	}
+
+	Waiver struct {
+		CommonWaiver          func(childComplexity int) int
+		CommonWaiverID        func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+		NotUsingReason        func(childComplexity int) int
+		WillUseWaiver         func(childComplexity int) int
+	}
+
+	WaiverAssessmentSurvey struct {
+		AdditionalMedicaidSpecificWaivers                      func(childComplexity int) int
+		BundlesPayments                                        func(childComplexity int) int
+		BundlesPaymentsExample                                 func(childComplexity int) int
+		BundlesPaymentsWhyNot                                  func(childComplexity int) int
+		CompletedBy                                            func(childComplexity int) int
+		CompletedByUserAccount                                 func(childComplexity int) int
+		CompletedDts                                           func(childComplexity int) int
+		CreatedBy                                              func(childComplexity int) int
+		CreatedByUserAccount                                   func(childComplexity int) int
+		CreatedDts                                             func(childComplexity int) int
+		ID                                                     func(childComplexity int) int
+		ImpactsHomeCommunityBasedServicePayments               func(childComplexity int) int
+		ImpactsHomeCommunityBasedServicePaymentsExample        func(childComplexity int) int
+		ImpactsHomeCommunityBasedServicePaymentsWhyNot         func(childComplexity int) int
+		ImpactsManagedCareWaivers                              func(childComplexity int) int
+		ImpactsManagedCareWaiversExample                       func(childComplexity int) int
+		ImpactsManagedCareWaiversWhyNot                        func(childComplexity int) int
+		ImpactsMedicaidOnlyBeneficiaries                       func(childComplexity int) int
+		ImpactsMedicaidOnlyBeneficiariesExample                func(childComplexity int) int
+		ImpactsMedicaidOnlyBeneficiariesWhyNot                 func(childComplexity int) int
+		ImpactsSiteOfCarePayments                              func(childComplexity int) int
+		ImpactsSiteOfCarePaymentsExample                       func(childComplexity int) int
+		ImpactsSiteOfCarePaymentsWhyNot                        func(childComplexity int) int
+		IsComplete                                             func(childComplexity int) int
+		ModelPlanID                                            func(childComplexity int) int
+		ModifiedBy                                             func(childComplexity int) int
+		ModifiedByUserAccount                                  func(childComplexity int) int
+		ModifiedDts                                            func(childComplexity int) int
+		ModifiesCareDeliveryWithClaimsBasedPayments            func(childComplexity int) int
+		ModifiesCareDeliveryWithClaimsBasedPaymentsExample     func(childComplexity int) int
+		ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot      func(childComplexity int) int
+		ModifiesCareTeamScopeOfPractice                        func(childComplexity int) int
+		ModifiesCareTeamScopeOfPracticeExample                 func(childComplexity int) int
+		ModifiesCareTeamScopeOfPracticeWhyNot                  func(childComplexity int) int
+		ModifiesMedicareSavingsPrograms                        func(childComplexity int) int
+		ModifiesMedicareSavingsProgramsExample                 func(childComplexity int) int
+		ModifiesMedicareSavingsProgramsWhyNot                  func(childComplexity int) int
+		ModifiesQualityMeasurementsOrPaymentsViaWaivers        func(childComplexity int) int
+		ModifiesQualityMeasurementsOrPaymentsViaWaiversExample func(childComplexity int) int
+		ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot  func(childComplexity int) int
+		OffersRiskSharingArrangements                          func(childComplexity int) int
+		OffersRiskSharingArrangementsExample                   func(childComplexity int) int
+		OffersRiskSharingArrangementsWhyNot                    func(childComplexity int) int
+		Status                                                 func(childComplexity int) int
+		SuggestedWaivers                                       func(childComplexity int) int
+		Waivers                                                func(childComplexity int) int
+	}
+
+	WaiverAssessmentSurveyMarkedCompleteActivityMeta struct {
+		MarkedCompleteBy            func(childComplexity int) int
+		MarkedCompleteByUserAccount func(childComplexity int) int
+		ModelPlan                   func(childComplexity int) int
+		ModelPlanID                 func(childComplexity int) int
+		Type                        func(childComplexity int) int
+		Version                     func(childComplexity int) int
+		WaiverAssessmentSurveyID    func(childComplexity int) int
+	}
+
+	WaiverAssessmentSurveyTranslation struct {
+		AdditionalMedicaidSpecificWaivers                      func(childComplexity int) int
+		BundlesPayments                                        func(childComplexity int) int
+		BundlesPaymentsExample                                 func(childComplexity int) int
+		BundlesPaymentsWhyNot                                  func(childComplexity int) int
+		ImpactsHomeCommunityBasedServicePayments               func(childComplexity int) int
+		ImpactsHomeCommunityBasedServicePaymentsExample        func(childComplexity int) int
+		ImpactsHomeCommunityBasedServicePaymentsWhyNot         func(childComplexity int) int
+		ImpactsManagedCareWaivers                              func(childComplexity int) int
+		ImpactsManagedCareWaiversExample                       func(childComplexity int) int
+		ImpactsManagedCareWaiversWhyNot                        func(childComplexity int) int
+		ImpactsMedicaidOnlyBeneficiaries                       func(childComplexity int) int
+		ImpactsMedicaidOnlyBeneficiariesExample                func(childComplexity int) int
+		ImpactsMedicaidOnlyBeneficiariesWhyNot                 func(childComplexity int) int
+		ImpactsSiteOfCarePayments                              func(childComplexity int) int
+		ImpactsSiteOfCarePaymentsExample                       func(childComplexity int) int
+		ImpactsSiteOfCarePaymentsWhyNot                        func(childComplexity int) int
+		IsComplete                                             func(childComplexity int) int
+		ModifiesCareDeliveryWithClaimsBasedPayments            func(childComplexity int) int
+		ModifiesCareDeliveryWithClaimsBasedPaymentsExample     func(childComplexity int) int
+		ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot      func(childComplexity int) int
+		ModifiesCareTeamScopeOfPractice                        func(childComplexity int) int
+		ModifiesCareTeamScopeOfPracticeExample                 func(childComplexity int) int
+		ModifiesCareTeamScopeOfPracticeWhyNot                  func(childComplexity int) int
+		ModifiesMedicareSavingsPrograms                        func(childComplexity int) int
+		ModifiesMedicareSavingsProgramsExample                 func(childComplexity int) int
+		ModifiesMedicareSavingsProgramsWhyNot                  func(childComplexity int) int
+		ModifiesQualityMeasurementsOrPaymentsViaWaivers        func(childComplexity int) int
+		ModifiesQualityMeasurementsOrPaymentsViaWaiversExample func(childComplexity int) int
+		ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot  func(childComplexity int) int
+		OffersRiskSharingArrangements                          func(childComplexity int) int
+		OffersRiskSharingArrangementsExample                   func(childComplexity int) int
+		OffersRiskSharingArrangementsWhyNot                    func(childComplexity int) int
+		Status                                                 func(childComplexity int) int
+	}
+
+	WaiverInfo struct {
+		CommonWaivers          func(childComplexity int) int
+		ModelPlanID            func(childComplexity int) int
+		SuggestedCommonWaivers func(childComplexity int) int
+		UnusedCommonWaivers    func(childComplexity int) int
+		Waivers                func(childComplexity int) int
 	}
 }
 
@@ -3031,6 +3201,7 @@ type ModelPlanResolver interface {
 	Questionnaires(ctx context.Context, obj *models.ModelPlan) (*models.Questionnaires, error)
 	MostRecentEdit(ctx context.Context, obj *models.ModelPlan) (*models.TranslatedAudit, error)
 	MtoMatrix(ctx context.Context, obj *models.ModelPlan) (*models.ModelsToOperationMatrix, error)
+	WaiverInfo(ctx context.Context, obj *models.ModelPlan) (*models.WaiverInfo, error)
 	GeneralStatus(ctx context.Context, obj *models.ModelPlan) (models.GeneralStatus, error)
 }
 type ModelPlanAndGroupResolver interface {
@@ -3143,6 +3314,9 @@ type MutationResolver interface {
 	UpdateUserViewCustomization(ctx context.Context, changes map[string]any) (*models.UserViewCustomization, error)
 	ReportAProblem(ctx context.Context, input model.ReportAProblemInput) (bool, error)
 	SendFeedbackEmail(ctx context.Context, input model.SendFeedbackEmailInput) (bool, error)
+	UpdateWaiver(ctx context.Context, modelPlanID uuid.UUID, commonWaiverID uuid.UUID, changes map[string]any) (*models.Waiver, error)
+	UpdateSelectedWaivers(ctx context.Context, modelPlanID uuid.UUID, changes []*models.WaiverSelectionInput) ([]*models.Waiver, error)
+	UpdateWaiverAssessmentSurvey(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.WaiverAssessmentSurvey, error)
 }
 type NewDiscussionRepliedActivityMetaResolver interface {
 	ModelPlan(ctx context.Context, obj *models.NewDiscussionRepliedActivityMeta) (*models.ModelPlan, error)
@@ -3356,14 +3530,21 @@ type QueryResolver interface {
 	UserAccount(ctx context.Context, username string) (*authentication.UserAccount, error)
 	SearchOktaUsers(ctx context.Context, searchTerm string) ([]*models.UserInfo, error)
 	UserViewCustomization(ctx context.Context) (*models.UserViewCustomization, error)
+	CommonWaivers(ctx context.Context, modelPlanID *uuid.UUID) ([]*models.CommonWaiver, error)
+	CommonWaiver(ctx context.Context, id uuid.UUID) (*models.CommonWaiver, error)
+	WaiverInfo(ctx context.Context, modelPlanID uuid.UUID) (*models.WaiverInfo, error)
 }
 type QuestionnairesResolver interface {
 	IddocQuestionnaire(ctx context.Context, obj *models.Questionnaires) (*models.IDDOCQuestionnaire, error)
 	DataExchangeApproach(ctx context.Context, obj *models.Questionnaires) (*models.PlanDataExchangeApproach, error)
+	WaiverAssessmentSurvey(ctx context.Context, obj *models.Questionnaires) (*models.WaiverAssessmentSurvey, error)
 }
 type SubscriptionResolver interface {
 	OnLockableSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.LockableSectionLockStatusChanged, error)
 	OnLockLockableSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.LockableSectionLockStatusChanged, error)
+}
+type SuggestedWaiverResolver interface {
+	CommonWaiver(ctx context.Context, obj *models.SuggestedWaiver) (*models.CommonWaiver, error)
 }
 type TagResolver interface {
 	Entity(ctx context.Context, obj *models.Tag) (models.TaggedEntity, error)
@@ -3423,6 +3604,8 @@ type UserNotificationPreferencesResolver interface {
 
 	IddocQuestionnaireComplete(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 
+	WaiverAssessmentSurveyMarkedComplete(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+
 	IncorrectModelStatus(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	MtoReadyForReview(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 }
@@ -3430,6 +3613,21 @@ type UserViewCustomizationResolver interface {
 	ViewCustomization(ctx context.Context, obj *models.UserViewCustomization) ([]models.ViewCustomizationType, error)
 	Solutions(ctx context.Context, obj *models.UserViewCustomization) ([]models.MTOCommonSolutionKey, error)
 	ComponentGroups(ctx context.Context, obj *models.UserViewCustomization) ([]models.ComponentGroup, error)
+}
+type WaiverResolver interface {
+	CommonWaiver(ctx context.Context, obj *models.Waiver) (*models.CommonWaiver, error)
+}
+type WaiverAssessmentSurveyResolver interface {
+	Waivers(ctx context.Context, obj *models.WaiverAssessmentSurvey) ([]*models.Waiver, error)
+	SuggestedWaivers(ctx context.Context, obj *models.WaiverAssessmentSurvey) ([]*models.SuggestedWaiver, error)
+}
+type WaiverAssessmentSurveyMarkedCompleteActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (*models.ModelPlan, error)
+
+	MarkedCompleteByUserAccount(ctx context.Context, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (*authentication.UserAccount, error)
+}
+type WaiverInfoResolver interface {
+	Waivers(ctx context.Context, obj *models.WaiverInfo) ([]*models.Waiver, error)
 }
 
 // endregion ************************** generated!.gotpl **************************
@@ -4417,6 +4615,133 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.CommonCategory.SubCategories(childComplexity), true
+
+	case "CommonWaiver.cmmiWaiverPointOfContact":
+		if e.ComplexityRoot.CommonWaiver.CmmiWaiverPointOfContact == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.CmmiWaiverPointOfContact(childComplexity), true
+	case "CommonWaiver.createdBy":
+		if e.ComplexityRoot.CommonWaiver.CreatedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.CreatedBy(childComplexity), true
+	case "CommonWaiver.createdByUserAccount":
+		if e.ComplexityRoot.CommonWaiver.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.CreatedByUserAccount(childComplexity), true
+	case "CommonWaiver.createdDts":
+		if e.ComplexityRoot.CommonWaiver.CreatedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.CreatedDts(childComplexity), true
+	case "CommonWaiver.description":
+		if e.ComplexityRoot.CommonWaiver.Description == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.Description(childComplexity), true
+	case "CommonWaiver.hasClaimsDataOrRREGAnalysis":
+		if e.ComplexityRoot.CommonWaiver.HasClaimsDataOrRREGAnalysis == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.HasClaimsDataOrRREGAnalysis(childComplexity), true
+	case "CommonWaiver.hasStandardizationEffort":
+		if e.ComplexityRoot.CommonWaiver.HasStandardizationEffort == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.HasStandardizationEffort(childComplexity), true
+	case "CommonWaiver.id":
+		if e.ComplexityRoot.CommonWaiver.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.ID(childComplexity), true
+	case "CommonWaiver.isAnswered":
+		if e.ComplexityRoot.CommonWaiver.IsAnswered == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.IsAnswered(childComplexity), true
+	case "CommonWaiver.isSuggested":
+		if e.ComplexityRoot.CommonWaiver.IsSuggested == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.IsSuggested(childComplexity), true
+	case "CommonWaiver.isUsedInActiveModels":
+		if e.ComplexityRoot.CommonWaiver.IsUsedInActiveModels == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.IsUsedInActiveModels(childComplexity), true
+	case "CommonWaiver.modifiedBy":
+		if e.ComplexityRoot.CommonWaiver.ModifiedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.ModifiedBy(childComplexity), true
+	case "CommonWaiver.modifiedByUserAccount":
+		if e.ComplexityRoot.CommonWaiver.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.ModifiedByUserAccount(childComplexity), true
+	case "CommonWaiver.modifiedDts":
+		if e.ComplexityRoot.CommonWaiver.ModifiedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.ModifiedDts(childComplexity), true
+	case "CommonWaiver.name":
+		if e.ComplexityRoot.CommonWaiver.Name == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.Name(childComplexity), true
+	case "CommonWaiver.notUsingReason":
+		if e.ComplexityRoot.CommonWaiver.NotUsingReason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.NotUsingReason(childComplexity), true
+	case "CommonWaiver.participationAgreementLanguageLink":
+		if e.ComplexityRoot.CommonWaiver.ParticipationAgreementLanguageLink == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.ParticipationAgreementLanguageLink(childComplexity), true
+	case "CommonWaiver.waiverFocus":
+		if e.ComplexityRoot.CommonWaiver.WaiverFocus == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.WaiverFocus(childComplexity), true
+	case "CommonWaiver.waiverType":
+		if e.ComplexityRoot.CommonWaiver.WaiverType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.WaiverType(childComplexity), true
+	case "CommonWaiver.whatIsWaived":
+		if e.ComplexityRoot.CommonWaiver.WhatIsWaived == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.WhatIsWaived(childComplexity), true
+	case "CommonWaiver.willUseWaiver":
+		if e.ComplexityRoot.CommonWaiver.WillUseWaiver == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.WillUseWaiver(childComplexity), true
 
 	case "CurrentUser.account":
 		if e.ComplexityRoot.CurrentUser.Account == nil {
@@ -7912,6 +8237,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.ModelPlan.Timeline(childComplexity), true
+	case "ModelPlan.waiverInfo":
+		if e.ComplexityRoot.ModelPlan.WaiverInfo == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelPlan.WaiverInfo(childComplexity), true
 
 	case "ModelPlanAndGroup.key":
 		if e.ComplexityRoot.ModelPlanAndGroup.Key == nil {
@@ -9009,6 +9340,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdatePlanTimeline(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]any)), true
+	case "Mutation.updateSelectedWaivers":
+		if e.ComplexityRoot.Mutation.UpdateSelectedWaivers == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateSelectedWaivers_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateSelectedWaivers(childComplexity, args["modelPlanID"].(uuid.UUID), args["changes"].([]*models.WaiverSelectionInput)), true
 	case "Mutation.updateUserNotificationPreferences":
 		if e.ComplexityRoot.Mutation.UpdateUserNotificationPreferences == nil {
 			break
@@ -9031,6 +9373,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.UpdateUserViewCustomization(childComplexity, args["changes"].(map[string]any)), true
+	case "Mutation.updateWaiver":
+		if e.ComplexityRoot.Mutation.UpdateWaiver == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateWaiver_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateWaiver(childComplexity, args["modelPlanID"].(uuid.UUID), args["commonWaiverID"].(uuid.UUID), args["changes"].(map[string]any)), true
+	case "Mutation.updateWaiverAssessmentSurvey":
+		if e.ComplexityRoot.Mutation.UpdateWaiverAssessmentSurvey == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateWaiverAssessmentSurvey_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.UpdateWaiverAssessmentSurvey(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]any)), true
 	case "Mutation.uploadNewPlanDocument":
 		if e.ComplexityRoot.Mutation.UploadNewPlanDocument == nil {
 			break
@@ -15466,6 +15830,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.CommonCategories(childComplexity), true
+	case "Query.commonWaiver":
+		if e.ComplexityRoot.Query.CommonWaiver == nil {
+			break
+		}
+
+		args, err := ec.field_Query_commonWaiver_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Query.CommonWaiver(childComplexity, args["id"].(uuid.UUID)), true
+	case "Query.commonWaivers":
+		if e.ComplexityRoot.Query.CommonWaivers == nil {
+			break
+		}
+
+		args, err := ec.field_Query_commonWaivers_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Query.CommonWaivers(childComplexity, args["modelPlanID"].(*uuid.UUID)), true
 	case "Query.ctatRequest":
 		if e.ComplexityRoot.Query.CtatRequest == nil {
 			break
@@ -15830,6 +16216,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.UserViewCustomization(childComplexity), true
+	case "Query.waiverInfo":
+		if e.ComplexityRoot.Query.WaiverInfo == nil {
+			break
+		}
+
+		args, err := ec.field_Query_waiverInfo_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Query.WaiverInfo(childComplexity, args["modelPlanID"].(uuid.UUID)), true
 
 	case "Questionnaires.dataExchangeApproach":
 		if e.ComplexityRoot.Questionnaires.DataExchangeApproach == nil {
@@ -15843,6 +16240,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Questionnaires.IddocQuestionnaire(childComplexity), true
+	case "Questionnaires.waiverAssessmentSurvey":
+		if e.ComplexityRoot.Questionnaires.WaiverAssessmentSurvey == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Questionnaires.WaiverAssessmentSurvey(childComplexity), true
 
 	case "Subscription.onLockLockableSectionContext":
 		if e.ComplexityRoot.Subscription.OnLockLockableSectionContext == nil {
@@ -15866,6 +16269,67 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Subscription.OnLockableSectionLocksChanged(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+
+	case "SuggestedWaiver.commonWaiver":
+		if e.ComplexityRoot.SuggestedWaiver.CommonWaiver == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.CommonWaiver(childComplexity), true
+	case "SuggestedWaiver.commonWaiverID":
+		if e.ComplexityRoot.SuggestedWaiver.CommonWaiverID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.CommonWaiverID(childComplexity), true
+	case "SuggestedWaiver.createdBy":
+		if e.ComplexityRoot.SuggestedWaiver.CreatedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.CreatedBy(childComplexity), true
+	case "SuggestedWaiver.createdByUserAccount":
+		if e.ComplexityRoot.SuggestedWaiver.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.CreatedByUserAccount(childComplexity), true
+	case "SuggestedWaiver.createdDts":
+		if e.ComplexityRoot.SuggestedWaiver.CreatedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.CreatedDts(childComplexity), true
+	case "SuggestedWaiver.id":
+		if e.ComplexityRoot.SuggestedWaiver.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.ID(childComplexity), true
+	case "SuggestedWaiver.modelPlanID":
+		if e.ComplexityRoot.SuggestedWaiver.ModelPlanID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.ModelPlanID(childComplexity), true
+	case "SuggestedWaiver.modifiedBy":
+		if e.ComplexityRoot.SuggestedWaiver.ModifiedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.ModifiedBy(childComplexity), true
+	case "SuggestedWaiver.modifiedByUserAccount":
+		if e.ComplexityRoot.SuggestedWaiver.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.ModifiedByUserAccount(childComplexity), true
+	case "SuggestedWaiver.modifiedDts":
+		if e.ComplexityRoot.SuggestedWaiver.ModifiedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.SuggestedWaiver.ModifiedDts(childComplexity), true
 
 	case "Tag.createdBy":
 		if e.ComplexityRoot.Tag.CreatedBy == nil {
@@ -17758,6 +18222,18 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.UserNotificationPreferences.UserID(childComplexity), true
+	case "UserNotificationPreferences.waiverAssessmentSurveyMarkedComplete":
+		if e.ComplexityRoot.UserNotificationPreferences.WaiverAssessmentSurveyMarkedComplete == nil {
+			break
+		}
+
+		return e.ComplexityRoot.UserNotificationPreferences.WaiverAssessmentSurveyMarkedComplete(childComplexity), true
+	case "UserNotificationPreferences.waiverAssessmentSurveyMarkedCompleteNotificationType":
+		if e.ComplexityRoot.UserNotificationPreferences.WaiverAssessmentSurveyMarkedCompleteNotificationType == nil {
+			break
+		}
+
+		return e.ComplexityRoot.UserNotificationPreferences.WaiverAssessmentSurveyMarkedCompleteNotificationType(childComplexity), true
 
 	case "UserNotifications.notifications":
 		if e.ComplexityRoot.UserNotifications.Notifications == nil {
@@ -17851,6 +18327,629 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.UserViewCustomization.ViewCustomization(childComplexity), true
 
+	case "Waiver.commonWaiver":
+		if e.ComplexityRoot.Waiver.CommonWaiver == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.CommonWaiver(childComplexity), true
+	case "Waiver.commonWaiverID":
+		if e.ComplexityRoot.Waiver.CommonWaiverID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.CommonWaiverID(childComplexity), true
+	case "Waiver.createdBy":
+		if e.ComplexityRoot.Waiver.CreatedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.CreatedBy(childComplexity), true
+	case "Waiver.createdByUserAccount":
+		if e.ComplexityRoot.Waiver.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.CreatedByUserAccount(childComplexity), true
+	case "Waiver.createdDts":
+		if e.ComplexityRoot.Waiver.CreatedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.CreatedDts(childComplexity), true
+	case "Waiver.id":
+		if e.ComplexityRoot.Waiver.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.ID(childComplexity), true
+	case "Waiver.modelPlanID":
+		if e.ComplexityRoot.Waiver.ModelPlanID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.ModelPlanID(childComplexity), true
+	case "Waiver.modifiedBy":
+		if e.ComplexityRoot.Waiver.ModifiedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.ModifiedBy(childComplexity), true
+	case "Waiver.modifiedByUserAccount":
+		if e.ComplexityRoot.Waiver.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.ModifiedByUserAccount(childComplexity), true
+	case "Waiver.modifiedDts":
+		if e.ComplexityRoot.Waiver.ModifiedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.ModifiedDts(childComplexity), true
+	case "Waiver.notUsingReason":
+		if e.ComplexityRoot.Waiver.NotUsingReason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.NotUsingReason(childComplexity), true
+	case "Waiver.willUseWaiver":
+		if e.ComplexityRoot.Waiver.WillUseWaiver == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.WillUseWaiver(childComplexity), true
+
+	case "WaiverAssessmentSurvey.additionalMedicaidSpecificWaivers":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.AdditionalMedicaidSpecificWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.AdditionalMedicaidSpecificWaivers(childComplexity), true
+	case "WaiverAssessmentSurvey.bundlesPayments":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.BundlesPayments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.BundlesPayments(childComplexity), true
+	case "WaiverAssessmentSurvey.bundlesPaymentsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.BundlesPaymentsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.BundlesPaymentsExample(childComplexity), true
+	case "WaiverAssessmentSurvey.bundlesPaymentsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.BundlesPaymentsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.BundlesPaymentsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.completedBy":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.CompletedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.CompletedBy(childComplexity), true
+	case "WaiverAssessmentSurvey.completedByUserAccount":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.CompletedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.CompletedByUserAccount(childComplexity), true
+	case "WaiverAssessmentSurvey.completedDts":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.CompletedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.CompletedDts(childComplexity), true
+	case "WaiverAssessmentSurvey.createdBy":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.CreatedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.CreatedBy(childComplexity), true
+	case "WaiverAssessmentSurvey.createdByUserAccount":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.CreatedByUserAccount(childComplexity), true
+	case "WaiverAssessmentSurvey.createdDts":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.CreatedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.CreatedDts(childComplexity), true
+	case "WaiverAssessmentSurvey.id":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ID(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsHomeCommunityBasedServicePayments":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsHomeCommunityBasedServicePayments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsHomeCommunityBasedServicePayments(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsHomeCommunityBasedServicePaymentsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsHomeCommunityBasedServicePaymentsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsHomeCommunityBasedServicePaymentsExample(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsHomeCommunityBasedServicePaymentsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsHomeCommunityBasedServicePaymentsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsHomeCommunityBasedServicePaymentsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsManagedCareWaivers":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsManagedCareWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsManagedCareWaivers(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsManagedCareWaiversExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsManagedCareWaiversExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsManagedCareWaiversExample(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsManagedCareWaiversWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsManagedCareWaiversWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsManagedCareWaiversWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsMedicaidOnlyBeneficiaries":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsMedicaidOnlyBeneficiaries == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsMedicaidOnlyBeneficiaries(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsMedicaidOnlyBeneficiariesExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsMedicaidOnlyBeneficiariesExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsMedicaidOnlyBeneficiariesExample(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsMedicaidOnlyBeneficiariesWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsMedicaidOnlyBeneficiariesWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsMedicaidOnlyBeneficiariesWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsSiteOfCarePayments":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsSiteOfCarePayments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsSiteOfCarePayments(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsSiteOfCarePaymentsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsSiteOfCarePaymentsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsSiteOfCarePaymentsExample(childComplexity), true
+	case "WaiverAssessmentSurvey.impactsSiteOfCarePaymentsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsSiteOfCarePaymentsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ImpactsSiteOfCarePaymentsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.isComplete":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.IsComplete == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.IsComplete(childComplexity), true
+	case "WaiverAssessmentSurvey.modelPlanID":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModelPlanID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModelPlanID(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiedBy":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiedBy(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiedByUserAccount":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiedByUserAccount(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiedDts":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiedDts(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPayments":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareDeliveryWithClaimsBasedPayments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareDeliveryWithClaimsBasedPayments(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPaymentsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareDeliveryWithClaimsBasedPaymentsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareDeliveryWithClaimsBasedPaymentsExample(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesCareTeamScopeOfPractice":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareTeamScopeOfPractice == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareTeamScopeOfPractice(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesCareTeamScopeOfPracticeExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareTeamScopeOfPracticeExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareTeamScopeOfPracticeExample(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesCareTeamScopeOfPracticeWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareTeamScopeOfPracticeWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesCareTeamScopeOfPracticeWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesMedicareSavingsPrograms":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesMedicareSavingsPrograms == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesMedicareSavingsPrograms(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesMedicareSavingsProgramsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesMedicareSavingsProgramsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesMedicareSavingsProgramsExample(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesMedicareSavingsProgramsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesMedicareSavingsProgramsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesMedicareSavingsProgramsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaivers":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesQualityMeasurementsOrPaymentsViaWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesQualityMeasurementsOrPaymentsViaWaivers(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaiversExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesQualityMeasurementsOrPaymentsViaWaiversExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesQualityMeasurementsOrPaymentsViaWaiversExample(childComplexity), true
+	case "WaiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.offersRiskSharingArrangements":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersRiskSharingArrangements == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.OffersRiskSharingArrangements(childComplexity), true
+	case "WaiverAssessmentSurvey.offersRiskSharingArrangementsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersRiskSharingArrangementsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.OffersRiskSharingArrangementsExample(childComplexity), true
+	case "WaiverAssessmentSurvey.offersRiskSharingArrangementsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersRiskSharingArrangementsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.OffersRiskSharingArrangementsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.status":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.Status(childComplexity), true
+	case "WaiverAssessmentSurvey.suggestedWaivers":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.SuggestedWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.SuggestedWaivers(childComplexity), true
+	case "WaiverAssessmentSurvey.waivers":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.Waivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.Waivers(childComplexity), true
+
+	case "WaiverAssessmentSurveyMarkedCompleteActivityMeta.markedCompleteBy":
+		if e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.MarkedCompleteBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.MarkedCompleteBy(childComplexity), true
+	case "WaiverAssessmentSurveyMarkedCompleteActivityMeta.markedCompleteByUserAccount":
+		if e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.MarkedCompleteByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.MarkedCompleteByUserAccount(childComplexity), true
+	case "WaiverAssessmentSurveyMarkedCompleteActivityMeta.modelPlan":
+		if e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.ModelPlan(childComplexity), true
+	case "WaiverAssessmentSurveyMarkedCompleteActivityMeta.modelPlanID":
+		if e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.ModelPlanID(childComplexity), true
+	case "WaiverAssessmentSurveyMarkedCompleteActivityMeta.type":
+		if e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.Type == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.Type(childComplexity), true
+	case "WaiverAssessmentSurveyMarkedCompleteActivityMeta.version":
+		if e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.Version == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.Version(childComplexity), true
+	case "WaiverAssessmentSurveyMarkedCompleteActivityMeta.waiverAssessmentSurveyID":
+		if e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.WaiverAssessmentSurveyID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyMarkedCompleteActivityMeta.WaiverAssessmentSurveyID(childComplexity), true
+
+	case "WaiverAssessmentSurveyTranslation.additionalMedicaidSpecificWaivers":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.AdditionalMedicaidSpecificWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.AdditionalMedicaidSpecificWaivers(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.bundlesPayments":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.BundlesPayments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.BundlesPayments(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.bundlesPaymentsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.BundlesPaymentsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.BundlesPaymentsExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.bundlesPaymentsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.BundlesPaymentsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.BundlesPaymentsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsHomeCommunityBasedServicePayments":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsHomeCommunityBasedServicePayments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsHomeCommunityBasedServicePayments(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsHomeCommunityBasedServicePaymentsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsHomeCommunityBasedServicePaymentsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsHomeCommunityBasedServicePaymentsExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsHomeCommunityBasedServicePaymentsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsHomeCommunityBasedServicePaymentsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsHomeCommunityBasedServicePaymentsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsManagedCareWaivers":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsManagedCareWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsManagedCareWaivers(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsManagedCareWaiversExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsManagedCareWaiversExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsManagedCareWaiversExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsManagedCareWaiversWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsManagedCareWaiversWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsManagedCareWaiversWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsMedicaidOnlyBeneficiaries":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsMedicaidOnlyBeneficiaries == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsMedicaidOnlyBeneficiaries(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsMedicaidOnlyBeneficiariesExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsMedicaidOnlyBeneficiariesExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsMedicaidOnlyBeneficiariesExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsMedicaidOnlyBeneficiariesWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsMedicaidOnlyBeneficiariesWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsMedicaidOnlyBeneficiariesWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsSiteOfCarePayments":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsSiteOfCarePayments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsSiteOfCarePayments(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsSiteOfCarePaymentsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsSiteOfCarePaymentsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsSiteOfCarePaymentsExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.impactsSiteOfCarePaymentsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsSiteOfCarePaymentsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ImpactsSiteOfCarePaymentsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.isComplete":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.IsComplete == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.IsComplete(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesCareDeliveryWithClaimsBasedPayments":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareDeliveryWithClaimsBasedPayments == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareDeliveryWithClaimsBasedPayments(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesCareDeliveryWithClaimsBasedPaymentsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareDeliveryWithClaimsBasedPaymentsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareDeliveryWithClaimsBasedPaymentsExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesCareTeamScopeOfPractice":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareTeamScopeOfPractice == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareTeamScopeOfPractice(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesCareTeamScopeOfPracticeExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareTeamScopeOfPracticeExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareTeamScopeOfPracticeExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesCareTeamScopeOfPracticeWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareTeamScopeOfPracticeWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareTeamScopeOfPracticeWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesMedicareSavingsPrograms":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesMedicareSavingsPrograms == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesMedicareSavingsPrograms(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesMedicareSavingsProgramsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesMedicareSavingsProgramsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesMedicareSavingsProgramsExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesMedicareSavingsProgramsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesMedicareSavingsProgramsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesMedicareSavingsProgramsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesQualityMeasurementsOrPaymentsViaWaivers":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesQualityMeasurementsOrPaymentsViaWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesQualityMeasurementsOrPaymentsViaWaivers(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesQualityMeasurementsOrPaymentsViaWaiversExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesQualityMeasurementsOrPaymentsViaWaiversExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesQualityMeasurementsOrPaymentsViaWaiversExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.offersRiskSharingArrangements":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersRiskSharingArrangements == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersRiskSharingArrangements(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.offersRiskSharingArrangementsExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersRiskSharingArrangementsExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersRiskSharingArrangementsExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.offersRiskSharingArrangementsWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersRiskSharingArrangementsWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersRiskSharingArrangementsWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.status":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.Status == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.Status(childComplexity), true
+
+	case "WaiverInfo.commonWaivers":
+		if e.ComplexityRoot.WaiverInfo.CommonWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverInfo.CommonWaivers(childComplexity), true
+	case "WaiverInfo.modelPlanID":
+		if e.ComplexityRoot.WaiverInfo.ModelPlanID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverInfo.ModelPlanID(childComplexity), true
+	case "WaiverInfo.suggestedCommonWaivers":
+		if e.ComplexityRoot.WaiverInfo.SuggestedCommonWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverInfo.SuggestedCommonWaivers(childComplexity), true
+	case "WaiverInfo.unusedCommonWaivers":
+		if e.ComplexityRoot.WaiverInfo.UnusedCommonWaivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverInfo.UnusedCommonWaivers(childComplexity), true
+	case "WaiverInfo.waivers":
+		if e.ComplexityRoot.WaiverInfo.Waivers == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverInfo.Waivers(childComplexity), true
+
 	}
 	return 0, false
 }
@@ -17899,6 +18998,9 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputSendFeedbackEmailInput,
 		ec.unmarshalInputUserNotificationPreferencesChanges,
 		ec.unmarshalInputUserViewCustomizationChanges,
+		ec.unmarshalInputWaiverAssessmentSurveyChanges,
+		ec.unmarshalInputWaiverChanges,
+		ec.unmarshalInputWaiverSelectionInput,
 	)
 	first := true
 
@@ -18258,6 +19360,7 @@ enum LockableSection {
   IDDOC_QUESTIONNAIRE
   MODELS_TO_OPERATION_MATRIX
   TIMELINE
+  WAIVER_ASSESSMENT_SURVEY
 }
 
 type LockableSectionLockStatusChanged {
@@ -18571,6 +19674,7 @@ enum TableName {
   possible_operational_need
   possible_operational_solution
   possible_operational_solution_contact
+  waiver_assessment_survey
   tag
   plan_timeline
   custom_timeline_date
@@ -19923,6 +21027,10 @@ type ModelPlan {
   # MTO Fields (START)
   mtoMatrix: ModelsToOperationMatrix!
   # MTO Fields (END)
+
+  # Waiver Fields (START)
+  waiverInfo: WaiverInfo!
+  # Waiver Fields (END)
 }
 
 """
@@ -24333,6 +25441,7 @@ Questionnaires groups all questionnaire-related fields for a model plan
 type Questionnaires {
   iddocQuestionnaire: IDDOCQuestionnaire!
   dataExchangeApproach: PlanDataExchangeApproach!
+  waiverAssessmentSurvey: WaiverAssessmentSurvey!
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/model_collaboration/tasks/plan_task.graphql", Input: `"""
@@ -24362,6 +25471,7 @@ enum PlanTaskKey {
   MODEL_PLAN
   MTO
   DATA_EXCHANGE
+  WAIVER_ASSESSMENT_SURVEY
   TWO_PAGER
 }
 
@@ -24712,6 +25822,7 @@ union ActivityMetaData =
   | IddocQuestionnaireCompletedActivityMeta
   | NewDiscussionAddedActivityMeta
   | IncorrectModelStatusActivityMeta
+  | WaiverAssessmentSurveyMarkedCompleteActivityMeta
   | NewTaskAddedActivityMeta
   | TaskCompletedActivityMeta
 
@@ -24751,6 +25862,16 @@ type IddocQuestionnaireCompletedActivityMeta {
   type: ActivityType!
   modelPlanID: UUID!
   modelPlan: ModelPlan!
+}
+
+type WaiverAssessmentSurveyMarkedCompleteActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  waiverAssessmentSurveyID: UUID!
+  markedCompleteBy: UUID!
+  markedCompleteByUserAccount: UserAccount!
 }
 
 type ModelPlanSharedActivityMeta {
@@ -24971,6 +26092,12 @@ enum IDDOCQuestionnaireCompletedNotificationType {
   MY_MODELS
 }
 
+enum WaiverAssessmentSurveyMarkedCompleteNotificationType {
+  ALL_MODELS
+  FOLLOWED_MODELS
+  MY_MODELS
+}
+
 enum MTOReadyForReviewNotificationType {
   ALL_MODELS
   FOLLOWED_MODELS
@@ -25012,6 +26139,8 @@ type UserNotificationPreferences {
   newDiscussionAddedNotificationType: NewDiscussionAddedNotificationType
   iddocQuestionnaireComplete: [UserNotificationPreferenceFlag!]!
   iddocQuestionnaireCompletedNotificationType: IDDOCQuestionnaireCompletedNotificationType
+  waiverAssessmentSurveyMarkedComplete: [UserNotificationPreferenceFlag!]!
+  waiverAssessmentSurveyMarkedCompleteNotificationType: WaiverAssessmentSurveyMarkedCompleteNotificationType
   incorrectModelStatus: [UserNotificationPreferenceFlag!]!
   mtoReadyForReview: [UserNotificationPreferenceFlag!]!
   mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType
@@ -25057,6 +26186,8 @@ input UserNotificationPreferencesChanges
   newDiscussionAddedNotificationType: NewDiscussionAddedNotificationType
   iddocQuestionnaireComplete: [UserNotificationPreferenceFlag!]
   iddocQuestionnaireCompletedNotificationType: IDDOCQuestionnaireCompletedNotificationType
+  waiverAssessmentSurveyMarkedComplete: [UserNotificationPreferenceFlag!]
+  waiverAssessmentSurveyMarkedCompleteNotificationType: WaiverAssessmentSurveyMarkedCompleteNotificationType
   incorrectModelStatus: [UserNotificationPreferenceFlag!]
   mtoReadyForReview: [UserNotificationPreferenceFlag!]
   mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType
@@ -25252,6 +26383,448 @@ extend type Mutation {
   This mutation sends feedback about the MINT product to the MINT team
   """
   sendFeedbackEmail(input: SendFeedbackEmailInput!): Boolean!
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/waiver/common_waiver.graphql", Input: `enum CommonWaiverType {
+  MEDICAID_PAYMENT
+  MEDICARE_PAYMENT
+  PROGRAM_MEDICARE_BE
+}
+
+"""
+CommonWaiver represents a waiver type in the CMMI waiver library. It is fetched in the context of a model plan to determine if the model plan has indicated it will use the waiver or not, and to determine if the waiver is suggested based on waiver assessment survey answers.
+"""
+type CommonWaiver {
+  id: UUID!
+  name: String!
+  description: String
+  participationAgreementLanguageLink: String
+  cmmiWaiverPointOfContact: String
+  waiverType: CommonWaiverType
+  waiverFocus: String
+  whatIsWaived: String
+  hasStandardizationEffort: Boolean
+  hasClaimsDataOrRREGAnalysis: String
+  isUsedInActiveModels: Boolean
+
+  # Custom Resolvers
+  """
+  To represent if this Common Waiver is _already_ answered for the Model Plan.
+  This will display null by default when not in the context of a model plan (eg fetched by key instead of model plan id), true when the model plan has indicated it will use the waiver, and false when the model plan has indicated it will not use the waiver.
+  It will also display as null if the quesion is not yet answered for the model plan.
+  """
+  willUseWaiver: Boolean
+  """
+  Convenience view into the waiver table not_using_reason field
+  """
+  notUsingReason: String
+  """
+  Returns if a model plan has answered if the waiver will be used or not.
+  """
+  isAnswered: Boolean!
+  # """
+  # Returns the suggestion context for this waiver in relation to a model plan.
+  # If modelPlanID is provided, it takes precedence over any model plan context from how the waiver was fetched.
+  # Returns isSuggested: false with empty reasons when no model plan context is available.
+  # """
+  # suggested(modelPlanID: UUID): WaiverSuggestionReason!
+  """
+  To represent if this Common Waiver is _suggested_ for the Model Plan based on waiver assessment survey answers.
+  This will automatically return false if it is not in the context of a model plan
+  """
+  isSuggested: Boolean!
+
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+# """
+# WaiverSuggestionReason is an aggregate type that represents the suggestion context for
+# a common waiver in the context of a specific model plan.
+# """
+# type WaiverSuggestionReason {
+#   """
+#   Whether this waiver is currently suggested based on the model plan's answers.
+#   """
+#   isSuggested: Boolean!
+#   """
+#   The specific per-field reasons why this waiver is suggested.
+#   Empty when isSuggested is false.
+#   """
+#   reasons: [WaiverSuggestionReason!]!
+#   """
+#   Total count of suggestion reasons (equivalent to len(reasons)).
+#   """
+#   count: Int!
+# }
+
+extend type Query {
+  """
+  Fetch all Common Waivers available in the library
+  """
+  commonWaivers(modelPlanID: UUID): [CommonWaiver!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+
+  """
+  Fetch a Common Waiver by ID
+  """
+  commonWaiver(id: UUID!): CommonWaiver!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/waiver/suggested_waiver.graphql", Input: `"""
+SuggestedWaiver represents a waiver MINT has determined is likely needed for a model plan
+based on answers to the waiver assessment survey.
+NOTE, this will be deprecated as a type in favor of adding suggestion context directly to CommonWaiver, but is left as a separate type for now to simplify the implementation.
+"""
+type SuggestedWaiver {
+  id: UUID!
+  modelPlanID: UUID!
+  commonWaiverID: UUID!
+  commonWaiver: CommonWaiver! @goField(forceResolver: true)
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/waiver/waiver.graphql", Input: `"""
+Waiver represents a model plan's decision on whether to use a specific waiver.
+"""
+type Waiver {
+  id: UUID!
+  modelPlanID: UUID!
+  commonWaiverID: UUID!
+  commonWaiver: CommonWaiver! @goField(forceResolver: true)
+  willUseWaiver: Boolean
+  notUsingReason: String
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+The fields needed to update a model plan's decision on whether to use a specific waiver.
+"""
+input WaiverChanges @goModel(model: "map[string]any") {
+  """
+  Does the model plan on using the waiver?
+  """
+  willUseWaiver: Boolean
+  """
+  What is the reason for not using the waiver? Required when willUseWaiver is false.
+  """
+  notUsingReason: String
+}
+
+"""
+Input for a single waiver selection in a bulk updateSelectedWaivers call.
+"""
+input WaiverSelectionInput {
+  commonWaiverID: UUID!
+  willUseWaiver: Boolean!
+  notUsingReason: String
+}
+
+extend type Mutation {
+  updateWaiver(
+    modelPlanID: UUID!
+    commonWaiverID: UUID!
+    changes: WaiverChanges!
+  ): Waiver! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  """
+  Update multiple waivers for a model plan in a single transaction.
+  Creates the waiver row if it does not yet exist (upsert).
+  """
+  updateSelectedWaivers(
+    modelPlanID: UUID!
+    changes: [WaiverSelectionInput!]!
+  ): [Waiver!]! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/waiver/waiver_info.graphql", Input: `"""
+This is a convenience type to wrap the info about a model
+"""
+type WaiverInfo {
+  modelPlanID: UUID!
+  commonWaivers: [CommonWaiver!]!
+  suggestedCommonWaivers: [CommonWaiver!]!
+  unusedCommonWaivers: [CommonWaiver!]!
+  waivers: [Waiver!]!
+}
+
+extend type Query {
+  waiverInfo(modelPlanID: UUID!): WaiverInfo!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/waiver_assessment_survey.graphql", Input: `"""
+WaiverAssessmentSurveyStatus represents the work completion status of a waiver assessment survey.
+"""
+enum WaiverAssessmentSurveyStatus {
+  READY
+  IN_PROGRESS
+  COMPLETE
+}
+
+"""
+NotSelectedReason represents the reason a waiver assessment survey question was answered No.
+"""
+enum NotSelectedReason {
+  OUT_OF_SCOPE
+  OVERLAPS
+  NOT_TESTING
+  NOT_ENGAGED
+  FEEDBACK_AGAINST_USE
+  OTHER
+}
+
+"""
+WaiverAssessmentSurvey represents the waiver assessment questionnaire for a model plan.
+"""
+type WaiverAssessmentSurvey {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 3 - Medicare payment waivers
+  modifiesMedicareSavingsPrograms: Boolean
+  modifiesMedicareSavingsProgramsExample: String
+  modifiesMedicareSavingsProgramsWhyNot: NotSelectedReason
+  bundlesPayments: Boolean
+  bundlesPaymentsExample: String
+  bundlesPaymentsWhyNot: NotSelectedReason
+  offersRiskSharingArrangements: Boolean
+  offersRiskSharingArrangementsExample: String
+  offersRiskSharingArrangementsWhyNot: NotSelectedReason
+
+  # Page 4 - Program waivers (Medicare Benefit Enhancements)
+  impactsSiteOfCarePayments: Boolean
+  impactsSiteOfCarePaymentsExample: String
+  impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
+  modifiesCareTeamScopeOfPractice: Boolean
+  modifiesCareTeamScopeOfPracticeExample: String
+  modifiesCareTeamScopeOfPracticeWhyNot: NotSelectedReason
+  modifiesCareDeliveryWithClaimsBasedPayments: Boolean
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: String
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: NotSelectedReason
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
+
+  # Page 5 - Medicaid payment waivers
+  impactsMedicaidOnlyBeneficiaries: Boolean
+  impactsMedicaidOnlyBeneficiariesExample: String
+  impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
+  impactsHomeCommunityBasedServicePayments: Boolean
+  impactsHomeCommunityBasedServicePaymentsExample: String
+  impactsHomeCommunityBasedServicePaymentsWhyNot: NotSelectedReason
+  impactsManagedCareWaivers: Boolean
+  impactsManagedCareWaiversExample: String
+  impactsManagedCareWaiversWhyNot: NotSelectedReason
+  additionalMedicaidSpecificWaivers: String
+
+  # Page 6 - Waiver selections for this model plan
+  waivers: [Waiver!]! @goField(forceResolver: true)
+
+  # Waivers MINT has determined are likely needed based on survey answers
+  # this will be removed in future implementations
+  suggestedWaivers: [SuggestedWaiver!]! @goField(forceResolver: true)
+
+  """
+  The UUID of the user who marked the waiver assessment survey complete.
+  """
+  completedBy: UUID
+
+  """
+  The user who marked the waiver assessment survey complete.
+  """
+  completedByUserAccount: UserAccount
+
+  """
+  The timestamp when the waiver assessment survey was marked complete.
+  """
+  completedDts: Time
+
+  """
+  Convenience field indicating whether the survey has been marked as complete.
+  Computed from status: true when status is COMPLETE.
+  """
+  isComplete: Boolean!
+
+  """
+  The work completion status of the waiver assessment survey.
+  """
+  status: WaiverAssessmentSurveyStatus!
+
+  # Model Metadata
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
+  # Page 3 - Medicare payment waivers
+  modifiesMedicareSavingsPrograms: Boolean
+  modifiesMedicareSavingsProgramsExample: String
+  modifiesMedicareSavingsProgramsWhyNot: NotSelectedReason
+  bundlesPayments: Boolean
+  bundlesPaymentsExample: String
+  bundlesPaymentsWhyNot: NotSelectedReason
+  offersRiskSharingArrangements: Boolean
+  offersRiskSharingArrangementsExample: String
+  offersRiskSharingArrangementsWhyNot: NotSelectedReason
+
+  # Page 4 - Program waivers (Medicare Benefit Enhancements)
+  impactsSiteOfCarePayments: Boolean
+  impactsSiteOfCarePaymentsExample: String
+  impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
+  modifiesCareTeamScopeOfPractice: Boolean
+  modifiesCareTeamScopeOfPracticeExample: String
+  modifiesCareTeamScopeOfPracticeWhyNot: NotSelectedReason
+  modifiesCareDeliveryWithClaimsBasedPayments: Boolean
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: String
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: NotSelectedReason
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
+
+  # Page 5 - Medicaid payment waivers
+  impactsMedicaidOnlyBeneficiaries: Boolean
+  impactsMedicaidOnlyBeneficiariesExample: String
+  impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
+  impactsHomeCommunityBasedServicePayments: Boolean
+  impactsHomeCommunityBasedServicePaymentsExample: String
+  impactsHomeCommunityBasedServicePaymentsWhyNot: NotSelectedReason
+  impactsManagedCareWaivers: Boolean
+  impactsManagedCareWaiversExample: String
+  impactsManagedCareWaiversWhyNot: NotSelectedReason
+  additionalMedicaidSpecificWaivers: String
+
+  # Convenience field for controlling status
+  isComplete: Boolean
+}
+
+extend type Mutation {
+  updateWaiverAssessmentSurvey(
+    id: UUID!
+    changes: WaiverAssessmentSurveyChanges!
+  ): WaiverAssessmentSurvey! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/waiver_assessment_survey_translation.graphql", Input: `"""
+Represents the waiver assessment questionnaire translation data.
+"""
+type WaiverAssessmentSurveyTranslation {
+  # General fields
+  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  """
+  IsComplete is a convenience field calculated from completedBy fields. It isn't in the database.
+  """
+  isComplete: TranslationFieldWithOptions!
+
+  # Page 3 - Medicare payment waivers
+  modifiesMedicareSavingsPrograms: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "modifies_medicare_savings_programs")
+  modifiesMedicareSavingsProgramsExample: TranslationFieldWithParent!
+    @goTag(key: "db", value: "modifies_medicare_savings_programs_example")
+  modifiesMedicareSavingsProgramsWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "modifies_medicare_savings_programs_why_not")
+  bundlesPayments: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "bundles_payments")
+  bundlesPaymentsExample: TranslationFieldWithParent!
+    @goTag(key: "db", value: "bundles_payments_example")
+  bundlesPaymentsWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "bundles_payments_why_not")
+  offersRiskSharingArrangements: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "offers_risk_sharing_arrangements")
+  offersRiskSharingArrangementsExample: TranslationFieldWithParent!
+    @goTag(key: "db", value: "offers_risk_sharing_arrangements_example")
+  offersRiskSharingArrangementsWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "offers_risk_sharing_arrangements_why_not")
+
+  # Page 4 - Program waivers (Medicare Benefit Enhancements)
+  impactsSiteOfCarePayments: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "impacts_site_of_care_payments")
+  impactsSiteOfCarePaymentsExample: TranslationFieldWithParent!
+    @goTag(key: "db", value: "impacts_site_of_care_payments_example")
+  impactsSiteOfCarePaymentsWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "impacts_site_of_care_payments_why_not")
+  modifiesCareTeamScopeOfPractice: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "modifies_care_team_scope_of_practice")
+  modifiesCareTeamScopeOfPracticeExample: TranslationFieldWithParent!
+    @goTag(key: "db", value: "modifies_care_team_scope_of_practice_example")
+  modifiesCareTeamScopeOfPracticeWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "modifies_care_team_scope_of_practice_why_not")
+  modifiesCareDeliveryWithClaimsBasedPayments: TranslationFieldWithOptionsAndChildren!
+    @goTag(
+      key: "db"
+      value: "modifies_care_delivery_with_claims_based_payments"
+    )
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: TranslationFieldWithParent!
+    @goTag(
+      key: "db"
+      value: "modifies_care_delivery_with_claims_based_payments_example"
+    )
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(
+      key: "db"
+      value: "modifies_care_delivery_with_claims_based_payments_why_not"
+    )
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: TranslationFieldWithOptionsAndChildren!
+    @goTag(
+      key: "db"
+      value: "modifies_quality_measurements_or_payments_via_waivers"
+    )
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationFieldWithParent!
+    @goTag(
+      key: "db"
+      value: "modifies_quality_measurements_or_payments_via_waivers_example"
+    )
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(
+      key: "db"
+      value: "modifies_quality_measurements_or_payments_via_waivers_why_not"
+    )
+
+  # Page 5 - Medicaid payment waivers
+  impactsMedicaidOnlyBeneficiaries: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "impacts_medicaid_only_beneficiaries")
+  impactsMedicaidOnlyBeneficiariesExample: TranslationFieldWithParent!
+    @goTag(key: "db", value: "impacts_medicaid_only_beneficiaries_example")
+  impactsMedicaidOnlyBeneficiariesWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "impacts_medicaid_only_beneficiaries_why_not")
+  impactsHomeCommunityBasedServicePayments: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "impacts_home_community_based_service_payments")
+  impactsHomeCommunityBasedServicePaymentsExample: TranslationFieldWithParent!
+    @goTag(
+      key: "db"
+      value: "impacts_home_community_based_service_payments_example"
+    )
+  impactsHomeCommunityBasedServicePaymentsWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(
+      key: "db"
+      value: "impacts_home_community_based_service_payments_why_not"
+    )
+  impactsManagedCareWaivers: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "impacts_managed_care_waivers")
+  impactsManagedCareWaiversExample: TranslationFieldWithParent!
+    @goTag(key: "db", value: "impacts_managed_care_waivers_example")
+  impactsManagedCareWaiversWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(key: "db", value: "impacts_managed_care_waivers_why_not")
+  additionalMedicaidSpecificWaivers: TranslationField!
+    @goTag(key: "db", value: "additional_medicaid_specific_waivers")
 }
 `, BuiltIn: false},
 }
@@ -25627,6 +27200,54 @@ func (ec *executionContext) childFields_CommonCategory(ctx context.Context, fiel
 		return ec.fieldContext_CommonCategory_subCategories(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type CommonCategory", field.Name)
+}
+
+func (ec *executionContext) childFields_CommonWaiver(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_CommonWaiver_id(ctx, field)
+	case "name":
+		return ec.fieldContext_CommonWaiver_name(ctx, field)
+	case "description":
+		return ec.fieldContext_CommonWaiver_description(ctx, field)
+	case "participationAgreementLanguageLink":
+		return ec.fieldContext_CommonWaiver_participationAgreementLanguageLink(ctx, field)
+	case "cmmiWaiverPointOfContact":
+		return ec.fieldContext_CommonWaiver_cmmiWaiverPointOfContact(ctx, field)
+	case "waiverType":
+		return ec.fieldContext_CommonWaiver_waiverType(ctx, field)
+	case "waiverFocus":
+		return ec.fieldContext_CommonWaiver_waiverFocus(ctx, field)
+	case "whatIsWaived":
+		return ec.fieldContext_CommonWaiver_whatIsWaived(ctx, field)
+	case "hasStandardizationEffort":
+		return ec.fieldContext_CommonWaiver_hasStandardizationEffort(ctx, field)
+	case "hasClaimsDataOrRREGAnalysis":
+		return ec.fieldContext_CommonWaiver_hasClaimsDataOrRREGAnalysis(ctx, field)
+	case "isUsedInActiveModels":
+		return ec.fieldContext_CommonWaiver_isUsedInActiveModels(ctx, field)
+	case "willUseWaiver":
+		return ec.fieldContext_CommonWaiver_willUseWaiver(ctx, field)
+	case "notUsingReason":
+		return ec.fieldContext_CommonWaiver_notUsingReason(ctx, field)
+	case "isAnswered":
+		return ec.fieldContext_CommonWaiver_isAnswered(ctx, field)
+	case "isSuggested":
+		return ec.fieldContext_CommonWaiver_isSuggested(ctx, field)
+	case "createdBy":
+		return ec.fieldContext_CommonWaiver_createdBy(ctx, field)
+	case "createdByUserAccount":
+		return ec.fieldContext_CommonWaiver_createdByUserAccount(ctx, field)
+	case "createdDts":
+		return ec.fieldContext_CommonWaiver_createdDts(ctx, field)
+	case "modifiedBy":
+		return ec.fieldContext_CommonWaiver_modifiedBy(ctx, field)
+	case "modifiedByUserAccount":
+		return ec.fieldContext_CommonWaiver_modifiedByUserAccount(ctx, field)
+	case "modifiedDts":
+		return ec.fieldContext_CommonWaiver_modifiedDts(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type CommonWaiver", field.Name)
 }
 
 func (ec *executionContext) childFields_CurrentUser(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
@@ -26687,6 +28308,8 @@ func (ec *executionContext) childFields_ModelPlan(ctx context.Context, field gra
 		return ec.fieldContext_ModelPlan_mostRecentEdit(ctx, field)
 	case "mtoMatrix":
 		return ec.fieldContext_ModelPlan_mtoMatrix(ctx, field)
+	case "waiverInfo":
+		return ec.fieldContext_ModelPlan_waiverInfo(ctx, field)
 	case "generalStatus":
 		return ec.fieldContext_ModelPlan_generalStatus(ctx, field)
 	}
@@ -28035,8 +29658,36 @@ func (ec *executionContext) childFields_Questionnaires(ctx context.Context, fiel
 		return ec.fieldContext_Questionnaires_iddocQuestionnaire(ctx, field)
 	case "dataExchangeApproach":
 		return ec.fieldContext_Questionnaires_dataExchangeApproach(ctx, field)
+	case "waiverAssessmentSurvey":
+		return ec.fieldContext_Questionnaires_waiverAssessmentSurvey(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type Questionnaires", field.Name)
+}
+
+func (ec *executionContext) childFields_SuggestedWaiver(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_SuggestedWaiver_id(ctx, field)
+	case "modelPlanID":
+		return ec.fieldContext_SuggestedWaiver_modelPlanID(ctx, field)
+	case "commonWaiverID":
+		return ec.fieldContext_SuggestedWaiver_commonWaiverID(ctx, field)
+	case "commonWaiver":
+		return ec.fieldContext_SuggestedWaiver_commonWaiver(ctx, field)
+	case "createdBy":
+		return ec.fieldContext_SuggestedWaiver_createdBy(ctx, field)
+	case "createdByUserAccount":
+		return ec.fieldContext_SuggestedWaiver_createdByUserAccount(ctx, field)
+	case "createdDts":
+		return ec.fieldContext_SuggestedWaiver_createdDts(ctx, field)
+	case "modifiedBy":
+		return ec.fieldContext_SuggestedWaiver_modifiedBy(ctx, field)
+	case "modifiedByUserAccount":
+		return ec.fieldContext_SuggestedWaiver_modifiedByUserAccount(ctx, field)
+	case "modifiedDts":
+		return ec.fieldContext_SuggestedWaiver_modifiedDts(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type SuggestedWaiver", field.Name)
 }
 
 func (ec *executionContext) childFields_Tag(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
@@ -28567,6 +30218,10 @@ func (ec *executionContext) childFields_UserNotificationPreferences(ctx context.
 		return ec.fieldContext_UserNotificationPreferences_iddocQuestionnaireComplete(ctx, field)
 	case "iddocQuestionnaireCompletedNotificationType":
 		return ec.fieldContext_UserNotificationPreferences_iddocQuestionnaireCompletedNotificationType(ctx, field)
+	case "waiverAssessmentSurveyMarkedComplete":
+		return ec.fieldContext_UserNotificationPreferences_waiverAssessmentSurveyMarkedComplete(ctx, field)
+	case "waiverAssessmentSurveyMarkedCompleteNotificationType":
+		return ec.fieldContext_UserNotificationPreferences_waiverAssessmentSurveyMarkedCompleteNotificationType(ctx, field)
 	case "incorrectModelStatus":
 		return ec.fieldContext_UserNotificationPreferences_incorrectModelStatus(ctx, field)
 	case "mtoReadyForReview":
@@ -28629,6 +30284,150 @@ func (ec *executionContext) childFields_UserViewCustomization(ctx context.Contex
 		return ec.fieldContext_UserViewCustomization_modifiedDts(ctx, field)
 	}
 	return nil, fmt.Errorf("no field named %q was found under type UserViewCustomization", field.Name)
+}
+
+func (ec *executionContext) childFields_Waiver(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_Waiver_id(ctx, field)
+	case "modelPlanID":
+		return ec.fieldContext_Waiver_modelPlanID(ctx, field)
+	case "commonWaiverID":
+		return ec.fieldContext_Waiver_commonWaiverID(ctx, field)
+	case "commonWaiver":
+		return ec.fieldContext_Waiver_commonWaiver(ctx, field)
+	case "willUseWaiver":
+		return ec.fieldContext_Waiver_willUseWaiver(ctx, field)
+	case "notUsingReason":
+		return ec.fieldContext_Waiver_notUsingReason(ctx, field)
+	case "createdBy":
+		return ec.fieldContext_Waiver_createdBy(ctx, field)
+	case "createdByUserAccount":
+		return ec.fieldContext_Waiver_createdByUserAccount(ctx, field)
+	case "createdDts":
+		return ec.fieldContext_Waiver_createdDts(ctx, field)
+	case "modifiedBy":
+		return ec.fieldContext_Waiver_modifiedBy(ctx, field)
+	case "modifiedByUserAccount":
+		return ec.fieldContext_Waiver_modifiedByUserAccount(ctx, field)
+	case "modifiedDts":
+		return ec.fieldContext_Waiver_modifiedDts(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type Waiver", field.Name)
+}
+
+func (ec *executionContext) childFields_WaiverAssessmentSurvey(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_WaiverAssessmentSurvey_id(ctx, field)
+	case "modelPlanID":
+		return ec.fieldContext_WaiverAssessmentSurvey_modelPlanID(ctx, field)
+	case "modifiesMedicareSavingsPrograms":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesMedicareSavingsPrograms(ctx, field)
+	case "modifiesMedicareSavingsProgramsExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsExample(ctx, field)
+	case "modifiesMedicareSavingsProgramsWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsWhyNot(ctx, field)
+	case "bundlesPayments":
+		return ec.fieldContext_WaiverAssessmentSurvey_bundlesPayments(ctx, field)
+	case "bundlesPaymentsExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_bundlesPaymentsExample(ctx, field)
+	case "bundlesPaymentsWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_bundlesPaymentsWhyNot(ctx, field)
+	case "offersRiskSharingArrangements":
+		return ec.fieldContext_WaiverAssessmentSurvey_offersRiskSharingArrangements(ctx, field)
+	case "offersRiskSharingArrangementsExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_offersRiskSharingArrangementsExample(ctx, field)
+	case "offersRiskSharingArrangementsWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_offersRiskSharingArrangementsWhyNot(ctx, field)
+	case "impactsSiteOfCarePayments":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsSiteOfCarePayments(ctx, field)
+	case "impactsSiteOfCarePaymentsExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsSiteOfCarePaymentsExample(ctx, field)
+	case "impactsSiteOfCarePaymentsWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsSiteOfCarePaymentsWhyNot(ctx, field)
+	case "modifiesCareTeamScopeOfPractice":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareTeamScopeOfPractice(ctx, field)
+	case "modifiesCareTeamScopeOfPracticeExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeExample(ctx, field)
+	case "modifiesCareTeamScopeOfPracticeWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeWhyNot(ctx, field)
+	case "modifiesCareDeliveryWithClaimsBasedPayments":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPayments(ctx, field)
+	case "modifiesCareDeliveryWithClaimsBasedPaymentsExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsExample(ctx, field)
+	case "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(ctx, field)
+	case "modifiesQualityMeasurementsOrPaymentsViaWaivers":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaivers(ctx, field)
+	case "modifiesQualityMeasurementsOrPaymentsViaWaiversExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversExample(ctx, field)
+	case "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(ctx, field)
+	case "impactsMedicaidOnlyBeneficiaries":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiaries(ctx, field)
+	case "impactsMedicaidOnlyBeneficiariesExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesExample(ctx, field)
+	case "impactsMedicaidOnlyBeneficiariesWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesWhyNot(ctx, field)
+	case "impactsHomeCommunityBasedServicePayments":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePayments(ctx, field)
+	case "impactsHomeCommunityBasedServicePaymentsExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsExample(ctx, field)
+	case "impactsHomeCommunityBasedServicePaymentsWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsWhyNot(ctx, field)
+	case "impactsManagedCareWaivers":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaivers(ctx, field)
+	case "impactsManagedCareWaiversExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaiversExample(ctx, field)
+	case "impactsManagedCareWaiversWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaiversWhyNot(ctx, field)
+	case "additionalMedicaidSpecificWaivers":
+		return ec.fieldContext_WaiverAssessmentSurvey_additionalMedicaidSpecificWaivers(ctx, field)
+	case "waivers":
+		return ec.fieldContext_WaiverAssessmentSurvey_waivers(ctx, field)
+	case "suggestedWaivers":
+		return ec.fieldContext_WaiverAssessmentSurvey_suggestedWaivers(ctx, field)
+	case "completedBy":
+		return ec.fieldContext_WaiverAssessmentSurvey_completedBy(ctx, field)
+	case "completedByUserAccount":
+		return ec.fieldContext_WaiverAssessmentSurvey_completedByUserAccount(ctx, field)
+	case "completedDts":
+		return ec.fieldContext_WaiverAssessmentSurvey_completedDts(ctx, field)
+	case "isComplete":
+		return ec.fieldContext_WaiverAssessmentSurvey_isComplete(ctx, field)
+	case "status":
+		return ec.fieldContext_WaiverAssessmentSurvey_status(ctx, field)
+	case "createdBy":
+		return ec.fieldContext_WaiverAssessmentSurvey_createdBy(ctx, field)
+	case "createdByUserAccount":
+		return ec.fieldContext_WaiverAssessmentSurvey_createdByUserAccount(ctx, field)
+	case "createdDts":
+		return ec.fieldContext_WaiverAssessmentSurvey_createdDts(ctx, field)
+	case "modifiedBy":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiedBy(ctx, field)
+	case "modifiedByUserAccount":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiedByUserAccount(ctx, field)
+	case "modifiedDts":
+		return ec.fieldContext_WaiverAssessmentSurvey_modifiedDts(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type WaiverAssessmentSurvey", field.Name)
+}
+
+func (ec *executionContext) childFields_WaiverInfo(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "modelPlanID":
+		return ec.fieldContext_WaiverInfo_modelPlanID(ctx, field)
+	case "commonWaivers":
+		return ec.fieldContext_WaiverInfo_commonWaivers(ctx, field)
+	case "suggestedCommonWaivers":
+		return ec.fieldContext_WaiverInfo_suggestedCommonWaivers(ctx, field)
+	case "unusedCommonWaivers":
+		return ec.fieldContext_WaiverInfo_unusedCommonWaivers(ctx, field)
+	case "waivers":
+		return ec.fieldContext_WaiverInfo_waivers(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type WaiverInfo", field.Name)
 }
 
 func (ec *executionContext) childFields___Directive(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
@@ -30585,6 +32384,28 @@ func (ec *executionContext) field_Mutation_updatePlanTimeline_args(ctx context.C
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updateSelectedWaivers_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "modelPlanID",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["modelPlanID"] = arg0
+	arg1, err := graphql.ProcessArgField(ctx, rawArgs, "changes",
+		func(ctx context.Context, v any) ([]*models.WaiverSelectionInput, error) {
+			return ec.unmarshalNWaiverSelectionInput2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverSelectionInputᚄ(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["changes"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_updateUserNotificationPreferences_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -30610,6 +32431,58 @@ func (ec *executionContext) field_Mutation_updateUserViewCustomization_args(ctx 
 		return nil, err
 	}
 	args["changes"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateWaiverAssessmentSurvey_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["id"] = arg0
+	arg1, err := graphql.ProcessArgField(ctx, rawArgs, "changes",
+		func(ctx context.Context, v any) (map[string]any, error) {
+			return ec.unmarshalNWaiverAssessmentSurveyChanges2map(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["changes"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updateWaiver_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "modelPlanID",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["modelPlanID"] = arg0
+	arg1, err := graphql.ProcessArgField(ctx, rawArgs, "commonWaiverID",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["commonWaiverID"] = arg1
+	arg2, err := graphql.ProcessArgField(ctx, rawArgs, "changes",
+		func(ctx context.Context, v any) (map[string]any, error) {
+			return ec.unmarshalNWaiverChanges2map(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["changes"] = arg2
 	return args, nil
 }
 
@@ -30674,6 +32547,34 @@ func (ec *executionContext) field_Query_auditChanges_args(ctx context.Context, r
 		return nil, err
 	}
 	args["primaryKey"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_commonWaiver_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_commonWaivers_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "modelPlanID",
+		func(ctx context.Context, v any) (*uuid.UUID, error) {
+			return ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["modelPlanID"] = arg0
 	return args, nil
 }
 
@@ -31076,6 +32977,20 @@ func (ec *executionContext) field_Query_userAccount_args(ctx context.Context, ra
 		return nil, err
 	}
 	args["username"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_waiverInfo_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "modelPlanID",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["modelPlanID"] = arg0
 	return args, nil
 }
 
@@ -35321,6 +37236,507 @@ func (ec *executionContext) _CommonCategory_subCategories(ctx context.Context, f
 }
 func (ec *executionContext) fieldContext_CommonCategory_subCategories(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("CommonCategory", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_id(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_id(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_name(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_name(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Name, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_name(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_description(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_description(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Description, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_participationAgreementLanguageLink(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_participationAgreementLanguageLink(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ParticipationAgreementLanguageLink, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_participationAgreementLanguageLink(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_cmmiWaiverPointOfContact(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_cmmiWaiverPointOfContact(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CmmiWaiverPointOfContact, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_cmmiWaiverPointOfContact(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_waiverType(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_waiverType(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.WaiverType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CommonWaiverType) graphql.Marshaler {
+			return ec.marshalOCommonWaiverType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiverType(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_waiverType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type CommonWaiverType does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_waiverFocus(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_waiverFocus(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.WaiverFocus, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_waiverFocus(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_whatIsWaived(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_whatIsWaived(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.WhatIsWaived, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_whatIsWaived(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_hasStandardizationEffort(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_hasStandardizationEffort(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.HasStandardizationEffort, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_hasStandardizationEffort(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_hasClaimsDataOrRREGAnalysis(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_hasClaimsDataOrRREGAnalysis(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.HasClaimsDataOrRREGAnalysis, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_hasClaimsDataOrRREGAnalysis(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_isUsedInActiveModels(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_isUsedInActiveModels(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IsUsedInActiveModels, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_isUsedInActiveModels(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_willUseWaiver(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_willUseWaiver(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.WillUseWaiver, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_willUseWaiver(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_notUsingReason(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_notUsingReason(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.NotUsingReason, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_notUsingReason(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_isAnswered(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_isAnswered(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IsAnswered(), nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_isAnswered(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, true, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_isSuggested(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_isSuggested(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IsSuggested(), nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_isSuggested(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, true, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_createdBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_createdBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_createdByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_createdByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CommonWaiver",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CommonWaiver_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_createdDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v time.Time) graphql.Marshaler {
+			return ec.marshalNTime2timeᚐTime(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_createdDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_modifiedBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+			return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_modifiedBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_modifiedByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_modifiedByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CommonWaiver",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CommonWaiver_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_modifiedDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *time.Time) graphql.Marshaler {
+			return ec.marshalOTime2ᚖtimeᚐTime(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type Time does not have child fields"))
 }
 
 func (ec *executionContext) _CurrentUser_launchDarkly(ctx context.Context, field graphql.CollectedField, obj *models.CurrentUser) (ret graphql.Marshaler) {
@@ -50279,6 +52695,38 @@ func (ec *executionContext) fieldContext_ModelPlan_mtoMatrix(_ context.Context, 
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_waiverInfo(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelPlan_waiverInfo(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.ModelPlan().WaiverInfo(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.WaiverInfo) graphql.Marshaler {
+			return ec.marshalNWaiverInfo2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverInfo(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelPlan_waiverInfo(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_WaiverInfo(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlan_generalStatus(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -56371,6 +58819,192 @@ func (ec *executionContext) fieldContext_Mutation_sendFeedbackEmail(ctx context.
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_sendFeedbackEmail_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateWaiver(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateWaiver(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateWaiver(ctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["commonWaiverID"].(uuid.UUID), fc.Args["changes"].(map[string]any))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
+				if err != nil {
+					var zeroVal *models.Waiver
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.Waiver
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.Waiver) graphql.Marshaler {
+			return ec.marshalNWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiver(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateWaiver(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_Waiver(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateWaiver_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateSelectedWaivers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateSelectedWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateSelectedWaivers(ctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["changes"].([]*models.WaiverSelectionInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
+				if err != nil {
+					var zeroVal []*models.Waiver
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal []*models.Waiver
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.Waiver) graphql.Marshaler {
+			return ec.marshalNWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateSelectedWaivers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_Waiver(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateSelectedWaivers_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateWaiverAssessmentSurvey(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_updateWaiverAssessmentSurvey(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().UpdateWaiverAssessmentSurvey(ctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]any))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
+				if err != nil {
+					var zeroVal *models.WaiverAssessmentSurvey
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.WaiverAssessmentSurvey
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.WaiverAssessmentSurvey) graphql.Marshaler {
+			return ec.marshalNWaiverAssessmentSurvey2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurvey(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_updateWaiverAssessmentSurvey(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_WaiverAssessmentSurvey(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateWaiverAssessmentSurvey_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -87578,6 +90212,192 @@ func (ec *executionContext) fieldContext_Query_userViewCustomization(_ context.C
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_commonWaivers(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_commonWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().CommonWaivers(ctx, fc.Args["modelPlanID"].(*uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal []*models.CommonWaiver
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal []*models.CommonWaiver
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.CommonWaiver) graphql.Marshaler {
+			return ec.marshalNCommonWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiverᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_commonWaivers(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CommonWaiver(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_commonWaivers_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_commonWaiver(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_commonWaiver(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().CommonWaiver(ctx, fc.Args["id"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.CommonWaiver
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CommonWaiver
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CommonWaiver) graphql.Marshaler {
+			return ec.marshalNCommonWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiver(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_commonWaiver(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CommonWaiver(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_commonWaiver_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_waiverInfo(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_waiverInfo(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().WaiverInfo(ctx, fc.Args["modelPlanID"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_MAC"})
+				if err != nil {
+					var zeroVal *models.WaiverInfo
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.WaiverInfo
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.WaiverInfo) graphql.Marshaler {
+			return ec.marshalNWaiverInfo2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverInfo(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_waiverInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_WaiverInfo(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_waiverInfo_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -87718,6 +90538,38 @@ func (ec *executionContext) fieldContext_Questionnaires_dataExchangeApproach(_ c
 	return fc, nil
 }
 
+func (ec *executionContext) _Questionnaires_waiverAssessmentSurvey(ctx context.Context, field graphql.CollectedField, obj *models.Questionnaires) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Questionnaires_waiverAssessmentSurvey(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.Questionnaires().WaiverAssessmentSurvey(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.WaiverAssessmentSurvey) graphql.Marshaler {
+			return ec.marshalNWaiverAssessmentSurvey2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurvey(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Questionnaires_waiverAssessmentSurvey(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Questionnaires",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_WaiverAssessmentSurvey(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Subscription_onLockableSectionLocksChanged(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
 	return graphql.ResolveFieldStream(
 		ctx,
@@ -87840,6 +90692,263 @@ func (ec *executionContext) fieldContext_Subscription_onLockLockableSectionConte
 		return fc, err
 	}
 	return fc, nil
+}
+
+func (ec *executionContext) _SuggestedWaiver_id(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_id(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("SuggestedWaiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _SuggestedWaiver_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_modelPlanID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModelPlanID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_modelPlanID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("SuggestedWaiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _SuggestedWaiver_commonWaiverID(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_commonWaiverID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CommonWaiverID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_commonWaiverID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("SuggestedWaiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _SuggestedWaiver_commonWaiver(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_commonWaiver(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.SuggestedWaiver().CommonWaiver(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CommonWaiver) graphql.Marshaler {
+			return ec.marshalNCommonWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiver(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_commonWaiver(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "SuggestedWaiver",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CommonWaiver(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _SuggestedWaiver_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_createdBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_createdBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("SuggestedWaiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _SuggestedWaiver_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_createdByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_createdByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "SuggestedWaiver",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _SuggestedWaiver_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_createdDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v time.Time) graphql.Marshaler {
+			return ec.marshalNTime2timeᚐTime(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_createdDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("SuggestedWaiver", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _SuggestedWaiver_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_modifiedBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+			return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_modifiedBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("SuggestedWaiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _SuggestedWaiver_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_modifiedByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_modifiedByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "SuggestedWaiver",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _SuggestedWaiver_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.SuggestedWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_SuggestedWaiver_modifiedDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *time.Time) graphql.Marshaler {
+			return ec.marshalOTime2ᚖtimeᚐTime(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_SuggestedWaiver_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("SuggestedWaiver", field, false, false, errors.New("field of type Time does not have child fields"))
 }
 
 func (ec *executionContext) _Tag_id(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
@@ -94986,6 +98095,52 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_iddocQuesti
 	return graphql.NewScalarFieldContext("UserNotificationPreferences", field, false, false, errors.New("field of type IDDOCQuestionnaireCompletedNotificationType does not have child fields"))
 }
 
+func (ec *executionContext) _UserNotificationPreferences_waiverAssessmentSurveyMarkedComplete(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_UserNotificationPreferences_waiverAssessmentSurveyMarkedComplete(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.UserNotificationPreferences().WaiverAssessmentSurveyMarkedComplete(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []models.UserNotificationPreferenceFlag) graphql.Marshaler {
+			return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_UserNotificationPreferences_waiverAssessmentSurveyMarkedComplete(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("UserNotificationPreferences", field, true, true, errors.New("field of type UserNotificationPreferenceFlag does not have child fields"))
+}
+
+func (ec *executionContext) _UserNotificationPreferences_waiverAssessmentSurveyMarkedCompleteNotificationType(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_UserNotificationPreferences_waiverAssessmentSurveyMarkedCompleteNotificationType(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.WaiverAssessmentSurveyMarkedCompleteNotificationType, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.WaiverAssessmentSurveyMarkedCompleteNotificationType) graphql.Marshaler {
+			return ec.marshalOWaiverAssessmentSurveyMarkedCompleteNotificationType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurveyMarkedCompleteNotificationType(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_UserNotificationPreferences_waiverAssessmentSurveyMarkedCompleteNotificationType(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("UserNotificationPreferences", field, false, false, errors.New("field of type WaiverAssessmentSurveyMarkedCompleteNotificationType does not have child fields"))
+}
+
 func (ec *executionContext) _UserNotificationPreferences_incorrectModelStatus(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -95599,6 +98754,2798 @@ func (ec *executionContext) _UserViewCustomization_modifiedDts(ctx context.Conte
 }
 func (ec *executionContext) fieldContext_UserViewCustomization_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("UserViewCustomization", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _Waiver_id(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_id(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _Waiver_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_modelPlanID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModelPlanID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_modelPlanID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _Waiver_commonWaiverID(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_commonWaiverID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CommonWaiverID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_commonWaiverID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _Waiver_commonWaiver(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_commonWaiver(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.Waiver().CommonWaiver(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CommonWaiver) graphql.Marshaler {
+			return ec.marshalNCommonWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiver(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_commonWaiver(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Waiver",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CommonWaiver(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Waiver_willUseWaiver(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_willUseWaiver(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.WillUseWaiver, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_willUseWaiver(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _Waiver_notUsingReason(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_notUsingReason(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.NotUsingReason, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_notUsingReason(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _Waiver_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_createdBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_createdBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _Waiver_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_createdByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_createdByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Waiver",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Waiver_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_createdDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v time.Time) graphql.Marshaler {
+			return ec.marshalNTime2timeᚐTime(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_createdDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _Waiver_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_modifiedBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+			return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_modifiedBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _Waiver_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_modifiedByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_modifiedByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Waiver",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Waiver_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_modifiedDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *time.Time) graphql.Marshaler {
+			return ec.marshalOTime2ᚖtimeᚐTime(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_id(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_id(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modelPlanID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModelPlanID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modelPlanID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesMedicareSavingsPrograms(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesMedicareSavingsPrograms(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesMedicareSavingsPrograms, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesMedicareSavingsPrograms(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesMedicareSavingsProgramsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesMedicareSavingsProgramsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_bundlesPayments(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_bundlesPayments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.BundlesPayments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_bundlesPayments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_bundlesPaymentsExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_bundlesPaymentsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.BundlesPaymentsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_bundlesPaymentsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_bundlesPaymentsWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_bundlesPaymentsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.BundlesPaymentsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_bundlesPaymentsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_offersRiskSharingArrangements(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_offersRiskSharingArrangements(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersRiskSharingArrangements, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_offersRiskSharingArrangements(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_offersRiskSharingArrangementsExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_offersRiskSharingArrangementsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersRiskSharingArrangementsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_offersRiskSharingArrangementsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_offersRiskSharingArrangementsWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_offersRiskSharingArrangementsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersRiskSharingArrangementsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_offersRiskSharingArrangementsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsSiteOfCarePayments(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsSiteOfCarePayments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsSiteOfCarePayments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsSiteOfCarePayments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsSiteOfCarePaymentsExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsSiteOfCarePaymentsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsSiteOfCarePaymentsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsSiteOfCarePaymentsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsSiteOfCarePaymentsWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsSiteOfCarePaymentsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsSiteOfCarePaymentsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsSiteOfCarePaymentsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesCareTeamScopeOfPractice(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareTeamScopeOfPractice(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareTeamScopeOfPractice, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesCareTeamScopeOfPractice(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareTeamScopeOfPracticeExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareTeamScopeOfPracticeWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPayments(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPayments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareDeliveryWithClaimsBasedPayments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPayments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareDeliveryWithClaimsBasedPaymentsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesQualityMeasurementsOrPaymentsViaWaivers, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesQualityMeasurementsOrPaymentsViaWaiversExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiaries(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiaries(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsMedicaidOnlyBeneficiaries, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiaries(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsMedicaidOnlyBeneficiariesExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsMedicaidOnlyBeneficiariesWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePayments(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePayments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsHomeCommunityBasedServicePayments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePayments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsHomeCommunityBasedServicePaymentsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsHomeCommunityBasedServicePaymentsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsManagedCareWaivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsManagedCareWaivers, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsManagedCareWaiversExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaiversExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsManagedCareWaiversExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaiversExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_impactsManagedCareWaiversWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaiversWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsManagedCareWaiversWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaiversWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_additionalMedicaidSpecificWaivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_additionalMedicaidSpecificWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.AdditionalMedicaidSpecificWaivers, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_additionalMedicaidSpecificWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_waivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_waivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.WaiverAssessmentSurvey().Waivers(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.Waiver) graphql.Marshaler {
+			return ec.marshalNWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_waivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurvey",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_Waiver(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_suggestedWaivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_suggestedWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.WaiverAssessmentSurvey().SuggestedWaivers(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.SuggestedWaiver) graphql.Marshaler {
+			return ec.marshalNSuggestedWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐSuggestedWaiverᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_suggestedWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurvey",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_SuggestedWaiver(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_completedBy(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_completedBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CompletedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+			return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_completedBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_completedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_completedByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CompletedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_completedByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurvey",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_completedDts(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_completedDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CompletedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *time.Time) graphql.Marshaler {
+			return ec.marshalOTime2ᚖtimeᚐTime(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_completedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_isComplete(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_isComplete(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IsComplete(), nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_isComplete(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, true, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_status(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_status(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Status, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.WaiverAssessmentSurveyStatus) graphql.Marshaler {
+			return ec.marshalNWaiverAssessmentSurveyStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurveyStatus(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type WaiverAssessmentSurveyStatus does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_createdBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_createdBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_createdByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_createdByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurvey",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_createdDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v time.Time) graphql.Marshaler {
+			return ec.marshalNTime2timeᚐTime(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_createdDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiedBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+			return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiedBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiedByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiedByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurvey",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_modifiedDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *time.Time) graphql.Marshaler {
+			return ec.marshalOTime2ᚖtimeᚐTime(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyMarkedCompleteActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_version(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Version, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v int) graphql.Marshaler {
+			return ec.marshalNInt2int(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_version(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurveyMarkedCompleteActivityMeta", field, false, false, errors.New("field of type Int does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyMarkedCompleteActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_type(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Type, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.ActivityType) graphql.Marshaler {
+			return ec.marshalNActivityType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_type(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurveyMarkedCompleteActivityMeta", field, false, false, errors.New("field of type ActivityType does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyMarkedCompleteActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_modelPlanID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModelPlanID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_modelPlanID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurveyMarkedCompleteActivityMeta", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyMarkedCompleteActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_modelPlan(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.WaiverAssessmentSurveyMarkedCompleteActivityMeta().ModelPlan(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.ModelPlan) graphql.Marshaler {
+			return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_modelPlan(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyMarkedCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_ModelPlan(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyMarkedCompleteActivityMeta_waiverAssessmentSurveyID(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_waiverAssessmentSurveyID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.WaiverAssessmentSurveyID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_waiverAssessmentSurveyID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurveyMarkedCompleteActivityMeta", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyMarkedCompleteActivityMeta_markedCompleteBy(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_markedCompleteBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.MarkedCompleteBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_markedCompleteBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurveyMarkedCompleteActivityMeta", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyMarkedCompleteActivityMeta_markedCompleteByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_markedCompleteByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.WaiverAssessmentSurveyMarkedCompleteActivityMeta().MarkedCompleteByUserAccount(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyMarkedCompleteActivityMeta_markedCompleteByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyMarkedCompleteActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_status(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_status(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Status, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_isComplete(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_isComplete(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IsComplete, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_isComplete(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsPrograms(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsPrograms(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesMedicareSavingsPrograms, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsPrograms(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsProgramsExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsProgramsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesMedicareSavingsProgramsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsProgramsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsProgramsWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsProgramsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesMedicareSavingsProgramsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsProgramsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_bundlesPayments(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_bundlesPayments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.BundlesPayments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_bundlesPayments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_bundlesPaymentsExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_bundlesPaymentsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.BundlesPaymentsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_bundlesPaymentsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_bundlesPaymentsWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_bundlesPaymentsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.BundlesPaymentsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_bundlesPaymentsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_offersRiskSharingArrangements(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_offersRiskSharingArrangements(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersRiskSharingArrangements, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_offersRiskSharingArrangements(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_offersRiskSharingArrangementsExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_offersRiskSharingArrangementsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersRiskSharingArrangementsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_offersRiskSharingArrangementsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_offersRiskSharingArrangementsWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_offersRiskSharingArrangementsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersRiskSharingArrangementsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_offersRiskSharingArrangementsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsSiteOfCarePayments(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsSiteOfCarePayments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsSiteOfCarePayments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsSiteOfCarePayments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsSiteOfCarePaymentsExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsSiteOfCarePaymentsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsSiteOfCarePaymentsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsSiteOfCarePaymentsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsSiteOfCarePaymentsWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsSiteOfCarePaymentsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsSiteOfCarePaymentsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsSiteOfCarePaymentsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPractice(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPractice(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareTeamScopeOfPractice, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPractice(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPracticeExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPracticeExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareTeamScopeOfPracticeExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPracticeExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPracticeWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPracticeWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareTeamScopeOfPracticeWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPracticeWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPayments(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPayments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareDeliveryWithClaimsBasedPayments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPayments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPaymentsExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPaymentsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareDeliveryWithClaimsBasedPaymentsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPaymentsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaivers(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesQualityMeasurementsOrPaymentsViaWaivers, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaiversExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaiversExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesQualityMeasurementsOrPaymentsViaWaiversExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaiversExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiaries(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiaries(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsMedicaidOnlyBeneficiaries, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiaries(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiariesExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiariesExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsMedicaidOnlyBeneficiariesExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiariesExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiariesWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiariesWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsMedicaidOnlyBeneficiariesWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiariesWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePayments(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePayments(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsHomeCommunityBasedServicePayments, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePayments(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePaymentsExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePaymentsExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsHomeCommunityBasedServicePaymentsExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePaymentsExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePaymentsWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePaymentsWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsHomeCommunityBasedServicePaymentsWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePaymentsWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsManagedCareWaivers(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsManagedCareWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsManagedCareWaivers, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsManagedCareWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsManagedCareWaiversExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ImpactsManagedCareWaiversWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_additionalMedicaidSpecificWaivers(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_additionalMedicaidSpecificWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.AdditionalMedicaidSpecificWaivers, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_additionalMedicaidSpecificWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverInfo_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.WaiverInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverInfo_modelPlanID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModelPlanID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverInfo_modelPlanID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverInfo", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverInfo_commonWaivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverInfo_commonWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CommonWaivers, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.CommonWaiver) graphql.Marshaler {
+			return ec.marshalNCommonWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiverᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverInfo_commonWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverInfo",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CommonWaiver(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverInfo_suggestedCommonWaivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverInfo_suggestedCommonWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.SuggestedCommonWaivers(), nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.CommonWaiver) graphql.Marshaler {
+			return ec.marshalNCommonWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiverᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverInfo_suggestedCommonWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverInfo",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CommonWaiver(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverInfo_unusedCommonWaivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverInfo_unusedCommonWaivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.UnusedCommonWaivers(), nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.CommonWaiver) graphql.Marshaler {
+			return ec.marshalNCommonWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiverᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverInfo_unusedCommonWaivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverInfo",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CommonWaiver(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverInfo_waivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverInfo) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverInfo_waivers(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.WaiverInfo().Waivers(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.Waiver) graphql.Marshaler {
+			return ec.marshalNWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverInfo_waivers(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverInfo",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_Waiver(ctx, field)
+		},
+	}
+	return fc, nil
 }
 
 func (ec *executionContext) ___Directive_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) (ret graphql.Marshaler) {
@@ -101339,7 +107286,7 @@ func (ec *executionContext) unmarshalInputUserNotificationPreferencesChanges(ctx
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"dailyDigestComplete", "addedAsCollaborator", "taggedInDiscussion", "taggedInDiscussionReply", "newDiscussionReply", "modelPlanShared", "newModelPlan", "newTaskAdded", "taskCompleted", "datesChanged", "datesChangedNotificationType", "dataExchangeApproachMarkedComplete", "dataExchangeApproachMarkedCompleteNotificationType", "newDiscussionAdded", "newDiscussionAddedNotificationType", "iddocQuestionnaireComplete", "iddocQuestionnaireCompletedNotificationType", "incorrectModelStatus", "mtoReadyForReview", "mtoReadyForReviewNotificationType"}
+	fieldsInOrder := [...]string{"dailyDigestComplete", "addedAsCollaborator", "taggedInDiscussion", "taggedInDiscussionReply", "newDiscussionReply", "modelPlanShared", "newModelPlan", "newTaskAdded", "taskCompleted", "datesChanged", "datesChangedNotificationType", "dataExchangeApproachMarkedComplete", "dataExchangeApproachMarkedCompleteNotificationType", "newDiscussionAdded", "newDiscussionAddedNotificationType", "iddocQuestionnaireComplete", "iddocQuestionnaireCompletedNotificationType", "waiverAssessmentSurveyMarkedComplete", "waiverAssessmentSurveyMarkedCompleteNotificationType", "incorrectModelStatus", "mtoReadyForReview", "mtoReadyForReviewNotificationType"}
 	it = make(map[string]any, len(asMap))
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
@@ -101466,6 +107413,20 @@ func (ec *executionContext) unmarshalInputUserNotificationPreferencesChanges(ctx
 				return it, err
 			}
 			it["iddocQuestionnaireCompletedNotificationType"] = data
+		case "waiverAssessmentSurveyMarkedComplete":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("waiverAssessmentSurveyMarkedComplete"))
+			data, err := ec.unmarshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["waiverAssessmentSurveyMarkedComplete"] = data
+		case "waiverAssessmentSurveyMarkedCompleteNotificationType":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("waiverAssessmentSurveyMarkedCompleteNotificationType"))
+			data, err := ec.unmarshalOWaiverAssessmentSurveyMarkedCompleteNotificationType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurveyMarkedCompleteNotificationType(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["waiverAssessmentSurveyMarkedCompleteNotificationType"] = data
 		case "incorrectModelStatus":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("incorrectModelStatus"))
 			data, err := ec.unmarshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, v)
@@ -101537,6 +107498,336 @@ func (ec *executionContext) unmarshalInputUserViewCustomizationChanges(ctx conte
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputWaiverAssessmentSurveyChanges(ctx context.Context, obj any) (map[string]any, error) {
+	var it map[string]any
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"modifiesMedicareSavingsPrograms", "modifiesMedicareSavingsProgramsExample", "modifiesMedicareSavingsProgramsWhyNot", "bundlesPayments", "bundlesPaymentsExample", "bundlesPaymentsWhyNot", "offersRiskSharingArrangements", "offersRiskSharingArrangementsExample", "offersRiskSharingArrangementsWhyNot", "impactsSiteOfCarePayments", "impactsSiteOfCarePaymentsExample", "impactsSiteOfCarePaymentsWhyNot", "modifiesCareTeamScopeOfPractice", "modifiesCareTeamScopeOfPracticeExample", "modifiesCareTeamScopeOfPracticeWhyNot", "modifiesCareDeliveryWithClaimsBasedPayments", "modifiesCareDeliveryWithClaimsBasedPaymentsExample", "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot", "modifiesQualityMeasurementsOrPaymentsViaWaivers", "modifiesQualityMeasurementsOrPaymentsViaWaiversExample", "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot", "impactsMedicaidOnlyBeneficiaries", "impactsMedicaidOnlyBeneficiariesExample", "impactsMedicaidOnlyBeneficiariesWhyNot", "impactsHomeCommunityBasedServicePayments", "impactsHomeCommunityBasedServicePaymentsExample", "impactsHomeCommunityBasedServicePaymentsWhyNot", "impactsManagedCareWaivers", "impactsManagedCareWaiversExample", "impactsManagedCareWaiversWhyNot", "additionalMedicaidSpecificWaivers", "isComplete"}
+	it = make(map[string]any, len(asMap))
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "modifiesMedicareSavingsPrograms":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesMedicareSavingsPrograms"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesMedicareSavingsPrograms"] = data
+		case "modifiesMedicareSavingsProgramsExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesMedicareSavingsProgramsExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesMedicareSavingsProgramsExample"] = data
+		case "modifiesMedicareSavingsProgramsWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesMedicareSavingsProgramsWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesMedicareSavingsProgramsWhyNot"] = data
+		case "bundlesPayments":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("bundlesPayments"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["bundlesPayments"] = data
+		case "bundlesPaymentsExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("bundlesPaymentsExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["bundlesPaymentsExample"] = data
+		case "bundlesPaymentsWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("bundlesPaymentsWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["bundlesPaymentsWhyNot"] = data
+		case "offersRiskSharingArrangements":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offersRiskSharingArrangements"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["offersRiskSharingArrangements"] = data
+		case "offersRiskSharingArrangementsExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offersRiskSharingArrangementsExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["offersRiskSharingArrangementsExample"] = data
+		case "offersRiskSharingArrangementsWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offersRiskSharingArrangementsWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["offersRiskSharingArrangementsWhyNot"] = data
+		case "impactsSiteOfCarePayments":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsSiteOfCarePayments"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsSiteOfCarePayments"] = data
+		case "impactsSiteOfCarePaymentsExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsSiteOfCarePaymentsExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsSiteOfCarePaymentsExample"] = data
+		case "impactsSiteOfCarePaymentsWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsSiteOfCarePaymentsWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsSiteOfCarePaymentsWhyNot"] = data
+		case "modifiesCareTeamScopeOfPractice":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesCareTeamScopeOfPractice"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesCareTeamScopeOfPractice"] = data
+		case "modifiesCareTeamScopeOfPracticeExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesCareTeamScopeOfPracticeExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesCareTeamScopeOfPracticeExample"] = data
+		case "modifiesCareTeamScopeOfPracticeWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesCareTeamScopeOfPracticeWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesCareTeamScopeOfPracticeWhyNot"] = data
+		case "modifiesCareDeliveryWithClaimsBasedPayments":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesCareDeliveryWithClaimsBasedPayments"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesCareDeliveryWithClaimsBasedPayments"] = data
+		case "modifiesCareDeliveryWithClaimsBasedPaymentsExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesCareDeliveryWithClaimsBasedPaymentsExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesCareDeliveryWithClaimsBasedPaymentsExample"] = data
+		case "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot"] = data
+		case "modifiesQualityMeasurementsOrPaymentsViaWaivers":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesQualityMeasurementsOrPaymentsViaWaivers"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesQualityMeasurementsOrPaymentsViaWaivers"] = data
+		case "modifiesQualityMeasurementsOrPaymentsViaWaiversExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesQualityMeasurementsOrPaymentsViaWaiversExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesQualityMeasurementsOrPaymentsViaWaiversExample"] = data
+		case "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot"] = data
+		case "impactsMedicaidOnlyBeneficiaries":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsMedicaidOnlyBeneficiaries"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsMedicaidOnlyBeneficiaries"] = data
+		case "impactsMedicaidOnlyBeneficiariesExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsMedicaidOnlyBeneficiariesExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsMedicaidOnlyBeneficiariesExample"] = data
+		case "impactsMedicaidOnlyBeneficiariesWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsMedicaidOnlyBeneficiariesWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsMedicaidOnlyBeneficiariesWhyNot"] = data
+		case "impactsHomeCommunityBasedServicePayments":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsHomeCommunityBasedServicePayments"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsHomeCommunityBasedServicePayments"] = data
+		case "impactsHomeCommunityBasedServicePaymentsExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsHomeCommunityBasedServicePaymentsExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsHomeCommunityBasedServicePaymentsExample"] = data
+		case "impactsHomeCommunityBasedServicePaymentsWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsHomeCommunityBasedServicePaymentsWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsHomeCommunityBasedServicePaymentsWhyNot"] = data
+		case "impactsManagedCareWaivers":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsManagedCareWaivers"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsManagedCareWaivers"] = data
+		case "impactsManagedCareWaiversExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsManagedCareWaiversExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsManagedCareWaiversExample"] = data
+		case "impactsManagedCareWaiversWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("impactsManagedCareWaiversWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["impactsManagedCareWaiversWhyNot"] = data
+		case "additionalMedicaidSpecificWaivers":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("additionalMedicaidSpecificWaivers"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["additionalMedicaidSpecificWaivers"] = data
+		case "isComplete":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isComplete"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["isComplete"] = data
+		}
+	}
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputWaiverChanges(ctx context.Context, obj any) (map[string]any, error) {
+	var it map[string]any
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"willUseWaiver", "notUsingReason"}
+	it = make(map[string]any, len(asMap))
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "willUseWaiver":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("willUseWaiver"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["willUseWaiver"] = data
+		case "notUsingReason":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("notUsingReason"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["notUsingReason"] = data
+		}
+	}
+	return it, nil
+}
+
+func (ec *executionContext) unmarshalInputWaiverSelectionInput(ctx context.Context, obj any) (models.WaiverSelectionInput, error) {
+	var it models.WaiverSelectionInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"commonWaiverID", "willUseWaiver", "notUsingReason"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "commonWaiverID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("commonWaiverID"))
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.CommonWaiverID = data
+		case "willUseWaiver":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("willUseWaiver"))
+			data, err := ec.unmarshalNBoolean2bool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.WillUseWaiver = data
+		case "notUsingReason":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("notUsingReason"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.NotUsingReason = data
+		}
+	}
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -101545,6 +107836,11 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 	switch obj := (obj).(type) {
 	case nil:
 		return graphql.Null
+	case *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._WaiverAssessmentSurveyMarkedCompleteActivityMeta(ctx, sel, obj)
 	case *models.TaskCompletedActivityMeta:
 		if obj == nil {
 			return graphql.Null
@@ -103917,6 +110213,210 @@ func (ec *executionContext) _CommonCategory(ctx context.Context, sel ast.Selecti
 			out.Values[i] = ec._CommonCategory_subCategories(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var commonWaiverImplementors = []string{"CommonWaiver"}
+
+func (ec *executionContext) _CommonWaiver(ctx context.Context, sel ast.SelectionSet, obj *models.CommonWaiver) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, commonWaiverImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CommonWaiver")
+		case "id":
+			out.Values[i] = ec._CommonWaiver_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "name":
+			out.Values[i] = ec._CommonWaiver_name(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "description":
+			out.Values[i] = ec._CommonWaiver_description(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "participationAgreementLanguageLink":
+			out.Values[i] = ec._CommonWaiver_participationAgreementLanguageLink(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "cmmiWaiverPointOfContact":
+			out.Values[i] = ec._CommonWaiver_cmmiWaiverPointOfContact(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "waiverType":
+			out.Values[i] = ec._CommonWaiver_waiverType(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "waiverFocus":
+			out.Values[i] = ec._CommonWaiver_waiverFocus(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "whatIsWaived":
+			out.Values[i] = ec._CommonWaiver_whatIsWaived(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "hasStandardizationEffort":
+			out.Values[i] = ec._CommonWaiver_hasStandardizationEffort(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "hasClaimsDataOrRREGAnalysis":
+			out.Values[i] = ec._CommonWaiver_hasClaimsDataOrRREGAnalysis(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "isUsedInActiveModels":
+			out.Values[i] = ec._CommonWaiver_isUsedInActiveModels(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "willUseWaiver":
+			out.Values[i] = ec._CommonWaiver_willUseWaiver(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "notUsingReason":
+			out.Values[i] = ec._CommonWaiver_notUsingReason(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "isAnswered":
+			out.Values[i] = ec._CommonWaiver_isAnswered(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "isSuggested":
+			out.Values[i] = ec._CommonWaiver_isSuggested(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdBy":
+			out.Values[i] = ec._CommonWaiver_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._CommonWaiver_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._CommonWaiver_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._CommonWaiver_modifiedBy(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._CommonWaiver_modifiedByUserAccount(ctx, field, obj)
+				if res == graphql.RequiredNull {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._CommonWaiver_modifiedDts(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
@@ -112241,6 +118741,44 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "waiverInfo":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_waiverInfo(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "generalStatus":
 			field := field
 
@@ -113795,6 +120333,27 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "sendFeedbackEmail":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_sendFeedbackEmail(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateWaiver":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateWaiver(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateSelectedWaivers":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateSelectedWaivers(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "updateWaiverAssessmentSurvey":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateWaiverAssessmentSurvey(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -125697,6 +132256,72 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "commonWaivers":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_commonWaivers(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "commonWaiver":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_commonWaiver(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "waiverInfo":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_waiverInfo(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "__type":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___type(ctx, field)
@@ -125820,6 +132445,44 @@ func (ec *executionContext) _Questionnaires(ctx context.Context, sel ast.Selecti
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "waiverAssessmentSurvey":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Questionnaires_waiverAssessmentSurvey(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -125861,6 +132524,188 @@ func (ec *executionContext) _Subscription(ctx context.Context, sel ast.Selection
 	default:
 		panic("unknown field " + strconv.Quote(fields[0].Name))
 	}
+}
+
+var suggestedWaiverImplementors = []string{"SuggestedWaiver"}
+
+func (ec *executionContext) _SuggestedWaiver(ctx context.Context, sel ast.SelectionSet, obj *models.SuggestedWaiver) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, suggestedWaiverImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("SuggestedWaiver")
+		case "id":
+			out.Values[i] = ec._SuggestedWaiver_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._SuggestedWaiver_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "commonWaiverID":
+			out.Values[i] = ec._SuggestedWaiver_commonWaiverID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "commonWaiver":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._SuggestedWaiver_commonWaiver(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdBy":
+			out.Values[i] = ec._SuggestedWaiver_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._SuggestedWaiver_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._SuggestedWaiver_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._SuggestedWaiver_modifiedBy(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._SuggestedWaiver_modifiedByUserAccount(ctx, field, obj)
+				if res == graphql.RequiredNull {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._SuggestedWaiver_modifiedDts(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
 }
 
 var tagImplementors = []string{"Tag"}
@@ -129398,6 +136243,49 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "waiverAssessmentSurveyMarkedComplete":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_waiverAssessmentSurveyMarkedComplete(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "waiverAssessmentSurveyMarkedCompleteNotificationType":
+			out.Values[i] = ec._UserNotificationPreferences_waiverAssessmentSurveyMarkedCompleteNotificationType(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "incorrectModelStatus":
 			field := field
 
@@ -129914,6 +136802,1049 @@ func (ec *executionContext) _UserViewCustomization(ctx context.Context, sel ast.
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var waiverImplementors = []string{"Waiver"}
+
+func (ec *executionContext) _Waiver(ctx context.Context, sel ast.SelectionSet, obj *models.Waiver) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, waiverImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Waiver")
+		case "id":
+			out.Values[i] = ec._Waiver_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._Waiver_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "commonWaiverID":
+			out.Values[i] = ec._Waiver_commonWaiverID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "commonWaiver":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Waiver_commonWaiver(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "willUseWaiver":
+			out.Values[i] = ec._Waiver_willUseWaiver(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "notUsingReason":
+			out.Values[i] = ec._Waiver_notUsingReason(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdBy":
+			out.Values[i] = ec._Waiver_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Waiver_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._Waiver_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._Waiver_modifiedBy(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Waiver_modifiedByUserAccount(ctx, field, obj)
+				if res == graphql.RequiredNull {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._Waiver_modifiedDts(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var waiverAssessmentSurveyImplementors = []string{"WaiverAssessmentSurvey"}
+
+func (ec *executionContext) _WaiverAssessmentSurvey(ctx context.Context, sel ast.SelectionSet, obj *models.WaiverAssessmentSurvey) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, waiverAssessmentSurveyImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("WaiverAssessmentSurvey")
+		case "id":
+			out.Values[i] = ec._WaiverAssessmentSurvey_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesMedicareSavingsPrograms":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesMedicareSavingsPrograms(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesMedicareSavingsProgramsExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesMedicareSavingsProgramsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesMedicareSavingsProgramsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "bundlesPayments":
+			out.Values[i] = ec._WaiverAssessmentSurvey_bundlesPayments(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "bundlesPaymentsExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_bundlesPaymentsExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "bundlesPaymentsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_bundlesPaymentsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "offersRiskSharingArrangements":
+			out.Values[i] = ec._WaiverAssessmentSurvey_offersRiskSharingArrangements(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "offersRiskSharingArrangementsExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_offersRiskSharingArrangementsExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "offersRiskSharingArrangementsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_offersRiskSharingArrangementsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsSiteOfCarePayments":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsSiteOfCarePayments(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsSiteOfCarePaymentsExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsSiteOfCarePaymentsExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsSiteOfCarePaymentsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsSiteOfCarePaymentsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesCareTeamScopeOfPractice":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesCareTeamScopeOfPractice(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesCareTeamScopeOfPracticeExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesCareTeamScopeOfPracticeWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesCareTeamScopeOfPracticeWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesCareDeliveryWithClaimsBasedPayments":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPayments(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesCareDeliveryWithClaimsBasedPaymentsExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesQualityMeasurementsOrPaymentsViaWaivers":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesQualityMeasurementsOrPaymentsViaWaiversExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsMedicaidOnlyBeneficiaries":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiaries(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsMedicaidOnlyBeneficiariesExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsMedicaidOnlyBeneficiariesWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsMedicaidOnlyBeneficiariesWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsHomeCommunityBasedServicePayments":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePayments(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsHomeCommunityBasedServicePaymentsExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsHomeCommunityBasedServicePaymentsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsHomeCommunityBasedServicePaymentsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsManagedCareWaivers":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsManagedCareWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsManagedCareWaiversExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsManagedCareWaiversExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "impactsManagedCareWaiversWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_impactsManagedCareWaiversWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "additionalMedicaidSpecificWaivers":
+			out.Values[i] = ec._WaiverAssessmentSurvey_additionalMedicaidSpecificWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "waivers":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._WaiverAssessmentSurvey_waivers(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "suggestedWaivers":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._WaiverAssessmentSurvey_suggestedWaivers(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "completedBy":
+			out.Values[i] = ec._WaiverAssessmentSurvey_completedBy(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "completedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._WaiverAssessmentSurvey_completedByUserAccount(ctx, field, obj)
+				if res == graphql.RequiredNull {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "completedDts":
+			out.Values[i] = ec._WaiverAssessmentSurvey_completedDts(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "isComplete":
+			out.Values[i] = ec._WaiverAssessmentSurvey_isComplete(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "status":
+			out.Values[i] = ec._WaiverAssessmentSurvey_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdBy":
+			out.Values[i] = ec._WaiverAssessmentSurvey_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._WaiverAssessmentSurvey_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "createdDts":
+			out.Values[i] = ec._WaiverAssessmentSurvey_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiedBy(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modifiedByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._WaiverAssessmentSurvey_modifiedByUserAccount(ctx, field, obj)
+				if res == graphql.RequiredNull {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "modifiedDts":
+			out.Values[i] = ec._WaiverAssessmentSurvey_modifiedDts(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var waiverAssessmentSurveyMarkedCompleteActivityMetaImplementors = []string{"WaiverAssessmentSurveyMarkedCompleteActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _WaiverAssessmentSurveyMarkedCompleteActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, waiverAssessmentSurveyMarkedCompleteActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("WaiverAssessmentSurveyMarkedCompleteActivityMeta")
+		case "version":
+			out.Values[i] = ec._WaiverAssessmentSurveyMarkedCompleteActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._WaiverAssessmentSurveyMarkedCompleteActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._WaiverAssessmentSurveyMarkedCompleteActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._WaiverAssessmentSurveyMarkedCompleteActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "waiverAssessmentSurveyID":
+			out.Values[i] = ec._WaiverAssessmentSurveyMarkedCompleteActivityMeta_waiverAssessmentSurveyID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "markedCompleteBy":
+			out.Values[i] = ec._WaiverAssessmentSurveyMarkedCompleteActivityMeta_markedCompleteBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "markedCompleteByUserAccount":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._WaiverAssessmentSurveyMarkedCompleteActivityMeta_markedCompleteByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var waiverAssessmentSurveyTranslationImplementors = []string{"WaiverAssessmentSurveyTranslation"}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation(ctx context.Context, sel ast.SelectionSet, obj *model.WaiverAssessmentSurveyTranslation) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, waiverAssessmentSurveyTranslationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("WaiverAssessmentSurveyTranslation")
+		case "status":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_status(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "isComplete":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_isComplete(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesMedicareSavingsPrograms":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsPrograms(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesMedicareSavingsProgramsExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsProgramsExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesMedicareSavingsProgramsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesMedicareSavingsProgramsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "bundlesPayments":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_bundlesPayments(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "bundlesPaymentsExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_bundlesPaymentsExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "bundlesPaymentsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_bundlesPaymentsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "offersRiskSharingArrangements":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_offersRiskSharingArrangements(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "offersRiskSharingArrangementsExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_offersRiskSharingArrangementsExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "offersRiskSharingArrangementsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_offersRiskSharingArrangementsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsSiteOfCarePayments":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsSiteOfCarePayments(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsSiteOfCarePaymentsExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsSiteOfCarePaymentsExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsSiteOfCarePaymentsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsSiteOfCarePaymentsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesCareTeamScopeOfPractice":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPractice(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesCareTeamScopeOfPracticeExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPracticeExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesCareTeamScopeOfPracticeWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesCareTeamScopeOfPracticeWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesCareDeliveryWithClaimsBasedPayments":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPayments(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesCareDeliveryWithClaimsBasedPaymentsExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPaymentsExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesQualityMeasurementsOrPaymentsViaWaivers":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesQualityMeasurementsOrPaymentsViaWaiversExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaiversExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsMedicaidOnlyBeneficiaries":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiaries(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsMedicaidOnlyBeneficiariesExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiariesExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsMedicaidOnlyBeneficiariesWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsMedicaidOnlyBeneficiariesWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsHomeCommunityBasedServicePayments":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePayments(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsHomeCommunityBasedServicePaymentsExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePaymentsExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsHomeCommunityBasedServicePaymentsWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsHomeCommunityBasedServicePaymentsWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsManagedCareWaivers":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsManagedCareWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsManagedCareWaiversExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "impactsManagedCareWaiversWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "additionalMedicaidSpecificWaivers":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_additionalMedicaidSpecificWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var waiverInfoImplementors = []string{"WaiverInfo"}
+
+func (ec *executionContext) _WaiverInfo(ctx context.Context, sel ast.SelectionSet, obj *models.WaiverInfo) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, waiverInfoImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("WaiverInfo")
+		case "modelPlanID":
+			out.Values[i] = ec._WaiverInfo_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "commonWaivers":
+			out.Values[i] = ec._WaiverInfo_commonWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "suggestedCommonWaivers":
+			out.Values[i] = ec._WaiverInfo_suggestedCommonWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "unusedCommonWaivers":
+			out.Values[i] = ec._WaiverInfo_unusedCommonWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "waivers":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._WaiverInfo_waivers(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -131119,6 +139050,32 @@ func (ec *executionContext) marshalNCommonCategory2ᚖgithubᚗcomᚋcmsᚑenter
 		return graphql.Null
 	}
 	return ec._CommonCategory(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNCommonWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiverᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.CommonWaiver) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNCommonWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiver(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNCommonWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiver(ctx context.Context, sel ast.SelectionSet, v *models.CommonWaiver) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._CommonWaiver(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNComponentGroup2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐComponentGroup(ctx context.Context, v any) (models.ComponentGroup, error) {
@@ -134848,6 +142805,32 @@ func (ec *executionContext) marshalNString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
+func (ec *executionContext) marshalNSuggestedWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐSuggestedWaiverᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.SuggestedWaiver) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNSuggestedWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐSuggestedWaiver(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNSuggestedWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐSuggestedWaiver(ctx context.Context, sel ast.SelectionSet, v *models.SuggestedWaiver) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._SuggestedWaiver(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNTableName2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTableName(ctx context.Context, v any) (models.TableName, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.TableName(tmp)
@@ -135425,6 +143408,98 @@ func (ec *executionContext) marshalNViewCustomizationType2ᚕgithubᚗcomᚋcms�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalNWaiver2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Waiver) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiver(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNWaiver2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiver(ctx context.Context, sel ast.SelectionSet, v *models.Waiver) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Waiver(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNWaiverAssessmentSurvey2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurvey(ctx context.Context, sel ast.SelectionSet, v *models.WaiverAssessmentSurvey) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._WaiverAssessmentSurvey(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNWaiverAssessmentSurveyChanges2map(ctx context.Context, v any) (map[string]any, error) {
+	res, err := ec.unmarshalInputWaiverAssessmentSurveyChanges(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNWaiverAssessmentSurveyStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurveyStatus(ctx context.Context, v any) (models.WaiverAssessmentSurveyStatus, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.WaiverAssessmentSurveyStatus(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNWaiverAssessmentSurveyStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurveyStatus(ctx context.Context, sel ast.SelectionSet, v models.WaiverAssessmentSurveyStatus) graphql.Marshaler {
+	_ = sel
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNWaiverChanges2map(ctx context.Context, v any) (map[string]any, error) {
+	res, err := ec.unmarshalInputWaiverChanges(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNWaiverInfo2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverInfo(ctx context.Context, sel ast.SelectionSet, v *models.WaiverInfo) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._WaiverInfo(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNWaiverSelectionInput2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverSelectionInputᚄ(ctx context.Context, v any) ([]*models.WaiverSelectionInput, error) {
+	vSlice := graphql.CoerceList(v)
+	var err error
+	res := make([]*models.WaiverSelectionInput, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNWaiverSelectionInput2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverSelectionInput(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) unmarshalNWaiverSelectionInput2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverSelectionInput(ctx context.Context, v any) (*models.WaiverSelectionInput, error) {
+	res, err := ec.unmarshalInputWaiverSelectionInput(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalNWaiverType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx context.Context, v any) (model.WaiverType, error) {
@@ -136253,6 +144328,25 @@ func (ec *executionContext) marshalOClaimsBasedPayType2ᚕgithubᚗcomᚋcmsᚑe
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOCommonWaiverType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiverType(ctx context.Context, v any) (*models.CommonWaiverType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.CommonWaiverType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOCommonWaiverType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCommonWaiverType(ctx context.Context, sel ast.SelectionSet, v *models.CommonWaiverType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	_ = sel
+	_ = ctx
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) unmarshalOComplexityCalculationLevelType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐComplexityCalculationLevelType(ctx context.Context, v any) (*models.ComplexityCalculationLevelType, error) {
@@ -137882,6 +145976,25 @@ func (ec *executionContext) marshalONonClaimsBasedPayType2ᚕgithubᚗcomᚋcms�
 	return ret
 }
 
+func (ec *executionContext) unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx context.Context, v any) (*models.NotSelectedReason, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.NotSelectedReason(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx context.Context, sel ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	_ = sel
+	_ = ctx
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
 func (ec *executionContext) unmarshalOOverlapType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐOverlapType(ctx context.Context, v any) (*models.OverlapType, error) {
 	if v == nil {
 		return nil, nil
@@ -138881,6 +146994,25 @@ func (ec *executionContext) marshalOViewCustomizationType2ᚕgithubᚗcomᚋcms�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOWaiverAssessmentSurveyMarkedCompleteNotificationType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurveyMarkedCompleteNotificationType(ctx context.Context, v any) (*models.WaiverAssessmentSurveyMarkedCompleteNotificationType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.WaiverAssessmentSurveyMarkedCompleteNotificationType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOWaiverAssessmentSurveyMarkedCompleteNotificationType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐWaiverAssessmentSurveyMarkedCompleteNotificationType(ctx context.Context, sel ast.SelectionSet, v *models.WaiverAssessmentSurveyMarkedCompleteNotificationType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	_ = sel
+	_ = ctx
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v any) ([]model.WaiverType, error) {

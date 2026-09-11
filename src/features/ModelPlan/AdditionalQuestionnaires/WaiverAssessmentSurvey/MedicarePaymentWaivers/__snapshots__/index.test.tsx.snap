@@ -1,0 +1,440 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MedicarePaymentWaivers Component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="mint-body-normal"
+  >
+    <div
+      class="margin-bottom-2 line-height-normal"
+    >
+      <h2
+        class="margin-0 margin-right-2 display-inline"
+      >
+        Medicare payment waivers
+      </h2>
+      <div
+        class="mint-body-large text-base display-inline"
+      >
+        (Page 3 of 7)
+      </div>
+    </div>
+    <p
+      class="margin-top-neg-1 margin-bottom-4 text-base-dark"
+    >
+      The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.
+    </p>
+    <div
+      class="tablet:grid-col-6"
+    >
+      <form
+        class="usa-form maxw-none"
+        data-testid="waiver-assessment-survey-medicare-payment-waivers-form"
+        id="waiver-assessment-survey-medicare-payment-waivers-form"
+      >
+        <fieldset
+          class="usa-fieldset"
+          data-testid="fieldset"
+        >
+          <div
+            class="margin-bottom-6"
+          >
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="modifies-medicare-savings-programs-true"
+              >
+                Does your model modify Medicare shared savings programs?
+              </label>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-medicare-savings-programs-true"
+                      id="modifies-medicare-savings-programs-true"
+                      name="modifiesMedicareSavingsPrograms"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-medicare-savings-programs-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="modifies-medicare-savings-programs-example"
+                  >
+                    Please provide an example
+                  </label>
+                  <textarea
+                    aria-labelledby="label-modifies-medicare-savings-programs-example hint-modifies-medicare-savings-programs-example"
+                    class="height-card usa-textarea"
+                    data-testid="modifies-medicare-savings-programs-example"
+                    id="modifies-medicare-savings-programs-example"
+                    maxlength="5000"
+                    name="modifiesMedicareSavingsProgramsExample"
+                  >
+                    Example
+                  </textarea>
+                </div>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="modifies-medicare-savings-programs-false"
+                      id="modifies-medicare-savings-programs-false"
+                      name="modifiesMedicareSavingsPrograms"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="modifies-medicare-savings-programs-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="bundles-payments-true"
+              >
+                Does your model bundle payments?
+              </label>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="bundles-payments-true"
+                      id="bundles-payments-true"
+                      name="bundlesPayments"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="bundles-payments-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="bundles-payments-false"
+                      id="bundles-payments-false"
+                      name="bundlesPayments"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="bundles-payments-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+                <div
+                  class="usa-form-group margin-left-4 margin-top-1"
+                  data-testid="formGroup"
+                >
+                  <label
+                    class="usa-label text-normal"
+                    data-testid="label"
+                    for="bundles-payments-why-not"
+                  >
+                    Please explain why not
+                  </label>
+                  <select
+                    class="usa-select"
+                    data-testid="Select"
+                    id="bundles-payments-why-not"
+                    name="bundlesPaymentsWhyNot"
+                  >
+                    <option
+                      value="default"
+                    >
+                      - Select -
+                    </option>
+                    <option
+                      value="OUT_OF_SCOPE"
+                    >
+                      Outside of model scope (e.g. Medicaid-only waiver)
+                    </option>
+                    <option
+                      value="OVERLAPS"
+                    >
+                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
+                    </option>
+                    <option
+                      value="NOT_TESTING"
+                    >
+                      The model will not be testing this waiver or payment type (e.g. bundles)
+                    </option>
+                    <option
+                      value="NOT_ENGAGED"
+                    >
+                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
+                    </option>
+                    <option
+                      value="FEEDBACK_AGAINST_USE"
+                    >
+                      Feedback from participants against waiver use
+                    </option>
+                    <option
+                      value="OTHER"
+                    >
+                      Other
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div
+              class="usa-form-group margin-top-0 margin-bottom-2"
+              data-testid="formGroup"
+            >
+              <label
+                class="usa-label text-normal text-bold"
+                data-testid="label"
+                for="offers-risk-sharing-arrangements-true"
+              >
+                Does your model offer risk sharing arrangements?
+              </label>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="offers-risk-sharing-arrangements-true"
+                      id="offers-risk-sharing-arrangements-true"
+                      name="offersRiskSharingArrangements"
+                      type="radio"
+                      value="TRUE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="offers-risk-sharing-arrangements-true"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        Yes
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="display-flex flex-column"
+              >
+                <fieldset
+                  class="usa-fieldset"
+                  data-testid="fieldset"
+                >
+                  <div
+                    class="usa-radio margin-top-0 margin-right-1"
+                    data-testid="radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      data-testid="offers-risk-sharing-arrangements-false"
+                      id="offers-risk-sharing-arrangements-false"
+                      name="offersRiskSharingArrangements"
+                      type="radio"
+                      value="FALSE"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="offers-risk-sharing-arrangements-false"
+                    >
+                      <span
+                        class="display-flex flex-align-center"
+                        style="gap: 4px;"
+                      >
+                        No
+                      </span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+          <div
+            class="bg-info-lighter padding-3"
+          >
+            <h2
+              class="usa-summary-box__heading margin-bottom-2"
+            >
+              Selected waivers
+            </h2>
+            <p
+              class="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest"
+            >
+              There are 0 total available Medicare payment waivers. Based on your answers to the above questions, MINT has determined that the following 0 waivers are likely needed for your model:
+            </p>
+            <div
+              class="margin-bottom-2"
+            >
+              <ul
+                class="margin-y-0 padding-left-3"
+                style="column-count: 2; column-gap: 1rem;"
+              />
+            </div>
+            <p
+              class="line-height-sans-5 margin-y-0 text-base-darkest"
+            >
+              Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.
+            </p>
+          </div>
+          <div
+            id="waiver-assessment-survey-medicare-payment-waivers-form"
+          >
+            <div
+              class="margin-top-6 margin-bottom-3 display-flex"
+            >
+              <button
+                class="usa-button usa-button usa-button--outline margin-top-0"
+                data-testid="button"
+                type="button"
+              >
+                Back
+              </button>
+              <button
+                class="usa-button margin-top-0"
+                data-testid="button"
+                id="waiver-assessment-survey-medicare-payment-waivers-form-next-button"
+                type="submit"
+              >
+                Next
+              </button>
+            </div>
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                aria-label="back"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                />
+              </svg>
+              Save and return to questionnaires
+            </button>
+          </div>
+        </fieldset>
+      </form>
+      <div
+        class="mint-page-number margin-y-6"
+        data-testid="page-num"
+      >
+        <span
+          class="mint-page-number__page-num"
+        >
+          Page 3 of 7
+        </span>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

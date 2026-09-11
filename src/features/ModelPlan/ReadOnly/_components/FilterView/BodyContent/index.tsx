@@ -13,6 +13,7 @@ import ReadOnlyParticipantsAndProviders from 'features/ModelPlan/ReadOnly/Partic
 import ReadOnlyPayments from 'features/ModelPlan/ReadOnly/Payments';
 import ReadOnlyTeamInfo from 'features/ModelPlan/ReadOnly/Team';
 import ReadOnlyModelTimeline from 'features/ModelPlan/ReadOnly/Timeline';
+import ReadOnlyWaiverAssessmentSurvey from 'features/ModelPlan/ReadOnly/WaiverAssessmentSurvey';
 
 import Divider from 'components/Divider';
 import usePlanTranslation from 'hooks/usePlanTranslation';
@@ -37,6 +38,7 @@ const components: Record<string, React.ElementType> = {
   opsEvalAndLearning: ReadOnlyOpsEvalAndLearning,
   payments: ReadOnlyPayments,
   dataExchangeApproach: ReadOnlyDataExchangeApproach,
+  waiverAssessmentSurvey: ReadOnlyWaiverAssessmentSurvey,
   iddocQuestionnaire: ReadOnlyIddocQuestionnaire
 };
 

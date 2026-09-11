@@ -45,6 +45,7 @@ const UserTargetingWrapper = ({ children }: WrapperProps) => {
             modelsApproachingClearanceEnabled: false,
             mintAnalyticsEnabled: true,
             sandbox: true,
+            waiverAssessmentSurveyEnabled: false,
             ctatEnabled: false
           }
         });

@@ -55,7 +55,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 	suite.NoError(err)
 	suite.NotNil(emailSubject)
 	suite.NotNil(emailBody)
-	suite.EqualValues("Updates on the models you're following", emailSubject)
+	suite.EqualValues("Updates on the models you’re following", emailSubject)
 
 	// Check if email contains model name
 	suite.True(strings.Contains(emailBody, mp.ModelName))

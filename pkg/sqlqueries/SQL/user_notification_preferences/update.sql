@@ -20,6 +20,8 @@ SET
     incorrect_model_status = :incorrect_model_status,
     mto_ready_for_review = :mto_ready_for_review,
     mto_ready_for_review_notification_type = :mto_ready_for_review_notification_type,
+    waiver_assessment_survey_marked_complete = :waiver_assessment_survey_marked_complete,
+    waiver_assessment_survey_marked_complete_notification_type = :waiver_assessment_survey_marked_complete_notification_type,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE
@@ -47,6 +49,8 @@ RETURNING
     incorrect_model_status,
     mto_ready_for_review,
     mto_ready_for_review_notification_type,
+    waiver_assessment_survey_marked_complete,
+    waiver_assessment_survey_marked_complete_notification_type,
     created_by,
     created_dts,
     modified_by,

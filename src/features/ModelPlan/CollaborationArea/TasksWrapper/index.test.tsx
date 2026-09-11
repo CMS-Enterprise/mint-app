@@ -39,7 +39,7 @@ describe('TasksWrapper', () => {
     await findByText('Start your Model Plan');
     expect(getByText('Previous')).toBeInTheDocument();
     expect(getByText('Next')).toBeInTheDocument();
-    expect(getByText('See all (4)')).toBeInTheDocument();
+    expect(getByText('See all (5)')).toBeInTheDocument();
   });
 
   it('hides tasks with COMPLETE state and renders next state', async () => {

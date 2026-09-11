@@ -1,0 +1,57 @@
+"""
+Waiver represents a model plan's decision on whether to use a specific waiver.
+"""
+type Waiver {
+  id: UUID!
+  modelPlanID: UUID!
+  commonWaiverID: UUID!
+  commonWaiver: CommonWaiver! @goField(forceResolver: true)
+  willUseWaiver: Boolean
+  notUsingReason: String
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+"""
+The fields needed to update a model plan's decision on whether to use a specific waiver.
+"""
+input WaiverChanges @goModel(model: "map[string]any") {
+  """
+  Does the model plan on using the waiver?
+  """
+  willUseWaiver: Boolean
+  """
+  What is the reason for not using the waiver? Required when willUseWaiver is false.
+  """
+  notUsingReason: String
+}
+
+"""
+Input for a single waiver selection in a bulk updateSelectedWaivers call.
+"""
+input WaiverSelectionInput {
+  commonWaiverID: UUID!
+  willUseWaiver: Boolean!
+  notUsingReason: String
+}
+
+extend type Mutation {
+  updateWaiver(
+    modelPlanID: UUID!
+    commonWaiverID: UUID!
+    changes: WaiverChanges!
+  ): Waiver! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+
+  """
+  Update multiple waivers for a model plan in a single transaction.
+  Creates the waiver row if it does not yet exist (upsert).
+  """
+  updateSelectedWaivers(
+    modelPlanID: UUID!
+    changes: [WaiverSelectionInput!]!
+  ): [Waiver!]! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}

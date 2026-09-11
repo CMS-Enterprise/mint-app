@@ -70,7 +70,7 @@ exports[`TaskCard > renders card with task details and navigation actions 1`] = 
           Start
         </button>
         <a
-          class="usa-button usa-button--outline margin-right-2"
+          class="display-flex flex-align-center usa-button usa-button--outline"
           data-discover="true"
           href="/help-and-knowledge/sample-model-plan"
           rel="noopener noreferrer"

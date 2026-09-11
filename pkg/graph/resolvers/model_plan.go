@@ -98,6 +98,7 @@ func ModelPlanCreate(
 			models.PlanTaskKeyModelPlan,
 			models.PlanTaskKeyMto,
 			models.PlanTaskKeyDataExchange,
+			models.PlanTaskKeyWaiverAssessmentSurvey,
 			models.PlanTaskKeyTwoPager,
 		} {
 			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, key, models.PlanTaskStatusToDo)
@@ -175,6 +176,14 @@ func ModelPlanCreate(
 		iddocQuestionnaire := models.NewIDDOCQuestionnaire(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
 
 		_, err = storage.IDDOCQuestionnaireCreate(tx, logger, iddocQuestionnaire)
+		if err != nil {
+			return nil, err
+		}
+
+		// Create default Waiver Assessment Survey object
+		waiverAssessmentSurvey := models.NewWaiverAssessmentSurvey(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
+
+		_, err = storage.WaiverAssessmentSurveyCreate(tx, logger, waiverAssessmentSurvey)
 		if err != nil {
 			return nil, err
 		}

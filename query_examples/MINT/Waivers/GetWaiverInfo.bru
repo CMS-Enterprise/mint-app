@@ -1,0 +1,52 @@
+meta {
+  name: GetWaiverInfo
+  type: graphql
+  seq: 2
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query waiverInfo($id: UUID!) {
+    waiverInfo(modelPlanID: $id) {
+      modelPlanID
+        commonWaivers{
+          id
+          name
+          description
+          participationAgreementLanguageLink
+          cmmiWaiverPointOfContact
+          waiverType
+          waiverFocus
+          whatIsWaived
+          hasStandardizationEffort
+          hasClaimsDataOrRREGAnalysis
+          isUsedInActiveModels
+          willUseWaiver
+          notUsingReason
+          isAnswered
+          isSuggested
+          createdBy
+          createdDts
+          modifiedBy
+          modifiedDts
+      }
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "id": "{{modelPlanID}}"
+  }
+}

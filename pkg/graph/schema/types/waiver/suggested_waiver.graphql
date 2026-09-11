@@ -1,0 +1,17 @@
+"""
+SuggestedWaiver represents a waiver MINT has determined is likely needed for a model plan
+based on answers to the waiver assessment survey.
+NOTE, this will be deprecated as a type in favor of adding suggestion context directly to CommonWaiver, but is left as a separate type for now to simplify the implementation.
+"""
+type SuggestedWaiver {
+  id: UUID!
+  modelPlanID: UUID!
+  commonWaiverID: UUID!
+  commonWaiver: CommonWaiver! @goField(forceResolver: true)
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}

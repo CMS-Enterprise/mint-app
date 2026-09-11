@@ -145,12 +145,13 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 
 	tasks, err := PlanTaskGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Len(tasks, 4)
+	suite.Len(tasks, 5)
 
 	taskByKey := planTasksByKey(tasks)
 	suite.NotNil(taskByKey[models.PlanTaskKeyModelPlan])
 	suite.NotNil(taskByKey[models.PlanTaskKeyMto])
 	suite.NotNil(taskByKey[models.PlanTaskKeyDataExchange])
+	suite.NotNil(taskByKey[models.PlanTaskKeyWaiverAssessmentSurvey])
 	suite.NotNil(taskByKey[models.PlanTaskKeyTwoPager])
 
 	for _, t := range tasks {

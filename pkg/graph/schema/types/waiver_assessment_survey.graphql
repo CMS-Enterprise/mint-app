@@ -1,0 +1,155 @@
+"""
+WaiverAssessmentSurveyStatus represents the work completion status of a waiver assessment survey.
+"""
+enum WaiverAssessmentSurveyStatus {
+  READY
+  IN_PROGRESS
+  COMPLETE
+}
+
+"""
+NotSelectedReason represents the reason a waiver assessment survey question was answered No.
+"""
+enum NotSelectedReason {
+  OUT_OF_SCOPE
+  OVERLAPS
+  NOT_TESTING
+  NOT_ENGAGED
+  FEEDBACK_AGAINST_USE
+  OTHER
+}
+
+"""
+WaiverAssessmentSurvey represents the waiver assessment questionnaire for a model plan.
+"""
+type WaiverAssessmentSurvey {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 3 - Medicare payment waivers
+  modifiesMedicareSavingsPrograms: Boolean
+  modifiesMedicareSavingsProgramsExample: String
+  modifiesMedicareSavingsProgramsWhyNot: NotSelectedReason
+  bundlesPayments: Boolean
+  bundlesPaymentsExample: String
+  bundlesPaymentsWhyNot: NotSelectedReason
+  offersRiskSharingArrangements: Boolean
+  offersRiskSharingArrangementsExample: String
+  offersRiskSharingArrangementsWhyNot: NotSelectedReason
+
+  # Page 4 - Program waivers (Medicare Benefit Enhancements)
+  impactsSiteOfCarePayments: Boolean
+  impactsSiteOfCarePaymentsExample: String
+  impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
+  modifiesCareTeamScopeOfPractice: Boolean
+  modifiesCareTeamScopeOfPracticeExample: String
+  modifiesCareTeamScopeOfPracticeWhyNot: NotSelectedReason
+  modifiesCareDeliveryWithClaimsBasedPayments: Boolean
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: String
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: NotSelectedReason
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
+
+  # Page 5 - Medicaid payment waivers
+  impactsMedicaidOnlyBeneficiaries: Boolean
+  impactsMedicaidOnlyBeneficiariesExample: String
+  impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
+  impactsHomeCommunityBasedServicePayments: Boolean
+  impactsHomeCommunityBasedServicePaymentsExample: String
+  impactsHomeCommunityBasedServicePaymentsWhyNot: NotSelectedReason
+  impactsManagedCareWaivers: Boolean
+  impactsManagedCareWaiversExample: String
+  impactsManagedCareWaiversWhyNot: NotSelectedReason
+  additionalMedicaidSpecificWaivers: String
+
+  # Page 6 - Waiver selections for this model plan
+  waivers: [Waiver!]! @goField(forceResolver: true)
+
+  # Waivers MINT has determined are likely needed based on survey answers
+  # this will be removed in future implementations
+  suggestedWaivers: [SuggestedWaiver!]! @goField(forceResolver: true)
+
+  """
+  The UUID of the user who marked the waiver assessment survey complete.
+  """
+  completedBy: UUID
+
+  """
+  The user who marked the waiver assessment survey complete.
+  """
+  completedByUserAccount: UserAccount
+
+  """
+  The timestamp when the waiver assessment survey was marked complete.
+  """
+  completedDts: Time
+
+  """
+  Convenience field indicating whether the survey has been marked as complete.
+  Computed from status: true when status is COMPLETE.
+  """
+  isComplete: Boolean!
+
+  """
+  The work completion status of the waiver assessment survey.
+  """
+  status: WaiverAssessmentSurveyStatus!
+
+  # Model Metadata
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
+  # Page 3 - Medicare payment waivers
+  modifiesMedicareSavingsPrograms: Boolean
+  modifiesMedicareSavingsProgramsExample: String
+  modifiesMedicareSavingsProgramsWhyNot: NotSelectedReason
+  bundlesPayments: Boolean
+  bundlesPaymentsExample: String
+  bundlesPaymentsWhyNot: NotSelectedReason
+  offersRiskSharingArrangements: Boolean
+  offersRiskSharingArrangementsExample: String
+  offersRiskSharingArrangementsWhyNot: NotSelectedReason
+
+  # Page 4 - Program waivers (Medicare Benefit Enhancements)
+  impactsSiteOfCarePayments: Boolean
+  impactsSiteOfCarePaymentsExample: String
+  impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
+  modifiesCareTeamScopeOfPractice: Boolean
+  modifiesCareTeamScopeOfPracticeExample: String
+  modifiesCareTeamScopeOfPracticeWhyNot: NotSelectedReason
+  modifiesCareDeliveryWithClaimsBasedPayments: Boolean
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: String
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: NotSelectedReason
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
+
+  # Page 5 - Medicaid payment waivers
+  impactsMedicaidOnlyBeneficiaries: Boolean
+  impactsMedicaidOnlyBeneficiariesExample: String
+  impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
+  impactsHomeCommunityBasedServicePayments: Boolean
+  impactsHomeCommunityBasedServicePaymentsExample: String
+  impactsHomeCommunityBasedServicePaymentsWhyNot: NotSelectedReason
+  impactsManagedCareWaivers: Boolean
+  impactsManagedCareWaiversExample: String
+  impactsManagedCareWaiversWhyNot: NotSelectedReason
+  additionalMedicaidSpecificWaivers: String
+
+  # Convenience field for controlling status
+  isComplete: Boolean
+}
+
+extend type Mutation {
+  updateWaiverAssessmentSurvey(
+    id: UUID!
+    changes: WaiverAssessmentSurveyChanges!
+  ): WaiverAssessmentSurvey! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}

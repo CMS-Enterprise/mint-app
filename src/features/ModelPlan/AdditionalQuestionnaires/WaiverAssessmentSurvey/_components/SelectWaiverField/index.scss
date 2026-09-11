@@ -1,0 +1,29 @@
+@use 'uswds-core' as *;
+@use 'viewports' as *;
+
+.mint-yes-no-button-group {
+  display: flex;
+
+  input[type="radio"] {
+    @include sr-only;
+  }
+
+  .usa-button {
+    margin-top: 0 !important;
+    border: 2px solid !important;
+    height: 2.5rem;
+    width: 5.5rem;
+  }
+
+  .mint-yes-no-button--yes .usa-button {
+    background-color: color('success-lighter');
+    border-color: color('success-darker');
+    color: color('success-darker');
+  }
+
+  .mint-yes-no-button--no .usa-button {
+    background-color: color('error-lighter');
+    border-color: color('error-dark');
+    color: color('error-dark');
+  }
+}

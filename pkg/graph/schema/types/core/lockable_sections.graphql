@@ -30,6 +30,7 @@ enum LockableSection {
   IDDOC_QUESTIONNAIRE
   MODELS_TO_OPERATION_MATRIX
   TIMELINE
+  WAIVER_ASSESSMENT_SURVEY
 }
 
 type LockableSectionLockStatusChanged {
