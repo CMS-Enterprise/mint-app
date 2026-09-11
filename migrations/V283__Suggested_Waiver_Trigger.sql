@@ -9,11 +9,11 @@
 -- On UPDATE, only common_waiver rows whose mapped field actually changed are processed
 -- so that the MERGE is a no-op when unrelated columns are saved.
 --
--- TODO: populate common_waiver.survey_question_field once CMS provides real
+-- NOTE: populate common_waiver.survey_question_field once CMS provides real
 -- waiver-to-question mappings. Until then the ELSE TRUE branch suggests every waiver.
 --
--- TODO: revisit this whole function once the final waiver-to-question configuration is
--- in hand — this is a reasonable starting point but the shape may need to change
+-- NOTE: revisit this function once the final waiver-to-question configuration is available;
+-- the approach may need to change depending on what that configuration looks like.
 -- depending on what that configuration looks like. We'll also want to test more
 -- thoroughly once every common_waiver row has a real field mapping (today only one
 -- waiver is wired up, for manual/integration testing — see waiver_suggestion_trigger_test.go).
