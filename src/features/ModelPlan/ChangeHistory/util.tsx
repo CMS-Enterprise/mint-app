@@ -1113,12 +1113,15 @@ export const isInitialCreatedSection = (
   changeType: ChangeType
 ): boolean =>
   !!(
-    ((changeType === 'taskListStatusUpdate' ||
-      changeType === 'planTaskStateUpdate') &&
+    (changeType === 'taskListStatusUpdate' &&
       change.translatedFields.find(
         field =>
           (field.fieldName === 'status' || field.fieldName === 'needed') &&
           field.old === null
+      )) ||
+    (changeType === 'planTaskStateUpdate' &&
+      change.translatedFields.find(
+        field => field.fieldName === 'state' && field.old === null
       )) ||
     identifyChangeType(change) === 'operationalNeedCreate'
   );
