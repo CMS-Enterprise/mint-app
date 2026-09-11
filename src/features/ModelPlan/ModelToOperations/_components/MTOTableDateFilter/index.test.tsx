@@ -6,7 +6,7 @@ import { vi } from 'vitest';
 import MTOTableDateFilter from '.';
 
 describe('MTOTableDateFilter Component', () => {
-  let setSelectedFilters: ReturnType<typeof vi.fn>;
+  let setSelectedFilters: ReturnType<typeof vi.fn<(filters: string[]) => void>>;
 
   beforeEach(() => {
     setSelectedFilters = vi.fn();
