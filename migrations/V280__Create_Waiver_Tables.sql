@@ -65,6 +65,12 @@ CREATE TABLE waiver_assessment_survey (
     impacts_managed_care_waivers BOOLEAN,
     impacts_managed_care_waivers_example TEXT,
     impacts_managed_care_waivers_why_not NOT_SELECTED_REASON,
+    offers_patient_incentives_safe_harbor_protection BOOLEAN,
+    offers_patient_incentives_safe_harbor_protection_example TEXT,
+    offers_patient_incentives_safe_harbor_protection_why_not NOT_SELECTED_REASON,
+    offers_expenses_remuneration_safe_harbor_protection BOOLEAN,
+    offers_expenses_remuneration_safe_harbor_protection_example TEXT,
+    offers_expenses_remuneration_safe_harbor_protection_why_not NOT_SELECTED_REASON,
     additional_medicaid_specific_waivers TEXT,
 
     status WAIVER_ASSESSMENT_SURVEY_STATUS NOT NULL DEFAULT 'READY',

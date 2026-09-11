@@ -454,6 +454,108 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     order: 5.032,
     parentRelation: () => waiverAssessmentSurvey.impactsManagedCareWaivers
   },
+  offersPatientIncentivesSafeHarborProtection: {
+    gqlField: 'offersPatientIncentivesSafeHarborProtection',
+    goField: 'OffersPatientIncentivesSafeHarborProtection',
+    dbField: 'offers_patient_incentives_safe_harbor_protection',
+    label:
+      'Will your model offer safe harbor protection of patient incentives (including reduced cost-sharing or additional services)?',
+    hideFromReadonly: true,
+    hideRelatedQuestionAlert: true,
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 5.04,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [
+        () =>
+          waiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtectionExample
+      ],
+      false: [
+        () =>
+          waiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtectionWhyNot
+      ]
+    }
+  },
+  offersPatientIncentivesSafeHarborProtectionExample: {
+    gqlField: 'offersPatientIncentivesSafeHarborProtectionExample',
+    goField: 'OffersPatientIncentivesSafeHarborProtectionExample',
+    dbField: 'offers_patient_incentives_safe_harbor_protection_example',
+    label: 'Please provide an example',
+    hideFromReadonly: true,
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.041,
+    parentRelation: () =>
+      waiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtection
+  },
+  offersPatientIncentivesSafeHarborProtectionWhyNot: {
+    gqlField: 'offersPatientIncentivesSafeHarborProtectionWhyNot',
+    goField: 'OffersPatientIncentivesSafeHarborProtectionWhyNot',
+    dbField: 'offers_patient_incentives_safe_harbor_protection_why_not',
+    label: 'Please explain why not',
+    hideFromReadonly: true,
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 5.042,
+    parentRelation: () =>
+      waiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtection
+  },
+  offersExpensesRemunerationSafeHarborProtection: {
+    gqlField: 'offersExpensesRemunerationSafeHarborProtection',
+    goField: 'OffersExpensesRemunerationSafeHarborProtection',
+    dbField: 'offers_expenses_remuneration_safe_harbor_protection',
+    label:
+      'Will your model offer safe harbor protection related to expenses or remuneration?',
+    hideFromReadonly: true,
+    hideRelatedQuestionAlert: true,
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 5.05,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    },
+    childRelation: {
+      true: [
+        () =>
+          waiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtectionExample
+      ],
+      false: [
+        () =>
+          waiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtectionWhyNot
+      ]
+    }
+  },
+  offersExpensesRemunerationSafeHarborProtectionExample: {
+    gqlField: 'offersExpensesRemunerationSafeHarborProtectionExample',
+    goField: 'OffersExpensesRemunerationSafeHarborProtectionExample',
+    dbField: 'offers_expenses_remuneration_safe_harbor_protection_example',
+    label: 'Please provide an example',
+    hideFromReadonly: true,
+    dataType: TranslationDataType.STRING,
+    formType: TranslationFormType.TEXTAREA,
+    order: 5.051,
+    parentRelation: () =>
+      waiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtection
+  },
+  offersExpensesRemunerationSafeHarborProtectionWhyNot: {
+    gqlField: 'offersExpensesRemunerationSafeHarborProtectionWhyNot',
+    goField: 'OffersExpensesRemunerationSafeHarborProtectionWhyNot',
+    dbField: 'offers_expenses_remuneration_safe_harbor_protection_why_not',
+    label: 'Please explain why not',
+    hideFromReadonly: true,
+    dataType: TranslationDataType.ENUM,
+    formType: TranslationFormType.SELECT,
+    options: notSelectedReasonOptions,
+    order: 5.052,
+    parentRelation: () =>
+      waiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtection
+  },
   additionalMedicaidSpecificWaivers: {
     gqlField: 'additionalMedicaidSpecificWaivers',
     goField: 'AdditionalMedicaidSpecificWaivers',
@@ -462,7 +564,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
       'Are there any other Medicaid-specific waivers of interest that are not outlined here?',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 5.04
+    order: 5.06
   },
   status: {
     gqlField: 'status',

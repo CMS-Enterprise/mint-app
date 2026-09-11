@@ -811,6 +811,12 @@ export type TranslationWaiverAssessmentSurveyForm = {
   impactsManagedCareWaivers: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   impactsManagedCareWaiversExample: TranslationFieldPropertiesWithParent<Bool>;
   impactsManagedCareWaiversWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  offersPatientIncentivesSafeHarborProtection: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  offersPatientIncentivesSafeHarborProtectionExample: TranslationFieldPropertiesWithParent<Bool>;
+  offersPatientIncentivesSafeHarborProtectionWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  offersExpensesRemunerationSafeHarborProtection: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  offersExpensesRemunerationSafeHarborProtectionExample: TranslationFieldPropertiesWithParent<Bool>;
+  offersExpensesRemunerationSafeHarborProtectionWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   additionalMedicaidSpecificWaivers: TranslationFieldProperties;
 };
 
