@@ -1,16 +1,12 @@
-import {
-  PlanTaskKey,
-  PlanTaskState,
-  PlanTaskStatus
-} from 'gql/generated/graphql';
+import { PlanTaskKey, PlanTaskStatus } from 'gql/generated/graphql';
 
 const tasks = {
   breadcrumb: 'Tasks',
   heading: 'Current tasks',
-  state: {
-    [PlanTaskState.UPCOMING]: 'Upcoming',
-    [PlanTaskState.TO_DO]: 'To do',
-    [PlanTaskState.COMPLETE]: 'Complete'
+  status: {
+    [PlanTaskStatus.TO_DO]: 'To do',
+    [PlanTaskStatus.IN_PROGRESS]: 'To do',
+    [PlanTaskStatus.COMPLETE]: 'Complete'
   },
   seeAll: 'See all ({{count}})',
   seeAllTasks: 'See all tasks',

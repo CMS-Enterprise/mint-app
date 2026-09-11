@@ -25,6 +25,7 @@ import {
   groupBatchedChanges,
   handleSortOptions,
   identifyChangeType,
+  isAssessmentDiscussionChange,
   isInitialCreatedSection,
   isModelPlanStatusChange,
   isMTOChange,
@@ -1280,5 +1281,83 @@ describe('util.tsx', () => {
     const result6 = isMTOChange(TypeOfChange.MODEL_TO_OPERATIONS, change);
 
     expect(result6).toEqual(false);
+  });
+});
+
+describe('isAssessmentDiscussionChange', () => {
+  const baseDiscussionChange: ChangeRecordType = {
+    __typename: 'TranslatedAudit',
+    id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+    tableName: TableName.PLAN_DISCUSSION,
+    date: '2024-06-07T19:14:30.145659Z',
+    action: DatabaseOperation.INSERT,
+    actorName: 'John Doe',
+    translatedFields: []
+  };
+
+  it('returns true for plan discussion with is_assessment true', () => {
+    const change: ChangeRecordType = {
+      ...baseDiscussionChange,
+      translatedFields: [
+        {
+          fieldName: 'is_assessment',
+          new: 'true',
+          changeType: AuditFieldChangeType.ANSWERED
+        }
+      ] as TranslatedAuditField[]
+    };
+
+    expect(isAssessmentDiscussionChange(change)).toBe(true);
+  });
+
+  it('returns true for discussion reply with is_assessment boolean true', () => {
+    const change: ChangeRecordType = {
+      ...baseDiscussionChange,
+      tableName: TableName.DISCUSSION_REPLY,
+      translatedFields: [
+        {
+          fieldName: 'is_assessment',
+          new: true,
+          changeType: AuditFieldChangeType.ANSWERED
+        }
+      ] as TranslatedAuditField[]
+    };
+
+    expect(isAssessmentDiscussionChange(change)).toBe(true);
+  });
+
+  it('returns false when is_assessment is false', () => {
+    const change: ChangeRecordType = {
+      ...baseDiscussionChange,
+      translatedFields: [
+        {
+          fieldName: 'is_assessment',
+          new: 'false',
+          changeType: AuditFieldChangeType.ANSWERED
+        }
+      ] as TranslatedAuditField[]
+    };
+
+    expect(isAssessmentDiscussionChange(change)).toBe(false);
+  });
+
+  it('returns false when is_assessment field is missing', () => {
+    expect(isAssessmentDiscussionChange(baseDiscussionChange)).toBe(false);
+  });
+
+  it('returns false for non-discussion tables', () => {
+    const change: ChangeRecordType = {
+      ...baseDiscussionChange,
+      tableName: TableName.PLAN_BASICS,
+      translatedFields: [
+        {
+          fieldName: 'is_assessment',
+          new: 'true',
+          changeType: AuditFieldChangeType.ANSWERED
+        }
+      ] as TranslatedAuditField[]
+    };
+
+    expect(isAssessmentDiscussionChange(change)).toBe(false);
   });
 });
