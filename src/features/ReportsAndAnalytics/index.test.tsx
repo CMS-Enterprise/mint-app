@@ -13,13 +13,6 @@ import { ASSESSMENT } from 'constants/jobCodes';
 import { getChangesByOtherData, getChangesBySection } from './util';
 import ReportsAndAnalytics from '.';
 
-// Mock ResizeObserver for ResponsiveContainer
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn()
-}));
-
 const mockStore = configureMockStore();
 const store = mockStore({ auth: { euaId: 'MINT' } });
 
