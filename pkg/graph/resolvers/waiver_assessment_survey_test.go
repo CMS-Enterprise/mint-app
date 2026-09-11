@@ -38,10 +38,12 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 
 	// Update fields; saving any answer auto-transitions the survey to IN_PROGRESS
 	changes := map[string]interface{}{
-		"modifiesMedicareSavingsPrograms":        helpers.PointerTo(true),
-		"modifiesMedicareSavingsProgramsExample": helpers.PointerTo("Some example"),
-		"bundlesPayments":                        helpers.PointerTo(false),
-		"additionalMedicaidSpecificWaivers":      helpers.PointerTo("Some additional waivers"),
+		"modifiesMedicareSavingsPrograms":                    helpers.PointerTo(true),
+		"modifiesMedicareSavingsProgramsExample":             helpers.PointerTo("Some example"),
+		"bundlesPayments":                                    helpers.PointerTo(false),
+		"offersPatientIncentivesSafeHarborProtection":        helpers.PointerTo(true),
+		"offersPatientIncentivesSafeHarborProtectionExample": helpers.PointerTo("Some safe harbor example"),
+		"additionalMedicaidSpecificWaivers":                  helpers.PointerTo("Some additional waivers"),
 	}
 
 	updated, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store, nil, email.AddressBook{})
@@ -50,6 +52,8 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 
 	suite.NotNil(updated.ModifiesMedicareSavingsPrograms)
 	suite.True(*updated.ModifiesMedicareSavingsPrograms)
+	suite.NotNil(updated.OffersPatientIncentivesSafeHarborProtection)
+	suite.True(*updated.OffersPatientIncentivesSafeHarborProtection)
 	suite.NotNil(updated.ModifiesMedicareSavingsProgramsExample)
 	suite.Equal("Some example", *updated.ModifiesMedicareSavingsProgramsExample)
 	suite.NotNil(updated.BundlesPayments)
