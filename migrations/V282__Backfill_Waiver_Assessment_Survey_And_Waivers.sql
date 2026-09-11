@@ -1,6 +1,6 @@
--- Register auditing for the waiver_assessment_survey and waiver tables.
+-- Register auditing for waiver_assessment_survey, waiver, and suggested_waiver tables.
 -- These calls must run in a separate migration from the ALTER TYPE TABLE_NAME ADD VALUE
--- statements (V269) because PostgreSQL does not allow a newly added enum value to be
+-- statements (V280) because PostgreSQL does not allow a newly added enum value to be
 -- referenced as a literal in the same transaction.
 SELECT audit.AUDIT_TABLE(
     'public',
