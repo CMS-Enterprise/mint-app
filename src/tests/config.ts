@@ -7,7 +7,8 @@ window.URL.createObjectURL = vi.fn();
 
 // Fill in some scroll functions
 // Usually for alerts and form field attention
-window.scroll = vi.fn;
+window.scroll = vi.fn();
+window.scrollTo = vi.fn();
 Element.prototype.scrollIntoView = vi.fn(() => {});
 
 // Mocks the clipboard and drag events - needed for TipTap editor
@@ -21,12 +22,15 @@ Object.defineProperty(window, 'DragEvent', {
   value: vi.fn()
 });
 
-// Mock ResizeObserver for ResponsiveContainer (Recharts)
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn()
-}));
+// Mock ResizeObserver for ResponsiveContainer (Recharts).
+// Vitest 4 requires constructor mocks to be a class or function, not an arrow.
+global.ResizeObserver = class ResizeObserver {
+  observe = vi.fn();
+
+  unobserve = vi.fn();
+
+  disconnect = vi.fn();
+};
 
 vi.mock('src/app/Clients/github', () => ({
   default: {
