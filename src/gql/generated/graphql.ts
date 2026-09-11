@@ -5037,19 +5037,8 @@ export enum PlanTaskKey {
   TWO_PAGER = 'TWO_PAGER'
 }
 
-/**
- * PlanTaskState is computed from PlanTaskStatus for display: it groups the finer-grained
- * PlanTaskStatus into the buckets the task list UI switches on. UPCOMING maps to UPCOMING; COMPLETE
- * maps to COMPLETE; every other status (TO_DO, IN_PROGRESS, NOT_NEEDED) maps to TO_DO.
- */
+/** PlanTaskState is stored in the database and represents the task lifecycle. */
 export enum PlanTaskState {
-  COMPLETE = 'COMPLETE',
-  TO_DO = 'TO_DO',
-  UPCOMING = 'UPCOMING'
-}
-
-/** PlanTaskStatus is stored in the database and represents the task lifecycle. */
-export enum PlanTaskStatus {
   COMPLETE = 'COMPLETE',
   IN_PROGRESS = 'IN_PROGRESS',
   NOT_NEEDED = 'NOT_NEEDED',
@@ -5057,10 +5046,20 @@ export enum PlanTaskStatus {
   UPCOMING = 'UPCOMING'
 }
 
+/**
+ * PlanTaskStatus is computed from PlanTaskState for display: it collapses every state to just
+ * TO_DO or COMPLETE. Only COMPLETE maps to COMPLETE; every other state (NOT_NEEDED, UPCOMING,
+ * TO_DO, IN_PROGRESS) maps to TO_DO.
+ */
+export enum PlanTaskStatus {
+  COMPLETE = 'COMPLETE',
+  TO_DO = 'TO_DO'
+}
+
 /** Represents plan task translation data */
 export type PlanTaskTranslation = {
   __typename: 'PlanTaskTranslation';
-  status: TranslationFieldWithOptions;
+  state: TranslationFieldWithOptions;
 };
 
 /** Represents PlanTimeline */

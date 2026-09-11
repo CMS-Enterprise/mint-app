@@ -41,7 +41,7 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	}
 
 	// MTO task progression: creating MTO data counts as starting the MTO
-	err = UpdatePlanTaskStatusOnMTOStarted(ctx, store, logger, modelPlanID, principal, store)
+	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, modelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func MTOCategoryDelete(
 		}
 
 		// MTO task regression: recalculate task after deleting MTO data.
-		if err = UpdatePlanTaskStatusOnMTODataDeleted(context.Background(), tx, logger, existing.ModelPlanID, principal, store, emailService, addressBook); err != nil {
+		if err = UpdatePlanTaskStateOnMTODataDeleted(context.Background(), tx, logger, existing.ModelPlanID, principal, store, emailService, addressBook); err != nil {
 			return fmt.Errorf("unable to recalculate MTO task after deleting category. Err %w", err)
 		}
 
@@ -114,7 +114,7 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 	}
 
 	// MTO task progression: editing category data counts as starting the MTO
-	err = UpdatePlanTaskStatusOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal, store)
+	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -173,7 +173,7 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	}
 
 	// MTO task progression: editing category data counts as starting the MTO
-	err = UpdatePlanTaskStatusOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal, store)
+	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +282,7 @@ func MTOCreateStandardCategories(ctx context.Context, logger *zap.Logger, princi
 		}
 
 		// MTO task progression: creating standard category data counts as starting the MTO
-		err := UpdatePlanTaskStatusOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
+		err := UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
 		if err != nil {
 			return err
 		}

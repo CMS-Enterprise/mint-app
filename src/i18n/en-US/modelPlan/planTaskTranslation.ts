@@ -1,30 +1,30 @@
 import { TranslationFieldPropertiesWithOptions } from 'types/translation';
 
 import {
-  PlanTaskStatus,
+  PlanTaskState,
   TranslationDataType,
   TranslationFormType
 } from '../../../gql/generated/graphql';
 
 export type TranslationPlanTask = {
-  status: TranslationFieldPropertiesWithOptions<PlanTaskStatus>;
+  state: TranslationFieldPropertiesWithOptions<PlanTaskState>;
 };
 
 export const planTaskTranslation: TranslationPlanTask = {
-  status: {
-    gqlField: 'status',
-    goField: 'Status',
-    dbField: 'status',
-    label: 'Task status',
+  state: {
+    gqlField: 'state',
+    goField: 'State',
+    dbField: 'state',
+    label: 'Task state',
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.CHECKBOX,
     order: 1.01,
     options: {
-      [PlanTaskStatus.NOT_NEEDED]: 'Not needed',
-      [PlanTaskStatus.UPCOMING]: 'Upcoming',
-      [PlanTaskStatus.TO_DO]: 'To do',
-      [PlanTaskStatus.IN_PROGRESS]: 'In progress',
-      [PlanTaskStatus.COMPLETE]: 'Complete'
+      [PlanTaskState.NOT_NEEDED]: 'Not needed',
+      [PlanTaskState.UPCOMING]: 'Upcoming',
+      [PlanTaskState.TO_DO]: 'To do',
+      [PlanTaskState.IN_PROGRESS]: 'In progress',
+      [PlanTaskState.COMPLETE]: 'Complete'
     },
     hideFromReadonly: true
   }

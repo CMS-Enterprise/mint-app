@@ -32,18 +32,18 @@ func PlanTaskGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) 
 	return loaders.PlanTask.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
-// updatePlanTaskStatusByKey updates a plan task's status. attributedTo is who gets credited as the
+// updatePlanTaskStateByKey updates a plan task's state. attributedTo is who gets credited as the
 // actor for this specific change (CompletedBy/ModifiedBy) in the database and, in turn, in Change
 // History - it is usually principal.Account().ID, but callers cascading an automatic side effect
 // (see activateUpcomingPlanTask) pass the MINT system account instead, since no one directly acted
 // on that specific task. principal is always used for access control regardless of attributedTo.
-func updatePlanTaskStatusByKey(
+func updatePlanTaskStateByKey(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	key models.PlanTaskKey,
-	newStatus models.PlanTaskStatus,
+	newState models.PlanTaskState,
 	principal authentication.Principal,
 	attributedTo uuid.UUID,
 	store *storage.Store,
@@ -66,20 +66,20 @@ func updatePlanTaskStatusByKey(
 		return nil, fmt.Errorf("plan task not found for modelPlanID %s and key %s", modelPlanID, key)
 	}
 
-	// Ensure completion metadata matches the target status before treating an update as a no-op.
-	isCompletionMetadataConsistent := (newStatus == models.PlanTaskStatusComplete && task.CompletedBy != nil && task.CompletedDts != nil) ||
-		(newStatus != models.PlanTaskStatusComplete && task.CompletedBy == nil && task.CompletedDts == nil)
+	// Ensure completion metadata matches the target state before treating an update as a no-op.
+	isCompletionMetadataConsistent := (newState == models.PlanTaskStateComplete && task.CompletedBy != nil && task.CompletedDts != nil) ||
+		(newState != models.PlanTaskStateComplete && task.CompletedBy == nil && task.CompletedDts == nil)
 
-	// Skip writes when status + completion metadata are already correct.
-	if task.Status == newStatus && isCompletionMetadataConsistent {
+	// Skip writes when state + completion metadata are already correct.
+	if task.State == newState && isCompletionMetadataConsistent {
 		return task, nil
 	}
 
-	didTransitionToDo := task.Status != models.PlanTaskStatusToDo && newStatus == models.PlanTaskStatusToDo
-	didTransitionToComplete := task.Status != models.PlanTaskStatusComplete && newStatus == models.PlanTaskStatusComplete
-	task.Status = newStatus
+	didTransitionToDo := task.State != models.PlanTaskStateToDo && newState == models.PlanTaskStateToDo
+	didTransitionToComplete := task.State != models.PlanTaskStateComplete && newState == models.PlanTaskStateComplete
+	task.State = newState
 
-	if newStatus == models.PlanTaskStatusComplete {
+	if newState == models.PlanTaskStateComplete {
 		task.CompletedBy = &attributedTo
 		task.CompletedDts = helpers.PointerTo(time.Now().UTC())
 	} else {
@@ -90,7 +90,7 @@ func updatePlanTaskStatusByKey(
 	err = BaseStructPreUpdate(
 		logger,
 		task,
-		map[string]interface{}{"status": newStatus},
+		map[string]interface{}{"state": newState},
 		principal,
 		store,
 		true,
@@ -120,7 +120,7 @@ func updatePlanTaskStatusByKey(
 
 // PlanTaskMarkComplete directly sets a manually-markable plan task's status to COMPLETE or TO_DO.
 // Unlike the calculated task keys (MODEL_PLAN, MTO, DATA_EXCHANGE), which are derived from other
-// model state and updated via updatePlanTaskStatusByKey's other callers, manually-markable keys
+// model state and updated via updatePlanTaskStateByKey's other callers, manually-markable keys
 // (see models.PlanTaskKey.IsManuallyMarkable) have no calculated status and are only ever changed
 // by direct user action, so a key is rejected here if it isn't on that allow-list.
 //
@@ -141,13 +141,13 @@ func PlanTaskMarkComplete(
 		return nil, fmt.Errorf("plan task key %s can not be manually marked complete", key)
 	}
 
-	newStatus := models.PlanTaskStatusToDo
+	newState := models.PlanTaskStateToDo
 	if isComplete {
-		newStatus = models.PlanTaskStatusComplete
+		newState = models.PlanTaskStateComplete
 	}
 
 	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
-		task, err := updatePlanTaskStatusByKey(ctx, tx, logger, modelPlanID, key, newStatus, principal, principal.Account().ID, store, emailService, addressBook)
+		task, err := updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, key, newState, principal, principal.Account().ID, store, emailService, addressBook)
 		if err != nil {
 			return nil, err
 		}
@@ -168,7 +168,7 @@ func PlanTaskMarkComplete(
 // currently UPCOMING (already activated, or has otherwise progressed) or doesn't exist yet, since
 // activation must never regress a task that has already moved on. The change is attributed to the
 // MINT system account rather than principal (the user who triggered the cascade by completing
-// another task), since no one directly acted on this specific task - see updatePlanTaskStatusByKey.
+// another task), since no one directly acted on this specific task - see updatePlanTaskStateByKey.
 func activateUpcomingPlanTask(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
@@ -200,11 +200,11 @@ func activateUpcomingPlanTask(
 		)
 		return nil
 	}
-	if target.Status != models.PlanTaskStatusUpcoming {
+	if target.State != models.PlanTaskStateUpcoming {
 		return nil
 	}
 
-	_, err = updatePlanTaskStatusByKey(ctx, np, logger, modelPlanID, key, models.PlanTaskStatusToDo, principal, constants.GetSystemAccountUUID(), store, emailService, addressBook)
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, key, models.PlanTaskStateToDo, principal, constants.GetSystemAccountUUID(), store, emailService, addressBook)
 	return err
 }
 

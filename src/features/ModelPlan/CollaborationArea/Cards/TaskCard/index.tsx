@@ -14,6 +14,7 @@ import {
   GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   PlanTaskKey,
+  PlanTaskState,
   PlanTaskStatus,
   useUpdateTaskStatusMutation
 } from 'gql/generated/graphql';
@@ -42,10 +43,6 @@ type TaskStatusConfig = {
 
 const TASK_STATUS_CONFIG: Partial<Record<PlanTaskStatus, TaskStatusConfig>> = {
   [PlanTaskStatus.TO_DO]: {
-    style: 'bg-warning-light',
-    icon: <Icon.PriorityHigh aria-label="To do" />
-  },
-  [PlanTaskStatus.IN_PROGRESS]: {
     style: 'bg-warning-light',
     icon: <Icon.PriorityHigh aria-label="To do" />
   },
@@ -79,8 +76,8 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
   const navigate = useNavigate();
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const { key, status } = task;
-  const baseKey = `${key}.${status}`;
+  const { key, state, status } = task;
+  const baseKey = `${key}.${state}`;
   const lastEditSection = getLastEditSectionForTask(key, modelPlan);
   const sectionStartedCounter = getSectionStartedCount(modelPlan);
 
@@ -144,7 +141,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
           />
         </p>
 
-        {status !== PlanTaskStatus.TO_DO && (
+        {state !== PlanTaskState.TO_DO && (
           <div className="display-flex flex-align-center flex-wrap-wrap">
             {key === PlanTaskKey.MODEL_PLAN && (
               <>
