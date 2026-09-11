@@ -149,7 +149,10 @@ services:
 
   minio:
     restart: always
-    image: minio/minio:latest
+    # minio/minio was removed from Docker Hub (MinIO moved to source-only distribution,
+    # see https://github.com/minio/minio/discussions - Oct 2025). quay.io still serves the
+    # last images MinIO published there before the cutover.
+    image: quay.io/minio/minio:latest
     entrypoint: minio server /data --console-address ":9966" --address ":9005"
     ports:
       - '9005:9005'
@@ -161,7 +164,7 @@ services:
       - "dev.dozzle.group=MINT"
 
   minio_mc:
-    image: minio/mc:latest
+    image: quay.io/minio/mc:latest
     volumes:
       - ./minio_config.json:/root/.mc/config.json
     depends_on:

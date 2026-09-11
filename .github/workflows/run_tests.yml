@@ -126,7 +126,11 @@ jobs:
           --health-retries 5
 
       minio:
-        image: minio/minio:edge-cicd
+        # minio/minio was removed from Docker Hub (MinIO moved to source-only distribution,
+        # see https://github.com/minio/minio/discussions - Oct 2025). quay.io still serves the
+        # last images MinIO published there before the cutover.
+        image: quay.io/minio/minio:latest-cicd
+        command: server /data
         ports:
           - '9005:9000'
         options: >-
