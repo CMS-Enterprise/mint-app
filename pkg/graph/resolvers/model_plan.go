@@ -96,6 +96,7 @@ func ModelPlanCreate(
 		// Create default tasks for the model plan. SIX_PAGER starts UPCOMING and is activated to
 		// TO_DO by PlanTaskMarkComplete once TWO_PAGER is marked complete (see
 		// models.PlanTaskKey.ActivationTarget).
+		// OA_PRESENTATION starts UPCOMING and activated once SIX_PAGER is marked complete.
 		defaultTasks := []struct {
 			key    models.PlanTaskKey
 			status models.PlanTaskStatus
@@ -105,6 +106,7 @@ func ModelPlanCreate(
 			{models.PlanTaskKeyDataExchange, models.PlanTaskStatusToDo},
 			{models.PlanTaskKeyTwoPager, models.PlanTaskStatusToDo},
 			{models.PlanTaskKeySixPager, models.PlanTaskStatusUpcoming},
+			{models.PlanTaskKeyOaPresentation, models.PlanTaskStatusUpcoming},
 		}
 		for _, defaultTask := range defaultTasks {
 			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, defaultTask.key, defaultTask.status)
