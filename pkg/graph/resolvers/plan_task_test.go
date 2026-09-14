@@ -20,37 +20,32 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
-func (suite *ResolverSuite) TestPlanTaskStateResolver() {
+func (suite *ResolverSuite) TestPlanTaskStatusResolver() {
 	r := &planTaskResolver{&Resolver{}}
 
 	// nil object should safely default to TO_DO
-	state, err := r.State(suite.testConfigs.Context, nil)
+	status, err := r.Status(suite.testConfigs.Context, nil)
 	suite.NoError(err)
-	suite.Equal(model.PlanTaskStateToDo, state)
+	suite.Equal(model.PlanTaskStatusToDo, status)
 
-	// Non-complete, non-upcoming statuses should map to TO_DO state
-	for _, status := range []models.PlanTaskStatus{
-		models.PlanTaskStatusNotNeeded,
-		models.PlanTaskStatusToDo,
-		models.PlanTaskStatusInProgress,
+	// Every non-complete state should map to TO_DO status
+	for _, state := range []models.PlanTaskState{
+		models.PlanTaskStateNotNeeded,
+		models.PlanTaskStateUpcoming,
+		models.PlanTaskStateToDo,
+		models.PlanTaskStateInProgress,
 	} {
-		task := &models.PlanTask{Status: status}
-		state, err = r.State(suite.testConfigs.Context, task)
+		task := &models.PlanTask{State: state}
+		status, err = r.Status(suite.testConfigs.Context, task)
 		suite.NoError(err)
-		suite.Equal(model.PlanTaskStateToDo, state, "expected status %s to map to TO_DO state", status)
+		suite.Equal(model.PlanTaskStatusToDo, status, "expected state %s to map to TO_DO status", state)
 	}
 
-	// UPCOMING status should map to UPCOMING state
-	taskUpcoming := &models.PlanTask{Status: models.PlanTaskStatusUpcoming}
-	state, err = r.State(suite.testConfigs.Context, taskUpcoming)
+	// COMPLETE state should map to COMPLETE status
+	taskComplete := &models.PlanTask{State: models.PlanTaskStateComplete}
+	status, err = r.Status(suite.testConfigs.Context, taskComplete)
 	suite.NoError(err)
-	suite.Equal(model.PlanTaskStateUpcoming, state)
-
-	// COMPLETE status should map to COMPLETE state
-	taskComplete := &models.PlanTask{Status: models.PlanTaskStatusComplete}
-	state, err = r.State(suite.testConfigs.Context, taskComplete)
-	suite.NoError(err)
-	suite.Equal(model.PlanTaskStateComplete, state)
+	suite.Equal(model.PlanTaskStatusComplete, status)
 }
 
 func (suite *ResolverSuite) TestModelPlanTasksResolver() {
@@ -88,7 +83,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 	)
 	suite.NoError(err)
 	if suite.NotNil(updated) {
-		suite.Equal(models.PlanTaskStatusComplete, updated.Status)
+		suite.Equal(models.PlanTaskStateComplete, updated.State)
 		if suite.NotNil(updated.CompletedBy) {
 			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
 		}
@@ -96,7 +91,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 	}
 
 	task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
-	suite.Equal(models.PlanTaskStatusComplete, task.Status)
+	suite.Equal(models.PlanTaskStateComplete, task.State)
 
 	// mark it back to TO_DO
 	updated, err = PlanTaskMarkComplete(
@@ -112,13 +107,13 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 	)
 	suite.NoError(err)
 	if suite.NotNil(updated) {
-		suite.Equal(models.PlanTaskStatusToDo, updated.Status)
+		suite.Equal(models.PlanTaskStateToDo, updated.State)
 		suite.Nil(updated.CompletedBy)
 		suite.Nil(updated.CompletedDts)
 	}
 
 	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyTwoPager)
-	suite.Equal(models.PlanTaskStatusToDo, task.Status)
+	suite.Equal(models.PlanTaskStateToDo, task.State)
 	suite.Nil(task.CompletedBy)
 	suite.Nil(task.CompletedDts)
 }
@@ -127,7 +122,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 	plan := suite.createModelPlan("Plan For Six Pager Activation")
 
 	sixPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
-	suite.Equal(models.PlanTaskStatusUpcoming, sixPagerTask.Status)
+	suite.Equal(models.PlanTaskStateUpcoming, sixPagerTask.State)
 
 	// marking TWO_PAGER complete activates SIX_PAGER from UPCOMING to TO_DO
 	_, err := PlanTaskMarkComplete(
@@ -144,7 +139,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 	suite.NoError(err)
 
 	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
-	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+	suite.Equal(models.PlanTaskStateToDo, sixPagerTask.State)
 	suite.Nil(sixPagerTask.CompletedBy)
 	suite.Nil(sixPagerTask.CompletedDts)
 
@@ -175,7 +170,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 	suite.NoError(err)
 
 	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
-	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+	suite.Equal(models.PlanTaskStateToDo, sixPagerTask.State)
 }
 
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteSixPager() {
@@ -196,7 +191,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteSixPager() {
 	suite.NoError(err)
 
 	sixPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
-	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+	suite.Equal(models.PlanTaskStateToDo, sixPagerTask.State)
 
 	// mark the SIX_PAGER task complete
 	updated, err := PlanTaskMarkComplete(
@@ -212,7 +207,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteSixPager() {
 	)
 	suite.NoError(err)
 	if suite.NotNil(updated) {
-		suite.Equal(models.PlanTaskStatusComplete, updated.Status)
+		suite.Equal(models.PlanTaskStateComplete, updated.State)
 		if suite.NotNil(updated.CompletedBy) {
 			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
 		}
@@ -220,7 +215,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteSixPager() {
 	}
 
 	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
-	suite.Equal(models.PlanTaskStatusComplete, sixPagerTask.Status)
+	suite.Equal(models.PlanTaskStateComplete, sixPagerTask.State)
 
 	// mark it back to TO_DO
 	updated, err = PlanTaskMarkComplete(
@@ -236,28 +231,30 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteSixPager() {
 	)
 	suite.NoError(err)
 	if suite.NotNil(updated) {
-		suite.Equal(models.PlanTaskStatusToDo, updated.Status)
+		suite.Equal(models.PlanTaskStateToDo, updated.State)
 		suite.Nil(updated.CompletedBy)
 		suite.Nil(updated.CompletedDts)
 	}
 
 	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
-	suite.Equal(models.PlanTaskStatusToDo, sixPagerTask.Status)
+	suite.Equal(models.PlanTaskStateToDo, sixPagerTask.State)
 	suite.Nil(sixPagerTask.CompletedBy)
 	suite.Nil(sixPagerTask.CompletedDts)
 }
 
-// TestSixPagerStateReflectsActivation confirms the state field displayed on the 6-pager card
-// tracks its status through the UPCOMING -> TO_DO activation trigger, end to end through the
-// resolver (not just the State function in isolation).
-func (suite *ResolverSuite) TestSixPagerStateReflectsActivation() {
+// TestSixPagerStatusStaysToDoThroughActivation confirms the computed status field on the
+// 6-pager card stays TO_DO across the UPCOMING -> TO_DO state activation trigger, end to end
+// through the resolver (not just the Status function in isolation). Status is binary
+// (TO_DO/COMPLETE), so unlike state it does not distinguish UPCOMING from TO_DO.
+func (suite *ResolverSuite) TestSixPagerStatusStaysToDoThroughActivation() {
 	plan := suite.createModelPlan("Plan For Six Pager State Display")
 	r := &planTaskResolver{&Resolver{}}
 
 	sixPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
-	state, err := r.State(suite.testConfigs.Context, sixPagerTask)
+	suite.Equal(models.PlanTaskStateUpcoming, sixPagerTask.State)
+	status, err := r.Status(suite.testConfigs.Context, sixPagerTask)
 	suite.NoError(err)
-	suite.Equal(model.PlanTaskStateUpcoming, state)
+	suite.Equal(model.PlanTaskStatusToDo, status)
 
 	_, err = PlanTaskMarkComplete(
 		suite.testConfigs.Context,
@@ -273,9 +270,10 @@ func (suite *ResolverSuite) TestSixPagerStateReflectsActivation() {
 	suite.NoError(err)
 
 	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
-	state, err = r.State(suite.testConfigs.Context, sixPagerTask)
+	suite.Equal(models.PlanTaskStateToDo, sixPagerTask.State)
+	status, err = r.Status(suite.testConfigs.Context, sixPagerTask)
 	suite.NoError(err)
-	suite.Equal(model.PlanTaskStateToDo, state)
+	suite.Equal(model.PlanTaskStatusToDo, status)
 }
 
 // TestPlanTaskMarkCompleteActivatesOAPresentation confirms marking SIX_PAGER complete activates
@@ -286,7 +284,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesOAPresentation() {
 	plan := suite.createModelPlan("Plan For OA Presentation Activation")
 
 	oaTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
-	suite.Equal(models.PlanTaskStatusUpcoming, oaTask.Status)
+	suite.Equal(models.PlanTaskStateUpcoming, oaTask.State)
 
 	// marking TWO_PAGER complete activates SIX_PAGER, but OA_PRESENTATION remains UPCOMING until
 	// SIX_PAGER itself is marked complete
@@ -304,7 +302,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesOAPresentation() {
 	suite.NoError(err)
 
 	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
-	suite.Equal(models.PlanTaskStatusUpcoming, oaTask.Status)
+	suite.Equal(models.PlanTaskStateUpcoming, oaTask.State)
 
 	// marking SIX_PAGER complete activates OA_PRESENTATION from UPCOMING to TO_DO
 	_, err = PlanTaskMarkComplete(
@@ -321,7 +319,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesOAPresentation() {
 	suite.NoError(err)
 
 	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
-	suite.Equal(models.PlanTaskStatusToDo, oaTask.Status)
+	suite.Equal(models.PlanTaskStateToDo, oaTask.State)
 	suite.Nil(oaTask.CompletedBy)
 	suite.Nil(oaTask.CompletedDts)
 
@@ -340,7 +338,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesOAPresentation() {
 	suite.NoError(err)
 
 	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
-	suite.Equal(models.PlanTaskStatusToDo, oaTask.Status)
+	suite.Equal(models.PlanTaskStateToDo, oaTask.State)
 }
 
 // TestPlanTaskMarkCompleteOAPresentation confirms OA_PRESENTATION can be manually marked complete
@@ -362,7 +360,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 	)
 	suite.NoError(err)
 	if suite.NotNil(updated) {
-		suite.Equal(models.PlanTaskStatusComplete, updated.Status)
+		suite.Equal(models.PlanTaskStateComplete, updated.State)
 		if suite.NotNil(updated.CompletedBy) {
 			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
 		}
@@ -370,7 +368,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 	}
 
 	oaTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
-	suite.Equal(models.PlanTaskStatusComplete, oaTask.Status)
+	suite.Equal(models.PlanTaskStateComplete, oaTask.State)
 
 	// mark it back to TO_DO
 	updated, err = PlanTaskMarkComplete(
@@ -386,13 +384,13 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 	)
 	suite.NoError(err)
 	if suite.NotNil(updated) {
-		suite.Equal(models.PlanTaskStatusToDo, updated.Status)
+		suite.Equal(models.PlanTaskStateToDo, updated.State)
 		suite.Nil(updated.CompletedBy)
 		suite.Nil(updated.CompletedDts)
 	}
 
 	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
-	suite.Equal(models.PlanTaskStatusToDo, oaTask.Status)
+	suite.Equal(models.PlanTaskStateToDo, oaTask.State)
 	suite.Nil(oaTask.CompletedBy)
 	suite.Nil(oaTask.CompletedDts)
 }
@@ -421,7 +419,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
 
 		// confirm the task was left untouched
 		task := suite.getPlanTaskByKey(plan.ID, key)
-		suite.Equal(models.PlanTaskStatusToDo, task.Status)
+		suite.Equal(models.PlanTaskStateToDo, task.State)
 		suite.Nil(task.CompletedBy)
 		suite.Nil(task.CompletedDts)
 	}
@@ -452,14 +450,14 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 		suite.Nil(t.CompletedBy)
 		suite.Nil(t.CompletedDts)
 		if upcomingKeys[t.Key] {
-			suite.Equal(models.PlanTaskStatusUpcoming, t.Status)
+			suite.Equal(models.PlanTaskStateUpcoming, t.State)
 		} else {
-			suite.Equal(models.PlanTaskStatusToDo, t.Status)
+			suite.Equal(models.PlanTaskStateToDo, t.State)
 		}
 	}
 }
 
-func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
+func (suite *ResolverSuite) TestPlanTaskStateTransitions() {
 	plan := suite.createModelPlan("Plan For Task Transitions")
 
 	suite.Run("starting model plan marks MODEL_PLAN task IN_PROGRESS", func() {
@@ -481,7 +479,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan)
-		suite.Equal(models.PlanTaskStatusInProgress, task.Status)
+		suite.Equal(models.PlanTaskStateInProgress, task.State)
 		suite.Nil(task.CompletedBy)
 		suite.Nil(task.CompletedDts)
 	})
@@ -500,8 +498,8 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 
 		mtoTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyMto)
 		dataExchangeTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDataExchange)
-		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
-		suite.Equal(models.PlanTaskStatusToDo, dataExchangeTask.Status)
+		suite.Equal(models.PlanTaskStateInProgress, mtoTask.State)
+		suite.Equal(models.PlanTaskStateToDo, dataExchangeTask.State)
 	})
 
 	suite.Run("creating common milestone marks MTO task IN_PROGRESS", func() {
@@ -525,7 +523,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		mtoTask := suite.getPlanTaskByKey(planWithMilestone.ID, models.PlanTaskKeyMto)
-		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+		suite.Equal(models.PlanTaskStateInProgress, mtoTask.State)
 	})
 
 	suite.Run("creating common solution marks MTO task IN_PROGRESS", func() {
@@ -545,7 +543,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		mtoTask := suite.getPlanTaskByKey(planWithSolution.ID, models.PlanTaskKeyMto)
-		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+		suite.Equal(models.PlanTaskStateInProgress, mtoTask.State)
 	})
 
 	suite.Run("creating standard categories marks MTO task IN_PROGRESS", func() {
@@ -561,7 +559,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		mtoTask := suite.getPlanTaskByKey(planWithStandards.ID, models.PlanTaskKeyMto)
-		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+		suite.Equal(models.PlanTaskStateInProgress, mtoTask.State)
 	})
 
 	suite.Run("deleting last MTO data recalculates MTO task to TO_DO", func() {
@@ -580,7 +578,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NotNil(category)
 
 		mtoTask := suite.getPlanTaskByKey(planForMTODeleteRegression.ID, models.PlanTaskKeyMto)
-		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+		suite.Equal(models.PlanTaskStateInProgress, mtoTask.State)
 
 		err = MTOCategoryDelete(
 			suite.testConfigs.Logger,
@@ -593,7 +591,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		mtoTask = suite.getPlanTaskByKey(planForMTODeleteRegression.ID, models.PlanTaskKeyMto)
-		suite.Equal(models.PlanTaskStatusToDo, mtoTask.Status)
+		suite.Equal(models.PlanTaskStateToDo, mtoTask.State)
 		suite.Nil(mtoTask.CompletedBy)
 		suite.Nil(mtoTask.CompletedDts)
 	})
@@ -616,7 +614,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		dataExchangeTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDataExchange)
-		suite.Equal(models.PlanTaskStatusInProgress, dataExchangeTask.Status)
+		suite.Equal(models.PlanTaskStateInProgress, dataExchangeTask.State)
 	})
 
 	suite.Run("marking data exchange approach complete marks DATA_EXCHANGE task COMPLETE", func() {
@@ -638,7 +636,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDataExchange)
-		suite.Equal(models.PlanTaskStatusComplete, task.Status)
+		suite.Equal(models.PlanTaskStateComplete, task.State)
 		if suite.NotNil(task.CompletedBy) {
 			suite.Equal(suite.testConfigs.Principal.Account().ID, *task.CompletedBy)
 		}
@@ -679,7 +677,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		task := suite.getPlanTaskByKey(planForDEARegression.ID, models.PlanTaskKeyDataExchange)
-		suite.Equal(models.PlanTaskStatusInProgress, task.Status)
+		suite.Equal(models.PlanTaskStateInProgress, task.State)
 		suite.Nil(task.CompletedBy)
 		suite.Nil(task.CompletedDts)
 	})
@@ -730,7 +728,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		task := suite.getPlanTaskByKey(planForDEACleared.ID, models.PlanTaskKeyDataExchange)
-		suite.Equal(models.PlanTaskStatusComplete, task.Status)
+		suite.Equal(models.PlanTaskStateComplete, task.State)
 		suite.NotNil(task.CompletedBy)
 		suite.NotNil(task.CompletedDts)
 	})
@@ -751,10 +749,10 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 
 		modelPlanTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan)
 		dataExchangeTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDataExchange)
-		suite.Equal(models.PlanTaskStatusComplete, modelPlanTask.Status)
+		suite.Equal(models.PlanTaskStateComplete, modelPlanTask.State)
 		suite.NotNil(modelPlanTask.CompletedBy)
 		suite.NotNil(modelPlanTask.CompletedDts)
-		suite.Equal(models.PlanTaskStatusComplete, dataExchangeTask.Status)
+		suite.Equal(models.PlanTaskStateComplete, dataExchangeTask.State)
 		suite.NotNil(dataExchangeTask.CompletedBy)
 		suite.NotNil(dataExchangeTask.CompletedDts)
 
@@ -774,10 +772,10 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 
 		modelPlanTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan)
 		dataExchangeTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDataExchange)
-		suite.Equal(models.PlanTaskStatusInProgress, modelPlanTask.Status)
+		suite.Equal(models.PlanTaskStateInProgress, modelPlanTask.State)
 		suite.Nil(modelPlanTask.CompletedBy)
 		suite.Nil(modelPlanTask.CompletedDts)
-		suite.Equal(models.PlanTaskStatusComplete, dataExchangeTask.Status)
+		suite.Equal(models.PlanTaskStateComplete, dataExchangeTask.State)
 		suite.NotNil(dataExchangeTask.CompletedBy)
 		suite.NotNil(dataExchangeTask.CompletedDts)
 
@@ -795,7 +793,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		mtoTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyMto)
-		suite.Equal(models.PlanTaskStatusComplete, mtoTask.Status)
+		suite.Equal(models.PlanTaskStateComplete, mtoTask.State)
 		suite.NotNil(mtoTask.CompletedBy)
 		suite.NotNil(mtoTask.CompletedDts)
 
@@ -814,7 +812,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		mtoTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyMto)
-		suite.Equal(models.PlanTaskStatusInProgress, mtoTask.Status)
+		suite.Equal(models.PlanTaskStateInProgress, mtoTask.State)
 		suite.Nil(mtoTask.CompletedBy)
 		suite.Nil(mtoTask.CompletedDts)
 	})
@@ -847,7 +845,7 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 		suite.NoError(err)
 
 		mtoTask := suite.getPlanTaskByKey(planWithoutMTOData.ID, models.PlanTaskKeyMto)
-		suite.Equal(models.PlanTaskStatusToDo, mtoTask.Status)
+		suite.Equal(models.PlanTaskStateToDo, mtoTask.State)
 		suite.Nil(mtoTask.CompletedBy)
 		suite.Nil(mtoTask.CompletedDts)
 	})
@@ -881,10 +879,10 @@ func (suite *ResolverSuite) TestPlanTaskStatusTransitions() {
 
 		modelPlanTask := suite.getPlanTaskByKey(planForRegression.ID, models.PlanTaskKeyModelPlan)
 		dataExchangeTask := suite.getPlanTaskByKey(planForRegression.ID, models.PlanTaskKeyDataExchange)
-		suite.Equal(models.PlanTaskStatusToDo, modelPlanTask.Status)
+		suite.Equal(models.PlanTaskStateToDo, modelPlanTask.State)
 		suite.Nil(modelPlanTask.CompletedBy)
 		suite.Nil(modelPlanTask.CompletedDts)
-		suite.Equal(models.PlanTaskStatusToDo, dataExchangeTask.Status)
+		suite.Equal(models.PlanTaskStateToDo, dataExchangeTask.State)
 		suite.Nil(dataExchangeTask.CompletedBy)
 		suite.Nil(dataExchangeTask.CompletedDts)
 	})
@@ -1043,7 +1041,7 @@ func (suite *ResolverSuite) TestTrySendPlanTaskNewAvailableNotificationsEmailRec
 	}
 }
 
-func (suite *ResolverSuite) TestUpdatePlanTaskStatusToDoSendsNewAvailableInAppNotification() {
+func (suite *ResolverSuite) TestUpdatePlanTaskStateToDoSendsNewAvailableInAppNotification() {
 	plan := suite.createModelPlan("Plan For New Task Available In-App")
 	suite.createPlanCollaborator(plan, "NTAI", []models.TeamRole{models.TeamRoleLeadership})
 	suite.createPlanCollaborator(plan, "NTAX", []models.TeamRole{models.TeamRoleLeadership})
@@ -1061,13 +1059,13 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStatusToDoSendsNewAvailableInAppNo
 	)
 	suite.NoError(err)
 
-	_, err = updatePlanTaskStatusByKey(
+	_, err = updatePlanTaskStateByKey(
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		plan.ID,
 		models.PlanTaskKeyModelPlan,
-		models.PlanTaskStatusComplete,
+		models.PlanTaskStateComplete,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,
 		suite.testConfigs.Store,
@@ -1080,13 +1078,13 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStatusToDoSendsNewAvailableInAppNo
 	optedInBefore := suite.numUnreadNotifications(optedInPrincipal)
 	optedOutBefore := suite.numUnreadNotifications(optedOutPrincipal)
 
-	_, err = updatePlanTaskStatusByKey(
+	_, err = updatePlanTaskStateByKey(
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		plan.ID,
 		models.PlanTaskKeyModelPlan,
-		models.PlanTaskStatusToDo,
+		models.PlanTaskStateToDo,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,
 		suite.testConfigs.Store,
@@ -1258,7 +1256,7 @@ func (suite *ResolverSuite) TestPlanTaskCompletedByUserAccountResolver() {
 		uuid.New(),
 		uuid.New(),
 		models.PlanTaskKeyModelPlan,
-		models.PlanTaskStatusToDo,
+		models.PlanTaskStateToDo,
 	)
 
 	account, err := task.CompletedByUserAccount(suite.testConfigs.Context)

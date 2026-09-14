@@ -1,11 +1,14 @@
-import { PlanTaskKey, PlanTaskStatus } from 'gql/generated/graphql';
+import {
+  PlanTaskKey,
+  PlanTaskState,
+  PlanTaskStatus
+} from 'gql/generated/graphql';
 
 const tasks = {
   breadcrumb: 'Tasks',
   heading: 'Current tasks',
   status: {
     [PlanTaskStatus.TO_DO]: 'To do',
-    [PlanTaskStatus.IN_PROGRESS]: 'To do',
     [PlanTaskStatus.COMPLETE]: 'Complete'
   },
   seeAll: 'See all ({{count}})',
@@ -38,15 +41,15 @@ const tasks = {
     primaryPath: '/models/{{modelID}}/collaboration-area/model-plan',
     secondaryPath: '/help-and-knowledge/sample-model-plan',
     secondaryAction: 'View sample Model Plan',
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading: 'Start your Model Plan',
       primaryAction: 'Start'
     },
-    [PlanTaskStatus.IN_PROGRESS]: {
+    [PlanTaskState.IN_PROGRESS]: {
       heading: 'Iterate on your Model Plan',
       primaryAction: 'Continue'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading: 'Iterate on your Model Plan',
       primaryAction: 'Go to Model Plan'
     }
@@ -59,7 +62,7 @@ const tasks = {
     secondaryPath:
       '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings',
     secondaryAction: 'View help article',
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading:
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
@@ -68,7 +71,7 @@ const tasks = {
       error:
         'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
@@ -86,7 +89,7 @@ const tasks = {
     secondaryPath:
       '/help-and-knowledge/about-6-page-concept-papers-and-review-meetings',
     secondaryAction: 'View help article',
-    [PlanTaskStatus.UPCOMING]: {
+    [PlanTaskState.UPCOMING]: {
       heading:
         'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 6-pager',
@@ -95,7 +98,7 @@ const tasks = {
       error:
         'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
     },
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading:
         'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 6-pager',
@@ -104,7 +107,7 @@ const tasks = {
       error:
         'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 6-pager',
@@ -120,15 +123,15 @@ const tasks = {
       '/models/{{modelID}}/collaboration-area/additional-questionnaires/data-exchange-approach/about-completing-data-exchange',
     secondaryPath: '/help-and-knowledge/evaluating-data-exchange-approach',
     secondaryAction: 'View help article',
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading: 'Start your data exchange approach',
       primaryAction: 'Start'
     },
-    [PlanTaskStatus.IN_PROGRESS]: {
+    [PlanTaskState.IN_PROGRESS]: {
       heading: 'Finalize your data exchange approach',
       primaryAction: 'Continue'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading: 'Finalize your data exchange approach',
       primaryAction: 'Go to approach'
     }
@@ -138,15 +141,15 @@ const tasks = {
     primaryPath: '/models/{{modelID}}/collaboration-area/model-to-operations',
     secondaryPath: '/help-and-knowledge/creating-mto-matrix',
     secondaryAction: 'View help article',
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading: 'Start your model-to-operations matrix (MTO)',
       primaryAction: 'Start'
     },
-    [PlanTaskStatus.IN_PROGRESS]: {
+    [PlanTaskState.IN_PROGRESS]: {
       heading: 'Keep your model-to-operations matrix (MTO) up-to-date',
       primaryAction: 'Continue'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading: 'Keep your model-to-operations matrix (MTO) up-to-date',
       primaryAction: 'Go to MTO'
     }

@@ -46,6 +46,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/tests/config.ts',
-    globalSetup: './src/config/global-setup.js'
+    globalSetup: './src/config/global-setup.js',
+    exclude: ['**/node_modules/**', '**/.git/**', '**/dist/**', '**/cypress/**']
   }
 });

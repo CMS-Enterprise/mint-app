@@ -9,7 +9,7 @@ INSERT INTO plan_task (
     id,
     model_plan_id,
     key,
-    status,
+    state,
     created_by
 )
 SELECT
@@ -24,11 +24,11 @@ SELECT
                 WHERE
                     pt.model_plan_id = mp.id
                     AND pt.key = 'SIX_PAGER'::PLAN_TASK_KEY
-                    AND pt.status = 'COMPLETE'::PLAN_TASK_STATUS
+                    AND pt.state = 'COMPLETE'::PLAN_TASK_STATE
             ) THEN 'TO_DO'
             ELSE 'UPCOMING'
         END
-    )::PLAN_TASK_STATUS AS status,
+    )::PLAN_TASK_STATE AS state,
     '00000001-0001-0001-0001-000000000001'::UUID AS created_by
 FROM model_plan mp
 WHERE NOT EXISTS (

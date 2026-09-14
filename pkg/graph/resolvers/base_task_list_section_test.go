@@ -37,7 +37,7 @@ func (suite *ResolverSuite) TestBaseTaskListSectionPreUpdate() {
 		}
 	}
 	suite.NotNil(modelPlanTask)
-	suite.Equal(models.PlanTaskStatusInProgress, modelPlanTask.Status)
+	suite.Equal(models.PlanTaskStateInProgress, modelPlanTask.State)
 
 	rev := uuid.MustParse("00000001-0001-0001-0001-000000000009")
 	//1/5 Ready for Review

@@ -23,18 +23,16 @@ func (r *mutationResolver) MarkPlanTaskComplete(ctx context.Context, modelPlanID
 	return PlanTaskMarkComplete(ctx, logger, modelPlanID, key, isComplete, principal, r.store, r.emailService, r.addressBook)
 }
 
-// State is the resolver for the state field.
-func (r *planTaskResolver) State(ctx context.Context, obj *models.PlanTask) (model.PlanTaskState, error) {
+// Status is the resolver for the status field.
+func (r *planTaskResolver) Status(ctx context.Context, obj *models.PlanTask) (model.PlanTaskStatus, error) {
 	if obj == nil {
-		return model.PlanTaskStateToDo, nil
+		return model.PlanTaskStatusToDo, nil
 	}
-	switch obj.Status {
-	case models.PlanTaskStatusComplete:
-		return model.PlanTaskStateComplete, nil
-	case models.PlanTaskStatusUpcoming:
-		return model.PlanTaskStateUpcoming, nil
+	switch obj.State {
+	case models.PlanTaskStateComplete:
+		return model.PlanTaskStatusComplete, nil
 	default:
-		return model.PlanTaskStateToDo, nil
+		return model.PlanTaskStatusToDo, nil
 	}
 }
 

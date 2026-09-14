@@ -38,7 +38,7 @@ func PlanTaskGetByIDLoader(
 	return sqlutils.SelectProcedure[models.PlanTask](np, sqlqueries.PlanTask.GetByIDLoader, args)
 }
 
-// PlanTaskUpdate updates mutable fields on a plan task (status and completion fields)
+// PlanTaskUpdate updates mutable fields on a plan task (state and completion fields)
 func PlanTaskUpdate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,

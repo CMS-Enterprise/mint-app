@@ -2,21 +2,21 @@ INSERT INTO plan_task (
     id,
     model_plan_id,
     key,
-    status,
+    state,
     created_by
 )
 VALUES (
     :id,
     :model_plan_id,
     :key,
-    :status,
+    :state,
     :created_by
 )
 RETURNING
     id,
     model_plan_id,
     key,
-    status,
+    state,
     completed_by,
     completed_dts,
     created_by,

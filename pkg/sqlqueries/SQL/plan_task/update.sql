@@ -1,6 +1,6 @@
 UPDATE plan_task
 SET
-    status = :status,
+    state = :state,
     completed_by = :completed_by,
     completed_dts = :completed_dts,
     modified_by = :modified_by,
@@ -11,7 +11,7 @@ RETURNING
     id,
     model_plan_id,
     key,
-    status,
+    state,
     completed_by,
     completed_dts,
     created_by,

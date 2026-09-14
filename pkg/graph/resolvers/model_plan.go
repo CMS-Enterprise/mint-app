@@ -98,18 +98,18 @@ func ModelPlanCreate(
 		// models.PlanTaskKey.ActivationTarget).
 		// OA_PRESENTATION starts UPCOMING and activated once SIX_PAGER is marked complete.
 		defaultTasks := []struct {
-			key    models.PlanTaskKey
-			status models.PlanTaskStatus
+			key   models.PlanTaskKey
+			state models.PlanTaskState
 		}{
-			{models.PlanTaskKeyModelPlan, models.PlanTaskStatusToDo},
-			{models.PlanTaskKeyMto, models.PlanTaskStatusToDo},
-			{models.PlanTaskKeyDataExchange, models.PlanTaskStatusToDo},
-			{models.PlanTaskKeyTwoPager, models.PlanTaskStatusToDo},
-			{models.PlanTaskKeySixPager, models.PlanTaskStatusUpcoming},
-			{models.PlanTaskKeyOaPresentation, models.PlanTaskStatusUpcoming},
+			{models.PlanTaskKeyModelPlan, models.PlanTaskStateToDo},
+			{models.PlanTaskKeyMto, models.PlanTaskStateToDo},
+			{models.PlanTaskKeyDataExchange, models.PlanTaskStateToDo},
+			{models.PlanTaskKeyTwoPager, models.PlanTaskStateToDo},
+			{models.PlanTaskKeySixPager, models.PlanTaskStateUpcoming},
+			{models.PlanTaskKeyOaPresentation, models.PlanTaskStateUpcoming},
 		}
 		for _, defaultTask := range defaultTasks {
-			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, defaultTask.key, defaultTask.status)
+			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, defaultTask.key, defaultTask.state)
 			_, err = storage.PlanTaskCreate(tx, logger, task)
 			if err != nil {
 				return nil, err
@@ -363,7 +363,7 @@ func ModelPlanUpdate(
 
 	// Plan tasks: CLEARED model status completes MODEL_PLAN and DATA_EXCHANGE tasks
 	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
-		updErr := UpdatePlanTaskStatusOnModelCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -372,7 +372,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress DATA_EXCHANGE and MODEL_PLAN tasks if model status moves backwards from CLEARED
 	if oldStatus == models.ModelStatusCleared &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelNoLongerCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -380,7 +380,7 @@ func ModelPlanUpdate(
 
 	// Plan tasks: ACTIVE model status completes MTO task
 	if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
-		updErr := UpdatePlanTaskStatusOnModelActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -388,7 +388,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress MTO task if model status moves backwards from ACTIVE
 	if oldStatus == models.ModelStatusActive &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusActive) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelNoLongerActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}

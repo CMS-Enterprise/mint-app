@@ -41,7 +41,7 @@ export type ChangeType =
   | 'newPlan'
   | 'statusUpdate'
   | 'taskListStatusUpdate'
-  | 'planTaskStatusUpdate'
+  | 'planTaskStateUpdate'
   | 'customTimelineUpdate'
   | 'questionnaireTaskListStatusUpdate'
   | 'mtoStatusUpdate'
@@ -877,13 +877,12 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
   ) {
     return 'taskListStatusUpdate';
   }
-
-  // If the change is a plan task (Tasks section) status update, return 'planTaskStatusUpdate'
+  // If the change is a plan task (Tasks section) state update, return 'planTaskStateUpdate'
   if (
     change.tableName === TableName.PLAN_TASK &&
-    change.translatedFields.find(field => field.fieldName === 'status')
+    change.translatedFields.find(field => field.fieldName === 'state')
   ) {
-    return 'planTaskStatusUpdate';
+    return 'planTaskStateUpdate';
   }
 
   if (change.tableName === TableName.CUSTOM_TIMELINE_DATE) {
@@ -1013,7 +1012,7 @@ export const getHeaderText = (change: ChangeRecordType): string => {
         headerText = i18next.t(`changeHistory:taskStatusUpdate`);
       }
       break;
-    case 'planTaskStatusUpdate':
+    case 'planTaskStateUpdate':
       headerText = isPlanTaskAutomaticChange(change)
         ? i18next.t(`changeHistory:taskCardAutoStatusUpdate`)
         : i18next.t(`changeHistory:taskCardStatusUpdate`);
@@ -1114,12 +1113,15 @@ export const isInitialCreatedSection = (
   changeType: ChangeType
 ): boolean =>
   !!(
-    ((changeType === 'taskListStatusUpdate' ||
-      changeType === 'planTaskStatusUpdate') &&
+    (changeType === 'taskListStatusUpdate' &&
       change.translatedFields.find(
         field =>
           (field.fieldName === 'status' || field.fieldName === 'needed') &&
           field.old === null
+      )) ||
+    (changeType === 'planTaskStateUpdate' &&
+      change.translatedFields.find(
+        field => field.fieldName === 'state' && field.old === null
       )) ||
     identifyChangeType(change) === 'operationalNeedCreate'
   );
