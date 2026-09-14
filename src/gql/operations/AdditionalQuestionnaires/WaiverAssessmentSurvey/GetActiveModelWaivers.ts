@@ -58,8 +58,8 @@ export default gql(/* GraphQL */ `
         }
       }
       waiverInfo {
-        suggestedCommonWaivers {
-          ...CommonWaiver
+        commonWaivers {
+          id
         }
       }
     }

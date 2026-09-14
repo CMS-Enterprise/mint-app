@@ -1375,7 +1375,7 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
             <p
               class="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest"
             >
-              There are 31 total available waivers that are currently used in active models. Based on your answers to the above questions, MINT will rule out any waivers that are likely not needed for your model. You will be asked to confirm waiver selections on the next page. Adjusting your answers to the questions above may change the list of selected waivers.
+              There are 1 total available waivers that are currently used in active models. Based on your answers to the above questions, MINT will rule out any waivers that are likely not needed for your model. You will be asked to confirm waiver selections on the next page. Adjusting your answers to the questions above may change the list of selected waivers.
             </p>
           </div>
           <div

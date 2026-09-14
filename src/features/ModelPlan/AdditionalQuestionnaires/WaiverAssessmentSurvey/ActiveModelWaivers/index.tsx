@@ -240,7 +240,10 @@ const ActiveModelWaivers = () => {
                 </SummaryBoxHeading>
 
                 <p className="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest">
-                  {waiverAssessmentSurveyMiscT('availableWaivers.description')}
+                  {waiverAssessmentSurveyMiscT('availableWaivers.description', {
+                    count:
+                      data?.modelPlan?.waiverInfo?.commonWaivers?.length ?? 0
+                  })}
                 </p>
               </div>
 

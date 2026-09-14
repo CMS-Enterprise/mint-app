@@ -687,7 +687,7 @@ const waiverAssessmentSurveyMisc = {
   availableWaivers: {
     heading: 'Available waivers',
     description:
-      'There are 31 total available waivers that are currently used in active models. Based on your answers to the above questions, MINT will rule out any waivers that are likely not needed for your model. You will be asked to confirm waiver selections on the next page. Adjusting your answers to the questions above may change the list of selected waivers.'
+      'There are {{count}} total available waivers that are currently used in active models. Based on your answers to the above questions, MINT will rule out any waivers that are likely not needed for your model. You will be asked to confirm waiver selections on the next page. Adjusting your answers to the questions above may change the list of selected waivers.'
   },
   ...waiverTypes,
   waiverSelectionAndConfirmation: {

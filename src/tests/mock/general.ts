@@ -353,7 +353,7 @@ const activeModelWaiversDataMocks: GetActiveModelWaiversQuery = {
     },
     waiverInfo: {
       __typename: 'WaiverInfo',
-      suggestedCommonWaivers: []
+      commonWaivers: [{ __typename: 'CommonWaiver', id: 'common_123' }]
     }
   }
 };
