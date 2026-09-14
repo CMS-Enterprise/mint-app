@@ -460,7 +460,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dbField: 'offers_patient_incentives_safe_harbor_protection',
     label:
       'Will your model offer safe harbor protection of patient incentives (including reduced cost-sharing or additional services)?',
-    hideFromReadonly: true,
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
@@ -485,7 +484,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'OffersPatientIncentivesSafeHarborProtectionExample',
     dbField: 'offers_patient_incentives_safe_harbor_protection_example',
     label: 'Please provide an example',
-    hideFromReadonly: true,
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 5.041,
@@ -497,7 +495,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'OffersPatientIncentivesSafeHarborProtectionWhyNot',
     dbField: 'offers_patient_incentives_safe_harbor_protection_why_not',
     label: 'Please explain why not',
-    hideFromReadonly: true,
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
@@ -511,7 +508,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dbField: 'offers_expenses_remuneration_safe_harbor_protection',
     label:
       'Will your model offer safe harbor protection related to expenses or remuneration?',
-    hideFromReadonly: true,
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
@@ -536,7 +532,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'OffersExpensesRemunerationSafeHarborProtectionExample',
     dbField: 'offers_expenses_remuneration_safe_harbor_protection_example',
     label: 'Please provide an example',
-    hideFromReadonly: true,
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 5.051,
@@ -548,7 +543,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'OffersExpensesRemunerationSafeHarborProtectionWhyNot',
     dbField: 'offers_expenses_remuneration_safe_harbor_protection_why_not',
     label: 'Please explain why not',
-    hideFromReadonly: true,
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
@@ -684,6 +678,11 @@ const waiverAssessmentSurveyMisc = {
     willUseWaiver_false: 'You said your model will not use this waiver.',
     changeResponse: 'Change response',
     notUsingReason: 'Please explain why your model is not using this waiver.'
+  },
+  activeModelWaivers: {
+    heading: 'Active model waivers',
+    description:
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. The waivers you select using these questions are all currently used in active models. At the end of this form, you will also be able to review waivers not currently used in active models.'
   },
   medicarePaymentWaivers: {
     heading: 'Medicare payment waivers',

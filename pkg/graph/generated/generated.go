@@ -26775,8 +26775,6 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   offersRiskSharingArrangements: Boolean
   offersRiskSharingArrangementsExample: String
   offersRiskSharingArrangementsWhyNot: NotSelectedReason
-
-  # Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: Boolean
   impactsSiteOfCarePaymentsExample: String
   impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
@@ -26789,8 +26787,6 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
   modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
-
-  # Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: Boolean
   impactsMedicaidOnlyBeneficiariesExample: String
   impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
@@ -26806,6 +26802,7 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   offersExpensesRemunerationSafeHarborProtection: Boolean
   offersExpensesRemunerationSafeHarborProtectionExample: String
   offersExpensesRemunerationSafeHarborProtectionWhyNot: NotSelectedReason
+
   additionalMedicaidSpecificWaivers: String
 
   # Convenience field for controlling status
