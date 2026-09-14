@@ -343,6 +343,60 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesOAPresentation() {
 	suite.Equal(models.PlanTaskStatusToDo, oaTask.Status)
 }
 
+// TestPlanTaskMarkCompleteOAPresentation confirms OA_PRESENTATION can be manually marked complete
+// and reverted back to TO_DO via PlanTaskMarkComplete, now that it is a manually-markable key.
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
+	plan := suite.createModelPlan("Plan For OA Presentation Manual Task Marking")
+
+	// mark the OA_PRESENTATION task complete
+	updated, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyOaPresentation,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStatusComplete, updated.Status)
+		if suite.NotNil(updated.CompletedBy) {
+			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
+		}
+		suite.NotNil(updated.CompletedDts)
+	}
+
+	oaTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStatusComplete, oaTask.Status)
+
+	// mark it back to TO_DO
+	updated, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyOaPresentation,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStatusToDo, updated.Status)
+		suite.Nil(updated.CompletedBy)
+		suite.Nil(updated.CompletedDts)
+	}
+
+	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStatusToDo, oaTask.Status)
+	suite.Nil(oaTask.CompletedBy)
+	suite.Nil(oaTask.CompletedDts)
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
 	plan := suite.createModelPlan("Plan For Rejected Manual Task Marking")
 

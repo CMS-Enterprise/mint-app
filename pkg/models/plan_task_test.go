@@ -9,6 +9,7 @@ import (
 func TestPlanTaskKeyIsManuallyMarkable(t *testing.T) {
 	assert.True(t, PlanTaskKeyTwoPager.IsManuallyMarkable())
 	assert.True(t, PlanTaskKeySixPager.IsManuallyMarkable())
+	assert.True(t, PlanTaskKeyOaPresentation.IsManuallyMarkable())
 
 	assert.False(t, PlanTaskKeyModelPlan.IsManuallyMarkable())
 	assert.False(t, PlanTaskKeyMto.IsManuallyMarkable())
