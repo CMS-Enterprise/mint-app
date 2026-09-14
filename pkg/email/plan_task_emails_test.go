@@ -1,10 +1,16 @@
 package email
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/cms-enterprise/mint-app/pkg/models"
+)
 
 func TestPlanTaskNewAvailableTemplate(t *testing.T) {
 	clientAddress := "https://mint.cms.gov"
 	modelID := "00000000-0000-0000-0000-000000000000"
+	twoPagerTaskName := models.PlanTaskKeyTwoPager.DisplayName()
+	sixPagerTaskName := models.PlanTaskKeySixPager.DisplayName()
 
 	subject, body, err := PlanTask.NewAvailable.GetContent(
 		PlanTaskNewAvailableSubjectContent{
@@ -14,7 +20,7 @@ func TestPlanTaskNewAvailableTemplate(t *testing.T) {
 			ClientAddress: clientAddress,
 			ModelID:       modelID,
 			ModelName:     "Test Model Plan",
-			TaskList:      []string{"Task 1", "Task 2"},
+			TaskList:      []string{sixPagerTaskName, twoPagerTaskName},
 			IsModelLead:   true,
 		},
 	)
@@ -28,8 +34,8 @@ func TestPlanTaskNewAvailableTemplate(t *testing.T) {
 	}
 
 	assertContains(t, body, "There are new tasks for your model Test Model Plan.", true)
-	assertContains(t, body, "<li>Task 1</li>", true)
-	assertContains(t, body, "<li>Task 2</li>", true)
+	assertContains(t, body, "<li>"+sixPagerTaskName+"</li>", true)
+	assertContains(t, body, "<li>"+twoPagerTaskName+"</li>", true)
 	assertContains(t, body, clientAddress+"/models/"+modelID+"/collaboration-area/tasks?tab=current", true)
 	assertContains(t, body, clientAddress+"/models/"+modelID+"/collaboration-area/collaborators", true)
 	assertContains(t, body, clientAddress+"/notifications/settings?unsubscribe_email=NEW_TASK_ADDED", true)
@@ -39,6 +45,7 @@ func TestPlanTaskNewAvailableTemplate(t *testing.T) {
 func TestPlanTaskCompletedTemplate(t *testing.T) {
 	clientAddress := "https://mint.cms.gov"
 	modelID := "00000000-0000-0000-0000-000000000000"
+	sixPagerTaskName := models.PlanTaskKeySixPager.DisplayName()
 
 	subject, body, err := PlanTask.Completed.GetContent(
 		PlanTaskCompletedSubjectContent{
@@ -48,7 +55,7 @@ func TestPlanTaskCompletedTemplate(t *testing.T) {
 			ClientAddress: clientAddress,
 			ModelID:       modelID,
 			ModelName:     "Test Model Plan",
-			TaskName:      "Task 1",
+			TaskName:      sixPagerTaskName,
 			IsModelLead:   true,
 		},
 	)
@@ -62,7 +69,7 @@ func TestPlanTaskCompletedTemplate(t *testing.T) {
 	}
 
 	assertContains(t, body, "A task was completed for your model.", true)
-	assertContains(t, body, "<li>Task 1</li>", true)
+	assertContains(t, body, "<li>"+sixPagerTaskName+"</li>", true)
 	assertContains(t, body, clientAddress+"/models/"+modelID+"/collaboration-area/tasks?tab=completed", true)
 	assertContains(t, body, clientAddress+"/models/"+modelID+"/collaboration-area/collaborators", true)
 	assertContains(t, body, clientAddress+"/notifications/settings?unsubscribe_email=TASK_COMPLETED", true)
