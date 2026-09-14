@@ -66,8 +66,8 @@ var planTaskKeyDisplayNames = map[PlanTaskKey]string{
 	PlanTaskKeyModelPlan:    "Model Plan",
 	PlanTaskKeyDataExchange: "Data exchange approach",
 	PlanTaskKeyMto:          "Model-to-operations matrix (MTO)",
-	PlanTaskKeyTwoPager:     "2-pager review",
-	PlanTaskKeySixPager:     "6-pager review",
+	PlanTaskKeyTwoPager:     "Prepare for your 2-page review meeting with CMMI Front Office",
+	PlanTaskKeySixPager:     "Prepare for your 6-page review meeting with CMMI Front Office",
 }
 
 // DisplayName returns a short human-readable name for this task key.
