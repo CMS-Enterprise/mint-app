@@ -4,10 +4,10 @@ describe('Tasks page', () => {
     cy.visit('/');
   });
 
-  it('shows current tasks for Empty Plan (seed keeps three incomplete tasks)', () => {
+  it('shows current tasks for Empty Plan', () => {
     cy.enterModelPlanCollaborationArea('Empty Plan');
 
-    cy.contains('button', /See all \(4\)/).should('be.visible');
+    cy.contains('button', /See all \(5\)/).should('be.visible');
 
     cy.contains('button', /See all \(\d+\)/).click();
 
@@ -17,6 +17,9 @@ describe('Tasks page', () => {
 
     cy.contains('h3', 'Start your Model Plan').should('be.visible');
     cy.contains('h3', 'Start your data exchange approach').should('be.visible');
+    cy.contains('h3', 'Complete your waiver assessment survey').should(
+      'be.visible'
+    );
     cy.contains('h3', 'Start your model-to-operations matrix (MTO)').should(
       'be.visible'
     );

@@ -36,6 +36,7 @@ export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.DATA_EXCHANGE,
+  PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
   PlanTaskKey.MTO
 ];
 
