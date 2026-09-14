@@ -358,7 +358,7 @@ const activeModelWaiversDataMocks: GetActiveModelWaiversQuery = {
   }
 };
 
-export const medicarePaymentWaiversMocks: MockedResponse<
+export const ActiveModelWaiversMocks: MockedResponse<
   GetActiveModelWaiversQuery,
   GetActiveModelWaiversQueryVariables
 >[] = [

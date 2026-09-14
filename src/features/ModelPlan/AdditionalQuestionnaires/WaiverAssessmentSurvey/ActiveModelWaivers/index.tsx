@@ -2,10 +2,15 @@ import React from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Fieldset, Form, FormGroup, Label } from '@trussworks/react-uswds';
+import {
+  Fieldset,
+  Form,
+  FormGroup,
+  Label,
+  SummaryBoxHeading
+} from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
-  CommonWaiverType,
   GetActiveModelWaiversQuery,
   TypedUpdateWaiverAssessmentSurveyDocument,
   useGetActiveModelWaiversQuery
@@ -22,9 +27,7 @@ import usePlanTranslation from 'hooks/usePlanTranslation';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
-import SelectedWaiversSection from '../_components/SelectedWaiversSection';
 import WaiverSurveyQuestion from '../_components/WaiverSurveyQuestion';
-import { filterSuggestedWaiversByType } from '../util';
 
 type ActiveModelWaiversData =
   GetActiveModelWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
@@ -133,11 +136,6 @@ const ActiveModelWaivers = () => {
 
   const { id: waiverID, ...formData } = mappedFormData;
 
-  const medicareSuggestedWaivers = filterSuggestedWaiversByType(
-    data?.modelPlan?.waiverInfo.suggestedCommonWaivers || [],
-    CommonWaiverType.MEDICARE_PAYMENT
-  );
-
   const methods = useForm<ActiveModelWaiversForm>({
     values: formData,
     mode: 'onChange'
@@ -177,7 +175,7 @@ const ActiveModelWaivers = () => {
         {waiverAssessmentSurveyMiscT('activeModelWaivers.description')}
       </p>
 
-      <div className="tablet:grid-col-6">
+      <div>
         <FormProvider {...methods}>
           <MutationErrorModal
             isOpen={mutationError.isModalOpen}
@@ -233,13 +231,18 @@ const ActiveModelWaivers = () => {
                 ))}
               </div>
 
-              <SelectedWaiversSection
-                selectedWaivers={medicareSuggestedWaivers || []}
-                waiverType="MEDICARE_PAYMENT"
-                waiverTypeText={waiverAssessmentSurveyMiscT(
-                  'MEDICARE_PAYMENT.waiverTypeText'
-                )}
-              />
+              <div className="bg-info-lighter padding-3">
+                <SummaryBoxHeading
+                  headingLevel="h2"
+                  className="margin-bottom-2"
+                >
+                  {waiverAssessmentSurveyMiscT('availableWaivers.heading')}
+                </SummaryBoxHeading>
+
+                <p className="line-height-sans-5 margin-top-0 margin-bottom-2 text-base-darkest">
+                  {waiverAssessmentSurveyMiscT('availableWaivers.description')}
+                </p>
+              </div>
 
               <FormFooter
                 id="waiver-assessment-survey-active-model-waivers-form"

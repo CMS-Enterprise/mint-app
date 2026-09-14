@@ -684,24 +684,10 @@ const waiverAssessmentSurveyMisc = {
     description:
       'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. The waivers you select using these questions are all currently used in active models. At the end of this form, you will also be able to review waivers not currently used in active models.'
   },
-  medicarePaymentWaivers: {
-    heading: 'Medicare payment waivers',
+  availableWaivers: {
+    heading: 'Available waivers',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Medicare payment waivers'
-  },
-  programWaivers: {
-    heading: 'Program waivers - Medicare Benefit Enhancements (BEs)',
-    readOnlyHeading: 'Program waivers - Medicare BEs',
-    description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Program waivers (Medicare BEs)'
-  },
-  medicaidPaymentWaivers: {
-    heading: 'Medicaid payment waivers',
-    description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Medicaid payment waivers'
+      'There are 31 total available waivers that are currently used in active models. Based on your answers to the above questions, MINT will rule out any waivers that are likely not needed for your model. You will be asked to confirm waiver selections on the next page. Adjusting your answers to the questions above may change the list of selected waivers.'
   },
   ...waiverTypes,
   waiverSelectionAndConfirmation: {
