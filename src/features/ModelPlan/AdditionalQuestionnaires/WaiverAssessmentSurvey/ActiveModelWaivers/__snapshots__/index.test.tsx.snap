@@ -35,7 +35,7 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
           data-testid="fieldset"
         >
           <div
-            class="margin-bottom-6"
+            class="tablet:grid-col-6 margin-bottom-6"
           >
             <div
               class="usa-form-group margin-top-0 margin-bottom-2"

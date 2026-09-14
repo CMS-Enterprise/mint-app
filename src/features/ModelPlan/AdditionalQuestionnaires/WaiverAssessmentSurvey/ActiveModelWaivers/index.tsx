@@ -196,7 +196,7 @@ const ActiveModelWaivers = () => {
             <Fieldset>
               <ConfirmLeaveRHF />
 
-              <div className="margin-bottom-6">
+              <div className="tablet:grid-col-6 margin-bottom-6">
                 {questionConfigs.map(questionConfig => (
                   <FormGroup
                     key={questionConfig.gqlField}
