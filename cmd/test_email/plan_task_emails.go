@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
@@ -13,6 +14,8 @@ func sendPlanTaskNewAvailableTestEmail(
 ) {
 	modelID := uuid.New()
 	modelName := "Test Model Plan"
+	twoPagerTaskName := models.PlanTaskKeyTwoPager.DisplayName()
+	sixPagerTaskName := models.PlanTaskKeySixPager.DisplayName()
 
 	subjectContent := email.PlanTaskNewAvailableSubjectContent{
 		ModelName: modelName,
@@ -22,8 +25,8 @@ func sendPlanTaskNewAvailableTestEmail(
 		ModelID:       modelID.String(),
 		ModelName:     modelName,
 		TaskList: []string{
-			"Task 1",
-			"Task 2",
+			sixPagerTaskName,
+			twoPagerTaskName,
 		},
 		IsModelLead: true,
 	}
@@ -48,6 +51,7 @@ func sendPlanTaskCompletedTestEmail(
 ) {
 	modelID := uuid.New()
 	modelName := "Test Model Plan"
+	sixPagerTaskName := models.PlanTaskKeySixPager.DisplayName()
 
 	subjectContent := email.PlanTaskCompletedSubjectContent{
 		ModelName: modelName,
@@ -56,7 +60,7 @@ func sendPlanTaskCompletedTestEmail(
 		ClientAddress: emailService.GetConfig().GetClientAddress(),
 		ModelID:       modelID.String(),
 		ModelName:     modelName,
-		TaskName:      "Task 1",
+		TaskName:      sixPagerTaskName,
 		IsModelLead:   true,
 	}
 
