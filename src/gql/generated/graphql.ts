@@ -6497,6 +6497,12 @@ export type WaiverAssessmentSurvey = {
   modifiesQualityMeasurementsOrPaymentsViaWaivers?: Maybe<Scalars['Boolean']['output']>;
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample?: Maybe<Scalars['String']['output']>;
   modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot?: Maybe<NotSelectedReason>;
+  offersExpensesRemunerationSafeHarborProtection?: Maybe<Scalars['Boolean']['output']>;
+  offersExpensesRemunerationSafeHarborProtectionExample?: Maybe<Scalars['String']['output']>;
+  offersExpensesRemunerationSafeHarborProtectionWhyNot?: Maybe<NotSelectedReason>;
+  offersPatientIncentivesSafeHarborProtection?: Maybe<Scalars['Boolean']['output']>;
+  offersPatientIncentivesSafeHarborProtectionExample?: Maybe<Scalars['String']['output']>;
+  offersPatientIncentivesSafeHarborProtectionWhyNot?: Maybe<NotSelectedReason>;
   offersRiskSharingArrangements?: Maybe<Scalars['Boolean']['output']>;
   offersRiskSharingArrangementsExample?: Maybe<Scalars['String']['output']>;
   offersRiskSharingArrangementsWhyNot?: Maybe<NotSelectedReason>;
@@ -6536,6 +6542,12 @@ export type WaiverAssessmentSurveyChanges = {
   modifiesQualityMeasurementsOrPaymentsViaWaivers?: InputMaybe<Scalars['Boolean']['input']>;
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample?: InputMaybe<Scalars['String']['input']>;
   modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot?: InputMaybe<NotSelectedReason>;
+  offersExpensesRemunerationSafeHarborProtection?: InputMaybe<Scalars['Boolean']['input']>;
+  offersExpensesRemunerationSafeHarborProtectionExample?: InputMaybe<Scalars['String']['input']>;
+  offersExpensesRemunerationSafeHarborProtectionWhyNot?: InputMaybe<NotSelectedReason>;
+  offersPatientIncentivesSafeHarborProtection?: InputMaybe<Scalars['Boolean']['input']>;
+  offersPatientIncentivesSafeHarborProtectionExample?: InputMaybe<Scalars['String']['input']>;
+  offersPatientIncentivesSafeHarborProtectionWhyNot?: InputMaybe<NotSelectedReason>;
   offersRiskSharingArrangements?: InputMaybe<Scalars['Boolean']['input']>;
   offersRiskSharingArrangementsExample?: InputMaybe<Scalars['String']['input']>;
   offersRiskSharingArrangementsWhyNot?: InputMaybe<NotSelectedReason>;
@@ -6598,6 +6610,12 @@ export type WaiverAssessmentSurveyTranslation = {
   modifiesQualityMeasurementsOrPaymentsViaWaivers: TranslationFieldWithOptionsAndChildren;
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationFieldWithParent;
   modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: TranslationFieldWithOptionsAndParent;
+  offersExpensesRemunerationSafeHarborProtection: TranslationFieldWithOptionsAndChildren;
+  offersExpensesRemunerationSafeHarborProtectionExample: TranslationFieldWithParent;
+  offersExpensesRemunerationSafeHarborProtectionWhyNot: TranslationFieldWithOptionsAndParent;
+  offersPatientIncentivesSafeHarborProtection: TranslationFieldWithOptionsAndChildren;
+  offersPatientIncentivesSafeHarborProtectionExample: TranslationFieldWithParent;
+  offersPatientIncentivesSafeHarborProtectionWhyNot: TranslationFieldWithOptionsAndParent;
   offersRiskSharingArrangements: TranslationFieldWithOptionsAndChildren;
   offersRiskSharingArrangementsExample: TranslationFieldWithParent;
   offersRiskSharingArrangementsWhyNot: TranslationFieldWithOptionsAndParent;

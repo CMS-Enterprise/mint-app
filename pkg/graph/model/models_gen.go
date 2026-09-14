@@ -1012,6 +1012,12 @@ type WaiverAssessmentSurveyTranslation struct {
 	ImpactsManagedCareWaivers                              models.TranslationFieldWithOptionsAndChildren `json:"impactsManagedCareWaivers" db:"impacts_managed_care_waivers"`
 	ImpactsManagedCareWaiversExample                       models.TranslationFieldWithParent             `json:"impactsManagedCareWaiversExample" db:"impacts_managed_care_waivers_example"`
 	ImpactsManagedCareWaiversWhyNot                        models.TranslationFieldWithOptionsAndParent   `json:"impactsManagedCareWaiversWhyNot" db:"impacts_managed_care_waivers_why_not"`
+	OffersPatientIncentivesSafeHarborProtection            models.TranslationFieldWithOptionsAndChildren `json:"offersPatientIncentivesSafeHarborProtection" db:"offers_patient_incentives_safe_harbor_protection"`
+	OffersPatientIncentivesSafeHarborProtectionExample     models.TranslationFieldWithParent             `json:"offersPatientIncentivesSafeHarborProtectionExample" db:"offers_patient_incentives_safe_harbor_protection_example"`
+	OffersPatientIncentivesSafeHarborProtectionWhyNot      models.TranslationFieldWithOptionsAndParent   `json:"offersPatientIncentivesSafeHarborProtectionWhyNot" db:"offers_patient_incentives_safe_harbor_protection_why_not"`
+	OffersExpensesRemunerationSafeHarborProtection         models.TranslationFieldWithOptionsAndChildren `json:"offersExpensesRemunerationSafeHarborProtection" db:"offers_expenses_remuneration_safe_harbor_protection"`
+	OffersExpensesRemunerationSafeHarborProtectionExample  models.TranslationFieldWithParent             `json:"offersExpensesRemunerationSafeHarborProtectionExample" db:"offers_expenses_remuneration_safe_harbor_protection_example"`
+	OffersExpensesRemunerationSafeHarborProtectionWhyNot   models.TranslationFieldWithOptionsAndParent   `json:"offersExpensesRemunerationSafeHarborProtectionWhyNot" db:"offers_expenses_remuneration_safe_harbor_protection_why_not"`
 	AdditionalMedicaidSpecificWaivers                      models.TranslationField                       `json:"additionalMedicaidSpecificWaivers" db:"additional_medicaid_specific_waivers"`
 }
 

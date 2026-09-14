@@ -2984,6 +2984,12 @@ type ComplexityRoot struct {
 		ModifiesQualityMeasurementsOrPaymentsViaWaivers        func(childComplexity int) int
 		ModifiesQualityMeasurementsOrPaymentsViaWaiversExample func(childComplexity int) int
 		ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot  func(childComplexity int) int
+		OffersExpensesRemunerationSafeHarborProtection         func(childComplexity int) int
+		OffersExpensesRemunerationSafeHarborProtectionExample  func(childComplexity int) int
+		OffersExpensesRemunerationSafeHarborProtectionWhyNot   func(childComplexity int) int
+		OffersPatientIncentivesSafeHarborProtection            func(childComplexity int) int
+		OffersPatientIncentivesSafeHarborProtectionExample     func(childComplexity int) int
+		OffersPatientIncentivesSafeHarborProtectionWhyNot      func(childComplexity int) int
 		OffersRiskSharingArrangements                          func(childComplexity int) int
 		OffersRiskSharingArrangementsExample                   func(childComplexity int) int
 		OffersRiskSharingArrangementsWhyNot                    func(childComplexity int) int
@@ -3032,6 +3038,12 @@ type ComplexityRoot struct {
 		ModifiesQualityMeasurementsOrPaymentsViaWaivers        func(childComplexity int) int
 		ModifiesQualityMeasurementsOrPaymentsViaWaiversExample func(childComplexity int) int
 		ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot  func(childComplexity int) int
+		OffersExpensesRemunerationSafeHarborProtection         func(childComplexity int) int
+		OffersExpensesRemunerationSafeHarborProtectionExample  func(childComplexity int) int
+		OffersExpensesRemunerationSafeHarborProtectionWhyNot   func(childComplexity int) int
+		OffersPatientIncentivesSafeHarborProtection            func(childComplexity int) int
+		OffersPatientIncentivesSafeHarborProtectionExample     func(childComplexity int) int
+		OffersPatientIncentivesSafeHarborProtectionWhyNot      func(childComplexity int) int
 		OffersRiskSharingArrangements                          func(childComplexity int) int
 		OffersRiskSharingArrangementsExample                   func(childComplexity int) int
 		OffersRiskSharingArrangementsWhyNot                    func(childComplexity int) int
@@ -18640,6 +18652,42 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.WaiverAssessmentSurvey.ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtection":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersExpensesRemunerationSafeHarborProtection == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.OffersExpensesRemunerationSafeHarborProtection(childComplexity), true
+	case "WaiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtectionExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersExpensesRemunerationSafeHarborProtectionExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.OffersExpensesRemunerationSafeHarborProtectionExample(childComplexity), true
+	case "WaiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtectionWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersExpensesRemunerationSafeHarborProtectionWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.OffersExpensesRemunerationSafeHarborProtectionWhyNot(childComplexity), true
+	case "WaiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtection":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersPatientIncentivesSafeHarborProtection == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.OffersPatientIncentivesSafeHarborProtection(childComplexity), true
+	case "WaiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtectionExample":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersPatientIncentivesSafeHarborProtectionExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.OffersPatientIncentivesSafeHarborProtectionExample(childComplexity), true
+	case "WaiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtectionWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersPatientIncentivesSafeHarborProtectionWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.OffersPatientIncentivesSafeHarborProtectionWhyNot(childComplexity), true
 	case "WaiverAssessmentSurvey.offersRiskSharingArrangements":
 		if e.ComplexityRoot.WaiverAssessmentSurvey.OffersRiskSharingArrangements == nil {
 			break
@@ -18894,6 +18942,42 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.offersExpensesRemunerationSafeHarborProtection":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersExpensesRemunerationSafeHarborProtection == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersExpensesRemunerationSafeHarborProtection(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.offersExpensesRemunerationSafeHarborProtectionExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersExpensesRemunerationSafeHarborProtectionExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersExpensesRemunerationSafeHarborProtectionExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.offersExpensesRemunerationSafeHarborProtectionWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersExpensesRemunerationSafeHarborProtectionWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersExpensesRemunerationSafeHarborProtectionWhyNot(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.offersPatientIncentivesSafeHarborProtection":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersPatientIncentivesSafeHarborProtection == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersPatientIncentivesSafeHarborProtection(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.offersPatientIncentivesSafeHarborProtectionExample":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersPatientIncentivesSafeHarborProtectionExample == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersPatientIncentivesSafeHarborProtectionExample(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.offersPatientIncentivesSafeHarborProtectionWhyNot":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersPatientIncentivesSafeHarborProtectionWhyNot == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersPatientIncentivesSafeHarborProtectionWhyNot(childComplexity), true
 	case "WaiverAssessmentSurveyTranslation.offersRiskSharingArrangements":
 		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.OffersRiskSharingArrangements == nil {
 			break
@@ -26630,6 +26714,12 @@ type WaiverAssessmentSurvey {
   impactsManagedCareWaivers: Boolean
   impactsManagedCareWaiversExample: String
   impactsManagedCareWaiversWhyNot: NotSelectedReason
+  offersPatientIncentivesSafeHarborProtection: Boolean
+  offersPatientIncentivesSafeHarborProtectionExample: String
+  offersPatientIncentivesSafeHarborProtectionWhyNot: NotSelectedReason
+  offersExpensesRemunerationSafeHarborProtection: Boolean
+  offersExpensesRemunerationSafeHarborProtectionExample: String
+  offersExpensesRemunerationSafeHarborProtectionWhyNot: NotSelectedReason
   additionalMedicaidSpecificWaivers: String
 
   # Page 6 - Waiver selections for this model plan
@@ -26710,6 +26800,12 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   impactsManagedCareWaivers: Boolean
   impactsManagedCareWaiversExample: String
   impactsManagedCareWaiversWhyNot: NotSelectedReason
+  offersPatientIncentivesSafeHarborProtection: Boolean
+  offersPatientIncentivesSafeHarborProtectionExample: String
+  offersPatientIncentivesSafeHarborProtectionWhyNot: NotSelectedReason
+  offersExpensesRemunerationSafeHarborProtection: Boolean
+  offersExpensesRemunerationSafeHarborProtectionExample: String
+  offersExpensesRemunerationSafeHarborProtectionWhyNot: NotSelectedReason
   additionalMedicaidSpecificWaivers: String
 
   # Convenience field for controlling status
@@ -26823,6 +26919,33 @@ type WaiverAssessmentSurveyTranslation {
     @goTag(key: "db", value: "impacts_managed_care_waivers_example")
   impactsManagedCareWaiversWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "impacts_managed_care_waivers_why_not")
+  offersPatientIncentivesSafeHarborProtection: TranslationFieldWithOptionsAndChildren!
+    @goTag(key: "db", value: "offers_patient_incentives_safe_harbor_protection")
+  offersPatientIncentivesSafeHarborProtectionExample: TranslationFieldWithParent!
+    @goTag(
+      key: "db"
+      value: "offers_patient_incentives_safe_harbor_protection_example"
+    )
+  offersPatientIncentivesSafeHarborProtectionWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(
+      key: "db"
+      value: "offers_patient_incentives_safe_harbor_protection_why_not"
+    )
+  offersExpensesRemunerationSafeHarborProtection: TranslationFieldWithOptionsAndChildren!
+    @goTag(
+      key: "db"
+      value: "offers_expenses_remuneration_safe_harbor_protection"
+    )
+  offersExpensesRemunerationSafeHarborProtectionExample: TranslationFieldWithParent!
+    @goTag(
+      key: "db"
+      value: "offers_expenses_remuneration_safe_harbor_protection_example"
+    )
+  offersExpensesRemunerationSafeHarborProtectionWhyNot: TranslationFieldWithOptionsAndParent!
+    @goTag(
+      key: "db"
+      value: "offers_expenses_remuneration_safe_harbor_protection_why_not"
+    )
   additionalMedicaidSpecificWaivers: TranslationField!
     @goTag(key: "db", value: "additional_medicaid_specific_waivers")
 }
@@ -30382,6 +30505,18 @@ func (ec *executionContext) childFields_WaiverAssessmentSurvey(ctx context.Conte
 		return ec.fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaiversExample(ctx, field)
 	case "impactsManagedCareWaiversWhyNot":
 		return ec.fieldContext_WaiverAssessmentSurvey_impactsManagedCareWaiversWhyNot(ctx, field)
+	case "offersPatientIncentivesSafeHarborProtection":
+		return ec.fieldContext_WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtection(ctx, field)
+	case "offersPatientIncentivesSafeHarborProtectionExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionExample(ctx, field)
+	case "offersPatientIncentivesSafeHarborProtectionWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionWhyNot(ctx, field)
+	case "offersExpensesRemunerationSafeHarborProtection":
+		return ec.fieldContext_WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtection(ctx, field)
+	case "offersExpensesRemunerationSafeHarborProtectionExample":
+		return ec.fieldContext_WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionExample(ctx, field)
+	case "offersExpensesRemunerationSafeHarborProtectionWhyNot":
+		return ec.fieldContext_WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionWhyNot(ctx, field)
 	case "additionalMedicaidSpecificWaivers":
 		return ec.fieldContext_WaiverAssessmentSurvey_additionalMedicaidSpecificWaivers(ctx, field)
 	case "waivers":
@@ -99795,6 +99930,144 @@ func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_impactsManagedCa
 	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
 }
 
+func (ec *executionContext) _WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtection(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtection(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersPatientIncentivesSafeHarborProtection, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtection(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersPatientIncentivesSafeHarborProtectionExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersPatientIncentivesSafeHarborProtectionWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtection(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtection(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersExpensesRemunerationSafeHarborProtection, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtection(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionExample(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersExpensesRemunerationSafeHarborProtectionExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionWhyNot(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersExpensesRemunerationSafeHarborProtectionWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.NotSelectedReason) graphql.Marshaler {
+			return ec.marshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type NotSelectedReason does not have child fields"))
+}
+
 func (ec *executionContext) _WaiverAssessmentSurvey_additionalMedicaidSpecificWaivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -101353,6 +101626,198 @@ func (ec *executionContext) _WaiverAssessmentSurveyTranslation_impactsManagedCar
 	)
 }
 func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtection(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtection(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersPatientIncentivesSafeHarborProtection, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtection(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtectionExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtectionExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersPatientIncentivesSafeHarborProtectionExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtectionExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtectionWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtectionWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersPatientIncentivesSafeHarborProtectionWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtectionWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtection(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtection(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersExpensesRemunerationSafeHarborProtection, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndChildren) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndChildren2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndChildren(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtection(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptionsAndChildren(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtectionExample(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtectionExample(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersExpensesRemunerationSafeHarborProtectionExample, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtectionExample(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithParent(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtectionWhyNot(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtectionWhyNot(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.OffersExpensesRemunerationSafeHarborProtectionWhyNot, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptionsAndParent) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptionsAndParent2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptionsAndParent(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtectionWhyNot(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "WaiverAssessmentSurveyTranslation",
 		Field:      field,
@@ -107509,7 +107974,7 @@ func (ec *executionContext) unmarshalInputWaiverAssessmentSurveyChanges(ctx cont
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modifiesMedicareSavingsPrograms", "modifiesMedicareSavingsProgramsExample", "modifiesMedicareSavingsProgramsWhyNot", "bundlesPayments", "bundlesPaymentsExample", "bundlesPaymentsWhyNot", "offersRiskSharingArrangements", "offersRiskSharingArrangementsExample", "offersRiskSharingArrangementsWhyNot", "impactsSiteOfCarePayments", "impactsSiteOfCarePaymentsExample", "impactsSiteOfCarePaymentsWhyNot", "modifiesCareTeamScopeOfPractice", "modifiesCareTeamScopeOfPracticeExample", "modifiesCareTeamScopeOfPracticeWhyNot", "modifiesCareDeliveryWithClaimsBasedPayments", "modifiesCareDeliveryWithClaimsBasedPaymentsExample", "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot", "modifiesQualityMeasurementsOrPaymentsViaWaivers", "modifiesQualityMeasurementsOrPaymentsViaWaiversExample", "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot", "impactsMedicaidOnlyBeneficiaries", "impactsMedicaidOnlyBeneficiariesExample", "impactsMedicaidOnlyBeneficiariesWhyNot", "impactsHomeCommunityBasedServicePayments", "impactsHomeCommunityBasedServicePaymentsExample", "impactsHomeCommunityBasedServicePaymentsWhyNot", "impactsManagedCareWaivers", "impactsManagedCareWaiversExample", "impactsManagedCareWaiversWhyNot", "additionalMedicaidSpecificWaivers", "isComplete"}
+	fieldsInOrder := [...]string{"modifiesMedicareSavingsPrograms", "modifiesMedicareSavingsProgramsExample", "modifiesMedicareSavingsProgramsWhyNot", "bundlesPayments", "bundlesPaymentsExample", "bundlesPaymentsWhyNot", "offersRiskSharingArrangements", "offersRiskSharingArrangementsExample", "offersRiskSharingArrangementsWhyNot", "impactsSiteOfCarePayments", "impactsSiteOfCarePaymentsExample", "impactsSiteOfCarePaymentsWhyNot", "modifiesCareTeamScopeOfPractice", "modifiesCareTeamScopeOfPracticeExample", "modifiesCareTeamScopeOfPracticeWhyNot", "modifiesCareDeliveryWithClaimsBasedPayments", "modifiesCareDeliveryWithClaimsBasedPaymentsExample", "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot", "modifiesQualityMeasurementsOrPaymentsViaWaivers", "modifiesQualityMeasurementsOrPaymentsViaWaiversExample", "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot", "impactsMedicaidOnlyBeneficiaries", "impactsMedicaidOnlyBeneficiariesExample", "impactsMedicaidOnlyBeneficiariesWhyNot", "impactsHomeCommunityBasedServicePayments", "impactsHomeCommunityBasedServicePaymentsExample", "impactsHomeCommunityBasedServicePaymentsWhyNot", "impactsManagedCareWaivers", "impactsManagedCareWaiversExample", "impactsManagedCareWaiversWhyNot", "offersPatientIncentivesSafeHarborProtection", "offersPatientIncentivesSafeHarborProtectionExample", "offersPatientIncentivesSafeHarborProtectionWhyNot", "offersExpensesRemunerationSafeHarborProtection", "offersExpensesRemunerationSafeHarborProtectionExample", "offersExpensesRemunerationSafeHarborProtectionWhyNot", "additionalMedicaidSpecificWaivers", "isComplete"}
 	it = make(map[string]any, len(asMap))
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
@@ -107727,6 +108192,48 @@ func (ec *executionContext) unmarshalInputWaiverAssessmentSurveyChanges(ctx cont
 				return it, err
 			}
 			it["impactsManagedCareWaiversWhyNot"] = data
+		case "offersPatientIncentivesSafeHarborProtection":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offersPatientIncentivesSafeHarborProtection"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["offersPatientIncentivesSafeHarborProtection"] = data
+		case "offersPatientIncentivesSafeHarborProtectionExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offersPatientIncentivesSafeHarborProtectionExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["offersPatientIncentivesSafeHarborProtectionExample"] = data
+		case "offersPatientIncentivesSafeHarborProtectionWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offersPatientIncentivesSafeHarborProtectionWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["offersPatientIncentivesSafeHarborProtectionWhyNot"] = data
+		case "offersExpensesRemunerationSafeHarborProtection":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offersExpensesRemunerationSafeHarborProtection"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["offersExpensesRemunerationSafeHarborProtection"] = data
+		case "offersExpensesRemunerationSafeHarborProtectionExample":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offersExpensesRemunerationSafeHarborProtectionExample"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["offersExpensesRemunerationSafeHarborProtectionExample"] = data
+		case "offersExpensesRemunerationSafeHarborProtectionWhyNot":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("offersExpensesRemunerationSafeHarborProtectionWhyNot"))
+			data, err := ec.unmarshalONotSelectedReason2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐNotSelectedReason(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["offersExpensesRemunerationSafeHarborProtectionWhyNot"] = data
 		case "additionalMedicaidSpecificWaivers":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("additionalMedicaidSpecificWaivers"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -137187,6 +137694,36 @@ func (ec *executionContext) _WaiverAssessmentSurvey(ctx context.Context, sel ast
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "offersPatientIncentivesSafeHarborProtection":
+			out.Values[i] = ec._WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtection(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "offersPatientIncentivesSafeHarborProtectionExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "offersPatientIncentivesSafeHarborProtectionWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_offersPatientIncentivesSafeHarborProtectionWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "offersExpensesRemunerationSafeHarborProtection":
+			out.Values[i] = ec._WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtection(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "offersExpensesRemunerationSafeHarborProtectionExample":
+			out.Values[i] = ec._WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionExample(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "offersExpensesRemunerationSafeHarborProtectionWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurvey_offersExpensesRemunerationSafeHarborProtectionWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "additionalMedicaidSpecificWaivers":
 			out.Values[i] = ec._WaiverAssessmentSurvey_additionalMedicaidSpecificWaivers(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
@@ -137746,6 +138283,36 @@ func (ec *executionContext) _WaiverAssessmentSurveyTranslation(ctx context.Conte
 			}
 		case "impactsManagedCareWaiversWhyNot":
 			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_impactsManagedCareWaiversWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "offersPatientIncentivesSafeHarborProtection":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtection(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "offersPatientIncentivesSafeHarborProtectionExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtectionExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "offersPatientIncentivesSafeHarborProtectionWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_offersPatientIncentivesSafeHarborProtectionWhyNot(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "offersExpensesRemunerationSafeHarborProtection":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtection(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "offersExpensesRemunerationSafeHarborProtectionExample":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtectionExample(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "offersExpensesRemunerationSafeHarborProtectionWhyNot":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_offersExpensesRemunerationSafeHarborProtectionWhyNot(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}

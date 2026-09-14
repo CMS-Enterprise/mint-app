@@ -61,6 +61,12 @@ type WaiverAssessmentSurvey {
   impactsManagedCareWaivers: Boolean
   impactsManagedCareWaiversExample: String
   impactsManagedCareWaiversWhyNot: NotSelectedReason
+  offersPatientIncentivesSafeHarborProtection: Boolean
+  offersPatientIncentivesSafeHarborProtectionExample: String
+  offersPatientIncentivesSafeHarborProtectionWhyNot: NotSelectedReason
+  offersExpensesRemunerationSafeHarborProtection: Boolean
+  offersExpensesRemunerationSafeHarborProtectionExample: String
+  offersExpensesRemunerationSafeHarborProtectionWhyNot: NotSelectedReason
   additionalMedicaidSpecificWaivers: String
 
   # Page 6 - Waiver selections for this model plan
@@ -141,6 +147,12 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   impactsManagedCareWaivers: Boolean
   impactsManagedCareWaiversExample: String
   impactsManagedCareWaiversWhyNot: NotSelectedReason
+  offersPatientIncentivesSafeHarborProtection: Boolean
+  offersPatientIncentivesSafeHarborProtectionExample: String
+  offersPatientIncentivesSafeHarborProtectionWhyNot: NotSelectedReason
+  offersExpensesRemunerationSafeHarborProtection: Boolean
+  offersExpensesRemunerationSafeHarborProtectionExample: String
+  offersExpensesRemunerationSafeHarborProtectionWhyNot: NotSelectedReason
   additionalMedicaidSpecificWaivers: String
 
   # Convenience field for controlling status
