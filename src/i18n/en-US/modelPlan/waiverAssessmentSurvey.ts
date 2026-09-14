@@ -602,6 +602,12 @@ const waiverTypes: Record<
   CommonWaiverType,
   { heading: string; description: string; waiverTypeText: string }
 > = {
+  [CommonWaiverType.FRAUD_ABUSE]: {
+    heading: 'Fraud and abuse waivers, safe harbors, and exceptions',
+    description:
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of fraud and abuse waivers, safe harbors, and exceptions. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    waiverTypeText: 'fraud and abuse waivers, safe harbors, and exceptions'
+  },
   [CommonWaiverType.MEDICARE_PAYMENT]: {
     heading: 'Medicare payment waivers',
     description:
@@ -619,6 +625,11 @@ const waiverTypes: Record<
     description:
       'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
     waiverTypeText: 'Program waivers (Medicare BEs)'
+  },
+  [CommonWaiverType.UNKNOWN]: {
+    heading: 'Unknown waiver type',
+    description: 'The following waivers do not have a known waiver type.',
+    waiverTypeText: 'waivers with an unknown type'
   }
 };
 
@@ -668,9 +679,11 @@ const waiverAssessmentSurveyMisc = {
     noPointOfContactListed: 'No point of contact listed',
     waiverType: 'Waiver type',
     waiverTypeLabels: {
+      FRAUD_ABUSE: 'Fraud and abuse',
       MEDICARE_PAYMENT: 'Payment',
       PROGRAM_MEDICARE_BE: 'Program',
-      MEDICAID_PAYMENT: 'Medicaid'
+      MEDICAID_PAYMENT: 'Medicaid',
+      UNKNOWN: 'Unknown'
     },
     waiverFocus: 'Waiver focus',
     whatIsWaived: 'What is waived?',
@@ -752,9 +765,11 @@ const waiverAssessmentSurveyMisc = {
   },
   modelHasNotSelectedWaiver: 'This model has not yet selected any waivers.',
   waiverType: {
+    FRAUD_ABUSE: 'Fraud and abuse waivers, safe harbors, and exceptions',
     MEDICARE_PAYMENT: 'Medicare payment waivers',
     PROGRAM_MEDICARE_BE: 'Program waivers - Medicare BEs',
-    MEDICAID_PAYMENT: 'Medicaid payment waivers'
+    MEDICAID_PAYMENT: 'Medicaid payment waivers',
+    UNKNOWN: 'Unknown waiver type'
   }
 };
 

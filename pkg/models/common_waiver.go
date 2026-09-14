@@ -7,9 +7,11 @@ type CommonWaiverType string
 
 // CommonWaiverType values
 const (
+	CommonWaiverTypeFraudAbuse        CommonWaiverType = "FRAUD_ABUSE"
 	CommonWaiverTypeMedicaidPayment   CommonWaiverType = "MEDICAID_PAYMENT"
 	CommonWaiverTypeMedicarePayment   CommonWaiverType = "MEDICARE_PAYMENT"
 	CommonWaiverTypeProgramMedicareBE CommonWaiverType = "PROGRAM_MEDICARE_BE"
+	CommonWaiverTypeUnknown           CommonWaiverType = "UNKNOWN"
 )
 
 // CommonWaiver represents a waiver type in the CMMI waiver library
