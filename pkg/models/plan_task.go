@@ -17,11 +17,12 @@ type PlanTaskKey string
 
 // These constants represent the possible values of a PlanTaskKey
 const (
-	PlanTaskKeyModelPlan    PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMto          PlanTaskKey = "MTO"
-	PlanTaskKeyDataExchange PlanTaskKey = "DATA_EXCHANGE"
-	PlanTaskKeyTwoPager     PlanTaskKey = "TWO_PAGER"
-	PlanTaskKeySixPager     PlanTaskKey = "SIX_PAGER"
+	PlanTaskKeyModelPlan      PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto            PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange   PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyTwoPager       PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeySixPager       PlanTaskKey = "SIX_PAGER"
+	PlanTaskKeyOaPresentation PlanTaskKey = "OA_PRESENTATION"
 )
 
 // manuallyMarkablePlanTaskKeys are the PlanTaskKeys whose status is set directly by a user via
@@ -35,8 +36,9 @@ const (
 // markable), the seeding list in ModelPlanCreate (pkg/graph/resolvers/model_plan.go), and either a
 // new calculated-status function in plan_task_status_updates.go or reuse of PlanTaskMarkComplete.
 var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
-	PlanTaskKeyTwoPager: true,
-	PlanTaskKeySixPager: true,
+	PlanTaskKeyTwoPager:       true,
+	PlanTaskKeySixPager:       true,
+	PlanTaskKeyOaPresentation: true,
 }
 
 // IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user
@@ -51,6 +53,7 @@ func (k PlanTaskKey) IsManuallyMarkable() bool {
 // is later marked incomplete again (see PlanTaskMarkComplete in pkg/graph/resolvers/plan_task.go).
 var planTaskActivationTriggers = map[PlanTaskKey]PlanTaskKey{
 	PlanTaskKeyTwoPager: PlanTaskKeySixPager,
+	PlanTaskKeySixPager: PlanTaskKeyOaPresentation,
 }
 
 // ActivationTarget returns the PlanTaskKey that should activate (move from UPCOMING to TO_DO) when k
@@ -63,11 +66,12 @@ func (k PlanTaskKey) ActivationTarget() (PlanTaskKey, bool) {
 // planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
 // and change history. Keys without an entry fall back to their raw string value.
 var planTaskKeyDisplayNames = map[PlanTaskKey]string{
-	PlanTaskKeyModelPlan:    "Model Plan",
-	PlanTaskKeyDataExchange: "Data exchange approach",
-	PlanTaskKeyMto:          "Model-to-operations matrix (MTO)",
-	PlanTaskKeyTwoPager:     "Prepare for your 2-page review meeting with CMMI Front Office",
-	PlanTaskKeySixPager:     "Prepare for your 6-page review meeting with CMMI Front Office",
+	PlanTaskKeyModelPlan:      "Model Plan",
+	PlanTaskKeyDataExchange:   "Data exchange approach",
+	PlanTaskKeyMto:            "Model-to-operations matrix (MTO)",
+	PlanTaskKeyTwoPager:       "2-pager review",
+	PlanTaskKeySixPager:       "6-pager review",
+	PlanTaskKeyOaPresentation: "Office of the Administrator (OA) presentation",
 }
 
 // DisplayName returns a short human-readable name for this task key.

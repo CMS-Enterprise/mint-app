@@ -9,6 +9,7 @@ import (
 func TestPlanTaskKeyIsManuallyMarkable(t *testing.T) {
 	assert.True(t, PlanTaskKeyTwoPager.IsManuallyMarkable())
 	assert.True(t, PlanTaskKeySixPager.IsManuallyMarkable())
+	assert.True(t, PlanTaskKeyOaPresentation.IsManuallyMarkable())
 
 	assert.False(t, PlanTaskKeyModelPlan.IsManuallyMarkable())
 	assert.False(t, PlanTaskKeyMto.IsManuallyMarkable())
@@ -22,11 +23,15 @@ func TestPlanTaskKeyActivationTarget(t *testing.T) {
 	assert.True(t, ok)
 	assert.Equal(t, PlanTaskKeySixPager, target)
 
+	target, ok = PlanTaskKeySixPager.ActivationTarget()
+	assert.True(t, ok)
+	assert.Equal(t, PlanTaskKeyOaPresentation, target)
+
 	for _, key := range []PlanTaskKey{
 		PlanTaskKeyModelPlan,
 		PlanTaskKeyMto,
 		PlanTaskKeyDataExchange,
-		PlanTaskKeySixPager,
+		PlanTaskKeyOaPresentation,
 		PlanTaskKey("NOT_A_REAL_KEY"),
 	} {
 		_, ok := key.ActivationTarget()
