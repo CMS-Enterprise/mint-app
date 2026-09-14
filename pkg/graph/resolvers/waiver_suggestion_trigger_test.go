@@ -8,7 +8,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// medicarePaymentWaiver1ID is the stable ID for "Medicare Payment Waiver 1", seeded by V269.
+// medicarePaymentWaiver1ID is the stable ID for "Medicare Payment Waiver 1", seeded by V280.
 var medicarePaymentWaiver1ID = uuid.MustParse("9f955945-7afd-481f-8558-e7e0fd465463")
 
 func (suite *ResolverSuite) TestWaiverSuggestionTrigger() {
@@ -52,7 +52,7 @@ func (suite *ResolverSuite) TestWaiverSuggestionTrigger() {
 
 	allWaivers, err := GetAllCommonWaiversByModelPlanID(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
-	suite.assertNumCommonWaiversSuggested(allWaivers, 15)
+	suite.assertNumCommonWaiversSuggested(allWaivers, 46)
 	suite.assertCommonWaiverSuggestion(allWaivers, "Medicare Payment Waiver 1", true)
 
 	survey, err := WaiverAssessmentSurveyGetByModelPlanID(suite.testConfigs.Context, plan.ID)
@@ -75,7 +75,7 @@ func (suite *ResolverSuite) TestWaiverSuggestionTrigger() {
 
 	allWaivers, err = GetAllCommonWaiversByModelPlanID(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
-	suite.assertNumCommonWaiversSuggested(allWaivers, 14)
+	suite.assertNumCommonWaiversSuggested(allWaivers, 45)
 	suite.assertCommonWaiverSuggestion(allWaivers, "Medicare Payment Waiver 1", false)
 
 	// Switching the answer to true re-suggests the waiver.
@@ -93,7 +93,7 @@ func (suite *ResolverSuite) TestWaiverSuggestionTrigger() {
 
 	allWaivers, err = GetAllCommonWaiversByModelPlanID(suite.testConfigs.Context, &plan.ID)
 	suite.NoError(err)
-	suite.assertNumCommonWaiversSuggested(allWaivers, 15)
+	suite.assertNumCommonWaiversSuggested(allWaivers, 46)
 	suite.assertCommonWaiverSuggestion(allWaivers, "Medicare Payment Waiver 1", true)
 }
 
