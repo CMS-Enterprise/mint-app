@@ -168,7 +168,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
         <CardFooter className="display-flex border-top-0 padding-top-1">
           <Button
             type="button"
-            outline={key === PlanTaskKey.OA_PRESENTATION}
+            outline={t(`${key}.primaryActionStyle`) === 'outline'}
             className="margin-right-2"
             onClick={() =>
               navigate(
@@ -181,7 +181,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
           >
             {t(`${baseKey}.primaryAction`)}
           </Button>
-          {key !== PlanTaskKey.OA_PRESENTATION && (
+          {t(`${key}.secondaryAction`, { defaultValue: '' }) !== '' && (
             <UswdsReactLink
               to={t(`${key}.secondaryPath`)}
               target="_blank"
