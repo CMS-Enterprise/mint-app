@@ -52,6 +52,12 @@ const TASK_STATUS_CONFIG: Partial<Record<PlanTaskStatus, TaskStatusConfig>> = {
   }
 };
 
+const USER_MARK_STATUS_TASKS = [
+  PlanTaskKey.TWO_PAGER,
+  PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.OA_PRESENTATION
+];
+
 function TaskStatusTag({ status }: { status: PlanTaskStatus }) {
   const { t } = useTranslation('tasks');
   const config = TASK_STATUS_CONFIG[status];
@@ -186,31 +192,36 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
           </UswdsReactLink>
         )}
 
-        <div className="display-flex flex-align-center">
-          {task.status !== PlanTaskStatus.COMPLETE && (
-            <CheckboxField
-              id={task.id}
-              label={t('markComplete')}
-              name="markTaskComplete"
-              onChange={() => markTaskComplete(true)}
-              onBlur={() => {}}
-              value="true"
-            />
-          )}
+        {USER_MARK_STATUS_TASKS.includes(key) && (
+          <div className="display-flex flex-align-center">
+            {task.status !== PlanTaskStatus.COMPLETE && (
+              <CheckboxField
+                id={task.id}
+                label={t('markComplete')}
+                name="markTaskComplete"
+                onChange={() => markTaskComplete(true)}
+                onBlur={() => {}}
+                value="true"
+              />
+            )}
 
-          {task.status === PlanTaskStatus.COMPLETE && (
-            <>
-              <Icon.Undo className="text-primary margin-right-1" aria-hidden />
-              <Button
-                type="button"
-                className="usa-button usa-button--unstyled deep-underline "
-                onClick={() => markTaskComplete(false)}
-              >
-                {t('markTodo')}
-              </Button>
-            </>
-          )}
-        </div>
+            {task.status === PlanTaskStatus.COMPLETE && (
+              <>
+                <Icon.Undo
+                  className="text-primary margin-right-1"
+                  aria-hidden
+                />
+                <Button
+                  type="button"
+                  className="usa-button usa-button--unstyled deep-underline "
+                  onClick={() => markTaskComplete(false)}
+                >
+                  {t('markTodo')}
+                </Button>
+              </>
+            )}
+          </div>
+        )}
       </CardFooter>
     </Card>
   );
