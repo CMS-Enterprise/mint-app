@@ -12,8 +12,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
-// PlanTaskGetByModelPlanIDLOADER returns all plan tasks for a slice of model plan IDs
-func PlanTaskGetByModelPlanIDLOADER(
+// PlanTaskGetByModelPlanIDs returns all plan tasks for a slice of model plan IDs. It's a plain,
+// uncached store query - despite backing the ByModelPlanID dataloader (see
+// storage/loaders/plan_task_loader.go), it's also called directly by callers running inside a DB
+// transaction (see updatePlanTaskStateByKey), which can't safely use the request-scoped dataloader
+// since it isn't transaction-aware.
+func PlanTaskGetByModelPlanIDs(
 	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	modelPlanIDs []uuid.UUID,

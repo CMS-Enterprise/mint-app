@@ -50,7 +50,7 @@ func updatePlanTaskStateByKey(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) (*models.PlanTask, error) {
-	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(np, logger, []uuid.UUID{modelPlanID})
+	tasks, err := storage.PlanTaskGetByModelPlanIDs(np, logger, []uuid.UUID{modelPlanID})
 	if err != nil {
 		return nil, err
 	}

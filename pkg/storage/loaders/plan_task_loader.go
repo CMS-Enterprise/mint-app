@@ -32,7 +32,7 @@ func batchPlanTaskGetByModelPlanID(ctx context.Context, modelPlanIDs []uuid.UUID
 		return errorPerEachKey[uuid.UUID, []*models.PlanTask](modelPlanIDs, err)
 	}
 
-	data, err := storage.PlanTaskGetByModelPlanIDLOADER(loaders.DataReader.Store, logger, modelPlanIDs)
+	data, err := storage.PlanTaskGetByModelPlanIDs(loaders.DataReader.Store, logger, modelPlanIDs)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, []*models.PlanTask](modelPlanIDs, err)
 	}
