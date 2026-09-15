@@ -21,7 +21,7 @@ BEGIN
 
     IF TG_OP = 'INSERT' THEN
         -- Treat all fields as changed so every common_waiver is evaluated on initial seed
-        changed_keys = '{*}'::TEXT[];
+        changed_keys = '{*}';
     ELSE
         h_old = hstore(OLD.*);
         changed_keys = akeys(h_new - h_old);
@@ -44,7 +44,7 @@ BEGIN
         FROM common_waiver cw
         -- On UPDATE: skip waivers whose mapped field did not change (no-op optimization)
         WHERE cw.survey_question_field IS NULL
-           OR changed_keys = '{*}'::TEXT[]
+           OR changed_keys = '{*}'
            OR cw.survey_question_field = ANY(changed_keys)
     ) AS source
     ON target.model_plan_id = NEW.model_plan_id
