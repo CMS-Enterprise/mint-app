@@ -52,6 +52,34 @@ func PlanTaskUpdate(
 	return updatedTask, nil
 }
 
+// PlanTaskActivateUpcoming moves a plan task from UPCOMING to TO_DO in a single conditional
+// update, attributing the change to modifiedBy. It returns nil if the task wasn't currently
+// UPCOMING (already activated, has otherwise progressed, or doesn't exist), which is a no-op
+// rather than an error.
+func PlanTaskActivateUpcoming(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
+	modifiedBy uuid.UUID,
+) (*models.PlanTask, error) {
+	args := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+		"key":           key,
+		"modified_by":   modifiedBy,
+	}
+
+	tasks, err := sqlutils.SelectProcedure[models.PlanTask](np, sqlqueries.PlanTask.ActivateUpcoming, args)
+	if err != nil {
+		return nil, err
+	}
+	if len(tasks) == 0 {
+		return nil, nil
+	}
+
+	return tasks[0], nil
+}
+
 // PlanTaskCreate creates a new plan task (used when a model plan is created)
 func PlanTaskCreate(
 	np sqlutils.NamedPreparer,

@@ -164,11 +164,12 @@ func PlanTaskMarkComplete(
 	})
 }
 
-// activateUpcomingPlanTask moves a plan task from UPCOMING to TO_DO. It is a no-op if the task isn't
-// currently UPCOMING (already activated, or has otherwise progressed) or doesn't exist yet, since
-// activation must never regress a task that has already moved on. The change is attributed to the
-// MINT system account rather than principal (the user who triggered the cascade by completing
-// another task), since no one directly acted on this specific task - see updatePlanTaskStateByKey.
+// activateUpcomingPlanTask moves a plan task from UPCOMING to TO_DO via a single conditional
+// update (see storage.PlanTaskActivateUpcoming). It is a no-op if the task isn't currently
+// UPCOMING (already activated, has otherwise progressed, or doesn't exist), since activation must
+// never regress a task that has already moved on. The change is attributed to the MINT system
+// account rather than principal (the user who triggered the cascade by completing another task),
+// since no one directly acted on this specific task - see updatePlanTaskStateByKey.
 func activateUpcomingPlanTask(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
@@ -180,32 +181,16 @@ func activateUpcomingPlanTask(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(np, logger, []uuid.UUID{modelPlanID})
+	task, err := storage.PlanTaskActivateUpcoming(np, logger, modelPlanID, key, constants.GetSystemAccountUUID())
 	if err != nil {
 		return err
 	}
-
-	var target *models.PlanTask
-	for _, t := range tasks {
-		if t.Key == key {
-			target = t
-			break
-		}
-	}
-	if target == nil {
-		logger.Warn(
-			"plan task activation target not found, skipping",
-			zap.String("modelPlanID", modelPlanID.String()),
-			zap.String("key", string(key)),
-		)
-		return nil
-	}
-	if target.State != models.PlanTaskStateUpcoming {
+	if task == nil {
 		return nil
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, key, models.PlanTaskStateToDo, principal, constants.GetSystemAccountUUID(), store, emailService, addressBook)
-	return err
+	trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, task, principal, emailService, addressBook)
+	return nil
 }
 
 // planTaskNotificationRecipientsByRole gets lists of both all model leads (regardless of settings) and non-model-leads (respecting settings) for notification purposes

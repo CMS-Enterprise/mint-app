@@ -173,6 +173,79 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 	suite.Equal(models.PlanTaskStateToDo, sixPagerTask.State)
 }
 
+// TestPlanTaskActivationDoesNotRegressCompletedTarget confirms that re-triggering activation
+// (e.g. by toggling the source task complete again) never regresses an activation target that a
+// user has since completed manually. This guards the single conditional-update behavior in
+// storage.PlanTaskActivateUpcoming, which only touches a target task that's still UPCOMING.
+func (suite *ResolverSuite) TestPlanTaskActivationDoesNotRegressCompletedTarget() {
+	plan := suite.createModelPlan("Plan For Activation Regression Guard")
+
+	_, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	// manually complete the activated SIX_PAGER task
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	sixPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStateComplete, sixPagerTask.State)
+	suite.NotNil(sixPagerTask.CompletedBy)
+	suite.NotNil(sixPagerTask.CompletedDts)
+
+	// toggle TWO_PAGER off and back on to re-trigger the activation cascade
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	// SIX_PAGER must still be COMPLETE - activation is only ever a no-op for a non-UPCOMING target
+	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStateComplete, sixPagerTask.State)
+	suite.NotNil(sixPagerTask.CompletedBy)
+	suite.NotNil(sixPagerTask.CompletedDts)
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteSixPager() {
 	plan := suite.createModelPlan("Plan For Six Pager Manual Task Marking")
 
