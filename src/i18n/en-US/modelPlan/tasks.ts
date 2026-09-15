@@ -143,7 +143,8 @@ const tasks = {
     primaryActionStyle: 'outline',
     [PlanTaskState.UPCOMING]: {
       heading:
-        'Prepare for your presentation to the Office of the Administrator (OA)'
+        'Prepare for your presentation to the Office of the Administrator (OA)',
+      primaryAction: 'Upload OA presentation'
     },
     [PlanTaskState.TO_DO]: {
       heading:
