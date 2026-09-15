@@ -1,9 +1,9 @@
 {
-  "status": {
-    "gqlField": "status",
-    "goField": "Status",
-    "dbField": "status",
-    "label": "Task status",
+  "state": {
+    "gqlField": "state",
+    "goField": "State",
+    "dbField": "state",
+    "label": "Task state",
     "dataType": "ENUM",
     "formType": "CHECKBOX",
     "order": 1.01,

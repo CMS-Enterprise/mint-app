@@ -27,7 +27,7 @@ func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSe
 	// MODEL_PLAN task progression: if any section is first edited, mark the MODEL_PLAN task IN_PROGRESS
 	if oldStatus == models.TaskReady && tls.GetStatus() == models.TaskInProgress {
 		modelPlanID := tls.GetModelPlanID()
-		err = UpdatePlanTaskStatusOnModelPlanStarted(context.Background(), store, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStateOnModelPlanStarted(context.Background(), store, logger, modelPlanID, principal, store)
 		if err != nil {
 			return err
 		}

@@ -10,7 +10,9 @@ import (
 	"github.com/samber/lo"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -31,88 +33,79 @@ func PlanTaskGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.UUID) 
 	return loaders.PlanTask.ByModelPlanID.Load(ctx, modelPlanID)
 }
 
-func updatePlanTaskStatusByKey(
+// updatePlanTaskStateByKey updates a plan task's state in a single conditional DB call (see
+// storage.PlanTaskUpdateStateByKey) rather than reading the task first, comparing in Go, and
+// writing - the DB itself skips the write when nothing would change, and returns the task's prior
+// state alongside the new row so the transition (for notification purposes) can be determined
+// without a separate read. attributedTo is who gets credited as the actor for this specific
+// change (CompletedBy/ModifiedBy) in the database and, in turn, in Change History - it is usually
+// principal.Account().ID, but callers cascading an automatic side effect (see
+// activateUpcomingPlanTask) pass the MINT system account instead, since no one directly acted on
+// that specific task. principal is always used for access control regardless of attributedTo.
+func updatePlanTaskStateByKey(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	key models.PlanTaskKey,
-	newStatus models.PlanTaskStatus,
+	newState models.PlanTaskState,
 	principal authentication.Principal,
+	attributedTo uuid.UUID,
 	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) (*models.PlanTask, error) {
-	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(np, logger, []uuid.UUID{modelPlanID})
-	if err != nil {
+	if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, store); err != nil {
 		return nil, err
 	}
 
-	var task *models.PlanTask
-	for _, t := range tasks {
-		if t.Key == key {
-			task = t
-			break
-		}
+	var completedBy *uuid.UUID
+	var completedDts *time.Time
+	if newState == models.PlanTaskStateComplete {
+		completedBy = &attributedTo
+		completedDts = helpers.PointerTo(time.Now().UTC())
 	}
-	if task == nil {
+
+	result, err := storage.PlanTaskUpdateStateByKey(np, logger, modelPlanID, key, newState, completedBy, completedDts, attributedTo)
+	if err != nil {
+		return nil, err
+	}
+	if result == nil {
+		// Either a no-op (already at newState/completion metadata) or the task doesn't exist -
+		// a plain lookup tells us which, and preserves the "not found" error below.
+		tasks, err := storage.PlanTaskGetByModelPlanIDs(np, logger, []uuid.UUID{modelPlanID})
+		if err != nil {
+			return nil, err
+		}
+		for _, t := range tasks {
+			if t.Key == key {
+				return t, nil
+			}
+		}
 		return nil, fmt.Errorf("plan task not found for modelPlanID %s and key %s", modelPlanID, key)
 	}
 
-	// Ensure completion metadata matches the target status before treating an update as a no-op.
-	isCompletionMetadataConsistent := (newStatus == models.PlanTaskStatusComplete && task.CompletedBy != nil && task.CompletedDts != nil) ||
-		(newStatus != models.PlanTaskStatusComplete && task.CompletedBy == nil && task.CompletedDts == nil)
-
-	// Skip writes when status + completion metadata are already correct.
-	if task.Status == newStatus && isCompletionMetadataConsistent {
-		return task, nil
-	}
-
-	didTransitionToDo := task.Status != models.PlanTaskStatusToDo && newStatus == models.PlanTaskStatusToDo
-	didTransitionToComplete := task.Status != models.PlanTaskStatusComplete && newStatus == models.PlanTaskStatusComplete
-	task.Status = newStatus
-
-	if newStatus == models.PlanTaskStatusComplete {
-		task.CompletedBy = &principal.Account().ID
-		task.CompletedDts = helpers.PointerTo(time.Now().UTC())
-	} else {
-		task.CompletedBy = nil
-		task.CompletedDts = nil
-	}
-
-	err = BaseStructPreUpdate(
-		logger,
-		task,
-		map[string]interface{}{"status": newStatus},
-		principal,
-		store,
-		true,
-		true,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	updatedTask, err := storage.PlanTaskUpdate(np, logger, task)
-	if err != nil {
-		return nil, err
-	}
+	didTransitionToDo := result.PreviousState != models.PlanTaskStateToDo && newState == models.PlanTaskStateToDo
+	didTransitionToComplete := result.PreviousState != models.PlanTaskStateComplete && newState == models.PlanTaskStateComplete
 
 	if didTransitionToComplete {
-		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, updatedTask, principal, emailService, addressBook)
+		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, result.Task, principal, emailService, addressBook)
 	}
 	if didTransitionToDo {
-		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, updatedTask, principal, emailService, addressBook)
+		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, result.Task, principal, emailService, addressBook)
 	}
 
-	return updatedTask, nil
+	return result.Task, nil
 }
 
 // PlanTaskMarkComplete directly sets a manually-markable plan task's status to COMPLETE or TO_DO.
 // Unlike the calculated task keys (MODEL_PLAN, MTO, DATA_EXCHANGE), which are derived from other
-// model state and updated via updatePlanTaskStatusByKey's other callers, manually-markable keys
+// model state and updated via updatePlanTaskStateByKey's other callers, manually-markable keys
 // (see models.PlanTaskKey.IsManuallyMarkable) have no calculated status and are only ever changed
 // by direct user action, so a key is rejected here if it isn't on that allow-list.
+//
+// Marking a key complete may also activate another task (see models.PlanTaskKey.ActivationTarget),
+// moving it from UPCOMING to TO_DO.
 func PlanTaskMarkComplete(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -128,14 +121,56 @@ func PlanTaskMarkComplete(
 		return nil, fmt.Errorf("plan task key %s can not be manually marked complete", key)
 	}
 
-	newStatus := models.PlanTaskStatusToDo
+	newState := models.PlanTaskStateToDo
 	if isComplete {
-		newStatus = models.PlanTaskStatusComplete
+		newState = models.PlanTaskStateComplete
 	}
 
 	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
-		return updatePlanTaskStatusByKey(ctx, tx, logger, modelPlanID, key, newStatus, principal, store, emailService, addressBook)
+		task, err := updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, key, newState, principal, principal.Account().ID, store, emailService, addressBook)
+		if err != nil {
+			return nil, err
+		}
+
+		if isComplete {
+			if targetKey, ok := key.ActivationTarget(); ok {
+				if err := activateUpcomingPlanTask(ctx, tx, logger, modelPlanID, targetKey, principal, store, emailService, addressBook); err != nil {
+					return nil, err
+				}
+			}
+		}
+
+		return task, nil
 	})
+}
+
+// activateUpcomingPlanTask moves a plan task from UPCOMING to TO_DO via a single conditional
+// update (see storage.PlanTaskActivateUpcoming). It is a no-op if the task isn't currently
+// UPCOMING (already activated, has otherwise progressed, or doesn't exist), since activation must
+// never regress a task that has already moved on. The change is attributed to the MINT system
+// account rather than principal (the user who triggered the cascade by completing another task),
+// since no one directly acted on this specific task - see updatePlanTaskStateByKey.
+func activateUpcomingPlanTask(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
+	principal authentication.Principal,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
+	task, err := storage.PlanTaskActivateUpcoming(np, logger, modelPlanID, key, constants.GetSystemAccountUUID())
+	if err != nil {
+		return err
+	}
+	if task == nil {
+		return nil
+	}
+
+	trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, task, principal, emailService, addressBook)
+	return nil
 }
 
 // planTaskNotificationRecipientsByRole gets lists of both all model leads (regardless of settings) and non-model-leads (respecting settings) for notification purposes

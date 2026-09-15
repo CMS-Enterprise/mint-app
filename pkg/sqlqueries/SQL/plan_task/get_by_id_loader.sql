@@ -7,7 +7,7 @@ SELECT
     task.id,
     task.model_plan_id,
     task.key,
-    task.status,
+    task.state,
     task.completed_by,
     task.completed_dts,
     task.created_by,
