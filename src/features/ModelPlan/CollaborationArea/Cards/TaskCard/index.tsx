@@ -168,6 +168,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
         <CardFooter className="display-flex border-top-0 padding-top-1">
           <Button
             type="button"
+            outline={key === PlanTaskKey.OA_PRESENTATION}
             className="margin-right-2"
             onClick={() =>
               navigate(
@@ -180,15 +181,17 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
           >
             {t(`${baseKey}.primaryAction`)}
           </Button>
-          <UswdsReactLink
-            to={t(`${key}.secondaryPath`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="usa-button usa-button--outline margin-right-2"
-            variant="unstyled"
-          >
-            {t(`${key}.secondaryAction`)}
-          </UswdsReactLink>
+          {key !== PlanTaskKey.OA_PRESENTATION && (
+            <UswdsReactLink
+              to={t(`${key}.secondaryPath`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="usa-button usa-button--outline margin-right-2"
+              variant="unstyled"
+            >
+              {t(`${key}.secondaryAction`)}
+            </UswdsReactLink>
+          )}
 
           {USER_MARK_STATUS_TASKS.includes(key) && (
             <div className="display-flex flex-align-center">

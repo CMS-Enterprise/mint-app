@@ -68,7 +68,7 @@ describe('TaskCard', () => {
       { initialEntries: [`/models/${modelID}/collaboration-area`] }
     );
 
-    const { findByText, getByLabelText, getByRole } = setup(
+    const { findByText, getByLabelText, getByRole, queryByRole } = setup(
       <RouterProvider router={router} />
     );
 
@@ -80,6 +80,9 @@ describe('TaskCard', () => {
     expect(
       getByRole('button', { name: 'Upload OA presentation' })
     ).toBeInTheDocument();
+    expect(
+      queryByRole('link', { name: 'View help article' })
+    ).not.toBeInTheDocument();
   });
 
   it('renders the revert-to-todo link for OA_PRESENTATION when COMPLETE', async () => {
