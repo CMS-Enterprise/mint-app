@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"github.com/samber/lo"
+
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
@@ -10,13 +12,19 @@ import (
 // which JSON_TO_RECORDSET requires to parse the JSON payload into typed rows.
 func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 	plan := suite.createModelPlan("plan for update selected waivers")
+	commonWaivers, err := GetAllCommonWaiversByModelPlanID(suite.testConfigs.Context, &plan.ID)
+	suite.NoError(err)
+	commonWaiver, found := lo.Find(commonWaivers, func(cw *models.CommonWaiver) bool {
+		return cw.Name == "Non-duplication"
+	})
+	suite.Require().True(found)
 
 	created, err := UpdateSelectedWaivers(
 		suite.testConfigs.Logger,
 		plan.ID,
 		[]*models.WaiverSelectionInput{
 			{
-				CommonWaiverID: medicarePaymentWaiver1ID,
+				CommonWaiverID: commonWaiver.ID,
 				WillUseWaiver:  true,
 				NotUsingReason: nil,
 			},
@@ -26,7 +34,7 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 	)
 	suite.NoError(err)
 	suite.Require().Len(created, 1)
-	suite.Equal(medicarePaymentWaiver1ID, created[0].CommonWaiverID)
+	suite.Equal(commonWaiver.ID, created[0].CommonWaiverID)
 	suite.Require().NotNil(created[0].WillUseWaiver)
 	suite.True(*created[0].WillUseWaiver)
 	suite.Nil(created[0].NotUsingReason)
@@ -37,7 +45,7 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 		plan.ID,
 		[]*models.WaiverSelectionInput{
 			{
-				CommonWaiverID: medicarePaymentWaiver1ID,
+				CommonWaiverID: commonWaiver.ID,
 				WillUseWaiver:  false,
 				NotUsingReason: &notUsingReason,
 			},

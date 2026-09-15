@@ -55,8 +55,6 @@ ALTER TABLE waiver_assessment_survey
 ENABLE TRIGGER audit_trigger;
 
 -- Part 2: Seed suggested_waiver rows — suggest all common waivers for every model plan.
--- survey_question_field is NULL on all common_waiver rows until real mappings arrive,
--- so the INSERT logic suggests every waiver for every plan.
 ALTER TABLE suggested_waiver
 DISABLE TRIGGER audit_trigger;
 

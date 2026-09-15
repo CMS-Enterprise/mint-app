@@ -1,36 +1,13 @@
 -- Trigger function to keep suggested_waiver in sync with waiver_assessment_survey.
 -- Uses MERGE (same pattern as SET_SUGGESTED_MTO_MILESTONE in V196) so that rows which
--- remain suggested are left untouched — preserving their change history — while only
+-- remain suggested are left untouched, preserving their change history, while only
 -- newly-qualifying rows are inserted and no-longer-qualifying rows are deleted.
 --
 -- survey_question_field on common_waiver is a column name on waiver_assessment_survey.
 -- The trigger uses hstore to look up the field value dynamically, avoiding hardcoded
--- per-field CASE logic. NULL survey_question_field means always suggest.
+-- per-field CASE logic. NULL survey answers mean still suggest.
 -- On UPDATE, only common_waiver rows whose mapped field actually changed are processed
 -- so that the MERGE is a no-op when unrelated columns are saved.
---
--- NOTE: populate common_waiver.survey_question_field once CMS provides real
--- waiver-to-question mappings. Until then the ELSE TRUE branch suggests every waiver.
---
--- NOTE: revisit this function once the final waiver-to-question configuration is available;
--- the approach may need to change depending on what that configuration looks like.
--- depending on what that configuration looks like. We'll also want to test more
--- thoroughly once every common_waiver row has a real field mapping (today only one
--- waiver is wired up, for manual/integration testing — see waiver_suggestion_trigger_test.go).
--- Open questions to settle once the config exists:
---   1. Is each waiver suggested by exactly one survey question (1:1), or can a waiver's
---      suggestion depend on multiple fields/questions? If the latter, a single
---      survey_question_field column + hstore lookup won't be enough and this will need
---      a refactor (e.g. a join table mapping a waiver to its trigger fields/conditions).
---   2. Is "is this common_waiver suggested for this survey" logic needed anywhere else
---      (resolvers, reports, etc.)? If so, consider splitting this into a SQL function
---      that just computes/returns suggestion status (a view over the data), with this
---      trigger calling that function to decide what to insert/delete, instead of
---      duplicating the CASE logic wherever it's needed.
---   3. Would it be simpler to split the INSERT and UPDATE handling into two separate
---      triggers/functions (or push the initial seed onto app code) instead of one
---      function branching on TG_OP? The MERGE itself doesn't need an INSERT-specific
---      branch — it's only there so every common_waiver gets evaluated on first seed.
 CREATE OR REPLACE FUNCTION MANAGE_SUGGESTED_WAIVERS()
 RETURNS TRIGGER AS $body$
 DECLARE
