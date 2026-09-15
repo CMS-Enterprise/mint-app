@@ -118,6 +118,50 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 	suite.Nil(task.CompletedDts)
 }
 
+// TestPlanTaskMarkCompleteIsStableOnRepeat confirms that marking an already-complete task
+// complete again is a true no-op - completedBy/completedDts/modifiedDts must not change - rather
+// than silently rewriting them with freshly-generated values on every call. This guards
+// storage.PlanTaskUpdateStateByKey's conditional-update guard, which can't compare completedDts
+// directly against the newly-computed value (since that's always different) and instead has to
+// check whether completion metadata is already present.
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteIsStableOnRepeat() {
+	plan := suite.createModelPlan("Plan For Repeat Mark Complete Stability")
+
+	first, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	suite.NotNil(first)
+
+	time.Sleep(10 * time.Millisecond) // ensure a repeat write would produce a detectably different timestamp
+
+	second, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(second) {
+		suite.Equal(first.CompletedBy, second.CompletedBy)
+		suite.Equal(first.CompletedDts, second.CompletedDts)
+		suite.Equal(first.ModifiedDts, second.ModifiedDts)
+	}
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 	plan := suite.createModelPlan("Plan For Six Pager Activation")
 
