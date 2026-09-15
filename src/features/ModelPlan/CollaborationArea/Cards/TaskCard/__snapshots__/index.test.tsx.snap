@@ -78,31 +78,6 @@ exports[`TaskCard > renders Model Plan to-do details, primary start action, and 
         >
           View sample Model Plan
         </a>
-        <div
-          class="display-flex flex-align-center"
-        >
-          <div
-            class="mint-checkbox usa-checkbox"
-          >
-            <input
-              class="usa-checkbox__input"
-              id="model_plan-task-id"
-              name="markTaskComplete"
-              type="checkbox"
-              value="true"
-            />
-            <label
-              class="usa-checkbox__label"
-              for="model_plan-task-id"
-              style="width: fit-content;"
-            >
-              Mark this task complete
-            </label>
-            <p
-              class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-pre-line"
-            />
-          </div>
-        </div>
       </div>
     </div>
   </li>

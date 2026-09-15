@@ -52,9 +52,6 @@ describe('TaskCard', () => {
       getByRole('link', { name: 'View sample Model Plan' })
     ).toBeInTheDocument();
     expect(getByRole('img', { name: 'To do' })).toBeInTheDocument();
-    expect(
-      getByRole('checkbox', { name: 'Mark this task complete' })
-    ).toBeInTheDocument();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -169,7 +166,7 @@ describe('TaskCard', () => {
 
   it('shows the revert-to-todo control and Complete tag when a task is complete', async () => {
     const { findByRole, getByRole, queryByRole } = renderTaskCard(
-      getTask(PlanTaskKey.MTO, {
+      getTask(PlanTaskKey.OA_PRESENTATION, {
         state: PlanTaskState.COMPLETE,
         status: PlanTaskStatus.COMPLETE
       })
@@ -179,7 +176,9 @@ describe('TaskCard', () => {
       await findByRole('button', { name: 'Mark this task to do' })
     ).toBeInTheDocument();
     expect(getByRole('img', { name: 'Complete' })).toBeInTheDocument();
-    expect(getByRole('button', { name: 'Go to MTO' })).toBeInTheDocument();
+    expect(
+      getByRole('button', { name: 'Upload OA presentation' })
+    ).toBeInTheDocument();
     expect(
       queryByRole('checkbox', { name: 'Mark this task complete' })
     ).not.toBeInTheDocument();
