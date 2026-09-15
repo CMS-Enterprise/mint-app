@@ -606,7 +606,7 @@ const waiverTypes: Record<
     heading: 'Fraud and abuse waivers, safe harbors, and exceptions',
     description:
       'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of fraud and abuse waivers, safe harbors, and exceptions. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'fraud and abuse waivers, safe harbors, and exceptions'
+    waiverTypeText: 'Fraud and abuse waivers'
   },
   [CommonWaiverType.MEDICARE_PAYMENT]: {
     heading: 'Medicare payment waivers',
@@ -629,7 +629,7 @@ const waiverTypes: Record<
   [CommonWaiverType.UNKNOWN]: {
     heading: 'Unknown waiver type',
     description: 'The following waivers do not have a known waiver type.',
-    waiverTypeText: 'waivers with an unknown type'
+    waiverTypeText: 'Unknown waivers'
   }
 };
 
