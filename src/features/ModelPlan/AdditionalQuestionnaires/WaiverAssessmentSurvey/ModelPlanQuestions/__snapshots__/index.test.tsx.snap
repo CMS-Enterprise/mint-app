@@ -17,7 +17,7 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
         <div
           class="mint-body-large text-base display-inline"
         >
-          (Page 2 of 7)
+          (Page 2 of 5)
         </div>
       </div>
       <p
@@ -510,7 +510,7 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
       <span
         class="mint-page-number__page-num"
       >
-        Page 2 of 7
+        Page 2 of 5
       </span>
     </div>
   </div>
