@@ -29,11 +29,13 @@ import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema
 const DocumentUpload = ({
   solutionDetailsLink,
   solutionID,
-  planTaskID
+  planTaskID,
+  defaultDocumentType
 }: {
   solutionDetailsLink?: string;
   solutionID?: string;
   planTaskID?: string;
+  defaultDocumentType?: DocumentType;
 }) => {
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
@@ -93,7 +95,9 @@ const DocumentUpload = ({
           file: null,
           url: null,
           name: null,
-          documentType: planTaskID ? DocumentType.CONCEPT_PAPER : null,
+          documentType:
+            defaultDocumentType ??
+            (planTaskID ? DocumentType.CONCEPT_PAPER : null),
           restricted: null,
           otherTypeDescription: '',
           optionalNotes: ''

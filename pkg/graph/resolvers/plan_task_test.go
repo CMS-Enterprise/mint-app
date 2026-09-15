@@ -365,6 +365,9 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
 		}
 		suite.NotNil(updated.CompletedDts)
+		if suite.NotNil(updated.ModifiedBy) {
+			suite.Equal(suite.testConfigs.Principal.Account().ID, *updated.ModifiedBy)
+		}
 	}
 
 	oaTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
