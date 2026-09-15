@@ -26470,9 +26470,11 @@ extend type Mutation {
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/waiver/common_waiver.graphql", Input: `enum CommonWaiverType {
+  FRAUD_ABUSE
   MEDICAID_PAYMENT
   MEDICARE_PAYMENT
   PROGRAM_MEDICARE_BE
+  UNKNOWN
 }
 
 """

@@ -605,9 +605,11 @@ export type CommonWaiver = {
 };
 
 export enum CommonWaiverType {
+  FRAUD_ABUSE = 'FRAUD_ABUSE',
   MEDICAID_PAYMENT = 'MEDICAID_PAYMENT',
   MEDICARE_PAYMENT = 'MEDICARE_PAYMENT',
-  PROGRAM_MEDICARE_BE = 'PROGRAM_MEDICARE_BE'
+  PROGRAM_MEDICARE_BE = 'PROGRAM_MEDICARE_BE',
+  UNKNOWN = 'UNKNOWN'
 }
 
 export enum ComplexityCalculationLevelType {

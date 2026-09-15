@@ -32,7 +32,9 @@ import {
 const ORDERED_WAIVER_TYPES = [
   CommonWaiverType.MEDICARE_PAYMENT,
   CommonWaiverType.PROGRAM_MEDICARE_BE,
-  CommonWaiverType.MEDICAID_PAYMENT
+  CommonWaiverType.MEDICAID_PAYMENT,
+  CommonWaiverType.FRAUD_ABUSE,
+  CommonWaiverType.UNKNOWN
 ];
 
 const WaiverSelectionAndConfirmation = () => {
