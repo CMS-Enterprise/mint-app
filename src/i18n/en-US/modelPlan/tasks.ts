@@ -137,16 +137,15 @@ const tasks = {
     }
   },
   [PlanTaskKey.OA_PRESENTATION]: {
-    copy: 'Prepare your presentation materials for the Office of the Administrator (OA) review. Once your presentation is ready, upload it to MINT so the cross-cutting teams have a record of it.',
+    copy: 'Sometime after your 6-pager review meeting and the completion of your ICIP, when your model is seeking approval to go into clearance, your team should meet with OA to discuss the model concept and to get verbal approval to enter materials into clearance. Prior to the meeting, your team should put together a presentation detailing the most important points about your model.',
     primaryPath:
       '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}&defaultDocumentType=OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION',
-    secondaryPath: '/help-and-knowledge',
-    secondaryAction: 'View help article',
-    [PlanTaskStatus.UPCOMING]: {
+    [PlanTaskState.UPCOMING]: {
       heading:
-        'Prepare for your presentation to the Office of the Administrator (OA)'
+        'Prepare for your presentation to the Office of the Administrator (OA)',
+      primaryAction: 'Upload OA presentation'
     },
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading:
         'Prepare for your presentation to the Office of the Administrator (OA)',
       primaryAction: 'Upload OA presentation',
@@ -155,7 +154,7 @@ const tasks = {
       error:
         'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your presentation to the Office of the Administrator (OA)',
       primaryAction: 'Upload OA presentation',

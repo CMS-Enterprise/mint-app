@@ -103,9 +103,7 @@ export function makePlanTasks(
     const defaultState = KEYS_DEFAULTING_TO_UPCOMING.has(key)
       ? PlanTaskState.UPCOMING
       : PlanTaskState.TO_DO;
-    const defaultStatus = KEYS_DEFAULTING_TO_UPCOMING.has(key)
-      ? PlanTaskStatus.UPCOMING
-      : PlanTaskStatus.TO_DO;
+    const defaultStatus = PlanTaskStatus.TO_DO;
 
     const resolvedState =
       overrides?.[key]?.state !== undefined

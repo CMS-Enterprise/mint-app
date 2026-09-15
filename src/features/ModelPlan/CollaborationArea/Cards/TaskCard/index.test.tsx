@@ -119,7 +119,7 @@ describe('TaskCard', () => {
     const tasks = makePlanTasks({
       [PlanTaskKey.OA_PRESENTATION]: {
         state: PlanTaskState.UPCOMING,
-        status: PlanTaskStatus.UPCOMING
+        status: PlanTaskStatus.TO_DO
       }
     });
     const task = tasks.find(t => t.key === PlanTaskKey.OA_PRESENTATION)!;

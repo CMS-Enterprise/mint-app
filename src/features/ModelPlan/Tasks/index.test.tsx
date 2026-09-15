@@ -134,7 +134,7 @@ describe('Tasks page', () => {
       },
       [PlanTaskKey.OA_PRESENTATION]: {
         state: PlanTaskState.UPCOMING,
-        status: PlanTaskStatus.UPCOMING
+        status: PlanTaskStatus.TO_DO
       }
     });
 
