@@ -162,8 +162,8 @@ const WaiverSelectionAndConfirmation = () => {
         header={waiverAssessmentSurveyMiscT(
           'waiverSelectionAndConfirmation.heading'
         )}
-        currentPage={6}
-        totalPages={7}
+        currentPage={4}
+        totalPages={5}
       />
 
       <p className="margin-top-neg-1 margin-bottom-5 text-base-dark">
@@ -215,14 +215,14 @@ const WaiverSelectionAndConfirmation = () => {
                   'saveAndReturnToQuestionnaires'
                 )}
                 homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
-                backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicaid-payment-waivers`}
+                backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/active-model-waivers`}
                 nextPage
                 disabled={isSubmitting}
               />
             </Fieldset>
           </Form>
         </FormProvider>
-        <PageNumber currentPage={6} totalPages={7} className="margin-y-6" />
+        <PageNumber currentPage={4} totalPages={5} className="margin-y-6" />
       </div>
     </div>
   );

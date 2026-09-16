@@ -545,12 +545,12 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
       <h3
         class="margin-top-0 margin-bottom-1"
       >
-        Medicare payment waivers
+        medicarePaymentWaivers.heading
       </h3>
       <a
         class="usa-link deep-underline display-block margin-bottom-3 mint-body-normal"
         data-discover="true"
-        data-testid="edit-medicare-payment-waivers-section"
+        data-testid="edit-medicarepaymentwaivers.heading-section"
         href="/medicare-payment-waivers"
       >
         Edit this section
@@ -636,12 +636,12 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
       <h3
         class="margin-top-0 margin-bottom-1"
       >
-        Program waivers - Medicare BEs
+        programWaivers.readOnlyHeading
       </h3>
       <a
         class="usa-link deep-underline display-block margin-bottom-3 mint-body-normal"
         data-discover="true"
-        data-testid="edit-program-waivers---medicare-bes-section"
+        data-testid="edit-programwaivers.readonlyheading-section"
         href="/program-waivers"
       >
         Edit this section
@@ -746,12 +746,12 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
       <h3
         class="margin-top-0 margin-bottom-1"
       >
-        Medicaid payment waivers
+        medicaidPaymentWaivers.heading
       </h3>
       <a
         class="usa-link deep-underline display-block margin-bottom-3 mint-body-normal"
         data-discover="true"
-        data-testid="edit-medicaid-payment-waivers-section"
+        data-testid="edit-medicaidpaymentwaivers.heading-section"
         href="/medicaid-payment-waivers"
       >
         Edit this section

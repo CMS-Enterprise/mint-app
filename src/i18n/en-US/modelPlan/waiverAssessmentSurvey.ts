@@ -460,7 +460,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dbField: 'offers_patient_incentives_safe_harbor_protection',
     label:
       'Will your model offer safe harbor protection of patient incentives (including reduced cost-sharing or additional services)?',
-    hideFromReadonly: true,
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
@@ -485,7 +484,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'OffersPatientIncentivesSafeHarborProtectionExample',
     dbField: 'offers_patient_incentives_safe_harbor_protection_example',
     label: 'Please provide an example',
-    hideFromReadonly: true,
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 5.041,
@@ -497,7 +495,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'OffersPatientIncentivesSafeHarborProtectionWhyNot',
     dbField: 'offers_patient_incentives_safe_harbor_protection_why_not',
     label: 'Please explain why not',
-    hideFromReadonly: true,
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
@@ -511,7 +508,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dbField: 'offers_expenses_remuneration_safe_harbor_protection',
     label:
       'Will your model offer safe harbor protection related to expenses or remuneration?',
-    hideFromReadonly: true,
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
@@ -536,7 +532,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'OffersExpensesRemunerationSafeHarborProtectionExample',
     dbField: 'offers_expenses_remuneration_safe_harbor_protection_example',
     label: 'Please provide an example',
-    hideFromReadonly: true,
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 5.051,
@@ -548,7 +543,6 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'OffersExpensesRemunerationSafeHarborProtectionWhyNot',
     dbField: 'offers_expenses_remuneration_safe_harbor_protection_why_not',
     label: 'Please explain why not',
-    hideFromReadonly: true,
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
@@ -698,24 +692,15 @@ const waiverAssessmentSurveyMisc = {
     changeResponse: 'Change response',
     notUsingReason: 'Please explain why your model is not using this waiver.'
   },
-  medicarePaymentWaivers: {
-    heading: 'Medicare payment waivers',
+  activeModelWaivers: {
+    heading: 'Active model waivers',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Medicare payment waivers'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. The waivers you select using these questions are all currently used in active models. At the end of this form, you will also be able to review waivers not currently used in active models.'
   },
-  programWaivers: {
-    heading: 'Program waivers - Medicare Benefit Enhancements (BEs)',
-    readOnlyHeading: 'Program waivers - Medicare BEs',
+  availableWaivers: {
+    heading: 'Available waivers',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Program waivers (Medicare BEs)'
-  },
-  medicaidPaymentWaivers: {
-    heading: 'Medicaid payment waivers',
-    description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Medicaid payment waivers'
+      'There are {{count}} total available waivers that are currently used in active models. Based on your answers to the above questions, MINT will rule out any waivers that are likely not needed for your model. You will be asked to confirm waiver selections on the next page. Adjusting your answers to the questions above may change the list of selected waivers.'
   },
   ...waiverTypes,
   waiverSelectionAndConfirmation: {
