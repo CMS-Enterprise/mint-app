@@ -60,7 +60,7 @@ When working on the terminal in WSL, you may see the occasional `ERROR: UtilConn
 
 ## C Toolchain
 
-The Go analysis tools and the frontend package `node-sass` depend on having a basic C toolchain installed.
+The Go analysis tools and some frontend native dependencies depend on having a basic C toolchain installed.
 
 **MacOS:** Developers should have this installed by default.
 
@@ -117,7 +117,7 @@ The [`goimports`](https://pkg.go.dev/golang.org/x/tools/cmd/goimports) tool is u
 
 ## Node.js/npm
 
-We currently support Node.js v16 for this repo; Node 17 support is currently blocked by [this `create-react-app` issue](https://github.com/facebook/create-react-app/issues/11562).
+We currently support Node.js v24 for this repo; see [`.nvmrc`](/.nvmrc) for the exact pinned version.
 
 The easiest way to install this specific version of Node/npm is to use [`nvm`](https://github.com/nvm-sh/nvm). To install `nvm`, run
 ```bash
