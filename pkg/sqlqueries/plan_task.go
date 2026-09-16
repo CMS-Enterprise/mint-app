@@ -14,16 +14,21 @@ var planTaskUpdateSQL string
 //go:embed SQL/plan_task/create.sql
 var planTaskCreateSQL string
 
+//go:embed SQL/plan_task/get_model_plan_ids_due_for_prepare_for_clearance.sql
+var planTaskGetModelPlanIDsDueForPrepareForClearanceSQL string
+
 type planTaskScripts struct {
-	GetByModelPlanIDLoader string
-	GetByIDLoader          string
-	Update                 string
-	Create                 string
+	GetByModelPlanIDLoader                   string
+	GetByIDLoader                            string
+	Update                                   string
+	Create                                   string
+	GetModelPlanIDsDueForPrepareForClearance string
 }
 
 var PlanTask = planTaskScripts{
-	GetByModelPlanIDLoader: planTaskGetByModelPlanIDLoaderSQL,
-	GetByIDLoader:          planTaskGetByIDLoaderSQL,
-	Update:                 planTaskUpdateSQL,
-	Create:                 planTaskCreateSQL,
+	GetByModelPlanIDLoader:                   planTaskGetByModelPlanIDLoaderSQL,
+	GetByIDLoader:                            planTaskGetByIDLoaderSQL,
+	Update:                                   planTaskUpdateSQL,
+	Create:                                   planTaskCreateSQL,
+	GetModelPlanIDsDueForPrepareForClearance: planTaskGetModelPlanIDsDueForPrepareForClearanceSQL,
 }

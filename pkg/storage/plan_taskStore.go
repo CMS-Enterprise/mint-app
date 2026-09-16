@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
@@ -50,6 +52,22 @@ func PlanTaskUpdate(
 	}
 
 	return updatedTask, nil
+}
+
+// PlanTaskGetModelPlanIDsDueForPrepareForClearance returns the model plan IDs whose
+// PREPARE_FOR_CLEARANCE task is still UPCOMING and whose internal clearance start date is on or
+// before triggerThreshold (i.e. within models.PrepareForClearanceTriggerDays of now). Used by
+// pkg/worker/prepare_for_clearance_batch_job.go to find which plans need activation.
+func PlanTaskGetModelPlanIDsDueForPrepareForClearance(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	triggerThreshold time.Time,
+) ([]*uuid.UUID, error) {
+	args := map[string]interface{}{
+		"trigger_threshold": triggerThreshold,
+	}
+
+	return sqlutils.SelectProcedure[uuid.UUID](np, sqlqueries.PlanTask.GetModelPlanIDsDueForPrepareForClearance, args)
 }
 
 // PlanTaskCreate creates a new plan task (used when a model plan is created)

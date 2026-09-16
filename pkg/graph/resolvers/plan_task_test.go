@@ -12,11 +12,13 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 func (suite *ResolverSuite) TestPlanTaskStateResolver() {
@@ -166,9 +168,24 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	}
 }
 
-func (suite *ResolverSuite) TestPlanTaskPrepareForClearanceTrigger() {
+// TestPrepareForClearanceActivateIfDue exercises the actual DB-backed activation path used by
+// PrepareForClearanceJob (see pkg/worker), rather than the read-time computation this used to be.
+func (suite *ResolverSuite) TestPrepareForClearanceActivateIfDue() {
+	activate := func(modelPlanID uuid.UUID) error {
+		return PrepareForClearanceActivateIfDue(
+			suite.testConfigs.Context,
+			suite.testConfigs.Store,
+			suite.testConfigs.Logger,
+			modelPlanID,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+	}
+
 	suite.Run("stays UPCOMING when clearance start date isn't set", func() {
 		plan := suite.createModelPlan("Plan For Prepare For Clearance No Date")
+		suite.NoError(activate(plan.ID))
 
 		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
 		suite.Equal(models.PlanTaskStatusUpcoming, task.Status)
@@ -177,41 +194,83 @@ func (suite *ResolverSuite) TestPlanTaskPrepareForClearanceTrigger() {
 	suite.Run("stays UPCOMING when clearance is more than 20 days away", func() {
 		plan := suite.createModelPlan("Plan For Prepare For Clearance Far Out")
 		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, 25))
+		suite.NoError(activate(plan.ID))
 
 		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
 		suite.Equal(models.PlanTaskStatusUpcoming, task.Status)
 	})
 
-	suite.Run("becomes TO_DO within 20 days of clearance", func() {
+	suite.Run("becomes TO_DO within 20 days of clearance, attributed to the MINT system account", func() {
 		plan := suite.createModelPlan("Plan For Prepare For Clearance Within Window")
 		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, 10))
+		suite.NoError(activate(plan.ID))
 
 		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
 		suite.Equal(models.PlanTaskStatusToDo, task.Status)
+		if suite.NotNil(task.ModifiedBy) {
+			suite.Equal(constants.GetSystemAccountUUID(), *task.ModifiedBy)
+		}
 	})
 
 	suite.Run("becomes TO_DO once the clearance date has passed", func() {
 		plan := suite.createModelPlan("Plan For Prepare For Clearance Past Date")
 		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, -1))
+		suite.NoError(activate(plan.ID))
 
 		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
 		suite.Equal(models.PlanTaskStatusToDo, task.Status)
 	})
 
-	suite.Run("triggered status is reflected on model_plan { tasks }", func() {
-		plan := suite.createModelPlan("Plan For Prepare For Clearance Tasks Field")
+	suite.Run("is a no-op once already TO_DO", func() {
+		plan := suite.createModelPlan("Plan For Prepare For Clearance Idempotent")
 		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, 10))
+		suite.NoError(activate(plan.ID))
 
-		r := &Resolver{store: suite.testConfigs.Store}
-		mpResolver := &modelPlanResolver{r}
-		tasks, err := mpResolver.Tasks(suite.testConfigs.Context, plan)
-		suite.NoError(err)
+		first := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
 
-		task := planTasksByKey(tasks)[models.PlanTaskKeyPrepareForClearance]
-		if suite.NotNil(task) {
-			suite.Equal(models.PlanTaskStatusToDo, task.Status)
-		}
+		suite.NoError(activate(plan.ID))
+		second := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
+
+		suite.Equal(first.ModifiedDts, second.ModifiedDts)
 	})
+}
+
+// TestPlanTaskGetModelPlanIDsDueForPrepareForClearance covers the query PrepareForClearanceBatchJob
+// uses to find which model plans need activation.
+func (suite *ResolverSuite) TestPlanTaskGetModelPlanIDsDueForPrepareForClearance() {
+	dueSoon := suite.createModelPlan("Plan Due Soon For Clearance Batch Query")
+	suite.setClearanceStarts(dueSoon.ID, time.Now().AddDate(0, 0, 10))
+
+	farOut := suite.createModelPlan("Plan Far Out For Clearance Batch Query")
+	suite.setClearanceStarts(farOut.ID, time.Now().AddDate(0, 0, 25))
+
+	noDate := suite.createModelPlan("Plan No Date For Clearance Batch Query")
+
+	alreadyToDo := suite.createModelPlan("Plan Already To Do For Clearance Batch Query")
+	suite.setClearanceStarts(alreadyToDo.ID, time.Now().AddDate(0, 0, 10))
+	suite.NoError(PrepareForClearanceActivateIfDue(
+		suite.testConfigs.Context,
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		alreadyToDo.ID,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	))
+
+	triggerThreshold := time.Now().AddDate(0, 0, models.PrepareForClearanceTriggerDays)
+	dueIDs, err := storage.PlanTaskGetModelPlanIDsDueForPrepareForClearance(suite.testConfigs.Store, suite.testConfigs.Logger, triggerThreshold)
+	suite.NoError(err)
+
+	dueIDSet := map[uuid.UUID]bool{}
+	for _, id := range dueIDs {
+		dueIDSet[*id] = true
+	}
+
+	suite.True(dueIDSet[dueSoon.ID], "expected the plan within the trigger window to be due")
+	suite.False(dueIDSet[farOut.ID], "expected the plan far outside the trigger window to not be due")
+	suite.False(dueIDSet[noDate.ID], "expected the plan with no clearance date to not be due")
+	suite.False(dueIDSet[alreadyToDo.ID], "expected the already-TO_DO plan to not be due again")
 }
 
 // setClearanceStarts sets a model plan's internal clearance start date, which drives the
@@ -786,7 +845,7 @@ func (suite *ResolverSuite) TestTrySendPlanTaskNewAvailableNotificationsEmailRec
 		suite.testConfigs.Store,
 		plan.ID,
 		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
-		suite.testConfigs.Principal,
+		suite.testConfigs.Principal.Account().ID,
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
 	)
