@@ -211,6 +211,12 @@ const ActiveModelWaivers = () => {
                       {questionConfig.label}
                     </Label>
 
+                    {questionConfig.sublabel && (
+                      <p className="text-base-dark text-normal margin-top-1 margin-bottom-0">
+                        {questionConfig.sublabel}
+                      </p>
+                    )}
+
                     <Controller
                       name={
                         questionConfig.gqlField as keyof ActiveModelWaiversForm

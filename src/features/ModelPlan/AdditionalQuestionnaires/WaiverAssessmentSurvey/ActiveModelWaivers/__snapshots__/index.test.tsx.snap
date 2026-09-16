@@ -358,6 +358,11 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
               >
                 Will your model be impacting site of care payments?
               </label>
+              <p
+                class="text-base-dark text-normal margin-top-1 margin-bottom-0"
+              >
+                For example: telehealth, at home
+              </p>
               <div
                 class="display-flex flex-column"
               >
@@ -458,6 +463,11 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
               >
                 Will your model be modifying the care teams’ scope of practice?
               </label>
+              <p
+                class="text-base-dark text-normal margin-top-1 margin-bottom-0"
+              >
+                For example: NP/PA flexibility, CHW inclusion, etc.
+              </p>
               <div
                 class="display-flex flex-column"
               >
@@ -590,6 +600,11 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
               >
                 Will your model be modifying how care is delivered with claims-based payments?
               </label>
+              <p
+                class="text-base-dark text-normal margin-top-1 margin-bottom-0"
+              >
+                For example: diabetic shoes
+              </p>
               <div
                 class="display-flex flex-column"
               >
@@ -854,6 +869,11 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
               >
                 Does your model impact Medicaid-only beneficiaries?
               </label>
+              <p
+                class="text-base-dark text-normal margin-top-1 margin-bottom-0"
+              >
+                Not including duals.
+              </p>
               <div
                 class="display-flex flex-column"
               >
