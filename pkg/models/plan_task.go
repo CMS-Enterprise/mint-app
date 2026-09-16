@@ -12,6 +12,14 @@ type PlanTask struct {
 	State PlanTaskState `json:"state" db:"state"`
 }
 
+// PlanTaskWithPreviousState wraps a plan task with the state it had immediately before the write
+// that produced this result (see storage.PlanTaskUpdateStateByKey), so callers can tell whether a
+// transition actually occurred without a separate read.
+type PlanTaskWithPreviousState struct {
+	PlanTask
+	PreviousState PlanTaskState `json:"previousState" db:"previous_state"`
+}
+
 // PlanTaskKey is an enum representing the type of task
 type PlanTaskKey string
 
