@@ -3,33 +3,22 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
-import type {
-  CommonWaiverFragment,
-  CommonWaiverType
-} from 'gql/generated/graphql';
+import type { GetWaiversQuery } from 'gql/generated/graphql';
 
-import { ExistingWaiver, WaiverSelectionForm } from 'types/waivers';
+import { WaiverSelectionForm } from 'types/waivers';
 
-import {
-  getDisplayWaiversForSection,
-  getRemainingUnusedWaivers
-} from '../../util';
+import { getSuggestedOrInUseWaivers, getUnselectedWaivers } from '../../util';
+import OtherWaiversTable from '../OtherWaiversTable';
 import SelectWaiverField from '../SelectWaiverField';
-import UnusedWaiversTable from '../UnusedWaiversTable';
 
-type WaiverSelectionSectionProps = {
-  waiverType: CommonWaiverType;
-  suggestedCommonWaivers: CommonWaiverFragment[];
-  unusedWaivers: CommonWaiverFragment[];
-  existingWaivers: ExistingWaiver[];
-};
+export type SelectedWaiver =
+  GetWaiversQuery['modelPlan']['waiverInfo']['commonWaivers'][number];
 
 const WaiverSelectionSection = ({
-  waiverType,
-  suggestedCommonWaivers,
-  unusedWaivers,
-  existingWaivers
-}: WaiverSelectionSectionProps) => {
+  waiverSelection
+}: {
+  waiverSelection: SelectedWaiver[];
+}) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
@@ -38,54 +27,53 @@ const WaiverSelectionSection = ({
 
   const formWaivers = watch('waivers');
 
-  const displayWaivers = useMemo(
-    () =>
-      getDisplayWaiversForSection(
-        suggestedCommonWaivers,
-        unusedWaivers,
-        existingWaivers,
-        waiverType,
-        formWaivers
-      ),
-    [
-      suggestedCommonWaivers,
-      unusedWaivers,
-      existingWaivers,
-      waiverType,
-      formWaivers
-    ]
+  const suggestedOrInUseWaivers = useMemo(
+    () => getSuggestedOrInUseWaivers(waiverSelection, formWaivers),
+    [waiverSelection, formWaivers]
   );
 
   const remainingUnusedWaivers = useMemo(
-    () => getRemainingUnusedWaivers(unusedWaivers, waiverType, formWaivers),
-    [unusedWaivers, waiverType, formWaivers]
+    () => getUnselectedWaivers(waiverSelection, formWaivers),
+    [waiverSelection, formWaivers]
   );
 
-  const handleAddUnusedWaiver = (waiver: CommonWaiverFragment) => {
+  const handleAddUnusedWaiver = (waiver: SelectedWaiver) => {
     setValue(
       `waivers.${waiver.id}`,
-      { willUseWaiver: true, notUsingReason: '' },
+      {
+        willUseWaiver: true,
+        notUsingReason: waiver.notUsingReason ?? '',
+        usingReason: waiver.usingReason ?? ''
+      },
       { shouldDirty: true }
     );
   };
 
   return (
     <div className="margin-bottom-5">
-      <h3 className="margin-top-0 margin-bottom-3">
-        {waiverAssessmentSurveyMiscT(`${waiverType}.heading`)}
-      </h3>
+      <div>
+        <h3 className="margin-top-0 margin-bottom-05">
+          {waiverAssessmentSurveyMiscT(
+            `waiverSelectionAndConfirmation.suggestedWaivers.heading`
+          )}
+        </h3>
+
+        <p className="margin-top-0 margin-bottom-3">
+          {waiverAssessmentSurveyMiscT(
+            `waiverSelectionAndConfirmation.suggestedWaivers.description`
+          )}
+        </p>
+      </div>
 
       <div className="margin-bottom-4">
-        {displayWaivers.map(waiver => (
+        {suggestedOrInUseWaivers.map(waiver => (
           <div
             key={waiver.id}
             className="padding-3 border-1px border-gray-10 radius-md shadow-3 margin-bottom-2"
           >
             <div className="margin-bottom-3">
               <h5 className="margin-top-0 margin-bottom-05 text-base-dark text-normal">
-                {waiverAssessmentSurveyMiscT(
-                  'waiverSelectionAndConfirmation.waiverName'
-                )}
+                {waiverAssessmentSurveyMiscT(`${waiver.waiverType}.heading`)}
               </h5>
 
               <p className="mint-body-large margin-top-0 margin-bottom-1">
@@ -113,12 +101,17 @@ const WaiverSelectionSection = ({
                 />
               </Button>
             </div>
-            <SelectWaiverField fieldPrefix={`waivers.${waiver.id}`} />
+
+            <SelectWaiverField
+              className="border-top-1px border-base-light"
+              fieldPrefix={`waivers.${waiver.id}`}
+              isFromUnusedWaivers={waiver.isSuggested === false}
+            />
           </div>
         ))}
       </div>
 
-      <UnusedWaiversTable
+      <OtherWaiversTable
         unusedWaivers={remainingUnusedWaivers}
         onAddUnusedWaiver={handleAddUnusedWaiver}
       />

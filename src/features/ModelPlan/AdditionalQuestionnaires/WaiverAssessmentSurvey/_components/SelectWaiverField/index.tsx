@@ -19,6 +19,7 @@ export type SelectWaiverFieldProps = {
   /** RHF path prefix for this waiver, e.g. `waivers.${commonWaiverID}` */
   fieldPrefix: string;
   className?: string;
+  isFromUnusedWaivers?: boolean;
 };
 
 /**
@@ -27,7 +28,8 @@ export type SelectWaiverFieldProps = {
  */
 const SelectWaiverField = ({
   fieldPrefix,
-  className
+  className,
+  isFromUnusedWaivers
 }: SelectWaiverFieldProps) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
@@ -37,26 +39,34 @@ const SelectWaiverField = ({
   const { control, setValue } = useFormContext();
 
   const willUseWaiverField = `${fieldPrefix}.willUseWaiver`;
-  const notUsingReasonField = `${fieldPrefix}.notUsingReason`;
+
+  const reasonFieldName = isFromUnusedWaivers
+    ? 'usingReason'
+    : 'notUsingReason';
+
   const fieldId = fieldPrefix.replace(/\./g, '-');
 
   return (
     <FormGroup className={className}>
-      <Label
-        id={`willUseWaiverLabel-${fieldId}`}
-        htmlFor={`willUseWaiver-yes-${fieldId}`}
-      >
-        {waiverAssessmentSurveyMiscT('waiverInfoPanel.willUseWaiverLabel')}
-      </Label>
-      <HelpText id={`willUseWaiverHelpText-${fieldId}`}>
-        {waiverAssessmentSurveyMiscT('waiverInfoPanel.willUseWaiverHelpText')}
-      </HelpText>
+      <div className="margin-bottom-3">
+        <Label
+          id={`willUseWaiverLabel-${fieldId}`}
+          htmlFor={`willUseWaiver-yes-${fieldId}`}
+          className="margin-top-2"
+        >
+          {waiverAssessmentSurveyMiscT('waiverInfoPanel.willUseWaiverLabel')}
+        </Label>
+        <HelpText id={`willUseWaiverHelpText-${fieldId}`}>
+          {waiverAssessmentSurveyMiscT('waiverInfoPanel.willUseWaiverHelpText')}
+        </HelpText>
+      </div>
+
       <Controller
         name={willUseWaiverField}
         control={control}
         render={({ field }) => (
           <>
-            {field.value === null || field.value === undefined ? (
+            {(field.value === null || field.value === undefined) && (
               <Fieldset
                 className="mint-yes-no-button-group margin-top-2"
                 aria-labelledby={`willUseWaiverLabel-${fieldId}`}
@@ -69,7 +79,9 @@ const SelectWaiverField = ({
                     data-testid={`willUseWaiver-yes-${fieldId}`}
                     {...field}
                     onChange={() =>
-                      setValue(willUseWaiverField, true, { shouldDirty: true })
+                      setValue(willUseWaiverField, true, {
+                        shouldDirty: true
+                      })
                     }
                     value="true"
                   />
@@ -88,7 +100,9 @@ const SelectWaiverField = ({
                     data-testid={`willUseWaiver-no-${fieldId}`}
                     {...field}
                     onChange={() =>
-                      setValue(willUseWaiverField, false, { shouldDirty: true })
+                      setValue(willUseWaiverField, false, {
+                        shouldDirty: true
+                      })
                     }
                     value="false"
                   />
@@ -101,60 +115,69 @@ const SelectWaiverField = ({
                   </label>
                 </div>
               </Fieldset>
-            ) : (
-              <>
-                <p
-                  className={classNames(
-                    'margin-top-2 margin-bottom-05 display-flex flex-align-center text-bold',
-                    field.value === true
-                      ? 'text-success-darker'
-                      : 'text-error-dark'
-                  )}
-                >
-                  {field.value === true ? (
-                    <Icon.Check aria-hidden className="margin-right-1" />
-                  ) : (
-                    <Icon.Close aria-hidden className="margin-right-1" />
-                  )}
-                  {field.value === true
-                    ? waiverAssessmentSurveyMiscT(
-                        'waiverInfoPanel.willUseWaiver_true'
-                      )
-                    : waiverAssessmentSurveyMiscT(
-                        'waiverInfoPanel.willUseWaiver_false'
-                      )}
-                </p>
-                <Button
-                  type="button"
-                  className="margin-0"
-                  unstyled
-                  onClick={() => {
-                    setValue(willUseWaiverField, null, { shouldDirty: true });
-                    setValue(notUsingReasonField, '', { shouldDirty: true });
-                  }}
-                >
-                  {waiverAssessmentSurveyMiscT(
-                    'waiverInfoPanel.changeResponse'
-                  )}
-                </Button>
+            )}
 
-                {field.value === false && (
+            {field.value !== null && field.value !== undefined && (
+              <>
+                <div className="display-flex flex-align-center">
+                  <p
+                    className={classNames(
+                      'margin-top-0 margin-bottom-05 margin-right-2 display-flex flex-align-center text-bold',
+                      field.value === true
+                        ? 'text-success-darker'
+                        : 'text-error-dark'
+                    )}
+                  >
+                    {field.value === true ? (
+                      <Icon.Check aria-hidden className="margin-right-1" />
+                    ) : (
+                      <Icon.Close aria-hidden className="margin-right-1" />
+                    )}
+
+                    {field.value === true
+                      ? waiverAssessmentSurveyMiscT(
+                          'waiverInfoPanel.willUseWaiver_true'
+                        )
+                      : waiverAssessmentSurveyMiscT(
+                          'waiverInfoPanel.willUseWaiver_false'
+                        )}
+                  </p>
+
+                  <Button
+                    type="button"
+                    className="margin-top-0 margin-bottom-05 deep-underline"
+                    unstyled
+                    onClick={() => {
+                      setValue(willUseWaiverField, null, { shouldDirty: true });
+                    }}
+                  >
+                    {waiverAssessmentSurveyMiscT(
+                      isFromUnusedWaivers
+                        ? 'waiverInfoPanel.removeWaiver'
+                        : 'waiverInfoPanel.changeResponse'
+                    )}
+                  </Button>
+                </div>
+
+                {(field.value === false || isFromUnusedWaivers) && (
                   <FormGroup>
-                    <Label htmlFor={`notUsingReason-${fieldId}`}>
+                    <Label htmlFor={`${reasonFieldName}-${fieldId}`}>
                       {waiverAssessmentSurveyMiscT(
-                        'waiverInfoPanel.notUsingReason'
+                        isFromUnusedWaivers
+                          ? 'waiverInfoPanel.usingReason'
+                          : 'waiverInfoPanel.notUsingReason'
                       )}
                     </Label>
 
                     <Controller
-                      name={notUsingReasonField}
+                      name={`${fieldPrefix}.${reasonFieldName}`}
                       control={control}
                       defaultValue=""
                       render={({ field: { ref, ...textField } }) => (
                         <Textarea
                           {...textField}
-                          id={`notUsingReason-${fieldId}`}
-                          data-testid={`notUsingReason-${fieldId}`}
+                          id={`${reasonFieldName}-${fieldId}`}
+                          data-testid={`${reasonFieldName}-${fieldId}`}
                         />
                       )}
                     />

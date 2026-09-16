@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Column, Row, useSortBy, useTable } from 'react-table';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
-import { CommonWaiverFragment } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
+
+import { SelectedWaiver } from '../WaiverSelectionSection';
 
 const LearnMoreButton = ({ waiverId }: { waiverId: string }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -37,8 +39,8 @@ const AddUnusedWaiverButton = ({
   waiver,
   onAddUnusedWaiver
 }: {
-  waiver: CommonWaiverFragment;
-  onAddUnusedWaiver: (waiver: CommonWaiverFragment) => void;
+  waiver: SelectedWaiver;
+  onAddUnusedWaiver: (waiver: SelectedWaiver) => void;
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
@@ -58,18 +60,17 @@ const AddUnusedWaiverButton = ({
   );
 };
 
-type UnusedWaiverType = CommonWaiverFragment[][number];
-type ColumnType = UnusedWaiverType & { actions: unknown };
+type ColumnType = SelectedWaiver & { actions: unknown };
 
-type UnusedWaiversTableProps = {
-  unusedWaivers: UnusedWaiverType[];
-  onAddUnusedWaiver: (waiver: CommonWaiverFragment) => void;
+type OtherWaiversTableProps = {
+  unusedWaivers: SelectedWaiver[];
+  onAddUnusedWaiver: (waiver: SelectedWaiver) => void;
 };
 
-const UnusedWaiversTable = ({
+const OtherWaiversTable = ({
   unusedWaivers,
   onAddUnusedWaiver
-}: UnusedWaiversTableProps) => {
+}: OtherWaiversTableProps) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
@@ -78,13 +79,13 @@ const UnusedWaiversTable = ({
     () => [
       {
         Header: waiverAssessmentSurveyMiscT(
-          'waiverSelectionAndConfirmation.unusedWaiver.name'
+          'waiverSelectionAndConfirmation.otherWaivers.name'
         ),
         accessor: row => row.name
       },
       {
         Header: waiverAssessmentSurveyMiscT(
-          'waiverSelectionAndConfirmation.unusedWaiver.action'
+          'waiverSelectionAndConfirmation.otherWaivers.action'
         ),
         accessor: 'actions',
         Cell: ({ row }: { row: Row<ColumnType> }) => {
@@ -120,20 +121,20 @@ const UnusedWaiversTable = ({
       useSortBy
     );
 
-  if (unusedWaivers.length === 0) {
-    return null;
-  }
+  // if (unusedWaivers.length === 0) {
+  //   return null;
+  // }
 
   return (
     <div>
       <h4 className="margin-top-0 margin-bottom-05">
         {waiverAssessmentSurveyMiscT(
-          'waiverSelectionAndConfirmation.unusedWaiver.heading'
+          'waiverSelectionAndConfirmation.otherWaivers.heading'
         )}
       </h4>
       <p className="mint-body-normal margin-top-0 margin-bottom-2">
         {waiverAssessmentSurveyMiscT(
-          'waiverSelectionAndConfirmation.unusedWaiver.description'
+          'waiverSelectionAndConfirmation.otherWaivers.description'
         )}
       </p>
 
@@ -180,6 +181,17 @@ const UnusedWaiversTable = ({
         </thead>
 
         <tbody {...getTableBodyProps()}>
+          {unusedWaivers.length === 0 && (
+            <tr>
+              <td className="border-0 padding-0" colSpan={columns.length}>
+                <Alert type="info" className="margin-top-2" slim>
+                  {waiverAssessmentSurveyMiscT(
+                    'waiverSelectionAndConfirmation.otherWaivers.emptyAlert'
+                  )}
+                </Alert>
+              </td>
+            </tr>
+          )}
           {rows.map(row => {
             prepareRow(row);
             const { getRowProps, cells, id } = { ...row };
@@ -206,4 +218,4 @@ const UnusedWaiversTable = ({
   );
 };
 
-export default UnusedWaiversTable;
+export default OtherWaiversTable;

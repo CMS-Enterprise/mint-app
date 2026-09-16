@@ -6,7 +6,6 @@ import { useMutation } from '@apollo/client';
 import { Fieldset, Form } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
-  CommonWaiverType,
   GetWaiversDocument,
   TypedUpdateSelectedWaiversDocument,
   useGetWaiversQuery
@@ -28,14 +27,6 @@ import {
   buildWaiverSelectionFormValues,
   getWaiverSelectionChanges
 } from '../util';
-
-const ORDERED_WAIVER_TYPES = [
-  CommonWaiverType.MEDICARE_PAYMENT,
-  CommonWaiverType.PROGRAM_MEDICARE_BE,
-  CommonWaiverType.MEDICAID_PAYMENT,
-  CommonWaiverType.FRAUD_ABUSE,
-  CommonWaiverType.UNKNOWN
-];
 
 const WaiverSelectionAndConfirmation = () => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
@@ -152,7 +143,7 @@ const WaiverSelectionAndConfirmation = () => {
     return <Spinner size="large" />;
   }
 
-  if (error || !data?.modelPlan?.questionnaires?.waiverAssessmentSurvey) {
+  if (error || !data?.modelPlan?.waiverInfo) {
     return <NotFoundPartial errorMessage={error?.message} />;
   }
 
@@ -195,19 +186,9 @@ const WaiverSelectionAndConfirmation = () => {
             <Fieldset>
               <ConfirmLeaveRHF />
 
-              {ORDERED_WAIVER_TYPES.map(waiverType => (
-                <WaiverSelectionSection
-                  key={waiverType}
-                  waiverType={waiverType}
-                  suggestedCommonWaivers={
-                    data.modelPlan.waiverInfo.suggestedCommonWaivers
-                  }
-                  unusedWaivers={data.modelPlan.waiverInfo.unusedCommonWaivers}
-                  existingWaivers={
-                    data.modelPlan.questionnaires.waiverAssessmentSurvey.waivers
-                  }
-                />
-              ))}
+              <WaiverSelectionSection
+                waiverSelection={data.modelPlan.waiverInfo.commonWaivers}
+              />
 
               <FormFooter
                 id="waiver-assessment-survey-waiver-selection-and-confirmation-form"

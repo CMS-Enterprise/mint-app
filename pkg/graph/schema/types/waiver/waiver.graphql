@@ -43,6 +43,7 @@ input WaiverSelectionInput {
   willUseWaiver: Boolean!
   usingReason: String
   notUsingReason: String
+  usingReason: String
 }
 
 extend type Mutation {

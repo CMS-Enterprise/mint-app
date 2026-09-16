@@ -1,6 +1,4 @@
 import {
-  CommonWaiverFragment,
-  CommonWaiverType,
   GetAllWaiverAssessmentSurveyQuery,
   GetModelPlanQuestionsQuery,
   GetWaiversQuery,
@@ -16,11 +14,7 @@ import {
   TranslationFieldPropertiesWithOptionsAndChildren,
   TranslationPlan
 } from 'types/translation';
-import {
-  ExistingWaiver,
-  WaiverSelectionFields,
-  WaiverSelectionForm
-} from 'types/waivers';
+import { WaiverSelectionFields, WaiverSelectionForm } from 'types/waivers';
 import dirtyInput, { symmetricDifference } from 'utils/formUtil';
 
 import {
@@ -32,6 +26,7 @@ import {
   QuestionFieldType,
   QuestionType
 } from './_components/ModelPlanQuestionsForm/questionMap';
+import { SelectedWaiver } from './_components/WaiverSelectionSection';
 
 /**
  * Maps translation config field
@@ -386,72 +381,44 @@ export const getDeepChildFields = (
   return deepFields;
 };
 
-export const filterSuggestedWaiversByType = (
-  suggestedWaivers: CommonWaiverFragment[],
-  waiverType: CommonWaiverType
-) => {
-  return suggestedWaivers.filter(waiver => waiver.waiverType === waiverType);
-};
 /**
- * Merges suggested waivers with user-added waivers for display in a section.
+ * Merges suggested waivers with user-selected unused/other waivers for display in suggested waivers section.
  */
-export const getDisplayWaiversForSection = (
-  suggestedCommonWaivers: CommonWaiverFragment[],
-  unusedCommonWaivers: CommonWaiverFragment[],
-  existingWaivers: ExistingWaiver[],
-  waiverType: CommonWaiverType,
+export const getSuggestedOrInUseWaivers = (
+  waiverSelection: SelectedWaiver[],
   formWaivers: WaiverSelectionForm['waivers']
-): CommonWaiverFragment[] => {
-  const suggested = filterSuggestedWaiversByType(
-    suggestedCommonWaivers,
-    waiverType
-  );
-  const unused = filterSuggestedWaiversByType(unusedCommonWaivers, waiverType);
-  const suggestedIds = new Set(suggested.map(waiver => waiver.id));
-
-  const addedFromUnused = unused.filter(
-    waiver => formWaivers[waiver.id]?.willUseWaiver === true
+): SelectedWaiver[] => {
+  const suggestedCommonWaivers = waiverSelection.filter(
+    waiver => waiver.isSuggested
   );
 
-  const addedFromSaved = existingWaivers
-    .filter(
-      waiver =>
-        waiver.commonWaiver.waiverType === waiverType &&
-        !suggestedIds.has(waiver.commonWaiverID)
-    )
-    .map(waiver => ({
-      __typename: 'CommonWaiver' as const,
-      id: waiver.commonWaiver.id,
-      name: waiver.commonWaiver.name,
-      waiverType: waiver.commonWaiver.waiverType
-    }));
+  // Waiver that is not suggested but is selected by the user (willUseWaiver = true)
+  const inUseNotSuggestedCommonWaivers = waiverSelection.filter(waiver => {
+    const isCurrentlySelected = formWaivers[waiver.id]
+      ? formWaivers[waiver.id].willUseWaiver
+      : waiver.willUseWaiver;
 
-  const displayById = new Map<string, CommonWaiverFragment>();
-
-  [...suggested, ...addedFromUnused, ...addedFromSaved].forEach(waiver => {
-    displayById.set(waiver.id, waiver);
+    return !waiver.isSuggested && isCurrentlySelected;
   });
 
-  return Array.from(displayById.values());
+  return [...suggestedCommonWaivers, ...inUseNotSuggestedCommonWaivers];
 };
 
 /**
- * Returns unused waivers still available for selection in the table.
+ * Returns not selected waivers still available for selection in the table.
  */
-export const getRemainingUnusedWaivers = (
-  unusedCommonWaivers: CommonWaiverFragment[],
-  waiverType: CommonWaiverType,
+export const getUnselectedWaivers = (
+  waiverSelection: SelectedWaiver[],
   formWaivers: WaiverSelectionForm['waivers']
-): CommonWaiverFragment[] => {
-  return filterSuggestedWaiversByType(unusedCommonWaivers, waiverType).filter(
-    waiver => formWaivers[waiver.id]?.willUseWaiver !== true
-  );
-};
+): SelectedWaiver[] => {
+  return waiverSelection.filter(waiver => {
+    const isCurrentlySelected = formWaivers[waiver.id]
+      ? formWaivers[waiver.id].willUseWaiver
+      : waiver.willUseWaiver;
 
-const emptyWaiverSelectionFields = (): WaiverSelectionFields => ({
-  willUseWaiver: null,
-  notUsingReason: ''
-});
+    return !waiver.isSuggested && !isCurrentlySelected;
+  });
+};
 
 /**
  * Builds react-hook-form values for waiver selection from GetWaivers query data.
@@ -462,17 +429,13 @@ export const buildWaiverSelectionFormValues = (
 ): WaiverSelectionForm => {
   const waivers: Record<string, WaiverSelectionFields> = {};
 
-  modelPlan?.waiverInfo.suggestedCommonWaivers.forEach(commonWaiver => {
-    waivers[commonWaiver.id] = emptyWaiverSelectionFields();
-  });
-
-  modelPlan?.questionnaires.waiverAssessmentSurvey.waivers.forEach(waiver => {
-    waivers[waiver.commonWaiverID] = {
+  modelPlan?.waiverInfo.commonWaivers.forEach(waiver => {
+    waivers[waiver.id] = {
       willUseWaiver: waiver.willUseWaiver ?? null,
-      notUsingReason: waiver.notUsingReason ?? ''
+      notUsingReason: waiver.notUsingReason ?? '',
+      usingReason: waiver.usingReason ?? ''
     };
   });
-
   return { waivers };
 };
 

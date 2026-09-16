@@ -687,9 +687,11 @@ const waiverAssessmentSurveyMisc = {
     willUseWaiverLabel: 'Do you plan to use this waiver with your model?',
     willUseWaiverHelpText:
       'Your answer to this question may reveal additional questions to be answered.',
-    willUseWaiver_true: 'You said your model will use this waiver.',
-    willUseWaiver_false: 'You said your model will not use this waiver.',
+    willUseWaiver_true: 'You said your model will use this waiver',
+    willUseWaiver_false: 'You said your model will not use this waiver',
     changeResponse: 'Change response',
+    removeWaiver: 'Remove waiver',
+    usingReason: 'Please explain why your model intends to use this waiver',
     notUsingReason: 'Please explain why your model is not using this waiver.'
   },
   activeModelWaivers: {
@@ -707,15 +709,21 @@ const waiverAssessmentSurveyMisc = {
     heading: 'Waiver selection and confirmation',
     description:
       'Confirm which waivers your model will use, and justify any you plan not to use. You may also review waivers that have been ruled out by previous questions and you may select them for your model to use.',
-    waiverName: 'WAIVER NAME',
+    suggestedWaivers: {
+      heading: 'Suggested waivers',
+      description:
+        'The waivers below are all currently used in active models, and are therefore more likely to be used in new models. At the end of this page, you will also be able to review waivers not currently used in active models.'
+    },
     learnMoreAboutThisWaiver: 'Learn more about this waiver',
     iPlanToUseThisWaiver: 'I plan to use this waiver for my model',
-    unusedWaiver: {
-      heading: 'Unused waivers',
+    otherWaivers: {
+      heading: 'Other waivers',
       description:
         'The waivers below were filtered out based on your answers earlier in this form. If you see any that you know your model will use, please select the button labeled “I plan to use this waiver for my model”. To see more details about each waiver, including a description and other information, please select the button labeled “Learn more about this waiver”.',
       name: 'Waiver name',
-      action: 'Actions'
+      action: 'Actions',
+      emptyAlert:
+        'There are no other waivers that were filtered out based on your answers in this form.'
     }
   },
   confirmAndSubmit: {
