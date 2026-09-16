@@ -129,8 +129,8 @@ const ConfirmAndSubmit = () => {
     <div className="mint-body-normal">
       <FormHeader
         header={waiverAssessmentSurveyMiscT('confirmAndSubmit.heading')}
-        currentPage={7}
-        totalPages={7}
+        currentPage={5}
+        totalPages={5}
       />
 
       <p className="margin-top-neg-1 margin-bottom-5 text-base-dark">
@@ -266,7 +266,7 @@ const ConfirmAndSubmit = () => {
         </Form>
       </FormProvider>
 
-      <PageNumber currentPage={7} totalPages={7} className="margin-y-6" />
+      <PageNumber currentPage={5} totalPages={5} className="margin-y-6" />
     </div>
   );
 };
