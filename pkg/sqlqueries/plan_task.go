@@ -8,22 +8,27 @@ var planTaskGetByModelPlanIDLoaderSQL string
 //go:embed SQL/plan_task/get_by_id_loader.sql
 var planTaskGetByIDLoaderSQL string
 
-//go:embed SQL/plan_task/update.sql
-var planTaskUpdateSQL string
+//go:embed SQL/plan_task/update_state_by_key.sql
+var planTaskUpdateStateByKeySQL string
 
 //go:embed SQL/plan_task/create.sql
 var planTaskCreateSQL string
 
+//go:embed SQL/plan_task/activate_upcoming.sql
+var planTaskActivateUpcomingSQL string
+
 type planTaskScripts struct {
 	GetByModelPlanIDLoader string
 	GetByIDLoader          string
-	Update                 string
+	UpdateStateByKey       string
 	Create                 string
+	ActivateUpcoming       string
 }
 
 var PlanTask = planTaskScripts{
 	GetByModelPlanIDLoader: planTaskGetByModelPlanIDLoaderSQL,
 	GetByIDLoader:          planTaskGetByIDLoaderSQL,
-	Update:                 planTaskUpdateSQL,
+	UpdateStateByKey:       planTaskUpdateStateByKeySQL,
 	Create:                 planTaskCreateSQL,
+	ActivateUpcoming:       planTaskActivateUpcomingSQL,
 }

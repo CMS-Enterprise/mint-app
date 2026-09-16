@@ -118,6 +118,50 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 	suite.Nil(task.CompletedDts)
 }
 
+// TestPlanTaskMarkCompleteIsStableOnRepeat confirms that marking an already-complete task
+// complete again is a true no-op - completedBy/completedDts/modifiedDts must not change - rather
+// than silently rewriting them with freshly-generated values on every call. This guards
+// storage.PlanTaskUpdateStateByKey's conditional-update guard, which can't compare completedDts
+// directly against the newly-computed value (since that's always different) and instead has to
+// check whether completion metadata is already present.
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteIsStableOnRepeat() {
+	plan := suite.createModelPlan("Plan For Repeat Mark Complete Stability")
+
+	first, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	suite.NotNil(first)
+
+	time.Sleep(10 * time.Millisecond) // ensure a repeat write would produce a detectably different timestamp
+
+	second, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(second) {
+		suite.Equal(first.CompletedBy, second.CompletedBy)
+		suite.Equal(first.CompletedDts, second.CompletedDts)
+		suite.Equal(first.ModifiedDts, second.ModifiedDts)
+	}
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 	plan := suite.createModelPlan("Plan For Six Pager Activation")
 
@@ -171,6 +215,79 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 
 	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
 	suite.Equal(models.PlanTaskStateToDo, sixPagerTask.State)
+}
+
+// TestPlanTaskActivationDoesNotRegressCompletedTarget confirms that re-triggering activation
+// (e.g. by toggling the source task complete again) never regresses an activation target that a
+// user has since completed manually. This guards the single conditional-update behavior in
+// storage.PlanTaskActivateUpcoming, which only touches a target task that's still UPCOMING.
+func (suite *ResolverSuite) TestPlanTaskActivationDoesNotRegressCompletedTarget() {
+	plan := suite.createModelPlan("Plan For Activation Regression Guard")
+
+	_, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	// manually complete the activated SIX_PAGER task
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	sixPagerTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStateComplete, sixPagerTask.State)
+	suite.NotNil(sixPagerTask.CompletedBy)
+	suite.NotNil(sixPagerTask.CompletedDts)
+
+	// toggle TWO_PAGER off and back on to re-trigger the activation cascade
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	// SIX_PAGER must still be COMPLETE - activation is only ever a no-op for a non-UPCOMING target
+	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
+	suite.Equal(models.PlanTaskStateComplete, sixPagerTask.State)
+	suite.NotNil(sixPagerTask.CompletedBy)
+	suite.NotNil(sixPagerTask.CompletedDts)
 }
 
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteSixPager() {
