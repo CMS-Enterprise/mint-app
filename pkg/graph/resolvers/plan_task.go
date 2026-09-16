@@ -11,6 +11,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -102,10 +103,72 @@ func updatePlanTaskStatusByKey(
 		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, updatedTask, principal, emailService, addressBook)
 	}
 	if didTransitionToDo {
-		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, updatedTask, principal, emailService, addressBook)
+		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, updatedTask, principal.Account().ID, emailService, addressBook)
 	}
 
 	return updatedTask, nil
+}
+
+// PrepareForClearanceActivateIfDue moves the PREPARE_FOR_CLEARANCE task for modelPlanID from
+// UPCOMING to TO_DO, attributed to the MINT system account, once the plan is within
+// models.PrepareForClearanceTriggerDays of its internal clearance start date. It's a no-op if the
+// task isn't currently UPCOMING (already activated, or the plan doesn't have one), if the plan has
+// no clearance start date set, or if that date is still further out than the trigger window - it
+// re-checks the date itself rather than trusting the caller, so it's safe to call standalone (not
+// just after storage.PlanTaskGetModelPlanIDsDueForPrepareForClearance has already filtered).
+// Called by PrepareForClearanceJob (see pkg/worker) rather than a user-facing mutation, since this
+// transition is purely time-triggered rather than the result of a discrete user action - there's
+// no acting principal to attribute the change to or check access against, so unlike
+// updatePlanTaskStatusByKey this writes directly via the store layer instead of going through
+// BaseStructPreUpdate.
+func PrepareForClearanceActivateIfDue(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
+	tasks, err := storage.PlanTaskGetByModelPlanIDLOADER(np, logger, []uuid.UUID{modelPlanID})
+	if err != nil {
+		return err
+	}
+
+	var task *models.PlanTask
+	for _, t := range tasks {
+		if t.Key == models.PlanTaskKeyPrepareForClearance {
+			task = t
+			break
+		}
+	}
+	if task == nil || task.Status != models.PlanTaskStatusUpcoming {
+		return nil
+	}
+
+	timeline, err := store.PlanTimelineGetByModelPlanID(modelPlanID)
+	if err != nil {
+		return err
+	}
+	if timeline == nil || timeline.ClearanceStarts == nil {
+		return nil
+	}
+	triggerDts := timeline.ClearanceStarts.AddDate(0, 0, -models.PrepareForClearanceTriggerDays)
+	if time.Now().Before(triggerDts) {
+		return nil
+	}
+
+	systemAccountID := constants.GetSystemAccountUUID()
+	task.Status = models.PlanTaskStatusToDo
+	task.ModifiedBy = &systemAccountID
+
+	updatedTask, err := storage.PlanTaskUpdate(np, logger, task)
+	if err != nil {
+		return err
+	}
+
+	trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, updatedTask, systemAccountID, emailService, addressBook)
+	return nil
 }
 
 // PlanTaskMarkComplete directly sets a manually-markable plan task's status to COMPLETE or TO_DO.
@@ -185,7 +248,7 @@ func trySendPlanTaskNewAvailableNotifications(
 	store *storage.Store,
 	modelPlanID uuid.UUID,
 	task *models.PlanTask,
-	principal authentication.Principal,
+	actorID uuid.UUID,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) {
@@ -212,7 +275,7 @@ func trySendPlanTaskNewAvailableNotifications(
 	if len(inAppRecipients) > 0 {
 		_, err = notifications.ActivityNewTaskAddedCreate(
 			ctx,
-			principal.Account().ID,
+			actorID,
 			np,
 			inAppRecipients,
 			modelPlanID,

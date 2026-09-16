@@ -1,6 +1,8 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+)
 
 // PlanTask represents a task associated with a model plan
 type PlanTask struct {
@@ -17,11 +19,19 @@ type PlanTaskKey string
 
 // These constants represent the possible values of a PlanTaskKey
 const (
-	PlanTaskKeyModelPlan    PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMto          PlanTaskKey = "MTO"
-	PlanTaskKeyDataExchange PlanTaskKey = "DATA_EXCHANGE"
-	PlanTaskKeyTwoPager     PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeyModelPlan           PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto                 PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange        PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyTwoPager            PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeyPrepareForClearance PlanTaskKey = "PREPARE_FOR_CLEARANCE"
 )
+
+// PrepareForClearanceTriggerDays is how many days before a model plan's internal clearance start
+// date the PREPARE_FOR_CLEARANCE task becomes actionable. This is evaluated by a scheduled job
+// (see pkg/worker/prepare_for_clearance_job.go) rather than at read time, since the transition
+// depends purely on elapsed time (now vs. a plan's clearanceStarts) rather than a discrete user
+// action - persisting it on a real write is what lets it show up in Change History.
+const PrepareForClearanceTriggerDays = 20
 
 // manuallyMarkablePlanTaskKeys are the PlanTaskKeys whose status is set directly by a user via
 // PlanTaskMarkComplete (pkg/graph/resolvers/plan_task.go) and the markPlanTaskComplete mutation,
@@ -46,10 +56,11 @@ func (k PlanTaskKey) IsManuallyMarkable() bool {
 // planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
 // and change history. Keys without an entry fall back to their raw string value.
 var planTaskKeyDisplayNames = map[PlanTaskKey]string{
-	PlanTaskKeyModelPlan:    "Model Plan",
-	PlanTaskKeyDataExchange: "Data exchange approach",
-	PlanTaskKeyMto:          "Model-to-operations matrix (MTO)",
-	PlanTaskKeyTwoPager:     "2-pager review",
+	PlanTaskKeyModelPlan:           "Model Plan",
+	PlanTaskKeyDataExchange:        "Data exchange approach",
+	PlanTaskKeyMto:                 "Model-to-operations matrix (MTO)",
+	PlanTaskKeyTwoPager:            "2-pager review",
+	PlanTaskKeyPrepareForClearance: "Prepare for clearance",
 }
 
 // DisplayName returns a short human-readable name for this task key.

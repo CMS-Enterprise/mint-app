@@ -24363,6 +24363,7 @@ enum PlanTaskKey {
   MTO
   DATA_EXCHANGE
   TWO_PAGER
+  PREPARE_FOR_CLEARANCE
 }
 
 """
