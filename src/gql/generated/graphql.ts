@@ -574,8 +574,8 @@ export type CommonWaiver = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  description?: Maybe<Scalars['String']['output']>;
-  hasClaimsDataOrRREGAnalysis?: Maybe<Scalars['String']['output']>;
+  description: Scalars['String']['output'];
+  hasClaimsDataOrRREGAnalysis: Scalars['String']['output'];
   hasStandardizationEffort?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['UUID']['output'];
   /** Returns if a model plan has answered if the waiver will be used or not. */
@@ -593,9 +593,9 @@ export type CommonWaiver = {
   /** Convenience view into the waiver table not_using_reason field */
   notUsingReason?: Maybe<Scalars['String']['output']>;
   participationAgreementLanguageLink?: Maybe<Scalars['String']['output']>;
-  waiverFocus?: Maybe<Scalars['String']['output']>;
+  waiverFocus: Scalars['String']['output'];
   waiverType?: Maybe<CommonWaiverType>;
-  whatIsWaived?: Maybe<Scalars['String']['output']>;
+  whatIsWaived: Scalars['String']['output'];
   /**
    * To represent if this Common Waiver is _already_ answered for the Model Plan.
    * This will display null by default when not in the context of a model plan (eg fetched by key instead of model plan id), true when the model plan has indicated it will use the waiver, and false when the model plan has indicated it will not use the waiver.
@@ -6769,7 +6769,7 @@ export type GetCommonWaiverQueryVariables = Exact<{
 }>;
 
 
-export type GetCommonWaiverQuery = { __typename: 'Query', commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, description?: string | null, participationAgreementLanguageLink?: string | null, cmmiWaiverPointOfContact?: string | null, waiverType?: CommonWaiverType | null, waiverFocus?: string | null, whatIsWaived?: string | null, hasStandardizationEffort?: boolean | null, hasClaimsDataOrRREGAnalysis?: string | null, isUsedInActiveModels?: boolean | null } };
+export type GetCommonWaiverQuery = { __typename: 'Query', commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, description: string, participationAgreementLanguageLink?: string | null, cmmiWaiverPointOfContact?: string | null, waiverType?: CommonWaiverType | null, waiverFocus: string, whatIsWaived: string, hasStandardizationEffort?: boolean | null, hasClaimsDataOrRREGAnalysis: string, isUsedInActiveModels?: boolean | null } };
 
 export type GetModelPlanQuestionsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
@@ -6783,7 +6783,7 @@ export type GetWaiversQueryVariables = Exact<{
 }>;
 
 
-export type GetWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, waivers: Array<{ __typename: 'Waiver', id: UUID, commonWaiverID: UUID, willUseWaiver?: boolean | null, notUsingReason?: string | null, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null, waiverFocus?: string | null } }> } }, waiverInfo: { __typename: 'WaiverInfo', suggestedCommonWaivers: Array<{ __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null }>, unusedCommonWaivers: Array<{ __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null }> } } };
+export type GetWaiversQuery = { __typename: 'Query', modelPlan: { __typename: 'ModelPlan', id: UUID, questionnaires: { __typename: 'Questionnaires', waiverAssessmentSurvey: { __typename: 'WaiverAssessmentSurvey', id: UUID, waivers: Array<{ __typename: 'Waiver', id: UUID, commonWaiverID: UUID, willUseWaiver?: boolean | null, notUsingReason?: string | null, commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null, waiverFocus: string } }> } }, waiverInfo: { __typename: 'WaiverInfo', suggestedCommonWaivers: Array<{ __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null }>, unusedCommonWaivers: Array<{ __typename: 'CommonWaiver', id: UUID, name: string, waiverType?: CommonWaiverType | null }> } } };
 
 export type UpdateModelPlanQuestionsMutationVariables = Exact<{
   modelPlanID: Scalars['UUID']['input'];

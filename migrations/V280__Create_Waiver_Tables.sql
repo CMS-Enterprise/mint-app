@@ -105,17 +105,17 @@ COMMENT ON COLUMN waiver_assessment_survey.completed_dts IS 'The timestamp when 
 -- Create the common_waiver table
 CREATE TABLE common_waiver (
     id UUID PRIMARY KEY DEFAULT GEN_RANDOM_UUID(),
-    name TEXT NOT NULL,
-    description TEXT,
-    participation_agreement_language_link TEXT,
-    cmmi_waiver_point_of_contact TEXT,
+    name ZERO_STRING NOT NULL,
+    description ZERO_STRING NOT NULL,
+    participation_agreement_language_link ZERO_STRING,
+    cmmi_waiver_point_of_contact ZERO_STRING,
     waiver_type COMMON_WAIVER_TYPE,
-    waiver_focus TEXT,
-    what_is_waived TEXT,
+    waiver_focus ZERO_STRING NOT NULL,
+    what_is_waived ZERO_STRING NOT NULL,
     has_standardization_effort BOOLEAN,
-    has_claims_data_or_rreg_analysis TEXT,
+    has_claims_data_or_rreg_analysis ZERO_STRING NOT NULL,
     is_used_in_active_models BOOLEAN,
-    survey_question_field TEXT,
+    survey_question_field ZERO_STRING NOT NULL,
 
     -- Standard audit fields
     created_by UUID REFERENCES public.user_account(id) MATCH SIMPLE NOT NULL,
@@ -208,6 +208,6 @@ VALUES
 ('00000002-0000-0000-0000-000000000026', 'Post-Discharge Home Visits', 'This Post-Discharge Home Visits Benefit Enhancement increases the availability to Beneficiaries of in-home care following discharge from an acute inpatient hospital, inpatient psychiatric facility, inpatient rehabilitation facility, long-term care hospital, or Skilled Nursing Facility (SNF) by altering the supervision level for “incident to” services to allow personnel under a physician’s general supervision (instead of direct supervision) to make home visits under certain conditions.', 'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/PP/DAPMI/_layouts/15/listform.aspx?PageType=4&ListId=%7BD0D0466A%2D0A15%2D41D8%2DA922%2DC6AC089B01B7%7D&ID=183&ContentTypeID=0x01001A99FFEB7E4B024BBA9C657298D27F99', NULL, 'PROGRAM_MEDICARE_BE', 'Site of care', '42 CFR §410.26(b)(5)', TRUE, 'Yes', TRUE, 'impacts_site_of_care_payments', '00000001-0001-0001-0001-000000000001'),
 ('00000002-0000-0000-0000-000000000027', 'Safe Harbor', 'CMS determines, on a model by model basis, whether and how the Safe Harbor provisions apply. These provisions include the Federal Anti-Kickback Statute Safe Harbor for CMS-sponsored model arrangements with regard to certain remunerations.', 'https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-H/part-512/subpart-E/subject-group-ECFRb54a35f020c0766/section-512.576', NULL, 'FRAUD_ABUSE', 'Patient engagement incentives, Beneficiary engagement incentives, Anti-kickback, Payment and financial arrangement, Safe harbors', '§1861(s)(12)(A) of the SSA; 42 CFR §410.12 ', FALSE, 'Unknown', TRUE, 'offers_expenses_remuneration_safe_harbor_protection', '00000001-0001-0001-0001-000000000001'),
 ('00000002-0000-0000-0000-000000000028', 'Shared Savings Distribution Waiver', 'Distribution of shared savings payments to or among the Accountable Care Organization (ACO), its Initiative Participants, or individuals and entities that were its Initiative Participants.', 'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/PP/DAPMI/_layouts/15/listform.aspx?PageType=4&ListId=%7BD0D0466A%2D0A15%2D41D8%2DA922%2DC6AC089B01B7%7D&ID=122&ContentTypeID=0x01001A99FFEB7E4B024BBA9C657298D27F99', NULL, 'FRAUD_ABUSE', 'Payment and financial arrangement', '§1877(a) of the SSA; §1128B(b)(1) and (2) of the SSA', FALSE, 'Unknown', TRUE, 'offers_expenses_remuneration_safe_harbor_protection', '00000001-0001-0001-0001-000000000001'),
-('00000002-0000-0000-0000-000000000029', 'Specifies Medicaid population(s) eligible for the model', 'Statute dictates that a state Medicaid program cannot exclude enrollees or providers because of where they live or work in the state. A waiver of statewideness can limit the geographic area in which a state is testing a new program, facilitate a phased-in implementation of a program, or reduce state expenditures by limiting eligible participants.', 'No PA language available', NULL, 'MEDICAID_PAYMENT', 'Administrative and operational', '§1902(a)(1) of the SSA', FALSE, 'Unknown', TRUE, 'impacts_medicaid_only_beneficiaries', '00000001-0001-0001-0001-000000000001'),
+('00000002-0000-0000-0000-000000000029', 'Specifies Medicaid population(s) eligible for the model', 'Statute dictates that a state Medicaid program cannot exclude enrollees or providers because of where they live or work in the state. A waiver of statewideness can limit the geographic area in which a state is testing a new program, facilitate a phased-in implementation of a program, or reduce state expenditures by limiting eligible participants.', NULL, NULL, 'MEDICAID_PAYMENT', 'Administrative and operational', '§1902(a)(1) of the SSA', FALSE, 'Unknown', TRUE, 'impacts_medicaid_only_beneficiaries', '00000001-0001-0001-0001-000000000001'),
 ('00000002-0000-0000-0000-000000000030', 'Telehealth', 'Waives the originating site requirements in sections 1834(m)(4)(C)(i) (geographic limitations) and (ii) (setting limitations).', 'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/PP/DAPMI/_layouts/15/listform.aspx?PageType=4&ListId=%7BD0D0466A%2D0A15%2D41D8%2DA922%2DC6AC089B01B7%7D&ID=178&ContentTypeID=0x01001A99FFEB7E4B024BBA9C657298D27F99', NULL, 'PROGRAM_MEDICARE_BE', 'Site of care', '§1834(m)(4)(C)(i) (geographic limitations); 42 CFR §410.78(b)(3) and (4); 42 CFR §410.78', TRUE, 'Yes', TRUE, 'impacts_site_of_care_payments', '00000001-0001-0001-0001-000000000001'),
 ('00000002-0000-0000-0000-000000000031', 'Waiver of Certain Post-Op Billing Restrictions', 'Waives the billing requirements for global surgeries to allow the separate billing of certain (up to 9) post-discharge home visits, including those related to recovery from the surgery.', 'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/PP/DAPMI/_layouts/15/listform.aspx?PageType=4&ListId=%7BD0D0466A%2D0A15%2D41D8%2DA922%2DC6AC089B01B7%7D&ID=66&ContentTypeID=0x01001A99FFEB7E4B024BBA9C657298D27F99', NULL, 'PROGRAM_MEDICARE_BE', 'Hospital and facility-related waiver', '42 CFR §410.26(b)(5)', FALSE, 'No', TRUE, 'modifies_care_delivery_with_claims_based_payments', '00000001-0001-0001-0001-000000000001');

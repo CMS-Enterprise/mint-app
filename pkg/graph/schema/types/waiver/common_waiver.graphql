@@ -12,14 +12,14 @@ CommonWaiver represents a waiver type in the CMMI waiver library. It is fetched 
 type CommonWaiver {
   id: UUID!
   name: String!
-  description: String
+  description: String!
   participationAgreementLanguageLink: String
   cmmiWaiverPointOfContact: String
   waiverType: CommonWaiverType
-  waiverFocus: String
-  whatIsWaived: String
+  waiverFocus: String!
+  whatIsWaived: String!
   hasStandardizationEffort: Boolean
-  hasClaimsDataOrRREGAnalysis: String
+  hasClaimsDataOrRREGAnalysis: String!
   isUsedInActiveModels: Boolean
 
   # Custom Resolvers

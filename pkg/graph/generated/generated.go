@@ -26483,14 +26483,14 @@ CommonWaiver represents a waiver type in the CMMI waiver library. It is fetched 
 type CommonWaiver {
   id: UUID!
   name: String!
-  description: String
+  description: String!
   participationAgreementLanguageLink: String
   cmmiWaiverPointOfContact: String
   waiverType: CommonWaiverType
-  waiverFocus: String
-  whatIsWaived: String
+  waiverFocus: String!
+  whatIsWaived: String!
   hasStandardizationEffort: Boolean
-  hasClaimsDataOrRREGAnalysis: String
+  hasClaimsDataOrRREGAnalysis: String!
   isUsedInActiveModels: Boolean
 
   # Custom Resolvers
@@ -37430,11 +37430,11 @@ func (ec *executionContext) _CommonWaiver_description(ctx context.Context, field
 			return obj.Description, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37522,11 +37522,11 @@ func (ec *executionContext) _CommonWaiver_waiverFocus(ctx context.Context, field
 			return obj.WaiverFocus, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_waiverFocus(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37545,11 +37545,11 @@ func (ec *executionContext) _CommonWaiver_whatIsWaived(ctx context.Context, fiel
 			return obj.WhatIsWaived, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_whatIsWaived(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37591,11 +37591,11 @@ func (ec *executionContext) _CommonWaiver_hasClaimsDataOrRREGAnalysis(ctx contex
 			return obj.HasClaimsDataOrRREGAnalysis, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_hasClaimsDataOrRREGAnalysis(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -110765,7 +110765,7 @@ func (ec *executionContext) _CommonWaiver(ctx context.Context, sel ast.Selection
 			}
 		case "description":
 			out.Values[i] = ec._CommonWaiver_description(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "participationAgreementLanguageLink":
@@ -110785,12 +110785,12 @@ func (ec *executionContext) _CommonWaiver(ctx context.Context, sel ast.Selection
 			}
 		case "waiverFocus":
 			out.Values[i] = ec._CommonWaiver_waiverFocus(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "whatIsWaived":
 			out.Values[i] = ec._CommonWaiver_whatIsWaived(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "hasStandardizationEffort":
@@ -110800,7 +110800,7 @@ func (ec *executionContext) _CommonWaiver(ctx context.Context, sel ast.Selection
 			}
 		case "hasClaimsDataOrRREGAnalysis":
 			out.Values[i] = ec._CommonWaiver_hasClaimsDataOrRREGAnalysis(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "isUsedInActiveModels":
