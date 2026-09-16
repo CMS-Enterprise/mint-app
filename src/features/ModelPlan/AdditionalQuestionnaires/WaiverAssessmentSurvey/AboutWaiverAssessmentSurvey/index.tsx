@@ -49,7 +49,7 @@ const AboutWaiverAssessmentSurvey = () => {
           'aboutWaiverAssessmentSurvey.heading'
         )}
         currentPage={1}
-        totalPages={7}
+        totalPages={5}
       />
 
       <p className="margin-top-neg-1">
@@ -182,7 +182,7 @@ const AboutWaiverAssessmentSurvey = () => {
         {additionalQuestionnairesT('returnToQuestionnaires')}
       </Button>
 
-      <PageNumber currentPage={1} totalPages={7} className="margin-y-6" />
+      <PageNumber currentPage={1} totalPages={5} className="margin-y-6" />
     </div>
   );
 };

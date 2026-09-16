@@ -26635,23 +26635,7 @@ extend type Mutation {
   ): [Waiver!]! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/waiver/waiver_info.graphql", Input: `"""
-This is a convenience type to wrap the info about a model
-"""
-type WaiverInfo {
-  modelPlanID: UUID!
-  commonWaivers: [CommonWaiver!]!
-  suggestedCommonWaivers: [CommonWaiver!]!
-  unusedCommonWaivers: [CommonWaiver!]!
-  waivers: [Waiver!]!
-}
-
-extend type Query {
-  waiverInfo(modelPlanID: UUID!): WaiverInfo!
-    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
-}
-`, BuiltIn: false},
-	{Name: "../schema/types/waiver_assessment_survey.graphql", Input: `"""
+	{Name: "../schema/types/waiver/waiver_assessment_survey.graphql", Input: `"""
 WaiverAssessmentSurveyStatus represents the work completion status of a waiver assessment survey.
 """
 enum WaiverAssessmentSurveyStatus {
@@ -26775,8 +26759,6 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   offersRiskSharingArrangements: Boolean
   offersRiskSharingArrangementsExample: String
   offersRiskSharingArrangementsWhyNot: NotSelectedReason
-
-  # Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: Boolean
   impactsSiteOfCarePaymentsExample: String
   impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
@@ -26789,8 +26771,6 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
   modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
-
-  # Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: Boolean
   impactsMedicaidOnlyBeneficiariesExample: String
   impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
@@ -26806,6 +26786,7 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   offersExpensesRemunerationSafeHarborProtection: Boolean
   offersExpensesRemunerationSafeHarborProtectionExample: String
   offersExpensesRemunerationSafeHarborProtectionWhyNot: NotSelectedReason
+
   additionalMedicaidSpecificWaivers: String
 
   # Convenience field for controlling status
@@ -26819,7 +26800,7 @@ extend type Mutation {
   ): WaiverAssessmentSurvey! @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/waiver_assessment_survey_translation.graphql", Input: `"""
+	{Name: "../schema/types/waiver/waiver_assessment_survey_translation.graphql", Input: `"""
 Represents the waiver assessment questionnaire translation data.
 """
 type WaiverAssessmentSurveyTranslation {
@@ -26948,6 +26929,22 @@ type WaiverAssessmentSurveyTranslation {
     )
   additionalMedicaidSpecificWaivers: TranslationField!
     @goTag(key: "db", value: "additional_medicaid_specific_waivers")
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/waiver/waiver_info.graphql", Input: `"""
+This is a convenience type to wrap the info about a model
+"""
+type WaiverInfo {
+  modelPlanID: UUID!
+  commonWaivers: [CommonWaiver!]!
+  suggestedCommonWaivers: [CommonWaiver!]!
+  unusedCommonWaivers: [CommonWaiver!]!
+  waivers: [Waiver!]!
+}
+
+extend type Query {
+  waiverInfo(modelPlanID: UUID!): WaiverInfo!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
 }
 `, BuiltIn: false},
 }

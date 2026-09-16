@@ -786,8 +786,6 @@ export type TranslationWaiverAssessmentSurveyForm = {
   offersRiskSharingArrangements: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   offersRiskSharingArrangementsExample: TranslationFieldPropertiesWithParent<Bool>;
   offersRiskSharingArrangementsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
-
-  // Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   impactsSiteOfCarePaymentsExample: TranslationFieldPropertiesWithParent<Bool>;
   impactsSiteOfCarePaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
@@ -800,8 +798,6 @@ export type TranslationWaiverAssessmentSurveyForm = {
   modifiesQualityMeasurementsOrPaymentsViaWaivers: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationFieldPropertiesWithParent<Bool>;
   modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
-
-  // Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
   impactsMedicaidOnlyBeneficiariesExample: TranslationFieldPropertiesWithParent<Bool>;
   impactsMedicaidOnlyBeneficiariesWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;

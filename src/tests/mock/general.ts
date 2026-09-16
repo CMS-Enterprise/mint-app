@@ -5,6 +5,9 @@ import {
   CustomTimelineDateType,
   DataExchangeApproachStatus,
   DiscussionTopicType,
+  GetActiveModelWaiversDocument,
+  GetActiveModelWaiversQuery,
+  GetActiveModelWaiversQueryVariables,
   GetAllCommonWaiversDocument,
   GetAllCommonWaiversQuery,
   GetAllCommonWaiversQueryVariables,
@@ -34,12 +37,6 @@ import {
   GetFavoritesDocument,
   GetFavoritesQuery,
   GetFavoritesQueryVariables,
-  GetMedicaidPaymentWaiversDocument,
-  GetMedicaidPaymentWaiversQuery,
-  GetMedicaidPaymentWaiversQueryVariables,
-  GetMedicarePaymentWaiversDocument,
-  GetMedicarePaymentWaiversQuery,
-  GetMedicarePaymentWaiversQueryVariables,
   GetModelPlanBaseDocument,
   GetModelPlanBaseQuery,
   GetModelPlanBaseQueryVariables,
@@ -52,9 +49,6 @@ import {
   GetModelPlansDocument,
   GetModelPlansQuery,
   GetModelPlansQueryVariables,
-  GetProgramWaiversDocument,
-  GetProgramWaiversQuery,
-  GetProgramWaiversQueryVariables,
   IddocQuestionnaireTaskListStatus,
   ModelCategory,
   ModelPhase,
@@ -313,7 +307,7 @@ export const modelPlanQuestionsMocks: MockedResponse<
   }
 ];
 
-const medicarePaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
+const activeModelWaiversDataMocks: GetActiveModelWaiversQuery = {
   __typename: 'Query',
   modelPlan: {
     __typename: 'ModelPlan',
@@ -331,41 +325,7 @@ const medicarePaymentWaiversDataMocks: GetMedicarePaymentWaiversQuery = {
         bundlesPaymentsWhyNot: NotSelectedReason.FEEDBACK_AGAINST_USE,
         offersRiskSharingArrangements: null,
         offersRiskSharingArrangementsExample: '',
-        offersRiskSharingArrangementsWhyNot: null
-      }
-    },
-    waiverInfo: {
-      __typename: 'WaiverInfo',
-      suggestedCommonWaivers: []
-    }
-  }
-};
-
-export const medicarePaymentWaiversMocks: MockedResponse<
-  GetMedicarePaymentWaiversQuery,
-  GetMedicarePaymentWaiversQueryVariables
->[] = [
-  {
-    request: {
-      query: GetMedicarePaymentWaiversDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: medicarePaymentWaiversDataMocks
-    }
-  }
-];
-
-const programWaiversDataMocks: GetProgramWaiversQuery = {
-  __typename: 'Query',
-  modelPlan: {
-    __typename: 'ModelPlan',
-    id: modelID,
-    questionnaires: {
-      __typename: 'Questionnaires',
-      waiverAssessmentSurvey: {
-        __typename: 'WaiverAssessmentSurvey',
-        id: '123',
+        offersRiskSharingArrangementsWhyNot: null,
         impactsSiteOfCarePayments: true,
         impactsSiteOfCarePaymentsExample: 'Example',
         impactsSiteOfCarePaymentsWhyNot: null,
@@ -378,41 +338,7 @@ const programWaiversDataMocks: GetProgramWaiversQuery = {
         modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: null,
         modifiesQualityMeasurementsOrPaymentsViaWaivers: false,
         modifiesQualityMeasurementsOrPaymentsViaWaiversExample: '',
-        modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: null
-      }
-    },
-    waiverInfo: {
-      __typename: 'WaiverInfo',
-      suggestedCommonWaivers: []
-    }
-  }
-};
-
-export const programWaiversMocks: MockedResponse<
-  GetProgramWaiversQuery,
-  GetProgramWaiversQueryVariables
->[] = [
-  {
-    request: {
-      query: GetProgramWaiversDocument,
-      variables: { id: modelID }
-    },
-    result: {
-      data: programWaiversDataMocks
-    }
-  }
-];
-
-const medicaidPaymentWaiversDataMocks: GetMedicaidPaymentWaiversQuery = {
-  __typename: 'Query',
-  modelPlan: {
-    __typename: 'ModelPlan',
-    id: modelID,
-    questionnaires: {
-      __typename: 'Questionnaires',
-      waiverAssessmentSurvey: {
-        __typename: 'WaiverAssessmentSurvey',
-        id: '123',
+        modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: null,
         impactsMedicaidOnlyBeneficiaries: true,
         impactsMedicaidOnlyBeneficiariesExample: 'Example',
         impactsMedicaidOnlyBeneficiariesWhyNot: null,
@@ -422,28 +348,27 @@ const medicaidPaymentWaiversDataMocks: GetMedicaidPaymentWaiversQuery = {
           NotSelectedReason.FEEDBACK_AGAINST_USE,
         impactsManagedCareWaivers: false,
         impactsManagedCareWaiversExample: '',
-        impactsManagedCareWaiversWhyNot: null,
-        additionalMedicaidSpecificWaivers: ''
+        impactsManagedCareWaiversWhyNot: null
       }
     },
     waiverInfo: {
       __typename: 'WaiverInfo',
-      suggestedCommonWaivers: []
+      commonWaivers: [{ __typename: 'CommonWaiver', id: 'common_123' }]
     }
   }
 };
 
-export const medicaidPaymentWaiversMocks: MockedResponse<
-  GetMedicaidPaymentWaiversQuery,
-  GetMedicaidPaymentWaiversQueryVariables
+export const ActiveModelWaiversMocks: MockedResponse<
+  GetActiveModelWaiversQuery,
+  GetActiveModelWaiversQueryVariables
 >[] = [
   {
     request: {
-      query: GetMedicaidPaymentWaiversDocument,
+      query: GetActiveModelWaiversDocument,
       variables: { id: modelID }
     },
     result: {
-      data: medicaidPaymentWaiversDataMocks
+      data: activeModelWaiversDataMocks
     }
   }
 ];
