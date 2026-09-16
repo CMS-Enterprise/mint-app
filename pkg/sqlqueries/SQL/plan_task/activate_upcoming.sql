@@ -1,12 +1,12 @@
 UPDATE plan_task
 SET
-    state = :state,
-    completed_by = :completed_by,
-    completed_dts = :completed_dts,
+    state = 'TO_DO',
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE
-    plan_task.id = :id
+    model_plan_id = :model_plan_id
+    AND key = :key
+    AND state = 'UPCOMING'
 RETURNING
     id,
     model_plan_id,
