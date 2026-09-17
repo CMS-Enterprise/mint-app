@@ -52,7 +52,7 @@ func TestPlanTaskKeyChangeHistoryDisplayName(t *testing.T) {
 	)
 	assert.Equal(
 		t,
-		"Prepare for your presentation to the Office of the Administrator (OA)",
+		"Prepare for your presentation to the Office of the Administrator",
 		PlanTaskKeyOaPresentation.ChangeHistoryDisplayName(),
 	)
 
