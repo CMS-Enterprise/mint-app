@@ -428,7 +428,7 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 
 	tasks, err := PlanTaskGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Len(tasks, 5)
+	suite.Len(tasks, len(models.DefaultPlanTasks))
 
 	taskByKey := planTasksByKey(tasks)
 	suite.NotNil(taskByKey[models.PlanTaskKeyModelPlan])
