@@ -18,7 +18,7 @@ func WaiversGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) ([]*mod
 }
 
 // UpdateSelectedWaivers upserts a waiver row for each selection in a single SQL statement.
-// Creates the row if it does not exist, otherwise updates will_use_waiver and not_using_reason.
+// Creates the row if it does not exist, otherwise updates the selection and its reason fields.
 func UpdateSelectedWaivers(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
@@ -32,6 +32,7 @@ func UpdateSelectedWaivers(
 	for _, sel := range selections {
 		w := models.NewWaiver(actor, modelPlanID, sel.CommonWaiverID)
 		w.WillUseWaiver = &sel.WillUseWaiver
+		w.UsingReason = sel.UsingReason
 		w.NotUsingReason = sel.NotUsingReason
 		w.ModifiedBy = &actor
 		waivers = append(waivers, w)

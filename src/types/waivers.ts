@@ -1,6 +1,6 @@
 import { GetWaiversQuery } from 'gql/generated/graphql';
 
-/** A single waiver's yes/no selection and optional reason for not using it. */
+/** A single waiver's yes/no selection and the optional reason for that decision. */
 export type WaiverSelectionFields = {
   willUseWaiver: boolean | null;
   notUsingReason: string;

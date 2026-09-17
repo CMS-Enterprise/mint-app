@@ -7,8 +7,8 @@ SELECT audit.AUDIT_TABLE(
     'waiver_assessment_survey',
     'id',
     'model_plan_id',
-    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
-    '{*,id,model_plan_id}'::TEXT[]
+    '{created_by,created_dts,modified_by,modified_dts}',
+    '{*,id,model_plan_id}'
 );
 
 SELECT audit.AUDIT_TABLE(
@@ -16,8 +16,8 @@ SELECT audit.AUDIT_TABLE(
     'waiver',
     'id',
     'model_plan_id',
-    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
-    '{*,id,model_plan_id,common_waiver_id}'::TEXT[]
+    '{created_by,created_dts,modified_by,modified_dts}',
+    '{*,id,model_plan_id,common_waiver_id}'
 );
 
 SELECT audit.AUDIT_TABLE(
@@ -25,8 +25,8 @@ SELECT audit.AUDIT_TABLE(
     'suggested_waiver',
     'id',
     'model_plan_id',
-    '{created_by,created_dts,modified_by,modified_dts}'::TEXT[],
-    '{*,id,model_plan_id,common_waiver_id}'::TEXT[]
+    '{created_by,created_dts,modified_by,modified_dts}',
+    '{*,id,model_plan_id,common_waiver_id}'
 );
 
 -- Part 1: Backfill waiver_assessment_survey for every model plan that doesn't already have one
@@ -42,8 +42,8 @@ INSERT INTO waiver_assessment_survey (
 SELECT
     GEN_RANDOM_UUID() AS id,
     mp.id AS model_plan_id,
-    'READY'::WAIVER_ASSESSMENT_SURVEY_STATUS AS status,
-    '00000001-0001-0001-0001-000000000001'::UUID AS created_by -- MINT System Account
+    'READY' AS status,
+    '00000001-0001-0001-0001-000000000001' AS created_by -- MINT System Account
 FROM model_plan mp
 WHERE NOT EXISTS (
     SELECT 1
@@ -55,8 +55,6 @@ ALTER TABLE waiver_assessment_survey
 ENABLE TRIGGER audit_trigger;
 
 -- Part 2: Seed suggested_waiver rows — suggest all common waivers for every model plan.
--- survey_question_field is NULL on all common_waiver rows until real mappings arrive,
--- so the INSERT logic suggests every waiver for every plan.
 ALTER TABLE suggested_waiver
 DISABLE TRIGGER audit_trigger;
 
@@ -70,7 +68,7 @@ SELECT
     GEN_RANDOM_UUID() AS id,
     mp.id AS model_plan_id,
     cw.id AS common_waiver_id,
-    '00000001-0001-0001-0001-000000000001'::UUID AS created_by -- MINT System Account
+    '00000001-0001-0001-0001-000000000001' AS created_by -- MINT System Account
 FROM model_plan mp
 CROSS JOIN common_waiver cw
 WHERE NOT EXISTS (

@@ -16,7 +16,7 @@ import (
 )
 
 // WaiverUpsert creates the waiver row if it does not exist, otherwise updates
-// will_use_waiver and not_using_reason. Used by the bulk updateSelectedWaivers mutation.
+// the selection and its reason fields. Used by the bulk updateSelectedWaivers mutation.
 func WaiverUpsert(np sqlutils.NamedPreparer, _ *zap.Logger, waiver *models.Waiver) (*models.Waiver, error) {
 	waiver.ID = utilityuuid.ValueOrNewUUID(waiver.ID)
 	return sqlutils.GetProcedure[models.Waiver](np, sqlqueries.Waiver.Upsert, waiver)

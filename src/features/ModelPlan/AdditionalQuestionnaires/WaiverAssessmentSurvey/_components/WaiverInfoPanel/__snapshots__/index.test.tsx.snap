@@ -140,7 +140,7 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
                   <dd
                     class="description-definition margin-0"
                   >
-                    Site of care
+                    Site of care, Safe harbors
                   </dd>
                   <dt
                     class="text-bold margin-bottom-05 margin-bottom-0 margin-top-3"

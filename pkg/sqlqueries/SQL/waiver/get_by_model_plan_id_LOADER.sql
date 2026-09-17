@@ -8,6 +8,7 @@ SELECT
     w.model_plan_id,
     w.common_waiver_id,
     w.will_use_waiver,
+    w.using_reason,
     w.not_using_reason,
     w.created_by,
     w.created_dts,

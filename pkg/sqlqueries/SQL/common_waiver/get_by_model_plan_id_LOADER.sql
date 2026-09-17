@@ -8,7 +8,6 @@ SELECT
     cw.name,
     cw.description,
     cw.participation_agreement_language_link,
-    cw.cmmi_waiver_point_of_contact,
     cw.waiver_type,
     cw.waiver_focus,
     cw.what_is_waived,
@@ -23,6 +22,7 @@ SELECT
     -- These are convenience fields for context.
     qIDs.model_plan_id,
     waiver.will_use_waiver,
+    waiver.using_reason,
     waiver.not_using_reason,
     suggested_waiver.id AS suggested_waiver_id
 

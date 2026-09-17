@@ -8,7 +8,6 @@ SELECT
     cw.name,
     cw.description,
     cw.participation_agreement_language_link,
-    cw.cmmi_waiver_point_of_contact,
     cw.waiver_type,
     cw.waiver_focus,
     cw.what_is_waived,
@@ -23,6 +22,7 @@ SELECT
     -- These fields are used when getting in scope of a model plan.
     CAST(NULL AS UUID) AS model_plan_id,
     CAST(NULL AS BOOLEAN) AS will_use_waiver,
+    NULL AS using_reason,
     NULL AS not_using_reason,
     CAST(NULL AS UUID) AS suggested_waiver_id
 FROM common_waiver AS cw

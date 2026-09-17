@@ -25,7 +25,7 @@ const commonWaiverMockData: GetCommonWaiverQuery['commonWaiver'] = {
   participationAgreementLanguageLink: 'https://example.com/pal',
   cmmiWaiverPointOfContact: 'Jane Doe',
   waiverType: CommonWaiverType.MEDICARE_PAYMENT,
-  waiverFocus: 'Site of care',
+  waiverFocus: 'Site of care, Safe harbors',
   whatIsWaived: 'Some regulation',
   hasStandardizationEffort: true,
   hasClaimsDataOrRREGAnalysis: 'Yes',
@@ -120,7 +120,7 @@ describe('WaiverInfoPanel', () => {
     ).toBeInTheDocument();
     expect(screen.getByText('Jane Doe')).toBeInTheDocument();
     expect(screen.getByText('Medicare payment waivers')).toBeInTheDocument();
-    expect(screen.getByText('Site of care')).toBeInTheDocument();
+    expect(screen.getByText('Site of care, Safe harbors')).toBeInTheDocument();
     expect(screen.getByText('Some regulation')).toBeInTheDocument();
     expect(
       screen.getByText('Do you plan to use this waiver with your model?')

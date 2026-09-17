@@ -68,11 +68,14 @@ const waiverSelectionCommonWaivers: CommonWaiverFragment[] = [
   unusedMedicaidWaiver
 ];
 
-const commonWaiverDetailsById: Map<string, CommonWaiverFragment> = new Map(
+const commonWaiverDetailsById: Map<
+  string,
+  GetCommonWaiverQuery['commonWaiver']
+> = new Map(
   waiverSelectionCommonWaivers.map(waiver => [
     waiver.id,
     {
-      __typename: 'CommonWaiver',
+      __typename: 'CommonWaiver' as const,
       id: waiver.id,
       name: waiver.name,
       description: `${waiver.name} description`,

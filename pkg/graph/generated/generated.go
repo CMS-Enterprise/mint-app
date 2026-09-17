@@ -38,6 +38,7 @@ type ResolverRoot interface {
 	AuditChange() AuditChangeResolver
 	CTATRequest() CTATRequestResolver
 	CTATRequestDocument() CTATRequestDocumentResolver
+	CommonWaiver() CommonWaiverResolver
 	CurrentUser() CurrentUserResolver
 	DailyDigestCompleteActivityMeta() DailyDigestCompleteActivityMetaResolver
 	DatesChangedActivityMeta() DatesChangedActivityMetaResolver
@@ -330,7 +331,6 @@ type ComplexityRoot struct {
 	}
 
 	CommonWaiver struct {
-		CmmiWaiverPointOfContact           func(childComplexity int) int
 		CreatedBy                          func(childComplexity int) int
 		CreatedByUserAccount               func(childComplexity int) int
 		CreatedDts                         func(childComplexity int) int
@@ -347,6 +347,7 @@ type ComplexityRoot struct {
 		Name                               func(childComplexity int) int
 		NotUsingReason                     func(childComplexity int) int
 		ParticipationAgreementLanguageLink func(childComplexity int) int
+		UsingReason                        func(childComplexity int) int
 		WaiverFocus                        func(childComplexity int) int
 		WaiverType                         func(childComplexity int) int
 		WhatIsWaived                       func(childComplexity int) int
@@ -2940,6 +2941,7 @@ type ComplexityRoot struct {
 		ModifiedByUserAccount func(childComplexity int) int
 		ModifiedDts           func(childComplexity int) int
 		NotUsingReason        func(childComplexity int) int
+		UsingReason           func(childComplexity int) int
 		WillUseWaiver         func(childComplexity int) int
 	}
 
@@ -3086,6 +3088,9 @@ type CTATRequestResolver interface {
 }
 type CTATRequestDocumentResolver interface {
 	DownloadURL(ctx context.Context, obj *models.CTATRequestDocument) (*string, error)
+}
+type CommonWaiverResolver interface {
+	WaiverFocus(ctx context.Context, obj *models.CommonWaiver) (string, error)
 }
 type CurrentUserResolver interface {
 	LaunchDarkly(ctx context.Context, obj *models.CurrentUser) (*model.LaunchDarklySettings, error)
@@ -4629,12 +4634,6 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.CommonCategory.SubCategories(childComplexity), true
 
-	case "CommonWaiver.cmmiWaiverPointOfContact":
-		if e.ComplexityRoot.CommonWaiver.CmmiWaiverPointOfContact == nil {
-			break
-		}
-
-		return e.ComplexityRoot.CommonWaiver.CmmiWaiverPointOfContact(childComplexity), true
 	case "CommonWaiver.createdBy":
 		if e.ComplexityRoot.CommonWaiver.CreatedBy == nil {
 			break
@@ -4731,6 +4730,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.CommonWaiver.ParticipationAgreementLanguageLink(childComplexity), true
+	case "CommonWaiver.usingReason":
+		if e.ComplexityRoot.CommonWaiver.UsingReason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CommonWaiver.UsingReason(childComplexity), true
 	case "CommonWaiver.waiverFocus":
 		if e.ComplexityRoot.CommonWaiver.WaiverFocus == nil {
 			break
@@ -18406,6 +18411,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Waiver.NotUsingReason(childComplexity), true
+	case "Waiver.usingReason":
+		if e.ComplexityRoot.Waiver.UsingReason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.Waiver.UsingReason(childComplexity), true
 	case "Waiver.willUseWaiver":
 		if e.ComplexityRoot.Waiver.WillUseWaiver == nil {
 			break
@@ -26474,9 +26485,11 @@ extend type Mutation {
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/waiver/common_waiver.graphql", Input: `enum CommonWaiverType {
+  FRAUD_ABUSE
   MEDICAID_PAYMENT
   MEDICARE_PAYMENT
   PROGRAM_MEDICARE_BE
+  UNKNOWN
 }
 
 """
@@ -26485,15 +26498,14 @@ CommonWaiver represents a waiver type in the CMMI waiver library. It is fetched 
 type CommonWaiver {
   id: UUID!
   name: String!
-  description: String
+  description: String!
   participationAgreementLanguageLink: String
-  cmmiWaiverPointOfContact: String
   waiverType: CommonWaiverType
-  waiverFocus: String
-  whatIsWaived: String
-  hasStandardizationEffort: Boolean
-  hasClaimsDataOrRREGAnalysis: String
-  isUsedInActiveModels: Boolean
+  waiverFocus: String!
+  whatIsWaived: String!
+  hasStandardizationEffort: Boolean!
+  hasClaimsDataOrRREGAnalysis: String!
+  isUsedInActiveModels: Boolean!
 
   # Custom Resolvers
   """
@@ -26502,6 +26514,10 @@ type CommonWaiver {
   It will also display as null if the quesion is not yet answered for the model plan.
   """
   willUseWaiver: Boolean
+  """
+  Convenience view into the waiver table using_reason field
+  """
+  usingReason: String
   """
   Convenience view into the waiver table not_using_reason field
   """
@@ -26590,6 +26606,7 @@ type Waiver {
   commonWaiverID: UUID!
   commonWaiver: CommonWaiver! @goField(forceResolver: true)
   willUseWaiver: Boolean
+  usingReason: String
   notUsingReason: String
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -26608,6 +26625,10 @@ input WaiverChanges @goModel(model: "map[string]any") {
   """
   willUseWaiver: Boolean
   """
+  What is the reason for using the waiver? Used when willUseWaiver is true.
+  """
+  usingReason: String
+  """
   What is the reason for not using the waiver? Required when willUseWaiver is false.
   """
   notUsingReason: String
@@ -26619,6 +26640,7 @@ Input for a single waiver selection in a bulk updateSelectedWaivers call.
 input WaiverSelectionInput {
   commonWaiverID: UUID!
   willUseWaiver: Boolean!
+  usingReason: String
   notUsingReason: String
 }
 
@@ -27336,8 +27358,6 @@ func (ec *executionContext) childFields_CommonWaiver(ctx context.Context, field 
 		return ec.fieldContext_CommonWaiver_description(ctx, field)
 	case "participationAgreementLanguageLink":
 		return ec.fieldContext_CommonWaiver_participationAgreementLanguageLink(ctx, field)
-	case "cmmiWaiverPointOfContact":
-		return ec.fieldContext_CommonWaiver_cmmiWaiverPointOfContact(ctx, field)
 	case "waiverType":
 		return ec.fieldContext_CommonWaiver_waiverType(ctx, field)
 	case "waiverFocus":
@@ -27352,6 +27372,8 @@ func (ec *executionContext) childFields_CommonWaiver(ctx context.Context, field 
 		return ec.fieldContext_CommonWaiver_isUsedInActiveModels(ctx, field)
 	case "willUseWaiver":
 		return ec.fieldContext_CommonWaiver_willUseWaiver(ctx, field)
+	case "usingReason":
+		return ec.fieldContext_CommonWaiver_usingReason(ctx, field)
 	case "notUsingReason":
 		return ec.fieldContext_CommonWaiver_notUsingReason(ctx, field)
 	case "isAnswered":
@@ -30422,6 +30444,8 @@ func (ec *executionContext) childFields_Waiver(ctx context.Context, field graphq
 		return ec.fieldContext_Waiver_commonWaiver(ctx, field)
 	case "willUseWaiver":
 		return ec.fieldContext_Waiver_willUseWaiver(ctx, field)
+	case "usingReason":
+		return ec.fieldContext_Waiver_usingReason(ctx, field)
 	case "notUsingReason":
 		return ec.fieldContext_Waiver_notUsingReason(ctx, field)
 	case "createdBy":
@@ -37432,11 +37456,11 @@ func (ec *executionContext) _CommonWaiver_description(ctx context.Context, field
 			return obj.Description, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_description(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37463,29 +37487,6 @@ func (ec *executionContext) _CommonWaiver_participationAgreementLanguageLink(ctx
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_participationAgreementLanguageLink(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
-}
-
-func (ec *executionContext) _CommonWaiver_cmmiWaiverPointOfContact(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_CommonWaiver_cmmiWaiverPointOfContact(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			return obj.CmmiWaiverPointOfContact, nil
-		},
-		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
-		},
-		true,
-		false,
-	)
-}
-func (ec *executionContext) fieldContext_CommonWaiver_cmmiWaiverPointOfContact(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
@@ -37521,18 +37522,18 @@ func (ec *executionContext) _CommonWaiver_waiverFocus(ctx context.Context, field
 			return ec.fieldContext_CommonWaiver_waiverFocus(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return obj.WaiverFocus, nil
+			return ec.Resolvers.CommonWaiver().WaiverFocus(ctx, obj)
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_waiverFocus(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
+	return graphql.NewScalarFieldContext("CommonWaiver", field, true, true, errors.New("field of type String does not have child fields"))
 }
 
 func (ec *executionContext) _CommonWaiver_whatIsWaived(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
@@ -37547,11 +37548,11 @@ func (ec *executionContext) _CommonWaiver_whatIsWaived(ctx context.Context, fiel
 			return obj.WhatIsWaived, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_whatIsWaived(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37570,11 +37571,11 @@ func (ec *executionContext) _CommonWaiver_hasStandardizationEffort(ctx context.C
 			return obj.HasStandardizationEffort, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
-			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_hasStandardizationEffort(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37593,11 +37594,11 @@ func (ec *executionContext) _CommonWaiver_hasClaimsDataOrRREGAnalysis(ctx contex
 			return obj.HasClaimsDataOrRREGAnalysis, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_hasClaimsDataOrRREGAnalysis(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37616,11 +37617,11 @@ func (ec *executionContext) _CommonWaiver_isUsedInActiveModels(ctx context.Conte
 			return obj.IsUsedInActiveModels, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
-			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_isUsedInActiveModels(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37648,6 +37649,29 @@ func (ec *executionContext) _CommonWaiver_willUseWaiver(ctx context.Context, fie
 }
 func (ec *executionContext) fieldContext_CommonWaiver_willUseWaiver(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
+func (ec *executionContext) _CommonWaiver_usingReason(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CommonWaiver_usingReason(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.UsingReason, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_CommonWaiver_usingReason(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
 func (ec *executionContext) _CommonWaiver_notUsingReason(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
@@ -99016,6 +99040,29 @@ func (ec *executionContext) fieldContext_Waiver_willUseWaiver(_ context.Context,
 	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type Boolean does not have child fields"))
 }
 
+func (ec *executionContext) _Waiver_usingReason(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Waiver_usingReason(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.UsingReason, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
+			return ec.marshalOString2ᚖstring(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_Waiver_usingReason(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("Waiver", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
 func (ec *executionContext) _Waiver_notUsingReason(ctx context.Context, field graphql.CollectedField, obj *models.Waiver) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -108265,7 +108312,7 @@ func (ec *executionContext) unmarshalInputWaiverChanges(ctx context.Context, obj
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"willUseWaiver", "notUsingReason"}
+	fieldsInOrder := [...]string{"willUseWaiver", "usingReason", "notUsingReason"}
 	it = make(map[string]any, len(asMap))
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
@@ -108280,6 +108327,13 @@ func (ec *executionContext) unmarshalInputWaiverChanges(ctx context.Context, obj
 				return it, err
 			}
 			it["willUseWaiver"] = data
+		case "usingReason":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("usingReason"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["usingReason"] = data
 		case "notUsingReason":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("notUsingReason"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -108303,7 +108357,7 @@ func (ec *executionContext) unmarshalInputWaiverSelectionInput(ctx context.Conte
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"commonWaiverID", "willUseWaiver", "notUsingReason"}
+	fieldsInOrder := [...]string{"commonWaiverID", "willUseWaiver", "usingReason", "notUsingReason"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -108324,6 +108378,13 @@ func (ec *executionContext) unmarshalInputWaiverSelectionInput(ctx context.Conte
 				return it, err
 			}
 			it.WillUseWaiver = data
+		case "usingReason":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("usingReason"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.UsingReason = data
 		case "notUsingReason":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("notUsingReason"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
@@ -110767,16 +110828,11 @@ func (ec *executionContext) _CommonWaiver(ctx context.Context, sel ast.Selection
 			}
 		case "description":
 			out.Values[i] = ec._CommonWaiver_description(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "participationAgreementLanguageLink":
 			out.Values[i] = ec._CommonWaiver_participationAgreementLanguageLink(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "cmmiWaiverPointOfContact":
-			out.Values[i] = ec._CommonWaiver_cmmiWaiverPointOfContact(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
@@ -110786,32 +110842,70 @@ func (ec *executionContext) _CommonWaiver(ctx context.Context, sel ast.Selection
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "waiverFocus":
-			out.Values[i] = ec._CommonWaiver_waiverFocus(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
-				atomic.AddUint32(&out.Invalids, 1)
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._CommonWaiver_waiverFocus(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "whatIsWaived":
 			out.Values[i] = ec._CommonWaiver_whatIsWaived(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "hasStandardizationEffort":
 			out.Values[i] = ec._CommonWaiver_hasStandardizationEffort(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "hasClaimsDataOrRREGAnalysis":
 			out.Values[i] = ec._CommonWaiver_hasClaimsDataOrRREGAnalysis(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "isUsedInActiveModels":
 			out.Values[i] = ec._CommonWaiver_isUsedInActiveModels(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "willUseWaiver":
 			out.Values[i] = ec._CommonWaiver_willUseWaiver(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "usingReason":
+			out.Values[i] = ec._CommonWaiver_usingReason(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
@@ -137398,6 +137492,11 @@ func (ec *executionContext) _Waiver(ctx context.Context, sel ast.SelectionSet, o
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "willUseWaiver":
 			out.Values[i] = ec._Waiver_willUseWaiver(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "usingReason":
+			out.Values[i] = ec._Waiver_usingReason(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}

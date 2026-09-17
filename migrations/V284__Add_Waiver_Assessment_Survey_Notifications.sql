@@ -11,7 +11,7 @@ CREATE TYPE WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE_NOTIFICATION_TYPE AS ENUM (
 );
 
 ALTER TABLE user_notification_preferences
-ADD COLUMN waiver_assessment_survey_marked_complete USER_NOTIFICATION_PREFERENCE_FLAG[] DEFAULT '{}'::USER_NOTIFICATION_PREFERENCE_FLAG[],
+ADD COLUMN waiver_assessment_survey_marked_complete USER_NOTIFICATION_PREFERENCE_FLAG[] DEFAULT '{}',
 ADD COLUMN waiver_assessment_survey_marked_complete_notification_type WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE_NOTIFICATION_TYPE DEFAULT NULL;
 
 COMMENT ON COLUMN user_notification_preferences.waiver_assessment_survey_marked_complete IS 'Notification preference for when a waiver assessment survey is marked complete.';
