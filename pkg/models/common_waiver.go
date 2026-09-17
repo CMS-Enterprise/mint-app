@@ -85,7 +85,6 @@ type CommonWaiver struct {
 	Name                               string                       `json:"name" db:"name"`
 	Description                        string                       `json:"description" db:"description"`
 	ParticipationAgreementLanguageLink *string                      `json:"participationAgreementLanguageLink" db:"participation_agreement_language_link"`
-	CmmiWaiverPointOfContact           *string                      `json:"cmmiWaiverPointOfContact" db:"cmmi_waiver_point_of_contact"`
 	WaiverType                         *CommonWaiverType            `json:"waiverType" db:"waiver_type"`
 	WaiverFocus                        EnumArray[CommonWaiverFocus] `json:"waiverFocus" db:"waiver_focus"`
 	WhatIsWaived                       string                       `json:"whatIsWaived" db:"what_is_waived"`

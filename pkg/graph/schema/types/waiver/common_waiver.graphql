@@ -14,7 +14,6 @@ type CommonWaiver {
   name: String!
   description: String!
   participationAgreementLanguageLink: String
-  cmmiWaiverPointOfContact: String
   waiverType: CommonWaiverType
   waiverFocus: String!
   whatIsWaived: String!

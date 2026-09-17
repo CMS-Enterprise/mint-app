@@ -331,7 +331,6 @@ type ComplexityRoot struct {
 	}
 
 	CommonWaiver struct {
-		CmmiWaiverPointOfContact           func(childComplexity int) int
 		CreatedBy                          func(childComplexity int) int
 		CreatedByUserAccount               func(childComplexity int) int
 		CreatedDts                         func(childComplexity int) int
@@ -4635,12 +4634,6 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.CommonCategory.SubCategories(childComplexity), true
 
-	case "CommonWaiver.cmmiWaiverPointOfContact":
-		if e.ComplexityRoot.CommonWaiver.CmmiWaiverPointOfContact == nil {
-			break
-		}
-
-		return e.ComplexityRoot.CommonWaiver.CmmiWaiverPointOfContact(childComplexity), true
 	case "CommonWaiver.createdBy":
 		if e.ComplexityRoot.CommonWaiver.CreatedBy == nil {
 			break
@@ -26507,7 +26500,6 @@ type CommonWaiver {
   name: String!
   description: String!
   participationAgreementLanguageLink: String
-  cmmiWaiverPointOfContact: String
   waiverType: CommonWaiverType
   waiverFocus: String!
   whatIsWaived: String!
@@ -27366,8 +27358,6 @@ func (ec *executionContext) childFields_CommonWaiver(ctx context.Context, field 
 		return ec.fieldContext_CommonWaiver_description(ctx, field)
 	case "participationAgreementLanguageLink":
 		return ec.fieldContext_CommonWaiver_participationAgreementLanguageLink(ctx, field)
-	case "cmmiWaiverPointOfContact":
-		return ec.fieldContext_CommonWaiver_cmmiWaiverPointOfContact(ctx, field)
 	case "waiverType":
 		return ec.fieldContext_CommonWaiver_waiverType(ctx, field)
 	case "waiverFocus":
@@ -37497,29 +37487,6 @@ func (ec *executionContext) _CommonWaiver_participationAgreementLanguageLink(ctx
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_participationAgreementLanguageLink(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
-}
-
-func (ec *executionContext) _CommonWaiver_cmmiWaiverPointOfContact(ctx context.Context, field graphql.CollectedField, obj *models.CommonWaiver) (ret graphql.Marshaler) {
-	return graphql.ResolveField(
-		ctx,
-		ec.OperationContext,
-		field,
-		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_CommonWaiver_cmmiWaiverPointOfContact(ctx, field)
-		},
-		func(ctx context.Context) (any, error) {
-			return obj.CmmiWaiverPointOfContact, nil
-		},
-		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
-			return ec.marshalOString2ᚖstring(ctx, selections, v)
-		},
-		true,
-		false,
-	)
-}
-func (ec *executionContext) fieldContext_CommonWaiver_cmmiWaiverPointOfContact(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("CommonWaiver", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
@@ -110866,11 +110833,6 @@ func (ec *executionContext) _CommonWaiver(ctx context.Context, sel ast.Selection
 			}
 		case "participationAgreementLanguageLink":
 			out.Values[i] = ec._CommonWaiver_participationAgreementLanguageLink(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "cmmiWaiverPointOfContact":
-			out.Values[i] = ec._CommonWaiver_cmmiWaiverPointOfContact(ctx, field, obj)
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
