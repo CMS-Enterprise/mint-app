@@ -30,12 +30,12 @@ const DocumentUpload = ({
   solutionDetailsLink,
   solutionID,
   planTaskID,
-  defaultDocumentType
+  documentType
 }: {
   solutionDetailsLink?: string;
   solutionID?: string;
   planTaskID?: string;
-  defaultDocumentType?: DocumentType;
+  documentType?: DocumentType;
 }) => {
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
@@ -95,9 +95,7 @@ const DocumentUpload = ({
           file: null,
           url: null,
           name: null,
-          documentType:
-            defaultDocumentType ??
-            (planTaskID ? DocumentType.CONCEPT_PAPER : null),
+          documentType: documentType ?? null,
           restricted: null,
           otherTypeDescription: '',
           optionalNotes: ''
@@ -203,23 +201,32 @@ const DocumentUpload = ({
                       </legend>
 
                       <FieldErrorMsg>{flatErrors.documentType}</FieldErrorMsg>
-                      {getKeys(documentTypeConfig.options).map(documentType => {
-                        return (
-                          <Field
-                            key={`FileUpload-${documentType}`}
-                            as={RadioField}
-                            checked={values.documentType === documentType}
-                            id={`FileUpload-${documentType}`}
-                            name="documentType"
-                            label={documentTypeConfig.options[documentType]}
-                            onChange={() => {
-                              setFieldValue('documentType', documentType);
-                              setFieldValue('otherTypeDescription', '');
-                            }}
-                            value={documentType}
-                          />
-                        );
-                      })}
+                      {getKeys(documentTypeConfig.options).map(
+                        documentTypeOption => {
+                          return (
+                            <Field
+                              key={`FileUpload-${documentTypeOption}`}
+                              as={RadioField}
+                              checked={
+                                values.documentType === documentTypeOption
+                              }
+                              id={`FileUpload-${documentTypeOption}`}
+                              name="documentType"
+                              label={
+                                documentTypeConfig.options[documentTypeOption]
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'documentType',
+                                  documentTypeOption
+                                );
+                                setFieldValue('otherTypeDescription', '');
+                              }}
+                              value={documentTypeOption}
+                            />
+                          );
+                        }
+                      )}
                       {values.documentType === DocumentType.OTHER && (
                         <div className="margin-left-4 margin-bottom-1">
                           <FieldGroup

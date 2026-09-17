@@ -18,6 +18,12 @@ import RequiredAsterisk from 'components/RequiredAsterisk';
 import DocumentUpload from './documentUpload';
 import LinkDocument from './LinkDocument';
 
+type AddDocumentLocationState = {
+  fromCollaborationArea?: boolean;
+  planTaskID?: string;
+  documentType?: DocumentType;
+};
+
 const AddDocument = () => {
   const { t } = useTranslation('documentsMisc');
 
@@ -25,27 +31,11 @@ const AddDocument = () => {
   const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
-
-  const { state } = useLocation() as {
-    state?: {
-      fromCollaborationArea?: boolean;
-      planTaskID?: string;
-      defaultDocumentType?: DocumentType;
-    };
-  };
+  const location = useLocation();
+  const state = location.state as AddDocumentLocationState | null;
 
   const planTaskID =
     state?.planTaskID || searchParams.get('planTaskID') || undefined;
-
-  const defaultDocumentTypeParam = searchParams.get('defaultDocumentType');
-  const defaultDocumentType =
-    state?.defaultDocumentType ||
-    (defaultDocumentTypeParam &&
-    Object.values(DocumentType).includes(
-      defaultDocumentTypeParam as DocumentType
-    )
-      ? (defaultDocumentTypeParam as DocumentType)
-      : undefined);
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -103,7 +93,7 @@ const AddDocument = () => {
           {formState === 'upload' ? (
             <DocumentUpload
               planTaskID={planTaskID}
-              defaultDocumentType={defaultDocumentType}
+              documentType={state?.documentType}
             />
           ) : (
             <LinkDocument planTaskID={planTaskID || undefined} />

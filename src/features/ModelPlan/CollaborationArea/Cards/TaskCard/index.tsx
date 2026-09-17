@@ -11,6 +11,7 @@ import {
   Link
 } from '@trussworks/react-uswds';
 import {
+  DocumentType,
   GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   PlanTaskKey,
@@ -57,6 +58,13 @@ const USER_MARK_STATUS_TASKS = [
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.OA_PRESENTATION
 ];
+
+const TASK_DOCUMENT_TYPE: Partial<Record<PlanTaskKey, DocumentType>> = {
+  [PlanTaskKey.TWO_PAGER]: DocumentType.CONCEPT_PAPER,
+  [PlanTaskKey.SIX_PAGER]: DocumentType.CONCEPT_PAPER,
+  [PlanTaskKey.OA_PRESENTATION]:
+    DocumentType.OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION
+};
 
 function TaskStatusTag({ status }: { status: PlanTaskStatus }) {
   const { t } = useTranslation('tasks');
@@ -173,7 +181,10 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
             navigate(
               t(`${key}.primaryPath`, { modelID, planTaskID: task.id }),
               {
-                state: { fromCollaborationArea: true }
+                state: {
+                  fromCollaborationArea: true,
+                  documentType: TASK_DOCUMENT_TYPE[key]
+                }
               }
             )
           }
