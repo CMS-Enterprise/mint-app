@@ -13,7 +13,7 @@ SELECT
     GEN_RANDOM_UUID() AS task_id,
     mp.id AS model_plan_id,
     'WAIVER_ASSESSMENT_SURVEY' AS key,
-    'TO_DO' AS status,
+    'TO_DO' AS state,
     '00000001-0001-0001-0001-000000000001' AS created_by
 FROM model_plan mp
 WHERE NOT EXISTS (
