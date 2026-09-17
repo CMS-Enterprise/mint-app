@@ -89,7 +89,7 @@ func (k PlanTaskKey) DisplayName() string {
 var planTaskKeyChangeHistoryNames = map[PlanTaskKey]string{
 	PlanTaskKeyTwoPager:       "Prepare for your 2-page review meeting with CMMI Front Office",
 	PlanTaskKeySixPager:       "Prepare for your 6-page review meeting with CMMI Front Office",
-	PlanTaskKeyOaPresentation: "Prepare for your presentation to the Office of the Administrator (OA)",
+	PlanTaskKeyOaPresentation: "Prepare for your presentation to the Office of the Administrator",
 }
 
 // ChangeHistoryDisplayName returns the task name shown in change history.
