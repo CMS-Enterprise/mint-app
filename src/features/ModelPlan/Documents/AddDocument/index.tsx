@@ -20,7 +20,6 @@ import LinkDocument from './LinkDocument';
 
 type AddDocumentLocationState = {
   fromCollaborationArea?: boolean;
-  planTaskID?: string;
   documentType?: DocumentType;
 };
 
@@ -34,8 +33,7 @@ const AddDocument = () => {
   const location = useLocation();
   const state = location.state as AddDocumentLocationState | null;
 
-  const planTaskID =
-    state?.planTaskID || searchParams.get('planTaskID') || undefined;
+  const planTaskID = searchParams.get('planTaskID') ?? undefined;
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -96,7 +94,10 @@ const AddDocument = () => {
               documentType={state?.documentType}
             />
           ) : (
-            <LinkDocument planTaskID={planTaskID || undefined} />
+            <LinkDocument
+              planTaskID={planTaskID}
+              documentType={state?.documentType}
+            />
           )}
 
           <div className="display-block">
