@@ -80,6 +80,7 @@ const commonWaiverDetailsById: Map<
       name: waiver.name,
       description: `${waiver.name} description`,
       participationAgreementLanguageLink: 'https://example.com/pal',
+      cmmiWaiverPointOfContact: 'Jane Doe',
       waiverType: waiver.waiverType,
       waiverFocus: 'Site of care',
       whatIsWaived: 'Some regulation',

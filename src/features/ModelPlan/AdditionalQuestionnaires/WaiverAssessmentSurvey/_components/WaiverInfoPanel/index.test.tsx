@@ -23,6 +23,7 @@ const commonWaiverMockData: GetCommonWaiverQuery['commonWaiver'] = {
   name: 'Test Waiver',
   description: 'Test waiver description',
   participationAgreementLanguageLink: 'https://example.com/pal',
+  cmmiWaiverPointOfContact: 'Jane Doe',
   waiverType: CommonWaiverType.MEDICARE_PAYMENT,
   waiverFocus: 'Site of care, Safe harbors',
   whatIsWaived: 'Some regulation',
