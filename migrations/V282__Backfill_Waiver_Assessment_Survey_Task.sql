@@ -6,14 +6,14 @@ INSERT INTO plan_task (
     id,
     model_plan_id,
     key,
-    status,
+    state,
     created_by
 )
 SELECT
     GEN_RANDOM_UUID() AS task_id,
     mp.id,
     'WAIVER_ASSESSMENT_SURVEY'::PLAN_TASK_KEY,
-    'TO_DO'::PLAN_TASK_STATUS,
+    'TO_DO'::PLAN_TASK_STATE,
     '00000001-0001-0001-0001-000000000001'::UUID
 FROM model_plan mp
 WHERE NOT EXISTS (
