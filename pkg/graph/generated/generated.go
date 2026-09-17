@@ -104,7 +104,6 @@ type ResolverRoot interface {
 	WaiverAssessmentSurvey() WaiverAssessmentSurveyResolver
 	WaiverAssessmentSurveyMarkedCompleteActivityMeta() WaiverAssessmentSurveyMarkedCompleteActivityMetaResolver
 	WaiverInfo() WaiverInfoResolver
-	WaiverSelectionInput() WaiverSelectionInputResolver
 }
 
 type DirectiveRoot struct {
@@ -3647,10 +3646,6 @@ type WaiverAssessmentSurveyMarkedCompleteActivityMetaResolver interface {
 }
 type WaiverInfoResolver interface {
 	Waivers(ctx context.Context, obj *models.WaiverInfo) ([]*models.Waiver, error)
-}
-
-type WaiverSelectionInputResolver interface {
-	UsingReason(ctx context.Context, obj *models.WaiverSelectionInput, data *string) error
 }
 
 // endregion ************************** generated!.gotpl **************************
@@ -26647,7 +26642,6 @@ input WaiverSelectionInput {
   willUseWaiver: Boolean!
   usingReason: String
   notUsingReason: String
-  usingReason: String
 }
 
 extend type Mutation {
@@ -108398,15 +108392,6 @@ func (ec *executionContext) unmarshalInputWaiverSelectionInput(ctx context.Conte
 				return it, err
 			}
 			it.NotUsingReason = data
-		case "usingReason":
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("usingReason"))
-			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-			if err = ec.Resolvers.WaiverSelectionInput().UsingReason(ctx, &it, data); err != nil {
-				return it, err
-			}
 		}
 	}
 	return it, nil

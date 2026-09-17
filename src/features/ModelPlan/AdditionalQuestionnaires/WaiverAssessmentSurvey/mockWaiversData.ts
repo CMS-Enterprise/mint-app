@@ -93,16 +93,18 @@ const waiverSelectionCommonWaivers: SelectedWaiver[] = [
   unusedMedicaidWaiver
 ];
 
-const commonWaiverDetailsById: Map<string, SelectedWaiver> = new Map(
+const commonWaiverDetailsById: Map<
+  string,
+  GetCommonWaiverQuery['commonWaiver']
+> = new Map(
   waiverSelectionCommonWaivers.map(waiver => [
     waiver.id,
     {
-      __typename: 'CommonWaiver' as const,
+      __typename: 'CommonWaiver',
       id: waiver.id,
       name: waiver.name,
       description: `${waiver.name} description`,
       participationAgreementLanguageLink: 'https://example.com/pal',
-      cmmiWaiverPointOfContact: 'Jane Doe',
       waiverType: waiver.waiverType,
       waiverFocus: 'Site of care',
       whatIsWaived: 'Some regulation',

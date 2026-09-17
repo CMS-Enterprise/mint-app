@@ -7,7 +7,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -37,20 +36,7 @@ func (r *waiverResolver) CommonWaiver(ctx context.Context, obj *models.Waiver) (
 	return CommonWaiverGetByID(ctx, obj.CommonWaiverID)
 }
 
-// UsingReason is the resolver for the usingReason field.
-func (r *waiverSelectionInputResolver) UsingReason(ctx context.Context, obj *models.WaiverSelectionInput, data *string) error {
-	panic(fmt.Errorf("not implemented: UsingReason - usingReason"))
-}
-
 // Waiver returns generated.WaiverResolver implementation.
 func (r *Resolver) Waiver() generated.WaiverResolver { return &waiverResolver{r} }
 
-// WaiverSelectionInput returns generated.WaiverSelectionInputResolver implementation.
-func (r *Resolver) WaiverSelectionInput() generated.WaiverSelectionInputResolver {
-	return &waiverSelectionInputResolver{r}
-}
-
-type (
-	waiverResolver               struct{ *Resolver }
-	waiverSelectionInputResolver struct{ *Resolver }
-)
+type waiverResolver struct{ *Resolver }
