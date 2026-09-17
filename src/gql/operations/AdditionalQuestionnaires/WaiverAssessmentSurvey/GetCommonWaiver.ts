@@ -7,6 +7,7 @@ export default gql(/* GraphQL */ `
       name
       description
       participationAgreementLanguageLink
+      cmmiWaiverPointOfContact
       waiverType
       waiverFocus
       whatIsWaived
