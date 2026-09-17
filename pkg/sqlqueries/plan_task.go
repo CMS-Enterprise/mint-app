@@ -17,12 +17,16 @@ var planTaskCreateSQL string
 //go:embed SQL/plan_task/activate_upcoming.sql
 var planTaskActivateUpcomingSQL string
 
+//go:embed SQL/plan_task/get_by_model_plan_id_and_key.sql
+var planTaskGetByModelPlanIDAndKeySQL string
+
 type planTaskScripts struct {
 	GetByModelPlanIDLoader string
 	GetByIDLoader          string
 	UpdateStateByKey       string
 	Create                 string
 	ActivateUpcoming       string
+	GetByModelPlanIDAndKey string
 }
 
 var PlanTask = planTaskScripts{
@@ -31,4 +35,5 @@ var PlanTask = planTaskScripts{
 	UpdateStateByKey:       planTaskUpdateStateByKeySQL,
 	Create:                 planTaskCreateSQL,
 	ActivateUpcoming:       planTaskActivateUpcomingSQL,
+	GetByModelPlanIDAndKey: planTaskGetByModelPlanIDAndKeySQL,
 }

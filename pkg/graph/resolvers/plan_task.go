@@ -73,29 +73,27 @@ func updatePlanTaskStateByKey(
 	if result == nil {
 		// Either a no-op (already at newState/completion metadata) or the task doesn't exist -
 		// a plain lookup tells us which, and preserves the "not found" error below.
-		tasks, err := storage.PlanTaskGetByModelPlanIDs(np, logger, []uuid.UUID{modelPlanID})
+		task, err := storage.PlanTaskGetByModelPlanIDAndKey(np, logger, modelPlanID, key)
 		if err != nil {
 			return nil, err
 		}
-		for _, t := range tasks {
-			if t.Key == key {
-				return t, nil
-			}
+		if task == nil {
+			return nil, fmt.Errorf("plan task not found for modelPlanID %s and key %s", modelPlanID, key)
 		}
-		return nil, fmt.Errorf("plan task not found for modelPlanID %s and key %s", modelPlanID, key)
+		return task, nil
 	}
 
 	didTransitionToDo := result.PreviousState != models.PlanTaskStateToDo && newState == models.PlanTaskStateToDo
 	didTransitionToComplete := result.PreviousState != models.PlanTaskStateComplete && newState == models.PlanTaskStateComplete
 
 	if didTransitionToComplete {
-		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, result.Task, principal, emailService, addressBook)
+		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, &result.PlanTask, principal, emailService, addressBook)
 	}
 	if didTransitionToDo {
-		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, result.Task, principal, emailService, addressBook)
+		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, &result.PlanTask, principal, emailService, addressBook)
 	}
 
-	return result.Task, nil
+	return &result.PlanTask, nil
 }
 
 // PlanTaskMarkComplete directly sets a manually-markable plan task's status to COMPLETE or TO_DO.

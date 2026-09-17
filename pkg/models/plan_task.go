@@ -12,6 +12,14 @@ type PlanTask struct {
 	State PlanTaskState `json:"state" db:"state"`
 }
 
+// PlanTaskWithPreviousState wraps a plan task with the state it had immediately before the write
+// that produced this result (see storage.PlanTaskUpdateStateByKey), so callers can tell whether a
+// transition actually occurred without a separate read.
+type PlanTaskWithPreviousState struct {
+	PlanTask
+	PreviousState PlanTaskState `json:"previousState" db:"previous_state"`
+}
+
 // PlanTaskKey is an enum representing the type of task
 type PlanTaskKey string
 
@@ -33,12 +41,32 @@ const (
 // status runs.
 //
 // Adding a new task key generally means touching three places: this map (only if it's manually
-// markable), the seeding list in ModelPlanCreate (pkg/graph/resolvers/model_plan.go), and either a
-// new calculated-status function in plan_task_status_updates.go or reuse of PlanTaskMarkComplete.
+// markable), DefaultPlanTasks below, and either a new calculated-status function in
+// plan_task_status_updates.go or reuse of PlanTaskMarkComplete.
 var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
 	PlanTaskKeyTwoPager:       true,
 	PlanTaskKeySixPager:       true,
 	PlanTaskKeyOaPresentation: true,
+}
+
+// PlanTaskDefault pairs a PlanTaskKey with the PlanTaskState it should start at when a model plan
+// is created.
+type PlanTaskDefault struct {
+	Key   PlanTaskKey
+	State PlanTaskState
+}
+
+// DefaultPlanTasks are the tasks seeded for every new model plan (see ModelPlanCreate in
+// pkg/graph/resolvers/model_plan.go). SIX_PAGER starts UPCOMING and is activated to TO_DO by
+// PlanTaskMarkComplete once TWO_PAGER is marked complete (see PlanTaskKey.ActivationTarget).
+// OA_PRESENTATION starts UPCOMING and is activated once SIX_PAGER is marked complete.
+var DefaultPlanTasks = []PlanTaskDefault{
+	{PlanTaskKeyModelPlan, PlanTaskStateToDo},
+	{PlanTaskKeyMto, PlanTaskStateToDo},
+	{PlanTaskKeyDataExchange, PlanTaskStateToDo},
+	{PlanTaskKeyTwoPager, PlanTaskStateToDo},
+	{PlanTaskKeySixPager, PlanTaskStateUpcoming},
+	{PlanTaskKeyOaPresentation, PlanTaskStateUpcoming},
 }
 
 // IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user
@@ -69,8 +97,8 @@ var planTaskKeyDisplayNames = map[PlanTaskKey]string{
 	PlanTaskKeyModelPlan:      "Model Plan",
 	PlanTaskKeyDataExchange:   "Data exchange approach",
 	PlanTaskKeyMto:            "Model-to-operations matrix (MTO)",
-	PlanTaskKeyTwoPager:       "2-pager review",
-	PlanTaskKeySixPager:       "6-pager review",
+	PlanTaskKeyTwoPager:       "Prepare for your 2-page review meeting with CMMI Front Office",
+	PlanTaskKeySixPager:       "Prepare for your 6-page review meeting with CMMI Front Office",
 	PlanTaskKeyOaPresentation: "Office of the Administrator (OA) presentation",
 }
 
