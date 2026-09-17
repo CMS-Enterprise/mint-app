@@ -23,6 +23,7 @@ SELECT
     -- These are convenience fields for context.
     qIDs.model_plan_id,
     waiver.will_use_waiver,
+    waiver.using_reason,
     waiver.not_using_reason,
     suggested_waiver.id AS suggested_waiver_id
 

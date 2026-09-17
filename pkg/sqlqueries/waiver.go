@@ -14,7 +14,7 @@ var waiverUpsertCollectionSQL string
 type waiverScripts struct {
 	// Uses a list of model_plan_ids to return all waivers for those model plans (one-to-many)
 	GetByModelPlanIDLoader string
-	// Creates the row if it does not exist, otherwise updates will_use_waiver and not_using_reason
+	// Creates the row if it does not exist, otherwise updates the selection and its reason fields
 	Upsert string
 	// Bulk version of Upsert — accepts a JSON array and inserts or updates all rows in one statement
 	UpsertCollection string

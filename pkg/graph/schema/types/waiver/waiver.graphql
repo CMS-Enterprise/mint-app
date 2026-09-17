@@ -7,6 +7,7 @@ type Waiver {
   commonWaiverID: UUID!
   commonWaiver: CommonWaiver! @goField(forceResolver: true)
   willUseWaiver: Boolean
+  usingReason: String
   notUsingReason: String
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -25,6 +26,10 @@ input WaiverChanges @goModel(model: "map[string]any") {
   """
   willUseWaiver: Boolean
   """
+  What is the reason for using the waiver? Used when willUseWaiver is true.
+  """
+  usingReason: String
+  """
   What is the reason for not using the waiver? Required when willUseWaiver is false.
   """
   notUsingReason: String
@@ -36,6 +41,7 @@ Input for a single waiver selection in a bulk updateSelectedWaivers call.
 input WaiverSelectionInput {
   commonWaiverID: UUID!
   willUseWaiver: Boolean!
+  usingReason: String
   notUsingReason: String
 }
 

@@ -30,6 +30,10 @@ type CommonWaiver {
   """
   willUseWaiver: Boolean
   """
+  Convenience view into the waiver table using_reason field
+  """
+  usingReason: String
+  """
   Convenience view into the waiver table not_using_reason field
   """
   notUsingReason: String

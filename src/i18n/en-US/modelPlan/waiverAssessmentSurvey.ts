@@ -690,6 +690,7 @@ const waiverAssessmentSurveyMisc = {
     willUseWaiver_true: 'You said your model will use this waiver.',
     willUseWaiver_false: 'You said your model will not use this waiver.',
     changeResponse: 'Change response',
+    usingReason: 'Please explain why your model is using this waiver.',
     notUsingReason: 'Please explain why your model is not using this waiver.'
   },
   activeModelWaivers: {

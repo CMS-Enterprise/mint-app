@@ -37,6 +37,7 @@ const SelectWaiverField = ({
   const { control, setValue } = useFormContext();
 
   const willUseWaiverField = `${fieldPrefix}.willUseWaiver`;
+  const usingReasonField = `${fieldPrefix}.usingReason`;
   const notUsingReasonField = `${fieldPrefix}.notUsingReason`;
   const fieldId = fieldPrefix.replace(/\./g, '-');
 
@@ -130,6 +131,7 @@ const SelectWaiverField = ({
                   unstyled
                   onClick={() => {
                     setValue(willUseWaiverField, null, { shouldDirty: true });
+                    setValue(usingReasonField, '', { shouldDirty: true });
                     setValue(notUsingReasonField, '', { shouldDirty: true });
                   }}
                 >
@@ -137,6 +139,29 @@ const SelectWaiverField = ({
                     'waiverInfoPanel.changeResponse'
                   )}
                 </Button>
+
+                {field.value === true && (
+                  <FormGroup>
+                    <Label htmlFor={`usingReason-${fieldId}`}>
+                      {waiverAssessmentSurveyMiscT(
+                        'waiverInfoPanel.usingReason'
+                      )}
+                    </Label>
+
+                    <Controller
+                      name={usingReasonField}
+                      control={control}
+                      defaultValue=""
+                      render={({ field: { ref, ...textField } }) => (
+                        <Textarea
+                          {...textField}
+                          id={`usingReason-${fieldId}`}
+                          data-testid={`usingReason-${fieldId}`}
+                        />
+                      )}
+                    />
+                  </FormGroup>
+                )}
 
                 {field.value === false && (
                   <FormGroup>

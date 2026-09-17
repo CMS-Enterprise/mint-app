@@ -24,6 +24,7 @@ const FormWrapper = ({
       waivers: {
         [TEST_WAIVER_ID]: {
           willUseWaiver: null,
+          usingReason: '',
           notUsingReason: '',
           ...defaultValues
         }
@@ -33,10 +34,14 @@ const FormWrapper = ({
   const notUsingReason = methods.watch(
     `${FIELD_PREFIX}.notUsingReason` as `waivers.${string}.notUsingReason`
   );
+  const usingReason = methods.watch(
+    `${FIELD_PREFIX}.usingReason` as `waivers.${string}.usingReason`
+  );
 
   return (
     <FormProvider {...methods}>
       <SelectWaiverField fieldPrefix={FIELD_PREFIX} />
+      <span data-testid="usingReason-value">{usingReason}</span>
       <span data-testid="notUsingReason-value">{notUsingReason}</span>
     </FormProvider>
   );
@@ -45,6 +50,7 @@ const FormWrapper = ({
 describe('SelectWaiverField', () => {
   const yesTestId = `willUseWaiver-yes-waivers-${TEST_WAIVER_ID}`;
   const noTestId = `willUseWaiver-no-waivers-${TEST_WAIVER_ID}`;
+  const usingReasonTestId = `usingReason-waivers-${TEST_WAIVER_ID}`;
   const notUsingReasonTestId = `notUsingReason-waivers-${TEST_WAIVER_ID}`;
 
   it('renders the label and yes/no options when no selection has been made', () => {
@@ -72,6 +78,10 @@ describe('SelectWaiverField', () => {
       screen.getByText('You said your model will use this waiver.')
     ).toBeInTheDocument();
     expect(screen.getByText('Change response')).toBeInTheDocument();
+    expect(
+      screen.getByText('Please explain why your model is using this waiver.')
+    ).toBeInTheDocument();
+    expect(screen.getByTestId(usingReasonTestId)).toBeInTheDocument();
     expect(screen.queryByTestId(notUsingReasonTestId)).not.toBeInTheDocument();
   });
 
@@ -91,6 +101,7 @@ describe('SelectWaiverField', () => {
       )
     ).toBeInTheDocument();
     expect(screen.getByTestId(notUsingReasonTestId)).toBeInTheDocument();
+    expect(screen.queryByTestId(usingReasonTestId)).not.toBeInTheDocument();
   });
 
   it('resets to yes/no options when change response is clicked', async () => {
@@ -120,5 +131,20 @@ describe('SelectWaiverField', () => {
     await user.click(screen.getByText('Change response'));
 
     expect(screen.getByTestId('notUsingReason-value')).toHaveTextContent('');
+  });
+
+  it('clears usingReason when change response is clicked', async () => {
+    const user = userEvent.setup();
+    render(<FormWrapper />);
+
+    await user.click(screen.getByTestId(yesTestId));
+    await user.type(screen.getByTestId(usingReasonTestId), 'Some reason');
+    expect(screen.getByTestId('usingReason-value')).toHaveTextContent(
+      'Some reason'
+    );
+
+    await user.click(screen.getByText('Change response'));
+
+    expect(screen.getByTestId('usingReason-value')).toHaveTextContent('');
   });
 });

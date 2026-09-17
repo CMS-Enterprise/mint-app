@@ -9,6 +9,7 @@ type Waiver struct {
 
 	CommonWaiverID uuid.UUID `json:"commonWaiverID" db:"common_waiver_id"`
 	WillUseWaiver  *bool     `json:"willUseWaiver" db:"will_use_waiver"`
+	UsingReason    *string   `json:"usingReason" db:"using_reason"`
 	NotUsingReason *string   `json:"notUsingReason" db:"not_using_reason"`
 }
 
@@ -17,6 +18,7 @@ type Waiver struct {
 type WaiverSelectionInput struct {
 	CommonWaiverID uuid.UUID `json:"commonWaiverID" db:"common_waiver_id"`
 	WillUseWaiver  bool      `json:"willUseWaiver" db:"will_use_waiver"`
+	UsingReason    *string   `json:"usingReason" db:"using_reason"`
 	NotUsingReason *string   `json:"notUsingReason" db:"not_using_reason"`
 }
 

@@ -10,8 +10,14 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/generated"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
+
+// WaiverFocus is the resolver for the waiverFocus field.
+func (r *commonWaiverResolver) WaiverFocus(ctx context.Context, obj *models.CommonWaiver) (string, error) {
+	return obj.WaiverFocusDisplay(), nil
+}
 
 // CommonWaivers is the resolver for the commonWaivers field.
 func (r *queryResolver) CommonWaivers(ctx context.Context, modelPlanID *uuid.UUID) ([]*models.CommonWaiver, error) {
@@ -22,3 +28,8 @@ func (r *queryResolver) CommonWaivers(ctx context.Context, modelPlanID *uuid.UUI
 func (r *queryResolver) CommonWaiver(ctx context.Context, id uuid.UUID) (*models.CommonWaiver, error) {
 	return CommonWaiverGetByID(ctx, id)
 }
+
+// CommonWaiver returns generated.CommonWaiverResolver implementation.
+func (r *Resolver) CommonWaiver() generated.CommonWaiverResolver { return &commonWaiverResolver{r} }
+
+type commonWaiverResolver struct{ *Resolver }
