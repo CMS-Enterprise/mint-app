@@ -129,9 +129,9 @@ CREATE TABLE common_waiver (
     waiver_focus COMMON_WAIVER_FOCUS[] NOT NULL
         CHECK (CARDINALITY(waiver_focus) > 0), -- ensure array is not empty
     what_is_waived ZERO_STRING NOT NULL,
-    has_standardization_effort BOOLEAN,
+    has_standardization_effort BOOLEAN NOT NULL,
     has_claims_data_or_rreg_analysis ZERO_STRING NOT NULL,
-    is_used_in_active_models BOOLEAN,
+    is_used_in_active_models BOOLEAN NOT NULL,
     survey_question_field ZERO_STRING NOT NULL,
 
     -- Standard audit fields
