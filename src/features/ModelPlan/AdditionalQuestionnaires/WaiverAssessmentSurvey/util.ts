@@ -15,7 +15,7 @@ import {
   TranslationPlan
 } from 'types/translation';
 import { WaiverSelectionFields, WaiverSelectionForm } from 'types/waivers';
-import dirtyInput, { symmetricDifference } from 'utils/formUtil';
+import dirtyInput, { sortByName, symmetricDifference } from 'utils/formUtil';
 
 import {
   CombinedConfigType,
@@ -388,18 +388,20 @@ export const getSuggestedOrInUseWaivers = (
   waiverSelection: SelectedWaiver[],
   formWaivers: WaiverSelectionForm['waivers']
 ): SelectedWaiver[] => {
-  const suggestedCommonWaivers = waiverSelection.filter(
-    waiver => waiver.isSuggested
-  );
+  const suggestedCommonWaivers = waiverSelection
+    .filter(waiver => waiver.isSuggested)
+    .sort(sortByName);
 
   // Waiver that is not suggested but is selected by the user (willUseWaiver = true)
-  const inUseNotSuggestedCommonWaivers = waiverSelection.filter(waiver => {
-    const isCurrentlySelected = formWaivers[waiver.id]
-      ? formWaivers[waiver.id].willUseWaiver
-      : waiver.willUseWaiver;
+  const inUseNotSuggestedCommonWaivers = waiverSelection
+    .filter(waiver => {
+      const isCurrentlySelected = formWaivers[waiver.id]
+        ? formWaivers[waiver.id].willUseWaiver
+        : waiver.willUseWaiver;
 
-    return !waiver.isSuggested && isCurrentlySelected;
-  });
+      return !waiver.isSuggested && isCurrentlySelected;
+    })
+    .sort(sortByName);
 
   return [...suggestedCommonWaivers, ...inUseNotSuggestedCommonWaivers];
 };
@@ -411,13 +413,15 @@ export const getUnselectedWaivers = (
   waiverSelection: SelectedWaiver[],
   formWaivers: WaiverSelectionForm['waivers']
 ): SelectedWaiver[] => {
-  return waiverSelection.filter(waiver => {
-    const isCurrentlySelected = formWaivers[waiver.id]
-      ? formWaivers[waiver.id].willUseWaiver
-      : waiver.willUseWaiver;
+  return waiverSelection
+    .filter(waiver => {
+      const isCurrentlySelected = formWaivers[waiver.id]
+        ? formWaivers[waiver.id].willUseWaiver
+        : waiver.willUseWaiver;
 
-    return !waiver.isSuggested && !isCurrentlySelected;
-  });
+      return !waiver.isSuggested && !isCurrentlySelected;
+    })
+    .sort(sortByName);
 };
 
 /**
@@ -449,7 +453,8 @@ const waiverSelectionFieldsChanged = (
 
   return (
     initial.willUseWaiver !== current.willUseWaiver ||
-    initial.notUsingReason !== current.notUsingReason
+    initial.notUsingReason !== current.notUsingReason ||
+    initial.usingReason !== current.usingReason
   );
 };
 
@@ -470,7 +475,7 @@ export const getWaiverSelectionChanges = (
   commonWaiverIDs.forEach(commonWaiverID => {
     const currentFields = current.waivers[commonWaiverID];
 
-    if (!currentFields || currentFields.willUseWaiver === null) {
+    if (!currentFields) {
       return;
     }
 
@@ -488,7 +493,7 @@ export const getWaiverSelectionChanges = (
       willUseWaiver: currentFields.willUseWaiver,
       ...(currentFields.willUseWaiver === false
         ? { notUsingReason: currentFields.notUsingReason || null }
-        : {})
+        : { usingReason: currentFields.usingReason || null })
     });
   });
 

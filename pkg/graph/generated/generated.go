@@ -26639,7 +26639,7 @@ Input for a single waiver selection in a bulk updateSelectedWaivers call.
 """
 input WaiverSelectionInput {
   commonWaiverID: UUID!
-  willUseWaiver: Boolean!
+  willUseWaiver: Boolean
   usingReason: String
   notUsingReason: String
 }
@@ -108373,7 +108373,7 @@ func (ec *executionContext) unmarshalInputWaiverSelectionInput(ctx context.Conte
 			it.CommonWaiverID = data
 		case "willUseWaiver":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("willUseWaiver"))
-			data, err := ec.unmarshalNBoolean2bool(ctx, v)
+			data, err := ec.unmarshalOBoolean2bool(ctx, v)
 			if err != nil {
 				return it, err
 			}
