@@ -23,7 +23,6 @@ const commonWaiverMockData: GetCommonWaiverQuery['commonWaiver'] = {
   name: 'Test Waiver',
   description: 'Test waiver description',
   participationAgreementLanguageLink: 'https://example.com/pal',
-  cmmiWaiverPointOfContact: 'Jane Doe',
   waiverType: CommonWaiverType.MEDICARE_PAYMENT,
   waiverFocus: 'Site of care, Safe harbors',
   whatIsWaived: 'Some regulation',
@@ -56,7 +55,8 @@ const FormWrapper = ({ children }: { children: React.ReactNode }) => {
       waivers: {
         [waiverId]: {
           willUseWaiver: null,
-          notUsingReason: ''
+          notUsingReason: '',
+          usingReason: ''
         }
       }
     }
@@ -118,54 +118,9 @@ describe('WaiverInfoPanel', () => {
     expect(
       screen.getByText('Link to Participation Agreement Language')
     ).toBeInTheDocument();
-    expect(screen.getByText('Jane Doe')).toBeInTheDocument();
     expect(screen.getByText('Medicare payment waivers')).toBeInTheDocument();
     expect(screen.getByText('Site of care, Safe harbors')).toBeInTheDocument();
     expect(screen.getByText('Some regulation')).toBeInTheDocument();
-    expect(
-      screen.getByText('Do you plan to use this waiver with your model?')
-    ).toBeInTheDocument();
-  });
-
-  it('shows fallback text when point of contact is empty', async () => {
-    renderPanel({
-      search: `waiverId=${waiverId}`,
-      mocks: [getCommonWaiver({ cmmiWaiverPointOfContact: '   ' })]
-    });
-
-    await waitFor(() => {
-      expect(
-        screen.getByText('No point of contact listed')
-      ).toBeInTheDocument();
-    });
-  });
-
-  it('hides waiver select actions on readview', async () => {
-    const router = createMemoryRouter(
-      [
-        {
-          path: '/read-view',
-          element: <WaiverInfoPanel />
-        }
-      ],
-      {
-        initialEntries: [`/read-view/?waiverId=${waiverId}`]
-      }
-    );
-
-    render(
-      <MockedProvider mocks={[getCommonWaiver()]}>
-        <RouterProvider router={router} />
-      </MockedProvider>
-    );
-
-    await waitFor(() => {
-      expect(screen.getByText('Test Waiver')).toBeInTheDocument();
-
-      expect(
-        screen.queryByText('Do you plan to use this waiver with your model?')
-      ).not.toBeInTheDocument();
-    });
   });
 
   it('matches snapshot when open', async () => {

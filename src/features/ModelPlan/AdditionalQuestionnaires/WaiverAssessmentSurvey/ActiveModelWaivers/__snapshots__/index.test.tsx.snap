@@ -80,28 +80,6 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
-                <div
-                  class="usa-form-group margin-left-4 margin-top-1"
-                  data-testid="formGroup"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="modifies-medicare-savings-programs-example"
-                  >
-                    Please provide an example
-                  </label>
-                  <textarea
-                    aria-labelledby="label-modifies-medicare-savings-programs-example hint-modifies-medicare-savings-programs-example"
-                    class="height-card usa-textarea"
-                    data-testid="modifies-medicare-savings-programs-example"
-                    id="modifies-medicare-savings-programs-example"
-                    maxlength="5000"
-                    name="modifiesMedicareSavingsProgramsExample"
-                  >
-                    Example
-                  </textarea>
-                </div>
               </div>
               <div
                 class="display-flex flex-column"
@@ -213,60 +191,6 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
-                <div
-                  class="usa-form-group margin-left-4 margin-top-1"
-                  data-testid="formGroup"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="bundles-payments-why-not"
-                  >
-                    Please explain why not
-                  </label>
-                  <select
-                    class="usa-select"
-                    data-testid="Select"
-                    id="bundles-payments-why-not"
-                    name="bundlesPaymentsWhyNot"
-                  >
-                    <option
-                      value="default"
-                    >
-                      - Select -
-                    </option>
-                    <option
-                      value="OUT_OF_SCOPE"
-                    >
-                      Outside of model scope (e.g. Medicaid-only waiver)
-                    </option>
-                    <option
-                      value="OVERLAPS"
-                    >
-                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
-                    </option>
-                    <option
-                      value="NOT_TESTING"
-                    >
-                      The model will not be testing this waiver or payment type (e.g. bundles)
-                    </option>
-                    <option
-                      value="NOT_ENGAGED"
-                    >
-                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
-                    </option>
-                    <option
-                      value="FEEDBACK_AGAINST_USE"
-                    >
-                      Feedback from participants against waiver use
-                    </option>
-                    <option
-                      value="OTHER"
-                    >
-                      Other
-                    </option>
-                  </select>
-                </div>
               </div>
             </div>
             <div
@@ -395,28 +319,6 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
-                <div
-                  class="usa-form-group margin-left-4 margin-top-1"
-                  data-testid="formGroup"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="impacts-site-of-care-payments-example"
-                  >
-                    Please provide an example
-                  </label>
-                  <textarea
-                    aria-labelledby="label-impacts-site-of-care-payments-example hint-impacts-site-of-care-payments-example"
-                    class="height-card usa-textarea"
-                    data-testid="impacts-site-of-care-payments-example"
-                    id="impacts-site-of-care-payments-example"
-                    maxlength="5000"
-                    name="impactsSiteOfCarePaymentsExample"
-                  >
-                    Example
-                  </textarea>
-                </div>
               </div>
               <div
                 class="display-flex flex-column"
@@ -533,60 +435,6 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
-                <div
-                  class="usa-form-group margin-left-4 margin-top-1"
-                  data-testid="formGroup"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="modifies-care-team-scope-of-practice-why-not"
-                  >
-                    Please explain why not
-                  </label>
-                  <select
-                    class="usa-select"
-                    data-testid="Select"
-                    id="modifies-care-team-scope-of-practice-why-not"
-                    name="modifiesCareTeamScopeOfPracticeWhyNot"
-                  >
-                    <option
-                      value="default"
-                    >
-                      - Select -
-                    </option>
-                    <option
-                      value="OUT_OF_SCOPE"
-                    >
-                      Outside of model scope (e.g. Medicaid-only waiver)
-                    </option>
-                    <option
-                      value="OVERLAPS"
-                    >
-                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
-                    </option>
-                    <option
-                      value="NOT_TESTING"
-                    >
-                      The model will not be testing this waiver or payment type (e.g. bundles)
-                    </option>
-                    <option
-                      value="NOT_ENGAGED"
-                    >
-                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
-                    </option>
-                    <option
-                      value="FEEDBACK_AGAINST_USE"
-                    >
-                      Feedback from participants against waiver use
-                    </option>
-                    <option
-                      value="OTHER"
-                    >
-                      Other
-                    </option>
-                  </select>
-                </div>
               </div>
             </div>
             <div
@@ -670,60 +518,6 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
-                <div
-                  class="usa-form-group margin-left-4 margin-top-1"
-                  data-testid="formGroup"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="modifies-care-delivery-with-claims-based-payments-why-not"
-                  >
-                    Please explain why not
-                  </label>
-                  <select
-                    class="usa-select"
-                    data-testid="Select"
-                    id="modifies-care-delivery-with-claims-based-payments-why-not"
-                    name="modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot"
-                  >
-                    <option
-                      value="default"
-                    >
-                      - Select -
-                    </option>
-                    <option
-                      value="OUT_OF_SCOPE"
-                    >
-                      Outside of model scope (e.g. Medicaid-only waiver)
-                    </option>
-                    <option
-                      value="OVERLAPS"
-                    >
-                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
-                    </option>
-                    <option
-                      value="NOT_TESTING"
-                    >
-                      The model will not be testing this waiver or payment type (e.g. bundles)
-                    </option>
-                    <option
-                      value="NOT_ENGAGED"
-                    >
-                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
-                    </option>
-                    <option
-                      value="FEEDBACK_AGAINST_USE"
-                    >
-                      Feedback from participants against waiver use
-                    </option>
-                    <option
-                      value="OTHER"
-                    >
-                      Other
-                    </option>
-                  </select>
-                </div>
               </div>
             </div>
             <div
@@ -802,60 +596,6 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
-                <div
-                  class="usa-form-group margin-left-4 margin-top-1"
-                  data-testid="formGroup"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="modifies-quality-measurements-or-payments-via-waivers-why-not"
-                  >
-                    Please explain why not
-                  </label>
-                  <select
-                    class="usa-select"
-                    data-testid="Select"
-                    id="modifies-quality-measurements-or-payments-via-waivers-why-not"
-                    name="modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot"
-                  >
-                    <option
-                      value="default"
-                    >
-                      - Select -
-                    </option>
-                    <option
-                      value="OUT_OF_SCOPE"
-                    >
-                      Outside of model scope (e.g. Medicaid-only waiver)
-                    </option>
-                    <option
-                      value="OVERLAPS"
-                    >
-                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
-                    </option>
-                    <option
-                      value="NOT_TESTING"
-                    >
-                      The model will not be testing this waiver or payment type (e.g. bundles)
-                    </option>
-                    <option
-                      value="NOT_ENGAGED"
-                    >
-                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
-                    </option>
-                    <option
-                      value="FEEDBACK_AGAINST_USE"
-                    >
-                      Feedback from participants against waiver use
-                    </option>
-                    <option
-                      value="OTHER"
-                    >
-                      Other
-                    </option>
-                  </select>
-                </div>
               </div>
             </div>
             <div
@@ -906,28 +646,6 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
-                <div
-                  class="usa-form-group margin-left-4 margin-top-1"
-                  data-testid="formGroup"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="impacts-medicaid-only-beneficiaries-example"
-                  >
-                    Please provide an example
-                  </label>
-                  <textarea
-                    aria-labelledby="label-impacts-medicaid-only-beneficiaries-example hint-impacts-medicaid-only-beneficiaries-example"
-                    class="height-card usa-textarea"
-                    data-testid="impacts-medicaid-only-beneficiaries-example"
-                    id="impacts-medicaid-only-beneficiaries-example"
-                    maxlength="5000"
-                    name="impactsMedicaidOnlyBeneficiariesExample"
-                  >
-                    Example
-                  </textarea>
-                </div>
               </div>
               <div
                 class="display-flex flex-column"
@@ -1039,60 +757,6 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
-                <div
-                  class="usa-form-group margin-left-4 margin-top-1"
-                  data-testid="formGroup"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="impacts-home-community-based-service-payments-why-not"
-                  >
-                    Please explain why not
-                  </label>
-                  <select
-                    class="usa-select"
-                    data-testid="Select"
-                    id="impacts-home-community-based-service-payments-why-not"
-                    name="impactsHomeCommunityBasedServicePaymentsWhyNot"
-                  >
-                    <option
-                      value="default"
-                    >
-                      - Select -
-                    </option>
-                    <option
-                      value="OUT_OF_SCOPE"
-                    >
-                      Outside of model scope (e.g. Medicaid-only waiver)
-                    </option>
-                    <option
-                      value="OVERLAPS"
-                    >
-                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
-                    </option>
-                    <option
-                      value="NOT_TESTING"
-                    >
-                      The model will not be testing this waiver or payment type (e.g. bundles)
-                    </option>
-                    <option
-                      value="NOT_ENGAGED"
-                    >
-                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
-                    </option>
-                    <option
-                      value="FEEDBACK_AGAINST_USE"
-                    >
-                      Feedback from participants against waiver use
-                    </option>
-                    <option
-                      value="OTHER"
-                    >
-                      Other
-                    </option>
-                  </select>
-                </div>
               </div>
             </div>
             <div
@@ -1171,60 +835,6 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
                     </label>
                   </div>
                 </fieldset>
-                <div
-                  class="usa-form-group margin-left-4 margin-top-1"
-                  data-testid="formGroup"
-                >
-                  <label
-                    class="usa-label text-normal"
-                    data-testid="label"
-                    for="impacts-managed-care-waivers-why-not"
-                  >
-                    Please explain why not
-                  </label>
-                  <select
-                    class="usa-select"
-                    data-testid="Select"
-                    id="impacts-managed-care-waivers-why-not"
-                    name="impactsManagedCareWaiversWhyNot"
-                  >
-                    <option
-                      value="default"
-                    >
-                      - Select -
-                    </option>
-                    <option
-                      value="OUT_OF_SCOPE"
-                    >
-                      Outside of model scope (e.g. Medicaid-only waiver)
-                    </option>
-                    <option
-                      value="OVERLAPS"
-                    >
-                      Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)
-                    </option>
-                    <option
-                      value="NOT_TESTING"
-                    >
-                      The model will not be testing this waiver or payment type (e.g. bundles)
-                    </option>
-                    <option
-                      value="NOT_ENGAGED"
-                    >
-                      The model does not engage with the user of this waiver (e.g. WISeR, CGT)
-                    </option>
-                    <option
-                      value="FEEDBACK_AGAINST_USE"
-                    >
-                      Feedback from participants against waiver use
-                    </option>
-                    <option
-                      value="OTHER"
-                    >
-                      Other
-                    </option>
-                  </select>
-                </div>
               </div>
             </div>
             <div

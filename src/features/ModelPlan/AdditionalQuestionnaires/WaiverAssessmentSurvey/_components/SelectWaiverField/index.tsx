@@ -149,6 +149,9 @@ const SelectWaiverField = ({
                     unstyled
                     onClick={() => {
                       setValue(willUseWaiverField, null, { shouldDirty: true });
+                      setValue(`${fieldPrefix}.${reasonFieldName}`, '', {
+                        shouldDirty: true
+                      });
                     }}
                   >
                     {waiverAssessmentSurveyMiscT(

@@ -69,7 +69,7 @@ describe('SelectWaiverField', () => {
     await user.click(screen.getByTestId(yesTestId));
 
     expect(
-      screen.getByText('You said your model will use this waiver.')
+      screen.getByText('You said your model will use this waiver')
     ).toBeInTheDocument();
     expect(screen.getByText('Change response')).toBeInTheDocument();
     expect(screen.queryByTestId(notUsingReasonTestId)).not.toBeInTheDocument();
@@ -82,7 +82,7 @@ describe('SelectWaiverField', () => {
     await user.click(screen.getByTestId(noTestId));
 
     expect(
-      screen.getByText('You said your model will not use this waiver.')
+      screen.getByText('You said your model will not use this waiver')
     ).toBeInTheDocument();
     expect(screen.getByText('Change response')).toBeInTheDocument();
     expect(
