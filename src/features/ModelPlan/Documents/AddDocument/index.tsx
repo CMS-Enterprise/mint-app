@@ -21,7 +21,6 @@ const AddDocument = () => {
   const { t } = useTranslation('documentsMisc');
 
   const [formState, setFormState] = useState<'upload' | 'link'>('upload');
-
   const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
@@ -29,10 +28,11 @@ const AddDocument = () => {
   const { state } = useLocation() as {
     state?: {
       fromCollaborationArea?: boolean;
+      planTaskID?: string;
     };
   };
 
-  const planTaskID = searchParams.get('planTaskID') || undefined;
+  const planTaskID = state?.planTaskID || searchParams.get('planTaskID') || '';
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -88,9 +88,9 @@ const AddDocument = () => {
           </ButtonGroup>
 
           {formState === 'upload' ? (
-            <DocumentUpload planTaskID={planTaskID} />
+            <DocumentUpload planTaskID={planTaskID || undefined} />
           ) : (
-            <LinkDocument planTaskID={planTaskID} />
+            <LinkDocument planTaskID={planTaskID || undefined} />
           )}
 
           <div className="display-block">

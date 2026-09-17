@@ -1,6 +1,6 @@
 const twoPageMeeting = {
   title: 'About 2-page concept papers and review meetings',
-  lastUpdatedDate: '2026-08-26',
+  lastUpdatedDate: '2026-09-09',
   description:
     'Model teams can use this article to learn more about 2-page concept papers, access helpful resources, and ensure they are fully prepared for the 2-page concept review meeting with CMMI Front Office (FO). Others working with new model teams or interested in the CMMI model development process can use this article and the linked resources to learn more about the 2-page concept paper phase of the process.',
   contentInfo: {

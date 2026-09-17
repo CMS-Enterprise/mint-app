@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
@@ -12,8 +14,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
-// PlanTaskGetByModelPlanIDLOADER returns all plan tasks for a slice of model plan IDs
-func PlanTaskGetByModelPlanIDLOADER(
+// PlanTaskGetByModelPlanIDs returns all plan tasks for a slice of model plan IDs. It backs the
+// ByModelPlanID dataloader (see storage/loaders/plan_task_loader.go) exclusively - callers that
+// need a single task by (modelPlanID, key), including those running inside a DB transaction that
+// can't safely use the request-scoped dataloader, should use
+// PlanTaskGetByModelPlanIDAndKey instead.
+func PlanTaskGetByModelPlanIDs(
 	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	modelPlanIDs []uuid.UUID,
@@ -38,18 +44,94 @@ func PlanTaskGetByIDLoader(
 	return sqlutils.SelectProcedure[models.PlanTask](np, sqlqueries.PlanTask.GetByIDLoader, args)
 }
 
-// PlanTaskUpdate updates mutable fields on a plan task (status and completion fields)
-func PlanTaskUpdate(
+// PlanTaskGetByModelPlanIDAndKey returns the plan task for a specific (modelPlanID, key) pair, or
+// nil if none exists. Unlike PlanTaskGetByModelPlanIDs, this filters in SQL rather than fetching
+// every task for the plan and scanning for the key in Go.
+func PlanTaskGetByModelPlanIDAndKey(
 	np sqlutils.NamedPreparer,
-	logger *zap.Logger,
-	task *models.PlanTask,
+	_ *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
 ) (*models.PlanTask, error) {
-	updatedTask, err := sqlutils.GetProcedure[models.PlanTask](np, sqlqueries.PlanTask.Update, task)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, task)
+	args := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+		"key":           key,
 	}
 
-	return updatedTask, nil
+	task, err := sqlutils.GetProcedure[models.PlanTask](np, sqlqueries.PlanTask.GetByModelPlanIDAndKey, args)
+	if err != nil {
+		if sqlutils.IsNoRowsResult(err) {
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	return task, nil
+}
+
+// PlanTaskUpdateStateByKey sets a plan task's state and completion metadata (identified by
+// modelPlanID + key, rather than a pre-fetched row) in a single conditional update, attributing
+// the change to modifiedBy. It returns (nil, nil) - a no-op, not an error - if the task was
+// already at the target state and completion metadata, or if it doesn't exist for this model
+// plan; callers that need to distinguish "doesn't exist" from "no-op" should follow up with
+// PlanTaskGetByModelPlanIDAndKey in that case.
+func PlanTaskUpdateStateByKey(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
+	newState models.PlanTaskState,
+	completedBy *uuid.UUID,
+	completedDts *time.Time,
+	modifiedBy uuid.UUID,
+) (*models.PlanTaskWithPreviousState, error) {
+	args := map[string]interface{}{
+		"model_plan_id":      modelPlanID,
+		"key":                key,
+		"state":              newState,
+		"completed_by":       completedBy,
+		"completed_dts":      completedDts,
+		"modified_by":        modifiedBy,
+		"target_is_complete": newState == models.PlanTaskStateComplete,
+	}
+
+	result, err := sqlutils.GetProcedure[models.PlanTaskWithPreviousState](np, sqlqueries.PlanTask.UpdateStateByKey, args)
+	if err != nil {
+		if sqlutils.IsNoRowsResult(err) {
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	return result, nil
+}
+
+// PlanTaskActivateUpcoming moves a plan task from UPCOMING to TO_DO in a single conditional
+// update, attributing the change to modifiedBy. It returns nil if the task wasn't currently
+// UPCOMING (already activated, has otherwise progressed, or doesn't exist), which is a no-op
+// rather than an error.
+func PlanTaskActivateUpcoming(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
+	modifiedBy uuid.UUID,
+) (*models.PlanTask, error) {
+	args := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+		"key":           key,
+		"modified_by":   modifiedBy,
+	}
+
+	task, err := sqlutils.GetProcedure[models.PlanTask](np, sqlqueries.PlanTask.ActivateUpcoming, args)
+	if err != nil {
+		if sqlutils.IsNoRowsResult(err) {
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	return task, nil
 }
 
 // PlanTaskCreate creates a new plan task (used when a model plan is created)
