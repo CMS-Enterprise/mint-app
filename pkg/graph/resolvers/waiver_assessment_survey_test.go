@@ -66,7 +66,7 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 
 	// Plan task should now be IN_PROGRESS
 	task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
-	suite.Equal(models.PlanTaskStatusInProgress, task.Status)
+	suite.Equal(models.PlanTaskStateInProgress, task.State)
 
 	// Transition to COMPLETE via the isComplete convenience field and verify the plan task follows
 	completed, err := WaiverAssessmentSurveyUpdate(suite.testConfigs.Context, suite.testConfigs.Logger, survey.ID, map[string]interface{}{
@@ -76,7 +76,7 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyUpdate() {
 	suite.Equal(models.WaiverAssessmentSurveyStatusComplete, completed.Status)
 
 	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
-	suite.Equal(models.PlanTaskStatusComplete, task.Status)
+	suite.Equal(models.PlanTaskStateComplete, task.State)
 
 	// CompletedBy/CompletedDts should be stamped on completion
 	suite.NotNil(completed.CompletedBy)
@@ -119,7 +119,7 @@ func (suite *ResolverSuite) TestWaiverAssessmentSurveyAutoTransition() {
 	suite.Equal(models.WaiverAssessmentSurveyStatusInProgress, updated.Status)
 
 	task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyWaiverAssessmentSurvey)
-	suite.Equal(models.PlanTaskStatusInProgress, task.Status)
+	suite.Equal(models.PlanTaskStateInProgress, task.State)
 }
 
 // TestWaiversNotPreCreatedWithModelPlan verifies that no waiver rows are pre-created when a

@@ -24,7 +24,7 @@ func (suite *NotificationsSuite) TestActivityTaskCompletedCreate() {
 		actorID,
 		modelPlanID,
 		models.PlanTaskKeyModelPlan,
-		models.PlanTaskStatusComplete,
+		models.PlanTaskStateComplete,
 	)
 
 	testActivity, err := ActivityTaskCompletedCreate(

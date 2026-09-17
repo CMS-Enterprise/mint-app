@@ -29,19 +29,23 @@ import 'components/Tabs/index.scss';
 
 type PlanTaskEntry = GetCollaborationAreaQuery['modelPlan']['tasks'][number];
 
-type TabId = 'current' | 'completed';
+type TabId = 'current' | 'upcoming' | 'completed';
 
 // Current tasks are shown in this fixed order per requirements.
 export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
-  PlanTaskKey.TWO_PAGER,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
+  PlanTaskKey.TWO_PAGER,
+  PlanTaskKey.SIX_PAGER,
   PlanTaskKey.MTO
 ];
 
 const getTabIdFromSearchParams = (tab: string | null): TabId => {
-  return tab === 'completed' ? 'completed' : 'current';
+  if (tab === 'upcoming' || tab === 'completed') {
+    return tab;
+  }
+  return 'current';
 };
 
 const getCompletedDts = (task: PlanTaskEntry): string => {
@@ -88,10 +92,16 @@ const Tasks = () => {
   const currentTasks = CURRENT_TASK_ORDER.flatMap(key => {
     const task = tasks.find(
       planTask =>
-        planTask.key === key && planTask.state !== PlanTaskState.COMPLETE
+        planTask.key === key &&
+        planTask.state !== PlanTaskState.COMPLETE &&
+        planTask.state !== PlanTaskState.UPCOMING
     );
     return task ? [task] : [];
   });
+
+  const upcomingTasks = tasks.filter(
+    task => task.state === PlanTaskState.UPCOMING
+  );
 
   const completedTasks = tasks.filter(
     task => task.state === PlanTaskState.COMPLETE
@@ -103,6 +113,10 @@ const Tasks = () => {
     {
       id: 'current' as const,
       label: t('tabs.current', { count: currentTasks.length })
+    },
+    {
+      id: 'upcoming' as const,
+      label: t('tabs.upcoming', { count: upcomingTasks.length })
     },
     {
       id: 'completed' as const,
@@ -182,6 +196,31 @@ const Tasks = () => {
               ) : (
                 <CardGroup>
                   {currentTasks.map(task => (
+                    <TaskCard
+                      key={task.key}
+                      task={task}
+                      modelPlan={modelPlan}
+                    />
+                  ))}
+                </CardGroup>
+              )}
+            </section>
+          )}
+
+          {tabId === 'upcoming' && (
+            <section
+              id="upcoming-panel"
+              role="tabpanel"
+              aria-labelledby="upcoming-tab"
+              tabIndex={0}
+            >
+              {upcomingTasks.length === 0 ? (
+                <Alert type="info" heading={t('emptyState.upcoming.heading')}>
+                  {t('emptyState.upcoming.copy')}
+                </Alert>
+              ) : (
+                <CardGroup>
+                  {upcomingTasks.map(task => (
                     <TaskCard
                       key={task.key}
                       task={task}
