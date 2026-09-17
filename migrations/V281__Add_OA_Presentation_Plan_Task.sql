@@ -1,5 +1,4 @@
 ALTER TYPE PLAN_TASK_KEY ADD VALUE 'OA_PRESENTATION';
-COMMIT;
 
 -- Backfill the OA_PRESENTATION task for model plans created before this task existed. A plan whose
 -- SIX_PAGER task is already COMPLETE starts OA_PRESENTATION at TO_DO (already activated); all other
