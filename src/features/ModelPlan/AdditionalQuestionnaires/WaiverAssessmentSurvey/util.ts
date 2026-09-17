@@ -450,7 +450,6 @@ export const getRemainingUnusedWaivers = (
 
 const emptyWaiverSelectionFields = (): WaiverSelectionFields => ({
   willUseWaiver: null,
-  usingReason: '',
   notUsingReason: ''
 });
 
@@ -470,7 +469,6 @@ export const buildWaiverSelectionFormValues = (
   modelPlan?.questionnaires.waiverAssessmentSurvey.waivers.forEach(waiver => {
     waivers[waiver.commonWaiverID] = {
       willUseWaiver: waiver.willUseWaiver ?? null,
-      usingReason: waiver.usingReason ?? '',
       notUsingReason: waiver.notUsingReason ?? ''
     };
   });
@@ -488,7 +486,6 @@ const waiverSelectionFieldsChanged = (
 
   return (
     initial.willUseWaiver !== current.willUseWaiver ||
-    initial.usingReason !== current.usingReason ||
     initial.notUsingReason !== current.notUsingReason
   );
 };
@@ -526,14 +523,9 @@ export const getWaiverSelectionChanges = (
     changes.push({
       commonWaiverID,
       willUseWaiver: currentFields.willUseWaiver,
-      usingReason:
-        currentFields.willUseWaiver === true
-          ? currentFields.usingReason || null
-          : null,
-      notUsingReason:
-        currentFields.willUseWaiver === false
-          ? currentFields.notUsingReason || null
-          : null
+      ...(currentFields.willUseWaiver === false
+        ? { notUsingReason: currentFields.notUsingReason || null }
+        : {})
     });
   });
 

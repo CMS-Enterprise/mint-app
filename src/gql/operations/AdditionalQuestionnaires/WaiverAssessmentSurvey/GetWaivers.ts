@@ -12,7 +12,6 @@ export default gql(/* GraphQL */ `
             id
             commonWaiverID
             willUseWaiver
-            usingReason
             notUsingReason
             commonWaiver {
               id

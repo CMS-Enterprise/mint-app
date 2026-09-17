@@ -64,7 +64,7 @@ const WaiverSelectionSection = ({
   const handleAddUnusedWaiver = (waiver: CommonWaiverFragment) => {
     setValue(
       `waivers.${waiver.id}`,
-      { willUseWaiver: true, usingReason: '', notUsingReason: '' },
+      { willUseWaiver: true, notUsingReason: '' },
       { shouldDirty: true }
     );
   };

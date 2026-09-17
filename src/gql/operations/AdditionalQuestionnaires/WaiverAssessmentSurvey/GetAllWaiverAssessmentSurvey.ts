@@ -65,7 +65,6 @@ export default gql(/* GraphQL */ `
           waivers {
             id
             willUseWaiver
-            usingReason
             notUsingReason
             commonWaiver {
               name

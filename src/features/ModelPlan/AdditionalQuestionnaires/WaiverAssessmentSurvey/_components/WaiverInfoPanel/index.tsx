@@ -32,7 +32,6 @@ const WaiverInfoPanelFormInitializer = ({ waiverId }: { waiverId: string }) => {
     if (!existingFields) {
       setValue(`waivers.${waiverId}`, {
         willUseWaiver: null,
-        usingReason: '',
         notUsingReason: ''
       });
     }

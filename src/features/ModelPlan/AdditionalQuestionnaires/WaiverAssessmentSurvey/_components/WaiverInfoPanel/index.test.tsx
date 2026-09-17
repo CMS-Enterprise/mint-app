@@ -56,7 +56,6 @@ const FormWrapper = ({ children }: { children: React.ReactNode }) => {
       waivers: {
         [waiverId]: {
           willUseWaiver: null,
-          usingReason: '',
           notUsingReason: ''
         }
       }
