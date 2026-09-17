@@ -6,7 +6,7 @@ INSERT INTO plan_task (
     id,
     model_plan_id,
     key,
-    status,
+    state,
     created_by
 )
 SELECT

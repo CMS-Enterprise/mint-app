@@ -2387,7 +2387,7 @@ type ComplexityRoot struct {
 	}
 
 	PlanTaskTranslation struct {
-		Status func(childComplexity int) int
+		State func(childComplexity int) int
 	}
 
 	PlanTimeline struct {
@@ -3496,7 +3496,8 @@ type PlanPaymentsResolver interface {
 	PaymentDemandRecoupmentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.FrequencyType, error)
 }
 type PlanTaskResolver interface {
-	State(ctx context.Context, obj *models.PlanTask) (model.PlanTaskState, error)
+	Status(ctx context.Context, obj *models.PlanTask) (model.PlanTaskStatus, error)
+
 	Documents(ctx context.Context, obj *models.PlanTask) ([]*models.PlanDocument, error)
 }
 type PlanTimelineResolver interface {
@@ -15528,12 +15529,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.PlanTask.Status(childComplexity), true
 
-	case "PlanTaskTranslation.status":
-		if e.ComplexityRoot.PlanTaskTranslation.Status == nil {
+	case "PlanTaskTranslation.state":
+		if e.ComplexityRoot.PlanTaskTranslation.State == nil {
 			break
 		}
 
-		return e.ComplexityRoot.PlanTaskTranslation.Status(childComplexity), true
+		return e.ComplexityRoot.PlanTaskTranslation.State(childComplexity), true
 
 	case "PlanTimeline.announced":
 		if e.ComplexityRoot.PlanTimeline.Announced == nil {
@@ -25552,8 +25553,8 @@ PlanTask represents a task on a model plan (e.g. model plan details, MTO, data e
 type PlanTask {
   id: UUID!
   key: PlanTaskKey!
-  status: PlanTaskStatus!
-  state: PlanTaskState! @goField(forceResolver: true)
+  status: PlanTaskStatus! @goField(forceResolver: true)
+  state: PlanTaskState!
   documents: [PlanDocument!]! @goField(forceResolver: true)
   completedBy: UUID
   completedByUserAccount: UserAccount
@@ -25575,12 +25576,13 @@ enum PlanTaskKey {
   DATA_EXCHANGE
   WAIVER_ASSESSMENT_SURVEY
   TWO_PAGER
+  SIX_PAGER
 }
 
 """
-PlanTaskStatus is stored in the database and represents the task lifecycle.
+PlanTaskState is stored in the database and represents the task lifecycle.
 """
-enum PlanTaskStatus {
+enum PlanTaskState {
   NOT_NEEDED
   UPCOMING
   TO_DO
@@ -25589,9 +25591,11 @@ enum PlanTaskStatus {
 }
 
 """
-PlanTaskState is computed from PlanTaskStatus for display.
+PlanTaskStatus is computed from PlanTaskState for display: it collapses every state to just
+TO_DO or COMPLETE. Only COMPLETE maps to COMPLETE; every other state (NOT_NEEDED, UPCOMING,
+TO_DO, IN_PROGRESS) maps to TO_DO.
 """
-enum PlanTaskState {
+enum PlanTaskStatus {
   TO_DO
   COMPLETE
 }
@@ -25599,8 +25603,8 @@ enum PlanTaskState {
 extend type Mutation {
   """
   Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
-  aren't calculated from other model state (currently just TWO_PAGER) can be set this way; other
-  keys will return an error.
+  aren't calculated from other model state (currently TWO_PAGER and SIX_PAGER) can be set this
+  way; other keys will return an error.
   """
   markPlanTaskComplete(
     modelPlanID: UUID!
@@ -25613,7 +25617,7 @@ extend type Mutation {
 Represents plan task translation data
 """
 type PlanTaskTranslation {
-  status: TranslationFieldWithOptions! @goTag(key: "db", value: "status")
+  state: TranslationFieldWithOptions! @goTag(key: "db", value: "state")
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/model_collaboration/team/plan_collaborator.graphql", Input: `enum TeamRole {
@@ -86465,18 +86469,18 @@ func (ec *executionContext) _PlanTask_status(ctx context.Context, field graphql.
 			return ec.fieldContext_PlanTask_status(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return obj.Status, nil
+			return ec.Resolvers.PlanTask().Status(ctx, obj)
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v models.PlanTaskStatus) graphql.Marshaler {
-			return ec.marshalNPlanTaskStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTaskStatus(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v model.PlanTaskStatus) graphql.Marshaler {
+			return ec.marshalNPlanTaskStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanTaskStatus(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
 func (ec *executionContext) fieldContext_PlanTask_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	return graphql.NewScalarFieldContext("PlanTask", field, false, false, errors.New("field of type PlanTaskStatus does not have child fields"))
+	return graphql.NewScalarFieldContext("PlanTask", field, true, true, errors.New("field of type PlanTaskStatus does not have child fields"))
 }
 
 func (ec *executionContext) _PlanTask_state(ctx context.Context, field graphql.CollectedField, obj *models.PlanTask) (ret graphql.Marshaler) {
@@ -86488,18 +86492,18 @@ func (ec *executionContext) _PlanTask_state(ctx context.Context, field graphql.C
 			return ec.fieldContext_PlanTask_state(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return ec.Resolvers.PlanTask().State(ctx, obj)
+			return obj.State, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v model.PlanTaskState) graphql.Marshaler {
-			return ec.marshalNPlanTaskState2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanTaskState(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v models.PlanTaskState) graphql.Marshaler {
+			return ec.marshalNPlanTaskState2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTaskState(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
 func (ec *executionContext) fieldContext_PlanTask_state(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	return graphql.NewScalarFieldContext("PlanTask", field, true, true, errors.New("field of type PlanTaskState does not have child fields"))
+	return graphql.NewScalarFieldContext("PlanTask", field, false, false, errors.New("field of type PlanTaskState does not have child fields"))
 }
 
 func (ec *executionContext) _PlanTask_documents(ctx context.Context, field graphql.CollectedField, obj *models.PlanTask) (ret graphql.Marshaler) {
@@ -86768,16 +86772,16 @@ func (ec *executionContext) fieldContext_PlanTask_modifiedDts(_ context.Context,
 	return graphql.NewScalarFieldContext("PlanTask", field, false, false, errors.New("field of type Time does not have child fields"))
 }
 
-func (ec *executionContext) _PlanTaskTranslation_status(ctx context.Context, field graphql.CollectedField, obj *model.PlanTaskTranslation) (ret graphql.Marshaler) {
+func (ec *executionContext) _PlanTaskTranslation_state(ctx context.Context, field graphql.CollectedField, obj *model.PlanTaskTranslation) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
 		ec.OperationContext,
 		field,
 		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_PlanTaskTranslation_status(ctx, field)
+			return ec.fieldContext_PlanTaskTranslation_state(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return obj.Status, nil
+			return obj.State, nil
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
@@ -86787,7 +86791,7 @@ func (ec *executionContext) _PlanTaskTranslation_status(ctx context.Context, fie
 		true,
 	)
 }
-func (ec *executionContext) fieldContext_PlanTaskTranslation_status(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanTaskTranslation_state(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanTaskTranslation",
 		Field:      field,
@@ -131100,11 +131104,6 @@ func (ec *executionContext) _PlanTask(ctx context.Context, sel ast.SelectionSet,
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "status":
-			out.Values[i] = ec._PlanTask_status(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&out.Invalids, 1)
-			}
-		case "state":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -131113,7 +131112,7 @@ func (ec *executionContext) _PlanTask(ctx context.Context, sel ast.SelectionSet,
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._PlanTask_state(ctx, field, obj)
+				res = ec._PlanTask_status(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -131142,6 +131141,11 @@ func (ec *executionContext) _PlanTask(ctx context.Context, sel ast.SelectionSet,
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "state":
+			out.Values[i] = ec._PlanTask_state(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "documents":
 			field := field
 
@@ -131357,8 +131361,8 @@ func (ec *executionContext) _PlanTaskTranslation(ctx context.Context, sel ast.Se
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("PlanTaskTranslation")
-		case "status":
-			out.Values[i] = ec._PlanTaskTranslation_status(ctx, field, obj)
+		case "state":
+			out.Values[i] = ec._PlanTaskTranslation_state(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -143093,23 +143097,13 @@ func (ec *executionContext) marshalNPlanTaskKey2githubᚗcomᚋcmsᚑenterprise�
 	return res
 }
 
-func (ec *executionContext) unmarshalNPlanTaskState2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanTaskState(ctx context.Context, v any) (model.PlanTaskState, error) {
-	var res model.PlanTaskState
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPlanTaskState2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanTaskState(ctx context.Context, sel ast.SelectionSet, v model.PlanTaskState) graphql.Marshaler {
-	return v
-}
-
-func (ec *executionContext) unmarshalNPlanTaskStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTaskStatus(ctx context.Context, v any) (models.PlanTaskStatus, error) {
+func (ec *executionContext) unmarshalNPlanTaskState2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTaskState(ctx context.Context, v any) (models.PlanTaskState, error) {
 	tmp, err := graphql.UnmarshalString(v)
-	res := models.PlanTaskStatus(tmp)
+	res := models.PlanTaskState(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNPlanTaskStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTaskStatus(ctx context.Context, sel ast.SelectionSet, v models.PlanTaskStatus) graphql.Marshaler {
+func (ec *executionContext) marshalNPlanTaskState2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTaskState(ctx context.Context, sel ast.SelectionSet, v models.PlanTaskState) graphql.Marshaler {
 	_ = sel
 	res := graphql.MarshalString(string(v))
 	if res == graphql.Null {
@@ -143118,6 +143112,16 @@ func (ec *executionContext) marshalNPlanTaskStatus2githubᚗcomᚋcmsᚑenterpri
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNPlanTaskStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanTaskStatus(ctx context.Context, v any) (model.PlanTaskStatus, error) {
+	var res model.PlanTaskStatus
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNPlanTaskStatus2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanTaskStatus(ctx context.Context, sel ast.SelectionSet, v model.PlanTaskStatus) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) marshalNPlanTimeline2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐPlanTimeline(ctx context.Context, sel ast.SelectionSet, v *models.PlanTimeline) graphql.Marshaler {
