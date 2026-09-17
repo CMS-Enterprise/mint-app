@@ -576,7 +576,7 @@ export type CommonWaiver = {
   createdDts: Scalars['Time']['output'];
   description: Scalars['String']['output'];
   hasClaimsDataOrRREGAnalysis: Scalars['String']['output'];
-  hasStandardizationEffort?: Maybe<Scalars['Boolean']['output']>;
+  hasStandardizationEffort: Scalars['Boolean']['output'];
   id: Scalars['UUID']['output'];
   /** Returns if a model plan has answered if the waiver will be used or not. */
   isAnswered: Scalars['Boolean']['output'];
@@ -585,7 +585,7 @@ export type CommonWaiver = {
    * This will automatically return false if it is not in the context of a model plan
    */
   isSuggested: Scalars['Boolean']['output'];
-  isUsedInActiveModels?: Maybe<Scalars['Boolean']['output']>;
+  isUsedInActiveModels: Scalars['Boolean']['output'];
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
   modifiedDts?: Maybe<Scalars['Time']['output']>;
@@ -6780,7 +6780,7 @@ export type GetCommonWaiverQueryVariables = Exact<{
 }>;
 
 
-export type GetCommonWaiverQuery = { __typename: 'Query', commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, description: string, participationAgreementLanguageLink?: string | null, cmmiWaiverPointOfContact?: string | null, waiverType?: CommonWaiverType | null, waiverFocus: string, whatIsWaived: string, hasStandardizationEffort?: boolean | null, hasClaimsDataOrRREGAnalysis: string, isUsedInActiveModels?: boolean | null } };
+export type GetCommonWaiverQuery = { __typename: 'Query', commonWaiver: { __typename: 'CommonWaiver', id: UUID, name: string, description: string, participationAgreementLanguageLink?: string | null, cmmiWaiverPointOfContact?: string | null, waiverType?: CommonWaiverType | null, waiverFocus: string, whatIsWaived: string, hasStandardizationEffort: boolean, hasClaimsDataOrRREGAnalysis: string, isUsedInActiveModels: boolean } };
 
 export type GetModelPlanQuestionsQueryVariables = Exact<{
   id: Scalars['UUID']['input'];

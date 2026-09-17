@@ -26511,9 +26511,9 @@ type CommonWaiver {
   waiverType: CommonWaiverType
   waiverFocus: String!
   whatIsWaived: String!
-  hasStandardizationEffort: Boolean
+  hasStandardizationEffort: Boolean!
   hasClaimsDataOrRREGAnalysis: String!
-  isUsedInActiveModels: Boolean
+  isUsedInActiveModels: Boolean!
 
   # Custom Resolvers
   """
@@ -37604,11 +37604,11 @@ func (ec *executionContext) _CommonWaiver_hasStandardizationEffort(ctx context.C
 			return obj.HasStandardizationEffort, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
-			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_hasStandardizationEffort(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -37650,11 +37650,11 @@ func (ec *executionContext) _CommonWaiver_isUsedInActiveModels(ctx context.Conte
 			return obj.IsUsedInActiveModels, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
-			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
 		},
 		true,
-		false,
+		true,
 	)
 }
 func (ec *executionContext) fieldContext_CommonWaiver_isUsedInActiveModels(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -110924,7 +110924,7 @@ func (ec *executionContext) _CommonWaiver(ctx context.Context, sel ast.Selection
 			}
 		case "hasStandardizationEffort":
 			out.Values[i] = ec._CommonWaiver_hasStandardizationEffort(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "hasClaimsDataOrRREGAnalysis":
@@ -110934,7 +110934,7 @@ func (ec *executionContext) _CommonWaiver(ctx context.Context, sel ast.Selection
 			}
 		case "isUsedInActiveModels":
 			out.Values[i] = ec._CommonWaiver_isUsedInActiveModels(ctx, field, obj)
-			if out.Values[i] == graphql.RequiredNull {
+			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "willUseWaiver":

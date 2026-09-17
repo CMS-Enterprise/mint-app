@@ -18,9 +18,9 @@ type CommonWaiver {
   waiverType: CommonWaiverType
   waiverFocus: String!
   whatIsWaived: String!
-  hasStandardizationEffort: Boolean
+  hasStandardizationEffort: Boolean!
   hasClaimsDataOrRREGAnalysis: String!
-  isUsedInActiveModels: Boolean
+  isUsedInActiveModels: Boolean!
 
   # Custom Resolvers
   """
