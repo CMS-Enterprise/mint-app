@@ -50,6 +50,11 @@ func TestPlanTaskKeyChangeHistoryDisplayName(t *testing.T) {
 		"Prepare for your 6-page review meeting with CMMI Front Office",
 		PlanTaskKeySixPager.ChangeHistoryDisplayName(),
 	)
+	assert.Equal(
+		t,
+		"Prepare for your presentation to the Office of the Administrator",
+		PlanTaskKeyOaPresentation.ChangeHistoryDisplayName(),
+	)
 
 	// Keys without a change-history-specific name fall back to DisplayName()
 	assert.Equal(t, PlanTaskKeyModelPlan.DisplayName(), PlanTaskKeyModelPlan.ChangeHistoryDisplayName())

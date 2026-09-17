@@ -31,13 +31,16 @@ type PlanTaskEntry = GetCollaborationAreaQuery['modelPlan']['tasks'][number];
 
 type TabId = 'current' | 'upcoming' | 'completed';
 
-// Current tasks are shown in this fixed order per requirements.
+// Current tasks are shown in this fixed order per requirements. OA_PRESENTATION is included here
+// so that once it activates from UPCOMING to TO_DO, it moves into the Current tab instead of
+// disappearing from both tabs.
 export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
-  PlanTaskKey.MTO
+  PlanTaskKey.MTO,
+  PlanTaskKey.OA_PRESENTATION
 ];
 
 const getTabIdFromSearchParams = (tab: string | null): TabId => {

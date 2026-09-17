@@ -11,6 +11,7 @@ import {
   Link
 } from '@trussworks/react-uswds';
 import {
+  DocumentType,
   GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   PlanTaskKey,
@@ -52,7 +53,18 @@ const TASK_STATUS_CONFIG: Partial<Record<PlanTaskStatus, TaskStatusConfig>> = {
   }
 };
 
-const USER_MARK_STATUS_TASKS = [PlanTaskKey.TWO_PAGER, PlanTaskKey.SIX_PAGER];
+const USER_MARK_STATUS_TASKS = [
+  PlanTaskKey.TWO_PAGER,
+  PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.OA_PRESENTATION
+];
+
+const TASK_DOCUMENT_TYPE: Partial<Record<PlanTaskKey, DocumentType>> = {
+  [PlanTaskKey.TWO_PAGER]: DocumentType.CONCEPT_PAPER,
+  [PlanTaskKey.SIX_PAGER]: DocumentType.CONCEPT_PAPER,
+  [PlanTaskKey.OA_PRESENTATION]:
+    DocumentType.OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION
+};
 
 function TaskStatusTag({ status }: { status: PlanTaskStatus }) {
   const { t } = useTranslation('tasks');
@@ -163,27 +175,33 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
       <CardFooter className="display-flex border-top-0 padding-top-1">
         <Button
           type="button"
+          outline={t(`${key}.primaryActionStyle`) === 'outline'}
           className="margin-right-2"
           onClick={() =>
             navigate(
               t(`${key}.primaryPath`, { modelID, planTaskID: task.id }),
               {
-                state: { fromCollaborationArea: true }
+                state: {
+                  fromCollaborationArea: true,
+                  documentType: TASK_DOCUMENT_TYPE[key]
+                }
               }
             )
           }
         >
           {t(`${baseKey}.primaryAction`)}
         </Button>
-        <UswdsReactLink
-          to={t(`${key}.secondaryPath`)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="usa-button usa-button--outline margin-right-2"
-          variant="unstyled"
-        >
-          {t(`${key}.secondaryAction`)}
-        </UswdsReactLink>
+        {t(`${key}.secondaryAction`, { defaultValue: '' }) !== '' && (
+          <UswdsReactLink
+            to={t(`${key}.secondaryPath`)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="usa-button usa-button--outline margin-right-2"
+            variant="unstyled"
+          >
+            {t(`${key}.secondaryAction`)}
+          </UswdsReactLink>
+        )}
 
         {USER_MARK_STATUS_TASKS.includes(key) && (
           <div className="display-flex flex-align-center">
