@@ -87,7 +87,7 @@ const ModelPlanQuestions = () => {
         <FormHeader
           header={waiverAssessmentSurveyMiscT('modelPlanQuestions.heading')}
           currentPage={2}
-          totalPages={7}
+          totalPages={5}
         />
         <p className="margin-top-neg-1 margin-bottom-4 text-base-dark">
           {waiverAssessmentSurveyMiscT('modelPlanQuestions.description')}
@@ -111,7 +111,7 @@ const ModelPlanQuestions = () => {
           )}
       </div>
 
-      <PageNumber currentPage={2} totalPages={7} className="margin-y-6" />
+      <PageNumber currentPage={2} totalPages={5} className="margin-y-6" />
     </div>
   );
 };

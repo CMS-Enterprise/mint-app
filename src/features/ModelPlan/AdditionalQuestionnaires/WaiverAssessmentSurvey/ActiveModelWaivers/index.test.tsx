@@ -3,22 +3,22 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { medicarePaymentWaiversMocks, modelID } from 'tests/mock/general';
+import { ActiveModelWaiversMocks, modelID } from 'tests/mock/general';
 
-import MedicarePaymentWaivers from './index';
+import ActiveModelWaivers from './index';
 
-describe('MedicarePaymentWaivers Component', () => {
+describe('ActiveModelWaivers Component', () => {
   const setupRouter = () => {
     return createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicare-payment-waivers',
-          element: <MedicarePaymentWaivers />
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/active-model-waivers',
+          element: <ActiveModelWaivers />
         }
       ],
       {
         initialEntries: [
-          `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/medicare-payment-waivers`
+          `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/active-model-waivers`
         ]
       }
     );
@@ -30,13 +30,13 @@ describe('MedicarePaymentWaivers Component', () => {
     const router = setupRouter();
 
     render(
-      <MockedProvider mocks={medicarePaymentWaiversMocks} addTypename={false}>
+      <MockedProvider mocks={ActiveModelWaiversMocks} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Medicare payment waivers')).toBeInTheDocument();
+      expect(screen.getByText('Active model waivers')).toBeInTheDocument();
     });
 
     expect(
@@ -44,20 +44,8 @@ describe('MedicarePaymentWaivers Component', () => {
         'Does your model modify Medicare shared savings programs?'
       )
     ).toBeInTheDocument();
-    expect(screen.getByText('Selected waivers')).toBeInTheDocument();
 
-    await waitFor(() => {
-      expect(screen.getByText('Please provide an example')).toBeInTheDocument();
-    });
-
-    const noRadioOption = screen.getAllByLabelText('No')[0];
-    await user.click(noRadioOption);
-
-    await waitFor(() => {
-      expect(
-        screen.queryByText('Please provide an example')
-      ).not.toBeInTheDocument();
-    });
+    expect(screen.getByText('Available waivers')).toBeInTheDocument();
 
     const nextButton = screen.getByRole('button', { name: /next/i });
     await user.click(nextButton);
@@ -71,13 +59,13 @@ describe('MedicarePaymentWaivers Component', () => {
     const router = setupRouter();
 
     const { asFragment } = render(
-      <MockedProvider mocks={medicarePaymentWaiversMocks} addTypename={false}>
+      <MockedProvider mocks={ActiveModelWaiversMocks} addTypename={false}>
         <RouterProvider router={router} />
       </MockedProvider>
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Medicare payment waivers')).toBeInTheDocument();
+      expect(screen.getByText('Active model waivers')).toBeInTheDocument();
     });
 
     expect(asFragment()).toMatchSnapshot();
