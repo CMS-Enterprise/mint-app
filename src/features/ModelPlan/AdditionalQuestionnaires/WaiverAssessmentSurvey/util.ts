@@ -440,7 +440,7 @@ export const buildWaiverSelectionFormValues = (
       usingReason: waiver.usingReason ?? ''
     };
   });
-  return { waivers };
+  return { waivers, isEmptyWaiversConfirmed: false }; // TODO update once query is ready
 };
 
 const waiverSelectionFieldsChanged = (
