@@ -18,7 +18,6 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 		return cw.Name == "Non-duplication"
 	})
 	suite.Require().True(found)
-	willUseWaiver := true
 
 	created, err := UpdateSelectedWaivers(
 		suite.testConfigs.Logger,
@@ -26,7 +25,7 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 		[]*models.WaiverSelectionInput{
 			{
 				CommonWaiverID: commonWaiver.ID,
-				WillUseWaiver:  &willUseWaiver,
+				WillUseWaiver:  new(true),
 				UsingReason:    nil,
 				NotUsingReason: nil,
 			},
@@ -50,7 +49,7 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 		[]*models.WaiverSelectionInput{
 			{
 				CommonWaiverID: commonWaiver.ID,
-				WillUseWaiver:  &willUseWaiver,
+				WillUseWaiver:  new(true),
 				UsingReason:    &usingReason,
 			},
 		},
@@ -67,14 +66,13 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 	suite.Equal(usingReason, *updated[0].UsingReason)
 	suite.Nil(updated[0].NotUsingReason)
 
-	willUseWaiver = false
 	updated, err = UpdateSelectedWaivers(
 		suite.testConfigs.Logger,
 		plan.ID,
 		[]*models.WaiverSelectionInput{
 			{
 				CommonWaiverID: commonWaiver.ID,
-				WillUseWaiver:  &willUseWaiver,
+				WillUseWaiver:  new(false),
 				NotUsingReason: &notUsingReason,
 			},
 		},
