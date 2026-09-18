@@ -313,6 +313,54 @@ describe('ChangeRecord', () => {
     ).toBeInTheDocument();
   });
 
+  it('attributes a manually-marked OA_PRESENTATION status change to the acting user, not MINT', () => {
+    const oaPresentationRecord: ChangeRecordType = {
+      id: 'e5c8d7b2-3a4e-4b5c-9d6e-7f8a9b0c1d2f',
+      tableName: TableName.PLAN_TASK,
+      date: '2024-06-28T12:00:00.000000Z',
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          id: '0a1eceab-fbf6-433a-ba2a-fd4482c4484e',
+          changeType: AuditFieldChangeType.UPDATED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'state',
+          fieldNameTranslated: 'State',
+          referenceLabel: null,
+          questionType: null,
+          notApplicableQuestions: null,
+          old: 'TO_DO',
+          oldTranslated: 'To do',
+          new: 'COMPLETE',
+          newTranslated: 'Complete',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      metaData: {
+        __typename: 'TranslatedAuditMetaGeneric',
+        version: 0,
+        tableName: TableName.PLAN_TASK,
+        relation: 'OA_PRESENTATION',
+        relationContent:
+          'Prepare for your presentation to the Office of the Administrator (OA)'
+      },
+      actorName: 'Jane McModelteam',
+      __typename: 'TranslatedAudit'
+    };
+
+    const { getByText, queryByText } = render(
+      <ChangeRecord changeRecord={oaPresentationRecord} index={1} />
+    );
+
+    expect(getByText('Jane McModelteam')).toBeInTheDocument();
+    expect(queryByText('MINT')).not.toBeInTheDocument();
+    expect(
+      getByText(
+        /marked a task \(Prepare for your presentation to the Office of the Administrator \(OA\)\) as Complete/
+      )
+    ).toBeInTheDocument();
+  });
+
   it('attributes an automatically-activated SIX_PAGER status change to MINT, not the triggering user', () => {
     const sixPagerActivationRecord: ChangeRecordType = {
       id: 'f5c8d7b2-3a4e-4b5c-9d6e-7f8a9b0c1d2e',
