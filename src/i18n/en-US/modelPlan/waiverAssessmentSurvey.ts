@@ -712,7 +712,9 @@ const waiverAssessmentSurveyMisc = {
     suggestedWaivers: {
       heading: 'Suggested waivers',
       description:
-        'The waivers below are all currently used in active models, and are therefore more likely to be used in new models. At the end of this page, you will also be able to review waivers not currently used in active models.'
+        'The waivers below are all currently used in active models, and are therefore more likely to be used in new models. At the end of this page, you will also be able to review waivers not currently used in active models.',
+      emptyAlert:
+        'Your answers on the previous page have ruled out all available active waivers. Confirm that your model does not require waivers, review and update your answers, or select from the list of ruled out waivers below.'
     },
     learnMoreAboutThisWaiver: 'Learn more about this waiver',
     iPlanToUseThisWaiver: 'I plan to use this waiver for my model',

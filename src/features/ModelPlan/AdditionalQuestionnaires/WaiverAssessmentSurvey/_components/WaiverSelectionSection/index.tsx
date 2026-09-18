@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Button, Icon } from '@trussworks/react-uswds';
 import type { GetWaiversQuery } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import { WaiverSelectionForm } from 'types/waivers';
 
 import { getSuggestedOrInUseWaivers, getUnselectedWaivers } from '../../util';
@@ -66,49 +67,58 @@ const WaiverSelectionSection = ({
       </div>
 
       <div className="margin-bottom-4">
-        {suggestedOrInUseWaivers.map(waiver => (
-          <div
-            key={waiver.id}
-            className="padding-3 border-1px border-gray-10 radius-md shadow-3 margin-bottom-2"
-          >
-            <div className="margin-bottom-3">
-              <h5 className="margin-top-0 margin-bottom-05 text-base-dark text-normal">
-                {waiverAssessmentSurveyMiscT(`${waiver.waiverType}.heading`)}
-              </h5>
+        {suggestedOrInUseWaivers.length === 0 && (
+          <Alert type="warning" slim>
+            {waiverAssessmentSurveyMiscT(
+              `waiverSelectionAndConfirmation.suggestedWaivers.emptyAlert`
+            )}
+          </Alert>
+        )}
 
-              <p className="mint-body-large margin-top-0 margin-bottom-1">
-                {waiver.name}
-              </p>
+        {suggestedOrInUseWaivers.length > 0 &&
+          suggestedOrInUseWaivers.map(waiver => (
+            <div
+              key={waiver.id}
+              className="padding-3 border-1px border-gray-10 radius-md shadow-3 margin-bottom-2"
+            >
+              <div className="margin-bottom-3">
+                <h5 className="margin-top-0 margin-bottom-05 text-base-dark text-normal">
+                  {waiverAssessmentSurveyMiscT(`${waiver.waiverType}.heading`)}
+                </h5>
 
-              <Button
-                type="button"
-                className="margin-top-0 deep-underline"
-                unstyled
-                onClick={() => {
-                  setSearchParams(prev => {
-                    const nextParams = new URLSearchParams(prev);
-                    nextParams.set('waiverId', waiver.id);
-                    return nextParams;
-                  });
-                }}
-              >
-                {waiverAssessmentSurveyMiscT(
-                  'waiverSelectionAndConfirmation.learnMoreAboutThisWaiver'
-                )}
-                <Icon.ArrowForward
-                  className="margin-left-0"
-                  aria-label="forward"
-                />
-              </Button>
+                <p className="mint-body-large margin-top-0 margin-bottom-1">
+                  {waiver.name}
+                </p>
+
+                <Button
+                  type="button"
+                  className="margin-top-0 deep-underline"
+                  unstyled
+                  onClick={() => {
+                    setSearchParams(prev => {
+                      const nextParams = new URLSearchParams(prev);
+                      nextParams.set('waiverId', waiver.id);
+                      return nextParams;
+                    });
+                  }}
+                >
+                  {waiverAssessmentSurveyMiscT(
+                    'waiverSelectionAndConfirmation.learnMoreAboutThisWaiver'
+                  )}
+                  <Icon.ArrowForward
+                    className="margin-left-0"
+                    aria-label="forward"
+                  />
+                </Button>
+              </div>
+
+              <SelectWaiverField
+                className="border-top-1px border-base-light"
+                fieldPrefix={`waivers.${waiver.id}`}
+                isFromUnusedWaivers={waiver.isSuggested === false}
+              />
             </div>
-
-            <SelectWaiverField
-              className="border-top-1px border-base-light"
-              fieldPrefix={`waivers.${waiver.id}`}
-              isFromUnusedWaivers={waiver.isSuggested === false}
-            />
-          </div>
-        ))}
+          ))}
       </div>
 
       <OtherWaiversTable
