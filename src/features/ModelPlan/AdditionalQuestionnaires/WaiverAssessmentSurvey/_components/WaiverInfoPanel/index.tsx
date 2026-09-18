@@ -3,7 +3,6 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { useGetCommonWaiverQuery } from 'gql/generated/graphql';
 
 import {
@@ -11,7 +10,6 @@ import {
   DescriptionList,
   DescriptionTerm
 } from 'components/DescriptionGroup';
-import Divider from 'components/Divider';
 import ExternalLink from 'components/ExternalLink';
 import Sidepanel from 'components/Sidepanel';
 import { WaiverSelectionForm } from 'types/waivers';
@@ -20,7 +18,6 @@ import {
   getCommonWaiverMockData,
   MOCK_WAIVERS_ENABLED
 } from '../../mockWaiversData';
-import SelectWaiverField from '../SelectWaiverField';
 
 /** Ensures form fields exist for the selected waiver. Requires FormProvider. */
 const WaiverInfoPanelFormInitializer = ({ waiverId }: { waiverId: string }) => {
@@ -32,7 +29,8 @@ const WaiverInfoPanelFormInitializer = ({ waiverId }: { waiverId: string }) => {
     if (!existingFields) {
       setValue(`waivers.${waiverId}`, {
         willUseWaiver: null,
-        notUsingReason: ''
+        notUsingReason: '',
+        usingReason: ''
       });
     }
   }, [waiverId, getValues, setValue]);
@@ -46,6 +44,8 @@ const WaiverInfoPanelFormInitializer = ({ waiverId }: { waiverId: string }) => {
  */
 const WaiverInfoPanel = () => {
   const { t } = useTranslation('waiverAssessmentSurveyMisc');
+  const { t: generalT } = useTranslation('general');
+
   const [searchParams, setSearchParams] = useSearchParams();
   const waiverId = searchParams.get('waiverId') ?? '';
 
@@ -66,15 +66,17 @@ const WaiverInfoPanel = () => {
     : queryData;
 
   const closeModal = () => {
-    setSearchParams(prev => {
-      const nextParams = new URLSearchParams(prev);
-      nextParams.delete('waiverId');
-      return nextParams;
-    });
+    setSearchParams(
+      prev => {
+        const nextParams = new URLSearchParams(prev);
+        nextParams.delete('waiverId');
+        return nextParams;
+      },
+      { preventScrollReset: true }
+    );
   };
 
   const {
-    cmmiWaiverPointOfContact,
     name,
     description,
     participationAgreementLanguageLink,
@@ -99,38 +101,26 @@ const WaiverInfoPanel = () => {
       )}
       <GridContainer className="padding-y-6 padding-x-8">
         <div className="maxw-mobile-lg">
-          <h2 className="margin-bottom-2">{name}</h2>
-          <p className="text-base-dark margin-bottom-1">{description}</p>
-          <ExternalLink href={participationAgreementLanguageLink || ''}>
-            {t('waiverInfoPanel.participationAgreementLanguage')}
-          </ExternalLink>
+          <div className="border-bottom-1px border-base-light margin-bottom-4">
+            <p className="text-mint-body margin-top-0 margin-bottom-1">
+              {t(`${waiverType}.heading`)}
+            </p>
 
-          <Divider className="margin-top-3 margin-bottom-4" />
+            <h2 className="margin-top-0 margin-bottom-1 line-height-large">
+              {name}
+            </h2>
+
+            <p className="text-base-dark margin-bottom-1">{description}</p>
+
+            <ExternalLink
+              href={participationAgreementLanguageLink || ''}
+              className="margin-bottom-3"
+            >
+              {t('waiverInfoPanel.participationAgreementLanguage')}
+            </ExternalLink>
+          </div>
 
           <DescriptionList title={t('waiverInfoPanel.heading')}>
-            <DescriptionTerm
-              term={t('waiverInfoPanel.cmmiWaiverPointOfContact')}
-              className="margin-bottom-0 margin-top-3"
-            />
-            <DescriptionDefinition
-              className={classNames({
-                'text-italic': !cmmiWaiverPointOfContact?.trim()
-              })}
-              definition={
-                cmmiWaiverPointOfContact?.trim()
-                  ? cmmiWaiverPointOfContact
-                  : t('waiverInfoPanel.noPointOfContactListed')
-              }
-            />
-
-            <DescriptionTerm
-              term={t('waiverInfoPanel.waiverType')}
-              className="margin-bottom-0 margin-top-3"
-            />
-            <DescriptionDefinition
-              definition={t(`${waiverType}.waiverTypeText`)}
-            />
-
             <DescriptionTerm
               term={t('waiverInfoPanel.waiverFocus')}
               className="margin-bottom-0 margin-top-3"
@@ -148,7 +138,9 @@ const WaiverInfoPanel = () => {
               className="margin-bottom-0 margin-top-3"
             />
             <DescriptionDefinition
-              definition={hasStandardizationEffort ? 'Yes' : 'No'}
+              definition={
+                hasStandardizationEffort ? generalT('yes') : generalT('no')
+              }
             />
 
             <DescriptionTerm
@@ -162,16 +154,11 @@ const WaiverInfoPanel = () => {
               className="margin-bottom-0 margin-top-3"
             />
             <DescriptionDefinition
-              definition={isUsedInActiveModels ? 'Yes' : 'No'}
+              definition={
+                isUsedInActiveModels ? generalT('yes') : generalT('no')
+              }
             />
           </DescriptionList>
-
-          {!isReadView && waiverId && (
-            <>
-              <Divider className="margin-top-3 margin-bottom-4" />
-              <SelectWaiverField fieldPrefix={`waivers.${waiverId}`} />
-            </>
-          )}
         </div>
       </GridContainer>
     </Sidepanel>

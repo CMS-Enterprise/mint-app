@@ -4,6 +4,7 @@ import { GetWaiversQuery } from 'gql/generated/graphql';
 export type WaiverSelectionFields = {
   willUseWaiver: boolean | null;
   notUsingReason: string;
+  usingReason: string;
 };
 
 /** Form state for page 6 waiver selection, keyed by common waiver ID. */
@@ -13,4 +14,4 @@ export type WaiverSelectionForm = {
 
 /** A model plan waiver row from the GetWaivers query. */
 export type ExistingWaiver =
-  GetWaiversQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey']['waivers'][number];
+  GetWaiversQuery['modelPlan']['waiverInfo']['commonWaivers'][number];
