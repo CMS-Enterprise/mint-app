@@ -7,6 +7,7 @@ import type { GetWaiversQuery } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { WaiverSelectionForm } from 'types/waivers';
 
 import { getSuggestedOrInUseWaivers, getUnselectedWaivers } from '../../util';
@@ -24,6 +25,9 @@ const WaiverSelectionSection = ({
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
+  const { isEmptyWaiversConfirmed: isEmptyWaiversConfirmedConfig } =
+    usePlanTranslation('waiverAssessmentSurvey');
+
   const [, setSearchParams] = useSearchParams();
   const { setValue, watch } = useFormContext<WaiverSelectionForm>();
 
@@ -78,12 +82,10 @@ const WaiverSelectionSection = ({
               <CheckboxField
                 id="confirm-empty"
                 data-testid="confirm-empty"
-                name="isComplete"
+                name="isEmptyWaiversConfirmed"
                 checked={!!watch('isEmptyWaiversConfirmed')}
                 value="true"
-                label={waiverAssessmentSurveyMiscT(
-                  `waiverSelectionAndConfirmation.suggestedWaivers.emptyCheckbox`
-                )}
+                label={isEmptyWaiversConfirmedConfig.options.true}
                 onChange={e => {
                   setValue('isEmptyWaiversConfirmed', e.target.checked, {
                     shouldDirty: true

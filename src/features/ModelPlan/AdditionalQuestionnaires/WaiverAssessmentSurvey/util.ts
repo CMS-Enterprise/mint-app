@@ -440,7 +440,12 @@ export const buildWaiverSelectionFormValues = (
       usingReason: waiver.usingReason ?? ''
     };
   });
-  return { waivers, isEmptyWaiversConfirmed: false }; // TODO update once query is ready
+
+  const isEmptyWaiversConfirmed =
+    modelPlan?.questionnaires.waiverAssessmentSurvey.isEmptyWaiversConfirmed ??
+    null;
+
+  return { waivers, isEmptyWaiversConfirmed };
 };
 
 const waiverSelectionFieldsChanged = (

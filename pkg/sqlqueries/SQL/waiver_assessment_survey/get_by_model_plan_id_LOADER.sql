@@ -43,6 +43,7 @@ SELECT
     was.offers_expenses_remuneration_safe_harbor_protection_example,
     was.offers_expenses_remuneration_safe_harbor_protection_why_not,
     was.additional_medicaid_specific_waivers,
+    was.is_empty_waivers_confirmed,
     was.status,
     was.completed_by,
     was.completed_dts,

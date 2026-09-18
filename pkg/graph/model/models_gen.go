@@ -1019,6 +1019,7 @@ type WaiverAssessmentSurveyTranslation struct {
 	OffersExpensesRemunerationSafeHarborProtectionExample  models.TranslationFieldWithParent             `json:"offersExpensesRemunerationSafeHarborProtectionExample" db:"offers_expenses_remuneration_safe_harbor_protection_example"`
 	OffersExpensesRemunerationSafeHarborProtectionWhyNot   models.TranslationFieldWithOptionsAndParent   `json:"offersExpensesRemunerationSafeHarborProtectionWhyNot" db:"offers_expenses_remuneration_safe_harbor_protection_why_not"`
 	AdditionalMedicaidSpecificWaivers                      models.TranslationField                       `json:"additionalMedicaidSpecificWaivers" db:"additional_medicaid_specific_waivers"`
+	IsEmptyWaiversConfirmed                                models.TranslationFieldWithOptions            `json:"isEmptyWaiversConfirmed" db:"is_empty_waivers_confirmed"`
 }
 
 type ActionType string

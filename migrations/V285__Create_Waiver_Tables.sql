@@ -67,8 +67,6 @@ CREATE TABLE waiver_assessment_survey (
     offers_risk_sharing_arrangements BOOLEAN,
     offers_risk_sharing_arrangements_example TEXT,
     offers_risk_sharing_arrangements_why_not NOT_SELECTED_REASON,
-
-    -- Page 4 - Program waivers (Medicare Benefit Enhancements)
     impacts_site_of_care_payments BOOLEAN,
     impacts_site_of_care_payments_example TEXT,
     impacts_site_of_care_payments_why_not NOT_SELECTED_REASON,
@@ -81,8 +79,6 @@ CREATE TABLE waiver_assessment_survey (
     modifies_quality_measurements_or_payments_via_waivers BOOLEAN,
     modifies_quality_measurements_or_payments_via_waivers_example TEXT,
     modifies_quality_measurements_or_payments_via_waivers_why_not NOT_SELECTED_REASON,
-
-    -- Page 5 - Medicaid payment waivers
     impacts_medicaid_only_beneficiaries BOOLEAN,
     impacts_medicaid_only_beneficiaries_example TEXT,
     impacts_medicaid_only_beneficiaries_why_not NOT_SELECTED_REASON,
@@ -99,6 +95,9 @@ CREATE TABLE waiver_assessment_survey (
     offers_expenses_remuneration_safe_harbor_protection_example TEXT,
     offers_expenses_remuneration_safe_harbor_protection_why_not NOT_SELECTED_REASON,
     additional_medicaid_specific_waivers TEXT,
+
+    -- Page 6
+    is_empty_waivers_confirmed BOOLEAN,
 
     status WAIVER_ASSESSMENT_SURVEY_STATUS NOT NULL DEFAULT 'READY',
     completed_by UUID REFERENCES public.user_account(id) MATCH SIMPLE,

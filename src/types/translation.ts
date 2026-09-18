@@ -814,6 +814,9 @@ export type TranslationWaiverAssessmentSurveyForm = {
   offersExpensesRemunerationSafeHarborProtectionExample: TranslationFieldPropertiesWithParent<Bool>;
   offersExpensesRemunerationSafeHarborProtectionWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
   additionalMedicaidSpecificWaivers: TranslationFieldProperties;
+
+  // Page 6 Waiver selection and confirmation
+  isEmptyWaiversConfirmed: TranslationFieldPropertiesWithOptions<Bool>;
 };
 
 type TranslationWaiverAssessmentSurveyGQL = Omit<

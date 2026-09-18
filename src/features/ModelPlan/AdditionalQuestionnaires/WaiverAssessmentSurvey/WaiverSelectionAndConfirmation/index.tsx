@@ -136,10 +136,9 @@ const WaiverSelectionAndConfirmation = () => {
 
       promise = updateWaiverAssessmentSurvey({
         variables: {
-          id: modelID,
+          id: data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id ?? '',
           changes: {
-            // TODO update once query is ready
-            // isEmptyWaiversConfirmed: getValues('isEmptyWaiversConfirmed')
+            isEmptyWaiversConfirmed: getValues('isEmptyWaiversConfirmed')
           }
         }
       });
