@@ -73,7 +73,7 @@ const WaiverSelectionAndConfirmation = () => {
     formData.waivers
   );
 
-  const hasInUseWaivers = initialInUseWaivers.length === 0;
+  const hasInUseWaivers = initialInUseWaivers.length > 0;
 
   const methods = useForm<WaiverSelectionForm>({
     values: formData,
@@ -114,9 +114,8 @@ const WaiverSelectionAndConfirmation = () => {
     let promise;
 
     if (hasInUseWaivers) {
-      console.log('hasInUseWaivers');
       const changes = getWaiverSelectionChanges(formData, getValues());
-      console.log('changes', changes);
+
       if (changes.length === 0) {
         return false;
       }
