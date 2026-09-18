@@ -1,11 +1,12 @@
 import {
-  CommonWaiverFragment,
   CommonWaiverType,
   GetAllWaiverAssessmentSurveyQuery,
   GetCommonWaiverQuery,
   GetWaiversQuery,
   WaiverAssessmentSurveyStatus
 } from 'gql/generated/graphql';
+
+import { SelectedWaiver } from './_components/WaiverSelectionSection';
 
 /**
  * Mock data for testing waiver assessment survey.
@@ -17,49 +18,73 @@ export const MOCK_WAIVERS_ENABLED = false;
 
 const WAIVER_ASSESSMENT_SURVEY_ID = 'a1b2c3d4-0000-0000-0000-000000000001';
 
-export const suggestedMedicareWaiver: CommonWaiverFragment = {
+export const suggestedMedicareWaiver: SelectedWaiver = {
   __typename: 'CommonWaiver',
   id: '11111111-1111-1111-1111-111111111111',
   name: 'Suggested Medicare Payment Waiver',
-  waiverType: CommonWaiverType.MEDICARE_PAYMENT
+  waiverType: CommonWaiverType.MEDICARE_PAYMENT,
+  isSuggested: true,
+  isAnswered: true,
+  willUseWaiver: true,
+  notUsingReason: null
 };
 
-export const unusedMedicareWaiver: CommonWaiverFragment = {
+export const unusedMedicareWaiver: SelectedWaiver = {
   __typename: 'CommonWaiver',
   id: '22222222-2222-2222-2222-222222222222',
   name: 'Unused Medicare Payment Waiver',
-  waiverType: CommonWaiverType.MEDICARE_PAYMENT
+  waiverType: CommonWaiverType.MEDICARE_PAYMENT,
+  isSuggested: false,
+  isAnswered: true,
+  willUseWaiver: true,
+  usingReason: 'cuz im a test'
 };
 
-export const suggestedProgramWaiver: CommonWaiverFragment = {
+export const suggestedProgramWaiver: SelectedWaiver = {
   __typename: 'CommonWaiver',
   id: '33333333-3333-3333-3333-333333333333',
   name: 'Suggested Program Waiver',
-  waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE
+  waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
+  isSuggested: true,
+  isAnswered: true,
+  willUseWaiver: false,
+  notUsingReason: 'No need'
 };
 
-export const unusedProgramWaiver: CommonWaiverFragment = {
+export const unusedProgramWaiver: SelectedWaiver = {
   __typename: 'CommonWaiver',
   id: '44444444-4444-4444-4444-444444444444',
   name: 'Unused Program Waiver',
-  waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE
+  waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
+  isSuggested: false,
+  isAnswered: false,
+  willUseWaiver: null,
+  notUsingReason: null
 };
 
-export const suggestedMedicaidWaiver: CommonWaiverFragment = {
+export const suggestedMedicaidWaiver: SelectedWaiver = {
   __typename: 'CommonWaiver',
   id: '55555555-5555-5555-5555-555555555555',
   name: 'Suggested Medicaid Payment Waiver',
-  waiverType: CommonWaiverType.MEDICAID_PAYMENT
+  waiverType: CommonWaiverType.MEDICAID_PAYMENT,
+  isSuggested: true,
+  isAnswered: false,
+  willUseWaiver: null,
+  notUsingReason: null
 };
 
-export const unusedMedicaidWaiver: CommonWaiverFragment = {
+export const unusedMedicaidWaiver: SelectedWaiver = {
   __typename: 'CommonWaiver',
   id: '66666666-6666-6666-6666-666666666666',
   name: 'Unused Medicaid Payment Waiver',
-  waiverType: CommonWaiverType.MEDICAID_PAYMENT
+  waiverType: CommonWaiverType.MEDICAID_PAYMENT,
+  isSuggested: false,
+  isAnswered: false,
+  willUseWaiver: null,
+  notUsingReason: null
 };
 
-const waiverSelectionCommonWaivers: CommonWaiverFragment[] = [
+const waiverSelectionCommonWaivers: SelectedWaiver[] = [
   suggestedMedicareWaiver,
   unusedMedicareWaiver,
   suggestedProgramWaiver,
@@ -75,18 +100,21 @@ const commonWaiverDetailsById: Map<
   waiverSelectionCommonWaivers.map(waiver => [
     waiver.id,
     {
-      __typename: 'CommonWaiver' as const,
+      __typename: 'CommonWaiver',
       id: waiver.id,
       name: waiver.name,
       description: `${waiver.name} description`,
       participationAgreementLanguageLink: 'https://example.com/pal',
-      cmmiWaiverPointOfContact: 'Jane Doe',
       waiverType: waiver.waiverType,
       waiverFocus: 'Site of care',
       whatIsWaived: 'Some regulation',
       hasStandardizationEffort: true,
       hasClaimsDataOrRREGAnalysis: 'Yes',
-      isUsedInActiveModels: false
+      isUsedInActiveModels: false,
+      isSuggested: true,
+      isAnswered: false,
+      willUseWaiver: null,
+      notUsingReason: null
     }
   ])
 );
@@ -99,37 +127,13 @@ export const getWaiversMockData = (modelPlanID: string): GetWaiversQuery => ({
   modelPlan: {
     __typename: 'ModelPlan',
     id: modelPlanID,
-    questionnaires: {
-      __typename: 'Questionnaires',
-      waiverAssessmentSurvey: {
-        __typename: 'WaiverAssessmentSurvey',
-        id: WAIVER_ASSESSMENT_SURVEY_ID,
-        waivers: [
-          {
-            __typename: 'Waiver',
-            id: 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-            commonWaiverID: suggestedMedicareWaiver.id,
-            willUseWaiver: true,
-            notUsingReason: null,
-            commonWaiver: {
-              __typename: 'CommonWaiver',
-              id: suggestedMedicareWaiver.id,
-              name: suggestedMedicareWaiver.name,
-              waiverType: CommonWaiverType.MEDICARE_PAYMENT,
-              waiverFocus: 'Site of care'
-            }
-          }
-        ]
-      }
-    },
+
     waiverInfo: {
       __typename: 'WaiverInfo',
-      suggestedCommonWaivers: [
+      commonWaivers: [
         suggestedMedicareWaiver,
         suggestedProgramWaiver,
-        suggestedMedicaidWaiver
-      ],
-      unusedCommonWaivers: [
+        suggestedMedicaidWaiver,
         unusedMedicareWaiver,
         unusedProgramWaiver,
         unusedMedicaidWaiver
