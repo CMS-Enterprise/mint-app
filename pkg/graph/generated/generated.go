@@ -108373,7 +108373,7 @@ func (ec *executionContext) unmarshalInputWaiverSelectionInput(ctx context.Conte
 			it.CommonWaiverID = data
 		case "willUseWaiver":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("willUseWaiver"))
-			data, err := ec.unmarshalOBoolean2bool(ctx, v)
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
 			if err != nil {
 				return it, err
 			}
