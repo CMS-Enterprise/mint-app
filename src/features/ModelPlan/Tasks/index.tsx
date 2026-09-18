@@ -35,6 +35,7 @@ type TabId = 'current' | 'upcoming' | 'completed';
 export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.DATA_EXCHANGE,
+  PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.MTO

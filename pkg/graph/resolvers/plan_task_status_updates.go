@@ -15,8 +15,9 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-// Plan task state updates: MODEL_PLAN, DATA_EXCHANGE, and MTO rows in plan_task are updated from
-// multiple resolvers. This file is the source of truth for *when* each UpdatePlanTaskStateOn* runs.
+// Plan task status updates: MODEL_PLAN, DATA_EXCHANGE, MTO, and WAIVER_ASSESSMENT_SURVEY rows in
+// plan_task are updated from multiple resolvers. This file is the source of truth for *when* each
+// UpdatePlanTaskStatusOn* runs.
 //
 // Not every PlanTaskKey is calculated here. Some (e.g. TWO_PAGER) have no calculated state and are
 // only ever changed by direct user action, via PlanTaskMarkComplete (plan_task.go) and the
@@ -36,6 +37,9 @@ import (
 //	MTO
 //    - IN_PROGRESS — MTO-related data is created or updated.
 //    - COMPLETE — model plan status is ACTIVE.
+//	WAIVER_ASSESSMENT_SURVEY
+//    - IN_PROGRESS — waiver assessment survey status is IN_PROGRESS.
+//    - COMPLETE — waiver assessment survey status is COMPLETE.
 
 // UpdatePlanTaskStateOnModelPlanStarted runs when a model plan section goes from READY to IN_PROGRESS.
 func UpdatePlanTaskStateOnModelPlanStarted(
@@ -397,4 +401,51 @@ func calculateMTOTaskState(
 	}
 
 	return models.PlanTaskStateToDo, nil
+}
+
+// UpdatePlanTaskStatusOnWaiverAssessmentStarted runs when the waiver assessment survey status changes.
+func UpdatePlanTaskStatusOnWaiverAssessmentStarted(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	principal authentication.Principal,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	emailAddressBook email.AddressBook,
+) error {
+	status, err := calculateWaiverAssessmentTaskStatus(np, logger, modelPlanID, store)
+	if err != nil {
+		return err
+	}
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyWaiverAssessmentSurvey, status, principal, principal.Account().ID, store, emailService, emailAddressBook)
+	return err
+}
+
+// calculateWaiverAssessmentTaskStatus derives the WAIVER_ASSESSMENT_SURVEY task status from the
+// waiver_assessment_survey section status. Mirrors the DATA_EXCHANGE pattern.
+func calculateWaiverAssessmentTaskStatus(
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	_ *storage.Store,
+) (models.PlanTaskState, error) {
+	surveys, err := storage.WaiverAssessmentSurveyGetByModelPlanIDLoader(np, logger, []uuid.UUID{modelPlanID})
+	if err != nil {
+		return "", err
+	}
+	// waiver_assessment_survey has UNIQUE(model_plan_id), so at most one row exists per plan.
+	if len(surveys) == 0 || surveys[0] == nil {
+		return models.PlanTaskStateToDo, nil
+	}
+	survey := surveys[0]
+
+	switch survey.Status {
+	case models.WaiverAssessmentSurveyStatusComplete:
+		return models.PlanTaskStateComplete, nil
+	case models.WaiverAssessmentSurveyStatusInProgress:
+		return models.PlanTaskStateInProgress, nil
+	default:
+		return models.PlanTaskStateToDo, nil
+	}
 }
