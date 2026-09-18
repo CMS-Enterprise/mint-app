@@ -6657,7 +6657,7 @@ export type WaiverSelectionInput = {
   commonWaiverID: Scalars['UUID']['input'];
   notUsingReason?: InputMaybe<Scalars['String']['input']>;
   usingReason?: InputMaybe<Scalars['String']['input']>;
-  willUseWaiver: Scalars['Boolean']['input'];
+  willUseWaiver?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum WaiverType {

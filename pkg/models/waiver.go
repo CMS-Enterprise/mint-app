@@ -17,7 +17,7 @@ type Waiver struct {
 // It is autobound by gqlgen via the pkg/models autobind path.
 type WaiverSelectionInput struct {
 	CommonWaiverID uuid.UUID `json:"commonWaiverID" db:"common_waiver_id"`
-	WillUseWaiver  bool      `json:"willUseWaiver" db:"will_use_waiver"`
+	WillUseWaiver  *bool     `json:"willUseWaiver" db:"will_use_waiver"`
 	UsingReason    *string   `json:"usingReason" db:"using_reason"`
 	NotUsingReason *string   `json:"notUsingReason" db:"not_using_reason"`
 }

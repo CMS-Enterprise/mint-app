@@ -31,7 +31,7 @@ func UpdateSelectedWaivers(
 	waivers := make([]*models.Waiver, 0, len(selections))
 	for _, sel := range selections {
 		w := models.NewWaiver(actor, modelPlanID, sel.CommonWaiverID)
-		w.WillUseWaiver = &sel.WillUseWaiver
+		w.WillUseWaiver = sel.WillUseWaiver
 		w.UsingReason = sel.UsingReason
 		w.NotUsingReason = sel.NotUsingReason
 		w.ModifiedBy = &actor
