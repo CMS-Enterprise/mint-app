@@ -109,6 +109,22 @@ func (w *Worker) getJobWrappers(ctx context.Context) []JobWrapper {
 			Job:  w.ModelStatusUpdateJob,
 		},
 		{
+			Name: prepareForClearanceCronJobName,
+			Job:  w.PrepareForClearanceCronJob,
+		},
+		{
+			Name: prepareForClearanceBatchJobName,
+			Job:  w.PrepareForClearanceBatchJob,
+		},
+		{
+			Name: prepareForClearanceBatchJobSuccessName,
+			Job:  w.PrepareForClearanceBatchJobSuccess,
+		},
+		{
+			Name: prepareForClearanceJobName,
+			Job:  w.PrepareForClearanceJob,
+		},
+		{
 			Name: refreshOktaCronJobName,
 			Job:  w.RefreshOktaCronJob,
 		},

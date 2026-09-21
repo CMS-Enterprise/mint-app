@@ -27,6 +27,7 @@ enum PlanTaskKey {
   DATA_EXCHANGE
   TWO_PAGER
   SIX_PAGER
+  PREPARE_FOR_CLEARANCE
 }
 
 """
