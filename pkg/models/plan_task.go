@@ -53,8 +53,9 @@ const PrepareForClearanceTriggerDays = 20
 // markable), DefaultPlanTasks below, and either a new calculated-status function in
 // plan_task_status_updates.go or reuse of PlanTaskMarkComplete.
 var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
-	PlanTaskKeyTwoPager: true,
-	PlanTaskKeySixPager: true,
+	PlanTaskKeyTwoPager:            true,
+	PlanTaskKeySixPager:            true,
+	PlanTaskKeyPrepareForClearance: true,
 }
 
 // PlanTaskDefault pairs a PlanTaskKey with the PlanTaskState it should start at when a model plan
