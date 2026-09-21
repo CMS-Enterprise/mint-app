@@ -98,14 +98,16 @@ func updatePlanTaskStateByKey(
 // PrepareForClearanceActivateIfDue moves the PREPARE_FOR_CLEARANCE task for modelPlanID from
 // UPCOMING to TO_DO, attributed to the MINT system account, once the plan is within
 // models.PrepareForClearanceTriggerDays of its internal clearance start date. It's a no-op if the
-// task isn't currently UPCOMING (already activated, or the plan doesn't have one), if the plan has
-// no clearance start date set, or if that date is still further out than the trigger window - it
-// re-checks the date itself rather than trusting the caller, so it's safe to call standalone (not
-// just after storage.PlanTaskGetModelPlanIDsDueForPrepareForClearance has already filtered).
-// Called by PrepareForClearanceJob (see pkg/worker) rather than a user-facing mutation, since this
-// transition is purely time-triggered rather than the result of a discrete user action - there's
-// no acting principal to attribute the change to or check access against, so unlike
-// updatePlanTaskStateByKey this writes directly via the store layer instead of going through
+// plan has no clearance start date set, or if that date is still further out than the trigger
+// window - it re-checks the date itself rather than trusting the caller, so it's safe to call
+// standalone (not just after storage.PlanTaskGetModelPlanIDsDueForPrepareForClearance has already
+// filtered). Like activateUpcomingPlanTask, the actual state transition goes through
+// storage.PlanTaskActivateUpcoming - a single conditional UPDATE that's a no-op if the task isn't
+// currently UPCOMING (already activated or doesn't exist) - rather than a separate fetch-then-check
+// followed by a write. Called by PrepareForClearanceJob (see pkg/worker) rather than a user-facing
+// mutation, since this transition is purely time-triggered rather than the result of a discrete
+// user action - there's no acting principal to attribute the change to or check access against, so
+// unlike updatePlanTaskStateByKey this writes directly via the store layer instead of going through
 // BaseStructPreUpdate.
 func PrepareForClearanceActivateIfDue(
 	ctx context.Context,
@@ -116,14 +118,6 @@ func PrepareForClearanceActivateIfDue(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	task, err := storage.PlanTaskGetByModelPlanIDAndKey(np, logger, modelPlanID, models.PlanTaskKeyPrepareForClearance)
-	if err != nil {
-		return err
-	}
-	if task == nil || task.State != models.PlanTaskStateUpcoming {
-		return nil
-	}
-
 	timeline, err := store.PlanTimelineGetByModelPlanID(modelPlanID)
 	if err != nil {
 		return err
@@ -137,15 +131,15 @@ func PrepareForClearanceActivateIfDue(
 	}
 
 	systemAccountID := constants.GetSystemAccountUUID()
-	result, err := storage.PlanTaskUpdateStateByKey(np, logger, modelPlanID, models.PlanTaskKeyPrepareForClearance, models.PlanTaskStateToDo, nil, nil, systemAccountID)
+	task, err := storage.PlanTaskActivateUpcoming(np, logger, modelPlanID, models.PlanTaskKeyPrepareForClearance, systemAccountID)
 	if err != nil {
 		return err
 	}
-	if result == nil {
+	if task == nil {
 		return nil
 	}
 
-	trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, &result.PlanTask, systemAccountID, emailService, addressBook)
+	trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, task, systemAccountID, emailService, addressBook)
 	return nil
 }
 
