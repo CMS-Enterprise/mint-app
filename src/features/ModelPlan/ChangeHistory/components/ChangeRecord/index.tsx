@@ -137,9 +137,9 @@ export const ChangeHeader = ({
   }
 
   // Plan task (Tasks section) status audits
-  if (changeRecordType === 'planTaskStatusUpdate') {
+  if (changeRecordType === 'planTaskStateUpdate') {
     const status = changeRecord.translatedFields.find(
-      field => field.fieldName === 'status'
+      field => field.fieldName === 'state'
     )?.newTranslated;
 
     const task =
@@ -691,9 +691,10 @@ const ChangeRecord = ({ changeRecord, index }: ChangeRecordProps) => {
     changeRecordType === 'operationalNeedUpdate' ||
     changeRecordType === 'operationalNeedCreate';
 
-  // Automatically calculated plan task changes (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as
-  // a side effect of other edits) are attributed to MINT rather than whichever user's edit
-  // triggered the recalculation, since no one directly acted on that specific task.
+  // Automatically calculated or activated plan task changes (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE
+  // recalculating as a side effect of other edits, or SIX_PAGER activating when TWO_PAGER is marked
+  // complete) are attributed to MINT rather than whichever user's action triggered it, since no one
+  // directly acted on that specific task.
   const actorName = isPlanTaskAutomaticChange(changeRecord)
     ? 'MINT'
     : changeRecord.actorName;

@@ -70,8 +70,7 @@ const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.MTO,
-  PlanTaskKey.DATA_EXCHANGE,
-  PlanTaskKey.PREPARE_FOR_CLEARANCE
+  PlanTaskKey.DATA_EXCHANGE
 ] as const;
 
 const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
@@ -79,7 +78,8 @@ const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
   [PlanTaskKey.MTO]: '2022-01-02T00:00:00Z',
   [PlanTaskKey.DATA_EXCHANGE]: '2022-01-03T00:00:00Z',
   [PlanTaskKey.TWO_PAGER]: '2022-01-04T00:00:00Z',
-  [PlanTaskKey.PREPARE_FOR_CLEARANCE]: '2022-01-05T00:00:00Z'
+  [PlanTaskKey.SIX_PAGER]: '2022-01-05T00:00:00Z',
+  [PlanTaskKey.PREPARE_FOR_CLEARANCE]: '2022-01-06T00:00:00Z'
 };
 
 export function makePlanTasks(
@@ -128,8 +128,8 @@ export const planTasksWithModelPlanComplete = makePlanTasks({
 });
 export const planTasksWithModelPlanInProgress = makePlanTasks({
   [PlanTaskKey.MODEL_PLAN]: {
-    state: PlanTaskState.TO_DO,
-    status: PlanTaskStatus.IN_PROGRESS
+    state: PlanTaskState.IN_PROGRESS,
+    status: PlanTaskStatus.TO_DO
   }
 });
 

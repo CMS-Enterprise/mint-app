@@ -7,14 +7,15 @@ import {
 const tasks = {
   breadcrumb: 'Tasks',
   heading: 'Current tasks',
-  state: {
-    [PlanTaskState.TO_DO]: 'To do',
-    [PlanTaskState.COMPLETE]: 'Complete'
+  status: {
+    [PlanTaskStatus.TO_DO]: 'To do',
+    [PlanTaskStatus.COMPLETE]: 'Complete'
   },
   seeAll: 'See all ({{count}})',
   seeAllTasks: 'See all tasks',
   tabs: {
     current: 'Current tasks ({{count}})',
+    upcoming: 'Upcoming tasks ({{count}})',
     completed: 'Completed tasks ({{count}})',
     ariaLabel: 'Switch between current and completed tasks'
   },
@@ -23,6 +24,10 @@ const tasks = {
       heading: 'Nothing to do here!',
       copy: "You've completed all of the current tasks.",
       viewCompletedTasks: ' <link1>Click here</link1> to view completed tasks.'
+    },
+    upcoming: {
+      heading: 'Nothing to do here!',
+      copy: 'You’ve completed all of the upcoming tasks.'
     },
     completed: {
       heading: 'There are no completed tasks yet.',
@@ -36,15 +41,15 @@ const tasks = {
     primaryPath: '/models/{{modelID}}/collaboration-area/model-plan',
     secondaryPath: '/help-and-knowledge/sample-model-plan',
     secondaryAction: 'View sample Model Plan',
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading: 'Start your Model Plan',
       primaryAction: 'Start'
     },
-    [PlanTaskStatus.IN_PROGRESS]: {
+    [PlanTaskState.IN_PROGRESS]: {
       heading: 'Iterate on your Model Plan',
       primaryAction: 'Continue'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading: 'Iterate on your Model Plan',
       primaryAction: 'Go to Model Plan'
     }
@@ -57,7 +62,7 @@ const tasks = {
     secondaryPath:
       '/help-and-knowledge/about-2-page-concept-papers-and-review-meetings',
     secondaryAction: 'View help article',
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading:
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
@@ -66,12 +71,48 @@ const tasks = {
       error:
         'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
       success:
         '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.',
+      error:
+        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+    }
+  },
+  [PlanTaskKey.SIX_PAGER]: {
+    copy: 'After completing your 2-page concept review meeting and receiving a green light from CMMI FO, it’s time to start your 6-pager concept paper. View the help article to understand what to include in your concept paper, access example 6-pagers, discover what other considerations to make for additional resources, and what to expect for your review meeting with CMMI FO. Please remember that 6-pager submission to FO requires sign off from QV/RREG/LDG leadership prior to submission. Team leads can utilize the email group <email>CMMINewModelDesign@cms.hhs.gov</email> to ensure all cross-cutting teams are engaged early in the process. When you finish your 6-pager, please upload it to MINT.',
+    email: 'CMMINewModelDesign@cms.hhs.gov',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}',
+    secondaryPath:
+      '/help-and-knowledge/about-6-page-concept-papers-and-review-meetings',
+    secondaryAction: 'View help article',
+    [PlanTaskState.UPCOMING]: {
+      heading:
+        'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 6-pager',
+      success:
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskState.TO_DO]: {
+      heading:
+        'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 6-pager',
+      success:
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskState.COMPLETE]: {
+      heading:
+        'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      primaryAction: 'Upload 6-pager',
+      success:
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now to-do.',
       error:
         'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
     }
@@ -82,15 +123,15 @@ const tasks = {
       '/models/{{modelID}}/collaboration-area/additional-questionnaires/data-exchange-approach/about-completing-data-exchange',
     secondaryPath: '/help-and-knowledge/evaluating-data-exchange-approach',
     secondaryAction: 'View help article',
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading: 'Start your data exchange approach',
       primaryAction: 'Start'
     },
-    [PlanTaskStatus.IN_PROGRESS]: {
+    [PlanTaskState.IN_PROGRESS]: {
       heading: 'Finalize your data exchange approach',
       primaryAction: 'Continue'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading: 'Finalize your data exchange approach',
       primaryAction: 'Go to approach'
     }
@@ -100,15 +141,15 @@ const tasks = {
     primaryPath: '/models/{{modelID}}/collaboration-area/model-to-operations',
     secondaryPath: '/help-and-knowledge/creating-mto-matrix',
     secondaryAction: 'View help article',
-    [PlanTaskStatus.TO_DO]: {
+    [PlanTaskState.TO_DO]: {
       heading: 'Start your model-to-operations matrix (MTO)',
       primaryAction: 'Start'
     },
-    [PlanTaskStatus.IN_PROGRESS]: {
+    [PlanTaskState.IN_PROGRESS]: {
       heading: 'Keep your model-to-operations matrix (MTO) up-to-date',
       primaryAction: 'Continue'
     },
-    [PlanTaskStatus.COMPLETE]: {
+    [PlanTaskState.COMPLETE]: {
       heading: 'Keep your model-to-operations matrix (MTO) up-to-date',
       primaryAction: 'Go to MTO'
     }

@@ -32,7 +32,12 @@ describe('FilterButtonWithModal', () => {
     }
   ];
 
-  const defaultAppliedFilters = {
+  type AppliedFilters = {
+    categoryName: string[];
+    facilitatedByRole: MtoFacilitator[];
+  };
+
+  const defaultAppliedFilters: AppliedFilters = {
     categoryName: [],
     facilitatedByRole: []
   };
@@ -41,7 +46,9 @@ describe('FilterButtonWithModal', () => {
   // eslint-disable-next-line
   console.error = vi.fn();
 
-  let setAppliedFilters: ReturnType<typeof vi.fn>;
+  let setAppliedFilters: ReturnType<
+    typeof vi.fn<(filters: AppliedFilters) => void>
+  >;
   beforeEach(() => {
     setAppliedFilters = vi.fn();
   });
@@ -51,7 +58,7 @@ describe('FilterButtonWithModal', () => {
       <FilterButtonWithModal
         filters={mockFilters}
         appliedFilters={defaultAppliedFilters}
-        setAppliedFilters={vi.fn()}
+        setAppliedFilters={vi.fn<(filters: AppliedFilters) => void>()}
       />
     );
 

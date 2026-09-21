@@ -333,13 +333,29 @@ else
     fi
     
     # Get the highest existing version number (excluding staged files)
-    EXISTING_MIGRATIONS=$(git ls-tree -r --name-only HEAD "$MIGRATIONS_DIR" 2>/dev/null | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
-    
+    # During an in-progress merge (MERGE_HEAD present), HEAD alone only reflects
+    # this branch's pre-merge tip, so migrations coming in from the other parent
+    # would look "new" and get flagged as non-consecutive against a stale max.
+    # Union in MERGE_HEAD's tree so already-existing migrations from both sides
+    # count towards the baseline, matching how the PR/merge_group CI check
+    # compares against the base branch instead of a single-parent HEAD.
+    if git rev-parse -q --verify MERGE_HEAD >/dev/null 2>&1; then
+        debug_log "Merge in progress (MERGE_HEAD detected) - including MERGE_HEAD tree in baseline"
+        EXISTING_MIGRATIONS=$( { git ls-tree -r --name-only HEAD "$MIGRATIONS_DIR" 2>/dev/null; git ls-tree -r --name-only MERGE_HEAD "$MIGRATIONS_DIR" 2>/dev/null; } | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" | sort -u || true)
+    else
+        EXISTING_MIGRATIONS=$(git ls-tree -r --name-only HEAD "$MIGRATIONS_DIR" 2>/dev/null | grep -E "^${MIGRATIONS_DIR}/V[0-9]+__.*\.sql$" || true)
+    fi
+
     if [ -z "$EXISTING_MIGRATIONS" ]; then
         # This is the first migration
         echo -e "${GREEN}✓ This appears to be the first migration${NC}"
         exit 0
     fi
+
+    # Exclude staged files that are already present (by filename) in the baseline -
+    # e.g. migrations pulled in from the other side of a merge. Only files that are
+    # genuinely new to both parents should be checked for consecutiveness.
+    STAGED_MIGRATIONS=$(comm -23 <(echo "$STAGED_MIGRATIONS" | sort -u) <(echo "$EXISTING_MIGRATIONS" | sort -u))
     
     # Extract version numbers and find the max
     max_version=0

@@ -2514,8 +2514,8 @@ export type Mutation = {
   markNotificationAsRead: UserNotification;
   /**
    * Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
-   * aren't calculated from other model state (currently just TWO_PAGER) can be set this way; other
-   * keys will return an error.
+   * aren't calculated from other model state (currently TWO_PAGER and SIX_PAGER) can be set this
+   * way; other keys will return an error.
    */
   markPlanTaskComplete: PlanTask;
   mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
@@ -5034,17 +5034,12 @@ export enum PlanTaskKey {
   MODEL_PLAN = 'MODEL_PLAN',
   MTO = 'MTO',
   PREPARE_FOR_CLEARANCE = 'PREPARE_FOR_CLEARANCE',
+  SIX_PAGER = 'SIX_PAGER',
   TWO_PAGER = 'TWO_PAGER'
 }
 
-/** PlanTaskState is computed from PlanTaskStatus for display. */
+/** PlanTaskState is stored in the database and represents the task lifecycle. */
 export enum PlanTaskState {
-  COMPLETE = 'COMPLETE',
-  TO_DO = 'TO_DO'
-}
-
-/** PlanTaskStatus is stored in the database and represents the task lifecycle. */
-export enum PlanTaskStatus {
   COMPLETE = 'COMPLETE',
   IN_PROGRESS = 'IN_PROGRESS',
   NOT_NEEDED = 'NOT_NEEDED',
@@ -5052,10 +5047,20 @@ export enum PlanTaskStatus {
   UPCOMING = 'UPCOMING'
 }
 
+/**
+ * PlanTaskStatus is computed from PlanTaskState for display: it collapses every state to just
+ * TO_DO or COMPLETE. Only COMPLETE maps to COMPLETE; every other state (NOT_NEEDED, UPCOMING,
+ * TO_DO, IN_PROGRESS) maps to TO_DO.
+ */
+export enum PlanTaskStatus {
+  COMPLETE = 'COMPLETE',
+  TO_DO = 'TO_DO'
+}
+
 /** Represents plan task translation data */
 export type PlanTaskTranslation = {
   __typename: 'PlanTaskTranslation';
-  status: TranslationFieldWithOptions;
+  state: TranslationFieldWithOptions;
 };
 
 /** Represents PlanTimeline */

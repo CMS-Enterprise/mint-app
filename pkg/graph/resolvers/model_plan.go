@@ -93,21 +93,9 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		// Create default tasks for the model plan. PREPARE_FOR_CLEARANCE starts UPCOMING; the resolver
-		// layer displays it as TO_DO once the plan is within models.PrepareForClearanceTriggerDays of
-		// its internal clearance start date (see PlanTaskGetByModelPlanIDLOADER).
-		defaultTasks := []struct {
-			key    models.PlanTaskKey
-			status models.PlanTaskStatus
-		}{
-			{models.PlanTaskKeyModelPlan, models.PlanTaskStatusToDo},
-			{models.PlanTaskKeyMto, models.PlanTaskStatusToDo},
-			{models.PlanTaskKeyDataExchange, models.PlanTaskStatusToDo},
-			{models.PlanTaskKeyTwoPager, models.PlanTaskStatusToDo},
-			{models.PlanTaskKeyPrepareForClearance, models.PlanTaskStatusUpcoming},
-		}
-		for _, defaultTask := range defaultTasks {
-			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, defaultTask.key, defaultTask.status)
+		// Create default tasks for the model plan.
+		for _, defaultTask := range models.DefaultPlanTasks {
+			task := models.NewPlanTask(userAccount.ID, createdPlan.ID, defaultTask.Key, defaultTask.State)
 			_, err = storage.PlanTaskCreate(tx, logger, task)
 			if err != nil {
 				return nil, err
@@ -361,7 +349,7 @@ func ModelPlanUpdate(
 
 	// Plan tasks: CLEARED model status completes MODEL_PLAN and DATA_EXCHANGE tasks
 	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
-		updErr := UpdatePlanTaskStatusOnModelCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -370,7 +358,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress DATA_EXCHANGE and MODEL_PLAN tasks if model status moves backwards from CLEARED
 	if oldStatus == models.ModelStatusCleared &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelNoLongerCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -378,7 +366,7 @@ func ModelPlanUpdate(
 
 	// Plan tasks: ACTIVE model status completes MTO task
 	if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
-		updErr := UpdatePlanTaskStatusOnModelActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -386,7 +374,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress MTO task if model status moves backwards from ACTIVE
 	if oldStatus == models.ModelStatusActive &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusActive) {
-		updErr := UpdatePlanTaskStatusOnModelNoLongerActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelNoLongerActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
