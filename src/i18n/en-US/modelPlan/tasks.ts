@@ -140,7 +140,6 @@ const tasks = {
     copy: 'Sometime after your 6-pager review meeting and the completion of your ICIP, when your model is seeking approval to go into clearance, your team should meet with OA to discuss the model concept and to get verbal approval to enter materials into clearance. Prior to the meeting, your team should put together a presentation detailing the most important points about your model.',
     primaryPath:
       '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}',
-    primaryActionStyle: 'outline',
     [PlanTaskState.UPCOMING]: {
       heading:
         'Prepare for your presentation to the Office of the Administrator (OA)',

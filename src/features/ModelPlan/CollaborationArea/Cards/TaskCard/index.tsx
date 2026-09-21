@@ -175,7 +175,6 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
       <CardFooter className="display-flex border-top-0 padding-top-1">
         <Button
           type="button"
-          outline={t(`${key}.primaryActionStyle`) === 'outline'}
           className="margin-right-2"
           onClick={() =>
             navigate(
