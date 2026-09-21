@@ -103,3 +103,27 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 	suite.Require().Len(updated, 1)
 	suite.Nil(updated[0].WillUseWaiver)
 }
+
+func (suite *ResolverSuite) TestUpdateSelectedWaiversRejectsNonCollaborator() {
+	plan := suite.createModelPlan("plan protected from non-collaborator waiver updates")
+	commonWaivers, err := GetAllCommonWaiversByModelPlanID(suite.testConfigs.Context, &plan.ID)
+	suite.Require().NoError(err)
+	suite.Require().NotEmpty(commonWaivers)
+
+	nonCollaborator := suite.getTestPrincipal(suite.testConfigs.Store, "waiver-non-collaborator")
+	nonCollaborator.JobCodeASSESSMENT = false
+
+	_, err = UpdateSelectedWaivers(
+		suite.testConfigs.Logger,
+		plan.ID,
+		[]*models.WaiverSelectionInput{
+			{
+				CommonWaiverID: commonWaivers[0].ID,
+				WillUseWaiver:  new(true),
+			},
+		},
+		nonCollaborator,
+		suite.testConfigs.Store,
+	)
+	suite.Error(err)
+}

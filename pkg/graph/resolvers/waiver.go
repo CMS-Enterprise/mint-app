@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -26,6 +27,10 @@ func UpdateSelectedWaivers(
 	principal authentication.Principal,
 	store *storage.Store,
 ) ([]*models.Waiver, error) {
+	if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, store); err != nil {
+		return nil, err
+	}
+
 	actor := principal.Account().ID
 
 	waivers := make([]*models.Waiver, 0, len(selections))
