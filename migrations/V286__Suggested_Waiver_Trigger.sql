@@ -17,7 +17,7 @@ END;
 $body$;
 
 -- Seed every common waiver as suggested when a waiver survey is created. Unanswered
--- questions do not rule out waivers, so the initial survey contains the full library.
+-- questions do not rule out waivers, so the initial survey contains all common waivers.
 CREATE OR REPLACE FUNCTION SEED_SUGGESTED_WAIVERS()
 RETURNS TRIGGER AS $body$
 BEGIN
