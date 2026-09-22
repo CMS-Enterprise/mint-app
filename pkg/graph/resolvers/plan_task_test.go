@@ -393,6 +393,128 @@ func (suite *ResolverSuite) TestSixPagerStatusStaysToDoThroughActivation() {
 	suite.Equal(model.PlanTaskStatusToDo, status)
 }
 
+// TestPlanTaskMarkCompleteActivatesOAPresentation confirms marking SIX_PAGER complete activates
+// OA_PRESENTATION from UPCOMING to TO_DO, that OA_PRESENTATION requires TWO_PAGER and SIX_PAGER to
+// have both been marked complete first, and that activation is one-way (reverting SIX_PAGER does
+// not revert OA_PRESENTATION).
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesOAPresentation() {
+	plan := suite.createModelPlan("Plan For OA Presentation Activation")
+
+	oaTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStateUpcoming, oaTask.State)
+
+	// marking TWO_PAGER complete activates SIX_PAGER, but OA_PRESENTATION remains UPCOMING until
+	// SIX_PAGER itself is marked complete
+	_, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyTwoPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStateUpcoming, oaTask.State)
+
+	// marking SIX_PAGER complete activates OA_PRESENTATION from UPCOMING to TO_DO
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStateToDo, oaTask.State)
+	suite.Nil(oaTask.CompletedBy)
+	suite.Nil(oaTask.CompletedDts)
+
+	// marking SIX_PAGER back to incomplete does not revert OA_PRESENTATION's activation (one-way)
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStateToDo, oaTask.State)
+}
+
+// TestPlanTaskMarkCompleteOAPresentation confirms OA_PRESENTATION can be manually marked complete
+// and reverted back to TO_DO via PlanTaskMarkComplete, now that it is a manually-markable key.
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
+	plan := suite.createModelPlan("Plan For OA Presentation Manual Task Marking")
+
+	// mark the OA_PRESENTATION task complete
+	updated, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyOaPresentation,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStateComplete, updated.State)
+		if suite.NotNil(updated.CompletedBy) {
+			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
+		}
+		suite.NotNil(updated.CompletedDts)
+		if suite.NotNil(updated.ModifiedBy) {
+			suite.Equal(suite.testConfigs.Principal.Account().ID, *updated.ModifiedBy)
+		}
+	}
+
+	oaTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStateComplete, oaTask.State)
+
+	// mark it back to TO_DO
+	updated, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyOaPresentation,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStateToDo, updated.State)
+		suite.Nil(updated.CompletedBy)
+		suite.Nil(updated.CompletedDts)
+	}
+
+	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
+	suite.Equal(models.PlanTaskStateToDo, oaTask.State)
+	suite.Nil(oaTask.CompletedBy)
+	suite.Nil(oaTask.CompletedDts)
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
 	plan := suite.createModelPlan("Plan For Rejected Manual Task Marking")
 
@@ -437,12 +559,18 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	suite.NotNil(taskByKey[models.PlanTaskKeyWaiverAssessmentSurvey])
 	suite.NotNil(taskByKey[models.PlanTaskKeyTwoPager])
 	suite.NotNil(taskByKey[models.PlanTaskKeySixPager])
+	suite.NotNil(taskByKey[models.PlanTaskKeyOaPresentation])
+
+	upcomingKeys := map[models.PlanTaskKey]bool{
+		models.PlanTaskKeySixPager:       true,
+		models.PlanTaskKeyOaPresentation: true,
+	}
 
 	for _, t := range tasks {
 		suite.Equal(plan.ID, t.ModelPlanID)
 		suite.Nil(t.CompletedBy)
 		suite.Nil(t.CompletedDts)
-		if t.Key == models.PlanTaskKeySixPager {
+		if upcomingKeys[t.Key] {
 			suite.Equal(models.PlanTaskStateUpcoming, t.State)
 		} else {
 			suite.Equal(models.PlanTaskStateToDo, t.State)
