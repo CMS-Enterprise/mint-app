@@ -218,8 +218,8 @@ describe('Tasks page', () => {
     expect(getCardHeadings(container)).toEqual([
       'Prepare for your presentation to the Office of the Administrator (OA)',
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
-      'Complete your waiver assessment survey',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
+      'Complete your waiver assessment survey',
       'Finalize your data exchange approach',
       'Keep your model-to-operations matrix (MTO) up-to-date',
       'Iterate on your Model Plan'
