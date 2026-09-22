@@ -8,6 +8,7 @@ import {
   GridContainer,
   Icon
 } from '@trussworks/react-uswds';
+import { DocumentType } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import MainContent from 'components/MainContent';
@@ -17,6 +18,11 @@ import RequiredAsterisk from 'components/RequiredAsterisk';
 import DocumentUpload from './documentUpload';
 import LinkDocument from './LinkDocument';
 
+type AddDocumentLocationState = {
+  fromCollaborationArea?: boolean;
+  documentType?: DocumentType;
+};
+
 const AddDocument = () => {
   const { t } = useTranslation('documentsMisc');
 
@@ -24,15 +30,10 @@ const AddDocument = () => {
   const [searchParams] = useSearchParams();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as AddDocumentLocationState | null;
 
-  const { state } = useLocation() as {
-    state?: {
-      fromCollaborationArea?: boolean;
-      planTaskID?: string;
-    };
-  };
-
-  const planTaskID = state?.planTaskID || searchParams.get('planTaskID') || '';
+  const planTaskID = searchParams.get('planTaskID') ?? undefined;
 
   const breadcrumbs = [
     BreadcrumbItemOptions.HOME,
@@ -88,9 +89,15 @@ const AddDocument = () => {
           </ButtonGroup>
 
           {formState === 'upload' ? (
-            <DocumentUpload planTaskID={planTaskID || undefined} />
+            <DocumentUpload
+              planTaskID={planTaskID}
+              documentType={state?.documentType}
+            />
           ) : (
-            <LinkDocument planTaskID={planTaskID || undefined} />
+            <LinkDocument
+              planTaskID={planTaskID}
+              documentType={state?.documentType}
+            />
           )}
 
           <div className="display-block">
