@@ -33,10 +33,6 @@ import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import WaiverAssessmentSurveyReadOnlySections from '../_components/WaiverAssessmentSurveyReadOnlySections';
-import {
-  getAllWaiverAssessmentSurveyMockData,
-  MOCK_WAIVERS_ENABLED
-} from '../mockWaiversData';
 import { isWaiverSurveyQuestionsComplete } from '../util';
 
 type ConfirmAndSubmitForm = Pick<
@@ -68,23 +64,12 @@ const ConfirmAndSubmit = () => {
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
-  const {
-    data: queryData,
-    loading: queryLoading,
-    error: queryError
-  } = useGetAllWaiverAssessmentSurveyQuery({
+  const { data, loading, error } = useGetAllWaiverAssessmentSurveyQuery({
     variables: {
       id: modelID
     },
-    skip: !modelID || MOCK_WAIVERS_ENABLED
+    skip: !modelID
   });
-
-  const data = MOCK_WAIVERS_ENABLED
-    ? getAllWaiverAssessmentSurveyMockData(modelID)
-    : queryData;
-
-  const loading = MOCK_WAIVERS_ENABLED ? false : queryLoading;
-  const error = MOCK_WAIVERS_ENABLED ? undefined : queryError;
 
   const waiverAssessmentSurveyData =
     data?.modelPlan?.questionnaires?.waiverAssessmentSurvey;

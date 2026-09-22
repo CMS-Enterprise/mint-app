@@ -14,11 +14,6 @@ import ExternalLink from 'components/ExternalLink';
 import Sidepanel from 'components/Sidepanel';
 import { WaiverSelectionForm } from 'types/waivers';
 
-import {
-  getCommonWaiverMockData,
-  MOCK_WAIVERS_ENABLED
-} from '../../mockWaiversData';
-
 /** Ensures form fields exist for the selected waiver. Requires FormProvider. */
 const WaiverInfoPanelFormInitializer = ({ waiverId }: { waiverId: string }) => {
   const { getValues, setValue } = useFormContext<WaiverSelectionForm>();
@@ -54,16 +49,12 @@ const WaiverInfoPanel = () => {
     location.pathname.includes('read-view') ||
     location.pathname.includes('confirm-your-waiver-selections');
 
-  const { data: queryData } = useGetCommonWaiverQuery({
+  const { data } = useGetCommonWaiverQuery({
     variables: {
       id: waiverId
     },
-    skip: !waiverId || MOCK_WAIVERS_ENABLED
+    skip: !waiverId
   });
-
-  const data = MOCK_WAIVERS_ENABLED
-    ? getCommonWaiverMockData(waiverId)
-    : queryData;
 
   const closeModal = () => {
     setSearchParams(
