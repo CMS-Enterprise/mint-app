@@ -122,7 +122,8 @@ export const isTableWithStatus = (
 // models.manuallyMarkablePlanTaskKeys in pkg/models/plan_task.go — keep in sync.
 const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [
   PlanTaskKey.TWO_PAGER,
-  PlanTaskKey.SIX_PAGER
+  PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.OA_PRESENTATION
 ];
 
 // The common_name of the MINT system user account (seeded in migrations/V45), used to attribute
@@ -137,10 +138,11 @@ const systemAccountCommonName = 'Mint System Account';
 // attributed to "MINT" in change history instead of the editing user (see ChangeRecord).
 //
 // Keys that are never manually markable (MODEL_PLAN/MTO/DATA_EXCHANGE) are always automatic. Keys
-// that are manually markable (TWO_PAGER/SIX_PAGER) can *also* change as an automatic side effect
-// (e.g. SIX_PAGER activating) - the backend attributes that specific write to the MINT system
-// account (see activateUpcomingPlanTask in pkg/graph/resolvers/plan_task.go), so those are
-// distinguished by actorName rather than by key alone.
+// that are manually markable (TWO_PAGER/SIX_PAGER/OA_PRESENTATION) can *also* change as an
+// automatic side effect (e.g. SIX_PAGER or OA_PRESENTATION activating) - the backend attributes
+// that specific write to the MINT system account (see activateUpcomingPlanTask in
+// pkg/graph/resolvers/plan_task.go), so those are distinguished by actorName rather than by key
+// alone.
 export const isPlanTaskAutomaticChange = (
   change: ChangeRecordType
 ): boolean => {
