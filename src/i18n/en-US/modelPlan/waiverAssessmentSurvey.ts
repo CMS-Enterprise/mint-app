@@ -150,7 +150,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.03,
+    order: 3.04,
     options: {
       true: 'Yes',
       false: 'No'
@@ -167,7 +167,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label: 'Please provide an example',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.031,
+    order: 3.041,
     parentRelation: () => waiverAssessmentSurvey.impactsSiteOfCarePayments
   },
   impactsSiteOfCarePaymentsWhyNot: {
@@ -178,7 +178,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
-    order: 3.032,
+    order: 3.042,
     parentRelation: () => waiverAssessmentSurvey.impactsSiteOfCarePayments
   },
   modifiesCareTeamScopeOfPractice: {
@@ -190,7 +190,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.04,
+    order: 3.05,
     options: {
       true: 'Yes',
       false: 'No'
@@ -211,7 +211,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label: 'Please provide an example',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.041,
+    order: 3.051,
     parentRelation: () => waiverAssessmentSurvey.modifiesCareTeamScopeOfPractice
   },
   modifiesCareTeamScopeOfPracticeWhyNot: {
@@ -222,7 +222,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
-    order: 3.042,
+    order: 3.052,
     parentRelation: () => waiverAssessmentSurvey.modifiesCareTeamScopeOfPractice
   },
   modifiesCareDeliveryWithClaimsBasedPayments: {
@@ -235,7 +235,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.05,
+    order: 3.06,
     options: {
       true: 'Yes',
       false: 'No'
@@ -258,7 +258,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label: 'Please provide an example',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.051,
+    order: 3.061,
     parentRelation: () =>
       waiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPayments
   },
@@ -270,7 +270,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
-    order: 3.052,
+    order: 3.062,
     parentRelation: () =>
       waiverAssessmentSurvey.modifiesCareDeliveryWithClaimsBasedPayments
   },
@@ -283,7 +283,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.06,
+    order: 3.07,
     options: {
       true: 'Yes',
       false: 'No'
@@ -306,7 +306,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label: 'Please provide an example',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.061,
+    order: 3.071,
     parentRelation: () =>
       waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaivers
   },
@@ -318,7 +318,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
-    order: 3.062,
+    order: 3.072,
     parentRelation: () =>
       waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaivers
   },
@@ -331,7 +331,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.07,
+    order: 3.08,
     options: {
       true: 'Yes',
       false: 'No'
@@ -352,7 +352,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label: 'Please provide an example',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.071,
+    order: 3.081,
     parentRelation: () =>
       waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiaries
   },
@@ -364,7 +364,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
-    order: 3.072,
+    order: 3.082,
     parentRelation: () =>
       waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiaries
   },
@@ -376,7 +376,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.08,
+    order: 3.09,
     options: {
       true: 'Yes',
       false: 'No'
@@ -399,7 +399,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label: 'Please provide an example',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.081,
+    order: 3.091,
     parentRelation: () =>
       waiverAssessmentSurvey.impactsHomeCommunityBasedServicePayments
   },
@@ -411,7 +411,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
-    order: 3.082,
+    order: 3.092,
     parentRelation: () =>
       waiverAssessmentSurvey.impactsHomeCommunityBasedServicePayments
   },
@@ -423,7 +423,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.09,
+    order: 3.1,
     options: {
       true: 'Yes',
       false: 'No'
@@ -440,7 +440,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label: 'Please provide an example',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.091,
+    order: 3.101,
     parentRelation: () => waiverAssessmentSurvey.impactsManagedCareWaivers
   },
   impactsManagedCareWaiversWhyNot: {
@@ -451,7 +451,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
-    order: 3.092,
+    order: 3.102,
     parentRelation: () => waiverAssessmentSurvey.impactsManagedCareWaivers
   },
   offersPatientIncentivesSafeHarborProtection: {
@@ -463,7 +463,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.1,
+    order: 3.11,
     options: {
       true: 'Yes',
       false: 'No'
@@ -486,7 +486,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label: 'Please provide an example',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.101,
+    order: 3.111,
     parentRelation: () =>
       waiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtection
   },
@@ -498,7 +498,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
-    order: 3.102,
+    order: 3.112,
     parentRelation: () =>
       waiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtection
   },
@@ -511,7 +511,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
-    order: 3.11,
+    order: 3.12,
     options: {
       true: 'Yes',
       false: 'No'
@@ -534,7 +534,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     label: 'Please provide an example',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
-    order: 3.111,
+    order: 3.121,
     parentRelation: () =>
       waiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtection
   },
@@ -546,7 +546,7 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     dataType: TranslationDataType.ENUM,
     formType: TranslationFormType.SELECT,
     options: notSelectedReasonOptions,
-    order: 3.112,
+    order: 3.122,
     parentRelation: () =>
       waiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtection
   },
