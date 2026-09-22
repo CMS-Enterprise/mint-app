@@ -206,7 +206,7 @@ const ConfirmAndSubmit = () => {
                   <CheckboxField
                     name={field.name}
                     id={convertCamelCaseToKebabCase(field.name)}
-                    data-testid={convertCamelCaseToKebabCase(field.name)}
+                    testid={convertCamelCaseToKebabCase(field.name)}
                     checked={field.value === true}
                     disabled={!isSurveyComplete}
                     value="true"

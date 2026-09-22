@@ -30,17 +30,15 @@ type WaiverAssessmentSurvey struct {
 	completedByRelation
 
 	// Page 3 - Medicare payment waivers
-	ModifiesMedicareSavingsPrograms        *bool              `json:"modifiesMedicareSavingsPrograms" db:"modifies_medicare_savings_programs"`
-	ModifiesMedicareSavingsProgramsExample *string            `json:"modifiesMedicareSavingsProgramsExample" db:"modifies_medicare_savings_programs_example"`
-	ModifiesMedicareSavingsProgramsWhyNot  *NotSelectedReason `json:"modifiesMedicareSavingsProgramsWhyNot" db:"modifies_medicare_savings_programs_why_not"`
-	BundlesPayments                        *bool              `json:"bundlesPayments" db:"bundles_payments"`
-	BundlesPaymentsExample                 *string            `json:"bundlesPaymentsExample" db:"bundles_payments_example"`
-	BundlesPaymentsWhyNot                  *NotSelectedReason `json:"bundlesPaymentsWhyNot" db:"bundles_payments_why_not"`
-	OffersRiskSharingArrangements          *bool              `json:"offersRiskSharingArrangements" db:"offers_risk_sharing_arrangements"`
-	OffersRiskSharingArrangementsExample   *string            `json:"offersRiskSharingArrangementsExample" db:"offers_risk_sharing_arrangements_example"`
-	OffersRiskSharingArrangementsWhyNot    *NotSelectedReason `json:"offersRiskSharingArrangementsWhyNot" db:"offers_risk_sharing_arrangements_why_not"`
-
-	// Page 4 - Program waivers (Medicare Benefit Enhancements)
+	ModifiesMedicareSavingsPrograms                        *bool              `json:"modifiesMedicareSavingsPrograms" db:"modifies_medicare_savings_programs"`
+	ModifiesMedicareSavingsProgramsExample                 *string            `json:"modifiesMedicareSavingsProgramsExample" db:"modifies_medicare_savings_programs_example"`
+	ModifiesMedicareSavingsProgramsWhyNot                  *NotSelectedReason `json:"modifiesMedicareSavingsProgramsWhyNot" db:"modifies_medicare_savings_programs_why_not"`
+	BundlesPayments                                        *bool              `json:"bundlesPayments" db:"bundles_payments"`
+	BundlesPaymentsExample                                 *string            `json:"bundlesPaymentsExample" db:"bundles_payments_example"`
+	BundlesPaymentsWhyNot                                  *NotSelectedReason `json:"bundlesPaymentsWhyNot" db:"bundles_payments_why_not"`
+	OffersRiskSharingArrangements                          *bool              `json:"offersRiskSharingArrangements" db:"offers_risk_sharing_arrangements"`
+	OffersRiskSharingArrangementsExample                   *string            `json:"offersRiskSharingArrangementsExample" db:"offers_risk_sharing_arrangements_example"`
+	OffersRiskSharingArrangementsWhyNot                    *NotSelectedReason `json:"offersRiskSharingArrangementsWhyNot" db:"offers_risk_sharing_arrangements_why_not"`
 	ImpactsSiteOfCarePayments                              *bool              `json:"impactsSiteOfCarePayments" db:"impacts_site_of_care_payments"`
 	ImpactsSiteOfCarePaymentsExample                       *string            `json:"impactsSiteOfCarePaymentsExample" db:"impacts_site_of_care_payments_example"`
 	ImpactsSiteOfCarePaymentsWhyNot                        *NotSelectedReason `json:"impactsSiteOfCarePaymentsWhyNot" db:"impacts_site_of_care_payments_why_not"`
@@ -53,24 +51,25 @@ type WaiverAssessmentSurvey struct {
 	ModifiesQualityMeasurementsOrPaymentsViaWaivers        *bool              `json:"modifiesQualityMeasurementsOrPaymentsViaWaivers" db:"modifies_quality_measurements_or_payments_via_waivers"`
 	ModifiesQualityMeasurementsOrPaymentsViaWaiversExample *string            `json:"modifiesQualityMeasurementsOrPaymentsViaWaiversExample" db:"modifies_quality_measurements_or_payments_via_waivers_example"`
 	ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot  *NotSelectedReason `json:"modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot" db:"modifies_quality_measurements_or_payments_via_waivers_why_not"`
+	ImpactsMedicaidOnlyBeneficiaries                       *bool              `json:"impactsMedicaidOnlyBeneficiaries" db:"impacts_medicaid_only_beneficiaries"`
+	ImpactsMedicaidOnlyBeneficiariesExample                *string            `json:"impactsMedicaidOnlyBeneficiariesExample" db:"impacts_medicaid_only_beneficiaries_example"`
+	ImpactsMedicaidOnlyBeneficiariesWhyNot                 *NotSelectedReason `json:"impactsMedicaidOnlyBeneficiariesWhyNot" db:"impacts_medicaid_only_beneficiaries_why_not"`
+	ImpactsHomeCommunityBasedServicePayments               *bool              `json:"impactsHomeCommunityBasedServicePayments" db:"impacts_home_community_based_service_payments"`
+	ImpactsHomeCommunityBasedServicePaymentsExample        *string            `json:"impactsHomeCommunityBasedServicePaymentsExample" db:"impacts_home_community_based_service_payments_example"`
+	ImpactsHomeCommunityBasedServicePaymentsWhyNot         *NotSelectedReason `json:"impactsHomeCommunityBasedServicePaymentsWhyNot" db:"impacts_home_community_based_service_payments_why_not"`
+	ImpactsManagedCareWaivers                              *bool              `json:"impactsManagedCareWaivers" db:"impacts_managed_care_waivers"`
+	ImpactsManagedCareWaiversExample                       *string            `json:"impactsManagedCareWaiversExample" db:"impacts_managed_care_waivers_example"`
+	ImpactsManagedCareWaiversWhyNot                        *NotSelectedReason `json:"impactsManagedCareWaiversWhyNot" db:"impacts_managed_care_waivers_why_not"`
+	OffersPatientIncentivesSafeHarborProtection            *bool              `json:"offersPatientIncentivesSafeHarborProtection" db:"offers_patient_incentives_safe_harbor_protection"`
+	OffersPatientIncentivesSafeHarborProtectionExample     *string            `json:"offersPatientIncentivesSafeHarborProtectionExample" db:"offers_patient_incentives_safe_harbor_protection_example"`
+	OffersPatientIncentivesSafeHarborProtectionWhyNot      *NotSelectedReason `json:"offersPatientIncentivesSafeHarborProtectionWhyNot" db:"offers_patient_incentives_safe_harbor_protection_why_not"`
+	OffersExpensesRemunerationSafeHarborProtection         *bool              `json:"offersExpensesRemunerationSafeHarborProtection" db:"offers_expenses_remuneration_safe_harbor_protection"`
+	OffersExpensesRemunerationSafeHarborProtectionExample  *string            `json:"offersExpensesRemunerationSafeHarborProtectionExample" db:"offers_expenses_remuneration_safe_harbor_protection_example"`
+	OffersExpensesRemunerationSafeHarborProtectionWhyNot   *NotSelectedReason `json:"offersExpensesRemunerationSafeHarborProtectionWhyNot" db:"offers_expenses_remuneration_safe_harbor_protection_why_not"`
+	AdditionalMedicaidSpecificWaivers                      *string            `json:"additionalMedicaidSpecificWaivers" db:"additional_medicaid_specific_waivers"`
 
-	// Page 5 - Medicaid payment waivers
-	ImpactsMedicaidOnlyBeneficiaries                      *bool              `json:"impactsMedicaidOnlyBeneficiaries" db:"impacts_medicaid_only_beneficiaries"`
-	ImpactsMedicaidOnlyBeneficiariesExample               *string            `json:"impactsMedicaidOnlyBeneficiariesExample" db:"impacts_medicaid_only_beneficiaries_example"`
-	ImpactsMedicaidOnlyBeneficiariesWhyNot                *NotSelectedReason `json:"impactsMedicaidOnlyBeneficiariesWhyNot" db:"impacts_medicaid_only_beneficiaries_why_not"`
-	ImpactsHomeCommunityBasedServicePayments              *bool              `json:"impactsHomeCommunityBasedServicePayments" db:"impacts_home_community_based_service_payments"`
-	ImpactsHomeCommunityBasedServicePaymentsExample       *string            `json:"impactsHomeCommunityBasedServicePaymentsExample" db:"impacts_home_community_based_service_payments_example"`
-	ImpactsHomeCommunityBasedServicePaymentsWhyNot        *NotSelectedReason `json:"impactsHomeCommunityBasedServicePaymentsWhyNot" db:"impacts_home_community_based_service_payments_why_not"`
-	ImpactsManagedCareWaivers                             *bool              `json:"impactsManagedCareWaivers" db:"impacts_managed_care_waivers"`
-	ImpactsManagedCareWaiversExample                      *string            `json:"impactsManagedCareWaiversExample" db:"impacts_managed_care_waivers_example"`
-	ImpactsManagedCareWaiversWhyNot                       *NotSelectedReason `json:"impactsManagedCareWaiversWhyNot" db:"impacts_managed_care_waivers_why_not"`
-	OffersPatientIncentivesSafeHarborProtection           *bool              `json:"offersPatientIncentivesSafeHarborProtection" db:"offers_patient_incentives_safe_harbor_protection"`
-	OffersPatientIncentivesSafeHarborProtectionExample    *string            `json:"offersPatientIncentivesSafeHarborProtectionExample" db:"offers_patient_incentives_safe_harbor_protection_example"`
-	OffersPatientIncentivesSafeHarborProtectionWhyNot     *NotSelectedReason `json:"offersPatientIncentivesSafeHarborProtectionWhyNot" db:"offers_patient_incentives_safe_harbor_protection_why_not"`
-	OffersExpensesRemunerationSafeHarborProtection        *bool              `json:"offersExpensesRemunerationSafeHarborProtection" db:"offers_expenses_remuneration_safe_harbor_protection"`
-	OffersExpensesRemunerationSafeHarborProtectionExample *string            `json:"offersExpensesRemunerationSafeHarborProtectionExample" db:"offers_expenses_remuneration_safe_harbor_protection_example"`
-	OffersExpensesRemunerationSafeHarborProtectionWhyNot  *NotSelectedReason `json:"offersExpensesRemunerationSafeHarborProtectionWhyNot" db:"offers_expenses_remuneration_safe_harbor_protection_why_not"`
-	AdditionalMedicaidSpecificWaivers                     *string            `json:"additionalMedicaidSpecificWaivers" db:"additional_medicaid_specific_waivers"`
+	// Page 6 - Waiver selection and confirmation
+	IsEmptyWaiversConfirmed *bool `json:"isEmptyWaiversConfirmed" db:"is_empty_waivers_confirmed"`
 
 	Status WaiverAssessmentSurveyStatus `json:"status" db:"status"`
 }

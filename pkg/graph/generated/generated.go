@@ -2970,6 +2970,7 @@ type ComplexityRoot struct {
 		ImpactsSiteOfCarePaymentsExample                       func(childComplexity int) int
 		ImpactsSiteOfCarePaymentsWhyNot                        func(childComplexity int) int
 		IsComplete                                             func(childComplexity int) int
+		IsEmptyWaiversConfirmed                                func(childComplexity int) int
 		ModelPlanID                                            func(childComplexity int) int
 		ModifiedBy                                             func(childComplexity int) int
 		ModifiedByUserAccount                                  func(childComplexity int) int
@@ -3028,6 +3029,7 @@ type ComplexityRoot struct {
 		ImpactsSiteOfCarePaymentsExample                       func(childComplexity int) int
 		ImpactsSiteOfCarePaymentsWhyNot                        func(childComplexity int) int
 		IsComplete                                             func(childComplexity int) int
+		IsEmptyWaiversConfirmed                                func(childComplexity int) int
 		ModifiesCareDeliveryWithClaimsBasedPayments            func(childComplexity int) int
 		ModifiesCareDeliveryWithClaimsBasedPaymentsExample     func(childComplexity int) int
 		ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot      func(childComplexity int) int
@@ -3637,6 +3639,7 @@ type WaiverResolver interface {
 }
 type WaiverAssessmentSurveyResolver interface {
 	Waivers(ctx context.Context, obj *models.WaiverAssessmentSurvey) ([]*models.Waiver, error)
+
 	SuggestedWaivers(ctx context.Context, obj *models.WaiverAssessmentSurvey) ([]*models.SuggestedWaiver, error)
 }
 type WaiverAssessmentSurveyMarkedCompleteActivityMetaResolver interface {
@@ -18568,6 +18571,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.WaiverAssessmentSurvey.IsComplete(childComplexity), true
+	case "WaiverAssessmentSurvey.isEmptyWaiversConfirmed":
+		if e.ComplexityRoot.WaiverAssessmentSurvey.IsEmptyWaiversConfirmed == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurvey.IsEmptyWaiversConfirmed(childComplexity), true
 	case "WaiverAssessmentSurvey.modelPlanID":
 		if e.ComplexityRoot.WaiverAssessmentSurvey.ModelPlanID == nil {
 			break
@@ -18882,6 +18891,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.IsComplete(childComplexity), true
+	case "WaiverAssessmentSurveyTranslation.isEmptyWaiversConfirmed":
+		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.IsEmptyWaiversConfirmed == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverAssessmentSurveyTranslation.IsEmptyWaiversConfirmed(childComplexity), true
 	case "WaiverAssessmentSurveyTranslation.modifiesCareDeliveryWithClaimsBasedPayments":
 		if e.ComplexityRoot.WaiverAssessmentSurveyTranslation.ModifiesCareDeliveryWithClaimsBasedPayments == nil {
 			break
@@ -26700,8 +26715,6 @@ type WaiverAssessmentSurvey {
   offersRiskSharingArrangements: Boolean
   offersRiskSharingArrangementsExample: String
   offersRiskSharingArrangementsWhyNot: NotSelectedReason
-
-  # Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: Boolean
   impactsSiteOfCarePaymentsExample: String
   impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
@@ -26714,8 +26727,6 @@ type WaiverAssessmentSurvey {
   modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
   modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
-
-  # Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: Boolean
   impactsMedicaidOnlyBeneficiariesExample: String
   impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
@@ -26733,8 +26744,10 @@ type WaiverAssessmentSurvey {
   offersExpensesRemunerationSafeHarborProtectionWhyNot: NotSelectedReason
   additionalMedicaidSpecificWaivers: String
 
-  # Page 6 - Waiver selections for this model plan
+  # Page 4 - Waiver selections for this model plan
   waivers: [Waiver!]! @goField(forceResolver: true)
+
+  isEmptyWaiversConfirmed: Boolean
 
   # Waivers MINT has determined are likely needed based on survey answers
   # this will be removed in future implementations
@@ -26816,6 +26829,8 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
 
   additionalMedicaidSpecificWaivers: String
 
+  isEmptyWaiversConfirmed: Boolean
+
   # Convenience field for controlling status
   isComplete: Boolean
 }
@@ -26857,8 +26872,6 @@ type WaiverAssessmentSurveyTranslation {
     @goTag(key: "db", value: "offers_risk_sharing_arrangements_example")
   offersRiskSharingArrangementsWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "offers_risk_sharing_arrangements_why_not")
-
-  # Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "impacts_site_of_care_payments")
   impactsSiteOfCarePaymentsExample: TranslationFieldWithParent!
@@ -26901,8 +26914,6 @@ type WaiverAssessmentSurveyTranslation {
       key: "db"
       value: "modifies_quality_measurements_or_payments_via_waivers_why_not"
     )
-
-  # Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "impacts_medicaid_only_beneficiaries")
   impactsMedicaidOnlyBeneficiariesExample: TranslationFieldWithParent!
@@ -26956,6 +26967,9 @@ type WaiverAssessmentSurveyTranslation {
     )
   additionalMedicaidSpecificWaivers: TranslationField!
     @goTag(key: "db", value: "additional_medicaid_specific_waivers")
+
+  isEmptyWaiversConfirmed: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "is_empty_waivers_confirmed")
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/waiver/waiver_info.graphql", Input: `"""
@@ -30547,6 +30561,8 @@ func (ec *executionContext) childFields_WaiverAssessmentSurvey(ctx context.Conte
 		return ec.fieldContext_WaiverAssessmentSurvey_additionalMedicaidSpecificWaivers(ctx, field)
 	case "waivers":
 		return ec.fieldContext_WaiverAssessmentSurvey_waivers(ctx, field)
+	case "isEmptyWaiversConfirmed":
+		return ec.fieldContext_WaiverAssessmentSurvey_isEmptyWaiversConfirmed(ctx, field)
 	case "suggestedWaivers":
 		return ec.fieldContext_WaiverAssessmentSurvey_suggestedWaivers(ctx, field)
 	case "completedBy":
@@ -100172,6 +100188,29 @@ func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_waivers(_ contex
 	return fc, nil
 }
 
+func (ec *executionContext) _WaiverAssessmentSurvey_isEmptyWaiversConfirmed(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurvey_isEmptyWaiversConfirmed(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IsEmptyWaiversConfirmed, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *bool) graphql.Marshaler {
+			return ec.marshalOBoolean2ᚖbool(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurvey_isEmptyWaiversConfirmed(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("WaiverAssessmentSurvey", field, false, false, errors.New("field of type Boolean does not have child fields"))
+}
+
 func (ec *executionContext) _WaiverAssessmentSurvey_suggestedWaivers(ctx context.Context, field graphql.CollectedField, obj *models.WaiverAssessmentSurvey) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -101906,6 +101945,38 @@ func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_addit
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverAssessmentSurveyTranslation_isEmptyWaiversConfirmed(ctx context.Context, field graphql.CollectedField, obj *model.WaiverAssessmentSurveyTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverAssessmentSurveyTranslation_isEmptyWaiversConfirmed(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.IsEmptyWaiversConfirmed, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverAssessmentSurveyTranslation_isEmptyWaiversConfirmed(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverAssessmentSurveyTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
 		},
 	}
 	return fc, nil
@@ -108023,7 +108094,7 @@ func (ec *executionContext) unmarshalInputWaiverAssessmentSurveyChanges(ctx cont
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modifiesMedicareSavingsPrograms", "modifiesMedicareSavingsProgramsExample", "modifiesMedicareSavingsProgramsWhyNot", "bundlesPayments", "bundlesPaymentsExample", "bundlesPaymentsWhyNot", "offersRiskSharingArrangements", "offersRiskSharingArrangementsExample", "offersRiskSharingArrangementsWhyNot", "impactsSiteOfCarePayments", "impactsSiteOfCarePaymentsExample", "impactsSiteOfCarePaymentsWhyNot", "modifiesCareTeamScopeOfPractice", "modifiesCareTeamScopeOfPracticeExample", "modifiesCareTeamScopeOfPracticeWhyNot", "modifiesCareDeliveryWithClaimsBasedPayments", "modifiesCareDeliveryWithClaimsBasedPaymentsExample", "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot", "modifiesQualityMeasurementsOrPaymentsViaWaivers", "modifiesQualityMeasurementsOrPaymentsViaWaiversExample", "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot", "impactsMedicaidOnlyBeneficiaries", "impactsMedicaidOnlyBeneficiariesExample", "impactsMedicaidOnlyBeneficiariesWhyNot", "impactsHomeCommunityBasedServicePayments", "impactsHomeCommunityBasedServicePaymentsExample", "impactsHomeCommunityBasedServicePaymentsWhyNot", "impactsManagedCareWaivers", "impactsManagedCareWaiversExample", "impactsManagedCareWaiversWhyNot", "offersPatientIncentivesSafeHarborProtection", "offersPatientIncentivesSafeHarborProtectionExample", "offersPatientIncentivesSafeHarborProtectionWhyNot", "offersExpensesRemunerationSafeHarborProtection", "offersExpensesRemunerationSafeHarborProtectionExample", "offersExpensesRemunerationSafeHarborProtectionWhyNot", "additionalMedicaidSpecificWaivers", "isComplete"}
+	fieldsInOrder := [...]string{"modifiesMedicareSavingsPrograms", "modifiesMedicareSavingsProgramsExample", "modifiesMedicareSavingsProgramsWhyNot", "bundlesPayments", "bundlesPaymentsExample", "bundlesPaymentsWhyNot", "offersRiskSharingArrangements", "offersRiskSharingArrangementsExample", "offersRiskSharingArrangementsWhyNot", "impactsSiteOfCarePayments", "impactsSiteOfCarePaymentsExample", "impactsSiteOfCarePaymentsWhyNot", "modifiesCareTeamScopeOfPractice", "modifiesCareTeamScopeOfPracticeExample", "modifiesCareTeamScopeOfPracticeWhyNot", "modifiesCareDeliveryWithClaimsBasedPayments", "modifiesCareDeliveryWithClaimsBasedPaymentsExample", "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot", "modifiesQualityMeasurementsOrPaymentsViaWaivers", "modifiesQualityMeasurementsOrPaymentsViaWaiversExample", "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot", "impactsMedicaidOnlyBeneficiaries", "impactsMedicaidOnlyBeneficiariesExample", "impactsMedicaidOnlyBeneficiariesWhyNot", "impactsHomeCommunityBasedServicePayments", "impactsHomeCommunityBasedServicePaymentsExample", "impactsHomeCommunityBasedServicePaymentsWhyNot", "impactsManagedCareWaivers", "impactsManagedCareWaiversExample", "impactsManagedCareWaiversWhyNot", "offersPatientIncentivesSafeHarborProtection", "offersPatientIncentivesSafeHarborProtectionExample", "offersPatientIncentivesSafeHarborProtectionWhyNot", "offersExpensesRemunerationSafeHarborProtection", "offersExpensesRemunerationSafeHarborProtectionExample", "offersExpensesRemunerationSafeHarborProtectionWhyNot", "additionalMedicaidSpecificWaivers", "isEmptyWaiversConfirmed", "isComplete"}
 	it = make(map[string]any, len(asMap))
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
@@ -108290,6 +108361,13 @@ func (ec *executionContext) unmarshalInputWaiverAssessmentSurveyChanges(ctx cont
 				return it, err
 			}
 			it["additionalMedicaidSpecificWaivers"] = data
+		case "isEmptyWaiversConfirmed":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isEmptyWaiversConfirmed"))
+			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["isEmptyWaiversConfirmed"] = data
 		case "isComplete":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("isComplete"))
 			data, err := ec.unmarshalOBoolean2ᚖbool(ctx, v)
@@ -137868,6 +137946,11 @@ func (ec *executionContext) _WaiverAssessmentSurvey(ctx context.Context, sel ast
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "isEmptyWaiversConfirmed":
+			out.Values[i] = ec._WaiverAssessmentSurvey_isEmptyWaiversConfirmed(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
 		case "suggestedWaivers":
 			field := field
 
@@ -138419,6 +138502,11 @@ func (ec *executionContext) _WaiverAssessmentSurveyTranslation(ctx context.Conte
 			}
 		case "additionalMedicaidSpecificWaivers":
 			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_additionalMedicaidSpecificWaivers(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "isEmptyWaiversConfirmed":
+			out.Values[i] = ec._WaiverAssessmentSurveyTranslation_isEmptyWaiversConfirmed(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}

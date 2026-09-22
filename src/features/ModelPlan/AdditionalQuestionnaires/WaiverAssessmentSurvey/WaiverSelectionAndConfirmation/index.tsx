@@ -8,6 +8,7 @@ import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
   GetWaiversDocument,
   TypedUpdateSelectedWaiversDocument,
+  TypedUpdateWaiverAssessmentSurveyDocument,
   useGetWaiversQuery
 } from 'gql/generated/graphql';
 
@@ -25,6 +26,7 @@ import WaiverSelectionSection from '../_components/WaiverSelectionSection';
 import { getWaiversMockData, MOCK_WAIVERS_ENABLED } from '../mockWaiversData';
 import {
   buildWaiverSelectionFormValues,
+  getSuggestedOrInUseWaivers,
   getWaiverSelectionChanges
 } from '../util';
 
@@ -66,6 +68,13 @@ const WaiverSelectionAndConfirmation = () => {
     [data?.modelPlan]
   );
 
+  const initialInUseWaivers = getSuggestedOrInUseWaivers(
+    data?.modelPlan?.waiverInfo?.commonWaivers ?? [],
+    formData.waivers
+  );
+
+  const hasInUseWaivers = initialInUseWaivers.length > 0;
+
   const methods = useForm<WaiverSelectionForm>({
     values: formData,
     mode: 'onChange'
@@ -82,6 +91,13 @@ const WaiverSelectionAndConfirmation = () => {
     }
   );
 
+  const [updateWaiverAssessmentSurvey, { loading: isSubmittingSurvey }] =
+    useMutation(TypedUpdateWaiverAssessmentSurveyDocument, {
+      refetchQueries: [
+        { query: GetWaiversDocument, variables: { id: modelID } }
+      ]
+    });
+
   const blocker = useBlocker(({ currentLocation, nextLocation }) => {
     if (isErrorModalOpen) {
       return false;
@@ -95,18 +111,40 @@ const WaiverSelectionAndConfirmation = () => {
       return false;
     }
 
-    const changes = getWaiverSelectionChanges(formData, getValues());
+    let promise;
 
-    if (changes.length === 0) {
-      return false;
+    if (hasInUseWaivers) {
+      const changes = getWaiverSelectionChanges(formData, getValues());
+
+      if (changes.length === 0) {
+        return false;
+      }
+
+      promise = updateSelectedWaivers({
+        variables: {
+          modelPlanID: modelID,
+          changes
+        }
+      });
+    } else {
+      const checkboxDirty =
+        methods.formState.dirtyFields.isEmptyWaiversConfirmed;
+
+      if (!checkboxDirty) {
+        return false;
+      }
+
+      promise = updateWaiverAssessmentSurvey({
+        variables: {
+          id: data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id ?? '',
+          changes: {
+            isEmptyWaiversConfirmed: getValues('isEmptyWaiversConfirmed')
+          }
+        }
+      });
     }
 
-    updateSelectedWaivers({
-      variables: {
-        modelPlanID: modelID,
-        changes
-      }
-    })
+    promise
       .then(response => {
         if (!response?.errors) {
           setDestinationURL(nextLocation.pathname);
@@ -198,7 +236,7 @@ const WaiverSelectionAndConfirmation = () => {
                 homeRoute={`/models/${modelID}/collaboration-area/additional-questionnaires`}
                 backPage={`/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/active-model-waivers`}
                 nextPage
-                disabled={isSubmitting}
+                disabled={isSubmitting || isSubmittingSurvey}
               />
             </Fieldset>
           </Form>

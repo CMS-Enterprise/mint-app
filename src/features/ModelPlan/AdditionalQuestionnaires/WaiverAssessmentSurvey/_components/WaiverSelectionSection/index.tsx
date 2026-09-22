@@ -2,10 +2,12 @@ import React, { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
-import { Button, Icon } from '@trussworks/react-uswds';
+import { Button, FormGroup, Icon } from '@trussworks/react-uswds';
 import type { GetWaiversQuery } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
+import CheckboxField from 'components/CheckboxField';
+import usePlanTranslation from 'hooks/usePlanTranslation';
 import { WaiverSelectionForm } from 'types/waivers';
 
 import { getSuggestedOrInUseWaivers, getUnselectedWaivers } from '../../util';
@@ -23,6 +25,9 @@ const WaiverSelectionSection = ({
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
+  const { isEmptyWaiversConfirmed: isEmptyWaiversConfirmedConfig } =
+    usePlanTranslation('waiverAssessmentSurvey');
+
   const [, setSearchParams] = useSearchParams();
   const { setValue, watch } = useFormContext<WaiverSelectionForm>();
 
@@ -68,10 +73,27 @@ const WaiverSelectionSection = ({
 
       <div className="margin-bottom-4">
         {suggestedOrInUseWaivers.length === 0 && (
-          <Alert type="warning" slim>
+          <Alert type="warning" slim className="margin-bottom-2">
             {waiverAssessmentSurveyMiscT(
               `waiverSelectionAndConfirmation.suggestedWaivers.emptyAlert`
             )}
+
+            <FormGroup className="margin-y-0">
+              <CheckboxField
+                id="confirm-empty"
+                data-testid="confirm-empty"
+                name="isEmptyWaiversConfirmed"
+                checked={!!watch('isEmptyWaiversConfirmed')}
+                value="true"
+                label={isEmptyWaiversConfirmedConfig.options.true}
+                onChange={e => {
+                  setValue('isEmptyWaiversConfirmed', e.target.checked, {
+                    shouldDirty: true
+                  });
+                }}
+                onBlur={() => null}
+              />
+            </FormGroup>
           </Alert>
         )}
 

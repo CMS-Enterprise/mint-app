@@ -38,6 +38,7 @@ SELECT
     offers_expenses_remuneration_safe_harbor_protection_example,
     offers_expenses_remuneration_safe_harbor_protection_why_not,
     additional_medicaid_specific_waivers,
+    is_empty_waivers_confirmed,
     status,
     completed_by,
     completed_dts,

@@ -10,6 +10,7 @@ export type WaiverSelectionFields = {
 /** Form state for page 6 waiver selection, keyed by common waiver ID. */
 export type WaiverSelectionForm = {
   waivers: Record<string, WaiverSelectionFields>;
+  isEmptyWaiversConfirmed: boolean | null;
 };
 
 /** A model plan waiver row from the GetWaivers query. */

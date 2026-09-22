@@ -28,8 +28,6 @@ type WaiverAssessmentSurveyTranslation {
     @goTag(key: "db", value: "offers_risk_sharing_arrangements_example")
   offersRiskSharingArrangementsWhyNot: TranslationFieldWithOptionsAndParent!
     @goTag(key: "db", value: "offers_risk_sharing_arrangements_why_not")
-
-  # Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "impacts_site_of_care_payments")
   impactsSiteOfCarePaymentsExample: TranslationFieldWithParent!
@@ -72,8 +70,6 @@ type WaiverAssessmentSurveyTranslation {
       key: "db"
       value: "modifies_quality_measurements_or_payments_via_waivers_why_not"
     )
-
-  # Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: TranslationFieldWithOptionsAndChildren!
     @goTag(key: "db", value: "impacts_medicaid_only_beneficiaries")
   impactsMedicaidOnlyBeneficiariesExample: TranslationFieldWithParent!
@@ -127,4 +123,7 @@ type WaiverAssessmentSurveyTranslation {
     )
   additionalMedicaidSpecificWaivers: TranslationField!
     @goTag(key: "db", value: "additional_medicaid_specific_waivers")
+
+  isEmptyWaiversConfirmed: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "is_empty_waivers_confirmed")
 }
