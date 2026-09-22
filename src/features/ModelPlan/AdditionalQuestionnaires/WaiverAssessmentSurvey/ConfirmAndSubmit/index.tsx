@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Controller, FormProvider, useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -23,6 +23,7 @@ import { Alert } from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
 import FormHeader from 'components/FormHeader';
+import UswdsReactLink from 'components/LinkWrapper';
 import MutationErrorModal from 'components/MutationErrorModal';
 import PageNumber from 'components/PageNumber';
 import Spinner from 'components/Spinner';
@@ -64,6 +65,8 @@ const ConfirmAndSubmit = () => {
 
   const { modelID = '' } = useParams<{ modelID: string }>();
 
+  const waiverSelectionPageUrl = `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation`;
+
   const { data, loading, error } = useGetAllWaiverAssessmentSurveyQuery({
     variables: {
       id: modelID
@@ -73,6 +76,22 @@ const ConfirmAndSubmit = () => {
 
   const waiverAssessmentSurveyData =
     data?.modelPlan?.questionnaires?.waiverAssessmentSurvey;
+
+  const selectedWaivers = useMemo(() => {
+    return (
+      waiverAssessmentSurveyData?.waivers.filter(
+        waiver => waiver.willUseWaiver === true
+      ) || []
+    );
+  }, [waiverAssessmentSurveyData?.waivers]);
+
+  const declinedWaivers = useMemo(() => {
+    return (
+      waiverAssessmentSurveyData?.waivers.filter(
+        waiver => waiver.willUseWaiver === false
+      ) || []
+    );
+  }, [waiverAssessmentSurveyData?.waivers]);
 
   const isSurveyComplete = waiverAssessmentSurveyData
     ? isWaiverSurveyQuestionsComplete(waiverAssessmentSurveyData)
@@ -122,20 +141,61 @@ const ConfirmAndSubmit = () => {
         {waiverAssessmentSurveyMiscT('confirmAndSubmit.description')}
       </p>
 
-      <h3 className="margin-bottom-2">
-        {waiverAssessmentSurveyMiscT('selectedWaivers.heading')}
-      </h3>
+      {/* Selected waivers section */}
+      <div>
+        <h3 className="margin-bottom-05">
+          {waiverAssessmentSurveyMiscT('selectedWaivers.heading', {
+            waiverCount: selectedWaivers.length
+          })}
+        </h3>
 
-      <div className="margin-bottom-5">
-        {waiverAssessmentSurveyData.waivers.length === 0 ? (
-          <Alert type="info" slim>
-            {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
-          </Alert>
-        ) : (
-          <SelectedWaiversTable
-            selectedWaivers={waiverAssessmentSurveyData.waivers}
-          />
-        )}
+        <UswdsReactLink
+          to={waiverSelectionPageUrl}
+          data-testid="waiver-selection-page-url"
+          className="deep-underline display-block margin-bottom-2 mint-body-normal"
+        >
+          {waiverAssessmentSurveyMiscT('confirmAndSubmit.editSection')}
+        </UswdsReactLink>
+
+        <div className="margin-bottom-5">
+          {selectedWaivers.length === 0 ? (
+            <Alert type="info" slim>
+              {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
+            </Alert>
+          ) : (
+            <SelectedWaiversTable
+              selectedWaivers={selectedWaivers}
+              visibleColumns={['waiverName', 'actions']}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Declined waivers section */}
+      <div>
+        <h3 className="margin-bottom-05">
+          {waiverAssessmentSurveyMiscT('declinedWaivers.heading', {
+            waiverCount: declinedWaivers.length
+          })}
+        </h3>
+
+        <UswdsReactLink
+          to={waiverSelectionPageUrl}
+          data-testid="waiver-selection-page-url"
+          className="deep-underline display-block margin-bottom-2 mint-body-normal"
+        >
+          {waiverAssessmentSurveyMiscT('confirmAndSubmit.editSection')}
+        </UswdsReactLink>
+
+        <div className="margin-bottom-5">
+          {declinedWaivers.length === 0 ? (
+            <Alert type="info" slim>
+              {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
+            </Alert>
+          ) : (
+            <SelectedWaiversTable selectedWaivers={declinedWaivers} />
+          )}
+        </div>
       </div>
 
       <WaiverAssessmentSurveyReadOnlySections modelPlan={data.modelPlan} />
