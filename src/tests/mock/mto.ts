@@ -72,7 +72,6 @@ const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.MTO,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
-  PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.OA_PRESENTATION
 ] as const;
