@@ -127,6 +127,14 @@ export const getWaiversMockData = (modelPlanID: string): GetWaiversQuery => ({
   modelPlan: {
     __typename: 'ModelPlan',
     id: modelPlanID,
+    questionnaires: {
+      __typename: 'Questionnaires',
+      waiverAssessmentSurvey: {
+        __typename: 'WaiverAssessmentSurvey',
+        id: 'survey-id',
+        isEmptyWaiversConfirmed: null
+      }
+    },
 
     waiverInfo: {
       __typename: 'WaiverInfo',

@@ -36,8 +36,6 @@ type WaiverAssessmentSurvey {
   offersRiskSharingArrangements: Boolean
   offersRiskSharingArrangementsExample: String
   offersRiskSharingArrangementsWhyNot: NotSelectedReason
-
-  # Page 4 - Program waivers (Medicare Benefit Enhancements)
   impactsSiteOfCarePayments: Boolean
   impactsSiteOfCarePaymentsExample: String
   impactsSiteOfCarePaymentsWhyNot: NotSelectedReason
@@ -50,8 +48,6 @@ type WaiverAssessmentSurvey {
   modifiesQualityMeasurementsOrPaymentsViaWaivers: Boolean
   modifiesQualityMeasurementsOrPaymentsViaWaiversExample: String
   modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: NotSelectedReason
-
-  # Page 5 - Medicaid payment waivers
   impactsMedicaidOnlyBeneficiaries: Boolean
   impactsMedicaidOnlyBeneficiariesExample: String
   impactsMedicaidOnlyBeneficiariesWhyNot: NotSelectedReason
@@ -69,8 +65,10 @@ type WaiverAssessmentSurvey {
   offersExpensesRemunerationSafeHarborProtectionWhyNot: NotSelectedReason
   additionalMedicaidSpecificWaivers: String
 
-  # Page 6 - Waiver selections for this model plan
+  # Page 4 - Waiver selections for this model plan
   waivers: [Waiver!]! @goField(forceResolver: true)
+
+  isEmptyWaiversConfirmed: Boolean
 
   # Waivers MINT has determined are likely needed based on survey answers
   # this will be removed in future implementations
@@ -151,6 +149,8 @@ input WaiverAssessmentSurveyChanges @goModel(model: "map[string]any") {
   offersExpensesRemunerationSafeHarborProtectionWhyNot: NotSelectedReason
 
   additionalMedicaidSpecificWaivers: String
+
+  isEmptyWaiversConfirmed: Boolean
 
   # Convenience field for controlling status
   isComplete: Boolean

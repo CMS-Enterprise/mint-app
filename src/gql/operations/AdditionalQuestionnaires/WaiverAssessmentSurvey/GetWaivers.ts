@@ -4,6 +4,12 @@ export default gql(/* GraphQL */ `
   query GetWaivers($id: UUID!) {
     modelPlan(id: $id) {
       id
+      questionnaires {
+        waiverAssessmentSurvey {
+          id
+          isEmptyWaiversConfirmed
+        }
+      }
       waiverInfo {
         commonWaivers {
           id
