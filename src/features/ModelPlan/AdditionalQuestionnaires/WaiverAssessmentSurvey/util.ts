@@ -513,35 +513,21 @@ type WaiverAssessmentSurveyGeneralCharacteristics =
 
 export type WaiverAssessmentSurveyQuestionConfigs = {
   modelPlanQuestionsConfig: Record<string, TranslationConfigType<string>>;
-  medicareQuestionsConfig: Record<string, TranslationConfigType<string>>;
-  programWaiversConfig: Record<string, TranslationConfigType<string>>;
-  medicaidQuestionsConfig: Record<string, TranslationConfigType<string>>;
+  waiverSurveyQuestionsConfig: Record<string, TranslationConfigType<string>>;
 };
 
 export type WaiverAssessmentSurveySectionHeadings = {
   modelPlanQuestions: string;
-  medicarePaymentWaivers: string;
-  programWaivers: string;
-  medicaidPaymentWaivers: string;
+  waiverSurveyQuestions: string;
 };
 
 export type WaiverAssessmentSurveySectionsConfig = {
-  modePlanQuestions: {
+  modelPlanQuestions: {
     heading: string;
     config: Record<string, TranslationConfigType<string>>;
     href: string;
   };
-  medicarePaymentWaivers: {
-    heading: string;
-    config: Record<string, TranslationConfigType<string>>;
-    href: string;
-  };
-  programWaivers: {
-    heading: string;
-    config: Record<string, TranslationConfigType<string>>;
-    href: string;
-  };
-  medicaidPaymentWaivers: {
+  waiverSurveyQuestions: {
     heading: string;
     config: Record<string, TranslationConfigType<string>>;
     href: string;
@@ -591,14 +577,12 @@ export const buildWaiverAssessmentSurveyQuestionConfigs = (
     waiversRequired: generalCharacteristicsConfig.waiversRequired,
     waiversRequiredTypes: generalCharacteristicsConfig.waiversRequiredTypes
   },
-  medicareQuestionsConfig: {
+  waiverSurveyQuestionsConfig: {
     modifiesMedicareSavingsPrograms:
       waiverAssessmentSurveyConfig.modifiesMedicareSavingsPrograms,
     bundlesPayments: waiverAssessmentSurveyConfig.bundlesPayments,
     offersRiskSharingArrangements:
-      waiverAssessmentSurveyConfig.offersRiskSharingArrangements
-  },
-  programWaiversConfig: {
+      waiverAssessmentSurveyConfig.offersRiskSharingArrangements,
     impactsSiteOfCarePayments:
       waiverAssessmentSurveyConfig.impactsSiteOfCarePayments,
     modifiesCareTeamScopeOfPractice:
@@ -606,15 +590,17 @@ export const buildWaiverAssessmentSurveyQuestionConfigs = (
     modifiesCareDeliveryWithClaimsBasedPayments:
       waiverAssessmentSurveyConfig.modifiesCareDeliveryWithClaimsBasedPayments,
     modifiesQualityMeasurementsOrPaymentsViaWaivers:
-      waiverAssessmentSurveyConfig.modifiesQualityMeasurementsOrPaymentsViaWaivers
-  },
-  medicaidQuestionsConfig: {
+      waiverAssessmentSurveyConfig.modifiesQualityMeasurementsOrPaymentsViaWaivers,
     impactsMedicaidOnlyBeneficiaries:
       waiverAssessmentSurveyConfig.impactsMedicaidOnlyBeneficiaries,
     impactsHomeCommunityBasedServicePayments:
       waiverAssessmentSurveyConfig.impactsHomeCommunityBasedServicePayments,
     impactsManagedCareWaivers:
-      waiverAssessmentSurveyConfig.impactsManagedCareWaivers
+      waiverAssessmentSurveyConfig.impactsManagedCareWaivers,
+    offersPatientIncentivesSafeHarborProtection:
+      waiverAssessmentSurveyConfig.offersPatientIncentivesSafeHarborProtection,
+    offersExpensesRemunerationSafeHarborProtection:
+      waiverAssessmentSurveyConfig.offersExpensesRemunerationSafeHarborProtection
   }
 });
 
@@ -625,25 +611,15 @@ export const buildWaiverAssessmentSurveySectionsConfig = (
   questionConfigs: WaiverAssessmentSurveyQuestionConfigs,
   headings: WaiverAssessmentSurveySectionHeadings
 ): WaiverAssessmentSurveySectionsConfig => ({
-  modePlanQuestions: {
+  modelPlanQuestions: {
     heading: headings.modelPlanQuestions,
     config: questionConfigs.modelPlanQuestionsConfig,
     href: '../model-plan-questions'
   },
-  medicarePaymentWaivers: {
-    heading: headings.medicarePaymentWaivers,
-    config: questionConfigs.medicareQuestionsConfig,
-    href: '../medicare-payment-waivers'
-  },
-  programWaivers: {
-    heading: headings.programWaivers,
-    config: questionConfigs.programWaiversConfig,
-    href: '../program-waivers'
-  },
-  medicaidPaymentWaivers: {
-    heading: headings.medicaidPaymentWaivers,
-    config: questionConfigs.medicaidQuestionsConfig,
-    href: '../medicaid-payment-waivers'
+  waiverSurveyQuestions: {
+    heading: headings.waiverSurveyQuestions,
+    config: questionConfigs.waiverSurveyQuestionsConfig,
+    href: '../active-model-waivers'
   }
 });
 
@@ -720,7 +696,9 @@ const WAIVER_SURVEY_PARENT_QUESTION_CONFIGS = [
   waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaivers,
   waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiaries,
   waiverAssessmentSurvey.impactsHomeCommunityBasedServicePayments,
-  waiverAssessmentSurvey.impactsManagedCareWaivers
+  waiverAssessmentSurvey.impactsManagedCareWaivers,
+  waiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtection,
+  waiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtection
 ] as const;
 
 type WaiverSurveyQuestionnaireData =

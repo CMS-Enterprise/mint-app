@@ -187,7 +187,6 @@ const RadioValue = <T extends string | keyof T, C extends string | keyof C>({
   return (
     <div className="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word">
       {!isEmpty(value) && config.options[value as T]}
-
       {/* Renders a list beneath a selection of a radio value */}
       {childHasOptions && childHasOptions.options && childField && (
         <RenderReadonlyValue
@@ -196,7 +195,6 @@ const RadioValue = <T extends string | keyof T, C extends string | keyof C>({
           values={values}
         />
       )}
-
       {/* Render default empty value */}
       {(isEmpty(value) || (childField && !childFieldValue)) && (
         <i className="text-base">

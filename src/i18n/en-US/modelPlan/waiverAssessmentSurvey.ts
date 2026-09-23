@@ -748,8 +748,8 @@ const waiverAssessmentSurveyMisc = {
       'Check through your waiver selections, and if everything looks accurate, mark this survey as complete.',
     summaryBox: {
       title: 'Want to review all past CMMI waivers?',
-      // TODO: Update link
-      text: 'Visit <link1>link and title of link</link1> to learn more'
+      text: 'Visit <link1>Waivers List in SharePoint</link1> to learn more',
+      link: 'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/PP/DAPMI/Lists/Existing%20Models/Waiver%20and%20Background%20Language.aspx'
     },
     saveAndExit: 'Save and exit questionnaire',
     questionnaireStatus: 'Questionnaire status',

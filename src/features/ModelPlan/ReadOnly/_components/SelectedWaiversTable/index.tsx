@@ -189,7 +189,7 @@ const SelectedWaiversTable = ({
                     <td
                       {...cell.getCellProps()}
                       key={cell.getCellProps().key}
-                      className="padding-left-0 padding-right-3"
+                      className="padding-left-0"
                     >
                       {cell.render('Cell')}
                     </td>

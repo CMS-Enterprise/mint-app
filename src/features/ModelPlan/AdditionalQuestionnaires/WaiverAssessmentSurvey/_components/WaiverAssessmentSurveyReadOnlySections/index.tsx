@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { convertToLowercaseAndDashes } from 'features/HelpAndKnowledge/Articles/TwoPagerMeeting';
 import SimpleReadOnlySection from 'features/ModelPlan/ReadOnly/_components/SimpleReadOnlySection';
+import WaiverSurveyReadOnlySection from 'features/ModelPlan/ReadOnly/_components/WaiverSurveyReadOnlySection';
 import { GetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -44,14 +45,8 @@ const WaiverAssessmentSurveyReadOnlySections = ({
       modelPlanQuestions: waiverAssessmentSurveyMiscT(
         'modelPlanQuestions.heading'
       ),
-      medicarePaymentWaivers: waiverAssessmentSurveyMiscT(
-        'medicarePaymentWaivers.heading'
-      ),
-      programWaivers: waiverAssessmentSurveyMiscT(
-        'programWaivers.readOnlyHeading'
-      ),
-      medicaidPaymentWaivers: waiverAssessmentSurveyMiscT(
-        'medicaidPaymentWaivers.heading'
+      waiverSurveyQuestions: waiverAssessmentSurveyMiscT(
+        'activeModelWaivers.heading'
       )
     }
   );
@@ -82,7 +77,7 @@ const WaiverAssessmentSurveyReadOnlySections = ({
                 : 'margin-bottom-6'
             )}
           >
-            <h3 className="margin-top-0 margin-bottom-1">
+            <h3 className="margin-top-0 margin-bottom-05">
               {waiverConfig.heading}
             </h3>
 
@@ -94,18 +89,23 @@ const WaiverAssessmentSurveyReadOnlySections = ({
               {waiverAssessmentSurveyMiscT('confirmAndSubmit.editSection')}
             </UswdsReactLink>
 
-            {Object.keys(waiverConfig.config).map(questionConfig => (
-              <SimpleReadOnlySection
-                key={questionConfig}
-                field={questionConfig}
-                translations={waiverConfig.config}
-                values={
-                  waiverSurvey === 'modePlanQuestions'
-                    ? modelQuestionsData
-                    : waiverAssessmentSurveyData
-                }
-              />
-            ))}
+            {Object.keys(waiverConfig.config).map(questionConfig =>
+              waiverSurvey === 'modelPlanQuestions' ? (
+                <SimpleReadOnlySection
+                  key={questionConfig}
+                  field={questionConfig}
+                  translations={waiverConfig.config}
+                  values={modelQuestionsData}
+                />
+              ) : (
+                <WaiverSurveyReadOnlySection
+                  key={questionConfig}
+                  field={questionConfig}
+                  translations={waiverConfig.config}
+                  values={waiverAssessmentSurveyData}
+                />
+              )
+            )}
           </div>
         );
       })}

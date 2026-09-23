@@ -345,7 +345,12 @@ export const waiverAssessmentSurveyMockData: GetAllWaiverAssessmentSurveyQuery =
           impactsManagedCareWaivers: false,
           impactsManagedCareWaiversExample: '',
           impactsManagedCareWaiversWhyNot: null,
-          additionalMedicaidSpecificWaivers: ''
+          offersPatientIncentivesSafeHarborProtection: false,
+          offersPatientIncentivesSafeHarborProtectionExample: '',
+          offersPatientIncentivesSafeHarborProtectionWhyNot: null,
+          offersExpensesRemunerationSafeHarborProtection: false,
+          offersExpensesRemunerationSafeHarborProtectionExample: '',
+          offersExpensesRemunerationSafeHarborProtectionWhyNot: null
         }
       }
     }

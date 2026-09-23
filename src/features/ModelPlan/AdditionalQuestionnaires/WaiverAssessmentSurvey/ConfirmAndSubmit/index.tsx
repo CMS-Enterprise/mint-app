@@ -6,7 +6,6 @@ import {
   Button,
   Form,
   FormGroup,
-  Link,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
@@ -22,6 +21,7 @@ import {
 import { Alert } from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import ExternalLink from 'components/ExternalLink';
 import FormHeader from 'components/FormHeader';
 import UswdsReactLink from 'components/LinkWrapper';
 import MutationErrorModal from 'components/MutationErrorModal';
@@ -209,8 +209,15 @@ const ConfirmAndSubmit = () => {
             <Trans
               i18nKey="waiverAssessmentSurveyMisc:confirmAndSubmit.summaryBox.text"
               components={{
-                // TODO: Update link
-                link1: <Link href="/">link</Link>
+                link1: (
+                  <ExternalLink
+                    href={waiverAssessmentSurveyMiscT(
+                      'confirmAndSubmit.summaryBox.link'
+                    )}
+                  >
+                    {' '}
+                  </ExternalLink>
+                )
               }}
             />
           </p>
