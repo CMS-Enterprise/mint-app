@@ -31,13 +31,16 @@ type PlanTaskEntry = GetCollaborationAreaQuery['modelPlan']['tasks'][number];
 
 type TabId = 'current' | 'upcoming' | 'completed';
 
-// Current tasks are shown in this fixed order per requirements.
+// Current tasks are shown in this fixed order per requirements. PREPARE_FOR_CLEARANCE is last
+// since it's the final step before clearance, activating only once the other tasks are largely
+// underway - final ordering/copy for its card is still pending a dedicated frontend ticket.
 export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
-  PlanTaskKey.MTO
+  PlanTaskKey.MTO,
+  PlanTaskKey.PREPARE_FOR_CLEARANCE
 ];
 
 const getTabIdFromSearchParams = (tab: string | null): TabId => {

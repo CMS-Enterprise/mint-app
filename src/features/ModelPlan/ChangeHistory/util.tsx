@@ -122,7 +122,8 @@ export const isTableWithStatus = (
 // models.manuallyMarkablePlanTaskKeys in pkg/models/plan_task.go — keep in sync.
 const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [
   PlanTaskKey.TWO_PAGER,
-  PlanTaskKey.SIX_PAGER
+  PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.PREPARE_FOR_CLEARANCE
 ];
 
 // The common_name of the MINT system user account (seeded in migrations/V45), used to attribute
@@ -132,15 +133,17 @@ const systemAccountCommonName = 'Mint System Account';
 
 // isPlanTaskAutomaticChange determines whether a plan_task change record represents a status
 // calculated or activated automatically (e.g. MODEL_PLAN/MTO/DATA_EXCHANGE recalculating as a side
-// effect of other edits, or SIX_PAGER activating from UPCOMING to TO_DO when TWO_PAGER is marked
-// complete) rather than a task the user directly marked complete/to do. Automatic changes are
+// effect of other edits, SIX_PAGER activating from UPCOMING to TO_DO when TWO_PAGER is marked
+// complete, or PREPARE_FOR_CLEARANCE activating from UPCOMING to TO_DO via the daily clearance-date
+// check) rather than a task the user directly marked complete/to do. Automatic changes are
 // attributed to "MINT" in change history instead of the editing user (see ChangeRecord).
 //
 // Keys that are never manually markable (MODEL_PLAN/MTO/DATA_EXCHANGE) are always automatic. Keys
-// that are manually markable (TWO_PAGER/SIX_PAGER) can *also* change as an automatic side effect
-// (e.g. SIX_PAGER activating) - the backend attributes that specific write to the MINT system
-// account (see activateUpcomingPlanTask in pkg/graph/resolvers/plan_task.go), so those are
-// distinguished by actorName rather than by key alone.
+// that are manually markable (TWO_PAGER/SIX_PAGER/PREPARE_FOR_CLEARANCE) can *also* change as an
+// automatic side effect (e.g. SIX_PAGER or PREPARE_FOR_CLEARANCE activating) - the backend
+// attributes that specific write to the MINT system account (see activateUpcomingPlanTask and
+// PrepareForClearanceActivateIfDue in pkg/graph/resolvers/plan_task.go), so those are distinguished
+// by actorName rather than by key alone.
 export const isPlanTaskAutomaticChange = (
   change: ChangeRecordType
 ): boolean => {

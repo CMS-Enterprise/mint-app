@@ -575,6 +575,87 @@ func (suite *ResolverSuite) TestPrepareForClearanceActivateIfDue() {
 	})
 }
 
+// TestPlanTaskChangeHistoryPrepareForClearance confirms PREPARE_FOR_CLEARANCE's plan_task audit
+// records translate correctly - same relation/relationContent as TWO_PAGER/SIX_PAGER, and the
+// actor is the acting user for a manual mark-complete vs. the MINT system account for the
+// scheduled activation - which is what src/features/ModelPlan/ChangeHistory/util.tsx's
+// isPlanTaskAutomaticChange relies on to distinguish "[User] marked..." from "MINT automatically
+// marked...".
+func (suite *ResolverSuite) TestPlanTaskChangeHistoryPrepareForClearance() {
+	findPlanTaskAudit := func(planID uuid.UUID) *models.TranslatedAudit {
+		audits, err := TranslatedAuditCollectionGetByModelPlanID(
+			suite.testConfigs.Context,
+			suite.testConfigs.Store,
+			suite.testConfigs.Logger,
+			suite.testConfigs.Principal,
+			planID,
+			nil,
+			nil,
+		)
+		suite.NoError(err)
+
+		for _, a := range audits {
+			if a.TableName != models.TNPlanTask {
+				continue
+			}
+			meta, ok := a.MetaData.(*models.TranslatedAuditMetaGeneric)
+			if ok && meta.Relation == string(models.PlanTaskKeyPrepareForClearance) {
+				return a
+			}
+		}
+		return nil
+	}
+
+	suite.Run("manual mark-complete is attributed to the acting user", func() {
+		plan := suite.createModelPlan("Plan For Prepare For Clearance Change History - Manual")
+
+		_, err := PlanTaskMarkComplete(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			plan.ID,
+			models.PlanTaskKeyPrepareForClearance,
+			true,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+
+		suite.dangerousQueueAndTranslateAllAudits()
+		audit := findPlanTaskAudit(plan.ID)
+		if suite.NotNil(audit, "expected a translated plan_task audit for PREPARE_FOR_CLEARANCE") {
+			suite.Equal(suite.testConfigs.Principal.Account().ID, audit.ActorID)
+
+			meta := audit.MetaData.(*models.TranslatedAuditMetaGeneric)
+			if suite.NotNil(meta.RelationContent) {
+				suite.Equal(models.PlanTaskKeyPrepareForClearance.ChangeHistoryDisplayName(), *meta.RelationContent)
+			}
+		}
+	})
+
+	suite.Run("scheduled activation is attributed to the MINT system account", func() {
+		plan := suite.createModelPlan("Plan For Prepare For Clearance Change History - Automatic")
+		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, 10))
+
+		suite.NoError(PrepareForClearanceActivateIfDue(
+			suite.testConfigs.Context,
+			suite.testConfigs.Store,
+			suite.testConfigs.Logger,
+			plan.ID,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		))
+
+		suite.dangerousQueueAndTranslateAllAudits()
+		audit := findPlanTaskAudit(plan.ID)
+		if suite.NotNil(audit, "expected a translated plan_task audit for PREPARE_FOR_CLEARANCE") {
+			suite.Equal(constants.GetSystemAccountUUID(), audit.ActorID)
+		}
+	})
+}
+
 // TestPlanTaskGetModelPlanIDsDueForPrepareForClearance covers the query PrepareForClearanceBatchJob
 // uses to find which model plans need activation.
 func (suite *ResolverSuite) TestPlanTaskGetModelPlanIDsDueForPrepareForClearance() {
