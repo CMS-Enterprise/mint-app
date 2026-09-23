@@ -119,6 +119,63 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 	suite.Nil(task.CompletedDts)
 }
 
+// TestPlanTaskMarkCompletePrepareForClearance confirms PREPARE_FOR_CLEARANCE is manually
+// markable like TWO_PAGER and SIX_PAGER, including while it's still UPCOMING (not yet activated
+// by PrepareForClearanceActivateIfDue) - marking complete has no precondition on current state.
+func (suite *ResolverSuite) TestPlanTaskMarkCompletePrepareForClearance() {
+	plan := suite.createModelPlan("Plan For Prepare For Clearance Manual Marking")
+
+	task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
+	suite.Equal(models.PlanTaskStateUpcoming, task.State)
+
+	updated, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyPrepareForClearance,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStateComplete, updated.State)
+		if suite.NotNil(updated.CompletedBy) {
+			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
+		}
+		suite.NotNil(updated.CompletedDts)
+	}
+
+	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
+	suite.Equal(models.PlanTaskStateComplete, task.State)
+
+	// mark it back to TO_DO
+	updated, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyPrepareForClearance,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStateToDo, updated.State)
+		suite.Nil(updated.CompletedBy)
+		suite.Nil(updated.CompletedDts)
+	}
+
+	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
+	suite.Equal(models.PlanTaskStateToDo, task.State)
+	suite.Nil(task.CompletedBy)
+	suite.Nil(task.CompletedDts)
+}
+
 // TestPlanTaskMarkCompleteIsStableOnRepeat confirms that marking an already-complete task
 // complete again is a true no-op - completedBy/completedDts/modifiedDts must not change - rather
 // than silently rewriting them with freshly-generated values on every call. This guards
