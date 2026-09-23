@@ -2,12 +2,14 @@ package worker
 
 import (
 	"strings"
+	"testing"
 	"time"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 
 	"github.com/golang/mock/gomock"
+	"github.com/google/uuid"
 	"github.com/samber/lo"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
@@ -110,4 +112,46 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 	suite.NoError(jobErr)
 
 	mockController.Finish()
+}
+
+func TestGenerateAggregatedDailyDigestEmailIncludesWaiverAssessmentSurveyComplete(t *testing.T) {
+	mockController := gomock.NewController(t)
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+
+	mockEmailService.
+		EXPECT().
+		GetConfig().
+		Return(&oddmail.GoSimpleMailServiceConfig{
+			ClientAddress: "http://localhost:3005",
+		}).
+		AnyTimes()
+
+	analyzedAudit, err := models.NewAnalyzedAudit(
+		uuid.New(),
+		uuid.New(),
+		"Test Plan",
+		time.Now().UTC(),
+		models.AnalyzedAuditChange{
+			PlanSections: &models.AnalyzedPlanSections{
+				WaiverAssessmentSurveyMarkedComplete: true,
+			},
+		},
+	)
+	if err != nil {
+		t.Fatalf("creating analyzed audit: %v", err)
+	}
+
+	emailSubject, emailBody, err := generateUserAgnosticDigestEmail(
+		[]*models.AnalyzedAudit{analyzedAudit},
+		mockEmailService,
+	)
+	if err != nil {
+		t.Fatalf("generating aggregated daily digest email: %v", err)
+	}
+	if emailSubject != "Updates on the models you’re following" {
+		t.Errorf("unexpected email subject: %q", emailSubject)
+	}
+	if !strings.Contains(emailBody, "Waiver assessment survey is complete") {
+		t.Error("aggregated daily digest email does not include waiver assessment survey completion")
+	}
 }
