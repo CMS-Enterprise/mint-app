@@ -25,7 +25,7 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 		[]*models.WaiverSelectionInput{
 			{
 				CommonWaiverID: commonWaiver.ID,
-				WillUseWaiver:  true,
+				WillUseWaiver:  new(true),
 				UsingReason:    nil,
 				NotUsingReason: nil,
 			},
@@ -49,7 +49,7 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 		[]*models.WaiverSelectionInput{
 			{
 				CommonWaiverID: commonWaiver.ID,
-				WillUseWaiver:  true,
+				WillUseWaiver:  new(true),
 				UsingReason:    &usingReason,
 			},
 		},
@@ -72,7 +72,7 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 		[]*models.WaiverSelectionInput{
 			{
 				CommonWaiverID: commonWaiver.ID,
-				WillUseWaiver:  false,
+				WillUseWaiver:  new(false),
 				NotUsingReason: &notUsingReason,
 			},
 		},
@@ -86,4 +86,44 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 	suite.Nil(updated[0].UsingReason)
 	suite.Require().NotNil(updated[0].NotUsingReason)
 	suite.Equal(notUsingReason, *updated[0].NotUsingReason)
+
+	updated, err = UpdateSelectedWaivers(
+		suite.testConfigs.Logger,
+		plan.ID,
+		[]*models.WaiverSelectionInput{
+			{
+				CommonWaiverID: commonWaiver.ID,
+				WillUseWaiver:  nil,
+			},
+		},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+	suite.NoError(err)
+	suite.Require().Len(updated, 1)
+	suite.Nil(updated[0].WillUseWaiver)
+}
+
+func (suite *ResolverSuite) TestUpdateSelectedWaiversRejectsNonCollaborator() {
+	plan := suite.createModelPlan("plan protected from non-collaborator waiver updates")
+	commonWaivers, err := GetAllCommonWaiversByModelPlanID(suite.testConfigs.Context, &plan.ID)
+	suite.Require().NoError(err)
+	suite.Require().NotEmpty(commonWaivers)
+
+	nonCollaborator := suite.getTestPrincipal(suite.testConfigs.Store, "waiver-non-collaborator")
+	nonCollaborator.JobCodeASSESSMENT = false
+
+	_, err = UpdateSelectedWaivers(
+		suite.testConfigs.Logger,
+		plan.ID,
+		[]*models.WaiverSelectionInput{
+			{
+				CommonWaiverID: commonWaivers[0].ID,
+				WillUseWaiver:  new(true),
+			},
+		},
+		nonCollaborator,
+		suite.testConfigs.Store,
+	)
+	suite.Error(err)
 }

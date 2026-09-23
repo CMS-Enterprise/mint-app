@@ -14,6 +14,10 @@ describe('ActiveModelWaivers Component', () => {
         {
           path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/active-model-waivers',
           element: <ActiveModelWaivers />
+        },
+        {
+          path: '/models/:modelID/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation',
+          element: <div>Waiver selection and confirmation</div>
         }
       ],
       {
@@ -47,11 +51,12 @@ describe('ActiveModelWaivers Component', () => {
 
     expect(screen.getByText('Available waivers')).toBeInTheDocument();
 
-    const nextButton = screen.getByRole('button', { name: /next/i });
-    await user.click(nextButton);
+    await user.click(screen.getByRole('button', { name: /next/i }));
 
     await waitFor(() => {
-      expect(nextButton).toBeInTheDocument();
+      expect(
+        screen.getByText('Waiver selection and confirmation')
+      ).toBeInTheDocument();
     });
   });
 
