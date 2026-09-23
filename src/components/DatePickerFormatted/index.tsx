@@ -1,7 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { DatePicker } from '@trussworks/react-uswds';
-// eslint-disable-next-line import/no-unresolved
-import { DatePickerProps } from '@trussworks/react-uswds/lib/components/forms/DatePicker/DatePicker';
+import { DatePicker, type DatePickerProps } from '@trussworks/react-uswds';
 import { DateTime } from 'luxon';
 
 function defaultFormat(
