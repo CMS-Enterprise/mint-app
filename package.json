@@ -201,24 +201,14 @@
     "webpack": "^5.105.4"
   },
   "resolutions": {
-    "prismjs": "1.24.0",
-    "glob-parent": "5.1.2",
-    "css-what": "5.0.1",
-    "trim": "0.0.3",
-    "lodash": "4.18.1",
-    "lodash-es": "4.18.1",
-    "axios": "0.21.1",
-    "marked": "0.7.0",
-    "node-fetch": "2.6.1",
     "@graphql-typed-document-node/core": "3.2.0",
-    "@types/react-dom": "17.0.2",
     "@typescript-eslint/parser": "^8.50.0",
-    "@typescript-eslint/typescript-estree": "^8.50.0",
-    "vite": "^6.4.3"
+    "@typescript-eslint/typescript-estree": "^8.50.0"
   },
   "comments": {
     "on_resolutions": {
-      "typed_document_node": "https://github.com/dotansimha/graphql-code-generator/issues/9293"
+      "typed_document_node": "https://github.com/dotansimha/graphql-code-generator/issues/9293",
+      "typescript_eslint": "eslint-config-react-app pins @typescript-eslint v5; align parser/typescript-estree with ESLint 8"
     }
   },
   "jest": {
