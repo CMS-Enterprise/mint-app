@@ -521,7 +521,7 @@ export type WaiverAssessmentSurveySectionHeadings = {
   waiverSurveyQuestions: string;
 };
 
-export type WaiverAssessmentSurveySectionsConfig = {
+export type WaiverQuestionsSectionsConfig = {
   modelPlanQuestions: {
     heading: string;
     config: Record<string, TranslationConfigType<string>>;
@@ -535,9 +535,9 @@ export type WaiverAssessmentSurveySectionsConfig = {
 };
 
 /**
- * Builds translation configs for waiver assessment survey read-only sections.
+ * Builds translation configs for waiver questions read-only sections.
  */
-export const buildWaiverAssessmentSurveyQuestionConfigs = (
+export const buildWaiverQuestionConfigs = (
   modelBasicsConfig: TranslationPlan['basics'],
   generalCharacteristicsConfig: TranslationPlan['generalCharacteristics'],
   waiverAssessmentSurveyConfig: TranslationPlan['waiverAssessmentSurvey']
@@ -605,12 +605,12 @@ export const buildWaiverAssessmentSurveyQuestionConfigs = (
 });
 
 /**
- * Builds section headings and configs for waiver assessment survey read-only views.
+ * Builds section headings and configs for waiver questions read-only views.
  */
-export const buildWaiverAssessmentSurveySectionsConfig = (
+export const buildWaiverQuestionsSectionsConfig = (
   questionConfigs: WaiverAssessmentSurveyQuestionConfigs,
   headings: WaiverAssessmentSurveySectionHeadings
-): WaiverAssessmentSurveySectionsConfig => ({
+): WaiverQuestionsSectionsConfig => ({
   modelPlanQuestions: {
     heading: headings.modelPlanQuestions,
     config: questionConfigs.modelPlanQuestionsConfig,
@@ -668,9 +668,9 @@ export const buildParticipationPreconditionPlans = (
 };
 
 /**
- * Builds merged model plan question values for waiver assessment survey read-only views.
+ * Builds merged model plan question values for waiver model questions read-only views.
  */
-export const buildWaiverAssessmentSurveyModelQuestionsData = (
+export const buildWaiverModelQuestionsData = (
   basics: WaiverAssessmentSurveyModelPlan['basics'],
   generalCharacteristics: WaiverAssessmentSurveyGeneralCharacteristics
 ) => ({

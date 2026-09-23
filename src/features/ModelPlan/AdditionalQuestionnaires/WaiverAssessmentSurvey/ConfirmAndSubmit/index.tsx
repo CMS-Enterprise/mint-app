@@ -33,7 +33,7 @@ import { formatDateLocal } from 'utils/date';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
-import WaiverAssessmentSurveyReadOnlySections from '../_components/WaiverAssessmentSurveyReadOnlySections';
+import WaiverQuestionsReadOnlySections from '../_components/WaiverQuestionsReadOnlySections';
 import { isWaiverSurveyQuestionsComplete } from '../util';
 
 type ConfirmAndSubmitForm = Pick<
@@ -198,7 +198,7 @@ const ConfirmAndSubmit = () => {
         </div>
       </div>
 
-      <WaiverAssessmentSurveyReadOnlySections modelPlan={data.modelPlan} />
+      <WaiverQuestionsReadOnlySections modelPlan={data.modelPlan} />
 
       <SummaryBox className="maxw-tablet">
         <SummaryBoxHeading headingLevel="h2" className="margin-bottom-2">

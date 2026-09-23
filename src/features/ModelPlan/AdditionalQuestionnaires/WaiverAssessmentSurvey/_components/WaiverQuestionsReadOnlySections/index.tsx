@@ -10,19 +10,19 @@ import UswdsReactLink from 'components/LinkWrapper';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 
 import {
-  buildWaiverAssessmentSurveyModelQuestionsData,
-  buildWaiverAssessmentSurveyQuestionConfigs,
-  buildWaiverAssessmentSurveySectionsConfig
+  buildWaiverModelQuestionsData,
+  buildWaiverQuestionConfigs,
+  buildWaiverQuestionsSectionsConfig
 } from '../../util';
 
-type WaiverAssessmentSurveyReadOnlySectionsProps = {
+type WaiverQuestionsReadOnlySectionsProps = {
   modelPlan: GetAllWaiverAssessmentSurveyQuery['modelPlan'];
 };
 
-/** Renders read-only waiver assessment survey question sections. */
-const WaiverAssessmentSurveyReadOnlySections = ({
+/** Renders read-only model question and waiver assessment survey question sections. */
+const WaiverQuestionsReadOnlySections = ({
   modelPlan
-}: WaiverAssessmentSurveyReadOnlySectionsProps) => {
+}: WaiverQuestionsReadOnlySectionsProps) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
@@ -35,8 +35,8 @@ const WaiverAssessmentSurveyReadOnlySections = ({
     'waiverAssessmentSurvey'
   );
 
-  const surveyQuestionsConfig = buildWaiverAssessmentSurveySectionsConfig(
-    buildWaiverAssessmentSurveyQuestionConfigs(
+  const waiverQuestionsConfig = buildWaiverQuestionsSectionsConfig(
+    buildWaiverQuestionConfigs(
       modelBasicsConfig,
       generalCharacteristicsConfig,
       waiverAssessmentSurveyConfig
@@ -51,7 +51,7 @@ const WaiverAssessmentSurveyReadOnlySections = ({
     }
   );
 
-  const modelQuestionsData = buildWaiverAssessmentSurveyModelQuestionsData(
+  const modelQuestionsData = buildWaiverModelQuestionsData(
     modelPlan.basics,
     modelPlan.generalCharacteristics
   );
@@ -61,18 +61,18 @@ const WaiverAssessmentSurveyReadOnlySections = ({
 
   return (
     <>
-      {Object.keys(surveyQuestionsConfig).map((waiverSurvey, index) => {
+      {Object.keys(waiverQuestionsConfig).map((questionType, index) => {
         const waiverConfig =
-          surveyQuestionsConfig[
-            waiverSurvey as keyof typeof surveyQuestionsConfig
+          waiverQuestionsConfig[
+            questionType as keyof typeof waiverQuestionsConfig
           ];
 
         return (
           <div
-            key={waiverSurvey}
-            id={`${convertToLowercaseAndDashes(waiverSurvey)}-read-view`}
+            key={questionType}
+            id={`${convertToLowercaseAndDashes(questionType)}-read-view`}
             className={classNames(
-              index !== Object.keys(surveyQuestionsConfig).length - 1
+              index !== Object.keys(waiverQuestionsConfig).length - 1
                 ? 'margin-bottom-5'
                 : 'margin-bottom-6'
             )}
@@ -90,7 +90,7 @@ const WaiverAssessmentSurveyReadOnlySections = ({
             </UswdsReactLink>
 
             {Object.keys(waiverConfig.config).map(questionConfig =>
-              waiverSurvey === 'modelPlanQuestions' ? (
+              questionType === 'modelPlanQuestions' ? (
                 <SimpleReadOnlySection
                   key={questionConfig}
                   field={questionConfig}
@@ -113,4 +113,4 @@ const WaiverAssessmentSurveyReadOnlySections = ({
   );
 };
 
-export default WaiverAssessmentSurveyReadOnlySections;
+export default WaiverQuestionsReadOnlySections;

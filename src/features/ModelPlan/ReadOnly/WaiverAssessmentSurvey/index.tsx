@@ -7,7 +7,7 @@ import { useGetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 import { Alert } from 'components/Alert';
 import PageLoading from 'components/PageLoading';
 
-import WaiverAssessmentSurveyReadOnlySections from '../../AdditionalQuestionnaires/WaiverAssessmentSurvey/_components/WaiverAssessmentSurveyReadOnlySections';
+import WaiverAssessmentSurveyReadOnlySections from '../../AdditionalQuestionnaires/WaiverAssessmentSurvey/_components/WaiverQuestionsReadOnlySections';
 import SelectedWaiversTable from '../_components/SelectedWaiversTable';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
