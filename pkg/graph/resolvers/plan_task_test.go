@@ -176,6 +176,53 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompletePrepareForClearance() {
 	suite.Nil(task.CompletedDts)
 }
 
+// TestPlanTaskMarkCompletePrepareForClearanceSendsNotification confirms that marking
+// PREPARE_FOR_CLEARANCE complete through the public PlanTaskMarkComplete mutation - not just the
+// lower-level updatePlanTaskStateByKey already covered generically for other keys - actually
+// results in an in-app notification for an opted-in collaborator, and none for one who opted out.
+// The notification pipeline itself (trySendPlanTaskCompletedNotifications) is key-agnostic, but
+// this is the only test that exercises it specifically for PREPARE_FOR_CLEARANCE end-to-end.
+func (suite *ResolverSuite) TestPlanTaskMarkCompletePrepareForClearanceSendsNotification() {
+	plan := suite.createModelPlan("Plan For Prepare For Clearance Completed Notification")
+	suite.createPlanCollaborator(plan, "PFCI", []models.TeamRole{models.TeamRoleLeadership})
+	suite.createPlanCollaborator(plan, "PFCX", []models.TeamRole{models.TeamRoleLeadership})
+	optedInPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "PFCI")
+	optedOutPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "PFCX")
+
+	_, err := UserNotificationPreferencesUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		optedInPrincipal,
+		suite.testConfigs.Store,
+		map[string]interface{}{
+			"taskCompleted": models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
+		},
+	)
+	suite.NoError(err)
+
+	leadBefore := suite.numUnreadNotifications(suite.testConfigs.Principal)
+	optedInBefore := suite.numUnreadNotifications(optedInPrincipal)
+	optedOutBefore := suite.numUnreadNotifications(optedOutPrincipal)
+
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyPrepareForClearance,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	// Leads always receive task-completed notifications regardless of their own preference.
+	suite.Equal(leadBefore+1, suite.numUnreadNotifications(suite.testConfigs.Principal))
+	suite.Equal(optedInBefore+1, suite.numUnreadNotifications(optedInPrincipal))
+	suite.Equal(optedOutBefore, suite.numUnreadNotifications(optedOutPrincipal))
+}
+
 // TestPlanTaskMarkCompleteIsStableOnRepeat confirms that marking an already-complete task
 // complete again is a true no-op - completedBy/completedDts/modifiedDts must not change - rather
 // than silently rewriting them with freshly-generated values on every call. This guards
