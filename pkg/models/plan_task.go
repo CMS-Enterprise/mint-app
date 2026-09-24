@@ -25,12 +25,13 @@ type PlanTaskKey string
 
 // These constants represent the possible values of a PlanTaskKey
 const (
-	PlanTaskKeyModelPlan      PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMto            PlanTaskKey = "MTO"
-	PlanTaskKeyDataExchange   PlanTaskKey = "DATA_EXCHANGE"
-	PlanTaskKeyTwoPager       PlanTaskKey = "TWO_PAGER"
-	PlanTaskKeySixPager       PlanTaskKey = "SIX_PAGER"
-	PlanTaskKeyOaPresentation PlanTaskKey = "OA_PRESENTATION"
+	PlanTaskKeyModelPlan              PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto                    PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange           PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyWaiverAssessmentSurvey PlanTaskKey = "WAIVER_ASSESSMENT_SURVEY"
+	PlanTaskKeyTwoPager               PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeySixPager               PlanTaskKey = "SIX_PAGER"
+	PlanTaskKeyOaPresentation         PlanTaskKey = "OA_PRESENTATION"
 )
 
 // manuallyMarkablePlanTaskKeys are the PlanTaskKeys whose status is set directly by a user via
@@ -64,6 +65,7 @@ var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeyModelPlan, PlanTaskStateToDo},
 	{PlanTaskKeyMto, PlanTaskStateToDo},
 	{PlanTaskKeyDataExchange, PlanTaskStateToDo},
+	{PlanTaskKeyWaiverAssessmentSurvey, PlanTaskStateToDo},
 	{PlanTaskKeyTwoPager, PlanTaskStateToDo},
 	{PlanTaskKeySixPager, PlanTaskStateUpcoming},
 	{PlanTaskKeyOaPresentation, PlanTaskStateUpcoming},

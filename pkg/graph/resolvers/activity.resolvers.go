@@ -160,6 +160,16 @@ func (r *taskCompletedActivityMetaResolver) CompletedByUserAccount(ctx context.C
 	return UserAccountGetByIDLOADER(ctx, obj.CompletedBy)
 }
 
+// ModelPlan is the resolver for the modelPlan field.
+func (r *waiverAssessmentSurveyMarkedCompleteActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// MarkedCompleteByUserAccount is the resolver for the markedCompleteByUserAccount field.
+func (r *waiverAssessmentSurveyMarkedCompleteActivityMetaResolver) MarkedCompleteByUserAccount(ctx context.Context, obj *models.WaiverAssessmentSurveyMarkedCompleteActivityMeta) (*authentication.UserAccount, error) {
+	return UserAccountGetByIDLOADER(ctx, obj.MarkedCompleteBy)
+}
+
 // Activity returns generated.ActivityResolver implementation.
 func (r *Resolver) Activity() generated.ActivityResolver { return &activityResolver{r} }
 
@@ -233,6 +243,11 @@ func (r *Resolver) TaskCompletedActivityMeta() generated.TaskCompletedActivityMe
 	return &taskCompletedActivityMetaResolver{r}
 }
 
+// WaiverAssessmentSurveyMarkedCompleteActivityMeta returns generated.WaiverAssessmentSurveyMarkedCompleteActivityMetaResolver implementation.
+func (r *Resolver) WaiverAssessmentSurveyMarkedCompleteActivityMeta() generated.WaiverAssessmentSurveyMarkedCompleteActivityMetaResolver {
+	return &waiverAssessmentSurveyMarkedCompleteActivityMetaResolver{r}
+}
+
 type (
 	activityResolver                                           struct{ *Resolver }
 	addedAsCollaboratorMetaResolver                            struct{ *Resolver }
@@ -249,4 +264,5 @@ type (
 	taggedInDiscussionReplyActivityMetaResolver                struct{ *Resolver }
 	taggedInPlanDiscussionActivityMetaResolver                 struct{ *Resolver }
 	taskCompletedActivityMetaResolver                          struct{ *Resolver }
+	waiverAssessmentSurveyMarkedCompleteActivityMetaResolver   struct{ *Resolver }
 )

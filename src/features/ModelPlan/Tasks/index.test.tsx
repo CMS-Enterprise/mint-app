@@ -88,6 +88,10 @@ const completeAllTasks = () =>
       state: PlanTaskState.COMPLETE,
       status: PlanTaskStatus.COMPLETE
     },
+    [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: {
+      state: PlanTaskState.COMPLETE,
+      status: PlanTaskStatus.COMPLETE
+    },
     [PlanTaskKey.SIX_PAGER]: {
       state: PlanTaskState.COMPLETE,
       status: PlanTaskStatus.COMPLETE
@@ -103,7 +107,7 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(planTasksAllToDo);
 
     await waitFor(() => {
-      expect(screen.getByText('Current tasks (4)')).toBeInTheDocument();
+      expect(screen.getByText('Current tasks (5)')).toBeInTheDocument();
     });
 
     expect(screen.getByRole('heading', { name: 'Tasks' })).toBeInTheDocument();
@@ -114,6 +118,7 @@ describe('Tasks page', () => {
     expect(getCardHeadings(container)).toEqual([
       'Start your Model Plan',
       'Start your data exchange approach',
+      'Complete your waiver assessment survey',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Start your model-to-operations matrix (MTO)'
     ]);
@@ -134,7 +139,7 @@ describe('Tasks page', () => {
     renderWithMock(planTasksWithModelPlanComplete);
 
     await waitFor(() => {
-      expect(screen.getByText('Current tasks (3)')).toBeInTheDocument();
+      expect(screen.getByText('Current tasks (4)')).toBeInTheDocument();
       expect(screen.getByText('Completed tasks (1)')).toBeInTheDocument();
     });
 
@@ -146,6 +151,15 @@ describe('Tasks page', () => {
     expect(
       screen.getByText('Start your data exchange approach')
     ).toBeInTheDocument();
+  });
+
+  it('renders waiver assessment survey task secondary action as link', async () => {
+    renderWithMock(planTasksWithModelPlanComplete);
+    expect(
+      await screen.findByRole('link', {
+        name: 'View additional questionnaires'
+      })
+    ).not.toHaveClass('usa-button usa-button--outline');
   });
 
   it('lists default upcoming tasks on the Upcoming tab', async () => {
@@ -178,13 +192,15 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(activatedLaterTasks);
 
     await waitFor(() => {
-      expect(screen.getByText('Current tasks (6)')).toBeInTheDocument();
+      expect(screen.getByText('Completed tasks (0)')).toBeInTheDocument();
+      expect(screen.getByText('Current tasks (7)')).toBeInTheDocument();
       expect(screen.getByText('Upcoming tasks (0)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
       'Start your Model Plan',
       'Start your data exchange approach',
+      'Complete your waiver assessment survey',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'Start your model-to-operations matrix (MTO)',
@@ -196,13 +212,14 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(completeAllTasks(), 'completed');
 
     await waitFor(() => {
-      expect(screen.getByText('Completed tasks (6)')).toBeInTheDocument();
+      expect(screen.getByText('Completed tasks (7)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
       'Prepare for your presentation to the Office of the Administrator (OA)',
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
+      'Complete your waiver assessment survey',
       'Finalize your data exchange approach',
       'Keep your model-to-operations matrix (MTO) up-to-date',
       'Iterate on your Model Plan'
