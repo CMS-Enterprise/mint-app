@@ -735,6 +735,7 @@ func (suite *ResolverSuite) TestPlanTaskChangeHistoryPrepareForClearance() {
 func (suite *ResolverSuite) TestPlanTaskGetModelPlanIDsDueForPrepareForClearance() {
 	dueSoon := suite.createModelPlan("Plan Due Soon For Clearance Batch Query")
 	suite.setClearanceStarts(dueSoon.ID, time.Now().AddDate(0, 0, 10))
+	suite.resetPrepareForClearanceTaskToUpcoming(dueSoon.ID)
 
 	farOut := suite.createModelPlan("Plan Far Out For Clearance Batch Query")
 	suite.setClearanceStarts(farOut.ID, time.Now().AddDate(0, 0, 25))
@@ -766,6 +767,23 @@ func (suite *ResolverSuite) TestPlanTaskGetModelPlanIDsDueForPrepareForClearance
 	suite.False(dueIDSet[farOut.ID], "expected the plan far outside the trigger window to not be due")
 	suite.False(dueIDSet[noDate.ID], "expected the plan with no clearance date to not be due")
 	suite.False(dueIDSet[alreadyToDo.ID], "expected the already-TO_DO plan to not be due again")
+}
+
+// resetPrepareForClearanceTaskToUpcoming forces the task back to UPCOMING after timeline sync
+// has activated it, so batch-query tests can assert the cron activation candidate set.
+func (suite *ResolverSuite) resetPrepareForClearanceTaskToUpcoming(modelPlanID uuid.UUID) {
+	modifiedBy := suite.testConfigs.Principal.Account().ID
+	_, err := storage.PlanTaskUpdateStateByKey(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		modelPlanID,
+		models.PlanTaskKeyPrepareForClearance,
+		models.PlanTaskStateUpcoming,
+		nil,
+		nil,
+		modifiedBy,
+	)
+	suite.NoError(err)
 }
 
 // setClearanceStarts sets a model plan's internal clearance start date, which drives the
