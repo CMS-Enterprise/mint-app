@@ -130,7 +130,7 @@ jobs:
         # Hub did before it (Oct 2025) - MinIO's own GitHub repo is now archived entirely, so
         # there's no official image left to pull from at all. pgsty/silo is an actively-maintained,
         # S3-API- and CLI-compatible fork, still freely published to Docker Hub.
-        image: docker.io/pgsty/silo:latest
+        image: docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z
         command: server /data
         ports:
           - '9005:9000'
