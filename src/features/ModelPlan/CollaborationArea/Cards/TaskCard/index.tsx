@@ -22,6 +22,7 @@ import {
 
 import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
+import ExternalLink from 'components/ExternalLink';
 import UswdsReactLink from 'components/LinkWrapper';
 import toastSuccess from 'components/ToastSuccess';
 import { getStatusAlertBody } from 'contexts/ErrorContext';
@@ -155,15 +156,14 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
   const secondaryLink = secondaryAction !== '' && (
     <>
       {isExternalUrl(secondaryPath) ? (
-        <a
+        <ExternalLink
           href={secondaryPath}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="usa-button usa-button--outline margin-right-2 display-inline-flex flex-align-center"
+          className="usa-button usa-button--outline margin-right-2"
+          variant="unstyled"
+          asButton
         >
           {secondaryAction}
-          <Icon.Launch className="margin-left-05" aria-label="launch" />
-        </a>
+        </ExternalLink>
       ) : (
         <UswdsReactLink
           to={secondaryPath}

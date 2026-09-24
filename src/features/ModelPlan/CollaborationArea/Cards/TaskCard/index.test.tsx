@@ -175,7 +175,7 @@ describe('TaskCard', () => {
 
     await findByText('Prepare for clearance');
     expect(
-      getByRole('link', { name: /View clearance info on SharePoint/i })
+      getByRole('button', { name: /View clearance info on SharePoint/i })
     ).toBeInTheDocument();
     expect(queryByRole('button', { name: 'Start' })).not.toBeInTheDocument();
     expect(
