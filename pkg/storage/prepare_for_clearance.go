@@ -46,5 +46,22 @@ func ClearReadyForClearanceByModelPlanID(
 		"model_plan_id": modelPlanID,
 		"modified_by":   modifiedBy,
 	}
-	return sqlutils.ExecProcedure(np, sqlqueries.PrepareForClearance.ClearReadyForClearanceByModelPlanID, args)
+
+	clearQueries := []string{
+		sqlqueries.PrepareForClearance.ClearReadyForClearancePlanBasics,
+		sqlqueries.PrepareForClearance.ClearReadyForClearancePlanGeneralCharacteristics,
+		sqlqueries.PrepareForClearance.ClearReadyForClearancePlanParticipantsAndProviders,
+		sqlqueries.PrepareForClearance.ClearReadyForClearancePlanBeneficiaries,
+		sqlqueries.PrepareForClearance.ClearReadyForClearancePlanOpsEvalAndLearning,
+		sqlqueries.PrepareForClearance.ClearReadyForClearancePlanPayments,
+		sqlqueries.PrepareForClearance.ClearReadyForClearancePlanTimeline,
+	}
+
+	for _, query := range clearQueries {
+		if err := sqlutils.ExecProcedure(np, query, args); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
