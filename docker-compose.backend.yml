@@ -149,11 +149,14 @@ services:
 
   minio:
     restart: always
-    # minio/minio was removed from Docker Hub (MinIO moved to source-only distribution,
-    # see https://github.com/minio/minio/discussions - Oct 2025). quay.io still serves the
-    # last images MinIO published there before the cutover.
-    image: quay.io/minio/minio:latest
-    entrypoint: minio server /data --console-address ":9966" --address ":9005"
+    # quay.io stopped allowing anonymous pulls of minio/minio (Sep 2026), the same way Docker Hub
+    # did before it (Oct 2025) - MinIO's own GitHub repo is now archived entirely, so there's no
+    # official image left to pull from at all. pgsty/silo is an actively-maintained, S3-API- and
+    # CLI-compatible fork, still freely published to Docker Hub. Uses the image's own
+    # docker-entrypoint.sh (not a custom entrypoint override) - `command:` alone matches pgsty's
+    # documented usage and is what's actually been verified to work.
+    image: docker.io/pgsty/silo:latest
+    command: server /data --console-address ":9966" --address ":9005"
     ports:
       - '9005:9005'
       - '9966:9966'
@@ -164,7 +167,9 @@ services:
       - "dev.dozzle.group=MINT"
 
   minio_mc:
-    image: quay.io/minio/mc:latest
+    # pgsty/mc is the companion client image (ships the `mc` binary, "mcli" upstream) for
+    # pgsty/silo - see the minio service above for why we're not on quay.io/minio/mc anymore.
+    image: docker.io/pgsty/mc:latest
     volumes:
       - ./minio_config.json:/root/.mc/config.json
     depends_on:
@@ -176,10 +181,10 @@ services:
       /bin/sh -c "
       /usr/bin/mc rb --force s3local/mint-app-file-uploads/;
       /usr/bin/mc mb --quiet s3local/mint-app-file-uploads/;
-      /usr/bin/mc policy set public s3local/mint-app-file-uploads;
+      /usr/bin/mc anonymous set public s3local/mint-app-file-uploads;
       /usr/bin/mc rb --force s3local/mint-app-echimp-uploads/;
       /usr/bin/mc mb --quiet s3local/mint-app-echimp-uploads/;
-      /usr/bin/mc policy set public s3local/mint-app-echimp-uploads;
+      /usr/bin/mc anonymous set public s3local/mint-app-echimp-uploads;
       "
 
   email:
