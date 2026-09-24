@@ -6,6 +6,7 @@ import { useGetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 
 import { Alert } from 'components/Alert';
 import PageLoading from 'components/PageLoading';
+import { sortByName } from 'utils/formUtil';
 
 import WaiverAssessmentSurveyReadOnlySections from '../../AdditionalQuestionnaires/WaiverAssessmentSurvey/_components/WaiverQuestionsReadOnlySections';
 import SelectedWaiversTable from '../_components/SelectedWaiversTable';
@@ -40,6 +41,16 @@ const ReadOnlyWaiverAssessmentSurvey = ({
   const allWaiverAssessmentSurveyData =
     data.modelPlan.questionnaires.waiverAssessmentSurvey;
 
+  const waiverSelectionData = data.modelPlan.waiverInfo.commonWaivers;
+
+  const selectedWaivers = waiverSelectionData
+    .filter(waiver => waiver.willUseWaiver === true)
+    .sort(sortByName);
+
+  // const declinedWaivers = waiverSelectionData
+  //   .filter(waiver => waiver.isSuggested && waiver.willUseWaiver === false)
+  //   .sort(sortByName);
+
   return (
     <div
       className="read-only-waiver-assessment-survey"
@@ -61,14 +72,12 @@ const ReadOnlyWaiverAssessmentSurvey = ({
         {waiverAssessmentSurveyMiscT('selectedWaivers.heading')}
       </h3>
 
-      {allWaiverAssessmentSurveyData.waivers.length === 0 ? (
+      {selectedWaivers.length === 0 ? (
         <Alert type="info" slim className="margin-bottom-6">
           {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
         </Alert>
       ) : (
-        <SelectedWaiversTable
-          selectedWaivers={allWaiverAssessmentSurveyData.waivers}
-        />
+        <SelectedWaiversTable selectedWaivers={selectedWaivers} />
       )}
 
       <WaiverAssessmentSurveyReadOnlySections modelPlan={data.modelPlan} />

@@ -479,26 +479,35 @@ export const getWaiverSelectionChanges = (
 
   commonWaiverIDs.forEach(commonWaiverID => {
     const currentFields = current.waivers[commonWaiverID];
+    const initialFields = initial.waivers[commonWaiverID];
 
     if (!currentFields) {
       return;
     }
 
-    if (
-      !waiverSelectionFieldsChanged(
-        initial.waivers[commonWaiverID],
-        currentFields
-      )
-    ) {
+    if (!waiverSelectionFieldsChanged(initialFields, currentFields)) {
       return;
     }
+
+    // Handle when willUseWaiver is false or null.
+    // We preserve the original DB value for usingReason.
+    const usingReason =
+      currentFields.willUseWaiver !== true
+        ? initialFields?.usingReason || null
+        : currentFields.usingReason || null;
+
+    // Handle when willUseWaiver is true or null.
+    // We preserve the original DB value for notUsingReason.
+    const notUsingReason =
+      currentFields.willUseWaiver !== false
+        ? initialFields?.notUsingReason || null
+        : currentFields.notUsingReason || null;
 
     changes.push({
       commonWaiverID,
       willUseWaiver: currentFields.willUseWaiver,
-      ...(currentFields.willUseWaiver === false
-        ? { notUsingReason: currentFields.notUsingReason || null }
-        : { usingReason: currentFields.usingReason || null })
+      usingReason,
+      notUsingReason
     });
   });
 
@@ -704,6 +713,9 @@ const WAIVER_SURVEY_PARENT_QUESTION_CONFIGS = [
 type WaiverSurveyQuestionnaireData =
   GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
 
+type WaiverSelectionData =
+  GetAllWaiverAssessmentSurveyQuery['modelPlan']['waiverInfo']['commonWaivers'];
+
 const isNonEmptyString = (value: unknown): boolean =>
   typeof value === 'string' && value.trim() !== '';
 
@@ -744,8 +756,12 @@ export const isWaiverSurveyQuestionComplete = (
  * Returns true when all pages 3–5 waiver question fields are complete.
  */
 export const isWaiverSurveyQuestionsComplete = (
-  surveyData: WaiverSurveyQuestionnaireData
+  surveyData: WaiverSurveyQuestionnaireData | undefined
 ): boolean => {
+  if (!surveyData) {
+    return false;
+  }
+
   const allParentQuestionsComplete =
     WAIVER_SURVEY_PARENT_QUESTION_CONFIGS.every(questionConfig =>
       isWaiverSurveyQuestionComplete(
@@ -755,4 +771,33 @@ export const isWaiverSurveyQuestionsComplete = (
     );
 
   return allParentQuestionsComplete;
+};
+
+export const isWaiverSelectionComplete = (
+  waiverSelectionData: WaiverSelectionData | undefined
+): boolean => {
+  if (!waiverSelectionData) {
+    return false;
+  }
+
+  const allWaiversSelected = waiverSelectionData.every(waiver => {
+    const isAnswered =
+      waiver.willUseWaiver !== null && waiver.willUseWaiver !== undefined;
+
+    if (waiver.isSuggested && isAnswered) {
+      return waiver.willUseWaiver
+        ? true
+        : isNonEmptyString(waiver.notUsingReason);
+    }
+
+    if (waiver.isSuggested === false) {
+      return waiver.willUseWaiver === true
+        ? isNonEmptyString(waiver.usingReason)
+        : true;
+    }
+
+    return false;
+  });
+
+  return allWaiversSelected;
 };

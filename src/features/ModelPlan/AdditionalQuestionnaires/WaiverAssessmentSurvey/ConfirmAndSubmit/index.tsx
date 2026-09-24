@@ -30,11 +30,15 @@ import Spinner from 'components/Spinner';
 import useHandleMutation from 'hooks/useHandleMutation';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
+import { sortByName } from 'utils/formUtil';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
 import WaiverQuestionsReadOnlySections from '../_components/WaiverQuestionsReadOnlySections';
-import { isWaiverSurveyQuestionsComplete } from '../util';
+import {
+  isWaiverSelectionComplete,
+  isWaiverSurveyQuestionsComplete
+} from '../util';
 
 type ConfirmAndSubmitForm = Pick<
   GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'],
@@ -77,25 +81,35 @@ const ConfirmAndSubmit = () => {
   const waiverAssessmentSurveyData =
     data?.modelPlan?.questionnaires?.waiverAssessmentSurvey;
 
+  const waiverSelectionData = data?.modelPlan?.waiverInfo?.commonWaivers;
+
   const selectedWaivers = useMemo(() => {
     return (
-      waiverAssessmentSurveyData?.waivers.filter(
-        waiver => waiver.willUseWaiver === true
-      ) || []
+      waiverSelectionData
+        ?.filter(waiver => waiver.willUseWaiver === true)
+        .sort(sortByName) || []
     );
-  }, [waiverAssessmentSurveyData?.waivers]);
+  }, [waiverSelectionData]);
 
   const declinedWaivers = useMemo(() => {
     return (
-      waiverAssessmentSurveyData?.waivers.filter(
-        waiver => waiver.willUseWaiver === false
-      ) || []
+      waiverSelectionData
+        ?.filter(waiver => waiver.isSuggested && waiver.willUseWaiver === false)
+        .sort(sortByName) || []
     );
-  }, [waiverAssessmentSurveyData?.waivers]);
+  }, [waiverSelectionData]);
 
-  const isSurveyComplete = waiverAssessmentSurveyData
-    ? isWaiverSurveyQuestionsComplete(waiverAssessmentSurveyData)
-    : false;
+  const hasSelectedWaivers = selectedWaivers.length > 0;
+
+  const hasSuggestedWaivers =
+    waiverSelectionData?.some(waiver => waiver.isSuggested) ?? false;
+
+  const requiresWaiverValidation = hasSelectedWaivers || hasSuggestedWaivers;
+
+  const isSurveyComplete = requiresWaiverValidation
+    ? isWaiverSurveyQuestionsComplete(waiverAssessmentSurveyData) &&
+      isWaiverSelectionComplete(waiverSelectionData)
+    : Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed);
 
   const mappedFormData = mapDefaultFormValues<ConfirmAndSubmitForm>(
     waiverAssessmentSurveyData,
@@ -125,7 +139,7 @@ const ConfirmAndSubmit = () => {
     return <Spinner size="large" />;
   }
 
-  if (error || !waiverAssessmentSurveyData) {
+  if (error || !waiverAssessmentSurveyData || !waiverSelectionData) {
     return <NotFoundPartial errorMessage={error?.message} />;
   }
 

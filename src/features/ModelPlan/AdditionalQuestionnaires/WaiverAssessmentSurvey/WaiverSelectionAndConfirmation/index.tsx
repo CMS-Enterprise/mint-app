@@ -6,6 +6,7 @@ import { useMutation } from '@apollo/client';
 import { Fieldset, Form } from '@trussworks/react-uswds';
 import NotFoundPartial from 'features/NotFound/NotFoundPartial';
 import {
+  GetAllWaiverAssessmentSurveyDocument,
   GetWaiversDocument,
   TypedUpdateSelectedWaiversDocument,
   TypedUpdateWaiverAssessmentSurveyDocument,
@@ -25,7 +26,6 @@ import WaiverInfoPanel from '../_components/WaiverInfoPanel';
 import WaiverSelectionSection from '../_components/WaiverSelectionSection';
 import {
   buildWaiverSelectionFormValues,
-  getSuggestedOrInUseWaivers,
   getWaiverSelectionChanges
 } from '../util';
 
@@ -59,13 +59,6 @@ const WaiverSelectionAndConfirmation = () => {
     [data?.modelPlan]
   );
 
-  const initialInUseWaivers = getSuggestedOrInUseWaivers(
-    data?.modelPlan?.waiverInfo?.commonWaivers ?? [],
-    formData.waivers
-  );
-
-  const hasInUseWaivers = initialInUseWaivers.length > 0;
-
   const methods = useForm<WaiverSelectionForm>({
     values: formData,
     mode: 'onChange'
@@ -77,7 +70,11 @@ const WaiverSelectionAndConfirmation = () => {
     TypedUpdateSelectedWaiversDocument,
     {
       refetchQueries: [
-        { query: GetWaiversDocument, variables: { id: modelID } }
+        { query: GetWaiversDocument, variables: { id: modelID } },
+        {
+          query: GetAllWaiverAssessmentSurveyDocument,
+          variables: { id: modelID }
+        }
       ]
     }
   );
@@ -102,42 +99,46 @@ const WaiverSelectionAndConfirmation = () => {
       return false;
     }
 
-    let promise;
+    const waiverChanges = getWaiverSelectionChanges(formData, getValues());
 
-    if (hasInUseWaivers) {
-      const changes = getWaiverSelectionChanges(formData, getValues());
+    const checkboxDirty = methods.formState.dirtyFields.isEmptyWaiversConfirmed;
 
-      if (changes.length === 0) {
-        return false;
-      }
-
-      promise = updateSelectedWaivers({
-        variables: {
-          modelPlanID: modelID,
-          changes
-        }
-      });
-    } else {
-      const checkboxDirty =
-        methods.formState.dirtyFields.isEmptyWaiversConfirmed;
-
-      if (!checkboxDirty) {
-        return false;
-      }
-
-      promise = updateWaiverAssessmentSurvey({
-        variables: {
-          id: data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id ?? '',
-          changes: {
-            isEmptyWaiversConfirmed: getValues('isEmptyWaiversConfirmed')
-          }
-        }
-      });
+    if (waiverChanges.length === 0 && !checkboxDirty) {
+      return false;
     }
 
-    promise
-      .then(response => {
-        if (!response?.errors) {
+    const promise: Promise<any>[] = [];
+
+    if (waiverChanges.length > 0) {
+      promise.push(
+        updateSelectedWaivers({
+          variables: {
+            modelPlanID: modelID,
+            changes: waiverChanges
+          }
+        })
+      );
+    }
+
+    if (checkboxDirty) {
+      promise.push(
+        updateWaiverAssessmentSurvey({
+          variables: {
+            id:
+              data?.modelPlan?.questionnaires?.waiverAssessmentSurvey?.id ?? '',
+            changes: {
+              isEmptyWaiversConfirmed: getValues('isEmptyWaiversConfirmed')
+            }
+          }
+        })
+      );
+    }
+
+    Promise.all(promise)
+      .then(responses => {
+        const hasErrors = responses.some(response => response?.errors);
+
+        if (!hasErrors) {
           setDestinationURL(nextLocation.pathname);
           blocker?.proceed?.();
         } else {

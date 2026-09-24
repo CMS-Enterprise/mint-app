@@ -48,7 +48,7 @@ const LearnMoreButton = ({
 };
 
 export type SelectedWaiver =
-  GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey']['waivers'][number];
+  GetAllWaiverAssessmentSurveyQuery['modelPlan']['waiverInfo']['commonWaivers'][number];
 
 type ColumnType = SelectedWaiver & { actions: unknown };
 
@@ -78,17 +78,15 @@ const SelectedWaiversTable = ({
         Header: waiverAssessmentSurveyMiscT(
           'selectedWaivers.readonlyColumns.waiverName'
         ),
-        accessor: row => row.commonWaiver.name,
+        accessor: row => row.name,
         width: isTwoColumn ? '70%' : '35%',
         Cell: ({ row }: { row: Row<ColumnType> }) => (
           <div>
-            <p className="text-mint-body margin-y-0">
-              {row.original.commonWaiver.name}
-            </p>
+            <p className="text-mint-body margin-y-0">{row.original.name}</p>
 
             <p className="text-mint-body text-base-dark margin-y-0">
               {waiverAssessmentSurveyMiscT(
-                `${row.original.commonWaiver.waiverType}.heading`
+                `${row.original.waiverType}.heading`
               )}
             </p>
           </div>

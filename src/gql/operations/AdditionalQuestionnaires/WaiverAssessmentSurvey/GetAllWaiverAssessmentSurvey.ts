@@ -62,15 +62,6 @@ export default gql(/* GraphQL */ `
           completedDts
           modifiedDts
           createdDts
-          waivers {
-            id
-            willUseWaiver
-            notUsingReason
-            commonWaiver {
-              name
-              waiverType
-            }
-          }
 
           # Page 3 - Medicare payment waivers
           modifiesMedicareSavingsPrograms
@@ -118,6 +109,20 @@ export default gql(/* GraphQL */ `
           offersExpensesRemunerationSafeHarborProtection
           offersExpensesRemunerationSafeHarborProtectionExample
           offersExpensesRemunerationSafeHarborProtectionWhyNot
+
+          isEmptyWaiversConfirmed
+        }
+      }
+
+      waiverInfo {
+        commonWaivers {
+          id
+          name
+          waiverType
+          isSuggested
+          willUseWaiver
+          usingReason
+          notUsingReason
         }
       }
     }
