@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import type { AccordionProps } from '@trussworks/react-uswds';
 import { Accordion, Grid, GridContainer, Link } from '@trussworks/react-uswds';
-import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
 import HelpBreadcrumb from 'features/HelpAndKnowledge/Articles/_components/HelpBreadcrumb';
 import HelpCategoryTag from 'features/HelpAndKnowledge/Articles/_components/HelpCategoryTag';
 import RelatedArticles from 'features/HelpAndKnowledge/Articles/_components/RelatedArticles';
@@ -14,6 +14,8 @@ import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 import { tObject } from 'utils/translation';
 
 import { ArticleCategories, HelpArticle } from '..';
+
+type AccordionItemProps = AccordionProps['items'][number];
 
 export type AccordionItemsConfigType = {
   title: string;
