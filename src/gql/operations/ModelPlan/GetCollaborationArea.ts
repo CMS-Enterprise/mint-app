@@ -39,6 +39,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         status
+        readyForClearanceDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
       }
       collaborators {
         id
@@ -112,6 +116,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         status
+        readyForClearanceDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
       }
       participantsAndProviders {
         id
@@ -120,6 +128,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         status
+        readyForClearanceDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
       }
       beneficiaries {
         id
@@ -128,6 +140,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         status
+        readyForClearanceDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
       }
       opsEvalAndLearning {
         id
@@ -136,6 +152,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         status
+        readyForClearanceDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
       }
       payments {
         id
@@ -144,6 +164,10 @@ export default gql(/* GraphQL */ `
           commonName
         }
         status
+        readyForClearanceDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
       }
       mtoMatrix {
         # Used to cache the mto matrix - always include
@@ -174,6 +198,10 @@ export default gql(/* GraphQL */ `
           dateField
         }
         status
+        readyForClearanceDts
+        readyForClearanceByUserAccount {
+          commonName
+        }
       }
     }
   }

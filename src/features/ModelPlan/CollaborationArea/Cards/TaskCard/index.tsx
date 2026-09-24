@@ -20,6 +20,7 @@ import {
   useUpdateTaskStatusMutation
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import CheckboxField from 'components/CheckboxField';
 import UswdsReactLink from 'components/LinkWrapper';
 import toastSuccess from 'components/ToastSuccess';
@@ -29,6 +30,7 @@ import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 import LastModifiedSection from '../../_components/LastModifiedSection';
 import {
   getLastEditSectionForTask,
+  getSectionsReadyForClearanceCount,
   getSectionStartedCount
 } from '../../_utils/modelPlanSectionUtils';
 
@@ -66,6 +68,8 @@ const TASK_DOCUMENT_TYPE: Partial<Record<PlanTaskKey, DocumentType>> = {
     DocumentType.OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION
 };
 
+const isExternalUrl = (path: string) => /^https?:\/\//i.test(path);
+
 function TaskStatusTag({ status }: { status: PlanTaskStatus }) {
   const { t } = useTranslation('tasks');
   const config = TASK_STATUS_CONFIG[status];
@@ -92,6 +96,23 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
   const baseKey = `${key}.${state}`;
   const lastEditSection = getLastEditSectionForTask(key, modelPlan);
   const sectionStartedCounter = getSectionStartedCount(modelPlan);
+  const sectionsReadyForClearance =
+    getSectionsReadyForClearanceCount(modelPlan);
+
+  const primaryAction = t(`${baseKey}.primaryAction`, { defaultValue: '' });
+  const secondaryPath = t(`${key}.secondaryPath`, { defaultValue: '' });
+  const secondaryAction = t(`${key}.secondaryAction`, { defaultValue: '' });
+  const upcomingAlert = t(`${key}.upcomingAlert`, { defaultValue: '' });
+
+  const isPrepareForClearance = key === PlanTaskKey.PREPARE_FOR_CLEARANCE;
+  const showClearanceProgress =
+    isPrepareForClearance &&
+    (state === PlanTaskState.TO_DO ||
+      state === PlanTaskState.IN_PROGRESS ||
+      state === PlanTaskState.COMPLETE);
+  const showClearanceLastEdit =
+    isPrepareForClearance &&
+    (state === PlanTaskState.IN_PROGRESS || state === PlanTaskState.COMPLETE);
 
   const [update] = useUpdateTaskStatusMutation();
 
@@ -131,6 +152,32 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
     });
   };
 
+  const secondaryLink = secondaryAction !== '' && (
+    <>
+      {isExternalUrl(secondaryPath) ? (
+        <a
+          href={secondaryPath}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="usa-button usa-button--outline margin-right-2 display-inline-flex flex-align-center"
+        >
+          {secondaryAction}
+          <Icon.Launch className="margin-left-05" aria-label="launch" />
+        </a>
+      ) : (
+        <UswdsReactLink
+          to={secondaryPath}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="usa-button usa-button--outline margin-right-2"
+          variant="unstyled"
+        >
+          {secondaryAction}
+        </UswdsReactLink>
+      )}
+    </>
+  );
+
   return (
     <Card
       gridLayout={{ desktop: { col: 12 } }}
@@ -153,7 +200,13 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
           />
         </p>
 
-        {state !== PlanTaskState.TO_DO && (
+        {state === PlanTaskState.UPCOMING && upcomingAlert !== '' && (
+          <Alert type="info" className="margin-top-2">
+            {upcomingAlert}
+          </Alert>
+        )}
+
+        {(state !== PlanTaskState.TO_DO || showClearanceProgress) && (
           <div className="display-flex flex-align-center flex-wrap-wrap">
             {key === PlanTaskKey.MODEL_PLAN && (
               <>
@@ -165,42 +218,50 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
                 <span className="text-base margin-x-2">|</span>
               </>
             )}
-            {lastEditSection && (
-              <LastModifiedSection section={lastEditSection} />
+            {showClearanceProgress && (
+              <>
+                <span className="text-base">
+                  {collaborationAreaT(
+                    'modelPlanCard.sectionsReadyForClearance',
+                    {
+                      sectionsReady: sectionsReadyForClearance
+                    }
+                  )}
+                </span>
+                {showClearanceLastEdit && lastEditSection && (
+                  <span className="text-base margin-x-2">|</span>
+                )}
+              </>
             )}
+            {(showClearanceLastEdit || !isPrepareForClearance) &&
+              lastEditSection && (
+                <LastModifiedSection section={lastEditSection} />
+              )}
           </div>
         )}
       </CardBody>
 
       <CardFooter className="display-flex border-top-0 padding-top-1">
-        <Button
-          type="button"
-          className="margin-right-2"
-          onClick={() =>
-            navigate(
-              t(`${key}.primaryPath`, { modelID, planTaskID: task.id }),
-              {
-                state: {
-                  fromCollaborationArea: true,
-                  documentType: TASK_DOCUMENT_TYPE[key]
+        {primaryAction !== '' && (
+          <Button
+            type="button"
+            className="margin-right-2"
+            onClick={() =>
+              navigate(
+                t(`${key}.primaryPath`, { modelID, planTaskID: task.id }),
+                {
+                  state: {
+                    fromCollaborationArea: true,
+                    documentType: TASK_DOCUMENT_TYPE[key]
+                  }
                 }
-              }
-            )
-          }
-        >
-          {t(`${baseKey}.primaryAction`)}
-        </Button>
-        {t(`${key}.secondaryAction`, { defaultValue: '' }) !== '' && (
-          <UswdsReactLink
-            to={t(`${key}.secondaryPath`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="usa-button usa-button--outline margin-right-2"
-            variant="unstyled"
+              )
+            }
           >
-            {t(`${key}.secondaryAction`)}
-          </UswdsReactLink>
+            {primaryAction}
+          </Button>
         )}
+        {secondaryLink}
 
         {USER_MARK_STATUS_TASKS.includes(key) && (
           <div className="display-flex flex-align-center">

@@ -5,7 +5,8 @@ import {
   GetCollaborationAreaQuery,
   PlanTaskKey,
   PlanTaskState,
-  PlanTaskStatus
+  PlanTaskStatus,
+  TaskStatus
 } from 'gql/generated/graphql';
 import { collaborationAreaData } from 'tests/mock/general';
 import { makePlanTasks, modelID, PlanTaskEntry } from 'tests/mock/mto';
@@ -161,6 +162,70 @@ describe('TaskCard', () => {
     ).not.toBeInTheDocument();
     expect(
       getByRole('checkbox', { name: 'Mark this task complete' })
+    ).toBeInTheDocument();
+  });
+
+  it('renders Prepare for clearance upcoming state with alert and SharePoint link only', async () => {
+    const { findByText, getByRole, getByText, queryByRole } = renderTaskCard(
+      getTask(PlanTaskKey.PREPARE_FOR_CLEARANCE, {
+        state: PlanTaskState.UPCOMING,
+        status: PlanTaskStatus.TO_DO
+      })
+    );
+
+    await findByText('Prepare for clearance');
+    expect(
+      getByRole('link', { name: /View clearance info on SharePoint/i })
+    ).toBeInTheDocument();
+    expect(queryByRole('button', { name: 'Start' })).not.toBeInTheDocument();
+    expect(
+      getByText(
+        'This step will become available 20 days prior to beginning internal clearance.'
+      )
+    ).toBeInTheDocument();
+  });
+
+  it('renders Prepare for clearance to-do with Start and section progress', async () => {
+    const { findByText, getByRole, getByText, queryByText } = renderTaskCard(
+      getTask(PlanTaskKey.PREPARE_FOR_CLEARANCE, {
+        state: PlanTaskState.TO_DO,
+        status: PlanTaskStatus.TO_DO
+      })
+    );
+
+    await findByText('Prepare for clearance');
+    expect(getByRole('button', { name: 'Start' })).toBeInTheDocument();
+    expect(getByText('0/7 sections ready for clearance')).toBeInTheDocument();
+    expect(queryByText(/Most recent edit/)).not.toBeInTheDocument();
+  });
+
+  it('renders Prepare for clearance in progress with Continue and last edit', async () => {
+    const modelPlan = {
+      ...collaborationAreaData,
+      basics: {
+        ...collaborationAreaData.basics,
+        status: TaskStatus.READY_FOR_CLEARANCE,
+        readyForClearanceDts: '2024-08-22T15:01:39.190679Z',
+        readyForClearanceByUserAccount: {
+          __typename: 'UserAccount' as const,
+          commonName: 'Jane McModelteam'
+        }
+      }
+    };
+
+    const { findByText, getByRole, getByText } = renderTaskCard(
+      getTask(PlanTaskKey.PREPARE_FOR_CLEARANCE, {
+        state: PlanTaskState.IN_PROGRESS,
+        status: PlanTaskStatus.TO_DO
+      }),
+      modelPlan
+    );
+
+    await findByText('Prepare for clearance');
+    expect(getByRole('button', { name: 'Continue' })).toBeInTheDocument();
+    expect(getByText('1/7 sections ready for clearance')).toBeInTheDocument();
+    expect(
+      getByText(/Most recent edit on 08\/22\/2024 by/)
     ).toBeInTheDocument();
   });
 
