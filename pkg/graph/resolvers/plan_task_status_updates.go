@@ -2,12 +2,16 @@ package resolvers
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -397,4 +401,156 @@ func calculateMTOTaskState(
 	}
 
 	return models.PlanTaskStateToDo, nil
+}
+
+// calculatePrepareForClearanceTaskState derives the PREPARE_FOR_CLEARANCE plan task state from
+// clearance timing and section readiness (mirrors prepare_for_clearance.calculateStatus).
+func calculatePrepareForClearanceTaskState(
+	clearanceData *models.PrepareForClearanceResponse,
+	now time.Time,
+) models.PlanTaskState {
+	if clearanceData.PlanTimelineClearanceStarts == nil {
+		return models.PlanTaskStateUpcoming
+	}
+
+	triggerDts := clearanceData.PlanTimelineClearanceStarts.AddDate(0, 0, -models.PrepareForClearanceTriggerDays)
+	if now.Before(triggerDts) {
+		return models.PlanTaskStateUpcoming
+	}
+
+	if clearanceData.AllReadyForClearance {
+		return models.PlanTaskStateComplete
+	}
+
+	if clearanceData.MostRecentClearanceDts != nil {
+		return models.PlanTaskStateInProgress
+	}
+
+	return models.PlanTaskStateToDo
+}
+
+// syncPrepareForClearancePlanTaskState recalculates and persists the PREPARE_FOR_CLEARANCE task
+// state. When the task should return to UPCOMING, section ready-for-clearance marks are cleared.
+// attributedTo is credited in change history (typically the MINT system account).
+func syncPrepareForClearancePlanTaskState(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	principal authentication.Principal,
+	attributedTo uuid.UUID,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
+	clearanceData, err := storage.ReadyForClearanceGetByModelPlanIDNP(np, logger, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	newState := calculatePrepareForClearanceTaskState(clearanceData, time.Now())
+
+	if newState == models.PlanTaskStateUpcoming {
+		clearModifiedBy := attributedTo
+		if principal != nil && principal.Account() != nil {
+			clearModifiedBy = principal.Account().ID
+		}
+		if err := storage.ClearReadyForClearanceByModelPlanID(np, logger, modelPlanID, clearModifiedBy); err != nil {
+			return err
+		}
+	}
+
+	return applyPrepareForClearancePlanTaskState(
+		ctx,
+		np,
+		logger,
+		modelPlanID,
+		newState,
+		principal,
+		attributedTo,
+		store,
+		emailService,
+		addressBook,
+	)
+}
+
+// applyPrepareForClearancePlanTaskState writes a target PREPARE_FOR_CLEARANCE task state.
+func applyPrepareForClearancePlanTaskState(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	newState models.PlanTaskState,
+	principal authentication.Principal,
+	attributedTo uuid.UUID,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
+	if principal != nil {
+		if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, store); err != nil {
+			return err
+		}
+	}
+
+	var completedBy *uuid.UUID
+	var completedDts *time.Time
+	if newState == models.PlanTaskStateComplete {
+		completedBy = &attributedTo
+		completedDts = helpers.PointerTo(time.Now().UTC())
+	}
+
+	result, err := storage.PlanTaskUpdateStateByKey(
+		np,
+		logger,
+		modelPlanID,
+		models.PlanTaskKeyPrepareForClearance,
+		newState,
+		completedBy,
+		completedDts,
+		attributedTo,
+	)
+	if err != nil {
+		return err
+	}
+	if result == nil {
+		return nil
+	}
+
+	didTransitionToDo := result.PreviousState == models.PlanTaskStateUpcoming && newState == models.PlanTaskStateToDo
+	didTransitionToComplete := result.PreviousState != models.PlanTaskStateComplete && newState == models.PlanTaskStateComplete
+
+	if didTransitionToComplete && principal != nil {
+		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, &result.PlanTask, principal, emailService, addressBook)
+	}
+	if didTransitionToDo {
+		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, &result.PlanTask, attributedTo, emailService, addressBook)
+	}
+
+	return nil
+}
+
+// UpdatePlanTaskStateOnPrepareForClearanceSync recalculates PREPARE_FOR_CLEARANCE after section or
+// timeline changes.
+func UpdatePlanTaskStateOnPrepareForClearanceSync(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	principal authentication.Principal,
+	store *storage.Store,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
+	return syncPrepareForClearancePlanTaskState(
+		ctx,
+		np,
+		logger,
+		modelPlanID,
+		principal,
+		constants.GetSystemAccountUUID(),
+		store,
+		emailService,
+		addressBook,
+	)
 }

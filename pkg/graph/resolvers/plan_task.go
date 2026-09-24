@@ -119,29 +119,18 @@ func PrepareForClearanceActivateIfDue(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	timeline, err := store.PlanTimelineGetByModelPlanID(modelPlanID)
-	if err != nil {
-		return err
-	}
-	if timeline == nil || timeline.ClearanceStarts == nil {
-		return nil
-	}
-	triggerDts := timeline.ClearanceStarts.AddDate(0, 0, -models.PrepareForClearanceTriggerDays)
-	if time.Now().Before(triggerDts) {
-		return nil
-	}
-
 	systemAccountID := constants.GetSystemAccountUUID()
-	task, err := storage.PlanTaskActivateUpcoming(np, logger, modelPlanID, models.PlanTaskKeyPrepareForClearance, systemAccountID)
-	if err != nil {
-		return err
-	}
-	if task == nil {
-		return nil
-	}
-
-	trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, task, systemAccountID, emailService, addressBook)
-	return nil
+	return syncPrepareForClearancePlanTaskState(
+		ctx,
+		np,
+		logger,
+		modelPlanID,
+		nil,
+		systemAccountID,
+		store,
+		emailService,
+		addressBook,
+	)
 }
 
 // PlanTaskMarkComplete directly sets a manually-markable plan task's status to COMPLETE or TO_DO.

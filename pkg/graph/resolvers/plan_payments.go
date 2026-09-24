@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -60,5 +61,23 @@ func PlanPaymentsUpdate(
 	if err != nil {
 		return nil, err
 	}
-	return store.PlanPaymentsUpdate(logger, payments)
+	retPayments, err := store.PlanPaymentsUpdate(logger, payments)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := BaseTaskListSectionAfterUpdate(
+		context.Background(),
+		store,
+		logger,
+		payments.ModelPlanID,
+		principal,
+		store,
+		nil,
+		email.AddressBook{},
+	); err != nil {
+		return nil, err
+	}
+
+	return retPayments, nil
 }
