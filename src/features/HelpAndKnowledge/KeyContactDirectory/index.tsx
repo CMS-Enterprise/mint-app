@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import type { AccordionProps } from '@trussworks/react-uswds';
 import {
   Accordion,
   Button,
@@ -8,7 +9,6 @@ import {
   GridContainer,
   Link
 } from '@trussworks/react-uswds';
-import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
 import {
   GetAllKeyContactCategoriesQuery,
   useGetAllKeyContactCategoriesQuery
@@ -30,6 +30,8 @@ import RemoveModal from './_components/RemoveModal';
 import SmeModal from './_components/SmeModal';
 
 import './index.scss';
+
+type AccordionItemProps = AccordionProps['items'][number];
 
 const AddCategoryButton = () => {
   const { t } = useTranslation('helpAndKnowledge');
