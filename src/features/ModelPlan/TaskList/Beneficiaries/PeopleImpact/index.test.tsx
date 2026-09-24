@@ -123,6 +123,22 @@ describe('Model Plan Beneficiaries', () => {
       ).toBeInTheDocument();
     });
 
+    await waitFor(() => {
+      expect(screen.getByTestId('expected-people-impacted')).toHaveValue(100);
+
+      expect(
+        screen.getByTestId('beneficiaries-choose-beneficiaries-other')
+      ).toHaveValue('Selection Method Other');
+
+      expect(
+        screen.getByTestId('beneficiaries-impact-confidence-note')
+      ).toHaveValue('String');
+
+      expect(screen.getByTestId('beneficiaries-selection-note')).toHaveValue(
+        'String'
+      );
+    });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

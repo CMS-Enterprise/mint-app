@@ -70,7 +70,9 @@ const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.MTO,
-  PlanTaskKey.DATA_EXCHANGE
+  PlanTaskKey.DATA_EXCHANGE,
+  PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.OA_PRESENTATION
 ] as const;
 
 const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
@@ -79,8 +81,16 @@ const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
   [PlanTaskKey.DATA_EXCHANGE]: '2022-01-03T00:00:00Z',
   [PlanTaskKey.TWO_PAGER]: '2022-01-04T00:00:00Z',
   [PlanTaskKey.SIX_PAGER]: '2022-01-05T00:00:00Z',
-  [PlanTaskKey.PREPARE_FOR_CLEARANCE]: '2022-01-06T00:00:00Z'
+  [PlanTaskKey.OA_PRESENTATION]: '2022-01-06T00:00:00Z',
+  [PlanTaskKey.PREPARE_FOR_CLEARANCE]: '2022-01-07T00:00:00Z'
 };
+
+// SIX_PAGER and OA_PRESENTATION start UPCOMING in production (see models.PlanTask default seeding)
+// and only move to TO_DO once activated, so default them to UPCOMING here too unless overridden.
+const KEYS_DEFAULTING_TO_UPCOMING = new Set<PlanTaskKey>([
+  PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.OA_PRESENTATION
+]);
 
 export function makePlanTasks(
   overrides?: Partial<
@@ -91,15 +101,20 @@ export function makePlanTasks(
   >
 ): PlanTaskEntry[] {
   return PLAN_TASK_KEYS_ORDER.map(key => {
+    const defaultState = KEYS_DEFAULTING_TO_UPCOMING.has(key)
+      ? PlanTaskState.UPCOMING
+      : PlanTaskState.TO_DO;
+    const defaultStatus = PlanTaskStatus.TO_DO;
+
     const resolvedState =
       overrides?.[key]?.state !== undefined
         ? overrides[key].state
-        : PlanTaskState.TO_DO;
+        : defaultState;
 
     const resolvedStatus =
       overrides?.[key]?.status !== undefined
         ? overrides[key].status
-        : PlanTaskStatus.TO_DO;
+        : defaultStatus;
 
     return {
       __typename: 'PlanTask' as const,

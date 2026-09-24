@@ -14,6 +14,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
@@ -62,7 +63,7 @@ func updatePlanTaskStateByKey(
 	var completedDts *time.Time
 	if newState == models.PlanTaskStateComplete {
 		completedBy = &attributedTo
-		completedDts = new(time.Now().UTC())
+		completedDts = helpers.PointerTo(time.Now().UTC())
 	}
 
 	result, err := storage.PlanTaskUpdateStateByKey(np, logger, modelPlanID, key, newState, completedBy, completedDts, attributedTo)

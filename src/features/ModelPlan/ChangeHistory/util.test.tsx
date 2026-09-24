@@ -1404,6 +1404,7 @@ describe('isPlanTaskAutomaticChange', () => {
   it.each([
     PlanTaskKey.TWO_PAGER,
     PlanTaskKey.SIX_PAGER,
+    PlanTaskKey.OA_PRESENTATION,
     PlanTaskKey.PREPARE_FOR_CLEARANCE
   ])(
     'returns false for manually-markable key %s changed by a real user',
@@ -1425,6 +1426,7 @@ describe('isPlanTaskAutomaticChange', () => {
   it.each([
     PlanTaskKey.TWO_PAGER,
     PlanTaskKey.SIX_PAGER,
+    PlanTaskKey.OA_PRESENTATION,
     PlanTaskKey.PREPARE_FOR_CLEARANCE
   ])(
     'returns true for manually-markable key %s changed by the MINT system account',

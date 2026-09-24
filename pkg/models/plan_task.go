@@ -32,6 +32,7 @@ const (
 	PlanTaskKeyDataExchange        PlanTaskKey = "DATA_EXCHANGE"
 	PlanTaskKeyTwoPager            PlanTaskKey = "TWO_PAGER"
 	PlanTaskKeySixPager            PlanTaskKey = "SIX_PAGER"
+	PlanTaskKeyOaPresentation      PlanTaskKey = "OA_PRESENTATION"
 	PlanTaskKeyPrepareForClearance PlanTaskKey = "PREPARE_FOR_CLEARANCE"
 )
 
@@ -55,6 +56,7 @@ const PrepareForClearanceTriggerDays = 20
 var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
 	PlanTaskKeyTwoPager:            true,
 	PlanTaskKeySixPager:            true,
+	PlanTaskKeyOaPresentation:      true,
 	PlanTaskKeyPrepareForClearance: true,
 }
 
@@ -68,12 +70,15 @@ type PlanTaskDefault struct {
 // DefaultPlanTasks are the tasks seeded for every new model plan (see ModelPlanCreate in
 // pkg/graph/resolvers/model_plan.go). SIX_PAGER starts UPCOMING and is activated to TO_DO by
 // PlanTaskMarkComplete once TWO_PAGER is marked complete (see PlanTaskKey.ActivationTarget).
+// OA_PRESENTATION starts UPCOMING and is activated once SIX_PAGER is marked complete.
+// PREPARE_FOR_CLEARANCE starts UPCOMING and is activated by the clearance-date job.
 var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeyModelPlan, PlanTaskStateToDo},
 	{PlanTaskKeyMto, PlanTaskStateToDo},
 	{PlanTaskKeyDataExchange, PlanTaskStateToDo},
 	{PlanTaskKeyTwoPager, PlanTaskStateToDo},
 	{PlanTaskKeySixPager, PlanTaskStateUpcoming},
+	{PlanTaskKeyOaPresentation, PlanTaskStateUpcoming},
 	{PlanTaskKeyPrepareForClearance, PlanTaskStateUpcoming},
 }
 
@@ -89,6 +94,7 @@ func (k PlanTaskKey) IsManuallyMarkable() bool {
 // is later marked incomplete again (see PlanTaskMarkComplete in pkg/graph/resolvers/plan_task.go).
 var planTaskActivationTriggers = map[PlanTaskKey]PlanTaskKey{
 	PlanTaskKeyTwoPager: PlanTaskKeySixPager,
+	PlanTaskKeySixPager: PlanTaskKeyOaPresentation,
 }
 
 // ActivationTarget returns the PlanTaskKey that should activate (move from UPCOMING to TO_DO) when k
@@ -106,6 +112,7 @@ var planTaskKeyDisplayNames = map[PlanTaskKey]string{
 	PlanTaskKeyMto:                 "Model-to-operations matrix (MTO)",
 	PlanTaskKeyTwoPager:            "Prepare for your 2-page review meeting with CMMI Front Office",
 	PlanTaskKeySixPager:            "Prepare for your 6-page review meeting with CMMI Front Office",
+	PlanTaskKeyOaPresentation:      "Office of the Administrator (OA) presentation",
 	PlanTaskKeyPrepareForClearance: "Prepare for clearance",
 }
 
@@ -122,8 +129,9 @@ func (k PlanTaskKey) DisplayName() string {
 // used in notifications. Only keys whose heading is constant across statuses are listed here; keys
 // without an entry fall back to DisplayName().
 var planTaskKeyChangeHistoryNames = map[PlanTaskKey]string{
-	PlanTaskKeyTwoPager: "Prepare for your 2-page review meeting with CMMI Front Office",
-	PlanTaskKeySixPager: "Prepare for your 6-page review meeting with CMMI Front Office",
+	PlanTaskKeyTwoPager:       "Prepare for your 2-page review meeting with CMMI Front Office",
+	PlanTaskKeySixPager:       "Prepare for your 6-page review meeting with CMMI Front Office",
+	PlanTaskKeyOaPresentation: "Prepare for your presentation to the Office of the Administrator",
 }
 
 // ChangeHistoryDisplayName returns the task name shown in change history.

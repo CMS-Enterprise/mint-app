@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TaskCard > renders card with task details and navigation actions 1`] = `
+exports[`TaskCard > renders Model Plan to-do details, primary start action, and sample-plan link 1`] = `
 <DocumentFragment>
   <li
     class="usa-card desktop:grid-col-12 collaboration-area__card minh-0 margin-bottom-3"

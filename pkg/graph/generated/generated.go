@@ -24365,6 +24365,7 @@ enum PlanTaskKey {
   DATA_EXCHANGE
   TWO_PAGER
   SIX_PAGER
+  OA_PRESENTATION
   PREPARE_FOR_CLEARANCE
 }
 
@@ -24392,7 +24393,7 @@ enum PlanTaskStatus {
 extend type Mutation {
   """
   Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
-  aren't calculated from other model state (currently TWO_PAGER, SIX_PAGER, and
+  aren't calculated from other model state (currently TWO_PAGER, SIX_PAGER, OA_PRESENTATION, and
   PREPARE_FOR_CLEARANCE) can be set this way; other keys will return an error.
   """
   markPlanTaskComplete(
