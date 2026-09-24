@@ -126,10 +126,11 @@ jobs:
           --health-retries 5
 
       minio:
-        # minio/minio was removed from Docker Hub (MinIO moved to source-only distribution,
-        # see https://github.com/minio/minio/discussions - Oct 2025). quay.io still serves the
-        # last images MinIO published there before the cutover.
-        image: quay.io/minio/minio:latest-cicd
+        # quay.io stopped allowing anonymous pulls of minio/minio (Sep 2026), the same way Docker
+        # Hub did before it (Oct 2025) - MinIO's own GitHub repo is now archived entirely, so
+        # there's no official image left to pull from at all. pgsty/silo is an actively-maintained,
+        # S3-API- and CLI-compatible fork, still freely published to Docker Hub.
+        image: docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z
         command: server /data
         ports:
           - '9005:9000'
