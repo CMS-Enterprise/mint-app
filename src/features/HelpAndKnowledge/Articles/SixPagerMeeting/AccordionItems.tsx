@@ -1,18 +1,20 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
+import type { AccordionProps } from '@trussworks/react-uswds';
 import {
   Link,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
 } from '@trussworks/react-uswds';
-import { AccordionItemProps } from '@trussworks/react-uswds/lib/components/Accordion/Accordion';
 
 import { Alert } from 'components/Alert';
 import ExternalLink from 'components/ExternalLink';
 import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
 import { AccordionItemsConfigType } from '.';
+
+type AccordionItemProps = AccordionProps['items'][number];
 
 const AccordionItems = (
   config: Record<string, AccordionItemsConfigType>

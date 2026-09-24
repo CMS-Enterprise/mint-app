@@ -1,25 +1,10 @@
 {
-  // This is an alias to @tsconfig/node16: https://github.com/tsconfig/bases
-  "extends": "ts-node/node16/tsconfig.json",
-
-  // Most ts-node options can be specified here using their programmatic names.
-  "ts-node": {
-    // It is faster to skip typechecking.
-    // Remove if you want ts-node to do typechecking.
-    "transpileOnly": true,
-
-    "files": true,
-
-    "compilerOptions": {
-      // compilerOptions specified here will override those declared below,
-      // but *only* in ts-node.  Useful if you want ts-node and tsc to use
-      // different options with a single tsconfig.json.
-      "module": "commonjs"
-    }
-  },
   "compilerOptions": {
     "target": "ESNext",
-    "baseUrl": "src",
+    "rootDir": "./src",
+    "paths": {
+      "*": ["./src/*"]
+    },
     "lib": [
       "dom",
       "dom.iterable",
@@ -32,9 +17,8 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "downlevelIteration": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,

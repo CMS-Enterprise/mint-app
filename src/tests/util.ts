@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { Options } from '@testing-library/user-event/dist/types/options';
+import userEvent, { type Options } from '@testing-library/user-event';
 
 const setup = (ui: ReactElement, options?: Options) => ({
   user: userEvent.setup(options),
