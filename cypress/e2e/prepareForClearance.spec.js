@@ -165,15 +165,13 @@ describe('The Model Plan Prepare for Clearance Form', () => {
     cy.url().should('include', '/collaboration-area/tasks');
     cy.get('[data-testid="tasks-page"]').should('be.visible');
 
-    openPrepareForClearanceFromTasks();
-
-    cy.get('#prepare-for-clearance-payments').should('be.checked');
-
-    // Don't need to update, all should be checked already
-    cy.get('[data-testid="dont-update-clearance"]').click({ force: true });
-
-    cy.url().should('include', '/collaboration-area/tasks');
-    cy.get('[data-testid="tasks-page"]').should('be.visible');
-    cy.contains('h3', 'Prepare for clearance').should('be.visible');
+    // All sections are ready for clearance, so the task moves to Completed.
+    cy.get('[data-testid="completed-tab"]').click();
+    cy.url().should('include', 'tab=completed');
+    cy.contains('h3', 'Prepare for clearance')
+      .should('be.visible')
+      .closest('.collaboration-area__card')
+      .contains('Complete')
+      .should('be.visible');
   });
 });
