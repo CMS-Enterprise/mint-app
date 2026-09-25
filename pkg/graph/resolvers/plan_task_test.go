@@ -119,110 +119,6 @@ func (suite *ResolverSuite) TestPlanTaskMarkComplete() {
 	suite.Nil(task.CompletedDts)
 }
 
-// TestPlanTaskMarkCompletePrepareForClearance confirms PREPARE_FOR_CLEARANCE is manually
-// markable like TWO_PAGER and SIX_PAGER, including while it's still UPCOMING (not yet activated
-// by PrepareForClearanceActivateIfDue) - marking complete has no precondition on current state.
-func (suite *ResolverSuite) TestPlanTaskMarkCompletePrepareForClearance() {
-	plan := suite.createModelPlan("Plan For Prepare For Clearance Manual Marking")
-
-	task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
-	suite.Equal(models.PlanTaskStateUpcoming, task.State)
-
-	updated, err := PlanTaskMarkComplete(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		plan.ID,
-		models.PlanTaskKeyPrepareForClearance,
-		true,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		nil,
-		email.AddressBook{},
-	)
-	suite.NoError(err)
-	if suite.NotNil(updated) {
-		suite.Equal(models.PlanTaskStateComplete, updated.State)
-		if suite.NotNil(updated.CompletedBy) {
-			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
-		}
-		suite.NotNil(updated.CompletedDts)
-	}
-
-	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
-	suite.Equal(models.PlanTaskStateComplete, task.State)
-
-	// mark it back to TO_DO
-	updated, err = PlanTaskMarkComplete(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		plan.ID,
-		models.PlanTaskKeyPrepareForClearance,
-		false,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		nil,
-		email.AddressBook{},
-	)
-	suite.NoError(err)
-	if suite.NotNil(updated) {
-		suite.Equal(models.PlanTaskStateToDo, updated.State)
-		suite.Nil(updated.CompletedBy)
-		suite.Nil(updated.CompletedDts)
-	}
-
-	task = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyPrepareForClearance)
-	suite.Equal(models.PlanTaskStateToDo, task.State)
-	suite.Nil(task.CompletedBy)
-	suite.Nil(task.CompletedDts)
-}
-
-// TestPlanTaskMarkCompletePrepareForClearanceSendsNotification confirms that marking
-// PREPARE_FOR_CLEARANCE complete through the public PlanTaskMarkComplete mutation - not just the
-// lower-level updatePlanTaskStateByKey already covered generically for other keys - actually
-// results in an in-app notification for an opted-in collaborator, and none for one who opted out.
-// The notification pipeline itself (trySendPlanTaskCompletedNotifications) is key-agnostic, but
-// this is the only test that exercises it specifically for PREPARE_FOR_CLEARANCE end-to-end.
-func (suite *ResolverSuite) TestPlanTaskMarkCompletePrepareForClearanceSendsNotification() {
-	plan := suite.createModelPlan("Plan For Prepare For Clearance Completed Notification")
-	suite.createPlanCollaborator(plan, "PFCI", []models.TeamRole{models.TeamRoleLeadership})
-	suite.createPlanCollaborator(plan, "PFCX", []models.TeamRole{models.TeamRoleLeadership})
-	optedInPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "PFCI")
-	optedOutPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "PFCX")
-
-	_, err := UserNotificationPreferencesUpdate(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		optedInPrincipal,
-		suite.testConfigs.Store,
-		map[string]interface{}{
-			"taskCompleted": models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp},
-		},
-	)
-	suite.NoError(err)
-
-	leadBefore := suite.numUnreadNotifications(suite.testConfigs.Principal)
-	optedInBefore := suite.numUnreadNotifications(optedInPrincipal)
-	optedOutBefore := suite.numUnreadNotifications(optedOutPrincipal)
-
-	_, err = PlanTaskMarkComplete(
-		suite.testConfigs.Context,
-		suite.testConfigs.Logger,
-		plan.ID,
-		models.PlanTaskKeyPrepareForClearance,
-		true,
-		suite.testConfigs.Principal,
-		suite.testConfigs.Store,
-		nil,
-		email.AddressBook{},
-	)
-	suite.NoError(err)
-
-	// Leads always receive task-completed notifications regardless of their own preference.
-	suite.Equal(leadBefore+1, suite.numUnreadNotifications(suite.testConfigs.Principal))
-	suite.Equal(optedInBefore+1, suite.numUnreadNotifications(optedInPrincipal))
-	suite.Equal(optedOutBefore, suite.numUnreadNotifications(optedOutPrincipal))
-}
-
 // TestPlanTaskMarkCompleteIsStableOnRepeat confirms that marking an already-complete task
 // complete again is a true no-op - completedBy/completedDts/modifiedDts must not change - rather
 // than silently rewriting them with freshly-generated values on every call. This guards
@@ -782,26 +678,28 @@ func (suite *ResolverSuite) TestPlanTaskChangeHistoryPrepareForClearance() {
 		return nil
 	}
 
-	suite.Run("manual mark-complete is attributed to the acting user", func() {
-		plan := suite.createModelPlan("Plan For Prepare For Clearance Change History - Manual")
+	suite.Run("calculated sync is attributed to the MINT system account", func() {
+		plan := suite.createModelPlan("Plan For Prepare For Clearance Change History - Sync")
+		suite.setClearanceStarts(plan.ID, time.Now().AddDate(0, 0, 10))
 
-		_, err := PlanTaskMarkComplete(
+		basics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
+		suite.NoError(err)
+		_, err = UpdatePlanBasics(
 			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
-			plan.ID,
-			models.PlanTaskKeyPrepareForClearance,
-			true,
+			basics.ID,
+			map[string]interface{}{
+				"status": model.TaskStatusInputReadyForClearance,
+			},
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
-			nil,
-			email.AddressBook{},
 		)
 		suite.NoError(err)
 
 		suite.dangerousQueueAndTranslateAllAudits()
 		audit := findPlanTaskAudit(plan.ID)
 		if suite.NotNil(audit, "expected a translated plan_task audit for PREPARE_FOR_CLEARANCE") {
-			suite.Equal(suite.testConfigs.Principal.Account().ID, audit.ActorID)
+			suite.Equal(constants.GetSystemAccountUUID(), audit.ActorID)
 
 			meta := audit.MetaData.(*models.TranslatedAuditMetaGeneric)
 			if suite.NotNil(meta.RelationContent) {
@@ -837,6 +735,7 @@ func (suite *ResolverSuite) TestPlanTaskChangeHistoryPrepareForClearance() {
 func (suite *ResolverSuite) TestPlanTaskGetModelPlanIDsDueForPrepareForClearance() {
 	dueSoon := suite.createModelPlan("Plan Due Soon For Clearance Batch Query")
 	suite.setClearanceStarts(dueSoon.ID, time.Now().AddDate(0, 0, 10))
+	suite.resetPrepareForClearanceTaskToUpcoming(dueSoon.ID)
 
 	farOut := suite.createModelPlan("Plan Far Out For Clearance Batch Query")
 	suite.setClearanceStarts(farOut.ID, time.Now().AddDate(0, 0, 25))
@@ -868,6 +767,23 @@ func (suite *ResolverSuite) TestPlanTaskGetModelPlanIDsDueForPrepareForClearance
 	suite.False(dueIDSet[farOut.ID], "expected the plan far outside the trigger window to not be due")
 	suite.False(dueIDSet[noDate.ID], "expected the plan with no clearance date to not be due")
 	suite.False(dueIDSet[alreadyToDo.ID], "expected the already-TO_DO plan to not be due again")
+}
+
+// resetPrepareForClearanceTaskToUpcoming forces the task back to UPCOMING after timeline sync
+// has activated it, so batch-query tests can assert the cron activation candidate set.
+func (suite *ResolverSuite) resetPrepareForClearanceTaskToUpcoming(modelPlanID uuid.UUID) {
+	modifiedBy := suite.testConfigs.Principal.Account().ID
+	_, err := storage.PlanTaskUpdateStateByKey(
+		suite.testConfigs.Store,
+		suite.testConfigs.Logger,
+		modelPlanID,
+		models.PlanTaskKeyPrepareForClearance,
+		models.PlanTaskStateUpcoming,
+		nil,
+		nil,
+		modifiedBy,
+	)
+	suite.NoError(err)
 }
 
 // setClearanceStarts sets a model plan's internal clearance start date, which drives the

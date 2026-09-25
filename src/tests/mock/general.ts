@@ -240,6 +240,8 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     id: '123',
     modifiedDts: null,
     status: TaskStatus.READY,
+    readyForClearanceDts: null,
+    readyForClearanceByUserAccount: null,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
@@ -250,6 +252,8 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     id: '7865676',
     modifiedDts: '',
     status: TaskStatus.IN_PROGRESS,
+    readyForClearanceDts: null,
+    readyForClearanceByUserAccount: null,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
@@ -260,6 +264,8 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     id: '54234',
     modifiedDts: '',
     status: TaskStatus.IN_PROGRESS,
+    readyForClearanceDts: null,
+    readyForClearanceByUserAccount: null,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
@@ -270,6 +276,8 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     id: '46246356',
     modifiedDts: '',
     status: TaskStatus.IN_PROGRESS,
+    readyForClearanceDts: null,
+    readyForClearanceByUserAccount: null,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
@@ -280,6 +288,8 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     id: '09865643',
     modifiedDts: '',
     status: TaskStatus.IN_PROGRESS,
+    readyForClearanceDts: null,
+    readyForClearanceByUserAccount: null,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
@@ -290,6 +300,8 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
     id: '8756435235',
     modifiedDts: '',
     status: TaskStatus.IN_PROGRESS,
+    readyForClearanceDts: null,
+    readyForClearanceByUserAccount: null,
     modifiedByUserAccount: {
       __typename: 'UserAccount',
       commonName: 'John Doe'
@@ -364,6 +376,8 @@ export const collaborationAreaData: GetCollaborationAreaQuery['modelPlan'] = {
       commonName: 'Jane Doe'
     },
     status: TaskStatus.IN_PROGRESS,
+    readyForClearanceDts: null,
+    readyForClearanceByUserAccount: null,
     datesAddedCount: 3,
     upcomingTimelineDate: {
       __typename: 'UpcomingTimelineDate',

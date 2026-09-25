@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -46,6 +47,22 @@ func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[
 	}
 
 	retOpsEvalAndLearning, err := store.PlanOpsEvalAndLearningUpdate(logger, existing)
-	return retOpsEvalAndLearning, err
+	if err != nil {
+		return nil, err
+	}
 
+	if err := BaseTaskListSectionAfterUpdate(
+		context.Background(),
+		store,
+		logger,
+		existing.ModelPlanID,
+		principal,
+		store,
+		nil,
+		email.AddressBook{},
+	); err != nil {
+		return nil, err
+	}
+
+	return retOpsEvalAndLearning, nil
 }
