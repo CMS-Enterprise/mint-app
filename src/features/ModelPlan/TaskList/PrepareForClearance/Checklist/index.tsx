@@ -5,7 +5,7 @@ Each checkbox modifies the 'status' on its respective task list sections
 
 import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Fieldset, Grid, Icon } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { NotFoundPartial } from 'features/NotFound';
@@ -44,6 +44,12 @@ import { formatDateUtc } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import dirtyInput from 'utils/formUtil';
 import { tArray } from 'utils/translation';
+
+import {
+  getPrepareForClearanceOrigin,
+  getPrepareForClearancePath,
+  getPrepareForClearanceReturnPath
+} from '../navigation';
 
 // Initial form values and types for each task-list clearance checkbox
 interface ClearanceFormValues {
@@ -114,9 +120,13 @@ const PrepareForClearanceCheckList = () => {
   const { t } = useTranslation('prepareForClearance');
   const { t: h } = useTranslation('general');
 
-  const { modelID } = useParams<{ modelID: string }>();
-
+  const { modelID = '' } = useParams<{ modelID: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
+  const origin = getPrepareForClearanceOrigin(location.state);
+  const returnPath = getPrepareForClearanceReturnPath(modelID, origin);
+  const prepareForClearancePath = getPrepareForClearancePath(modelID);
+  const originState = { prepareForClearanceOrigin: origin };
 
   // Used to map, iterate and label task list sections and values from query
   const taskListSections = tArray<Record<string, string>>(
@@ -186,7 +196,7 @@ const PrepareForClearanceCheckList = () => {
       const errors = responses?.find(result => result?.errors);
 
       if (!errors) {
-        navigate(`/models/${modelID}/collaboration-area/model-plan`);
+        navigate(returnPath, { state: originState });
       }
     });
   };
@@ -206,7 +216,7 @@ const PrepareForClearanceCheckList = () => {
         items={[
           BreadcrumbItemOptions.HOME,
           BreadcrumbItemOptions.COLLABORATION_AREA,
-          BreadcrumbItemOptions.TASK_LIST,
+          ...(origin === 'tasks' ? [BreadcrumbItemOptions.TASKS] : []),
           BreadcrumbItemOptions.PREPARE_FOR_CLEARANCE
         ]}
       />
@@ -352,7 +362,8 @@ const PrepareForClearanceCheckList = () => {
                                 {/* Need to pass in section ID to update readyForClearance state on next route */}
                                 <UswdsReactLink
                                   data-testid={`clearance-${section}`}
-                                  to={`/models/${modelID}/collaboration-area/model-plan/prepare-for-clearance/${taskListSections[section].path}/${sectionID}`}
+                                  to={`${prepareForClearancePath}/${taskListSections[section].path}/${sectionID}`}
+                                  state={originState}
                                   className="margin-left-4 margin-top-1 margin-bottom-2 display-flex flex-align-center"
                                 >
                                   {t('review', {
@@ -389,9 +400,7 @@ const PrepareForClearanceCheckList = () => {
                       data-testid="dont-update-clearance"
                       className="usa-button usa-button--unstyled display-flex"
                       onClick={() =>
-                        navigate(
-                          `/models/${modelID}/collaboration-area/model-plan`
-                        )
+                        navigate(returnPath, { state: originState })
                       }
                     >
                       <Icon.ArrowBack
