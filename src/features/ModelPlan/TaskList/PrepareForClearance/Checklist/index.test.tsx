@@ -48,13 +48,16 @@ describe('Prepare for clearance checklist', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
+          path: '/models/:modelID/collaboration-area/prepare-for-clearance',
           element: <PrepareForClearanceCheckList />
         }
       ],
       {
         initialEntries: [
-          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+          {
+            pathname: `/models/${modelID}/collaboration-area/prepare-for-clearance`,
+            state: { prepareForClearanceOrigin: 'tasks' }
+          }
         ]
       }
     );
@@ -69,6 +72,11 @@ describe('Prepare for clearance checklist', () => {
       expect(screen.getByTestId('prepare-for-clearance-basics')).toBeChecked();
     });
 
+    expect(screen.getByText('Tasks')).toBeInTheDocument();
+    expect(
+      screen.getByText('Don’t update statuses and return to previous page')
+    ).toBeInTheDocument();
+
     await user.click(screen.getByTestId('prepare-for-clearance-basics'));
 
     await waitFor(() => {
@@ -76,6 +84,37 @@ describe('Prepare for clearance checklist', () => {
         screen.getByTestId('prepare-for-clearance-basics')
       ).not.toBeChecked();
     });
+  });
+
+  it('hides Tasks breadcrumb when opened from the collaboration area', async () => {
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area/prepare-for-clearance',
+          element: <PrepareForClearanceCheckList />
+        }
+      ],
+      {
+        initialEntries: [
+          {
+            pathname: `/models/${modelID}/collaboration-area/prepare-for-clearance`,
+            state: { prepareForClearanceOrigin: 'collaborationArea' }
+          }
+        ]
+      }
+    );
+
+    render(
+      <MockedProvider mocks={clearanceMock}>
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId('prepare-for-clearance-basics')).toBeChecked();
+    });
+
+    expect(screen.queryByText('Tasks')).not.toBeInTheDocument();
   });
 
   it('renders SectionClearanceLabel', async () => {
@@ -97,13 +136,16 @@ describe('Prepare for clearance checklist', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance',
+          path: '/models/:modelID/collaboration-area/prepare-for-clearance',
           element: <PrepareForClearanceCheckList />
         }
       ],
       {
         initialEntries: [
-          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance`
+          {
+            pathname: `/models/${modelID}/collaboration-area/prepare-for-clearance`,
+            state: { prepareForClearanceOrigin: 'tasks' }
+          }
         ]
       }
     );
