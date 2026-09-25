@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { convertToLowercaseAndDashes } from 'features/HelpAndKnowledge/Articles/TwoPagerMeeting';
-import SimpleReadOnlySection from 'features/ModelPlan/ReadOnly/_components/SimpleReadOnlySection';
+import WaiverModelQuestionsReadOnlySection from 'features/ModelPlan/ReadOnly/_components/WaiverModelQuestionsReadOnlySection';
 import WaiverSurveyReadOnlySection from 'features/ModelPlan/ReadOnly/_components/WaiverSurveyReadOnlySection';
 import { GetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 
@@ -14,6 +14,7 @@ import {
   buildWaiverQuestionConfigs,
   buildWaiverQuestionsSectionsConfig
 } from '../../util';
+import { CombinedConfigType } from '../ModelPlanQuestionsForm';
 
 type WaiverQuestionsReadOnlySectionsProps = {
   modelPlan: GetAllWaiverAssessmentSurveyQuery['modelPlan'];
@@ -27,20 +28,17 @@ const WaiverQuestionsReadOnlySections = ({
     'waiverAssessmentSurveyMisc'
   );
 
-  const modelBasicsConfig = usePlanTranslation('basics');
-  const generalCharacteristicsConfig = usePlanTranslation(
-    'generalCharacteristics'
-  );
   const waiverAssessmentSurveyConfig = usePlanTranslation(
     'waiverAssessmentSurvey'
   );
 
+  const combinedConfig: CombinedConfigType = {
+    ...usePlanTranslation('basics'),
+    ...usePlanTranslation('generalCharacteristics')
+  };
+
   const waiverQuestionsConfig = buildWaiverQuestionsSectionsConfig(
-    buildWaiverQuestionConfigs(
-      modelBasicsConfig,
-      generalCharacteristicsConfig,
-      waiverAssessmentSurveyConfig
-    ),
+    buildWaiverQuestionConfigs(combinedConfig, waiverAssessmentSurveyConfig),
     {
       modelPlanQuestions: waiverAssessmentSurveyMiscT(
         'modelPlanQuestions.heading'
@@ -91,10 +89,10 @@ const WaiverQuestionsReadOnlySections = ({
 
             {Object.keys(waiverConfig.config).map(questionConfig =>
               questionType === 'modelPlanQuestions' ? (
-                <SimpleReadOnlySection
+                <WaiverModelQuestionsReadOnlySection
                   key={questionConfig}
-                  field={questionConfig}
-                  translations={waiverConfig.config}
+                  field={questionConfig as keyof CombinedConfigType}
+                  translations={combinedConfig}
                   values={modelQuestionsData}
                 />
               ) : (

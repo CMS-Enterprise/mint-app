@@ -46,24 +46,22 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
     <h3
       class="margin-bottom-2"
     >
-      Selected waivers
+      Selected waivers ({{waiverCount}})
     </h3>
     <table
       class="usa-table usa-table--borderless width-full margin-top-0 margin-bottom-3"
       data-testid="table"
     >
-      <thead
-        class="margin-x-2"
-      >
+      <thead>
         <tr
           role="row"
         >
           <th
-            class="padding-left-2 padding-y-1 border-bottom-2px text-no-wrap"
+            class="padding-left-0 padding-y-1 border-bottom-2px text-no-wrap"
             colspan="1"
             role="columnheader"
             scope="col"
-            style="width: 33.333%;"
+            style="width: 35%;"
           >
             <button
               class="usa-button usa-button--unstyled usa-button position-relative deep-underline margin-top-0"
@@ -91,11 +89,11 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             </button>
           </th>
           <th
-            class="padding-left-2 padding-y-1 border-bottom-2px text-no-wrap"
+            class="padding-left-0 padding-y-1 border-bottom-2px text-no-wrap"
             colspan="1"
             role="columnheader"
             scope="col"
-            style="width: 33.333%;"
+            style="width: 35%;"
           >
             <button
               class="usa-button usa-button--unstyled usa-button position-relative deep-underline margin-top-0"
@@ -104,7 +102,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
               title="Toggle SortBy"
               type="button"
             >
-              Waiver category
+              Reason
               <svg
                 aria-label="unfold"
                 class="usa-icon margin-left-05"
@@ -123,11 +121,11 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             </button>
           </th>
           <th
-            class="padding-left-2 padding-y-1 border-bottom-2px text-no-wrap"
+            class="padding-left-0 padding-y-1 border-bottom-2px text-no-wrap"
             colspan="1"
             role="columnheader"
             scope="col"
-            style="width: 33.333%;"
+            style="width: 30%;"
           >
             <p
               class="text-bold margin-0"
@@ -144,19 +142,28 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
           role="row"
         >
           <td
-            class="padding-left-2"
+            class="padding-left-0"
             role="cell"
           >
-            Common Waiver Name
+            <div>
+              <p
+                class="text-mint-body margin-y-0"
+              >
+                Common Waiver Name
+              </p>
+              <p
+                class="text-mint-body text-base-dark margin-y-0"
+              >
+                Medicaid payment waivers
+              </p>
+            </div>
           </td>
           <td
-            class="padding-left-2"
+            class="padding-left-0"
             role="cell"
-          >
-            Medicaid payment waivers
-          </td>
+          />
           <td
-            class="padding-left-2"
+            class="padding-left-0"
             role="cell"
           >
             <button
@@ -172,10 +179,10 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
     </table>
     <div
       class="margin-bottom-5"
-      id="modeplanquestions-read-view"
+      id="modelplanquestions-read-view"
     >
       <h3
-        class="margin-top-0 margin-bottom-1"
+        class="margin-top-0 margin-bottom-05"
       >
         Model Plan questions
       </h3>
@@ -261,29 +268,6 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--cmmi-group margin-bottom-2"
-        >
-          <div
-            class="read-only-section--question"
-          >
-            <span
-              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
-            >
-              CMMI group
-            </span>
-          </div>
-          <div
-            class="margin-y-0"
-          >
-            Policy and Programs Group (PPG), State and Population Health Group (SPHG)
-          </div>
-        </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
-        <div
           class="read-only-section read-only-section--is-this-a-new-track-of-an-existing-model-or-a-new-model margin-bottom-2"
         >
           <div
@@ -301,11 +285,6 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             New track of an existing model
           </div>
         </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
         <div
           class="read-only-section read-only-section--which-existing-model margin-bottom-2"
         >
@@ -347,11 +326,24 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             Yes
           </div>
         </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
+        <div
+          class="read-only-section read-only-section--explain-why-and-how-the-model-made-this-decision margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Explain why and how the model made this decision.
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            We think it is right
+          </div>
+        </div>
         <div
           class="read-only-section read-only-section--which-existing-models-does-your-proposed-track-model-most-closely-resemble margin-bottom-2"
         >
@@ -369,6 +361,42 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
           >
             name, Other
           </div>
+        </div>
+        <div
+          class="read-only-section read-only-section--please-specify-other margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Please specify other
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Other model
+          </div>
+        </div>
+        <div
+          class="read-only-section read-only-section--in-what-way-does-the-new-model-resemble-the-selected-model-s margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              In what way does the new model resemble the selected model(s)?
+            </span>
+          </div>
+          <em
+            class="text-base mint-text-medium"
+          >
+            Not answered yet
+          </em>
         </div>
       </div>
       <div
@@ -393,11 +421,6 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             Yes
           </div>
         </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
         <div
           class="read-only-section read-only-section--which-models margin-bottom-2"
         >
@@ -416,13 +439,8 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             name, Other
           </div>
         </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
         <div
-          class="read-only-section read-only-section--what-are-the-model-key-characteristics margin-bottom-2"
+          class="read-only-section read-only-section--please-specify-other margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -430,13 +448,72 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             <span
               class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
-              What are the model key characteristics?
+              Please specify other
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Other model
+          </div>
+        </div>
+        <div
+          class="read-only-section read-only-section--explain-any-details-including-if-it-is-just-part-of-the-model margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Explain any details including if it is just part of the model.
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            It is a condition
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--what-are-the-model-key-characteristics--select-all-that-apply margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              What are the model key characteristics? Select all that apply.
             </span>
           </div>
           <div
             class="margin-y-0"
           >
             Payment Model, Population-based Model, Service Delivery Model, Other
+          </div>
+        </div>
+        <div
+          class="read-only-section read-only-section--please-describe-the-other-key-characteristics margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Please describe the other key characteristics
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Custom characteristic
           </div>
         </div>
       </div>
@@ -462,11 +539,6 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             Yes
           </div>
         </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
         <div
           class="read-only-section read-only-section--geography-type-is margin-bottom-2"
         >
@@ -485,11 +557,60 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             States and territories, Region, Other
           </div>
         </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
+        <div
+          class="read-only-section read-only-section--please-specify-what-the-other-geography-type-is margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Please specify what the other geography type is.
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Geography type other
+          </div>
+        </div>
+        <div
+          class="read-only-section read-only-section--which-states-and-territories margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Which states and territories?
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            California, Indiana
+          </div>
+        </div>
+        <div
+          class="read-only-section read-only-section--geography-region-types margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Geography region types
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            Core-based statistical areas (CBSAs)
+          </div>
+        </div>
         <div
           class="read-only-section read-only-section--geographies-are-applied-to margin-bottom-2"
         >
@@ -508,13 +629,8 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             Beneficiaries, Other
           </div>
         </div>
-      </div>
-      <div
-        class="desktop:grid-col-12"
-        data-testid="grid"
-      >
         <div
-          class="read-only-section read-only-section--are-waivers-required--if-so--which-types-of-waivers margin-bottom-2"
+          class="read-only-section read-only-section--please-specify-what-the-geographies-are-applied-to margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -522,36 +638,72 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             <span
               class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
-              Are waivers required? If so, which types of waivers?
+              Please specify what the geographies are applied to.
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            Geography applied other
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section--are-waivers-required margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Are waivers required?
             </span>
           </div>
           <div
             class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
             Yes
-            <div
-              class="margin-y-0"
+          </div>
+        </div>
+        <div
+          class="read-only-section read-only-section--which-types-of-waivers-are-required--select-all-that-apply margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
-              Anti-Kickback Statute (AKS) safe harbor or other exception, Medicaid
-            </div>
+              Which types of waivers are required? Select all that apply.
+            </span>
+          </div>
+          <div
+            class="margin-y-0"
+          >
+            Anti-Kickback Statute (AKS) safe harbor or other exception, Medicaid
           </div>
         </div>
       </div>
     </div>
     <div
-      class="margin-bottom-5"
-      id="medicarepaymentwaivers-read-view"
+      class="margin-bottom-6"
+      id="waiversurveyquestions-read-view"
     >
       <h3
-        class="margin-top-0 margin-bottom-1"
+        class="margin-top-0 margin-bottom-05"
       >
-        medicarePaymentWaivers.heading
+        Active model waivers
       </h3>
       <a
         class="usa-link deep-underline display-block margin-bottom-3 mint-body-normal"
         data-discover="true"
-        data-testid="edit-medicarepaymentwaivers.heading-section"
-        href="/medicare-payment-waivers"
+        data-testid="edit-active-model-waivers-section"
+        href="/active-model-waivers"
       >
         Edit this section
       </a>
@@ -560,7 +712,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--does-your-model-modify-medicare-shared-savings-programs margin-bottom-2"
+          class="read-only-section read-only-section-does-your-model-modify-medicare-shared-savings-programs margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -574,7 +726,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
           <div
             class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
-            Yes
+            Yes, Example
           </div>
         </div>
       </div>
@@ -583,7 +735,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--does-your-model-bundle-payments margin-bottom-2"
+          class="read-only-section read-only-section-does-your-model-bundle-payments margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -597,7 +749,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
           <div
             class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
-            No
+            No, Feedback from participants against waiver use
           </div>
         </div>
       </div>
@@ -606,7 +758,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--does-your-model-offer-risk-sharing-arrangements margin-bottom-2"
+          class="read-only-section read-only-section-does-your-model-offer-risk-sharing-arrangements margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -617,41 +769,19 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
               Does your model offer risk sharing arrangements?
             </span>
           </div>
-          <div
-            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          <em
+            class="text-base mint-text-medium"
           >
-            <i
-              class="text-base"
-            >
-              No answer entered
-            </i>
-          </div>
+            Not answered yet
+          </em>
         </div>
       </div>
-    </div>
-    <div
-      class="margin-bottom-5"
-      id="programwaivers-read-view"
-    >
-      <h3
-        class="margin-top-0 margin-bottom-1"
-      >
-        programWaivers.readOnlyHeading
-      </h3>
-      <a
-        class="usa-link deep-underline display-block margin-bottom-3 mint-body-normal"
-        data-discover="true"
-        data-testid="edit-programwaivers.readonlyheading-section"
-        href="/program-waivers"
-      >
-        Edit this section
-      </a>
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--will-your-model-be-impacting-site-of-care-payments margin-bottom-2"
+          class="read-only-section read-only-section-will-your-model-be-impacting-site-of-care-payments margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -665,7 +795,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
           <div
             class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
-            Yes
+            Yes, Example
           </div>
         </div>
       </div>
@@ -674,7 +804,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--will-your-model-be-modifying-the-care-teams--scope-of-practice margin-bottom-2"
+          class="read-only-section read-only-section-will-your-model-be-modifying-the-care-teams--scope-of-practice margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -688,7 +818,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
           <div
             class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
-            No
+            No, Feedback from participants against waiver use
           </div>
         </div>
       </div>
@@ -697,7 +827,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--will-your-model-be-modifying-how-care-is-delivered-with-claims-based-payments margin-bottom-2"
+          class="read-only-section read-only-section-will-your-model-be-modifying-how-care-is-delivered-with-claims-based-payments margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -720,7 +850,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--will-your-model-be-modifying-quality-measurements-or-payments-via-waivers margin-bottom-2"
+          class="read-only-section read-only-section-will-your-model-be-modifying-quality-measurements-or-payments-via-waivers margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -738,30 +868,12 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="margin-bottom-6"
-      id="medicaidpaymentwaivers-read-view"
-    >
-      <h3
-        class="margin-top-0 margin-bottom-1"
-      >
-        medicaidPaymentWaivers.heading
-      </h3>
-      <a
-        class="usa-link deep-underline display-block margin-bottom-3 mint-body-normal"
-        data-discover="true"
-        data-testid="edit-medicaidpaymentwaivers.heading-section"
-        href="/medicaid-payment-waivers"
-      >
-        Edit this section
-      </a>
       <div
         class="desktop:grid-col-12"
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--does-your-model-impact-medicaid-only-beneficiaries margin-bottom-2"
+          class="read-only-section read-only-section-does-your-model-impact-medicaid-only-beneficiaries margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -775,7 +887,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
           <div
             class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
           >
-            Yes
+            Yes, Example
           </div>
         </div>
       </div>
@@ -784,7 +896,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--does-your-model-impact-home--and-community-based-service-payments margin-bottom-2"
+          class="read-only-section read-only-section-does-your-model-impact-home--and-community-based-service-payments margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -793,6 +905,29 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
               class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
               Does your model impact home- and community-based service payments?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            No, Feedback from participants against waiver use
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section-does-your-model-impact-managed-care-waivers margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Does your model impact managed care waivers?
             </span>
           </div>
           <div
@@ -807,7 +942,7 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
         data-testid="grid"
       >
         <div
-          class="read-only-section read-only-section--does-your-model-impact-managed-care-waivers margin-bottom-2"
+          class="read-only-section read-only-section-will-your-model-offer-safe-harbor-protection-of-patient-incentives--including-reduced-cost-sharing-or-additional-services margin-bottom-2"
         >
           <div
             class="read-only-section--question"
@@ -815,7 +950,30 @@ exports[`Read Only Model Plan Summary -- Waiver Assessment Survey > matches snap
             <span
               class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
             >
-              Does your model impact managed care waivers?
+              Will your model offer safe harbor protection of patient incentives (including reduced cost-sharing or additional services)?
+            </span>
+          </div>
+          <div
+            class="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word"
+          >
+            No
+          </div>
+        </div>
+      </div>
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <div
+          class="read-only-section read-only-section-will-your-model-offer-safe-harbor-protection-related-to-expenses-or-remuneration margin-bottom-2"
+        >
+          <div
+            class="read-only-section--question"
+          >
+            <span
+              class="text-bold margin-y-0 mint-text-normal line-height-sans-4 text-pre-line"
+            >
+              Will your model offer safe harbor protection related to expenses or remuneration?
             </span>
           </div>
           <div
