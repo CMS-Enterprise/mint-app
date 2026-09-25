@@ -151,10 +151,6 @@ export default gql(/* GraphQL */ `
         readyForClearanceDts
         status
       }
-      prepareForClearance {
-        status
-        modifiedDts: latestClearanceDts
-      }
       mtoMatrix {
         # Used to cache the mto matrix - always include
         info {

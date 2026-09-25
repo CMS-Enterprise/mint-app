@@ -2,7 +2,6 @@ import {
   DataExchangeApproachStatus,
   ModelPhase,
   MtoMilestoneStatus,
-  PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
 
@@ -22,10 +21,7 @@ const statusText: Record<ModelPhase, string> = {
 };
 
 const taskListStatus: Record<
-  | TaskStatus
-  | DataExchangeApproachStatus
-  | MtoMilestoneStatus
-  | PrepareForClearanceStatus,
+  TaskStatus | DataExchangeApproachStatus | MtoMilestoneStatus,
   string
 > = {
   [TaskStatus.READY]: 'Ready to start',
@@ -34,8 +30,7 @@ const taskListStatus: Record<
   [TaskStatus.READY_FOR_REVIEW]: 'Ready for review',
   [TaskStatus.READY_FOR_CLEARANCE]: 'Ready for clearance',
   [DataExchangeApproachStatus.COMPLETE]: 'Complete',
-  [MtoMilestoneStatus.COMPLETED]: 'Completed',
-  [PrepareForClearanceStatus.CANNOT_START]: 'Cannot start yet'
+  [MtoMilestoneStatus.COMPLETED]: 'Completed'
 };
 
 const modelPlanTaskList = {
@@ -143,22 +138,12 @@ const modelPlanTaskList = {
       assessment:
         'The Model Team will fill out as much of the basic model information as they know and reach out to you if they need help.',
       path: 'it-solutions'
-    },
-    prepareForClearance: {
-      heading: 'Prepare for clearance',
-      team: 'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
-      assessment:
-        'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
-      path: 'prepare-for-clearance'
     }
   },
-  cannotStartClearance:
-    'This step will become available 20 days prior to beginning internal clearance.',
   taskListButton: {
     start: 'Start',
     continue: 'Continue',
-    update: 'Update',
-    updateStatuses: 'Update statuses'
+    update: 'Update'
   },
   mostRecentEdit: 'Most recent edit on {{-date}}',
   mostRecentEditBy: 'Most recent edit on {{-date}} by ',
