@@ -82,6 +82,10 @@ const WaiverSelectionAndConfirmation = () => {
   const [updateWaiverAssessmentSurvey, { loading: isSubmittingSurvey }] =
     useMutation(TypedUpdateWaiverAssessmentSurveyDocument, {
       refetchQueries: [
+        {
+          query: GetAllWaiverAssessmentSurveyDocument,
+          variables: { id: modelID }
+        },
         { query: GetWaiversDocument, variables: { id: modelID } }
       ]
     });

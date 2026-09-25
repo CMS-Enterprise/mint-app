@@ -37,7 +37,7 @@ describe('The WaiverAssessment Survey Read Only Section', () => {
         )
       )
     ).toBeInTheDocument();
-    expect(screen.getByText('Yes')).toBeInTheDocument();
+    expect(screen.getByText('Yes, Not answered yet')).toBeInTheDocument();
   });
 
   it('renders "No answer entered" if copy is empty', async () => {

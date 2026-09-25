@@ -72,6 +72,8 @@ const SingleValue = <T extends string | keyof T, C extends string | keyof C>({
   translations: Record<string, TranslationConfigType<T, C>>;
   values: any;
 }) => {
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+
   const config = translations[field];
 
   const value = values[config.gqlField];
@@ -106,7 +108,9 @@ const SingleValue = <T extends string | keyof T, C extends string | keyof C>({
 
   return (
     <div className="margin-y-0 mint-text-medium line-height-sans-4 text-pre-line text-overflow-wrap-break-word">
-      {childValue ? `${parentValue}, ${childFieldValue}` : parentValue}
+      {childFieldValue
+        ? `${parentValue}, ${childFieldValue}`
+        : `${parentValue}, ${miscellaneousT('notAnswered')}`}
     </div>
   );
 };
