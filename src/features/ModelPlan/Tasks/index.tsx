@@ -33,14 +33,16 @@ type TabId = 'current' | 'upcoming' | 'completed';
 
 // Current tasks are shown in this fixed order per requirements. OA_PRESENTATION is included here
 // so that once it activates from UPCOMING to TO_DO, it moves into the Current tab instead of
-// disappearing from both tabs.
+// disappearing from both tabs. PREPARE_FOR_CLEARANCE is last since it's the final step before
+// clearance - final ordering/copy for its card is still pending a dedicated frontend ticket.
 export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.MTO,
-  PlanTaskKey.OA_PRESENTATION
+  PlanTaskKey.OA_PRESENTATION,
+  PlanTaskKey.PREPARE_FOR_CLEARANCE
 ];
 
 const getTabIdFromSearchParams = (tab: string | null): TabId => {

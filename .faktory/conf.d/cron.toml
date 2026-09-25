@@ -23,3 +23,8 @@
   [cron.job]
     type = "UpdateUserAccountCronJob"
     queue = "critical"
+[[cron]]
+  schedule = "0 5 * * *"
+  [cron.job]
+    type = "PrepareForClearanceCronJob"
+    queue = "critical"

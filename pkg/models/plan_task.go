@@ -1,6 +1,8 @@
 package models
 
-import "github.com/google/uuid"
+import (
+	"github.com/google/uuid"
+)
 
 // PlanTask represents a task associated with a model plan
 type PlanTask struct {
@@ -25,13 +27,21 @@ type PlanTaskKey string
 
 // These constants represent the possible values of a PlanTaskKey
 const (
-	PlanTaskKeyModelPlan      PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMto            PlanTaskKey = "MTO"
-	PlanTaskKeyDataExchange   PlanTaskKey = "DATA_EXCHANGE"
-	PlanTaskKeyTwoPager       PlanTaskKey = "TWO_PAGER"
-	PlanTaskKeySixPager       PlanTaskKey = "SIX_PAGER"
-	PlanTaskKeyOaPresentation PlanTaskKey = "OA_PRESENTATION"
+	PlanTaskKeyModelPlan           PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto                 PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange        PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyTwoPager            PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeySixPager            PlanTaskKey = "SIX_PAGER"
+	PlanTaskKeyOaPresentation      PlanTaskKey = "OA_PRESENTATION"
+	PlanTaskKeyPrepareForClearance PlanTaskKey = "PREPARE_FOR_CLEARANCE"
 )
+
+// PrepareForClearanceTriggerDays is how many days before a model plan's internal clearance start
+// date the PREPARE_FOR_CLEARANCE task becomes actionable. This is evaluated by a scheduled job
+// (see pkg/worker/prepare_for_clearance_job.go) rather than at read time, since the transition
+// depends purely on elapsed time (now vs. a plan's clearanceStarts) rather than a discrete user
+// action - persisting it on a real write is what lets it show up in Change History.
+const PrepareForClearanceTriggerDays = 20
 
 // manuallyMarkablePlanTaskKeys are the PlanTaskKeys whose status is set directly by a user via
 // PlanTaskMarkComplete (pkg/graph/resolvers/plan_task.go) and the markPlanTaskComplete mutation,
@@ -44,9 +54,10 @@ const (
 // markable), DefaultPlanTasks below, and either a new calculated-status function in
 // plan_task_status_updates.go or reuse of PlanTaskMarkComplete.
 var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
-	PlanTaskKeyTwoPager:       true,
-	PlanTaskKeySixPager:       true,
-	PlanTaskKeyOaPresentation: true,
+	PlanTaskKeyTwoPager:            true,
+	PlanTaskKeySixPager:            true,
+	PlanTaskKeyOaPresentation:      true,
+	PlanTaskKeyPrepareForClearance: true,
 }
 
 // PlanTaskDefault pairs a PlanTaskKey with the PlanTaskState it should start at when a model plan
@@ -60,6 +71,7 @@ type PlanTaskDefault struct {
 // pkg/graph/resolvers/model_plan.go). SIX_PAGER starts UPCOMING and is activated to TO_DO by
 // PlanTaskMarkComplete once TWO_PAGER is marked complete (see PlanTaskKey.ActivationTarget).
 // OA_PRESENTATION starts UPCOMING and is activated once SIX_PAGER is marked complete.
+// PREPARE_FOR_CLEARANCE starts UPCOMING and is activated by the clearance-date job.
 var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeyModelPlan, PlanTaskStateToDo},
 	{PlanTaskKeyMto, PlanTaskStateToDo},
@@ -67,6 +79,7 @@ var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeyTwoPager, PlanTaskStateToDo},
 	{PlanTaskKeySixPager, PlanTaskStateUpcoming},
 	{PlanTaskKeyOaPresentation, PlanTaskStateUpcoming},
+	{PlanTaskKeyPrepareForClearance, PlanTaskStateUpcoming},
 }
 
 // IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user
@@ -94,12 +107,13 @@ func (k PlanTaskKey) ActivationTarget() (PlanTaskKey, bool) {
 // planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
 // and change history. Keys without an entry fall back to their raw string value.
 var planTaskKeyDisplayNames = map[PlanTaskKey]string{
-	PlanTaskKeyModelPlan:      "Model Plan",
-	PlanTaskKeyDataExchange:   "Data exchange approach",
-	PlanTaskKeyMto:            "Model-to-operations matrix (MTO)",
-	PlanTaskKeyTwoPager:       "Prepare for your 2-page review meeting with CMMI Front Office",
-	PlanTaskKeySixPager:       "Prepare for your 6-page review meeting with CMMI Front Office",
-	PlanTaskKeyOaPresentation: "Office of the Administrator (OA) presentation",
+	PlanTaskKeyModelPlan:           "Model Plan",
+	PlanTaskKeyDataExchange:        "Data exchange approach",
+	PlanTaskKeyMto:                 "Model-to-operations matrix (MTO)",
+	PlanTaskKeyTwoPager:            "Prepare for your 2-page review meeting with CMMI Front Office",
+	PlanTaskKeySixPager:            "Prepare for your 6-page review meeting with CMMI Front Office",
+	PlanTaskKeyOaPresentation:      "Office of the Administrator (OA) presentation",
+	PlanTaskKeyPrepareForClearance: "Prepare for clearance",
 }
 
 // DisplayName returns a short human-readable name for this task key.

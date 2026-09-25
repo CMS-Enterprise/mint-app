@@ -1,6 +1,7 @@
 import {
   AuditFieldChangeType,
   DatabaseOperation,
+  PlanTaskKey,
   TableName,
   TranslatedAuditField,
   TranslationDataType
@@ -29,6 +30,7 @@ import {
   isInitialCreatedSection,
   isModelPlanStatusChange,
   isMTOChange,
+  isPlanTaskAutomaticChange,
   isTableWithStatus,
   linkingTableQuestions,
   parseArray,
@@ -1360,4 +1362,87 @@ describe('isAssessmentDiscussionChange', () => {
 
     expect(isAssessmentDiscussionChange(change)).toBe(false);
   });
+});
+
+describe('isPlanTaskAutomaticChange', () => {
+  const baseTaskChange: ChangeRecordType = {
+    __typename: 'TranslatedAudit',
+    id: '4a380e4d-9c81-4515-8994-c25f6f533de8',
+    tableName: TableName.PLAN_TASK,
+    date: '2024-06-07T19:14:30.145659Z',
+    action: DatabaseOperation.UPDATE,
+    actorName: 'Jane McModelteam',
+    translatedFields: [],
+    metaData: {
+      __typename: 'TranslatedAuditMetaGeneric',
+      relation: PlanTaskKey.MODEL_PLAN,
+      relationContent: 'Model Plan',
+      tableName: TableName.PLAN_TASK,
+      version: 1
+    }
+  };
+
+  it('returns false for non plan_task tables', () => {
+    expect(
+      isPlanTaskAutomaticChange({
+        ...baseTaskChange,
+        tableName: TableName.PLAN_BASICS
+      })
+    ).toBe(false);
+  });
+
+  it('returns false when metaData is missing', () => {
+    expect(
+      isPlanTaskAutomaticChange({ ...baseTaskChange, metaData: null })
+    ).toBe(false);
+  });
+
+  it('returns true for a key that is never manually markable, regardless of actor', () => {
+    expect(isPlanTaskAutomaticChange(baseTaskChange)).toBe(true);
+  });
+
+  it.each([
+    PlanTaskKey.TWO_PAGER,
+    PlanTaskKey.SIX_PAGER,
+    PlanTaskKey.OA_PRESENTATION,
+    PlanTaskKey.PREPARE_FOR_CLEARANCE
+  ])(
+    'returns false for manually-markable key %s changed by a real user',
+    key => {
+      const change: ChangeRecordType = {
+        ...baseTaskChange,
+        metaData: {
+          __typename: 'TranslatedAuditMetaGeneric',
+          relation: key,
+          relationContent: key,
+          tableName: TableName.PLAN_TASK,
+          version: 1
+        }
+      };
+      expect(isPlanTaskAutomaticChange(change)).toBe(false);
+    }
+  );
+
+  it.each([
+    PlanTaskKey.TWO_PAGER,
+    PlanTaskKey.SIX_PAGER,
+    PlanTaskKey.OA_PRESENTATION,
+    PlanTaskKey.PREPARE_FOR_CLEARANCE
+  ])(
+    'returns true for manually-markable key %s changed by the MINT system account',
+    key => {
+      const change: ChangeRecordType = {
+        ...baseTaskChange,
+        actorName: 'Mint System Account',
+        metaData: {
+          __typename: 'TranslatedAuditMetaGeneric',
+          relation: key,
+          relationContent: key,
+          tableName: TableName.PLAN_TASK,
+          version: 1
+        }
+      };
+      expect(isPlanTaskAutomaticChange(change)).toBe(true);
+    }
+  );
 });

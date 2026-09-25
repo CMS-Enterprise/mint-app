@@ -81,7 +81,8 @@ const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
   [PlanTaskKey.DATA_EXCHANGE]: '2022-01-03T00:00:00Z',
   [PlanTaskKey.TWO_PAGER]: '2022-01-04T00:00:00Z',
   [PlanTaskKey.SIX_PAGER]: '2022-01-05T00:00:00Z',
-  [PlanTaskKey.OA_PRESENTATION]: '2022-01-06T00:00:00Z'
+  [PlanTaskKey.OA_PRESENTATION]: '2022-01-06T00:00:00Z',
+  [PlanTaskKey.PREPARE_FOR_CLEARANCE]: '2022-01-07T00:00:00Z'
 };
 
 // SIX_PAGER and OA_PRESENTATION start UPCOMING in production (see models.PlanTask default seeding)
