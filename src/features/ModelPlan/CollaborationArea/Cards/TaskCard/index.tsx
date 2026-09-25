@@ -10,6 +10,7 @@ import {
   Icon,
   Link
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import {
   DocumentType,
   GetCollaborationAreaDocument,
