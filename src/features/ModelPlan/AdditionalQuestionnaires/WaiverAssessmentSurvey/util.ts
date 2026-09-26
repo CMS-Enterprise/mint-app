@@ -1,4 +1,5 @@
 import {
+  CmsCenter,
   GetAllWaiverAssessmentSurveyQuery,
   GetModelPlanQuestionsQuery,
   GetWaiversQuery,
@@ -479,26 +480,35 @@ export const getWaiverSelectionChanges = (
 
   commonWaiverIDs.forEach(commonWaiverID => {
     const currentFields = current.waivers[commonWaiverID];
+    const initialFields = initial.waivers[commonWaiverID];
 
     if (!currentFields) {
       return;
     }
 
-    if (
-      !waiverSelectionFieldsChanged(
-        initial.waivers[commonWaiverID],
-        currentFields
-      )
-    ) {
+    if (!waiverSelectionFieldsChanged(initialFields, currentFields)) {
       return;
     }
+
+    // Handle when willUseWaiver is false or null.
+    // We preserve the original DB value for usingReason.
+    const usingReason =
+      currentFields.willUseWaiver !== true
+        ? initialFields?.usingReason || null
+        : currentFields.usingReason || null;
+
+    // Handle when willUseWaiver is true or null.
+    // We preserve the original DB value for notUsingReason.
+    const notUsingReason =
+      currentFields.willUseWaiver !== false
+        ? initialFields?.notUsingReason || null
+        : currentFields.notUsingReason || null;
 
     changes.push({
       commonWaiverID,
       willUseWaiver: currentFields.willUseWaiver,
-      ...(currentFields.willUseWaiver === false
-        ? { notUsingReason: currentFields.notUsingReason || null }
-        : { usingReason: currentFields.usingReason || null })
+      usingReason,
+      notUsingReason
     });
   });
 
@@ -512,36 +522,22 @@ type WaiverAssessmentSurveyGeneralCharacteristics =
   WaiverAssessmentSurveyModelPlan['generalCharacteristics'];
 
 export type WaiverAssessmentSurveyQuestionConfigs = {
-  modelPlanQuestionsConfig: Record<string, TranslationConfigType<string>>;
-  medicareQuestionsConfig: Record<string, TranslationConfigType<string>>;
-  programWaiversConfig: Record<string, TranslationConfigType<string>>;
-  medicaidQuestionsConfig: Record<string, TranslationConfigType<string>>;
+  modelPlanQuestionsConfig: Partial<CombinedConfigType>;
+  waiverSurveyQuestionsConfig: Record<string, TranslationConfigType<string>>;
 };
 
 export type WaiverAssessmentSurveySectionHeadings = {
   modelPlanQuestions: string;
-  medicarePaymentWaivers: string;
-  programWaivers: string;
-  medicaidPaymentWaivers: string;
+  waiverSurveyQuestions: string;
 };
 
-export type WaiverAssessmentSurveySectionsConfig = {
-  modePlanQuestions: {
+export type WaiverQuestionsSectionsConfig = {
+  modelPlanQuestions: {
     heading: string;
     config: Record<string, TranslationConfigType<string>>;
     href: string;
   };
-  medicarePaymentWaivers: {
-    heading: string;
-    config: Record<string, TranslationConfigType<string>>;
-    href: string;
-  };
-  programWaivers: {
-    heading: string;
-    config: Record<string, TranslationConfigType<string>>;
-    href: string;
-  };
-  medicaidPaymentWaivers: {
+  waiverSurveyQuestions: {
     heading: string;
     config: Record<string, TranslationConfigType<string>>;
     href: string;
@@ -549,56 +545,30 @@ export type WaiverAssessmentSurveySectionsConfig = {
 };
 
 /**
- * Builds translation configs for waiver assessment survey read-only sections.
+ * Builds translation configs for waiver questions read-only sections.
  */
-export const buildWaiverAssessmentSurveyQuestionConfigs = (
-  modelBasicsConfig: TranslationPlan['basics'],
-  generalCharacteristicsConfig: TranslationPlan['generalCharacteristics'],
+export const buildWaiverQuestionConfigs = (
+  combinedConfig: CombinedConfigType,
   waiverAssessmentSurveyConfig: TranslationPlan['waiverAssessmentSurvey']
 ): WaiverAssessmentSurveyQuestionConfigs => ({
   modelPlanQuestionsConfig: {
-    modelCategory: modelBasicsConfig.modelCategory,
-    additionalModelCategories: modelBasicsConfig.additionalModelCategories,
-    cmsCenters: modelBasicsConfig.cmsCenters,
-    cmmiGroups: modelBasicsConfig.cmmiGroups,
-    isNewModel: generalCharacteristicsConfig.isNewModel,
-    existingModel: generalCharacteristicsConfig.existingModel,
-    resemblesExistingModel: generalCharacteristicsConfig.resemblesExistingModel,
-    resemblesExistingModelWhich:
-      generalCharacteristicsConfig.resemblesExistingModelWhich,
+    modelCategory: combinedConfig.modelCategory,
+    additionalModelCategories: combinedConfig.additionalModelCategories,
+    cmsCenters: combinedConfig.cmsCenters,
+    isNewModel: combinedConfig.isNewModel,
+    resemblesExistingModel: combinedConfig.resemblesExistingModel,
     participationInModelPrecondition:
-      generalCharacteristicsConfig.participationInModelPrecondition,
-    participationInModelPreconditionWhich:
-      generalCharacteristicsConfig.participationInModelPreconditionWhich,
-    keyCharacteristics: generalCharacteristicsConfig.keyCharacteristics,
-    keyCharacteristicsOther:
-      generalCharacteristicsConfig.keyCharacteristicsOther,
-    collectPlanBids: generalCharacteristicsConfig.collectPlanBids,
-    managePartCDEnrollment: generalCharacteristicsConfig.managePartCDEnrollment,
-    planContractUpdated: generalCharacteristicsConfig.planContractUpdated,
-    geographiesTargeted: generalCharacteristicsConfig.geographiesTargeted,
-    geographiesTargetedTypes:
-      generalCharacteristicsConfig.geographiesTargetedTypes,
-    geographiesStatesAndTerritories:
-      generalCharacteristicsConfig.geographiesStatesAndTerritories,
-    geographiesRegionTypes: generalCharacteristicsConfig.geographiesRegionTypes,
-    geographiesTargetedTypesOther:
-      generalCharacteristicsConfig.geographiesTargetedTypesOther,
-    geographiesTargetedAppliedTo:
-      generalCharacteristicsConfig.geographiesTargetedAppliedTo,
-    geographiesTargetedAppliedToOther:
-      generalCharacteristicsConfig.geographiesTargetedAppliedToOther,
-    waiversRequired: generalCharacteristicsConfig.waiversRequired,
-    waiversRequiredTypes: generalCharacteristicsConfig.waiversRequiredTypes
+      combinedConfig.participationInModelPrecondition,
+    keyCharacteristics: combinedConfig.keyCharacteristics,
+    geographiesTargeted: combinedConfig.geographiesTargeted,
+    waiversRequired: combinedConfig.waiversRequired
   },
-  medicareQuestionsConfig: {
+  waiverSurveyQuestionsConfig: {
     modifiesMedicareSavingsPrograms:
       waiverAssessmentSurveyConfig.modifiesMedicareSavingsPrograms,
     bundlesPayments: waiverAssessmentSurveyConfig.bundlesPayments,
     offersRiskSharingArrangements:
-      waiverAssessmentSurveyConfig.offersRiskSharingArrangements
-  },
-  programWaiversConfig: {
+      waiverAssessmentSurveyConfig.offersRiskSharingArrangements,
     impactsSiteOfCarePayments:
       waiverAssessmentSurveyConfig.impactsSiteOfCarePayments,
     modifiesCareTeamScopeOfPractice:
@@ -606,44 +576,36 @@ export const buildWaiverAssessmentSurveyQuestionConfigs = (
     modifiesCareDeliveryWithClaimsBasedPayments:
       waiverAssessmentSurveyConfig.modifiesCareDeliveryWithClaimsBasedPayments,
     modifiesQualityMeasurementsOrPaymentsViaWaivers:
-      waiverAssessmentSurveyConfig.modifiesQualityMeasurementsOrPaymentsViaWaivers
-  },
-  medicaidQuestionsConfig: {
+      waiverAssessmentSurveyConfig.modifiesQualityMeasurementsOrPaymentsViaWaivers,
     impactsMedicaidOnlyBeneficiaries:
       waiverAssessmentSurveyConfig.impactsMedicaidOnlyBeneficiaries,
     impactsHomeCommunityBasedServicePayments:
       waiverAssessmentSurveyConfig.impactsHomeCommunityBasedServicePayments,
     impactsManagedCareWaivers:
-      waiverAssessmentSurveyConfig.impactsManagedCareWaivers
+      waiverAssessmentSurveyConfig.impactsManagedCareWaivers,
+    offersPatientIncentivesSafeHarborProtection:
+      waiverAssessmentSurveyConfig.offersPatientIncentivesSafeHarborProtection,
+    offersExpensesRemunerationSafeHarborProtection:
+      waiverAssessmentSurveyConfig.offersExpensesRemunerationSafeHarborProtection
   }
 });
 
 /**
- * Builds section headings and configs for waiver assessment survey read-only views.
+ * Builds section headings and configs for waiver questions read-only views.
  */
-export const buildWaiverAssessmentSurveySectionsConfig = (
+export const buildWaiverQuestionsSectionsConfig = (
   questionConfigs: WaiverAssessmentSurveyQuestionConfigs,
   headings: WaiverAssessmentSurveySectionHeadings
-): WaiverAssessmentSurveySectionsConfig => ({
-  modePlanQuestions: {
+): WaiverQuestionsSectionsConfig => ({
+  modelPlanQuestions: {
     heading: headings.modelPlanQuestions,
     config: questionConfigs.modelPlanQuestionsConfig,
     href: '../model-plan-questions'
   },
-  medicarePaymentWaivers: {
-    heading: headings.medicarePaymentWaivers,
-    config: questionConfigs.medicareQuestionsConfig,
-    href: '../medicare-payment-waivers'
-  },
-  programWaivers: {
-    heading: headings.programWaivers,
-    config: questionConfigs.programWaiversConfig,
-    href: '../program-waivers'
-  },
-  medicaidPaymentWaivers: {
-    heading: headings.medicaidPaymentWaivers,
-    config: questionConfigs.medicaidQuestionsConfig,
-    href: '../medicaid-payment-waivers'
+  waiverSurveyQuestions: {
+    heading: headings.waiverSurveyQuestions,
+    config: questionConfigs.waiverSurveyQuestionsConfig,
+    href: '../active-model-waivers'
   }
 });
 
@@ -692,9 +654,9 @@ export const buildParticipationPreconditionPlans = (
 };
 
 /**
- * Builds merged model plan question values for waiver assessment survey read-only views.
+ * Builds merged model plan question values for waiver model questions read-only views.
  */
-export const buildWaiverAssessmentSurveyModelQuestionsData = (
+export const buildWaiverModelQuestionsData = (
   basics: WaiverAssessmentSurveyModelPlan['basics'],
   generalCharacteristics: WaiverAssessmentSurveyGeneralCharacteristics
 ) => ({
@@ -720,11 +682,92 @@ const WAIVER_SURVEY_PARENT_QUESTION_CONFIGS = [
   waiverAssessmentSurvey.modifiesQualityMeasurementsOrPaymentsViaWaivers,
   waiverAssessmentSurvey.impactsMedicaidOnlyBeneficiaries,
   waiverAssessmentSurvey.impactsHomeCommunityBasedServicePayments,
-  waiverAssessmentSurvey.impactsManagedCareWaivers
+  waiverAssessmentSurvey.impactsManagedCareWaivers,
+  waiverAssessmentSurvey.offersPatientIncentivesSafeHarborProtection,
+  waiverAssessmentSurvey.offersExpensesRemunerationSafeHarborProtection
 ] as const;
+
+export const getReadOnlySubQuestionFields = (
+  question: keyof CombinedConfigType,
+  values: Record<string, unknown>,
+  config: CombinedConfigType
+): {
+  subQuestionFields: Array<keyof CombinedConfigType>;
+} => {
+  const subQuestionFields: Array<keyof CombinedConfigType> = [];
+
+  const collectSubFields = (currentQuestionKey: string) => {
+    const translationKey = getTranslationKey(currentQuestionKey);
+
+    const currentConfig = config[translationKey as keyof CombinedConfigType];
+
+    if (!currentConfig) return;
+
+    const currentValue = values[currentConfig.gqlField];
+
+    const valueArray = Array.isArray(currentValue)
+      ? currentValue
+      : [currentValue];
+
+    // Special case for cmsCenters and CMMI, since CMMI is not a child question but is a sub-question of cmsCenters
+    if (
+      currentQuestionKey === 'cmsCenters' &&
+      valueArray.includes(CmsCenter.CMMI)
+    ) {
+      subQuestionFields.push('cmmiGroups' as keyof CombinedConfigType);
+
+      collectSubFields('cmmiGroups');
+    }
+
+    valueArray.forEach(val => {
+      if (val == null || val === '') return;
+      const valueString = String(val);
+
+      // 1. Child Relations
+      if (isTranslationFieldPropertiesWithOptionsAndChildren(currentConfig)) {
+        const children =
+          currentConfig.childRelation?.[
+            valueString as keyof typeof currentConfig.childRelation
+          ];
+
+        children?.forEach(child => {
+          const childConfig = child();
+          const { gqlField } = childConfig;
+
+          if (gqlField && isValidQuestionField(gqlField, config)) {
+            subQuestionFields.push(gqlField as keyof CombinedConfigType);
+
+            collectSubFields(gqlField);
+          }
+        });
+      }
+
+      // 2. Options Related Info
+      if (isTranslationFieldPropertiesWithOptions(currentConfig)) {
+        const otherQuestion =
+          currentConfig.optionsRelatedInfo?.[
+            valueString as keyof typeof currentConfig.optionsRelatedInfo
+          ];
+
+        if (otherQuestion) {
+          subQuestionFields.push(otherQuestion as keyof CombinedConfigType);
+
+          collectSubFields(otherQuestion);
+        }
+      }
+    });
+  };
+
+  collectSubFields(question);
+
+  return { subQuestionFields };
+};
 
 type WaiverSurveyQuestionnaireData =
   GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'];
+
+type WaiverSelectionData =
+  GetAllWaiverAssessmentSurveyQuery['modelPlan']['waiverInfo']['commonWaivers'];
 
 const isNonEmptyString = (value: unknown): boolean =>
   typeof value === 'string' && value.trim() !== '';
@@ -766,8 +809,12 @@ export const isWaiverSurveyQuestionComplete = (
  * Returns true when all pages 3–5 waiver question fields are complete.
  */
 export const isWaiverSurveyQuestionsComplete = (
-  surveyData: WaiverSurveyQuestionnaireData
+  surveyData: WaiverSurveyQuestionnaireData | undefined
 ): boolean => {
+  if (!surveyData) {
+    return false;
+  }
+
   const allParentQuestionsComplete =
     WAIVER_SURVEY_PARENT_QUESTION_CONFIGS.every(questionConfig =>
       isWaiverSurveyQuestionComplete(
@@ -777,4 +824,33 @@ export const isWaiverSurveyQuestionsComplete = (
     );
 
   return allParentQuestionsComplete;
+};
+
+export const isWaiverSelectionComplete = (
+  waiverSelectionData: WaiverSelectionData | undefined
+): boolean => {
+  if (!waiverSelectionData) {
+    return false;
+  }
+
+  const allWaiversSelected = waiverSelectionData.every(waiver => {
+    const isAnswered =
+      waiver.willUseWaiver !== null && waiver.willUseWaiver !== undefined;
+
+    if (waiver.isSuggested && isAnswered) {
+      return waiver.willUseWaiver
+        ? true
+        : isNonEmptyString(waiver.notUsingReason);
+    }
+
+    if (waiver.isSuggested === false) {
+      return waiver.willUseWaiver === true
+        ? isNonEmptyString(waiver.usingReason)
+        : true;
+    }
+
+    return false;
+  });
+
+  return allWaiversSelected;
 };

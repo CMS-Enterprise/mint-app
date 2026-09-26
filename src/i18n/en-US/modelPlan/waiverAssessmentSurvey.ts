@@ -748,8 +748,8 @@ const waiverAssessmentSurveyMisc = {
       'Check through your waiver selections, and if everything looks accurate, mark this survey as complete.',
     summaryBox: {
       title: 'Want to review all past CMMI waivers?',
-      // TODO: Update link
-      text: 'Visit <link1>link and title of link</link1> to learn more'
+      text: 'Visit <link1>Waivers List in SharePoint</link1> to learn more',
+      link: 'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/PP/DAPMI/Lists/Existing%20Models/Waiver%20and%20Background%20Language.aspx'
     },
     saveAndExit: 'Save and exit questionnaire',
     questionnaireStatus: 'Questionnaire status',
@@ -760,19 +760,22 @@ const waiverAssessmentSurveyMisc = {
     editSection: 'Edit this section'
   },
   selectedWaivers: {
-    heading: 'Selected waivers',
+    heading: 'Selected waivers ({{waiverCount}})',
     description:
       'There are {{-totalWaiversCount}} total available {{-waiverType}}. Based on your answers to the above questions, MINT has determined that the following {{-selectedWaiversCount}} waivers are likely needed for your model:',
     summary:
       'Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.',
     readonlyColumns: {
       waiverName: 'Waiver name',
-      waiverCategory: 'Waiver category',
+      reason: 'Reason',
       actions: 'Actions',
       viewDetails: 'Learn more about this waiver'
     }
   },
-  modelHasNotSelectedWaiver: 'This model has not yet selected any waivers.',
+  declinedWaivers: {
+    heading: 'Declined waivers ({{waiverCount}})'
+  },
+  modelHasNotSelectedWaiver: 'This model will not require any waivers.',
   waiverType: {
     FRAUD_ABUSE: 'Fraud and abuse waivers, safe harbors, and exceptions',
     MEDICARE_PAYMENT: 'Medicare payment waivers',

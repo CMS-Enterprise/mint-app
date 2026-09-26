@@ -297,19 +297,6 @@ export const waiverAssessmentSurveyMockData: GetAllWaiverAssessmentSurveyQuery =
           isComplete: false,
           modifiedDts: '2022-06-03T19:32:24.412662Z',
           createdDts: '2022-06-03T19:32:24.412662Z',
-          waivers: [
-            {
-              __typename: 'Waiver',
-              id: '123',
-              willUseWaiver: true,
-              notUsingReason: '',
-              commonWaiver: {
-                __typename: 'CommonWaiver',
-                name: 'Common Waiver Name',
-                waiverType: CommonWaiverType.MEDICAID_PAYMENT
-              }
-            }
-          ],
 
           modifiesMedicareSavingsPrograms: true,
           modifiesMedicareSavingsProgramsExample: 'Example',
@@ -345,8 +332,28 @@ export const waiverAssessmentSurveyMockData: GetAllWaiverAssessmentSurveyQuery =
           impactsManagedCareWaivers: false,
           impactsManagedCareWaiversExample: '',
           impactsManagedCareWaiversWhyNot: null,
-          additionalMedicaidSpecificWaivers: ''
+          offersPatientIncentivesSafeHarborProtection: false,
+          offersPatientIncentivesSafeHarborProtectionExample: '',
+          offersPatientIncentivesSafeHarborProtectionWhyNot: null,
+          offersExpensesRemunerationSafeHarborProtection: false,
+          offersExpensesRemunerationSafeHarborProtectionExample: '',
+          offersExpensesRemunerationSafeHarborProtectionWhyNot: null
         }
+      },
+
+      waiverInfo: {
+        __typename: 'WaiverInfo',
+        commonWaivers: [
+          {
+            __typename: 'CommonWaiver',
+            id: '123',
+            isSuggested: true,
+            name: 'Common Waiver Name',
+            waiverType: CommonWaiverType.MEDICAID_PAYMENT,
+            willUseWaiver: true,
+            notUsingReason: ''
+          }
+        ]
       }
     }
   };
