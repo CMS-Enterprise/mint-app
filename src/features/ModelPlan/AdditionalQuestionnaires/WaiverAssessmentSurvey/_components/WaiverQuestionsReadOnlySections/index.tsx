@@ -18,11 +18,13 @@ import { CombinedConfigType } from '../ModelPlanQuestionsForm';
 
 type WaiverQuestionsReadOnlySectionsProps = {
   modelPlan: GetAllWaiverAssessmentSurveyQuery['modelPlan'];
+  isReadview?: boolean;
 };
 
 /** Renders read-only model question and waiver assessment survey question sections. */
 const WaiverQuestionsReadOnlySections = ({
-  modelPlan
+  modelPlan,
+  isReadview = false
 }: WaiverQuestionsReadOnlySectionsProps) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
@@ -65,45 +67,60 @@ const WaiverQuestionsReadOnlySections = ({
             questionType as keyof typeof waiverQuestionsConfig
           ];
 
+        const isNotLastSection =
+          index !== Object.keys(waiverQuestionsConfig).length - 1;
+
         return (
           <div
             key={questionType}
             id={`${convertToLowercaseAndDashes(questionType)}-read-view`}
             className={classNames(
-              index !== Object.keys(waiverQuestionsConfig).length - 1
-                ? 'margin-bottom-5'
-                : 'margin-bottom-6'
+              isNotLastSection ? 'margin-bottom-5' : 'margin-bottom-6'
             )}
           >
-            <h3 className="margin-top-0 margin-bottom-05">
+            <h3
+              className={classNames('margin-top-0', {
+                'margin-bottom-3': isReadview,
+                'margin-bottom-05': !isReadview
+              })}
+            >
               {waiverConfig.heading}
             </h3>
 
-            <UswdsReactLink
-              to={waiverConfig.href}
-              data-testid={`edit-${convertToLowercaseAndDashes(waiverConfig.heading)}-section`}
-              className="deep-underline display-block margin-bottom-3 mint-body-normal"
-            >
-              {waiverAssessmentSurveyMiscT('confirmAndSubmit.editSection')}
-            </UswdsReactLink>
-
-            {Object.keys(waiverConfig.config).map(questionConfig =>
-              questionType === 'modelPlanQuestions' ? (
-                <WaiverModelQuestionsReadOnlySection
-                  key={questionConfig}
-                  field={questionConfig as keyof CombinedConfigType}
-                  translations={combinedConfig}
-                  values={modelQuestionsData}
-                />
-              ) : (
-                <WaiverSurveyReadOnlySection
-                  key={questionConfig}
-                  field={questionConfig}
-                  translations={waiverConfig.config}
-                  values={waiverAssessmentSurveyData}
-                />
-              )
+            {!isReadview && (
+              <UswdsReactLink
+                to={waiverConfig.href}
+                data-testid={`edit-${convertToLowercaseAndDashes(waiverConfig.heading)}-section`}
+                className="deep-underline display-block margin-bottom-3 mint-body-normal"
+              >
+                {waiverAssessmentSurveyMiscT('confirmAndSubmit.editSection')}
+              </UswdsReactLink>
             )}
+
+            <div
+              className={classNames({
+                'border-bottom-1px border-base-light padding-bottom-1':
+                  isReadview && isNotLastSection
+              })}
+            >
+              {Object.keys(waiverConfig.config).map(questionConfig =>
+                questionType === 'modelPlanQuestions' ? (
+                  <WaiverModelQuestionsReadOnlySection
+                    key={questionConfig}
+                    field={questionConfig as keyof CombinedConfigType}
+                    translations={combinedConfig}
+                    values={modelQuestionsData}
+                  />
+                ) : (
+                  <WaiverSurveyReadOnlySection
+                    key={questionConfig}
+                    field={questionConfig}
+                    translations={waiverConfig.config}
+                    values={waiverAssessmentSurveyData}
+                  />
+                )
+              )}
+            </div>
           </div>
         );
       })}

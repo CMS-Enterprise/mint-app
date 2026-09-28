@@ -6,7 +6,7 @@ import i18next from 'i18next';
 import { waiverAssessmentSurvey } from 'i18n/en-US/modelPlan/waiverAssessmentSurvey';
 import { Bool } from 'types/translation';
 
-import WaiverAssessmentSurveyReadOnlySections from '.';
+import WaiverSurveyReadOnlySection from '.';
 
 const defaultEmptyProps = {
   field: 'modifiesMedicareSavingsPrograms',
@@ -28,7 +28,7 @@ describe('The WaiverAssessment Survey Read Only Section', () => {
       }
     };
 
-    render(<WaiverAssessmentSurveyReadOnlySections {...data} />);
+    render(<WaiverSurveyReadOnlySection {...data} />);
 
     expect(
       screen.getByText(
@@ -41,7 +41,7 @@ describe('The WaiverAssessment Survey Read Only Section', () => {
   });
 
   it('renders "No answer entered" if copy is empty', async () => {
-    render(<WaiverAssessmentSurveyReadOnlySections {...defaultEmptyProps} />);
+    render(<WaiverSurveyReadOnlySection {...defaultEmptyProps} />);
 
     expect(
       screen.getByText(
@@ -68,7 +68,7 @@ describe('The WaiverAssessment Survey Read Only Section', () => {
       }
     };
 
-    render(<WaiverAssessmentSurveyReadOnlySections {...data} />);
+    render(<WaiverSurveyReadOnlySection {...data} />);
 
     expect(screen.getByText('Yes, Example text')).toBeInTheDocument();
   });
@@ -83,7 +83,7 @@ describe('The WaiverAssessment Survey Read Only Section', () => {
       }
     };
 
-    render(<WaiverAssessmentSurveyReadOnlySections {...data} />);
+    render(<WaiverSurveyReadOnlySection {...data} />);
 
     expect(screen.getByText('No, Other')).toBeInTheDocument();
   });
