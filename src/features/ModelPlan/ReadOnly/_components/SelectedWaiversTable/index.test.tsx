@@ -8,26 +8,22 @@ import SelectedWaiversTable, { SelectedWaiver } from '.';
 
 const mockSelectedWaivers: SelectedWaiver[] = [
   {
-    __typename: 'Waiver',
+    __typename: 'CommonWaiver',
     id: '456',
     willUseWaiver: true,
     notUsingReason: '',
-    commonWaiver: {
-      __typename: 'CommonWaiver',
-      name: 'Test Waiver',
-      waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE
-    }
+    name: 'Test Waiver',
+    isSuggested: true,
+    waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE
   },
   {
-    __typename: 'Waiver',
+    __typename: 'CommonWaiver',
     id: '123',
     willUseWaiver: true,
     notUsingReason: '',
-    commonWaiver: {
-      __typename: 'CommonWaiver',
-      name: 'Test Waiver 2',
-      waiverType: CommonWaiverType.MEDICAID_PAYMENT
-    }
+    name: 'Test Waiver 2',
+    isSuggested: true,
+    waiverType: CommonWaiverType.MEDICAID_PAYMENT
   }
 ];
 
@@ -65,14 +61,6 @@ describe('The SelectedWaiversTable Component', () => {
       screen.getByText(
         i18next.t<string, {}, string>(
           'waiverAssessmentSurveyMisc:selectedWaivers.readonlyColumns.waiverName'
-        )
-      )
-    ).toBeInTheDocument();
-
-    expect(
-      screen.getByText(
-        i18next.t<string, {}, string>(
-          'waiverAssessmentSurveyMisc:selectedWaivers.readonlyColumns.waiverCategory'
         )
       )
     ).toBeInTheDocument();

@@ -48,47 +48,71 @@ const LearnMoreButton = ({
 };
 
 export type SelectedWaiver =
-  GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey']['waivers'][number];
+  GetAllWaiverAssessmentSurveyQuery['modelPlan']['waiverInfo']['commonWaivers'][number];
 
 type ColumnType = SelectedWaiver & { actions: unknown };
 
+export type ColumnKey = 'waiverName' | 'reason' | 'actions';
+const DEFAULT_VISIBLE_COLUMNS: ColumnKey[] = [
+  'waiverName',
+  'reason',
+  'actions'
+];
+
 const SelectedWaiversTable = ({
-  selectedWaivers
+  selectedWaivers,
+  visibleColumns = DEFAULT_VISIBLE_COLUMNS
 }: {
   selectedWaivers: SelectedWaiver[];
+  visibleColumns?: ColumnKey[];
 }) => {
   const { t: waiverAssessmentSurveyMiscT } = useTranslation(
     'waiverAssessmentSurveyMisc'
   );
 
-  const columns: Column<ColumnType>[] = useMemo(
-    () => [
-      {
+  const columns: Column<ColumnType>[] = useMemo(() => {
+    const isTwoColumn = visibleColumns.length === 2;
+
+    const allColumns: Record<ColumnKey, Column<ColumnType>> = {
+      waiverName: {
         Header: waiverAssessmentSurveyMiscT(
           'selectedWaivers.readonlyColumns.waiverName'
         ),
-        accessor: row => row.commonWaiver.name
+        accessor: row => row.name,
+        width: isTwoColumn ? '70%' : '35%',
+        Cell: ({ row }: { row: Row<ColumnType> }) => (
+          <div>
+            <p className="text-mint-body margin-y-0">{row.original.name}</p>
+
+            <p className="text-mint-body text-base-dark margin-y-0">
+              {waiverAssessmentSurveyMiscT(
+                `${row.original.waiverType}.heading`
+              )}
+            </p>
+          </div>
+        )
       },
-      {
+      reason: {
         Header: waiverAssessmentSurveyMiscT(
-          'selectedWaivers.readonlyColumns.waiverCategory'
+          'selectedWaivers.readonlyColumns.reason'
         ),
-        accessor: row => row.commonWaiver.waiverType,
-        Cell: ({ value }: { value: string }) =>
-          waiverAssessmentSurveyMiscT(`waiverType.${value}`)
+        accessor: 'notUsingReason',
+        width: '35%'
       },
-      {
+      actions: {
         Header: waiverAssessmentSurveyMiscT(
           'selectedWaivers.readonlyColumns.actions'
         ),
         accessor: 'actions',
+        width: '30%',
         Cell: ({ row }: { row: Row<ColumnType> }) => (
           <LearnMoreButton selectedWaiver={row.original} />
         )
       }
-    ],
-    [waiverAssessmentSurveyMiscT]
-  );
+    };
+
+    return visibleColumns.map(key => allColumns[key]);
+  }, [waiverAssessmentSurveyMiscT, visibleColumns]);
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
@@ -115,7 +139,7 @@ const SelectedWaiversTable = ({
         className="margin-top-0 margin-bottom-3"
         fullWidth
       >
-        <thead className="margin-x-2">
+        <thead>
           {headerGroups.map(headerGroup => (
             <tr
               {...headerGroup.getHeaderGroupProps()}
@@ -126,8 +150,8 @@ const SelectedWaiversTable = ({
                   {...column.getHeaderProps()}
                   scope="col"
                   key={column.id}
-                  style={{ width: '33.333%' }}
-                  className="padding-left-2 padding-y-1 border-bottom-2px text-no-wrap"
+                  className="padding-left-0 padding-y-1 border-bottom-2px text-no-wrap"
+                  style={{ width: column.width }}
                   colSpan={1}
                 >
                   {column.id === 'actions' ? (
@@ -163,7 +187,7 @@ const SelectedWaiversTable = ({
                     <td
                       {...cell.getCellProps()}
                       key={cell.getCellProps().key}
-                      className="padding-left-2"
+                      className="padding-left-0"
                     >
                       {cell.render('Cell')}
                     </td>

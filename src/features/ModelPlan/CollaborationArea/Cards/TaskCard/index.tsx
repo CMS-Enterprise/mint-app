@@ -10,7 +10,6 @@ import {
   Icon,
   Link
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import {
   DocumentType,
   GetCollaborationAreaDocument,
@@ -196,16 +195,10 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
             to={t(`${key}.secondaryPath`, { modelID })}
             target="_blank"
             rel="noopener noreferrer"
-            className={classNames('display-flex flex-align-center', {
-              'usa-button usa-button--outline margin-right-2':
-                key !== PlanTaskKey.WAIVER_ASSESSMENT_SURVEY
-            })}
+            className="usa-button usa-button--outline margin-right-2"
             variant="unstyled"
           >
             {t(`${key}.secondaryAction`)}
-            {key === PlanTaskKey.WAIVER_ASSESSMENT_SURVEY && (
-              <Icon.ArrowForward className="margin-left-05" aria-hidden />
-            )}
           </UswdsReactLink>
         )}
 

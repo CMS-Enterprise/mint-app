@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Button, FormGroup, Icon } from '@trussworks/react-uswds';
@@ -31,7 +31,9 @@ const WaiverSelectionSection = ({
   const [, setSearchParams] = useSearchParams();
   const { setValue, watch } = useFormContext<WaiverSelectionForm>();
 
-  const formWaivers = watch('waivers');
+  const formWaivers = useWatch({
+    name: 'waivers'
+  });
 
   const suggestedOrInUseWaivers = useMemo(
     () => getSuggestedOrInUseWaivers(waiverSelection, formWaivers),

@@ -62,15 +62,6 @@ export default gql(/* GraphQL */ `
           completedDts
           modifiedDts
           createdDts
-          waivers {
-            id
-            willUseWaiver
-            notUsingReason
-            commonWaiver {
-              name
-              waiverType
-            }
-          }
 
           # Page 3 - Medicare payment waivers
           modifiesMedicareSavingsPrograms
@@ -83,7 +74,6 @@ export default gql(/* GraphQL */ `
           offersRiskSharingArrangementsExample
           offersRiskSharingArrangementsWhyNot
 
-          # Page 4 - Program waivers (Medicare Benefit Enhancements)
           impactsSiteOfCarePayments
           impactsSiteOfCarePaymentsExample
           impactsSiteOfCarePaymentsWhyNot
@@ -100,7 +90,6 @@ export default gql(/* GraphQL */ `
           modifiesQualityMeasurementsOrPaymentsViaWaiversExample
           modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot
 
-          # Page 5 - Medicaid payment waivers
           impactsMedicaidOnlyBeneficiaries
           impactsMedicaidOnlyBeneficiariesExample
           impactsMedicaidOnlyBeneficiariesWhyNot
@@ -113,7 +102,27 @@ export default gql(/* GraphQL */ `
           impactsManagedCareWaiversExample
           impactsManagedCareWaiversWhyNot
 
-          additionalMedicaidSpecificWaivers
+          offersPatientIncentivesSafeHarborProtection
+          offersPatientIncentivesSafeHarborProtectionExample
+          offersPatientIncentivesSafeHarborProtectionWhyNot
+
+          offersExpensesRemunerationSafeHarborProtection
+          offersExpensesRemunerationSafeHarborProtectionExample
+          offersExpensesRemunerationSafeHarborProtectionWhyNot
+
+          isEmptyWaiversConfirmed
+        }
+      }
+
+      waiverInfo {
+        commonWaivers {
+          id
+          name
+          waiverType
+          isSuggested
+          willUseWaiver
+          usingReason
+          notUsingReason
         }
       }
     }

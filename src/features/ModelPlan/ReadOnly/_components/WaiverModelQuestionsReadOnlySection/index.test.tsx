@@ -1,16 +1,21 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { CombinedConfigType } from 'features/ModelPlan/AdditionalQuestionnaires/WaiverAssessmentSurvey/_components/ModelPlanQuestionsForm';
 import { GeographyType } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
+import { basics } from 'i18n/en-US/modelPlan/basics';
 import { generalCharacteristics } from 'i18n/en-US/modelPlan/generalCharacteristics';
 import { Bool } from 'types/translation';
 
-import SimpleReadOnlySection from '.';
+import WaiverModelQuestionsReadOnlySection from '.';
 
 const defaultEmptyProps = {
-  field: 'geographiesTargeted',
-  translations: generalCharacteristics,
+  field: 'geographiesTargeted' as keyof CombinedConfigType,
+  translations: {
+    ...generalCharacteristics,
+    ...basics
+  },
   values: {
     geographiesTargeted: null as null | Bool,
     geographiesTargetedTypes: null as null | GeographyType[],
@@ -29,7 +34,7 @@ describe('The Simple Read Only Section', () => {
         }
       };
 
-      render(<SimpleReadOnlySection {...data} />);
+      render(<WaiverModelQuestionsReadOnlySection {...data} />);
 
       expect(
         screen.getByText(
@@ -42,7 +47,7 @@ describe('The Simple Read Only Section', () => {
     });
 
     it('renders "No answer entered" if copy is empty', async () => {
-      render(<SimpleReadOnlySection {...defaultEmptyProps} />);
+      render(<WaiverModelQuestionsReadOnlySection {...defaultEmptyProps} />);
 
       expect(
         screen.getByText(
@@ -53,7 +58,9 @@ describe('The Simple Read Only Section', () => {
       ).toBeInTheDocument();
 
       expect(
-        screen.getByText(i18next.t<string, {}, string>('miscellaneous:na'))
+        screen.getByText(
+          i18next.t<string, {}, string>('miscellaneous:notAnswered')
+        )
       ).toBeInTheDocument();
     });
   });
@@ -62,7 +69,7 @@ describe('The Simple Read Only Section', () => {
     it('renders Other entry', async () => {
       const data = {
         ...defaultEmptyProps,
-        field: 'geographiesTargetedTypes',
+        field: 'geographiesTargetedTypes' as keyof CombinedConfigType,
         values: {
           ...defaultEmptyProps.values,
           geographiesTargeted: Bool.true,
@@ -70,8 +77,7 @@ describe('The Simple Read Only Section', () => {
         }
       };
 
-      render(<SimpleReadOnlySection {...data} />);
-      screen.debug();
+      render(<WaiverModelQuestionsReadOnlySection {...data} />);
 
       expect(
         screen.getByText(

@@ -153,15 +153,6 @@ describe('Tasks page', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders waiver assessment survey task secondary action as link', async () => {
-    renderWithMock(planTasksWithModelPlanComplete);
-    expect(
-      await screen.findByRole('link', {
-        name: 'View additional questionnaires'
-      })
-    ).not.toHaveClass('usa-button usa-button--outline');
-  });
-
   it('lists default upcoming tasks on the Upcoming tab', async () => {
     const { container } = renderWithMock(planTasksAllToDo, 'upcoming');
 
