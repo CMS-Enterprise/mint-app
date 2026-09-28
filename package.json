@@ -23,6 +23,7 @@
     "@tiptap/starter-kit": "^3.31.3",
     "@tiptap/suggestion": "^3.31.3",
     "@trussworks/react-uswds": "^10.1.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@types/apollo-upload-client": "^17.0.5",
     "@types/jest": "26.0.23",
     "@types/lodash": "^4.17.25",
@@ -92,7 +93,7 @@
     "subscriptions-transport-ws": "^0.11.0",
     "tippy.js": "^6.3.7",
     "ts-node": "^10.9.2",
-    "typescript": "^7.0.2",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "xlsx-js-style": "^1.2.0",
     "yup": "^1.7.1"
   },
