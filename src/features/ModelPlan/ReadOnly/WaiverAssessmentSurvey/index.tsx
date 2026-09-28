@@ -51,6 +51,13 @@ const ReadOnlyWaiverAssessmentSurvey = ({
     .filter(waiver => waiver.isSuggested && waiver.willUseWaiver === false)
     .sort(sortByName);
 
+  const hasSuggestedWaivers =
+    waiverSelectionData?.some(waiver => waiver.isSuggested) ?? false;
+
+  const willNotRequireWaivers =
+    Boolean(allWaiverAssessmentSurveyData.isEmptyWaiversConfirmed) ||
+    (hasSuggestedWaivers && selectedWaivers.length === 0);
+
   return (
     <div
       className="read-only-waiver-assessment-survey"
@@ -78,7 +85,11 @@ const ReadOnlyWaiverAssessmentSurvey = ({
 
         {selectedWaivers.length === 0 ? (
           <Alert type="info" slim className="margin-bottom-6">
-            {waiverAssessmentSurveyMiscT('selectedWaivers.emptyAlert')}
+            {waiverAssessmentSurveyMiscT(
+              willNotRequireWaivers
+                ? 'modelNotRequireWaivers'
+                : 'selectedWaivers.emptyAlert'
+            )}
           </Alert>
         ) : (
           <SelectedWaiversTable

@@ -773,6 +773,7 @@ const waiverAssessmentSurveyMisc = {
     heading: 'Declined waivers ({{waiverCount}})',
     emptyAlert: 'This model has not yet declined any waivers.'
   },
+  modelNotRequireWaivers: 'This model will not require any waivers.',
   waiverType: {
     FRAUD_ABUSE: 'Fraud and abuse waivers, safe harbors, and exceptions',
     MEDICARE_PAYMENT: 'Medicare payment waivers',
