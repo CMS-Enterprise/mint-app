@@ -78,7 +78,7 @@ const ReadOnlyWaiverAssessmentSurvey = ({
 
         {selectedWaivers.length === 0 ? (
           <Alert type="info" slim className="margin-bottom-6">
-            {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
+            {waiverAssessmentSurveyMiscT('selectedWaivers.emptyAlert')}
           </Alert>
         ) : (
           <SelectedWaiversTable
@@ -99,7 +99,7 @@ const ReadOnlyWaiverAssessmentSurvey = ({
         <div className="margin-bottom-5">
           {declinedWaivers.length === 0 ? (
             <Alert type="info" slim>
-              {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
+              {waiverAssessmentSurveyMiscT('declinedWaivers.emptyAlert')}
             </Alert>
           ) : (
             <SelectedWaiversTable selectedWaivers={declinedWaivers} />

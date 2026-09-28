@@ -761,10 +761,7 @@ const waiverAssessmentSurveyMisc = {
   },
   selectedWaivers: {
     heading: 'Selected waivers ({{waiverCount}})',
-    description:
-      'There are {{-totalWaiversCount}} total available {{-waiverType}}. Based on your answers to the above questions, MINT has determined that the following {{-selectedWaiversCount}} waivers are likely needed for your model:',
-    summary:
-      'Adjusting your answers to the questions above may change the list of selected waivers. In a later step, you will be able to confirm this list and/or rule out additional waivers.',
+    emptyAlert: 'This model has not yet selected any waivers.',
     readonlyColumns: {
       waiverName: 'Waiver name',
       reason: 'Reason',
@@ -773,9 +770,9 @@ const waiverAssessmentSurveyMisc = {
     }
   },
   declinedWaivers: {
-    heading: 'Declined waivers ({{waiverCount}})'
+    heading: 'Declined waivers ({{waiverCount}})',
+    emptyAlert: 'This model has not yet declined any waivers.'
   },
-  modelHasNotSelectedWaiver: 'This model will not require any waivers.',
   waiverType: {
     FRAUD_ABUSE: 'Fraud and abuse waivers, safe harbors, and exceptions',
     MEDICARE_PAYMENT: 'Medicare payment waivers',
