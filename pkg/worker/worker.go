@@ -33,6 +33,7 @@ type Worker struct {
 	EmailService  oddmail.EmailService
 	AddressBook   email.AddressBook
 	Connections   int
+	StartupDelay  time.Duration
 	ProcessJobs   bool
 	OktaAPIClient oktaapi.Client
 }
@@ -147,6 +148,16 @@ func (w *Worker) Work() {
 		return
 	}
 
+	// Delay pool creation so a replacement task does not immediately open its
+	// full set of Faktory connections while the outgoing task is shutting down.
+	// The delay is intentionally a mitigation only; it does not guarantee that
+	// the old task has finished closing its connections.
+	ctx, stop := workerShutdownContext(context.Background())
+	defer stop()
+	if err := waitForStartupDelay(ctx, w.StartupDelay); err != nil {
+		return
+	}
+
 	mgr := faktory_worker.NewManager()
 
 	// Setup Manager
@@ -174,7 +185,7 @@ func (w *Worker) Work() {
 	mgr.Use(FaktoryLoggerMiddleware())
 
 	zapLogger := appconfig.MustInitializeLogger(w.Environment)
-	ctx := appcontext.WithLogger(context.Background(), zapLogger)
+	ctx = appcontext.WithLogger(ctx, zapLogger)
 
 	// Initialize data loaders and attach them to the context
 	dataLoaders := loaders.NewDataLoaders(w.Store)
@@ -189,9 +200,6 @@ func (w *Worker) Work() {
 	// mgr.Terminate() a chance to run and close the pooled Faktory connections. Those
 	// connections then linger on the Faktory server until it reaps them itself, and repeated
 	// deploys without that cleanup accumulate until the server hits its connection limit.
-	ctx, stop := workerShutdownContext(ctx)
-	defer stop()
-
 	// Register jobs using JobWrapper
 	for _, job := range w.getJobWrappers(ctx) {
 		zapLogger.Info("registering job", zap.String("job_name", job.Name))
@@ -204,6 +212,24 @@ func (w *Worker) Work() {
 	err = mgr.RunWithContext(ctx)
 	if err != nil {
 		panic(err)
+	}
+}
+
+// waitForStartupDelay waits for the configured startup delay unless the worker
+// receives a shutdown signal first.
+func waitForStartupDelay(ctx context.Context, delay time.Duration) error {
+	if delay <= 0 {
+		return nil
+	}
+
+	timer := time.NewTimer(delay)
+	defer timer.Stop()
+
+	select {
+	case <-timer.C:
+		return nil
+	case <-ctx.Done():
+		return ctx.Err()
 	}
 }
 

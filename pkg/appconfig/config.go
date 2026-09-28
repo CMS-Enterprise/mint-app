@@ -136,6 +136,14 @@ const FaktoryProcessJobs = "FAKTORY_PROCESS_JOBS"
 // FaktoryConnections number of connections for a manager
 const FaktoryConnections = "FAKTORY_CONNECTIONS"
 
+// FaktoryStartupDelaySeconds is the number of seconds to wait before starting
+// the Faktory worker pool during application startup.
+const FaktoryStartupDelaySeconds = "FAKTORY_STARTUP_DELAY_SECONDS"
+
+// DefaultFaktoryStartupDelaySeconds gives an outgoing worker pool time to shut
+// down before a replacement task opens its own pool during a rolling deploy.
+const DefaultFaktoryStartupDelaySeconds = 30
+
 // FlagSourceOption represents an environment
 type FlagSourceOption string
 

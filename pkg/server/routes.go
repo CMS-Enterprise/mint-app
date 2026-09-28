@@ -316,6 +316,7 @@ func (s *Server) routes(
 		EmailService:  emailService,
 		AddressBook:   addressBook,
 		Connections:   s.Config.GetInt(appconfig.FaktoryConnections),
+		StartupDelay:  time.Duration(s.Config.GetInt(appconfig.FaktoryStartupDelaySeconds)) * time.Second,
 		ProcessJobs:   s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
 		OktaAPIClient: oktaClient,
 	}

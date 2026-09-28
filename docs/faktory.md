@@ -41,6 +41,7 @@ MINT App:
 - `FAKTORY_URL`: The `TCP` URL of the Faktory Server with the port the [FWP](https://github.com/contribsys/faktory/blob/main/docs/protocol-specification.md) is listening on e.g. `tcp://:{FAKTORY_PASSWORD}@faktory.example.com:7419`.
 - `FAKTORY_CONNECTIONS`: Number of connection pools. Our license is limited to 100 connections across production environments.
 - `FAKTORY_PROCESS_JOBS`: If queued jobs should be processed.
+- `FAKTORY_STARTUP_DELAY_SECONDS`: Delay before starting the Faktory worker pool. Defaults to 30 seconds to reduce connection contention during rolling deploys.
 
 ### ⏲ Cron Jobs
 [Cron Jobs](https://github.com/contribsys/faktory/wiki/Ent-Cron) are configured using `.toml` files that are loaded into the server's config before serving:

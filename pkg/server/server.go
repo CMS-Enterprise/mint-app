@@ -32,6 +32,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 // NewServer sets up the dependencies for a server
 func NewServer(config *viper.Viper) *Server {
+	config.SetDefault(appconfig.FaktoryStartupDelaySeconds, appconfig.DefaultFaktoryStartupDelaySeconds)
 
 	// Set environment from config
 	environment, err := appconfig.NewEnvironment(config.GetString(appconfig.EnvironmentKey))
