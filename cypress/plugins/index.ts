@@ -1,35 +1,29 @@
 // ***********************************************************
-// This example plugins/index.js can be used to load plugins
-//
-// You can change the location of this file or turn off loading
-// the plugins file with the 'pluginsFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/plugins-guide
-// ***********************************************************
-
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
-const cypressOTP = require('cypress-otp');
-const wp = require('@cypress/webpack-preprocessor');
-const apollo = require('@apollo/client');
-const fetch = require('cross-fetch'); // needed to allow apollo-client to make queries from Node environment
-const fs = require('fs');
-const path = require('path');
+// ***********************************************************
 
-const {
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
+import webpackPreprocessor from '@cypress/webpack-preprocessor';
+import fetch from 'cross-fetch';
+import cypressOTP from 'cypress-otp';
+import fs from 'node:fs';
+import path from 'node:path';
+
+import {
+  LockableSection,
   LockModelPlanSectionDocument
-} = require('../../src/gql/generated/graphql');
+} from '../../src/gql/generated/graphql';
 
-const cache = new apollo.InMemoryCache();
+const cache = new InMemoryCache();
 
-function createApolloClient(euaId) {
+function createApolloClient(euaId: string) {
   const gqlURL =
     process.env.VITE_GRAPHQL_ADDRESS || 'http://localhost:8085/api/graph/query';
 
-  return new apollo.ApolloClient({
+  return new ApolloClient({
     cache,
-    link: new apollo.HttpLink({
+    link: new HttpLink({
       uri: gqlURL,
       fetch,
       headers: {
@@ -40,29 +34,37 @@ function createApolloClient(euaId) {
   });
 }
 
-function lockTaskListSection({ euaId, modelPlanID, section }) {
+function lockTaskListSection({
+  euaId,
+  modelPlanID,
+  section
+}: {
+  euaId: string;
+  modelPlanID: string;
+  section: LockableSection;
+}) {
   const apolloClient = createApolloClient(euaId);
   const input = {
     modelPlanID,
     section
   };
+
   // need to return this Promise to indicate to Cypress that the task was handled
-  // https://docs.cypress.io/api/commands/task#Usage - "The command will fail if undefined is returned or if the promise is resolved with undefined."
+  // https://on.cypress.io/task
   return apolloClient.mutate({
     mutation: LockModelPlanSectionDocument,
     variables: input
   });
 }
 
-function deleteFile(filePath) {
+function deleteFile(filePath: string) {
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
-    return null;
   }
   return null;
 }
 
-function deleteAllFiles(folderPath) {
+function deleteAllFiles(folderPath: string) {
   const files = fs.readdirSync(folderPath);
   files.forEach(file => {
     fs.unlinkSync(path.join(folderPath, file));
@@ -70,17 +72,20 @@ function deleteAllFiles(folderPath) {
   return null;
 }
 
-function createFolderIfNotExists(folderPath) {
+function createFolderIfNotExists(folderPath: string) {
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });
   }
   return null;
 }
 
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-
+const setupNodeEvents = (
+  on: Cypress.PluginEvents,
+  config: Cypress.PluginConfigOptions
+):
+  | void
+  | Cypress.PluginConfigOptions
+  | Promise<void | Cypress.PluginConfigOptions> => {
   on('task', {
     generateOTP: cypressOTP,
     lockTaskListSection,
@@ -105,7 +110,7 @@ module.exports = (on, config) => {
       }
     }
   };
-  on('file:preprocessor', wp(options));
+  on('file:preprocessor', webpackPreprocessor(options));
 
   const newConfig = config;
   newConfig.env.oktaDomain = process.env.OKTA_DOMAIN;
@@ -113,5 +118,7 @@ module.exports = (on, config) => {
   newConfig.env.password = process.env.OKTA_TEST_PASSWORD;
   newConfig.env.otpSecret = process.env.OKTA_TEST_SECRET;
 
-  return config;
+  return newConfig;
 };
+
+export default setupNodeEvents;
