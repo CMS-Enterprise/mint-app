@@ -1401,11 +1401,24 @@ describe('isPlanTaskAutomaticChange', () => {
     expect(isPlanTaskAutomaticChange(baseTaskChange)).toBe(true);
   });
 
+  it('returns true for PREPARE_FOR_CLEARANCE changed by a real user (calculated task)', () => {
+    const change: ChangeRecordType = {
+      ...baseTaskChange,
+      metaData: {
+        __typename: 'TranslatedAuditMetaGeneric',
+        relation: PlanTaskKey.PREPARE_FOR_CLEARANCE,
+        relationContent: PlanTaskKey.PREPARE_FOR_CLEARANCE,
+        tableName: TableName.PLAN_TASK,
+        version: 1
+      }
+    };
+    expect(isPlanTaskAutomaticChange(change)).toBe(true);
+  });
+
   it.each([
     PlanTaskKey.TWO_PAGER,
     PlanTaskKey.SIX_PAGER,
-    PlanTaskKey.OA_PRESENTATION,
-    PlanTaskKey.PREPARE_FOR_CLEARANCE
+    PlanTaskKey.OA_PRESENTATION
   ])(
     'returns false for manually-markable key %s changed by a real user',
     key => {
@@ -1426,8 +1439,7 @@ describe('isPlanTaskAutomaticChange', () => {
   it.each([
     PlanTaskKey.TWO_PAGER,
     PlanTaskKey.SIX_PAGER,
-    PlanTaskKey.OA_PRESENTATION,
-    PlanTaskKey.PREPARE_FOR_CLEARANCE
+    PlanTaskKey.OA_PRESENTATION
   ])(
     'returns true for manually-markable key %s changed by the MINT system account',
     key => {

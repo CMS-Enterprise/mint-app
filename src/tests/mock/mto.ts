@@ -72,7 +72,8 @@ const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.MTO,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.SIX_PAGER,
-  PlanTaskKey.OA_PRESENTATION
+  PlanTaskKey.OA_PRESENTATION,
+  PlanTaskKey.PREPARE_FOR_CLEARANCE
 ] as const;
 
 const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
@@ -89,7 +90,8 @@ const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
 // and only move to TO_DO once activated, so default them to UPCOMING here too unless overridden.
 const KEYS_DEFAULTING_TO_UPCOMING = new Set<PlanTaskKey>([
   PlanTaskKey.SIX_PAGER,
-  PlanTaskKey.OA_PRESENTATION
+  PlanTaskKey.OA_PRESENTATION,
+  PlanTaskKey.PREPARE_FOR_CLEARANCE
 ]);
 
 export function makePlanTasks(
