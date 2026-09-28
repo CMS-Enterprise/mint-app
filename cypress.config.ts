@@ -10,7 +10,7 @@ export default defineConfig({
   execTimeout: 120000,
   video: true,
   e2e: {
-    // Register Node-side Cypress event handlers and preprocessors.
+    // Register Node-side Cypress event handlers.
     setupNodeEvents(on, config) {
       return setupNodeEvents(on, config);
     },

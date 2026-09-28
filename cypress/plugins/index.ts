@@ -4,7 +4,6 @@
 // ***********************************************************
 
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-import webpackPreprocessor from '@cypress/webpack-preprocessor';
 import fetch from 'cross-fetch';
 import cypressOTP from 'cypress-otp';
 import fs from 'node:fs';
@@ -93,24 +92,6 @@ const setupNodeEvents = (
     deleteAllFiles,
     createFolderIfNotExists
   });
-
-  const options = {
-    webpackOptions: {
-      resolve: {
-        extensions: ['.ts', '.js']
-      },
-      module: {
-        rules: [
-          {
-            test: /\.tsx?$/,
-            loader: 'ts-loader',
-            options: { transpileOnly: true }
-          }
-        ]
-      }
-    }
-  };
-  on('file:preprocessor', webpackPreprocessor(options));
 
   const newConfig = config;
   newConfig.env.oktaDomain = process.env.OKTA_DOMAIN;
