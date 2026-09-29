@@ -204,6 +204,7 @@ const Tasks = () => {
                       key={task.key}
                       task={task}
                       modelPlan={modelPlan}
+                      prepareForClearanceOrigin="tasks"
                     />
                   ))}
                 </CardGroup>
@@ -229,6 +230,7 @@ const Tasks = () => {
                       key={task.key}
                       task={task}
                       modelPlan={modelPlan}
+                      prepareForClearanceOrigin="tasks"
                     />
                   ))}
                 </CardGroup>
@@ -254,6 +256,7 @@ const Tasks = () => {
                       key={task.key}
                       task={task}
                       modelPlan={modelPlan}
+                      prepareForClearanceOrigin="tasks"
                     />
                   ))}
                 </CardGroup>

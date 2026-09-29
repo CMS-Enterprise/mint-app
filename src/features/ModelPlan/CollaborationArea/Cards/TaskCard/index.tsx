@@ -28,6 +28,7 @@ import toastSuccess from 'components/ToastSuccess';
 import { getStatusAlertBody } from 'contexts/ErrorContext';
 import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
+import type { PrepareForClearanceOrigin } from '../../../TaskList/PrepareForClearance/navigation';
 import LastModifiedSection from '../../_components/LastModifiedSection';
 import {
   getLastEditSectionForTask,
@@ -38,6 +39,7 @@ import {
 type TaskCardProps = {
   task: GetCollaborationAreaQuery['modelPlan']['tasks'][number];
   modelPlan: GetCollaborationAreaQuery['modelPlan'];
+  prepareForClearanceOrigin?: PrepareForClearanceOrigin;
 };
 
 type TaskStatusConfig = {
@@ -86,7 +88,11 @@ function TaskStatusTag({ status }: { status: PlanTaskStatus }) {
   );
 }
 
-const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
+const TaskCard = ({
+  task,
+  modelPlan,
+  prepareForClearanceOrigin = 'tasks'
+}: TaskCardProps) => {
   const { t } = useTranslation('tasks');
   const { t: collaborationAreaT } = useTranslation('collaborationArea');
 
@@ -252,6 +258,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
                 {
                   state: {
                     fromCollaborationArea: true,
+                    prepareForClearanceOrigin,
                     documentType: TASK_DOCUMENT_TYPE[key]
                   }
                 }

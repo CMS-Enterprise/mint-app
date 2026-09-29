@@ -14,7 +14,7 @@ const prepareForClearance = {
   description:
     'After you’ve iterated on your Model Plan, make sure the information that’s included in your Model Plan matches any documentation that you’re using for clearance.',
   update: 'Update section statuses',
-  dontUpdate: 'Don’t update statuses and return to task list',
+  dontUpdate: 'Don’t update statuses and return to previous page',
   markedAsReady: 'Marked ready for clearance by {{-name}} on {{-date}}',
   review: 'Review {{-section}}',
   changes: 'Make changes to {{-section}}',

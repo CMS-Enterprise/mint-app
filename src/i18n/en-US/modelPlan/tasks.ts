@@ -184,8 +184,7 @@ const tasks = {
   },
   [PlanTaskKey.PREPARE_FOR_CLEARANCE]: {
     copy: 'Once you have iterated on your Model Plan, review each section and confirm your answers are ready for clearance and match the information included in your ICIP. As a part of this step you should also add any refined cost estimates and check your uploaded documents.',
-    primaryPath:
-      '/models/{{modelID}}/collaboration-area/model-plan/prepare-for-clearance',
+    primaryPath: '/models/{{modelID}}/collaboration-area/prepare-for-clearance',
     secondaryPath:
       'https://share.cms.gov/center/CMMI/Clearances/SitePages/Home.aspx',
     secondaryAction: 'View clearance info on SharePoint',

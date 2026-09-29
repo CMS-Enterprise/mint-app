@@ -7,7 +7,6 @@ import {
   MtoMilestoneStatus,
   MtoStatus,
   PlanTaskStatus,
-  PrepareForClearanceStatus,
   TaskStatus
 } from 'gql/generated/graphql';
 
@@ -29,7 +28,6 @@ export const TaskListStatusTag = ({
 }: {
   status:
     | TaskStatus
-    | PrepareForClearanceStatus
     | ModelStatus
     | DataExchangeApproachStatus
     | IddocQuestionnaireTaskListStatus
@@ -66,10 +64,6 @@ export const TaskListStatusTag = ({
     case 'READY_FOR_CLEARANCE':
       tagCopy = t('taskListStatus.READY_FOR_CLEARANCE');
       tagStyle = 'bg-base-lighter text-base-darker';
-      break;
-    case 'CANNOT_START':
-      tagCopy = t('taskListStatus.CANNOT_START');
-      tagStyle = 'bg-white border-2px text-base';
       break;
     case 'NOT_NEEDED':
       tagCopy = additionalQuestionnairesT(
@@ -109,7 +103,7 @@ export const TaskListStatusTag = ({
 type TaskListItemProps = {
   children?: React.ReactNode;
   heading: string;
-  status: TaskStatus | PrepareForClearanceStatus;
+  status: TaskStatus;
   testId: string;
 };
 
