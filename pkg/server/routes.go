@@ -52,7 +52,7 @@ import (
 //
 // This function requires the OktaMiddlewareFactory object because it, in some cases (as described above), needs to perform operations that decode JWTs, which is a responsibility of
 // some of the functions attached to that factory. A refactor to clean up this cross-package dependency was considered but determined to be too much effort. (Don't hurt me)
-func HandleLocalOrOktaWebSocketAuth(omf *okta.MiddlewareFactory) transport.WebsocketInitFunc {
+func HandleLocalOrOktaWebSocketAuth(omf *okta.MiddlewareFactory, localAuthEnabled bool) transport.WebsocketInitFunc {
 	return func(ctx context.Context, initPayload transport.InitPayload) (context.Context, *transport.InitPayload, error) {
 		authToken := initPayload["authToken"]
 		token, ok := authToken.(string)
@@ -60,8 +60,7 @@ func HandleLocalOrOktaWebSocketAuth(omf *okta.MiddlewareFactory) transport.Webso
 			return nil, &initPayload, errors.New("authToken not found in transport payload")
 		}
 
-		localToken := strings.HasPrefix(token, "Local ")
-		if localToken {
+		if localAuthEnabled && strings.HasPrefix(token, "Local ") {
 			return local.NewLocalWebSocketAuthenticationMiddleware(omf.Store)(ctx, initPayload)
 		}
 		return omf.NewOktaWebSocketAuthenticationMiddleware()(ctx, initPayload)
@@ -274,7 +273,7 @@ func (s *Server) routes(
 				Subprotocols:       []string{"graphql-transport-ws"},
 			},
 		},
-		InitFunc: HandleLocalOrOktaWebSocketAuth(oktaMiddlewareFactory),
+		InitFunc: HandleLocalOrOktaWebSocketAuth(oktaMiddlewareFactory, s.NewLocalAuthIsEnabled()),
 	})
 	graphqlServer.AddTransport(transport.Options{})
 	graphqlServer.AddTransport(transport.GET{})
