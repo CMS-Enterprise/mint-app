@@ -51,7 +51,7 @@ const SelectWaiverField = ({
       <div className="margin-bottom-3">
         <Label
           id={`willUseWaiverLabel-${fieldId}`}
-          htmlFor={`willUseWaiver-yes-${fieldId}`}
+          htmlFor={`willUseWaiver-${fieldId}`}
           className="margin-top-2"
         >
           {waiverAssessmentSurveyMiscT('waiverInfoPanel.willUseWaiverLabel')}
