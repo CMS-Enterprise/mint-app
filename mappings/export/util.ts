@@ -28,6 +28,7 @@ import payments from '../../src/i18n/en-US/modelPlan/payments';
 import reply from '../../src/i18n/en-US/modelPlan/replies';
 import operationalSolution from '../../src/i18n/en-US/modelPlan/solutions';
 import tdls from '../../src/i18n/en-US/modelPlan/tdls';
+import { waiverAssessmentSurvey } from '../../src/i18n/en-US/modelPlan/waiverAssessmentSurvey';
 import {
   getKeys,
   TranslationConfigType,
@@ -38,6 +39,7 @@ export const translationSections = {
   key_contact: keyContact,
   key_contact_category: keyContactCategory,
   iddoc_questionnaire: iddocQuestionnaire,
+  waiver_assessment_survey: waiverAssessmentSurvey,
   model_plan: modelPlan,
   plan_basics: basics,
   plan_general_characteristics: generalCharacteristics,
