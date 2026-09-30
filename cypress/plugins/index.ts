@@ -93,6 +93,20 @@ const setupNodeEvents = (
     createFolderIfNotExists
   });
 
+  // Only keep videos for specs with a failed attempt; delete the rest so they
+  // aren't stored or uploaded.
+  on('after:spec', (_spec, results) => {
+    if (!results?.video) return;
+
+    const hasFailure = results.tests?.some(test =>
+      test.attempts?.some(attempt => attempt.state === 'failed')
+    );
+
+    if (!hasFailure) {
+      fs.rmSync(results.video, { force: true });
+    }
+  });
+
   const newConfig = config;
   newConfig.env.oktaDomain = process.env.OKTA_DOMAIN;
   newConfig.env.username = process.env.OKTA_TEST_USERNAME;
