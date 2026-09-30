@@ -11,6 +11,7 @@
 cypress.env.json
 /cypress/videos
 /cypress/screenshots
+/cypress/.seed.dump
 go-coverage.*
 /results
 

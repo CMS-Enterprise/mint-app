@@ -442,6 +442,21 @@ namespace :db do
     sh "go run ./cmd/dbseed/*go clean"
 
   end
+
+  CYPRESS_SEED_DUMP = "cypress/.seed.dump"
+  DB_EXEC = "docker compose -f docker-compose.backend.yml exec -T db"
+
+  desc "Cleans and seeds the database, then saves it as a snapshot for Cypress"
+  task :snapshot => ["db:clean", "db:seed"] do
+    sh "#{DB_EXEC} pg_dump -U postgres -d postgres -Fc > #{CYPRESS_SEED_DUMP}"
+  end
+
+  desc "Restores the database from the Cypress snapshot, creating the snapshot first if needed"
+  task :restore do
+    Rake::Task["db:snapshot"].invoke unless File.exist?(CYPRESS_SEED_DUMP)
+    sh %Q{#{DB_EXEC} psql -U postgres -d postgres -q -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'postgres' AND pid <> pg_backend_pid()" > /dev/null}
+    sh "#{DB_EXEC} pg_restore -U postgres -d postgres --clean --if-exists --single-transaction < #{CYPRESS_SEED_DUMP}"
+  end
 end
 
 
@@ -504,12 +519,13 @@ namespace :test do
     end
   end
   desc "Run Cypress test"
-  task :cypress => "db:clean" do
+  task :cypress do
     sh "yarn", "cypress", "run"
   end
   namespace :cypress do
     desc "Runs Cypress tests in headed mode "
-    task :headed => "db:clean" do
+    task :headed do
+    rm_f CYPRESS_SEED_DUMP
     sh "yarn", "cypress", "open"
     end
   end

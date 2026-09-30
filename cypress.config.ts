@@ -9,6 +9,7 @@ export default defineConfig({
   defaultCommandTimeout: 10000,
   execTimeout: 120000,
   video: true,
+  videoCompression: false,
   e2e: {
     // Register Node-side Cypress event handlers.
     setupNodeEvents(on, config) {

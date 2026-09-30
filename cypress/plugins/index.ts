@@ -6,6 +6,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 import fetch from 'cross-fetch';
 import cypressOTP from 'cypress-otp';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -78,6 +79,52 @@ function createFolderIfNotExists(folderPath: string) {
   return null;
 }
 
+// Must match CYPRESS_SEED_DUMP in scripts/dev
+const SEED_DUMP = 'cypress/.seed.dump';
+
+// The ffmpeg Cypress itself uses to record videos
+function bundledFfmpegPath(config: Cypress.PluginConfigOptions) {
+  return path.join(
+    config.cypressBinaryRoot,
+    'node_modules',
+    '@ffmpeg-installer',
+    `${config.platform}-${config.arch}`,
+    config.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg'
+  );
+}
+
+function keepVideoOnlyOnFailure(
+  results: {
+    video: string | null;
+    error: string | null;
+    stats: { failures: number };
+  },
+  ffmpegPath: string
+) {
+  const { video } = results;
+  if (!video || !fs.existsSync(video)) return;
+
+  if (results.stats.failures === 0 && !results.error) {
+    fs.unlinkSync(video);
+    return;
+  }
+
+  const compressed = `${video}.compressed.mp4`;
+  try {
+    execFileSync(
+      ffmpegPath,
+      ['-y', '-loglevel', 'error', '-i', video, '-crf', '32', compressed],
+      { stdio: 'inherit' }
+    );
+    fs.renameSync(compressed, video);
+  } catch (err) {
+    // Keep the uncompressed video so the failure can still be debugged
+    // eslint-disable-next-line no-console
+    console.warn(`Could not compress ${video}:`, err);
+    if (fs.existsSync(compressed)) fs.unlinkSync(compressed);
+  }
+}
+
 const setupNodeEvents = (
   on: Cypress.PluginEvents,
   config: Cypress.PluginConfigOptions
@@ -92,6 +139,24 @@ const setupNodeEvents = (
     deleteAllFiles,
     createFolderIfNotExists
   });
+
+  const seedDumpPath = path.join(config.projectRoot, SEED_DUMP);
+
+  on('before:run', () => {
+    execFileSync('scripts/dev', ['db:snapshot'], {
+      cwd: config.projectRoot,
+      stdio: 'inherit'
+    });
+  });
+
+  on('after:run', () => {
+    deleteFile(seedDumpPath);
+  });
+
+  const ffmpegPath = bundledFfmpegPath(config);
+  on('after:spec', (_spec, results) =>
+    keepVideoOnlyOnFailure(results, ffmpegPath)
+  );
 
   const newConfig = config;
   newConfig.env.oktaDomain = process.env.OKTA_DOMAIN;
