@@ -72,12 +72,12 @@ The Go analysis tools and some frontend native dependencies depend on having a b
 
 **Windows+WSL:** The default Ubuntu installation should have a recent version of Git installed. To install the latest version of Git, see [the official installation instructions](https://git-scm.com/download/linux).
 
-## Docker (with docker-compose)
+## Docker (with Docker Compose)
 
 **MacOS:**
 ```console
-brew cask install docker
-brew install docker-completion docker-compose docker-compose-completion
+brew install --cask docker
+brew install docker-completion
 ```
 Now you will need to start the Docker service: run Spotlight and type in
 "docker", then select "Docker Desktop" in the results.
