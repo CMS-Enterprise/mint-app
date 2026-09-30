@@ -99,7 +99,8 @@ export type TableWithStatus =
   | TableName.PLAN_OPS_EVAL_AND_LEARNING
   | TableName.PLAN_PAYMENTS
   | TableName.PLAN_DATA_EXCHANGE_APPROACH
-  | TableName.IDDOC_QUESTIONNAIRE;
+  | TableName.IDDOC_QUESTIONNAIRE
+  | TableName.WAIVER_ASSESSMENT_SURVEY;
 
 export const isTableWithStatus = (
   tableName: TableName
@@ -113,7 +114,8 @@ export const isTableWithStatus = (
     TableName.PLAN_OPS_EVAL_AND_LEARNING,
     TableName.PLAN_PAYMENTS,
     TableName.PLAN_DATA_EXCHANGE_APPROACH,
-    TableName.IDDOC_QUESTIONNAIRE
+    TableName.IDDOC_QUESTIONNAIRE,
+    TableName.WAIVER_ASSESSMENT_SURVEY
   ].includes(tableName);
 };
 

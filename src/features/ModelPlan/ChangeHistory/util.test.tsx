@@ -93,6 +93,8 @@ describe('util.tsx', () => {
   // Test for isTableWithStatus
   it('isTableWithStatus', () => {
     expect(isTableWithStatus(TableName.PLAN_BASICS)).toBe(true);
+    expect(isTableWithStatus(TableName.IDDOC_QUESTIONNAIRE)).toBe(true);
+    expect(isTableWithStatus(TableName.WAIVER_ASSESSMENT_SURVEY)).toBe(true);
     expect(isTableWithStatus(TableName.OPERATIONAL_SOLUTION_SUBTASK)).toBe(
       false
     );
@@ -311,6 +313,59 @@ describe('util.tsx', () => {
         __typename: 'TranslatedAudit'
       }
     ]);
+  });
+
+  it('separates waiver assessment survey status from answer changes', () => {
+    const change: ChangeRecordType = {
+      id: 'waiver-assessment-survey-change',
+      tableName: TableName.WAIVER_ASSESSMENT_SURVEY,
+      date: '2024-04-22T13:55:13.725192Z',
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          id: 'waiver-status',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'status',
+          fieldNameTranslated: 'Questionnaire status',
+          old: 'IN_PROGRESS',
+          oldTranslated: 'In progress',
+          new: 'READY',
+          newTranslated: 'Ready',
+          __typename: 'TranslatedAuditField'
+        },
+        {
+          id: 'waiver-answer',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.BOOLEAN,
+          fieldName: 'has_waiver',
+          fieldNameTranslated: 'Has a waiver?',
+          old: null,
+          oldTranslated: null,
+          new: 'true',
+          newTranslated: 'Yes',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      actorName: 'MINT Doe',
+      __typename: 'TranslatedAudit'
+    };
+
+    const separatedChanges = separateStatusChanges([change]);
+
+    expect(separatedChanges).toHaveLength(2);
+    expect(separatedChanges[0].translatedFields).toHaveLength(1);
+    expect(separatedChanges[0].translatedFields[0].fieldName).toBe(
+      'has_waiver'
+    );
+    expect(separatedChanges[1].id).toBe(
+      'waiver-assessment-survey-change-status'
+    );
+    expect(separatedChanges[1].translatedFields).toHaveLength(1);
+    expect(separatedChanges[1].translatedFields[0].fieldName).toBe('status');
+    expect(identifyChangeType(separatedChanges[1])).toBe(
+      'taskListStatusUpdate'
+    );
   });
 
   // Test for identifyChangeType

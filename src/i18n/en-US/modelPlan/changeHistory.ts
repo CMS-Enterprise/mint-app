@@ -117,6 +117,7 @@ const changeHistory = {
       'Operational solutions and implementation status tracker',
     plan_data_exchange_approach: 'Data exchange approach',
     iddoc_questionnaire: '4i/ACO-OS questionnaire',
+    waiver_assessment_survey: 'Waiver assessment survey',
     plan_task: 'Tasks'
   },
   self: 'self',
