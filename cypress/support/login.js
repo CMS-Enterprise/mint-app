@@ -195,30 +195,32 @@ Cypress.Commands.add(
       // ?local=true opens DevLogin directly (needed when redirect Okta login is enabled).
       cy.visit('/signin?local=true', { timeout: 120000 });
 
-      cy.wait(500);
+      // One query per action, with no assertion mid-chain. A `.should()` followed by an
+      // action locks in the element, so if the form re-renders in between, the action
+      // hits a detached node. Separate cy.get() calls re-query from the top each time.
+      cy.get('[data-testid="LocalAuth-EUA"]').should('be.not.disabled');
+      cy.get('[data-testid="LocalAuth-EUA"]').type(name);
+      cy.get('[data-testid="LocalAuth-EUA"]').should('have.value', name);
 
-      cy.get('[data-testid="LocalAuth-EUA"]')
-        .should('be.not.disabled')
-        .type(name);
       if (role) {
-        cy.get(`input[value="${role}"]`).should('be.not.disabled').check({
-          force: true
-        });
+        cy.get(`input[value="${role}"]`).should('be.not.disabled');
+        cy.get(`input[value="${role}"]`).check({ force: true });
       }
-      cy.get('[data-testid="LocalAuth-Submit"]')
-        .should('be.not.disabled')
-        .click({ force: true });
+
+      cy.get('[data-testid="LocalAuth-Submit"]').should('be.not.disabled');
+      cy.get('[data-testid="LocalAuth-Submit"]').click({ force: true });
 
       if (!nda) {
-        cy.get('#nda-check').check({ force: true }).should('be.checked');
+        cy.get('#nda-check').check({ force: true });
+        cy.get('#nda-check').should('be.checked');
 
-        cy.get('#nda-submit').should('be.not.disabled').click({ force: true });
+        cy.get('#nda-submit').should('be.not.disabled');
+        cy.get('#nda-submit').click({ force: true });
       } else {
         cy.get('#nda-alert').should('contain.text', 'Accepted on');
 
-        cy.get('[data-testid="nda-continue"]')
-          .should('be.not.disabled')
-          .click({ force: true });
+        cy.get('[data-testid="nda-continue"]').should('be.not.disabled');
+        cy.get('[data-testid="nda-continue"]').click({ force: true });
       }
 
       cy.url().should('eq', 'http://localhost:3005/');
