@@ -10,13 +10,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import {
+  CreateMtoCommonMilestoneDocument,
   LockableSection,
-  LockModelPlanSectionDocument
+  LockModelPlanSectionDocument,
+  MtoCommonSolutionKey,
+  MtoFacilitator
 } from '../../src/gql/generated/graphql';
 
 const cache = new InMemoryCache();
 
-function createApolloClient(euaId: string) {
+function createApolloClient(
+  euaId: string,
+  jobCodes: string[] = ['MINT_USER_NONPROD']
+) {
   const gqlURL =
     process.env.VITE_GRAPHQL_ADDRESS || 'http://localhost:8085/api/graph/query';
 
@@ -27,7 +33,11 @@ function createApolloClient(euaId: string) {
       fetch,
       headers: {
         // need job code to be able to issue LCID
-        Authorization: `Local {"euaId":"${euaId}", "favorLocalAuth":true, "jobCodes":["MINT_USER_NONPROD"]}`
+        Authorization: `Local ${JSON.stringify({
+          euaId,
+          favorLocalAuth: true,
+          jobCodes
+        })}`
       }
     })
   });
@@ -54,6 +64,37 @@ function lockTaskListSection({
     mutation: LockModelPlanSectionDocument,
     variables: input
   });
+}
+
+// The common milestone library comes from migrations and is not reset by `db:clean`,
+// so specs that edit/remove a milestone create their own uniquely named one to stay re-runnable.
+function createCommonMilestone({
+  name,
+  categoryName = 'Learning',
+  facilitatedByRole = [MtoFacilitator.IT_LEAD],
+  // The edit form requires at least one common solution
+  commonSolutions = [MtoCommonSolutionKey.ACO_OS]
+}: {
+  name: string;
+  categoryName?: string;
+  facilitatedByRole?: MtoFacilitator[];
+  commonSolutions?: MtoCommonSolutionKey[];
+}) {
+  // Creating a common milestone requires the assessment role
+  const apolloClient = createApolloClient('JTTC', ['MINT_ASSESSMENT_NONPROD']);
+
+  return apolloClient
+    .mutate({
+      mutation: CreateMtoCommonMilestoneDocument,
+      variables: {
+        name,
+        description: 'Created by Cypress',
+        categoryName,
+        facilitatedByRole,
+        commonSolutions
+      }
+    })
+    .then(result => result.data?.createMTOCommonMilestone ?? null);
 }
 
 function deleteFile(filePath: string) {
@@ -88,6 +129,7 @@ const setupNodeEvents = (
   on('task', {
     generateOTP: cypressOTP,
     lockTaskListSection,
+    createCommonMilestone,
     deleteFile,
     deleteAllFiles,
     createFolderIfNotExists

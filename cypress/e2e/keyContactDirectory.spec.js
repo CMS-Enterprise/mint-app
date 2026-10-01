@@ -202,10 +202,11 @@ describe('Key Contact Directory', () => {
       'You removed Centers for Medicare and Medicaid Services as a subject category.'
     );
 
-    cy.get('[data-testid="accordion"]').within(() => {
-      cy.contains('Centers for Medicare and Medicaid Services').should(
-        'not.exist'
-      );
-    });
+    // cy.contains(selector, text) so this still passes when removing the last
+    // category leaves no accordion on the page (the toast also contains the name)
+    cy.contains(
+      '[data-testid="accordion"]',
+      'Centers for Medicare and Medicaid Services'
+    ).should('not.exist');
   });
 });

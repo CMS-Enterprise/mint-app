@@ -1,3 +1,7 @@
+// The milestone library is not reset between runs, so the edit/remove tests create
+// their own uniquely named milestone instead of relying on seeded ones.
+const runId = Date.now();
+
 describe('Common Milestone Admin Management', () => {
   describe('Non-Assessment User Tests', () => {
     beforeEach(() => {
@@ -72,10 +76,18 @@ describe('Common Milestone Admin Management', () => {
     });
 
     it('edits an existing milestone and handles confirmation flow', () => {
+      const originalName = `Milestone to edit ${runId}`;
+      const editedName = `Renamed milestone ${runId}`;
+
+      cy.task('createCommonMilestone', { name: originalName });
+
       cy.visit('/help-and-knowledge/milestone-library');
 
+      // The library is paginated, so search instead of relying on page position
+      cy.get('#help-articles-search').type(originalName);
+
       cy.get('[data-testid="CardGroup"]')
-        .contains('Acquire a learning contractor')
+        .contains(originalName)
         .parents('.usa-card')
         .within(() => {
           cy.contains('Category: Learning').should('be.visible');
@@ -89,7 +101,7 @@ describe('Common Milestone Admin Management', () => {
 
       cy.get('input[name="name"]')
         .clear({ force: true })
-        .type('Acquire a new learning contractor', { force: true, delay: 50 }); // Slight delay mimics human typing;
+        .type(editedName, { force: true, delay: 50 }); // Slight delay mimics human typing;
 
       cy.get('[aria-label="Remove IT Lead"]').click();
 
@@ -115,7 +127,7 @@ describe('Common Milestone Admin Management', () => {
       );
 
       cy.get('[data-testid="toast-success"]').contains(
-        `Your changes for a milestone (Acquire a new learning contractor) have been saved.`
+        `Your changes for a milestone (${editedName}) have been saved.`
       );
 
       cy.get('[data-testid="common-milestone-side-panel"]').should('not.exist');
@@ -123,20 +135,29 @@ describe('Common Milestone Admin Management', () => {
 
       cy.clickOutside();
 
-      cy.get('[data-testid="CardGroup"]')
-        .contains('Acquire a new learning contractor')
-        .should('be.visible');
+      cy.get('#help-articles-search').clear();
+      cy.get('#help-articles-search').type(editedName);
 
       cy.get('[data-testid="CardGroup"]')
-        .contains('Acquire a learning contractor')
-        .should('not.exist');
+        .contains(editedName)
+        .should('be.visible');
+
+      cy.contains('[data-testid="CardGroup"]', originalName).should(
+        'not.exist'
+      );
     });
 
     it('deletes a milestone through the confirmation modal', () => {
+      const milestoneName = `Milestone to remove ${runId}`;
+
+      cy.task('createCommonMilestone', { name: milestoneName });
+
       cy.visit('/help-and-knowledge/milestone-library');
 
+      cy.get('#help-articles-search').type(milestoneName);
+
       cy.get('[data-testid="CardGroup"]')
-        .contains('Acquire a quality measures development contractor')
+        .contains(milestoneName)
         .parents('.usa-card')
         .within(() => {
           cy.get('button').contains('Learn about this milestone').click();
@@ -154,9 +175,10 @@ describe('Common Milestone Admin Management', () => {
         'You have removed a milestone from the library. It is no longer available for use.'
       );
 
-      cy.get('[data-testid="CardGroup"]')
-        .contains('Acquire a quality measures development contractor')
-        .should('not.exist');
+      // cy.contains(selector, text) still passes if the search leaves no card group
+      cy.contains('[data-testid="CardGroup"]', milestoneName).should(
+        'not.exist'
+      );
     });
   });
 });
