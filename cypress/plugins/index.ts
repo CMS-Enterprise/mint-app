@@ -10,11 +10,18 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import {
+  CreateModelPlanCollaboratorDocument,
+  CreateModelPlanDiscussionDocument,
   CreateMtoCommonMilestoneDocument,
+  DiscussionTopicType,
+  DiscussionUserRole,
+  GetModelPlansDocument,
   LockableSection,
   LockModelPlanSectionDocument,
+  ModelPlanFilter,
   MtoCommonSolutionKey,
-  MtoFacilitator
+  MtoFacilitator,
+  TeamRole
 } from '../../src/gql/generated/graphql';
 
 const cache = new InMemoryCache();
@@ -97,6 +104,86 @@ function createCommonMilestone({
     .then(result => result.data?.createMTOCommonMilestone ?? null);
 }
 
+// Model plan IDs are random per seed, so tasks look plans up by name.
+async function findModelPlanID(
+  apolloClient: ReturnType<typeof createApolloClient>,
+  modelName: string
+) {
+  const { data } = await apolloClient.query({
+    query: GetModelPlansDocument,
+    variables: { filter: ModelPlanFilter.INCLUDE_ALL, isMAC: false },
+    fetchPolicy: 'no-cache'
+  });
+
+  const plan = data.modelPlanCollection.find(
+    (modelPlan: { modelName: string }) => modelPlan.modelName === modelName
+  );
+
+  if (!plan) {
+    throw new Error(`No model plan named "${modelName}" found for this user`);
+  }
+
+  return plan.id;
+}
+
+// The following tasks trigger the same backend mutations as the UI forms, so a spec can set
+// up an event (e.g. to generate a notification) without clicking through the form. The forms
+// themselves are covered by their own specs.
+async function createDiscussion({
+  euaId,
+  jobCodes,
+  modelPlanName,
+  content,
+  topic = DiscussionTopicType.MODEL_PLAN_MODEL_BASICS,
+  userRole = DiscussionUserRole.MINT_TEAM,
+  userRoleDescription = null
+}: {
+  euaId: string;
+  jobCodes?: string[];
+  modelPlanName: string;
+  // Rich text HTML; mentions use the editor's <span data-type="mention" ...> markup
+  content: string;
+  topic?: DiscussionTopicType;
+  userRole?: DiscussionUserRole;
+  userRoleDescription?: string | null;
+}) {
+  const apolloClient = createApolloClient(euaId, jobCodes);
+  const modelPlanID = await findModelPlanID(apolloClient, modelPlanName);
+
+  const { data } = await apolloClient.mutate({
+    mutation: CreateModelPlanDiscussionDocument,
+    variables: {
+      input: { modelPlanID, content, topic, userRole, userRoleDescription }
+    }
+  });
+
+  return data?.createPlanDiscussion?.id ?? null;
+}
+
+async function addCollaborator({
+  euaId,
+  jobCodes,
+  modelPlanName,
+  userName,
+  teamRoles
+}: {
+  euaId: string;
+  jobCodes?: string[];
+  modelPlanName: string;
+  userName: string;
+  teamRoles: TeamRole[];
+}) {
+  const apolloClient = createApolloClient(euaId, jobCodes);
+  const modelPlanID = await findModelPlanID(apolloClient, modelPlanName);
+
+  const { data } = await apolloClient.mutate({
+    mutation: CreateModelPlanCollaboratorDocument,
+    variables: { input: { modelPlanID, userName, teamRoles } }
+  });
+
+  return data?.createPlanCollaborator?.id ?? null;
+}
+
 function deleteFile(filePath: string) {
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
@@ -130,6 +217,8 @@ const setupNodeEvents = (
     generateOTP: cypressOTP,
     lockTaskListSection,
     createCommonMilestone,
+    createDiscussion,
+    addCollaborator,
     deleteFile,
     deleteAllFiles,
     createFolderIfNotExists
