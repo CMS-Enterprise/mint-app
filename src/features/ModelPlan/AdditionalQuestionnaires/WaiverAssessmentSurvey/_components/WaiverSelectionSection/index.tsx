@@ -103,6 +103,7 @@ const WaiverSelectionSection = ({
           suggestedOrInUseWaivers.map(waiver => (
             <div
               key={waiver.id}
+              data-testid={`waiver-selection-${waiver.id}`}
               className="padding-3 border-1px border-gray-10 radius-md shadow-3 margin-bottom-2"
             >
               <div className="margin-bottom-3">

@@ -21,6 +21,7 @@ import {
   TranslationGeneralCharacteristics
 } from 'types/translation';
 import mapDefaultFormValues from 'utils/mapDefaultFormValues';
+import { convertToLowercaseAndDashes } from 'utils/modelPlan';
 
 import {
   formattedLabel,
@@ -388,6 +389,7 @@ const ModelPlanQuestionsForm = ({
           {MODEL_PLAN_QUESTIONS.map((questionGroup, index) => (
             <div
               key={questionGroup.map(q => q.field).join(',')}
+              data-testid="question-group"
               className={`${index === MODEL_PLAN_QUESTIONS.length - 1 ? 'margin-bottom-0' : 'margin-bottom-4'}`}
             >
               {questionGroup.map(questionConfig => {
@@ -467,7 +469,10 @@ const QuestionBody = ({ label, answer }: { label: string; answer: string }) => {
   const { t: miscellaneousT } = useTranslation('miscellaneous');
 
   return (
-    <div className="margin-bottom-2">
+    <div
+      className="margin-bottom-2"
+      data-testid={`question-body-${convertToLowercaseAndDashes(label)}`}
+    >
       <span className="text-bold margin-y-0 mint-text-normal">{label}</span>
 
       <div className="margin-y-0 mint-text-medium text-light text-pre-line text-overflow-wrap-break-word">
