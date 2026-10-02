@@ -55,10 +55,12 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
         >
           <div
             class="margin-bottom-4"
+            data-testid="question-group"
           >
             <div>
               <div
                 class="margin-bottom-2"
+                data-testid="question-body-primary-model-category"
               >
                 <span
                   class="text-bold margin-y-0 mint-text-normal"
@@ -77,6 +79,7 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
             <div>
               <div
                 class="margin-bottom-2"
+                data-testid="question-body-additional-model-categories"
               >
                 <span
                   class="text-bold margin-y-0 mint-text-normal"
@@ -121,10 +124,12 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
           </div>
           <div
             class="margin-bottom-4"
+            data-testid="question-group"
           >
             <div>
               <div
                 class="margin-bottom-2"
+                data-testid="question-body-cms-component"
               >
                 <span
                   class="text-bold margin-y-0 mint-text-normal"
@@ -169,10 +174,12 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
           </div>
           <div
             class="margin-bottom-4"
+            data-testid="question-group"
           >
             <div>
               <div
                 class="margin-bottom-2"
+                data-testid="question-body-is-this-a-new-track-of-an-existing-model-or-a-new-model"
               >
                 <span
                   class="text-bold margin-y-0 mint-text-normal"
@@ -217,10 +224,12 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
           </div>
           <div
             class="margin-bottom-4"
+            data-testid="question-group"
           >
             <div>
               <div
                 class="margin-bottom-2"
+                data-testid="question-body-does-your-proposed-track/model-resemble-any-existing-models"
               >
                 <span
                   class="text-bold margin-y-0 mint-text-normal"
@@ -265,10 +274,12 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
           </div>
           <div
             class="margin-bottom-4"
+            data-testid="question-group"
           >
             <div>
               <div
                 class="margin-bottom-2"
+                data-testid="question-body-is-participation-in-another-model-a-precondition-for-participation-in-this-model"
               >
                 <span
                   class="text-bold margin-y-0 mint-text-normal"
@@ -313,10 +324,12 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
           </div>
           <div
             class="margin-bottom-4"
+            data-testid="question-group"
           >
             <div>
               <div
                 class="margin-bottom-2"
+                data-testid="question-body-what-are-the-model-key-characteristics-select-all-that-apply."
               >
                 <span
                   class="text-bold margin-y-0 mint-text-normal"
@@ -361,10 +374,12 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
           </div>
           <div
             class="margin-bottom-4"
+            data-testid="question-group"
           >
             <div>
               <div
                 class="margin-bottom-2"
+                data-testid="question-body-is-the-model-targeted-at-specific-geographies"
               >
                 <span
                   class="text-bold margin-y-0 mint-text-normal"
@@ -409,10 +424,12 @@ exports[`ModelPlanQuestions Component > matches snapshot 1`] = `
           </div>
           <div
             class="margin-bottom-0"
+            data-testid="question-group"
           >
             <div>
               <div
                 class="margin-bottom-2"
+                data-testid="question-body-are-waivers-required"
               >
                 <span
                   class="text-bold margin-y-0 mint-text-normal"

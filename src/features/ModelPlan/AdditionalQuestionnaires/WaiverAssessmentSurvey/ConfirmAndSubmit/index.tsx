@@ -111,6 +111,10 @@ const ConfirmAndSubmit = () => {
       isWaiverSelectionComplete(waiverSelectionData)
     : Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed);
 
+  const willNotRequireWaivers =
+    Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed) ||
+    (hasSuggestedWaivers && !hasSelectedWaivers);
+
   const mappedFormData = mapDefaultFormValues<ConfirmAndSubmitForm>(
     waiverAssessmentSurveyData,
     DEFAULT_FORM_VALUES
@@ -174,7 +178,11 @@ const ConfirmAndSubmit = () => {
         <div className="margin-bottom-5">
           {selectedWaivers.length === 0 ? (
             <Alert type="info" slim>
-              {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
+              {waiverAssessmentSurveyMiscT(
+                willNotRequireWaivers
+                  ? 'modelNotRequireWaivers'
+                  : 'selectedWaivers.emptyAlert'
+              )}
             </Alert>
           ) : (
             <SelectedWaiversTable
@@ -204,7 +212,7 @@ const ConfirmAndSubmit = () => {
         <div className="margin-bottom-5">
           {declinedWaivers.length === 0 ? (
             <Alert type="info" slim>
-              {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
+              {waiverAssessmentSurveyMiscT('declinedWaivers.emptyAlert')}
             </Alert>
           ) : (
             <SelectedWaiversTable selectedWaivers={declinedWaivers} />
