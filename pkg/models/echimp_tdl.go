@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/sanitization"
@@ -48,17 +50,23 @@ func (raw *EChimpTDLRaw) Sanitize() (*EChimpTDL, error) {
 
 }
 
-func ConvertRawTDLSToParsed(rawRecords []*EChimpTDLRaw) ([]*EChimpTDL, error) {
+// ConvertRawTDLSToParsed sanitizes a batch of raw ECHIMP TDL records.
+// A record that fails to sanitize (e.g. a malformed field in the upstream ECHIMP export) is
+// skipped rather than failing the whole batch, since ECHIMP is a third-party data source MINT
+// doesn't control the quality of - one bad TDL shouldn't take down the CRs/TDLs feature for
+// everyone else. Skipped records are returned as errors for the caller to log.
+func ConvertRawTDLSToParsed(rawRecords []*EChimpTDLRaw) ([]*EChimpTDL, []error) {
 	records := []*EChimpTDL{}
+	var skipErrs []error
 	for _, rawRecord := range rawRecords {
 		sanitized, err := rawRecord.Sanitize()
 		if err != nil {
-			//TODO, do we want to allow errors gracefully?
-			return nil, err
+			skipErrs = append(skipErrs, fmt.Errorf("skipping ECHIMP TDL %s: %w", rawRecord.TdlNumber, err))
+			continue
 		}
 		records = append(records, sanitized)
 	}
-	return records, nil
+	return records, skipErrs
 
 }
 
