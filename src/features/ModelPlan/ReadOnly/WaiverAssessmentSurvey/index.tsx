@@ -8,7 +8,7 @@ import { Alert } from 'components/Alert';
 import PageLoading from 'components/PageLoading';
 import { sortByName } from 'utils/formUtil';
 
-import WaiverAssessmentSurveyReadOnlySections from '../../AdditionalQuestionnaires/WaiverAssessmentSurvey/_components/WaiverQuestionsReadOnlySections';
+import WaiverQuestionsReadOnlySections from '../../AdditionalQuestionnaires/WaiverAssessmentSurvey/_components/WaiverQuestionsReadOnlySections';
 import SelectedWaiversTable from '../_components/SelectedWaiversTable';
 import TitleAndStatus from '../_components/TitleAndStatus';
 import { ReadOnlyProps } from '../ModelBasics';
@@ -47,9 +47,16 @@ const ReadOnlyWaiverAssessmentSurvey = ({
     .filter(waiver => waiver.willUseWaiver === true)
     .sort(sortByName);
 
-  // const declinedWaivers = waiverSelectionData
-  //   .filter(waiver => waiver.isSuggested && waiver.willUseWaiver === false)
-  //   .sort(sortByName);
+  const declinedWaivers = waiverSelectionData
+    .filter(waiver => waiver.isSuggested && waiver.willUseWaiver === false)
+    .sort(sortByName);
+
+  const hasSuggestedWaivers =
+    waiverSelectionData?.some(waiver => waiver.isSuggested) ?? false;
+
+  const willNotRequireWaivers =
+    Boolean(allWaiverAssessmentSurveyData.isEmptyWaiversConfirmed) ||
+    (hasSuggestedWaivers && selectedWaivers.length === 0);
 
   return (
     <div
@@ -68,19 +75,50 @@ const ReadOnlyWaiverAssessmentSurvey = ({
           allWaiverAssessmentSurveyData.createdDts
         }
       />
-      <h3 className="margin-bottom-2">
-        {waiverAssessmentSurveyMiscT('selectedWaivers.heading')}
-      </h3>
+      {/* Selected waivers section */}
+      <div>
+        <h3 className="margin-bottom-2">
+          {waiverAssessmentSurveyMiscT('selectedWaivers.heading', {
+            waiverCount: selectedWaivers.length
+          })}
+        </h3>
 
-      {selectedWaivers.length === 0 ? (
-        <Alert type="info" slim className="margin-bottom-6">
-          {waiverAssessmentSurveyMiscT('modelHasNotSelectedWaiver')}
-        </Alert>
-      ) : (
-        <SelectedWaiversTable selectedWaivers={selectedWaivers} />
-      )}
+        {selectedWaivers.length === 0 ? (
+          <Alert type="info" slim className="margin-bottom-6">
+            {waiverAssessmentSurveyMiscT(
+              willNotRequireWaivers
+                ? 'modelNotRequireWaivers'
+                : 'selectedWaivers.emptyAlert'
+            )}
+          </Alert>
+        ) : (
+          <SelectedWaiversTable
+            selectedWaivers={selectedWaivers}
+            visibleColumns={['waiverName', 'actions']}
+          />
+        )}
+      </div>
 
-      <WaiverAssessmentSurveyReadOnlySections modelPlan={data.modelPlan} />
+      {/* Declined waivers section */}
+      <div>
+        <h3 className="margin-bottom-05">
+          {waiverAssessmentSurveyMiscT('declinedWaivers.heading', {
+            waiverCount: declinedWaivers.length
+          })}
+        </h3>
+
+        <div className="margin-bottom-5">
+          {declinedWaivers.length === 0 ? (
+            <Alert type="info" slim>
+              {waiverAssessmentSurveyMiscT('declinedWaivers.emptyAlert')}
+            </Alert>
+          ) : (
+            <SelectedWaiversTable selectedWaivers={declinedWaivers} />
+          )}
+        </div>
+      </div>
+
+      <WaiverQuestionsReadOnlySections modelPlan={data.modelPlan} isReadview />
     </div>
   );
 };
