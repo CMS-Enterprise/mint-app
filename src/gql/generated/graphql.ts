@@ -5771,6 +5771,7 @@ export enum TableName {
   USER_NOTIFICATION = 'user_notification',
   USER_NOTIFICATION_PREFERENCES = 'user_notification_preferences',
   USER_VIEW_CUSTOMIZATION = 'user_view_customization',
+  WAIVER = 'waiver',
   WAIVER_ASSESSMENT_SURVEY = 'waiver_assessment_survey'
 }
 
@@ -6661,6 +6662,13 @@ export type WaiverSelectionInput = {
   notUsingReason?: InputMaybe<Scalars['String']['input']>;
   usingReason?: InputMaybe<Scalars['String']['input']>;
   willUseWaiver?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Represents the translation data for a model plan's waiver selections. */
+export type WaiverTranslation = {
+  __typename: 'WaiverTranslation';
+  notUsingReason: TranslationField;
+  usingReason: TranslationField;
 };
 
 export enum WaiverType {
