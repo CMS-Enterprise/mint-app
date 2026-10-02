@@ -3061,6 +3061,11 @@ type ComplexityRoot struct {
 		UnusedCommonWaivers    func(childComplexity int) int
 		Waivers                func(childComplexity int) int
 	}
+
+	WaiverTranslation struct {
+		NotUsingReason func(childComplexity int) int
+		UsingReason    func(childComplexity int) int
+	}
 }
 
 // endregion ***************************** api!.gotpl *****************************
@@ -19061,6 +19066,19 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.WaiverInfo.Waivers(childComplexity), true
 
+	case "WaiverTranslation.notUsingReason":
+		if e.ComplexityRoot.WaiverTranslation.NotUsingReason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverTranslation.NotUsingReason(childComplexity), true
+	case "WaiverTranslation.usingReason":
+		if e.ComplexityRoot.WaiverTranslation.UsingReason == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverTranslation.UsingReason(childComplexity), true
+
 	}
 	return 0, false
 }
@@ -19786,6 +19804,7 @@ enum TableName {
   possible_operational_solution
   possible_operational_solution_contact
   waiver_assessment_survey
+  waiver
   tag
   plan_timeline
   custom_timeline_date
@@ -26986,6 +27005,14 @@ type WaiverInfo {
 extend type Query {
   waiverInfo(modelPlanID: UUID!): WaiverInfo!
     @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/waiver/waiver_translation.graphql", Input: `"""
+Represents the translation data for a model plan's waiver selections.
+"""
+type WaiverTranslation {
+  usingReason: TranslationField! @goTag(key: "db", value: "using_reason")
+  notUsingReason: TranslationField! @goTag(key: "db", value: "not_using_reason")
 }
 `, BuiltIn: false},
 }
@@ -102133,6 +102160,70 @@ func (ec *executionContext) fieldContext_WaiverInfo_waivers(_ context.Context, f
 	return fc, nil
 }
 
+func (ec *executionContext) _WaiverTranslation_usingReason(ctx context.Context, field graphql.CollectedField, obj *model.WaiverTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverTranslation_usingReason(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.UsingReason, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverTranslation_usingReason(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _WaiverTranslation_notUsingReason(ctx context.Context, field graphql.CollectedField, obj *model.WaiverTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverTranslation_notUsingReason(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.NotUsingReason, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationField) graphql.Marshaler {
+			return ec.marshalNTranslationField2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationField(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverTranslation_notUsingReason(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationField(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) ___Directive_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -138601,6 +138692,49 @@ func (ec *executionContext) _WaiverInfo(ctx context.Context, sel ast.SelectionSe
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var waiverTranslationImplementors = []string{"WaiverTranslation"}
+
+func (ec *executionContext) _WaiverTranslation(ctx context.Context, sel ast.SelectionSet, obj *model.WaiverTranslation) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, waiverTranslationImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("WaiverTranslation")
+		case "usingReason":
+			out.Values[i] = ec._WaiverTranslation_usingReason(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "notUsingReason":
+			out.Values[i] = ec._WaiverTranslation_notUsingReason(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

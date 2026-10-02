@@ -1,0 +1,20 @@
+{
+  "usingReason": {
+    "gqlField": "usingReason",
+    "goField": "UsingReason",
+    "dbField": "using_reason",
+    "label": "Please explain why your model intends to use this waiver",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.1
+  },
+  "notUsingReason": {
+    "gqlField": "notUsingReason",
+    "goField": "NotUsingReason",
+    "dbField": "not_using_reason",
+    "label": "Please explain why your model is not using this waiver.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.2
+  }
+}

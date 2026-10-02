@@ -54,6 +54,16 @@ func (wast *WaiverAssessmentSurveyTranslation) ToMap() (map[string]models.ITrans
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
+func (wt *WaiverTranslation) TableName() models.TableName {
+	return models.TNWaiver
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (wt *WaiverTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*wt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
 func (pOet *PlanOpsEvalAndLearningTranslation) TableName() models.TableName {
 	return models.TNPlanOpsEvalAndLearning
 }

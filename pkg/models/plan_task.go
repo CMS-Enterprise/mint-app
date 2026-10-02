@@ -99,7 +99,7 @@ var planTaskKeyDisplayNames = map[PlanTaskKey]string{
 	PlanTaskKeyModelPlan:              "Model Plan",
 	PlanTaskKeyDataExchange:           "Data exchange approach",
 	PlanTaskKeyMto:                    "Model-to-operations matrix (MTO)",
-	PlanTaskKeyWaiverAssessmentSurvey: "Waiver assessment survey",
+	PlanTaskKeyWaiverAssessmentSurvey: "waiver assessment survey",
 	PlanTaskKeyTwoPager:               "Prepare for your 2-page review meeting with CMMI Front Office",
 	PlanTaskKeySixPager:               "Prepare for your 6-page review meeting with CMMI Front Office",
 	PlanTaskKeyOaPresentation:         "Office of the Administrator (OA) presentation",

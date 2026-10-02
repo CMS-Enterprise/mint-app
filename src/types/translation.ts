@@ -127,6 +127,7 @@ import {
   TriStateAnswer,
   WaiverAssessmentSurveyStatus,
   WaiverAssessmentSurveyTranslation,
+  WaiverTranslation,
   WaiverType,
   YesNoOtherType,
   YesNoType
@@ -830,6 +831,18 @@ type TranslationWaiverAssessmentSurveyGQL = Omit<
 */
 export type TranslationWaiverAssessmentSurvey = {
   [K in keyof TranslationWaiverAssessmentSurveyGQL]: TranslationWaiverAssessmentSurveyForm[K]; // FE form type
+};
+
+// Waiver selections - Change History purposes only
+export type TranslationWaiverForm = {
+  usingReason: TranslationFieldProperties;
+  notUsingReason: TranslationFieldProperties;
+};
+
+type TranslationWaiverGQL = Omit<WaiverTranslation, '__typename'>;
+
+export type TranslationWaiver = {
+  [K in keyof TranslationWaiverGQL]: TranslationWaiverForm[K];
 };
 
 // IDDOC Questionnaire

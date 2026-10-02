@@ -462,6 +462,92 @@ describe('util.tsx', () => {
     ]);
   });
 
+  it('removes waiver assessment survey dependent fields', () => {
+    const change: ChangeRecordType = {
+      id: 'waiver-assessment-survey-change',
+      tableName: TableName.WAIVER_ASSESSMENT_SURVEY,
+      date: '2024-04-22T13:55:13.725192Z',
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          id: 'waiver-primary-answer',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.BOOLEAN,
+          fieldName: 'modifies_medicare_savings_programs',
+          fieldNameTranslated:
+            'Does your model modify Medicare shared savings programs?',
+          old: null,
+          oldTranslated: null,
+          new: 'true',
+          newTranslated: 'Yes',
+          __typename: 'TranslatedAuditField'
+        },
+        {
+          id: 'waiver-example',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'modifies_medicare_savings_programs_example',
+          fieldNameTranslated: 'Please provide an example',
+          old: null,
+          oldTranslated: null,
+          new: 'An example',
+          newTranslated: 'An example',
+          __typename: 'TranslatedAuditField'
+        },
+        {
+          id: 'waiver-why-not',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.ENUM,
+          fieldName: 'modifies_medicare_savings_programs_why_not',
+          fieldNameTranslated: 'Please explain why not',
+          old: null,
+          oldTranslated: null,
+          new: 'OTHER',
+          newTranslated: 'Other',
+          __typename: 'TranslatedAuditField'
+        },
+        {
+          id: 'waiver-using-reason',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'using_reason',
+          fieldNameTranslated:
+            'Please explain why your model intends to use this waiver',
+          old: null,
+          oldTranslated: null,
+          new: 'It supports the model design.',
+          newTranslated: 'It supports the model design.',
+          __typename: 'TranslatedAuditField'
+        },
+        {
+          id: 'waiver-not-using-reason',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'not_using_reason',
+          fieldNameTranslated:
+            'Please explain why your model is not using this waiver.',
+          old: null,
+          oldTranslated: null,
+          new: 'It is not applicable.',
+          newTranslated: 'It is not applicable.',
+          __typename: 'TranslatedAuditField'
+        }
+      ],
+      actorName: 'MINT Doe',
+      __typename: 'TranslatedAudit'
+    };
+
+    const filteredChanges = removedUnneededFields([change]);
+
+    expect(
+      filteredChanges[0].translatedFields.map(field => field.fieldName)
+    ).toEqual([
+      'modifies_medicare_savings_programs',
+      'using_reason',
+      'not_using_reason'
+    ]);
+  });
+
   // Test for sortChangesByDay - Sorts the changes by day - { day: [changes] }
   it('should sort changes by day', () => {
     const changes = [...sortData];

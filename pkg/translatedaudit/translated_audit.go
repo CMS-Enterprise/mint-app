@@ -131,6 +131,11 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *m
 	change.TableName = audit.TableName
 	translatedAudit.TranslatedAudit = change
 
+	waiverName, err := getWaiverNameForAudit(store, audit)
+	if err != nil {
+		return nil, fmt.Errorf("unable to resolve waiver name for audit %d: %w", audit.ID, err)
+	}
+
 	for fieldName, field := range audit.Fields {
 		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, &audit.AuditChange, operation, translationMap)
 
@@ -140,6 +145,9 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *m
 		if !wasTranslated {
 			//If this doesn't have a translation, don't append this to the translated field list (and don't save it)
 			continue
+		}
+		if waiverName != "" && isWaiverReasonField(audit.TableName, fieldName) {
+			transField.FieldNameTranslated = waiverReasonLabel(transField.FieldNameTranslated, waiverName)
 		}
 		translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
 
@@ -159,6 +167,18 @@ func setEmptyStringsToNil(value interface{}) interface{} {
 		return nil
 	}
 	return value
+}
+
+func isWaiverReasonField(tableName models.TableName, fieldName string) bool {
+	if tableName != models.TNWaiver {
+		return false
+	}
+
+	return fieldName == "using_reason" || fieldName == "not_using_reason"
+}
+
+func waiverReasonLabel(fieldLabel string, waiverName string) string {
+	return fmt.Sprintf("%s (Waiver: %s)", fieldLabel, waiverName)
 }
 
 // translateField translates a given audit field. It returns the translated audit field, as well as a bool to signify if it was translated or not

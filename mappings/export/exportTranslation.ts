@@ -40,6 +40,7 @@ import replies from '../../src/i18n/en-US/modelPlan/replies';
 import operationalSolutions from '../../src/i18n/en-US/modelPlan/solutions';
 import tables from '../../src/i18n/en-US/modelPlan/tables';
 import tdls from '../../src/i18n/en-US/modelPlan/tdls';
+import waiver from '../../src/i18n/en-US/modelPlan/waiver';
 import { waiverAssessmentSurvey } from '../../src/i18n/en-US/modelPlan/waiverAssessmentSurvey';
 import { getKeys } from '../../src/types/translation';
 
@@ -50,6 +51,7 @@ export const translationSections = {
   key_contact_category: keyContactCategory,
   iddoc_questionnaire: iddocQuestionnaire,
   waiver_assessment_survey: waiverAssessmentSurvey,
+  waiver,
   model_plan: modelPlan,
   plan_basics: basics,
   plan_general_characteristics: generalCharacteristics,

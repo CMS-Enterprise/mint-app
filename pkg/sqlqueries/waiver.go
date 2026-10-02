@@ -2,6 +2,9 @@ package sqlqueries
 
 import _ "embed"
 
+//go:embed SQL/waiver/get_by_id.sql
+var waiverGetByIDSQL string
+
 //go:embed SQL/waiver/get_by_model_plan_id_LOADER.sql
 var waiverGetByModelPlanIDLoaderSQL string
 
@@ -12,6 +15,8 @@ var waiverUpsertSQL string
 var waiverUpsertCollectionSQL string
 
 type waiverScripts struct {
+	// Gets a waiver row by its primary key.
+	GetByID string
 	// Uses a list of model_plan_ids to return all waivers for those model plans (one-to-many)
 	GetByModelPlanIDLoader string
 	// Creates the row if it does not exist, otherwise updates the selection and its reason fields
@@ -22,6 +27,7 @@ type waiverScripts struct {
 
 // Waiver houses all the SQL scripts for the waiver table
 var Waiver = waiverScripts{
+	GetByID:                waiverGetByIDSQL,
 	GetByModelPlanIDLoader: waiverGetByModelPlanIDLoaderSQL,
 	Upsert:                 waiverUpsertSQL,
 	UpsertCollection:       waiverUpsertCollectionSQL,

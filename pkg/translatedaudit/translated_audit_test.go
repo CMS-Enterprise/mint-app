@@ -164,3 +164,18 @@ func TestGetChangeType(t *testing.T) {
 	ct = getChangeType(old, nilNew)
 	assert.EqualValues(t, models.AFCRemoved, ct)
 }
+
+func TestWaiverReasonLabel(t *testing.T) {
+	assert.Equal(
+		t,
+		"Please explain why your model is not using this waiver. (Waiver: Implementation period)",
+		waiverReasonLabel("Please explain why your model is not using this waiver.", "Implementation period"),
+	)
+}
+
+func TestIsWaiverReasonField(t *testing.T) {
+	assert.True(t, isWaiverReasonField(models.TNWaiver, "using_reason"))
+	assert.True(t, isWaiverReasonField(models.TNWaiver, "not_using_reason"))
+	assert.False(t, isWaiverReasonField(models.TNWaiverAssessmentSurvey, "using_reason"))
+	assert.False(t, isWaiverReasonField(models.TNWaiver, "will_use_waiver"))
+}
