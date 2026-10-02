@@ -10,6 +10,8 @@ export default defineConfig({
   defaultCommandTimeout: 10000,
   execTimeout: 120000,
   video: true,
+  // Skip the ffmpeg re-encode: it costs ~5s per spec and passing videos are deleted anyway.
+  videoCompression: false,
   e2e: {
     // Register Node-side Cypress event handlers.
     setupNodeEvents(on, config) {

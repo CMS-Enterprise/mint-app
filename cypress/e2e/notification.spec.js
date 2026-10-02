@@ -8,61 +8,21 @@ describe('Notification Center', () => {
     });
 
     it('navigates through the Notification page', () => {
-      cy.enterModelPlanTaskList('Empty Plan');
+      // Preliminarily creating two notifications before testing notifications:
+      // two discussions that @mention JTTC. The discussion form itself is covered in discussions.spec.js
+      ['First Notification', 'Second Notification'].forEach(text => {
+        cy.task('createDiscussion', {
+          euaId: 'JTTC',
+          jobCodes: ['MINT_ASSESSMENT_NONPROD'],
+          modelPlanName: 'Empty Plan',
+          userRole: 'NONE_OF_THE_ABOVE',
+          userRoleDescription: 'Designer',
+          content: `<p><span class="mention" data-type="mention" data-id="JTTC" data-label="Anabelle Jerde (JTTC)" data-mention-suggestion-char="@" data-id-db="" tag-type="USER_ACCOUNT">@Anabelle Jerde (JTTC)</span> ${text}</p>`
+        });
+      });
 
-      cy.contains('button', 'Start a discussion').click();
-
-      // Preliminarily creating two notifications before testing notifications
-      // First notification
-      cy.contains('h1', 'Start a discussion');
-
-      cy.contains('button', 'Save discussion').should('be.disabled');
-
-      cy.get('#discussion-topic').should('not.be.disabled');
-      cy.get('#discussion-topic').select('Model Plan (Model basics)');
-
-      cy.get('#user-role')
-        .should('not.be.disabled')
-        .select('None of the above');
-
-      cy.get('#user-role-description')
-        .type('Designer')
-        .should('have.value', 'Designer');
-
-      cy.get('#mention-editor')
-        .type('@ana')
-        .contains('Anabelle Jerde (JTTC)')
-        .click();
-      cy.get('#mention-editor')
-        .type('First Notification')
-        .should('have.text', '@Anabelle Jerde (JTTC) First Notification');
-
-      cy.contains('button', 'Save discussion').click();
-
-      // Second notification
-      cy.contains('button', 'Start a discussion').click();
-
-      cy.get('#discussion-topic').should('not.be.disabled');
-      cy.get('#discussion-topic').select('Model Plan (Model basics)');
-
-      cy.get('#user-role')
-        .should('not.be.disabled')
-        .select('None of the above');
-
-      cy.get('#user-role-description').should('have.value', 'Designer');
-
-      cy.get('#mention-editor')
-        .type('@ana')
-        .contains('Anabelle Jerde (JTTC)')
-        .click();
-      cy.get('#mention-editor')
-        .type('Second Notification')
-        .should('have.text', '@Anabelle Jerde (JTTC) Second Notification');
-
-      cy.contains('button', 'Save discussion').click();
-
-      cy.get('[data-testid="close-discussions"]').click({ force: true });
-      cy.get('[data-testid="navmenu__notification"]').first().click();
+      // Full page load so the notifications aren't served from the client cache
+      cy.visit('/notifications');
 
       // Actual Notification Test
       cy.get('[data-testid="navmenu__notification"]')
@@ -188,31 +148,13 @@ describe('Notification Center', () => {
     });
 
     it('testing Adding Collaborator Notification', () => {
-      cy.visit('/');
-      cy.enterModelPlanCollaborationArea('Empty Plan');
-
-      // Add SF13 as a collaborator
-      cy.get('[data-testid="add-collaborator"]').click();
-
-      cy.get('#react-select-model-team-cedar-contact-input')
-        .click()
-        .type('Jerry', { delay: 100 });
-
-      cy.get('#react-select-model-team-cedar-contact-option-0')
-        .contains('Jerry Seinfeld (Jerry.Seinfeld@local.fake)')
-        .click();
-
-      cy.get('#collaborator-role').within(() => {
-        cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
+      // Add SF13 as a collaborator (the add-collaborator form is covered in collaborator.spec.js)
+      cy.task('addCollaborator', {
+        euaId: 'MINT',
+        modelPlanName: 'Empty Plan',
+        userName: 'SF13',
+        teamRoles: ['EVALUATION']
       });
-
-      cy.clickOutside();
-
-      cy.get('[data-testid="multiselect-tag--Evaluation"]')
-        .first()
-        .contains('Evaluation');
-
-      cy.contains('button', 'Add team member').click();
 
       cy.logout();
 
@@ -454,33 +396,20 @@ describe('Notification Center', () => {
 
       cy.contains('button', 'Save').click();
 
-      // Navigate back to home to click "Empty Plan" model plan
-      cy.get('[aria-label="Home"]').click();
-      cy.url().should('include', '/');
+      // Wait for the settings to save before triggering the event
+      cy.get('[data-testid="toast-success"]').should('exist');
 
-      cy.enterModelPlanCollaborationArea('Empty Plan');
+      // Start a discussion (the discussion form is covered in discussions.spec.js)
+      cy.task('createDiscussion', {
+        euaId: 'MINT',
+        modelPlanName: 'Empty Plan',
+        userRole: 'MINT_TEAM',
+        content: '<p>How to I get to model characteristics?</p>'
+      });
 
-      // Start a discussion
-      cy.contains('button', 'Start a discussion').click();
-
-      cy.get('#discussion-topic').should('not.be.disabled');
-      cy.get('#discussion-topic').select('Model Plan (Model basics)');
-
-      cy.get('#user-role').should('not.be.disabled').select('MINT Team');
-      cy.get('#mention-editor')
-        .type('How to I get to model characteristics?')
-        .should('have.text', 'How to I get to model characteristics?');
-
-      cy.contains('button', 'Save discussion').click();
-
-      cy.get('[data-testid="page-loading"]').should('not.exist');
-
-      cy.get('[data-testid="close-discussions"]').click();
-      cy.get('[data-testid="discussion-modal"]').should('not.exist');
-
-      cy.get('[data-testid="navmenu__notification"]').click();
-
-      cy.url().should('include', '/notifications');
+      // Full page load: navigating client-side would show the cached notification list
+      // until the nav bar's 5s poll refreshes it, since the event wasn't created in the UI
+      cy.visit('/notifications');
 
       cy.get('[data-testid="spinner"]').should('not.exist');
 

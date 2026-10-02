@@ -1,6 +1,14 @@
 const maxAttempts = 3;
 
 describe('Logging in', () => {
+  // The Okta test runs the hosted Okta/ELP redirect login, so it needs, locally and in CI:
+  //   - VITE_OKTA_REDIRECT_LOGIN_ENABLED=true when the frontend is built/started. This is a
+  //     build-time flag (CI sets it in run_tests.yml). Locally it defaults to false in .envrc, so
+  //     set it in .envrc.local and restart the frontend; otherwise cy.login() fails after retrying.
+  //   - OKTA_TEST_USERNAME, OKTA_TEST_PASSWORD and OKTA_TEST_SECRET (the OTP seed). CI reads these
+  //     from GitHub secrets; locally they are empty in .envrc, so set them in .envrc.local.
+  //   - Network access to the Okta test IdP (OKTA_DOMAIN).
+  // The other login tests below use local auth and need none of this.
   it(
     'logs in with okta',
     {

@@ -10,13 +10,26 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import {
+  CreateModelPlanCollaboratorDocument,
+  CreateModelPlanDiscussionDocument,
+  CreateMtoCommonMilestoneDocument,
+  DiscussionTopicType,
+  DiscussionUserRole,
+  GetModelPlansDocument,
   LockableSection,
-  LockModelPlanSectionDocument
+  LockModelPlanSectionDocument,
+  ModelPlanFilter,
+  MtoCommonSolutionKey,
+  MtoFacilitator,
+  TeamRole
 } from '../../src/gql/generated/graphql';
 
 const cache = new InMemoryCache();
 
-function createApolloClient(euaId: string) {
+function createApolloClient(
+  euaId: string,
+  jobCodes: string[] = ['MINT_USER_NONPROD']
+) {
   const gqlURL =
     process.env.VITE_GRAPHQL_ADDRESS || 'http://localhost:8085/api/graph/query';
 
@@ -27,7 +40,11 @@ function createApolloClient(euaId: string) {
       fetch,
       headers: {
         // need job code to be able to issue LCID
-        Authorization: `Local {"euaId":"${euaId}", "favorLocalAuth":true, "jobCodes":["MINT_USER_NONPROD"]}`
+        Authorization: `Local ${JSON.stringify({
+          euaId,
+          favorLocalAuth: true,
+          jobCodes
+        })}`
       }
     })
   });
@@ -54,6 +71,117 @@ function lockTaskListSection({
     mutation: LockModelPlanSectionDocument,
     variables: input
   });
+}
+
+// The common milestone library comes from migrations and is not reset by `db:clean`,
+// so specs that edit/remove a milestone create their own uniquely named one to stay re-runnable.
+function createCommonMilestone({
+  name,
+  categoryName = 'Learning',
+  facilitatedByRole = [MtoFacilitator.IT_LEAD],
+  // The edit form requires at least one common solution
+  commonSolutions = [MtoCommonSolutionKey.ACO_OS]
+}: {
+  name: string;
+  categoryName?: string;
+  facilitatedByRole?: MtoFacilitator[];
+  commonSolutions?: MtoCommonSolutionKey[];
+}) {
+  // Creating a common milestone requires the assessment role
+  const apolloClient = createApolloClient('JTTC', ['MINT_ASSESSMENT_NONPROD']);
+
+  return apolloClient
+    .mutate({
+      mutation: CreateMtoCommonMilestoneDocument,
+      variables: {
+        name,
+        description: 'Created by Cypress',
+        categoryName,
+        facilitatedByRole,
+        commonSolutions
+      }
+    })
+    .then(result => result.data?.createMTOCommonMilestone ?? null);
+}
+
+// Model plan IDs are random per seed, so tasks look plans up by name.
+async function findModelPlanID(
+  apolloClient: ReturnType<typeof createApolloClient>,
+  modelName: string
+) {
+  const { data } = await apolloClient.query({
+    query: GetModelPlansDocument,
+    variables: { filter: ModelPlanFilter.INCLUDE_ALL, isMAC: false },
+    fetchPolicy: 'no-cache'
+  });
+
+  const plan = data.modelPlanCollection.find(
+    (modelPlan: { modelName: string }) => modelPlan.modelName === modelName
+  );
+
+  if (!plan) {
+    throw new Error(`No model plan named "${modelName}" found for this user`);
+  }
+
+  return plan.id;
+}
+
+// The following tasks trigger the same backend mutations as the UI forms, so a spec can set
+// up an event (e.g. to generate a notification) without clicking through the form. The forms
+// themselves are covered by their own specs.
+async function createDiscussion({
+  euaId,
+  jobCodes,
+  modelPlanName,
+  content,
+  topic = DiscussionTopicType.MODEL_PLAN_MODEL_BASICS,
+  userRole = DiscussionUserRole.MINT_TEAM,
+  userRoleDescription = null
+}: {
+  euaId: string;
+  jobCodes?: string[];
+  modelPlanName: string;
+  // Rich text HTML; mentions use the editor's <span data-type="mention" ...> markup
+  content: string;
+  topic?: DiscussionTopicType;
+  userRole?: DiscussionUserRole;
+  userRoleDescription?: string | null;
+}) {
+  const apolloClient = createApolloClient(euaId, jobCodes);
+  const modelPlanID = await findModelPlanID(apolloClient, modelPlanName);
+
+  const { data } = await apolloClient.mutate({
+    mutation: CreateModelPlanDiscussionDocument,
+    variables: {
+      input: { modelPlanID, content, topic, userRole, userRoleDescription }
+    }
+  });
+
+  return data?.createPlanDiscussion?.id ?? null;
+}
+
+async function addCollaborator({
+  euaId,
+  jobCodes,
+  modelPlanName,
+  userName,
+  teamRoles
+}: {
+  euaId: string;
+  jobCodes?: string[];
+  modelPlanName: string;
+  userName: string;
+  teamRoles: TeamRole[];
+}) {
+  const apolloClient = createApolloClient(euaId, jobCodes);
+  const modelPlanID = await findModelPlanID(apolloClient, modelPlanName);
+
+  const { data } = await apolloClient.mutate({
+    mutation: CreateModelPlanCollaboratorDocument,
+    variables: { input: { modelPlanID, userName, teamRoles } }
+  });
+
+  return data?.createPlanCollaborator?.id ?? null;
 }
 
 function deleteFile(filePath: string) {
@@ -88,9 +216,26 @@ const setupNodeEvents = (
   on('task', {
     generateOTP: cypressOTP,
     lockTaskListSection,
+    createCommonMilestone,
+    createDiscussion,
+    addCollaborator,
     deleteFile,
     deleteAllFiles,
     createFolderIfNotExists
+  });
+
+  // Only keep videos for specs with a failed attempt; delete the rest so they
+  // aren't stored or uploaded.
+  on('after:spec', (_spec, results) => {
+    if (!results?.video) return;
+
+    const hasFailure = results.tests?.some(test =>
+      test.attempts?.some(attempt => attempt.state === 'failed')
+    );
+
+    if (!hasFailure) {
+      fs.rmSync(results.video, { force: true });
+    }
   });
 
   const newConfig = config;
