@@ -2,7 +2,7 @@
 # version of Node.js, yarn, and node_modules.
 #
 # Note, this image purposefully does NOT copy the source code into the image,
-# because the source code is mounted as a volume in the docker-compose.frontend.yml file.
+# because the source code is mounted as a volume in the Compose frontend file.
 # This allows the image to be cached far more easily, and only needs to be rebuilt
 # when the dependencies change.
 

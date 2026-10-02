@@ -1,5 +1,5 @@
 # This image is used for production only.
-# In local development, we use `faktory-ent` directly in our docker-compose.yml
+# In local development, we use `faktory-ent` directly in our Compose file
 
 FROM docker.contribsys.com/contribsys/faktory-ent:1.9.4
 

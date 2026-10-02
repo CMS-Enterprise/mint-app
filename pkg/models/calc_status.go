@@ -44,7 +44,7 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 
 		// Check for valid field type, and if the data is filled
 		switch field.Type.Kind() {
-		case reflect.Ptr:
+		case reflect.Pointer:
 			filledOut = !value.IsNil()
 		case reflect.Slice:
 			filledOut = value.Len() > 0

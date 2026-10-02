@@ -76,7 +76,7 @@ export FAKTORY_CONNECTIONS=20
 export FAKTORY_PROCESS_JOBS=true
 ```
 
-- docker-compose is used to set up and run the Faktory Server locally.
+- Docker Compose is used to set up and run the Faktory Server locally.
 - The first time you run `scripts/dev up` it will ask you for username and password to `docker.contribsys.com`. These credentials are in 1Password.
 - Web UI will be at `localhost:7420`.
 
