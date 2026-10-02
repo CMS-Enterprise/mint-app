@@ -192,7 +192,7 @@ const TaskCard = ({ task, modelPlan }: TaskCardProps) => {
         </Button>
         {t(`${key}.secondaryAction`, { defaultValue: '' }) !== '' && (
           <UswdsReactLink
-            to={t(`${key}.secondaryPath`)}
+            to={t(`${key}.secondaryPath`, { modelID })}
             target="_blank"
             rel="noopener noreferrer"
             className="usa-button usa-button--outline margin-right-2"

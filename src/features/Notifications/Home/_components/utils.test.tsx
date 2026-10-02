@@ -26,6 +26,11 @@ describe('VerifyEmailParams Util', () => {
 
     const result5 = verifyEmailParams('INVALID_PARAM');
     expect(result5).toEqual(false);
+
+    const result6 = verifyEmailParams(
+      'WAIVER_ASSESSMENT_SURVEY_MARKED_COMPLETE'
+    );
+    expect(result6).toEqual(true);
   });
 });
 

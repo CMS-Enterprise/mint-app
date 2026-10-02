@@ -71,6 +71,7 @@ const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.MTO,
   PlanTaskKey.DATA_EXCHANGE,
+  PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.OA_PRESENTATION
 ] as const;
@@ -79,6 +80,7 @@ const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
   [PlanTaskKey.MODEL_PLAN]: '2022-01-01T00:00:00Z',
   [PlanTaskKey.MTO]: '2022-01-02T00:00:00Z',
   [PlanTaskKey.DATA_EXCHANGE]: '2022-01-03T00:00:00Z',
+  [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: '2022-01-04T00:00:00Z',
   [PlanTaskKey.TWO_PAGER]: '2022-01-04T00:00:00Z',
   [PlanTaskKey.SIX_PAGER]: '2022-01-05T00:00:00Z',
   [PlanTaskKey.OA_PRESENTATION]: '2022-01-06T00:00:00Z'

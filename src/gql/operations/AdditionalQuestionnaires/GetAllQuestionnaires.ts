@@ -26,6 +26,15 @@ export default gql(/* GraphQL */ `
             commonName
           }
         }
+        waiverAssessmentSurvey {
+          id
+          status
+          modifiedDts
+          modifiedByUserAccount {
+            id
+            commonName
+          }
+        }
       }
     }
   }

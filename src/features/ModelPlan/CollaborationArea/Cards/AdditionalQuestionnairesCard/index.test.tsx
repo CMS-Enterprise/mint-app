@@ -49,7 +49,7 @@ describe('AdditionalQuestionnairesCard', () => {
         i18next.t('collaborationArea:additionalQuestionnairesCard.heading')
       )
     ).toBeInTheDocument();
-    expect(screen.getByText('1 required questionnaire')).toBeInTheDocument();
+    expect(screen.getByText('2 required questionnaires')).toBeInTheDocument();
     expect(
       screen.getByText(
         i18next.t(

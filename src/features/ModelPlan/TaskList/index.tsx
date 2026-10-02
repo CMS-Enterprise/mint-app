@@ -43,6 +43,7 @@ import StickyModelNameWrapper from 'components/StickyModelNameWrapper';
 import UpdateStatusModal from 'components/UpdateStatusModal';
 import { SubscriptionContext } from 'contexts/PageLockContext';
 import { formatDateLocal } from 'utils/date';
+import { findEffectiveLock } from 'utils/lockableSectionLinking';
 import { isAssessment } from 'utils/user';
 
 import SectionLock from '../../../components/SectionLock';
@@ -195,9 +196,13 @@ const TaskList = () => {
   const getTaskListLockedStatus = (
     section: string
   ): TaskListSectionLockStatus | undefined => {
-    return lockableSectionLocks.find(
-      sectionLock => sectionLock.section === taskListSectionMap[section]
-    );
+    const lockableSection = taskListSectionMap[section];
+
+    if (!lockableSection) {
+      return undefined;
+    }
+
+    return findEffectiveLock(lockableSectionLocks, lockableSection);
   };
 
   return (
