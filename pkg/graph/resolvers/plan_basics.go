@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
@@ -33,7 +34,24 @@ func UpdatePlanBasics(
 	}
 
 	retBasics, err := store.PlanBasicsUpdate(logger, existing)
-	return retBasics, err
+	if err != nil {
+		return nil, err
+	}
+
+	if err := BaseTaskListSectionAfterUpdate(
+		ctx,
+		store,
+		logger,
+		existing.ModelPlanID,
+		principal,
+		store,
+		nil,
+		email.AddressBook{},
+	); err != nil {
+		return nil, err
+	}
+
+	return retBasics, nil
 }
 
 // PlanBasicsGetByModelPlanIDLOADER implements resolver logic to get plan basics by a model plan ID using a data loader
