@@ -6,7 +6,7 @@ Link to each task list section and checks if task list sections are locked
 
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Grid, GridContainer, Icon } from '@trussworks/react-uswds';
 import ReadOnlyBeneficiaries from 'features/ModelPlan/ReadOnly/Beneficiaries';
 import ReadOnlyGeneralCharacteristics from 'features/ModelPlan/ReadOnly/GeneralCharacteristics';
@@ -53,6 +53,11 @@ import { SubscriptionContext } from 'contexts/PageLockContext';
 import { tArray } from 'utils/translation';
 
 import { ClearanceStatusesModelPlanFormType } from '../Checklist';
+import {
+  getPrepareForClearanceOrigin,
+  getPrepareForClearancePath,
+  getPrepareForClearanceReturnPath
+} from '../navigation';
 
 type MutationObjectType = {
   'model-timeline': UpdateClearanceTimelineMutationFn;
@@ -114,11 +119,16 @@ const renderReviewTaskSection = (
 export const ClearanceReview = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const { section, sectionID } = useParams<ClearanceParamProps>();
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID = '' } = useParams<{ modelID: string }>();
   const { t } = useTranslation('general');
   const { t: p } = useTranslation('prepareForClearance');
   const { t: generalT } = useTranslation('general');
   const navigate = useNavigate();
+  const location = useLocation();
+  const origin = getPrepareForClearanceOrigin(location.state);
+  const returnPath = getPrepareForClearanceReturnPath(modelID, origin);
+  const prepareForClearancePath = getPrepareForClearancePath(modelID);
+  const originState = { prepareForClearanceOrigin: origin };
 
   // Subscription locks context for task list
   const { lockableSectionLocks } = useContext(SubscriptionContext);
@@ -196,9 +206,7 @@ export const ClearanceReview = () => {
       }
     }).then(response => {
       if (!response?.errors) {
-        navigate(
-          `/models/${modelID}/collaboration-area/model-plan/prepare-for-clearance`
-        );
+        navigate(prepareForClearancePath, { state: originState });
       }
     });
   };
@@ -228,8 +236,9 @@ export const ClearanceReview = () => {
           to={
             !locked
               ? `/models/${modelID}/collaboration-area/model-plan/${section}`
-              : `/models/${modelID}/collaboration-area/model-plan`
+              : returnPath
           }
+          state={originState}
         >
           {!locked ? p('modal.update') : generalT('lockedModal.return')}
         </UswdsReactLink>
@@ -256,9 +265,7 @@ export const ClearanceReview = () => {
             items={[
               BreadcrumbItemOptions.HOME,
               BreadcrumbItemOptions.COLLABORATION_AREA,
-              ...(section === 'model-timeline'
-                ? []
-                : [BreadcrumbItemOptions.TASK_LIST]),
+              ...(origin === 'tasks' ? [BreadcrumbItemOptions.TASKS] : []),
               BreadcrumbItemOptions.PREPARE_FOR_CLEARANCE
             ]}
             customItem={p(`reviewBreadcrumbs.${routeMap[section!]}`)}
@@ -275,9 +282,7 @@ export const ClearanceReview = () => {
               type="button"
               className="usa-button usa-button--outline margin-bottom-1"
               onClick={() => {
-                navigate(
-                  `/models/${modelID}/collaboration-area/model-plan/prepare-for-clearance`
-                );
+                navigate(prepareForClearancePath, { state: originState });
               }}
             >
               {t('back')}

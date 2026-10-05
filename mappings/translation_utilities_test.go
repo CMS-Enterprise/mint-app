@@ -67,7 +67,7 @@ func assertTranslationFields(t *testing.T, translation Translation) {
 	typ := v.Type()
 	kind := typ.Kind()
 
-	if kind == reflect.Ptr {
+	if kind == reflect.Pointer {
 		// Dereference the pointer to get the underlying value
 		v = v.Elem()
 		typ = v.Type()
@@ -406,7 +406,7 @@ func assertTranslationStructCoverage(t *testing.T, translationMap map[string]mod
 	typ := v.Type()
 	kind := typ.Kind()
 
-	if kind == reflect.Ptr {
+	if kind == reflect.Pointer {
 		// Dereference the pointer to get the underlying value
 		v = v.Elem()
 		typ = v.Type()

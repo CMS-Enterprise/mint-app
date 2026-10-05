@@ -1,5 +1,4 @@
 ---
-version: '3.7'
 services:
   db:
     ports:
@@ -116,8 +115,8 @@ services:
       - AWS_ECHIMP_CACHE_TIME_MINS
       # - AWS_ACCESS_KEY_ID
       # - AWS_SECRET_ACCESS_KEY
-      - PGHOST=db # We need to override this to point to the docker-compose service name, rather than `localhost`
-      - PGPORT=5432 # We also need to override this, as docker-compose networking uses the container port, not the host port
+      - PGHOST=db # We need to override this to point to the Compose service name, rather than `localhost`
+      - PGPORT=5432 # We also need to override this, as Compose networking uses the container port, not the host port
       - PGDATABASE
       - PGUSER
       - PGPASS
@@ -133,7 +132,7 @@ services:
       - LAMBDA_ENDPOINT
       - MINIO_ACCESS_KEY
       - MINIO_SECRET_KEY
-      - MINIO_ADDRESS=http://minio:9005 # We need to override this, as docker-compose networking uses the container name and port
+      - MINIO_ADDRESS=http://minio:9005 # We need to override this, as Compose networking uses the container name and port
       - SERVER_CERT
       - SERVER_KEY
       - USE_TLS
