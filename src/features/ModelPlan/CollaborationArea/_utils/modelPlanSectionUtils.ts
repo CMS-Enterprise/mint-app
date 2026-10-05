@@ -9,6 +9,24 @@ import TaskListSectionKeys from 'constants/enums';
 
 import type { LastModifiedSectionData } from '../_components/LastModifiedSection';
 
+const CLEARANCE_SECTION_KEYS = [
+  'timeline',
+  'basics',
+  'generalCharacteristics',
+  'participantsAndProviders',
+  'beneficiaries',
+  'opsEvalAndLearning',
+  'payments'
+] as const;
+
+type ClearanceSectionKey = (typeof CLEARANCE_SECTION_KEYS)[number];
+
+type ClearanceSection = {
+  readyForClearanceDts?: string | null;
+  readyForClearanceByUserAccount?: { commonName: string } | null;
+  status?: TaskStatus;
+};
+
 type ModelPlan = GetCollaborationAreaQuery['modelPlan'];
 
 type SectionWithModified = ModelPlan[keyof ModelPlan] & {
@@ -88,5 +106,44 @@ export function getLastEditSectionForTask(
     }
     return null;
   }
+  if (taskKey === PlanTaskKey.PREPARE_FOR_CLEARANCE) {
+    return getLatestClearanceEditSection(modelPlan);
+  }
   return null;
 }
+
+/** Count of task-list sections marked ready for clearance (7 total, including timeline). */
+export const getSectionsReadyForClearanceCount = (
+  modelPlan: ModelPlan
+): number => {
+  return CLEARANCE_SECTION_KEYS.filter(key => {
+    const section = modelPlan[key] as ClearanceSection | undefined;
+    return section?.status === TaskStatus.READY_FOR_CLEARANCE;
+  }).length;
+};
+
+const getLatestClearanceEditSection = (
+  modelPlan: ModelPlan
+): LastModifiedSectionData | null => {
+  let latest: LastModifiedSectionData | null = null;
+
+  CLEARANCE_SECTION_KEYS.forEach(key => {
+    const section = modelPlan[key as ClearanceSectionKey] as
+      | ClearanceSection
+      | undefined;
+    const modifiedDts = section?.readyForClearanceDts;
+    const commonName = section?.readyForClearanceByUserAccount?.commonName;
+    if (
+      modifiedDts &&
+      commonName &&
+      modifiedDts > (latest?.modifiedDts || '')
+    ) {
+      latest = {
+        modifiedDts,
+        modifiedByUserAccount: { commonName }
+      };
+    }
+  });
+
+  return latest;
+};

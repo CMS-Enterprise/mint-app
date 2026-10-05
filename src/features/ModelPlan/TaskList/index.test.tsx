@@ -20,7 +20,6 @@ import {
   ModelPhase,
   ModelStatus,
   MtoStatus,
-  PrepareForClearanceStatus,
   TaskStatus,
   TranslationDataType
 } from 'gql/generated/graphql';
@@ -139,11 +138,6 @@ describe('The Model Plan Task List', () => {
       modifiedDts: '',
       readyForClearanceDts: '',
       status: TaskStatus.IN_PROGRESS
-    },
-    prepareForClearance: {
-      __typename: 'PrepareForClearance',
-      status: PrepareForClearanceStatus.IN_PROGRESS,
-      modifiedDts: ''
     },
     payments: {
       __typename: 'PlanPayments',
@@ -396,6 +390,7 @@ describe('The Model Plan Task List', () => {
     await waitForElementToBeRemoved(() => getByTestId('page-loading'));
 
     expect(await screen.findByTestId('task-list')).toBeInTheDocument();
+    expect(screen.queryByText('Prepare for clearance')).not.toBeInTheDocument();
   });
 
   it('displays the model plan name', async () => {

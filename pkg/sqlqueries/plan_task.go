@@ -20,20 +20,25 @@ var planTaskActivateUpcomingSQL string
 //go:embed SQL/plan_task/get_by_model_plan_id_and_key.sql
 var planTaskGetByModelPlanIDAndKeySQL string
 
+//go:embed SQL/plan_task/get_model_plan_ids_due_for_prepare_for_clearance.sql
+var planTaskGetModelPlanIDsDueForPrepareForClearanceSQL string
+
 type planTaskScripts struct {
-	GetByModelPlanIDLoader string
-	GetByIDLoader          string
-	UpdateStateByKey       string
-	Create                 string
-	ActivateUpcoming       string
-	GetByModelPlanIDAndKey string
+	GetByModelPlanIDLoader                   string
+	GetByIDLoader                            string
+	UpdateStateByKey                         string
+	Create                                   string
+	ActivateUpcoming                         string
+	GetByModelPlanIDAndKey                   string
+	GetModelPlanIDsDueForPrepareForClearance string
 }
 
 var PlanTask = planTaskScripts{
-	GetByModelPlanIDLoader: planTaskGetByModelPlanIDLoaderSQL,
-	GetByIDLoader:          planTaskGetByIDLoaderSQL,
-	UpdateStateByKey:       planTaskUpdateStateByKeySQL,
-	Create:                 planTaskCreateSQL,
-	ActivateUpcoming:       planTaskActivateUpcomingSQL,
-	GetByModelPlanIDAndKey: planTaskGetByModelPlanIDAndKeySQL,
+	GetByModelPlanIDLoader:                   planTaskGetByModelPlanIDLoaderSQL,
+	GetByIDLoader:                            planTaskGetByIDLoaderSQL,
+	UpdateStateByKey:                         planTaskUpdateStateByKeySQL,
+	Create:                                   planTaskCreateSQL,
+	ActivateUpcoming:                         planTaskActivateUpcomingSQL,
+	GetByModelPlanIDAndKey:                   planTaskGetByModelPlanIDAndKeySQL,
+	GetModelPlanIDsDueForPrepareForClearance: planTaskGetModelPlanIDsDueForPrepareForClearanceSQL,
 }
