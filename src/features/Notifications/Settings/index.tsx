@@ -175,6 +175,21 @@ const NotificationSettings = () => {
     SelectNotificationType<keyof NotificationSettingsFormType>[]
   >([]);
 
+  // Queue the "which models" scope whenever that preference's checkbox changes.
+  // Reading dirtyFields inside onChange races the form state update, so the scope
+  // was sometimes left null and the user never received the notification.
+  const queueModelScope = (
+    notificationType?: SelectNotificationType<
+      keyof NotificationSettingsFormType
+    >
+  ) => {
+    if (!notificationType) return;
+
+    setNotificationTypesChanges(prev =>
+      prev.includes(notificationType) ? prev : [...prev, notificationType]
+    );
+  };
+
   const onSubmit = (formData: NotificationSettingsFormType) => {
     const dirtyInputs = dirtyInput(notificationPreferences, formData);
 
@@ -417,10 +432,7 @@ const NotificationSettings = () => {
                             <Controller
                               name={notification.name}
                               control={control}
-                              render={({
-                                field: { ref, ...field },
-                                formState
-                              }) => (
+                              render={({ field: { ref, ...field } }) => (
                                 <>
                                   <Grid mobile={{ col: 3 }}>
                                     <Checkbox
@@ -445,22 +457,8 @@ const NotificationSettings = () => {
                                           );
                                         }
 
-                                        const hasPrefchanged =
-                                          formState.dirtyFields[
-                                            notification.name
-                                          ];
-
-                                        setNotificationTypesChanges(prev =>
-                                          hasPrefchanged
-                                            ? [
-                                                ...prev,
-                                                notification.notificationType
-                                              ]
-                                            : prev.filter(
-                                                type =>
-                                                  type !==
-                                                  notification.notificationType
-                                              )
+                                        queueModelScope(
+                                          notification.notificationType
                                         );
                                       }}
                                       disabled={notification.disable?.includes(
@@ -496,22 +494,8 @@ const NotificationSettings = () => {
                                           );
                                         }
 
-                                        const hasPrefchanged =
-                                          formState.dirtyFields[
-                                            notification.name
-                                          ];
-
-                                        setNotificationTypesChanges(prev =>
-                                          hasPrefchanged
-                                            ? [
-                                                ...prev,
-                                                notification.notificationType
-                                              ]
-                                            : prev.filter(
-                                                type =>
-                                                  type !==
-                                                  notification.notificationType
-                                              )
+                                        queueModelScope(
+                                          notification.notificationType
                                         );
                                       }}
                                       disabled={notification.disable?.includes(
