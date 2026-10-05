@@ -111,10 +111,14 @@ const ConfirmAndSubmit = () => {
       isWaiverSelectionComplete(waiverSelectionData)
     : Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed);
 
-  const willNotRequireWaivers =
-    Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed) ||
-    (hasSuggestedWaivers && !hasSelectedWaivers);
+  const allSuggestedWaiversDeclined =
+    waiverSelectionData
+      ?.filter(waiver => waiver.isSuggested)
+      .every(waiver => waiver.willUseWaiver === false) ?? false;
 
+  const willNotRequireWaivers = hasSuggestedWaivers
+    ? allSuggestedWaiversDeclined
+    : Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed);
   const mappedFormData = mapDefaultFormValues<ConfirmAndSubmitForm>(
     waiverAssessmentSurveyData,
     DEFAULT_FORM_VALUES
