@@ -83,26 +83,37 @@ const ConfirmAndSubmit = () => {
 
   const waiverSelectionData = data?.modelPlan?.waiverInfo?.commonWaivers;
 
-  const selectedWaivers = useMemo(() => {
-    return (
-      waiverSelectionData
-        ?.filter(waiver => waiver.willUseWaiver === true)
-        .sort(sortByName) || []
-    );
-  }, [waiverSelectionData]);
+  const { selectedWaivers, declinedWaivers, suggestedWaivers } = useMemo(() => {
+    if (!waiverSelectionData) {
+      return {
+        selectedWaivers: [],
+        declinedWaivers: [],
+        suggestedWaivers: []
+      };
+    }
 
-  const declinedWaivers = useMemo(() => {
-    return (
-      waiverSelectionData
-        ?.filter(waiver => waiver.isSuggested && waiver.willUseWaiver === false)
-        .sort(sortByName) || []
+    const waiversInUse = waiverSelectionData
+      .filter(waiver => waiver.willUseWaiver === true)
+      .sort(sortByName);
+
+    const waiversSuggested = waiverSelectionData.filter(
+      waiver => waiver.isSuggested
     );
+
+    const waiversDeclined = waiversSuggested
+      .filter(waiver => waiver.willUseWaiver === false)
+      .sort(sortByName);
+
+    return {
+      selectedWaivers: waiversInUse,
+      declinedWaivers: waiversDeclined,
+      suggestedWaivers: waiversSuggested
+    };
   }, [waiverSelectionData]);
 
   const hasSelectedWaivers = selectedWaivers.length > 0;
 
-  const hasSuggestedWaivers =
-    waiverSelectionData?.some(waiver => waiver.isSuggested) ?? false;
+  const hasSuggestedWaivers = suggestedWaivers.length > 0;
 
   const requiresWaiverValidation = hasSelectedWaivers || hasSuggestedWaivers;
 
@@ -112,13 +123,15 @@ const ConfirmAndSubmit = () => {
     : Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed);
 
   const allSuggestedWaiversDeclined =
-    waiverSelectionData
-      ?.filter(waiver => waiver.isSuggested)
-      .every(waiver => waiver.willUseWaiver === false) ?? false;
+    hasSuggestedWaivers && declinedWaivers.length === suggestedWaivers.length;
 
+  // only shows not required waivers if the no waiver box is checked or if user declined all suggested waivers.
+  // Note user can change answers to trigger suggested waivers appear without changing isEmptyWaiversConfirmed status
+  // Therefore check if there's any suugested waivers first
   const willNotRequireWaivers = hasSuggestedWaivers
     ? allSuggestedWaiversDeclined
     : Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed);
+
   const mappedFormData = mapDefaultFormValues<ConfirmAndSubmitForm>(
     waiverAssessmentSurveyData,
     DEFAULT_FORM_VALUES

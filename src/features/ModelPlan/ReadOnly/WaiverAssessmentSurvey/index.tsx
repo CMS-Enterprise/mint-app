@@ -47,16 +47,25 @@ const ReadOnlyWaiverAssessmentSurvey = ({
     .filter(waiver => waiver.willUseWaiver === true)
     .sort(sortByName);
 
-  const declinedWaivers = waiverSelectionData
-    .filter(waiver => waiver.isSuggested && waiver.willUseWaiver === false)
+  const suggestedWaivers = waiverSelectionData.filter(
+    waiver => waiver.isSuggested
+  );
+
+  const declinedWaivers = suggestedWaivers
+    .filter(waiver => waiver.willUseWaiver === false)
     .sort(sortByName);
 
-  const hasSuggestedWaivers =
-    waiverSelectionData?.some(waiver => waiver.isSuggested) ?? false;
+  const hasSuggestedWaivers = suggestedWaivers.length > 0;
 
-  const willNotRequireWaivers =
-    Boolean(allWaiverAssessmentSurveyData.isEmptyWaiversConfirmed) ||
-    (hasSuggestedWaivers && selectedWaivers.length === 0);
+  const allSuggestedWaiversDeclined =
+    hasSuggestedWaivers && declinedWaivers.length === suggestedWaivers.length;
+
+  // only shows not required waivers if the no waiver box is checked or if user declined all suggested waivers.
+  // Note user can change answers to trigger suggested waivers appear without changing isEmptyWaiversConfirmed status
+  // Therefore check if there's any suugested waivers first
+  const willNotRequireWaivers = hasSuggestedWaivers
+    ? allSuggestedWaiversDeclined
+    : Boolean(allWaiverAssessmentSurveyData.isEmptyWaiversConfirmed);
 
   return (
     <div
