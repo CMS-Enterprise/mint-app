@@ -266,7 +266,7 @@ func translateField(
 	}
 
 	children, hasChildren := translationInterface.GetChildren()
-	if hasChildren {
+	if hasChildren && shouldTrackNotApplicableQuestions(audit.TableName) {
 		conditionals = checkChildConditionals(old, new, children)
 	}
 

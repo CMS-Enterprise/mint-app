@@ -7,6 +7,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"github.com/cms-enterprise/mint-app/mappings"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
@@ -142,6 +143,55 @@ func TestTranslateField(t *testing.T) {
 
 	})
 
+}
+
+func TestTranslateFieldNotApplicableQuestionsByTable(t *testing.T) {
+	tests := []struct {
+		name      string
+		tableName models.TableName
+		fieldName string
+		want      bool
+	}{
+		{name: "waiver assessment survey", tableName: models.TNWaiverAssessmentSurvey, fieldName: "modifies_medicare_savings_programs", want: false},
+		{name: "IDDOC questionnaire", tableName: models.TNIddocQuestionnaire, fieldName: "needed", want: true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			translation, err := mappings.GetTranslation(tt.tableName)
+			if !assert.NoError(t, err) {
+				return
+			}
+			translationMap, err := translation.ToMap()
+			if !assert.NoError(t, err) {
+				return
+			}
+			if !assert.Contains(t, translationMap, tt.fieldName) {
+				return
+			}
+			children, hasChildren := translationMap[tt.fieldName].GetChildren()
+			assert.True(t, hasChildren)
+			assert.NotEmpty(t, children["true"])
+
+			audit := &models.AuditChange{TableName: tt.tableName}
+			field, translated, err := translateField(
+				context.Background(), nil, tt.fieldName,
+				models.AuditField{Old: "true", New: "false"},
+				audit, models.DBOpUpdate, translationMap,
+			)
+			assert.NoError(t, err)
+			if !assert.True(t, translated) || !assert.NotNil(t, field) {
+				return
+			}
+			if tt.want {
+				if assert.NotNil(t, field.NotApplicableQuestions) {
+					assert.NotEmpty(t, *field.NotApplicableQuestions)
+				}
+			} else {
+				assert.Nil(t, field.NotApplicableQuestions)
+			}
+		})
+	}
 }
 
 func TestGetChangeType(t *testing.T) {

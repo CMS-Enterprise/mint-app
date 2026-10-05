@@ -9,6 +9,24 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+func TestShouldTrackNotApplicableQuestions(t *testing.T) {
+	tests := []struct {
+		name      string
+		tableName models.TableName
+		want      bool
+	}{
+		{name: "waiver assessment survey", tableName: models.TNWaiverAssessmentSurvey, want: false},
+		{name: "IDDOC questionnaire", tableName: models.TNIddocQuestionnaire, want: true},
+		{name: "plan beneficiaries", tableName: models.TNPlanBeneficiaries, want: true},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.want, shouldTrackNotApplicableQuestions(tt.tableName))
+		})
+	}
+}
+
 // TestCheckChildConditionals verifies the conditional question logic
 func TestCheckChildConditionals(t *testing.T) {
 	childMap := testChildMap()
