@@ -257,15 +257,19 @@ describe('Discussion Component', () => {
 
     const topicSelect = screen.getByRole('combobox', { name: /topic/i });
 
-    userEvent.selectOptions(topicSelect, [DiscussionTopicType.MODEL_PLAN_ALL]);
+    expect(
+      screen.getByRole('option', { name: 'Waiver assessment survey' })
+    ).toHaveValue(DiscussionTopicType.WAIVER_ASSESSMENT_SURVEY);
+
+    userEvent.selectOptions(topicSelect, [
+      DiscussionTopicType.WAIVER_ASSESSMENT_SURVEY
+    ]);
 
     await waitFor(() => {
-      expect(topicSelect).toHaveValue(DiscussionTopicType.MODEL_PLAN_ALL);
+      expect(topicSelect).toHaveValue(
+        DiscussionTopicType.WAIVER_ASSESSMENT_SURVEY
+      );
     });
-
-    expect(
-      screen.queryByText('Waiver assessment survey')
-    ).not.toBeInTheDocument();
 
     expect(
       screen.getByRole('button', { name: /Save discussion/i })
