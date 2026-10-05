@@ -40,7 +40,7 @@ describe('getDefaultDiscussionTopicFromPath', () => {
     ).toBe(DiscussionTopicType.MODEL_PLAN_GENERAL_CHARACTERISTICS);
   });
 
-  it('maps timeline, data exchange, iddoc, and MTO', () => {
+  it('maps timeline, data exchange, waiver survey, iddoc, and MTO', () => {
     expect(
       getDefaultDiscussionTopicFromPath(
         '/models/abc/collaboration-area/model-timeline'
@@ -52,6 +52,11 @@ describe('getDefaultDiscussionTopicFromPath', () => {
         '/models/abc/collaboration-area/additional-questionnaires/data-exchange-approach/collecting-and-sending-data'
       )
     ).toBe(DiscussionTopicType.DATA_EXCHANGE_APPROACH);
+    expect(
+      getDefaultDiscussionTopicFromPath(
+        '/models/abc/collaboration-area/additional-questionnaires/waiver-assessment-survey/about'
+      )
+    ).toBe(DiscussionTopicType.WAIVER_ASSESSMENT_SURVEY);
 
     expect(
       getDefaultDiscussionTopicFromPath(
