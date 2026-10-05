@@ -466,7 +466,7 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
               <p
                 class="text-base-dark text-normal margin-top-1 margin-bottom-0"
               >
-                For example: NP/PA flexibility, CHW inclusion, etc.
+                For example: Nurse Practitioner (NP)/Physician’s Assistant (PA) flexibility, Community Health Worker (CHW) inclusion, etc.
               </p>
               <div
                 class="display-flex flex-column"

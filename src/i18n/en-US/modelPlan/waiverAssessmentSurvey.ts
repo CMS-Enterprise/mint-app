@@ -186,7 +186,8 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
     goField: 'ModifiesCareTeamScopeOfPractice',
     dbField: 'modifies_care_team_scope_of_practice',
     label: 'Will your model be modifying the care teams’ scope of practice?',
-    sublabel: 'For example: NP/PA flexibility, CHW inclusion, etc.',
+    sublabel:
+      'For example: Nurse Practitioner (NP)/Physician’s Assistant (PA) flexibility, Community Health Worker (CHW) inclusion, etc.',
     hideRelatedQuestionAlert: true,
     dataType: TranslationDataType.BOOLEAN,
     formType: TranslationFormType.RADIO,
