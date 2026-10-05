@@ -208,7 +208,7 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(completeAllTasks(), 'completed');
 
     await waitFor(() => {
-      expect(screen.getByText('Completed tasks (7)')).toBeInTheDocument();
+      expect(screen.getByText('Completed tasks (8)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
