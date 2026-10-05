@@ -608,41 +608,36 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
 
 const waiverTypes: Record<
   CommonWaiverType,
-  { heading: string; description: string; waiverTypeText: string }
+  { heading: string; description: string }
 > = {
   [CommonWaiverType.FRAUD_ABUSE]: {
     heading: 'Fraud and abuse waivers, safe harbors, and exceptions',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of fraud and abuse waivers, safe harbors, and exceptions. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Fraud and abuse waivers'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of fraud and abuse waivers, safe harbors, and exceptions. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
   },
   [CommonWaiverType.MEDICARE_PAYMENT]: {
-    heading: 'Medicare payment waivers',
+    heading: 'Medicare payment waiver',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Medicare payment waivers'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
   },
   [CommonWaiverType.MEDICAID_PAYMENT]: {
-    heading: 'Medicaid payment waivers',
+    heading: 'Medicaid waiver',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Medicaid payment waivers'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
   },
   [CommonWaiverType.PROGRAM_MEDICARE_BE]: {
-    heading: 'Program waivers - Medicare Benefit Enhancements (BEs)',
+    heading: 'Medicare program waiver',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
-    waiverTypeText: 'Program waivers (Medicare BEs)'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
   },
   [CommonWaiverType.UNKNOWN]: {
     heading: 'Unknown waiver type',
-    description: 'The following waivers do not have a known waiver type.',
-    waiverTypeText: 'Unknown waivers'
+    description: 'The following waivers do not have a known waiver type.'
   }
 };
 
 const waiverAssessmentSurveyMisc = {
-  heading: 'Waiver Assessment Survey',
+  heading: 'Waiver assessment survey',
   bannerText:
     'Your waiver assessment survey can only be accessed by one person at a time. If you are not actively editing or reviewing this section, please exit out of it so others can access it.',
   description:
@@ -664,7 +659,7 @@ const waiverAssessmentSurveyMisc = {
       'Model Leads (with the assistance of other model team members as necessary), will work to complete this survey and help determine which waivers are needed for this model. This will help the Front Office, group leadership, and other MINT users understand which waivers you are utilizing and understands the reasons why you are not using other available waivers. If you have any questions, please contact Grace Goodhew or Megan Hyde in LDG, or email the MINT Team.',
     modelTeam: 'Model team',
     modelTeamDescription:
-      'Model leads or model team members responsible for data-centric activities should work with the IT Lead or Solution Architect to complete the questions in this approach.',
+      'Other model team members responsible for waiver activities should work with the Model Lead to complete the questions in this survey.',
     modelLead: 'Model Lead',
     email: 'Email the MINT Team',
     whatHappenNext: 'What happens next',
@@ -711,7 +706,7 @@ const waiverAssessmentSurveyMisc = {
   activeModelWaivers: {
     heading: 'Active model waivers',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. The waivers you select using these questions are all currently used in active models. At the end of this form, you will also be able to review waivers not currently used in active models.'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. The waivers you select using these questions are all currently used in active models.'
   },
   availableWaivers: {
     heading: 'Available waivers',
