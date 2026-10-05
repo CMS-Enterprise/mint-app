@@ -27,7 +27,6 @@ import { getKeys } from 'types/translation';
 import flattenErrors from 'utils/flattenErrors';
 
 import DiscussionUserInfo from './_components/DiscussionUserInfo';
-import DISCUSSION_TOPICS_HIDDEN_FROM_UI from './discussionTopicConstants';
 import {
   getDiscussionFormValidationErrors,
   isDiscussionFormSubmittable
@@ -304,18 +303,13 @@ const QuestionAndReply = ({
                           {`-${discussionsMiscT('select')}-`}
                         </option>
 
-                        {getKeys(topicConfig.options)
-                          .filter(
-                            topic =>
-                              !DISCUSSION_TOPICS_HIDDEN_FROM_UI.includes(topic)
-                          )
-                          .map(topic => {
-                            return (
-                              <option key={topic} value={topic}>
-                                {topicConfig.options[topic]}
-                              </option>
-                            );
-                          })}
+                        {getKeys(topicConfig.options).map(topic => {
+                          return (
+                            <option key={topic} value={topic}>
+                              {topicConfig.options[topic]}
+                            </option>
+                          );
+                        })}
                       </Field>
                     </FieldGroup>
                   )}
