@@ -154,6 +154,23 @@ func UpdatePlanTimeline(
 			)
 		}
 
+		_, clearanceStartsChanged := changes["clearanceStarts"]
+		_, statusChanged := changes["status"]
+		if clearanceStartsChanged || statusChanged {
+			if err := UpdatePlanTaskStateOnPrepareForClearanceSync(
+				ctx,
+				tx,
+				logger,
+				existing.ModelPlanID,
+				principal,
+				store,
+				emailService,
+				addressBook,
+			); err != nil {
+				return nil, err
+			}
+		}
+
 		return updatedTimeline, nil
 	})
 
