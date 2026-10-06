@@ -221,7 +221,8 @@ jobs:
         run: |
           ./scripts/github-action-announce-broken-branch
 
-  e2e_tests:
+  # The matrix name is not the required status check. e2e_tests below reports that name.
+  e2e_test_shards:
     name: e2e_tests (shard ${{ matrix.shard }}/${{ matrix.total_shards }})
     if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
     runs-on: ubuntu-latest
@@ -325,6 +326,25 @@ jobs:
         if: ${{ failure() }}
         run: |
           ./scripts/github-action-announce-broken-branch
+
+  # Branch protection requires "run_tests / e2e_tests". Shard jobs report
+  # "e2e_tests (shard N/4)" instead, so this job posts the expected name.
+  # Shards use continue-on-error, so a failed shard keeps result=success and
+  # outcome=failure. This job has to read outcome.
+  e2e_tests:
+    name: e2e_tests
+    needs: e2e_test_shards
+    if: ${{ !cancelled() && needs.e2e_test_shards.result != 'skipped' && needs.e2e_test_shards.result != 'cancelled' }}
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Require every shard to pass
+        run: |
+          echo "shard result=${{ needs.e2e_test_shards.result }} outcome=${{ needs.e2e_test_shards.outcome }}"
+          if [ "${{ needs.e2e_test_shards.outcome }}" != "success" ]; then
+            echo "One or more Cypress shards failed."
+            exit 1
+          fi
 
   lint:
     if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
