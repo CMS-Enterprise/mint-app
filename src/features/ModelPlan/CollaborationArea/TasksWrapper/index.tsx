@@ -89,7 +89,11 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
   return (
     <div>
       <CardGroup>
-        <TaskCard task={currentTask} modelPlan={modelPlan} />
+        <TaskCard
+          task={currentTask}
+          modelPlan={modelPlan}
+          prepareForClearanceOrigin="collaborationArea"
+        />
       </CardGroup>
 
       <div className="display-flex flex-align-center flex-justify">

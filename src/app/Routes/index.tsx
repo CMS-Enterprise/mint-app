@@ -121,6 +121,27 @@ const TaskListToModelPlanRedirect = () => {
   return <Navigate to={newLocation} replace />;
 };
 
+// Redirect old model-plan prepare-for-clearance paths to collaboration-area root
+const ModelPlanPrepareForClearanceRedirect = () => {
+  const location = useLocation();
+
+  const newPath = location.pathname.replace(
+    '/collaboration-area/model-plan/prepare-for-clearance',
+    '/collaboration-area/prepare-for-clearance'
+  );
+
+  return (
+    <Navigate
+      to={{
+        pathname: newPath,
+        search: location.search,
+        hash: location.hash
+      }}
+      replace
+    />
+  );
+};
+
 const ProtectedHome = () => {
   const { authState } = useOktaAuth();
   return authState?.isAuthenticated ? (
@@ -406,6 +427,10 @@ const router = createBrowserRouter([
 
       // Prepare for Clearance Routes
       prepareForClearanceRoutes,
+      {
+        path: '/models/:modelID/collaboration-area/model-plan/prepare-for-clearance/*',
+        element: <ModelPlanPrepareForClearanceRedirect />
+      },
 
       // IT Solutions Routes
       {

@@ -1,6 +1,9 @@
 import { defineConfig } from 'cypress';
 
+import setupNodeEvents from './cypress/plugins';
+
 export default defineConfig({
+  allowCypressEnv: false,
   viewportHeight: 800,
   viewportWidth: 1280,
   projectId: 'vc6vw5',
@@ -8,11 +11,9 @@ export default defineConfig({
   execTimeout: 120000,
   video: true,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
+    // Register Node-side Cypress event handlers.
     setupNodeEvents(on, config) {
-      // eslint-disable-next-line global-require
-      return require('./cypress/plugins/index')(on, config);
+      return setupNodeEvents(on, config);
     },
     baseUrl: 'http://localhost:3005',
     specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',

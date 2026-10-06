@@ -229,9 +229,9 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 		return err
 	}
 
-	sanitizedCRS, err := models.ConvertRawCRSToParsed(crsRaw)
-	if err != nil {
-		return err
+	sanitizedCRS, skipErrs := models.ConvertRawCRSToParsed(crsRaw)
+	for _, skipErr := range skipErrs {
+		logger.Warn("skipping invalid ECHIMP CR record", zap.Error(skipErr))
 	}
 
 	tdlsRaw, err := parquet.ReadFromS3[*models.EChimpTDLRaw](ctx, client, tdlKey)
@@ -243,9 +243,9 @@ func (c *crAndTDLCache) refreshCache(ctx context.Context, client *s3.S3Client, v
 		return err
 	}
 
-	sanitizedTDLS, err := models.ConvertRawTDLSToParsed(tdlsRaw)
-	if err != nil {
-		return err
+	sanitizedTDLS, skipErrs := models.ConvertRawTDLSToParsed(tdlsRaw)
+	for _, skipErr := range skipErrs {
+		logger.Warn("skipping invalid ECHIMP TDL record", zap.Error(skipErr))
 	}
 
 	allCrsAndTDLs := aggregateAllCrsAndTDLS(sanitizedCRS, sanitizedTDLS)

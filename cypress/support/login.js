@@ -1,8 +1,6 @@
 // Hosted Okta/ELP redirect login (requires VITE_OKTA_REDIRECT_LOGIN_ENABLED=true).
 // CMS ELP chooser → EUA/IDM form → optional MFA → back to localhost.
-Cypress.Commands.add('login', () => {
-  const oktaDomain = Cypress.env('oktaDomain');
-
+function loginWithEnv({ oktaDomain, username, password, otpSecret }) {
   // Hosted IDM pages throw opaque cross-origin errors ("Script error." / "null")
   // that Cypress surfaces on the primary origin during redirect. Suppress only
   // those opaque cases so real app exceptions still fail the test.
@@ -46,12 +44,16 @@ Cypress.Commands.add('login', () => {
     oktaDomain,
     {
       args: {
-        username: Cypress.env('username'),
-        password: Cypress.env('password'),
-        otpSecret: Cypress.env('otpSecret')
+        username,
+        password,
+        otpSecret
       }
     },
-    ({ username, password, otpSecret }) => {
+    ({
+      username: originUsername,
+      password: originPassword,
+      otpSecret: originOtpSecret
+    }) => {
       // Same opaque cross-origin script errors, scoped to the IDM origin.
       Cypress.on('uncaught:exception', err => {
         const msg = `${err?.message || ''}`;
@@ -81,12 +83,12 @@ Cypress.Commands.add('login', () => {
       cy.get('input[name="identifier"]', { timeout: 15000 })
         .should('be.visible')
         .clear()
-        .type(username, { log: false });
+        .type(originUsername, { log: false });
 
       cy.get('input[name="credentials.passcode"]')
         .should('be.visible')
         .clear()
-        .type(password, {
+        .type(originPassword, {
           log: false,
           parseSpecialCharSequences: false
         });
@@ -154,7 +156,7 @@ Cypress.Commands.add('login', () => {
             });
         }
 
-        cy.task('generateOTP', otpSecret, { log: false }).then(token => {
+        cy.task('generateOTP', originOtpSecret, { log: false }).then(token => {
           cy.get('input[name="credentials.passcode"], input[name="answer"]', {
             timeout: 15000
           })
@@ -184,6 +186,12 @@ Cypress.Commands.add('login', () => {
   cy.location('pathname', { timeout: 30000 }).should(
     'eq',
     '/pre-decisional-notice'
+  );
+}
+
+Cypress.Commands.add('login', () => {
+  cy.env(['oktaDomain', 'username', 'password', 'otpSecret']).then(
+    loginWithEnv
   );
 });
 
