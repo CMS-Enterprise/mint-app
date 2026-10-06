@@ -22,7 +22,7 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
     <p
       class="margin-top-neg-1 margin-bottom-4 text-base-dark"
     >
-      The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. The waivers you select using these questions are all currently used in active models. At the end of this form, you will also be able to review waivers not currently used in active models.
+      The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. The waivers you select using these questions are all currently used in active models.
     </p>
     <div>
       <form
@@ -466,7 +466,7 @@ exports[`ActiveModelWaivers Component > matches snapshot 1`] = `
               <p
                 class="text-base-dark text-normal margin-top-1 margin-bottom-0"
               >
-                For example: NP/PA flexibility, CHW inclusion, etc.
+                For example: Nurse Practitioner (NP)/Physician’s Assistant (PA) flexibility, Community Health Worker (CHW) inclusion, etc.
               </p>
               <div
                 class="display-flex flex-column"

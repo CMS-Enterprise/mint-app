@@ -76,7 +76,7 @@ exports[`WaiverInfoPanel > matches snapshot when open 1`] = `
                   <p
                     class="text-mint-body margin-top-0 margin-bottom-1"
                   >
-                    Medicare payment waivers
+                    Medicare payment waiver
                   </p>
                   <h2
                     class="margin-top-0 margin-bottom-1 line-height-large"
