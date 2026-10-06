@@ -8,6 +8,19 @@ import {
 // Change History purposes only. These fields are stored on the waiver table,
 // while the rest of the questionnaire fields are stored on waiver_assessment_survey.
 const waiver: TranslationWaiver = {
+  willUseWaiver: {
+    gqlField: 'willUseWaiver',
+    goField: 'WillUseWaiver',
+    dbField: 'will_use_waiver',
+    label: 'Do you plan to use this waiver with your model?',
+    dataType: TranslationDataType.BOOLEAN,
+    formType: TranslationFormType.RADIO,
+    order: 1,
+    options: {
+      true: 'Yes',
+      false: 'No'
+    }
+  },
   usingReason: {
     gqlField: 'usingReason',
     goField: 'UsingReason',

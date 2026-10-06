@@ -3065,6 +3065,7 @@ type ComplexityRoot struct {
 	WaiverTranslation struct {
 		NotUsingReason func(childComplexity int) int
 		UsingReason    func(childComplexity int) int
+		WillUseWaiver  func(childComplexity int) int
 	}
 }
 
@@ -19078,6 +19079,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.WaiverTranslation.UsingReason(childComplexity), true
+	case "WaiverTranslation.willUseWaiver":
+		if e.ComplexityRoot.WaiverTranslation.WillUseWaiver == nil {
+			break
+		}
+
+		return e.ComplexityRoot.WaiverTranslation.WillUseWaiver(childComplexity), true
 
 	}
 	return 0, false
@@ -27012,6 +27019,8 @@ extend type Query {
 Represents the translation data for a model plan's waiver selections.
 """
 type WaiverTranslation {
+  willUseWaiver: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "will_use_waiver")
   usingReason: TranslationField! @goTag(key: "db", value: "using_reason")
   notUsingReason: TranslationField! @goTag(key: "db", value: "not_using_reason")
 }
@@ -102161,6 +102170,38 @@ func (ec *executionContext) fieldContext_WaiverInfo_waivers(_ context.Context, f
 	return fc, nil
 }
 
+func (ec *executionContext) _WaiverTranslation_willUseWaiver(ctx context.Context, field graphql.CollectedField, obj *model.WaiverTranslation) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_WaiverTranslation_willUseWaiver(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.WillUseWaiver, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.TranslationFieldWithOptions) graphql.Marshaler {
+			return ec.marshalNTranslationFieldWithOptions2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐTranslationFieldWithOptions(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_WaiverTranslation_willUseWaiver(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "WaiverTranslation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_TranslationFieldWithOptions(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _WaiverTranslation_usingReason(ctx context.Context, field graphql.CollectedField, obj *model.WaiverTranslation) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -138726,6 +138767,11 @@ func (ec *executionContext) _WaiverTranslation(ctx context.Context, sel ast.Sele
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("WaiverTranslation")
+		case "willUseWaiver":
+			out.Values[i] = ec._WaiverTranslation_willUseWaiver(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "usingReason":
 			out.Values[i] = ec._WaiverTranslation_usingReason(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

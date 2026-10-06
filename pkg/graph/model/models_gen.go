@@ -1024,8 +1024,9 @@ type WaiverAssessmentSurveyTranslation struct {
 
 // Represents the translation data for a model plan's waiver selections.
 type WaiverTranslation struct {
-	UsingReason    models.TranslationField `json:"usingReason" db:"using_reason"`
-	NotUsingReason models.TranslationField `json:"notUsingReason" db:"not_using_reason"`
+	WillUseWaiver  models.TranslationFieldWithOptions `json:"willUseWaiver" db:"will_use_waiver"`
+	UsingReason    models.TranslationField            `json:"usingReason" db:"using_reason"`
+	NotUsingReason models.TranslationField            `json:"notUsingReason" db:"not_using_reason"`
 }
 
 type ActionType string

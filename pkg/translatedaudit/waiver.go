@@ -10,7 +10,7 @@ import (
 )
 
 func getWaiverNameForAudit(store *storage.Store, audit *models.AuditChangeWithModelPlanID) (string, error) {
-	if audit.TableName != models.TNWaiver || !hasWaiverReasonField(audit.Fields) {
+	if audit.TableName != models.TNWaiver || !hasWaiverSelectionField(audit.Fields) {
 		return "", nil
 	}
 	if store == nil {
@@ -33,8 +33,7 @@ func getWaiverNameForAudit(store *storage.Store, audit *models.AuditChangeWithMo
 	return commonWaivers[0].Name, nil
 }
 
-func hasWaiverReasonField(fields models.AuditFields) bool {
-	_, hasUsingReason := fields["using_reason"]
-	_, hasNotUsingReason := fields["not_using_reason"]
-	return hasUsingReason || hasNotUsingReason
+func hasWaiverSelectionField(fields models.AuditFields) bool {
+	_, hasSelection := fields["will_use_waiver"]
+	return hasSelection
 }

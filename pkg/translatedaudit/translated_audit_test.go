@@ -215,17 +215,73 @@ func TestGetChangeType(t *testing.T) {
 	assert.EqualValues(t, models.AFCRemoved, ct)
 }
 
-func TestWaiverReasonLabel(t *testing.T) {
+func TestWaiverSelectionLabel(t *testing.T) {
 	assert.Equal(
 		t,
-		"Please explain why your model is not using this waiver. (Waiver: Implementation period)",
-		waiverReasonLabel("Please explain why your model is not using this waiver.", "Implementation period"),
+		"Do you plan to use this waiver with your model? (Waiver: Implementation period)",
+		waiverSelectionLabel("Do you plan to use this waiver with your model?", "Implementation period"),
 	)
 }
 
-func TestIsWaiverReasonField(t *testing.T) {
-	assert.True(t, isWaiverReasonField(models.TNWaiver, "using_reason"))
-	assert.True(t, isWaiverReasonField(models.TNWaiver, "not_using_reason"))
-	assert.False(t, isWaiverReasonField(models.TNWaiverAssessmentSurvey, "using_reason"))
-	assert.False(t, isWaiverReasonField(models.TNWaiver, "will_use_waiver"))
+func TestIsWaiverSelectionField(t *testing.T) {
+	assert.True(t, isWaiverSelectionField(models.TNWaiver, "will_use_waiver"))
+	assert.False(t, isWaiverSelectionField(models.TNWaiver, "using_reason"))
+	assert.False(t, isWaiverSelectionField(models.TNWaiver, "not_using_reason"))
+	assert.False(t, isWaiverSelectionField(models.TNWaiverAssessmentSurvey, "will_use_waiver"))
+}
+
+func TestWaiverNameLookupIsNeededForSelectionOnlyChange(t *testing.T) {
+	audit := &models.AuditChangeWithModelPlanID{
+		AuditChange: models.AuditChange{
+			TableName: models.TNWaiver,
+			Fields: models.AuditFields{
+				"will_use_waiver": {Old: "t", New: "f"},
+			},
+		},
+	}
+
+	_, err := getWaiverNameForAudit(nil, audit)
+	assert.ErrorContains(t, err, "store was nil")
+
+	audit.Fields = models.AuditFields{"not_using_reason": {Old: nil, New: "Not needed"}}
+	name, err := getWaiverNameForAudit(nil, audit)
+	assert.NoError(t, err)
+	assert.Empty(t, name)
+}
+
+func TestTranslateWaiverDecisionAndReason(t *testing.T) {
+	translation, err := mappings.WaiverTranslation()
+	if !assert.NoError(t, err) {
+		return
+	}
+	translationMap, err := translation.ToMap()
+	if !assert.NoError(t, err) {
+		return
+	}
+
+	audit := &models.AuditChange{TableName: models.TNWaiver}
+	decision, translated, err := translateField(
+		context.Background(), nil, "will_use_waiver",
+		models.AuditField{Old: "t", New: "f"}, audit, models.DBOpUpdate, translationMap,
+	)
+	assert.NoError(t, err)
+	if !assert.True(t, translated) || !assert.NotNil(t, decision) {
+		return
+	}
+	assert.Equal(t, models.AFCUpdated, decision.ChangeType)
+	assert.Equal(t, "Yes", decision.OldTranslated)
+	assert.Equal(t, "No", decision.NewTranslated)
+	assert.Equal(t, "Do you plan to use this waiver with your model?", decision.FieldNameTranslated)
+
+	reason, translated, err := translateField(
+		context.Background(), nil, "not_using_reason",
+		models.AuditField{Old: nil, New: "The waiver is not needed."}, audit, models.DBOpUpdate, translationMap,
+	)
+	assert.NoError(t, err)
+	if !assert.True(t, translated) || !assert.NotNil(t, reason) {
+		return
+	}
+	assert.Equal(t, models.AFCAnswered, reason.ChangeType)
+	assert.Equal(t, "Please explain why your model is not using this waiver.", reason.FieldNameTranslated)
+	assert.Equal(t, "The waiver is not needed.", reason.NewTranslated)
 }

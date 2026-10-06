@@ -11,6 +11,6 @@ func TestWaiverTranslation(t *testing.T) {
 		t,
 		WaiverTranslation,
 		models.Waiver{},
-		append(taskListStructExcludeFields, "CommonWaiverID", "WillUseWaiver"),
+		append(taskListStructExcludeFields, "CommonWaiverID"),
 	)
 }

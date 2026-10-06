@@ -835,6 +835,7 @@ export type TranslationWaiverAssessmentSurvey = {
 
 // Waiver selections - Change History purposes only
 export type TranslationWaiverForm = {
+  willUseWaiver: TranslationFieldPropertiesWithOptions<Bool>;
   usingReason: TranslationFieldProperties;
   notUsingReason: TranslationFieldProperties;
 };

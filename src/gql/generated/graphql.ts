@@ -6670,6 +6670,7 @@ export type WaiverTranslation = {
   __typename: 'WaiverTranslation';
   notUsingReason: TranslationField;
   usingReason: TranslationField;
+  willUseWaiver: TranslationFieldWithOptions;
 };
 
 export enum WaiverType {
