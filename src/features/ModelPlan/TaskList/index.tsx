@@ -70,8 +70,6 @@ type OpsEvalAndLearningType =
 type ParticipantsAndProvidersType =
   GetModelPlanQuery['modelPlan']['participantsAndProviders'];
 type PaymentsType = GetModelPlanQuery['modelPlan']['payments'];
-type PrepareForClearanceType =
-  GetModelPlanQuery['modelPlan']['prepareForClearance'];
 
 type TaskListSectionsType = {
   [key: string]:
@@ -80,8 +78,7 @@ type TaskListSectionsType = {
     | GeneralCharacteristicsType
     | OpsEvalAndLearningType
     | ParticipantsAndProvidersType
-    | PaymentsType
-    | PrepareForClearanceType;
+    | PaymentsType;
 };
 
 const taskListSectionMap: Partial<Record<string, LockableSection>> = {
@@ -90,8 +87,7 @@ const taskListSectionMap: Partial<Record<string, LockableSection>> = {
   participantsAndProviders: LockableSection.PARTICIPANTS_AND_PROVIDERS,
   beneficiaries: LockableSection.BENEFICIARIES,
   opsEvalAndLearning: LockableSection.OPERATIONS_EVALUATION_AND_LEARNING,
-  payments: LockableSection.PAYMENT,
-  prepareForClearance: LockableSection.PREPARE_FOR_CLEARANCE
+  payments: LockableSection.PAYMENT
 };
 
 export type StatusMessageType = {
@@ -150,7 +146,6 @@ const TaskList = () => {
     opsEvalAndLearning,
     beneficiaries,
     payments,
-    prepareForClearance,
     collaborators,
     suggestedPhase
   } = modelPlan;
@@ -161,8 +156,7 @@ const TaskList = () => {
     participantsAndProviders,
     beneficiaries,
     opsEvalAndLearning,
-    payments,
-    prepareForClearance
+    payments
   };
 
   // Gets the sessions storage variable for statusChecked of modelPlan
@@ -326,44 +320,41 @@ const TaskList = () => {
                   data-testid="task-list"
                   className="margin-top-6 margin-bottom-0 padding-left-0"
                 >
-                  {Object.keys(taskListSections).map((key: string) => {
-                    const lastEditI18Key =
-                      taskListSections[key].__typename === 'PrepareForClearance'
-                        ? 'mostRecentEdit'
-                        : 'mostRecentEditBy';
+                  {Object.keys(taskListSections).map(
+                    (key: string, index: number, keys: string[]) => {
+                      const isLast = index === keys.length - 1;
 
-                    return (
-                      <Fragment key={key}>
-                        <TaskListItem
-                          key={key}
-                          testId={`task-list-intake-form-${key}`}
-                          heading={t(`numberedList.${key}.heading`)}
-                          status={taskListSections[key].status}
-                        >
-                          <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
-                            <TaskListDescription>
-                              <p className="margin-top-0">
-                                {t(`numberedList.${key}.${userRole}`)}
-                              </p>
-                            </TaskListDescription>
-                          </div>
+                      return (
+                        <Fragment key={key}>
+                          <TaskListItem
+                            key={key}
+                            testId={`task-list-intake-form-${key}`}
+                            heading={t(`numberedList.${key}.heading`)}
+                            status={taskListSections[key].status}
+                          >
+                            <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
+                              <TaskListDescription>
+                                <p className="margin-top-0">
+                                  {t(`numberedList.${key}.${userRole}`)}
+                                </p>
+                              </TaskListDescription>
+                            </div>
 
-                          {taskListSections[key].modifiedDts && (
-                            <div
-                              data-testid="most-recent-edit"
-                              className="display-flex flex-align-center margin-top-1 margin-bottom-2"
-                            >
-                              <span className="text-base margin-right-1">
-                                {t(lastEditI18Key, {
-                                  date: formatDateLocal(
-                                    taskListSections[key].modifiedDts!,
-                                    'MM/dd/yyyy'
-                                  )
-                                })}
-                              </span>
-                              {taskListSections[key].__typename !==
-                                'PrepareForClearance' &&
-                                taskListSections[key].modifiedByUserAccount && (
+                            {taskListSections[key].modifiedDts && (
+                              <div
+                                data-testid="most-recent-edit"
+                                className="display-flex flex-align-center margin-top-1 margin-bottom-2"
+                              >
+                                <span className="text-base margin-right-1">
+                                  {t('mostRecentEditBy', {
+                                    date: formatDateLocal(
+                                      taskListSections[key].modifiedDts!,
+                                      'MM/dd/yyyy'
+                                    )
+                                  })}
+                                </span>
+                                {taskListSections[key]
+                                  .modifiedByUserAccount && (
                                   <Avatar
                                     className="text-base-darkest"
                                     user={
@@ -372,32 +363,33 @@ const TaskList = () => {
                                     }
                                   />
                                 )}
-                            </div>
-                          )}
-
-                          <div className="display-flex flex-align-center">
-                            <TaskListButton
-                              ariaLabel={t(`numberedList.${key}.heading`)}
-                              path={t(`numberedList.${key}.path`)}
-                              disabled={
-                                !!getTaskListLockedStatus(key) &&
-                                getTaskListLockedStatus(key)
-                                  ?.lockedByUserAccount.username !== euaId
-                              }
-                              status={taskListSections[key].status}
-                            />
-
-                            {taskListSectionMap[key] && (
-                              <SectionLock section={taskListSectionMap[key]} />
+                              </div>
                             )}
-                          </div>
-                        </TaskListItem>
-                        {key !== 'prepareForClearance' && (
-                          <Divider className="margin-bottom-4" />
-                        )}
-                      </Fragment>
-                    );
-                  })}
+
+                            <div className="display-flex flex-align-center">
+                              <TaskListButton
+                                ariaLabel={t(`numberedList.${key}.heading`)}
+                                path={t(`numberedList.${key}.path`)}
+                                disabled={
+                                  !!getTaskListLockedStatus(key) &&
+                                  getTaskListLockedStatus(key)
+                                    ?.lockedByUserAccount.username !== euaId
+                                }
+                                status={taskListSections[key].status}
+                              />
+
+                              {taskListSectionMap[key] && (
+                                <SectionLock
+                                  section={taskListSectionMap[key]}
+                                />
+                              )}
+                            </div>
+                          </TaskListItem>
+                          {!isLast && <Divider className="margin-bottom-4" />}
+                        </Fragment>
+                      );
+                    }
+                  )}
                 </ol>
               </Grid>
               <Grid desktop={{ col: 3 }}>

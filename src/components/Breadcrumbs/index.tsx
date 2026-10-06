@@ -139,7 +139,7 @@ export const commonBreadCrumbs = (
   },
   PREPARE_FOR_CLEARANCE: {
     text: 'prepareForClearance:heading',
-    url: `/models/${modelID}/collaboration-area/model-plan/prepare-for-clearance`
+    url: `/models/${modelID}/collaboration-area/prepare-for-clearance`
   },
   STATUS: {
     text: 'modelPlanMisc:headingStatus',
