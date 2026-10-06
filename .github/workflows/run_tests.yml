@@ -223,15 +223,20 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ env.MINIO_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ env.MINIO_KEY }}
+          # Clears any leftover AWS_SESSION_TOKEN from the ECR fallback login above - MinIO's
+          # local minioadmin credentials aren't session-based, and a real STS token left over
+          # from that step makes the AWS CLI send a request MinIO rejects as InvalidTokenId.
+          AWS_SESSION_TOKEN: ''
           AWS_DEFAULT_REGION: us-west-2
         run: >-
           aws --endpoint-url ${{ env.MINIO_ADDRESS }}
           s3 mb s3://${{ env.S3_BUCKET }}
-          
+
       - name: Make MINIO  EChimp Bucket
         env:
             AWS_ACCESS_KEY_ID: ${{ env.MINIO_KEY }}
             AWS_SECRET_ACCESS_KEY: ${{ env.MINIO_KEY }}
+            AWS_SESSION_TOKEN: ''
             AWS_DEFAULT_REGION: us-west-2
         run: >-
             aws --endpoint-url ${{ env.MINIO_ADDRESS }}
