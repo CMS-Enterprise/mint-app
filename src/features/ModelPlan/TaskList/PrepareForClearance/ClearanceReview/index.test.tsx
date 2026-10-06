@@ -107,13 +107,13 @@ describe('ClearanceReview component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID',
+          path: '/models/:modelID/collaboration-area/prepare-for-clearance/:section/:sectionID',
           element: <ClearanceReview />
         }
       ],
       {
         initialEntries: [
-          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
+          `/models/${modelID}/collaboration-area/prepare-for-clearance/beneficiaries/${beneficiaryID}`
         ]
       }
     );
@@ -139,13 +139,13 @@ describe('ClearanceReview component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID',
+          path: '/models/:modelID/collaboration-area/prepare-for-clearance/:section/:sectionID',
           element: <ClearanceReview />
         }
       ],
       {
         initialEntries: [
-          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
+          `/models/${modelID}/collaboration-area/prepare-for-clearance/beneficiaries/${beneficiaryID}`
         ]
       }
     );
@@ -173,13 +173,13 @@ describe('ClearanceReview component', () => {
     const router = createMemoryRouter(
       [
         {
-          path: '/models/:modelID/collaboration-area/task-list/prepare-for-clearance/:section/:sectionID',
+          path: '/models/:modelID/collaboration-area/prepare-for-clearance/:section/:sectionID',
           element: <ClearanceReview />
         }
       ],
       {
         initialEntries: [
-          `/models/${modelID}/collaboration-area/task-list/prepare-for-clearance/beneficiaries/${beneficiaryID}`
+          `/models/${modelID}/collaboration-area/prepare-for-clearance/beneficiaries/${beneficiaryID}`
         ]
       }
     );

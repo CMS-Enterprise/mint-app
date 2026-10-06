@@ -3,6 +3,7 @@ import { defineConfig } from 'cypress';
 import setupNodeEvents from './cypress/plugins';
 
 export default defineConfig({
+  allowCypressEnv: false,
   viewportHeight: 800,
   viewportWidth: 1280,
   projectId: 'vc6vw5',

@@ -56,6 +56,8 @@ func (b *baseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 	// If model is moved out of READY_FOR_CLEARANCE it should be set to IN_PROGRESS
 	if oldStatus == TaskReadyForClearance && b.Status != TaskReadyForClearance {
 		b.Status = TaskInProgress
+		b.ReadyForClearanceBy = nil
+		b.ReadyForClearanceDts = nil
 		return nil
 	}
 

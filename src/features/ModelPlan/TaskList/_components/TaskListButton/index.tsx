@@ -1,15 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PrepareForClearanceStatus, TaskStatus } from 'gql/generated/graphql';
-
-import Alert from 'components/Alert';
+import { TaskStatus } from 'gql/generated/graphql';
 
 type TaskListButtonProps = {
   ariaLabel?: string;
   path: string;
   disabled?: boolean;
-  status: TaskStatus | PrepareForClearanceStatus;
+  status: TaskStatus;
 };
 
 const TaskListButton = ({
@@ -32,34 +30,25 @@ const TaskListButton = ({
     ) {
       return t('taskListButton.update');
     }
-    if (status === 'IN_PROGRESS' && path !== 'prepare-for-clearance') {
+    if (status === TaskStatus.IN_PROGRESS) {
       return t('taskListButton.continue');
-    }
-    if (status === 'IN_PROGRESS' && path === 'prepare-for-clearance') {
-      return t('taskListButton.updateStatuses');
     }
     return '';
   };
 
   return (
-    <>
-      {status === 'CANNOT_START' ? (
-        <Alert type="info">{t('cannotStartClearance')}</Alert>
-      ) : (
-        <button
-          type="button"
-          disabled={disabled}
-          data-testid={path}
-          className="usa-button margin-bottom-0 width-auto margin-right-2"
-          onClick={() =>
-            navigate(`/models/${modelID}/collaboration-area/model-plan/${path}`)
-          }
-          aria-label={`${ctaCopy()} ${ariaLabel?.toLowerCase()}`}
-        >
-          {ctaCopy()}
-        </button>
-      )}
-    </>
+    <button
+      type="button"
+      disabled={disabled}
+      data-testid={path}
+      className="usa-button margin-bottom-0 width-auto margin-right-2"
+      onClick={() =>
+        navigate(`/models/${modelID}/collaboration-area/model-plan/${path}`)
+      }
+      aria-label={`${ctaCopy()} ${ariaLabel?.toLowerCase()}`}
+    >
+      {ctaCopy()}
+    </button>
   );
 };
 
