@@ -99,7 +99,7 @@ exports[`AboutWaiverAssessmentSurvey > renders correctly and matches snapshot 1`
         <p
           class="margin-top-0"
         >
-          Model leads or model team members responsible for data-centric activities should work with the IT Lead or Solution Architect to complete the questions in this approach.
+          Other model team members responsible for waiver activities should work with the Model Lead to complete the questions in this survey.
         </p>
       </div>
       <div

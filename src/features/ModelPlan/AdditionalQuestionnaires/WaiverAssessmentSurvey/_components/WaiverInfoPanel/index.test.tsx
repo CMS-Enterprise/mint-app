@@ -118,7 +118,7 @@ describe('WaiverInfoPanel', () => {
     expect(
       screen.getByText('Link to Participation Agreement Language')
     ).toBeInTheDocument();
-    expect(screen.getByText('Medicare payment waivers')).toBeInTheDocument();
+    expect(screen.getByText('Medicare payment waiver')).toBeInTheDocument();
     expect(screen.getByText('Site of care, Safe harbors')).toBeInTheDocument();
     expect(screen.getByText('Some regulation')).toBeInTheDocument();
   });
