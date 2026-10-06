@@ -149,30 +149,49 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v7
 
-      - name: Configure AWS credentials
+      # MinIO (via our pgsty/silo mirror) can't run as a native `services:` container here like
+      # postgres/faktory above - GitHub Actions pulls `services:` images at job setup, before any
+      # step has run, and a private ECR fallback (below) needs a freshly-generated, short-lived
+      # token rather than a static credential a `services:` block could hold. So we start it by
+      # hand, and wait for it the same way GitHub's own service health-check would.
+      #
+      # Primary source is docker.io/pgsty/silo directly, same as local dev. Our own ECR mirror
+      # (populated by manual_mirror_minio.yml) is only a fallback for if Docker Hub itself becomes
+      # unpullable - the exact failure mode that took out the original quay.io/minio image.
+      - name: Pull MinIO (Silo)
+        id: pull-silo-primary
+        continue-on-error: true
+        run: |
+          docker pull "docker.io/pgsty/silo:$SILO_IMAGE_TAG"
+          docker tag "docker.io/pgsty/silo:$SILO_IMAGE_TAG" minio-silo:ci
+
+      - name: Configure AWS credentials (ECR fallback)
+        if: steps.pull-silo-primary.outcome == 'failure'
         uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
           role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
           aws-region: us-east-1
 
-      - name: Login to Amazon ECR
+      - name: Login to Amazon ECR (fallback)
+        if: steps.pull-silo-primary.outcome == 'failure'
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      # MinIO (via our pgsty/silo mirror) can't run as a native `services:` container here like
-      # postgres/faktory above - GitHub Actions pulls `services:` images at job setup, before any
-      # step (including the ECR login above) has run, and AWS ECR requires a freshly-generated,
-      # short-lived token rather than a static credential a `services:` block could hold. So we
-      # start it by hand, after logging in, and wait for it the same way GitHub's own service
-      # health-check would.
-      - name: Start MinIO (Silo)
+      - name: Pull MinIO (Silo) from our ECR mirror (fallback)
+        if: steps.pull-silo-primary.outcome == 'failure'
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          echo "::warning::docker.io/pgsty/silo pull failed, falling back to our ECR mirror"
+          docker pull "$ECR_REGISTRY/mint-silo:$SILO_IMAGE_TAG"
+          docker tag "$ECR_REGISTRY/mint-silo:$SILO_IMAGE_TAG" minio-silo:ci
+
+      - name: Start MinIO (Silo)
         run: |
           docker run -d --name minio -p 9005:9000 \
             --health-cmd "curl -s http://localhost:9000/minio/health/live" \
             --health-interval 1s --health-timeout 1s --health-retries 5 \
-            "$ECR_REGISTRY/mint-silo:$SILO_IMAGE_TAG" server /data
+            minio-silo:ci server /data
 
       - name: Wait for MinIO (Silo) to be healthy
         run: |
