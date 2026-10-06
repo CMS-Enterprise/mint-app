@@ -18,13 +18,19 @@ describe('Logging in', () => {
       }
     },
     () => {
-      // Get the current number of retries and sleep before running the test to make sure the One-Time-Password is new
+      // A code Okta already rejected is burned until the 30s TOTP window rolls.
+      // Wait only for that remainder. generateOTP also refuses to mint a code
+      // in the last few seconds of a window.
       const currentRetry = cy.state('runnable')._currentRetry; // eslint-disable-line no-underscore-dangle
       if (currentRetry > 0) {
+        const stepSeconds = 30;
+        const remaining =
+          stepSeconds - (Math.floor(Date.now() / 1000) % stepSeconds);
+        const waitMs = (remaining + 1) * 1000;
         cy.log(
-          `[Attempt ${currentRetry + 1}/${maxAttempts}] Sleeping 30s for OTP`
+          `[Attempt ${currentRetry + 1}/${maxAttempts}] Waiting ${waitMs}ms for a new OTP`
         );
-        cy.wait(30000);
+        cy.wait(waitMs);
       }
       cy.login();
       cy.location('pathname', { timeout: 20000 }).should(

@@ -206,6 +206,22 @@ function createFolderIfNotExists(folderPath: string) {
   return null;
 }
 
+// TOTP codes rotate every 30s. Generating one in the last few seconds makes Okta
+// reject it by the time the form is submitted, which shows up as a flake on the
+// OTP step. Wait for the next window when the current one is about to roll.
+function generateOTP(secret?: string): Promise<string> {
+  const stepSeconds = 30;
+  const safetySeconds = 8;
+  const remaining = stepSeconds - (Math.floor(Date.now() / 1000) % stepSeconds);
+  const delayMs = remaining < safetySeconds ? (remaining + 1) * 1000 : 0;
+
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(cypressOTP(secret));
+    }, delayMs);
+  });
+}
+
 const setupNodeEvents = (
   on: Cypress.PluginEvents,
   config: Cypress.PluginConfigOptions
@@ -214,7 +230,7 @@ const setupNodeEvents = (
   | Cypress.PluginConfigOptions
   | Promise<void | Cypress.PluginConfigOptions> => {
   on('task', {
-    generateOTP: cypressOTP,
+    generateOTP,
     lockTaskListSection,
     createCommonMilestone,
     createDiscussion,
