@@ -24,6 +24,9 @@ All changes in this repository MUST be accompanied by appropriate tests.
 - E2E tests live in the `cypress/` directory.
 - Critical user journeys (e.g., creating a model plan, signing a document) MUST have E2E coverage.
 - Use `cy.intercept` to handle external service dependencies where appropriate.
+- Drive the UI for the journey under test. Use a `cy.task` in `cypress/plugins/index.ts` only to set up backend state another spec already covers through the UI (for example, a discussion that produces a notification). Tasks call the same GraphQL mutation as the form, authenticate with the local `Authorization` header, and look model plans up by name.
+- CI shards `cypress/e2e` with `node scripts/cypress-shard.cjs <shard> <total>`, then `yarn cypress run --spec` on that list. Balance comes from `cypress/spec-timings.json`; change the shard count in both `shard` and `total_shards` in `.github/workflows/run_tests.yml`.
+- When you add a Cypress spec or its runtime changes, update its duration in `cypress/spec-timings.json` from a CI Cypress summary.
 
 ## Test Coverage Checklist
 - [ ] New features have corresponding unit tests.
