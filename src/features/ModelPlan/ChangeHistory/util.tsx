@@ -251,35 +251,6 @@ const unneededFields: HiddenFieldTypes[] = [
     fields: ['completed_by', 'completed_dts']
   },
   {
-    table: TableName.WAIVER_ASSESSMENT_SURVEY,
-    fields: [
-      'modifies_medicare_savings_programs_example',
-      'modifies_medicare_savings_programs_why_not',
-      'bundles_payments_example',
-      'bundles_payments_why_not',
-      'offers_risk_sharing_arrangements_example',
-      'offers_risk_sharing_arrangements_why_not',
-      'impacts_site_of_care_payments_example',
-      'impacts_site_of_care_payments_why_not',
-      'modifies_care_team_scope_of_practice_example',
-      'modifies_care_team_scope_of_practice_why_not',
-      'modifies_care_delivery_with_claims_based_payments_example',
-      'modifies_care_delivery_with_claims_based_payments_why_not',
-      'modifies_quality_measurements_or_payments_via_waivers_example',
-      'modifies_quality_measurements_or_payments_via_waivers_why_not',
-      'impacts_medicaid_only_beneficiaries_example',
-      'impacts_medicaid_only_beneficiaries_why_not',
-      'impacts_home_community_based_service_payments_example',
-      'impacts_home_community_based_service_payments_why_not',
-      'impacts_managed_care_waivers_example',
-      'impacts_managed_care_waivers_why_not',
-      'offers_patient_incentives_safe_harbor_protection_example',
-      'offers_patient_incentives_safe_harbor_protection_why_not',
-      'offers_expenses_remuneration_safe_harbor_protection_example',
-      'offers_expenses_remuneration_safe_harbor_protection_why_not'
-    ]
-  },
-  {
     table: TableName.MTO_CATEGORY,
     fields: ['position']
   }

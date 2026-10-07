@@ -36,6 +36,7 @@ import {
   parseArray,
   removedUnneededFields,
   separateStatusChanges,
+  sortAllChanges,
   sortChangesByDay,
   sortCreateChangeFirst
 } from './util';
@@ -464,7 +465,7 @@ describe('util.tsx', () => {
     ]);
   });
 
-  it('removes waiver assessment survey dependent fields', () => {
+  it('keeps waiver assessment survey Yes and No details in change history', () => {
     const change: ChangeRecordType = {
       id: 'waiver-assessment-survey-change',
       tableName: TableName.WAIVER_ASSESSMENT_SURVEY,
@@ -507,32 +508,6 @@ describe('util.tsx', () => {
           new: 'OTHER',
           newTranslated: 'Other',
           __typename: 'TranslatedAuditField'
-        },
-        {
-          id: 'waiver-using-reason',
-          changeType: AuditFieldChangeType.ANSWERED,
-          dataType: TranslationDataType.STRING,
-          fieldName: 'using_reason',
-          fieldNameTranslated:
-            'Please explain why your model intends to use this waiver',
-          old: null,
-          oldTranslated: null,
-          new: 'It supports the model design.',
-          newTranslated: 'It supports the model design.',
-          __typename: 'TranslatedAuditField'
-        },
-        {
-          id: 'waiver-not-using-reason',
-          changeType: AuditFieldChangeType.ANSWERED,
-          dataType: TranslationDataType.STRING,
-          fieldName: 'not_using_reason',
-          fieldNameTranslated:
-            'Please explain why your model is not using this waiver.',
-          old: null,
-          oldTranslated: null,
-          new: 'It is not applicable.',
-          newTranslated: 'It is not applicable.',
-          __typename: 'TranslatedAuditField'
         }
       ],
       actorName: 'MINT Doe',
@@ -545,9 +520,18 @@ describe('util.tsx', () => {
       filteredChanges[0].translatedFields.map(field => field.fieldName)
     ).toEqual([
       'modifies_medicare_savings_programs',
-      'using_reason',
-      'not_using_reason'
+      'modifies_medicare_savings_programs_example',
+      'modifies_medicare_savings_programs_why_not'
     ]);
+
+    // A change to either detail alone must remain visible after all history filters.
+    change.translatedFields.slice(1).forEach(field => {
+      const groupedChanges = sortAllChanges([
+        { ...change, translatedFields: [field] }
+      ]);
+      expect(groupedChanges).toHaveLength(1);
+      expect(groupedChanges[0][0].translatedFields).toEqual([field]);
+    });
   });
 
   // Test for sortChangesByDay - Sorts the changes by day - { day: [changes] }
