@@ -293,3 +293,70 @@ func TestTranslateWaiverDecisionAndReason(t *testing.T) {
 	assert.Equal(t, "Please explain why your model is not using this waiver.", reason.FieldNameTranslated)
 	assert.Equal(t, "The waiver is not needed.", reason.NewTranslated)
 }
+
+func TestWaiverAssessmentSurveyReasonHistoryLabels(t *testing.T) {
+	tests := []struct {
+		name      string
+		fields    models.AuditFields
+		fieldName string
+		wantLabel string
+	}{
+		{
+			name: "example changed without Yes/No answer",
+			fields: models.AuditFields{
+				"bundles_payments_example": {Old: "first example", New: "second example"},
+			},
+			fieldName: "bundles_payments_example",
+			wantLabel: "Please provide an example (Does your model bundle payments?)",
+		},
+		{
+			name: "reason changed without Yes/No answer",
+			fields: models.AuditFields{
+				"modifies_medicare_savings_programs_why_not": {Old: "NOT_TESTING", New: "OUT_OF_SCOPE"},
+			},
+			fieldName: "modifies_medicare_savings_programs_why_not",
+			wantLabel: "Please explain why not (Does your model modify Medicare shared savings programs?)",
+		},
+		{
+			name: "example changed with Yes/No answer",
+			fields: models.AuditFields{
+				"bundles_payments":         {Old: "false", New: "true"},
+				"bundles_payments_example": {Old: nil, New: "example"},
+			},
+			fieldName: "bundles_payments_example",
+			wantLabel: "Please provide an example",
+		},
+		{
+			name: "reason changed with Yes/No answer",
+			fields: models.AuditFields{
+				"bundles_payments":         {Old: "true", New: "false"},
+				"bundles_payments_why_not": {Old: nil, New: "OUT_OF_SCOPE"},
+			},
+			fieldName: "bundles_payments_why_not",
+			wantLabel: "Please explain why not",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			audit := &models.AuditChangeWithModelPlanID{
+				AuditChange: models.AuditChange{
+					TableName: models.TNWaiverAssessmentSurvey,
+					Action:    "U",
+					Fields:    tt.fields,
+				},
+			}
+			translated, err := genericAuditTranslation(context.Background(), nil, audit)
+			if !assert.NoError(t, err) {
+				return
+			}
+			for _, field := range translated.TranslatedFields {
+				if field.FieldName == tt.fieldName {
+					assert.Equal(t, tt.wantLabel, field.FieldNameTranslated)
+					return
+				}
+			}
+			t.Errorf("translated field %q not found", tt.fieldName)
+		})
+	}
+}
