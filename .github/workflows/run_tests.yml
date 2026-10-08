@@ -188,6 +188,23 @@ jobs:
           docker pull "$ECR_REGISTRY/mint-silo:$SILO_IMAGE_TAG"
           docker tag "$ECR_REGISTRY/mint-silo:$SILO_IMAGE_TAG" minio-silo:ci
 
+      # configure-aws-credentials exports the INFRA_ROLE_TO_ASSUME credentials to every later step
+      # in this job via $GITHUB_ENV (the same role build_application_images.yml uses for ECR
+      # push). Clear them here, right after the ECR pull they were needed for, so steps further
+      # down (go test, etc.) don't run with live AWS credentials in their environment.
+      # always() because the fallback steps above have no continue-on-error - if any of them
+      # fail, GitHub skips subsequent steps by default, which would skip this cleanup too and
+      # leave the credentials live for e.g. the Announce failure step.
+      - name: Clear ECR fallback AWS credentials
+        if: always() && steps.pull-silo-primary.outcome == 'failure'
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker logout "$ECR_REGISTRY"
+          echo "AWS_ACCESS_KEY_ID=" >> "$GITHUB_ENV"
+          echo "AWS_SECRET_ACCESS_KEY=" >> "$GITHUB_ENV"
+          echo "AWS_SESSION_TOKEN=" >> "$GITHUB_ENV"
+
       - name: Start MinIO (Silo)
         run: |
           docker run -d --name minio -p 9005:9000 \
