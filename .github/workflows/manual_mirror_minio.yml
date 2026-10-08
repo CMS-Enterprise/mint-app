@@ -46,15 +46,17 @@ jobs:
       - name: Mirror pgsty/silo
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          SILO_TAG: ${{ inputs.silo_tag }}
         run: |
           docker buildx imagetools create \
-            --tag "$ECR_REGISTRY/mint-silo:${{ inputs.silo_tag }}" \
-            "docker.io/pgsty/silo:${{ inputs.silo_tag }}"
+            --tag "$ECR_REGISTRY/mint-silo:$SILO_TAG" \
+            "docker.io/pgsty/silo:$SILO_TAG"
 
       - name: Mirror pgsty/mc
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          MC_TAG: ${{ inputs.mc_tag }}
         run: |
           docker buildx imagetools create \
-            --tag "$ECR_REGISTRY/mint-mc:${{ inputs.mc_tag }}" \
-            "docker.io/pgsty/mc:${{ inputs.mc_tag }}"
+            --tag "$ECR_REGISTRY/mint-mc:$MC_TAG" \
+            "docker.io/pgsty/mc:$MC_TAG"
