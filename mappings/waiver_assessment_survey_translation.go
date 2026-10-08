@@ -3,6 +3,7 @@ package mappings
 import (
 	_ "embed"
 	"encoding/json"
+	"fmt"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
@@ -15,6 +16,7 @@ func WaiverAssessmentSurveyTranslation() (*model.WaiverAssessmentSurveyTranslati
 	var translation model.WaiverAssessmentSurveyTranslation
 	err := json.Unmarshal(waiverAssessmentSurveyJSON, &translation)
 	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
 		return nil, err
 	}
 	return &translation, nil
