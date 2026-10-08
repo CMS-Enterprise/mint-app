@@ -763,7 +763,16 @@ const waiverAssessmentSurveyMisc = {
       reason: 'Reason',
       actions: 'Actions',
       viewDetails: 'Learn more about this waiver'
-    }
+    },
+    notSuggestedInfo:
+      'This waiver was not originally suggested for this model. <button>View the reason for including it.</button>'
+  },
+  waiverUsageReasonModal: {
+    heading: 'Waiver usage reason',
+    waiverTitle: '<bold>Waiver title:</bold> {{waiverTitle}}',
+    usageReason: '<bold>Usage reason:</bold> {{usageReason}}',
+    alertText:
+      'MINT suggests waivers based on answers to questions in the waiver assessment survey. Model teams who elect to use waivers not suggested by MINT are asked to confirm why they plan to use that waiver.'
   },
   declinedWaivers: {
     heading: 'Declined waivers ({{waiverCount}})',

@@ -1,12 +1,47 @@
-import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useMemo, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { Column, Row, useSortBy, useTable } from 'react-table';
-import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Button, Icon, Table as UswdsTable } from '@trussworks/react-uswds';
 import WaiverInfoPanel from 'features/ModelPlan/AdditionalQuestionnaires/WaiverAssessmentSurvey/_components/WaiverInfoPanel';
 import { GetAllWaiverAssessmentSurveyQuery } from 'gql/generated/graphql';
 
 import { getHeaderSortIcon, sortColumnValues } from 'utils/tableSort';
+
+import WaiverUsageReasonModal from '../WaiverUsageReasonModal';
+
+const ViewReasonButton = ({
+  selectedWaiver,
+  children
+}: {
+  selectedWaiver: SelectedWaiver;
+  children?: React.ReactNode;
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      {isModalOpen && (
+        <WaiverUsageReasonModal
+          isOpen
+          closeModal={() => setIsModalOpen(false)}
+          selectedWaiver={selectedWaiver}
+        />
+      )}
+
+      <Button
+        type="button"
+        className="margin-y-0 margin-right-3 deep-underline mint-body-normal"
+        unstyled
+        onClick={() => {
+          setIsModalOpen(true);
+        }}
+      >
+        {children}
+      </Button>
+    </>
+  );
+};
 
 const LearnMoreButton = ({
   selectedWaiver
@@ -89,6 +124,24 @@ const SelectedWaiversTable = ({
                 `${row.original.waiverType}.heading`
               )}
             </p>
+            {!row.original.isSuggested && (
+              <div>
+                <Icon.Info
+                  className="text-base-light margin-right-1"
+                  aria-label="info"
+                  style={{ verticalAlign: 'text-top' }}
+                />
+
+                <span className="mint-body-normal text-base">
+                  <Trans
+                    i18nKey="waiverAssessmentSurveyMisc:selectedWaivers.notSuggestedInfo"
+                    components={{
+                      button: <ViewReasonButton selectedWaiver={row.original} />
+                    }}
+                  />
+                </span>
+              </div>
+            )}
           </div>
         )
       },
