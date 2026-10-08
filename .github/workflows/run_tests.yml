@@ -195,7 +195,10 @@ jobs:
       # leave the credentials live for e.g. the Announce failure step.
       - name: Clear ECR fallback AWS credentials
         if: always() && steps.pull-silo-primary.outcome == 'failure'
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
+          docker logout "$ECR_REGISTRY"
           echo "AWS_ACCESS_KEY_ID=" >> "$GITHUB_ENV"
           echo "AWS_SECRET_ACCESS_KEY=" >> "$GITHUB_ENV"
           echo "AWS_SESSION_TOKEN=" >> "$GITHUB_ENV"
