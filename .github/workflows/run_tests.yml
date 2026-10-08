@@ -162,8 +162,10 @@ jobs:
         id: pull-silo-primary
         continue-on-error: true
         run: |
-          docker pull "docker.io/pgsty/silo:$SILO_IMAGE_TAG"
-          docker tag "docker.io/pgsty/silo:$SILO_IMAGE_TAG" minio-silo:ci
+          # DUMMY/TEMPORARY: deliberately bogus repo name to force this step to fail, so this
+          # throwaway PR exercises the ECR fallback path below. Not meant to merge.
+          docker pull "docker.io/pgsty/silo-does-not-exist:$SILO_IMAGE_TAG"
+          docker tag "docker.io/pgsty/silo-does-not-exist:$SILO_IMAGE_TAG" minio-silo:ci
 
       - name: Configure AWS credentials (ECR fallback)
         if: steps.pull-silo-primary.outcome == 'failure'
