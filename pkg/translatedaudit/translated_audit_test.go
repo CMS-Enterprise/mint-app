@@ -215,11 +215,11 @@ func TestGetChangeType(t *testing.T) {
 	assert.EqualValues(t, models.AFCRemoved, ct)
 }
 
-func TestWaiverSelectionLabel(t *testing.T) {
+func TestWaiverFieldLabel(t *testing.T) {
 	assert.Equal(
 		t,
 		"Do you plan to use this waiver with your model? (Waiver: Implementation period)",
-		waiverSelectionLabel("Do you plan to use this waiver with your model?", "Implementation period"),
+		waiverFieldLabel("Do you plan to use this waiver with your model?", "Implementation period"),
 	)
 }
 
@@ -230,7 +230,7 @@ func TestIsWaiverSelectionField(t *testing.T) {
 	assert.False(t, isWaiverSelectionField(models.TNWaiverAssessmentSurvey, "will_use_waiver"))
 }
 
-func TestWaiverNameLookupIsNeededForSelectionOnlyChange(t *testing.T) {
+func TestWaiverNameLookupIsNeededForWaiverHistoryFields(t *testing.T) {
 	audit := &models.AuditChangeWithModelPlanID{
 		AuditChange: models.AuditChange{
 			TableName: models.TNWaiver,
@@ -244,6 +244,14 @@ func TestWaiverNameLookupIsNeededForSelectionOnlyChange(t *testing.T) {
 	assert.ErrorContains(t, err, "store was nil")
 
 	audit.Fields = models.AuditFields{"not_using_reason": {Old: nil, New: "Not needed"}}
+	_, err = getWaiverNameForAudit(nil, audit)
+	assert.ErrorContains(t, err, "store was nil")
+
+	audit.Fields = models.AuditFields{"using_reason": {Old: nil, New: "Needed"}}
+	_, err = getWaiverNameForAudit(nil, audit)
+	assert.ErrorContains(t, err, "store was nil")
+
+	audit.Fields = models.AuditFields{}
 	name, err := getWaiverNameForAudit(nil, audit)
 	assert.NoError(t, err)
 	assert.Empty(t, name)

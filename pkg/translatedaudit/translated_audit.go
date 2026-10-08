@@ -146,8 +146,9 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *m
 			//If this doesn't have a translation, don't append this to the translated field list (and don't save it)
 			continue
 		}
-		if waiverName != "" && isWaiverSelectionField(audit.TableName, fieldName) {
-			transField.FieldNameTranslated = waiverSelectionLabel(transField.FieldNameTranslated, waiverName)
+		if waiverName != "" && (isWaiverSelectionField(audit.TableName, fieldName) ||
+			(!hasWaiverSelectionField(audit.Fields) && isWaiverReasonField(audit.TableName, fieldName))) {
+			transField.FieldNameTranslated = waiverFieldLabel(transField.FieldNameTranslated, waiverName)
 		}
 		translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
 
@@ -173,7 +174,11 @@ func isWaiverSelectionField(tableName models.TableName, fieldName string) bool {
 	return tableName == models.TNWaiver && fieldName == "will_use_waiver"
 }
 
-func waiverSelectionLabel(fieldLabel string, waiverName string) string {
+func isWaiverReasonField(tableName models.TableName, fieldName string) bool {
+	return tableName == models.TNWaiver && (fieldName == "using_reason" || fieldName == "not_using_reason")
+}
+
+func waiverFieldLabel(fieldLabel string, waiverName string) string {
 	return fmt.Sprintf("%s (Waiver: %s)", fieldLabel, waiverName)
 }
 
