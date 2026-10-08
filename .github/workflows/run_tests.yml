@@ -192,7 +192,10 @@ jobs:
       # down (go test, etc.) don't run with live AWS credentials in their environment.
       - name: Clear ECR fallback AWS credentials
         if: steps.pull-silo-primary.outcome == 'failure'
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
+          docker logout "$ECR_REGISTRY"
           echo "AWS_ACCESS_KEY_ID=" >> "$GITHUB_ENV"
           echo "AWS_SECRET_ACCESS_KEY=" >> "$GITHUB_ENV"
           echo "AWS_SESSION_TOKEN=" >> "$GITHUB_ENV"
