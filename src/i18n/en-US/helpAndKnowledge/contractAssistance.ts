@@ -516,7 +516,7 @@ const contractAssistance: TranslationContractAssistance = {
     dbField: 'notes',
     label: 'Progress notes',
     sublabel:
-      'Add any notes about your progress on this ticket. Once saved, these notes are viewable by the requester, who will receive an email update alerting them to your changes.',
+      'Add any notes about your progress on this ticket. Once saved, these notes will only be viewable by CTAT admins. An update email will go to the CTAT mailbox alerting the team to any changes.',
     dataType: TranslationDataType.STRING,
     formType: TranslationFormType.TEXTAREA,
     order: 2.03

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql(/* GraphQL */ `
-  query GetCtatRequest($id: UUID!) {
+  query GetCtatRequestAdmin($id: UUID!) {
     ctatRequest(id: $id) {
       id
       humanReadableID
@@ -14,6 +14,7 @@ export default gql(/* GraphQL */ `
         commonName
         email
       }
+      notes
       resolution
       requesterUserAccount {
         givenName
