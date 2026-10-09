@@ -45,7 +45,10 @@ const CtatTicketViewPanel = ({
   });
 
   const { loading, error } = isAdmin ? adminResult : requesterResult;
+
+  // requester ticket will be populated when a non-admin (such as the requester) is viewing the ticket
   const requesterTicket = requesterResult.data?.ctatRequest;
+  // adminTicket will be populated when an admin (even if it's the requester) is viewing the ticket
   const adminTicket = adminResult.data?.ctatRequest;
 
   const closePanel = useCallback(() => {
