@@ -404,7 +404,7 @@ jobs:
   e2e_tests:
     name: e2e_tests
     needs: e2e_test_shards
-    if: ${{ !cancelled() && needs.e2e_test_shards.result != 'skipped' && needs.e2e_test_shards.result != 'cancelled' }}
+    if: ${{ always() && inputs.skip_tests == false && github.event_name != 'merge_group' }}
     runs-on: ubuntu-latest
     steps:
       - name: Require every shard to pass
