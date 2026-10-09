@@ -436,20 +436,22 @@ func SendCTATUpdateEmails(
 		bodyContent.Resolution = *updatedRequest.Resolution
 	}
 
-	requesterEmailSubject, requesterEmailBody, err := CTAT.Update.GetContent(subjectContent, bodyContent)
-	if err != nil {
-		return err
-	}
+	if statusUpdated || assignedAdminUpdated || resolutionUpdated {
+		requesterEmailSubject, requesterEmailBody, err := CTAT.Update.GetContent(subjectContent, bodyContent)
+		if err != nil {
+			return err
+		}
 
-	if err := emailService.Send(
-		addressBook.DefaultSender,
-		[]string{bodySummary.RequesterEmail},
-		nil,
-		requesterEmailSubject,
-		"text/html",
-		requesterEmailBody,
-	); err != nil {
-		return err
+		if err := emailService.Send(
+			addressBook.DefaultSender,
+			[]string{bodySummary.RequesterEmail},
+			nil,
+			requesterEmailSubject,
+			"text/html",
+			requesterEmailBody,
+		); err != nil {
+			return err
+		}
 	}
 
 	// if unset, exit here

@@ -13,6 +13,7 @@ import {
   CtatContractActivityType,
   CtatContractType,
   CtatStatus,
+  GetCtatRequestAdminQuery,
   GetCtatRequestQuery
 } from 'gql/generated/graphql';
 
@@ -34,6 +35,7 @@ import CtatTicketAdminForm from './CtatTicketAdminForm';
 
 type CtatTicketViewContentProps = {
   ticket: GetCtatRequestQuery['ctatRequest'];
+  adminTicket?: GetCtatRequestAdminQuery['ctatRequest'];
   isAdmin?: boolean;
   closeModal?: () => void;
   setDisableButton?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -126,6 +128,7 @@ const SupportingDocumentItem = ({
 
 const CtatTicketViewContent = ({
   ticket,
+  adminTicket,
   isAdmin = false,
   closeModal,
   setDisableButton,
@@ -177,12 +180,13 @@ const CtatTicketViewContent = ({
       </p>
 
       {isAdmin &&
+      adminTicket &&
       closeModal &&
       setDisableButton &&
       setIsDirty &&
       onSubmitted ? (
         <CtatTicketAdminForm
-          ticket={ticket}
+          ticket={adminTicket}
           closeModal={closeModal}
           setDisableButton={setDisableButton}
           setIsDirty={setIsDirty}
@@ -238,19 +242,6 @@ const CtatTicketViewContent = ({
               assignedMemberDisplay || (
                 <EmptyValue>
                   {contractAssistanceMiscT('ctatViewPanel.empty.notAssigned')}
-                </EmptyValue>
-              )
-            }
-          />
-
-          <DetailField
-            label={contractAssistanceT('notes.label')}
-            definition={
-              ticket.notes?.trim() ? (
-                ticket.notes
-              ) : (
-                <EmptyValue>
-                  {contractAssistanceMiscT('ctatViewPanel.empty.noNotes')}
                 </EmptyValue>
               )
             }

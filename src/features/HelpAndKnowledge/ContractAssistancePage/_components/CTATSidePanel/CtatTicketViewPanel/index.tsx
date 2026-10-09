@@ -2,7 +2,10 @@ import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
-import { useGetCtatRequestQuery } from 'gql/generated/graphql';
+import {
+  useGetCtatRequestAdminQuery,
+  useGetCtatRequestQuery
+} from 'gql/generated/graphql';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
@@ -32,12 +35,21 @@ const CtatTicketViewPanel = ({
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [leavePage, setLeavePage] = useState<boolean>(false);
 
-  const { data, loading, error } = useGetCtatRequestQuery({
+  const requesterResult = useGetCtatRequestQuery({
     variables: { id: ticketId },
-    skip: !ticketId
+    skip: !ticketId || isAdmin
+  });
+  const adminResult = useGetCtatRequestAdminQuery({
+    variables: { id: ticketId },
+    skip: !ticketId || !isAdmin
   });
 
-  const ticket = data?.ctatRequest;
+  const { loading, error } = isAdmin ? adminResult : requesterResult;
+
+  // requester ticket will be populated when a non-admin (such as the requester) is viewing the ticket
+  const requesterTicket = requesterResult.data?.ctatRequest;
+  // adminTicket will be populated when an admin (even if it's the requester) is viewing the ticket
+  const adminTicket = adminResult.data?.ctatRequest;
 
   const closePanel = useCallback(() => {
     if (isAdmin && isDirty && !submitted.current) {
@@ -93,15 +105,19 @@ const CtatTicketViewPanel = ({
       >
         {loading && <PageLoading />}
         {error && <NotFound errorMessage={error.message} />}
-        {!loading && !error && ticket && (
+        {!loading && !error && isAdmin && adminTicket && (
           <CtatTicketViewContent
-            ticket={ticket}
-            isAdmin={isAdmin}
+            ticket={adminTicket}
+            adminTicket={adminTicket}
+            isAdmin
             closeModal={handleCloseModal}
             setDisableButton={setDisableSubmitBtn}
             setIsDirty={setIsDirty}
             onSubmitted={handleSubmitted}
           />
+        )}
+        {!loading && !error && !isAdmin && requesterTicket && (
+          <CtatTicketViewContent ticket={requesterTicket} />
         )}
       </Sidepanel>
 
