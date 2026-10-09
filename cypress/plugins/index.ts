@@ -181,7 +181,7 @@ async function addCollaborator({
     variables: { input: { modelPlanID, userName, teamRoles } }
   });
 
-  return data?.createPlanCollaborator?.id ?? null;
+  return data?.createPlanCollaborator?.userID ?? null;
 }
 
 function deleteFile(filePath: string) {
