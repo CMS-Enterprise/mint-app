@@ -14,6 +14,10 @@ on:
         required: false
         default: false
 
+permissions:
+  id-token: write
+  contents: read
+
 env:
   GIT_HASH: ${{ github.sha }}
   GIT_REF_NAME: ${{ github.ref }}
@@ -25,6 +29,9 @@ env:
   MINIO_KEY: minioadmin
   S3_BUCKET: mint-app-file-uploads
   S3_ECHIMP_BUCKET: mint-app-echimp-uploads
+  # Keep in sync with the pin in docker-compose.backend.yml and with the ECR mirror workflow
+  # (manual_mirror_minio.yml) that publishes this tag to our own account.
+  SILO_IMAGE_TAG: RELEASE.2026-09-16T00-00-00Z
 
 jobs:
   skip_tests:
@@ -125,21 +132,6 @@ jobs:
           --health-timeout 1s
           --health-retries 5
 
-      minio:
-        # quay.io stopped allowing anonymous pulls of minio/minio (Sep 2026), the same way Docker
-        # Hub did before it (Oct 2025) - MinIO's own GitHub repo is now archived entirely, so
-        # there's no official image left to pull from at all. pgsty/silo is an actively-maintained,
-        # S3-API- and CLI-compatible fork, still freely published to Docker Hub.
-        image: docker.io/pgsty/silo:RELEASE.2026-09-16T00-00-00Z
-        command: server /data
-        ports:
-          - '9005:9000'
-        options: >-
-          --health-cmd "curl -s http://localhost:9000/minio/health/live"
-          --health-interval 1s
-          --health-timeout 1s
-          --health-retries 5
-
       faktory:
         image: docker.contribsys.com/contribsys/faktory-ent:latest
         credentials:
@@ -156,6 +148,80 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v7
+
+      # MinIO (via our pgsty/silo mirror) can't run as a native `services:` container here like
+      # postgres/faktory above - GitHub Actions pulls `services:` images at job setup, before any
+      # step has run, and a private ECR fallback (below) needs a freshly-generated, short-lived
+      # token rather than a static credential a `services:` block could hold. So we start it by
+      # hand, and wait for it the same way GitHub's own service health-check would.
+      #
+      # Primary source is docker.io/pgsty/silo directly, same as local dev. Our own ECR mirror
+      # (populated by manual_mirror_minio.yml) is only a fallback for if Docker Hub itself becomes
+      # unpullable - the exact failure mode that took out the original quay.io/minio image.
+      - name: Pull MinIO (Silo)
+        id: pull-silo-primary
+        continue-on-error: true
+        run: |
+          docker pull "docker.io/pgsty/silo:$SILO_IMAGE_TAG"
+          docker tag "docker.io/pgsty/silo:$SILO_IMAGE_TAG" minio-silo:ci
+
+      - name: Configure AWS credentials (ECR fallback)
+        if: steps.pull-silo-primary.outcome == 'failure'
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR (fallback)
+        if: steps.pull-silo-primary.outcome == 'failure'
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Pull MinIO (Silo) from our ECR mirror (fallback)
+        if: steps.pull-silo-primary.outcome == 'failure'
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          echo "::warning::docker.io/pgsty/silo pull failed, falling back to our ECR mirror"
+          docker pull "$ECR_REGISTRY/mint-silo:$SILO_IMAGE_TAG"
+          docker tag "$ECR_REGISTRY/mint-silo:$SILO_IMAGE_TAG" minio-silo:ci
+
+      # configure-aws-credentials exports the INFRA_ROLE_TO_ASSUME credentials to every later step
+      # in this job via $GITHUB_ENV (the same role build_application_images.yml uses for ECR
+      # push). Clear them here, right after the ECR pull they were needed for, so steps further
+      # down (go test, etc.) don't run with live AWS credentials in their environment.
+      # always() because the fallback steps above have no continue-on-error - if any of them
+      # fail, GitHub skips subsequent steps by default, which would skip this cleanup too and
+      # leave the credentials live for e.g. the Announce failure step.
+      - name: Clear ECR fallback AWS credentials
+        if: always() && steps.pull-silo-primary.outcome == 'failure'
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker logout "$ECR_REGISTRY"
+          echo "AWS_ACCESS_KEY_ID=" >> "$GITHUB_ENV"
+          echo "AWS_SECRET_ACCESS_KEY=" >> "$GITHUB_ENV"
+          echo "AWS_SESSION_TOKEN=" >> "$GITHUB_ENV"
+
+      - name: Start MinIO (Silo)
+        run: |
+          docker run -d --name minio -p 9005:9000 \
+            --health-cmd "curl -s http://localhost:9000/minio/health/live" \
+            --health-interval 1s --health-timeout 1s --health-retries 5 \
+            minio-silo:ci server /data
+
+      - name: Wait for MinIO (Silo) to be healthy
+        run: |
+          for _ in $(seq 1 30); do
+            status="$(docker inspect --format='{{.State.Health.Status}}' minio)"
+            if [ "$status" = "healthy" ]; then
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "minio container did not become healthy in time" >&2
+          docker logs minio
+          exit 1
 
       - name: Migrate Database
         uses: docker://flyway/flyway:10.15-alpine
@@ -174,15 +240,20 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ env.MINIO_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ env.MINIO_KEY }}
+          # Clears any leftover AWS_SESSION_TOKEN from the ECR fallback login above - MinIO's
+          # local minioadmin credentials aren't session-based, and a real STS token left over
+          # from that step makes the AWS CLI send a request MinIO rejects as InvalidTokenId.
+          AWS_SESSION_TOKEN: ''
           AWS_DEFAULT_REGION: us-west-2
         run: >-
           aws --endpoint-url ${{ env.MINIO_ADDRESS }}
           s3 mb s3://${{ env.S3_BUCKET }}
-          
+
       - name: Make MINIO  EChimp Bucket
         env:
             AWS_ACCESS_KEY_ID: ${{ env.MINIO_KEY }}
             AWS_SECRET_ACCESS_KEY: ${{ env.MINIO_KEY }}
+            AWS_SESSION_TOKEN: ''
             AWS_DEFAULT_REGION: us-west-2
         run: >-
             aws --endpoint-url ${{ env.MINIO_ADDRESS }}
