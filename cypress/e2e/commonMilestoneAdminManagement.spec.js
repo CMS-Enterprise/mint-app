@@ -142,6 +142,8 @@ describe('Common Milestone Admin Management', () => {
         .contains(editedName)
         .should('be.visible');
 
+      cy.get('#help-articles-search').clear();
+      cy.get('#help-articles-search').type(originalName);
       cy.contains('[data-testid="CardGroup"]', originalName).should(
         'not.exist'
       );
