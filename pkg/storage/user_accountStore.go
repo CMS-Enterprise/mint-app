@@ -238,6 +238,16 @@ func (s *Store) UserAccountsGetNotificationRecipientsForIDDOCQuestionnaireComple
 	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesIDDOCQuestionnaireCompleted, arg)
 }
 
+// UserAccountGetNotificationPreferencesForWaiverAssessmentSurveyMarkedComplete returns a collection of
+// user accounts that should be notified of when a waiver assessment survey is marked complete
+func UserAccountGetNotificationPreferencesForWaiverAssessmentSurveyMarkedComplete(
+	np sqlutils.NamedPreparer,
+	modelPlanID uuid.UUID,
+) ([]*models.UserAccountAndNotificationPreferences, error) {
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
+	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesWaiverAssessmentSurveyMarkedComplete, arg)
+}
+
 // UserAccountGetNotificationPreferencesForMTOReadyForReview returns a collection of
 // user accounts that should be notified of when an MTO is marked ready for review
 func UserAccountGetNotificationPreferencesForMTOReadyForReview(

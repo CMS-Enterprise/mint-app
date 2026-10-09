@@ -107,7 +107,10 @@ const TaskCard = ({
     getSectionsReadyForClearanceCount(modelPlan);
 
   const primaryAction = t(`${baseKey}.primaryAction`, { defaultValue: '' });
-  const secondaryPath = t(`${key}.secondaryPath`, { defaultValue: '' });
+  const secondaryPath = t(`${key}.secondaryPath`, {
+    defaultValue: '',
+    modelID
+  });
   const secondaryAction = t(`${key}.secondaryAction`, { defaultValue: '' });
   const upcomingAlert = t(`${key}.upcomingAlert`, { defaultValue: '' });
 

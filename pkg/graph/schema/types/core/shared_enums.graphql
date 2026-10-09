@@ -219,6 +219,8 @@ enum TableName {
   possible_operational_need
   possible_operational_solution
   possible_operational_solution_contact
+  waiver_assessment_survey
+  waiver
   tag
   plan_timeline
   custom_timeline_date

@@ -44,6 +44,26 @@ func (pGct *PlanGeneralCharacteristicsTranslation) ToMap() (map[string]models.IT
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
+func (wast *WaiverAssessmentSurveyTranslation) TableName() models.TableName {
+	return models.TNWaiverAssessmentSurvey
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (wast *WaiverAssessmentSurveyTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*wast)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
+func (wt *WaiverTranslation) TableName() models.TableName {
+	return models.TNWaiver
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (wt *WaiverTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*wt)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
 func (pOet *PlanOpsEvalAndLearningTranslation) TableName() models.TableName {
 	return models.TNPlanOpsEvalAndLearning
 }

@@ -25,6 +25,8 @@ export default gql(/* GraphQL */ `
         incorrectModelStatus
         mtoReadyForReview
         mtoReadyForReviewNotificationType
+        waiverAssessmentSurveyMarkedComplete
+        waiverAssessmentSurveyMarkedCompleteNotificationType
       }
       leadModelPlanCount
     }

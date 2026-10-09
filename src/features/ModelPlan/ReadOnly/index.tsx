@@ -67,6 +67,7 @@ import ReadOnlyOpsEvalAndLearning from './OpsEvalAndLearning';
 import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
 import ReadOnlyModelTimeline from './Timeline';
+import ReadOnlyWaiverAssessmentSurvey from './WaiverAssessmentSurvey';
 
 import './index.scss';
 
@@ -146,6 +147,13 @@ export const ReadOnlyComponents = (
       route: `/models/${modelID}/read-view/data-exchange-approach`,
       helpRoute: '/help-and-knowledge/sample-model-plan/data-exchange-approach',
       component: <ReadOnlyDataExchangeApproach modelID={modelID} />,
+      group: 'model-design-activities'
+    },
+    'waiver-assessment-survey': {
+      route: `/models/${modelID}/read-view/waiver-assessment-survey`,
+      helpRoute:
+        '/help-and-knowledge/sample-model-plan/waiver-assessment-survey',
+      component: <ReadOnlyWaiverAssessmentSurvey modelID={modelID} />,
       group: 'model-design-activities'
     },
     'iddoc-questionnaire': {
@@ -624,6 +632,10 @@ export const readViewRoutes = {
     {
       path: '/models/:modelID/read-view/data-exchange-approach',
       element: <ReadOnlyDataExchangeApproach />
+    },
+    {
+      path: '/models/:modelID/read-view/waiver-assessment-survey',
+      element: <ReadOnlyWaiverAssessmentSurvey />
     },
     {
       path: '/models/:modelID/read-view/iddoc-questionnaire',

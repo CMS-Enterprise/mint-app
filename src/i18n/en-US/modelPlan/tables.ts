@@ -127,6 +127,12 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   [TableName.PLAN_TIMELINE]: {
     generalName: 'Timeline'
   },
+  [TableName.WAIVER_ASSESSMENT_SURVEY]: {
+    generalName: 'Waiver assessment survey'
+  },
+  [TableName.WAIVER]: {
+    generalName: 'Waiver assessment survey'
+  },
   [TableName.MTO_MILESTONE_NOTE]: {
     generalName: 'MTO milestone note'
   },

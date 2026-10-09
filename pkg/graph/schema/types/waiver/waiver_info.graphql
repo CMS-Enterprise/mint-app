@@ -1,0 +1,15 @@
+"""
+This is a convenience type to wrap the info about a model
+"""
+type WaiverInfo {
+  modelPlanID: UUID!
+  commonWaivers: [CommonWaiver!]!
+  suggestedCommonWaivers: [CommonWaiver!]!
+  unusedCommonWaivers: [CommonWaiver!]!
+  waivers: [Waiver!]!
+}
+
+extend type Query {
+  waiverInfo(modelPlanID: UUID!): WaiverInfo!
+    @hasAnyRole(roles: [MINT_USER, MINT_MAC])
+}

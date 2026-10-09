@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"strings"
+	"testing"
 	"time"
 
 	"github.com/golang/mock/gomock"
@@ -55,7 +56,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 	suite.NoError(err)
 	suite.NotNil(emailSubject)
 	suite.NotNil(emailBody)
-	suite.EqualValues("Updates on the models you're following", emailSubject)
+	suite.EqualValues("Updates on the models you’re following", emailSubject)
 
 	// Check if email contains model name
 	suite.True(strings.Contains(emailBody, mp.ModelName))
@@ -79,6 +80,46 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 
 	suite.NoError(err)
 	mockController.Finish()
+}
+
+func TestGenerateDailyDigestEmailIncludesWaiverAssessmentSurveyComplete(t *testing.T) {
+	mockController := gomock.NewController(t)
+	mockEmailService := emailtestconfigs.InitializeMockEmailService(mockController)
+
+	mockEmailService.
+		EXPECT().
+		GetConfig().
+		Return(&emailtestconfigs.TestEmailServiceConfig).
+		AnyTimes()
+
+	analyzedAudit, err := models.NewAnalyzedAudit(
+		uuid.New(),
+		uuid.New(),
+		"Test Plan",
+		time.Now().UTC(),
+		models.AnalyzedAuditChange{
+			PlanSections: &models.AnalyzedPlanSections{
+				WaiverAssessmentSurveyMarkedComplete: true,
+			},
+		},
+	)
+	if err != nil {
+		t.Fatalf("creating analyzed audit: %v", err)
+	}
+
+	emailSubject, emailBody, err := generateDigestEmail(
+		[]*models.AnalyzedAudit{analyzedAudit},
+		mockEmailService,
+	)
+	if err != nil {
+		t.Fatalf("generating daily digest email: %v", err)
+	}
+	if emailSubject != "Updates on the models you’re following" {
+		t.Errorf("unexpected email subject: %q", emailSubject)
+	}
+	if !strings.Contains(emailBody, "Waiver assessment survey is complete") {
+		t.Error("daily digest email does not include waiver assessment survey completion")
+	}
 }
 
 // TestDailyDigestNotificationSend verifies that TestDailyDigestNotificationSend functions as expected, and does not generate an error
