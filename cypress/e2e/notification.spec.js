@@ -1,4 +1,38 @@
-import { aliasQuery } from '../support/graphql-test-utils';
+import { aliasMutation, aliasQuery } from '../support/graphql-test-utils';
+
+// Full page load. The notifications page and the nav bar share an Apollo cache,
+// so a client-side visit can render a list fetched before the event was written.
+const openNotifications = () => {
+  cy.visit('/notifications');
+  cy.get('[data-testid="notification-index"]').should('be.visible');
+  cy.get('[data-testid="spinner"]').should('not.exist');
+};
+
+// Saving redirects to /notifications only after the mutation succeeds.
+// Navigating away before that races the redirect and can drop the new preference.
+const saveNotificationSettings = () => {
+  cy.contains('button', 'Save').should('not.be.disabled').click();
+  cy.location('pathname').should('eq', '/notifications');
+  cy.get('[data-testid="toast-success"]').should('be.visible');
+  cy.get('[data-testid="spinner"]').should('not.exist');
+};
+
+// Check both channels once the settings form has loaded. ensureChecked retries
+// because a click during hydration does not stick.
+const enableNotification = name => {
+  cy.get('#notification-settings-form fieldset')
+    .first()
+    .should('not.be.disabled');
+
+  cy.ensureChecked(
+    `#notification-setting-email-${name}`,
+    `label[for="notification-setting-email-${name}"]`
+  );
+  cy.ensureChecked(
+    `#notification-setting-in-app-${name}`,
+    `label[for="notification-setting-in-app-${name}"]`
+  );
+};
 
 describe('Notification Center', () => {
   describe('MINT Assessment User Tests', () => {
@@ -8,61 +42,20 @@ describe('Notification Center', () => {
     });
 
     it('navigates through the Notification page', () => {
-      cy.enterModelPlanTaskList('Empty Plan');
+      // Preliminarily creating two notifications before testing notifications:
+      // two discussions that @mention JTTC. The discussion form itself is covered in discussions.spec.js
+      ['First Notification', 'Second Notification'].forEach(text => {
+        cy.task('createDiscussion', {
+          euaId: 'JTTC',
+          jobCodes: ['MINT_ASSESSMENT_NONPROD'],
+          modelPlanName: 'Empty Plan',
+          userRole: 'NONE_OF_THE_ABOVE',
+          userRoleDescription: 'Designer',
+          content: `<p><span class="mention" data-type="mention" data-id="JTTC" data-label="Anabelle Jerde (JTTC)" data-mention-suggestion-char="@" data-id-db="" tag-type="USER_ACCOUNT">@Anabelle Jerde (JTTC)</span> ${text}</p>`
+        });
+      });
 
-      cy.contains('button', 'Start a discussion').click();
-
-      // Preliminarily creating two notifications before testing notifications
-      // First notification
-      cy.contains('h1', 'Start a discussion');
-
-      cy.contains('button', 'Save discussion').should('be.disabled');
-
-      cy.get('#discussion-topic').should('not.be.disabled');
-      cy.get('#discussion-topic').select('Model Plan (Model basics)');
-
-      cy.get('#user-role')
-        .should('not.be.disabled')
-        .select('None of the above');
-
-      cy.get('#user-role-description')
-        .type('Designer')
-        .should('have.value', 'Designer');
-
-      cy.get('#mention-editor')
-        .type('@ana')
-        .contains('Anabelle Jerde (JTTC)')
-        .click();
-      cy.get('#mention-editor')
-        .type('First Notification')
-        .should('have.text', '@Anabelle Jerde (JTTC) First Notification');
-
-      cy.contains('button', 'Save discussion').click();
-
-      // Second notification
-      cy.contains('button', 'Start a discussion').click();
-
-      cy.get('#discussion-topic').should('not.be.disabled');
-      cy.get('#discussion-topic').select('Model Plan (Model basics)');
-
-      cy.get('#user-role')
-        .should('not.be.disabled')
-        .select('None of the above');
-
-      cy.get('#user-role-description').should('have.value', 'Designer');
-
-      cy.get('#mention-editor')
-        .type('@ana')
-        .contains('Anabelle Jerde (JTTC)')
-        .click();
-      cy.get('#mention-editor')
-        .type('Second Notification')
-        .should('have.text', '@Anabelle Jerde (JTTC) Second Notification');
-
-      cy.contains('button', 'Save discussion').click();
-
-      cy.get('[data-testid="close-discussions"]').click({ force: true });
-      cy.get('[data-testid="navmenu__notification"]').first().click();
+      openNotifications();
 
       // Actual Notification Test
       cy.get('[data-testid="navmenu__notification"]')
@@ -77,12 +70,11 @@ describe('Notification Center', () => {
       cy.get('[data-testid="individual-notification"]')
         .should('have.length', 2)
         .first()
-        .find('button', 'View Discussion')
+        .contains('button', /view discussion/i)
         .click();
 
-      // Navigate to Notification page (faster than cy.visit)
       cy.get('[data-testid="close-discussions"]').click({ force: true });
-      cy.get('[data-testid="navmenu__notification"]').first().click();
+      openNotifications();
 
       // Check to see first entry should no longer have red dot
       cy.get('[data-testid="individual-notification"]')
@@ -90,10 +82,18 @@ describe('Notification Center', () => {
         .find('[data-testid="notification-red-dot"]')
         .should('not.exist');
 
-      // Mark all as read
-      cy.contains('button', 'Mark all').click();
+      cy.intercept('POST', '/api/graph/query', req => {
+        aliasMutation(req, 'UpdateAllNotificationsAsRead');
+      });
 
-      // No more red dots
+      cy.contains('button', 'Mark all').click();
+      cy.wait('@UpdateAllNotificationsAsRead')
+        .its('response.statusCode')
+        .should('eq', 200);
+
+      // Reload so the nav icon is not waiting on its 5s poll
+      openNotifications();
+
       cy.get('[data-testid="navmenu__notifications--noNotification"]').should(
         'exist'
       );
@@ -109,14 +109,21 @@ describe('Notification Center', () => {
 
       cy.contains('label', 'Type your reply');
 
+      cy.intercept('POST', '/api/graph/query', req => {
+        aliasMutation(req, 'CreateModelPlanReply');
+      });
+
       cy.get('#mention-editor').type(
         'Triggering new discussion reply notification'
       );
 
       cy.contains('button', 'Save reply').click();
+      cy.wait('@CreateModelPlanReply')
+        .its('response.statusCode')
+        .should('eq', 200);
 
       cy.get('[data-testid="close-discussions"]').click({ force: true });
-      cy.get('[data-testid="navmenu__notification"]').first().click();
+      openNotifications();
 
       cy.get('[data-testid="navmenu__notifications--yesNotification"]').should(
         'exist'
@@ -130,11 +137,11 @@ describe('Notification Center', () => {
       // Checking that marking as read works
       cy.get('[data-testid="individual-notification"]')
         .first()
-        .find('button', 'View Discussion')
+        .contains('button', /view discussion/i)
         .click();
 
       cy.get('[data-testid="close-discussions"]').click({ force: true });
-      cy.get('[data-testid="navmenu__notification"]').first().click();
+      openNotifications();
 
       cy.get('[data-testid="individual-notification"]')
         .first()
@@ -150,10 +157,9 @@ describe('Notification Center', () => {
     });
 
     it('navigates to see Daily Digest notification', () => {
-      cy.visit('/notifications');
+      openNotifications();
 
-      cy.get('[data-testid="individual-notification"]')
-        .first()
+      cy.contains('[data-testid="individual-notification"]', 'View digest')
         .find('[data-testid="notification-red-dot"]')
         .should('exist');
       cy.contains('button', 'View digest').click();
@@ -169,15 +175,20 @@ describe('Notification Center', () => {
 
     it('navigates to see Notification Settings', () => {
       // Uncheck first checkbox and save
+      cy.get('#notification-settings-form fieldset')
+        .first()
+        .should('not.be.disabled');
+
       cy.get('#notification-setting-email-dailyDigestComplete')
         .should('be.checked')
         .uncheck({
           force: true
         });
+      cy.get('#notification-setting-email-dailyDigestComplete').should(
+        'not.be.checked'
+      );
 
-      cy.contains('button', 'Save').click();
-
-      cy.get('[data-testid="toast-success"]').should('exist');
+      saveNotificationSettings();
 
       cy.contains('a', 'Notification settings').click();
 
@@ -188,39 +199,19 @@ describe('Notification Center', () => {
     });
 
     it('testing Adding Collaborator Notification', () => {
-      cy.visit('/');
-      cy.enterModelPlanCollaborationArea('Empty Plan');
-
-      // Add SF13 as a collaborator
-      cy.get('[data-testid="add-collaborator"]').click();
-
-      cy.get('#react-select-model-team-cedar-contact-input')
-        .click()
-        .type('Jerry', { delay: 100 });
-
-      cy.get('#react-select-model-team-cedar-contact-option-0')
-        .contains('Jerry Seinfeld (Jerry.Seinfeld@local.fake)')
-        .click();
-
-      cy.get('#collaborator-role').within(() => {
-        cy.get("input[type='text']").click().type('evalu{downArrow}{enter}');
+      // Add SF13 as a collaborator (the add-collaborator form is covered in collaborator.spec.js)
+      cy.task('addCollaborator', {
+        euaId: 'MINT',
+        modelPlanName: 'Empty Plan',
+        userName: 'SF13',
+        teamRoles: ['EVALUATION']
       });
-
-      cy.clickOutside();
-
-      cy.get('[data-testid="multiselect-tag--Evaluation"]')
-        .first()
-        .contains('Evaluation');
-
-      cy.contains('button', 'Add team member').click();
 
       cy.logout();
 
       // Login as SF13
       cy.localLogin({ name: 'SF13' });
-      cy.visit('/');
-
-      cy.get('[data-testid="navmenu__notification"]').first().click();
+      openNotifications();
 
       cy.get('[data-testid="individual-notification"]').contains(
         'MINT Doe added you to the team for Empty Plan.'
@@ -232,26 +223,11 @@ describe('Notification Center', () => {
     });
 
     it('testing Incorrect Model Status Notification', () => {
-      // Check the incorrect model status in-app checkbox
-      cy.get('[data-testid="notification-setting-in-app-incorrectModelStatus"]')
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
+      enableNotification('incorrectModelStatus');
+      saveNotificationSettings();
 
-      cy.get('[data-testid="notification-setting-email-incorrectModelStatus"]')
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
-
-      cy.contains('button', 'Save').click();
-
-      // Navigate back to home to update a timeline
-      cy.get('[aria-label="Home"]').click();
-      cy.url().should('include', '/');
+      cy.visit('/');
+      cy.get('[data-testid="homepage"]').should('be.visible');
 
       cy.contains('a', 'Plan with Timeline').click();
       cy.url().should('include', '/collaboration-area');
@@ -268,8 +244,12 @@ describe('Notification Center', () => {
         .should('have.value', '05/23/2025');
 
       cy.clickOutside();
+
+      cy.intercept('POST', '/api/graph/query', req => {
+        aliasMutation(req, 'UpdateTimeline');
+      });
       cy.contains('button', 'Save').click();
-      cy.wait(500);
+      cy.wait('@UpdateTimeline').its('response.statusCode').should('eq', 200);
 
       // Comment out since currently need to wait for too long for below notification to show
       // Navigate back to Notification Center
@@ -305,26 +285,10 @@ describe('Notification Center', () => {
     });
 
     it('testing New Model Plan Notification', () => {
-      // Check the new model plan in-app checkbox
-      cy.get('[data-testid="notification-setting-in-app-newModelPlan"]')
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
+      enableNotification('newModelPlan');
+      saveNotificationSettings();
 
-      cy.get('[data-testid="notification-setting-email-newModelPlan"]')
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
-
-      cy.contains('button', 'Save').click();
-
-      // Navigate back to home to add a new model to MINT
-      cy.get('[aria-label="Home"]').click();
-      cy.location('pathname').should('eq', '/');
+      cy.visit('/');
       cy.get('[data-testid="homepage"]').should('be.visible');
 
       cy.contains('a', 'Add a new model to MINT').click();
@@ -338,9 +302,7 @@ describe('Notification Center', () => {
       cy.contains('button', 'Next').click();
       cy.url().should('include', '/collaboration-area/collaborators');
 
-      // Navigate back to Notification Center
-      cy.get('[data-testid="navmenu__notification"]').first().click();
-      cy.url().should('include', '/notifications');
+      openNotifications();
 
       cy.get('[data-testid="individual-notification"]').contains(
         'MINT Doe created a Model Plan: Cypress Model Plan.'
@@ -365,26 +327,10 @@ describe('Notification Center', () => {
     });
 
     it('testing Dates Changed Notification', () => {
-      // Check the new model plan in-app checkbox
-      cy.get('[data-testid="notification-setting-in-app-datesChanged"]')
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
+      enableNotification('datesChanged');
+      saveNotificationSettings();
 
-      cy.get('[data-testid="notification-setting-email-datesChanged"]')
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
-
-      cy.contains('button', 'Save').click();
-
-      // Navigate back to home to click "Empty Plan" model plan
-      cy.get('[aria-label="Home"]').click();
-      cy.url().should('include', '/');
+      cy.visit('/');
 
       cy.enterModelPlanCollaborationArea('Empty Plan');
 
@@ -398,15 +344,13 @@ describe('Notification Center', () => {
 
       cy.clickOutside();
 
+      cy.intercept('POST', '/api/graph/query', req => {
+        aliasMutation(req, 'UpdateTimeline');
+      });
       cy.contains('button', 'Save').click();
+      cy.wait('@UpdateTimeline').its('response.statusCode').should('eq', 200);
 
-      cy.get('[data-testid="page-loading"]').should('not.exist');
-
-      cy.get('[data-testid="navmenu__notification"]').click().click().click();
-
-      cy.url().should('include', '/notifications');
-
-      cy.get('[data-testid="spinner"]').should('not.exist');
+      openNotifications();
 
       cy.get('[data-testid="individual-notification"]').contains(
         'updated the dates for Empty Plan.'
@@ -437,52 +381,18 @@ describe('Notification Center', () => {
     });
 
     it('testing New Discussion Added Notification', () => {
-      // Check the new model plan in-app checkbox
-      cy.get('[data-testid="notification-setting-in-app-newDiscussionAdded"]')
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
+      enableNotification('newDiscussionAdded');
+      saveNotificationSettings();
 
-      cy.get('[data-testid="notification-setting-email-newDiscussionAdded"]')
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
+      // Start a discussion (the discussion form is covered in discussions.spec.js)
+      cy.task('createDiscussion', {
+        euaId: 'MINT',
+        modelPlanName: 'Empty Plan',
+        userRole: 'MINT_TEAM',
+        content: '<p>How to I get to model characteristics?</p>'
+      });
 
-      cy.contains('button', 'Save').click();
-
-      // Navigate back to home to click "Empty Plan" model plan
-      cy.get('[aria-label="Home"]').click();
-      cy.url().should('include', '/');
-
-      cy.enterModelPlanCollaborationArea('Empty Plan');
-
-      // Start a discussion
-      cy.contains('button', 'Start a discussion').click();
-
-      cy.get('#discussion-topic').should('not.be.disabled');
-      cy.get('#discussion-topic').select('Model Plan (Model basics)');
-
-      cy.get('#user-role').should('not.be.disabled').select('MINT Team');
-      cy.get('#mention-editor')
-        .type('How to I get to model characteristics?')
-        .should('have.text', 'How to I get to model characteristics?');
-
-      cy.contains('button', 'Save discussion').click();
-
-      cy.get('[data-testid="page-loading"]').should('not.exist');
-
-      cy.get('[data-testid="close-discussions"]').click();
-      cy.get('[data-testid="discussion-modal"]').should('not.exist');
-
-      cy.get('[data-testid="navmenu__notification"]').click();
-
-      cy.url().should('include', '/notifications');
-
-      cy.get('[data-testid="spinner"]').should('not.exist');
+      openNotifications();
 
       cy.get('[data-testid="individual-notification"]').contains(
         'added a discussion for Empty Plan.'
@@ -515,30 +425,10 @@ describe('Notification Center', () => {
     });
 
     it('testing Data Exchange Approach is marked Complete Notification', () => {
-      // Check the new model plan in-app checkbox
-      cy.get(
-        '[data-testid="notification-setting-in-app-dataExchangeApproachMarkedComplete"]'
-      )
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
+      enableNotification('dataExchangeApproachMarkedComplete');
+      saveNotificationSettings();
 
-      cy.get(
-        '[data-testid="notification-setting-email-dataExchangeApproachMarkedComplete"]'
-      )
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
-
-      cy.contains('button', 'Save').click();
-
-      // Navigate back to home to add a new model to MINT
-      cy.get('[aria-label="Home"]').click();
-      cy.url().should('include', '/');
+      cy.visit('/');
 
       cy.enterModelPlanCollaborationArea('Empty Plan');
       cy.contains('button', 'Go to questionnaires').click();
@@ -575,9 +465,7 @@ describe('Notification Center', () => {
       cy.url().should('include', '/additional-questionnaires');
       cy.get('h1').contains('Additional questionnaires');
 
-      cy.get('[data-testid="navmenu__notification"]').click();
-      cy.url().should('include', '/notifications');
-      cy.get('[data-testid="spinner"]').should('not.exist');
+      openNotifications();
 
       cy.get('[data-testid="individual-notification"]').contains(
         'MINT Doe marked the data exchange approach complete for Empty Plan.'
@@ -615,29 +503,10 @@ describe('Notification Center', () => {
       });
 
       // Check the IDDOC questionnaire in-app checkbox
-      cy.get(
-        '[data-testid="notification-setting-in-app-iddocQuestionnaireComplete"]'
-      )
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
+      enableNotification('iddocQuestionnaireComplete');
+      saveNotificationSettings();
 
-      cy.get(
-        '[data-testid="notification-setting-email-iddocQuestionnaireComplete"]'
-      )
-        .should('not.be.disabled')
-        .should('be.not.checked')
-        .check({
-          force: true
-        });
-
-      cy.contains('button', 'Save').click();
-
-      // Navigate back to home to add a new model to MINT
-      cy.get('[aria-label="Home"]').click();
-      cy.url().should('include', '/');
+      cy.visit('/');
 
       cy.enterModelPlanTaskList('Empty Plan');
       cy.get('[data-testid="ops-eval-and-learning"]').click();
@@ -683,9 +552,7 @@ describe('Notification Center', () => {
       cy.url().should('include', '/additional-questionnaires');
       cy.get('h1').contains('Additional questionnaires');
 
-      cy.get('[data-testid="navmenu__notification"]').click();
-      cy.url().should('include', '/notifications');
-      cy.get('[data-testid="spinner"]').should('not.exist');
+      openNotifications();
 
       cy.get('[data-testid="individual-notification"]').contains(
         'MINT Doe marked the 4i/ACO-OS questionnaire complete for Empty Plan.'
@@ -718,31 +585,14 @@ describe('Notification Center', () => {
     });
 
     it('testing MTO is marked Ready for Review Notification', () => {
-      // Check the MTO Ready for Review email checkbox
-      cy.ensureChecked(
-        '#notification-setting-email-mtoReadyForReview',
-        'label[for="notification-setting-email-mtoReadyForReview"]'
-      );
+      cy.intercept('POST', '/api/graph/query', req => {
+        aliasMutation(req, 'UpdateMTOReadyForReview');
+      });
 
-      cy.get(
-        '[data-testid="notification-setting-email-mtoReadyForReview"]'
-      ).should('be.checked');
+      enableNotification('mtoReadyForReview');
+      saveNotificationSettings();
 
-      // Check the MTO Ready for Review in-app checkbox
-      cy.ensureChecked(
-        '#notification-setting-in-app-mtoReadyForReview',
-        'label[for="notification-setting-in-app-mtoReadyForReview"]'
-      );
-
-      cy.get(
-        '[data-testid="notification-setting-in-app-mtoReadyForReview"]'
-      ).should('be.checked');
-
-      cy.contains('button', 'Save').click();
-
-      // Navigate back to home to mark MTO ready for review
-      cy.get('[aria-label="Home"]').click();
-      cy.url().should('include', '/');
+      cy.visit('/');
 
       cy.enterModelPlanCollaborationArea('Model Plan for MTO testing');
 
@@ -764,14 +614,16 @@ describe('Notification Center', () => {
       cy.get('[data-testid="mto-ready-for-review-modal"]').within(() => {
         cy.contains('button', 'Mark as ready for review').click();
       });
+      cy.wait('@UpdateMTOReadyForReview')
+        .its('response.statusCode')
+        .should('eq', 200);
+      cy.get('[data-testid="mto-ready-for-review-modal"]').should('not.exist');
       cy.get('[data-testid="tasklist-tag"]').contains('Ready for review');
       cy.get('[data-testid="tasklist-tag"]')
         .contains('In progress')
         .should('not.exist');
 
-      cy.get('[data-testid="navmenu__notification"]').click();
-      cy.url().should('include', '/notifications');
-      cy.get('[data-testid="spinner"]').should('not.exist');
+      openNotifications();
 
       cy.get('[data-testid="individual-notification"]').contains(
         'MINT Doe marked the model-to-operations matrix (MTO) for Model Plan for MTO testing as ready for review.'

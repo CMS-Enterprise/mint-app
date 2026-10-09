@@ -99,86 +99,150 @@ function loginWithEnv({ oktaDomain, username, password, otpSecret }) {
         .click();
 
       // MFA is optional (Okta may skip it for a remembered device). Wait until
-      // we leave the password form, then complete MFA only if it appears.
-      cy.get('body', { timeout: 20000 }).should($body => {
-        const leftPasswordForm =
-          $body.find('input[name="identifier"]:visible').length === 0;
-        const mfaVisible =
-          /Multi-Factor Authentication|Google Authenticator|Enter code/i.test(
-            $body.text()
-          );
-        expect(
-          leftPasswordForm || mfaVisible,
-          'expected MFA challenge or post-password transition'
-        ).to.eq(true);
-      });
+      // the username form is actually gone. Treating "MFA text OR left the form"
+      // as success continued during the blank transition and typed the code into
+      // the password field, which uses the same credentials.passcode name.
+      const otpSelector =
+        'input[name="credentials.passcode"], input[name="answer"]';
 
-      cy.get('body').then($body => {
-        const text = $body.text();
-        const mfaVisible =
-          /Multi-Factor Authentication|Google Authenticator|Enter code/i.test(
-            text
-          );
-        const otpFieldVisible =
-          $body.find(
-            'input[name="credentials.passcode"]:visible, input[name="answer"]:visible'
-          ).length > 0 &&
-          $body.find('input[name="identifier"]:visible').length === 0;
+      cy.get('body', { timeout: 30000 })
+        .should($body => {
+          const passwordFormVisible =
+            $body.find('input[name="identifier"]:visible').length > 0;
+          const otpFieldVisible = $body
+            .find(otpSelector)
+            .filter(':visible').length;
+          const mfaVisible =
+            /Multi-Factor Authentication|Google Authenticator|Enter code/i.test(
+              $body.text()
+            );
+          const stillOnLogin = $body.find('#okta-sign-in').length > 0;
 
-        if (!mfaVisible && !otpFieldVisible) {
-          // Password alone was enough; redirect back to the app will end this origin.
-          return;
-        }
+          expect(
+            passwordFormVisible,
+            'expected to leave the username/password form'
+          ).to.eq(false);
+          expect(
+            !stillOnLogin || otpFieldVisible > 0 || mfaVisible,
+            'expected an MFA challenge or to leave the hosted login page'
+          ).to.eq(true);
+        })
+        .then($body => {
+          const text = $body.text();
+          const mfaVisible =
+            /Multi-Factor Authentication|Google Authenticator|Enter code/i.test(
+              text
+            );
+          const otpFieldVisible =
+            $body.find(otpSelector).filter(':visible').length > 0;
 
-        // Prefer Google Authenticator — OKTA_TEST_SECRET is that factor's OTP seed.
-        // CMS ELP customizes Okta's MFA list markup, so walk up from the label to
-        // the nearest ancestor that contains a Select control.
-        if (text.includes('Google Authenticator') && !otpFieldVisible) {
-          cy.contains('Google Authenticator')
-            .should('be.visible')
-            .then($label => {
-              let $node = $label;
-              for (let i = 0; i < 8; i += 1) {
-                const $select = $node
-                  .find('a, button')
-                  .filter((_, el) =>
-                    /^Select$/i.test((el.textContent || '').trim())
-                  );
-                if ($select.length) {
-                  cy.wrap($select.first()).click({ force: true });
-                  return;
-                }
-                $node = $node.parent();
-              }
-              throw new Error(
-                'Could not find a Select control for Google Authenticator on the MFA options page'
+          if (!mfaVisible && !otpFieldVisible) {
+            // Password alone was enough; redirect back to the app will end this origin.
+            return;
+          }
+
+          // Queued only after the authenticator choice (when one is required), so
+          // the code is generated once the passcode field is actually on screen.
+          const enterOtp = () => {
+            cy.get(otpSelector, { timeout: 20000 })
+              .filter(':visible')
+              .first()
+              .should('not.be.disabled');
+
+            // Check this before typing. Toggling it re-renders the form and clears
+            // a code that was already entered.
+            cy.get('body').then($mfaBody => {
+              const $remember = $mfaBody.find(
+                'input[name="rememberDevice"]:visible'
               );
+              if ($remember.length && !$remember.is(':checked')) {
+                cy.get('input[name="rememberDevice"]').check({ force: true });
+              }
             });
-        }
 
-        cy.task('generateOTP', originOtpSecret, { log: false }).then(token => {
-          cy.get('input[name="credentials.passcode"], input[name="answer"]', {
-            timeout: 15000
-          })
-            .filter(':visible')
-            .first()
-            .clear()
-            .type(token, { log: false });
+            // generateOTP also waits out the end of the 30s window. Don't submit
+            // until the value stuck — Okta drops fast keystrokes, and a partial
+            // code fails verification.
+            cy.task('generateOTP', originOtpSecret, { log: false }).then(
+              token => {
+                const typeToken = attemptsLeft => {
+                  cy.get(otpSelector, { timeout: 20000 })
+                    .filter(':visible')
+                    .first()
+                    .focus()
+                    .clear({ force: true })
+                    .type(token, { log: false, delay: 50 });
 
-          cy.get('body').then($mfaBody => {
-            if ($mfaBody.find('input[name="rememberDevice"]').length) {
-              cy.get('input[name="rememberDevice"]').check({ force: true });
-            }
-          });
+                  cy.get(otpSelector)
+                    .filter(':visible')
+                    .first()
+                    .invoke('val')
+                    .then(value => {
+                      if (value !== token && attemptsLeft > 0) {
+                        typeToken(attemptsLeft - 1);
+                        return;
+                      }
+                      expect(value, 'OTP field').to.eq(token);
 
-          cy.get(
-            '#okta-sign-in input[type="submit"][data-type="save"], input[type="submit"][value="Verify"], input[value="Verify"]'
-          )
-            .filter(':visible')
-            .first()
-            .click({ force: true });
+                      cy.get(
+                        '#okta-sign-in input[type="submit"][data-type="save"], input[type="submit"][value="Verify"], input[value="Verify"]'
+                      )
+                        .filter(':visible')
+                        .first()
+                        .click({ force: true });
+                    });
+                };
+
+                typeToken(2);
+              }
+            );
+          };
+
+          // Prefer Google Authenticator — OKTA_TEST_SECRET is that factor's OTP seed.
+          // The factor list's parent contains every Select button, so choose the one
+          // closest to this label instead of the first Select on the page.
+          if (text.includes('Google Authenticator') && !otpFieldVisible) {
+            cy.contains('Google Authenticator')
+              .should('be.visible')
+              .then($label => {
+                const labelTop = $label[0].getBoundingClientRect().top;
+                const $selects = Cypress.$('#okta-sign-in')
+                  .find('a, button, input[type="submit"], [role="button"]')
+                  .filter((_, el) => {
+                    const label = (
+                      el.getAttribute('value') ||
+                      el.textContent ||
+                      ''
+                    ).trim();
+                    return /^Select$/i.test(label);
+                  });
+
+                if (!$selects.length) {
+                  throw new Error(
+                    'Could not find a Select control for Google Authenticator on the MFA options page'
+                  );
+                }
+
+                let best = $selects.get(0);
+                let bestDistance = Number.POSITIVE_INFINITY;
+                $selects.each((_, el) => {
+                  const distance = Math.abs(
+                    el.getBoundingClientRect().top - labelTop
+                  );
+                  if (distance < bestDistance) {
+                    bestDistance = distance;
+                    best = el;
+                  }
+                });
+
+                cy.wrap(best).click({ force: true });
+                enterOtp();
+              });
+            return;
+          }
+
+          enterOtp();
         });
-      });
     }
   );
 

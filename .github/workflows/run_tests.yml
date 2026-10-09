@@ -292,11 +292,19 @@ jobs:
         run: |
           ./scripts/github-action-announce-broken-branch
 
-  e2e_tests:
+  # The matrix name is not the required status check. e2e_tests below reports that name.
+  e2e_test_shards:
+    name: e2e_tests (shard ${{ matrix.shard }}/${{ matrix.total_shards }})
     if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
     runs-on: ubuntu-latest
-    continue-on-error: true
     needs: [build_docker_images, build_frontend_assets]
+    strategy:
+      # Each shard runs on its own runner with its own DB/backend stack, so specs stay isolated.
+      # To change the shard count, update both lists.
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
+        total_shards: [4]
     steps:
       - name: Check out code
         uses: actions/checkout@v7
@@ -360,23 +368,27 @@ jobs:
       - name: Run Cypress Tests
         run: |
           export FLAG_SOURCE=FILE
-          yarn cypress run
+          SPECS=$(node scripts/cypress-shard.cjs ${{ matrix.shard }} ${{ matrix.total_shards }})
+          echo "Shard ${{ matrix.shard }}/${{ matrix.total_shards }} specs: $SPECS"
+          yarn cypress run --spec "$SPECS"
       - name: Docker Compose Down
         if: always() # Always spin down the container
         run: |
           scripts/dev down
+      # Videos of passing specs are deleted by the after:spec hook in cypress/plugins
       - name: Upload cypress videos
-        if: ${{ always() }}
+        if: ${{ failure() }}
         uses: actions/upload-artifact@v7
         with:
-          name: cypress-videos
+          name: cypress-videos-shard-${{ matrix.shard }}
           path: cypress/videos
+          if-no-files-found: ignore
           retention-days: 14
       - name: Upload cypress screenshots
-        if: ${{ always() }}
+        if: ${{ failure() }}
         uses: actions/upload-artifact@v7
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-shard-${{ matrix.shard }}
           path: cypress/screenshots
           if-no-files-found: ignore
           retention-days: 14
@@ -384,6 +396,24 @@ jobs:
         if: ${{ failure() }}
         run: |
           ./scripts/github-action-announce-broken-branch
+
+  # Branch protection requires "run_tests / e2e_tests". Shard jobs report
+  # "e2e_tests (shard N/4)" instead, so this job posts the expected name.
+  # needs.<matrix>.outcome is empty, so this reads result. Shards must not set
+  # continue-on-error, or a failed shard still reports result=success.
+  e2e_tests:
+    name: e2e_tests
+    needs: e2e_test_shards
+    if: ${{ always() && inputs.skip_tests == false && github.event_name != 'merge_group' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every shard to pass
+        run: |
+          echo "shard result=${{ needs.e2e_test_shards.result }}"
+          if [ "${{ needs.e2e_test_shards.result }}" != "success" ]; then
+            echo "One or more Cypress shards failed."
+            exit 1
+          fi
 
   lint:
     if: ${{ inputs.skip_tests == false && github.event_name != 'merge_group' }}
