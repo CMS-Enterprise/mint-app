@@ -11,6 +11,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
@@ -64,4 +65,9 @@ func WaiverGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, mode
 		return nil, err
 	}
 	return res, nil
+}
+
+// WaiverGetByID returns a waiver row for a given id.
+func WaiverGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.Waiver, error) {
+	return sqlutils.GetProcedure[models.Waiver](np, sqlqueries.Waiver.GetByID, utilitysql.CreateIDQueryMap(id))
 }

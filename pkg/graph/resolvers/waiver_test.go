@@ -104,6 +104,90 @@ func (suite *ResolverSuite) TestUpdateSelectedWaivers() {
 	suite.Nil(updated[0].WillUseWaiver)
 }
 
+// TestWaiverAuditTranslationLoadsCommonWaiverName exercises the database-backed
+// waiver lookup used when translating a changed selection field.
+func (suite *ResolverSuite) TestWaiverAuditTranslationLoadsCommonWaiverName() {
+	plan := suite.createModelPlan("plan for waiver audit translation")
+	commonWaivers, err := GetAllCommonWaiversByModelPlanID(suite.testConfigs.Context, &plan.ID)
+	suite.Require().NoError(err)
+	commonWaiver, found := lo.Find(commonWaivers, func(cw *models.CommonWaiver) bool {
+		return cw.Name == "Non-duplication"
+	})
+	suite.Require().True(found)
+
+	created, err := UpdateSelectedWaivers(
+		suite.testConfigs.Logger,
+		plan.ID,
+		[]*models.WaiverSelectionInput{{CommonWaiverID: commonWaiver.ID, WillUseWaiver: new(true)}},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+	suite.Require().NoError(err)
+	suite.Require().Len(created, 1)
+	// Translate the insert separately so the next batch contains the decision change.
+	suite.dangerousQueueAndTranslateAllAudits()
+
+	notUsingReason := "This model does not need the waiver"
+	_, err = UpdateSelectedWaivers(
+		suite.testConfigs.Logger,
+		plan.ID,
+		[]*models.WaiverSelectionInput{{
+			CommonWaiverID: commonWaiver.ID,
+			WillUseWaiver:  new(false),
+			NotUsingReason: &notUsingReason,
+		}},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+	suite.Require().NoError(err)
+
+	translatedAudits := suite.dangerousQueueAndTranslateAllAudits()
+	waiverAudit, found := lo.Find(translatedAudits, func(audit *models.TranslatedAuditWithTranslatedFields) bool {
+		return audit.TableName == models.TNWaiver && audit.PrimaryKey == created[0].ID
+	})
+	suite.Require().True(found, "expected a translated audit for the changed waiver")
+
+	decision, found := lo.Find(waiverAudit.TranslatedFields, func(field *models.TranslatedAuditField) bool {
+		return field.FieldName == "will_use_waiver"
+	})
+	suite.Require().True(found, "expected the translated waiver decision field")
+	suite.Equal("Do you plan to use this waiver with your model? (Waiver: "+commonWaiver.Name+")", decision.FieldNameTranslated)
+	suite.Equal("Yes", decision.OldTranslated)
+	suite.Equal("No", decision.NewTranslated)
+
+	reason, found := lo.Find(waiverAudit.TranslatedFields, func(field *models.TranslatedAuditField) bool {
+		return field.FieldName == "not_using_reason"
+	})
+	suite.Require().True(found, "expected the translated waiver reason field")
+	suite.Equal("Please explain why your model is not using this waiver.", reason.FieldNameTranslated)
+
+	// Changing only the reason must still identify the waiver in change history.
+	updatedReason := "This waiver is not relevant to the model"
+	_, err = UpdateSelectedWaivers(
+		suite.testConfigs.Logger,
+		plan.ID,
+		[]*models.WaiverSelectionInput{{
+			CommonWaiverID: commonWaiver.ID,
+			WillUseWaiver:  new(false),
+			NotUsingReason: &updatedReason,
+		}},
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
+	suite.Require().NoError(err)
+
+	translatedAudits = suite.dangerousQueueAndTranslateAllAudits()
+	waiverAudit, found = lo.Find(translatedAudits, func(audit *models.TranslatedAuditWithTranslatedFields) bool {
+		return audit.TableName == models.TNWaiver && audit.PrimaryKey == created[0].ID
+	})
+	suite.Require().True(found, "expected a translated audit for the changed reason")
+	suite.Require().Len(waiverAudit.TranslatedFields, 1)
+	reason = waiverAudit.TranslatedFields[0]
+	suite.Equal("not_using_reason", reason.FieldName)
+	suite.Equal("Please explain why your model is not using this waiver. (Waiver: "+commonWaiver.Name+")", reason.FieldNameTranslated)
+	suite.Equal(updatedReason, reason.NewTranslated)
+}
+
 func (suite *ResolverSuite) TestUpdateSelectedWaiversRejectsNonCollaborator() {
 	plan := suite.createModelPlan("plan protected from non-collaborator waiver updates")
 	commonWaivers, err := GetAllCommonWaiversByModelPlanID(suite.testConfigs.Context, &plan.ID)

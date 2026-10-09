@@ -1,0 +1,9 @@
+"""
+Represents the translation data for a model plan's waiver selections.
+"""
+type WaiverTranslation {
+  willUseWaiver: TranslationFieldWithOptions!
+    @goTag(key: "db", value: "will_use_waiver")
+  usingReason: TranslationField! @goTag(key: "db", value: "using_reason")
+  notUsingReason: TranslationField! @goTag(key: "db", value: "not_using_reason")
+}

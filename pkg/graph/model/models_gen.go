@@ -1022,6 +1022,13 @@ type WaiverAssessmentSurveyTranslation struct {
 	IsEmptyWaiversConfirmed                                models.TranslationFieldWithOptions            `json:"isEmptyWaiversConfirmed" db:"is_empty_waivers_confirmed"`
 }
 
+// Represents the translation data for a model plan's waiver selections.
+type WaiverTranslation struct {
+	WillUseWaiver  models.TranslationFieldWithOptions `json:"willUseWaiver" db:"will_use_waiver"`
+	UsingReason    models.TranslationField            `json:"usingReason" db:"using_reason"`
+	NotUsingReason models.TranslationField            `json:"notUsingReason" db:"not_using_reason"`
+}
+
 type ActionType string
 
 const (
