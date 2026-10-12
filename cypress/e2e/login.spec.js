@@ -1,6 +1,14 @@
 const maxAttempts = 3;
 
 describe('Logging in', () => {
+  // The Okta test runs the hosted Okta/ELP redirect login, so it needs, locally and in CI:
+  //   - VITE_OKTA_REDIRECT_LOGIN_ENABLED=true when the frontend is built/started. This is a
+  //     build-time flag (CI sets it in run_tests.yml). Locally it defaults to false in .envrc, so
+  //     set it in .envrc.local and restart the frontend; otherwise cy.login() fails after retrying.
+  //   - OKTA_TEST_USERNAME, OKTA_TEST_PASSWORD and OKTA_TEST_SECRET (the OTP seed). CI reads these
+  //     from GitHub secrets; locally they are empty in .envrc, so set them in .envrc.local.
+  //   - Network access to the Okta test IdP (OKTA_DOMAIN).
+  // The other login tests below use local auth and need none of this.
   it(
     'logs in with okta',
     {
@@ -10,13 +18,19 @@ describe('Logging in', () => {
       }
     },
     () => {
-      // Get the current number of retries and sleep before running the test to make sure the One-Time-Password is new
+      // A code Okta already rejected is burned until the 30s TOTP window rolls.
+      // Wait only for that remainder. generateOTP also refuses to mint a code
+      // in the last few seconds of a window.
       const currentRetry = cy.state('runnable')._currentRetry; // eslint-disable-line no-underscore-dangle
       if (currentRetry > 0) {
+        const stepSeconds = 30;
+        const remaining =
+          stepSeconds - (Math.floor(Date.now() / 1000) % stepSeconds);
+        const waitMs = (remaining + 1) * 1000;
         cy.log(
-          `[Attempt ${currentRetry + 1}/${maxAttempts}] Sleeping 30s for OTP`
+          `[Attempt ${currentRetry + 1}/${maxAttempts}] Waiting ${waitMs}ms for a new OTP`
         );
-        cy.wait(30000);
+        cy.wait(waitMs);
       }
       cy.login();
       cy.location('pathname', { timeout: 20000 }).should(
