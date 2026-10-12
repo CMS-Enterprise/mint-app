@@ -436,6 +436,8 @@ func SendCTATUpdateEmails(
 		bodyContent.Resolution = *updatedRequest.Resolution
 	}
 
+	// we want to check if any data that the requester can see (i.e., not progress notes) was updated. if *only* the progress notes
+	// were updated, we don't have to send the requester an email
 	if statusUpdated || assignedAdminUpdated || resolutionUpdated {
 		requesterEmailSubject, requesterEmailBody, err := CTAT.Update.GetContent(subjectContent, bodyContent)
 		if err != nil {
