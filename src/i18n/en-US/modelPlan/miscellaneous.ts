@@ -29,6 +29,7 @@ export const miscellaneous: Record<string, Record<string, string> | string> = {
   notes: 'Notes',
   noneEntered: 'None entered',
   na: 'No answer entered',
+  notAnswered: 'Not answered yet',
   dateFormat: 'mm/dd/yyyy',
   noAdditionalInformation: 'No additional information specified',
   other: 'Other',

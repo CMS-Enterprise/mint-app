@@ -131,6 +131,11 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *m
 	change.TableName = audit.TableName
 	translatedAudit.TranslatedAudit = change
 
+	waiverName, err := getWaiverNameForAudit(store, audit)
+	if err != nil {
+		return nil, fmt.Errorf("unable to resolve waiver name for audit %d: %w", audit.ID, err)
+	}
+
 	for fieldName, field := range audit.Fields {
 		transField, wasTranslated, tErr := translateField(ctx, store, fieldName, field, &audit.AuditChange, operation, translationMap)
 
@@ -140,6 +145,15 @@ func genericAuditTranslation(ctx context.Context, store *storage.Store, audit *m
 		if !wasTranslated {
 			//If this doesn't have a translation, don't append this to the translated field list (and don't save it)
 			continue
+		}
+		if waiverName != "" && (isWaiverSelectionField(audit.TableName, fieldName) ||
+			(!hasWaiverSelectionField(audit.Fields) && isWaiverReasonField(audit.TableName, fieldName))) {
+			transField.FieldNameTranslated = waiverFieldLabel(transField.FieldNameTranslated, waiverName)
+		}
+		if audit.TableName == models.TNWaiverAssessmentSurvey {
+			transField.FieldNameTranslated = waiverSurveyReasonLabel(
+				translationMap[fieldName], audit.Fields, transField.FieldNameTranslated,
+			)
 		}
 		translatedAudit.TranslatedFields = append(translatedAudit.TranslatedFields, transField)
 
@@ -159,6 +173,45 @@ func setEmptyStringsToNil(value interface{}) interface{} {
 		return nil
 	}
 	return value
+}
+
+func isWaiverSelectionField(tableName models.TableName, fieldName string) bool {
+	return tableName == models.TNWaiver && fieldName == "will_use_waiver"
+}
+
+func isWaiverReasonField(tableName models.TableName, fieldName string) bool {
+	return tableName == models.TNWaiver && (fieldName == "using_reason" || fieldName == "not_using_reason")
+}
+
+func waiverFieldLabel(fieldLabel string, waiverName string) string {
+	return fmt.Sprintf("%s (Waiver: %s)", fieldLabel, waiverName)
+}
+
+// waiverSurveyReasonLabel adds the parent question when only a page 3 reason
+// changes. When the Yes/No answer changes too, its own history field supplies
+// that context and the reason keeps its usual label.
+func waiverSurveyReasonLabel(translation models.ITranslationField, changedFields models.AuditFields, reasonLabel string) string {
+	parent, hasParent := translation.GetParent()
+	if !hasParent {
+		return reasonLabel
+	}
+
+	var parentField, parentLabel string
+	switch question := parent.(type) {
+	case models.TranslationField:
+		parentField, parentLabel = question.DBField, question.GetLabel()
+	case models.TranslationFieldWithOptionsAndChildren:
+		parentField, parentLabel = question.DBField, question.GetLabel()
+	default:
+		return reasonLabel
+	}
+	if parentField == "" {
+		return reasonLabel
+	}
+	if _, changed := changedFields[parentField]; changed {
+		return reasonLabel
+	}
+	return fmt.Sprintf("%s (%s)", reasonLabel, parentLabel)
 }
 
 // translateField translates a given audit field. It returns the translated audit field, as well as a bool to signify if it was translated or not
@@ -246,7 +299,7 @@ func translateField(
 	}
 
 	children, hasChildren := translationInterface.GetChildren()
-	if hasChildren {
+	if hasChildren && shouldTrackNotApplicableQuestions(audit.TableName) {
 		conditionals = checkChildConditionals(old, new, children)
 	}
 

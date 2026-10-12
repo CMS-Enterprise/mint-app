@@ -1,7 +1,8 @@
 import {
   DataExchangeApproachStatus,
   GetCollaborationAreaQuery,
-  IddocQuestionnaireTaskListStatus
+  IddocQuestionnaireTaskListStatus,
+  WaiverAssessmentSurveyStatus
 } from 'gql/generated/graphql';
 
 export type QuestionnairesType =
@@ -16,4 +17,5 @@ export type QuestionnaireName = keyof Omit<QuestionnairesType, '__typename'>;
 
 export type QuestionnairesStatusType =
   | DataExchangeApproachStatus
-  | IddocQuestionnaireTaskListStatus;
+  | IddocQuestionnaireTaskListStatus
+  | WaiverAssessmentSurveyStatus;

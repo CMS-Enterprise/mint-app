@@ -1,0 +1,33 @@
+{
+  "willUseWaiver": {
+    "gqlField": "willUseWaiver",
+    "goField": "WillUseWaiver",
+    "dbField": "will_use_waiver",
+    "label": "Do you plan to use this waiver with your model?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 1,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    }
+  },
+  "usingReason": {
+    "gqlField": "usingReason",
+    "goField": "UsingReason",
+    "dbField": "using_reason",
+    "label": "Please explain why your model intends to use this waiver",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.1
+  },
+  "notUsingReason": {
+    "gqlField": "notUsingReason",
+    "goField": "NotUsingReason",
+    "dbField": "not_using_reason",
+    "label": "Please explain why your model is not using this waiver.",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1.2
+  }
+}

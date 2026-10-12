@@ -6,6 +6,7 @@ import { AppState } from 'stores/reducers/rootReducer';
 
 import { AvatarCircle } from 'components/Avatar';
 import { SubscriptionContext } from 'contexts/PageLockContext';
+import { findEffectiveLock } from 'utils/lockableSectionLinking';
 
 type SectionLockProps = {
   section: LockableSection;
@@ -20,10 +21,8 @@ const SectionLock = ({ section }: SectionLockProps) => {
   // Get the lockable sections from the SubscriptionContext
   const { lockableSectionLocks } = useContext(SubscriptionContext);
 
-  // Find the lock for the specified section
-  const sectionLock = lockableSectionLocks?.find(
-    lock => lock.section === section
-  );
+  // Find the lock for the specified section (including linked sections)
+  const sectionLock = findEffectiveLock(lockableSectionLocks, section);
 
   // If current section lock is not found, return null
   if (!sectionLock) {

@@ -190,6 +190,19 @@ body:graphql {
                       commonName
                   }
               }
+              ... on WaiverAssessmentSurveyMarkedCompleteActivityMeta {
+                  version
+                  type
+                  modelPlanID
+                  modelPlan {
+                      modelName
+                  }
+                  waiverAssessmentSurveyID
+                  markedCompleteBy
+                  markedCompleteByUserAccount {
+                      commonName
+                  }
+              }
             }
             createdByUserAccount {
               commonName

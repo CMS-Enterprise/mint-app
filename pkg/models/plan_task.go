@@ -27,13 +27,14 @@ type PlanTaskKey string
 
 // These constants represent the possible values of a PlanTaskKey
 const (
-	PlanTaskKeyModelPlan           PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMto                 PlanTaskKey = "MTO"
-	PlanTaskKeyDataExchange        PlanTaskKey = "DATA_EXCHANGE"
-	PlanTaskKeyTwoPager            PlanTaskKey = "TWO_PAGER"
-	PlanTaskKeySixPager            PlanTaskKey = "SIX_PAGER"
-	PlanTaskKeyOaPresentation      PlanTaskKey = "OA_PRESENTATION"
-	PlanTaskKeyPrepareForClearance PlanTaskKey = "PREPARE_FOR_CLEARANCE"
+	PlanTaskKeyModelPlan              PlanTaskKey = "MODEL_PLAN"
+	PlanTaskKeyMto                    PlanTaskKey = "MTO"
+	PlanTaskKeyDataExchange           PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyWaiverAssessmentSurvey PlanTaskKey = "WAIVER_ASSESSMENT_SURVEY"
+	PlanTaskKeyTwoPager               PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeySixPager               PlanTaskKey = "SIX_PAGER"
+	PlanTaskKeyOaPresentation         PlanTaskKey = "OA_PRESENTATION"
+	PlanTaskKeyPrepareForClearance    PlanTaskKey = "PREPARE_FOR_CLEARANCE"
 )
 
 // PrepareForClearanceTriggerDays is how many days before a model plan's internal clearance start
@@ -75,6 +76,7 @@ var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeyModelPlan, PlanTaskStateToDo},
 	{PlanTaskKeyMto, PlanTaskStateToDo},
 	{PlanTaskKeyDataExchange, PlanTaskStateToDo},
+	{PlanTaskKeyWaiverAssessmentSurvey, PlanTaskStateToDo},
 	{PlanTaskKeyTwoPager, PlanTaskStateToDo},
 	{PlanTaskKeySixPager, PlanTaskStateUpcoming},
 	{PlanTaskKeyOaPresentation, PlanTaskStateUpcoming},
@@ -106,13 +108,14 @@ func (k PlanTaskKey) ActivationTarget() (PlanTaskKey, bool) {
 // planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
 // and change history. Keys without an entry fall back to their raw string value.
 var planTaskKeyDisplayNames = map[PlanTaskKey]string{
-	PlanTaskKeyModelPlan:           "Model Plan",
-	PlanTaskKeyDataExchange:        "Data exchange approach",
-	PlanTaskKeyMto:                 "Model-to-operations matrix (MTO)",
-	PlanTaskKeyTwoPager:            "Prepare for your 2-page review meeting with CMMI Front Office",
-	PlanTaskKeySixPager:            "Prepare for your 6-page review meeting with CMMI Front Office",
-	PlanTaskKeyOaPresentation:      "Office of the Administrator (OA) presentation",
-	PlanTaskKeyPrepareForClearance: "Prepare for clearance",
+	PlanTaskKeyModelPlan:              "Model Plan",
+	PlanTaskKeyDataExchange:           "Data exchange approach",
+	PlanTaskKeyMto:                    "Model-to-operations matrix (MTO)",
+	PlanTaskKeyWaiverAssessmentSurvey: "Waiver assessment survey",
+	PlanTaskKeyTwoPager:               "Prepare for your 2-page review meeting with CMMI Front Office",
+	PlanTaskKeySixPager:               "Prepare for your 6-page review meeting with CMMI Front Office",
+	PlanTaskKeyOaPresentation:         "Office of the Administrator (OA) presentation",
+	PlanTaskKeyPrepareForClearance:    "Prepare for clearance",
 }
 
 // DisplayName returns a short human-readable name for this task key.

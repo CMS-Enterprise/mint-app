@@ -1,13 +1,45 @@
 package resolvers
 
 import (
+	"testing"
 	"time"
 
 	"github.com/google/uuid"
+	"go.uber.org/zap"
 	"golang.org/x/sync/errgroup"
 
+	"github.com/cms-enterprise/mint-app/pkg/logging"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
+
+func TestAnalyzeSectionsAuditsMarksWaiverAssessmentSurveyComplete(t *testing.T) {
+	audits := []*models.AuditChange{
+		{
+			TableName: models.TNWaiverAssessmentSurvey,
+			Fields: models.AuditFields{
+				"status": {
+					Old: string(models.WaiverAssessmentSurveyStatusInProgress),
+					New: string(models.WaiverAssessmentSurveyStatusComplete),
+				},
+			},
+		},
+	}
+
+	sections, err := analyzeSectionsAudits(
+		audits,
+		logging.NewZapLogger(zap.NewNop()),
+	)
+	if err != nil {
+		t.Fatalf("analyzing waiver assessment survey audit: %v", err)
+	}
+	if sections == nil {
+		t.Fatal("expected analyzed plan sections")
+	}
+	if !sections.WaiverAssessmentSurveyMarkedComplete {
+		t.Error("waiver assessment survey completion was not detected")
+	}
+}
 
 func (suite *ResolverSuite) TestAnalyzedAuditLoader() {
 
