@@ -272,23 +272,6 @@ func logIfNoRowsFetched(logger *zap.Logger, modelPlanID uuid.UUID, documents []*
 	return nil
 }
 
-// PlanDocumentUpdate updates a plan document object by id with provided values
-func (s *Store) PlanDocumentUpdate(logger *zap.Logger, plan *models.PlanDocument) (*models.PlanDocument, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.Update)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
-	}
-	defer stmt.Close()
-
-	err = stmt.Get(plan, plan)
-	if err != nil {
-		return nil, genericmodel.HandleModelQueryError(logger, err, plan)
-	}
-
-	return plan, nil
-}
-
 // PlanDocumentDelete deletes a plan document object by id
 func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (sql.Result, error) {
 
