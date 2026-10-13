@@ -19101,7 +19101,7 @@ type CTATRequest {
   Tracks the first time an admin was assigned to the request. It is nil if no admin has been assigned yet. It does not change if the admin is unassigned or reassigned.
   """
   adminAssignedDts: Time
-  notes: String
+  notes: String @hasRole(role: MINT_ASSESSMENT)
   resolution: String
 
   cmmiGroup: CTATCMMIGroupOption
@@ -33336,7 +33336,25 @@ func (ec *executionContext) _CTATRequest_notes(ctx context.Context, field graphq
 		func(ctx context.Context) (any, error) {
 			return obj.Notes, nil
 		},
-		nil,
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ASSESSMENT")
+				if err != nil {
+					var zeroVal *string
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *string
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, obj, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
 		func(ctx context.Context, selections ast.SelectionSet, v *string) graphql.Marshaler {
 			return ec.marshalOString2ᚖstring(ctx, selections, v)
 		},

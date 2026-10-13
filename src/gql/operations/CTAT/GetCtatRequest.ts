@@ -14,7 +14,6 @@ export default gql(/* GraphQL */ `
         commonName
         email
       }
-      notes
       resolution
       requesterUserAccount {
         givenName
