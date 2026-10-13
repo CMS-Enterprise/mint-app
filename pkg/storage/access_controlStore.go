@@ -20,11 +20,11 @@ type IsCollaboratorResult struct {
 }
 
 // CheckIfCollaborator returns true if the principal is a collaborator on a model plan.
-func (s *Store) CheckIfCollaborator(_ *zap.Logger, principalID uuid.UUID, modelPlanID uuid.UUID) (bool, error) {
+func CheckIfCollaborator(np sqlutils.NamedPreparer, _ *zap.Logger, principalID uuid.UUID, modelPlanID uuid.UUID) (bool, error) {
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaborator)
+	stmt, err := np.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaborator)
 	if err != nil {
 		return isCollaborator, err
 	}
@@ -44,7 +44,8 @@ func (s *Store) CheckIfCollaborator(_ *zap.Logger, principalID uuid.UUID, modelP
 
 // CheckIfCollaboratorByDiscussionID returns true if the principal is a
 // collaborator on a model plan, by the relation on the plan discussion
-func (s *Store) CheckIfCollaboratorByDiscussionID(
+func CheckIfCollaboratorByDiscussionID(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	principalID uuid.UUID,
 	discussionID uuid.UUID,
@@ -52,7 +53,7 @@ func (s *Store) CheckIfCollaboratorByDiscussionID(
 
 	isCollaborator := false
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorByDiscussionID)
+	stmt, err := np.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorByDiscussionID)
 	if err != nil {
 		return isCollaborator, err
 	}
@@ -86,12 +87,13 @@ func CheckIfCollaboratorLOADER(np sqlutils.NamedPreparer, keys []IsCollaboratorK
 	return results, nil
 }
 
-func (s *Store) CheckIfCollaboratorByMilestoneID(
+func CheckIfCollaboratorByMilestoneID(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	principalID uuid.UUID,
 	milestoneID uuid.UUID,
 ) (bool, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorByMilestoneID)
+	stmt, err := np.PrepareNamed(sqlqueries.AccessControl.CheckIfCollaboratorByMilestoneID)
 	if err != nil {
 		return false, err
 	}

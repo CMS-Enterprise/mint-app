@@ -10,5 +10,5 @@ import (
 
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key
 func AuditChangeCollectionByIDAndTable(logger *zap.Logger, tableName models.TableName, primaryKey uuid.UUID, store *storage.Store) ([]*models.AuditChange, error) {
-	return store.AuditChangeCollectionByIDAndTable(logger, tableName, primaryKey)
+	return storage.AuditChangeCollectionByIDAndTable(store, logger, tableName, primaryKey)
 }

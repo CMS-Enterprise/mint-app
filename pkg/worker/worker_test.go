@@ -206,7 +206,7 @@ func (suite *WorkerSuite) createAnalyzedAudit(mp *models.ModelPlan, date time.Ti
 	newAnalyzedAudit, err := models.NewAnalyzedAudit(principal.UserAccount.ID, mp.ID, mp.ModelName, date, changes)
 	suite.NoError(err)
 
-	analyzedAudit, err := suite.testConfigs.Store.AnalyzedAuditCreate(suite.testConfigs.Logger, newAnalyzedAudit)
+	analyzedAudit, err := storage.AnalyzedAuditCreate(suite.testConfigs.Store, suite.testConfigs.Logger, newAnalyzedAudit)
 	suite.NoError(err)
 
 	return analyzedAudit

@@ -55,7 +55,7 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 	dayToAnalyze := time.Now()
 
 	// Step 1. Get all model plans
-	modelPlans, err := s.Config.Store.ModelPlanCollection(s.Config.Logger, false)
+	modelPlans, err := storage.ModelPlanCollection(s.Config.Store, s.Config.Logger, false)
 	if err != nil {
 		panic(fmt.Errorf("couldn't retrieve model plan collection"))
 	}

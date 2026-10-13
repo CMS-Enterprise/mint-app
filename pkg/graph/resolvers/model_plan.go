@@ -401,7 +401,7 @@ func ModelPlanGetByIDLOADER(ctx context.Context, id uuid.UUID) (*models.ModelPla
 
 // ModelPlanGetSampleModel returns the sample model plan
 func ModelPlanGetSampleModel(logger *zap.Logger, store *storage.Store) (*models.ModelPlan, error) {
-	plan, err := store.ModelPlanGetByName(logger, constants.SampleModelName)
+	plan, err := storage.ModelPlanGetByName(store, logger, constants.SampleModelName)
 	if err != nil {
 		return nil, err
 	}
@@ -434,17 +434,17 @@ func ModelPlanCollection(ctx context.Context, echimpS3Client *s3.S3Client, viper
 	var err error
 	switch filter {
 	case model.ModelPlanFilterIncludeAll:
-		modelPlans, err = store.ModelPlanCollection(logger, false)
+		modelPlans, err = storage.ModelPlanCollection(store, logger, false)
 	case model.ModelPlanFilterCollabOnly:
-		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.Account().ID)
+		modelPlans, err = storage.ModelPlanCollectionCollaboratorOnly(store, logger, false, principal.Account().ID)
 	case model.ModelPlanFilterWithCrTdls:
 		modelPlans, err = ModelPlansWithEchimpCRAndTDLS(ctx, echimpS3Client, viperConfig, logger, store)
 	case model.ModelPlanFilterFavorited:
-		modelPlans, err = store.ModelPlanCollectionFavorited(logger, false, principal.Account().ID)
+		modelPlans, err = storage.ModelPlanCollectionFavorited(store, logger, false, principal.Account().ID)
 	case model.ModelPlanFilterApproachingClearance:
 		modelPlans, err = storage.ModelPlanCollectionApproachingClearance(store, logger)
 	case model.ModelPlanFilterNewlyCreated:
-		modelPlans, err = store.ModelPlanCollectionNewlyCreated(logger)
+		modelPlans, err = storage.ModelPlanCollectionNewlyCreated(store, logger)
 	default:
 		modelPlans = nil
 		err = fmt.Errorf("model plan filter not defined for filter: %s", filter)
@@ -457,7 +457,7 @@ func ModelPlanCollection(ctx context.Context, echimpS3Client *s3.S3Client, viper
 func ModelPlanNameHistory(logger *zap.Logger, modelPlanID uuid.UUID, sortDir models.SortDirection, store *storage.Store) ([]string, error) {
 	fieldName := "model_name"
 
-	changes, err := store.AuditChangeCollectionByIDAndTableAndField(logger, "model_plan", modelPlanID, fieldName, sortDir)
+	changes, err := storage.AuditChangeCollectionByIDAndTableAndField(store, logger, "model_plan", modelPlanID, fieldName, sortDir)
 	nameHistory := make([]string, len(changes)) // more efficient than appending
 	for i := 0; i < len(changes); i++ {
 
@@ -638,7 +638,7 @@ func ModelPlanGetTaskListStatus(
 	models.TaskStatus,
 	error,
 ) {
-	taskListStatus, err := store.ModelPlanGetTaskListStatus(logger, modelPlanID)
+	taskListStatus, err := storage.ModelPlanGetTaskListStatus(store, logger, modelPlanID)
 	if err != nil {
 		return "", err
 	}

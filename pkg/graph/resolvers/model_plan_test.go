@@ -9,6 +9,7 @@ import (
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -300,7 +301,8 @@ func (suite *ResolverSuite) TestModelPlansGetByFavorited() {
 	)
 	suite.NoError(err)
 
-	retPlans, err := suite.testConfigs.Store.ModelPlanCollectionFavorited(
+	retPlans, err := storage.ModelPlanCollectionFavorited(
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		false,
 		testPrincipal.UserAccount.ID,
@@ -335,7 +337,8 @@ func (suite *ResolverSuite) TestModelPlansGetByFavoritedWithMultipleFavorited() 
 	)
 	suite.NoError(err)
 
-	retPlans, err := suite.testConfigs.Store.ModelPlanCollectionFavorited(
+	retPlans, err := storage.ModelPlanCollectionFavorited(
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		false,
 		suite.testConfigs.Principal.Account().ID,
@@ -384,7 +387,8 @@ func (suite *ResolverSuite) TestModelPlansGetByFavoritedWithArchival() {
 	)
 	suite.NoError(err)
 
-	retPlans, err := suite.testConfigs.Store.ModelPlanCollectionFavorited(
+	retPlans, err := storage.ModelPlanCollectionFavorited(
+		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		false,
 		suite.testConfigs.Principal.Account().ID,

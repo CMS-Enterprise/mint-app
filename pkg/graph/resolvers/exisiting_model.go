@@ -12,7 +12,7 @@ import (
 
 // ExistingModelCollectionGet returns all existing models
 func ExistingModelCollectionGet(logger *zap.Logger, store *storage.Store) ([]*models.ExistingModel, error) {
-	existingModels, err := store.ExistingModelCollectionGet(logger)
+	existingModels, err := storage.ExistingModelCollectionGet(store, logger)
 	if err != nil {
 		return nil, err
 	}

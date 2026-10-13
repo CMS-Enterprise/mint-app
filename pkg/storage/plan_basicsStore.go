@@ -78,11 +78,11 @@ func updatePlanBasics(np sqlutils.NamedPreparer, logger *zap.Logger, plan *model
 }
 
 // PlanBasicsGetByID returns the plan basics for a given id
-func (s *Store) PlanBasicsGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanBasics, error) {
+func PlanBasicsGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.PlanBasics, error) {
 
 	plan := models.PlanBasics{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBasics.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanBasics.GetByID)
 	if err != nil {
 		return nil, err
 	}

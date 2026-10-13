@@ -141,10 +141,10 @@ func ModelPlanGetByID(np sqlutils.NamedPreparer, logger logging.ILogger, id uuid
 }
 
 // ModelPlanGetByName returns a model plan for a given ID
-func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
+func ModelPlanGetByName(np sqlutils.NamedPreparer, logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetByName)
+	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.GetByName)
 	if err != nil {
 		return nil, err
 	}
@@ -170,11 +170,11 @@ func (s *Store) ModelPlanGetByName(logger *zap.Logger, modelName string) (*model
 }
 
 // ModelPlanCollection returns a list of all model plans (whether or not you're a collaborator)
-func (s *Store) ModelPlanCollection(logger logging.ILogger, archived bool) ([]*models.ModelPlan, error) {
+func ModelPlanCollection(np sqlutils.NamedPreparer, logger logging.ILogger, archived bool) ([]*models.ModelPlan, error) {
 
 	var modelPlans []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.CollectionWhereArchived)
+	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.CollectionWhereArchived)
 	if err != nil {
 		return nil, err
 	}
@@ -202,7 +202,8 @@ func (s *Store) ModelPlanCollection(logger logging.ILogger, archived bool) ([]*m
 
 // ModelPlanCollectionCollaboratorOnly returns a list of all model plans for
 // which the user_accountID supplied is a collaborator.
-func (s *Store) ModelPlanCollectionCollaboratorOnly(
+func ModelPlanCollectionCollaboratorOnly(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	archived bool,
 	userID uuid.UUID,
@@ -210,7 +211,7 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(
 
 	var modelPlans []*models.ModelPlan
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.CollectionByCollaborator)
+	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.CollectionByCollaborator)
 	if err != nil {
 		return nil, err
 	}
@@ -261,11 +262,11 @@ func ModelPlanCollectionApproachingClearance(np sqlutils.NamedPreparer, logger *
 }
 
 // ModelPlanCollectionNewlyCreated returns a list of all model plans created within the last 6 months
-func (s *Store) ModelPlanCollectionNewlyCreated(logger *zap.Logger) ([]*models.ModelPlan, error) {
+func ModelPlanCollectionNewlyCreated(np sqlutils.NamedPreparer, logger *zap.Logger) ([]*models.ModelPlan, error) {
 	logger.Info("fetching model plans created within the last 6 months")
 
 	args := map[string]interface{}{}
-	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereNewlyCreated, args)
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.CollectionWhereNewlyCreated, args)
 	if err != nil {
 		if sqlutils.IsNoRowsResult(err) {
 			return nil, nil
@@ -285,7 +286,8 @@ func (s *Store) ModelPlanCollectionNewlyCreated(logger *zap.Logger) ([]*models.M
 
 // ModelPlanCollectionFavorited returns a list of all model plans which are favorited by the user
 // Note: Externally, this is called "followed" but internally we call it "favorited"
-func (s *Store) ModelPlanCollectionFavorited(
+func ModelPlanCollectionFavorited(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	archived bool,
 	userID uuid.UUID,
@@ -296,7 +298,7 @@ func (s *Store) ModelPlanCollectionFavorited(
 		"user_id":  userID,
 	}
 
-	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](s.db, sqlqueries.ModelPlan.CollectionWhereFavoritedByUserID, arg)
+	modelPlans, err := sqlutils.SelectProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.CollectionWhereFavoritedByUserID, arg)
 	if err != nil {
 		logger.Error(
 			"failed to fetch favorited model plans by user id",
@@ -324,25 +326,25 @@ func ModelPlanGetByMTOSolutionKeyLOADER(np sqlutils.NamedPreparer, _ *zap.Logger
 }
 
 // ModelPlanGetByComponentGroupLoader returns model plans for multiple component group keys using a batched loader query
-func (s *Store) ModelPlanGetByComponentGroupLoader(logger *zap.Logger, componentGroups []models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
+func ModelPlanGetByComponentGroupLoader(np sqlutils.NamedPreparer, logger *zap.Logger, componentGroups []models.ComponentGroup) ([]*models.ModelPlanAndGroup, error) {
 	args := map[string]interface{}{
 		"component_group_keys": pq.Array(componentGroups),
 	}
-	res, err := sqlutils.SelectProcedure[models.ModelPlanAndGroup](s.db, sqlqueries.ModelPlan.GetByComponentGroupLoader, args)
+	res, err := sqlutils.SelectProcedure[models.ModelPlanAndGroup](np, sqlqueries.ModelPlan.GetByComponentGroupLoader, args)
 	if err != nil {
 		return nil, err
 	}
 	return res, nil
 }
 
-func (s *Store) ModelPlanGetTaskListStatus(logger *zap.Logger, modelPlanID uuid.UUID) (models.TaskStatus, error) {
+func ModelPlanGetTaskListStatus(np sqlutils.NamedPreparer, logger *zap.Logger, modelPlanID uuid.UUID) (models.TaskStatus, error) {
 	arg := map[string]interface{}{
 		"model_plan_id": modelPlanID,
 	}
 
 	println("modelPlanID: ", modelPlanID.String())
 
-	taskStatus, err := sqlutils.GetProcedure[models.TaskStatus](s.db, sqlqueries.ModelPlan.GetTaskListStatus, arg)
+	taskStatus, err := sqlutils.GetProcedure[models.TaskStatus](np, sqlqueries.ModelPlan.GetTaskListStatus, arg)
 	if err != nil {
 		logger.Error(
 			"Failed to fetch task list status",

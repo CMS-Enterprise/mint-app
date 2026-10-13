@@ -25,7 +25,7 @@ func (suite *WorkerSuite) TestTranslateAuditJob() {
 	suite.NoError(err)
 	now := time.Now()
 
-	audits, err := suite.testConfigs.Store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(suite.testConfigs.Logger, plan.ID, plan.ID, now, models.SortDesc)
+	audits, err := storage.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID, plan.ID, now, models.SortDesc)
 	suite.NoError(err)
 
 	auditToAnalyze := audits[0]
