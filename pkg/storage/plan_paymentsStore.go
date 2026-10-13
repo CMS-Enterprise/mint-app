@@ -43,7 +43,7 @@ func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(
 }
 
 // PlanPaymentsCreate creates a new plan payments row in the database and returns a copy to the caller
-func (s *Store) PlanPaymentsCreate(
+func PlanPaymentsCreate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {

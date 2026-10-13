@@ -27,7 +27,7 @@ func AnalyzeModelPlanForAnalyzedAudit[T logging.ChainableErrorOrWarnLogger[T]](
 ) (*models.AnalyzedAudit, error) {
 
 	logger.Info("fetching model plan")
-	mp, err := store.ModelPlanGetByID(store, logger, modelPlanID)
+	mp, err := storage.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
 		return nil, err
 	}

@@ -17,7 +17,7 @@ import (
 )
 
 // PlanTimelineCreate creates a new planTimeline
-func (s *Store) PlanTimelineCreate(np sqlutils.NamedPreparer, logger *zap.Logger, planTimeline *models.PlanTimeline) (*models.PlanTimeline, error) {
+func PlanTimelineCreate(np sqlutils.NamedPreparer, logger *zap.Logger, planTimeline *models.PlanTimeline) (*models.PlanTimeline, error) {
 
 	if planTimeline.ID == uuid.Nil {
 		planTimeline.ID = uuid.New()

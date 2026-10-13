@@ -116,7 +116,7 @@ func calculateModelPlanTaskState(
 	modelPlanID uuid.UUID,
 	store *storage.Store,
 ) (models.PlanTaskState, error) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		return "", err
 	}
@@ -256,7 +256,7 @@ func calculateDataExchangeTaskState(
 	modelPlanID uuid.UUID,
 	store *storage.Store,
 ) (models.PlanTaskState, error) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		return "", err
 	}
@@ -367,7 +367,7 @@ func calculateMTOTaskState(
 	modelPlanID uuid.UUID,
 	store *storage.Store,
 ) (models.PlanTaskState, error) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		return "", err
 	}

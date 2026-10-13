@@ -39,7 +39,7 @@ func PlanFavoriteIsFavoritedLOADER(np sqlutils.NamedPreparer, keys []IsFavoriteK
 }
 
 // PlanFavoriteCreate creates and returns a plan favorite object
-func (s *Store) PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
+func PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()

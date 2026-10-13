@@ -345,7 +345,7 @@ func getModelPlanForeignKeyReference(ctx context.Context, store *storage.Store, 
 	logger := appcontext.ZLogger(ctx)
 
 	// get the plan
-	plan, err := store.ModelPlanGetByID(store, logger, uuidKey)
+	plan, err := storage.ModelPlanGetByID(store, logger, uuidKey)
 
 	if err != nil {
 		return "", fmt.Errorf("there was an issue translating the model plan foreign key reference. err %w", err)
@@ -420,7 +420,7 @@ func getModelPlanMTOTemplateLinkForeignKeyReference(ctx context.Context, store *
 	}
 
 	// Get the model plan for context
-	modelPlan, err := store.ModelPlanGetByID(store, logger, templateLink.ModelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(store, logger, templateLink.ModelPlanID)
 	if err != nil {
 		// If we can't get the model plan, just return the template name
 		return fmt.Sprintf("Template: %s", template.Name), nil

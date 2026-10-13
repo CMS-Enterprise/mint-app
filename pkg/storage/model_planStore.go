@@ -66,7 +66,7 @@ func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON st
 }
 
 // ModelPlanCreate creates a model plan using a transaction
-func (s *Store) ModelPlanCreate(np sqlutils.NamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+func ModelPlanCreate(np sqlutils.NamedPreparer, logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
@@ -130,7 +130,7 @@ func ModelPlanUpdate(np sqlutils.NamedPreparer, logger logging.ILogger, plan *mo
 }
 
 // ModelPlanGetByID returns a model plan for a given ID
-func (s *Store) ModelPlanGetByID(np sqlutils.NamedPreparer, logger logging.ILogger, id uuid.UUID) (*models.ModelPlan, error) {
+func ModelPlanGetByID(np sqlutils.NamedPreparer, logger logging.ILogger, id uuid.UUID) (*models.ModelPlan, error) {
 
 	plan := models.ModelPlan{}
 	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.GetByID)

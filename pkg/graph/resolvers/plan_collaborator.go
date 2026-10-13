@@ -54,12 +54,12 @@ func PlanCollaboratorCreate(
 		return nil, nil, err
 	}
 
-	modelPlan, err := store.ModelPlanGetByID(np, logger, input.ModelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, input.ModelPlanID)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	retCollaborator, err := store.PlanCollaboratorCreate(np, logger, collaborator)
+	retCollaborator, err := storage.PlanCollaboratorCreate(np, logger, collaborator)
 	if err != nil {
 		return nil, nil, err
 	}
