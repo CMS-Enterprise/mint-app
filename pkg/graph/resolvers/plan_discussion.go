@@ -75,7 +75,7 @@ func CreatePlanDiscussion(
 
 		userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
 
-		recipientUserAccounts, err := storage.UserAccountsGetNotificationRecipientsForDiscussionAdded(tx, modelPlan.ID)
+		recipientUserAccounts, err := storage.UserAccountsGetNotificationRecipientsForDiscussionAdded(store, modelPlan.ID)
 		if err != nil {
 			logger.Error("Error getting user accounts for discussion added notifications",
 				zap.Error(err),
