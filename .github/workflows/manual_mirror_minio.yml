@@ -1,0 +1,62 @@
+name: Manual Mirror (MinIO / Silo)
+
+# Mirrors the pgsty/silo and pgsty/mc images (the MinIO-compatible fork we moved to after
+# quay.io/minio lost anonymous pull access - see docker-compose.backend.yml) into our own ECR
+# account, so CI and any future consumer aren't dependent on Docker Hub staying pullable.
+#
+# This is a registry-to-registry copy via `docker buildx imagetools create`, not a rebuild - we
+# aren't modifying these images, so there's no Dockerfile/build step, and the multi-arch manifest
+# is preserved as-is. Run this by hand whenever we deliberately bump the pinned upstream tag
+# (docker-compose.backend.yml, .github/workflows/run_tests.yml, and the easi-app equivalents all
+# need to be updated to match).
+
+on:
+  workflow_dispatch:
+    inputs:
+      silo_tag:
+        description: 'docker.io/pgsty/silo tag to mirror'
+        required: true
+        default: 'RELEASE.2026-09-16T00-00-00Z'
+      mc_tag:
+        description: 'docker.io/pgsty/mc tag to mirror'
+        required: true
+        default: 'RELEASE.2026-09-16T00-00-00Z'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: ${{ secrets.INFRA_ROLE_TO_ASSUME }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Mirror pgsty/silo
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          SILO_TAG: ${{ inputs.silo_tag }}
+        run: |
+          docker buildx imagetools create \
+            --tag "$ECR_REGISTRY/mint-silo:$SILO_TAG" \
+            "docker.io/pgsty/silo:$SILO_TAG"
+
+      - name: Mirror pgsty/mc
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          MC_TAG: ${{ inputs.mc_tag }}
+        run: |
+          docker buildx imagetools create \
+            --tag "$ECR_REGISTRY/mint-mc:$MC_TAG" \
+            "docker.io/pgsty/mc:$MC_TAG"

@@ -3,8 +3,10 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import {
+  DatesChangedNotificationType,
   GetNotificationSettingsDocument,
   GetNotificationSettingsQuery,
+  UpdateNotificationSettingsDocument,
   UserNotificationPreferenceFlag
 } from 'gql/generated/graphql';
 import setup from 'tests/util';
@@ -219,5 +221,87 @@ describe('Notification Settings Page', () => {
     });
 
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('saves the model scope when a model-specific preference is enabled', async () => {
+    let savedChanges: Record<string, unknown> | undefined;
+
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/notifications/settings',
+          element: (
+            <MessageProvider>
+              <NotificationSettings />
+            </MessageProvider>
+          )
+        },
+        {
+          path: '/notifications',
+          element: <div>Notifications</div>
+        }
+      ],
+      {
+        initialEntries: ['/notifications/settings']
+      }
+    );
+
+    const { user } = setup(
+      <MockedProvider
+        mocks={[
+          ...notificationsSettingsMock,
+          {
+            request: {
+              query: UpdateNotificationSettingsDocument
+            },
+            variableMatcher: (variables: {
+              changes: Record<string, unknown>;
+            }) => {
+              savedChanges = variables.changes;
+              return (
+                variables.changes.datesChangedNotificationType ===
+                  DatesChangedNotificationType.ALL_MODELS &&
+                Array.isArray(variables.changes.datesChanged) &&
+                variables.changes.datesChanged.includes(
+                  UserNotificationPreferenceFlag.EMAIL
+                )
+              );
+            },
+            result: {
+              data: {
+                updateUserNotificationPreferences: {
+                  ...notificationPreferences,
+                  datesChanged: [UserNotificationPreferenceFlag.EMAIL],
+                  datesChangedNotificationType:
+                    DatesChangedNotificationType.ALL_MODELS
+                }
+              }
+            }
+          }
+        ]}
+      >
+        <RouterProvider router={router} />
+      </MockedProvider>
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('notification-setting-email-datesChanged')
+      ).not.toBeChecked();
+    });
+
+    await user.click(
+      screen.getByTestId('notification-setting-email-datesChanged')
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Save' }));
+
+    await waitFor(() => {
+      expect(router.state.location.pathname).toBe('/notifications');
+    });
+
+    expect(savedChanges?.datesChangedNotificationType).toBe(
+      DatesChangedNotificationType.ALL_MODELS
+    );
   });
 });

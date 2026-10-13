@@ -39,7 +39,10 @@ const MTOReadyForReview = ({
         query: GetModelToOperationsMatrixDocument,
         variables: {
           id: modelID
-        }
+        },
+        // Don't share an identical in-flight request: it can pre-date this mutation and
+        // would leave the status tag stale
+        context: { queryDeduplication: false }
       }
     ]
   });
