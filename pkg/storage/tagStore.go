@@ -54,11 +54,11 @@ func TagCollectionCreate(np sqlutils.NamedPreparer, _ *zap.Logger, tags []*model
 }
 
 // TagCollectionGetByContentIDAndField returns relevant tags for specific table and field
-func (s *Store) TagCollectionGetByContentIDAndField(_ *zap.Logger, taggedTable string, taggedField string, taggedContentID uuid.UUID) ([]*models.Tag, error) {
+func TagCollectionGetByContentIDAndField(np sqlutils.NamedPreparer, _ *zap.Logger, taggedTable string, taggedField string, taggedContentID uuid.UUID) ([]*models.Tag, error) {
 
 	var tags []*models.Tag
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.Tag.GetByTableFieldAndContent)
+	stmt, err := np.PrepareNamed(sqlqueries.Tag.GetByTableFieldAndContent)
 	if err != nil {
 		return nil, err
 	}

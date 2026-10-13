@@ -162,7 +162,7 @@ func (suite *ResolverSuite) TestEvaluateSuggestedPhaseForClearance() {
 	// Create a plan
 	planName := "Test Plan"
 	plan := suite.createModelPlan(planName)
-	planTimeline, err := suite.testConfigs.Store.PlanTimelineGetByModelPlanID(plan.ID)
+	planTimeline, err := storage.PlanTimelineGetByModelPlanID(suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 
 	yesterday := time.Now().Add(time.Hour * -24)
@@ -192,7 +192,7 @@ func (suite *ResolverSuite) TestEvaluateSuggestedPhaseForClearance() {
 func (suite *ResolverSuite) setUpPlanWithPastICIPDate(planName string) *models.ModelPlan {
 	plan := suite.createModelPlan(planName)
 
-	planTimeline, err := suite.testConfigs.Store.PlanTimelineGetByModelPlanID(plan.ID)
+	planTimeline, err := storage.PlanTimelineGetByModelPlanID(suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 
 	yesterday := time.Now().Add(-24 * time.Hour)

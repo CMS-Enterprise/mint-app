@@ -132,7 +132,7 @@ func (suite *TAuditSuite) createPlanTDL(modelPlanID uuid.UUID, idNumber string, 
 		preHook(planTDL)
 	}
 
-	tdl, err := suite.testConfigs.Store.PlanTDLCreate(suite.testConfigs.Logger, planTDL)
+	tdl, err := storage.PlanTDLCreate(suite.testConfigs.Store, suite.testConfigs.Logger, planTDL)
 	suite.NoError(err)
 
 	return tdl

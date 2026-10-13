@@ -35,6 +35,6 @@ func UserAccountsGetByIDs(logger *zap.Logger, store *storage.Store, ids []uuid.U
 	if err != nil {
 		logger.Error("issue converting uuids to JSON for User Accounts", zap.Error(err))
 	}
-	return store.UserAccountGetByIDLOADER(logger, jsonParam)
+	return storage.UserAccountGetByIDLOADER(store, logger, jsonParam)
 
 }

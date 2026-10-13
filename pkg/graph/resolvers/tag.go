@@ -47,7 +47,7 @@ func TagCollectionGet(
 	taggedField string,
 	taggedContentID uuid.UUID) ([]*models.Tag, error) {
 
-	tags, err := store.TagCollectionGetByContentIDAndField(logger, taggedTable, taggedField, taggedContentID)
+	tags, err := storage.TagCollectionGetByContentIDAndField(store, logger, taggedTable, taggedField, taggedContentID)
 
 	return tags, err
 }

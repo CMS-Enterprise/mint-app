@@ -64,7 +64,7 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 
 		case "plan_tdl":
 			logger := appcontext.ZLogger(ctx)
-			planTDL, err := store.PlanTDLGetByID(logger, primaryKey)
+			planTDL, err := storage.PlanTDLGetByID(store, logger, primaryKey)
 			if err != nil {
 				return nil, nil, err
 			}

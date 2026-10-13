@@ -82,7 +82,7 @@ func (s *Seeder) CreateAnalyzedAuditData() {
 	// Step 4. Get all Users who have a favorited model (See worker.DigestEmailBatchJob in pkg/worker/digest_email_job.go)
 
 	// Try to send the emails for the daily digest (which also generates a notification)
-	userIDs, err := s.Config.Store.PlanFavoriteCollectionGetUniqueUserIDs()
+	userIDs, err := storage.PlanFavoriteCollectionGetUniqueUserIDs(s.Config.Store)
 	if err != nil {
 		panic(fmt.Errorf("couldn't get user ids for users with plan favorites, %w", err))
 	}

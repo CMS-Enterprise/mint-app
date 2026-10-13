@@ -13,16 +13,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-// ReadyForClearanceGetByModelPlanID reads information about a model plan's clearance
-func (s *Store) ReadyForClearanceGetByModelPlanID(
-	logger *zap.Logger,
-	modelPlanID uuid.UUID,
-) (*models.PrepareForClearanceResponse, error) {
-	return ReadyForClearanceGetByModelPlanIDNP(s, logger, modelPlanID)
-}
-
-// ReadyForClearanceGetByModelPlanIDNP reads clearance aggregate data for a model plan.
-func ReadyForClearanceGetByModelPlanIDNP(
+// ReadyForClearanceGetByModelPlanID reads clearance aggregate data for a model plan.
+func ReadyForClearanceGetByModelPlanID(
 	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	modelPlanID uuid.UUID,

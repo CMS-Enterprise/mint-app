@@ -307,7 +307,7 @@ func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogge
 		return err
 	}
 
-	planTimeline, err := store.PlanTimelineGetByModelPlanID(modelPlanID)
+	planTimeline, err := storage.PlanTimelineGetByModelPlanID(store, modelPlanID)
 	if err != nil {
 		return err
 	}

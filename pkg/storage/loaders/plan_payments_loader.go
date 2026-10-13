@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetPlanPaymentsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Plan Payments in one query
@@ -26,7 +27,7 @@ func (loaders *DataLoaders) GetPlanPaymentsByModelPlanID(ctx context.Context, ke
 		logger.Error("issue converting keys to JSON for data loader in Plan Payments", zap.Error(*err))
 	}
 
-	pays, _ := dr.Store.PlanPaymentsGetByModelPlanIDLOADER(logger, marshaledParams)
+	pays, _ := storage.PlanPaymentsGetByModelPlanIDLOADER(dr.Store, logger, marshaledParams)
 	payByID := lo.Associate(pays, func(gc *models.PlanPayments) (string, *models.PlanPayments) {
 		return gc.ModelPlanID.String(), gc
 	})

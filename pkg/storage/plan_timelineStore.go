@@ -58,10 +58,10 @@ func PlanTimelineGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID)
 }
 
 // PlanTimelineGetByModelPlanID returns the planTimeline for a given model plan id
-func (s *Store) PlanTimelineGetByModelPlanID(modelPlanID uuid.UUID) (*models.PlanTimeline, error) {
+func PlanTimelineGetByModelPlanID(np sqlutils.NamedPreparer, modelPlanID uuid.UUID) (*models.PlanTimeline, error) {
 	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
 
-	planTimeline, err := sqlutils.GetProcedure[models.PlanTimeline](s, sqlqueries.PlanTimeline.GetByModelPlanID, arg)
+	planTimeline, err := sqlutils.GetProcedure[models.PlanTimeline](np, sqlqueries.PlanTimeline.GetByModelPlanID, arg)
 	if err != nil {
 		return nil, fmt.Errorf("error getting planTimeline by model plan id: %w", err)
 	}
