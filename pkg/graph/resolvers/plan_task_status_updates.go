@@ -156,7 +156,7 @@ func calculateModelPlanTaskState(
 		return models.PlanTaskStateInProgress, nil
 	}
 
-	beneficiaries, err := store.PlanBeneficiariesGetByModelPlanIDLOADER(logger, paramTableJSON)
+	beneficiaries, err := storage.PlanBeneficiariesGetByModelPlanIDLOADER(store, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}

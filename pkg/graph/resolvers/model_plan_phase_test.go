@@ -92,7 +92,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	expectedEmail := "Terry.Thompson@local.fake" // This comes from the stub fetch user info function
 
 	// Ensure collaborator creation is correct
-	collaborators, err := suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
+	collaborators, err := storage.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
 	suite.NoError(err)
 	suite.NotEmpty(collaborators)
 
@@ -126,7 +126,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	suite.NoError(err)
 
 	// Ensure the second collaborator is also created
-	collaborators, err = suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
+	collaborators, err = storage.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
 	suite.NoError(err)
 	suite.NotEmpty(collaborators)
 
@@ -222,7 +222,7 @@ func (suite *ResolverSuite) TestTryNotificationSendIncorrectModelStatus_NilEmail
 
 	// The model plan creator is automatically added as a model lead collaborator.
 	// Confirm the lead is present before proceeding.
-	collaborators, err := suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
+	collaborators, err := storage.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
 	suite.NoError(err)
 	suite.NotEmpty(collaborators)
 

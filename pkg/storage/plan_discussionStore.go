@@ -17,17 +17,16 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
-//TODO: Migrate all these queries to the sql_queries package
-
 // DiscussionReplyGetByDiscussionIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) DiscussionReplyGetByDiscussionIDLOADER(
+func DiscussionReplyGetByDiscussionIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.DiscussionReply, error) {
 
 	var discRSlice []*models.DiscussionReply
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.DiscussionReply.GetByDiscussionIDLoader)
+	stmt, err := np.PrepareNamed(sqlqueries.DiscussionReply.GetByDiscussionIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -114,12 +113,13 @@ func DiscussionReplyCreate(
 }
 
 // PlanDiscussionUpdate updates a plan discussion object
-func (s *Store) PlanDiscussionUpdate(
+func PlanDiscussionUpdate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	discussion *models.PlanDiscussion,
 ) (*models.PlanDiscussion, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDiscussion.Update)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDiscussion.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, discussion)
 	}
@@ -134,12 +134,13 @@ func (s *Store) PlanDiscussionUpdate(
 }
 
 // DiscussionReplyUpdate updates a discussion reply object
-func (s *Store) DiscussionReplyUpdate(
+func DiscussionReplyUpdate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	reply *models.DiscussionReply,
 ) (*models.DiscussionReply, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.DiscussionReply.Update)
+	stmt, err := np.PrepareNamed(sqlqueries.DiscussionReply.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, reply)
 	}
@@ -189,9 +190,9 @@ func (s *Store) PlanDiscussionDelete(
 }
 
 // PlanDiscussionByID retrieves the plan discussion for a given id
-func (s *Store) PlanDiscussionByID(_ *zap.Logger, id uuid.UUID) (*models.PlanDiscussion, error) {
+func PlanDiscussionByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.PlanDiscussion, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDiscussion.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDiscussion.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -254,9 +255,9 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 }
 
 // DiscussionReplyByID retrieves the discussion reply for a given id
-func (s *Store) DiscussionReplyByID(_ *zap.Logger, id uuid.UUID) (*models.DiscussionReply, error) {
+func DiscussionReplyByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.DiscussionReply, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.DiscussionReply.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.DiscussionReply.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -272,12 +273,13 @@ func (s *Store) DiscussionReplyByID(_ *zap.Logger, id uuid.UUID) (*models.Discus
 }
 
 // GetMostRecentDiscussionRoleSelection retrieves the latest role selection for a given user
-func (s *Store) GetMostRecentDiscussionRoleSelection(
+func GetMostRecentDiscussionRoleSelection(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	userID uuid.UUID,
 ) (*models.DiscussionRoleSelection, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDiscussion.GetUserRole)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDiscussion.GetUserRole)
 	if err != nil {
 		logger.Error("failed to prepare SQL statement", zap.Error(err))
 		return nil, err

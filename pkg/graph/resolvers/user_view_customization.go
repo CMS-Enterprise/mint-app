@@ -107,7 +107,7 @@ func getDefaultViewCustomizationsByRole(
 		// Assessment users should have 1 or 2 customizations by default:
 		// 1. My Model Plans (Only present for Assessment users who are collaborators on at least one model plan)
 		// 2. All Model Plans (Always present for Assessment users)
-		userCollaborationsCount, collabCountErr := store.PlanCollaboratorGetCountByUserID(principal.Account().ID)
+		userCollaborationsCount, collabCountErr := storage.PlanCollaboratorGetCountByUserID(store, principal.Account().ID)
 		if collabCountErr != nil {
 			return nil, collabCountErr
 		}

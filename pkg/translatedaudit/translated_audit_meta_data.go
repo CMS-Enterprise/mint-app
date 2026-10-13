@@ -54,7 +54,7 @@ func PlanCrTdlMetaDataGet(ctx context.Context, store *storage.Store, primaryKey 
 		switch tableName {
 		case "plan_cr":
 			logger := appcontext.ZLogger(ctx)
-			planCR, err := store.PlanCRGetByID(logger, primaryKey)
+			planCR, err := storage.PlanCRGetByID(store, logger, primaryKey)
 			if err != nil {
 				return nil, nil, err
 			}
@@ -112,7 +112,7 @@ func PlanCollaboratorMetaDataGet(ctx context.Context, store *storage.Store, prim
 			return nil, nil, fmt.Errorf("the %s field, wasn't present on the audit change, and the data is deleted, and not queryable", userIDField)
 		}
 
-		collab, collabErr := store.PlanCollaboratorGetByID(primaryKey)
+		collab, collabErr := storage.PlanCollaboratorGetByID(store, primaryKey)
 		if collabErr != nil {
 			if !sqlutils.IsNoRowsResult(collabErr) {
 				return nil, nil, collabErr

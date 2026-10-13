@@ -96,17 +96,6 @@ func PlanBasicsGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (
 	return &plan, nil
 }
 
-// PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
-func (s *Store) PlanBasicsGetByModelPlanID(modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
-
-	planBasics, err := sqlutils.GetProcedure[models.PlanBasics](s, sqlqueries.PlanBasics.GetByModelPlanID, arg)
-	if err != nil {
-		return nil, fmt.Errorf("error getting plan basics by model plan id: %w", err)
-	}
-	return planBasics, nil
-}
-
 // PlanBasicsGetByModelPlanIDLoader returns the plan basics for a slice of model plan ids
 func PlanBasicsGetByModelPlanIDLoader(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.PlanBasics, error) {
 
