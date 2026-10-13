@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"database/sql"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -13,7 +12,6 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
 func ModelPlansGetByModePlanIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanIDs []uuid.UUID) ([]*models.ModelPlan, error) {
@@ -39,30 +37,6 @@ func ModelPlansGetByCTATRequestIDsLOADER(np sqlutils.NamedPreparer, _ *zap.Logge
 	}
 
 	return res, nil
-}
-
-// ModelPlanGetByModelPlanIDLOADER returns the model plan for a slice of ids
-func (s *Store) ModelPlanGetByModelPlanIDLOADER(_ *zap.Logger, paramTableJSON string) ([]*models.ModelPlan, error) {
-
-	var planSlice []*models.ModelPlan
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.GetByIDLoader)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"paramTableJSON": paramTableJSON,
-	}
-
-	err = stmt.Select(&planSlice, arg) //this returns more than one
-
-	if err != nil {
-		return nil, err
-	}
-
-	return planSlice, nil
 }
 
 // ModelPlanCreate creates a model plan using a transaction
@@ -263,36 +237,6 @@ func (s *Store) ModelPlanCollectionCollaboratorOnly(
 	return modelPlans, nil
 }
 
-// ModelPlanCollectionWithCRTDLS returns a list of all model plans for which the there are CRTDls
-func (s *Store) ModelPlanCollectionWithCRTDLS(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
-
-	var modelPlans []*models.ModelPlan
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.CollectionWithCRTDL)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"archived": archived,
-	}
-
-	err = stmt.Select(&modelPlans, arg)
-	if err != nil {
-		logger.Error(
-			"Failed to fetch model plans",
-			zap.Error(err),
-		)
-		return nil, &apperrors.QueryError{
-			Err:       err,
-			Model:     models.ModelPlan{},
-			Operation: apperrors.QueryFetch,
-		}
-	}
-
-	return modelPlans, nil
-}
 func ModelPlanCollectionApproachingClearance(np sqlutils.NamedPreparer, logger *zap.Logger) ([]*models.ModelPlan, error) {
 	logger.Info("fetching model plans approaching clearance")
 	args := map[string]interface{}{}
@@ -368,26 +312,6 @@ func (s *Store) ModelPlanCollectionFavorited(
 	return modelPlans, nil
 }
 
-// ModelPlanDeleteByID deletes a model plan for a given ID
-func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.ModelPlan.DeleteByID)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	arg := map[string]interface{}{
-		"model_plan_id": id,
-	}
-
-	sqlResult, err := stmt.Exec(arg)
-	if err != nil {
-		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
-	}
-
-	return sqlResult, nil
-
-}
 func ModelPlanGetByMTOSolutionKeyLOADER(np sqlutils.NamedPreparer, _ *zap.Logger, keys []models.MTOCommonSolutionKey) ([]*models.ModelPlanAndMTOCommonSolution, error) {
 	args := map[string]interface{}{
 		"mto_common_solution_keys": pq.Array(keys),
