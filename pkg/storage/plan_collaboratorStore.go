@@ -55,7 +55,7 @@ func PlanCollaboratorGetIDLOADER(
 }
 
 // PlanCollaboratorCreate creates a new plan collaborator
-func (s *Store) PlanCollaboratorCreate(
+func PlanCollaboratorCreate(
 	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	collaborator *models.PlanCollaborator,

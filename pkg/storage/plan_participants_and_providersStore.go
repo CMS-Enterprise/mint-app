@@ -43,7 +43,7 @@ func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(
 }
 
 // PlanParticipantsAndProvidersCreate creates a new plan providers_and_participants object
-func (s *Store) PlanParticipantsAndProvidersCreate(
+func PlanParticipantsAndProvidersCreate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanParticipantsAndProviders,

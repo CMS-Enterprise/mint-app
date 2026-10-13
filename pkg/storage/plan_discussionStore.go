@@ -61,7 +61,7 @@ func PlanDiscussionGetByModelPlanIDLOADER(
 // PlanDiscussionCreate creates a plan discussion
 // the method is expected to be part of a larger transaction and does not handle  committing or rollingback the transactions
 // if the *sqlx.Tx is nil, this function will create one. The returned tx is the same as the one in the parameters.
-func (s *Store) PlanDiscussionCreate(
+func PlanDiscussionCreate(
 	logger *zap.Logger,
 	discussion *models.PlanDiscussion,
 	np sqlutils.NamedPreparer,

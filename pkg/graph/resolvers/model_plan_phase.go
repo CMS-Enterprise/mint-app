@@ -300,7 +300,7 @@ func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogge
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
 ) error {
-	modelPlan, err := store.ModelPlanGetByID(store, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(store, logger, modelPlanID)
 	if err != nil {
 		err = fmt.Errorf("unable to get model plan for model plan id %s. Err %w", modelPlanID, err)
 		logger.ErrorOrWarn(err.Error(), zap.Error(err))

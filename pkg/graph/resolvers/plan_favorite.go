@@ -33,7 +33,7 @@ func PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, principal
 		return nil, err
 	}
 
-	return store.PlanFavoriteCreate(np, logger, favorite)
+	return storage.PlanFavoriteCreate(np, logger, favorite)
 
 }
 

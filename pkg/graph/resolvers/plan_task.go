@@ -259,7 +259,7 @@ func trySendPlanTaskNewAvailableNotifications(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		logger.Error("failed to create new task available notifications", zap.Error(err))
 		return
@@ -377,7 +377,7 @@ func trySendPlanTaskCompletedNotifications(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		logger.Error("failed to create task completed notifications", zap.Error(err))
 		return

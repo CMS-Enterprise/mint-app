@@ -101,7 +101,7 @@ func (s *Store) UserAccountGetByIDLOADER(
 // UserAccountNotificationPreferencesNewModelPlan gets the notification
 // preferences for a new model plan for a slice of users who have at least one
 // enabled preference
-func (s *Store) UserAccountNotificationPreferencesNewModelPlan(np sqlutils.NamedPreparer) (
+func UserAccountNotificationPreferencesNewModelPlan(np sqlutils.NamedPreparer) (
 	[]*models.UserAccountAndNotificationPreferences,
 	error,
 ) {
@@ -207,7 +207,7 @@ func UserAccountGetNotificationPreferencesForDataExchangeApproachMarkedComplete(
 
 // UserAccountsGetNotificationRecipientsForDiscussionAdded returns a collection of
 // user accounts that should be notified of when a new discussion is added to a model plan
-func (s *Store) UserAccountsGetNotificationRecipientsForDiscussionAdded(
+func UserAccountsGetNotificationRecipientsForDiscussionAdded(
 	np sqlutils.NamedPreparer,
 	modelPlanID uuid.UUID,
 ) (
@@ -221,16 +221,6 @@ func (s *Store) UserAccountsGetNotificationRecipientsForDiscussionAdded(
 // UserAccountGetNotificationPreferencesForIDDOCQuestionnaireCompleted returns a collection of
 // user accounts that should be notified of when an IDDOC questionnaire is completed
 func UserAccountGetNotificationPreferencesForIDDOCQuestionnaireCompleted(
-	np sqlutils.NamedPreparer,
-	modelPlanID uuid.UUID,
-) ([]*models.UserAccountAndNotificationPreferences, error) {
-	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
-	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesIDDOCQuestionnaireCompleted, arg)
-}
-
-// UserAccountsGetNotificationRecipientsForIDDOCQuestionnaireCompleted returns a collection of
-// user accounts that should be notified of when an IDDOC questionnaire is completed
-func (s *Store) UserAccountsGetNotificationRecipientsForIDDOCQuestionnaireCompleted(
 	np sqlutils.NamedPreparer,
 	modelPlanID uuid.UUID,
 ) ([]*models.UserAccountAndNotificationPreferences, error) {

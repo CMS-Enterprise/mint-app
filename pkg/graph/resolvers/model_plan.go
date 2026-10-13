@@ -88,7 +88,7 @@ func ModelPlanCreate(
 
 		userAccount := principal.Account()
 
-		createdPlan, err := store.ModelPlanCreate(tx, logger, plan)
+		createdPlan, err := storage.ModelPlanCreate(tx, logger, plan)
 		if err != nil {
 			return nil, err
 		}
@@ -107,7 +107,7 @@ func ModelPlanCreate(
 		// Create a default plan basics object
 		basics := models.NewPlanBasics(baseTaskListUser)
 
-		_, err = store.PlanBasicsCreate(tx, logger, basics)
+		_, err = storage.PlanBasicsCreate(tx, logger, basics)
 		if err != nil {
 			return nil, err
 		}
@@ -115,7 +115,7 @@ func ModelPlanCreate(
 		// Create a default plan general characteristics object
 		generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskListUser)
 
-		_, err = store.PlanGeneralCharacteristicsCreate(tx, logger, generalCharacteristics)
+		_, err = storage.PlanGeneralCharacteristicsCreate(tx, logger, generalCharacteristics)
 		if err != nil {
 			return nil, err
 		}
@@ -123,7 +123,7 @@ func ModelPlanCreate(
 		// Create a default Plan Beneficiaries object
 		beneficiaries := models.NewPlanBeneficiaries(baseTaskListUser)
 
-		_, err = store.PlanBeneficiariesCreate(tx, logger, beneficiaries)
+		_, err = storage.PlanBeneficiariesCreate(tx, logger, beneficiaries)
 		if err != nil {
 			return nil, err
 		}
@@ -131,7 +131,7 @@ func ModelPlanCreate(
 		//Create a default Plan Participants and Providers object
 		participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskListUser)
 
-		_, err = store.PlanParticipantsAndProvidersCreate(tx, logger, participantsAndProviders)
+		_, err = storage.PlanParticipantsAndProvidersCreate(tx, logger, participantsAndProviders)
 		if err != nil {
 			return nil, err
 		}
@@ -139,7 +139,7 @@ func ModelPlanCreate(
 		//Create default Plan OpsEvalAndLearning object
 		opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskListUser)
 
-		_, err = store.PlanOpsEvalAndLearningCreate(tx, logger, opsEvalAndLearning)
+		_, err = storage.PlanOpsEvalAndLearningCreate(tx, logger, opsEvalAndLearning)
 		if err != nil {
 			return nil, err
 		}
@@ -147,7 +147,7 @@ func ModelPlanCreate(
 		//Create default PlanPayments object
 		planPayments := models.NewPlanPayments(baseTaskListUser)
 
-		_, err = store.PlanPaymentsCreate(tx, logger, planPayments)
+		_, err = storage.PlanPaymentsCreate(tx, logger, planPayments)
 		if err != nil {
 			return nil, err
 		}
@@ -177,7 +177,7 @@ func ModelPlanCreate(
 		// Create a default planTimeline object
 		planTimeline := models.NewPlanTimeline(baseTaskListUser)
 
-		_, err = store.PlanTimelineCreate(tx, logger, planTimeline)
+		_, err = storage.PlanTimelineCreate(tx, logger, planTimeline)
 		if err != nil {
 			return nil, err
 		}
@@ -204,7 +204,7 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
-		notifPreferences, err := store.UserAccountNotificationPreferencesNewModelPlan(tx)
+		notifPreferences, err := storage.UserAccountNotificationPreferencesNewModelPlan(tx)
 		if err != nil {
 			return nil, err
 		}
@@ -330,7 +330,7 @@ func ModelPlanUpdate(
 	addressBook email.AddressBook,
 ) (*models.ModelPlan, error) {
 	// Get existing plan
-	existingPlan, err := store.ModelPlanGetByID(store, logger, id)
+	existingPlan, err := storage.ModelPlanGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -386,7 +386,7 @@ func ModelPlanUpdate(
 
 // ModelPlanGetByID implements resolver logic to get a model plan by its ID
 func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.ModelPlan, error) {
-	plan, err := store.ModelPlanGetByID(store, logger, id)
+	plan, err := storage.ModelPlanGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}

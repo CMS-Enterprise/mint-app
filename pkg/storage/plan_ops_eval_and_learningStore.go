@@ -42,7 +42,7 @@ func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(
 }
 
 // PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
-func (s *Store) PlanOpsEvalAndLearningCreate(
+func PlanOpsEvalAndLearningCreate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	oel *models.PlanOpsEvalAndLearning,
