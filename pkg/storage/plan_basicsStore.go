@@ -53,7 +53,7 @@ func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*
 			if updated.ModifiedBy == nil {
 				return nil, fmt.Errorf("plan basics modified_by is nil after update")
 			}
-			_, err = s.PlanTimelineClearApplicationDatesByModelPlanID(tx, logger, updated.ModelPlanID, *updated.ModifiedBy)
+			_, err = PlanTimelineClearApplicationDatesByModelPlanID(tx, logger, updated.ModelPlanID, *updated.ModifiedBy)
 			if err != nil {
 				return nil, err
 			}

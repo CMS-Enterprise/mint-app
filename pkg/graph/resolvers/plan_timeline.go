@@ -61,7 +61,7 @@ func UpdatePlanTimeline(
 	}
 
 	// Get existing planTimeline
-	existing, err := store.PlanTimelineGetByID(store, logger, id)
+	existing, err := storage.PlanTimelineGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +124,7 @@ func UpdatePlanTimeline(
 			return nil, err
 		}
 
-		updatedTimeline, err := store.PlanTimelineUpdate(tx, logger, existing)
+		updatedTimeline, err := storage.PlanTimelineUpdate(tx, logger, existing)
 		if err != nil {
 			return nil, fmt.Errorf("failed to update timeline: %w", err)
 		}

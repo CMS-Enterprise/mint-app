@@ -202,7 +202,7 @@ func (suite *ResolverSuite) setUpPlanWithPastICIPDate(planName string) *models.M
 	planTimeline.CompleteICIP = &yesterday
 	planTimeline.ModifiedBy = &userID
 	planTimeline.ModifiedDts = &timeNow
-	_, err = suite.testConfigs.Store.PlanTimelineUpdate(suite.testConfigs.Store, suite.testConfigs.Logger, planTimeline)
+	_, err = storage.PlanTimelineUpdate(suite.testConfigs.Store, suite.testConfigs.Logger, planTimeline)
 	suite.NoError(err)
 
 	plan.ModifiedBy = &userID
