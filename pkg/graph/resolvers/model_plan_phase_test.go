@@ -78,7 +78,7 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 	)
 	suite.NoError(err)
 
-	plan, err = suite.testConfigs.Store.ModelPlanGetByID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
+	plan, err = storage.ModelPlanGetByID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
 	suite.NoError(err)
 	suite.NotNil(plan.PreviousSuggestedPhase)
 	suite.EqualValues(models.ModelPhaseIcipComplete, *plan.PreviousSuggestedPhase)

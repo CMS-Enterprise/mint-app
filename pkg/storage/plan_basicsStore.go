@@ -20,7 +20,7 @@ import (
 )
 
 // PlanBasicsCreate creates a new plan basics
-func (s *Store) PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
+func PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
 	basics.ID = utilityuuid.ValueOrNewUUID(basics.ID)
 
@@ -45,7 +45,7 @@ func (s *Store) PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, 
 // MANDATORY_NATIONAL or MANDATORY_REGIONAL_OR_STATE, timeline application period dates are cleared in the same transaction.
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 	return sqlutils.WithTransaction(s, func(tx *sqlx.Tx) (*models.PlanBasics, error) {
-		updated, err := s.updatePlanBasics(tx, logger, plan)
+		updated, err := updatePlanBasics(tx, logger, plan)
 		if err != nil {
 			return nil, err
 		}
@@ -62,7 +62,7 @@ func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*
 	})
 }
 
-func (s *Store) updatePlanBasics(np sqlutils.NamedPreparer, logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
+func updatePlanBasics(np sqlutils.NamedPreparer, logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 	stmt, err := np.PrepareNamed(sqlqueries.PlanBasics.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)

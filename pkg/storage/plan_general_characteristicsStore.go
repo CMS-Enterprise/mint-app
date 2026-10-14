@@ -16,7 +16,7 @@ import (
 )
 
 // PlanGeneralCharacteristicsCreate creates a new plan basics
-func (s *Store) PlanGeneralCharacteristicsCreate(
+func PlanGeneralCharacteristicsCreate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanGeneralCharacteristics,

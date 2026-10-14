@@ -346,7 +346,7 @@ func (s *StoreTestSuite) TestMTOCommonMilestoneArchiveRemovesTemplateReferencesB
 	s.Require().NoError(err)
 
 	modelPlan := models.NewModelPlan(actorUserID, "Archive cascade milestone test")
-	createdModelPlan, err := s.store.ModelPlanCreate(tx, s.logger, modelPlan)
+	createdModelPlan, err := ModelPlanCreate(tx, s.logger, modelPlan)
 	s.Require().NoError(err)
 
 	modelPlanSolutions, err := MTOSolutionCreateCommonAllowConflictsSQL(

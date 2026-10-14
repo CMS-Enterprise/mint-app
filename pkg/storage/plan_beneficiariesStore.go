@@ -42,7 +42,7 @@ func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(
 }
 
 // PlanBeneficiariesCreate creates a new plan benficiaries object
-func (s *Store) PlanBeneficiariesCreate(
+func PlanBeneficiariesCreate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	b *models.PlanBeneficiaries,
