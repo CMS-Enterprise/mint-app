@@ -12,10 +12,10 @@ import classNames from 'classnames';
 import {
   CtatAdminUpdateInput,
   CtatStatus,
-  GetCtatRequestQuery,
+  GetCtatRequestAdminQuery,
   useAdminUpdateCtatRequestMutation
 } from 'gql/generated/graphql';
-import GetCtatRequest from 'gql/operations/CTAT/GetCtatRequest';
+import GetCtatRequestAdmin from 'gql/operations/CTAT/GetCtatRequestAdmin';
 import GetCtatRequestsAdmin from 'gql/operations/CTAT/GetCtatRequestsAdmin';
 
 import CollapsableLink from 'components/CollapsableLink';
@@ -46,7 +46,7 @@ type CtatTicketAdminFormValues = {
 };
 
 type CtatTicketAdminFormProps = {
-  ticket: GetCtatRequestQuery['ctatRequest'];
+  ticket: GetCtatRequestAdminQuery['ctatRequest'];
   closeModal: () => void;
   setDisableButton: React.Dispatch<React.SetStateAction<boolean>>;
   setIsDirty: (isDirty: boolean) => void;
@@ -54,7 +54,7 @@ type CtatTicketAdminFormProps = {
 };
 
 const buildSelectedAdmin = (
-  ticket: GetCtatRequestQuery['ctatRequest']
+  ticket: GetCtatRequestAdminQuery['ctatRequest']
 ): OktaUserType | null => {
   const account = ticket.assignedAdminUserAccount;
   if (!account?.username) {
@@ -69,7 +69,7 @@ const buildSelectedAdmin = (
 };
 
 const buildInitialValues = (
-  ticket: GetCtatRequestQuery['ctatRequest']
+  ticket: GetCtatRequestAdminQuery['ctatRequest']
 ): CtatTicketAdminFormValues => ({
   status: ticket.status ?? CtatStatus.NEW,
   assignedAdmin: ticket.assignedAdminUserAccount?.username ?? '',
@@ -100,7 +100,7 @@ const CtatTicketAdminForm = ({
 
   const [adminUpdateCtatRequest] = useAdminUpdateCtatRequestMutation({
     refetchQueries: [
-      { query: GetCtatRequest, variables: { id: ticket.id } },
+      { query: GetCtatRequestAdmin, variables: { id: ticket.id } },
       { query: GetCtatRequestsAdmin }
     ]
   });

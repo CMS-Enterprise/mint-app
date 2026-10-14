@@ -20,17 +20,11 @@ var modelPlanCollectionWhereArchivedSQL string
 //go:embed SQL/model_plan/collection_by_collaborator.sql
 var modelPlanCollectionByCollaboratorSQL string
 
-//go:embed SQL/model_plan/collection_with_crtdl.sql
-var modelPlanCollectionWithCRTDlSQL string
-
 //go:embed SQL/model_plan/collection_approaching_clearance.sql
 var modelPlanCollectionApproachingClearanceSQL string
 
 //go:embed SQL/model_plan/collection_where_newly_created.sql
 var modelPlanCollectionWhereNewlyCreatedSQL string
-
-//go:embed SQL/model_plan/delete_by_id.sql
-var modelPlanDeleteByID string
 
 //go:embed SQL/model_plan/get_by_id_LOADER.sql
 var modelPlanGetByIDLoaderSQL string
@@ -60,10 +54,8 @@ type modelPlanScripts struct {
 	GetByName                        string
 	CollectionWhereArchived          string
 	CollectionByCollaborator         string
-	CollectionWithCRTDL              string
 	CollectionApproachingClearance   string
 	CollectionWhereNewlyCreated      string
-	DeleteByID                       string
 	GetByIDLoader                    string
 	GetByCTATRequestIDLoader         string
 	GetByMTOSolutionKeyLoader        string
@@ -81,10 +73,8 @@ var ModelPlan = modelPlanScripts{
 	GetByName:                        modelPlanGetByNameSQL,
 	CollectionWhereArchived:          modelPlanCollectionWhereArchivedSQL,
 	CollectionByCollaborator:         modelPlanCollectionByCollaboratorSQL,
-	CollectionWithCRTDL:              modelPlanCollectionWithCRTDlSQL,
 	CollectionApproachingClearance:   modelPlanCollectionApproachingClearanceSQL,
 	CollectionWhereNewlyCreated:      modelPlanCollectionWhereNewlyCreatedSQL,
-	DeleteByID:                       modelPlanDeleteByID,
 	GetByIDLoader:                    modelPlanGetByIDLoaderSQL,
 	GetByCTATRequestIDLoader:         modelPlanGetByCTATRequestIDLoaderSQL,
 	GetByMTOSolutionKeyLoader:        modelPlanGetByMTOCommonSolutionKeySQL,

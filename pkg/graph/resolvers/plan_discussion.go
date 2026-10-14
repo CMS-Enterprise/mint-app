@@ -55,7 +55,7 @@ func CreatePlanDiscussion(
 			return nil, fmt.Errorf("unable to update tagged html. error : %w", err)
 		}
 
-		discussion, err := store.PlanDiscussionCreate(logger, planDiscussion, tx)
+		discussion, err := storage.PlanDiscussionCreate(logger, planDiscussion, tx)
 		if err != nil {
 			return nil, err
 		}
@@ -75,7 +75,7 @@ func CreatePlanDiscussion(
 
 		userRole := discussion.UserRole.Humanize(models.ValueOrEmpty(discussion.UserRoleDescription))
 
-		recipientUserAccounts, err := store.UserAccountsGetNotificationRecipientsForDiscussionAdded(store, modelPlan.ID)
+		recipientUserAccounts, err := storage.UserAccountsGetNotificationRecipientsForDiscussionAdded(store, modelPlan.ID)
 		if err != nil {
 			logger.Error("Error getting user accounts for discussion added notifications",
 				zap.Error(err),

@@ -8,6 +8,7 @@ import {
   CtatHelpNeededType,
   CtatRequestUrgency,
   CtatStatus,
+  GetCtatRequestAdminDocument,
   GetCtatRequestDocument,
   GetCtatRequestsAdminDocument
 } from 'gql/generated/graphql';
@@ -67,6 +68,14 @@ const openTicketMock = {
   }
 };
 
+const openAdminTicketMock = {
+  ...openTicketMock,
+  request: {
+    query: GetCtatRequestAdminDocument,
+    variables: { id: ticketId }
+  }
+};
+
 const closedTicketMock = {
   request: {
     query: GetCtatRequestDocument,
@@ -89,6 +98,14 @@ const closedTicketMock = {
         }
       }
     }
+  }
+};
+
+const closedAdminTicketMock = {
+  ...closedTicketMock,
+  request: {
+    query: GetCtatRequestAdminDocument,
+    variables: { id: ticketId }
   }
 };
 
@@ -163,7 +180,8 @@ describe('CtatTicketViewPanel', () => {
       screen.getByText('Ticket progress and resolution')
     ).toBeInTheDocument();
     expect(screen.getByText('Not assigned yet')).toBeInTheDocument();
-    expect(screen.getByText('No notes added')).toBeInTheDocument();
+    expect(screen.queryByText('Progress notes')).not.toBeInTheDocument();
+    expect(screen.queryByText('No notes added')).not.toBeInTheDocument();
     expect(screen.getByText('No resolution added')).toBeInTheDocument();
     expect(screen.getByText('What happens next?')).toBeInTheDocument();
 
@@ -258,8 +276,8 @@ describe('CtatTicketViewPanel', () => {
     });
 
     expect(
-      screen.getByText('Working on data security language.')
-    ).toBeInTheDocument();
+      screen.queryByText('Working on data security language.')
+    ).not.toBeInTheDocument();
     expect(
       screen.getByText('Drafted a legally sound document.')
     ).toBeInTheDocument();
@@ -275,7 +293,7 @@ describe('CtatTicketViewPanel', () => {
   });
 
   it('renders admin editable form with save footer for assessment users', async () => {
-    renderPanel([openTicketMock], { isAdmin: true });
+    renderPanel([openAdminTicketMock], { isAdmin: true });
 
     await waitFor(() => {
       expect(screen.getByTestId('ctat-admin-status')).toBeInTheDocument();
@@ -296,7 +314,7 @@ describe('CtatTicketViewPanel', () => {
   });
 
   it('renders blue admin progress box for open tickets', async () => {
-    renderPanel([openTicketMock], { isAdmin: true });
+    renderPanel([openAdminTicketMock], { isAdmin: true });
 
     await waitFor(() => {
       expect(screen.getByTestId('ctat-admin-status')).toBeInTheDocument();
@@ -309,7 +327,7 @@ describe('CtatTicketViewPanel', () => {
   });
 
   it('renders grey admin progress box for closed tickets', async () => {
-    renderPanel([closedTicketMock], { isAdmin: true });
+    renderPanel([closedAdminTicketMock], { isAdmin: true });
 
     await waitFor(() => {
       expect(screen.getByTestId('ctat-admin-status')).toBeInTheDocument();
@@ -350,7 +368,12 @@ describe('CtatTicketViewPanel', () => {
     };
 
     const { user } = renderPanel(
-      [openTicketMock, adminUpdateMock, openTicketMock, adminListMock],
+      [
+        openAdminTicketMock,
+        adminUpdateMock,
+        openAdminTicketMock,
+        adminListMock
+      ],
       { isAdmin: true, closeModal }
     );
 

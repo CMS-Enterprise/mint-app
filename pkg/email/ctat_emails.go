@@ -436,20 +436,24 @@ func SendCTATUpdateEmails(
 		bodyContent.Resolution = *updatedRequest.Resolution
 	}
 
-	requesterEmailSubject, requesterEmailBody, err := CTAT.Update.GetContent(subjectContent, bodyContent)
-	if err != nil {
-		return err
-	}
+	// we want to check if any data that the requester can see (i.e., not progress notes) was updated. if *only* the progress notes
+	// were updated, we don't have to send the requester an email
+	if statusUpdated || assignedAdminUpdated || resolutionUpdated {
+		requesterEmailSubject, requesterEmailBody, err := CTAT.Update.GetContent(subjectContent, bodyContent)
+		if err != nil {
+			return err
+		}
 
-	if err := emailService.Send(
-		addressBook.DefaultSender,
-		[]string{bodySummary.RequesterEmail},
-		nil,
-		requesterEmailSubject,
-		"text/html",
-		requesterEmailBody,
-	); err != nil {
-		return err
+		if err := emailService.Send(
+			addressBook.DefaultSender,
+			[]string{bodySummary.RequesterEmail},
+			nil,
+			requesterEmailSubject,
+			"text/html",
+			requesterEmailBody,
+		); err != nil {
+			return err
+		}
 	}
 
 	// if unset, exit here

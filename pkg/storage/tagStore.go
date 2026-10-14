@@ -13,30 +13,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
-
-// TagCreate writes a new tage to the database
-func (s *Store) TagCreate(
-	logger *zap.Logger,
-	tag *models.Tag,
-) (*models.Tag, error) {
-	tag.ID = utilityuuid.ValueOrNewUUID(tag.ID)
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.Tag.Create)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, tag)
-	}
-	defer stmt.Close()
-
-	retTag := &models.Tag{}
-	err = stmt.Get(retTag, tag)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, retTag)
-	}
-
-	return retTag, nil
-}
 
 // TagCollectionCreate creates an array of tags in the database based on the tag context provided in the string
 // the method is expected to be part of a larger transaction and does not handle  committing or rolling back the transactions
