@@ -36,6 +36,7 @@ type UserNotificationPreferences struct {
 	IncorrectModelStatusNotificationType               UserNotificationPreferenceFlags                     `json:"incorrectModelStatusNotificationType" db:"incorrect_model_status_notification_type"`
 	MTOReadyForReview                                  UserNotificationPreferenceFlags                     `json:"mtoReadyForReview" db:"mto_ready_for_review"`
 	MTOReadyForReviewNotificationType                  *MTOReadyForReviewNotificationType                  `json:"mtoReadyForReviewNotificationType" db:"mto_ready_for_review_notification_type"`
+	ModelFollowerUpdate                                UserNotificationPreferenceFlags                     `json:"modelFollowerUpdate" db:"model_follower_update"`
 }
 
 // NewUserNotificationPreferences returns a New UserNotificationPreferences
@@ -59,6 +60,7 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		IddocQuestionnaireComplete:         EmptyUserNotificationPreferencesFlags(),
 		IncorrectModelStatus:               EmptyUserNotificationPreferencesFlags(),
 		MTOReadyForReview:                  EmptyUserNotificationPreferencesFlags(),
+		ModelFollowerUpdate:                DefaultUserNotificationPreferencesFlags(),
 	}
 }
 

@@ -29,6 +29,7 @@ SELECT
     UNP.incorrect_model_status,
     UNP.mto_ready_for_review,
     UNP.mto_ready_for_review_notification_type,
+    UNP.model_follower_update,
     UNP.created_by,
     UNP.created_dts,
     UNP.modified_by,

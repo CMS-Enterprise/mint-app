@@ -96,6 +96,11 @@ func (r *userNotificationPreferencesResolver) MtoReadyForReview(ctx context.Cont
 	return obj.MTOReadyForReview, nil
 }
 
+// ModelFollowerUpdate is the resolver for the modelFollowerUpdate field.
+func (r *userNotificationPreferencesResolver) ModelFollowerUpdate(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.ModelFollowerUpdate, nil
+}
+
 // UserNotificationPreferences returns generated.UserNotificationPreferencesResolver implementation.
 func (r *Resolver) UserNotificationPreferences() generated.UserNotificationPreferencesResolver {
 	return &userNotificationPreferencesResolver{r}

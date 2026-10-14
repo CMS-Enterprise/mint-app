@@ -1,6 +1,13 @@
 package resolvers
 
-import "github.com/cms-enterprise/mint-app/pkg/models"
+import (
+	"github.com/google/uuid"
+	"github.com/samber/lo"
+
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
+)
 
 func (suite *ResolverSuite) TestUserNotificationPreferencesGetByUserID() {
 	pref, err := UserNotificationPreferencesGetByUserID(suite.testConfigs.Context, suite.testConfigs.Principal.Account().ID)
@@ -14,6 +21,39 @@ func (suite *ResolverSuite) TestUserNotificationPreferencesGetByUserID() {
 	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.NewDiscussionReply)
 	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.ModelPlanShared)
 	suite.EqualValues(models.UserNotificationPreferenceFlags(nil), pref.IncorrectModelStatus)
+	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.ModelFollowerUpdate)
+}
+
+func (suite *ResolverSuite) TestUserAccountGetNotificationPreferencesForModelFollowerUpdate() {
+	plan := suite.createModelPlan("Plan with followers")
+	follower := suite.getTestPrincipal(suite.testConfigs.Store, "FOLO")
+	optedOut := suite.getTestPrincipal(suite.testConfigs.Store, "OPTO")
+	_ = suite.getTestPrincipal(suite.testConfigs.Store, "NOFO")
+
+	for _, princ := range []*authentication.ApplicationPrincipal{follower, optedOut} {
+		_, err := PlanFavoriteCreate(suite.testConfigs.Store, suite.testConfigs.Logger, princ, princ.Account().ID, suite.testConfigs.Store, plan.ID)
+		suite.NoError(err)
+	}
+
+	_, err := UserNotificationPreferencesUpdate(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		optedOut,
+		suite.testConfigs.Store,
+		map[string]interface{}{"modelFollowerUpdate": models.UserNotificationPreferenceFlags{}},
+	)
+	suite.NoError(err)
+
+	recipients, err := storage.UserAccountGetNotificationPreferencesForModelFollowerUpdate(suite.testConfigs.Store, plan.ID)
+	suite.NoError(err)
+	// The plan creator follows the plan automatically
+	suite.Len(recipients, 2)
+
+	recipientIDs := lo.Map(recipients, func(r *models.UserAccountAndNotificationPreferences, _ int) uuid.UUID { return r.ID })
+	suite.ElementsMatch([]uuid.UUID{suite.testConfigs.Principal.Account().ID, follower.Account().ID}, recipientIDs)
+	for _, recipient := range recipients {
+		suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), recipient.PreferenceFlags)
+	}
 }
 
 func (suite *ResolverSuite) TestUserNotificationPreferencesUpdate() {

@@ -6258,6 +6258,7 @@ export type UserNotificationPreferences = {
   iddocQuestionnaireComplete: Array<UserNotificationPreferenceFlag>;
   iddocQuestionnaireCompletedNotificationType?: Maybe<IddocQuestionnaireCompletedNotificationType>;
   incorrectModelStatus: Array<UserNotificationPreferenceFlag>;
+  modelFollowerUpdate: Array<UserNotificationPreferenceFlag>;
   modelPlanShared: Array<UserNotificationPreferenceFlag>;
   modifiedBy?: Maybe<Scalars['UUID']['output']>;
   modifiedByUserAccount?: Maybe<UserAccount>;
@@ -6286,6 +6287,7 @@ export type UserNotificationPreferencesChanges = {
   iddocQuestionnaireComplete?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   iddocQuestionnaireCompletedNotificationType?: InputMaybe<IddocQuestionnaireCompletedNotificationType>;
   incorrectModelStatus?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
+  modelFollowerUpdate?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   modelPlanShared?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   mtoReadyForReview?: InputMaybe<Array<UserNotificationPreferenceFlag>>;
   mtoReadyForReviewNotificationType?: InputMaybe<MtoReadyForReviewNotificationType>;

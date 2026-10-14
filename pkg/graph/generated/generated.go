@@ -2865,6 +2865,7 @@ type ComplexityRoot struct {
 		IddocQuestionnaireCompletedNotificationType        func(childComplexity int) int
 		IncorrectModelStatus                               func(childComplexity int) int
 		MTOReadyForReviewNotificationType                  func(childComplexity int) int
+		ModelFollowerUpdate                                func(childComplexity int) int
 		ModelPlanShared                                    func(childComplexity int) int
 		ModifiedBy                                         func(childComplexity int) int
 		ModifiedByUserAccount                              func(childComplexity int) int
@@ -3456,6 +3457,8 @@ type UserNotificationPreferencesResolver interface {
 
 	IncorrectModelStatus(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	MtoReadyForReview(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+
+	ModelFollowerUpdate(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 }
 type UserViewCustomizationResolver interface {
 	ViewCustomization(ctx context.Context, obj *models.UserViewCustomization) ([]models.ViewCustomizationType, error)
@@ -17809,6 +17812,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.UserNotificationPreferences.MTOReadyForReviewNotificationType(childComplexity), true
+	case "UserNotificationPreferences.modelFollowerUpdate":
+		if e.ComplexityRoot.UserNotificationPreferences.ModelFollowerUpdate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.UserNotificationPreferences.ModelFollowerUpdate(childComplexity), true
 	case "UserNotificationPreferences.modelPlanShared":
 		if e.ComplexityRoot.UserNotificationPreferences.ModelPlanShared == nil {
 			break
@@ -25199,6 +25208,7 @@ type UserNotificationPreferences {
   incorrectModelStatus: [UserNotificationPreferenceFlag!]!
   mtoReadyForReview: [UserNotificationPreferenceFlag!]!
   mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType
+  modelFollowerUpdate: [UserNotificationPreferenceFlag!]!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -25244,6 +25254,7 @@ input UserNotificationPreferencesChanges
   incorrectModelStatus: [UserNotificationPreferenceFlag!]
   mtoReadyForReview: [UserNotificationPreferenceFlag!]
   mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType
+  modelFollowerUpdate: [UserNotificationPreferenceFlag!]
 }
 
 extend type Mutation {
@@ -28781,6 +28792,8 @@ func (ec *executionContext) childFields_UserNotificationPreferences(ctx context.
 		return ec.fieldContext_UserNotificationPreferences_mtoReadyForReview(ctx, field)
 	case "mtoReadyForReviewNotificationType":
 		return ec.fieldContext_UserNotificationPreferences_mtoReadyForReviewNotificationType(ctx, field)
+	case "modelFollowerUpdate":
+		return ec.fieldContext_UserNotificationPreferences_modelFollowerUpdate(ctx, field)
 	case "createdBy":
 		return ec.fieldContext_UserNotificationPreferences_createdBy(ctx, field)
 	case "createdByUserAccount":
@@ -95746,6 +95759,29 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_mtoReadyFor
 	return graphql.NewScalarFieldContext("UserNotificationPreferences", field, false, false, errors.New("field of type MTOReadyForReviewNotificationType does not have child fields"))
 }
 
+func (ec *executionContext) _UserNotificationPreferences_modelFollowerUpdate(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_UserNotificationPreferences_modelFollowerUpdate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.UserNotificationPreferences().ModelFollowerUpdate(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []models.UserNotificationPreferenceFlag) graphql.Marshaler {
+			return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_UserNotificationPreferences_modelFollowerUpdate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("UserNotificationPreferences", field, true, true, errors.New("field of type UserNotificationPreferenceFlag does not have child fields"))
+}
+
 func (ec *executionContext) _UserNotificationPreferences_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -102030,7 +102066,7 @@ func (ec *executionContext) unmarshalInputUserNotificationPreferencesChanges(ctx
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"dailyDigestComplete", "addedAsCollaborator", "taggedInDiscussion", "taggedInDiscussionReply", "newDiscussionReply", "modelPlanShared", "newModelPlan", "newTaskAdded", "taskCompleted", "datesChanged", "datesChangedNotificationType", "dataExchangeApproachMarkedComplete", "dataExchangeApproachMarkedCompleteNotificationType", "newDiscussionAdded", "newDiscussionAddedNotificationType", "iddocQuestionnaireComplete", "iddocQuestionnaireCompletedNotificationType", "incorrectModelStatus", "mtoReadyForReview", "mtoReadyForReviewNotificationType"}
+	fieldsInOrder := [...]string{"dailyDigestComplete", "addedAsCollaborator", "taggedInDiscussion", "taggedInDiscussionReply", "newDiscussionReply", "modelPlanShared", "newModelPlan", "newTaskAdded", "taskCompleted", "datesChanged", "datesChangedNotificationType", "dataExchangeApproachMarkedComplete", "dataExchangeApproachMarkedCompleteNotificationType", "newDiscussionAdded", "newDiscussionAddedNotificationType", "iddocQuestionnaireComplete", "iddocQuestionnaireCompletedNotificationType", "incorrectModelStatus", "mtoReadyForReview", "mtoReadyForReviewNotificationType", "modelFollowerUpdate"}
 	it = make(map[string]any, len(asMap))
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
@@ -102178,6 +102214,13 @@ func (ec *executionContext) unmarshalInputUserNotificationPreferencesChanges(ctx
 				return it, err
 			}
 			it["mtoReadyForReviewNotificationType"] = data
+		case "modelFollowerUpdate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelFollowerUpdate"))
+			data, err := ec.unmarshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modelFollowerUpdate"] = data
 		}
 	}
 	return it, nil
@@ -130455,6 +130498,44 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 			if out.Values[i] == graphql.RequiredNull {
 				atomic.AddUint32(&out.Invalids, 1)
 			}
+		case "modelFollowerUpdate":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._UserNotificationPreferences_modelFollowerUpdate(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "createdBy":
 			out.Values[i] = ec._UserNotificationPreferences_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {

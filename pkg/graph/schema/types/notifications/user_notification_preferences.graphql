@@ -71,6 +71,7 @@ type UserNotificationPreferences {
   incorrectModelStatus: [UserNotificationPreferenceFlag!]!
   mtoReadyForReview: [UserNotificationPreferenceFlag!]!
   mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType
+  modelFollowerUpdate: [UserNotificationPreferenceFlag!]!
 
   createdBy: UUID!
   createdByUserAccount: UserAccount!
@@ -116,6 +117,7 @@ input UserNotificationPreferencesChanges
   incorrectModelStatus: [UserNotificationPreferenceFlag!]
   mtoReadyForReview: [UserNotificationPreferenceFlag!]
   mtoReadyForReviewNotificationType: MTOReadyForReviewNotificationType
+  modelFollowerUpdate: [UserNotificationPreferenceFlag!]
 }
 
 extend type Mutation {

@@ -238,6 +238,16 @@ func UserAccountGetNotificationPreferencesForMTOReadyForReview(
 	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesMTOReadyForReview, arg)
 }
 
+// UserAccountGetNotificationPreferencesForModelFollowerUpdate returns a collection of
+// user accounts that follow a model plan and should be notified when it sends an update message
+func UserAccountGetNotificationPreferencesForModelFollowerUpdate(
+	np sqlutils.NamedPreparer,
+	modelPlanID uuid.UUID,
+) ([]*models.UserAccountAndNotificationPreferences, error) {
+	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
+	return sqlutils.SelectProcedure[models.UserAccountAndNotificationPreferences](np, sqlqueries.UserAccount.GetNotificationPreferencesModelFollowerUpdate, arg)
+}
+
 // UserAccountGetNotificationPreferencesForTaskCompleted returns a collection of
 // user accounts that should be notified when a plan task is completed
 func UserAccountGetNotificationPreferencesForTaskCompleted(

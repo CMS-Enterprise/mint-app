@@ -21,6 +21,7 @@ SELECT
     incorrect_model_status,
     mto_ready_for_review,
     mto_ready_for_review_notification_type,
+    model_follower_update,
     created_by,
     created_dts,
     modified_by,
