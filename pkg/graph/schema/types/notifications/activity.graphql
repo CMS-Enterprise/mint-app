@@ -17,6 +17,7 @@ enum ActivityType {
   INCORRECT_MODEL_STATUS
   NEW_TASK_ADDED
   TASK_COMPLETED
+  MODEL_FOLLOWER_UPDATE
 }
 
 enum DateChangeFieldType {
@@ -47,6 +48,7 @@ union ActivityMetaData =
   | IncorrectModelStatusActivityMeta
   | NewTaskAddedActivityMeta
   | TaskCompletedActivityMeta
+  | ModelFollowerUpdateActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -205,6 +207,14 @@ type NewTaskAddedActivityMeta {
   planTaskID: UUID!
   planTask: PlanTask!
   taskKey: PlanTaskKey!
+}
+
+type ModelFollowerUpdateActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  content: String!
 }
 
 """

@@ -61,6 +61,7 @@ type ResolverRoot interface {
 	MTOTemplateMilestone() MTOTemplateMilestoneResolver
 	MTOTemplateSolution() MTOTemplateSolutionResolver
 	MTOTemplateSubCategory() MTOTemplateSubCategoryResolver
+	ModelFollowerUpdateActivityMeta() ModelFollowerUpdateActivityMetaResolver
 	ModelPlan() ModelPlanResolver
 	ModelPlanAndGroup() ModelPlanAndGroupResolver
 	ModelPlanAndMTOCommonSolution() ModelPlanAndMTOCommonSolutionResolver
@@ -1042,6 +1043,14 @@ type ComplexityRoot struct {
 	ModelCountAnalyticsOverTime struct {
 		MonthYear      func(childComplexity int) int
 		NumberOfModels func(childComplexity int) int
+	}
+
+	ModelFollowerUpdateActivityMeta struct {
+		Content     func(childComplexity int) int
+		ModelPlan   func(childComplexity int) int
+		ModelPlanID func(childComplexity int) int
+		Type        func(childComplexity int) int
+		Version     func(childComplexity int) int
 	}
 
 	ModelFollowersAnalytics struct {
@@ -3004,6 +3013,9 @@ type MTOTemplateSolutionResolver interface {
 }
 type MTOTemplateSubCategoryResolver interface {
 	Milestones(ctx context.Context, obj *models.MTOTemplateSubCategory) ([]*models.MTOTemplateMilestone, error)
+}
+type ModelFollowerUpdateActivityMetaResolver interface {
+	ModelPlan(ctx context.Context, obj *models.ModelFollowerUpdateActivityMeta) (*models.ModelPlan, error)
 }
 type ModelPlanResolver interface {
 	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
@@ -7672,6 +7684,37 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.ModelCountAnalyticsOverTime.NumberOfModels(childComplexity), true
+
+	case "ModelFollowerUpdateActivityMeta.content":
+		if e.ComplexityRoot.ModelFollowerUpdateActivityMeta.Content == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdateActivityMeta.Content(childComplexity), true
+	case "ModelFollowerUpdateActivityMeta.modelPlan":
+		if e.ComplexityRoot.ModelFollowerUpdateActivityMeta.ModelPlan == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdateActivityMeta.ModelPlan(childComplexity), true
+	case "ModelFollowerUpdateActivityMeta.modelPlanID":
+		if e.ComplexityRoot.ModelFollowerUpdateActivityMeta.ModelPlanID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdateActivityMeta.ModelPlanID(childComplexity), true
+	case "ModelFollowerUpdateActivityMeta.type":
+		if e.ComplexityRoot.ModelFollowerUpdateActivityMeta.Type == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdateActivityMeta.Type(childComplexity), true
+	case "ModelFollowerUpdateActivityMeta.version":
+		if e.ComplexityRoot.ModelFollowerUpdateActivityMeta.Version == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdateActivityMeta.Version(childComplexity), true
 
 	case "ModelFollowersAnalytics.modelName":
 		if e.ComplexityRoot.ModelFollowersAnalytics.ModelName == nil {
@@ -24690,6 +24733,7 @@ enum ActivityType {
   INCORRECT_MODEL_STATUS
   NEW_TASK_ADDED
   TASK_COMPLETED
+  MODEL_FOLLOWER_UPDATE
 }
 
 enum DateChangeFieldType {
@@ -24720,6 +24764,7 @@ union ActivityMetaData =
   | IncorrectModelStatusActivityMeta
   | NewTaskAddedActivityMeta
   | TaskCompletedActivityMeta
+  | ModelFollowerUpdateActivityMeta
 
 type AddedAsCollaboratorMeta {
   version: Int!
@@ -24878,6 +24923,14 @@ type NewTaskAddedActivityMeta {
   planTaskID: UUID!
   planTask: PlanTask!
   taskKey: PlanTaskKey!
+}
+
+type ModelFollowerUpdateActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  content: String!
 }
 
 """
@@ -49226,6 +49279,130 @@ func (ec *executionContext) _ModelCountAnalyticsOverTime_numberOfModels(ctx cont
 }
 func (ec *executionContext) fieldContext_ModelCountAnalyticsOverTime_numberOfModels(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("ModelCountAnalyticsOverTime", field, false, false, errors.New("field of type Int does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdateActivityMeta_version(ctx context.Context, field graphql.CollectedField, obj *models.ModelFollowerUpdateActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdateActivityMeta_version(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Version, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v int) graphql.Marshaler {
+			return ec.marshalNInt2int(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdateActivityMeta_version(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdateActivityMeta", field, false, false, errors.New("field of type Int does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdateActivityMeta_type(ctx context.Context, field graphql.CollectedField, obj *models.ModelFollowerUpdateActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdateActivityMeta_type(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Type, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.ActivityType) graphql.Marshaler {
+			return ec.marshalNActivityType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐActivityType(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdateActivityMeta_type(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdateActivityMeta", field, false, false, errors.New("field of type ActivityType does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdateActivityMeta_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.ModelFollowerUpdateActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdateActivityMeta_modelPlanID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModelPlanID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdateActivityMeta_modelPlanID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdateActivityMeta", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdateActivityMeta_modelPlan(ctx context.Context, field graphql.CollectedField, obj *models.ModelFollowerUpdateActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdateActivityMeta_modelPlan(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.ModelFollowerUpdateActivityMeta().ModelPlan(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *models.ModelPlan) graphql.Marshaler {
+			return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdateActivityMeta_modelPlan(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelFollowerUpdateActivityMeta",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_ModelPlan(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelFollowerUpdateActivityMeta_content(ctx context.Context, field graphql.CollectedField, obj *models.ModelFollowerUpdateActivityMeta) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdateActivityMeta_content(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Content, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdateActivityMeta_content(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdateActivityMeta", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
 func (ec *executionContext) _ModelFollowersAnalytics_modelName(ctx context.Context, field graphql.CollectedField, obj *models.ModelFollowersAnalytics) (ret graphql.Marshaler) {
@@ -101614,6 +101791,11 @@ func (ec *executionContext) _ActivityMetaData(ctx context.Context, sel ast.Selec
 			return graphql.Null
 		}
 		return ec._ModelPlanSharedActivityMeta(ctx, sel, obj)
+	case *models.ModelFollowerUpdateActivityMeta:
+		if obj == nil {
+			return graphql.Null
+		}
+		return ec._ModelFollowerUpdateActivityMeta(ctx, sel, obj)
 	case *models.MTOReadyForReviewActivityMeta:
 		if obj == nil {
 			return graphql.Null
@@ -111183,6 +111365,97 @@ func (ec *executionContext) _ModelCountAnalyticsOverTime(ctx context.Context, se
 			out.Values[i] = ec._ModelCountAnalyticsOverTime_numberOfModels(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
+var modelFollowerUpdateActivityMetaImplementors = []string{"ModelFollowerUpdateActivityMeta", "ActivityMetaData"}
+
+func (ec *executionContext) _ModelFollowerUpdateActivityMeta(ctx context.Context, sel ast.SelectionSet, obj *models.ModelFollowerUpdateActivityMeta) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, modelFollowerUpdateActivityMetaImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ModelFollowerUpdateActivityMeta")
+		case "version":
+			out.Values[i] = ec._ModelFollowerUpdateActivityMeta_version(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "type":
+			out.Values[i] = ec._ModelFollowerUpdateActivityMeta_type(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._ModelFollowerUpdateActivityMeta_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "modelPlan":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelFollowerUpdateActivityMeta_modelPlan(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+		case "content":
+			out.Values[i] = ec._ModelFollowerUpdateActivityMeta_content(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))

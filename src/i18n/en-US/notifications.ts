@@ -98,6 +98,10 @@ const notifications = {
       TASK_COMPLETED: {
         text: ' marked a task as complete for {{-modelName}}.',
         cta: 'View tasks'
+      },
+      MODEL_FOLLOWER_UPDATE: {
+        text: ' sent a message about {{-modelName}}.',
+        cta: 'View message'
       }
     },
     dailyDigest: {
