@@ -13,6 +13,8 @@ type modelPlanEmails struct {
 	SuggestedPhase *emailtemplates.GenEmailTemplate[ModelPlanSuggestedPhaseSubjectContent, ModelPlanSuggestedPhaseBodyContent]
 	// The email to be sent when a custom timeline date is created for a model plan
 	CustomTimelineDateCreated *emailtemplates.GenEmailTemplate[CustomTimelineDateCreatedSubjectContent, CustomTimelineDateCreatedBodyContent]
+	// The email to be sent to followers when a model plan shares an update message
+	FollowerUpdate *emailtemplates.GenEmailTemplate[ModelFollowerUpdateSubjectContent, ModelFollowerUpdateBodyContent]
 }
 
 // ModelPlan is the collection of all model plan related email templates
@@ -41,5 +43,10 @@ var ModelPlan = modelPlanEmails{
 		CustomTimelineDateCreatedTemplateName,
 		customTimelineDateCreatedSubjectTemplate,
 		customTimelineDateCreatedBodyTemplate,
+	),
+	FollowerUpdate: NewEmailTemplate[ModelFollowerUpdateSubjectContent, ModelFollowerUpdateBodyContent](
+		ModelFollowerUpdateTemplateName,
+		modelFollowerUpdateSubjectTemplate,
+		modelFollowerUpdateBodyTemplate,
 	),
 }
