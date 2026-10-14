@@ -18,11 +18,13 @@ import { homeArticles } from './Articles';
 import ContractAssistanceSection from './ContractAssistanceSection';
 import KeyContactDirectory from './KeyContactDirectory';
 import MilestoneLibrarySection from './MilestoneLibrarySection';
+import WaiverLibrarySection from './WaiverLibrarySection';
 
 const JUMP_TO_LINKS_I18NKEYS = [
   'helpResourcesAndLinks',
   'contractAssistanceMisc:hkcJumpToLabel',
   'milestoneLibrary.hkcJumpToLabel',
+  'waiverLibraryMisc:hkcJumpToLabel',
   'operationalSolutionsAndITSystems',
   'keyContactDirectory.jumpToLabel'
 ];
@@ -168,6 +170,12 @@ export const HelpAndKnowledgeHome = () => {
 
       <div className="bg-base-lightest padding-y-6 padding-bottom-8">
         <MilestoneLibrarySection />
+
+        <GridContainer>
+          <Divider className="margin-top-5 margin-bottom-4" />
+        </GridContainer>
+
+        <WaiverLibrarySection />
 
         <GridContainer>
           <Divider className="margin-top-5 margin-bottom-4" />
