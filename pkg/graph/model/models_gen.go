@@ -337,6 +337,11 @@ type MilestoneSuggestionReasons struct {
 	Count int `json:"count"`
 }
 
+// Represents model follower update translation data
+type ModelFollowerUpdateTranslation struct {
+	Content models.TranslationField `json:"content" db:"content"`
+}
+
 // Represents Model Plan MTO Template Link translation data
 type ModelPlanMTOTemplateLinkTranslation struct {
 	ModelPlanID models.TranslationField `json:"modelPlanID" db:"model_plan_id"`

@@ -58,6 +58,7 @@ import iddocQuestionnaire, {
   iddocQuestionnaireMisc
 } from './modelPlan/iddocQuestionnaire';
 import miscellaneous from './modelPlan/miscellaneous';
+import modelFollowerUpdate from './modelPlan/modelFollowerUpdate';
 import { modelPlan, modelPlanMisc } from './modelPlan/modelPlan';
 import modelToOperations, {
   modelToOperationsMisc
@@ -166,6 +167,7 @@ const enUS = {
   mtoMilestone,
   mtoMilestoneNote,
   mtoMilestoneNoteMisc,
+  modelFollowerUpdate,
   mtoCommonMilestone,
   mtoCommonMilestoneMisc,
   mtoCommonSolutionContact,

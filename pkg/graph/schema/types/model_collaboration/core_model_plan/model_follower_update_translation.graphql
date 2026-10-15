@@ -1,0 +1,6 @@
+"""
+Represents model follower update translation data
+"""
+type ModelFollowerUpdateTranslation {
+  content: TranslationField! @goTag(key: "db", value: "content")
+}

@@ -76,6 +76,7 @@ const (
 	TNMTOMilestoneNote                 TableName = "mto_milestone_note"
 	TNKeyContact                       TableName = "key_contact"
 	TNKeyContactCategory               TableName = "key_contact_category"
+	TNModelFollowerUpdate              TableName = "model_follower_update"
 
 	/*************DEPRECATED****************/
 	TNOperationalNeed                    TableName = "operational_need"

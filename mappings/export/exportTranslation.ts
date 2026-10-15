@@ -20,6 +20,7 @@ import documentSolutionLink from '../../src/i18n/en-US/modelPlan/documentSolutio
 import existingModelLink from '../../src/i18n/en-US/modelPlan/existingModelLink';
 import generalCharacteristics from '../../src/i18n/en-US/modelPlan/generalCharacteristics';
 import iddocQuestionnaire from '../../src/i18n/en-US/modelPlan/iddocQuestionnaire';
+import modelFollowerUpdate from '../../src/i18n/en-US/modelPlan/modelFollowerUpdate';
 import modelPlan from '../../src/i18n/en-US/modelPlan/modelPlan';
 import modelPlanMtoTemplateLink from '../../src/i18n/en-US/modelPlan/modelPlanMtoTemplateLink';
 import mtoInfo from '../../src/i18n/en-US/modelPlan/modelToOperations';
@@ -78,7 +79,8 @@ export const translationSections = {
   mto_milestone_note: mtoMilestoneNote,
   custom_timeline_date: customDate,
   model_plan_mto_template_link: modelPlanMtoTemplateLink,
-  plan_task: planTaskTranslation
+  plan_task: planTaskTranslation,
+  model_follower_update: modelFollowerUpdate
 };
 
 export const parseTypscriptToJSON = (translations: any, outputFile: string) => {

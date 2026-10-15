@@ -72,6 +72,8 @@ func GetTranslation(tableName models.TableName) (Translation, error) {
 		return CustomTimelineDateTranslation()
 	case models.TNMTOMilestoneNote:
 		return MTOMilestoneNoteTranslation()
+	case models.TNModelFollowerUpdate:
+		return ModelFollowerUpdateTranslation()
 	case models.TNModelPlanMTOTemplateLink:
 		return ModelPlanMTOTemplateLinkTranslation()
 	case models.TNPlanTask:

@@ -56,6 +56,7 @@ import {
   KeyContactCategoryTranslation,
   KeyContactTranslation,
   ModelCategory,
+  ModelFollowerUpdateTranslation,
   ModelLearningSystemType,
   ModelPlanMtoTemplateLinkTranslation,
   ModelStatus,
@@ -1479,6 +1480,20 @@ export type TranslationMTOMilestoneNoteCustom = {
   [K in keyof TranslationMTOMilestoneNoteCustomGQL]: TranslationMTOMilestoneNoteCustomForm[K]; // FE form type
 };
 
+// Model Follower Update - Change History purposes only
+export type TranslationModelFollowerUpdateForm = {
+  content: TranslationFieldProperties;
+};
+
+type TranslationModelFollowerUpdateGQL = Omit<
+  ModelFollowerUpdateTranslation, // graphql gen type
+  '__typename'
+>;
+
+export type TranslationModelFollowerUpdate = {
+  [K in keyof TranslationModelFollowerUpdateGQL]: TranslationModelFollowerUpdateForm[K]; // FE form type
+};
+
 // Timeline
 export type TranslationTimelineForm = {
   completeICIP: TranslationFieldProperties;
@@ -1559,6 +1574,7 @@ export type TranslationPlan = {
   mtoSolution: TranslationMTOSolutionCustom;
   mtoCommonSolutionSystemOwner: TranslationMTOCommonSolutionSystemOwnerCustom;
   mtoMilestoneNote: TranslationMTOMilestoneNoteCustom;
+  modelFollowerUpdate: TranslationModelFollowerUpdate;
   mtoCommonMilestone: TranslationMTOCommonMilestoneCustom;
   contractAssistance: TranslationContractAssistance;
 };
@@ -1601,6 +1617,7 @@ export enum PlanSection {
   MTO_SOLUTION = 'mtoSolution',
   MTO_COMMON_SOLUTION_SYSTEM_OWNER = 'mtoCommonSolutionSystemOwner',
   MTO_MILESTONE_NOTE = 'mtoMilestoneNote',
+  MODEL_FOLLOWER_UPDATE = 'modelFollowerUpdate',
   MTO_COMMON_MILESTONE = 'mtoCommonMilestone',
   CONTRACT_ASSISTANCE = 'contractAssistance'
 }

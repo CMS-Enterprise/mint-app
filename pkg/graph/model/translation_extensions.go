@@ -303,6 +303,16 @@ func (ptt *PlanTaskTranslation) ToMap() (map[string]models.ITranslationField, er
 }
 
 // TableName returns the table name for this translation, satisfying the Translation interface
+func (t *ModelFollowerUpdateTranslation) TableName() models.TableName {
+	return models.TNModelFollowerUpdate
+}
+
+// ToMap translates this translation to a map, satisfying the Translation interface
+func (t *ModelFollowerUpdateTranslation) ToMap() (map[string]models.ITranslationField, error) {
+	return models.StructToTranslationMap(*t)
+}
+
+// TableName returns the table name for this translation, satisfying the Translation interface
 func (t *MTOMilestoneNoteTranslation) TableName() models.TableName {
 	return models.TNMTOMilestoneNote
 }

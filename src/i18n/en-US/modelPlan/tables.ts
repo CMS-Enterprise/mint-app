@@ -130,6 +130,9 @@ export const tables: Record<TableName, Omit<EnumTranslation, '__typename'>> = {
   [TableName.MTO_MILESTONE_NOTE]: {
     generalName: 'MTO milestone note'
   },
+  [TableName.MODEL_FOLLOWER_UPDATE]: {
+    generalName: 'Message to followers'
+  },
   [TableName.MTO_TEMPLATE]: {
     generalName: 'MTO template'
   },

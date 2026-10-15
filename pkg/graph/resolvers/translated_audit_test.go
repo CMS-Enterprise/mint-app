@@ -345,6 +345,36 @@ func (suite *ResolverSuite) TestTranslateAuditMilestoneSolutionLinkDeletedWhenMi
 	}
 }
 
+func (suite *ResolverSuite) TestTranslateAuditModelFollowerUpdate() {
+	plan := suite.createModelPlan("plan for model follower update audit translation")
+	suite.dangerousQueueAndTranslateAllAudits()
+
+	content := "<p>The <strong>kickoff</strong> moved to Friday</p>"
+	followerUpdate, err := storage.ModelFollowerUpdateCreate(
+		suite.testConfigs.Store,
+		models.NewModelFollowerUpdate(suite.testConfigs.Principal.Account().ID, plan.ID, content),
+	)
+	suite.NoError(err)
+	suite.NotEqual(uuid.Nil, followerUpdate.ID)
+	suite.Equal(plan.ID, followerUpdate.ModelPlanID)
+	suite.Equal(content, followerUpdate.Content)
+
+	translatedAudits := suite.dangerousQueueAndTranslateAllAudits()
+	suite.Len(translatedAudits, 1)
+
+	translatedAudit := translatedAudits[0]
+	suite.Equal(models.TNModelFollowerUpdate, translatedAudit.TableName)
+	suite.Equal(plan.ID, translatedAudit.ModelPlanID)
+	suite.Equal(followerUpdate.ID, translatedAudit.PrimaryKey)
+	suite.Equal(models.DBOpInsert, translatedAudit.Action)
+
+	suite.Len(translatedAudit.TranslatedFields, 1)
+	contentField := translatedAudit.TranslatedFields[0]
+	suite.Equal("content", contentField.FieldName)
+	suite.Equal("Model update message", contentField.FieldNameTranslated)
+	suite.Equal(content, contentField.NewTranslated)
+}
+
 // TestTranslateAuditMilestoneSolutionLinkDeletedWhenSolutionDeleted verifies that translating the audit
 // for a cascade-deleted mto_milestone_solution_link succeeds when the linked solution is deleted.
 // In this case the primary path (milestone_id → mto_milestone) is still available, so the translation

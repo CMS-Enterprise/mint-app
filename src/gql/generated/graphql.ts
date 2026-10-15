@@ -2191,6 +2191,20 @@ export type ModelCountAnalyticsOverTime = {
   numberOfModels: Scalars['Int']['output'];
 };
 
+/** ModelFollowerUpdate represents a message sent by a model team to everyone following a model plan */
+export type ModelFollowerUpdate = {
+  __typename: 'ModelFollowerUpdate';
+  content: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
 export type ModelFollowerUpdateActivityMeta = {
   __typename: 'ModelFollowerUpdateActivityMeta';
   content: Scalars['String']['output'];
@@ -2198,6 +2212,12 @@ export type ModelFollowerUpdateActivityMeta = {
   modelPlanID: Scalars['UUID']['output'];
   type: ActivityType;
   version: Scalars['Int']['output'];
+};
+
+/** Represents model follower update translation data */
+export type ModelFollowerUpdateTranslation = {
+  __typename: 'ModelFollowerUpdateTranslation';
+  content: TranslationField;
 };
 
 export type ModelFollowersAnalytics = {
@@ -2544,6 +2564,8 @@ export type Mutation = {
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
   sendFeedbackEmail: Scalars['Boolean']['output'];
+  /** SendModelFollowerUpdate saves a rich text message about a model plan and sends it to everyone following it. */
+  sendModelFollowerUpdate: ModelFollowerUpdate;
   /**
    * ShareModelPlan allows a user to share a model plan with other users.
    * if both a view filter and a section are provided, the view filter will be ignored
@@ -2949,6 +2971,13 @@ export type MutationReportAProblemArgs = {
 /** Mutations definition for the schema */
 export type MutationSendFeedbackEmailArgs = {
   input: SendFeedbackEmailInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationSendModelFollowerUpdateArgs = {
+  content: Scalars['String']['input'];
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
@@ -5603,6 +5632,7 @@ export enum TableName {
   IDDOC_QUESTIONNAIRE = 'iddoc_questionnaire',
   KEY_CONTACT = 'key_contact',
   KEY_CONTACT_CATEGORY = 'key_contact_category',
+  MODEL_FOLLOWER_UPDATE = 'model_follower_update',
   MODEL_PLAN = 'model_plan',
   MODEL_PLAN_MTO_TEMPLATE_LINK = 'model_plan_mto_template_link',
   MTO_CATEGORY = 'mto_category',

@@ -1,0 +1,11 @@
+{
+  "content": {
+    "gqlField": "content",
+    "goField": "Content",
+    "dbField": "content",
+    "label": "Model update message",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 1
+  }
+}

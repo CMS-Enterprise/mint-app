@@ -249,4 +249,6 @@ enum TableName {
 
   key_contact
   key_contact_category
+
+  model_follower_update
 }

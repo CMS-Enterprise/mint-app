@@ -171,6 +171,9 @@
   "mto_milestone_note": {
     "generalName": "MTO milestone note"
   },
+  "model_follower_update": {
+    "generalName": "Message to followers"
+  },
   "mto_template": {
     "generalName": "MTO template"
   },

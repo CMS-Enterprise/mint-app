@@ -71,7 +71,8 @@ module.exports = {
       'OperationalSolutionKey', // This is needed for the translation of the OperationalSolutionTranslation
       'CustomTimelineDateTranslation',
       'CTATRequestTranslation',
-      'PlanTaskTranslation'
+      'PlanTaskTranslation',
+      'ModelFollowerUpdateTranslation'
     ],
     'enum-values-all-caps': ['TableName']
   }

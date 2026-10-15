@@ -103,6 +103,7 @@ const changeHistory = {
     mto_info: 'model-to-operations matrix',
     mto_milestone_solution_link: 'model-to-operations matrix',
     mto_milestone_note: 'model-to-operations matrix',
+    model_follower_update: 'Messages to followers',
     model_plan_mto_template_link: 'model-to-operations matrix',
     plan_document: 'Documents',
     plan_cr: 'FFS CRs and TDLs',
