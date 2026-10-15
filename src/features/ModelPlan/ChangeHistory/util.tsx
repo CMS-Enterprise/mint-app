@@ -57,6 +57,7 @@ export type ChangeType =
   | 'operationalNeedCreate'
   | 'operationalNeedUpdate'
   | 'mtoNoteUpdate'
+  | 'followerUpdate'
   | 'standardUpdate';
 
 export type TranslationTables =
@@ -954,6 +955,10 @@ export const identifyChangeType = (change: ChangeRecordType): ChangeType => {
     return 'mtoNoteUpdate';
   }
 
+  if (change.tableName === TableName.MODEL_FOLLOWER_UPDATE) {
+    return 'followerUpdate';
+  }
+
   return 'standardUpdate';
 };
 
@@ -1046,6 +1051,9 @@ export const getHeaderText = (change: ChangeRecordType): string => {
       break;
     case 'mtoNoteUpdate':
       headerText = i18next.t('changeHistory:mtoNoteUpdate');
+      break;
+    case 'followerUpdate':
+      headerText = i18next.t('changeHistory:followerUpdate');
       break;
     default:
       break;

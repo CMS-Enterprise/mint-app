@@ -334,6 +334,36 @@ export const ChangeHeader = ({
   }
 
   // Discussion audits
+  if (changeRecordType === 'followerUpdate') {
+    const content = changeRecord.translatedFields.find(
+      field => field.fieldName === 'content'
+    )?.newTranslated;
+
+    return (
+      <>
+        <Trans
+          i18nKey={getHeaderText(changeRecord)}
+          shouldUnescape
+          values={{
+            date: formatDateUtc(changeRecord.date, 'MMMM d, yyyy'),
+            time: formatTime(changeRecord.date)
+          }}
+          components={{
+            datetime: DateSpan
+          }}
+        />
+        <div className="padding-left-4 margin-top-1">
+          <MentionTextArea
+            className="text-base-darkest margin-bottom-0"
+            id={`follower-update-${changeRecord.id}`}
+            editable={false}
+            initialContent={content}
+          />
+        </div>
+      </>
+    );
+  }
+
   if (changeRecordType === 'discussionUpdate') {
     const metaDiscussion =
       changeRecord?.metaData &&

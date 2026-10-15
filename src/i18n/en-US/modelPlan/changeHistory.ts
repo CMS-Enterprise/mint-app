@@ -79,6 +79,8 @@ const changeHistory = {
     '{{action}} a note {{inOrTo}} the model-to-operations matrix (MTO) <datetime>on {{date}} at {{time}}</datetime>',
   mtoNoteUpdateMeta:
     '{{action}} {{toForFrom}} milestone <bold>{{milestoneName}}</bold>',
+  followerUpdate:
+    'sent a message to model followers <datetime>on {{date}} at {{time}}</datetime>',
   replyCount: '{{count}} earlier reply not shown',
   replyCount_other: '{{count}} earlier replies not shown',
   discussionTopic: 'Topic: {{topic}}',

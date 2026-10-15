@@ -342,6 +342,31 @@ describe('util.tsx', () => {
     expect(identifyChangeType(change)).toBe('taskListStatusUpdate');
   });
 
+  it('identifies model follower update messages', () => {
+    const change: ChangeRecordType = {
+      __typename: 'TranslatedAudit',
+      id: '7a6b5c4d-3e2f-4a1b-9c8d-7e6f5a4b3c2d',
+      tableName: TableName.MODEL_FOLLOWER_UPDATE,
+      date: '2026-10-15T13:55:13.725192Z',
+      action: DatabaseOperation.INSERT,
+      actorName: 'MINT Doe',
+      translatedFields: [
+        {
+          fieldName: 'content',
+          old: null,
+          new: '<p>The kickoff moved to Friday</p>',
+          newTranslated: '<p>The kickoff moved to Friday</p>',
+          changeType: AuditFieldChangeType.ANSWERED
+        }
+      ] as TranslatedAuditField[]
+    };
+
+    expect(identifyChangeType(change)).toBe('followerUpdate');
+    expect(getHeaderText(change)).toBe(
+      i18next.t('changeHistory:followerUpdate')
+    );
+  });
+
   // Test for isInitialCreatedSection
   it('isInitialCreatedSection', () => {
     const change: ChangeRecordType = {
