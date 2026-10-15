@@ -1,12 +1,40 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
+import NotFound from 'features/NotFound';
+import {
+  GetAllCommonWaiversQuery,
+  useGetAllCommonWaiversQuery
+} from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
+import PageLoading from 'components/PageLoading';
+import { sortByName } from 'utils/formUtil';
+
+import WaiverCardGroup from './_components/WaivercardGroup';
+
+export type CommonWaiverData =
+  GetAllCommonWaiversQuery['commonWaivers'][number];
 
 const HKCWaiverLibrary = () => {
   const { t: waiverLibraryMiscT } = useTranslation('waiverLibraryMisc');
+
+  const {
+    data: allCommonWaivers,
+    loading,
+    error
+  } = useGetAllCommonWaiversQuery();
+
+  const sortedWaivers = useMemo(() => {
+    if (!allCommonWaivers?.commonWaivers) return [];
+
+    return [...allCommonWaivers.commonWaivers].sort(sortByName);
+  }, [allCommonWaivers]);
+
+  if (error) {
+    return <NotFound />;
+  }
 
   return (
     <GridContainer>
@@ -38,6 +66,12 @@ const HKCWaiverLibrary = () => {
           </span>
         </UswdsReactLink>
       </div>
+
+      {loading ? (
+        <PageLoading />
+      ) : (
+        <WaiverCardGroup commonWaivers={sortedWaivers} />
+      )}
     </GridContainer>
   );
 };

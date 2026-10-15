@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { GridContainer } from '@trussworks/react-uswds';
 import { useGetCommonWaiverQuery } from 'gql/generated/graphql';
 
@@ -12,26 +11,8 @@ import {
 } from 'components/DescriptionGroup';
 import ExternalLink from 'components/ExternalLink';
 import Sidepanel from 'components/Sidepanel';
-import { WaiverSelectionForm } from 'types/waivers';
 
 /** Ensures form fields exist for the selected waiver. Requires FormProvider. */
-const WaiverInfoPanelFormInitializer = ({ waiverId }: { waiverId: string }) => {
-  const { getValues, setValue } = useFormContext<WaiverSelectionForm>();
-
-  useEffect(() => {
-    const existingFields = getValues(`waivers.${waiverId}`);
-
-    if (!existingFields) {
-      setValue(`waivers.${waiverId}`, {
-        willUseWaiver: null,
-        notUsingReason: '',
-        usingReason: ''
-      });
-    }
-  }, [waiverId, getValues, setValue]);
-
-  return null;
-};
 
 /**
  * Side panel for viewing common waiver details and selecting whether to use it.
@@ -43,11 +24,6 @@ const WaiverInfoPanel = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const waiverId = searchParams.get('waiverId') ?? '';
-
-  const location = useLocation();
-  const isReadView =
-    location.pathname.includes('read-view') ||
-    location.pathname.includes('confirm-your-waiver-selections');
 
   const { data } = useGetCommonWaiverQuery({
     variables: {
@@ -87,9 +63,6 @@ const WaiverInfoPanel = () => {
       closeModal={closeModal}
       modalHeading={t('waiverInfoPanel.heading')}
     >
-      {!isReadView && waiverId && (
-        <WaiverInfoPanelFormInitializer waiverId={waiverId} />
-      )}
       <GridContainer className="padding-y-6 padding-x-8">
         <div className="maxw-mobile-lg">
           <div className="border-bottom-1px border-base-light margin-bottom-4">
