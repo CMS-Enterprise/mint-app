@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WaiverLibrarySection > matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    id="waiver-library"
+    style="scroll-margin-top: 3.5rem;"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <h2
+        class="margin-0"
+      >
+        Waiver library
+      </h2>
+      <p
+        class="margin-top-1 margin-bottom-3 font-body-md line-height-sans-4"
+      >
+        CMMI Leadership assumes that new models will use program and payment waivers unless justified otherwise. You may use this waiver library to browse and learn more about the waivers available for model teams. MINT also includes a mandatory survey helps determine which models will use which waivers, which specific waivers are most appropriate for each model, ensures proper justification for waiver selections, and identifies instances where standard CMS authorities may be insufficient without additional waiver flexibility.
+      </p>
+      <a
+        class="usa-button text-white"
+        data-discover="true"
+        href="/help-and-knowledge/waiver-library?page=1"
+      >
+        View waiver library
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;
