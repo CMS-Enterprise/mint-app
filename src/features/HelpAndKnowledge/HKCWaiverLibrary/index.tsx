@@ -51,7 +51,7 @@ const HKCWaiverLibrary = () => {
         {waiverLibraryMiscT('description')}
       </p>
 
-      <div className="margin-bottom-6">
+      <div className="margin-bottom-5">
         <UswdsReactLink
           to="/help-and-knowledge"
           data-testid="return-to-hkc"
