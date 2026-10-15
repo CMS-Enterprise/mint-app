@@ -27,6 +27,7 @@
   "cypress/e2e/payments.spec.js": 24,
   "cypress/e2e/prepareForClearance.spec.js": 14,
   "cypress/e2e/reportsAndAnalytics.js": 10,
+  "cypress/e2e/sendMessageToFollowers.spec.js": 12,
   "cypress/e2e/tasks.spec.js": 14,
   "cypress/e2e/timeline.spec.js": 9,
   "cypress/e2e/unfollow.spec.js": 9,

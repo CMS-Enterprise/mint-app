@@ -7016,6 +7016,14 @@ export type SearchOktaUsersQueryVariables = Exact<{
 
 export type SearchOktaUsersQuery = { __typename: 'Query', searchOktaUsers: Array<{ __typename: 'UserInfo', displayName: string, username: string, email: string }> };
 
+export type SendModelFollowerUpdateMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type SendModelFollowerUpdateMutation = { __typename: 'Mutation', sendModelFollowerUpdate: { __typename: 'ModelFollowerUpdate', id: UUID, modelPlanID: UUID, content: string } };
+
 export type UpdateModelPlanMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
   changes: ModelPlanChanges;
@@ -14447,6 +14455,42 @@ export type SearchOktaUsersQueryHookResult = ReturnType<typeof useSearchOktaUser
 export type SearchOktaUsersLazyQueryHookResult = ReturnType<typeof useSearchOktaUsersLazyQuery>;
 export type SearchOktaUsersSuspenseQueryHookResult = ReturnType<typeof useSearchOktaUsersSuspenseQuery>;
 export type SearchOktaUsersQueryResult = Apollo.QueryResult<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>;
+export const SendModelFollowerUpdateDocument = gql`
+    mutation SendModelFollowerUpdate($modelPlanID: UUID!, $content: String!) {
+  sendModelFollowerUpdate(modelPlanID: $modelPlanID, content: $content) {
+    id
+    modelPlanID
+    content
+  }
+}
+    `;
+export type SendModelFollowerUpdateMutationFn = Apollo.MutationFunction<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>;
+
+/**
+ * __useSendModelFollowerUpdateMutation__
+ *
+ * To run a mutation, you first call `useSendModelFollowerUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendModelFollowerUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendModelFollowerUpdateMutation, { data, loading, error }] = useSendModelFollowerUpdateMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useSendModelFollowerUpdateMutation(baseOptions?: Apollo.MutationHookOptions<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>(SendModelFollowerUpdateDocument, options);
+      }
+export type SendModelFollowerUpdateMutationHookResult = ReturnType<typeof useSendModelFollowerUpdateMutation>;
+export type SendModelFollowerUpdateMutationResult = Apollo.MutationResult<SendModelFollowerUpdateMutation>;
+export type SendModelFollowerUpdateMutationOptions = Apollo.BaseMutationOptions<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>;
 export const UpdateModelPlanDocument = gql`
     mutation UpdateModelPlan($id: UUID!, $changes: ModelPlanChanges!) {
   updateModelPlan(id: $id, changes: $changes) {
@@ -20104,6 +20148,7 @@ export const TypedGetModelPlansByComponentGroupDocument = {"kind":"Document","de
 export const TypedGetNewlyCreatedModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNewlyCreatedModelPlans"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"EnumValue","value":"NEWLY_CREATED"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"abbreviation"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"discussions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"topic"}}]}}]}}]}}]} as unknown as DocumentNode<GetNewlyCreatedModelPlansQuery, GetNewlyCreatedModelPlansQueryVariables>;
 export const TypedGetUserInfoDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUserInfo"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"username"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"username"},"value":{"kind":"Variable","name":{"kind":"Name","value":"username"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]} as unknown as DocumentNode<GetUserInfoQuery, GetUserInfoQueryVariables>;
 export const TypedSearchOktaUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchOktaUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"searchOktaUsers"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"searchTerm"},"value":{"kind":"Variable","name":{"kind":"Name","value":"searchTerm"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<SearchOktaUsersQuery, SearchOktaUsersQueryVariables>;
+export const TypedSendModelFollowerUpdateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendModelFollowerUpdate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendModelFollowerUpdate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>;
 export const TypedUpdateModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanMutation, UpdateModelPlanMutationVariables>;
 export const TypedGetLockedModelPlanSectionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetLockedModelPlanSections"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockableSectionLocks"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"section"}},{"kind":"Field","name":{"kind":"Name","value":"lockedByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"isAssessment"}}]}}]}}]} as unknown as DocumentNode<GetLockedModelPlanSectionsQuery, GetLockedModelPlanSectionsQueryVariables>;
 export const TypedLockModelPlanSectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LockModelPlanSection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"section"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"LockableSection"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lockLockableSection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"section"},"value":{"kind":"Variable","name":{"kind":"Name","value":"section"}}}]}]}}]} as unknown as DocumentNode<LockModelPlanSectionMutation, LockModelPlanSectionMutationVariables>;

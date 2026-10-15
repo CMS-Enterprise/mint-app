@@ -10,20 +10,16 @@ import {
   Icon,
   Label
 } from '@trussworks/react-uswds';
+import { useSendModelFollowerUpdateMutation } from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import HelpText from 'components/HelpText';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RichTextEditor from 'components/RichTextEditor';
+import toastSuccess from 'components/ToastSuccess';
 
-type SendMessageToFollowersProps = {
-  onSend?: (content: string) => void;
-};
-
-const SendMessageToFollowers = ({
-  onSend = () => {}
-}: SendMessageToFollowersProps) => {
+const SendMessageToFollowers = () => {
   const { t } = useTranslation('collaborationArea');
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
@@ -31,12 +27,27 @@ const SendMessageToFollowers = ({
   const [content, setContent] = useState<string>('');
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
 
+  const [sendModelFollowerUpdate, { loading }] =
+    useSendModelFollowerUpdateMutation();
+
   const collaborationAreaPath = `/models/${modelID}/collaboration-area`;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (isEmpty) return;
-    onSend(content);
+    if (isEmpty || loading) return;
+
+    sendModelFollowerUpdate({
+      variables: { modelPlanID: modelID, content }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          toastSuccess(t('sendMessageToFollowers.success'), {
+            id: 'send-message-to-followers-success'
+          });
+          navigate(collaborationAreaPath);
+        }
+      })
+      .catch(() => {});
   };
 
   const returnLink = (
@@ -115,7 +126,7 @@ const SendMessageToFollowers = ({
             <Button
               type="submit"
               className="margin-top-6 margin-bottom-2"
-              disabled={isEmpty}
+              disabled={isEmpty || loading}
             >
               {t('sendMessageToFollowers.sendMessage')}
             </Button>

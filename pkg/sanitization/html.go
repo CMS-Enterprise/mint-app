@@ -42,7 +42,7 @@ func createHTMLPolicy() *bluemonday.Policy {
 
 	policy := bluemonday.NewPolicy()
 	// NOTE make sure to update the allowed policy on the frontend when it is updated here as well
-	policy.AllowElements("p", "br", "strong", "em", "ol", "ul", "li", "a")
+	policy.AllowElements("p", "br", "strong", "em", "u", "ol", "ul", "li", "a")
 
 	// Rules for links
 	// if not included, this will be added to all links rel="nofollow noreferrer noopener"
