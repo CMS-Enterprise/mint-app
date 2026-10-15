@@ -16,13 +16,19 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 2rem;
-    height: 2rem;
+    min-width: 2.5rem;
+    height: 2.5rem;
     padding: 0 .5rem;
     border: 0;
     background: transparent;
     color: color('ink');
     cursor: pointer;
+
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      fill: currentColor;
+    }
 
     &:hover {
       background-color: color('base-lightest');
@@ -35,14 +41,16 @@
 
   &__divider {
     width: 1px;
-    height: 1.5rem;
+    height: 1.75rem;
     margin: 0 .25rem;
     background-color: color('base-lighter');
   }
 
+  // Overrides the global `.tiptap` border from MentionTextArea, which TipTap applies to every editor
   &__content .ProseMirror {
     min-height: 8rem;
     padding: .5rem;
+    border: 0;
     outline: none;
 
     p {

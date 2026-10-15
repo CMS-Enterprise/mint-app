@@ -7,7 +7,12 @@ import {
   useEditorState
 } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { Icon } from '@trussworks/react-uswds';
+import { ReactComponent as BoldIcon } from '@uswds/uswds/img/material-icons/format_bold.svg';
+import { ReactComponent as ItalicIcon } from '@uswds/uswds/img/material-icons/format_italic.svg';
+import { ReactComponent as BulletListIcon } from '@uswds/uswds/img/material-icons/format_list_bulleted.svg';
+import { ReactComponent as OrderedListIcon } from '@uswds/uswds/img/material-icons/format_list_numbered.svg';
+import { ReactComponent as UnderlineIcon } from '@uswds/uswds/img/material-icons/format_underlined.svg';
+import { ReactComponent as LinkIcon } from '@uswds/uswds/img/material-icons/link.svg';
 import classNames from 'classnames';
 
 import './index.scss';
@@ -86,21 +91,21 @@ const Toolbar = ({ editor }: { editor: Editor }) => {
         isActive={state.bold}
         onClick={() => editor.chain().focus().toggleBold().run()}
       >
-        <strong aria-hidden>B</strong>
+        <BoldIcon aria-hidden />
       </ToolbarButton>
       <ToolbarButton
         label={t('italic')}
         isActive={state.italic}
         onClick={() => editor.chain().focus().toggleItalic().run()}
       >
-        <em aria-hidden>I</em>
+        <ItalicIcon aria-hidden />
       </ToolbarButton>
       <ToolbarButton
         label={t('underline')}
         isActive={state.underline}
         onClick={() => editor.chain().focus().toggleUnderline().run()}
       >
-        <u aria-hidden>U</u>
+        <UnderlineIcon aria-hidden />
       </ToolbarButton>
 
       <span className="mint-rich-text-editor__divider" aria-hidden />
@@ -110,16 +115,14 @@ const Toolbar = ({ editor }: { editor: Editor }) => {
         isActive={state.bulletList}
         onClick={() => editor.chain().focus().toggleBulletList().run()}
       >
-        <Icon.List aria-hidden />
+        <BulletListIcon aria-hidden />
       </ToolbarButton>
       <ToolbarButton
         label={t('orderedList')}
         isActive={state.orderedList}
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
       >
-        <span aria-hidden className="text-bold">
-          1.
-        </span>
+        <OrderedListIcon aria-hidden />
       </ToolbarButton>
 
       <span className="mint-rich-text-editor__divider" aria-hidden />
@@ -129,7 +132,7 @@ const Toolbar = ({ editor }: { editor: Editor }) => {
         isActive={state.link}
         onClick={toggleLink}
       >
-        <Icon.Link aria-hidden />
+        <LinkIcon aria-hidden />
       </ToolbarButton>
     </div>
   );
