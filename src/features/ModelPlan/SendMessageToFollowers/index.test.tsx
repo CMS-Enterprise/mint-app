@@ -2,6 +2,7 @@ import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { stubProseMirrorLayout } from 'tests/util';
 
 import SendMessageToFollowers from './index';
 
@@ -28,15 +29,7 @@ const renderPage = (onSend = vi.fn()) => {
 
 describe('SendMessageToFollowers', () => {
   beforeAll(() => {
-    // jsdom does not implement layout APIs that ProseMirror reads while typing
-    const emptyRects = () => ({
-      length: 0,
-      item: () => null,
-      [Symbol.iterator]: () => [][Symbol.iterator]()
-    });
-    Range.prototype.getClientRects = emptyRects as () => DOMRectList;
-    Range.prototype.getBoundingClientRect = () => new DOMRect();
-    document.elementFromPoint = () => null;
+    stubProseMirrorLayout();
   });
 
   it('renders the page copy and a disabled send button', async () => {
@@ -82,6 +75,24 @@ describe('SendMessageToFollowers', () => {
     await user.click(sendButton);
 
     expect(onSend).toHaveBeenCalledWith('<p>Model update</p>');
+  });
+
+  it('disables send again when the message is cleared', async () => {
+    const user = userEvent.setup();
+    renderPage();
+
+    const editor = await screen.findByRole('textbox', {
+      name: /Model update message/
+    });
+    await user.click(editor);
+    await user.keyboard('Model update');
+
+    const sendButton = screen.getByRole('button', { name: 'Send message' });
+    await waitFor(() => expect(sendButton).not.toBeDisabled());
+
+    await user.keyboard('{Control>}a{/Control}{Backspace}');
+
+    await waitFor(() => expect(sendButton).toBeDisabled());
   });
 
   it('returns to the collaboration area', async () => {
