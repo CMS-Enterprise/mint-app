@@ -102,9 +102,13 @@ exports[`HKC Waiver library Component > renders correctly and matches snapshot 1
                   class="usa-card__header"
                   data-testid="CardHeader"
                 >
-                  Medicare payment waiver
+                  <p
+                    class="line-height-body-1 font-body-sm text-base-dark margin-bottom-05"
+                  >
+                    Medicare payment waiver
+                  </p>
                   <h3
-                    class="line-height-normal margin-top-05"
+                    class="line-height-normal margin-0"
                   >
                     short Waiver 2
                   </h3>
@@ -113,7 +117,9 @@ exports[`HKC Waiver library Component > renders correctly and matches snapshot 1
                   class="usa-card__body waiver-card__body padding-y-0 flex-1 overflow-hidden"
                   data-testid="CardBody"
                 >
-                  <p>
+                  <p
+                    class="text-base-dark"
+                  >
                     Description of Waiver 2
                   </p>
                 </div>
@@ -130,7 +136,7 @@ exports[`HKC Waiver library Component > renders correctly and matches snapshot 1
                   </button>
                   <svg
                     aria-label="forward"
-                    class="usa-icon margin-left-1"
+                    class="usa-icon margin-left-1 text-primary"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -162,9 +168,13 @@ exports[`HKC Waiver library Component > renders correctly and matches snapshot 1
                   class="usa-card__header"
                   data-testid="CardHeader"
                 >
-                  Medicaid waiver
+                  <p
+                    class="line-height-body-1 font-body-sm text-base-dark margin-bottom-05"
+                  >
+                    Medicaid waiver
+                  </p>
                   <h3
-                    class="line-height-normal margin-top-05"
+                    class="line-height-normal margin-0"
                   >
                     super long survey name Waiver 1
                   </h3>
@@ -173,7 +183,9 @@ exports[`HKC Waiver library Component > renders correctly and matches snapshot 1
                   class="usa-card__body waiver-card__body padding-y-0 flex-1 overflow-hidden"
                   data-testid="CardBody"
                 >
-                  <p>
+                  <p
+                    class="text-base-dark"
+                  >
                     Description of Waiver 1
                   </p>
                 </div>
@@ -190,7 +202,7 @@ exports[`HKC Waiver library Component > renders correctly and matches snapshot 1
                   </button>
                   <svg
                     aria-label="forward"
-                    class="usa-icon margin-left-1"
+                    class="usa-icon margin-left-1 text-primary"
                     focusable="false"
                     height="1em"
                     role="img"
@@ -222,9 +234,13 @@ exports[`HKC Waiver library Component > renders correctly and matches snapshot 1
                   class="usa-card__header"
                   data-testid="CardHeader"
                 >
-                  Medicare program waiver
+                  <p
+                    class="line-height-body-1 font-body-sm text-base-dark margin-bottom-05"
+                  >
+                    Medicare program waiver
+                  </p>
                   <h3
-                    class="line-height-normal margin-top-05"
+                    class="line-height-normal margin-0"
                   >
                     Waiver 3
                   </h3>
@@ -233,7 +249,9 @@ exports[`HKC Waiver library Component > renders correctly and matches snapshot 1
                   class="usa-card__body waiver-card__body padding-y-0 flex-1 overflow-hidden"
                   data-testid="CardBody"
                 >
-                  <p>
+                  <p
+                    class="text-base-dark"
+                  >
                     Description of Waiver 3
                   </p>
                 </div>
@@ -250,7 +268,7 @@ exports[`HKC Waiver library Component > renders correctly and matches snapshot 1
                   </button>
                   <svg
                     aria-label="forward"
-                    class="usa-icon margin-left-1"
+                    class="usa-icon margin-left-1 text-primary"
                     focusable="false"
                     height="1em"
                     role="img"

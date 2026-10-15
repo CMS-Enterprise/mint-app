@@ -39,13 +39,15 @@ const WaiverCard = ({ waiver }: { waiver: CommonWaiverData }) => {
       style={{ height: '260px' }}
     >
       <CardHeader>
-        {waiverAssessmentSurveyMiscT(`${waiver.waiverType}.shortName`)}
+        <p className="line-height-body-1 font-body-sm text-base-dark margin-bottom-05">
+          {waiverAssessmentSurveyMiscT(`${waiver.waiverType}.shortName`)}
+        </p>
 
-        <h3 className="line-height-normal margin-top-05">{waiver.name}</h3>
+        <h3 className="line-height-normal margin-0">{waiver.name}</h3>
       </CardHeader>
 
       <CardBody className="waiver-card__body padding-y-0 flex-1 overflow-hidden">
-        <p>{waiver.description}</p>
+        <p className="text-base-dark">{waiver.description}</p>
       </CardBody>
 
       <CardFooter className="padding-3 display-flex flex-align-center">
@@ -58,7 +60,10 @@ const WaiverCard = ({ waiver }: { waiver: CommonWaiverData }) => {
           {waiverLibraryMiscT('learnAbout')}
         </Button>
 
-        <Icon.ArrowForward className="margin-left-1" aria-label="forward" />
+        <Icon.ArrowForward
+          className="margin-left-1 text-primary"
+          aria-label="forward"
+        />
       </CardFooter>
     </Card>
   );
