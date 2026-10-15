@@ -33,6 +33,7 @@ import keyContactCategory, {
 import mtoCommonMilestone, {
   mtoCommonMilestoneMisc
 } from './helpAndKnowledge/mtoCommonMilestone';
+import waiverLibraryMisc from './helpAndKnowledge/waiverLibrary';
 import adminActions from './home/adminActions';
 import customHome from './home/customHome';
 import homepageSettings from './home/settings';
@@ -229,6 +230,7 @@ const enUS = {
   usingSolutionsAndITSystemsTable,
   usingTableActions,
   usingMilestoneLibrary,
+  waiverLibraryMisc,
   usingSolutionLibrary,
   addCustomMilestone,
   addCustomSolution,
