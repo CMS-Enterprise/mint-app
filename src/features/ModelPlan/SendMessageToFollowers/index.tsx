@@ -61,8 +61,8 @@ const SendMessageToFollowers = ({
           customItem={t('sendMessageToFollowers.breadcrumb')}
         />
 
-        <Grid desktop={{ col: 8 }}>
-          <PageHeading className="margin-top-4 margin-bottom-1">
+        <Grid desktop={{ col: 12 }}>
+          <PageHeading className="margin-top-4 margin-bottom-0">
             {t('sendMessageToFollowers.heading')}
           </PageHeading>
 
@@ -79,7 +79,8 @@ const SendMessageToFollowers = ({
               components={{ s: <span className="text-error" /> }}
             />
           </p>
-
+        </Grid>
+        <Grid desktop={{ col: 8 }}>
           <Form
             className="maxw-none"
             onSubmit={handleSubmit}
@@ -95,10 +96,7 @@ const SendMessageToFollowers = ({
                 {t('sendMessageToFollowers.messageLabel')}
               </Label>
 
-              <HelpText
-                id="follower-message-help-text"
-                className="margin-top-1"
-              >
+              <HelpText id="follower-message-help-text">
                 {t('sendMessageToFollowers.messageHelpText')}
               </HelpText>
 
