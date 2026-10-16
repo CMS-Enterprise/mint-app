@@ -9,6 +9,16 @@ const waiverLibraryMisc = {
   returnToHkc: 'Return to Help and Knowledge Center',
   learnAbout: 'Learn about this waiver',
   waivers: 'waivers',
+  filters: {
+    resultsCount: '<bold>{{-count}}</bold> result',
+    resultsCount_other: '<bold>{{-count}}</bold> results',
+    forSearch: 'for "{{query}}"',
+    noResults: {
+      heading: 'There are no waivers that match your search.',
+      content:
+        'Please double-check your search and try again. If you’re searching for a waiver that you believe should be a part of MINT, please contact the MINT Team at <email>MINTTeam@cms.hhs.gov</email>.'
+    }
+  },
   filterOptions: {
     type: {
       label: 'By waiver type',

@@ -1,5 +1,6 @@
 import { CommonWaiverFilters } from 'features/HelpAndKnowledge/HKCWaiverLibrary/_components/WaivercardGroup';
 import { getArrayFromParams } from 'features/ModelPlan/ModelToOperations/_components/MTOTableFilters/_utils';
+import i18next from 'i18next';
 
 import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
 
@@ -35,9 +36,33 @@ export const buildSearchParamsFromFilters = (
   return newParams;
 };
 
+export const searchCommonWaivers = (
+  searchQuery: string,
+  commonWaivers: CommonWaiverData[]
+) => {
+  if (!searchQuery) return commonWaivers;
+
+  const query = searchQuery.trim().toLowerCase();
+
+  return commonWaivers.filter(waiver => {
+    const isNameMatch = waiver.name.toLowerCase().includes(query);
+
+    const isTypeMatch =
+      waiver.waiverType &&
+      i18next
+        .t(`waiverAssessmentSurveyMisc:${waiver.waiverType}.heading`)
+        .toLowerCase()
+        .includes(query);
+
+    const isDescriptionMatch = waiver.description.toLowerCase().includes(query);
+
+    return isNameMatch || isTypeMatch || isDescriptionMatch;
+  });
+};
+
 export const filterCommonWaivers = (
-  commonWaivers: CommonWaiverData[],
-  appliedFilters: CommonWaiverFilters
+  appliedFilters: CommonWaiverFilters,
+  commonWaivers: CommonWaiverData[]
 ) => {
   return commonWaivers.filter(commonWaiver => {
     const isTypeMatch =

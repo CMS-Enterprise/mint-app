@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useMemo, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { CardGroup, Grid } from '@trussworks/react-uswds';
 import WaiverInfoPanel from 'features/ModelPlan/AdditionalQuestionnaires/WaiverAssessmentSurvey/_components/WaiverInfoPanel';
@@ -9,15 +9,14 @@ import FilterButtonWithModal from 'components/FilterButtonWithModal';
 import FilterTags from 'components/FilterTags';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePageSize from 'components/TablePageSize';
-import TableResults from 'components/TableResults';
 import usePagination from 'hooks/usePagination';
-import useSearchSortPagination from 'hooks/useSearchSortPagination';
 
 import type { CommonWaiverData } from '../..';
 import {
   buildSearchParamsFromFilters,
   filterCommonWaivers,
-  parseAppliedFilters
+  parseAppliedFilters,
+  searchCommonWaivers
 } from '../CommonWaiverFilters/_utils';
 import getCommonWaiverFilters from '../CommonWaiverFilters/getCommonWaiverFilters';
 import WaiverCard from '../WaiverCard';
@@ -37,29 +36,13 @@ const WaiverCardGroup = ({
 }) => {
   const { t: waiverLibraryMiscT } = useTranslation('waiverLibraryMisc');
 
+  const [query, setQuery] = useState('');
+
+  const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEMS_PER_PAGE);
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const activeWaiverId = searchParams.get('waiverId');
-
-  const { allItems, search, pageSize } = useSearchSortPagination<
-    CommonWaiverData,
-    any
-  >({
-    items: commonWaivers,
-    filterFunction: useMemo(() => () => [], []),
-    sortFunction: (items: CommonWaiverData[], sort: any) => items,
-    sortOptions: [
-      {
-        value: '',
-        label: ''
-      }
-    ],
-    defaultItemsPerPage: DEFAULT_ITEMS_PER_PAGE
-  });
-
-  const { itemsPerPage, setItemsPerPage } = pageSize;
-
-  const { query, setQuery, rowLength } = search;
 
   const appliedFilters = useMemo(
     () => parseAppliedFilters(searchParams),
@@ -80,20 +63,26 @@ const WaiverCardGroup = ({
     filterArray => filterArray.length > 0
   );
 
-  const filteredCommonWaivers = useMemo(() => {
-    if (!hasActiveFilters) {
-      return commonWaivers;
+  const filteredSearchedCommonWaivers = useMemo(() => {
+    let result = commonWaivers;
+
+    if (hasActiveFilters) {
+      result = filterCommonWaivers(appliedFilters, result);
     }
 
-    return filterCommonWaivers(commonWaivers, appliedFilters);
-  }, [commonWaivers, hasActiveFilters, appliedFilters]);
+    if (query) {
+      result = searchCommonWaivers(query, result);
+    }
+
+    return result;
+  }, [commonWaivers, hasActiveFilters, appliedFilters, query]);
 
   const {
     currentItems,
     Pagination: PaginationComponent,
     pagination: { currentPage, pageCount }
   } = usePagination<CommonWaiverData[]>({
-    items: filteredCommonWaivers,
+    items: filteredSearchedCommonWaivers,
     itemsPerPage,
     withQueryParams: 'page',
     showPageIfOne: true
@@ -105,7 +94,6 @@ const WaiverCardGroup = ({
 
       {/* Filter and Search */}
       <div className="margin-bottom-3">
-        {/* <Grid row> */}
         <Grid className="display-flex flex-wrap flex-align-center margin-bottom-3">
           <FilterButtonWithModal
             className="margin-right-1"
@@ -127,22 +115,25 @@ const WaiverCardGroup = ({
           filters={filterOptions}
           appliedFilters={appliedFilters}
           setAppliedFilters={setAppliedFilters}
-          className="margin-top-2"
         />
 
-        {!!query && (
-          <Grid desktop={{ col: 12 }}>
-            <TableResults
-              globalFilter={query}
-              pageIndex={currentPage - 1}
-              pageSize={itemsPerPage}
-              filteredRowLength={rowLength}
-              rowLength={allItems.length}
-              showAlert={false}
-            />
-          </Grid>
+        {(query || hasActiveFilters) && (
+          <div className="margin-top-3">
+            <span>
+              <Trans
+                i18nKey="waiverLibraryMisc:filters.resultsCount"
+                values={{ count: filteredSearchedCommonWaivers.length }}
+                components={{
+                  bold: <span className="text-bold" />
+                }}
+              />{' '}
+              {query &&
+                waiverLibraryMiscT('filters.forSearch', {
+                  query
+                })}
+            </span>
+          </div>
         )}
-        {/* </Grid> */}
       </div>
 
       {/* Waiver Cards */}
