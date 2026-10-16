@@ -114,6 +114,7 @@ import landing from './landing';
 import nda from './nda';
 import notifications from './notifications';
 import privacyPolicy from './privacyPolicy';
+import richTextEditor from './richTextEditor';
 import routes from './routes';
 import tableAndPagination from './tableAndPagination';
 import termsAndConditions from './termsAndConditions';
@@ -138,6 +139,7 @@ const enUS = {
   modelSummary,
   nda,
   notifications,
+  richTextEditor,
   routes,
   // New Translation
   modelPlan,

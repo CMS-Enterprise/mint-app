@@ -34,6 +34,7 @@ import ModelPlan from 'features/ModelPlan/ModelPlanOverview';
 import { modelToOperationsRoutes } from 'features/ModelPlan/ModelToOperations';
 import NewPlan from 'features/ModelPlan/NewPlan';
 import { readViewRoutes } from 'features/ModelPlan/ReadOnly';
+import SendMessageToFollowers from 'features/ModelPlan/SendMessageToFollowers';
 import Status from 'features/ModelPlan/Status';
 import StepsOverview from 'features/ModelPlan/StepsOverview';
 import TaskList from 'features/ModelPlan/TaskList';
@@ -314,6 +315,14 @@ const router = createBrowserRouter([
         )
       },
       collaboratorsRoutes,
+      {
+        path: '/models/:modelID/collaboration-area/send-message-to-followers',
+        element: (
+          <ProtectedRoute>
+            <SendMessageToFollowers />
+          </ProtectedRoute>
+        )
+      },
       {
         path: '/models/:modelID/collaboration-area/status',
         element: (
