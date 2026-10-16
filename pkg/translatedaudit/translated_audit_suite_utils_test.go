@@ -112,7 +112,7 @@ func (suite *TAuditSuite) createPlanCR(modelPlanID uuid.UUID, idNumber string, p
 		preHook(planCR)
 	}
 
-	cr, err := suite.testConfigs.Store.PlanCRCreate(suite.testConfigs.Logger, planCR)
+	cr, err := storage.PlanCRCreate(suite.testConfigs.Store, suite.testConfigs.Logger, planCR)
 	suite.NoError(err)
 
 	return cr
@@ -132,7 +132,7 @@ func (suite *TAuditSuite) createPlanTDL(modelPlanID uuid.UUID, idNumber string, 
 		preHook(planTDL)
 	}
 
-	tdl, err := suite.testConfigs.Store.PlanTDLCreate(suite.testConfigs.Logger, planTDL)
+	tdl, err := storage.PlanTDLCreate(suite.testConfigs.Store, suite.testConfigs.Logger, planTDL)
 	suite.NoError(err)
 
 	return tdl

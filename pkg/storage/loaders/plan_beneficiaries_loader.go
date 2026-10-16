@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetPlanBeneficiariesByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Plan Beneficiaries in one query
@@ -26,7 +27,7 @@ func (loaders *DataLoaders) GetPlanBeneficiariesByModelPlanID(ctx context.Contex
 		logger.Error("issue converting keys to JSON for data loader in Plan Beneficiaries", zap.Error(*err))
 	}
 
-	benes, _ := dr.Store.PlanBeneficiariesGetByModelPlanIDLOADER(logger, marshaledParams)
+	benes, _ := storage.PlanBeneficiariesGetByModelPlanIDLOADER(dr.Store, logger, marshaledParams)
 	benesByID := lo.Associate(benes, func(gc *models.PlanBeneficiaries) (string, *models.PlanBeneficiaries) {
 		return gc.ModelPlanID.String(), gc
 	})

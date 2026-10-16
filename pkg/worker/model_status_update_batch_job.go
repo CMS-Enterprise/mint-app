@@ -11,6 +11,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
 	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 var modelStatusUpdateJobMaxRetry = 2
@@ -28,7 +29,7 @@ func (w *Worker) ModelStatusUpdateBatchJob(ctx context.Context, args ...interfac
 	logger.Info("Getting collection of model plans that require status checking")
 
 	// TODO: Implement the logic to return the models to check? Or do we check every model plan?
-	modelsToUpdate, err := w.Store.ModelPlanCollection(logger, false)
+	modelsToUpdate, err := storage.ModelPlanCollection(w.Store, logger, false)
 	if err != nil {
 		logger.ErrorOrWarn("unable to get model plan collection for the model status update batch job", zap.Error(err))
 		return err

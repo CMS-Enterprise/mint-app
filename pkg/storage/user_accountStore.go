@@ -73,14 +73,15 @@ func UserAccountGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*authenticatio
 }
 
 // UserAccountGetByIDLOADER gets multiple User account from the database by its internal id.
-func (s *Store) UserAccountGetByIDLOADER(
+func UserAccountGetByIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	paramTableJSON string,
 ) ([]*authentication.UserAccount, error) {
 
 	var userSlice []*authentication.UserAccount
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.UserAccount.GetByIDLOADER)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetByIDLOADER)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +172,8 @@ func UserAccountUpdateByUserName(np sqlutils.NamedPreparer, userAccount *authent
 
 // UserAccountsGetNotificationRecipientsForDatesChanged returns a collection of
 // user accounts that should be notified of a change in model plan dates
-func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
+func UserAccountsGetNotificationRecipientsForDatesChanged(
+	np sqlutils.NamedPreparer,
 	modelPlanID uuid.UUID,
 ) (
 	[]*models.UserAccountAndNotificationPreferences,
@@ -179,7 +181,7 @@ func (s *Store) UserAccountsGetNotificationRecipientsForDatesChanged(
 ) {
 	var recipients []*models.UserAccountAndNotificationPreferences
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.UserAccount.GetNotificationRecipientsDatesChanged)
+	stmt, err := np.PrepareNamed(sqlqueries.UserAccount.GetNotificationRecipientsDatesChanged)
 	if err != nil {
 		return nil, err
 	}

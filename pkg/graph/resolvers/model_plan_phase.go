@@ -150,7 +150,7 @@ func GetEmailsForModelStatusAlert[T logging.ChainableErrorOrWarnLogger[T]](
 	modelPlanID uuid.UUID,
 ) ([]string, error) {
 	// Get the collaborators for the model plan
-	planCollaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+	planCollaborators, err := storage.PlanCollaboratorGetByModelPlanID(store, logger, modelPlanID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get plan collaborators: %w", err)
 	}
@@ -198,7 +198,7 @@ func GetCollaboratorUUIDsForModelStatusAlert(
 	store *storage.Store,
 	modelPlanID uuid.UUID,
 ) ([]uuid.UUID, error) {
-	planCollaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+	planCollaborators, err := storage.PlanCollaboratorGetByModelPlanID(store, logger, modelPlanID)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get plan collaborators: %w", err)
 	}
@@ -226,7 +226,7 @@ func sendInAppNotificationForPhaseSuggestion[T logging.ChainableErrorOrWarnLogge
 	}
 
 	isLeadfunc := func(user_id uuid.UUID) (bool, error) {
-		collaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+		collaborators, err := storage.PlanCollaboratorGetByModelPlanID(store, logger, modelPlanID)
 		if err != nil {
 			return false, err
 		}
@@ -307,7 +307,7 @@ func TryNotificationSendIncorrectModelStatus[T logging.ChainableErrorOrWarnLogge
 		return err
 	}
 
-	planTimeline, err := store.PlanTimelineGetByModelPlanID(modelPlanID)
+	planTimeline, err := storage.PlanTimelineGetByModelPlanID(store, modelPlanID)
 	if err != nil {
 		return err
 	}

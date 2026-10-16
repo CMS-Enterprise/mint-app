@@ -26,13 +26,13 @@ func PlanCRCreate(logger *zap.Logger, input *model.PlanCRCreateInput, principal 
 		return nil, err
 	}
 
-	return store.PlanCRCreate(logger, planCR)
+	return storage.PlanCRCreate(store, logger, planCR)
 }
 
 // PlanCRUpdate updates a plan_cr_tdl record in the database
 func PlanCRUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanCR, error) {
 	// Get PlanCrTdl
-	existingPlanCR, err := store.PlanCRGetByID(logger, id)
+	existingPlanCR, err := storage.PlanCRGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -42,14 +42,14 @@ func PlanCRUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface
 		return nil, err
 	}
 
-	result, err := store.PlanCRUpdate(logger, existingPlanCR)
+	result, err := storage.PlanCRUpdate(store, logger, existingPlanCR)
 	return result, err
 }
 
 // PlanCRDelete deletes a plan cr_tdl record in the database
 func PlanCRDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCR, error) {
 
-	existingPlanCR, err := store.PlanCRGetByID(logger, id)
+	existingPlanCR, err := storage.PlanCRGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -64,12 +64,12 @@ func PlanCRDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Pri
 
 // PlanCRGet returns a plan_cr_tdl record in the database
 func PlanCRGet(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCR, error) {
-	result, err := store.PlanCRGetByID(logger, id)
+	result, err := storage.PlanCRGetByID(store, logger, id)
 	return result, err
 }
 
 // PlanCRsGetByModelPlanID returns plan_cr_tdl records related to a model plan
 func PlanCRsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanCR, error) {
-	result, err := store.PlanCRsGetByModelPlanID(logger, modelPlanID)
+	result, err := storage.PlanCRsGetByModelPlanID(store, logger, modelPlanID)
 	return result, err
 }

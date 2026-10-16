@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetPlanParticipantsAndProvidersByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Plan Participants and Providers in one query
@@ -26,7 +27,7 @@ func (loaders *DataLoaders) GetPlanParticipantsAndProvidersByModelPlanID(ctx con
 		logger.Error("issue converting keys to JSON for data loader in Plan Participants and Providers", zap.Error(*err))
 	}
 
-	pAndPs, _ := dr.Store.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger, marshaledParams)
+	pAndPs, _ := storage.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(dr.Store, logger, marshaledParams)
 	pAndPByID := lo.Associate(pAndPs, func(gc *models.PlanParticipantsAndProviders) (string, *models.PlanParticipantsAndProviders) {
 		return gc.ModelPlanID.String(), gc
 	})

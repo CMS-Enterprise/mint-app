@@ -17,7 +17,7 @@ func ReadyForClearanceRead(
 	store *storage.Store,
 	modelPlanID uuid.UUID,
 ) (*model.PrepareForClearance, error) {
-	clearanceData, err := store.ReadyForClearanceGetByModelPlanID(logger, modelPlanID)
+	clearanceData, err := storage.ReadyForClearanceGetByModelPlanID(store, logger, modelPlanID)
 	if err != nil {
 		return nil, err
 	}

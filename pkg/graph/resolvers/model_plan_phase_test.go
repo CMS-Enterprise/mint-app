@@ -92,7 +92,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	expectedEmail := "Terry.Thompson@local.fake" // This comes from the stub fetch user info function
 
 	// Ensure collaborator creation is correct
-	collaborators, err := suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
+	collaborators, err := storage.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
 	suite.NoError(err)
 	suite.NotEmpty(collaborators)
 
@@ -126,7 +126,7 @@ func (suite *ResolverSuite) TestGetEmailsForModelPlanLeads() {
 	suite.NoError(err)
 
 	// Ensure the second collaborator is also created
-	collaborators, err = suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
+	collaborators, err = storage.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
 	suite.NoError(err)
 	suite.NotEmpty(collaborators)
 
@@ -162,7 +162,7 @@ func (suite *ResolverSuite) TestEvaluateSuggestedPhaseForClearance() {
 	// Create a plan
 	planName := "Test Plan"
 	plan := suite.createModelPlan(planName)
-	planTimeline, err := suite.testConfigs.Store.PlanTimelineGetByModelPlanID(plan.ID)
+	planTimeline, err := storage.PlanTimelineGetByModelPlanID(suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 
 	yesterday := time.Now().Add(time.Hour * -24)
@@ -192,7 +192,7 @@ func (suite *ResolverSuite) TestEvaluateSuggestedPhaseForClearance() {
 func (suite *ResolverSuite) setUpPlanWithPastICIPDate(planName string) *models.ModelPlan {
 	plan := suite.createModelPlan(planName)
 
-	planTimeline, err := suite.testConfigs.Store.PlanTimelineGetByModelPlanID(plan.ID)
+	planTimeline, err := storage.PlanTimelineGetByModelPlanID(suite.testConfigs.Store, plan.ID)
 	suite.NoError(err)
 
 	yesterday := time.Now().Add(-24 * time.Hour)
@@ -202,7 +202,7 @@ func (suite *ResolverSuite) setUpPlanWithPastICIPDate(planName string) *models.M
 	planTimeline.CompleteICIP = &yesterday
 	planTimeline.ModifiedBy = &userID
 	planTimeline.ModifiedDts = &timeNow
-	_, err = suite.testConfigs.Store.PlanTimelineUpdate(suite.testConfigs.Store, suite.testConfigs.Logger, planTimeline)
+	_, err = storage.PlanTimelineUpdate(suite.testConfigs.Store, suite.testConfigs.Logger, planTimeline)
 	suite.NoError(err)
 
 	plan.ModifiedBy = &userID
@@ -222,7 +222,7 @@ func (suite *ResolverSuite) TestTryNotificationSendIncorrectModelStatus_NilEmail
 
 	// The model plan creator is automatically added as a model lead collaborator.
 	// Confirm the lead is present before proceeding.
-	collaborators, err := suite.testConfigs.Store.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Logger, plan.ID)
+	collaborators, err := storage.PlanCollaboratorGetByModelPlanID(suite.testConfigs.Store, suite.testConfigs.Logger, plan.ID)
 	suite.NoError(err)
 	suite.NotEmpty(collaborators)
 

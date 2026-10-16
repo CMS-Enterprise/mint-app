@@ -36,7 +36,7 @@ func batchPlanCollaboratorGetByModelPlanID(ctx context.Context, modelPlanIDs []u
 
 	logger := appcontext.ZLogger(ctx)
 
-	collabs, err := dr.Store.PlanCollaboratorGetByModelPlanIDLOADER(logger, modelPlanIDs)
+	collabs, err := storage.PlanCollaboratorGetByModelPlanIDLOADER(dr.Store, logger, modelPlanIDs)
 	if err != nil {
 		return errorPerEachKey[uuid.UUID, []*models.PlanCollaborator](modelPlanIDs, err)
 	}

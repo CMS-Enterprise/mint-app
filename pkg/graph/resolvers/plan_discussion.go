@@ -384,7 +384,7 @@ func sendPlanDiscussionCreatedEmail(
 func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
 
 	// Get existing discussion
-	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
+	existingDiscussion, err := storage.PlanDiscussionByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -394,7 +394,7 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 		return nil, err
 	}
 
-	result, err := store.PlanDiscussionUpdate(logger, existingDiscussion)
+	result, err := storage.PlanDiscussionUpdate(store, logger, existingDiscussion)
 	return result, err
 }
 
@@ -402,7 +402,7 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 // Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
 
-	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
+	existingDiscussion, err := storage.PlanDiscussionByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -457,7 +457,7 @@ func CreateDiscussionReply(
 		reply.Content.Mentions = discussionReply.Content.Mentions
 
 		// Note these aren't async in order to prevent race condition. If possible, this can be made async.
-		discussion, err := store.PlanDiscussionByID(logger, reply.DiscussionID)
+		discussion, err := storage.PlanDiscussionByID(store, logger, reply.DiscussionID)
 		if err != nil {
 			return reply, err
 		}
@@ -547,7 +547,7 @@ func CreateDiscussionReply(
 // Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
 	// Get existing reply
-	existingReply, err := store.DiscussionReplyByID(logger, id)
+	existingReply, err := storage.DiscussionReplyByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -556,14 +556,14 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 		return nil, err
 	}
 
-	result, err := store.DiscussionReplyUpdate(logger, existingReply)
+	result, err := storage.DiscussionReplyUpdate(store, logger, existingReply)
 	return result, err
 }
 
 // DeleteDiscussionReply implements resolver logic to Delete a Discussion reply object
 // Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	existingReply, err := store.DiscussionReplyByID(logger, id)
+	existingReply, err := storage.DiscussionReplyByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -604,14 +604,14 @@ func PlanDiscussionGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uuid.
 // PlanDiscussionGetByID returns a single discussion from the database for a given discussionID
 func PlanDiscussionGetByID(_ context.Context, store *storage.Store, logger *zap.Logger, discussionID uuid.UUID) (*models.PlanDiscussion, error) {
 	// Future Enhancement: make this a data loader
-	return store.PlanDiscussionByID(logger, discussionID)
+	return storage.PlanDiscussionByID(store, logger, discussionID)
 
 }
 
 // DiscussionReplyGetByID returns a single discussion reply from the database for a given discussionReplyID
 func DiscussionReplyGetByID(_ context.Context, store *storage.Store, logger *zap.Logger, discussionReplyID uuid.UUID) (*models.DiscussionReply, error) {
 	// Future Enhancement: make this a data loader
-	return store.DiscussionReplyByID(logger, discussionReplyID)
+	return storage.DiscussionReplyByID(store, logger, discussionReplyID)
 
 }
 
@@ -621,5 +621,5 @@ func GetMostRecentDiscussionRoleSelection(
 	store *storage.Store,
 	principal authentication.Principal,
 ) (*models.DiscussionRoleSelection, error) {
-	return store.GetMostRecentDiscussionRoleSelection(logger, principal.Account().ID)
+	return storage.GetMostRecentDiscussionRoleSelection(store, logger, principal.Account().ID)
 }

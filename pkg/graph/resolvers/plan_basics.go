@@ -23,7 +23,7 @@ func UpdatePlanBasics(
 	store *storage.Store,
 ) (*models.PlanBasics, error) {
 	// Get existing basics
-	existing, err := store.PlanBasicsGetByID(logger, id)
+	existing, err := storage.PlanBasicsGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}

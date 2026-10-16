@@ -25,13 +25,13 @@ func PlanTDLCreate(logger *zap.Logger, input *model.PlanTDLCreateInput, principa
 		return nil, err
 	}
 
-	return store.PlanTDLCreate(logger, planTDL)
+	return storage.PlanTDLCreate(store, logger, planTDL)
 }
 
 // PlanTDLUpdate updates a plan_cr_tdl record in the database
 func PlanTDLUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanTDL, error) {
 	// Get PlanCrTdl
-	existingPlanTDL, err := store.PlanTDLGetByID(logger, id)
+	existingPlanTDL, err := storage.PlanTDLGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -41,14 +41,14 @@ func PlanTDLUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interfac
 		return nil, err
 	}
 
-	result, err := store.PlanTDLUpdate(logger, existingPlanTDL)
+	result, err := storage.PlanTDLUpdate(store, logger, existingPlanTDL)
 	return result, err
 }
 
 // PlanTDLDelete deletes a plan cr_tdl record in the database
 func PlanTDLDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanTDL, error) {
 
-	existingPlanCrTdl, err := store.PlanTDLGetByID(logger, id)
+	existingPlanCrTdl, err := storage.PlanTDLGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -63,12 +63,12 @@ func PlanTDLDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Pr
 
 // PlanTDLGet returns a plan_cr_tdl record in the database
 func PlanTDLGet(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanTDL, error) {
-	result, err := store.PlanTDLGetByID(logger, id)
+	result, err := storage.PlanTDLGetByID(store, logger, id)
 	return result, err
 }
 
 // PlanTDLsGetByModelPlanID returns plan_cr_tdl records related to a model plan
 func PlanTDLsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanTDL, error) {
-	result, err := store.PlanTDLsGetByModelPlanID(logger, modelPlanID)
+	result, err := storage.PlanTDLsGetByModelPlanID(store, logger, modelPlanID)
 	return result, err
 }

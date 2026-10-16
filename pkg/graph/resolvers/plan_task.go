@@ -215,7 +215,7 @@ func planTaskNotificationRecipientsByRole(
 	modelPlanID uuid.UUID,
 	recipients []*models.UserAccountAndNotificationPreferences,
 ) ([]*models.UserAccountAndNotificationPreferences, []*models.UserAccountAndNotificationPreferences, error) {
-	collaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+	collaborators, err := storage.PlanCollaboratorGetByModelPlanID(store, logger, modelPlanID)
 	if err != nil {
 		return nil, nil, err
 	}
