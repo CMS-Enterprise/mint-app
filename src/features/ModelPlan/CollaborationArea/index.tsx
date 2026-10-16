@@ -232,7 +232,9 @@ const CollaborationArea = () => {
                 <h2 className="margin-top-0">{tasksT('heading')}</h2>
                 <TasksWrapper modelPlan={modelPlan} tasks={tasks} />
               </Grid>
-              <Divider className="margin-y-6" />
+              <Grid col={12}>
+                <Divider className="margin-top-6 margin-bottom-3" />
+              </Grid>
               <Grid col={12}>
                 <h2 className="margin-top-0">{collaborationAreaT('areas')}</h2>
                 <FollowerMessageBanner
