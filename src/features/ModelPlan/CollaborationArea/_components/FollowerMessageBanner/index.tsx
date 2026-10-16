@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans } from 'react-i18next';
-import { Icon } from '@trussworks/react-uswds';
+import { Icon, SummaryBox } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -14,27 +14,33 @@ const FollowerMessageBanner = ({
   modelID,
   className
 }: FollowerMessageBannerProps) => (
-  <div
+  <SummaryBox
     className={classNames(
-      'display-flex flex-align-center bg-info-lighter border-left-05 border-info padding-y-1 padding-x-2',
+      'display-flex flex-align-center padding-y-1 padding-x-3',
       className
     )}
     data-testid="follower-message-banner"
   >
-    <Icon.Campaign className="margin-right-1 flex-no-shrink" aria-hidden />
-    <span>
-      <Trans
-        i18nKey="collaborationArea:followerMessageBanner"
-        components={{
-          link1: (
-            <UswdsReactLink
-              to={`/models/${modelID}/collaboration-area/send-message-to-followers`}
-            />
-          )
-        }}
+    <div className="display-flex flex-align-center">
+      <Icon.Campaign
+        size={3}
+        className="margin-right-2 text-info-darker"
+        aria-hidden
       />
-    </span>
-  </div>
+      <span>
+        <Trans
+          i18nKey="collaborationArea:followerMessageBanner"
+          components={{
+            link1: (
+              <UswdsReactLink
+                to={`/models/${modelID}/collaboration-area/send-message-to-followers`}
+              />
+            )
+          }}
+        />
+      </span>
+    </div>
+  </SummaryBox>
 );
 
 export default FollowerMessageBanner;
