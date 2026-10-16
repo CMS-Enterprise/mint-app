@@ -45,7 +45,7 @@ const SendMessageToFollowers = ({
       className="usa-button usa-button--unstyled display-inline-flex flex-align-center"
       onClick={() => navigate(collaborationAreaPath)}
     >
-      <Icon.ArrowBack className="margin-right-1" aria-hidden />
+      <Icon.ArrowBack aria-hidden />
       {t('sendMessageToFollowers.returnCta')}
     </Button>
   );
@@ -114,7 +114,7 @@ const SendMessageToFollowers = ({
 
             <Button
               type="submit"
-              className="margin-top-4 margin-bottom-3"
+              className="margin-top-6 margin-bottom-2"
               disabled={isEmpty}
             >
               {t('sendMessageToFollowers.sendMessage')}
