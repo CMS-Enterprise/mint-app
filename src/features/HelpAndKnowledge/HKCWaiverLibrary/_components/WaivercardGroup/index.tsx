@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
-import { CardGroup, Grid } from '@trussworks/react-uswds';
+import { CardGroup, Grid, Link } from '@trussworks/react-uswds';
 import WaiverInfoPanel from 'features/ModelPlan/AdditionalQuestionnaires/WaiverAssessmentSurvey/_components/WaiverInfoPanel';
 import { CommonWaiverType } from 'gql/generated/graphql';
 
+import { Alert } from 'components/Alert';
 import FilterButtonWithModal from 'components/FilterButtonWithModal';
 import FilterTags from 'components/FilterTags';
 import GlobalClientFilter from 'components/TableFilter';
@@ -80,7 +81,7 @@ const WaiverCardGroup = ({
   const {
     currentItems,
     Pagination: PaginationComponent,
-    pagination: { currentPage, pageCount }
+    pagination: { currentPage }
   } = usePagination<CommonWaiverData[]>({
     items: filteredSearchedCommonWaivers,
     itemsPerPage,
@@ -136,6 +137,23 @@ const WaiverCardGroup = ({
         )}
       </div>
 
+      {/* Empty Alert */}
+      {(query || hasActiveFilters) && currentItems.length === 0 && (
+        <Alert
+          type="warning"
+          className="margin-bottom-3 padding-y-1 mandatory-fields-alert__text"
+          heading={waiverLibraryMiscT('filters.noResults.heading')}
+          slim
+        >
+          <Trans
+            i18nKey="waiverLibraryMisc:filters.noResults.content"
+            components={{
+              email: <Link href="mailto:MINTTeam@cms.hhs.gov"> </Link>
+            }}
+          />
+        </Alert>
+      )}
+
       {/* Waiver Cards */}
       <CardGroup className="padding-x-1">
         <Grid desktop={{ col: 12 }}>
@@ -151,32 +169,28 @@ const WaiverCardGroup = ({
 
       {/* Pagination */}
       <div className="display-flex flex-wrap">
-        {currentItems.length > 0 && pageCount > 0 && (
-          <div key={`pagination-wrapper-page-${currentPage}`}>
-            {PaginationComponent}
-          </div>
-        )}
+        <div key={`pagination-wrapper-page-${currentPage}`}>
+          {PaginationComponent}
+        </div>
 
-        {currentItems.length > 0 && (
-          <TablePageSize
-            className="margin-left-auto desktop:grid-col-auto"
-            pageSize={itemsPerPage}
-            setPageSize={setItemsPerPage}
-            valueArray={[3, 6, 9, 12, 15, 'all']}
-            suffix={waiverLibraryMiscT('waivers')}
-            onChange={() => {
-              // Reset pagination to the first page when the page size changes
-              setSearchParams(
-                prev => {
-                  const nextParams = new URLSearchParams(prev);
-                  nextParams.set('page', '1');
-                  return nextParams;
-                },
-                { replace: true }
-              );
-            }}
-          />
-        )}
+        <TablePageSize
+          className="margin-left-auto desktop:grid-col-auto"
+          pageSize={itemsPerPage}
+          setPageSize={setItemsPerPage}
+          valueArray={[3, 6, 9, 12, 15, 'all']}
+          suffix={waiverLibraryMiscT('waivers')}
+          onChange={() => {
+            // Reset pagination to the first page when the page size changes
+            setSearchParams(
+              prev => {
+                const nextParams = new URLSearchParams(prev);
+                nextParams.set('page', '1');
+                return nextParams;
+              },
+              { replace: true }
+            );
+          }}
+        />
       </div>
     </>
   );
