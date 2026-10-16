@@ -222,13 +222,11 @@ const PageLockWrapper = ({ children }: SubscriptionHandlerProps) => {
     const sectionsToLock = getLinkedSections(modelPlanSection);
 
     sectionsToLock.forEach((section: LockableSection) => {
-      const userHoldsLock = lockableSectionLocks.some(
-        (lock: LockSectionType) =>
-          lock.section === section &&
-          lock.lockedByUserAccount.username === euaId
+      const isSectionLocked = lockableSectionLocks.some(
+        (lock: LockSectionType) => lock.section === section
       );
 
-      if (!userHoldsLock) {
+      if (!isSectionLocked) {
         addLockedSection(section);
       }
     });

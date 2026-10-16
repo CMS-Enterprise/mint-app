@@ -99,16 +99,14 @@ const ModelPlanQuestions = () => {
           {waiverAssessmentSurveyMiscT('modelPlanQuestions.infoAlert')}
         </Alert>
 
-        {flattenedData &&
-          mintPlansData.length > 0 &&
-          existingPlansData.length > 0 && (
-            <ModelPlanQuestionsForm
-              modelPlanQuestionsData={flattenedData}
-              modelPlanOptions={modelPlanOptions}
-              mintModelPlanCollection={mintPlansData}
-              existingModelCollection={existingPlansData}
-            />
-          )}
+        {flattenedData && (
+          <ModelPlanQuestionsForm
+            modelPlanQuestionsData={flattenedData}
+            modelPlanOptions={modelPlanOptions}
+            mintModelPlanCollection={mintPlansData}
+            existingModelCollection={existingPlansData}
+          />
+        )}
       </div>
 
       <PageNumber currentPage={2} totalPages={5} className="margin-y-6" />

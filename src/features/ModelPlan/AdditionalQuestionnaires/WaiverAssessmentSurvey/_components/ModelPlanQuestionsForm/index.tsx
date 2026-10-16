@@ -278,13 +278,14 @@ const ModelPlanQuestionsForm = ({
       participationCurrentModelPlanIDs = participationSplit.currentModelPlanIDs;
     }
 
-    // ONLY block and save if there is an actual diff to send
-    if (
+    const hasChanges =
       withBasics ||
       withGeneralCharacteristics ||
       withResemblesLinks ||
-      withParticipationLinks
-    ) {
+      withParticipationLinks;
+
+    // ONLY block and save if there is an actual diff to send
+    if (hasChanges) {
       updateModelPlanQuestions({
         variables: {
           modelPlanID: modelID,
@@ -330,7 +331,7 @@ const ModelPlanQuestionsForm = ({
         });
     }
 
-    return false;
+    return hasChanges;
   });
 
   /** Below useEffect handles manually sub field value clean up upon parent field change */
