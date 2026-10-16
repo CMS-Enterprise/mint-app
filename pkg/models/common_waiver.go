@@ -21,38 +21,6 @@ const (
 	CommonWaiverTypeUnknown           CommonWaiverType = "UNKNOWN"
 )
 
-// DisplayName returns the user-facing label for a common waiver focus.
-func (f CommonWaiverFocus) DisplayName() string {
-	switch f {
-	case CommonWaiverFocusAdministrativeOperational:
-		return "Administrative and operational"
-	case CommonWaiverFocusAntiKickback:
-		return "Anti-kickback"
-	case CommonWaiverFocusBeneficiaryEngagementCostSharing:
-		return "Beneficiary engagement and cost sharing"
-	case CommonWaiverFocusBeneficiaryEngagementIncentives:
-		return "Beneficiary engagement incentives"
-	case CommonWaiverFocusHospitalFacilityRelated:
-		return "Hospital and facility-related waiver"
-	case CommonWaiverFocusPatientEngagementIncentives:
-		return "Patient engagement incentives"
-	case CommonWaiverFocusPaymentFinancialArrangement:
-		return "Payment and financial arrangement"
-	case CommonWaiverFocusPaymentSystemsRateAdjustments:
-		return "Payment systems and rate adjustments"
-	case CommonWaiverFocusSafeHarbors:
-		return "Safe harbors"
-	case CommonWaiverFocusScopeOfPractice:
-		return "Scope of practice"
-	case CommonWaiverFocusSharedDecisionMakingPatientServices:
-		return "Shared decision-making and patient services"
-	case CommonWaiverFocusSiteOfCare:
-		return "Site of care"
-	default:
-		return string(f)
-	}
-}
-
 // WaiverFocusDisplay returns the waiver's focus areas as a comma-separated string.
 func (c CommonWaiver) WaiverFocusDisplay() string {
 	labels := make([]string, len(c.WaiverFocus))
@@ -77,6 +45,30 @@ const (
 	CommonWaiverFocusSharedDecisionMakingPatientServices CommonWaiverFocus = "SHARED_DECISION_MAKING_PATIENT_SERVICES"
 	CommonWaiverFocusSiteOfCare                          CommonWaiverFocus = "SITE_OF_CARE"
 )
+
+// commonWaiverFocusDisplayNames maps common waiver focuses to their user-facing labels.
+var commonWaiverFocusDisplayNames = map[CommonWaiverFocus]string{
+	CommonWaiverFocusAdministrativeOperational:           "Administrative and operational",
+	CommonWaiverFocusAntiKickback:                        "Anti-kickback",
+	CommonWaiverFocusBeneficiaryEngagementCostSharing:    "Beneficiary engagement and cost sharing",
+	CommonWaiverFocusBeneficiaryEngagementIncentives:     "Beneficiary engagement incentives",
+	CommonWaiverFocusHospitalFacilityRelated:             "Hospital and facility-related waiver",
+	CommonWaiverFocusPatientEngagementIncentives:         "Patient engagement incentives",
+	CommonWaiverFocusPaymentFinancialArrangement:         "Payment and financial arrangement",
+	CommonWaiverFocusPaymentSystemsRateAdjustments:       "Payment systems and rate adjustments",
+	CommonWaiverFocusSafeHarbors:                         "Safe harbors",
+	CommonWaiverFocusScopeOfPractice:                     "Scope of practice",
+	CommonWaiverFocusSharedDecisionMakingPatientServices: "Shared decision-making and patient services",
+	CommonWaiverFocusSiteOfCare:                          "Site of care",
+}
+
+// DisplayName returns the user-facing label for a common waiver focus.
+func (f CommonWaiverFocus) DisplayName() string {
+	if name, ok := commonWaiverFocusDisplayNames[f]; ok {
+		return name
+	}
+	return string(f)
+}
 
 // CommonWaiver represents a waiver type in the CMMI waiver library
 type CommonWaiver struct {
