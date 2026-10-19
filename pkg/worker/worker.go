@@ -18,6 +18,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -248,7 +249,7 @@ func (w *Worker) Work() {
 
 // randomStartupDelay returns a random duration in [0, maxDelaySeconds) seconds. It returns 0
 // (no delay) if maxDelaySeconds <= 0, or if generating the random value fails.
-func randomStartupDelay(maxDelaySeconds int, logger *zap.Logger) time.Duration {
+func randomStartupDelay(maxDelaySeconds int, logger logging.ILogger) time.Duration {
 	if maxDelaySeconds <= 0 {
 		return 0
 	}
