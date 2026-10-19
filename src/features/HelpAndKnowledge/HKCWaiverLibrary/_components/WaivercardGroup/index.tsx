@@ -104,7 +104,18 @@ const WaiverCardGroup = ({
           />
           <GlobalClientFilter
             globalFilter={query}
-            setGlobalFilter={setQuery}
+            setGlobalFilter={value => {
+              setQuery(value);
+              // Reset pagination to the first page when query changes
+              setSearchParams(
+                prev => {
+                  const nextParams = new URLSearchParams(prev);
+                  nextParams.set('page', '1');
+                  return nextParams;
+                },
+                { replace: true }
+              );
+            }}
             tableID="waiver-library-table"
             tableName="waiver-library"
             className="maxw-none tablet:width-mobile-lg tablet:margin-left-1"

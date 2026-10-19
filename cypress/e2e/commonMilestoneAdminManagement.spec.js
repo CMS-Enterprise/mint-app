@@ -84,7 +84,7 @@ describe('Common Milestone Admin Management', () => {
       cy.visit('/help-and-knowledge/milestone-library');
 
       // The library is paginated, so search instead of relying on page position
-      cy.get('#help-articles-search').type(originalName);
+      cy.get('#milestone-library-table').type(originalName);
 
       cy.get('[data-testid="CardGroup"]')
         .contains(originalName)

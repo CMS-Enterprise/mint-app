@@ -15,10 +15,17 @@ const getCommonWaiverFilters = (
   const waiverTypes = commonWaivers.map(
     waiver => waiver.waiverType || 'UNKNOWN'
   );
+
   const uniqueWaiverType = [...new Set(waiverTypes)].sort();
 
-  const waiverFocus = commonWaivers.map(waiver => waiver.waiverFocus);
-  const uniqueWaiverFocus = [...new Set(waiverFocus.flat())].sort();
+  const waiverFocus = commonWaivers.flatMap(waiver =>
+    waiver.waiverFocus
+      .split(',')
+      .map(focus => focus.trim())
+      .filter(Boolean)
+  );
+
+  const uniqueWaiverFocus = [...new Set(waiverFocus)].sort();
 
   const otherFilterOptions = tObject<string>(
     'waiverLibraryMisc:filterOptions.other.options'
