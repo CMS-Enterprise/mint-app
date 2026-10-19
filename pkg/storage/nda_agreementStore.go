@@ -15,11 +15,11 @@ import (
 )
 
 // NDAAgreementGetByUserID returns an NDA based on a UserID
-func (s *Store) NDAAgreementGetByUserID(_ *zap.Logger, userID uuid.UUID) (*models.NDAAgreement, error) {
+func NDAAgreementGetByUserID(np sqlutils.NamedPreparer, _ *zap.Logger, userID uuid.UUID) (*models.NDAAgreement, error) {
 
 	nda := models.NDAAgreement{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.NDAAgreement.GetByUserID)
+	stmt, err := np.PrepareNamed(sqlqueries.NDAAgreement.GetByUserID)
 	if err != nil {
 		return nil, err
 	}
@@ -41,9 +41,9 @@ func (s *Store) NDAAgreementGetByUserID(_ *zap.Logger, userID uuid.UUID) (*model
 }
 
 // NDAAgreementUpdate updates an nda agreement based on userID
-func (s *Store) NDAAgreementUpdate(_ *zap.Logger, nda *models.NDAAgreement) (*models.NDAAgreement, error) {
+func NDAAgreementUpdate(np sqlutils.NamedPreparer, _ *zap.Logger, nda *models.NDAAgreement) (*models.NDAAgreement, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.NDAAgreement.Update)
+	stmt, err := np.PrepareNamed(sqlqueries.NDAAgreement.Update)
 	if err != nil {
 		return nil, err
 	}
@@ -58,11 +58,11 @@ func (s *Store) NDAAgreementUpdate(_ *zap.Logger, nda *models.NDAAgreement) (*mo
 }
 
 // NDAAgreementCreate creates a new nda agreement based on an EUA
-func (s *Store) NDAAgreementCreate(_ *zap.Logger, nda *models.NDAAgreement) (*models.NDAAgreement, error) {
+func NDAAgreementCreate(np sqlutils.NamedPreparer, _ *zap.Logger, nda *models.NDAAgreement) (*models.NDAAgreement, error) {
 
 	nda.ID = utilityuuid.ValueOrNewUUID(nda.ID)
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.NDAAgreement.Insert)
+	stmt, err := np.PrepareNamed(sqlqueries.NDAAgreement.Insert)
 	if err != nil {
 		return nil, err
 	}

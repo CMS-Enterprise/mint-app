@@ -14,7 +14,7 @@ import (
 
 // NDAAgreementGetByUserID returns an EUA agreement by eua
 func NDAAgreementGetByUserID(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
-	nda, err := store.NDAAgreementGetByUserID(logger, principal.Account().ID)
+	nda, err := storage.NDAAgreementGetByUserID(store, logger, principal.Account().ID)
 	info := model.NDAInfo{}
 	if err != nil {
 		return nil, err
@@ -33,7 +33,7 @@ func NDAAgreementGetByUserID(logger *zap.Logger, principal authentication.Princi
 // NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
 func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
 	user := principal.Account()
-	existing, err := store.NDAAgreementGetByUserID(logger, principal.Account().ID)
+	existing, err := storage.NDAAgreementGetByUserID(store, logger, principal.Account().ID)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authen
 
 	if existing.ID == uuid.Nil {
 
-		new, err2 := store.NDAAgreementCreate(logger, existing)
+		new, err2 := storage.NDAAgreementCreate(store, logger, existing)
 		if err2 != nil {
 			return nil, err2
 		}
@@ -64,7 +64,7 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authen
 	} else {
 
 		existing.ModifiedBy = &user.ID
-		update, err3 := store.NDAAgreementUpdate(logger, existing)
+		update, err3 := storage.NDAAgreementUpdate(store, logger, existing)
 		if err3 != nil {
 			return nil, err3
 		}

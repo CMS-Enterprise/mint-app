@@ -59,7 +59,7 @@ func getUserAgnosticDigestAnalyzedAudits(
 	logger logging.ILogger,
 ) ([]*models.AnalyzedAudit, error) {
 
-	analyzedAudits, err := store.AnalyzedAuditGetByDate(logger, date)
+	analyzedAudits, err := storage.AnalyzedAuditGetByDate(store, logger, date)
 	if err != nil {
 		return nil, err
 	}

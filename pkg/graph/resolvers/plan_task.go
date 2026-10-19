@@ -215,7 +215,7 @@ func planTaskNotificationRecipientsByRole(
 	modelPlanID uuid.UUID,
 	recipients []*models.UserAccountAndNotificationPreferences,
 ) ([]*models.UserAccountAndNotificationPreferences, []*models.UserAccountAndNotificationPreferences, error) {
-	collaborators, err := store.PlanCollaboratorGetByModelPlanID(logger, modelPlanID)
+	collaborators, err := storage.PlanCollaboratorGetByModelPlanID(store, logger, modelPlanID)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -259,7 +259,7 @@ func trySendPlanTaskNewAvailableNotifications(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		logger.Error("failed to create new task available notifications", zap.Error(err))
 		return
@@ -377,7 +377,7 @@ func trySendPlanTaskCompletedNotifications(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		logger.Error("failed to create task completed notifications", zap.Error(err))
 		return

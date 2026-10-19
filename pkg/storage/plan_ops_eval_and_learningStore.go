@@ -16,14 +16,15 @@ import (
 )
 
 // PlanOpsEvalAndLearningGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(
+func PlanOpsEvalAndLearningGetByModelPlanIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.PlanOpsEvalAndLearning, error) {
 
 	var oelSlice []*models.PlanOpsEvalAndLearning
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.GetByModelPlanIDLoader)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +43,7 @@ func (s *Store) PlanOpsEvalAndLearningGetByModelPlanIDLOADER(
 }
 
 // PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
-func (s *Store) PlanOpsEvalAndLearningCreate(
+func PlanOpsEvalAndLearningCreate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	oel *models.PlanOpsEvalAndLearning,
@@ -68,12 +69,13 @@ func (s *Store) PlanOpsEvalAndLearningCreate(
 }
 
 // PlanOpsEvalAndLearningUpdate updates the plan providers_and_participants for a given id
-func (s *Store) PlanOpsEvalAndLearningUpdate(
+func PlanOpsEvalAndLearningUpdate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	oel *models.PlanOpsEvalAndLearning,
 ) (*models.PlanOpsEvalAndLearning, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.Update)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, oel)
 	}
@@ -88,14 +90,15 @@ func (s *Store) PlanOpsEvalAndLearningUpdate(
 }
 
 // PlanOpsEvalAndLearningGetByID returns the plan providers_and_participants for a given id
-func (s *Store) PlanOpsEvalAndLearningGetByID(
+func PlanOpsEvalAndLearningGetByID(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	id uuid.UUID,
 ) (*models.PlanOpsEvalAndLearning, error) {
 
 	oel := models.PlanOpsEvalAndLearning{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanOpsEvalAndLearning.GetByID)
 	if err != nil {
 		return nil, err
 	}

@@ -22,11 +22,11 @@ func GetMTOSolutionSelectedDetails(np sqlutils.NamedPreparer, solutionID uuid.UU
 
 // GetDiscussionReplyDetailsForEmail returns Discussion replies along with user account information for each reply.
 // It is sorted by the database with the newest replies going to oldest replies.
-func (s *Store) GetDiscussionReplyDetailsForEmail(discussionID uuid.UUID) ([]*email.DiscussionReplyEmailContentDB, error) {
+func GetDiscussionReplyDetailsForEmail(np sqlutils.NamedPreparer, discussionID uuid.UUID) ([]*email.DiscussionReplyEmailContentDB, error) {
 
 	var discRSlice []*email.DiscussionReplyEmailContentDB
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.Email.DiscussionReplyToOriginatorDetailsGet)
+	stmt, err := np.PrepareNamed(sqlqueries.Email.DiscussionReplyToOriginatorDetailsGet)
 	if err != nil {
 		return nil, err
 	}

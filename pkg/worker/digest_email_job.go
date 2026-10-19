@@ -9,6 +9,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 
 	faktory "github.com/contribsys/faktory/client"
 	faktory_worker "github.com/contribsys/faktory_worker_go"
@@ -48,7 +49,7 @@ func (w *Worker) DigestEmailBatchJob(ctx context.Context, args ...interface{}) e
 
 	logger.Info("getting collection of unique userIds that have favorited a model")
 
-	userIDs, err := w.Store.PlanFavoriteCollectionGetUniqueUserIDs()
+	userIDs, err := storage.PlanFavoriteCollectionGetUniqueUserIDs(w.Store)
 	if err != nil {
 		return err
 	}

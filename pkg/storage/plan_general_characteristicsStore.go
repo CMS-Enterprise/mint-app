@@ -16,7 +16,7 @@ import (
 )
 
 // PlanGeneralCharacteristicsCreate creates a new plan basics
-func (s *Store) PlanGeneralCharacteristicsCreate(
+func PlanGeneralCharacteristicsCreate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanGeneralCharacteristics,
@@ -42,12 +42,13 @@ func (s *Store) PlanGeneralCharacteristicsCreate(
 }
 
 // PlanGeneralCharacteristicsUpdate updates the plan general characteristics for a given id
-func (s *Store) PlanGeneralCharacteristicsUpdate(
+func PlanGeneralCharacteristicsUpdate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanGeneralCharacteristics,
 ) (*models.PlanGeneralCharacteristics, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.Update)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, gc)
 	}
@@ -62,14 +63,15 @@ func (s *Store) PlanGeneralCharacteristicsUpdate(
 }
 
 // PlanGeneralCharacteristicsGetByID returns the plan general characteristics for a given id
-func (s *Store) PlanGeneralCharacteristicsGetByID(
+func PlanGeneralCharacteristicsGetByID(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	id uuid.UUID,
 ) (*models.PlanGeneralCharacteristics, error) {
 
 	gc := models.PlanGeneralCharacteristics{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -85,14 +87,15 @@ func (s *Store) PlanGeneralCharacteristicsGetByID(
 
 // PlanGeneralCharacteristicsGetByModelPlanIDLOADER returns the plan
 // GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanGeneralCharacteristicsGetByModelPlanIDLOADER(
+func PlanGeneralCharacteristicsGetByModelPlanIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.PlanGeneralCharacteristics, error) {
 
 	var genCharSlice []*models.PlanGeneralCharacteristics
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.GetByModelPlanIDLoader)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanGeneralCharacteristics.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}

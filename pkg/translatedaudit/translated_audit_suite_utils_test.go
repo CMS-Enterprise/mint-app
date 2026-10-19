@@ -17,7 +17,7 @@ import (
 // any other relevant tables like the resolver does. It is just for testing
 func (suite *TAuditSuite) createModelPlan(planName string) *models.ModelPlan {
 	planToCreate := models.NewModelPlan(suite.testConfigs.Principal.UserAccount.ID, planName)
-	retMP, err := suite.testConfigs.Store.ModelPlanCreate(
+	retMP, err := storage.ModelPlanCreate(
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		planToCreate,
@@ -70,7 +70,7 @@ func (suite *TAuditSuite) createPlanDiscussion(modelPlanID uuid.UUID, content st
 		nil,
 	)
 
-	retDisc, err := suite.testConfigs.Store.PlanDiscussionCreate(suite.testConfigs.Logger, discussion, suite.testConfigs.Store)
+	retDisc, err := storage.PlanDiscussionCreate(suite.testConfigs.Logger, discussion, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	return retDisc
@@ -112,7 +112,7 @@ func (suite *TAuditSuite) createPlanCR(modelPlanID uuid.UUID, idNumber string, p
 		preHook(planCR)
 	}
 
-	cr, err := suite.testConfigs.Store.PlanCRCreate(suite.testConfigs.Logger, planCR)
+	cr, err := storage.PlanCRCreate(suite.testConfigs.Store, suite.testConfigs.Logger, planCR)
 	suite.NoError(err)
 
 	return cr
@@ -132,7 +132,7 @@ func (suite *TAuditSuite) createPlanTDL(modelPlanID uuid.UUID, idNumber string, 
 		preHook(planTDL)
 	}
 
-	tdl, err := suite.testConfigs.Store.PlanTDLCreate(suite.testConfigs.Logger, planTDL)
+	tdl, err := storage.PlanTDLCreate(suite.testConfigs.Store, suite.testConfigs.Logger, planTDL)
 	suite.NoError(err)
 
 	return tdl
@@ -158,7 +158,7 @@ func (suite *TAuditSuite) createPlanCollaborator(modelPlanID uuid.UUID, userName
 	roles := []models.TeamRole{models.TeamRoleModelLead, models.TeamRoleCOR}
 	collaborator := models.NewPlanCollaborator(suite.testConfigs.Principal.UserAccount.ID, modelPlanID, collabPrinc.UserAccount.ID, roles)
 
-	retCollaborator, err := suite.testConfigs.Store.PlanCollaboratorCreate(suite.testConfigs.Store, suite.testConfigs.Logger, collaborator)
+	retCollaborator, err := storage.PlanCollaboratorCreate(suite.testConfigs.Store, suite.testConfigs.Logger, collaborator)
 	suite.NoError(err)
 	return retCollaborator
 }

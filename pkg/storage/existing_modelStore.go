@@ -12,14 +12,15 @@ import (
 )
 
 // ExistingModelGetByIDLOADER returns the existing model for a slice of model plan ids
-func (s *Store) ExistingModelGetByIDLOADER(
+func ExistingModelGetByIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.ExistingModel, error) {
 
 	var eMSlice []*models.ExistingModel
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.ExistingModel.GetByModelPlanIDLoader)
+	stmt, err := np.PrepareNamed(sqlqueries.ExistingModel.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -38,10 +39,10 @@ func (s *Store) ExistingModelGetByIDLOADER(
 }
 
 // ExistingModelCollectionGet returns a list of existing models
-func (s *Store) ExistingModelCollectionGet(_ *zap.Logger) ([]*models.ExistingModel, error) {
+func ExistingModelCollectionGet(np sqlutils.NamedPreparer, _ *zap.Logger) ([]*models.ExistingModel, error) {
 
 	var existingModels []*models.ExistingModel
-	stmt, err := s.db.PrepareNamed(sqlqueries.ExistingModel.CollectionGet)
+	stmt, err := np.PrepareNamed(sqlqueries.ExistingModel.CollectionGet)
 
 	if err != nil {
 		return nil, err

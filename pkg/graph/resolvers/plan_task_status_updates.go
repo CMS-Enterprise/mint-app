@@ -120,7 +120,7 @@ func calculateModelPlanTaskState(
 	modelPlanID uuid.UUID,
 	store *storage.Store,
 ) (models.PlanTaskState, error) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		return "", err
 	}
@@ -152,7 +152,7 @@ func calculateModelPlanTaskState(
 		return "", *jsonErr
 	}
 
-	generalCharacteristics, err := store.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(logger, paramTableJSON)
+	generalCharacteristics, err := storage.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(store, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -160,7 +160,7 @@ func calculateModelPlanTaskState(
 		return models.PlanTaskStateInProgress, nil
 	}
 
-	beneficiaries, err := store.PlanBeneficiariesGetByModelPlanIDLOADER(logger, paramTableJSON)
+	beneficiaries, err := storage.PlanBeneficiariesGetByModelPlanIDLOADER(store, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -168,7 +168,7 @@ func calculateModelPlanTaskState(
 		return models.PlanTaskStateInProgress, nil
 	}
 
-	participantsAndProviders, err := store.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(logger, paramTableJSON)
+	participantsAndProviders, err := storage.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(store, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -176,7 +176,7 @@ func calculateModelPlanTaskState(
 		return models.PlanTaskStateInProgress, nil
 	}
 
-	opsEvalAndLearning, err := store.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(logger, paramTableJSON)
+	opsEvalAndLearning, err := storage.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(store, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -184,7 +184,7 @@ func calculateModelPlanTaskState(
 		return models.PlanTaskStateInProgress, nil
 	}
 
-	payments, err := store.PlanPaymentsGetByModelPlanIDLOADER(logger, paramTableJSON)
+	payments, err := storage.PlanPaymentsGetByModelPlanIDLOADER(store, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -260,7 +260,7 @@ func calculateDataExchangeTaskState(
 	modelPlanID uuid.UUID,
 	store *storage.Store,
 ) (models.PlanTaskState, error) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		return "", err
 	}
@@ -371,7 +371,7 @@ func calculateMTOTaskState(
 	modelPlanID uuid.UUID,
 	store *storage.Store,
 ) (models.PlanTaskState, error) {
-	modelPlan, err := store.ModelPlanGetByID(np, logger, modelPlanID)
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
 		return "", err
 	}
@@ -447,7 +447,7 @@ func syncPrepareForClearancePlanTaskState(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	clearanceData, err := storage.ReadyForClearanceGetByModelPlanIDNP(np, logger, modelPlanID)
+	clearanceData, err := storage.ReadyForClearanceGetByModelPlanID(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}

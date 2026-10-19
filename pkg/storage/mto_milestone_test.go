@@ -31,7 +31,7 @@ func (s *StoreTestSuite) TestMTOMilestoneCreateAllowConflicts() {
 	s.Require().NoError(err)
 
 	modelPlan := models.NewModelPlan(actorUserID, "Allow conflicts milestone test")
-	createdModelPlan, err := s.store.ModelPlanCreate(tx, s.logger, modelPlan)
+	createdModelPlan, err := ModelPlanCreate(tx, s.logger, modelPlan)
 	s.Require().NoError(err)
 
 	// first insert — should succeed and report newly inserted

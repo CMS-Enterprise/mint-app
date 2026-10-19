@@ -20,7 +20,7 @@ import (
 )
 
 // PlanBasicsCreate creates a new plan basics
-func (s *Store) PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
+func PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
 	basics.ID = utilityuuid.ValueOrNewUUID(basics.ID)
 
@@ -45,7 +45,7 @@ func (s *Store) PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, 
 // MANDATORY_NATIONAL or MANDATORY_REGIONAL_OR_STATE, timeline application period dates are cleared in the same transaction.
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 	return sqlutils.WithTransaction(s, func(tx *sqlx.Tx) (*models.PlanBasics, error) {
-		updated, err := s.updatePlanBasics(tx, logger, plan)
+		updated, err := updatePlanBasics(tx, logger, plan)
 		if err != nil {
 			return nil, err
 		}
@@ -53,7 +53,7 @@ func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*
 			if updated.ModifiedBy == nil {
 				return nil, fmt.Errorf("plan basics modified_by is nil after update")
 			}
-			_, err = s.PlanTimelineClearApplicationDatesByModelPlanID(tx, logger, updated.ModelPlanID, *updated.ModifiedBy)
+			_, err = PlanTimelineClearApplicationDatesByModelPlanID(tx, logger, updated.ModelPlanID, *updated.ModifiedBy)
 			if err != nil {
 				return nil, err
 			}
@@ -62,7 +62,7 @@ func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*
 	})
 }
 
-func (s *Store) updatePlanBasics(np sqlutils.NamedPreparer, logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
+func updatePlanBasics(np sqlutils.NamedPreparer, logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 	stmt, err := np.PrepareNamed(sqlqueries.PlanBasics.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
@@ -78,11 +78,11 @@ func (s *Store) updatePlanBasics(np sqlutils.NamedPreparer, logger *zap.Logger, 
 }
 
 // PlanBasicsGetByID returns the plan basics for a given id
-func (s *Store) PlanBasicsGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanBasics, error) {
+func PlanBasicsGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.PlanBasics, error) {
 
 	plan := models.PlanBasics{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBasics.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanBasics.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -94,17 +94,6 @@ func (s *Store) PlanBasicsGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanBasi
 		return nil, err
 	}
 	return &plan, nil
-}
-
-// PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
-func (s *Store) PlanBasicsGetByModelPlanID(modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
-
-	planBasics, err := sqlutils.GetProcedure[models.PlanBasics](s, sqlqueries.PlanBasics.GetByModelPlanID, arg)
-	if err != nil {
-		return nil, fmt.Errorf("error getting plan basics by model plan id: %w", err)
-	}
-	return planBasics, nil
 }
 
 // PlanBasicsGetByModelPlanIDLoader returns the plan basics for a slice of model plan ids

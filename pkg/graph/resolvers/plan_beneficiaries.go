@@ -36,7 +36,7 @@ func PlanBeneficiariesGetByModelPlanIDLOADER(ctx context.Context, modelPlanID uu
 // PlanBeneficiariesUpdate updates a plan Beneficiary buisness object
 func PlanBeneficiariesUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanBeneficiaries, error) {
 	// Get existing plan beneficiaries
-	existing, err := store.PlanBeneficiariesGetByID(logger, id)
+	existing, err := storage.PlanBeneficiariesGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func PlanBeneficiariesUpdate(logger *zap.Logger, id uuid.UUID, changes map[strin
 		return nil, err
 	}
 
-	retBeneficiaries, err := store.PlanBeneficiariesUpdate(logger, existing)
+	retBeneficiaries, err := storage.PlanBeneficiariesUpdate(store, logger, existing)
 	if err != nil {
 		return nil, err
 	}
