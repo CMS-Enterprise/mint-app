@@ -6,7 +6,9 @@ const waiverLibraryMisc = {
   hkcViewCta: 'View waiver library',
   description:
     'The waivers included in this library are waivers actively used in CMMI models. CMMI Leadership assumes that new models will use program and payment waivers unless justified otherwise. You may use this waiver library to browse and learn more about the waivers available for model teams, and each model team must also complete a survey to help determine which waivers their model will use.',
-  returnToHkc: 'Return to Help and Knowledge Center'
+  returnToHkc: 'Return to Help and Knowledge Center',
+  learnAbout: 'Learn about this waiver',
+  waivers: 'waivers'
 };
 
 export default waiverLibraryMisc;
