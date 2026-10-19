@@ -571,7 +571,7 @@ func sendPlanTimelineDateChangedEmails(
 		return err
 	}
 
-	recipientUserAccounts, err := store.UserAccountsGetNotificationRecipientsForDatesChanged(modelPlan.ID)
+	recipientUserAccounts, err := storage.UserAccountsGetNotificationRecipientsForDatesChanged(store, modelPlan.ID)
 	if err != nil {
 		logger.Error("Error getting user accounts for date change notifications",
 			zap.Error(err),

@@ -86,7 +86,7 @@ func sendDiscussionReplyEmails(ctx context.Context,
 		return err
 	}
 	// Get the email details from the db
-	replyDetails, err := store.GetDiscussionReplyDetailsForEmail(discussion.ID)
+	replyDetails, err := storage.GetDiscussionReplyDetailsForEmail(store, discussion.ID)
 	if err != nil {
 		return err
 	}

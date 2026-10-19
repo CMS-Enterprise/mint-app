@@ -5,6 +5,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 
 	"github.com/graph-gophers/dataloader/v7"
 )
@@ -27,7 +28,7 @@ func batchModelPlansByComponentGroup(ctx context.Context, componentGroups []mode
 		return errorPerEachKey[models.ComponentGroup, []*models.ModelPlanAndGroup](componentGroups, err)
 	}
 
-	data, err := loaders.DataReader.Store.ModelPlanGetByComponentGroupLoader(logger, componentGroups)
+	data, err := storage.ModelPlanGetByComponentGroupLoader(loaders.DataReader.Store, logger, componentGroups)
 	if err != nil {
 		return errorPerEachKey[models.ComponentGroup, []*models.ModelPlanAndGroup](componentGroups, err)
 	}

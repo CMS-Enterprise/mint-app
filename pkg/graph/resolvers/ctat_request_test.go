@@ -621,7 +621,7 @@ func TestSendCTATUpdateEmailSkipsWhitespaceOnlyChanges(t *testing.T) {
 	}
 }
 
-func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange() {
+func (suite *ResolverSuite) TestSendCTATUpdateEmailRoutesNotesOnlyAndMixedChanges() {
 	mockController := gomock.NewController(suite.T())
 	defer mockController.Finish()
 
@@ -643,10 +643,6 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 		models.CTATStatusNew,
 	)
 
-	requesterAccount, err := originalRequest.RequesterUserAccount(suite.testConfigs.Context)
-	suite.Require().NoError(err)
-	suite.Require().NotNil(requesterAccount)
-
 	assignedAdminPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	suite.Require().NotNil(assignedAdminPrincipal)
 	suite.Require().NotNil(assignedAdminPrincipal.Account())
@@ -661,18 +657,6 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 	updatedRequest := *originalRequest
 	notes := "This is a substantial update."
 	updatedRequest.Notes = &notes
-
-	mockEmailService.
-		EXPECT().
-		Send(
-			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq([]string{requesterAccount.Email}),
-			gomock.Nil(),
-			gomock.Any(),
-			gomock.Eq("text/html"),
-			gomock.Any(),
-		).
-		Times(1)
 
 	mockEmailService.
 		EXPECT().
@@ -697,6 +681,42 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailSendsOnceForSubstantialChange
 			gomock.Any(),
 		).
 		Times(1)
+
+	err := email.SendCTATUpdateEmails(
+		adminCtx,
+		mockEmailService,
+		email.AddressBook{
+			DefaultSender: "unit-test-execution@mint.cms.gov",
+			CTATTeamEmail: "test.ctat.team@mint.dev.cms.gov",
+		},
+		originalRequest,
+		&updatedRequest,
+		CTATRelatedMINTModelsGetByCTATRequestIDLOADER,
+		CTATRequestDocumentGetByCTATRequestIDLOADER,
+	)
+	suite.NoError(err)
+
+	// A status change alongside the notes change is visible to the requester.
+	requesterAccount, err := originalRequest.RequesterUserAccount(suite.testConfigs.Context)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(requesterAccount)
+	updatedRequest.Status = models.CTATStatusInProgress
+
+	mockEmailService.EXPECT().Send(
+		gomock.Eq("unit-test-execution@mint.cms.gov"),
+		gomock.Eq([]string{requesterAccount.Email}),
+		gomock.Nil(), gomock.Any(), gomock.Eq("text/html"), gomock.Any(),
+	).Times(1)
+	mockEmailService.EXPECT().Send(
+		gomock.Eq("unit-test-execution@mint.cms.gov"),
+		gomock.Eq([]string{"test.ctat.team@mint.dev.cms.gov"}),
+		gomock.Nil(), gomock.Any(), gomock.Eq("text/html"), gomock.Any(),
+	).Times(1)
+	mockEmailService.EXPECT().Send(
+		gomock.Eq("unit-test-execution@mint.cms.gov"),
+		gomock.Eq([]string{assignedAdminPrincipal.Account().Email}),
+		gomock.Nil(), gomock.Any(), gomock.Eq("text/html"), gomock.Any(),
+	).Times(1)
 
 	err = email.SendCTATUpdateEmails(
 		adminCtx,

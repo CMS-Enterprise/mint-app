@@ -9,6 +9,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetDiscussionReplyByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Discussion Reply in one query
@@ -25,7 +26,7 @@ func (loaders *DataLoaders) GetDiscussionReplyByModelPlanID(ctx context.Context,
 		logger.Error("issue converting keys to JSON for data loader in Discussion Reply", zap.Error(*err))
 	}
 
-	discRs, _ := dr.Store.DiscussionReplyGetByDiscussionIDLOADER(logger, marshaledParams)
+	discRs, _ := storage.DiscussionReplyGetByDiscussionIDLOADER(dr.Store, logger, marshaledParams)
 	discRByID := map[string][]*models.DiscussionReply{}
 	for _, discR := range discRs {
 		slice, ok := discRByID[string(discR.DiscussionID.String())]

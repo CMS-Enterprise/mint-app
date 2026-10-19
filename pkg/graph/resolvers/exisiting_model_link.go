@@ -68,7 +68,7 @@ func ExistingModelLinksUpdate(logger *zap.Logger, store *storage.Store, principa
 // ExistingModelLinkGetByID returns an existing model link by its id
 func ExistingModelLinkGetByID(logger *zap.Logger, store *storage.Store, principal authentication.Principal, id uuid.UUID) (*models.ExistingModelLink, error) {
 
-	retLink, err := store.ExistingModelLinkGetByID(logger, id)
+	retLink, err := storage.ExistingModelLinkGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}

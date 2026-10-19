@@ -16,14 +16,15 @@ import (
 )
 
 // PlanBeneficiariesGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(
+func PlanBeneficiariesGetByModelPlanIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.PlanBeneficiaries, error) {
 
 	var benesSlice []*models.PlanBeneficiaries
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBeneficiaries.GetByModelPlanIDLoader)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanBeneficiaries.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +43,7 @@ func (s *Store) PlanBeneficiariesGetByModelPlanIDLOADER(
 }
 
 // PlanBeneficiariesCreate creates a new plan benficiaries object
-func (s *Store) PlanBeneficiariesCreate(
+func PlanBeneficiariesCreate(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	b *models.PlanBeneficiaries,
@@ -67,12 +68,13 @@ func (s *Store) PlanBeneficiariesCreate(
 }
 
 // PlanBeneficiariesUpdate updates the plan general characteristics for a given id
-func (s *Store) PlanBeneficiariesUpdate(
+func PlanBeneficiariesUpdate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	b *models.PlanBeneficiaries,
 ) (*models.PlanBeneficiaries, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBeneficiaries.Update)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanBeneficiaries.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, b)
 	}
@@ -87,14 +89,15 @@ func (s *Store) PlanBeneficiariesUpdate(
 }
 
 // PlanBeneficiariesGetByID returns the plan general characteristics for a given id
-func (s *Store) PlanBeneficiariesGetByID(
+func PlanBeneficiariesGetByID(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	id uuid.UUID,
 ) (*models.PlanBeneficiaries, error) {
 
 	b := models.PlanBeneficiaries{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanBeneficiaries.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanBeneficiaries.GetByID)
 	if err != nil {
 		return nil, err
 	}

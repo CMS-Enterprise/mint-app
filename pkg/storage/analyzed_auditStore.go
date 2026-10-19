@@ -16,7 +16,8 @@ import (
 )
 
 // AnalyzedAuditCreate creates and returns an AnalyzedAudit object
-func (s *Store) AnalyzedAuditCreate(
+func AnalyzedAuditCreate(
+	np sqlutils.NamedPreparer,
 	logger logging.ILogger,
 	AnalyzedAudit *models.AnalyzedAudit,
 ) (*models.AnalyzedAudit, error) {
@@ -25,7 +26,7 @@ func (s *Store) AnalyzedAuditCreate(
 		AnalyzedAudit.ID = uuid.New()
 	}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.AnalyzedAudit.Create)
+	stmt, err := np.PrepareNamed(sqlqueries.AnalyzedAudit.Create)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create analyzed_audit with error %s", err),
@@ -50,7 +51,8 @@ func (s *Store) AnalyzedAuditCreate(
 }
 
 // AnalyzedAuditGetByModelPlanIDAndDate gets and returns all AnalyzedAudits by modelPlanID
-func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(
+func AnalyzedAuditGetByModelPlanIDAndDate(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	modelPlanID uuid.UUID,
 	date time.Time,
@@ -58,7 +60,7 @@ func (s *Store) AnalyzedAuditGetByModelPlanIDAndDate(
 
 	analyzedAudit := models.AnalyzedAudit{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.AnalyzedAudit.GetByModelPlanIDAndDate)
+	stmt, err := np.PrepareNamed(sqlqueries.AnalyzedAudit.GetByModelPlanIDAndDate)
 	if err != nil {
 		return nil, err
 	}
@@ -107,11 +109,11 @@ func AnalyzedAuditGetByModelPlanIDsAndDate(
 }
 
 // AnalyzedAuditGetByDate gets and returns all AnalyzedAudits by date
-func (s *Store) AnalyzedAuditGetByDate(_ logging.ILogger, date time.Time) ([]*models.AnalyzedAudit, error) {
+func AnalyzedAuditGetByDate(np sqlutils.NamedPreparer, _ logging.ILogger, date time.Time) ([]*models.AnalyzedAudit, error) {
 
 	var analyzedAudits []*models.AnalyzedAudit
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.AnalyzedAudit.GetByDate)
+	stmt, err := np.PrepareNamed(sqlqueries.AnalyzedAudit.GetByDate)
 	if err != nil {
 		return nil, err
 	}

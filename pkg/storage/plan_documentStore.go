@@ -86,13 +86,14 @@ func PlanDocumentGetByIDNoS3Check(
 }
 
 // PlanDocumentRead reads a plan document object by id
-func (s *Store) PlanDocumentRead(
+func PlanDocumentRead(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	s3Client *s3.S3Client,
 	id uuid.UUID,
 ) (*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDocument.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -113,12 +114,13 @@ func (s *Store) PlanDocumentRead(
 }
 
 // PlanDocumentsReadByModelPlanID reads a plan document object by model plan id
-func (s *Store) PlanDocumentsReadByModelPlanID(
+func PlanDocumentsReadByModelPlanID(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByModelPlanID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDocument.GetByModelPlanID)
 	if err != nil {
 		return nil, err
 	}
@@ -140,12 +142,13 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 }
 
 // PlanDocumentsReadByModelPlanIDNotRestricted reads a plan document object by model plan id and restricted = false
-func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
+func PlanDocumentsReadByModelPlanIDNotRestricted(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByModelPlanIDNotRestricted)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDocument.GetByModelPlanIDNotRestricted)
 	if err != nil {
 		return nil, err
 	}
@@ -167,8 +170,8 @@ func (s *Store) PlanDocumentsReadByModelPlanIDNotRestricted(
 }
 
 // PlanDocumentsReadByPlanTaskID reads plan documents attributed to a plan task.
-func (s *Store) PlanDocumentsReadByPlanTaskID(logger *zap.Logger, planTaskID uuid.UUID, s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByPlanTaskID)
+func PlanDocumentsReadByPlanTaskID(np sqlutils.NamedPreparer, logger *zap.Logger, planTaskID uuid.UUID, s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDocument.GetByPlanTaskID)
 	if err != nil {
 		return nil, err
 	}
@@ -190,12 +193,13 @@ func (s *Store) PlanDocumentsReadByPlanTaskID(logger *zap.Logger, planTaskID uui
 }
 
 // PlanDocumentsReadByPlanTaskIDNotRestricted reads non-restricted plan documents attributed to a plan task.
-func (s *Store) PlanDocumentsReadByPlanTaskIDNotRestricted(
+func PlanDocumentsReadByPlanTaskIDNotRestricted(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	planTaskID uuid.UUID,
 	s3Client *s3.S3Client) ([]*models.PlanDocument, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.GetByPlanTaskIDNotRestricted)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDocument.GetByPlanTaskIDNotRestricted)
 	if err != nil {
 		return nil, err
 	}
@@ -270,23 +274,6 @@ func logIfNoRowsFetched(logger *zap.Logger, modelPlanID uuid.UUID, documents []*
 	}
 
 	return nil
-}
-
-// PlanDocumentUpdate updates a plan document object by id with provided values
-func (s *Store) PlanDocumentUpdate(logger *zap.Logger, plan *models.PlanDocument) (*models.PlanDocument, error) {
-
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanDocument.Update)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
-	}
-	defer stmt.Close()
-
-	err = stmt.Get(plan, plan)
-	if err != nil {
-		return nil, genericmodel.HandleModelQueryError(logger, err, plan)
-	}
-
-	return plan, nil
 }
 
 // PlanDocumentDelete deletes a plan document object by id

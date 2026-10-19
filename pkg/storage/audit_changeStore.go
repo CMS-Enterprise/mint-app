@@ -15,7 +15,8 @@ import (
 )
 
 // AuditChangeCollectionByIDAndTable returns changes based on tablename and primary key from the database
-func (s *Store) AuditChangeCollectionByIDAndTable(
+func AuditChangeCollectionByIDAndTable(
+	np sqlutils.NamedPreparer,
 	_ logging.ILogger,
 	tableName models.TableName,
 	primaryKey uuid.UUID,
@@ -23,7 +24,7 @@ func (s *Store) AuditChangeCollectionByIDAndTable(
 
 	var auditChanges []*models.AuditChange
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.AuditChange.CollectionByIDAndTable)
+	stmt, err := np.PrepareNamed(sqlqueries.AuditChange.CollectionByIDAndTable)
 	if err != nil {
 		return nil, err
 
@@ -47,7 +48,8 @@ func (s *Store) AuditChangeCollectionByIDAndTable(
 // AuditChangeCollectionByIDAndTableAndField returns changes based on tablename
 // and primary key from the database. It will only return record sets where the
 // given field was modified. It will return all changed fields anywyas
-func (s *Store) AuditChangeCollectionByIDAndTableAndField(
+func AuditChangeCollectionByIDAndTableAndField(
+	np sqlutils.NamedPreparer,
 	_ logging.ILogger,
 	tableName string,
 	primaryKey uuid.UUID,
@@ -64,7 +66,7 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(
 
 	orderedQuery := sqlqueries.AuditChange.CollectionByIDAndTableAndField + orderClause
 
-	stmt, err := s.db.PrepareNamed(orderedQuery)
+	stmt, err := np.PrepareNamed(orderedQuery)
 	if err != nil {
 		return nil, err
 
@@ -86,7 +88,8 @@ func (s *Store) AuditChangeCollectionByIDAndTableAndField(
 }
 
 // AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate returns changes based on foreign key and date from the database.
-func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(
+func AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(
+	np sqlutils.NamedPreparer,
 	_ logging.ILogger,
 	primaryKey uuid.UUID,
 	foreignKey uuid.UUID,
@@ -103,7 +106,7 @@ func (s *Store) AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(
 
 	orderedQuery := sqlqueries.AuditChange.CollectionByPrimaryKeyOrForeignKeyAndDate + orderClause
 
-	stmt, err := s.db.PrepareNamed(orderedQuery)
+	stmt, err := np.PrepareNamed(orderedQuery)
 	if err != nil {
 		return nil, err
 

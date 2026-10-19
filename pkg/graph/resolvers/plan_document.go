@@ -103,7 +103,7 @@ func validatePlanDocumentTaskAttribution(store *storage.Store, logger *zap.Logge
 
 // PlanDocumentRead implements resolver logic to fetch a plan document object by ID
 func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *s3.S3Client, id uuid.UUID) (*models.PlanDocument, error) {
-	document, err := store.PlanDocumentRead(logger, s3Client, id)
+	document, err := storage.PlanDocumentRead(store, logger, s3Client, id)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +122,7 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal 
 
 	// Non-collaborators OR anyone with the Non-CMS User job code cannot see restricted documents
 	if !isCollaborator || principal.AllowNonCMSUser() {
-		notRestrictedDocuments, err := store.PlanDocumentsReadByModelPlanIDNotRestricted(logger, id, s3Client)
+		notRestrictedDocuments, err := storage.PlanDocumentsReadByModelPlanIDNotRestricted(store, logger, id, s3Client)
 
 		if err != nil {
 			return nil, err
@@ -131,7 +131,7 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, principal 
 		return notRestrictedDocuments, nil
 	}
 
-	documents, docErr := store.PlanDocumentsReadByModelPlanID(logger, id, s3Client)
+	documents, docErr := storage.PlanDocumentsReadByModelPlanID(store, logger, id, s3Client)
 
 	if docErr != nil {
 		return nil, docErr
@@ -148,7 +148,7 @@ func PlanDocumentsReadByPlanTaskID(logger *zap.Logger, task *models.PlanTask, pr
 	}
 
 	if !isCollaborator || principal.AllowNonCMSUser() {
-		notRestrictedDocuments, err := store.PlanDocumentsReadByPlanTaskIDNotRestricted(logger, task.ID, s3Client)
+		notRestrictedDocuments, err := storage.PlanDocumentsReadByPlanTaskIDNotRestricted(store, logger, task.ID, s3Client)
 		if err != nil {
 			return nil, err
 		}
@@ -156,7 +156,7 @@ func PlanDocumentsReadByPlanTaskID(logger *zap.Logger, task *models.PlanTask, pr
 		return notRestrictedDocuments, nil
 	}
 
-	documents, docErr := store.PlanDocumentsReadByPlanTaskID(logger, task.ID, s3Client)
+	documents, docErr := storage.PlanDocumentsReadByPlanTaskID(store, logger, task.ID, s3Client)
 	if docErr != nil {
 		return nil, docErr
 	}
@@ -166,7 +166,7 @@ func PlanDocumentsReadByPlanTaskID(logger *zap.Logger, task *models.PlanTask, pr
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
 func PlanDocumentDelete(logger *zap.Logger, s3Client *s3.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (int, error) {
-	existingdoc, err := store.PlanDocumentRead(logger, s3Client, id)
+	existingdoc, err := storage.PlanDocumentRead(store, logger, s3Client, id)
 	if err != nil {
 		return 0, err
 	}

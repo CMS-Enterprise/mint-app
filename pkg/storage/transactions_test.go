@@ -15,7 +15,7 @@ func (s *StoreTestSuite) TestWithTransaction() {
 		plan, err := sqlutils.WithTransaction[models.ModelPlan](s.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 			modelName := "testing transactions"
 			plan := models.NewModelPlan(s.principal.Account().ID, modelName)
-			createdPlan, err := s.store.ModelPlanCreate(tx, s.logger, plan)
+			createdPlan, err := ModelPlanCreate(tx, s.logger, plan)
 			if err != nil {
 				return nil, err
 			}
@@ -25,7 +25,7 @@ func (s *StoreTestSuite) TestWithTransaction() {
 		s.NoError(err)
 		s.NotNil(plan)
 
-		planRet, err := s.store.ModelPlanGetByID(s.store, s.logger, plan.ID) // If the transaction was commited, we should get the plan
+		planRet, err := ModelPlanGetByID(s.store, s.logger, plan.ID) // If the transaction was commited, we should get the plan
 		s.NoError(err)
 		s.NotNil(planRet)
 	})
@@ -34,7 +34,7 @@ func (s *StoreTestSuite) TestWithTransaction() {
 		plan, err := sqlutils.WithTransaction[models.ModelPlan](s.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 			modelName := "testing transactions rollback"
 			plan := models.NewModelPlan(s.principal.Account().ID, modelName)
-			createdPlan, err := s.store.ModelPlanCreate(tx, s.logger, plan)
+			createdPlan, err := ModelPlanCreate(tx, s.logger, plan)
 			if err != nil {
 				return nil, err
 			}
@@ -51,7 +51,7 @@ func (s *StoreTestSuite) TestWithTransaction() {
 		plan, err := sqlutils.WithTransaction[models.ModelPlan](s.store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 
 			plan := models.NewModelPlan(s.principal.Account().ID, modelName)
-			createdPlan, err := s.store.ModelPlanCreate(s.store, s.logger, plan) //Call the method on the store itself, so it is automatically created
+			createdPlan, err := ModelPlanCreate(s.store, s.logger, plan) //Call the method on the store itself, so it is automatically created
 			if err != nil {
 				return nil, err
 			}
@@ -62,7 +62,7 @@ func (s *StoreTestSuite) TestWithTransaction() {
 		s.Error(err)
 		s.Nil(plan) //if there is an error, WithTransaction returns nil
 
-		planRet, err := s.store.ModelPlanGetByID(s.store, s.logger, planGlobal.ID) // The model plan was created directly, not as part of a transaction, so it isn't rolled back
+		planRet, err := ModelPlanGetByID(s.store, s.logger, planGlobal.ID) // The model plan was created directly, not as part of a transaction, so it isn't rolled back
 		s.NoError(err)
 		s.EqualValues(modelName, planRet.ModelName)
 		s.NotNil(planRet)

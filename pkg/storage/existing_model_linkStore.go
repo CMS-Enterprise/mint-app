@@ -4,6 +4,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
 	"github.com/google/uuid"
 
@@ -15,14 +16,15 @@ import (
 )
 
 // GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER returns the plan GeneralCharacteristics for a slice of model plan ids and field Names
-func (s *Store) GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER(
+func GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.ExistingModelLinks, error) {
 
 	var linkSlice []*models.ExistingModelLinks
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.ExistingModelLink.GetNamesByModelPlanIDAndFieldName)
+	stmt, err := np.PrepareNamed(sqlqueries.ExistingModelLink.GetNamesByModelPlanIDAndFieldName)
 	if err != nil {
 		return nil, err
 	}
@@ -42,14 +44,15 @@ func (s *Store) GetExistingModelLinkNamesByModelPlanIDAndFieldNameLOADER(
 }
 
 // ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(
+func ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.ExistingModelLink, error) {
 
 	var linkSlice []*models.ExistingModelLink
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.ExistingModelLink.GetByModelPlanIDAndFieldNameLoader)
+	stmt, err := np.PrepareNamed(sqlqueries.ExistingModelLink.GetByModelPlanIDAndFieldNameLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -119,11 +122,11 @@ func (s *Store) ExistingModelLinksUpdate(
 }
 
 // ExistingModelLinkGetByID returns an an existing model link by ID
-func (s *Store) ExistingModelLinkGetByID(logger *zap.Logger, id uuid.UUID) (*models.ExistingModelLink, error) {
+func ExistingModelLinkGetByID(np sqlutils.NamedPreparer, logger *zap.Logger, id uuid.UUID) (*models.ExistingModelLink, error) {
 
 	link := models.ExistingModelLink{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.ExistingModelLink.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.ExistingModelLink.GetByID)
 	if err != nil {
 		return nil, err
 	}

@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetPlanGeneralCharacteristicsByModelPlanID uses a DataLoader to aggreggate a SQL call and return all general characteristics in one query
@@ -26,7 +27,7 @@ func (loaders *DataLoaders) GetPlanGeneralCharacteristicsByModelPlanID(ctx conte
 		logger.Error("issue converting keys to JSON for data loader in General Characteristics", zap.Error(*err))
 	}
 
-	genChars, _ := dr.Store.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(logger, marshaledParams)
+	genChars, _ := storage.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(dr.Store, logger, marshaledParams)
 	gcByID := lo.Associate(genChars, func(gc *models.PlanGeneralCharacteristics) (string, *models.PlanGeneralCharacteristics) {
 		return gc.ModelPlanID.String(), gc
 	})
