@@ -1,3 +1,4 @@
+import { CommonWaiverType } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import { FilterGroupType } from 'components/FilterGroup';
@@ -12,8 +13,8 @@ const getCommonWaiverFilters = (
   commonWaivers: CommonWaiverData[]
 ): FilterGroupType[] => {
   // Extract unique values for each field
-  const waiverTypes = commonWaivers.map(
-    waiver => waiver.waiverType || 'UNKNOWN'
+  const waiverTypes: CommonWaiverType[] = commonWaivers.flatMap(waiver =>
+    waiver.waiverType ? [waiver.waiverType] : []
   );
 
   const uniqueWaiverType = [...new Set(waiverTypes)].sort();
