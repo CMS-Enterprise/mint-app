@@ -191,18 +191,8 @@ func (w *Worker) Work() {
 	// spreads that burst out so it's less likely to land in the same instant as the old task's
 	// shutdown - this narrows the collision window, it doesn't eliminate it. Zero (the default
 	// when unset) disables the delay.
-	if maxDelaySeconds := w.StartupDelayMaxSeconds; maxDelaySeconds > 0 {
-		delaySeconds, err := rand.Int(rand.Reader, big.NewInt(int64(maxDelaySeconds)))
-		if err != nil {
-			zapLogger.Warn("failed to generate faktory startup delay, skipping it", zap.Error(err))
-		} else if delay := time.Duration(delaySeconds.Int64()) * time.Second; delay > 0 {
-			zapLogger.Info("delaying faktory worker startup", zap.Duration("delay", delay))
-			select {
-			case <-time.After(delay):
-			case <-ctx.Done():
-				return
-			}
-		}
+	if err := waitForStartupDelay(ctx, w.StartupDelayMaxSeconds, zapLogger); err != nil {
+		return
 	}
 
 	mgr := faktory_worker.NewManager()
@@ -250,6 +240,33 @@ func (w *Worker) Work() {
 	err = mgr.RunWithContext(ctx)
 	if err != nil {
 		panic(err)
+	}
+}
+
+// waitForStartupDelay sleeps for a random duration in [0, maxDelaySeconds) seconds, returning
+// early with ctx.Err() if ctx is canceled first. maxDelaySeconds <= 0 disables the delay.
+func waitForStartupDelay(ctx context.Context, maxDelaySeconds int, logger *zap.Logger) error {
+	if maxDelaySeconds <= 0 {
+		return nil
+	}
+
+	delaySeconds, err := rand.Int(rand.Reader, big.NewInt(int64(maxDelaySeconds)))
+	if err != nil {
+		logger.Warn("failed to generate faktory startup delay, skipping it", zap.Error(err))
+		return nil
+	}
+
+	delay := time.Duration(delaySeconds.Int64()) * time.Second
+	if delay <= 0 {
+		return nil
+	}
+
+	logger.Info("delaying faktory worker startup", zap.Duration("delay", delay))
+	select {
+	case <-time.After(delay):
+		return nil
+	case <-ctx.Done():
+		return ctx.Err()
 	}
 }
 
