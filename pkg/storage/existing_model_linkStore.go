@@ -113,11 +113,6 @@ func ExistingModelLinksUpdate(
 		return nil, err
 	}
 
-	err = tx.Commit()
-	if err != nil {
-		return nil, err
-	}
-
 	return linkSlice, nil
 }
 
