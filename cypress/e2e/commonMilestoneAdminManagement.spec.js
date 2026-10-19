@@ -84,7 +84,7 @@ describe('Common Milestone Admin Management', () => {
       cy.visit('/help-and-knowledge/milestone-library');
 
       // The library is paginated, so search instead of relying on page position
-      cy.get('#milestone-library-table').type(originalName);
+      cy.get('#milestone-library-table-search').type(originalName);
 
       cy.get('[data-testid="CardGroup"]')
         .contains(originalName)
@@ -135,15 +135,15 @@ describe('Common Milestone Admin Management', () => {
 
       cy.clickOutside();
 
-      cy.get('#help-articles-search').clear();
-      cy.get('#help-articles-search').type(editedName);
+      cy.get('#milestone-library-table-search').clear();
+      cy.get('#milestone-library-table-search').type(editedName);
 
       cy.get('[data-testid="CardGroup"]')
         .contains(editedName)
         .should('be.visible');
 
-      cy.get('#help-articles-search').clear();
-      cy.get('#help-articles-search').type(originalName);
+      cy.get('#milestone-library-table-search').clear();
+      cy.get('#milestone-library-table-search').type(originalName);
       cy.contains('[data-testid="CardGroup"]', originalName).should(
         'not.exist'
       );
@@ -156,7 +156,7 @@ describe('Common Milestone Admin Management', () => {
 
       cy.visit('/help-and-knowledge/milestone-library');
 
-      cy.get('#help-articles-search').type(milestoneName);
+      cy.get('#milestone-library-table-search').type(milestoneName);
 
       cy.get('[data-testid="CardGroup"]')
         .contains(milestoneName)
