@@ -1,18 +1,17 @@
 package storage
 
 import (
+	_ "embed"
 	"fmt"
 
-	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
-
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
-
-	_ "embed"
 )
 
 // PlanCRCreate creates  returns a plan_cr_tdl object
@@ -61,11 +60,7 @@ func PlanCRUpdate(np sqlutils.NamedPreparer, logger *zap.Logger, planCR *models.
 }
 
 // PlanCRDelete deletes a plan_cr_tdl
-func (s *Store) PlanCRDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanCR, error) {
-
-	tx := s.db.MustBegin()
-	defer tx.Rollback()
-
+func PlanCRDelete(tx *sqlx.Tx, _ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.PlanCR, error) {
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
 		return nil, err
@@ -85,10 +80,6 @@ func (s *Store) PlanCRDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*mo
 	err = stmt.Get(&deletedCR, arg)
 	if err != nil {
 		return nil, err
-	}
-	err = tx.Commit()
-	if err != nil {
-		return nil, fmt.Errorf("could not commit cr tdl delete transaction: %w", err)
 	}
 
 	return &deletedCR, nil

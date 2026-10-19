@@ -5,19 +5,17 @@ import (
 	"database/sql"
 	_ "embed"
 
-	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
-
+	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
+	"go.uber.org/zap"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/cms-enterprise/mint-app/pkg/s3"
-	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
-	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-
-	"github.com/google/uuid"
-	"go.uber.org/zap"
-
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/s3"
 	"github.com/cms-enterprise/mint-app/pkg/shared/utilitysql"
+	"github.com/cms-enterprise/mint-app/pkg/shared/utilityuuid"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
@@ -271,10 +269,7 @@ func logIfNoRowsFetched(logger *zap.Logger, modelPlanID uuid.UUID, documents []*
 }
 
 // PlanDocumentDelete deletes a plan document object by id
-func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (sql.Result, error) {
-
-	tx := s.db.MustBegin()
-	defer tx.Rollback()
+func PlanDocumentDelete(tx *sqlx.Tx, logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (sql.Result, error) {
 
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
@@ -290,11 +285,6 @@ func (s *Store) PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, userID uuid
 	sqlResult, err := stmt.Exec(utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
-	}
-
-	err = tx.Commit()
-	if err != nil {
-		return nil, err
 	}
 
 	return sqlResult, nil

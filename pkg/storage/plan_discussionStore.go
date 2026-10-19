@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"go.uber.org/zap"
 
@@ -155,14 +156,12 @@ func DiscussionReplyUpdate(
 }
 
 // PlanDiscussionDelete deletes the plan discussion for a given id
-func (s *Store) PlanDiscussionDelete(
+func PlanDiscussionDelete(
+	tx *sqlx.Tx,
 	_ *zap.Logger,
 	id uuid.UUID,
 	userID uuid.UUID,
 ) (*models.PlanDiscussion, error) {
-
-	tx := s.db.MustBegin()
-	defer tx.Rollback()
 
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
@@ -179,11 +178,6 @@ func (s *Store) PlanDiscussionDelete(
 	err = stmt.Get(discussion, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
-	}
-
-	err = tx.Commit()
-	if err != nil {
-		return nil, fmt.Errorf("could not commit discussion delete transaction: %w", err)
 	}
 
 	return discussion, nil
@@ -223,9 +217,7 @@ func PlanDiscussionByIDWithNumberOfReplies(np sqlutils.NamedPreparer, _ *zap.Log
 }
 
 // DiscussionReplyDelete deletes the discussion reply for a given id
-func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.DiscussionReply, error) {
-	tx := s.db.MustBegin()
-	defer tx.Rollback()
+func DiscussionReplyDelete(tx *sqlx.Tx, logger *zap.Logger, id uuid.UUID, userID uuid.UUID) (*models.DiscussionReply, error) {
 	args := map[string]interface{}{
 		"id": id,
 	}
@@ -244,11 +236,6 @@ func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID, userID u
 	err = statement.Get(discussionReply, args)
 	if err != nil {
 		return nil, err
-	}
-
-	err = tx.Commit()
-	if err != nil {
-		return nil, fmt.Errorf("could not commit discussion reply delete transaction: %w", err)
 	}
 
 	return discussionReply, nil

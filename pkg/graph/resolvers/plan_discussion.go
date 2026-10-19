@@ -401,17 +401,17 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 // DeletePlanDiscussion implements resolver logic to Delete a plan Discussion object
 // Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
-
-	existingDiscussion, err := storage.PlanDiscussionByID(store, logger, id)
-	if err != nil {
-		return nil, err
-	}
-	err = BaseStructPreDelete(logger, existingDiscussion, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
-	result, err := store.PlanDiscussionDelete(logger, id, principal.Account().ID)
-	return result, err
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanDiscussion, error) {
+		existingDiscussion, err := storage.PlanDiscussionByID(tx, logger, id)
+		if err != nil {
+			return nil, err
+		}
+		err = BaseStructPreDelete(logger, existingDiscussion, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
+		return storage.PlanDiscussionDelete(tx, logger, id, principal.Account().ID)
+	})
 }
 
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
@@ -563,17 +563,17 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 // DeleteDiscussionReply implements resolver logic to Delete a Discussion reply object
 // Deprecated: THIS IS NOT USED by the front end. If it is ever used, make sure to handle tags
 func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	existingReply, err := storage.DiscussionReplyByID(store, logger, id)
-	if err != nil {
-		return nil, err
-	}
-	err = BaseStructPreDelete(logger, existingReply, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
-	result, err := store.DiscussionReplyDelete(logger, id, principal.Account().ID)
-
-	return result, err
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.DiscussionReply, error) {
+		existingReply, err := storage.DiscussionReplyByID(tx, logger, id)
+		if err != nil {
+			return nil, err
+		}
+		err = BaseStructPreDelete(logger, existingReply, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
+		return storage.DiscussionReplyDelete(tx, logger, id, principal.Account().ID)
+	})
 }
 
 // DiscussionReplyCollectionByDiscusionIDLOADER implements resolver logic to get Discussion Reply by a model plan ID using a data loader

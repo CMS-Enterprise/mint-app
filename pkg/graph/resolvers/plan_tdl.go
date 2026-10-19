@@ -4,10 +4,12 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
@@ -47,18 +49,19 @@ func PlanTDLUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interfac
 
 // PlanTDLDelete deletes a plan cr_tdl record in the database
 func PlanTDLDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanTDL, error) {
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanTDL, error) {
+		existingPlanCrTdl, err := storage.PlanTDLGetByID(tx, logger, id)
+		if err != nil {
+			return nil, err
+		}
 
-	existingPlanCrTdl, err := storage.PlanTDLGetByID(store, logger, id)
-	if err != nil {
-		return nil, err
-	}
+		err = BaseStructPreDelete(logger, existingPlanCrTdl, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
 
-	err = BaseStructPreDelete(logger, existingPlanCrTdl, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
-
-	return store.PlanTDLDelete(logger, id, principal.Account().ID)
+		return storage.PlanTDLDelete(tx, logger, id, principal.Account().ID)
+	})
 }
 
 // PlanTDLGet returns a plan_cr_tdl record in the database

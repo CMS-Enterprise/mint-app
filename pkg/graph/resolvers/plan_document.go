@@ -169,21 +169,24 @@ func PlanDocumentsReadByPlanTaskID(logger *zap.Logger, task *models.PlanTask, pr
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
-func PlanDocumentDelete(logger *zap.Logger, s3Client *s3.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (int, error) {
-	existingdoc, err := storage.PlanDocumentRead(store, logger, s3Client, id)
-	if err != nil {
-		return 0, err
-	}
-	err = BaseStructPreDelete(logger, existingdoc, principal, store, true)
-	if err != nil {
-		return 0, err
-	}
+func PlanDocumentDelete(logger *zap.Logger, s3Client *s3.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*int, error) {
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*int, error) {
+		existingdoc, err := storage.PlanDocumentRead(tx, logger, s3Client, id)
+		if err != nil {
+			return nil, err
+		}
+		err = BaseStructPreDelete(logger, existingdoc, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
 
-	sqlResult, err := store.PlanDocumentDelete(logger, id, principal.Account().ID)
-	if err != nil {
-		return 0, err
-	}
+		sqlResult, err := storage.PlanDocumentDelete(tx, logger, id, principal.Account().ID)
+		if err != nil {
+			return nil, err
+		}
 
-	rowsAffected, err := sqlResult.RowsAffected()
-	return int(rowsAffected), err
+		rowsAffected, err := sqlResult.RowsAffected()
+		return new(int(rowsAffected)), err
+	})
+
 }
