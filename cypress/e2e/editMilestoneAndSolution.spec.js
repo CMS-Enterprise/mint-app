@@ -26,7 +26,7 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
     cy.location('search').should('include', 'view=milestones');
   });
 
-  it.skip('edits solution details from milestone panel with milestone context', () => {
+  it('edits solution details from milestone panel with milestone context', () => {
     cy.get('table').within(() => {
       cy.get('td')
         .contains(milestoneName)
@@ -139,7 +139,7 @@ describe('MTO edit milestone ↔ edit solution cross-navigation', () => {
     });
   });
 
-  it.skip('returns to milestone details when closing solution panel opened from milestone', () => {
+  it('returns to milestone details when closing solution panel opened from milestone', () => {
     cy.get('table').within(() => {
       cy.get('td')
         .contains(milestoneName)
