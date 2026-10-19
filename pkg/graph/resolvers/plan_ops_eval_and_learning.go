@@ -36,7 +36,7 @@ func PlanOpsEvalAndLearningGetByModelPlanIDLOADER(ctx context.Context, modelPlan
 // PlanOpsEvalAndLearningUpdate updates a PlanOpsEvalAndLearning buisness object
 func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanOpsEvalAndLearning, error) {
 	//Get existing  PlanOpsEvalAndLearning
-	existing, err := store.PlanOpsEvalAndLearningGetByID(logger, id)
+	existing, err := storage.PlanOpsEvalAndLearningGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[
 		return nil, err
 	}
 
-	retOpsEvalAndLearning, err := store.PlanOpsEvalAndLearningUpdate(logger, existing)
+	retOpsEvalAndLearning, err := storage.PlanOpsEvalAndLearningUpdate(store, logger, existing)
 	if err != nil {
 		return nil, err
 	}

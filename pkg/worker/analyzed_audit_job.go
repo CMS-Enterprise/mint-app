@@ -12,6 +12,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/logfields"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 /*
@@ -85,7 +86,7 @@ func (w *Worker) AnalyzedAuditBatchJob(ctx context.Context, args ...interface{})
 	}
 
 	dayToAnalyze := args[0]
-	modelPlans, err := w.Store.ModelPlanCollection(logger, false)
+	modelPlans, err := storage.ModelPlanCollection(w.Store, logger, false)
 	if err != nil {
 		return err
 	}

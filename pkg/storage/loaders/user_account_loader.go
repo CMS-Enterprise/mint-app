@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetUserAccountsByIDLoader Uses a DataLoader to return many User Accounts by ID
@@ -27,7 +28,7 @@ func (loaders *DataLoaders) GetUserAccountsByIDLoader(ctx context.Context, keys 
 	}
 	output := make([]*dataloader.Result, len(keys))
 
-	userAccounts, err2 := dr.Store.UserAccountGetByIDLOADER(logger, marshaledParams)
+	userAccounts, err2 := storage.UserAccountGetByIDLOADER(dr.Store, logger, marshaledParams)
 	if err2 != nil { //IF THERE IS A DB error, return error for every result
 		for _, result := range output {
 			result.Error = err2

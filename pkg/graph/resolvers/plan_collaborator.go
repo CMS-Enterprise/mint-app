@@ -128,7 +128,7 @@ func sendCollaboratorAddedEmail(
 // PlanCollaboratorUpdate implements resolver logic to update a plan collaborator
 func PlanCollaboratorUpdate(logger *zap.Logger, id uuid.UUID, newRoles []models.TeamRole, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
 	// Get existing collaborator
-	existingCollaborator, err := store.PlanCollaboratorGetByID(id)
+	existingCollaborator, err := storage.PlanCollaboratorGetByID(store, id)
 	if err != nil {
 		return nil, err
 	}
@@ -139,12 +139,12 @@ func PlanCollaboratorUpdate(logger *zap.Logger, id uuid.UUID, newRoles []models.
 
 	existingCollaborator.TeamRoles = models.ConvertEnumsToStringArray(newRoles)
 
-	return store.PlanCollaboratorUpdate(logger, existingCollaborator)
+	return storage.PlanCollaboratorUpdate(store, logger, existingCollaborator)
 }
 
 // PlanCollaboratorDelete implements resolver logic to delete a plan collaborator
 func PlanCollaboratorDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
-	existingCollaborator, err := store.PlanCollaboratorGetByID(id)
+	existingCollaborator, err := storage.PlanCollaboratorGetByID(store, id)
 	if err != nil {
 		return nil, err
 	}

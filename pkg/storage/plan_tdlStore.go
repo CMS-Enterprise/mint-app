@@ -16,12 +16,12 @@ import (
 )
 
 // PlanTDLCreate creates  returns a plan_cr_tdl object
-func (s *Store) PlanTDLCreate(logger *zap.Logger, planTDL *models.PlanTDL) (*models.PlanTDL, error) {
+func PlanTDLCreate(np sqlutils.NamedPreparer, logger *zap.Logger, planTDL *models.PlanTDL) (*models.PlanTDL, error) {
 	if planTDL.ID == uuid.Nil {
 		planTDL.ID = uuid.New()
 	}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTDL.Create)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanTDL.Create)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create TDL with error %s", err),
@@ -45,8 +45,8 @@ func (s *Store) PlanTDLCreate(logger *zap.Logger, planTDL *models.PlanTDL) (*mod
 }
 
 // PlanTDLUpdate updates and returns a plan_cr_tdl object
-func (s *Store) PlanTDLUpdate(logger *zap.Logger, planTDL *models.PlanTDL) (*models.PlanTDL, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTDL.Update)
+func PlanTDLUpdate(np sqlutils.NamedPreparer, logger *zap.Logger, planTDL *models.PlanTDL) (*models.PlanTDL, error) {
+	stmt, err := np.PrepareNamed(sqlqueries.PlanTDL.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, planTDL)
 	}
@@ -95,9 +95,9 @@ func (s *Store) PlanTDLDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*m
 }
 
 // PlanTDLGetByID returns a plan_cr_tdl
-func (s *Store) PlanTDLGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanTDL, error) {
+func PlanTDLGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.PlanTDL, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTDL.Get)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanTDL.Get)
 	if err != nil {
 		return nil, err
 	}
@@ -120,11 +120,11 @@ func (s *Store) PlanTDLGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanTDL, er
 }
 
 // PlanTDLsGetByModelPlanID returns all plan_cr_tdls associated with a model plan
-func (s *Store) PlanTDLsGetByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanTDL, error) {
+func PlanTDLsGetByModelPlanID(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanTDL, error) {
 
 	var planTDLs []*models.PlanTDL
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanTDL.CollectionByModelPlanID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanTDL.CollectionByModelPlanID)
 	if err != nil {
 		return nil, err
 	}

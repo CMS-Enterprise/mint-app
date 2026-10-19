@@ -157,7 +157,7 @@ func sendCustomTimelineDateCreatedEmails(
 		}()
 	}
 
-	recipientUserAccounts, err := store.UserAccountsGetNotificationRecipientsForDatesChanged(customTimelineDate.ModelPlanID)
+	recipientUserAccounts, err := storage.UserAccountsGetNotificationRecipientsForDatesChanged(store, customTimelineDate.ModelPlanID)
 	if err != nil {
 		return fmt.Errorf("unable to get date change notification recipients for custom timeline date created email: %w", err)
 	}

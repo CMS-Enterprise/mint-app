@@ -16,12 +16,12 @@ import (
 )
 
 // PlanCRCreate creates  returns a plan_cr_tdl object
-func (s *Store) PlanCRCreate(logger *zap.Logger, planCR *models.PlanCR) (*models.PlanCR, error) {
+func PlanCRCreate(np sqlutils.NamedPreparer, logger *zap.Logger, planCR *models.PlanCR) (*models.PlanCR, error) {
 	if planCR.ID == uuid.Nil {
 		planCR.ID = uuid.New()
 	}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCR.Create)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanCR.Create)
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create CR with error %s", err),
@@ -45,8 +45,8 @@ func (s *Store) PlanCRCreate(logger *zap.Logger, planCR *models.PlanCR) (*models
 }
 
 // PlanCRUpdate updates and returns a plan_cr_tdl object
-func (s *Store) PlanCRUpdate(logger *zap.Logger, planCR *models.PlanCR) (*models.PlanCR, error) {
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCR.Update)
+func PlanCRUpdate(np sqlutils.NamedPreparer, logger *zap.Logger, planCR *models.PlanCR) (*models.PlanCR, error) {
+	stmt, err := np.PrepareNamed(sqlqueries.PlanCR.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, planCR)
 	}
@@ -95,9 +95,9 @@ func (s *Store) PlanCRDelete(_ *zap.Logger, id uuid.UUID, userID uuid.UUID) (*mo
 }
 
 // PlanCRGetByID returns a plan_cr_tdl
-func (s *Store) PlanCRGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanCR, error) {
+func PlanCRGetByID(np sqlutils.NamedPreparer, _ *zap.Logger, id uuid.UUID) (*models.PlanCR, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCR.Get)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanCR.Get)
 	if err != nil {
 		return nil, err
 	}
@@ -120,11 +120,11 @@ func (s *Store) PlanCRGetByID(_ *zap.Logger, id uuid.UUID) (*models.PlanCR, erro
 }
 
 // PlanCRsGetByModelPlanID returns all plan_cr_tdls associated with a model plan
-func (s *Store) PlanCRsGetByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanCR, error) {
+func PlanCRsGetByModelPlanID(np sqlutils.NamedPreparer, _ *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanCR, error) {
 
 	var planCRs []*models.PlanCR
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCR.CollectionByModelPlanID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanCR.CollectionByModelPlanID)
 	if err != nil {
 		return nil, err
 	}

@@ -109,13 +109,14 @@ func (s *Store) PlanFavoriteDelete(
 }
 
 // PlanFavoriteGetByModelIDAndUserAccountID returns a plan favorite
-func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(
+func PlanFavoriteGetByModelIDAndUserAccountID(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	userAccountID uuid.UUID,
 	modelPlanID uuid.UUID,
 ) (*models.PlanFavorite, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanFavorite.Get)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanFavorite.Get)
 	if err != nil {
 		return nil, err
 	}
@@ -140,11 +141,11 @@ func (s *Store) PlanFavoriteGetByModelIDAndUserAccountID(
 }
 
 // PlanFavoriteCollectionGetUniqueUserIDs returns userIDs of users that have favorited any model
-func (s *Store) PlanFavoriteCollectionGetUniqueUserIDs() ([]uuid.UUID, error) {
+func PlanFavoriteCollectionGetUniqueUserIDs(np sqlutils.NamedPreparer) ([]uuid.UUID, error) {
 
 	var userIDs []uuid.UUID
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanFavorite.GetUniqueUserIDs)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanFavorite.GetUniqueUserIDs)
 	if err != nil {
 		return nil, err
 	}

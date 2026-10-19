@@ -17,14 +17,15 @@ import (
 )
 
 // PlanPaymentsGetByModelPlanIDLOADER returns the plan GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanPaymentsGetByModelPlanIDLOADER(
+func PlanPaymentsGetByModelPlanIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.PlanPayments, error) {
 
 	var paySlice []*models.PlanPayments
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanPayments.GetByModelPlanIDLoader)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanPayments.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -68,12 +69,13 @@ func PlanPaymentsCreate(
 }
 
 // PlanPaymentsRead finds a plan payments model by id
-func (s *Store) PlanPaymentsRead(
+func PlanPaymentsRead(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	id uuid.UUID) (*models.PlanPayments, error) {
 	modelInstance := models.PlanPayments{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanPayments.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanPayments.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -89,11 +91,12 @@ func (s *Store) PlanPaymentsRead(
 }
 
 // PlanPaymentsUpdate updates a plan payment model in the database
-func (s *Store) PlanPaymentsUpdate(
+func PlanPaymentsUpdate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanPayments.Update)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanPayments.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, payments)
 	}
@@ -106,9 +109,3 @@ func (s *Store) PlanPaymentsUpdate(
 
 	return payments, nil
 }
-
-/*func (s *Store) PlanPaymentsDelete(
-	logger *zap.Logger,
-	id uuid.UUID) (*models.PlanPayments, error) {
-	return nil, nil
-}*/

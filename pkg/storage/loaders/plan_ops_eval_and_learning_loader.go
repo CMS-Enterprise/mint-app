@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetPlanOpsEvalAndLearningByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Plan Operations Evaluation And Learning in one query
@@ -26,7 +27,7 @@ func (loaders *DataLoaders) GetPlanOpsEvalAndLearningByModelPlanID(ctx context.C
 		logger.Error("issue converting keys to JSON for data loader in Plan Operations Evaluation And Learning", zap.Error(*err))
 	}
 
-	oels, _ := dr.Store.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(logger, marshaledParams)
+	oels, _ := storage.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(dr.Store, logger, marshaledParams)
 	oelByID := lo.Associate(oels, func(gc *models.PlanOpsEvalAndLearning) (string, *models.PlanOpsEvalAndLearning) {
 		return gc.ModelPlanID.String(), gc
 	})

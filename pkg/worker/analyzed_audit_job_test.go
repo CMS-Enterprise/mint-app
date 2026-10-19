@@ -163,7 +163,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	suite.NoError(jobErr)
 
 	// Get Stored audit
-	analyzedAudit, err := worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(suite.testConfigs.Logger, plan.ID, time.Now().UTC())
+	analyzedAudit, err := storage.AnalyzedAuditGetByModelPlanIDAndDate(worker.Store, suite.testConfigs.Logger, plan.ID, time.Now().UTC())
 	suite.NoError(err)
 
 	suite.NotNil(analyzedAudit)
@@ -229,7 +229,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJob() {
 	jobErr2 := perf2.Execute(job2, worker.AnalyzedAuditJob)
 	suite.NoError(jobErr2)
 
-	_, err = worker.Store.AnalyzedAuditGetByModelPlanIDAndDate(suite.testConfigs.Logger, noChangeMp.ID, time.Now().UTC())
+	_, err = storage.AnalyzedAuditGetByModelPlanIDAndDate(worker.Store, suite.testConfigs.Logger, noChangeMp.ID, time.Now().UTC())
 	suite.Error(err)
 }
 
@@ -362,7 +362,7 @@ func (suite *WorkerSuite) TestAnalyzedAuditJobIntegration() {
 	})
 	suite.NoError(err)
 
-	analyzedAudit, err := suite.testConfigs.Store.AnalyzedAuditGetByModelPlanIDAndDate(suite.testConfigs.Logger, mp1.ID, time.Now().UTC())
+	analyzedAudit, err := storage.AnalyzedAuditGetByModelPlanIDAndDate(suite.testConfigs.Store, suite.testConfigs.Logger, mp1.ID, time.Now().UTC())
 	suite.NoError(err)
 
 	suite.NotEmpty(analyzedAudit)

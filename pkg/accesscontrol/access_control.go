@@ -77,7 +77,7 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 	}
 
 	if principal.AllowUSER() {
-		collaborator, err := store.CheckIfCollaborator(logger, principal.Account().ID, modelPlanID)
+		collaborator, err := storage.CheckIfCollaborator(store, logger, principal.Account().ID, modelPlanID)
 		return collaborator, err
 	}
 
@@ -98,7 +98,7 @@ func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.P
 	}
 
 	if principal.AllowUSER() {
-		collaborator, err := store.CheckIfCollaboratorByDiscussionID(logger, principal.Account().ID, discussionID)
+		collaborator, err := storage.CheckIfCollaboratorByDiscussionID(store, logger, principal.Account().ID, discussionID)
 		return collaborator, err
 
 	}
@@ -118,7 +118,7 @@ func IsCollaboratorByMilestoneID(logger *zap.Logger, principal authentication.Pr
 	}
 
 	if principal.AllowUSER() {
-		return store.CheckIfCollaboratorByMilestoneID(logger, principal.Account().ID, milestoneID)
+		return storage.CheckIfCollaboratorByMilestoneID(store, logger, principal.Account().ID, milestoneID)
 	}
 
 	errString := "user has no roles"

@@ -19,7 +19,8 @@ import (
 )
 
 // PlanCollaboratorGetByModelPlanIDLOADER returns the plan collaborators for a slice of model plan ids
-func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
+func PlanCollaboratorGetByModelPlanIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	modelPlanIDs []uuid.UUID,
 ) ([]*models.PlanCollaborator, error) {
@@ -28,7 +29,7 @@ func (s *Store) PlanCollaboratorGetByModelPlanIDLOADER(
 		"model_plan_ids": pq.Array(modelPlanIDs),
 	}
 
-	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](s, sqlqueries.PlanCollaborator.CollectionGetByModelPlanIDLoader, arg)
+	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](np, sqlqueries.PlanCollaborator.CollectionGetByModelPlanIDLoader, arg)
 	if err != nil {
 		return nil, fmt.Errorf("issue selecting plan collaborators by model plan id, %w", err)
 	}
@@ -81,12 +82,13 @@ func PlanCollaboratorCreate(
 }
 
 // PlanCollaboratorUpdate updates the plan collaborator for a given id
-func (s *Store) PlanCollaboratorUpdate(
+func PlanCollaboratorUpdate(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	collaborator *models.PlanCollaborator,
 ) (*models.PlanCollaborator, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.Update)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanCollaborator.Update)
 	if err != nil {
 		return nil, err
 	}
@@ -137,9 +139,9 @@ func (s *Store) PlanCollaboratorDelete(
 
 // PlanCollaboratorGetByID returns a plan collaborator for a given database ID, or nil if none found
 // Note: The dataloader method should be preferred over this method.
-func (s *Store) PlanCollaboratorGetByID(id uuid.UUID) (*models.PlanCollaborator, error) {
+func PlanCollaboratorGetByID(np sqlutils.NamedPreparer, id uuid.UUID) (*models.PlanCollaborator, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanCollaborator.GetByID)
 	if err != nil {
 		return nil, err
 	}
@@ -155,9 +157,9 @@ func (s *Store) PlanCollaboratorGetByID(id uuid.UUID) (*models.PlanCollaborator,
 }
 
 // PlanCollaboratorGetCountByUserID returns the number of plan collaborators for a given user_id
-func (s *Store) PlanCollaboratorGetCountByUserID(userID uuid.UUID) (int, error) {
+func PlanCollaboratorGetCountByUserID(np sqlutils.NamedPreparer, userID uuid.UUID) (int, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanCollaborator.GetCountByUserID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanCollaborator.GetCountByUserID)
 	if err != nil {
 		return 0, err
 	}
@@ -175,13 +177,14 @@ func (s *Store) PlanCollaboratorGetCountByUserID(userID uuid.UUID) (int, error) 
 }
 
 // PlanCollaboratorGetByModelPlanID returns a slice of plan collaborators corresponding with a model plan id
-func (s *Store) PlanCollaboratorGetByModelPlanID(
+func PlanCollaboratorGetByModelPlanID(
+	np sqlutils.NamedPreparer,
 	_ logging.ILogger,
 	modelPlanID uuid.UUID,
 ) ([]*models.PlanCollaborator, error) {
 	arg := utilitysql.CreateModelPlanIDQueryMap(modelPlanID)
 
-	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](s, sqlqueries.PlanCollaborator.CollectionGetByModelPlanID, arg)
+	retCollaborators, err := sqlutils.SelectProcedure[models.PlanCollaborator](np, sqlqueries.PlanCollaborator.CollectionGetByModelPlanID, arg)
 	if err != nil {
 		return nil, fmt.Errorf("issue selecting plan collaborators by model plan id, %w", err)
 	}

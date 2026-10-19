@@ -11,7 +11,7 @@ import (
 func (suite *ResolverSuite) TestBaseTaskListSectionPreUpdate() {
 	modelPlan := suite.createModelPlan("Test plan basics update")
 
-	planBasics, err := suite.testConfigs.Store.PlanBasicsGetByModelPlanID(modelPlan.ID)
+	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(suite.testConfigs.Context, modelPlan.ID)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{

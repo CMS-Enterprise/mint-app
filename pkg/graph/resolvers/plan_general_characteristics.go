@@ -28,7 +28,7 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 	}
 
 	// Get existing plan general characteristics
-	existing, err := store.PlanGeneralCharacteristicsGetByID(logger, id)
+	existing, err := storage.PlanGeneralCharacteristicsGetByID(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +38,7 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 		return nil, err
 	}
 
-	retGeneralCharacteristics, err := store.PlanGeneralCharacteristicsUpdate(logger, existing)
+	retGeneralCharacteristics, err := storage.PlanGeneralCharacteristicsUpdate(store, logger, existing)
 	if err != nil {
 		return nil, err
 	}

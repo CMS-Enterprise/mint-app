@@ -33,7 +33,7 @@ func AnalyzeModelPlanForAnalyzedAudit[T logging.ChainableErrorOrWarnLogger[T]](
 	}
 
 	logger.Info("returning audit change collection")
-	audits, err := store.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(logger, mp.ID, mp.ID, dayToAnalyze, models.SortDesc)
+	audits, err := storage.AuditChangeCollectionByPrimaryKeyOrForeignKeyAndDate(store, logger, mp.ID, mp.ID, dayToAnalyze, models.SortDesc)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func AnalyzeModelPlanForAnalyzedAudit[T logging.ChainableErrorOrWarnLogger[T]](
 	}
 
 	logger.Info("saving analyzed audit to the database")
-	retAnalyzedAudit, err := store.AnalyzedAuditCreate(logger, analyzedAudit)
+	retAnalyzedAudit, err := storage.AnalyzedAuditCreate(store, logger, analyzedAudit)
 
 	if err != nil {
 		return nil, err

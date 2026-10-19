@@ -17,14 +17,15 @@ import (
 
 // PlanParticipantsAndProvidersGetByModelPlanIDLOADER returns the plan
 // GeneralCharacteristics for a slice of model plan ids
-func (s *Store) PlanParticipantsAndProvidersGetByModelPlanIDLOADER(
+func PlanParticipantsAndProvidersGetByModelPlanIDLOADER(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	paramTableJSON string,
 ) ([]*models.PlanParticipantsAndProviders, error) {
 
 	var pAndPSlice []*models.PlanParticipantsAndProviders
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.GetByModelPlanIDLoader)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.GetByModelPlanIDLoader)
 	if err != nil {
 		return nil, err
 	}
@@ -69,12 +70,13 @@ func PlanParticipantsAndProvidersCreate(
 }
 
 // PlanParticipantsAndProvidersUpdate updates the plan providers_and_participants for a given id
-func (s *Store) PlanParticipantsAndProvidersUpdate(
+func PlanParticipantsAndProvidersUpdate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	gc *models.PlanParticipantsAndProviders,
 ) (*models.PlanParticipantsAndProviders, error) {
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.Update)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.Update)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, gc)
 	}
@@ -91,14 +93,15 @@ func (s *Store) PlanParticipantsAndProvidersUpdate(
 }
 
 // PlanParticipantsAndProvidersGetByID returns the plan providers_and_participants for a given id
-func (s *Store) PlanParticipantsAndProvidersGetByID(
+func PlanParticipantsAndProvidersGetByID(
+	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	id uuid.UUID,
 ) (*models.PlanParticipantsAndProviders, error) {
 
 	gc := models.PlanParticipantsAndProviders{}
 
-	stmt, err := s.db.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.GetByID)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanParticipantsAndProviders.GetByID)
 	if err != nil {
 		return nil, err
 	}

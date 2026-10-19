@@ -20,7 +20,7 @@ func PlanPaymentsRead(
 	id uuid.UUID,
 ) (*models.PlanPayments, error) {
 
-	return store.PlanPaymentsRead(logger, id)
+	return storage.PlanPaymentsRead(store, logger, id)
 }
 
 // PlanPaymentsGetByModelPlanIDLOADER implements resolver logic to get Plan Payments by a model plan ID using a data loader
@@ -52,7 +52,7 @@ func PlanPaymentsUpdate(
 	principal authentication.Principal,
 ) (*models.PlanPayments, error) {
 
-	payments, err := store.PlanPaymentsRead(logger, id)
+	payments, err := storage.PlanPaymentsRead(store, logger, id)
 	if err != nil {
 		return nil, err
 	}
@@ -61,7 +61,7 @@ func PlanPaymentsUpdate(
 	if err != nil {
 		return nil, err
 	}
-	retPayments, err := store.PlanPaymentsUpdate(logger, payments)
+	retPayments, err := storage.PlanPaymentsUpdate(store, logger, payments)
 	if err != nil {
 		return nil, err
 	}

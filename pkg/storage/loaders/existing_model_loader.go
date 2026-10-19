@@ -10,6 +10,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // GetExistingModelByModelPlanID uses a DataLoader to aggreggate a SQL call and return all Existing Model in one query
@@ -26,7 +27,7 @@ func (loaders *DataLoaders) GetExistingModelByModelPlanID(ctx context.Context, k
 		logger.Error("issue converting keys to JSON for data loader in Existing Model", zap.Error(*err))
 	}
 
-	eMs, _ := dr.Store.ExistingModelGetByIDLOADER(logger, marshaledParams)
+	eMs, _ := storage.ExistingModelGetByIDLOADER(dr.Store, logger, marshaledParams)
 	eMByID := lo.Associate(eMs, func(gc *models.ExistingModel) (string, *models.ExistingModel) {
 		return fmt.Sprint(gc.ID), gc
 	})

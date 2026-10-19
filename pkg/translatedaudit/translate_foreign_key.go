@@ -462,7 +462,7 @@ func getPlanCollaboratorForeignKeyReference(ctx context.Context, store *storage.
 	}
 
 	// get the collaborator
-	collaborator, err := store.PlanCollaboratorGetByID(uuidKey)
+	collaborator, err := storage.PlanCollaboratorGetByID(store, uuidKey)
 	if err != nil {
 		if sqlutils.IsNoRowsResult(err) {
 			return DataNotAvailableMessage, nil
