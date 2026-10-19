@@ -31,9 +31,11 @@ describe('The waiver assessment survey Form', () => {
       .parents('[data-testid="question-group"]')
       .within(() => {
         cy.get('[data-testid="button"]').click();
-        cy.get('input[name="modelCategory"][value="ACCOUNTABLE_CARE"]').check({
-          force: true
-        });
+        cy.get('input[name="modelCategory"][value="ACCOUNTABLE_CARE"]').then(
+          $input => {
+            $input[0].click();
+          }
+        );
       });
 
     cy.contains('button', 'Next').click();

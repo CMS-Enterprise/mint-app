@@ -319,7 +319,6 @@ const ModelPlanQuestionsForm = ({
         .then(response => {
           if (!response?.errors) {
             setDestinationURL(nextLocation.pathname);
-            blocker?.proceed?.();
           } else {
             setDestinationURL(nextLocation.pathname);
             setIsErrorModalOpen(true);
@@ -333,6 +332,13 @@ const ModelPlanQuestionsForm = ({
 
     return hasChanges;
   });
+
+  // Handle the blocker state
+  useEffect(() => {
+    if (blocker.state === 'blocked' && destinationURL && !isErrorModalOpen) {
+      blocker.proceed();
+    }
+  }, [destinationURL, blocker, isErrorModalOpen]);
 
   /** Below useEffect handles manually sub field value clean up upon parent field change */
   useEffect(() => {
