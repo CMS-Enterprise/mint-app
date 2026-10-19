@@ -258,7 +258,7 @@ func waitForStartupDelay(ctx context.Context, maxDelaySeconds int, logger *zap.L
 
 	delay := time.Duration(delaySeconds.Int64()) * time.Second
 	if delay <= 0 {
-		return nil
+		return ctx.Err()
 	}
 
 	logger.Info("delaying faktory worker startup", zap.Duration("delay", delay))
