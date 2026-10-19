@@ -44,7 +44,7 @@ func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName str
 		false,
 		zero.String{})
 
-	retDocument, err := suite.testConfigs.Store.PlanDocumentCreate(suite.testConfigs.Logger, suite.testConfigs.Principal.UserAccount.ID.String(), document)
+	retDocument, err := storage.PlanDocumentCreate(suite.testConfigs.Store, suite.testConfigs.Logger, suite.testConfigs.Principal.UserAccount.ID.String(), document)
 	suite.NoError(err)
 	return retDocument
 

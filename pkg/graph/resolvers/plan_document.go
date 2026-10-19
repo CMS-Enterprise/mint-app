@@ -14,20 +14,21 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
 
 // PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
-func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *s3.S3Client) (*models.PlanDocument, error) {
-	err := validatePlanDocumentTaskAttribution(store, logger, input.ModelPlanID, input.PlanTaskID)
+func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal authentication.Principal, np sqlutils.NamedPreparer, s3Client *s3.S3Client) (*models.PlanDocument, error) {
+	err := validatePlanDocumentTaskAttribution(np, logger, input.ModelPlanID, input.PlanTaskID)
 	if err != nil {
 		return nil, err
 	}
 
 	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
 
-	err = BaseStructPreCreate(logger, document, principal, store, true)
+	err = BaseStructPreCreate(logger, document, principal, np, true)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +38,7 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 		return &models.PlanDocument{}, err
 	}
 
-	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
+	document, err = storage.PlanDocumentCreate(np, logger, principal.ID(), document)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
@@ -46,8 +47,8 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 }
 
 // PlanDocumentCreateLinked creates a plan document which is a link to an external URL instead of an Uploaded file
-func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, store *storage.Store) (*models.PlanDocument, error) {
-	err := validatePlanDocumentTaskAttribution(store, logger, input.ModelPlanID, input.PlanTaskID)
+func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, np sqlutils.NamedPreparer) (*models.PlanDocument, error) {
+	err := validatePlanDocumentTaskAttribution(np, logger, input.ModelPlanID, input.PlanTaskID)
 	if err != nil {
 		return nil, err
 	}
@@ -69,12 +70,12 @@ func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkIn
 	}
 	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
 
-	err = BaseStructPreCreate(logger, document, principal, store, true)
+	err = BaseStructPreCreate(logger, document, principal, np, true)
 	if err != nil {
 		return nil, err
 	}
 
-	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
+	document, err = storage.PlanDocumentCreate(np, logger, principal.ID(), document)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
@@ -82,12 +83,12 @@ func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkIn
 	return document, nil
 }
 
-func validatePlanDocumentTaskAttribution(store *storage.Store, logger *zap.Logger, modelPlanID uuid.UUID, planTaskID *uuid.UUID) error {
+func validatePlanDocumentTaskAttribution(np sqlutils.NamedPreparer, logger *zap.Logger, modelPlanID uuid.UUID, planTaskID *uuid.UUID) error {
 	if planTaskID == nil {
 		return nil
 	}
 
-	tasks, err := storage.PlanTaskGetByIDLoader(store, logger, []uuid.UUID{*planTaskID})
+	tasks, err := storage.PlanTaskGetByIDLoader(np, logger, []uuid.UUID{*planTaskID})
 	if err != nil {
 		return err
 	}

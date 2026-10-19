@@ -22,20 +22,19 @@ import (
 )
 
 // PlanDocumentCreate creates a plan document
-func (s *Store) PlanDocumentCreate(
+func PlanDocumentCreate(
+	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	principal string,
-	inputDocument *models.PlanDocument) (*models.PlanDocument, error) {
+	inputDocument *models.PlanDocument,
+) (*models.PlanDocument, error) {
 
 	inputDocument.ID = utilityuuid.ValueOrNewUUID(inputDocument.ID)
 	inputDocument.ModifiedBy = nil
 	inputDocument.ModifiedDts = nil
 
-	tx := s.db.MustBegin()
-	defer tx.Rollback()
-
 	retDoc := &models.PlanDocument{}
-	stmt, err := tx.PrepareNamed(sqlqueries.PlanDocument.Create)
+	stmt, err := np.PrepareNamed(sqlqueries.PlanDocument.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
@@ -48,16 +47,11 @@ func (s *Store) PlanDocumentCreate(
 
 	if inputDocument.PlanTaskID != nil {
 		link := models.NewPlanTaskDocumentLink(inputDocument.CreatedBy, *inputDocument.PlanTaskID, retDoc.ID)
-		_, err = PlanTaskDocumentLinkCreate(tx, logger, link)
+		_, err = planTaskDocumentLinkCreate(np, logger, link)
 		if err != nil {
 			return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 		}
 		retDoc.PlanTaskID = inputDocument.PlanTaskID
-	}
-
-	err = tx.Commit()
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 	}
 
 	return retDoc, nil
