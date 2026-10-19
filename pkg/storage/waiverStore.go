@@ -26,7 +26,7 @@ func WaiverUpsert(np sqlutils.NamedPreparer, _ *zap.Logger, waiver *models.Waive
 // WaiverUpsertCollection inserts or updates a collection of waiver rows in a single SQL statement.
 // Accepts a JSON array via JSON_TO_RECORDSET; intended to be called within a transaction.
 func WaiverUpsertCollection(np sqlutils.NamedPreparer, _ *zap.Logger, waivers []*models.Waiver) ([]*models.Waiver, error) {
-	mapSlice := make([]map[string]interface{}, 0, len(waivers))
+	mapSlice := make([]map[string]any, 0, len(waivers))
 	for _, w := range waivers {
 		w.ID = utilityuuid.ValueOrNewUUID(w.ID)
 		wMap, err := models.StructToMap(*w)
@@ -41,17 +41,11 @@ func WaiverUpsertCollection(np sqlutils.NamedPreparer, _ *zap.Logger, waivers []
 		return nil, fmt.Errorf("issue converting waiver collection to JSON: %w", err)
 	}
 
-	stmt, err := np.PrepareNamed(sqlqueries.Waiver.UpsertCollection)
-	if err != nil {
-		return nil, err
-	}
-	defer stmt.Close()
-
-	var results []*models.Waiver
-	if err := stmt.Select(&results, map[string]interface{}{"paramTableJSON": jsonWaivers}); err != nil {
-		return nil, err
-	}
-	return results, nil
+	return sqlutils.SelectProcedure[models.Waiver](
+		np,
+		sqlqueries.Waiver.UpsertCollection,
+		map[string]any{"paramTableJSON": jsonWaivers},
+	)
 }
 
 // WaiverGetByModelPlanIDLoader returns ALL waivers for the given model plan ids (one-to-many).

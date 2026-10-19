@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
@@ -18,6 +19,9 @@ func getWaiverNameForAudit(store *storage.Store, audit *models.AuditChangeWithMo
 	}
 
 	waiver, err := storage.WaiverGetByID(store, nil, audit.PrimaryKey)
+	if sqlutils.IsNoRowsResult(err) {
+		return "", nil
+	}
 	if err != nil {
 		return "", fmt.Errorf("unable to load waiver %s: %w", audit.PrimaryKey, err)
 	}
@@ -27,7 +31,7 @@ func getWaiverNameForAudit(store *storage.Store, audit *models.AuditChangeWithMo
 		return "", fmt.Errorf("unable to load common waiver %s: %w", waiver.CommonWaiverID, err)
 	}
 	if len(commonWaivers) == 0 || commonWaivers[0] == nil {
-		return "", fmt.Errorf("common waiver %s was not found", waiver.CommonWaiverID)
+		return "", nil
 	}
 
 	return commonWaivers[0].Name, nil

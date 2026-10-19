@@ -159,27 +159,25 @@ func TrySendWaiverAssessmentSurveyNotifications(
 			return
 		}
 
-		// Send to MINT team (no footer)
+		// Send to MINT team
 		if err := sendWaiverAssessmentSurveyMarkedCompleteEmail(
 			emailService,
 			emailAddressBook,
 			modelPlan,
 			emailAddressBook.MINTTeamEmail,
 			principal.Account().CommonName,
-			false,
 		); err != nil {
 			logger.Error("waiver assessment survey notification: failed to send MINT team email", zap.Error(err))
 			return
 		}
 
-		// Send to opted-in users (with footer)
+		// Send to opted-in users
 		if err := sendWaiverAssessmentSurveyMarkedCompleteEmails(
 			emailService,
 			emailAddressBook,
 			emailUANs,
 			modelPlan,
 			principal.Account().CommonName,
-			true,
 		); err != nil {
 			logger.Error("waiver assessment survey notification: failed to send user emails", zap.Error(err))
 		}
@@ -190,7 +188,6 @@ func getWaiverAssessmentSurveyMarkedCompleteEmailContent(
 	emailService oddmail.EmailService,
 	modelPlan *models.ModelPlan,
 	markedCompleteByCommonName string,
-	showFooter bool,
 ) (string, string, error) {
 	subjectContent := email.WaiverAssessmentSurveyCompletedSubjectContent{
 		ModelName: modelPlan.ModelName,
@@ -210,9 +207,8 @@ func sendWaiverAssessmentSurveyMarkedCompleteEmail(
 	modelPlan *models.ModelPlan,
 	userEmail string,
 	markedCompleteByCommonName string,
-	showFooter bool,
 ) error {
-	subject, body, err := getWaiverAssessmentSurveyMarkedCompleteEmailContent(emailService, modelPlan, markedCompleteByCommonName, showFooter)
+	subject, body, err := getWaiverAssessmentSurveyMarkedCompleteEmailContent(emailService, modelPlan, markedCompleteByCommonName)
 	if err != nil {
 		return err
 	}
@@ -225,9 +221,8 @@ func sendWaiverAssessmentSurveyMarkedCompleteEmails(
 	receivers []*models.UserAccountAndNotificationPreferences,
 	modelPlan *models.ModelPlan,
 	markedCompleteByCommonName string,
-	showFooter bool,
 ) error {
-	subject, body, err := getWaiverAssessmentSurveyMarkedCompleteEmailContent(emailService, modelPlan, markedCompleteByCommonName, showFooter)
+	subject, body, err := getWaiverAssessmentSurveyMarkedCompleteEmailContent(emailService, modelPlan, markedCompleteByCommonName)
 	if err != nil {
 		return err
 	}
