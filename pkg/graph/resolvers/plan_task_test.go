@@ -589,7 +589,6 @@ func (suite *ResolverSuite) TestPrepareForClearanceActivateIfDue() {
 			suite.testConfigs.Store,
 			suite.testConfigs.Logger,
 			modelPlanID,
-			suite.testConfigs.Store,
 			nil,
 			email.AddressBook{},
 		)
@@ -717,7 +716,6 @@ func (suite *ResolverSuite) TestPlanTaskChangeHistoryPrepareForClearance() {
 			suite.testConfigs.Store,
 			suite.testConfigs.Logger,
 			plan.ID,
-			suite.testConfigs.Store,
 			nil,
 			email.AddressBook{},
 		))
@@ -749,7 +747,6 @@ func (suite *ResolverSuite) TestPlanTaskGetModelPlanIDsDueForPrepareForClearance
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		alreadyToDo.ID,
-		suite.testConfigs.Store,
 		nil,
 		email.AddressBook{},
 	))
@@ -1355,7 +1352,6 @@ func (suite *ResolverSuite) TestTrySendPlanTaskNewAvailableNotificationsEmailRec
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
 		plan.ID,
 		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
 		suite.testConfigs.Principal.Account().ID,
@@ -1419,7 +1415,6 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStateToDoSendsNewAvailableInAppNot
 		models.PlanTaskStateComplete,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,
-		suite.testConfigs.Store,
 		nil,
 		email.AddressBook{},
 	)
@@ -1438,7 +1433,6 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStateToDoSendsNewAvailableInAppNot
 		models.PlanTaskStateToDo,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,
-		suite.testConfigs.Store,
 		nil,
 		email.AddressBook{},
 	)
@@ -1514,7 +1508,6 @@ func (suite *ResolverSuite) TestTrySendPlanTaskCompletedNotificationsEmailRecipi
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
 		plan.ID,
 		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
 		suite.testConfigs.Principal,
@@ -1577,7 +1570,6 @@ func (suite *ResolverSuite) TestTrySendPlanTaskCompletedNotificationsInAppRecipi
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
 		plan.ID,
 		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
 		suite.testConfigs.Principal,

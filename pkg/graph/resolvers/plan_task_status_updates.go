@@ -48,9 +48,8 @@ func UpdatePlanTaskStateOnModelPlanStarted(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 ) error {
-	_, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStateInProgress, principal, principal.Account().ID, store, nil, email.AddressBook{})
+	_, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, models.PlanTaskStateInProgress, principal, principal.Account().ID, nil, email.AddressBook{})
 	return err
 }
 
@@ -61,23 +60,22 @@ func UpdatePlanTaskStateOnModelCleared(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	modelPlanState, err := calculateModelPlanTaskState(np, logger, modelPlanID, store)
+	modelPlanState, err := calculateModelPlanTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
-	if _, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanState, principal, principal.Account().ID, store, emailService, addressBook); err != nil {
+	if _, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanState, principal, principal.Account().ID, emailService, addressBook); err != nil {
 		return err
 	}
 
-	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID, store)
+	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, store, emailService, addressBook)
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, emailService, addressBook)
 	return err
 }
 
@@ -89,24 +87,23 @@ func UpdatePlanTaskStateOnModelNoLongerCleared(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	modelPlanState, err := calculateModelPlanTaskState(np, logger, modelPlanID, store)
+	modelPlanState, err := calculateModelPlanTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
-	if _, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanState, principal, principal.Account().ID, store, emailService, addressBook); err != nil {
+	if _, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanState, principal, principal.Account().ID, emailService, addressBook); err != nil {
 		return err
 	}
 
-	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID, store)
+	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, store, emailService, addressBook)
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, emailService, addressBook)
 	return err
 }
 
@@ -114,7 +111,6 @@ func calculateModelPlanTaskState(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
-	store *storage.Store,
 ) (models.PlanTaskState, error) {
 	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
@@ -148,7 +144,7 @@ func calculateModelPlanTaskState(
 		return "", *jsonErr
 	}
 
-	generalCharacteristics, err := storage.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(store, logger, paramTableJSON)
+	generalCharacteristics, err := storage.PlanGeneralCharacteristicsGetByModelPlanIDLOADER(np, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -156,7 +152,7 @@ func calculateModelPlanTaskState(
 		return models.PlanTaskStateInProgress, nil
 	}
 
-	beneficiaries, err := storage.PlanBeneficiariesGetByModelPlanIDLOADER(store, logger, paramTableJSON)
+	beneficiaries, err := storage.PlanBeneficiariesGetByModelPlanIDLOADER(np, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -164,7 +160,7 @@ func calculateModelPlanTaskState(
 		return models.PlanTaskStateInProgress, nil
 	}
 
-	participantsAndProviders, err := storage.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(store, logger, paramTableJSON)
+	participantsAndProviders, err := storage.PlanParticipantsAndProvidersGetByModelPlanIDLOADER(np, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -172,7 +168,7 @@ func calculateModelPlanTaskState(
 		return models.PlanTaskStateInProgress, nil
 	}
 
-	opsEvalAndLearning, err := storage.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(store, logger, paramTableJSON)
+	opsEvalAndLearning, err := storage.PlanOpsEvalAndLearningGetByModelPlanIDLOADER(np, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -180,7 +176,7 @@ func calculateModelPlanTaskState(
 		return models.PlanTaskStateInProgress, nil
 	}
 
-	payments, err := storage.PlanPaymentsGetByModelPlanIDLOADER(store, logger, paramTableJSON)
+	payments, err := storage.PlanPaymentsGetByModelPlanIDLOADER(np, logger, paramTableJSON)
 	if err != nil {
 		return "", err
 	}
@@ -198,14 +194,13 @@ func UpdatePlanTaskStateOnDataExchangeApproachStarted(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 ) error {
-	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID, store)
+	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, store, nil, email.AddressBook{})
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, nil, email.AddressBook{})
 	return err
 }
 
@@ -216,16 +211,15 @@ func UpdatePlanTaskStateOnDataExchangeApproachComplete(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID, store)
+	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, store, emailService, addressBook)
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, emailService, addressBook)
 	return err
 }
 
@@ -237,16 +231,15 @@ func UpdatePlanTaskStateOnDataExchangeApproachNoLongerComplete(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID, store)
+	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, store, emailService, addressBook)
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, emailService, addressBook)
 	return err
 }
 
@@ -254,7 +247,6 @@ func calculateDataExchangeTaskState(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
-	store *storage.Store,
 ) (models.PlanTaskState, error) {
 	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
@@ -290,14 +282,13 @@ func UpdatePlanTaskStateOnMTOStarted(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 ) error {
-	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID, store)
+	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, store, nil, email.AddressBook{})
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, nil, email.AddressBook{})
 	return err
 }
 
@@ -308,16 +299,15 @@ func UpdatePlanTaskStateOnModelActive(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID, store)
+	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, store, emailService, addressBook)
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, emailService, addressBook)
 	return err
 }
 
@@ -328,16 +318,15 @@ func UpdatePlanTaskStateOnMTODataDeleted(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID, store)
+	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, store, emailService, addressBook)
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, emailService, addressBook)
 	return err
 }
 
@@ -348,16 +337,15 @@ func UpdatePlanTaskStateOnModelNoLongerActive(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID, store)
+	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID)
 	if err != nil {
 		return err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, store, emailService, addressBook)
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, emailService, addressBook)
 	return err
 }
 
@@ -365,7 +353,6 @@ func calculateMTOTaskState(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
-	store *storage.Store,
 ) (models.PlanTaskState, error) {
 	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
@@ -439,7 +426,6 @@ func syncPrepareForClearancePlanTaskState(
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
 	attributedTo uuid.UUID,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
@@ -468,7 +454,6 @@ func syncPrepareForClearancePlanTaskState(
 		newState,
 		principal,
 		attributedTo,
-		store,
 		emailService,
 		addressBook,
 	)
@@ -483,12 +468,11 @@ func applyPrepareForClearancePlanTaskState(
 	newState models.PlanTaskState,
 	principal authentication.Principal,
 	attributedTo uuid.UUID,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
 	if principal != nil {
-		if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, store); err != nil {
+		if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, np); err != nil {
 			return err
 		}
 	}
@@ -521,10 +505,10 @@ func applyPrepareForClearancePlanTaskState(
 	didTransitionToComplete := result.PreviousState != models.PlanTaskStateComplete && newState == models.PlanTaskStateComplete
 
 	if didTransitionToComplete && principal != nil {
-		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, &result.PlanTask, principal, emailService, addressBook)
+		trySendPlanTaskCompletedNotifications(ctx, np, logger, modelPlanID, &result.PlanTask, principal, emailService, addressBook)
 	}
 	if didTransitionToDo {
-		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, &result.PlanTask, attributedTo, emailService, addressBook)
+		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, modelPlanID, &result.PlanTask, attributedTo, emailService, addressBook)
 	}
 
 	return nil
@@ -538,7 +522,6 @@ func UpdatePlanTaskStateOnPrepareForClearanceSync(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
@@ -549,7 +532,6 @@ func UpdatePlanTaskStateOnPrepareForClearanceSync(
 		modelPlanID,
 		principal,
 		constants.GetSystemAccountUUID(),
-		store,
 		emailService,
 		addressBook,
 	)

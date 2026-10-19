@@ -325,31 +325,31 @@ func ModelPlanUpdate(
 	id uuid.UUID,
 	changes map[string]interface{},
 	principal authentication.Principal,
-	store *storage.Store,
+	np sqlutils.NamedPreparer,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) (*models.ModelPlan, error) {
 	// Get existing plan
-	existingPlan, err := storage.ModelPlanGetByID(store, logger, id)
+	existingPlan, err := storage.ModelPlanGetByID(np, logger, id)
 	if err != nil {
 		return nil, err
 	}
 
 	oldStatus := existingPlan.Status
 
-	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, store, true, true)
+	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, np, true, true)
 	if err != nil {
 		return nil, err
 	}
 
-	retPlan, err := storage.ModelPlanUpdate(store, logger, existingPlan)
+	retPlan, err := storage.ModelPlanUpdate(np, logger, existingPlan)
 	if err != nil {
 		return nil, err
 	}
 
 	// Plan tasks: CLEARED model status completes MODEL_PLAN and DATA_EXCHANGE tasks
 	if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
-		updErr := UpdatePlanTaskStateOnModelCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelCleared(ctx, np, logger, retPlan.ID, principal, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -358,7 +358,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress DATA_EXCHANGE and MODEL_PLAN tasks if model status moves backwards from CLEARED
 	if oldStatus == models.ModelStatusCleared &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) {
-		updErr := UpdatePlanTaskStateOnModelNoLongerCleared(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelNoLongerCleared(ctx, np, logger, retPlan.ID, principal, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -366,7 +366,7 @@ func ModelPlanUpdate(
 
 	// Plan tasks: ACTIVE model status completes MTO task
 	if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
-		updErr := UpdatePlanTaskStateOnModelActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelActive(ctx, np, logger, retPlan.ID, principal, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
@@ -374,7 +374,7 @@ func ModelPlanUpdate(
 	// Plan tasks: Regress MTO task if model status moves backwards from ACTIVE
 	if oldStatus == models.ModelStatusActive &&
 		models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusActive) {
-		updErr := UpdatePlanTaskStateOnModelNoLongerActive(ctx, store, logger, retPlan.ID, principal, store, emailService, addressBook)
+		updErr := UpdatePlanTaskStateOnModelNoLongerActive(ctx, np, logger, retPlan.ID, principal, emailService, addressBook)
 		if updErr != nil {
 			return nil, updErr
 		}
