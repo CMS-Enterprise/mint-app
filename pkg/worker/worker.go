@@ -266,7 +266,7 @@ func randomStartupDelay(maxDelaySeconds int, logger *zap.Logger) time.Duration {
 // first. delay <= 0 returns immediately.
 func waitForStartupDelay(ctx context.Context, delay time.Duration) error {
 	if delay <= 0 {
-		return nil
+		return ctx.Err()
 	}
 
 	select {
