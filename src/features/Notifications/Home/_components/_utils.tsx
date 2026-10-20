@@ -156,8 +156,7 @@ export const getNavUrl = (metaData: ActivityMetaData) => {
       return `/models/${metaData.modelPlanID}/read-view/iddoc-questionnaire`;
 
     case 'WaiverAssessmentSurveyMarkedCompleteActivityMeta':
-      // TODO MINT-3729: Update read view route for waiver assessment survey
-      return `/models/${metaData.modelPlanID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about`;
+      return `/models/${metaData.modelPlanID}/read-view/waiver-assessment-survey`;
 
     case 'MTOReadyForReviewActivityMeta':
       return `/models/${metaData.modelPlanID}/read-view/milestones`;
