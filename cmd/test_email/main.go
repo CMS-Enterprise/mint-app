@@ -213,7 +213,7 @@ func sendPlanDiscussionCreatedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{receiverEmail},
+		&receiverEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -246,7 +246,7 @@ func sendModelPlanCreatedEmailTest(
 
 	err = emailService.Send(
 		"test@mint.cms.gov",
-		[]string{"test@mint.cms.gov"},
+		new("test@mint.cms.gov"),
 		nil,
 		emailSubject,
 		"text/html",
@@ -295,7 +295,7 @@ func sendCTATSubmittedTestEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{bodyContent.RequesterEmail},
+		&bodyContent.RequesterEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -353,7 +353,7 @@ func sendCTATUpdateTestEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{bodyContent.RequesterEmail},
+		&bodyContent.RequesterEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -402,7 +402,7 @@ func sendCTATSubmittedAdminTestEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.CTATTeamEmail},
+		&addressBook.CTATTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -463,7 +463,7 @@ func sendCTATUpdateAdminTestEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.CTATTeamEmail},
+		&addressBook.CTATTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -474,7 +474,7 @@ func sendCTATUpdateAdminTestEmail(
 	if len(bodyContent.AssignedTeamMemberEmail) > 0 {
 		err = emailService.Send(
 			addressBook.DefaultSender,
-			[]string{bodyContent.AssignedTeamMemberEmail},
+			&bodyContent.AssignedTeamMemberEmail,
 			nil,
 			emailSubject,
 			"text/html",
@@ -730,7 +730,14 @@ func sendCollaboratorAddedEmailTest(
 	})
 	noErr(err)
 
-	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		&receiverEmail,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
 	noErr(err)
 }
 
@@ -925,7 +932,7 @@ func sendTestIddocQuestionnaireMarkedCompleteEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",

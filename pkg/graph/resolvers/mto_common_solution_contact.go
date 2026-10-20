@@ -453,7 +453,7 @@ func sendSolutionContactWelcomeEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{contact.Email},
+		&contact.Email,
 		nil,
 		emailSubject,
 		"text/html",
@@ -493,7 +493,7 @@ func sendSolutionContactMintMailboxPOCAdded(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -534,7 +534,7 @@ func sendSolutionContactMintMailboxPOCEdited(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -573,7 +573,7 @@ func sendSolutionContactMintMailboxPOCRemoved(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",

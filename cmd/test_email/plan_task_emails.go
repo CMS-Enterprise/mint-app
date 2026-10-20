@@ -36,7 +36,7 @@ func sendPlanTaskNewAvailableTestEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.DefaultSender},
+		&addressBook.DefaultSender,
 		nil,
 		emailSubject,
 		"text/html",
@@ -69,7 +69,7 @@ func sendPlanTaskCompletedTestEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.DefaultSender},
+		&addressBook.DefaultSender,
 		nil,
 		emailSubject,
 		"text/html",
