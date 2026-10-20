@@ -40,6 +40,9 @@ var unTranslatedTables = []models.TableName{
 	models.TNKeyContact,
 	models.TNKeyContactCategory,
 
+	// Suggested waivers are audited but not shown in translated change history
+	models.TNSuggestedWaiver,
+
 	// we don't translate CTAT tables
 	models.TNCTATRequest,
 	models.TNCTATRequestDocument,
