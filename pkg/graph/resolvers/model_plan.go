@@ -621,7 +621,15 @@ func ModelPlanShare(
 
 	// Send email
 	if len(receiverEmails) > 0 {
-		err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			nil,
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+			oddmail.WithBCC(receiverEmails),
+		)
 		if err != nil {
 			return false, fmt.Errorf("failed to send email: %w", err)
 		}

@@ -332,7 +332,15 @@ func sendPlanDiscussionTaggedSolutionEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, pocEmailAddress, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		nil,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(pocEmailAddress),
+	)
 	if err != nil {
 		return err
 	}
@@ -372,7 +380,15 @@ func sendPlanDiscussionCreatedEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		nil,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(receiverEmails),
+	)
 	if err != nil {
 		return err
 	}

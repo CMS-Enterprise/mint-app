@@ -542,11 +542,12 @@ func sendModelPlanShareTest(
 	// Send email
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		receiverEmails,
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
 		emailBody,
+		oddmail.WithBCC(receiverEmails),
 	)
 	noErr(err)
 }
@@ -663,11 +664,12 @@ func sendDateChangedEmailsTest(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		addressBook.ModelPlanDateChangedRecipients,
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
 		emailBody,
+		oddmail.WithBCC(addressBook.ModelPlanDateChangedRecipients),
 	)
 	noErr(err)
 }
@@ -699,11 +701,12 @@ func sendCustomTimelineDateCreatedEmailTest(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		addressBook.ModelPlanDateChangedRecipients,
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
 		emailBody,
+		oddmail.WithBCC(addressBook.ModelPlanDateChangedRecipients),
 	)
 	noErr(err)
 }
@@ -846,11 +849,12 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseInClearance(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		addressBook.ModelPlanDateChangedRecipients,
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
 		emailBody,
+		oddmail.WithBCC(addressBook.ModelPlanDateChangedRecipients),
 	)
 	noErr(err)
 }
@@ -886,11 +890,12 @@ func sendModelPlanSuggestedPhaseEmailsTestWithPhaseIcipComplete(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		addressBook.ModelPlanDateChangedRecipients,
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
 		emailBody,
+		oddmail.WithBCC(addressBook.ModelPlanDateChangedRecipients),
 	)
 	noErr(err)
 }
