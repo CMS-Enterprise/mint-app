@@ -95,7 +95,7 @@ func (suite *WorkerSuite) TestAggregatedDigestEmail() {
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{addressBook.MINTTeamEmail}),
+			gomock.Eq(&addressBook.MINTTeamEmail),
 			gomock.Any(),
 			gomock.Eq(emailSubject),
 			gomock.Any(),

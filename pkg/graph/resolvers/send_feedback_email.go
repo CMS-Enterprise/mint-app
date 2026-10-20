@@ -40,7 +40,7 @@ func SendFeedbackEmail(
 		return false, err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, []string{addressBook.DevTeamEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, &addressBook.DevTeamEmail, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return false, err
 	}

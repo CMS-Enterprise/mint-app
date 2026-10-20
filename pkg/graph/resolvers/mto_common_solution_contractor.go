@@ -258,7 +258,7 @@ func sendContractorAddedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -296,7 +296,7 @@ func sendContractorEditedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -334,7 +334,7 @@ func sendContractorRemovedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",

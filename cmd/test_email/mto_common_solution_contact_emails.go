@@ -53,7 +53,7 @@ func sendMTOCommonSolutionSolutionContactWelcomeEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, []string{contact.Email}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, &contact.Email, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}
@@ -105,7 +105,7 @@ func sendMTOCommonSolutionSolutionContactAddedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{contact.Email},
+		&contact.Email,
 		nil,
 		emailSubject,
 		"text/html",
@@ -162,7 +162,7 @@ func sendMTOCommonSolutionSolutionContactEditedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{contact.Email},
+		&contact.Email,
 		nil,
 		emailSubject,
 		"text/html",
@@ -215,7 +215,7 @@ func sendMTOCommonSolutionSolutionContactRemovedEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, []string{contact.Email}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(addressBook.DefaultSender, &contact.Email, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}
@@ -264,7 +264,7 @@ func sendMTOCommonSolutionContractorAddedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"},
+		models.StringPointer("test@mint.cms.gov"),
 		nil,
 		emailSubject,
 		"text/html",
@@ -317,7 +317,7 @@ func sendMTOCommonSolutionContractorEditedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"},
+		models.StringPointer("test@mint.cms.gov"),
 		nil,
 		emailSubject,
 		"text/html",
@@ -371,7 +371,7 @@ func sendMTOCommonSolutionContractorRemovedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"},
+		models.StringPointer("test@mint.cms.gov"),
 		nil,
 		emailSubject,
 		"text/html",
@@ -425,7 +425,7 @@ func sendMTOCommonSolutionSystemOwnerAddedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"},
+		models.StringPointer("test@mint.cms.gov"),
 		nil,
 		emailSubject,
 		"text/html",
@@ -482,7 +482,7 @@ func sendMTOCommonSolutionSystemOwnerEditedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"},
+		models.StringPointer("test@mint.cms.gov"),
 		nil,
 		emailSubject,
 		"text/html",
@@ -536,7 +536,7 @@ func sendMTOCommonSolutionSystemOwnerRemovedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"},
+		models.StringPointer("test@mint.cms.gov"),
 		nil,
 		emailSubject,
 		"text/html",

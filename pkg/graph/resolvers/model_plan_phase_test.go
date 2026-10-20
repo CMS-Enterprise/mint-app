@@ -43,7 +43,7 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 		EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq(emailRecipients),
+			gomock.Nil(), // To
 			gomock.Nil(), // CC
 			gomock.Any(), // emailSubject - actual template content
 			gomock.Eq("text/html"),

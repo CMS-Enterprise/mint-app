@@ -62,7 +62,7 @@ func SendDataExchangeApproachMarkedCompleteEmailNotification(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{userEmail},
+		&userEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -101,7 +101,7 @@ func SendDataExchangeApproachMarkedCompleteEmailNotifications(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{},
+		nil,
 		nil,
 		emailSubject,
 		"text/html",

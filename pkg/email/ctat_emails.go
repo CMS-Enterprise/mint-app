@@ -299,7 +299,7 @@ func SendCTATSubmittedEmails(
 
 	if err := emailService.Send(
 		addressBook.DefaultSender,
-		[]string{bodyContent.RequesterEmail},
+		&bodyContent.RequesterEmail,
 		nil,
 		requesterEmailSubject,
 		"text/html",
@@ -320,7 +320,7 @@ func SendCTATSubmittedEmails(
 
 	return emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.CTATTeamEmail},
+		&addressBook.CTATTeamEmail,
 		nil,
 		adminEmailSubject,
 		"text/html",
@@ -446,7 +446,7 @@ func SendCTATUpdateEmails(
 
 		if err := emailService.Send(
 			addressBook.DefaultSender,
-			[]string{bodySummary.RequesterEmail},
+			&bodySummary.RequesterEmail,
 			nil,
 			requesterEmailSubject,
 			"text/html",
@@ -477,7 +477,7 @@ func SendCTATUpdateEmails(
 	// send email to CTAT team inbox
 	if err := emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.CTATTeamEmail},
+		&addressBook.CTATTeamEmail,
 		nil,
 		adminEmailSubject,
 		"text/html",
@@ -490,7 +490,7 @@ func SendCTATUpdateEmails(
 		// send email to the assigned admin on the CTAT request
 		if err := emailService.Send(
 			addressBook.DefaultSender,
-			[]string{assignedAdminAccount.Email},
+			&assignedAdminAccount.Email,
 			nil,
 			adminEmailSubject,
 			"text/html",

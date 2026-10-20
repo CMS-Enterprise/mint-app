@@ -305,7 +305,7 @@ func sendModelPlanCreatedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{},
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
