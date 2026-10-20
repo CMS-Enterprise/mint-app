@@ -55,7 +55,7 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 			gomock.Any(), // emailBody - actual template content
 			gomock.Any(),
 		).
-		DoAndReturn(func(_ string, _, _ *string, _, _ string, opts ...oddmail.EmailOption) error {
+		DoAndReturn(func(_ string, _, _ *string, _, _, _ string, opts ...oddmail.EmailOption) error {
 			var options oddmail.EmailOptions
 			for _, opt := range opts {
 				opt(&options)
@@ -280,7 +280,7 @@ func (suite *ResolverSuite) TestTryNotificationSendIncorrectModelStatus_WithEmai
 		gomock.Eq("text/html"),
 		gomock.Any(),
 		gomock.Any(),
-	).DoAndReturn(func(_ string, _, _ *string, _, _ string, opts ...oddmail.EmailOption) error {
+	).DoAndReturn(func(_ string, _, _ *string, _, _, _ string, opts ...oddmail.EmailOption) error {
 		var options oddmail.EmailOptions
 		for _, opt := range opts {
 			opt(&options)
