@@ -657,7 +657,7 @@ const waiverAssessmentSurveyMisc = {
     ],
     whosInvolved: 'Who’s involved',
     whosInvolvedDescription:
-      'Model Leads (with the assistance of other model team members as necessary), will work to complete this survey and help determine which waivers are needed for this model. This will help the Front Office, group leadership, and other MINT users understand which waivers you are utilizing and understands the reasons why you are not using other available waivers. If you have any questions, please contact Grace Goodhew or Megan Hyde in LDG, or email the MINT Team.',
+      'Model Leads (with the assistance of other model team members as necessary), will work to complete this survey and help determine which waivers are needed for this model. This will help the Front Office, group leadership, and other MINT users understand which waivers you are utilizing and understands the reasons why you are not using other available waivers. If you have any questions, please email the MINT Team.',
     modelTeam: 'Model team',
     modelTeamDescription:
       'Other model team members responsible for waiver activities should work with the Model Lead to complete the questions in this survey.',

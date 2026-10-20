@@ -44,6 +44,7 @@ const IddocQuestionnaire = () => {
       <StickyModelNameWrapper
         triggerRef={headerRef}
         sectionHeading={iddocQuestionnaireMiscT('heading')}
+        sectionHeadingOnly
         modelName={modelName}
         abbreviation={abbreviation || undefined}
       />

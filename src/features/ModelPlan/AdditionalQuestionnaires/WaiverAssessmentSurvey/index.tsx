@@ -56,6 +56,7 @@ const WaiverAssessmentSurvey = () => {
       <StickyModelNameWrapper
         triggerRef={headerRef}
         sectionHeading={waiverAssessmentSurveyMiscT('heading')}
+        sectionHeadingOnly
         modelName={modelName}
         abbreviation={abbreviation || undefined}
       />
