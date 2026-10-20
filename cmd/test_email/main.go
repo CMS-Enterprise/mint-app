@@ -730,7 +730,14 @@ func sendCollaboratorAddedEmailTest(
 	})
 	noErr(err)
 
-	err = emailService.Send(addressBook.DefaultSender, &receiverEmail, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		&receiverEmail,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
 	noErr(err)
 }
 

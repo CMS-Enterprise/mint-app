@@ -53,7 +53,14 @@ func sendMTOCommonSolutionSolutionContactWelcomeEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, &contact.Email, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		&contact.Email,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
 	if err != nil {
 		return err
 	}
@@ -215,7 +222,14 @@ func sendMTOCommonSolutionSolutionContactRemovedEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, &contact.Email, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		&contact.Email,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
 	if err != nil {
 		return err
 	}

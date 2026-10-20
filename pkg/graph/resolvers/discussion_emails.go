@@ -61,7 +61,14 @@ func sendDiscussionReplyOriginatorEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, &originatorEmail, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		&originatorEmail,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
 	if err != nil {
 		return err
 	}
