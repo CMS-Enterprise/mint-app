@@ -221,21 +221,30 @@ export const commonWaiversMockData: GetAllCommonWaiversQuery['commonWaivers'] =
       id: '123',
       name: 'super long survey name Waiver 1',
       description: 'Description of Waiver 1',
-      waiverType: CommonWaiverType.MEDICAID_PAYMENT
+      waiverType: CommonWaiverType.MEDICAID_PAYMENT,
+      waiverFocus: 'Focus 1',
+      hasStandardizationEffort: true,
+      hasClaimsDataOrRREGAnalysis: 'Yes'
     },
     {
       __typename: 'CommonWaiver',
       id: '456',
       name: 'short Waiver 2',
       description: 'Description of Waiver 2',
-      waiverType: CommonWaiverType.MEDICARE_PAYMENT
+      waiverType: CommonWaiverType.MEDICARE_PAYMENT,
+      waiverFocus: 'Focus 2',
+      hasStandardizationEffort: false,
+      hasClaimsDataOrRREGAnalysis: 'Yes'
     },
     {
       __typename: 'CommonWaiver',
       id: '789',
       name: 'Waiver 3',
       description: 'Description of Waiver 3',
-      waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE
+      waiverType: CommonWaiverType.PROGRAM_MEDICARE_BE,
+      waiverFocus: 'Focus 3',
+      hasStandardizationEffort: false,
+      hasClaimsDataOrRREGAnalysis: 'No'
     }
   ];
 

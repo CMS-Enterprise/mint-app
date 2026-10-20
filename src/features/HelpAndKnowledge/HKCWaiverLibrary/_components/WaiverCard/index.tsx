@@ -40,9 +40,8 @@ const WaiverCard = ({ waiver }: { waiver: CommonWaiverData }) => {
     >
       <CardHeader>
         <p className="line-height-body-1 font-body-sm text-base-dark margin-bottom-05">
-          {waiverAssessmentSurveyMiscT(
-            `${waiver.waiverType ?? 'UNKNOWN'}.shortName`
-          )}
+          {waiver.waiverType &&
+            waiverAssessmentSurveyMiscT(`${waiver.waiverType}.shortName`)}
         </p>
 
         <h3 className="line-height-normal margin-0">{waiver.name}</h3>

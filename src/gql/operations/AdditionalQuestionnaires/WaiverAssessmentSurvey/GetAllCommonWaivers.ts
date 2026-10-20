@@ -7,6 +7,9 @@ export default gql(/* GraphQL */ `
       name
       description
       waiverType
+      waiverFocus
+      hasStandardizationEffort
+      hasClaimsDataOrRREGAnalysis
     }
   }
 `);
