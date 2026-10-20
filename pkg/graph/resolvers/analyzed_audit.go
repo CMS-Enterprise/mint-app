@@ -371,6 +371,9 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 			logger.Warn("audit or audit.Fields is nil in audit entry", zap.Int("index", index))
 			return "", false
 		}
+		if audit.TableName != models.TNPlanDataExchangeApproach {
+			return "", false
+		}
 
 		keys := lo.Keys(audit.Fields)
 		if lo.Contains(keys, "status") {
@@ -387,6 +390,9 @@ func analyzeSectionsAudits[T logging.ChainableErrorOrWarnLogger[T]](audits []*mo
 	iddocQuestionnaireMarkedComplete := lo.FilterMap(filteredAudits, func(audit *models.AuditChange, index int) (models.TableName, bool) {
 		if audit == nil || audit.Fields == nil {
 			logger.Warn("audit or audit.Fields is nil in audit entry", zap.Int("index", index))
+			return "", false
+		}
+		if audit.TableName != models.TNIddocQuestionnaire {
 			return "", false
 		}
 

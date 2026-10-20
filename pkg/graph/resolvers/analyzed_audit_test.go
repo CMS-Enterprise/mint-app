@@ -39,6 +39,12 @@ func TestAnalyzeSectionsAuditsMarksWaiverAssessmentSurveyComplete(t *testing.T) 
 	if !sections.WaiverAssessmentSurveyMarkedComplete {
 		t.Error("waiver assessment survey completion was not detected")
 	}
+	if sections.DataExchangeApproachMarkedComplete {
+		t.Error("waiver assessment survey completion was mistaken for data exchange completion")
+	}
+	if sections.IDDOCQuestionnaireMarkedComplete {
+		t.Error("waiver assessment survey completion was mistaken for IDDOC completion")
+	}
 }
 
 func (suite *ResolverSuite) TestAnalyzedAuditLoader() {
