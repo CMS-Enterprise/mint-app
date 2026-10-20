@@ -178,7 +178,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, userNam
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq(models.StringPointer(collaboratorInput.UserName+".doe@local.fake")), //this comes from the stub user info function
+			gomock.Eq(new(collaboratorInput.UserName+".doe@local.fake")), //this comes from the stub user info function
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
 			gomock.Any(),

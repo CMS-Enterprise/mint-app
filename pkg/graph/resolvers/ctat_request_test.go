@@ -662,7 +662,7 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailRoutesNotesOnlyAndMixedChange
 		EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq(models.StringPointer("test.ctat.team@mint.dev.cms.gov")),
+			gomock.Eq(new("test.ctat.team@mint.dev.cms.gov")),
 			gomock.Nil(),
 			gomock.Any(),
 			gomock.Eq("text/html"),
@@ -674,7 +674,7 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailRoutesNotesOnlyAndMixedChange
 		EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq(models.StringPointer(assignedAdminPrincipal.Account().Email)),
+			gomock.Eq(new(assignedAdminPrincipal.Account().Email)),
 			gomock.Nil(),
 			gomock.Any(),
 			gomock.Eq("text/html"),
@@ -709,12 +709,12 @@ func (suite *ResolverSuite) TestSendCTATUpdateEmailRoutesNotesOnlyAndMixedChange
 	).Times(1)
 	mockEmailService.EXPECT().Send(
 		gomock.Eq("unit-test-execution@mint.cms.gov"),
-		gomock.Eq(models.StringPointer("test.ctat.team@mint.dev.cms.gov")),
+		gomock.Eq(new("test.ctat.team@mint.dev.cms.gov")),
 		gomock.Nil(), gomock.Any(), gomock.Eq("text/html"), gomock.Any(),
 	).Times(1)
 	mockEmailService.EXPECT().Send(
 		gomock.Eq("unit-test-execution@mint.cms.gov"),
-		gomock.Eq(models.StringPointer(assignedAdminPrincipal.Account().Email)),
+		gomock.Eq(new(assignedAdminPrincipal.Account().Email)),
 		gomock.Nil(), gomock.Any(), gomock.Eq("text/html"), gomock.Any(),
 	).Times(1)
 
