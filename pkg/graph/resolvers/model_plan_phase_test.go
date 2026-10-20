@@ -34,6 +34,11 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 	suite.NoError(err)
 
 	emailRecipients := []string{"TEST1@local.mock", "TEST2@local.mock"}
+	mintTeamEmail := "MINT-team@local.mock"
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+		MINTTeamEmail: mintTeamEmail,
+	}
 	phaseSuggestion := models.PhaseSuggestion{
 		Phase:             models.ModelPhaseIcipComplete,
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
@@ -50,11 +55,15 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 			gomock.Any(), // emailBody - actual template content
 			gomock.Any(),
 		).
+		DoAndReturn(func(_ string, _, _ *string, _, _ string, opts ...oddmail.EmailOption) error {
+			var options oddmail.EmailOptions
+			for _, opt := range opts {
+				opt(&options)
+			}
+			suite.Equal([]string{mintTeamEmail, emailRecipients[0], emailRecipients[1]}, options.BccAddresses)
+			return nil
+		}).
 		Times(1)
-
-	addressBook := email.AddressBook{
-		DefaultSender: "unit-test-execution@mint.cms.gov",
-	}
 
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress: "http://localhost:3005",
