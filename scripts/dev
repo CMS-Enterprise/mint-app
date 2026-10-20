@@ -190,6 +190,11 @@ namespace :up do
 
   desc "Starts all services in the foreground except the frontend (runs more quickly, if frontend isn't needed)"
   namespace :backend do
+    desc "Starts backend services with prebuilt images for CI"
+    task :ci do
+      up(false, "-d", "--no-build", ci:true)
+    end
+
     task :watch do
       up(false)
     end
