@@ -246,7 +246,7 @@ func sendModelPlanCreatedEmailTest(
 
 	err = emailService.Send(
 		"test@mint.cms.gov",
-		models.StringPointer("test@mint.cms.gov"),
+		new("test@mint.cms.gov"),
 		nil,
 		emailSubject,
 		"text/html",
