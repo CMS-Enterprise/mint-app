@@ -171,9 +171,9 @@ func PlanDocumentsReadByPlanTaskID(logger *zap.Logger, task *models.PlanTask, pr
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
-func PlanDocumentDelete(logger *zap.Logger, s3Client *s3.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*int, error) {
+func PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*int, error) {
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*int, error) {
-		existingdoc, err := storage.PlanDocumentRead(tx, logger, s3Client, id)
+		existingdoc, err := storage.PlanDocumentGetByIDNoS3Check(tx, logger, id)
 		if err != nil {
 			return nil, err
 		}
