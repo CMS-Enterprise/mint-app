@@ -84,7 +84,7 @@ func DailyDigestNotificationSend[T logging.ChainableErrorOrWarnLogger[T]](
 	// Send generated email
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{recipientEmail},
+		&recipientEmail,
 		nil,
 		emailSubject,
 		"text/html",

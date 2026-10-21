@@ -144,11 +144,12 @@ func sendCustomTimelineDateCreatedEmails(
 		go func() {
 			if err := emailService.Send(
 				addressBook.DefaultSender,
-				addressBook.ModelPlanDateChangedRecipients,
+				nil,
 				nil,
 				emailSubject,
 				"text/html",
 				emailBody,
+				oddmail.WithBCC(addressBook.ModelPlanDateChangedRecipients),
 			); err != nil {
 				logger.Error("problem sending custom timeline date created email to recipients",
 					zap.Error(err),

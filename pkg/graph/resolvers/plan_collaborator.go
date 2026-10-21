@@ -119,7 +119,14 @@ func sendCollaboratorAddedEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		&receiverEmail,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
 	if err != nil {
 		return err
 	}

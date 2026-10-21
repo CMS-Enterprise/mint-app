@@ -272,7 +272,7 @@ func SendMTOReadyForReviewEmailNotification(
 	}
 	return emailService.Send(
 		addressBook.DefaultSender,
-		[]string{userEmail},
+		&userEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -312,7 +312,7 @@ func SendMTOReadyForReviewEmailNotifications(
 
 	return emailService.Send(
 		addressBook.DefaultSender,
-		[]string{},
+		nil,
 		nil,
 		emailSubject,
 		"text/html",

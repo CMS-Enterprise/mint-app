@@ -1324,14 +1324,14 @@ func (suite *ResolverSuite) TestTrySendPlanTaskNewAvailableNotificationsEmailRec
 	mockEmailService.EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq([]string{}),
+			gomock.Nil(),
 			gomock.Nil(),
 			gomock.Any(),
 			gomock.Eq("text/html"),
 			gomock.Any(),
 			gomock.Any(),
 		).
-		DoAndReturn(func(_ string, _, _ []string, _, _ string, body string, opts ...oddmail.EmailOption) error {
+		DoAndReturn(func(_ string, _, _ *string, _, _ string, body string, opts ...oddmail.EmailOption) error {
 			var emailOptions oddmail.EmailOptions
 			for _, opt := range opts {
 				opt(&emailOptions)
@@ -1480,14 +1480,14 @@ func (suite *ResolverSuite) TestTrySendPlanTaskCompletedNotificationsEmailRecipi
 	mockEmailService.EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq([]string{}),
+			gomock.Nil(),
 			gomock.Nil(),
 			gomock.Any(),
 			gomock.Eq("text/html"),
 			gomock.Any(),
 			gomock.Any(),
 		).
-		DoAndReturn(func(_ string, _, _ []string, _, _ string, body string, opts ...oddmail.EmailOption) error {
+		DoAndReturn(func(_ string, _, _ *string, _, _ string, body string, opts ...oddmail.EmailOption) error {
 			var emailOptions oddmail.EmailOptions
 			for _, opt := range opts {
 				opt(&emailOptions)

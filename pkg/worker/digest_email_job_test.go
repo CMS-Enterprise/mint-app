@@ -202,7 +202,7 @@ func (suite *WorkerSuite) TestDigestEmailJobIntegration() {
 			EXPECT().
 			Send(
 				gomock.Any(),
-				gomock.Eq([]string{collaboratorAccount.Email}),
+				gomock.Eq(&collaboratorAccount.Email),
 				gomock.Any(),
 				gomock.Any(),
 				gomock.Any(),

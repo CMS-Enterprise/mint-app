@@ -323,7 +323,7 @@ func trySendPlanTaskNewAvailableNotifications(
 			go func() {
 				err := emailService.Send(
 					addressBook.DefaultSender,
-					[]string{},
+					nil,
 					nil,
 					emailSubject,
 					"text/html",
@@ -346,7 +346,7 @@ func trySendPlanTaskNewAvailableNotifications(
 			go func() {
 				err := emailService.Send(
 					addressBook.DefaultSender,
-					[]string{},
+					nil,
 					nil,
 					emailSubject,
 					"text/html",
@@ -443,7 +443,7 @@ func trySendPlanTaskCompletedNotifications(
 			go func() {
 				err := emailService.Send(
 					addressBook.DefaultSender,
-					[]string{},
+					nil,
 					nil,
 					emailSubject,
 					"text/html",
@@ -467,7 +467,7 @@ func trySendPlanTaskCompletedNotifications(
 			go func() {
 				err := emailService.Send(
 					addressBook.DefaultSender,
-					[]string{},
+					nil,
 					nil,
 					emailSubject,
 					"text/html",

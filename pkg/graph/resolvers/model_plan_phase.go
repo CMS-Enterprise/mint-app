@@ -109,12 +109,12 @@ func TrySendEmailForPhaseSuggestion[T logging.ChainableErrorOrWarnLogger[T]](
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		emailRecipients,
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
 		emailBody,
-		oddmail.WithBCC([]string{addressBook.MINTTeamEmail}),
+		oddmail.WithBCC(append([]string{addressBook.MINTTeamEmail}, emailRecipients...)),
 	)
 	if err != nil {
 		err = fmt.Errorf("unable to send email for model plan id %s. Err %w", modelPlan.ID, err)

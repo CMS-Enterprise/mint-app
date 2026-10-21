@@ -100,7 +100,7 @@ func CreateMTOCommonMilestone(
 
 		err = emailService.Send(
 			addressBook.DefaultSender,
-			[]string{addressBook.MINTTeamEmail},
+			&addressBook.MINTTeamEmail,
 			nil,
 			emailSubject,
 			"text/html",
@@ -200,7 +200,7 @@ func UpdateMTOCommonMilestone(
 
 		err = emailService.Send(
 			addressBook.DefaultSender,
-			[]string{addressBook.MINTTeamEmail},
+			&addressBook.MINTTeamEmail,
 			nil,
 			emailSubject,
 			"text/html",
@@ -259,7 +259,7 @@ func ArchiveMTOCommonMilestone(
 
 		err = emailService.Send(
 			addressBook.DefaultSender,
-			[]string{addressBook.MINTTeamEmail},
+			&addressBook.MINTTeamEmail,
 			nil,
 			emailSubject,
 			"text/html",

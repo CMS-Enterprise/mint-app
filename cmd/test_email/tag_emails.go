@@ -100,7 +100,14 @@ func sendPlanDiscussionTaggedUserEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, []string{taggedUser.Email}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		&taggedUser.Email,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
 	if err != nil {
 		return err
 	}
@@ -203,7 +210,15 @@ func sendPlanDiscussionTaggedSolutionEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, pocEmailAddress, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		nil,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(pocEmailAddress),
+	)
 	if err != nil {
 		return err
 	}

@@ -60,8 +60,8 @@ func (g GoSimpleMailService) setEmailBody(email *mail.Email, contentType string,
 // Send uses the GoSimpleMailService to dispatch an email with the provided settings
 func (g GoSimpleMailService) Send(
 	from string,
-	toAddresses []string,
-	ccAddresses []string,
+	toAddress *string,
+	ccAddress *string,
 	subject string,
 	contentType string,
 	body string,
@@ -74,12 +74,12 @@ func (g GoSimpleMailService) Send(
 	email.SetFrom(from).
 		SetSubject(subject)
 
-	for _, toAddress := range toAddresses {
-		email.AddTo(toAddress)
+	if toAddress != nil {
+		email.AddTo(*toAddress)
 	}
 
-	for _, ccAddress := range ccAddresses {
-		email.AddCc(ccAddress)
+	if ccAddress != nil {
+		email.AddCc(*ccAddress)
 	}
 
 	var options EmailOptions
