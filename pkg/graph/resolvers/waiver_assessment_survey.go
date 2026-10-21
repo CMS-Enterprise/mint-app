@@ -212,7 +212,14 @@ func sendWaiverAssessmentSurveyMarkedCompleteEmail(
 	if err != nil {
 		return err
 	}
-	return emailService.Send(addressBook.DefaultSender, []string{userEmail}, nil, subject, "text/html", body)
+	return emailService.Send(
+		addressBook.DefaultSender,
+		&userEmail,
+		nil,
+		subject,
+		"text/html",
+		body,
+	)
 }
 
 func sendWaiverAssessmentSurveyMarkedCompleteEmails(
@@ -229,5 +236,13 @@ func sendWaiverAssessmentSurveyMarkedCompleteEmails(
 	receiverEmails := lo.Map(receivers, func(pref *models.UserAccountAndNotificationPreferences, _ int) string {
 		return pref.Email
 	})
-	return emailService.Send(addressBook.DefaultSender, []string{}, nil, subject, "text/html", body, oddmail.WithBCC(receiverEmails))
+	return emailService.Send(
+		addressBook.DefaultSender,
+		nil,
+		nil,
+		subject,
+		"text/html",
+		body,
+		oddmail.WithBCC(receiverEmails),
+	)
 }

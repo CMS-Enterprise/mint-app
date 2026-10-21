@@ -32,7 +32,7 @@ func sendTestWaiverAssessmentSurveyMarkedCompleteEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
