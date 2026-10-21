@@ -3,10 +3,13 @@ FROM golang:1.27.3 AS base
 WORKDIR /mint/
 
 # Copy certificates
+# The final image copies this stage's CA bundle (not distroless's), so upgrade
+# ca-certificates explicitly to pick up trust store fixes even if this base
+# image tag is stale, then add our custom CAs on top.
 COPY config/tls/*.crt /usr/local/share/ca-certificates/
-RUN update-ca-certificates && \
-	apt update && \
-	apt install -y tzdata && \
+RUN apt-get update && \
+	apt-get install -y --no-install-recommends ca-certificates tzdata && \
+	update-ca-certificates && \
 	rm -rf /var/lib/apt/lists/*
 
 # Copy go.mod and go.sum files to the workspace and download dependencies
