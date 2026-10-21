@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"fmt"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -38,6 +40,10 @@ func PlanTDLUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interfac
 		return nil, err
 	}
 
+	if existingPlanTDL == nil {
+		return nil, fmt.Errorf("plan TDL %s not found", id)
+	}
+
 	err = BaseStructPreUpdate(logger, existingPlanTDL, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
@@ -53,6 +59,9 @@ func PlanTDLDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Pr
 		existingPlanCrTdl, err := storage.PlanTDLGetByID(tx, logger, id)
 		if err != nil {
 			return nil, err
+		}
+		if existingPlanCrTdl == nil {
+			return nil, fmt.Errorf("plan TDL %s not found", id)
 		}
 
 		err = BaseStructPreDelete(logger, existingPlanCrTdl, principal, tx, true)

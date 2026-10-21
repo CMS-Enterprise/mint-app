@@ -72,16 +72,16 @@ func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkIn
 		if u.Scheme != "http" && u.Scheme != "https" {
 			return nil, fmt.Errorf(" url does not have a valid scheme. It should begin with http or https. url : %s ", input.URL)
 		}
-		document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
+		createdDoc := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
 
-		err = BaseStructPreCreate(logger, document, principal, tx, true)
+		err = BaseStructPreCreate(logger, createdDoc, principal, tx, true)
 		if err != nil {
 			return nil, err
 		}
 
-		document, err = storage.PlanDocumentCreate(tx, logger, principal.ID(), document)
+		document, err := storage.PlanDocumentCreate(tx, logger, principal.ID(), createdDoc)
 		if err != nil {
-			return nil, genericmodel.HandleModelCreationError(logger, err, document)
+			return nil, genericmodel.HandleModelCreationError(logger, err, createdDoc)
 		}
 
 		return document, nil
