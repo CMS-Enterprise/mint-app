@@ -136,6 +136,26 @@ const tasks = {
       primaryAction: 'Go to approach'
     }
   },
+  [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: {
+    copy: 'CMMI Leadership assumes that new models will use program and payment waivers unless justified otherwise. This mandatory survey helps determine which models will use which waivers, which specific waivers are most appropriate for each model, ensures proper justification for waiver selections, and identifies instances where standard CMS authorities may be insufficient without additional waiver flexibility. ',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about',
+    secondaryPath:
+      '/models/{{modelID}}/collaboration-area/additional-questionnaires',
+    secondaryAction: 'View additional questionnaires',
+    [PlanTaskState.TO_DO]: {
+      heading: 'Complete your waiver assessment survey',
+      primaryAction: 'Start'
+    },
+    [PlanTaskState.IN_PROGRESS]: {
+      heading: 'Complete your waiver assessment survey',
+      primaryAction: 'Continue'
+    },
+    [PlanTaskState.COMPLETE]: {
+      heading: 'Complete your waiver assessment survey',
+      primaryAction: 'Go to survey'
+    }
+  },
   [PlanTaskKey.OA_PRESENTATION]: {
     copy: 'Sometime after your 6-pager review meeting and the completion of your ICIP, when your model is seeking approval to go into clearance, your team should meet with OA to discuss the model concept and to get verbal approval to enter materials into clearance. Prior to the meeting, your team should put together a presentation detailing the most important points about your model.',
     primaryPath:

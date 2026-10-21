@@ -64,7 +64,9 @@ const notificationPreferences: NotificationPerferenceType = {
   iddocQuestionnaireComplete: [UserNotificationPreferenceFlag.EMAIL],
   iddocQuestionnaireCompletedNotificationType: null,
   mtoReadyForReview: [],
-  mtoReadyForReviewNotificationType: null
+  mtoReadyForReviewNotificationType: null,
+  waiverAssessmentSurveyMarkedComplete: [],
+  waiverAssessmentSurveyMarkedCompleteNotificationType: null
 };
 
 const notificationsSettingsMock = [
@@ -140,6 +142,18 @@ describe('Notification Settings Page', () => {
       expect(
         screen.getByTestId('notification-setting-whichModel-datesChanged')
       ).toBeDisabled();
+
+      expect(
+        screen.getByTestId(
+          'notification-setting-email-waiverAssessmentSurveyMarkedComplete'
+        )
+      ).not.toBeChecked();
+
+      expect(
+        screen.getByTestId(
+          'notification-setting-whichModel-waiverAssessmentSurveyMarkedComplete'
+        )
+      ).toBeDisabled();
     });
 
     await user.click(
@@ -159,6 +173,11 @@ describe('Notification Settings Page', () => {
     );
     await user.click(
       screen.getByTestId('notification-setting-email-datesChanged')
+    );
+    await user.click(
+      screen.getByTestId(
+        'notification-setting-email-waiverAssessmentSurveyMarkedComplete'
+      )
     );
 
     await waitFor(() => {
@@ -187,6 +206,18 @@ describe('Notification Settings Page', () => {
       ).toBeChecked();
       expect(
         screen.getByTestId('notification-setting-whichModel-datesChanged')
+      ).not.toBeDisabled();
+
+      expect(
+        screen.getByTestId(
+          'notification-setting-email-waiverAssessmentSurveyMarkedComplete'
+        )
+      ).toBeChecked();
+
+      expect(
+        screen.getByTestId(
+          'notification-setting-whichModel-waiverAssessmentSurveyMarkedComplete'
+        )
       ).not.toBeDisabled();
     });
   });

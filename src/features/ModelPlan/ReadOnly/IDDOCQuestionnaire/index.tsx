@@ -42,9 +42,6 @@ const ReadOnlyIddocQuestionnaire = ({
     .iddocQuestionnaire ||
     {}) as GetAllIddocQuestionnaireQuery['modelPlan']['questionnaires']['iddocQuestionnaire'];
 
-  // TODO: Temporarily overriding needed to true
-  // const testData = { ...allIddocQuestionnaireData, needed: true};
-
   const isIddocNeeded = allIddocQuestionnaireData.needed;
 
   return (
@@ -84,7 +81,7 @@ const ReadOnlyIddocQuestionnaire = ({
           )}
 
           <ReadOnlyBody
-            data={allIddocQuestionnaireData} // TODO use {testData} here for needed state
+            data={allIddocQuestionnaireData}
             config={iddocQuestionnaireConfig}
             filteredView={filteredView}
           />
