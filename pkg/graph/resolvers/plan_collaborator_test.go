@@ -128,7 +128,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaboratorWithNotification() {
 		EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq([]string{expectedEmail}),
+			gomock.Eq(&expectedEmail),
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
 			gomock.Any(),

@@ -84,7 +84,7 @@ func sendMTOMilestoneAssignedTestEmailHelper(
 	// Send test email
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{"test@mint.cms.gov"}, // Use test email address
+		new("test@mint.cms.gov"), // Use test email address
 		nil,
 		emailSubject,
 		"text/html",

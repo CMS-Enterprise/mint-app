@@ -25,7 +25,7 @@ func (suite *ResolverSuite) TestDataExchangeApproachMarkedCompleteEmail() {
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{expectedEmail}),
+			gomock.Eq(&expectedEmail),
 			gomock.Any(),
 			gomock.Any(),
 			gomock.Any(),
