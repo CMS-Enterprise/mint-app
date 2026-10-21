@@ -3,6 +3,8 @@ package resolvers
 import (
 	"time"
 
+	"github.com/google/uuid"
+
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
 
@@ -70,10 +72,21 @@ func (suite *ResolverSuite) TestPlanCRDelete() {
 	cr := suite.createPlanCR(plan, "123-456", time.Now(), time.Now(), "My CR", "My comments")
 
 	del, err := PlanCRDelete(suite.testConfigs.Logger, cr.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
-	suite.NoError(err)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(del)
 	suite.EqualValues(del.ID, cr.ID)
 
-	// TODO Should we fetch by ID / model plan collection and see that it's no longer there?
+	del, err = PlanCRDelete(suite.testConfigs.Logger, cr.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.Nil(del)
+	suite.ErrorContains(err, "not found")
+}
+
+func (suite *ResolverSuite) TestPlanCRDeleteMissingID() {
+	missingID := uuid.New()
+
+	del, err := PlanCRDelete(suite.testConfigs.Logger, missingID, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.Nil(del)
+	suite.ErrorContains(err, "not found")
 }
 
 // TestPlanCRGet returns a plan_cr_tdl record

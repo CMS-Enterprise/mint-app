@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"fmt"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -54,6 +56,9 @@ func PlanCRDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Pri
 		existingPlanCR, err := storage.PlanCRGetByID(tx, logger, id)
 		if err != nil {
 			return nil, err
+		}
+		if existingPlanCR == nil {
+			return nil, fmt.Errorf("plan CR %s not found", id)
 		}
 
 		err = BaseStructPreDelete(logger, existingPlanCR, principal, tx, true)

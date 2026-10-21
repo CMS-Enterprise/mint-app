@@ -27,22 +27,22 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 		return nil, err
 	}
 
-	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
+	createdDoc := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
 
-	err = BaseStructPreCreate(logger, document, principal, store, true)
+	err = BaseStructPreCreate(logger, createdDoc, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
 
-	err = s3Client.UploadFile(context.TODO(), input.FileData.File, document.FileKey)
+	err = s3Client.UploadFile(context.TODO(), input.FileData.File, createdDoc.FileKey)
 	if err != nil {
 		return &models.PlanDocument{}, err
 	}
 
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanDocument, error) {
-		document, err = storage.PlanDocumentCreate(tx, logger, principal.ID(), document)
+		document, err := storage.PlanDocumentCreate(tx, logger, principal.ID(), createdDoc)
 		if err != nil {
-			return nil, genericmodel.HandleModelCreationError(logger, err, document)
+			return nil, genericmodel.HandleModelCreationError(logger, err, createdDoc)
 		}
 
 		return document, nil
