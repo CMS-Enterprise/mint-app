@@ -44,8 +44,13 @@ func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName str
 		false,
 		zero.String{})
 
-	retDocument, err := storage.PlanDocumentCreate(suite.testConfigs.Store, suite.testConfigs.Logger, suite.testConfigs.Principal.UserAccount.ID.String(), document)
+	retDocument, err := sqlutils.WithTransaction(suite.testConfigs.Store, func(tx *sqlx.Tx) (*models.PlanDocument, error) {
+		retDocument, err := storage.PlanDocumentCreate(tx, suite.testConfigs.Logger, suite.testConfigs.Principal.UserAccount.ID.String(), document)
+		suite.NoError(err)
+		return retDocument, nil
+	})
 	suite.NoError(err)
+
 	return retDocument
 
 }

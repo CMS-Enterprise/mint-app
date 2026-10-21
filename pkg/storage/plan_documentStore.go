@@ -21,7 +21,7 @@ import (
 
 // PlanDocumentCreate creates a plan document
 func PlanDocumentCreate(
-	np sqlutils.NamedPreparer,
+	tx *sqlx.Tx,
 	logger *zap.Logger,
 	principal string,
 	inputDocument *models.PlanDocument,
@@ -32,7 +32,7 @@ func PlanDocumentCreate(
 	inputDocument.ModifiedDts = nil
 
 	retDoc := &models.PlanDocument{}
-	stmt, err := np.PrepareNamed(sqlqueries.PlanDocument.Create)
+	stmt, err := tx.PrepareNamed(sqlqueries.PlanDocument.Create)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
@@ -45,7 +45,7 @@ func PlanDocumentCreate(
 
 	if inputDocument.PlanTaskID != nil {
 		link := models.NewPlanTaskDocumentLink(inputDocument.CreatedBy, *inputDocument.PlanTaskID, retDoc.ID)
-		_, err = planTaskDocumentLinkCreate(np, logger, link)
+		_, err = planTaskDocumentLinkCreate(tx, logger, link)
 		if err != nil {
 			return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 		}
