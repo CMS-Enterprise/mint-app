@@ -32,7 +32,9 @@ const scrollBypass: string[] = [
   'view-milestone=',
   'view-solution=',
   // Contract assistance ticket side panel
-  '/help-and-knowledge/contract-assistance/'
+  '/help-and-knowledge/contract-assistance/',
+  // Waiver side panel
+  'waiverId='
 ];
 
 const shouldScroll = (path: string, prevPath: string | undefined) => {
