@@ -34,6 +34,11 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 	suite.NoError(err)
 
 	emailRecipients := []string{"TEST1@local.mock", "TEST2@local.mock"}
+	mintTeamEmail := "MINT-team@local.mock"
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+		MINTTeamEmail: mintTeamEmail,
+	}
 	phaseSuggestion := models.PhaseSuggestion{
 		Phase:             models.ModelPhaseIcipComplete,
 		SuggestedStatuses: []models.ModelStatus{models.ModelStatusIcipComplete},
@@ -43,18 +48,22 @@ func (suite *ResolverSuite) testSendEmailForPhaseSuggestion(modelName string) *m
 		EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq(emailRecipients),
+			gomock.Nil(), // To
 			gomock.Nil(), // CC
 			gomock.Any(), // emailSubject - actual template content
 			gomock.Eq("text/html"),
 			gomock.Any(), // emailBody - actual template content
 			gomock.Any(),
 		).
+		DoAndReturn(func(_ string, _, _ *string, _, _, _ string, opts ...oddmail.EmailOption) error {
+			var options oddmail.EmailOptions
+			for _, opt := range opts {
+				opt(&options)
+			}
+			suite.Equal([]string{mintTeamEmail, emailRecipients[0], emailRecipients[1]}, options.BccAddresses)
+			return nil
+		}).
 		Times(1)
-
-	addressBook := email.AddressBook{
-		DefaultSender: "unit-test-execution@mint.cms.gov",
-	}
 
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress: "http://localhost:3005",
@@ -251,6 +260,10 @@ func (suite *ResolverSuite) TestTryNotificationSendIncorrectModelStatus_NilEmail
 // path: both in-app notification and email are sent when a model lead's plan has an incorrect status.
 func (suite *ResolverSuite) TestTryNotificationSendIncorrectModelStatus_WithEmailService() {
 	plan := suite.setUpPlanWithPastICIPDate("plan for full notification test")
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+		MINTTeamEmail: "MINT-team@local.mock",
+	}
 
 	mockController := gomock.NewController(suite.T())
 	mockEmailService := oddmail.NewMockEmailService(mockController)
@@ -260,21 +273,28 @@ func (suite *ResolverSuite) TestTryNotificationSendIncorrectModelStatus_WithEmai
 	}
 	mockEmailService.EXPECT().GetConfig().Return(emailServiceConfig).AnyTimes()
 	mockEmailService.EXPECT().Send(
-		gomock.Any(),
-		gomock.Any(),
+		gomock.Eq(addressBook.DefaultSender),
+		gomock.Nil(),
 		gomock.Nil(),
 		gomock.Any(),
 		gomock.Eq("text/html"),
 		gomock.Any(),
 		gomock.Any(),
-	).Times(1)
+	).DoAndReturn(func(_ string, _, _ *string, _, _, _ string, opts ...oddmail.EmailOption) error {
+		var options oddmail.EmailOptions
+		for _, opt := range opts {
+			opt(&options)
+		}
+		suite.Equal([]string{addressBook.MINTTeamEmail, "Terry.Thompson@local.fake"}, options.BccAddresses)
+		return nil
+	}).Times(1)
 
 	err := TryNotificationSendIncorrectModelStatus(
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.ZapLogger,
 		mockEmailService,
-		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+		addressBook,
 		plan.ID,
 	)
 	suite.NoError(err)
@@ -295,7 +315,7 @@ func (suite *ResolverSuite) TestTryNotificationSendIncorrectModelStatus_WithEmai
 		suite.testConfigs.Store,
 		suite.testConfigs.ZapLogger,
 		mockEmailService,
-		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+		addressBook,
 		plan.ID,
 	)
 	suite.NoError(err)

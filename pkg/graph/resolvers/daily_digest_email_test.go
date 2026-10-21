@@ -71,7 +71,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSendComponents() {
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{collaboratorAccount.Email}),
+			gomock.Eq(&collaboratorAccount.Email),
 			gomock.Any(),
 			gomock.Eq(emailSubject),
 			gomock.Any(),
@@ -155,7 +155,7 @@ func (suite *ResolverSuite) TestDailyDigestNotificationSend() {
 		EXPECT().
 		Send(
 			addressBook.DefaultSender,
-			gomock.Eq([]string{userAccount.Account().Email}),
+			gomock.Eq(new(userAccount.Account().Email)),
 			gomock.Any(),
 			gomock.Any(),
 			gomock.Any(),
