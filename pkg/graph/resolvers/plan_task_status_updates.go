@@ -533,7 +533,7 @@ func UpdatePlanTaskStatusOnWaiverAssessmentStarted(
 	if err != nil {
 		return err
 	}
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyWaiverAssessmentSurvey, status, principal, principal.Account().ID, store, emailService, emailAddressBook)
+	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyWaiverAssessmentSurvey, status, principal, principal.Account().ID, emailService, emailAddressBook)
 	return err
 }
 
