@@ -50,40 +50,42 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 }
 
 // PlanDocumentCreateLinked creates a plan document which is a link to an external URL instead of an Uploaded file
-func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, np sqlutils.NamedPreparer) (*models.PlanDocument, error) {
-	err := validatePlanDocumentTaskAttribution(np, logger, input.ModelPlanID, input.PlanTaskID)
-	if err != nil {
-		return nil, err
-	}
+func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, store *storage.Store) (*models.PlanDocument, error) {
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanDocument, error) {
+		err := validatePlanDocumentTaskAttribution(tx, logger, input.ModelPlanID, input.PlanTaskID)
+		if err != nil {
+			return nil, err
+		}
 
-	contentType := "externalLink"
-	fileSize := 0
-	u, err := url.Parse(input.URL)
-	if err != nil {
-		return nil, fmt.Errorf(" url is not in a valid format. err : %w", err)
-	}
-	// Ensure the URL has a host specified and is not a relative link
-	if u.Host == "" {
-		return nil, fmt.Errorf(" url does not have a host specified. Please create a valid absolute reference. url : %s ", input.URL)
-	}
+		contentType := "externalLink"
+		fileSize := 0
+		u, err := url.Parse(input.URL)
+		if err != nil {
+			return nil, fmt.Errorf(" url is not in a valid format. err : %w", err)
+		}
+		// Ensure the URL has a host specified and is not a relative link
+		if u.Host == "" {
+			return nil, fmt.Errorf(" url does not have a host specified. Please create a valid absolute reference. url : %s ", input.URL)
+		}
 
-	// Ensure the URL has a scheme of either http or https
-	if u.Scheme != "http" && u.Scheme != "https" {
-		return nil, fmt.Errorf(" url does not have a valid scheme. It should begin with http or https. url : %s ", input.URL)
-	}
-	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
+		// Ensure the URL has a scheme of either http or https
+		if u.Scheme != "http" && u.Scheme != "https" {
+			return nil, fmt.Errorf(" url does not have a valid scheme. It should begin with http or https. url : %s ", input.URL)
+		}
+		document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
 
-	err = BaseStructPreCreate(logger, document, principal, np, true)
-	if err != nil {
-		return nil, err
-	}
+		err = BaseStructPreCreate(logger, document, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
 
-	document, err = storage.PlanDocumentCreate(np, logger, principal.ID(), document)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, document)
-	}
+		document, err = storage.PlanDocumentCreate(tx, logger, principal.ID(), document)
+		if err != nil {
+			return nil, genericmodel.HandleModelCreationError(logger, err, document)
+		}
 
-	return document, nil
+		return document, nil
+	})
 }
 
 func validatePlanDocumentTaskAttribution(np sqlutils.NamedPreparer, logger *zap.Logger, modelPlanID uuid.UUID, planTaskID *uuid.UUID) error {
