@@ -36,11 +36,7 @@ import {
   useUpdateClearancePaymentsMutation,
   useUpdateClearanceTimelineMutation
 } from 'gql/generated/graphql';
-import {
-  findLockedSection,
-  LockStatus,
-  modelPlanSectionMap
-} from 'wrappers/PageLockWrapper';
+import { modelPlanSectionMap } from 'wrappers/PageLockWrapper';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import UswdsReactLink from 'components/LinkWrapper';
@@ -50,6 +46,7 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { useErrorMessage } from 'contexts/ErrorContext';
 import { SubscriptionContext } from 'contexts/PageLockContext';
+import { findLockedSection, LockStatus } from 'utils/lockableSectionLinking';
 import { tArray } from 'utils/translation';
 
 import { ClearanceStatusesModelPlanFormType } from '../Checklist';

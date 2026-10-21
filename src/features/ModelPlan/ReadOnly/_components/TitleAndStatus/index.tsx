@@ -8,7 +8,8 @@ import {
   IddocQuestionnaireTaskListStatus,
   ModelStatus,
   MtoStatus,
-  TaskStatus
+  TaskStatus,
+  WaiverAssessmentSurveyStatus
 } from 'gql/generated/graphql';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -27,6 +28,7 @@ type TitleAndStatusProps = {
     | TaskStatus
     | DataExchangeApproachStatus
     | MtoStatus
+    | WaiverAssessmentSurveyStatus
     | IddocQuestionnaireTaskListStatus;
   modifiedOrCreatedDts?: string | null;
   editDates?: boolean;

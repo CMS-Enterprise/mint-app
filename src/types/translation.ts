@@ -82,6 +82,7 @@ import {
   MtoSolutionType,
   MultiSourceDataToCollect,
   NonClaimsBasedPayType,
+  NotSelectedReason,
   OperationalNeedKey,
   OperationalNeedTranslation,
   OperationalSolutionKey,
@@ -124,6 +125,9 @@ import {
   TranslationField,
   TranslationFieldWithOptions,
   TriStateAnswer,
+  WaiverAssessmentSurveyStatus,
+  WaiverAssessmentSurveyTranslation,
+  WaiverTranslation,
   WaiverType,
   YesNoOtherType,
   YesNoType
@@ -765,6 +769,81 @@ type TranslationOpsEvalAndLearningGQL = Omit<
 */
 export type TranslationOpsEvalAndLearning = {
   [K in keyof TranslationOpsEvalAndLearningGQL]: TranslationOpsEvalAndLearningForm[K]; // FE form type
+};
+
+// Waiver Assessment Survey
+
+export type TranslationWaiverAssessmentSurveyForm = {
+  status: TranslationFieldPropertiesWithOptions<WaiverAssessmentSurveyStatus>;
+  isComplete: TranslationFieldPropertiesWithOptions<Bool>;
+
+  // Page 3 - Medicare payment waivers
+  modifiesMedicareSavingsPrograms: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  modifiesMedicareSavingsProgramsExample: TranslationFieldPropertiesWithParent<Bool>;
+  modifiesMedicareSavingsProgramsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  bundlesPayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  bundlesPaymentsExample: TranslationFieldPropertiesWithParent<Bool>;
+  bundlesPaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  offersRiskSharingArrangements: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  offersRiskSharingArrangementsExample: TranslationFieldPropertiesWithParent<Bool>;
+  offersRiskSharingArrangementsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  impactsSiteOfCarePayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  impactsSiteOfCarePaymentsExample: TranslationFieldPropertiesWithParent<Bool>;
+  impactsSiteOfCarePaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  modifiesCareTeamScopeOfPractice: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  modifiesCareTeamScopeOfPracticeExample: TranslationFieldPropertiesWithParent<Bool>;
+  modifiesCareTeamScopeOfPracticeWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  modifiesCareDeliveryWithClaimsBasedPayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  modifiesCareDeliveryWithClaimsBasedPaymentsExample: TranslationFieldPropertiesWithParent<Bool>;
+  modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  modifiesQualityMeasurementsOrPaymentsViaWaivers: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  modifiesQualityMeasurementsOrPaymentsViaWaiversExample: TranslationFieldPropertiesWithParent<Bool>;
+  modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  impactsMedicaidOnlyBeneficiaries: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  impactsMedicaidOnlyBeneficiariesExample: TranslationFieldPropertiesWithParent<Bool>;
+  impactsMedicaidOnlyBeneficiariesWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  impactsHomeCommunityBasedServicePayments: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  impactsHomeCommunityBasedServicePaymentsExample: TranslationFieldPropertiesWithParent<Bool>;
+  impactsHomeCommunityBasedServicePaymentsWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  impactsManagedCareWaivers: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  impactsManagedCareWaiversExample: TranslationFieldPropertiesWithParent<Bool>;
+  impactsManagedCareWaiversWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  offersPatientIncentivesSafeHarborProtection: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  offersPatientIncentivesSafeHarborProtectionExample: TranslationFieldPropertiesWithParent<Bool>;
+  offersPatientIncentivesSafeHarborProtectionWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  offersExpensesRemunerationSafeHarborProtection: TranslationFieldPropertiesWithOptionsAndChildren<Bool>;
+  offersExpensesRemunerationSafeHarborProtectionExample: TranslationFieldPropertiesWithParent<Bool>;
+  offersExpensesRemunerationSafeHarborProtectionWhyNot: TranslationFieldPropertiesWithOptionsAndParent<NotSelectedReason>;
+  additionalMedicaidSpecificWaivers: TranslationFieldProperties;
+
+  // Page 6 Waiver selection and confirmation
+  isEmptyWaiversConfirmed: TranslationFieldPropertiesWithOptions<Bool>;
+};
+
+type TranslationWaiverAssessmentSurveyGQL = Omit<
+  WaiverAssessmentSurveyTranslation,
+  '__typename'
+>;
+
+/*
+  Merged keys from graphql gen with FE form types
+  Create a tighter connection between BE/FE translation types
+*/
+export type TranslationWaiverAssessmentSurvey = {
+  [K in keyof TranslationWaiverAssessmentSurveyGQL]: TranslationWaiverAssessmentSurveyForm[K]; // FE form type
+};
+
+// Waiver selections - Change History purposes only
+export type TranslationWaiverForm = {
+  willUseWaiver: TranslationFieldPropertiesWithOptions<Bool>;
+  usingReason: TranslationFieldProperties;
+  notUsingReason: TranslationFieldProperties;
+};
+
+type TranslationWaiverGQL = Omit<WaiverTranslation, '__typename'>;
+
+export type TranslationWaiver = {
+  [K in keyof TranslationWaiverGQL]: TranslationWaiverForm[K];
 };
 
 // IDDOC Questionnaire
@@ -1552,6 +1631,7 @@ export type TranslationPlan = {
   solutions: TranslationOperationalSolutions;
   operationalSolutionSubtasks: TranslationOperationalSolutionSubtasks;
   dataExchangeApproach: TranslationDataExchangeApproach;
+  waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey;
   iddocQuestionnaire: TranslationIddocQuestionnaire;
   modelToOperations: TranslationMTOInfo;
   mtoCategory: TranslationMTOCategory;
@@ -1573,7 +1653,8 @@ export type TranslationPlanSection =
   | TranslationPlan['opsEvalAndLearning']
   | TranslationPlan['payments']
   | TranslationPlan['dataExchangeApproach']
-  | TranslationPlan['iddocQuestionnaire'];
+  | TranslationPlan['iddocQuestionnaire']
+  | TranslationPlan['waiverAssessmentSurvey'];
 
 export enum PlanSection {
   MODEL_PLAN = 'modelPlan',
@@ -1594,6 +1675,7 @@ export enum PlanSection {
   OPERATIONAL_SOLUTIONS = 'solutions',
   OPERATIONAL_SOLUTION_SUBTASKS = 'operationalSolutionSubtasks',
   DATA_EXCHANGE_APPROACH = 'dataExchangeApproach',
+  WAIVER_ASSESSMENT_SURVEY = 'waiverAssessmentSurvey',
   IDDOC_QUESTIONNAIRE = 'iddocQuestionnaire',
   MTO_INFO = 'modelToOperations',
   MTO_CATEGORY = 'mtoCategory',

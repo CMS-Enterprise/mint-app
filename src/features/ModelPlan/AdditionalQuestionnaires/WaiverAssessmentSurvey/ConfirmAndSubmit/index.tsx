@@ -1,0 +1,365 @@
+import React, { useMemo } from 'react';
+import { Controller, FormProvider, useForm } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  Button,
+  Form,
+  FormGroup,
+  SummaryBox,
+  SummaryBoxContent,
+  SummaryBoxHeading
+} from '@trussworks/react-uswds';
+import SelectedWaiversTable from 'features/ModelPlan/ReadOnly/_components/SelectedWaiversTable';
+import NotFoundPartial from 'features/NotFound/NotFoundPartial';
+import {
+  GetAllWaiverAssessmentSurveyQuery,
+  TypedUpdateWaiverAssessmentSurveyDocument,
+  useGetAllWaiverAssessmentSurveyQuery
+} from 'gql/generated/graphql';
+
+import { Alert } from 'components/Alert';
+import CheckboxField from 'components/CheckboxField';
+import ConfirmLeaveRHF from 'components/ConfirmLeave/ConfirmLeaveRHF';
+import ExternalLink from 'components/ExternalLink';
+import FormHeader from 'components/FormHeader';
+import UswdsReactLink from 'components/LinkWrapper';
+import MutationErrorModal from 'components/MutationErrorModal';
+import PageNumber from 'components/PageNumber';
+import Spinner from 'components/Spinner';
+import useHandleMutation from 'hooks/useHandleMutation';
+import usePlanTranslation from 'hooks/usePlanTranslation';
+import { formatDateLocal } from 'utils/date';
+import { sortByName } from 'utils/formUtil';
+import mapDefaultFormValues from 'utils/mapDefaultFormValues';
+import { convertCamelCaseToKebabCase } from 'utils/modelPlan';
+
+import WaiverQuestionsReadOnlySections from '../_components/WaiverQuestionsReadOnlySections';
+import {
+  isWaiverSelectionComplete,
+  isWaiverSurveyQuestionsComplete
+} from '../util';
+
+type ConfirmAndSubmitForm = Pick<
+  GetAllWaiverAssessmentSurveyQuery['modelPlan']['questionnaires']['waiverAssessmentSurvey'],
+  'id' | 'isComplete' | 'completedByUserAccount' | 'completedDts'
+>;
+
+const DEFAULT_FORM_VALUES: ConfirmAndSubmitForm = {
+  id: '',
+  isComplete: false,
+  completedByUserAccount: {
+    __typename: 'UserAccount',
+    id: '',
+    commonName: ''
+  },
+  completedDts: ''
+};
+
+const ConfirmAndSubmit = () => {
+  const { t: miscellaneousT } = useTranslation('miscellaneous');
+  const { t: waiverAssessmentSurveyMiscT } = useTranslation(
+    'waiverAssessmentSurveyMisc'
+  );
+  const { isComplete: isCompleteConfig } = usePlanTranslation(
+    'waiverAssessmentSurvey'
+  );
+
+  const navigate = useNavigate();
+
+  const { modelID = '' } = useParams<{ modelID: string }>();
+
+  const waiverSelectionPageUrl = `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation`;
+
+  const { data, loading, error } = useGetAllWaiverAssessmentSurveyQuery({
+    variables: {
+      id: modelID
+    },
+    skip: !modelID
+  });
+
+  const waiverAssessmentSurveyData =
+    data?.modelPlan?.questionnaires?.waiverAssessmentSurvey;
+
+  const waiverSelectionData = data?.modelPlan?.waiverInfo?.commonWaivers;
+
+  const { selectedWaivers, declinedWaivers, suggestedWaivers } = useMemo(() => {
+    if (!waiverSelectionData) {
+      return {
+        selectedWaivers: [],
+        declinedWaivers: [],
+        suggestedWaivers: []
+      };
+    }
+
+    const waiversInUse = waiverSelectionData
+      .filter(waiver => waiver.willUseWaiver === true)
+      .sort(sortByName);
+
+    const waiversSuggested = waiverSelectionData.filter(
+      waiver => waiver.isSuggested
+    );
+
+    const waiversDeclined = waiversSuggested
+      .filter(waiver => waiver.willUseWaiver === false)
+      .sort(sortByName);
+
+    return {
+      selectedWaivers: waiversInUse,
+      declinedWaivers: waiversDeclined,
+      suggestedWaivers: waiversSuggested
+    };
+  }, [waiverSelectionData]);
+
+  const hasSelectedWaivers = selectedWaivers.length > 0;
+
+  const hasSuggestedWaivers = suggestedWaivers.length > 0;
+
+  const requiresWaiverValidation = hasSelectedWaivers || hasSuggestedWaivers;
+
+  const isSurveyComplete = requiresWaiverValidation
+    ? isWaiverSurveyQuestionsComplete(waiverAssessmentSurveyData) &&
+      isWaiverSelectionComplete(waiverSelectionData)
+    : Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed);
+
+  const allSuggestedWaiversDeclined =
+    hasSuggestedWaivers && declinedWaivers.length === suggestedWaivers.length;
+
+  // only shows not required waivers if the no waiver box is checked or if user declined all suggested waivers.
+  // Note user can change answers to trigger suggested waivers appear without changing isEmptyWaiversConfirmed status
+  // Therefore check if there's any suugested waivers first
+  const willNotRequireWaivers = hasSuggestedWaivers
+    ? allSuggestedWaiversDeclined
+    : Boolean(waiverAssessmentSurveyData?.isEmptyWaiversConfirmed);
+
+  const mappedFormData = mapDefaultFormValues<ConfirmAndSubmitForm>(
+    waiverAssessmentSurveyData,
+    DEFAULT_FORM_VALUES
+  );
+
+  const methods = useForm<ConfirmAndSubmitForm>({
+    values: mappedFormData,
+    mode: 'onChange'
+  });
+
+  const { handleSubmit, watch, control } = methods;
+
+  const { mutationError, loading: isSubmitting } =
+    useHandleMutation<ConfirmAndSubmitForm>(
+      TypedUpdateWaiverAssessmentSurveyDocument,
+      {
+        id: mappedFormData.id,
+        rhfRef: {
+          initialValues: mappedFormData,
+          values: watch()
+        }
+      }
+    );
+
+  if (loading) {
+    return <Spinner size="large" />;
+  }
+
+  if (error || !waiverAssessmentSurveyData || !waiverSelectionData) {
+    return <NotFoundPartial errorMessage={error?.message} />;
+  }
+
+  return (
+    <div className="mint-body-normal">
+      <FormHeader
+        header={waiverAssessmentSurveyMiscT('confirmAndSubmit.heading')}
+        currentPage={5}
+        totalPages={5}
+      />
+
+      <p className="margin-top-neg-1 margin-bottom-5 text-base-dark">
+        {waiverAssessmentSurveyMiscT('confirmAndSubmit.description')}
+      </p>
+
+      {/* Selected waivers section */}
+      <div>
+        <h3 className="margin-bottom-05">
+          {waiverAssessmentSurveyMiscT('selectedWaivers.heading', {
+            waiverCount: selectedWaivers.length
+          })}
+        </h3>
+
+        <UswdsReactLink
+          to={waiverSelectionPageUrl}
+          data-testid="waiver-selection-page-url"
+          className="deep-underline display-block margin-bottom-2 mint-body-normal"
+        >
+          {waiverAssessmentSurveyMiscT('confirmAndSubmit.editSection')}
+        </UswdsReactLink>
+
+        <div className="margin-bottom-5">
+          {selectedWaivers.length === 0 ? (
+            <Alert type="info" slim>
+              {waiverAssessmentSurveyMiscT(
+                willNotRequireWaivers
+                  ? 'modelNotRequireWaivers'
+                  : 'selectedWaivers.emptyAlert'
+              )}
+            </Alert>
+          ) : (
+            <SelectedWaiversTable
+              selectedWaivers={selectedWaivers}
+              visibleColumns={['waiverName', 'actions']}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Declined waivers section */}
+      <div>
+        <h3 className="margin-bottom-05">
+          {waiverAssessmentSurveyMiscT('declinedWaivers.heading', {
+            waiverCount: declinedWaivers.length
+          })}
+        </h3>
+
+        <UswdsReactLink
+          to={waiverSelectionPageUrl}
+          data-testid="waiver-selection-page-url"
+          className="deep-underline display-block margin-bottom-2 mint-body-normal"
+        >
+          {waiverAssessmentSurveyMiscT('confirmAndSubmit.editSection')}
+        </UswdsReactLink>
+
+        <div className="margin-bottom-5">
+          {declinedWaivers.length === 0 ? (
+            <Alert type="info" slim>
+              {waiverAssessmentSurveyMiscT('declinedWaivers.emptyAlert')}
+            </Alert>
+          ) : (
+            <SelectedWaiversTable selectedWaivers={declinedWaivers} />
+          )}
+        </div>
+      </div>
+
+      <WaiverQuestionsReadOnlySections modelPlan={data.modelPlan} />
+
+      <SummaryBox className="maxw-tablet">
+        <SummaryBoxHeading headingLevel="h2" className="margin-bottom-2">
+          {waiverAssessmentSurveyMiscT('confirmAndSubmit.summaryBox.title')}
+        </SummaryBoxHeading>
+        <SummaryBoxContent>
+          <p className="margin-0">
+            <Trans
+              i18nKey="waiverAssessmentSurveyMisc:confirmAndSubmit.summaryBox.text"
+              components={{
+                link1: (
+                  <ExternalLink
+                    href={waiverAssessmentSurveyMiscT(
+                      'confirmAndSubmit.summaryBox.link'
+                    )}
+                  >
+                    {' '}
+                  </ExternalLink>
+                )
+              }}
+            />
+          </p>
+        </SummaryBoxContent>
+      </SummaryBox>
+
+      <FormProvider {...methods}>
+        <MutationErrorModal
+          isOpen={mutationError.isModalOpen}
+          closeModal={mutationError.closeModal}
+          url={mutationError.destinationURL}
+        />
+
+        <Form
+          id="waiver-assessment-survey-confirm-and-submit-form"
+          data-testid="waiver-assessment-survey-confirm-and-submit-form"
+          className="maxw-none"
+          onSubmit={handleSubmit(() => {
+            navigate(
+              `/models/${modelID}/collaboration-area/additional-questionnaires`
+            );
+          })}
+        >
+          <ConfirmLeaveRHF />
+
+          <div className="margin-top-6 margin-bottom-3 maxw-tablet border-1px border-base-light radius-md padding-2">
+            <p className="margin-y-0">
+              {waiverAssessmentSurveyMiscT(
+                'confirmAndSubmit.questionnaireStatus'
+              )}
+            </p>
+
+            <Controller
+              name="isComplete"
+              control={control}
+              render={({ field: { ref, ...field } }) => (
+                <FormGroup className="margin-y-0">
+                  <CheckboxField
+                    name={field.name}
+                    id={convertCamelCaseToKebabCase(field.name)}
+                    testid={convertCamelCaseToKebabCase(field.name)}
+                    checked={field.value === true}
+                    disabled={!isSurveyComplete}
+                    value="true"
+                    label={isCompleteConfig.options.true}
+                    onChange={e => {
+                      field.onChange(e.target.checked);
+                    }}
+                    onBlur={field.onBlur}
+                  />
+
+                  {mappedFormData.completedByUserAccount?.commonName &&
+                    mappedFormData.completedDts && (
+                      <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
+                        {miscellaneousT('markedComplete', {
+                          user: mappedFormData.completedByUserAccount.commonName
+                        })}
+                        {formatDateLocal(
+                          mappedFormData.completedDts,
+                          'MM/dd/yyyy'
+                        )}
+                      </p>
+                    )}
+                </FormGroup>
+              )}
+            />
+
+            {!isSurveyComplete && (
+              <Alert type="warning" slim>
+                {waiverAssessmentSurveyMiscT(
+                  'confirmAndSubmit.questionnaireStatusAlert'
+                )}
+              </Alert>
+            )}
+          </div>
+
+          <div className="margin-top-6 margin-bottom-3 display-flex">
+            <Button
+              type="button"
+              className="usa-button usa-button--outline margin-top-0"
+              disabled={isSubmitting}
+              onClick={() =>
+                navigate(
+                  `/models/${modelID}/collaboration-area/additional-questionnaires/waiver-assessment-survey/waiver-selection-and-confirmation`
+                )
+              }
+            >
+              {miscellaneousT('back')}
+            </Button>
+            <Button
+              type="submit"
+              className="margin-top-0"
+              disabled={isSubmitting}
+            >
+              {waiverAssessmentSurveyMiscT('confirmAndSubmit.saveAndExit')}
+            </Button>
+          </div>
+        </Form>
+      </FormProvider>
+
+      <PageNumber currentPage={5} totalPages={5} className="margin-y-6" />
+    </div>
+  );
+};
+
+export default ConfirmAndSubmit;

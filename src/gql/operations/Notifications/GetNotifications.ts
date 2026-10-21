@@ -178,6 +178,14 @@ export default gql(/* GraphQL */ `
                   modelName
                 }
               }
+              ... on WaiverAssessmentSurveyMarkedCompleteActivityMeta {
+                version
+                type
+                modelPlanID
+                modelPlan {
+                  modelName
+                }
+              }
               ... on MTOReadyForReviewActivityMeta {
                 version
                 type

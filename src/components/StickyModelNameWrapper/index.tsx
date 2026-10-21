@@ -25,6 +25,11 @@ interface StickyModelNameWrapperProps {
    */
   sectionHeading?: string;
   /**
+   * Optional: If true, only render sectionHeading without the model name.
+   * When provided along with modelName, renders the standardized header format.
+   */
+  sectionHeadingOnly?: boolean;
+  /**
    * Optional: Model name for standardized format.
    * When provided with sectionHeading, renders the standardized header format.
    */
@@ -66,6 +71,7 @@ const StickyModelNameWrapper = ({
   triggerRef,
   className,
   sectionHeading,
+  sectionHeadingOnly = false,
   modelName,
   abbreviation
 }: StickyModelNameWrapperProps) => {
@@ -126,9 +132,11 @@ const StickyModelNameWrapper = ({
       return (
         <div className="padding-top-2 padding-bottom-1">
           <h3 className="margin-y-0">
-            {miscellaneousT('modelPlanHeading', {
-              heading: sectionHeading
-            })}
+            {sectionHeadingOnly
+              ? sectionHeading
+              : miscellaneousT('modelPlanHeading', {
+                  heading: sectionHeading
+                })}
           </h3>
           <p className="margin-y-0 font-body-lg line-height-sans-3">
             {miscellaneousT('for')} {modelName}
