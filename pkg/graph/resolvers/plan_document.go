@@ -22,24 +22,24 @@ import (
 
 // PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
 func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *s3.S3Client) (*models.PlanDocument, error) {
+	err := validatePlanDocumentTaskAttribution(store, logger, input.ModelPlanID, input.PlanTaskID)
+	if err != nil {
+		return nil, err
+	}
+
+	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
+
+	err = BaseStructPreCreate(logger, document, principal, store, true)
+	if err != nil {
+		return nil, err
+	}
+
+	err = s3Client.UploadFile(context.TODO(), input.FileData.File, document.FileKey)
+	if err != nil {
+		return &models.PlanDocument{}, err
+	}
+
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanDocument, error) {
-		err := validatePlanDocumentTaskAttribution(tx, logger, input.ModelPlanID, input.PlanTaskID)
-		if err != nil {
-			return nil, err
-		}
-
-		document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
-
-		err = BaseStructPreCreate(logger, document, principal, tx, true)
-		if err != nil {
-			return nil, err
-		}
-
-		err = s3Client.UploadFile(context.TODO(), input.FileData.File, document.FileKey)
-		if err != nil {
-			return &models.PlanDocument{}, err
-		}
-
 		document, err = storage.PlanDocumentCreate(tx, logger, principal.ID(), document)
 		if err != nil {
 			return nil, genericmodel.HandleModelCreationError(logger, err, document)
