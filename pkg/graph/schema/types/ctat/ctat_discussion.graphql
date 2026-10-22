@@ -1,0 +1,24 @@
+type CTATDiscussion {
+  id: String!
+  ticketID: UUID!
+  content: String!
+  isAdmin: Boolean!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+}
+
+input CTATDiscussionInput {
+  ticketID: UUID!
+  content: String!
+}
+
+extend type Query {
+  discussions(id: UUID!): [CTATDiscussion!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
+
+extend type Mutation {
+  saveDiscussion(input: CTATDiscussionInput!): CTATDiscussion!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
