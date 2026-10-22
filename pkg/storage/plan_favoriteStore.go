@@ -1,18 +1,17 @@
 package storage
 
 import (
+	_ "embed"
 	"fmt"
 
-	"github.com/cms-enterprise/mint-app/pkg/logging"
-	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
-
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-
-	_ "embed"
 )
 
 // IsFavoriteResult holds the result of a batch favorite existence check
@@ -69,15 +68,13 @@ func PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, favorite 
 }
 
 // PlanFavoriteDelete deletes a plan favorite
-func (s *Store) PlanFavoriteDelete(
+func PlanFavoriteDelete(
+	tx *sqlx.Tx,
 	_ *zap.Logger,
 	userAccountID uuid.UUID,
 	planID uuid.UUID,
 	deletedByUserID uuid.UUID,
 ) (*models.PlanFavorite, error) {
-
-	tx := s.db.MustBegin()
-	defer tx.Rollback()
 
 	err := setCurrentSessionUserVariable(tx, deletedByUserID)
 	if err != nil {
@@ -101,10 +98,6 @@ func (s *Store) PlanFavoriteDelete(
 		return nil, err
 	}
 
-	err = tx.Commit()
-	if err != nil {
-		return nil, fmt.Errorf("could not commit plan favorite delete transaction: %w", err)
-	}
 	return &delFavorite, nil
 }
 

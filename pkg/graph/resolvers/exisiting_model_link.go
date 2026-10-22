@@ -7,9 +7,11 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -49,19 +51,21 @@ func ExistingModelLinksGetByModelPlanIDAndFieldNameLOADER(ctx context.Context, m
 
 // ExistingModelLinksUpdate creates or deletes existing model links based on the list provided.
 func ExistingModelLinksUpdate(logger *zap.Logger, store *storage.Store, principal authentication.Principal, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error) {
-	link := models.NewExistingModelLink(principal.Account().ID, modelPlanID, nil, nil) // this is for access check
-	err := BaseStructPreCreate(logger, link, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.ExistingModelLinks, error) {
+		link := models.NewExistingModelLink(principal.Account().ID, modelPlanID, nil, nil) // this is for access check
+		err := BaseStructPreCreate(logger, link, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
 
-	retLinks, err := store.ExistingModelLinksUpdate(logger, principal.Account().ID, modelPlanID, fieldName, existingModelIDs, currentModelPlanIDs)
-	if err != nil {
-		return nil, err
-	}
-	links := models.NewExistingModelLinks(modelPlanID, fieldName, retLinks)
+		retLinks, err := storage.ExistingModelLinksUpdate(tx, logger, principal.Account().ID, modelPlanID, fieldName, existingModelIDs, currentModelPlanIDs)
+		if err != nil {
+			return nil, err
+		}
+		links := models.NewExistingModelLinks(modelPlanID, fieldName, retLinks)
 
-	return links, err
+		return links, err
+	})
 
 }
 

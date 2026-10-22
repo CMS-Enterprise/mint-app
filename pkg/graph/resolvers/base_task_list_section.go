@@ -11,14 +11,13 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // BaseTaskListSectionPreUpdate applies incoming changes from to a TaskList Section, and validates it's status
-func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSection, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) error {
+func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSection, changes map[string]interface{}, principal authentication.Principal, np sqlutils.NamedPreparer) error {
 	oldStatus := tls.GetStatus()
 
-	err := BaseStructPreUpdate(logger, tls, changes, principal, store, true, true)
+	err := BaseStructPreUpdate(logger, tls, changes, principal, np, true, true)
 	if err != nil {
 		return err
 	}
@@ -31,7 +30,7 @@ func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSe
 	// MODEL_PLAN task progression: if any section is first edited, mark the MODEL_PLAN task IN_PROGRESS
 	if oldStatus == models.TaskReady && tls.GetStatus() == models.TaskInProgress {
 		modelPlanID := tls.GetModelPlanID()
-		err = UpdatePlanTaskStateOnModelPlanStarted(context.Background(), store, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStateOnModelPlanStarted(context.Background(), np, logger, modelPlanID, principal)
 		if err != nil {
 			return err
 		}
@@ -48,7 +47,6 @@ func BaseTaskListSectionAfterUpdate(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
@@ -58,7 +56,6 @@ func BaseTaskListSectionAfterUpdate(
 		logger,
 		modelPlanID,
 		principal,
-		store,
 		emailService,
 		addressBook,
 	)

@@ -37,7 +37,12 @@ func (r *mutationResolver) DeletePlanDocument(ctx context.Context, id uuid.UUID)
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return PlanDocumentDelete(logger, r.fileUploadS3Client, id, principal, r.store)
+	rowsAffected, err := PlanDocumentDelete(logger, id, principal, r.store)
+	if err != nil {
+		return -1, err
+	}
+
+	return *rowsAffected, nil
 }
 
 // URL is the resolver for the url field.

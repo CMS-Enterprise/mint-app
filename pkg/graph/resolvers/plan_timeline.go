@@ -105,7 +105,7 @@ func UpdatePlanTimeline(
 				modelPlan,
 				resetSuggestedPhaseChanges,
 				principal,
-				store,
+				tx,
 				true,
 				true,
 			)
@@ -119,7 +119,7 @@ func UpdatePlanTimeline(
 			}
 		}
 
-		err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
+		err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, tx)
 		if err != nil {
 			return nil, err
 		}
@@ -163,7 +163,6 @@ func UpdatePlanTimeline(
 				logger,
 				existing.ModelPlanID,
 				principal,
-				store,
 				emailService,
 				addressBook,
 			); err != nil {

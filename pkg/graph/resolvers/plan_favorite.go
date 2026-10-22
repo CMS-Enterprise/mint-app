@@ -3,9 +3,9 @@ package resolvers
 import (
 	"context"
 
-	"go.uber.org/zap"
-
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
+	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -39,20 +39,20 @@ func PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, principal
 
 // PlanFavoriteDelete deletes a plan favorite record in the database
 func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanFavorite, error) {
+		existingFavorite, err := storage.PlanFavoriteGetByModelIDAndUserAccountID(tx, logger, principal.Account().ID, modelPlanID)
 
-	existingFavorite, err := storage.PlanFavoriteGetByModelIDAndUserAccountID(store, logger, principal.Account().ID, modelPlanID)
+		if err != nil {
+			return nil, err
+		}
 
-	if err != nil {
-		return nil, err
-	}
+		err = BaseStructPreDelete(logger, existingFavorite, principal, tx, false) //you don't need to be a collaborator to favorite a model plan.
+		if err != nil {
+			return nil, err
+		}
 
-	err = BaseStructPreDelete(logger, existingFavorite, principal, store, false) //you don't need to be a collaborator to favorite a model plan.
-	if err != nil {
-		return nil, err
-	}
-
-	return store.PlanFavoriteDelete(logger, principal.Account().ID, modelPlanID, principal.Account().ID)
-
+		return storage.PlanFavoriteDelete(tx, logger, principal.Account().ID, modelPlanID, principal.Account().ID)
+	})
 }
 
 // PlanFavoriteGet returns a plan favorite record
