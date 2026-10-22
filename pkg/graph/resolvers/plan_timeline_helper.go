@@ -561,11 +561,12 @@ func sendPlanTimelineDateChangedEmails(
 	// Send the email to default recipients
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		addressBook.ModelPlanDateChangedRecipients,
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
 		defaultRecipientEmailBody,
+		oddmail.WithBCC(addressBook.ModelPlanDateChangedRecipients),
 	)
 	if err != nil {
 		return err

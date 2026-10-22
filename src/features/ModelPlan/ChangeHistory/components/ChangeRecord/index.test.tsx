@@ -55,6 +55,61 @@ describe('ChangeRecord', () => {
     expect(getByText('Model type')).toBeInTheDocument();
   });
 
+  it('shows a waiver decision update and newly answered reason together', () => {
+    const waiverRecord: ChangeRecordType = {
+      ...mockChangeRecord,
+      tableName: TableName.WAIVER,
+      action: DatabaseOperation.UPDATE,
+      translatedFields: [
+        {
+          ...mockChangeRecord.translatedFields[0],
+          id: 'waiver-decision',
+          changeType: AuditFieldChangeType.UPDATED,
+          fieldName: 'will_use_waiver',
+          fieldNameTranslated:
+            'Do you plan to use this waiver with your model? (Waiver: Implementation period)',
+          old: 'true',
+          oldTranslated: 'Yes',
+          new: 'false',
+          newTranslated: 'No'
+        },
+        {
+          ...mockChangeRecord.translatedFields[0],
+          id: 'waiver-reason',
+          changeType: AuditFieldChangeType.ANSWERED,
+          dataType: TranslationDataType.STRING,
+          fieldName: 'not_using_reason',
+          fieldNameTranslated:
+            'Please explain why your model is not using this waiver.',
+          old: null,
+          oldTranslated: null,
+          new: 'The waiver is not needed.',
+          newTranslated: 'The waiver is not needed.'
+        }
+      ]
+    };
+
+    const { getByText, getAllByTestId, queryByText } = render(
+      <ChangeRecord changeRecord={waiverRecord} index={1} />
+    );
+
+    fireEvent.click(getByText('Show details'));
+
+    expect(
+      getByText(
+        'Do you plan to use this waiver with your model? (Waiver: Implementation period)'
+      )
+    ).toBeInTheDocument();
+    expect(
+      getByText('Please explain why your model is not using this waiver.')
+    ).toBeInTheDocument();
+    expect(getByText('Previous answer')).toBeInTheDocument();
+    expect(
+      getAllByTestId('shown-value').map(value => value.textContent)
+    ).toEqual(['No', 'Yes', 'The waiver is not needed.']);
+    expect(queryByText(/Because of this change/)).not.toBeInTheDocument();
+  });
+
   it('uses generic metadata for custom timeline date-only updates', () => {
     const customTimelineDateRecord: ChangeRecordType = {
       id: 'bfbf2c34-7e6c-4c12-9d97-605e3aa3aace',

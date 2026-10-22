@@ -174,6 +174,14 @@ func ModelPlanCreate(
 			return nil, err
 		}
 
+		// Create default Waiver Assessment Survey object
+		waiverAssessmentSurvey := models.NewWaiverAssessmentSurvey(baseTaskListUser.CreatedBy, baseTaskListUser.ModelPlanID)
+
+		_, err = storage.WaiverAssessmentSurveyCreate(tx, logger, waiverAssessmentSurvey)
+		if err != nil {
+			return nil, err
+		}
+
 		// Create a default planTimeline object
 		planTimeline := models.NewPlanTimeline(baseTaskListUser)
 
@@ -305,7 +313,7 @@ func sendModelPlanCreatedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{},
+		nil,
 		nil,
 		emailSubject,
 		"text/html",
@@ -621,7 +629,15 @@ func ModelPlanShare(
 
 	// Send email
 	if len(receiverEmails) > 0 {
-		err = emailService.Send(addressBook.DefaultSender, receiverEmails, nil, emailSubject, "text/html", emailBody)
+		err = emailService.Send(
+			addressBook.DefaultSender,
+			nil,
+			nil,
+			emailSubject,
+			"text/html",
+			emailBody,
+			oddmail.WithBCC(receiverEmails),
+		)
 		if err != nil {
 			return false, fmt.Errorf("failed to send email: %w", err)
 		}

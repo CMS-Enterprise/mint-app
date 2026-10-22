@@ -17,4 +17,5 @@ const (
 	LockableSectionDataExchangeApproach            LockableSection = "DATA_EXCHANGE_APPROACH"
 	LockableSectionDataModelsToOperationMatrix     LockableSection = "MODELS_TO_OPERATION_MATRIX"
 	LockableSectionTimeline                        LockableSection = "TIMELINE"
+	LockableSectionWaiverAssessmentSurvey          LockableSection = "WAIVER_ASSESSMENT_SURVEY"
 )

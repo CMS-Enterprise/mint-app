@@ -36,7 +36,7 @@ func (suite *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		EXPECT().
 		Send(
 			gomock.Any(),
-			gomock.Eq([]string{expectedEmail}),
+			gomock.Eq(&expectedEmail),
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
 			gomock.Any(),

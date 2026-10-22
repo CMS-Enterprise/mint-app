@@ -27,13 +27,15 @@ func sendTestDailyDigestEmail(
 					models.TNModelPlan,
 					models.TNMTOCategory,
 					models.TNMTOMilestone,
+					models.TNWaiverAssessmentSurvey,
 				},
 				ReadyForReview: []models.TableName{
 					models.TNPlanTimeline,
 					models.TNPlanOpsEvalAndLearning,
 					models.TNMTOSolution,
 				},
-				IDDOCQuestionnaireMarkedComplete: true,
+				IDDOCQuestionnaireMarkedComplete:     true,
+				WaiverAssessmentSurveyMarkedComplete: true,
 			},
 		},
 	}
@@ -49,7 +51,7 @@ func sendTestDailyDigestEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.DefaultSender},
+		&addressBook.DefaultSender,
 		nil,
 		subject,
 		"text/html",
@@ -77,13 +79,15 @@ func sendTestDailyDigestEmailAggregated(
 					models.TNModelPlan,
 					models.TNMTOCategory,
 					models.TNMTOMilestone,
+					models.TNWaiverAssessmentSurvey,
 				},
 				ReadyForReview: []models.TableName{
 					models.TNPlanTimeline,
 					models.TNPlanOpsEvalAndLearning,
 					models.TNMTOSolution,
 				},
-				IDDOCQuestionnaireMarkedComplete: true,
+				IDDOCQuestionnaireMarkedComplete:     true,
+				WaiverAssessmentSurveyMarkedComplete: true,
 			},
 		},
 	}
@@ -101,13 +105,15 @@ func sendTestDailyDigestEmailAggregated(
 					models.TNModelPlan,
 					models.TNMTOCategory,
 					models.TNMTOMilestone,
+					models.TNWaiverAssessmentSurvey,
 				},
 				ReadyForReview: []models.TableName{
 					models.TNPlanTimeline,
 					models.TNPlanOpsEvalAndLearning,
 					models.TNMTOSolution,
 				},
-				IDDOCQuestionnaireMarkedComplete: true,
+				IDDOCQuestionnaireMarkedComplete:     true,
+				WaiverAssessmentSurveyMarkedComplete: true,
 			},
 		},
 	}
@@ -124,7 +130,7 @@ func sendTestDailyDigestEmailAggregated(
 	// Send generated email
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		subject,
 		"text/html",

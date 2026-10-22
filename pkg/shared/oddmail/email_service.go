@@ -16,6 +16,6 @@ func WithBCC(bccAddresses []string) EmailOption {
 
 // EmailService is an interface for any service capable of sending emails
 type EmailService interface {
-	Send(from string, toAddresses []string, ccAddresses []string, subject string, contentType string, body string, opts ...EmailOption) error
+	Send(from string, toAddress *string, ccAddress *string, subject string, contentType string, body string, opts ...EmailOption) error
 	GetConfig() EmailServiceConfig
 }

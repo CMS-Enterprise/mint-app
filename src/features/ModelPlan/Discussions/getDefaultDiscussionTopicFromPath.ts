@@ -21,6 +21,10 @@ const collaborationAreaPathTopics: [RegExp, DiscussionTopicType][] = [
     DiscussionTopicType.DATA_EXCHANGE_APPROACH
   ],
   [
+    /\/collaboration-area\/additional-questionnaires\/waiver-assessment-survey(?:\/|$)/,
+    DiscussionTopicType.WAIVER_ASSESSMENT_SURVEY
+  ],
+  [
     /\/collaboration-area\/additional-questionnaires\/iddoc-questionnaire(?:\/|$)/,
     DiscussionTopicType.IDDOC_QUESTIONNAIRE
   ],
