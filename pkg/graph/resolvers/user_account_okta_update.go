@@ -39,10 +39,22 @@ func UpdateUserAccountFromOkta[T logging.ChainableErrorOrWarnLogger[T]](
 
 	logger = logger.With(logfields.UserID(existingUser.ID))
 
-	existingUser.CommonName = userInfo.DisplayName
-	existingUser.Email = userInfo.Email
-	existingUser.GivenName = userInfo.FirstName
-	existingUser.FamilyName = userInfo.LastName
+	// Okta can return a blank value for a profile field (e.g. displayName is not
+	// required by Okta's schema). user_account columns reject empty strings, so
+	// an overwrite with "" would fail the update entirely; keep the existing
+	// value instead.
+	if userInfo.DisplayName != "" {
+		existingUser.CommonName = userInfo.DisplayName
+	}
+	if userInfo.Email != "" {
+		existingUser.Email = userInfo.Email
+	}
+	if userInfo.FirstName != "" {
+		existingUser.GivenName = userInfo.FirstName
+	}
+	if userInfo.LastName != "" {
+		existingUser.FamilyName = userInfo.LastName
+	}
 
 	_, err = storage.UserAccountUpdateByUserName(store, existingUser)
 	if err != nil {
