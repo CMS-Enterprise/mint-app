@@ -1,0 +1,22 @@
+{{template "shared_header.html"}}
+{{template "shared_non_mint_mailbox_header.html" .}}
+
+<hr>
+
+<p>{{.SenderName}} sent an update about {{.ModelName}}, a model you follow.</p>
+
+<br>
+
+{{.Content}}
+
+<br>
+
+<p><a href="{{.ClientAddress}}/models/{{.ModelID}}/collaboration-area">Go to the model collaboration area</a></p>
+
+<hr>
+
+<br>
+<br>
+
+{{template "shared_access_banner.html" .}}
+{{template "shared_footer.html"}}
