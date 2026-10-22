@@ -35,6 +35,7 @@ type CTATDiscussion struct {
 	CreatedDts           time.Time                  `json:"createdDts"`
 }
 
+// Input for creating a CTAT Discussion
 type CTATDiscussionInput struct {
 	TicketID uuid.UUID `json:"ticketID"`
 	Content  string    `json:"content"`

@@ -2468,7 +2468,7 @@ type ComplexityRoot struct {
 		CtatRequestsRequester             func(childComplexity int) int
 		CurrentUser                       func(childComplexity int) int
 		CustomTimelineDate                func(childComplexity int, id uuid.UUID) int
-		Discussions                       func(childComplexity int, id uuid.UUID) int
+		Discussions                       func(childComplexity int, ticketID uuid.UUID) int
 		ExistingModelCollection           func(childComplexity int) int
 		ExistingModelLink                 func(childComplexity int, id uuid.UUID) int
 		KeyContact                        func(childComplexity int, id uuid.UUID) int
@@ -3536,7 +3536,7 @@ type QueryResolver interface {
 	Analytics(ctx context.Context) (*models.AnalyticsSummary, error)
 	LockableSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error)
 	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
-	Discussions(ctx context.Context, id uuid.UUID) ([]*model.CTATDiscussion, error)
+	Discussions(ctx context.Context, ticketID uuid.UUID) ([]*model.CTATDiscussion, error)
 	CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error)
 	CtatRequestsRequester(ctx context.Context) (*models.CTATRequestsTableDataRequester, error)
 	CtatRequests(ctx context.Context) (*models.CTATRequestsTableData, error)
@@ -15997,7 +15997,7 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 			return 0, false
 		}
 
-		return e.ComplexityRoot.Query.Discussions(childComplexity, args["id"].(uuid.UUID)), true
+		return e.ComplexityRoot.Query.Discussions(childComplexity, args["ticketID"].(uuid.UUID)), true
 	case "Query.existingModelCollection":
 		if e.ComplexityRoot.Query.ExistingModelCollection == nil {
 			break
@@ -20277,13 +20277,16 @@ type EnumTranslation {
   createdDts: Time!
 }
 
+"""
+Input for creating a CTAT Discussion
+"""
 input CTATDiscussionInput {
   ticketID: UUID!
   content: String!
 }
 
 extend type Query {
-  discussions(id: UUID!): [CTATDiscussion!]!
+  discussions(ticketID: UUID!): [CTATDiscussion!]!
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 
@@ -32962,14 +32965,14 @@ func (ec *executionContext) field_Query_customTimelineDate_args(ctx context.Cont
 func (ec *executionContext) field_Query_discussions_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
-	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "id",
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "ticketID",
 		func(ctx context.Context, v any) (uuid.UUID, error) {
 			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
 		})
 	if err != nil {
 		return nil, err
 	}
-	args["id"] = arg0
+	args["ticketID"] = arg0
 	return args, nil
 }
 
@@ -88955,7 +88958,7 @@ func (ec *executionContext) _Query_discussions(ctx context.Context, field graphq
 		},
 		func(ctx context.Context) (any, error) {
 			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().Discussions(ctx, fc.Args["id"].(uuid.UUID))
+			return ec.Resolvers.Query().Discussions(ctx, fc.Args["ticketID"].(uuid.UUID))
 		},
 		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
 			directive0 := next

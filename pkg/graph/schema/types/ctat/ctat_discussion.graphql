@@ -8,13 +8,16 @@ type CTATDiscussion {
   createdDts: Time!
 }
 
+"""
+Input for creating a CTAT Discussion
+"""
 input CTATDiscussionInput {
   ticketID: UUID!
   content: String!
 }
 
 extend type Query {
-  discussions(id: UUID!): [CTATDiscussion!]!
+  discussions(ticketID: UUID!): [CTATDiscussion!]!
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 

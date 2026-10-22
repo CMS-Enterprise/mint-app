@@ -355,6 +355,7 @@ export type CtatDiscussion = {
   ticketID: Scalars['UUID']['output'];
 };
 
+/** Input for creating a CTAT Discussion */
 export type CtatDiscussionInput = {
   content: Scalars['String']['input'];
   ticketID: Scalars['UUID']['input'];
@@ -5385,7 +5386,7 @@ export type QueryCustomTimelineDateArgs = {
 
 /** Query definition for the schema */
 export type QueryDiscussionsArgs = {
-  id: Scalars['UUID']['input'];
+  ticketID: Scalars['UUID']['input'];
 };
 
 

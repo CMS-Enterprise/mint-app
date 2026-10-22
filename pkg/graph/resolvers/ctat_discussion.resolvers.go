@@ -20,6 +20,6 @@ func (r *mutationResolver) SaveDiscussion(ctx context.Context, input model.CTATD
 }
 
 // Discussions is the resolver for the discussions field.
-func (r *queryResolver) Discussions(ctx context.Context, id uuid.UUID) ([]*model.CTATDiscussion, error) {
+func (r *queryResolver) Discussions(ctx context.Context, ticketID uuid.UUID) ([]*model.CTATDiscussion, error) {
 	panic(fmt.Errorf("not implemented: Discussions - discussions"))
 }
