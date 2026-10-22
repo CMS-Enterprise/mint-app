@@ -82,6 +82,64 @@ func TestUpdateUserAccountFromOkta_Success(t *testing.T) {
 	require.Equal(t, "User", updated.FamilyName)
 }
 
+func TestUpdateUserAccountFromOkta_BlankOktaFieldsPreserveExisting(t *testing.T) {
+	ctx := context.Background()
+
+	dbConfig, ldClient, logger, _, _ := getTestDependencies()
+	store, err := storage.NewStore(dbConfig, ldClient)
+	require.NoError(t, err)
+	require.NoError(t, store.TruncateAllTablesDANGEROUS(logger))
+
+	username := "TEST"
+
+	// Create the existing account first.
+	getUserInfo := func(ctx context.Context, _ string) (*models.UserInfo, error) {
+		return &models.UserInfo{
+			DisplayName: "Initial Test User",
+			Email:       "initial@test.com",
+			FirstName:   "Initial",
+			LastName:    "User",
+			Username:    username,
+		}, nil
+	}
+	_, err = userhelpers.GetOrCreateUserAccount(
+		ctx,
+		store,
+		store,
+		username,
+		true,  // hasLoggedIn
+		false, // isMacUser
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(getUserInfo),
+	)
+	require.NoError(t, err)
+
+	// Okta returns a blank DisplayName, as can happen for profiles that don't
+	// populate it. The update should succeed and keep the existing CommonName
+	// rather than failing the zero_string check or persisting the blank.
+	fakeOkta := fakeOktaClient{
+		userInfo: &models.UserInfo{
+			DisplayName: "",
+			Email:       "updated@test.com",
+			FirstName:   "Updated",
+			LastName:    "User",
+			Username:    username,
+		},
+	}
+
+	resLogger := logging.NewZapLogger(logger)
+	err = UpdateUserAccountFromOkta(ctx, store, fakeOkta, resLogger, username)
+	require.NoError(t, err)
+
+	updated, err := storage.UserAccountGetByUsername(store, username)
+	require.NoError(t, err)
+	require.NotNil(t, updated)
+
+	require.Equal(t, "Initial Test User", updated.CommonName)
+	require.Equal(t, "updated@test.com", updated.Email)
+	require.Equal(t, "Updated", updated.GivenName)
+	require.Equal(t, "User", updated.FamilyName)
+}
+
 func TestUpdateUserAccountFromOkta_UserAccountMissing(t *testing.T) {
 	ctx := context.Background()
 
