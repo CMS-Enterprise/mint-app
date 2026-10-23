@@ -351,7 +351,7 @@ export type CtatDiscussion = {
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
   id: Scalars['UUID']['output'];
-  isAdmin: Scalars['Boolean']['output'];
+  posterRole: CtatDiscussionPoster;
   ticketID: Scalars['UUID']['output'];
 };
 
@@ -360,6 +360,12 @@ export type CtatDiscussionInput = {
   content: Scalars['String']['input'];
   ticketID: Scalars['UUID']['input'];
 };
+
+/** The role of the discussion poster */
+export enum CtatDiscussionPoster {
+  ADMIN = 'ADMIN',
+  REQUESTER = 'REQUESTER'
+}
 
 /** The selected type of help needed for a CTAT record. */
 export enum CtatHelpNeededType {

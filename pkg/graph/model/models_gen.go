@@ -29,7 +29,7 @@ type CTATDiscussion struct {
 	ID                   uuid.UUID                  `json:"id"`
 	TicketID             uuid.UUID                  `json:"ticketID"`
 	Content              string                     `json:"content"`
-	IsAdmin              bool                       `json:"isAdmin"`
+	PosterRole           CTATDiscussionPoster       `json:"posterRole"`
 	CreatedBy            uuid.UUID                  `json:"createdBy"`
 	CreatedByUserAccount authentication.UserAccount `json:"createdByUserAccount"`
 	CreatedDts           time.Time                  `json:"createdDts"`
@@ -1526,6 +1526,62 @@ func (e *CMSCenter) UnmarshalJSON(b []byte) error {
 }
 
 func (e CMSCenter) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+// The role of the discussion poster
+type CTATDiscussionPoster string
+
+const (
+	CTATDiscussionPosterRequester CTATDiscussionPoster = "REQUESTER"
+	CTATDiscussionPosterAdmin     CTATDiscussionPoster = "ADMIN"
+)
+
+var AllCTATDiscussionPoster = []CTATDiscussionPoster{
+	CTATDiscussionPosterRequester,
+	CTATDiscussionPosterAdmin,
+}
+
+func (e CTATDiscussionPoster) IsValid() bool {
+	switch e {
+	case CTATDiscussionPosterRequester, CTATDiscussionPosterAdmin:
+		return true
+	}
+	return false
+}
+
+func (e CTATDiscussionPoster) String() string {
+	return string(e)
+}
+
+func (e *CTATDiscussionPoster) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CTATDiscussionPoster(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CTATDiscussionPoster", str)
+	}
+	return nil
+}
+
+func (e CTATDiscussionPoster) MarshalGQL(w io.Writer) {
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *CTATDiscussionPoster) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e CTATDiscussionPoster) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil
