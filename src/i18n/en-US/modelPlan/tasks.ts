@@ -140,9 +140,8 @@ const tasks = {
     copy: 'CMMI Leadership assumes that new models will use program and payment waivers unless justified otherwise. This mandatory survey helps determine which models will use which waivers, which specific waivers are most appropriate for each model, ensures proper justification for waiver selections, and identifies instances where standard CMS authorities may be insufficient without additional waiver flexibility. ',
     primaryPath:
       '/models/{{modelID}}/collaboration-area/additional-questionnaires/waiver-assessment-survey/about',
-    secondaryPath:
-      '/models/{{modelID}}/collaboration-area/additional-questionnaires',
-    secondaryAction: 'View additional questionnaires',
+    secondaryPath: '/help-and-knowledge/waiver-library',
+    secondaryAction: 'View waiver library',
     [PlanTaskState.TO_DO]: {
       heading: 'Complete your waiver assessment survey',
       primaryAction: 'Start'

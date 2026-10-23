@@ -6,6 +6,7 @@ const header = {
     allHelpResourcesAndLinks: 'All help resources and links',
     contractAssistance: 'Contract assistance',
     milestoneLibrary: 'Milestone library',
+    waiverLibrary: 'Waiver library',
     operationalSolutions: 'Library of solutions and IT systems',
     contactDirectory: 'Contact directory'
   },
