@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
+import type { ReportsType } from 'features/ReportsAndAnalytics';
 import { ModelShareSection } from 'gql/generated/graphql';
 
 import FilterGroup from 'components/FilterGroup';
@@ -12,10 +13,12 @@ import getBasicFilters from './getFilterOptions';
 
 const DownloadSectionModal = ({
   isModalOpen,
-  closeModal
+  closeModal,
+  reportType
 }: {
   isModalOpen: boolean;
   closeModal: () => void;
+  reportType: ReportsType;
 }) => {
   const { t: analyticsT } = useTranslation('analytics');
   const { t: generalT } = useTranslation('general');
@@ -41,7 +44,11 @@ const DownloadSectionModal = ({
   );
 
   const handleDownload = () => {
-    fetchAllData(ModelShareSection.ALL);
+    if (reportType === 'allModels') {
+      fetchAllData(ModelShareSection.ALL, selectedFilters);
+    } else if (reportType === 'basicModelInfo') {
+      fetchAllData('basicModelInfo', selectedFilters);
+    }
     closeModal();
   };
 

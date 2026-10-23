@@ -119,6 +119,8 @@ const ReportsAndAnalytics = () => {
 
   const [isDownloadSectionOpen, setIsDownloadSectionOpen] = useState(false);
 
+  const [reportType, setReportType] = useState<ReportsType | null>(null);
+
   const [isDateRangeModalOpen, setIsDateRangeModalOpen] = useState(false);
 
   const [downloadingReport, setDownloadingReport] =
@@ -203,10 +205,11 @@ const ReportsAndAnalytics = () => {
 
   return (
     <MainContent className="mint-body-normal">
-      {isDownloadSectionOpen && (
+      {isDownloadSectionOpen && reportType && (
         <DownloadSectionModal
           isModalOpen={isDownloadSectionOpen}
           closeModal={() => setIsDownloadSectionOpen(false)}
+          reportType={reportType}
         />
       )}
 
@@ -319,6 +322,7 @@ const ReportsAndAnalytics = () => {
                           if (reportKey === 'ctat') {
                             setIsDateRangeModalOpen(true);
                           } else {
+                            setReportType(reportKey as ReportsType);
                             setIsDownloadSectionOpen(true);
                           }
                         }}
