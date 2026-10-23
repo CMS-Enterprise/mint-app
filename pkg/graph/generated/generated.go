@@ -35433,11 +35433,11 @@ func (ec *executionContext) _CTATDiscussion_createdByUserAccount(ctx context.Con
 			return ec.fieldContext_CTATDiscussion_createdByUserAccount(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return obj.CreatedByUserAccount, nil
+			return obj.CreatedByUserAccount(ctx)
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v authentication.UserAccount) graphql.Marshaler {
-			return ec.marshalNUserAccount2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
 		},
 		true,
 		true,
@@ -35447,7 +35447,7 @@ func (ec *executionContext) fieldContext_CTATDiscussion_createdByUserAccount(_ c
 	fc = &graphql.FieldContext{
 		Object:     "CTATDiscussion",
 		Field:      field,
-		IsMethod:   false,
+		IsMethod:   true,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return ec.childFields_UserAccount(ctx, field)
@@ -110515,37 +110515,70 @@ func (ec *executionContext) _CTATDiscussion(ctx context.Context, sel ast.Selecti
 		case "id":
 			out.Values[i] = ec._CTATDiscussion_id(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "ticketID":
 			out.Values[i] = ec._CTATDiscussion_ticketID(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "content":
 			out.Values[i] = ec._CTATDiscussion_content(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "posterRole":
 			out.Values[i] = ec._CTATDiscussion_posterRole(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "createdBy":
 			out.Values[i] = ec._CTATDiscussion_createdBy(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		case "createdByUserAccount":
-			out.Values[i] = ec._CTATDiscussion_createdByUserAccount(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				out.Invalids++
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._CTATDiscussion_createdByUserAccount(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
 			}
+
+			if field.IsDeferred() {
+				deferredFieldSet.AddField(field)
+				fieldIndex := len(deferredFieldSet.Values) - 1
+				deferredFieldSet.Concurrently(fieldIndex, func(ctx context.Context) graphql.Marshaler {
+					return innerFunc(ctx, deferredFieldSet)
+				})
+
+				for _, deferrable := range field.Deferrables {
+					view, ok := deferLabelToView[deferrable.Label]
+					if !ok {
+						view = deferredFieldSet.NewView()
+						deferLabelToView[deferrable.Label] = view
+					}
+					view.AddIndices(fieldIndex)
+				}
+
+				// don't run the out.Concurrently() call below
+				out.Values[i] = graphql.Null
+				continue
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
 		case "createdDts":
 			out.Values[i] = ec._CTATDiscussion_createdDts(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
-				out.Invalids++
+				atomic.AddUint32(&out.Invalids, 1)
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
