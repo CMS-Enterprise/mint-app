@@ -25,6 +25,22 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
+type CTATDiscussion struct {
+	ID                   uuid.UUID                  `json:"id"`
+	TicketID             uuid.UUID                  `json:"ticketID"`
+	Content              string                     `json:"content"`
+	IsAdmin              bool                       `json:"isAdmin"`
+	CreatedBy            uuid.UUID                  `json:"createdBy"`
+	CreatedByUserAccount authentication.UserAccount `json:"createdByUserAccount"`
+	CreatedDts           time.Time                  `json:"createdDts"`
+}
+
+// Input for creating a CTAT Discussion
+type CTATDiscussionInput struct {
+	TicketID uuid.UUID `json:"ticketID"`
+	Content  string    `json:"content"`
+}
+
 // Input for uploading a supporting document for a CTAT request.
 type CTATRequestDocumentInput struct {
 	FileData graphql.Upload `json:"fileData"`
