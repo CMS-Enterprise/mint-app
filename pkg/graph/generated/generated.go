@@ -1074,6 +1074,18 @@ type ComplexityRoot struct {
 		NumberOfModels func(childComplexity int) int
 	}
 
+	ModelFollowerUpdate struct {
+		Content               func(childComplexity int) int
+		CreatedBy             func(childComplexity int) int
+		CreatedByUserAccount  func(childComplexity int) int
+		CreatedDts            func(childComplexity int) int
+		ID                    func(childComplexity int) int
+		ModelPlanID           func(childComplexity int) int
+		ModifiedBy            func(childComplexity int) int
+		ModifiedByUserAccount func(childComplexity int) int
+		ModifiedDts           func(childComplexity int) int
+	}
+
 	ModelFollowersAnalytics struct {
 		ModelName         func(childComplexity int) int
 		ModelPlanID       func(childComplexity int) int
@@ -1229,6 +1241,7 @@ type ComplexityRoot struct {
 		ReorderMTOCategory                    func(childComplexity int, id uuid.UUID, newOrder *int, parentID *uuid.UUID) int
 		ReportAProblem                        func(childComplexity int, input model.ReportAProblemInput) int
 		SendFeedbackEmail                     func(childComplexity int, input model.SendFeedbackEmailInput) int
+		SendModelFollowerUpdate               func(childComplexity int, modelPlanID uuid.UUID, content string) int
 		ShareModelPlan                        func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, modelShareSection *models.ModelShareSection, usernames []string, optionalMessage *string) int
 		UnlockAllLockableSections             func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockLockableSection                 func(childComplexity int, modelPlanID uuid.UUID, section models.LockableSection) int
@@ -3269,6 +3282,7 @@ type MutationResolver interface {
 	CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error)
 	AdminUpdateCTATRequest(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CTATRequest, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
+	SendModelFollowerUpdate(ctx context.Context, modelPlanID uuid.UUID, content string) (*model.ModelFollowerUpdate, error)
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
 	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.ModelPlan, error)
 	ShareModelPlan(ctx context.Context, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, modelShareSection *models.ModelShareSection, usernames []string, optionalMessage *string) (bool, error)
@@ -8024,6 +8038,61 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.ModelCountAnalyticsOverTime.NumberOfModels(childComplexity), true
 
+	case "ModelFollowerUpdate.content":
+		if e.ComplexityRoot.ModelFollowerUpdate.Content == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdate.Content(childComplexity), true
+	case "ModelFollowerUpdate.createdBy":
+		if e.ComplexityRoot.ModelFollowerUpdate.CreatedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdate.CreatedBy(childComplexity), true
+	case "ModelFollowerUpdate.createdByUserAccount":
+		if e.ComplexityRoot.ModelFollowerUpdate.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdate.CreatedByUserAccount(childComplexity), true
+	case "ModelFollowerUpdate.createdDts":
+		if e.ComplexityRoot.ModelFollowerUpdate.CreatedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdate.CreatedDts(childComplexity), true
+	case "ModelFollowerUpdate.id":
+		if e.ComplexityRoot.ModelFollowerUpdate.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdate.ID(childComplexity), true
+	case "ModelFollowerUpdate.modelPlanID":
+		if e.ComplexityRoot.ModelFollowerUpdate.ModelPlanID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdate.ModelPlanID(childComplexity), true
+	case "ModelFollowerUpdate.modifiedBy":
+		if e.ComplexityRoot.ModelFollowerUpdate.ModifiedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdate.ModifiedBy(childComplexity), true
+	case "ModelFollowerUpdate.modifiedByUserAccount":
+		if e.ComplexityRoot.ModelFollowerUpdate.ModifiedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdate.ModifiedByUserAccount(childComplexity), true
+	case "ModelFollowerUpdate.modifiedDts":
+		if e.ComplexityRoot.ModelFollowerUpdate.ModifiedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.ModelFollowerUpdate.ModifiedDts(childComplexity), true
+
 	case "ModelFollowersAnalytics.modelName":
 		if e.ComplexityRoot.ModelFollowersAnalytics.ModelName == nil {
 			break
@@ -9070,6 +9139,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.SendFeedbackEmail(childComplexity, args["input"].(model.SendFeedbackEmailInput)), true
+	case "Mutation.sendModelFollowerUpdate":
+		if e.ComplexityRoot.Mutation.SendModelFollowerUpdate == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_sendModelFollowerUpdate_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.SendModelFollowerUpdate(childComplexity, args["modelPlanID"].(uuid.UUID), args["content"].(string)), true
 	case "Mutation.shareModelPlan":
 		if e.ComplexityRoot.Mutation.ShareModelPlan == nil {
 			break
@@ -21027,6 +21107,31 @@ type ExistingModelLinkTranslation {
   fieldName: TranslationFieldWithOptions! @goTag(key: "db", value: "field_name")
 }
 `, BuiltIn: false},
+	{Name: "../schema/types/model_collaboration/core_model_plan/model_follower_update.graphql", Input: `"""
+ModelFollowerUpdate represents a message sent to everyone following a model plan
+"""
+type ModelFollowerUpdate {
+  id: UUID!
+  modelPlanID: UUID!
+  content: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Mutation {
+  """
+  SendModelFollowerUpdate saves a rich text message about a model plan and sends it to everyone following it.
+  """
+  sendModelFollowerUpdate(
+    modelPlanID: UUID!
+    content: String!
+  ): ModelFollowerUpdate! @hasRole(role: MINT_USER)
+}
+`, BuiltIn: false},
 	{Name: "../schema/types/model_collaboration/core_model_plan/model_plan.graphql", Input: `enum ModelPlanFilter {
   INCLUDE_ALL
   COLLAB_ONLY
@@ -28422,6 +28527,30 @@ func (ec *executionContext) childFields_ModelCountAnalyticsOverTime(ctx context.
 	return nil, fmt.Errorf("no field named %q was found under type ModelCountAnalyticsOverTime", field.Name)
 }
 
+func (ec *executionContext) childFields_ModelFollowerUpdate(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_ModelFollowerUpdate_id(ctx, field)
+	case "modelPlanID":
+		return ec.fieldContext_ModelFollowerUpdate_modelPlanID(ctx, field)
+	case "content":
+		return ec.fieldContext_ModelFollowerUpdate_content(ctx, field)
+	case "createdBy":
+		return ec.fieldContext_ModelFollowerUpdate_createdBy(ctx, field)
+	case "createdByUserAccount":
+		return ec.fieldContext_ModelFollowerUpdate_createdByUserAccount(ctx, field)
+	case "createdDts":
+		return ec.fieldContext_ModelFollowerUpdate_createdDts(ctx, field)
+	case "modifiedBy":
+		return ec.fieldContext_ModelFollowerUpdate_modifiedBy(ctx, field)
+	case "modifiedByUserAccount":
+		return ec.fieldContext_ModelFollowerUpdate_modifiedByUserAccount(ctx, field)
+	case "modifiedDts":
+		return ec.fieldContext_ModelFollowerUpdate_modifiedDts(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type ModelFollowerUpdate", field.Name)
+}
+
 func (ec *executionContext) childFields_ModelFollowersAnalytics(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "modelName":
@@ -31953,6 +32082,28 @@ func (ec *executionContext) field_Mutation_sendFeedbackEmail_args(ctx context.Co
 		return nil, err
 	}
 	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_sendModelFollowerUpdate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "modelPlanID",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["modelPlanID"] = arg0
+	arg1, err := graphql.ProcessArgField(ctx, rawArgs, "content",
+		func(ctx context.Context, v any) (string, error) {
+			return ec.unmarshalNString2string(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["content"] = arg1
 	return args, nil
 }
 
@@ -51852,6 +52003,231 @@ func (ec *executionContext) fieldContext_ModelCountAnalyticsOverTime_numberOfMod
 	return graphql.NewScalarFieldContext("ModelCountAnalyticsOverTime", field, false, false, errors.New("field of type Int does not have child fields"))
 }
 
+func (ec *executionContext) _ModelFollowerUpdate_id(ctx context.Context, field graphql.CollectedField, obj *model.ModelFollowerUpdate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdate_id(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdate_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdate", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdate_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *model.ModelFollowerUpdate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdate_modelPlanID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModelPlanID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdate_modelPlanID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdate", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdate_content(ctx context.Context, field graphql.CollectedField, obj *model.ModelFollowerUpdate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdate_content(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Content, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdate_content(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdate", field, false, false, errors.New("field of type String does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdate_createdBy(ctx context.Context, field graphql.CollectedField, obj *model.ModelFollowerUpdate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdate_createdBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdate_createdBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdate", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdate_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *model.ModelFollowerUpdate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdate_createdByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedByUserAccount, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalNUserAccount2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdate_createdByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelFollowerUpdate",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelFollowerUpdate_createdDts(ctx context.Context, field graphql.CollectedField, obj *model.ModelFollowerUpdate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdate_createdDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v time.Time) graphql.Marshaler {
+			return ec.marshalNTime2timeᚐTime(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdate_createdDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdate", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdate_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *model.ModelFollowerUpdate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdate_modifiedBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
+			return ec.marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdate_modifiedBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdate", field, false, false, errors.New("field of type UUID does not have child fields"))
+}
+
+func (ec *executionContext) _ModelFollowerUpdate_modifiedByUserAccount(ctx context.Context, field graphql.CollectedField, obj *model.ModelFollowerUpdate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdate_modifiedByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedByUserAccount, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalOUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdate_modifiedByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelFollowerUpdate",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelFollowerUpdate_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *model.ModelFollowerUpdate) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_ModelFollowerUpdate_modifiedDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ModifiedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *time.Time) graphql.Marshaler {
+			return ec.marshalOTime2ᚖtimeᚐTime(ctx, selections, v)
+		},
+		true,
+		false,
+	)
+}
+func (ec *executionContext) fieldContext_ModelFollowerUpdate_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("ModelFollowerUpdate", field, false, false, errors.New("field of type Time does not have child fields"))
+}
+
 func (ec *executionContext) _ModelFollowersAnalytics_modelName(ctx context.Context, field graphql.CollectedField, obj *models.ModelFollowersAnalytics) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -54813,6 +55189,68 @@ func (ec *executionContext) fieldContext_Mutation_updateExistingModelLinks(ctx c
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updateExistingModelLinks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_sendModelFollowerUpdate(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_sendModelFollowerUpdate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().SendModelFollowerUpdate(ctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["content"].(string))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				role, err := ec.unmarshalNRole2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+				if err != nil {
+					var zeroVal *model.ModelFollowerUpdate
+					return zeroVal, err
+				}
+				if ec.Directives.HasRole == nil {
+					var zeroVal *model.ModelFollowerUpdate
+					return zeroVal, errors.New("directive hasRole is not implemented")
+				}
+				return ec.Directives.HasRole(ctx, nil, directive0, role)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *model.ModelFollowerUpdate) graphql.Marshaler {
+			return ec.marshalNModelFollowerUpdate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelFollowerUpdate(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_sendModelFollowerUpdate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_ModelFollowerUpdate(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_sendModelFollowerUpdate_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -118513,6 +118951,84 @@ func (ec *executionContext) _ModelCountAnalyticsOverTime(ctx context.Context, se
 	return out
 }
 
+var modelFollowerUpdateImplementors = []string{"ModelFollowerUpdate"}
+
+func (ec *executionContext) _ModelFollowerUpdate(ctx context.Context, sel ast.SelectionSet, obj *model.ModelFollowerUpdate) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, modelFollowerUpdateImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferredFieldSet := graphql.NewFieldSet(nil)
+	deferLabelToView := make(map[string]*graphql.FieldSetView)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ModelFollowerUpdate")
+		case "id":
+			out.Values[i] = ec._ModelFollowerUpdate_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modelPlanID":
+			out.Values[i] = ec._ModelFollowerUpdate_modelPlanID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "content":
+			out.Values[i] = ec._ModelFollowerUpdate_content(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createdBy":
+			out.Values[i] = ec._ModelFollowerUpdate_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createdByUserAccount":
+			out.Values[i] = ec._ModelFollowerUpdate_createdByUserAccount(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createdDts":
+			out.Values[i] = ec._ModelFollowerUpdate_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "modifiedBy":
+			out.Values[i] = ec._ModelFollowerUpdate_modifiedBy(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "modifiedByUserAccount":
+			out.Values[i] = ec._ModelFollowerUpdate_modifiedByUserAccount(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		case "modifiedDts":
+			out.Values[i] = ec._ModelFollowerUpdate_modifiedDts(ctx, field, obj)
+			if out.Values[i] == graphql.RequiredNull {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.Deferred, int32(min(len(deferLabelToView), math.MaxInt32)))
+
+	ec.ProcessDeferredGroup(graphql.DeferredGroup{
+		Defers:   deferLabelToView,
+		Path:     graphql.GetPath(ctx),
+		FieldSet: deferredFieldSet,
+		Context:  ctx,
+	})
+
+	return out
+}
+
 var modelFollowersAnalyticsImplementors = []string{"ModelFollowersAnalytics"}
 
 func (ec *executionContext) _ModelFollowersAnalytics(ctx context.Context, sel ast.SelectionSet, obj *models.ModelFollowersAnalytics) graphql.Marshaler {
@@ -120675,6 +121191,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updateExistingModelLinks":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateExistingModelLinks(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "sendModelFollowerUpdate":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_sendModelFollowerUpdate(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -142252,6 +142775,16 @@ func (ec *executionContext) marshalNModelCountAnalyticsOverTime2ᚖgithubᚗcom�
 		return graphql.Null
 	}
 	return ec._ModelCountAnalyticsOverTime(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNModelFollowerUpdate2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelFollowerUpdate(ctx context.Context, sel ast.SelectionSet, v *model.ModelFollowerUpdate) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ModelFollowerUpdate(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNModelFollowersAnalytics2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐModelFollowersAnalyticsᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ModelFollowersAnalytics) graphql.Marshaler {

@@ -29,6 +29,8 @@ const collaborationArea = {
   switchToReadView: 'Switch to the Read View for the model',
   updateStatus: 'Update model status',
   areas: 'Areas',
+  followerMessageBanner:
+    'Have an update or announcement about your model? <link1>Send a message to followers</link1>',
   goToModelPlan: 'Go to Model Plan',
   modelPlanCard: {
     heading: 'Model Plan',
@@ -103,6 +105,18 @@ const collaborationArea = {
     startTimeline: 'Start timeline',
     editTimeline: 'Edit timeline',
     shareButton: 'Share or export timeline'
+  },
+  sendMessageToFollowers: {
+    breadcrumb: 'Send a message',
+    heading: 'Send a message to followers',
+    description:
+      'Compose a message about any updates to your model. This will send an email notification and/or in-app notification to any MINT users who follow your model.',
+    returnCta: 'Don’t send a message and return to collaboration area',
+    requiredFields: 'Fields marked with an asterisk ( <s>*</s> ) are required.',
+    messageLabel: 'Model update message',
+    messageHelpText:
+      'If necessary, include a brief description to help other users understand what this date is and why it matters for your model.',
+    sendMessage: 'Send message'
   }
 };
 

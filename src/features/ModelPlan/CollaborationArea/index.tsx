@@ -25,6 +25,7 @@ import useFavoritePlan from 'hooks/useFavoritePlan';
 
 import { UpdateFavoriteProps } from '../ModelPlanOverview';
 
+import FollowerMessageBanner from './_components/FollowerMessageBanner';
 import AdditionalQuestionnairesCard from './Cards/AdditionalQuestionnairesCard';
 import CRTDLCard from './Cards/CRTDLCard';
 import DiscussionsCard from './Cards/DiscussionsCard';
@@ -231,9 +232,15 @@ const CollaborationArea = () => {
                 <h2 className="margin-top-0">{tasksT('heading')}</h2>
                 <TasksWrapper modelPlan={modelPlan} tasks={tasks} />
               </Grid>
-              <Divider className="margin-y-6" />
+              <Grid col={12}>
+                <Divider className="margin-top-6 margin-bottom-3" />
+              </Grid>
               <Grid col={12}>
                 <h2 className="margin-top-0">{collaborationAreaT('areas')}</h2>
+                <FollowerMessageBanner
+                  modelID={modelID}
+                  className="margin-bottom-3"
+                />
                 <CardGroup>
                   <ModelPlanCard
                     modelID={modelID}
