@@ -1,8 +1,16 @@
+"""
+The role of the discussion poster
+"""
+enum CTATDiscussionPoster {
+  REQUESTER
+  ADMIN
+}
+
 type CTATDiscussion {
   id: UUID!
   ticketID: UUID!
   content: String!
-  isAdmin: Boolean!
+  posterRole: CTATDiscussionPoster!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!

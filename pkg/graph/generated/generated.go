@@ -231,7 +231,7 @@ type ComplexityRoot struct {
 		CreatedByUserAccount func(childComplexity int) int
 		CreatedDts           func(childComplexity int) int
 		ID                   func(childComplexity int) int
-		IsAdmin              func(childComplexity int) int
+		PosterRole           func(childComplexity int) int
 		TicketID             func(childComplexity int) int
 	}
 
@@ -4159,12 +4159,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.CTATDiscussion.ID(childComplexity), true
-	case "CTATDiscussion.isAdmin":
-		if e.ComplexityRoot.CTATDiscussion.IsAdmin == nil {
+	case "CTATDiscussion.posterRole":
+		if e.ComplexityRoot.CTATDiscussion.PosterRole == nil {
 			break
 		}
 
-		return e.ComplexityRoot.CTATDiscussion.IsAdmin(childComplexity), true
+		return e.ComplexityRoot.CTATDiscussion.PosterRole(childComplexity), true
 	case "CTATDiscussion.ticketID":
 		if e.ComplexityRoot.CTATDiscussion.TicketID == nil {
 			break
@@ -20267,11 +20267,19 @@ type EnumTranslation {
   groupedName: String
 }
 `, BuiltIn: false},
-	{Name: "../schema/types/ctat/ctat_discussion.graphql", Input: `type CTATDiscussion {
+	{Name: "../schema/types/ctat/ctat_discussion.graphql", Input: `"""
+The role of the discussion poster
+"""
+enum CTATDiscussionPoster {
+  REQUESTER
+  ADMIN
+}
+
+type CTATDiscussion {
   id: UUID!
   ticketID: UUID!
   content: String!
-  isAdmin: Boolean!
+  posterRole: CTATDiscussionPoster!
   createdBy: UUID!
   createdByUserAccount: UserAccount!
   createdDts: Time!
@@ -27356,8 +27364,8 @@ func (ec *executionContext) childFields_CTATDiscussion(ctx context.Context, fiel
 		return ec.fieldContext_CTATDiscussion_ticketID(ctx, field)
 	case "content":
 		return ec.fieldContext_CTATDiscussion_content(ctx, field)
-	case "isAdmin":
-		return ec.fieldContext_CTATDiscussion_isAdmin(ctx, field)
+	case "posterRole":
+		return ec.fieldContext_CTATDiscussion_posterRole(ctx, field)
 	case "createdBy":
 		return ec.fieldContext_CTATDiscussion_createdBy(ctx, field)
 	case "createdByUserAccount":
@@ -35370,27 +35378,27 @@ func (ec *executionContext) fieldContext_CTATDiscussion_content(_ context.Contex
 	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, errors.New("field of type String does not have child fields"))
 }
 
-func (ec *executionContext) _CTATDiscussion_isAdmin(ctx context.Context, field graphql.CollectedField, obj *model.CTATDiscussion) (ret graphql.Marshaler) {
+func (ec *executionContext) _CTATDiscussion_posterRole(ctx context.Context, field graphql.CollectedField, obj *model.CTATDiscussion) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
 		ec.OperationContext,
 		field,
 		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_CTATDiscussion_isAdmin(ctx, field)
+			return ec.fieldContext_CTATDiscussion_posterRole(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
-			return obj.IsAdmin, nil
+			return obj.PosterRole, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
-			return ec.marshalNBoolean2bool(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v model.CTATDiscussionPoster) graphql.Marshaler {
+			return ec.marshalNCTATDiscussionPoster2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionPoster(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
-func (ec *executionContext) fieldContext_CTATDiscussion_isAdmin(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, errors.New("field of type Boolean does not have child fields"))
+func (ec *executionContext) fieldContext_CTATDiscussion_posterRole(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, errors.New("field of type CTATDiscussionPoster does not have child fields"))
 }
 
 func (ec *executionContext) _CTATDiscussion_createdBy(ctx context.Context, field graphql.CollectedField, obj *model.CTATDiscussion) (ret graphql.Marshaler) {
@@ -110519,8 +110527,8 @@ func (ec *executionContext) _CTATDiscussion(ctx context.Context, sel ast.Selecti
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "isAdmin":
-			out.Values[i] = ec._CTATDiscussion_isAdmin(ctx, field, obj)
+		case "posterRole":
+			out.Values[i] = ec._CTATDiscussion_posterRole(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -140351,6 +140359,16 @@ func (ec *executionContext) marshalNCTATDiscussion2ᚖgithubᚗcomᚋcmsᚑenter
 func (ec *executionContext) unmarshalNCTATDiscussionInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionInput(ctx context.Context, v any) (model.CTATDiscussionInput, error) {
 	res, err := ec.unmarshalInputCTATDiscussionInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNCTATDiscussionPoster2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionPoster(ctx context.Context, v any) (model.CTATDiscussionPoster, error) {
+	var res model.CTATDiscussionPoster
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNCTATDiscussionPoster2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionPoster(ctx context.Context, sel ast.SelectionSet, v model.CTATDiscussionPoster) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNCTATHelpNeededType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATHelpNeededType(ctx context.Context, v any) (models.CTATHelpNeededType, error) {
