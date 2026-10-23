@@ -1,5 +1,5 @@
 type CTATDiscussion {
-  id: String!
+  id: UUID!
   ticketID: UUID!
   content: String!
   isAdmin: Boolean!

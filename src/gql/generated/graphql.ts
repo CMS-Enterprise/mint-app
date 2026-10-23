@@ -350,7 +350,7 @@ export type CtatDiscussion = {
   createdBy: Scalars['UUID']['output'];
   createdByUserAccount: UserAccount;
   createdDts: Scalars['Time']['output'];
-  id: Scalars['String']['output'];
+  id: Scalars['UUID']['output'];
   isAdmin: Scalars['Boolean']['output'];
   ticketID: Scalars['UUID']['output'];
 };

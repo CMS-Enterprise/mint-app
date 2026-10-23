@@ -20268,7 +20268,7 @@ type EnumTranslation {
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/ctat/ctat_discussion.graphql", Input: `type CTATDiscussion {
-  id: String!
+  id: UUID!
   ticketID: UUID!
   content: String!
   isAdmin: Boolean!
@@ -35313,15 +35313,15 @@ func (ec *executionContext) _CTATDiscussion_id(ctx context.Context, field graphq
 			return obj.ID, nil
 		},
 		nil,
-		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
-			return ec.marshalNString2string(ctx, selections, v)
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
 		},
 		true,
 		true,
 	)
 }
 func (ec *executionContext) fieldContext_CTATDiscussion_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, errors.New("field of type String does not have child fields"))
+	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, errors.New("field of type UUID does not have child fields"))
 }
 
 func (ec *executionContext) _CTATDiscussion_ticketID(ctx context.Context, field graphql.CollectedField, obj *model.CTATDiscussion) (ret graphql.Marshaler) {

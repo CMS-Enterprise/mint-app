@@ -26,7 +26,7 @@ type ApplyTemplateResult struct {
 }
 
 type CTATDiscussion struct {
-	ID                   string                     `json:"id"`
+	ID                   uuid.UUID                  `json:"id"`
 	TicketID             uuid.UUID                  `json:"ticketID"`
 	Content              string                     `json:"content"`
 	IsAdmin              bool                       `json:"isAdmin"`
