@@ -299,8 +299,8 @@ const MilestoneCardGroup = ({
               <GlobalClientFilter
                 globalFilter={query}
                 setGlobalFilter={setQuery}
-                tableID="help-articles"
-                tableName=""
+                tableID="milestone-library-table"
+                tableName="milestone-library"
                 className={classNames('maxw-none tablet:width-mobile-lg', {
                   'tablet:margin-left-1': showFilters
                 })}
