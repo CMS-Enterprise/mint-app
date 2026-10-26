@@ -11,4 +11,4 @@ SELECT
     d.created_dts
 FROM ctat_discussion AS d
 INNER JOIN QUERIED_IDS ON d.ticket_id = QUERIED_IDS.ticket_id
-ORDER BY d.created_dts DESC;
+ORDER BY d.created_dts DESC, d.id DESC;
