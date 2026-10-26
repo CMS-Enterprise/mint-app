@@ -28,6 +28,7 @@ import UsingTableActions from './Articles/UsingTableActions';
 import UtilizingSolutions from './Articles/UtilizingSolutions';
 import ContractAssistancePage from './ContractAssistancePage';
 import HKCMilestoneLibrary from './HKCMilestoneLibrary';
+import HKCWaiverLibrary from './HKCWaiverLibrary';
 import HelpAndKnowledgeHome from './home';
 import SolutionsHelp from './SolutionsHelp';
 
@@ -47,6 +48,7 @@ export const helpAndKnowledgeRoutes = {
     { path: 'articles', element: <AllArticles /> },
     { path: 'model-plan-overview', element: <ModelPlanOverview /> },
     { path: 'milestone-library', element: <HKCMilestoneLibrary /> },
+    { path: 'waiver-library', element: <HKCWaiverLibrary /> },
     { path: 'operational-solutions', element: <SolutionsHelp /> },
     { path: 'high-level-project-plan', element: <HighLevelProjectPlan /> },
     {

@@ -259,7 +259,7 @@ func sendKeyContactWelcomeEmail(
 	if contact.Email != nil {
 		err = emailService.Send(
 			addressBook.DefaultSender,
-			[]string{*contact.Email},
+			contact.Email,
 			nil,
 			emailSubject,
 			"text/html",

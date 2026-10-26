@@ -551,12 +551,13 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 
 	tasks, err := PlanTaskGetByModelPlanIDLOADER(suite.testConfigs.Context, plan.ID)
 	suite.NoError(err)
-	suite.Len(tasks, 7)
+	suite.Len(tasks, len(models.DefaultPlanTasks))
 
 	taskByKey := planTasksByKey(tasks)
 	suite.NotNil(taskByKey[models.PlanTaskKeyModelPlan])
 	suite.NotNil(taskByKey[models.PlanTaskKeyMto])
 	suite.NotNil(taskByKey[models.PlanTaskKeyDataExchange])
+	suite.NotNil(taskByKey[models.PlanTaskKeyWaiverAssessmentSurvey])
 	suite.NotNil(taskByKey[models.PlanTaskKeyTwoPager])
 	suite.NotNil(taskByKey[models.PlanTaskKeySixPager])
 	suite.NotNil(taskByKey[models.PlanTaskKeyOaPresentation])
@@ -1327,14 +1328,14 @@ func (suite *ResolverSuite) TestTrySendPlanTaskNewAvailableNotificationsEmailRec
 	mockEmailService.EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq([]string{}),
+			gomock.Nil(),
 			gomock.Nil(),
 			gomock.Any(),
 			gomock.Eq("text/html"),
 			gomock.Any(),
 			gomock.Any(),
 		).
-		DoAndReturn(func(_ string, _, _ []string, _, _ string, body string, opts ...oddmail.EmailOption) error {
+		DoAndReturn(func(_ string, _, _ *string, _, _ string, body string, opts ...oddmail.EmailOption) error {
 			var emailOptions oddmail.EmailOptions
 			for _, opt := range opts {
 				opt(&emailOptions)
@@ -1486,14 +1487,14 @@ func (suite *ResolverSuite) TestTrySendPlanTaskCompletedNotificationsEmailRecipi
 	mockEmailService.EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
-			gomock.Eq([]string{}),
+			gomock.Nil(),
 			gomock.Nil(),
 			gomock.Any(),
 			gomock.Eq("text/html"),
 			gomock.Any(),
 			gomock.Any(),
 		).
-		DoAndReturn(func(_ string, _, _ []string, _, _ string, body string, opts ...oddmail.EmailOption) error {
+		DoAndReturn(func(_ string, _, _ *string, _, _ string, body string, opts ...oddmail.EmailOption) error {
 			var emailOptions oddmail.EmailOptions
 			for _, opt := range opts {
 				opt(&emailOptions)

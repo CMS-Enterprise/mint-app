@@ -33,6 +33,7 @@ import keyContactCategory, {
 import mtoCommonMilestone, {
   mtoCommonMilestoneMisc
 } from './helpAndKnowledge/mtoCommonMilestone';
+import waiverLibraryMisc from './helpAndKnowledge/waiverLibrary';
 import adminActions from './home/adminActions';
 import customHome from './home/customHome';
 import homepageSettings from './home/settings';
@@ -96,6 +97,10 @@ import modelPlanTaskList from './modelPlan/taskList';
 import tasks from './modelPlan/tasks';
 import tdls from './modelPlan/tdls';
 import { timeline, timelineMisc } from './modelPlan/timeline';
+import {
+  waiverAssessmentSurvey,
+  waiverAssessmentSurveyMisc
+} from './modelPlan/waiverAssessmentSurvey';
 import filterView from './readOnly/filterView';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
@@ -150,6 +155,8 @@ const enUS = {
   generalCharacteristicsMisc,
   iddocQuestionnaire,
   iddocQuestionnaireMisc,
+  waiverAssessmentSurvey,
+  waiverAssessmentSurveyMisc,
   participantsAndProviders,
   participantsAndProvidersMisc,
   beneficiaries,
@@ -223,6 +230,7 @@ const enUS = {
   usingSolutionsAndITSystemsTable,
   usingTableActions,
   usingMilestoneLibrary,
+  waiverLibraryMisc,
   usingSolutionLibrary,
   addCustomMilestone,
   addCustomSolution,

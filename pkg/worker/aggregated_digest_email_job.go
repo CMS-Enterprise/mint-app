@@ -39,7 +39,7 @@ func AggregatedDigestEmailJob[T logging.ChainableErrorOrWarnLogger[T]](
 	// Send generated email
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",

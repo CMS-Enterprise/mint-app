@@ -32,7 +32,9 @@ body:graphql {
         iddocQuestionnaireComplete: [EMAIL, IN_APP]
         iddocQuestionnaireCompletedNotificationType: ALL_MODELS
         mtoReadyForReview: [EMAIL, IN_APP]
-        mtoReadyForReviewNotificationType: MY_MODELS
+        mtoReadyForReviewNotificationType: ALL_MODELS
+        waiverAssessmentSurveyMarkedComplete: [EMAIL, IN_APP]
+        waiverAssessmentSurveyMarkedCompleteNotificationType: ALL_MODELS
       }
     ) {
       dailyDigestComplete
@@ -48,6 +50,8 @@ body:graphql {
       iddocQuestionnaireCompletedNotificationType
       mtoReadyForReview
       mtoReadyForReviewNotificationType
+      waiverAssessmentSurveyMarkedComplete
+      waiverAssessmentSurveyMarkedCompleteNotificationType
     }
   }
 }
