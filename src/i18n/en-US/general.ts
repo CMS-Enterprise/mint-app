@@ -44,6 +44,7 @@ const general = {
   tasklistBreadcrumb: 'Model Plan task list',
   cancel: 'Cancel',
   select: 'Select',
+  close: 'Close',
   additionalNote: 'Add an additional note',
   datePlaceholder: 'mm/dd/yyyy',
   yes: 'Yes',

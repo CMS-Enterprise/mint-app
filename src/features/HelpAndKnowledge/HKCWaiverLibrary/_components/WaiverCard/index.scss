@@ -1,0 +1,14 @@
+.waiver-card {
+    &__container {
+        min-height: 260px; 
+        height: 100%; 
+    }
+
+    &__body p {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0;
+    }
+}

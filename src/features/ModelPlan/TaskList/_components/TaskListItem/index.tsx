@@ -7,7 +7,8 @@ import {
   MtoMilestoneStatus,
   MtoStatus,
   PlanTaskStatus,
-  TaskStatus
+  TaskStatus,
+  WaiverAssessmentSurveyStatus
 } from 'gql/generated/graphql';
 
 type TaskListDescriptionProps = {
@@ -30,6 +31,7 @@ export const TaskListStatusTag = ({
     | TaskStatus
     | ModelStatus
     | DataExchangeApproachStatus
+    | WaiverAssessmentSurveyStatus
     | IddocQuestionnaireTaskListStatus
     | MtoStatus
     | MtoMilestoneStatus

@@ -602,7 +602,7 @@ func sendMTOMilestoneAssignedEmail(
 	// Send email to assigned user
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{assignedUser.Email},
+		&assignedUser.Email,
 		nil,
 		emailSubject,
 		"text/html",

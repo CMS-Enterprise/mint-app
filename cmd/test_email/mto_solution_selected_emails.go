@@ -88,7 +88,15 @@ func sendMTOSolutionSelectedForUseByModelEmail(
 		return err
 	}
 
-	err = emailService.Send(addressBook.DefaultSender, pocEmailAddress, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		nil,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+		oddmail.WithBCC(pocEmailAddress),
+	)
 	if err != nil {
 		return err
 	}

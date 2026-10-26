@@ -39,6 +39,21 @@ const questionnairesList: Record<
     path: 'data-exchange-approach/about-completing-data-exchange',
     responsibleTeamMember: 'IT Lead (with assistance from other team members)'
   },
+  waiverAssessmentSurvey: {
+    heading: 'Waiver assessment survey',
+    description: [
+      'This survey will help determine which specific waivers are most appropriate for your model, ensure proper justification for waiver selections, and identify any instances where standard CMS authorities may be sufficient without additional waiver flexibility.',
+      'Your responses will:',
+      [
+        'Inform stakeholder engagement strategies',
+        'Support operational planning and implementation timelines',
+        'Ensure compliance with statutory and regulatory requirements'
+      ]
+    ],
+    path: 'waiver-assessment-survey/about',
+    responsibleTeamMember:
+      'Model Lead (with assistance from other team members)'
+  },
   iddocQuestionnaire: {
     heading: '4i and ACO-OS',
     description: [
@@ -52,6 +67,7 @@ const questionnairesList: Record<
 const additionalQuestionnaires = {
   heading: 'Additional questionnaires',
   returnToCollaboration: 'Return to model collaboration area',
+  returnToQuestionnaires: 'Return to questionnaires',
   sideNav: {
     relatedContent: 'Related content',
     articles: [

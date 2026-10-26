@@ -292,7 +292,7 @@ func SendIDDOCQuestionnaireCompletedEmailNotification(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{userEmail},
+		&userEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -331,7 +331,7 @@ func SendIDDOCQuestionnaireCompletedEmailNotifications(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{},
+		nil,
 		nil,
 		emailSubject,
 		"text/html",

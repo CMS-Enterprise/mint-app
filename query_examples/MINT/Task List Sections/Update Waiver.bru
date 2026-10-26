@@ -1,0 +1,49 @@
+meta {
+  name: Update Waiver
+  type: graphql
+  seq: 6
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  mutation updateWaiver($modelPlanID: UUID!, $commonWaiverID: UUID!, $changes: WaiverChanges!) {
+    updateWaiver(modelPlanID: $modelPlanID, commonWaiverID: $commonWaiverID, changes: $changes) {
+      id
+      modelPlanID
+      commonWaiverID
+      willUseWaiver
+      notUsingReason
+      commonWaiver {
+        id
+        name
+        waiverType
+      }
+      createdBy
+      createdDts
+      modifiedBy
+      modifiedDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "modelPlanID": "{{modelPlanID}}",
+    "commonWaiverID": "{{commonWaiverID}}",
+    "changes": {
+      "willUseWaiver": true,
+      "notUsingReason": null
+    }
+  }
+}

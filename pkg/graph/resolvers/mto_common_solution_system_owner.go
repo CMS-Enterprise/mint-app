@@ -283,7 +283,7 @@ func sendMTOCommonSolutionSystemOwnerAddedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -325,7 +325,7 @@ func sendMTOCommonSolutionSystemOwnerEditedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
@@ -365,7 +365,7 @@ func sendMTOCommonSolutionSystemOwnerRemovedEmail(
 
 	err = emailService.Send(
 		addressBook.DefaultSender,
-		[]string{addressBook.MINTTeamEmail},
+		&addressBook.MINTTeamEmail,
 		nil,
 		emailSubject,
 		"text/html",
