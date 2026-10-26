@@ -117,15 +117,15 @@ exports[`HKC Milestone library Component > renders correctly and matches snapsho
               <label
                 class="usa-sr-only"
                 data-testid="label"
-                for="help-articles-search"
+                for="milestone-library-table-search"
               >
                 Search Table
               </label>
               <input
                 class="usa-input height-5"
                 data-testid="textInput"
-                id="help-articles-search"
-                name=" Search"
+                id="milestone-library-table-search"
+                name="milestone-library Search"
                 role="searchbox"
                 type="search"
                 value=""
