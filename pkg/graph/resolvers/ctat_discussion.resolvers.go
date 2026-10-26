@@ -13,6 +13,7 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
 // SaveDiscussion is the resolver for the saveDiscussion field.
@@ -22,5 +23,5 @@ func (r *mutationResolver) SaveDiscussion(ctx context.Context, input model.CTATD
 
 // Discussions is the resolver for the discussions field.
 func (r *queryResolver) Discussions(ctx context.Context, ticketID uuid.UUID) ([]*models.CTATDiscussion, error) {
-	panic(fmt.Errorf("not implemented: Discussions - discussions"))
+	return loaders.CTATDiscussion.ByTicketID.Load(ctx, ticketID)
 }
