@@ -5,7 +5,11 @@ export default gql(/* GraphQL */ `
     commonWaivers {
       id
       name
+      description
       waiverType
+      waiverFocus
+      hasStandardizationEffort
+      hasClaimsDataOrRREGAnalysis
     }
   }
 `);
