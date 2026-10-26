@@ -485,16 +485,15 @@ const filterCsvData = (
     const isStatusMatch =
       filters.status.length > 0 && filters.status.includes(modelPlan.status);
 
-    const hasOtherFilters = filters.other.length > 0;
-    let isOtherMatch = false;
-
-    if (hasOtherFilters && filters.other.includes('MY_MODELS')) {
-      isOtherMatch = modelPlan.isCollaborator;
-    }
-
-    if (hasOtherFilters && filters.other.includes('MODELS_I_FOLLOW')) {
-      isOtherMatch = modelPlan.isFavorite;
-    }
+    const isOtherMatch = filters.other.some(filter => {
+      if (filter === 'MY_MODELS') {
+        return modelPlan.isCollaborator;
+      }
+      if (filter === 'MODELS_I_FOLLOW') {
+        return modelPlan.isFavorite;
+      }
+      return false;
+    });
 
     return isStatusMatch || isOtherMatch;
   });
@@ -607,15 +606,11 @@ const useFetchCSVData = (): UseFetchCSVData => {
         if (exportSection) setExportSection(exportSection);
         const result = await fetchAllDataQuery();
 
-        const filteredData = filters
+        const csvData = filters
           ? filterCsvData(result.data?.modelPlanCollection || [], filters || {})
           : result.data?.modelPlanCollection || [];
 
-        csvFormatter(
-          filteredData,
-          allPlanTranslation,
-          exportSectionRef.current
-        );
+        csvFormatter(csvData, allPlanTranslation, exportSectionRef.current);
         return result;
       },
       [fetchAllDataQuery, setExportSection, allPlanTranslation]
