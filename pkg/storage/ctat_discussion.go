@@ -9,8 +9,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-func CTATDiscussionCreate(np sqlutils.NamedPreparer, input models.CTATDiscussionInput) (*models.CTATDiscussion, error) {
-	return sqlutils.GetProcedure[models.CTATDiscussion](np, sqlqueries.CTATDiscussion.Create, input)
+func CTATDiscussionCreate(np sqlutils.NamedPreparer, discussion *models.CTATDiscussion) (*models.CTATDiscussion, error) {
+	return sqlutils.GetProcedure[models.CTATDiscussion](np, sqlqueries.CTATDiscussion.Create, discussion)
 }
 
 func CTATDiscussionByTicketID(np sqlutils.NamedPreparer, ticketIDs []uuid.UUID) ([]*models.CTATDiscussion, error) {

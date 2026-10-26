@@ -1238,7 +1238,7 @@ type ComplexityRoot struct {
 		RenameMTOCategory                     func(childComplexity int, id uuid.UUID, name string) int
 		ReorderMTOCategory                    func(childComplexity int, id uuid.UUID, newOrder *int, parentID *uuid.UUID) int
 		ReportAProblem                        func(childComplexity int, input model.ReportAProblemInput) int
-		SaveDiscussion                        func(childComplexity int, input models.CTATDiscussionInput) int
+		SaveDiscussion                        func(childComplexity int, input model.CTATDiscussionInput) int
 		SendFeedbackEmail                     func(childComplexity int, input model.SendFeedbackEmailInput) int
 		ShareModelPlan                        func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, modelShareSection *models.ModelShareSection, usernames []string, optionalMessage *string) int
 		UnlockAllLockableSections             func(childComplexity int, modelPlanID uuid.UUID) int
@@ -3278,7 +3278,7 @@ type MutationResolver interface {
 	UnlockLockableSection(ctx context.Context, modelPlanID uuid.UUID, section models.LockableSection) (bool, error)
 	UnlockAllLockableSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error)
 	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
-	SaveDiscussion(ctx context.Context, input models.CTATDiscussionInput) (*models.CTATDiscussion, error)
+	SaveDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error)
 	CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error)
 	AdminUpdateCTATRequest(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CTATRequest, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
@@ -9126,7 +9126,7 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 			return 0, false
 		}
 
-		return e.ComplexityRoot.Mutation.SaveDiscussion(childComplexity, args["input"].(models.CTATDiscussionInput)), true
+		return e.ComplexityRoot.Mutation.SaveDiscussion(childComplexity, args["input"].(model.CTATDiscussionInput)), true
 	case "Mutation.sendFeedbackEmail":
 		if e.ComplexityRoot.Mutation.SendFeedbackEmail == nil {
 			break
@@ -32084,8 +32084,8 @@ func (ec *executionContext) field_Mutation_saveDiscussion_args(ctx context.Conte
 	var err error
 	args := map[string]any{}
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
-		func(ctx context.Context, v any) (models.CTATDiscussionInput, error) {
-			return ec.unmarshalNCTATDiscussionInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussionInput(ctx, v)
+		func(ctx context.Context, v any) (model.CTATDiscussionInput, error) {
+			return ec.unmarshalNCTATDiscussionInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -54993,7 +54993,7 @@ func (ec *executionContext) _Mutation_saveDiscussion(ctx context.Context, field 
 		},
 		func(ctx context.Context) (any, error) {
 			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().SaveDiscussion(ctx, fc.Args["input"].(models.CTATDiscussionInput))
+			return ec.Resolvers.Mutation().SaveDiscussion(ctx, fc.Args["input"].(model.CTATDiscussionInput))
 		},
 		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
 			directive0 := next
@@ -103895,8 +103895,8 @@ func UnmarshalCTATAdminUpdateInput(ctx context.Context, raw any) (map[string]any
 	return out, err
 }
 
-func (ec *executionContext) unmarshalInputCTATDiscussionInput(ctx context.Context, obj any) (models.CTATDiscussionInput, error) {
-	var it models.CTATDiscussionInput
+func (ec *executionContext) unmarshalInputCTATDiscussionInput(ctx context.Context, obj any) (model.CTATDiscussionInput, error) {
+	var it model.CTATDiscussionInput
 	if obj == nil {
 		return it, nil
 	}
@@ -103938,8 +103938,8 @@ func (ec *executionContext) unmarshalInputCTATDiscussionInput(ctx context.Contex
 //
 // ctx must come from a gqlgen request; outside one there is no unmarshaler to use
 // and the returned error says so.
-func UnmarshalCTATDiscussionInput(ctx context.Context, raw any) (models.CTATDiscussionInput, error) {
-	var out models.CTATDiscussionInput
+func UnmarshalCTATDiscussionInput(ctx context.Context, raw any) (model.CTATDiscussionInput, error) {
+	var out model.CTATDiscussionInput
 	err := graphql.UnmarshalNamedInputFromContext(ctx, "CTATDiscussionInput", raw, &out)
 	return out, err
 }
@@ -128476,7 +128476,7 @@ func (ec *executionContext) marshalNCTATDiscussion2ᚖgithubᚗcomᚋcmsᚑenter
 	return ec._CTATDiscussion(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNCTATDiscussionInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussionInput(ctx context.Context, v any) (models.CTATDiscussionInput, error) {
+func (ec *executionContext) unmarshalNCTATDiscussionInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionInput(ctx context.Context, v any) (model.CTATDiscussionInput, error) {
 	res, err := ec.unmarshalInputCTATDiscussionInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }

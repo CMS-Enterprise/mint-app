@@ -11,11 +11,12 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // SaveDiscussion is the resolver for the saveDiscussion field.
-func (r *mutationResolver) SaveDiscussion(ctx context.Context, input models.CTATDiscussionInput) (*models.CTATDiscussion, error) {
+func (r *mutationResolver) SaveDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error) {
 	panic(fmt.Errorf("not implemented: SaveDiscussion - saveDiscussion"))
 }
 
