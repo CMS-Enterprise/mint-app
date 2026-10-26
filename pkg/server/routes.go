@@ -310,13 +310,14 @@ func (s *Server) routes(
 
 	// Setup faktory worker
 	s.Worker = &worker.Worker{
-		Store:         store,
-		Environment:   s.environment,
-		EmailService:  emailService,
-		AddressBook:   addressBook,
-		Connections:   s.Config.GetInt(appconfig.FaktoryConnections),
-		ProcessJobs:   s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
-		OktaAPIClient: oktaClient,
+		Store:                  store,
+		Environment:            s.environment,
+		EmailService:           emailService,
+		AddressBook:            addressBook,
+		Connections:            s.Config.GetInt(appconfig.FaktoryConnections),
+		ProcessJobs:            s.Config.GetBool(appconfig.FaktoryProcessJobs) && !s.environment.Testing(),
+		OktaAPIClient:          oktaClient,
+		StartupDelayMaxSeconds: s.Config.GetInt(appconfig.FaktoryStartupDelayMaxSeconds),
 	}
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
