@@ -136,6 +136,10 @@ const FaktoryProcessJobs = "FAKTORY_PROCESS_JOBS"
 // FaktoryConnections number of connections for a manager
 const FaktoryConnections = "FAKTORY_CONNECTIONS"
 
+// FaktoryStartupDelayMaxSeconds is the upper bound (in seconds) of a random delay before the
+// worker opens its Faktory connection pool. 0 (the default when unset) disables the delay.
+const FaktoryStartupDelayMaxSeconds = "FAKTORY_STARTUP_DELAY_MAX_SECONDS"
+
 // FlagSourceOption represents an environment
 type FlagSourceOption string
 
