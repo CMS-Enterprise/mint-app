@@ -9,7 +9,7 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 
-import getBasicFilters from './getFilterOptions';
+import { getAllModelFilters, getBasicModelFilters } from './getFilterOptions';
 
 const DownloadSectionModal = ({
   isModalOpen,
@@ -26,7 +26,16 @@ const DownloadSectionModal = ({
   // Fetch all data for CSV export of all model plans
   const { fetchAllData } = useFetchCSVData();
 
-  const filterOptions = getBasicFilters();
+  const getFilterOptions = () => {
+    switch (reportType) {
+      case 'basicModelInfo':
+        return getBasicModelFilters();
+      default:
+        return getAllModelFilters();
+    }
+  };
+
+  const filterOptions = getFilterOptions();
 
   const selectedFilterConfig: Record<string, string[]> = filterOptions.reduce(
     (config, filter) => ({

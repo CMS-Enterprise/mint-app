@@ -1,9 +1,10 @@
+import { ModelStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
 import { FilterGroupType } from 'components/FilterGroup';
 import { tObject } from 'utils/translation';
 
-const getBasicFilters = (): FilterGroupType[] => {
+export const getAllModelFilters = (): FilterGroupType[] => {
   const statusOptions = Object.entries(
     tObject<string>('modelPlan:status.options')
   );
@@ -42,4 +43,22 @@ const getBasicFilters = (): FilterGroupType[] => {
   ];
 };
 
-export default getBasicFilters;
+export const getBasicModelFilters = () => {
+  const allFilters = getAllModelFilters();
+
+  return allFilters.map(filterGroup => {
+    if (filterGroup.key === 'status') {
+      return {
+        ...filterGroup,
+        options: filterGroup.options?.filter(
+          option =>
+            option.value !== ModelStatus.ENDED &&
+            option.value !== ModelStatus.PAUSED &&
+            option.value !== ModelStatus.CANCELED
+        )
+      };
+    }
+
+    return filterGroup;
+  });
+};
