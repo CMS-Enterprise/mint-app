@@ -98,6 +98,11 @@ const notifications = {
       TASK_COMPLETED: {
         text: ' marked a task as complete for {{-modelName}}.',
         cta: 'View tasks'
+      },
+      // TODO(MINT-3912): placeholder copy, the real notification rendering is implemented in MINT-3912
+      MODEL_FOLLOWER_UPDATE: {
+        text: ' sent an update about {{-modelName}}.',
+        cta: 'View model'
       }
     },
     dailyDigest: {

@@ -216,7 +216,10 @@ const activityI18nKeybases = {
   MTOReadyForReviewActivityMeta:
     'notifications:index.activityType.MTO_READY_FOR_REVIEW',
   NewTaskAddedActivityMeta: 'notifications:index.activityType.NEW_TASK_ADDED',
-  TaskCompletedActivityMeta: 'notifications:index.activityType.TASK_COMPLETED'
+  TaskCompletedActivityMeta: 'notifications:index.activityType.TASK_COMPLETED',
+  // TODO(MINT-3912): placeholder so the new activity type compiles, the real rendering is implemented in MINT-3912
+  ModelFollowerUpdateActivityMeta:
+    'notifications:index.activityType.MODEL_FOLLOWER_UPDATE'
 };
 
 export const activityText = (data: ActivityMetaData) => {

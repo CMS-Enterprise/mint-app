@@ -27,6 +27,7 @@ const (
 	ActivityIncorrectModelStatus               ActivityType = "INCORRECT_MODEL_STATUS"
 	ActivityNewTaskAdded                       ActivityType = "NEW_TASK_ADDED"
 	ActivityTaskCompleted                      ActivityType = "TASK_COMPLETED"
+	ActivityModelFollowerUpdate                ActivityType = "MODEL_FOLLOWER_UPDATE"
 )
 
 // activityMetaDataTypeMap maps ActivityType to the corresponding ActivityMetaData struct type
@@ -47,6 +48,7 @@ var activityMetaDataTypeMap = map[ActivityType]func() ActivityMetaData{
 	ActivityIncorrectModelStatus:               func() ActivityMetaData { return &IncorrectModelStatusActivityMeta{} },
 	ActivityNewTaskAdded:                       func() ActivityMetaData { return &NewTaskAddedActivityMeta{} },
 	ActivityTaskCompleted:                      func() ActivityMetaData { return &TaskCompletedActivityMeta{} },
+	ActivityModelFollowerUpdate:                func() ActivityMetaData { return &ModelFollowerUpdateActivityMeta{} },
 }
 
 // Activity represents a discrete event that has happened in the application that might be notifiable.

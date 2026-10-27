@@ -7,14 +7,17 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
+	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 )
 
 // SendModelFollowerUpdate is the resolver for the sendModelFollowerUpdate field.
 func (r *mutationResolver) SendModelFollowerUpdate(ctx context.Context, modelPlanID uuid.UUID, content string) (*model.ModelFollowerUpdate, error) {
-	panic(fmt.Errorf("not implemented: SendModelFollowerUpdate - sendModelFollowerUpdate"))
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return ModelFollowerUpdateSend(ctx, logger, principal, r.store, r.emailService, r.addressBook, modelPlanID, content)
 }
