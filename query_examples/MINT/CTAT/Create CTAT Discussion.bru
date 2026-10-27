@@ -50,6 +50,6 @@ vars:pre-request {
 
 tests {
   let responseData = res.getBody().data.createDiscussion
-
+  
   bru.setVar("ctatDiscussionID", responseData.id);
 }
