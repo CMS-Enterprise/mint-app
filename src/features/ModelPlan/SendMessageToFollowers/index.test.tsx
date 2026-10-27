@@ -10,6 +10,7 @@ import {
 import { stubProseMirrorLayout } from 'tests/util';
 
 import ErrorProvider from 'contexts/ErrorContext';
+import { getCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
 import SendMessageToFollowers from './index';
 
@@ -88,6 +89,10 @@ const renderPage = (mocks: MockedResponse[] = [baseMock]) => {
 };
 
 describe('SendMessageToFollowers', () => {
+  beforeEach(() => {
+    toastSuccess.mockClear();
+  });
+
   beforeAll(() => {
     stubProseMirrorLayout();
   });
@@ -174,5 +179,35 @@ describe('SendMessageToFollowers', () => {
     expect(router.state.location.pathname).toBe(
       `/models/${modelID}/collaboration-area`
     );
+  });
+
+  it('sets the error toast copy and stays on the page when sending fails', async () => {
+    const user = userEvent.setup();
+    const { router } = renderPage([
+      baseMock,
+      {
+        ...sendMock('<p>Model update</p>'),
+        result: undefined,
+        error: new Error('failed')
+      }
+    ]);
+
+    const editor = await screen.findByRole('textbox', {
+      name: /Model update message/
+    });
+    await user.click(editor);
+    await user.keyboard('Model update');
+
+    const sendButton = screen.getByRole('button', { name: 'Send message' });
+    await waitFor(() => expect(sendButton).not.toBeDisabled());
+    await user.click(sendButton);
+
+    await waitFor(() =>
+      expect(getCurrentErrorMeta().overrideMessage).toBe(
+        'There was an error sending your message. Please try again. If the error persists, please try again another time.'
+      )
+    );
+    expect(toastSuccess).not.toHaveBeenCalled();
+    expect(router.state.location.pathname).toBe(path);
   });
 });

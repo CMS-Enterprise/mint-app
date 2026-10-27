@@ -19,7 +19,8 @@ var modelFollowerUpdateBodyTemplate string
 
 // ModelFollowerUpdateSubjectContent defines the parameters necessary for the corresponding email subject
 type ModelFollowerUpdateSubjectContent struct {
-	// ModelAcronym is the model's abbreviation, falling back to the model name when it has none
+	ModelName string
+	// ModelAcronym is the model's abbreviation, empty when the model has none
 	ModelAcronym string
 }
 

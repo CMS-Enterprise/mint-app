@@ -41,7 +41,7 @@ const SendMessageToFollowers = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (isEmpty) return;
+    if (isEmpty || !modelName) return;
 
     // the global error link shows this copy in an error toast if the mutation fails
     setErrorMeta({ overrideMessage: t('sendMessageToFollowers.error') });
@@ -134,7 +134,7 @@ const SendMessageToFollowers = () => {
             <Button
               type="submit"
               className="margin-top-6 margin-bottom-2"
-              disabled={isEmpty}
+              disabled={isEmpty || !modelName}
             >
               {t('sendMessageToFollowers.sendMessage')}
             </Button>

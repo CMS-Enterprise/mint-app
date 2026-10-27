@@ -115,24 +115,23 @@ func trySendModelFollowerUpdateEmail(
 		return
 	}
 
+	// a failure to load the optional model details must not prevent the email from being sent
+	var categories []string
 	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlan.ID)
 	if err != nil {
-		logger.Error("failed to get plan basics for model follower update email notification", zap.Error(err))
-		return
+		logger.Warn("failed to get plan basics for model follower update email notification", zap.Error(err))
+	} else {
+		if planBasics.ModelCategory != nil {
+			categories = append(categories, models.ModelCategoryHumanized[*planBasics.ModelCategory])
+		}
+		for _, category := range planBasics.AdditionalModelCategories {
+			categories = append(categories, models.ModelCategoryHumanized[models.ModelCategory(category)])
+		}
 	}
 
 	modelLeads, err := modelLeadNamesGetByModelPlanID(ctx, modelPlan.ID)
 	if err != nil {
-		logger.Error("failed to get model leads for model follower update email notification", zap.Error(err))
-		return
-	}
-
-	var categories []string
-	if planBasics.ModelCategory != nil {
-		categories = append(categories, models.ModelCategoryHumanized[*planBasics.ModelCategory])
-	}
-	for _, category := range planBasics.AdditionalModelCategories {
-		categories = append(categories, models.ModelCategoryHumanized[models.ModelCategory(category)])
+		logger.Warn("failed to get model leads for model follower update email notification", zap.Error(err))
 	}
 
 	lastUpdated := modelPlan.CreatedDts
@@ -140,21 +139,23 @@ func trySendModelFollowerUpdateEmail(
 		lastUpdated = *modelPlan.ModifiedDts
 	}
 
-	// the subject falls back to the model name when the model has no acronym
-	modelAcronym := modelPlan.ModelName
-	if modelPlan.Abbreviation != nil && *modelPlan.Abbreviation != "" {
-		modelAcronym = *modelPlan.Abbreviation
+	// an empty abbreviation is treated as no acronym
+	modelAcronym := lo.FromPtr(modelPlan.Abbreviation)
+	var modelShortName *string
+	if modelAcronym != "" {
+		modelShortName = &modelAcronym
 	}
 
 	emailSubject, emailBody, err := email.ModelFollowerUpdate.Send.GetContent(
 		email.ModelFollowerUpdateSubjectContent{
+			ModelName:    modelPlan.ModelName,
 			ModelAcronym: modelAcronym,
 		},
 		email.ModelFollowerUpdateBodyContent{
 			ClientAddress:    emailService.GetConfig().GetClientAddress(),
 			ModelID:          modelPlan.ID.String(),
 			ModelName:        modelPlan.ModelName,
-			ModelShortName:   modelPlan.Abbreviation,
+			ModelShortName:   modelShortName,
 			ModelCategories:  categories,
 			ModelStatus:      models.ModelStatusHumanized[modelPlan.Status],
 			ModelLastUpdated: lastUpdated,

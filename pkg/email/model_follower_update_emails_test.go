@@ -13,6 +13,7 @@ func TestModelFollowerUpdateTemplate(t *testing.T) {
 
 	subject, body, err := ModelFollowerUpdate.Send.GetContent(
 		ModelFollowerUpdateSubjectContent{
+			ModelName:    "Test Model Plan",
 			ModelAcronym: "TMP",
 		},
 		ModelFollowerUpdateBodyContent{
@@ -47,4 +48,23 @@ func TestModelFollowerUpdateTemplate(t *testing.T) {
 	// the sanitized content is rendered as HTML, not escaped
 	assertContains(t, body, "<p>Hello <strong>followers</strong></p>", true)
 	assertContains(t, body, clientAddress+"/models/"+modelID+"/read-view/model-basics", true)
+}
+
+func TestModelFollowerUpdateSubjectWithoutAcronym(t *testing.T) {
+	subject, _, err := ModelFollowerUpdate.Send.GetContent(
+		ModelFollowerUpdateSubjectContent{ModelName: "Test Model Plan"},
+		ModelFollowerUpdateBodyContent{
+			ClientAddress:    "https://mint.cms.gov",
+			ModelID:          "00000000-0000-0000-0000-000000000000",
+			ModelName:        "Test Model Plan",
+			ModelLastUpdated: time.Date(2026, 8, 9, 0, 0, 0, 0, time.UTC),
+		},
+	)
+	if err != nil {
+		t.Fatalf("unexpected template render error: %v", err)
+	}
+
+	if subject != "A model (Test Model Plan) has shared a message" {
+		t.Fatalf("expected subject %q, got %q", "A model (Test Model Plan) has shared a message", subject)
+	}
 }
