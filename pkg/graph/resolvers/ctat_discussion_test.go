@@ -66,7 +66,7 @@ func (suite *ResolverSuite) TestCreateCTATDiscussionAsAdmin() {
 	suite.Equal(admin.Account().ID, stored[0].CreatedBy)
 }
 
-func (suite *ResolverSuite) TestCreateCTATDiscussionRejectsNonRequesterWithoutAssessmentAccess() {
+func (suite *ResolverSuite) TestCTATDiscussionRejectsNonRequesterWithoutAssessmentAccess() {
 	requester := suite.testConfigs.Principal
 	ticket := suite.createTestCTATRequest(
 		requester.Account().ID,
@@ -75,6 +75,14 @@ func (suite *ResolverSuite) TestCreateCTATDiscussionRejectsNonRequesterWithoutAs
 		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
 		models.CTATStatusNew,
 	)
+	requesterCtx := appcontext.WithPrincipal(suite.testConfigs.Context, requester)
+	posted, err := createDiscussion(requesterCtx, suite.testConfigs.Store, model.CTATDiscussionInput{
+		TicketID: ticket.ID,
+		Content:  "A private discussion on this ticket.",
+	})
+	suite.Require().NoError(err)
+	suite.Require().NotNil(posted)
+
 	otherUser := suite.getTestPrincipal(suite.testConfigs.Store, "BTAL")
 	otherUser.JobCodeASSESSMENT = false
 	otherUser.JobCodeUSER = true
@@ -89,8 +97,8 @@ func (suite *ResolverSuite) TestCreateCTATDiscussionRejectsNonRequesterWithoutAs
 	suite.Nil(created)
 
 	stored, err := discussions(ctx, ticket.ID)
-	suite.NoError(err)
-	suite.Empty(stored)
+	suite.ErrorContains(err, "is not authorized to view CTAT discussions")
+	suite.Nil(stored)
 }
 
 func (suite *ResolverSuite) TestCreateCTATDiscussionRequiresExistingTicketAndPrincipal() {

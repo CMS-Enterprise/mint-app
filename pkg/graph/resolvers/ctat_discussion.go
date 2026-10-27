@@ -54,6 +54,12 @@ func createDiscussion(ctx context.Context, np sqlutils.NamedPreparer, input mode
 
 func discussions(ctx context.Context, ticketID uuid.UUID) ([]*models.CTATDiscussion, error) {
 	principal := appcontext.Principal(ctx)
+
+	if principal.AllowASSESSMENT() {
+		// short-circuit for admins
+		return loaders.CTATDiscussion.ByTicketID.Load(ctx, ticketID)
+	}
+
 	principalAcct := principal.Account()
 	if principalAcct == nil {
 		return nil, errors.New("problem getting principal account when getting discussions")
@@ -63,11 +69,14 @@ func discussions(ctx context.Context, ticketID uuid.UUID) ([]*models.CTATDiscuss
 	if err != nil {
 		return nil, err
 	}
+
 	if ctatTicket == nil {
 		return nil, fmt.Errorf("ctatTicket not found with id %s", ticketID.String())
 	}
-	if ctatTicket.Requester != principalAcct.ID && !principal.AllowASSESSMENT() {
-		return nil, errors.New("user is not authorized to view CTAT discussions")
+
+	// check if acting user is requester
+	if ctatTicket.Requester != principalAcct.ID {
+		return nil, fmt.Errorf("user (%s) is not authorized to view CTAT discussions", principalAcct.Email)
 	}
 
 	return loaders.CTATDiscussion.ByTicketID.Load(ctx, ticketID)
