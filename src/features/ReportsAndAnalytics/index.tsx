@@ -59,6 +59,7 @@ import { formatDateUtc } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
 import DateRangeModal from './_components/DateRangeModal';
+import DownloadSectionModal from './_components/DownloadSectionModal';
 
 export type ReportsType =
   | 'mtoMilestoneSummary'
@@ -115,6 +116,10 @@ const ReportsAndAnalytics = () => {
 
   const [isDownloadingAllCharts, setIsDownloadingAllCharts] =
     useState<boolean>(false);
+
+  const [isDownloadSectionOpen, setIsDownloadSectionOpen] = useState(false);
+
+  const [reportType, setReportType] = useState<ReportsType | null>(null);
 
   const [isDateRangeModalOpen, setIsDateRangeModalOpen] = useState(false);
 
@@ -200,6 +205,14 @@ const ReportsAndAnalytics = () => {
 
   return (
     <MainContent className="mint-body-normal">
+      {isDownloadSectionOpen && reportType && (
+        <DownloadSectionModal
+          isModalOpen={isDownloadSectionOpen}
+          closeModal={() => setIsDownloadSectionOpen(false)}
+          reportType={reportType}
+        />
+      )}
+
       {isDateRangeModalOpen && (
         <DateRangeModal
           isModalOpen={isDateRangeModalOpen}
@@ -293,28 +306,33 @@ const ReportsAndAnalytics = () => {
                       >
                         {downloadingReport === reportKey
                           ? t('loading')
-                          : t(
-                              reportKey === 'ctat' ? 'downloadAll' : 'download'
-                            )}
+                          : t('downloadAll')}
 
                         {downloadingReport === reportKey && (
                           <Spinner size="small" />
                         )}
                       </Button>
 
-                      {reportKey === 'ctat' && (
-                        <Button
-                          type="button"
-                          data-testid="select-time-range-button"
-                          unstyled
-                          className="deep-underline"
-                          onClick={() => {
+                      <Button
+                        type="button"
+                        data-testid="select-time-range-button"
+                        unstyled
+                        className="deep-underline"
+                        onClick={() => {
+                          if (reportKey === 'ctat') {
                             setIsDateRangeModalOpen(true);
-                          }}
-                        >
-                          {t('selectDateRange')}
-                        </Button>
-                      )}
+                          } else {
+                            setReportType(reportKey as ReportsType);
+                            setIsDownloadSectionOpen(true);
+                          }
+                        }}
+                      >
+                        {t(
+                          reportKey === 'ctat'
+                            ? 'selectDateRange'
+                            : 'downloadSection'
+                        )}
+                      </Button>
                     </CardFooter>
                   </Card>
                 </Grid>

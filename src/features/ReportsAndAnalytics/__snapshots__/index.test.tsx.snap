@@ -96,7 +96,14 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
                       data-testid="download-allModels-button"
                       type="button"
                     >
-                      Download
+                      Download all
+                    </button>
+                    <button
+                      class="usa-button usa-button--unstyled deep-underline"
+                      data-testid="select-time-range-button"
+                      type="button"
+                    >
+                      Download section
                     </button>
                   </div>
                 </div>
@@ -146,7 +153,14 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
                       data-testid="download-basicModelInfo-button"
                       type="button"
                     >
-                      Download
+                      Download all
+                    </button>
+                    <button
+                      class="usa-button usa-button--unstyled deep-underline"
+                      data-testid="select-time-range-button"
+                      type="button"
+                    >
+                      Download section
                     </button>
                   </div>
                 </div>
@@ -196,7 +210,14 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
                       data-testid="download-mtoMilestoneSummary-button"
                       type="button"
                     >
-                      Download
+                      Download all
+                    </button>
+                    <button
+                      class="usa-button usa-button--unstyled deep-underline"
+                      data-testid="select-time-range-button"
+                      type="button"
+                    >
+                      Download section
                     </button>
                   </div>
                 </div>

@@ -473,6 +473,32 @@ const filterBasicModelPlanData = (data: CSVModelPlanType[]) => {
   });
 };
 
+const filterCsvData = (
+  csvData: CSVModelPlanType[],
+  filters: Record<string, string[]>
+) => {
+  if (!csvData || csvData.length === 0) {
+    return [];
+  }
+
+  return csvData.filter(modelPlan => {
+    const isStatusMatch =
+      filters.status.length > 0 && filters.status.includes(modelPlan.status);
+
+    const isOtherMatch = filters.other.some(filter => {
+      if (filter === 'MY_MODELS') {
+        return modelPlan.isCollaborator;
+      }
+      if (filter === 'MODELS_I_FOLLOW') {
+        return modelPlan.isFavorite;
+      }
+      return false;
+    });
+
+    return isStatusMatch || isOtherMatch;
+  });
+};
+
 const csvFormatter = (
   csvData: CSVModelPlanType[],
   allPlanTranslation: any,
@@ -492,7 +518,7 @@ const csvFormatter = (
 
     let modelName: string;
 
-    if (csvData.length > 1) {
+    if (csvData.length === 0 || csvData.length > 1) {
       modelName = isBasicModelInfo ? 'Basic model information' : 'All models';
     } else {
       modelName = csvData[0].modelName;
@@ -541,7 +567,8 @@ type UseFetchCSVData = {
     exportSection?: ExportSection
   ) => Promise<GetAllSingleModelDataQueryResult>;
   fetchAllData: (
-    exportSection?: ExportSection
+    exportSection?: ExportSection,
+    filters?: Record<string, string[]>
   ) => Promise<GetAllModelDataQueryResult>;
   setExportSection: (exportSection: ExportSection) => void;
 };
@@ -575,14 +602,15 @@ const useFetchCSVData = (): UseFetchCSVData => {
       [fetchSingleDataQuery, setExportSection, allPlanTranslation]
     ),
     fetchAllData: useCallback(
-      async exportSection => {
+      async (exportSection, filters) => {
         if (exportSection) setExportSection(exportSection);
         const result = await fetchAllDataQuery();
-        csvFormatter(
-          result.data?.modelPlanCollection || [],
-          allPlanTranslation,
-          exportSectionRef.current
-        );
+
+        const csvData = filters
+          ? filterCsvData(result.data?.modelPlanCollection || [], filters || {})
+          : result.data?.modelPlanCollection || [];
+
+        csvFormatter(csvData, allPlanTranslation, exportSectionRef.current);
         return result;
       },
       [fetchAllDataQuery, setExportSection, allPlanTranslation]

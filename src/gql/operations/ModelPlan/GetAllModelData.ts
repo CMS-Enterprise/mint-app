@@ -14,6 +14,8 @@ export default gql(/* GraphQL */ `
       }
       createdDts
       status
+      isFavorite
+      isCollaborator
       taskListStatus
       prepareForClearance {
         status
