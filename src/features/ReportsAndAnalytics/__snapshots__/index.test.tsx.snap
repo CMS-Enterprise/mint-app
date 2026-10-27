@@ -185,6 +185,56 @@ exports[`ReportsAndAnalytics > matches the snapshot when analytics feature is en
                     <h3
                       class="line-height-normal margin-top-1"
                     >
+                      Group filtered view
+                    </h3>
+                  </div>
+                  <div
+                    class="usa-card__body padding-x-3 "
+                    data-testid="CardBody"
+                  >
+                    <p>
+                      Download information about models, filtered to one of the available group filtered views.
+                    </p>
+                    <p
+                      class="text-base-dark"
+                    >
+                      Format: CSV
+                    </p>
+                  </div>
+                  <div
+                    class="usa-card__footer padding-3 display-flex"
+                    data-testid="CardFooter"
+                  >
+                    <button
+                      class="usa-button margin-right-2"
+                      data-testid="download-groupFilteredView-button"
+                      type="button"
+                    >
+                      Download
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </div>
+            <div
+              class="tablet:grid-col-6 desktop:grid-col-4 display-flex"
+              data-testid="grid"
+            >
+              <li
+                class="usa-card margin-bottom-2"
+                data-testid="Card"
+              >
+                <div
+                  class="usa-card__container radius-md padding-0 margin-0"
+                  style="min-height: 350px;"
+                >
+                  <div
+                    class="usa-card__header padding-3 padding-bottom-0"
+                    data-testid="CardHeader"
+                  >
+                    <h3
+                      class="line-height-normal margin-top-1"
+                    >
                       MTO milestone summary
                     </h3>
                   </div>
