@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"errors"
+	"fmt"
 	"sync"
 	"time"
 
@@ -207,7 +208,9 @@ func (suite *ResolverSuite) TestModelFollowerUpdateSendNotifiesFollowers() {
 		lo.Map(expectedRecipients, func(recipient authentication.Principal, _ int) string { return recipient.Account().Email }),
 		sent.bcc,
 	)
-	suite.Contains(sent.subject, plan.ModelName)
+	// the test plan has no abbreviation, so the subject falls back to the model name
+	suite.Equal(fmt.Sprintf("A model (%s) has shared a message", plan.ModelName), sent.subject)
+	suite.Contains(sent.body, "Model lead(s)")
 	suite.Contains(sent.body, "Big news")
 	suite.Contains(sent.body, `href="https://example.com"`)
 	suite.NotContains(sent.body, "<script>")

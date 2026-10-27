@@ -81,7 +81,7 @@ func ModelFollowerUpdateSend(
 		return nil, err
 	}
 
-	trySendModelFollowerUpdateEmail(logger, emailService, addressBook, modelPlan, principal, recipients, sanitizedContent)
+	trySendModelFollowerUpdateEmail(ctx, logger, emailService, addressBook, modelPlan, recipients, sanitizedContent)
 
 	return &model.ModelFollowerUpdate{
 		ID:                   activity.ID,
@@ -95,11 +95,11 @@ func ModelFollowerUpdateSend(
 
 // trySendModelFollowerUpdateEmail sends one email to all recipients in BCC. Failures are logged, not returned.
 func trySendModelFollowerUpdateEmail(
+	ctx context.Context,
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
-	principal authentication.Principal,
 	recipients []*models.UserAccountAndNotificationPreferences,
 	sanitizedContent string,
 ) {
@@ -115,16 +115,51 @@ func trySendModelFollowerUpdateEmail(
 		return
 	}
 
+	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlan.ID)
+	if err != nil {
+		logger.Error("failed to get plan basics for model follower update email notification", zap.Error(err))
+		return
+	}
+
+	modelLeads, err := modelLeadNamesGetByModelPlanID(ctx, modelPlan.ID)
+	if err != nil {
+		logger.Error("failed to get model leads for model follower update email notification", zap.Error(err))
+		return
+	}
+
+	var categories []string
+	if planBasics.ModelCategory != nil {
+		categories = append(categories, models.ModelCategoryHumanized[*planBasics.ModelCategory])
+	}
+	for _, category := range planBasics.AdditionalModelCategories {
+		categories = append(categories, models.ModelCategoryHumanized[models.ModelCategory(category)])
+	}
+
+	lastUpdated := modelPlan.CreatedDts
+	if modelPlan.ModifiedDts != nil {
+		lastUpdated = *modelPlan.ModifiedDts
+	}
+
+	// the subject falls back to the model name when the model has no acronym
+	modelAcronym := modelPlan.ModelName
+	if modelPlan.Abbreviation != nil && *modelPlan.Abbreviation != "" {
+		modelAcronym = *modelPlan.Abbreviation
+	}
+
 	emailSubject, emailBody, err := email.ModelFollowerUpdate.Send.GetContent(
 		email.ModelFollowerUpdateSubjectContent{
-			ModelName: modelPlan.ModelName,
+			ModelAcronym: modelAcronym,
 		},
 		email.ModelFollowerUpdateBodyContent{
-			ClientAddress: emailService.GetConfig().GetClientAddress(),
-			ModelID:       modelPlan.ID.String(),
-			ModelName:     modelPlan.ModelName,
-			SenderName:    principal.Account().CommonName,
-			Content:       template.HTML(sanitizedContent), //nolint:gosec // content is sanitized by sanitization.SanitizeHTML
+			ClientAddress:    emailService.GetConfig().GetClientAddress(),
+			ModelID:          modelPlan.ID.String(),
+			ModelName:        modelPlan.ModelName,
+			ModelShortName:   modelPlan.Abbreviation,
+			ModelCategories:  categories,
+			ModelStatus:      models.ModelStatusHumanized[modelPlan.Status],
+			ModelLastUpdated: lastUpdated,
+			ModelLeads:       modelLeads,
+			Content:          template.HTML(sanitizedContent), //nolint:gosec // content is sanitized by sanitization.SanitizeHTML
 		},
 	)
 	if err != nil {
@@ -146,4 +181,25 @@ func trySendModelFollowerUpdateEmail(
 			logger.Error("failed to send model follower update email notification", zap.Error(err))
 		}
 	}()
+}
+
+// modelLeadNamesGetByModelPlanID returns the common names of the collaborators with the model lead role
+func modelLeadNamesGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) ([]string, error) {
+	planCollaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	var modelLeads []string
+	for _, collaborator := range planCollaborators {
+		if !lo.Contains(collaborator.TeamRoles, string(models.TeamRoleModelLead)) {
+			continue
+		}
+		account, err := collaborator.UserAccount(ctx)
+		if err != nil {
+			return nil, err
+		}
+		modelLeads = append(modelLeads, account.CommonName)
+	}
+	return modelLeads, nil
 }
