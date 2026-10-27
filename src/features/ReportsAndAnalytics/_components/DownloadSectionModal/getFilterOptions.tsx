@@ -1,3 +1,4 @@
+import FilteredViewSelect from 'features/ReportsAndAnalytics/_components/FilteredViewSelect';
 import { ModelStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
 
@@ -43,7 +44,7 @@ export const getAllModelFilters = (): FilterGroupType[] => {
   ];
 };
 
-export const getBasicModelFilters = () => {
+export const getBasicModelFilters = (): FilterGroupType[] => {
   const allFilters = getAllModelFilters();
 
   return allFilters.map(filterGroup => {
@@ -61,4 +62,20 @@ export const getBasicModelFilters = () => {
 
     return filterGroup;
   });
+};
+
+export const getGroupFilteredViewFilters = (): FilterGroupType[] => {
+  const allFilters = getAllModelFilters();
+
+  const filteredViewConfig = {
+    key: 'filteredView',
+    label: i18next.t(
+      `analytics:configureDownload.otherFilterOptions.filteredView.label`
+    ),
+    tagLabel: '',
+    displayShowAll: false,
+    CustomComponent: FilteredViewSelect
+  };
+
+  return [filteredViewConfig, ...allFilters];
 };

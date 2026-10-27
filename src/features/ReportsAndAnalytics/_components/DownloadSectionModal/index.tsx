@@ -9,7 +9,11 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 
-import { getAllModelFilters, getBasicModelFilters } from './getFilterOptions';
+import {
+  getAllModelFilters,
+  getBasicModelFilters,
+  getGroupFilteredViewFilters
+} from './getFilterOptions';
 
 const DownloadSectionModal = ({
   isModalOpen,
@@ -30,6 +34,8 @@ const DownloadSectionModal = ({
     switch (reportType) {
       case 'basicModelInfo':
         return getBasicModelFilters();
+      case 'groupFilteredView':
+        return getGroupFilteredViewFilters();
       default:
         return getAllModelFilters();
     }
