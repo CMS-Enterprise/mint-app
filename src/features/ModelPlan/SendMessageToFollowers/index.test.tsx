@@ -1,20 +1,71 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {
+  GetModelPlanBaseDocument,
+  SendModelFollowerUpdateDocument
+} from 'gql/generated/graphql';
 import { stubProseMirrorLayout } from 'tests/util';
+
+import ErrorProvider from 'contexts/ErrorContext';
 
 import SendMessageToFollowers from './index';
 
 const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const path = `/models/${modelID}/collaboration-area/send-message-to-followers`;
 
-const renderPage = (onSend = vi.fn()) => {
+const toastSuccess = vi.hoisted(() => vi.fn());
+vi.mock('components/ToastSuccess', () => ({ default: toastSuccess }));
+
+const modelName = 'Test Model';
+
+const baseMock: MockedResponse = {
+  request: { query: GetModelPlanBaseDocument, variables: { id: modelID } },
+  result: {
+    data: {
+      modelPlan: {
+        __typename: 'ModelPlan',
+        id: modelID,
+        modelName,
+        abbreviation: null,
+        modifiedDts: null,
+        createdDts: '2026-01-01T00:00:00Z',
+        status: 'PLAN_DRAFT',
+        mtoMatrix: {
+          __typename: 'ModelsToOperationMatrix',
+          status: 'COMPLETED',
+          info: null
+        }
+      }
+    }
+  }
+};
+
+const sendMock = (content: string): MockedResponse => ({
+  request: {
+    query: SendModelFollowerUpdateDocument,
+    variables: { modelPlanID: modelID, content }
+  },
+  result: {
+    data: {
+      sendModelFollowerUpdate: {
+        __typename: 'ModelFollowerUpdate',
+        id: 'a0000000-0000-0000-0000-000000000000',
+        modelPlanID: modelID,
+        content
+      }
+    }
+  }
+});
+
+const renderPage = (mocks: MockedResponse[] = [baseMock]) => {
   const router = createMemoryRouter(
     [
       {
         path: '/models/:modelID/collaboration-area/send-message-to-followers',
-        element: <SendMessageToFollowers onSend={onSend} />
+        element: <SendMessageToFollowers />
       },
       {
         path: '/models/:modelID/collaboration-area',
@@ -24,7 +75,16 @@ const renderPage = (onSend = vi.fn()) => {
     { initialEntries: [path] }
   );
 
-  return { router, ...render(<RouterProvider router={router} />) };
+  return {
+    router,
+    ...render(
+      <MockedProvider mocks={mocks}>
+        <ErrorProvider>
+          <RouterProvider router={router} />
+        </ErrorProvider>
+      </MockedProvider>
+    )
+  };
 };
 
 describe('SendMessageToFollowers', () => {
@@ -59,10 +119,9 @@ describe('SendMessageToFollowers', () => {
     expect(screen.getByRole('button', { name: 'Link' })).toBeInTheDocument();
   });
 
-  it('passes the editor HTML to onSend', async () => {
+  it('sends the editor HTML, shows the success toast and returns to the collaboration area', async () => {
     const user = userEvent.setup();
-    const onSend = vi.fn();
-    renderPage(onSend);
+    const { router } = renderPage([baseMock, sendMock('<p>Model update</p>')]);
 
     const editor = await screen.findByRole('textbox', {
       name: /Model update message/
@@ -74,7 +133,14 @@ describe('SendMessageToFollowers', () => {
     await waitFor(() => expect(sendButton).not.toBeDisabled());
     await user.click(sendButton);
 
-    expect(onSend).toHaveBeenCalledWith('<p>Model update</p>');
+    await waitFor(() =>
+      expect(router.state.location.pathname).toBe(
+        `/models/${modelID}/collaboration-area`
+      )
+    );
+    expect(toastSuccess).toHaveBeenCalledWith(
+      `You sent a message to the followers of this model (${modelName}).`
+    );
   });
 
   it('disables send again when the message is cleared', async () => {

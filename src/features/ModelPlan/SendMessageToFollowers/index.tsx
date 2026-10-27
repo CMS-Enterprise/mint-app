@@ -10,23 +10,29 @@ import {
   Icon,
   Label
 } from '@trussworks/react-uswds';
+import {
+  useGetModelPlanBaseQuery,
+  useSendModelFollowerUpdateMutation
+} from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import HelpText from 'components/HelpText';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RichTextEditor from 'components/RichTextEditor';
+import toastSuccess from 'components/ToastSuccess';
+import { useErrorMessage } from 'contexts/ErrorContext';
 
-type SendMessageToFollowersProps = {
-  onSend?: (content: string) => void;
-};
-
-const SendMessageToFollowers = ({
-  onSend = () => {}
-}: SendMessageToFollowersProps) => {
+const SendMessageToFollowers = () => {
   const { t } = useTranslation('collaborationArea');
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
+  const { setErrorMeta } = useErrorMessage();
+
+  const { data } = useGetModelPlanBaseQuery({ variables: { id: modelID } });
+  const modelName = data?.modelPlan.modelName ?? '';
+
+  const [sendUpdate] = useSendModelFollowerUpdateMutation();
 
   const [content, setContent] = useState<string>('');
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
@@ -36,7 +42,20 @@ const SendMessageToFollowers = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isEmpty) return;
-    onSend(content);
+
+    // the global error link shows this copy in an error toast if the mutation fails
+    setErrorMeta({ overrideMessage: t('sendMessageToFollowers.error') });
+
+    sendUpdate({ variables: { modelPlanID: modelID, content } })
+      .then(response => {
+        if (!response?.errors) {
+          toastSuccess(t('sendMessageToFollowers.success', { modelName }));
+          navigate(collaborationAreaPath);
+        }
+      })
+      .catch(() => {
+        // the error toast is shown by the global error link
+      });
   };
 
   const returnLink = (
