@@ -1191,6 +1191,7 @@ type ComplexityRoot struct {
 		ArchiveMTOCommonMilestone             func(childComplexity int, id uuid.UUID) int
 		CreateCTATRequest                     func(childComplexity int, input model.CTATRequestInput) int
 		CreateCustomTimelineDate              func(childComplexity int, input model.CustomTimelineDateCreateInput) int
+		CreateDiscussion                      func(childComplexity int, input model.CTATDiscussionInput) int
 		CreateDiscussionReply                 func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateKeyContactCategory              func(childComplexity int, name string) int
 		CreateKeyContactMailbox               func(childComplexity int, mailboxTitle string, mailboxAddress string, subjectArea string, subjectCategoryID uuid.UUID) int
@@ -1238,7 +1239,6 @@ type ComplexityRoot struct {
 		RenameMTOCategory                     func(childComplexity int, id uuid.UUID, name string) int
 		ReorderMTOCategory                    func(childComplexity int, id uuid.UUID, newOrder *int, parentID *uuid.UUID) int
 		ReportAProblem                        func(childComplexity int, input model.ReportAProblemInput) int
-		SaveDiscussion                        func(childComplexity int, input model.CTATDiscussionInput) int
 		SendFeedbackEmail                     func(childComplexity int, input model.SendFeedbackEmailInput) int
 		ShareModelPlan                        func(childComplexity int, modelPlanID uuid.UUID, viewFilter *models.ModelViewFilter, modelShareSection *models.ModelShareSection, usernames []string, optionalMessage *string) int
 		UnlockAllLockableSections             func(childComplexity int, modelPlanID uuid.UUID) int
@@ -3278,7 +3278,7 @@ type MutationResolver interface {
 	UnlockLockableSection(ctx context.Context, modelPlanID uuid.UUID, section models.LockableSection) (bool, error)
 	UnlockAllLockableSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error)
 	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
-	SaveDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error)
+	CreateDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error)
 	CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error)
 	AdminUpdateCTATRequest(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CTATRequest, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
@@ -8604,6 +8604,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateCustomTimelineDate(childComplexity, args["input"].(model.CustomTimelineDateCreateInput)), true
+	case "Mutation.createDiscussion":
+		if e.ComplexityRoot.Mutation.CreateDiscussion == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createDiscussion_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateDiscussion(childComplexity, args["input"].(model.CTATDiscussionInput)), true
 	case "Mutation.createDiscussionReply":
 		if e.ComplexityRoot.Mutation.CreateDiscussionReply == nil {
 			break
@@ -9116,17 +9127,6 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.ReportAProblem(childComplexity, args["input"].(model.ReportAProblemInput)), true
-	case "Mutation.saveDiscussion":
-		if e.ComplexityRoot.Mutation.SaveDiscussion == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_saveDiscussion_args(ctx, rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.ComplexityRoot.Mutation.SaveDiscussion(childComplexity, args["input"].(model.CTATDiscussionInput)), true
 	case "Mutation.sendFeedbackEmail":
 		if e.ComplexityRoot.Mutation.SendFeedbackEmail == nil {
 			break
@@ -20301,7 +20301,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  saveDiscussion(input: CTATDiscussionInput!): CTATDiscussion!
+  createDiscussion(input: CTATDiscussionInput!): CTATDiscussion!
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 `, BuiltIn: false},
@@ -31074,6 +31074,20 @@ func (ec *executionContext) field_Mutation_createDiscussionReply_args(ctx contex
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_createDiscussion_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (model.CTATDiscussionInput, error) {
+			return ec.unmarshalNCTATDiscussionInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_createKeyContactCategory_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -32072,20 +32086,6 @@ func (ec *executionContext) field_Mutation_reportAProblem_args(ctx context.Conte
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (model.ReportAProblemInput, error) {
 			return ec.unmarshalNReportAProblemInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐReportAProblemInput(ctx, v)
-		})
-	if err != nil {
-		return nil, err
-	}
-	args["input"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_saveDiscussion_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
-	var err error
-	args := map[string]any{}
-	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
-		func(ctx context.Context, v any) (model.CTATDiscussionInput, error) {
-			return ec.unmarshalNCTATDiscussionInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -54983,17 +54983,17 @@ func (ec *executionContext) fieldContext_Mutation_agreeToNDA(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_saveDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Mutation_createDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
 		ec.OperationContext,
 		field,
 		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return ec.fieldContext_Mutation_saveDiscussion(ctx, field)
+			return ec.fieldContext_Mutation_createDiscussion(ctx, field)
 		},
 		func(ctx context.Context) (any, error) {
 			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Mutation().SaveDiscussion(ctx, fc.Args["input"].(model.CTATDiscussionInput))
+			return ec.Resolvers.Mutation().CreateDiscussion(ctx, fc.Args["input"].(model.CTATDiscussionInput))
 		},
 		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
 			directive0 := next
@@ -55021,7 +55021,7 @@ func (ec *executionContext) _Mutation_saveDiscussion(ctx context.Context, field 
 		true,
 	)
 }
-func (ec *executionContext) fieldContext_Mutation_saveDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_createDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -55038,7 +55038,7 @@ func (ec *executionContext) fieldContext_Mutation_saveDiscussion(ctx context.Con
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_saveDiscussion_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_createDiscussion_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -116733,9 +116733,9 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "saveDiscussion":
+		case "createDiscussion":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_saveDiscussion(ctx, field)
+				return ec._Mutation_createDiscussion(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++

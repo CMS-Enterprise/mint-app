@@ -10,7 +10,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-func (suite *ResolverSuite) TestSaveCTATDiscussionAsRequester() {
+func (suite *ResolverSuite) TestCreateCTATDiscussionAsRequester() {
 	requester := suite.testConfigs.Principal
 	ticket := suite.createTestCTATRequest(
 		requester.Account().ID,
@@ -23,7 +23,7 @@ func (suite *ResolverSuite) TestSaveCTATDiscussionAsRequester() {
 	// The suite principal also has assessment access; ticket ownership takes precedence.
 	suite.True(requester.AllowASSESSMENT())
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, requester)
-	created, err := saveDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	created, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
 		TicketID: ticket.ID,
 		Content:  "I have a question about this ticket.",
 	})
@@ -37,7 +37,7 @@ func (suite *ResolverSuite) TestSaveCTATDiscussionAsRequester() {
 	suite.False(created.CreatedDts.IsZero())
 }
 
-func (suite *ResolverSuite) TestSaveCTATDiscussionAsAdmin() {
+func (suite *ResolverSuite) TestCreateCTATDiscussionAsAdmin() {
 	requester := suite.testConfigs.Principal
 	ticket := suite.createTestCTATRequest(
 		requester.Account().ID,
@@ -49,7 +49,7 @@ func (suite *ResolverSuite) TestSaveCTATDiscussionAsAdmin() {
 	admin := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, admin)
 
-	created, err := saveDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	created, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
 		TicketID: ticket.ID,
 		Content:  "The CTAT team is reviewing this request.",
 	})
@@ -66,15 +66,15 @@ func (suite *ResolverSuite) TestSaveCTATDiscussionAsAdmin() {
 	suite.Equal(admin.Account().ID, stored[0].CreatedBy)
 }
 
-func (suite *ResolverSuite) TestSaveCTATDiscussionRequiresExistingTicketAndPrincipal() {
+func (suite *ResolverSuite) TestCreateCTATDiscussionRequiresExistingTicketAndPrincipal() {
 	input := model.CTATDiscussionInput{TicketID: uuid.New(), Content: "No ticket"}
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
 
-	created, err := saveDiscussion(ctx, suite.testConfigs.Store, input)
+	created, err := createDiscussion(ctx, suite.testConfigs.Store, input)
 	suite.ErrorContains(err, "not found")
 	suite.Nil(created)
 
-	created, err = saveDiscussion(suite.testConfigs.Context, suite.testConfigs.Store, input)
+	created, err = createDiscussion(suite.testConfigs.Context, suite.testConfigs.Store, input)
 	suite.ErrorContains(err, "problem getting principal account")
 	suite.Nil(created)
 }
@@ -104,15 +104,15 @@ func (suite *ResolverSuite) TestCTATDiscussionsByTicket() {
 	)
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, requester)
 
-	first, err := saveDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	first, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
 		TicketID: ticketA.ID, Content: "First post",
 	})
 	suite.Require().NoError(err)
-	second, err := saveDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	second, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
 		TicketID: ticketA.ID, Content: "Second post",
 	})
 	suite.Require().NoError(err)
-	onOtherTicket, err := saveDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	onOtherTicket, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
 		TicketID: ticketB.ID, Content: "Other ticket post",
 	})
 	suite.Require().NoError(err)

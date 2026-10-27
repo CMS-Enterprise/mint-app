@@ -30,6 +30,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  saveDiscussion(input: CTATDiscussionInput!): CTATDiscussion!
+  createDiscussion(input: CTATDiscussionInput!): CTATDiscussion!
     @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }

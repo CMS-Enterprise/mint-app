@@ -15,10 +15,10 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
 
-func saveDiscussion(ctx context.Context, np sqlutils.NamedPreparer, input model.CTATDiscussionInput) (*models.CTATDiscussion, error) {
+func createDiscussion(ctx context.Context, np sqlutils.NamedPreparer, input model.CTATDiscussionInput) (*models.CTATDiscussion, error) {
 	principalAcct := appcontext.Principal(ctx).Account()
 	if principalAcct == nil {
-		return nil, errors.New("problem getting principal account when saving discussion")
+		return nil, errors.New("problem getting principal account when creating discussion")
 	}
 
 	// we need to determine if the acting user is the requester
