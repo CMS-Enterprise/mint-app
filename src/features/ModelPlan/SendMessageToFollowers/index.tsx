@@ -21,7 +21,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RichTextEditor from 'components/RichTextEditor';
 import toastSuccess from 'components/ToastSuccess';
-import { useErrorMessage } from 'contexts/ErrorContext';
+import { statusAlert, useErrorMessage } from 'contexts/ErrorContext';
 
 const SendMessageToFollowers = () => {
   const { t } = useTranslation('collaborationArea');
@@ -32,7 +32,7 @@ const SendMessageToFollowers = () => {
   const { data } = useGetModelPlanBaseQuery({ variables: { id: modelID } });
   const modelName = data?.modelPlan.modelName ?? '';
 
-  const [sendUpdate] = useSendModelFollowerUpdateMutation();
+  const [sendUpdate, { loading }] = useSendModelFollowerUpdateMutation();
 
   const [content, setContent] = useState<string>('');
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
@@ -41,7 +41,7 @@ const SendMessageToFollowers = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (isEmpty || !modelName) return;
+    if (isEmpty || !modelName || loading) return;
 
     // the global error link shows this copy in an error toast if the mutation fails
     setErrorMeta({ overrideMessage: t('sendMessageToFollowers.error') });
@@ -53,8 +53,16 @@ const SendMessageToFollowers = () => {
           navigate(collaborationAreaPath);
         }
       })
-      .catch(() => {
-        // the error toast is shown by the global error link
+      .catch(error => {
+        // GraphQL errors are toasted by the global error link; it ignores transport failures
+        if (error?.networkError && !error?.graphQLErrors?.length) {
+          statusAlert({
+            type: 'error',
+            message: t('sendMessageToFollowers.error')
+          });
+          // the global link never clears the override on a network failure
+          setErrorMeta({});
+        }
       });
   };
 
@@ -134,7 +142,7 @@ const SendMessageToFollowers = () => {
             <Button
               type="submit"
               className="margin-top-6 margin-bottom-2"
-              disabled={isEmpty || !modelName}
+              disabled={isEmpty || !modelName || loading}
             >
               {t('sendMessageToFollowers.sendMessage')}
             </Button>
