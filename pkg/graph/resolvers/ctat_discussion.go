@@ -32,12 +32,14 @@ func createDiscussion(ctx context.Context, np sqlutils.NamedPreparer, input mode
 	}
 
 	var posterRole models.CTATDiscussionPoster
-	if ctatTicket.Requester == principalAcct.ID {
-		// this is the requester making a discussion
+
+	switch {
+	case ctatTicket.Requester == principalAcct.ID:
 		posterRole = models.CTATDiscussionPosterRequester
-	} else {
-		// otherwise, it's an admin
+	case appcontext.Principal(ctx).AllowASSESSMENT():
 		posterRole = models.CTATDiscussionPosterAdmin
+	default:
+		return nil, fmt.Errorf("user (%s) is not authorized to create a CTAT discussion", principalAcct.Email)
 	}
 
 	discussion := models.CTATDiscussion{
