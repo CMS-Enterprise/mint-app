@@ -22,7 +22,7 @@ const FilteredViewSelect = ({
           'configureDownload.otherFilterOptions.filteredView.label'
         )}
         name="filtered-view"
-        value={selectedFilters[0] || ''}
+        value={selectedFilters[0] || 'default'}
         onChange={e => {
           setSelectedFilters([e.target.value]);
         }}
