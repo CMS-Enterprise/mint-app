@@ -66,6 +66,33 @@ func (suite *ResolverSuite) TestCreateCTATDiscussionAsAdmin() {
 	suite.Equal(admin.Account().ID, stored[0].CreatedBy)
 }
 
+func (suite *ResolverSuite) TestCreateCTATDiscussionRejectsNonRequesterWithoutAssessmentAccess() {
+	requester := suite.testConfigs.Principal
+	ticket := suite.createTestCTATRequest(
+		requester.Account().ID,
+		time.Now().Add(24*time.Hour),
+		"Unauthorized discussion",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
+		models.CTATStatusNew,
+	)
+	otherUser := suite.getTestPrincipal(suite.testConfigs.Store, "BTAL")
+	otherUser.JobCodeASSESSMENT = false
+	otherUser.JobCodeUSER = true
+	suite.Require().NotEqual(requester.Account().ID, otherUser.Account().ID)
+	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, otherUser)
+
+	created, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+		TicketID: ticket.ID,
+		Content:  "I should not be able to post on this ticket.",
+	})
+	suite.ErrorContains(err, "is not authorized to create a CTAT discussion")
+	suite.Nil(created)
+
+	stored, err := discussions(ctx, ticket.ID)
+	suite.NoError(err)
+	suite.Empty(stored)
+}
+
 func (suite *ResolverSuite) TestCreateCTATDiscussionRequiresExistingTicketAndPrincipal() {
 	input := model.CTATDiscussionInput{TicketID: uuid.New(), Content: "No ticket"}
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
