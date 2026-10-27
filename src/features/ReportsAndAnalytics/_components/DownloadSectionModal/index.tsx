@@ -60,9 +60,27 @@ const DownloadSectionModal = ({
 
   const handleDownload = () => {
     if (reportType === 'allModels') {
-      fetchAllData(ModelShareSection.ALL, selectedFilters);
-    } else if (reportType === 'basicModelInfo') {
-      fetchAllData('basicModelInfo', selectedFilters);
+      fetchAllData({
+        exportSection: ModelShareSection.ALL,
+        filters: selectedFilters,
+        reportType
+      });
+    }
+
+    if (reportType === 'basicModelInfo') {
+      fetchAllData({
+        exportSection: 'basicModelInfo',
+        filters: selectedFilters,
+        reportType
+      });
+    }
+
+    if (reportType === 'groupFilteredView') {
+      fetchAllData({
+        exportSection: selectedFilters.filteredView[0],
+        filters: selectedFilters,
+        reportType
+      });
     }
     closeModal();
   };

@@ -168,9 +168,15 @@ const ReportsAndAnalytics = () => {
           'MINT-MTO_Milestone_Summary.xlsx'
         );
       } else if (reportKey === 'allModels') {
-        await fetchAllData(ModelShareSection.ALL);
+        await fetchAllData({
+          exportSection: ModelShareSection.ALL,
+          reportType: reportKey
+        });
       } else if (reportKey === 'basicModelInfo') {
-        await fetchAllData('basicModelInfo');
+        await fetchAllData({
+          exportSection: 'basicModelInfo',
+          reportType: reportKey
+        });
       } else if (reportKey === 'ctat') {
         await fetchCTATReport();
       } else if (reportKey === 'groupFilteredView') {
