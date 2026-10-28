@@ -286,11 +286,12 @@ func (a *AnalyzedCrTdls) Humanize() string {
 
 // AnalyzedPlanSections represents an AnalyzedPlanSections in an AnalyzedAuditChange
 type AnalyzedPlanSections struct {
-	Updated                            []TableName `json:"updated,omitempty"`
-	ReadyForReview                     []TableName `json:"readyForReview,omitempty"`
-	ReadyForClearance                  []TableName `json:"readyForClearance,omitempty"`
-	DataExchangeApproachMarkedComplete bool        `json:"dataExchangeApproachMarkedComplete,omitempty"`
-	IDDOCQuestionnaireMarkedComplete   bool        `json:"iddocQuestionnaireMarkedComplete,omitempty"`
+	Updated                              []TableName `json:"updated,omitempty"`
+	ReadyForReview                       []TableName `json:"readyForReview,omitempty"`
+	ReadyForClearance                    []TableName `json:"readyForClearance,omitempty"`
+	DataExchangeApproachMarkedComplete   bool        `json:"dataExchangeApproachMarkedComplete,omitempty"`
+	IDDOCQuestionnaireMarkedComplete     bool        `json:"iddocQuestionnaireMarkedComplete,omitempty"`
+	WaiverAssessmentSurveyMarkedComplete bool        `json:"waiverAssessmentSurveyMarkedComplete,omitempty"`
 }
 
 const (
@@ -321,13 +322,20 @@ const (
 	// AnalyzedPlanSectionsHumanizedIDDOCQuestionnaireComplete is human readable
 	// sentence template of AnalyzedPlanSections.IDDOCQuestionnaireMarkedComplete
 	AnalyzedPlanSectionsHumanizedIDDOCQuestionnaireComplete = "4i/ACO-OS questionnaire is complete"
+
+	// AnalyzedPlanSectionsHumanizedWaiverAssessmentSurveyComplete is human readable
+	// sentence template of AnalyzedPlanSections.WaiverAssessmentSurveyMarkedComplete
+	AnalyzedPlanSectionsHumanizedWaiverAssessmentSurveyComplete = "Waiver assessment survey is complete"
 )
 
 // IsEmpty returns if AnalyzedPlanSections fields are empty
 func (a AnalyzedPlanSections) IsEmpty() bool {
 	return len(a.ReadyForClearance) == 0 &&
 		len(a.ReadyForReview) == 0 &&
-		len(a.Updated) == 0
+		len(a.Updated) == 0 &&
+		!a.DataExchangeApproachMarkedComplete &&
+		!a.IDDOCQuestionnaireMarkedComplete &&
+		!a.WaiverAssessmentSurveyMarkedComplete
 }
 
 // Humanize returns AnalyzedPlanSections in human readable sentences
@@ -380,6 +388,11 @@ func (a *AnalyzedPlanSections) Humanize() []string {
 	// IDDOCQuestionnaire marked complete
 	if a.IDDOCQuestionnaireMarkedComplete {
 		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, AnalyzedPlanSectionsHumanizedIDDOCQuestionnaireComplete)
+	}
+
+	// WaiverAssessmentSurvey marked complete
+	if a.WaiverAssessmentSurveyMarkedComplete {
+		humanizedAnalyzedPlanSections = append(humanizedAnalyzedPlanSections, AnalyzedPlanSectionsHumanizedWaiverAssessmentSurveyComplete)
 	}
 
 	return humanizedAnalyzedPlanSections

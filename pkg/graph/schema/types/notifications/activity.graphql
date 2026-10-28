@@ -46,6 +46,7 @@ union ActivityMetaData =
   | IddocQuestionnaireCompletedActivityMeta
   | NewDiscussionAddedActivityMeta
   | IncorrectModelStatusActivityMeta
+  | WaiverAssessmentSurveyMarkedCompleteActivityMeta
   | NewTaskAddedActivityMeta
   | TaskCompletedActivityMeta
   | ModelFollowerUpdateActivityMeta
@@ -86,6 +87,16 @@ type IddocQuestionnaireCompletedActivityMeta {
   type: ActivityType!
   modelPlanID: UUID!
   modelPlan: ModelPlan!
+}
+
+type WaiverAssessmentSurveyMarkedCompleteActivityMeta {
+  version: Int!
+  type: ActivityType!
+  modelPlanID: UUID!
+  modelPlan: ModelPlan!
+  waiverAssessmentSurveyID: UUID!
+  markedCompleteBy: UUID!
+  markedCompleteByUserAccount: UserAccount!
 }
 
 type ModelPlanSharedActivityMeta {

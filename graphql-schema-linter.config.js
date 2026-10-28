@@ -68,7 +68,9 @@ module.exports = {
       'KeyContactTranslation',
       'KeyContactCategoryTranslation',
       'IddocQuestionnaireTranslation',
+      'WaiverTranslation',
       'OperationalSolutionKey', // This is needed for the translation of the OperationalSolutionTranslation
+      'WaiverAssessmentSurveyTranslation',
       'CustomTimelineDateTranslation',
       'CTATRequestTranslation',
       'PlanTaskTranslation'

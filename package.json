@@ -183,7 +183,7 @@
     "start-server-and-test": "^1.11.0",
     "storybook-addon-apollo-client": "^5.0.0",
     "text-encoding": "^0.7.0",
-    "vite": "^6.4.3",
+    "vite": "^6.4.5",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "4.1.11",

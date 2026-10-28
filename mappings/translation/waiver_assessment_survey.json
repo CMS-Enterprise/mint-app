@@ -1,0 +1,1230 @@
+{
+  "modifiesMedicareSavingsPrograms": {
+    "gqlField": "modifiesMedicareSavingsPrograms",
+    "goField": "ModifiesMedicareSavingsPrograms",
+    "dbField": "modifies_medicare_savings_programs",
+    "label": "Does your model modify Medicare shared savings programs?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.01,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "modifiesMedicareSavingsProgramsExample",
+          "goField": "ModifiesMedicareSavingsProgramsExample",
+          "dbField": "modifies_medicare_savings_programs_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.011
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "modifiesMedicareSavingsProgramsWhyNot",
+          "goField": "ModifiesMedicareSavingsProgramsWhyNot",
+          "dbField": "modifies_medicare_savings_programs_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.012
+        }
+      ]
+    }
+  },
+  "modifiesMedicareSavingsProgramsExample": {
+    "gqlField": "modifiesMedicareSavingsProgramsExample",
+    "goField": "ModifiesMedicareSavingsProgramsExample",
+    "dbField": "modifies_medicare_savings_programs_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.011,
+    "parentRelation": {
+      "gqlField": "modifiesMedicareSavingsPrograms",
+      "goField": "ModifiesMedicareSavingsPrograms",
+      "dbField": "modifies_medicare_savings_programs",
+      "label": "Does your model modify Medicare shared savings programs?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.01,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "modifiesMedicareSavingsProgramsWhyNot": {
+    "gqlField": "modifiesMedicareSavingsProgramsWhyNot",
+    "goField": "ModifiesMedicareSavingsProgramsWhyNot",
+    "dbField": "modifies_medicare_savings_programs_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.012,
+    "parentRelation": {
+      "gqlField": "modifiesMedicareSavingsPrograms",
+      "goField": "ModifiesMedicareSavingsPrograms",
+      "dbField": "modifies_medicare_savings_programs",
+      "label": "Does your model modify Medicare shared savings programs?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.01,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "bundlesPayments": {
+    "gqlField": "bundlesPayments",
+    "goField": "BundlesPayments",
+    "dbField": "bundles_payments",
+    "label": "Does your model bundle payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.02,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "bundlesPaymentsExample",
+          "goField": "BundlesPaymentsExample",
+          "dbField": "bundles_payments_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.021
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "bundlesPaymentsWhyNot",
+          "goField": "BundlesPaymentsWhyNot",
+          "dbField": "bundles_payments_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.022
+        }
+      ]
+    }
+  },
+  "bundlesPaymentsExample": {
+    "gqlField": "bundlesPaymentsExample",
+    "goField": "BundlesPaymentsExample",
+    "dbField": "bundles_payments_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.021,
+    "parentRelation": {
+      "gqlField": "bundlesPayments",
+      "goField": "BundlesPayments",
+      "dbField": "bundles_payments",
+      "label": "Does your model bundle payments?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.02,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "bundlesPaymentsWhyNot": {
+    "gqlField": "bundlesPaymentsWhyNot",
+    "goField": "BundlesPaymentsWhyNot",
+    "dbField": "bundles_payments_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.022,
+    "parentRelation": {
+      "gqlField": "bundlesPayments",
+      "goField": "BundlesPayments",
+      "dbField": "bundles_payments",
+      "label": "Does your model bundle payments?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.02,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "offersRiskSharingArrangements": {
+    "gqlField": "offersRiskSharingArrangements",
+    "goField": "OffersRiskSharingArrangements",
+    "dbField": "offers_risk_sharing_arrangements",
+    "label": "Does your model offer risk sharing arrangements?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.03,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "offersRiskSharingArrangementsExample",
+          "goField": "OffersRiskSharingArrangementsExample",
+          "dbField": "offers_risk_sharing_arrangements_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.031
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "offersRiskSharingArrangementsWhyNot",
+          "goField": "OffersRiskSharingArrangementsWhyNot",
+          "dbField": "offers_risk_sharing_arrangements_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.032
+        }
+      ]
+    }
+  },
+  "offersRiskSharingArrangementsExample": {
+    "gqlField": "offersRiskSharingArrangementsExample",
+    "goField": "OffersRiskSharingArrangementsExample",
+    "dbField": "offers_risk_sharing_arrangements_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.031,
+    "parentRelation": {
+      "gqlField": "offersRiskSharingArrangements",
+      "goField": "OffersRiskSharingArrangements",
+      "dbField": "offers_risk_sharing_arrangements",
+      "label": "Does your model offer risk sharing arrangements?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.03,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "offersRiskSharingArrangementsWhyNot": {
+    "gqlField": "offersRiskSharingArrangementsWhyNot",
+    "goField": "OffersRiskSharingArrangementsWhyNot",
+    "dbField": "offers_risk_sharing_arrangements_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.032,
+    "parentRelation": {
+      "gqlField": "offersRiskSharingArrangements",
+      "goField": "OffersRiskSharingArrangements",
+      "dbField": "offers_risk_sharing_arrangements",
+      "label": "Does your model offer risk sharing arrangements?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.03,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "impactsSiteOfCarePayments": {
+    "gqlField": "impactsSiteOfCarePayments",
+    "goField": "ImpactsSiteOfCarePayments",
+    "dbField": "impacts_site_of_care_payments",
+    "label": "Will your model be impacting site of care payments?",
+    "sublabel": "For example: telehealth, at home",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.04,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "impactsSiteOfCarePaymentsExample",
+          "goField": "ImpactsSiteOfCarePaymentsExample",
+          "dbField": "impacts_site_of_care_payments_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.041
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "impactsSiteOfCarePaymentsWhyNot",
+          "goField": "ImpactsSiteOfCarePaymentsWhyNot",
+          "dbField": "impacts_site_of_care_payments_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.042
+        }
+      ]
+    }
+  },
+  "impactsSiteOfCarePaymentsExample": {
+    "gqlField": "impactsSiteOfCarePaymentsExample",
+    "goField": "ImpactsSiteOfCarePaymentsExample",
+    "dbField": "impacts_site_of_care_payments_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.041,
+    "parentRelation": {
+      "gqlField": "impactsSiteOfCarePayments",
+      "goField": "ImpactsSiteOfCarePayments",
+      "dbField": "impacts_site_of_care_payments",
+      "label": "Will your model be impacting site of care payments?",
+      "sublabel": "For example: telehealth, at home",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.04,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "impactsSiteOfCarePaymentsWhyNot": {
+    "gqlField": "impactsSiteOfCarePaymentsWhyNot",
+    "goField": "ImpactsSiteOfCarePaymentsWhyNot",
+    "dbField": "impacts_site_of_care_payments_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.042,
+    "parentRelation": {
+      "gqlField": "impactsSiteOfCarePayments",
+      "goField": "ImpactsSiteOfCarePayments",
+      "dbField": "impacts_site_of_care_payments",
+      "label": "Will your model be impacting site of care payments?",
+      "sublabel": "For example: telehealth, at home",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.04,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "modifiesCareTeamScopeOfPractice": {
+    "gqlField": "modifiesCareTeamScopeOfPractice",
+    "goField": "ModifiesCareTeamScopeOfPractice",
+    "dbField": "modifies_care_team_scope_of_practice",
+    "label": "Will your model be modifying the care teams’ scope of practice?",
+    "sublabel": "For example: Nurse Practitioner (NP)/Physician’s Assistant (PA) flexibility, Community Health Worker (CHW) inclusion, etc.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.05,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "modifiesCareTeamScopeOfPracticeExample",
+          "goField": "ModifiesCareTeamScopeOfPracticeExample",
+          "dbField": "modifies_care_team_scope_of_practice_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.051
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "modifiesCareTeamScopeOfPracticeWhyNot",
+          "goField": "ModifiesCareTeamScopeOfPracticeWhyNot",
+          "dbField": "modifies_care_team_scope_of_practice_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.052
+        }
+      ]
+    }
+  },
+  "modifiesCareTeamScopeOfPracticeExample": {
+    "gqlField": "modifiesCareTeamScopeOfPracticeExample",
+    "goField": "ModifiesCareTeamScopeOfPracticeExample",
+    "dbField": "modifies_care_team_scope_of_practice_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.051,
+    "parentRelation": {
+      "gqlField": "modifiesCareTeamScopeOfPractice",
+      "goField": "ModifiesCareTeamScopeOfPractice",
+      "dbField": "modifies_care_team_scope_of_practice",
+      "label": "Will your model be modifying the care teams’ scope of practice?",
+      "sublabel": "For example: Nurse Practitioner (NP)/Physician’s Assistant (PA) flexibility, Community Health Worker (CHW) inclusion, etc.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.05,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "modifiesCareTeamScopeOfPracticeWhyNot": {
+    "gqlField": "modifiesCareTeamScopeOfPracticeWhyNot",
+    "goField": "ModifiesCareTeamScopeOfPracticeWhyNot",
+    "dbField": "modifies_care_team_scope_of_practice_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.052,
+    "parentRelation": {
+      "gqlField": "modifiesCareTeamScopeOfPractice",
+      "goField": "ModifiesCareTeamScopeOfPractice",
+      "dbField": "modifies_care_team_scope_of_practice",
+      "label": "Will your model be modifying the care teams’ scope of practice?",
+      "sublabel": "For example: Nurse Practitioner (NP)/Physician’s Assistant (PA) flexibility, Community Health Worker (CHW) inclusion, etc.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.05,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "modifiesCareDeliveryWithClaimsBasedPayments": {
+    "gqlField": "modifiesCareDeliveryWithClaimsBasedPayments",
+    "goField": "ModifiesCareDeliveryWithClaimsBasedPayments",
+    "dbField": "modifies_care_delivery_with_claims_based_payments",
+    "label": "Will your model be modifying how care is delivered with claims-based payments?",
+    "sublabel": "For example: diabetic shoes",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.06,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "modifiesCareDeliveryWithClaimsBasedPaymentsExample",
+          "goField": "ModifiesCareDeliveryWithClaimsBasedPaymentsExample",
+          "dbField": "modifies_care_delivery_with_claims_based_payments_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.061
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot",
+          "goField": "ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot",
+          "dbField": "modifies_care_delivery_with_claims_based_payments_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.062
+        }
+      ]
+    }
+  },
+  "modifiesCareDeliveryWithClaimsBasedPaymentsExample": {
+    "gqlField": "modifiesCareDeliveryWithClaimsBasedPaymentsExample",
+    "goField": "ModifiesCareDeliveryWithClaimsBasedPaymentsExample",
+    "dbField": "modifies_care_delivery_with_claims_based_payments_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.061,
+    "parentRelation": {
+      "gqlField": "modifiesCareDeliveryWithClaimsBasedPayments",
+      "goField": "ModifiesCareDeliveryWithClaimsBasedPayments",
+      "dbField": "modifies_care_delivery_with_claims_based_payments",
+      "label": "Will your model be modifying how care is delivered with claims-based payments?",
+      "sublabel": "For example: diabetic shoes",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.06,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot": {
+    "gqlField": "modifiesCareDeliveryWithClaimsBasedPaymentsWhyNot",
+    "goField": "ModifiesCareDeliveryWithClaimsBasedPaymentsWhyNot",
+    "dbField": "modifies_care_delivery_with_claims_based_payments_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.062,
+    "parentRelation": {
+      "gqlField": "modifiesCareDeliveryWithClaimsBasedPayments",
+      "goField": "ModifiesCareDeliveryWithClaimsBasedPayments",
+      "dbField": "modifies_care_delivery_with_claims_based_payments",
+      "label": "Will your model be modifying how care is delivered with claims-based payments?",
+      "sublabel": "For example: diabetic shoes",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.06,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "modifiesQualityMeasurementsOrPaymentsViaWaivers": {
+    "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaivers",
+    "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaivers",
+    "dbField": "modifies_quality_measurements_or_payments_via_waivers",
+    "label": "Will your model be modifying quality measurements or payments via waivers?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.07,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaiversExample",
+          "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaiversExample",
+          "dbField": "modifies_quality_measurements_or_payments_via_waivers_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.071
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot",
+          "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot",
+          "dbField": "modifies_quality_measurements_or_payments_via_waivers_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.072
+        }
+      ]
+    }
+  },
+  "modifiesQualityMeasurementsOrPaymentsViaWaiversExample": {
+    "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaiversExample",
+    "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaiversExample",
+    "dbField": "modifies_quality_measurements_or_payments_via_waivers_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.071,
+    "parentRelation": {
+      "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaivers",
+      "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaivers",
+      "dbField": "modifies_quality_measurements_or_payments_via_waivers",
+      "label": "Will your model be modifying quality measurements or payments via waivers?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.07,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot": {
+    "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot",
+    "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaiversWhyNot",
+    "dbField": "modifies_quality_measurements_or_payments_via_waivers_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.072,
+    "parentRelation": {
+      "gqlField": "modifiesQualityMeasurementsOrPaymentsViaWaivers",
+      "goField": "ModifiesQualityMeasurementsOrPaymentsViaWaivers",
+      "dbField": "modifies_quality_measurements_or_payments_via_waivers",
+      "label": "Will your model be modifying quality measurements or payments via waivers?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.07,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "impactsMedicaidOnlyBeneficiaries": {
+    "gqlField": "impactsMedicaidOnlyBeneficiaries",
+    "goField": "ImpactsMedicaidOnlyBeneficiaries",
+    "dbField": "impacts_medicaid_only_beneficiaries",
+    "label": "Does your model impact Medicaid-only beneficiaries?",
+    "sublabel": "Not including duals.",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.08,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "impactsMedicaidOnlyBeneficiariesExample",
+          "goField": "ImpactsMedicaidOnlyBeneficiariesExample",
+          "dbField": "impacts_medicaid_only_beneficiaries_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.081
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "impactsMedicaidOnlyBeneficiariesWhyNot",
+          "goField": "ImpactsMedicaidOnlyBeneficiariesWhyNot",
+          "dbField": "impacts_medicaid_only_beneficiaries_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.082
+        }
+      ]
+    }
+  },
+  "impactsMedicaidOnlyBeneficiariesExample": {
+    "gqlField": "impactsMedicaidOnlyBeneficiariesExample",
+    "goField": "ImpactsMedicaidOnlyBeneficiariesExample",
+    "dbField": "impacts_medicaid_only_beneficiaries_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.081,
+    "parentRelation": {
+      "gqlField": "impactsMedicaidOnlyBeneficiaries",
+      "goField": "ImpactsMedicaidOnlyBeneficiaries",
+      "dbField": "impacts_medicaid_only_beneficiaries",
+      "label": "Does your model impact Medicaid-only beneficiaries?",
+      "sublabel": "Not including duals.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.08,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "impactsMedicaidOnlyBeneficiariesWhyNot": {
+    "gqlField": "impactsMedicaidOnlyBeneficiariesWhyNot",
+    "goField": "ImpactsMedicaidOnlyBeneficiariesWhyNot",
+    "dbField": "impacts_medicaid_only_beneficiaries_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.082,
+    "parentRelation": {
+      "gqlField": "impactsMedicaidOnlyBeneficiaries",
+      "goField": "ImpactsMedicaidOnlyBeneficiaries",
+      "dbField": "impacts_medicaid_only_beneficiaries",
+      "label": "Does your model impact Medicaid-only beneficiaries?",
+      "sublabel": "Not including duals.",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.08,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "impactsHomeCommunityBasedServicePayments": {
+    "gqlField": "impactsHomeCommunityBasedServicePayments",
+    "goField": "ImpactsHomeCommunityBasedServicePayments",
+    "dbField": "impacts_home_community_based_service_payments",
+    "label": "Does your model impact home- and community-based service payments?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.09,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "impactsHomeCommunityBasedServicePaymentsExample",
+          "goField": "ImpactsHomeCommunityBasedServicePaymentsExample",
+          "dbField": "impacts_home_community_based_service_payments_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.091
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "impactsHomeCommunityBasedServicePaymentsWhyNot",
+          "goField": "ImpactsHomeCommunityBasedServicePaymentsWhyNot",
+          "dbField": "impacts_home_community_based_service_payments_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.092
+        }
+      ]
+    }
+  },
+  "impactsHomeCommunityBasedServicePaymentsExample": {
+    "gqlField": "impactsHomeCommunityBasedServicePaymentsExample",
+    "goField": "ImpactsHomeCommunityBasedServicePaymentsExample",
+    "dbField": "impacts_home_community_based_service_payments_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.091,
+    "parentRelation": {
+      "gqlField": "impactsHomeCommunityBasedServicePayments",
+      "goField": "ImpactsHomeCommunityBasedServicePayments",
+      "dbField": "impacts_home_community_based_service_payments",
+      "label": "Does your model impact home- and community-based service payments?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.09,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "impactsHomeCommunityBasedServicePaymentsWhyNot": {
+    "gqlField": "impactsHomeCommunityBasedServicePaymentsWhyNot",
+    "goField": "ImpactsHomeCommunityBasedServicePaymentsWhyNot",
+    "dbField": "impacts_home_community_based_service_payments_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.092,
+    "parentRelation": {
+      "gqlField": "impactsHomeCommunityBasedServicePayments",
+      "goField": "ImpactsHomeCommunityBasedServicePayments",
+      "dbField": "impacts_home_community_based_service_payments",
+      "label": "Does your model impact home- and community-based service payments?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.09,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "impactsManagedCareWaivers": {
+    "gqlField": "impactsManagedCareWaivers",
+    "goField": "ImpactsManagedCareWaivers",
+    "dbField": "impacts_managed_care_waivers",
+    "label": "Does your model impact managed care waivers?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.1,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "impactsManagedCareWaiversExample",
+          "goField": "ImpactsManagedCareWaiversExample",
+          "dbField": "impacts_managed_care_waivers_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.101
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "impactsManagedCareWaiversWhyNot",
+          "goField": "ImpactsManagedCareWaiversWhyNot",
+          "dbField": "impacts_managed_care_waivers_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.102
+        }
+      ]
+    }
+  },
+  "impactsManagedCareWaiversExample": {
+    "gqlField": "impactsManagedCareWaiversExample",
+    "goField": "ImpactsManagedCareWaiversExample",
+    "dbField": "impacts_managed_care_waivers_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.101,
+    "parentRelation": {
+      "gqlField": "impactsManagedCareWaivers",
+      "goField": "ImpactsManagedCareWaivers",
+      "dbField": "impacts_managed_care_waivers",
+      "label": "Does your model impact managed care waivers?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "impactsManagedCareWaiversWhyNot": {
+    "gqlField": "impactsManagedCareWaiversWhyNot",
+    "goField": "ImpactsManagedCareWaiversWhyNot",
+    "dbField": "impacts_managed_care_waivers_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.102,
+    "parentRelation": {
+      "gqlField": "impactsManagedCareWaivers",
+      "goField": "ImpactsManagedCareWaivers",
+      "dbField": "impacts_managed_care_waivers",
+      "label": "Does your model impact managed care waivers?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.1,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "offersPatientIncentivesSafeHarborProtection": {
+    "gqlField": "offersPatientIncentivesSafeHarborProtection",
+    "goField": "OffersPatientIncentivesSafeHarborProtection",
+    "dbField": "offers_patient_incentives_safe_harbor_protection",
+    "label": "Will your model offer safe harbor protection of patient incentives (including reduced cost-sharing or additional services)?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.11,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "offersPatientIncentivesSafeHarborProtectionExample",
+          "goField": "OffersPatientIncentivesSafeHarborProtectionExample",
+          "dbField": "offers_patient_incentives_safe_harbor_protection_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.111
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "offersPatientIncentivesSafeHarborProtectionWhyNot",
+          "goField": "OffersPatientIncentivesSafeHarborProtectionWhyNot",
+          "dbField": "offers_patient_incentives_safe_harbor_protection_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.112
+        }
+      ]
+    }
+  },
+  "offersPatientIncentivesSafeHarborProtectionExample": {
+    "gqlField": "offersPatientIncentivesSafeHarborProtectionExample",
+    "goField": "OffersPatientIncentivesSafeHarborProtectionExample",
+    "dbField": "offers_patient_incentives_safe_harbor_protection_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.111,
+    "parentRelation": {
+      "gqlField": "offersPatientIncentivesSafeHarborProtection",
+      "goField": "OffersPatientIncentivesSafeHarborProtection",
+      "dbField": "offers_patient_incentives_safe_harbor_protection",
+      "label": "Will your model offer safe harbor protection of patient incentives (including reduced cost-sharing or additional services)?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.11,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "offersPatientIncentivesSafeHarborProtectionWhyNot": {
+    "gqlField": "offersPatientIncentivesSafeHarborProtectionWhyNot",
+    "goField": "OffersPatientIncentivesSafeHarborProtectionWhyNot",
+    "dbField": "offers_patient_incentives_safe_harbor_protection_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.112,
+    "parentRelation": {
+      "gqlField": "offersPatientIncentivesSafeHarborProtection",
+      "goField": "OffersPatientIncentivesSafeHarborProtection",
+      "dbField": "offers_patient_incentives_safe_harbor_protection",
+      "label": "Will your model offer safe harbor protection of patient incentives (including reduced cost-sharing or additional services)?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.11,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "offersExpensesRemunerationSafeHarborProtection": {
+    "gqlField": "offersExpensesRemunerationSafeHarborProtection",
+    "goField": "OffersExpensesRemunerationSafeHarborProtection",
+    "dbField": "offers_expenses_remuneration_safe_harbor_protection",
+    "label": "Will your model offer safe harbor protection related to expenses or remuneration?",
+    "dataType": "BOOLEAN",
+    "formType": "RADIO",
+    "order": 3.12,
+    "options": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "childRelation": {
+      "true": [
+        {
+          "gqlField": "offersExpensesRemunerationSafeHarborProtectionExample",
+          "goField": "OffersExpensesRemunerationSafeHarborProtectionExample",
+          "dbField": "offers_expenses_remuneration_safe_harbor_protection_example",
+          "label": "Please provide an example",
+          "dataType": "STRING",
+          "formType": "TEXTAREA",
+          "order": 3.121
+        }
+      ],
+      "false": [
+        {
+          "gqlField": "offersExpensesRemunerationSafeHarborProtectionWhyNot",
+          "goField": "OffersExpensesRemunerationSafeHarborProtectionWhyNot",
+          "dbField": "offers_expenses_remuneration_safe_harbor_protection_why_not",
+          "label": "Please explain why not",
+          "dataType": "ENUM",
+          "formType": "SELECT",
+          "options": {
+            "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+            "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+            "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+            "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+            "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+            "OTHER": "Other"
+          },
+          "order": 3.122
+        }
+      ]
+    }
+  },
+  "offersExpensesRemunerationSafeHarborProtectionExample": {
+    "gqlField": "offersExpensesRemunerationSafeHarborProtectionExample",
+    "goField": "OffersExpensesRemunerationSafeHarborProtectionExample",
+    "dbField": "offers_expenses_remuneration_safe_harbor_protection_example",
+    "label": "Please provide an example",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 3.121,
+    "parentRelation": {
+      "gqlField": "offersExpensesRemunerationSafeHarborProtection",
+      "goField": "OffersExpensesRemunerationSafeHarborProtection",
+      "dbField": "offers_expenses_remuneration_safe_harbor_protection",
+      "label": "Will your model offer safe harbor protection related to expenses or remuneration?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.12,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "offersExpensesRemunerationSafeHarborProtectionWhyNot": {
+    "gqlField": "offersExpensesRemunerationSafeHarborProtectionWhyNot",
+    "goField": "OffersExpensesRemunerationSafeHarborProtectionWhyNot",
+    "dbField": "offers_expenses_remuneration_safe_harbor_protection_why_not",
+    "label": "Please explain why not",
+    "dataType": "ENUM",
+    "formType": "SELECT",
+    "options": {
+      "OUT_OF_SCOPE": "Outside of model scope (e.g. Medicaid-only waiver)",
+      "OVERLAPS": "Waiver overlaps with another model test or incentive (e.g. payment or scope of practice)",
+      "NOT_TESTING": "The model will not be testing this waiver or payment type (e.g. bundles)",
+      "NOT_ENGAGED": "The model does not engage with the user of this waiver (e.g. WISeR, CGT)",
+      "FEEDBACK_AGAINST_USE": "Feedback from participants against waiver use",
+      "OTHER": "Other"
+    },
+    "order": 3.122,
+    "parentRelation": {
+      "gqlField": "offersExpensesRemunerationSafeHarborProtection",
+      "goField": "OffersExpensesRemunerationSafeHarborProtection",
+      "dbField": "offers_expenses_remuneration_safe_harbor_protection",
+      "label": "Will your model offer safe harbor protection related to expenses or remuneration?",
+      "dataType": "BOOLEAN",
+      "formType": "RADIO",
+      "order": 3.12,
+      "options": {
+        "true": "Yes",
+        "false": "No"
+      }
+    }
+  },
+  "additionalMedicaidSpecificWaivers": {
+    "gqlField": "additionalMedicaidSpecificWaivers",
+    "goField": "AdditionalMedicaidSpecificWaivers",
+    "dbField": "additional_medicaid_specific_waivers",
+    "label": "Are there any other Medicaid-specific waivers of interest that are not outlined here?",
+    "dataType": "STRING",
+    "formType": "TEXTAREA",
+    "order": 5.06
+  },
+  "isEmptyWaiversConfirmed": {
+    "gqlField": "isEmptyWaiversConfirmed",
+    "goField": "IsEmptyWaiversConfirmed",
+    "dbField": "is_empty_waivers_confirmed",
+    "label": "Check this box to confirm your model does not require any waivers",
+    "dataType": "BOOLEAN",
+    "formType": "CHECKBOX",
+    "order": 4.1,
+    "options": {
+      "true": "Check this box to confirm your model does not require any waivers",
+      "false": "No"
+    },
+    "hideFromReadonly": true
+  },
+  "status": {
+    "gqlField": "status",
+    "goField": "Status",
+    "dbField": "status",
+    "label": "Questionnaire status",
+    "dataType": "ENUM",
+    "formType": "CHECKBOX",
+    "order": 8.01,
+    "options": {
+      "READY": "Not started",
+      "IN_PROGRESS": "In progress",
+      "COMPLETE": "Complete"
+    },
+    "hideFromReadonly": true
+  },
+  "isComplete": {
+    "gqlField": "isComplete",
+    "goField": "IsComplete",
+    "dbField": "is_complete",
+    "label": "Questionnaire status",
+    "dataType": "BOOLEAN",
+    "formType": "CHECKBOX",
+    "order": 8.02,
+    "options": {
+      "true": "This questionnaire (waiver assessment survey) is complete.",
+      "false": "No"
+    },
+    "hideFromReadonly": true
+  }
+}

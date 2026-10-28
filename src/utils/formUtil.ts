@@ -44,6 +44,9 @@ type DirtyInputType = {
   [key: string]: any;
 };
 
+export const sortByName = <T extends { name: string }>(a: T, b: T): number =>
+  a.name.localeCompare(b.name);
+
 export const dirtyInput = (initialValues: any, values: any) => {
   if (!initialValues || !values) return {};
 

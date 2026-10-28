@@ -7,6 +7,11 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
+// shouldTrackNotApplicableQuestions controls which audits list questions made inapplicable by a change.
+func shouldTrackNotApplicableQuestions(tableName models.TableName) bool {
+	return tableName != models.TNWaiverAssessmentSurvey
+}
+
 // checkChildConditionals will check if changes to a question make any questions non applicable
 // if so, return an array of the question label.
 func checkChildConditionals(old interface{}, new interface{}, childrenMap map[string][]models.TranslationField) *pq.StringArray {
