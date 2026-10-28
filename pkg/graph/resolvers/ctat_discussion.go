@@ -27,10 +27,6 @@ func createDiscussion(ctx context.Context, np sqlutils.NamedPreparer, input mode
 		return nil, err
 	}
 
-	if ctatTicket == nil {
-		return nil, fmt.Errorf("ctatTicket not found with id %s", input.TicketID.String())
-	}
-
 	var posterRole models.CTATDiscussionPoster
 
 	switch {
@@ -68,10 +64,6 @@ func discussions(ctx context.Context, ticketID uuid.UUID) ([]*models.CTATDiscuss
 	ctatTicket, err := loaders.CTATRequest.GetByID.Load(ctx, ticketID)
 	if err != nil {
 		return nil, err
-	}
-
-	if ctatTicket == nil {
-		return nil, fmt.Errorf("ctatTicket not found with id %s", ticketID.String())
 	}
 
 	// check if acting user is requester
