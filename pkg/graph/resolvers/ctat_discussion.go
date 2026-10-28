@@ -16,7 +16,8 @@ import (
 )
 
 func createDiscussion(ctx context.Context, np sqlutils.NamedPreparer, input model.CTATDiscussionInput) (*models.CTATDiscussion, error) {
-	principalAcct := appcontext.Principal(ctx).Account()
+	principal := appcontext.Principal(ctx)
+	principalAcct := principal.Account()
 	if principalAcct == nil {
 		return nil, errors.New("problem getting principal account when creating discussion")
 	}
@@ -32,7 +33,7 @@ func createDiscussion(ctx context.Context, np sqlutils.NamedPreparer, input mode
 	switch {
 	case ctatTicket.Requester == principalAcct.ID:
 		posterRole = models.CTATDiscussionPosterRequester
-	case appcontext.Principal(ctx).AllowASSESSMENT():
+	case principal.AllowASSESSMENT():
 		posterRole = models.CTATDiscussionPosterAdmin
 	default:
 		return nil, fmt.Errorf("user (%s) is not authorized to create a CTAT discussion", principalAcct.Email)
