@@ -142,9 +142,12 @@ describe('SendMessageToFollowers', () => {
         `/models/${modelID}/collaboration-area`
       )
     );
-    expect(toastSuccess).toHaveBeenCalledWith(
+    expect(toastSuccess).toHaveBeenCalledTimes(1);
+    const { container } = render(toastSuccess.mock.calls[0][0] as ReactElement);
+    expect(container).toHaveTextContent(
       `You sent a message to the followers of this model (${modelName}).`
     );
+    expect(container.querySelector('strong')).toHaveTextContent(modelName);
   });
 
   it('disables send again when the message is cleared', async () => {
