@@ -81,7 +81,7 @@ func ModelFollowerUpdateSend(
 		return nil, err
 	}
 
-	trySendModelFollowerUpdateEmail(ctx, logger, emailService, addressBook, modelPlan, recipients, sanitizedContent)
+	trySendModelFollowerUpdateEmail(ctx, logger, store, emailService, addressBook, modelPlan, recipients, sanitizedContent)
 
 	return &model.ModelFollowerUpdate{
 		ID:                   activity.ID,
@@ -97,6 +97,7 @@ func ModelFollowerUpdateSend(
 func trySendModelFollowerUpdateEmail(
 	ctx context.Context,
 	logger *zap.Logger,
+	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
@@ -129,7 +130,7 @@ func trySendModelFollowerUpdateEmail(
 		}
 	}
 
-	modelLeads, err := modelLeadNamesGetByModelPlanID(ctx, modelPlan.ID)
+	modelLeads, err := modelLeadNamesGetByModelPlanID(ctx, logger, store, modelPlan.ID)
 	if err != nil {
 		logger.Warn("failed to get model leads for model follower update email notification", zap.Error(err))
 	}
@@ -184,23 +185,38 @@ func trySendModelFollowerUpdateEmail(
 	}()
 }
 
-// modelLeadNamesGetByModelPlanID returns the common names of the collaborators with the model lead role
-func modelLeadNamesGetByModelPlanID(ctx context.Context, modelPlanID uuid.UUID) ([]string, error) {
+// modelLeadNamesGetByModelPlanID returns the common names of the collaborators with the model lead role.
+// The user accounts are fetched in a single query rather than one lookup per lead.
+func modelLeadNamesGetByModelPlanID(ctx context.Context, logger *zap.Logger, store *storage.Store, modelPlanID uuid.UUID) ([]string, error) {
 	planCollaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
 
-	var modelLeads []string
-	for _, collaborator := range planCollaborators {
-		if !lo.Contains(collaborator.TeamRoles, string(models.TeamRoleModelLead)) {
-			continue
-		}
-		account, err := collaborator.UserAccount(ctx)
-		if err != nil {
-			return nil, err
-		}
-		modelLeads = append(modelLeads, account.CommonName)
+	leads := lo.Filter(planCollaborators, func(collaborator *models.PlanCollaborator, _ int) bool {
+		return lo.Contains(collaborator.TeamRoles, string(models.TeamRoleModelLead))
+	})
+	if len(leads) == 0 {
+		return nil, nil
 	}
-	return modelLeads, nil
+
+	leadIDs := lo.Map(leads, func(collaborator *models.PlanCollaborator, _ int) uuid.UUID {
+		return collaborator.UserID
+	})
+	accounts, err := UserAccountsGetByIDs(logger, store, leadIDs)
+	if err != nil {
+		return nil, err
+	}
+
+	accountsByID := lo.KeyBy(accounts, func(account *authentication.UserAccount) uuid.UUID {
+		return account.ID
+	})
+	// keep the order of the collaborators
+	return lo.FilterMap(leadIDs, func(id uuid.UUID, _ int) (string, bool) {
+		account, ok := accountsByID[id]
+		if !ok {
+			return "", false
+		}
+		return account.CommonName, true
+	}), nil
 }

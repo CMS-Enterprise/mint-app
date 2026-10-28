@@ -21,13 +21,13 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RichTextEditor from 'components/RichTextEditor';
 import toastSuccess from 'components/ToastSuccess';
-import { statusAlert, useErrorMessage } from 'contexts/ErrorContext';
+import { getStatusAlertBody, statusAlert } from 'contexts/ErrorContext';
+import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
 const SendMessageToFollowers = () => {
   const { t } = useTranslation('collaborationArea');
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
-  const { setErrorMeta } = useErrorMessage();
 
   const { data } = useGetModelPlanBaseQuery({ variables: { id: modelID } });
   const modelName = data?.modelPlan.modelName ?? '';
@@ -43,8 +43,14 @@ const SendMessageToFollowers = () => {
     event.preventDefault();
     if (isEmpty || !modelName || loading) return;
 
-    // the global error link shows this copy in an error toast if the mutation fails
-    setErrorMeta({ overrideMessage: t('sendMessageToFollowers.error') });
+    // the global error link shows this copy in an error toast if the mutation fails.
+    // ErrorMessageProvider is not mounted in the app, so the store is set directly
+    setCurrentErrorMeta({
+      overrideMessage: getStatusAlertBody({
+        type: 'error',
+        message: t('sendMessageToFollowers.error')
+      })
+    });
 
     sendUpdate({ variables: { modelPlanID: modelID, content } })
       .then(response => {
@@ -60,9 +66,11 @@ const SendMessageToFollowers = () => {
             type: 'error',
             message: t('sendMessageToFollowers.error')
           });
-          // the global link never clears the override on a network failure
-          setErrorMeta({});
         }
+      })
+      .finally(() => {
+        // don't let the override affect later mutations
+        setCurrentErrorMeta({});
       });
   };
 

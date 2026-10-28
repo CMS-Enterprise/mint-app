@@ -8,9 +8,9 @@ import {
   GetModelPlanBaseDocument,
   SendModelFollowerUpdateDocument
 } from 'gql/generated/graphql';
+import { GraphQLError } from 'graphql';
 import { stubProseMirrorLayout } from 'tests/util';
 
-import ErrorProvider from 'contexts/ErrorContext';
 import { getCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
 import SendMessageToFollowers from './index';
@@ -81,9 +81,7 @@ const renderPage = (mocks: MockedResponse[] = [baseMock]) => {
     router,
     ...render(
       <MockedProvider mocks={mocks}>
-        <ErrorProvider>
-          <RouterProvider router={router} />
-        </ErrorProvider>
+        <RouterProvider router={router} />
       </MockedProvider>
     )
   };
@@ -217,7 +215,11 @@ describe('SendMessageToFollowers', () => {
 
   it('only sends once and disables the button while the request is in flight', async () => {
     const user = userEvent.setup();
-    const result = vi.fn(() => sendMock('<p>Model update</p>').result as any);
+    const response = sendMock('<p>Model update</p>').result;
+    if (response === undefined || typeof response === 'function') {
+      throw new Error('Expected a static mutation result');
+    }
+    const result = vi.fn(() => response);
     const { router } = renderPage([
       baseMock,
       { ...sendMock('<p>Model update</p>'), result, delay: 50 }
@@ -241,5 +243,39 @@ describe('SendMessageToFollowers', () => {
     );
     expect(result).toHaveBeenCalledTimes(1);
     expect(toastSuccess).toHaveBeenCalledTimes(1);
+  });
+
+  it('sets the error override for the request, then clears it, when the mutation returns GraphQL errors', async () => {
+    const user = userEvent.setup();
+    let overrideDuringRequest: unknown;
+    const result = vi.fn(() => {
+      overrideDuringRequest = getCurrentErrorMeta().overrideMessage;
+      return { errors: [new GraphQLError('failed')] };
+    });
+    const { router } = renderPage([
+      baseMock,
+      { ...sendMock('<p>Model update</p>'), result }
+    ]);
+
+    const editor = await screen.findByRole('textbox', {
+      name: /Model update message/
+    });
+    await user.click(editor);
+    await user.keyboard('Model update');
+
+    const sendButton = screen.getByRole('button', { name: 'Send message' });
+    await waitFor(() => expect(sendButton).not.toBeDisabled());
+    await user.click(sendButton);
+
+    await waitFor(() => expect(result).toHaveBeenCalledTimes(1));
+    const { container } = render(overrideDuringRequest as ReactElement);
+    expect(container).toHaveTextContent(
+      'There was an error sending your message. Please try again. If the error persists, please try again another time.'
+    );
+    await waitFor(() =>
+      expect(getCurrentErrorMeta().overrideMessage).toBeUndefined()
+    );
+    expect(toastSuccess).not.toHaveBeenCalled();
+    expect(router.state.location.pathname).toBe(path);
   });
 });
