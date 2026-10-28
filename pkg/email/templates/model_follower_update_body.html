@@ -3,15 +3,16 @@
 
 <hr>
 
-<h3>A model has shared a message:</h3>
-<br/>
+<h3 style="margin: 16px 0;">A model has shared a message:</h3>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
       <td align="center">
         <div class="container-border">
-          <h2 style="display: inline-block;">{{.ModelName}}</h2>
-          {{if .ModelShortName}}<span style="display: inline-block;"> ({{.ModelShortName}})</span>{{end}}
+          <h2 style="display: inline-block; margin: 0;">{{.ModelName}}
+            {{if .ModelShortName}}<span style="display: inline-block; font-size: 1rem; font-weight: normal;"> ({{.ModelShortName}})</span>{{end}}
+          </h2>
+
           <br/>
           <br/>
 
@@ -54,8 +55,6 @@
               View more details in MINT
             </a>
           </p>
-
-          <br>
         </div>
       </td>
     </tr>

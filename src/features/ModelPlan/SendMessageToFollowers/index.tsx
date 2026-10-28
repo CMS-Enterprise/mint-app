@@ -55,7 +55,14 @@ const SendMessageToFollowers = () => {
     sendUpdate({ variables: { modelPlanID: modelID, content } })
       .then(response => {
         if (!response?.errors) {
-          toastSuccess(t('sendMessageToFollowers.success', { modelName }));
+          toastSuccess(
+            <Trans
+              t={t}
+              i18nKey="sendMessageToFollowers.success"
+              values={{ modelName }}
+              components={{ bold: <strong /> }}
+            />
+          );
           navigate(collaborationAreaPath);
         }
       })
