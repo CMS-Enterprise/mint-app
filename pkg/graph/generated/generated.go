@@ -225,6 +225,16 @@ type ComplexityRoot struct {
 		TableName             func(childComplexity int) int
 	}
 
+	CTATDiscussion struct {
+		Content              func(childComplexity int) int
+		CreatedBy            func(childComplexity int) int
+		CreatedByUserAccount func(childComplexity int) int
+		CreatedDts           func(childComplexity int) int
+		ID                   func(childComplexity int) int
+		PosterRole           func(childComplexity int) int
+		TicketID             func(childComplexity int) int
+	}
+
 	CTATRequest struct {
 		AdminAssignedDts             func(childComplexity int) int
 		AssignedAdmin                func(childComplexity int) int
@@ -1181,6 +1191,7 @@ type ComplexityRoot struct {
 		ArchiveMTOCommonMilestone             func(childComplexity int, id uuid.UUID) int
 		CreateCTATRequest                     func(childComplexity int, input model.CTATRequestInput) int
 		CreateCustomTimelineDate              func(childComplexity int, input model.CustomTimelineDateCreateInput) int
+		CreateDiscussion                      func(childComplexity int, input model.CTATDiscussionInput) int
 		CreateDiscussionReply                 func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateKeyContactCategory              func(childComplexity int, name string) int
 		CreateKeyContactMailbox               func(childComplexity int, mailboxTitle string, mailboxAddress string, subjectArea string, subjectCategoryID uuid.UUID) int
@@ -2457,6 +2468,7 @@ type ComplexityRoot struct {
 		CtatRequestsRequester             func(childComplexity int) int
 		CurrentUser                       func(childComplexity int) int
 		CustomTimelineDate                func(childComplexity int, id uuid.UUID) int
+		Discussions                       func(childComplexity int, ticketID uuid.UUID) int
 		ExistingModelCollection           func(childComplexity int) int
 		ExistingModelLink                 func(childComplexity int, id uuid.UUID) int
 		KeyContact                        func(childComplexity int, id uuid.UUID) int
@@ -3266,6 +3278,7 @@ type MutationResolver interface {
 	UnlockLockableSection(ctx context.Context, modelPlanID uuid.UUID, section models.LockableSection) (bool, error)
 	UnlockAllLockableSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error)
 	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
+	CreateDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error)
 	CreateCTATRequest(ctx context.Context, input model.CTATRequestInput) (*models.CTATRequest, error)
 	AdminUpdateCTATRequest(ctx context.Context, id uuid.UUID, changes map[string]any) (*models.CTATRequest, error)
 	UpdateExistingModelLinks(ctx context.Context, modelPlanID uuid.UUID, fieldName models.ExisitingModelLinkFieldType, existingModelIDs []int, currentModelPlanIDs []uuid.UUID) (*models.ExistingModelLinks, error)
@@ -3523,6 +3536,7 @@ type QueryResolver interface {
 	Analytics(ctx context.Context) (*models.AnalyticsSummary, error)
 	LockableSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error)
 	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
+	Discussions(ctx context.Context, ticketID uuid.UUID) ([]*models.CTATDiscussion, error)
 	CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error)
 	CtatRequestsRequester(ctx context.Context) (*models.CTATRequestsTableDataRequester, error)
 	CtatRequests(ctx context.Context) (*models.CTATRequestsTableData, error)
@@ -4114,6 +4128,49 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.AuditChange.TableName(childComplexity), true
+
+	case "CTATDiscussion.content":
+		if e.ComplexityRoot.CTATDiscussion.Content == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATDiscussion.Content(childComplexity), true
+	case "CTATDiscussion.createdBy":
+		if e.ComplexityRoot.CTATDiscussion.CreatedBy == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATDiscussion.CreatedBy(childComplexity), true
+	case "CTATDiscussion.createdByUserAccount":
+		if e.ComplexityRoot.CTATDiscussion.CreatedByUserAccount == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATDiscussion.CreatedByUserAccount(childComplexity), true
+	case "CTATDiscussion.createdDts":
+		if e.ComplexityRoot.CTATDiscussion.CreatedDts == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATDiscussion.CreatedDts(childComplexity), true
+	case "CTATDiscussion.id":
+		if e.ComplexityRoot.CTATDiscussion.ID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATDiscussion.ID(childComplexity), true
+	case "CTATDiscussion.posterRole":
+		if e.ComplexityRoot.CTATDiscussion.PosterRole == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATDiscussion.PosterRole(childComplexity), true
+	case "CTATDiscussion.ticketID":
+		if e.ComplexityRoot.CTATDiscussion.TicketID == nil {
+			break
+		}
+
+		return e.ComplexityRoot.CTATDiscussion.TicketID(childComplexity), true
 
 	case "CTATRequest.adminAssignedDts":
 		if e.ComplexityRoot.CTATRequest.AdminAssignedDts == nil {
@@ -8547,6 +8604,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Mutation.CreateCustomTimelineDate(childComplexity, args["input"].(model.CustomTimelineDateCreateInput)), true
+	case "Mutation.createDiscussion":
+		if e.ComplexityRoot.Mutation.CreateDiscussion == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createDiscussion_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CreateDiscussion(childComplexity, args["input"].(model.CTATDiscussionInput)), true
 	case "Mutation.createDiscussionReply":
 		if e.ComplexityRoot.Mutation.CreateDiscussionReply == nil {
 			break
@@ -15919,6 +15987,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.CustomTimelineDate(childComplexity, args["id"].(uuid.UUID)), true
+	case "Query.discussions":
+		if e.ComplexityRoot.Query.Discussions == nil {
+			break
+		}
+
+		args, err := ec.field_Query_discussions_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Query.Discussions(childComplexity, args["ticketID"].(uuid.UUID)), true
 	case "Query.existingModelCollection":
 		if e.ComplexityRoot.Query.ExistingModelCollection == nil {
 			break
@@ -19096,6 +19175,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalers := func() *graphql.InputUnmarshalerIndex {
 		return graphql.NewInputUnmarshalerIndex(
 			graphql.NewInputUnmarshaler("CTATAdminUpdateInput", ec.unmarshalInputCTATAdminUpdateInput),
+			graphql.NewInputUnmarshaler("CTATDiscussionInput", ec.unmarshalInputCTATDiscussionInput),
 			graphql.NewInputUnmarshaler("CTATRequestDocumentInput", ec.unmarshalInputCTATRequestDocumentInput),
 			graphql.NewInputUnmarshaler("CTATRequestInput", ec.unmarshalInputCTATRequestInput),
 			graphql.NewInputUnmarshaler("CustomTimelineDateChanges", ec.unmarshalInputCustomTimelineDateChanges),
@@ -20187,6 +20267,42 @@ Represents a translation of enum values.  generalName is the human readable name
 type EnumTranslation {
   generalName: String!
   groupedName: String
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/ctat/ctat_discussion.graphql", Input: `"""
+The role of the discussion poster
+"""
+enum CTATDiscussionPoster {
+  REQUESTER
+  ADMIN
+}
+
+type CTATDiscussion {
+  id: UUID!
+  ticketID: UUID!
+  content: String!
+  posterRole: CTATDiscussionPoster!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+}
+
+"""
+Input for creating a CTAT Discussion
+"""
+input CTATDiscussionInput {
+  ticketID: UUID!
+  content: String!
+}
+
+extend type Query {
+  discussions(ticketID: UUID!): [CTATDiscussion!]!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
+}
+
+extend type Mutation {
+  createDiscussion(input: CTATDiscussionInput!): CTATDiscussion!
+    @hasAnyRole(roles: [MINT_USER, MINT_ASSESSMENT])
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/ctat/ctat_request.graphql", Input: `"""
@@ -27242,6 +27358,26 @@ func (ec *executionContext) childFields_AuditChange(ctx context.Context, field g
 	return nil, fmt.Errorf("no field named %q was found under type AuditChange", field.Name)
 }
 
+func (ec *executionContext) childFields_CTATDiscussion(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+	switch field.Name {
+	case "id":
+		return ec.fieldContext_CTATDiscussion_id(ctx, field)
+	case "ticketID":
+		return ec.fieldContext_CTATDiscussion_ticketID(ctx, field)
+	case "content":
+		return ec.fieldContext_CTATDiscussion_content(ctx, field)
+	case "posterRole":
+		return ec.fieldContext_CTATDiscussion_posterRole(ctx, field)
+	case "createdBy":
+		return ec.fieldContext_CTATDiscussion_createdBy(ctx, field)
+	case "createdByUserAccount":
+		return ec.fieldContext_CTATDiscussion_createdByUserAccount(ctx, field)
+	case "createdDts":
+		return ec.fieldContext_CTATDiscussion_createdDts(ctx, field)
+	}
+	return nil, fmt.Errorf("no field named %q was found under type CTATDiscussion", field.Name)
+}
+
 func (ec *executionContext) childFields_CTATRequest(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 	switch field.Name {
 	case "id":
@@ -30938,6 +31074,20 @@ func (ec *executionContext) field_Mutation_createDiscussionReply_args(ctx contex
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_createDiscussion_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (model.CTATDiscussionInput, error) {
+			return ec.unmarshalNCTATDiscussionInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionInput(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_createKeyContactCategory_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -32819,6 +32969,20 @@ func (ec *executionContext) field_Query_customTimelineDate_args(ctx context.Cont
 		return nil, err
 	}
 	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_discussions_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "ticketID",
+		func(ctx context.Context, v any) (uuid.UUID, error) {
+			return ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["ticketID"] = arg0
 	return args, nil
 }
 
@@ -35159,6 +35323,176 @@ func (ec *executionContext) _AuditChange_modifiedDts(ctx context.Context, field 
 }
 func (ec *executionContext) fieldContext_AuditChange_modifiedDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	return graphql.NewScalarFieldContext("AuditChange", field, false, false, "Time")
+}
+
+func (ec *executionContext) _CTATDiscussion_id(ctx context.Context, field graphql.CollectedField, obj *models.CTATDiscussion) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATDiscussion_id(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.ID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATDiscussion_id(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, "UUID")
+}
+
+func (ec *executionContext) _CTATDiscussion_ticketID(ctx context.Context, field graphql.CollectedField, obj *models.CTATDiscussion) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATDiscussion_ticketID(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.TicketID, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATDiscussion_ticketID(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, "UUID")
+}
+
+func (ec *executionContext) _CTATDiscussion_content(ctx context.Context, field graphql.CollectedField, obj *models.CTATDiscussion) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATDiscussion_content(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.Content, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v string) graphql.Marshaler {
+			return ec.marshalNString2string(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATDiscussion_content(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, "String")
+}
+
+func (ec *executionContext) _CTATDiscussion_posterRole(ctx context.Context, field graphql.CollectedField, obj *models.CTATDiscussion) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATDiscussion_posterRole(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.PosterRole, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v models.CTATDiscussionPoster) graphql.Marshaler {
+			return ec.marshalNCTATDiscussionPoster2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussionPoster(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATDiscussion_posterRole(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, "CTATDiscussionPoster")
+}
+
+func (ec *executionContext) _CTATDiscussion_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.CTATDiscussion) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATDiscussion_createdBy(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedBy, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
+			return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATDiscussion_createdBy(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, "UUID")
+}
+
+func (ec *executionContext) _CTATDiscussion_createdByUserAccount(ctx context.Context, field graphql.CollectedField, obj *models.CTATDiscussion) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATDiscussion_createdByUserAccount(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedByUserAccount(ctx)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *authentication.UserAccount) graphql.Marshaler {
+			return ec.marshalNUserAccount2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋauthenticationᚐUserAccount(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATDiscussion_createdByUserAccount(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "CTATDiscussion",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_UserAccount(ctx, field)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _CTATDiscussion_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.CTATDiscussion) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_CTATDiscussion_createdDts(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return obj.CreatedDts, nil
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v time.Time) graphql.Marshaler {
+			return ec.marshalNTime2timeᚐTime(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_CTATDiscussion_createdDts(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("CTATDiscussion", field, false, false, "Time")
 }
 
 func (ec *executionContext) _CTATRequest_id(ctx context.Context, field graphql.CollectedField, obj *models.CTATRequest) (ret graphql.Marshaler) {
@@ -54643,6 +54977,68 @@ func (ec *executionContext) fieldContext_Mutation_agreeToNDA(ctx context.Context
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_agreeToNDA_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_createDiscussion(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CreateDiscussion(ctx, fc.Args["input"].(model.CTATDiscussionInput))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
+				if err != nil {
+					var zeroVal *models.CTATDiscussion
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal *models.CTATDiscussion
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v *models.CTATDiscussion) graphql.Marshaler {
+			return ec.marshalNCTATDiscussion2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussion(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_createDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CTATDiscussion(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createDiscussion_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -88576,6 +88972,68 @@ func (ec *executionContext) fieldContext_Query_ndaInfo(_ context.Context, field 
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_discussions(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_discussions(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().Discussions(ctx, fc.Args["ticketID"].(uuid.UUID))
+		},
+		func(ctx context.Context, next graphql.Resolver) graphql.Resolver {
+			directive0 := next
+
+			directive1 := func(ctx context.Context) (any, error) {
+				roles, err := ec.unmarshalNRole2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRoleᚄ(ctx, []any{"MINT_USER", "MINT_ASSESSMENT"})
+				if err != nil {
+					var zeroVal []*models.CTATDiscussion
+					return zeroVal, err
+				}
+				if ec.Directives.HasAnyRole == nil {
+					var zeroVal []*models.CTATDiscussion
+					return zeroVal, errors.New("directive hasAnyRole is not implemented")
+				}
+				return ec.Directives.HasAnyRole(ctx, nil, directive0, roles)
+			}
+
+			next = directive1
+			return next
+		},
+		func(ctx context.Context, selections ast.SelectionSet, v []*models.CTATDiscussion) graphql.Marshaler {
+			return ec.marshalNCTATDiscussion2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussionᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_discussions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_CTATDiscussion(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_discussions_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_ctatRequest(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -103437,6 +103895,55 @@ func UnmarshalCTATAdminUpdateInput(ctx context.Context, raw any) (map[string]any
 	return out, err
 }
 
+func (ec *executionContext) unmarshalInputCTATDiscussionInput(ctx context.Context, obj any) (model.CTATDiscussionInput, error) {
+	var it model.CTATDiscussionInput
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"ticketID", "content"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "ticketID":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ticketID"))
+			data, err := ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.TicketID = data
+		case "content":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Content = data
+		}
+	}
+	return it, nil
+}
+
+// UnmarshalCTATDiscussionInput unmarshals raw into the CTATDiscussionInput input type, using the
+// unmarshaler bound to ctx's request. Call it from a resolver to decode an input
+// object that was not passed as a field argument.
+//
+// ctx must come from a gqlgen request; outside one there is no unmarshaler to use
+// and the returned error says so.
+func UnmarshalCTATDiscussionInput(ctx context.Context, raw any) (model.CTATDiscussionInput, error) {
+	var out model.CTATDiscussionInput
+	err := graphql.UnmarshalNamedInputFromContext(ctx, "CTATDiscussionInput", raw, &out)
+	return out, err
+}
+
 func (ec *executionContext) unmarshalInputCTATRequestDocumentInput(ctx context.Context, obj any) (model.CTATRequestDocumentInput, error) {
 	var it model.CTATRequestDocumentInput
 	if obj == nil {
@@ -110161,6 +110668,70 @@ func (ec *executionContext) _AuditChange(ctx context.Context, sel ast.SelectionS
 	return out
 }
 
+var cTATDiscussionImplementors = []string{"CTATDiscussion"}
+
+func (ec *executionContext) _CTATDiscussion(ctx context.Context, sel ast.SelectionSet, obj *models.CTATDiscussion) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, cTATDiscussionImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := graphql.NewDeferredGroup(ctx)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CTATDiscussion")
+		case "id":
+			out.Values[i] = ec._CTATDiscussion_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "ticketID":
+			out.Values[i] = ec._CTATDiscussion_ticketID(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "content":
+			out.Values[i] = ec._CTATDiscussion_content(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "posterRole":
+			out.Values[i] = ec._CTATDiscussion_posterRole(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdBy":
+			out.Values[i] = ec._CTATDiscussion_createdBy(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		case "createdByUserAccount":
+			out.ResolveConcurrently(ec.OperationContext, &deferred, i,
+				true, true,
+				func(ctx context.Context) graphql.Marshaler {
+					return ec._CTATDiscussion_createdByUserAccount(ctx, field, obj)
+				})
+		case "createdDts":
+			out.Values[i] = ec._CTATDiscussion_createdDts(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&out.Invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	if n := len(deferred.Defers); n > 0 {
+		atomic.AddInt32(&ec.Deferred, int32(min(n, math.MaxInt32)))
+		ec.ProcessDeferredGroup(deferred)
+	}
+
+	return out
+}
+
 var cTATRequestImplementors = []string{"CTATRequest"}
 
 func (ec *executionContext) _CTATRequest(ctx context.Context, sel ast.SelectionSet, obj *models.CTATRequest) graphql.Marshaler {
@@ -116158,6 +116729,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "agreeToNDA":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_agreeToNDA(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "createDiscussion":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createDiscussion(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -123352,6 +123930,12 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				func(ctx context.Context) graphql.Marshaler {
 					return ec._Query_ndaInfo(ctx, field)
 				})
+		case "discussions":
+			out.ResolveRootConcurrently(innerCtx, ec.OperationContext, i,
+				true, true,
+				func(ctx context.Context) graphql.Marshaler {
+					return ec._Query_discussions(ctx, field)
+				})
 		case "ctatRequest":
 			out.ResolveRootConcurrently(innerCtx, ec.OperationContext, i,
 				true, true,
@@ -127864,6 +128448,50 @@ func (ec *executionContext) marshalNCTATCMMIGroupOption2githubᚗcomᚋcmsᚑent
 	res := graphql.MarshalString(string(v))
 	if res == graphql.Null {
 		graphql.AddInvalidNullFromMarshaler(ctx, "CTATCMMIGroupOption!")
+	}
+	return res
+}
+
+func (ec *executionContext) marshalNCTATDiscussion2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussionᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.CTATDiscussion) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNCTATDiscussion2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussion(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNCTATDiscussion2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussion(ctx context.Context, sel ast.SelectionSet, v *models.CTATDiscussion) graphql.Marshaler {
+	if v == nil {
+		graphql.AddInvalidNullError(ctx, "CTATDiscussion!")
+		return graphql.Null
+	}
+	return ec._CTATDiscussion(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNCTATDiscussionInput2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDiscussionInput(ctx context.Context, v any) (model.CTATDiscussionInput, error) {
+	res, err := ec.unmarshalInputCTATDiscussionInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNCTATDiscussionPoster2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussionPoster(ctx context.Context, v any) (models.CTATDiscussionPoster, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.CTATDiscussionPoster(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNCTATDiscussionPoster2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATDiscussionPoster(ctx context.Context, sel ast.SelectionSet, v models.CTATDiscussionPoster) graphql.Marshaler {
+	_ = sel
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		graphql.AddInvalidNullFromMarshaler(ctx, "CTATDiscussionPoster!")
 	}
 	return res
 }
