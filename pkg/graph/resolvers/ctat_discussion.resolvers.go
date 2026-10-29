@@ -7,7 +7,6 @@ package resolvers
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -15,12 +14,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// SaveDiscussion is the resolver for the saveDiscussion field.
-func (r *mutationResolver) SaveDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error) {
-	panic(fmt.Errorf("not implemented: SaveDiscussion - saveDiscussion"))
+// CreateDiscussion is the resolver for the createDiscussion field.
+func (r *mutationResolver) CreateDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error) {
+	return createDiscussion(ctx, r.store, input)
 }
 
 // Discussions is the resolver for the discussions field.
 func (r *queryResolver) Discussions(ctx context.Context, ticketID uuid.UUID) ([]*models.CTATDiscussion, error) {
-	panic(fmt.Errorf("not implemented: Discussions - discussions"))
+	return discussions(ctx, ticketID)
 }

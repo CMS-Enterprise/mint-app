@@ -2526,6 +2526,7 @@ export type Mutation = {
   archiveMTOCommonMilestone: MtoCommonMilestone;
   createCTATRequest: CtatRequest;
   createCustomTimelineDate: CustomTimelineDate;
+  createDiscussion: CtatDiscussion;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2603,7 +2604,6 @@ export type Mutation = {
    */
   reorderMTOCategory: MtoCategory;
   reportAProblem: Scalars['Boolean']['output'];
-  saveDiscussion: CtatDiscussion;
   /** This mutation sends feedback about the MINT product to the MINT team */
   sendFeedbackEmail: Scalars['Boolean']['output'];
   /**
@@ -2689,6 +2689,12 @@ export type MutationCreateCtatRequestArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateCustomTimelineDateArgs = {
   input: CustomTimelineDateCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateDiscussionArgs = {
+  input: CtatDiscussionInput;
 };
 
 
@@ -3012,12 +3018,6 @@ export type MutationReorderMtoCategoryArgs = {
 /** Mutations definition for the schema */
 export type MutationReportAProblemArgs = {
   input: ReportAProblemInput;
-};
-
-
-/** Mutations definition for the schema */
-export type MutationSaveDiscussionArgs = {
-  input: CtatDiscussionInput;
 };
 
 
