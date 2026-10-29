@@ -52,9 +52,9 @@ const ModelFollowerUpdate = ({
       data-testid="notification--model-follower-update"
     >
       <PageHeading headingLevel="h2" className="margin-top-0 margin-bottom-3">
-        {abbreviation
-          ? t('index.modelFollowerUpdate.heading', { abbreviation })
-          : t('index.modelFollowerUpdate.headingNoAbbreviation')}
+        {t('index.modelFollowerUpdate.heading', {
+          abbreviation: abbreviation || modelName
+        })}
       </PageHeading>
 
       <div className="border-1px border-base-lighter border-red radius-md padding-3 margin-bottom-3">

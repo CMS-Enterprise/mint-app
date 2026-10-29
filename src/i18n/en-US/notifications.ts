@@ -113,7 +113,6 @@ const notifications = {
     },
     modelFollowerUpdate: {
       heading: 'A model ({{-abbreviation}}) has shared a message',
-      headingNoAbbreviation: 'A model has shared a message',
       category: 'Category',
       status: 'Status',
       lastUpdated: 'Last updated',
