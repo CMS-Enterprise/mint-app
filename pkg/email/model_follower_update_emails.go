@@ -3,6 +3,7 @@ package email
 import (
 	_ "embed"
 	"html/template"
+	"time"
 
 	"github.com/cms-enterprise/mint-app/pkg/shared/emailtemplates"
 )
@@ -19,14 +20,20 @@ var modelFollowerUpdateBodyTemplate string
 // ModelFollowerUpdateSubjectContent defines the parameters necessary for the corresponding email subject
 type ModelFollowerUpdateSubjectContent struct {
 	ModelName string
+	// ModelAcronym is the model's abbreviation, empty when the model has none
+	ModelAcronym string
 }
 
 // ModelFollowerUpdateBodyContent defines the parameters necessary for the corresponding email body
 type ModelFollowerUpdateBodyContent struct {
-	ClientAddress string
-	ModelID       string
-	ModelName     string
-	SenderName    string
+	ClientAddress    string
+	ModelID          string
+	ModelName        string
+	ModelShortName   *string
+	ModelCategories  []string
+	ModelStatus      string
+	ModelLastUpdated time.Time
+	ModelLeads       []string
 	// Content is the message, already sanitized by sanitization.SanitizeHTML, so it is rendered unescaped
 	Content template.HTML
 }
@@ -37,7 +44,6 @@ type modelFollowerUpdateEmails struct {
 }
 
 // ModelFollowerUpdate is the collection of all model follower update related email templates
-// TODO(MINT-3909): this is a stub so the resolver can send an email. The full email template is implemented in MINT-3909.
 var ModelFollowerUpdate = modelFollowerUpdateEmails{
 	Send: NewEmailTemplate[ModelFollowerUpdateSubjectContent, ModelFollowerUpdateBodyContent](
 		ModelFollowerUpdateTemplateName,

@@ -10,23 +10,29 @@ import {
   Icon,
   Label
 } from '@trussworks/react-uswds';
+import {
+  useGetModelPlanBaseQuery,
+  useSendModelFollowerUpdateMutation
+} from 'gql/generated/graphql';
 
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
 import HelpText from 'components/HelpText';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RichTextEditor from 'components/RichTextEditor';
+import toastSuccess from 'components/ToastSuccess';
+import { getStatusAlertBody, statusAlert } from 'contexts/ErrorContext';
+import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
-type SendMessageToFollowersProps = {
-  onSend?: (content: string) => void;
-};
-
-const SendMessageToFollowers = ({
-  onSend = () => {}
-}: SendMessageToFollowersProps) => {
+const SendMessageToFollowers = () => {
   const { t } = useTranslation('collaborationArea');
   const { modelID = '' } = useParams<{ modelID: string }>();
   const navigate = useNavigate();
+
+  const { data } = useGetModelPlanBaseQuery({ variables: { id: modelID } });
+  const modelName = data?.modelPlan.modelName ?? '';
+
+  const [sendUpdate, { loading }] = useSendModelFollowerUpdateMutation();
 
   const [content, setContent] = useState<string>('');
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
@@ -35,8 +41,44 @@ const SendMessageToFollowers = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (isEmpty) return;
-    onSend(content);
+    if (isEmpty || !modelName || loading) return;
+
+    // the global error link shows this copy in an error toast if the mutation fails.
+    // ErrorMessageProvider is not mounted in the app, so the store is set directly
+    setCurrentErrorMeta({
+      overrideMessage: getStatusAlertBody({
+        type: 'error',
+        message: t('sendMessageToFollowers.error')
+      })
+    });
+
+    sendUpdate({ variables: { modelPlanID: modelID, content } })
+      .then(response => {
+        if (!response?.errors) {
+          toastSuccess(
+            <Trans
+              t={t}
+              i18nKey="sendMessageToFollowers.success"
+              values={{ modelName }}
+              components={{ bold: <strong /> }}
+            />
+          );
+          navigate(collaborationAreaPath);
+        }
+      })
+      .catch(error => {
+        // GraphQL errors are toasted by the global error link; it ignores transport failures
+        if (error?.networkError && !error?.graphQLErrors?.length) {
+          statusAlert({
+            type: 'error',
+            message: t('sendMessageToFollowers.error')
+          });
+        }
+      })
+      .finally(() => {
+        // don't let the override affect later mutations
+        setCurrentErrorMeta({});
+      });
   };
 
   const returnLink = (
@@ -115,7 +157,7 @@ const SendMessageToFollowers = ({
             <Button
               type="submit"
               className="margin-top-6 margin-bottom-2"
-              disabled={isEmpty}
+              disabled={isEmpty || !modelName || loading}
             >
               {t('sendMessageToFollowers.sendMessage')}
             </Button>

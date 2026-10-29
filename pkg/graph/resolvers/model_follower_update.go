@@ -81,7 +81,7 @@ func ModelFollowerUpdateSend(
 		return nil, err
 	}
 
-	trySendModelFollowerUpdateEmail(logger, emailService, addressBook, modelPlan, principal, recipients, sanitizedContent)
+	trySendModelFollowerUpdateEmail(ctx, logger, store, emailService, addressBook, modelPlan, recipients, sanitizedContent)
 
 	return &model.ModelFollowerUpdate{
 		ID:                   activity.ID,
@@ -95,11 +95,12 @@ func ModelFollowerUpdateSend(
 
 // trySendModelFollowerUpdateEmail sends one email to all recipients in BCC. Failures are logged, not returned.
 func trySendModelFollowerUpdateEmail(
+	ctx context.Context,
 	logger *zap.Logger,
+	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	modelPlan *models.ModelPlan,
-	principal authentication.Principal,
 	recipients []*models.UserAccountAndNotificationPreferences,
 	sanitizedContent string,
 ) {
@@ -115,16 +116,52 @@ func trySendModelFollowerUpdateEmail(
 		return
 	}
 
+	// a failure to load the optional model details must not prevent the email from being sent
+	var categories []string
+	planBasics, err := PlanBasicsGetByModelPlanIDLOADER(ctx, modelPlan.ID)
+	if err != nil {
+		logger.Warn("failed to get plan basics for model follower update email notification", zap.Error(err))
+	} else {
+		if planBasics.ModelCategory != nil {
+			categories = append(categories, models.ModelCategoryHumanized[*planBasics.ModelCategory])
+		}
+		for _, category := range planBasics.AdditionalModelCategories {
+			categories = append(categories, models.ModelCategoryHumanized[models.ModelCategory(category)])
+		}
+	}
+
+	modelLeads, err := modelLeadNamesGetByModelPlanID(ctx, logger, store, modelPlan.ID)
+	if err != nil {
+		logger.Warn("failed to get model leads for model follower update email notification", zap.Error(err))
+	}
+
+	lastUpdated := modelPlan.CreatedDts
+	if modelPlan.ModifiedDts != nil {
+		lastUpdated = *modelPlan.ModifiedDts
+	}
+
+	// an empty abbreviation is treated as no acronym
+	modelAcronym := lo.FromPtr(modelPlan.Abbreviation)
+	var modelShortName *string
+	if modelAcronym != "" {
+		modelShortName = &modelAcronym
+	}
+
 	emailSubject, emailBody, err := email.ModelFollowerUpdate.Send.GetContent(
 		email.ModelFollowerUpdateSubjectContent{
-			ModelName: modelPlan.ModelName,
+			ModelName:    modelPlan.ModelName,
+			ModelAcronym: modelAcronym,
 		},
 		email.ModelFollowerUpdateBodyContent{
-			ClientAddress: emailService.GetConfig().GetClientAddress(),
-			ModelID:       modelPlan.ID.String(),
-			ModelName:     modelPlan.ModelName,
-			SenderName:    principal.Account().CommonName,
-			Content:       template.HTML(sanitizedContent), //nolint:gosec // content is sanitized by sanitization.SanitizeHTML
+			ClientAddress:    emailService.GetConfig().GetClientAddress(),
+			ModelID:          modelPlan.ID.String(),
+			ModelName:        modelPlan.ModelName,
+			ModelShortName:   modelShortName,
+			ModelCategories:  categories,
+			ModelStatus:      models.ModelStatusHumanized[modelPlan.Status],
+			ModelLastUpdated: lastUpdated,
+			ModelLeads:       modelLeads,
+			Content:          template.HTML(sanitizedContent), //nolint:gosec // content is sanitized by sanitization.SanitizeHTML
 		},
 	)
 	if err != nil {
@@ -146,4 +183,40 @@ func trySendModelFollowerUpdateEmail(
 			logger.Error("failed to send model follower update email notification", zap.Error(err))
 		}
 	}()
+}
+
+// modelLeadNamesGetByModelPlanID returns the common names of the collaborators with the model lead role.
+// The user accounts are fetched in a single query rather than one lookup per lead.
+func modelLeadNamesGetByModelPlanID(ctx context.Context, logger *zap.Logger, store *storage.Store, modelPlanID uuid.UUID) ([]string, error) {
+	planCollaborators, err := PlanCollaboratorGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+
+	leads := lo.Filter(planCollaborators, func(collaborator *models.PlanCollaborator, _ int) bool {
+		return lo.Contains(collaborator.TeamRoles, string(models.TeamRoleModelLead))
+	})
+	if len(leads) == 0 {
+		return nil, nil
+	}
+
+	leadIDs := lo.Map(leads, func(collaborator *models.PlanCollaborator, _ int) uuid.UUID {
+		return collaborator.UserID
+	})
+	accounts, err := UserAccountsGetByIDs(logger, store, leadIDs)
+	if err != nil {
+		return nil, err
+	}
+
+	accountsByID := lo.KeyBy(accounts, func(account *authentication.UserAccount) uuid.UUID {
+		return account.ID
+	})
+	// keep the order of the collaborators
+	return lo.FilterMap(leadIDs, func(id uuid.UUID, _ int) (string, bool) {
+		account, ok := accountsByID[id]
+		if !ok {
+			return "", false
+		}
+		return account.CommonName, true
+	}), nil
 }

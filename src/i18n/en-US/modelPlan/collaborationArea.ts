@@ -116,7 +116,11 @@ const collaborationArea = {
     messageLabel: 'Model update message',
     messageHelpText:
       'If necessary, include a brief description to help other users understand what this date is and why it matters for your model.',
-    sendMessage: 'Send message'
+    sendMessage: 'Send message',
+    success:
+      'You sent a message to the followers of this model (<bold>{{-modelName}}</bold>).',
+    error:
+      'There was an error sending your message. Please try again. If the error persists, please try again another time.'
   }
 };
 
