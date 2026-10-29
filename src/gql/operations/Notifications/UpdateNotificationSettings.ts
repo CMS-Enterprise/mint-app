@@ -7,6 +7,7 @@ export default gql(/* GraphQL */ `
     updateUserNotificationPreferences(changes: $changes) {
       id
       dailyDigestComplete
+      modelFollowerUpdate
       addedAsCollaborator
       taggedInDiscussion
       taggedInDiscussionReply

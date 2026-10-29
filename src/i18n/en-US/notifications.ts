@@ -199,6 +199,11 @@ const notifications = {
             disable: ['IN_APP']
           },
           {
+            name: 'modelFollowerUpdate',
+            copy: 'When a model I follow sends an update message',
+            disable: ['IN_APP']
+          },
+          {
             name: 'addedAsCollaborator',
             copy: 'When I’m added as a collaborator to a Model Plan',
             disable: ['IN_APP']

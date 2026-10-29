@@ -26,6 +26,11 @@ func (r *userNotificationPreferencesResolver) DailyDigestComplete(ctx context.Co
 	return obj.DailyDigestComplete, nil
 }
 
+// ModelFollowerUpdate is the resolver for the modelFollowerUpdate field.
+func (r *userNotificationPreferencesResolver) ModelFollowerUpdate(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
+	return obj.ModelFollowerUpdate, nil
+}
+
 // AddedAsCollaborator is the resolver for the addedAsCollaborator field.
 func (r *userNotificationPreferencesResolver) AddedAsCollaborator(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error) {
 	return obj.AddedAsCollaborator, nil
