@@ -44,7 +44,7 @@
     "@typescript/native": "npm:typescript@^7.0.2",
     "@uswds/uswds": "^3.13.0",
     "apollo-upload-client": "^17.0.0",
-    "axios": "^1.20.0",
+    "axios": "^1.21.0",
     "classnames": "^2.5.1",
     "cross-fetch": "^3.2.0",
     "cypress-file-upload": "^5.0.8",
