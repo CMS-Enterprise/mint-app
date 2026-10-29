@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"fmt"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 
 	"github.com/cms-enterprise/mint-app/pkg/logging"
@@ -103,14 +104,12 @@ func PlanCollaboratorUpdate(
 }
 
 // PlanCollaboratorDelete deletes the plan collaborator for a given id
-func (s *Store) PlanCollaboratorDelete(
+func PlanCollaboratorDelete(
+	tx *sqlx.Tx,
 	_ *zap.Logger,
 	id uuid.UUID,
 	userID uuid.UUID,
 ) (*models.PlanCollaborator, error) {
-
-	tx := s.db.MustBegin()
-	defer tx.Rollback()
 
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
@@ -127,11 +126,6 @@ func (s *Store) PlanCollaboratorDelete(
 	err = stmt.Get(collaborator, utilitysql.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
-	}
-
-	err = tx.Commit()
-	if err != nil {
-		return nil, fmt.Errorf("could not commit collaborator delete transaction: %w", err)
 	}
 
 	return collaborator, nil

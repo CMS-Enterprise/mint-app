@@ -85,7 +85,7 @@ func PlanDataExchangeApproachUpdate(
 			}
 
 			// Update the base task list section
-			err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
+			err = BaseStructPreUpdate(logger, existing, changes, principal, tx, true, true)
 			if err != nil {
 				return nil, err
 			}
@@ -98,7 +98,7 @@ func PlanDataExchangeApproachUpdate(
 
 			// DATA_EXCHANGE task progression: when approach is started, mark DATA_EXCHANGE task IN_PROGRESS
 			if deaChangedToInProgress {
-				updErr := UpdatePlanTaskStateOnDataExchangeApproachStarted(ctx, tx, logger, existing.ModelPlanID, principal, store)
+				updErr := UpdatePlanTaskStateOnDataExchangeApproachStarted(ctx, tx, logger, existing.ModelPlanID, principal)
 				if updErr != nil {
 					return nil, updErr
 				}
@@ -112,7 +112,6 @@ func PlanDataExchangeApproachUpdate(
 					logger,
 					existing.ModelPlanID,
 					principal,
-					store,
 					emailService,
 					emailAddressBook,
 				)
@@ -129,7 +128,6 @@ func PlanDataExchangeApproachUpdate(
 					logger,
 					existing.ModelPlanID,
 					principal,
-					store,
 					emailService,
 					emailAddressBook,
 				)

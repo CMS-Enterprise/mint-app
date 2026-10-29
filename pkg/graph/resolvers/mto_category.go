@@ -19,7 +19,11 @@ import (
 )
 
 // MTOCategoryCreate uses the provided information to create a new mto category
-func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func MTOCategoryCreate(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
 	name string,
 	modelPlanID uuid.UUID,
 	parentID *uuid.UUID,
@@ -41,7 +45,7 @@ func MTOCategoryCreate(ctx context.Context, logger *zap.Logger, principal authen
 	}
 
 	// MTO task progression: creating MTO data counts as starting the MTO
-	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, modelPlanID, principal, store)
+	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, modelPlanID, principal)
 	if err != nil {
 		return nil, err
 	}
@@ -64,13 +68,13 @@ func MTOCategoryDelete(
 	}
 
 	return sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
-		existing, err := storage.MTOCategoryGetByID(store, logger, id)
+		existing, err := storage.MTOCategoryGetByID(tx, logger, id)
 		if err != nil {
 			return fmt.Errorf("unable to delete MTO category. Err %w", err)
 		}
 
 		// Just check access, don't apply changes here
-		if err = BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
+		if err = BaseStructPreDelete(logger, existing, principal, tx, true); err != nil {
 			return fmt.Errorf("unable to delete MTO category. Err %w", err)
 		}
 
@@ -79,7 +83,7 @@ func MTOCategoryDelete(
 		}
 
 		// MTO task regression: recalculate task after deleting MTO data.
-		if err = UpdatePlanTaskStateOnMTODataDeleted(context.Background(), tx, logger, existing.ModelPlanID, principal, store, emailService, addressBook); err != nil {
+		if err = UpdatePlanTaskStateOnMTODataDeleted(context.Background(), tx, logger, existing.ModelPlanID, principal, emailService, addressBook); err != nil {
 			return fmt.Errorf("unable to recalculate MTO task after deleting category. Err %w", err)
 		}
 
@@ -88,7 +92,11 @@ func MTOCategoryDelete(
 }
 
 // MTOCategoryRename updates the name of MTOCategory or SubCategory
-func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func MTOCategoryRename(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
 	id uuid.UUID,
 	name string,
 ) (*models.MTOCategory, error) {
@@ -114,7 +122,7 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 	}
 
 	// MTO task progression: editing category data counts as starting the MTO
-	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal, store)
+	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +130,11 @@ func MTOCategoryRename(ctx context.Context, logger *zap.Logger, principal authen
 }
 
 // MTOCategoryReorder updates the position of an MTOCategory or SubCategory
-func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func MTOCategoryReorder(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
 	id uuid.UUID,
 	order *int,
 	parentID *uuid.UUID,
@@ -173,7 +185,7 @@ func MTOCategoryReorder(ctx context.Context, logger *zap.Logger, principal authe
 	}
 
 	// MTO task progression: editing category data counts as starting the MTO
-	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal, store)
+	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +294,7 @@ func MTOCreateStandardCategories(ctx context.Context, logger *zap.Logger, princi
 		}
 
 		// MTO task progression: creating standard category data counts as starting the MTO
-		err := UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
+		err := UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal)
 		if err != nil {
 			return err
 		}

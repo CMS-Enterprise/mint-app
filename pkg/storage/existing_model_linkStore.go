@@ -3,6 +3,8 @@ package storage
 import (
 	"go.uber.org/zap"
 
+	"github.com/jmoiron/sqlx"
+
 	"github.com/cms-enterprise/mint-app/pkg/sqlqueries"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 
@@ -72,7 +74,8 @@ func ExistingModelLinkGetByModelPlanIDAndFieldNameLOADER(
 }
 
 // ExistingModelLinksUpdate creates a new links that don't yet exist, deletes ones that are no longer provided,
-func (s *Store) ExistingModelLinksUpdate(
+func ExistingModelLinksUpdate(
+	tx *sqlx.Tx,
 	logger *zap.Logger,
 	userID uuid.UUID,
 	modelPlanID uuid.UUID,
@@ -80,9 +83,6 @@ func (s *Store) ExistingModelLinksUpdate(
 	existingModelIDs []int,
 	currentModelPlanIDs []uuid.UUID,
 ) ([]*models.ExistingModelLink, error) {
-
-	tx := s.db.MustBegin()
-	defer tx.Rollback()
 
 	err := setCurrentSessionUserVariable(tx, userID)
 	if err != nil {
@@ -110,11 +110,6 @@ func (s *Store) ExistingModelLinksUpdate(
 	err = stmt.Select(&linkSlice, arg)
 	if err != nil {
 		logger.Error("failed to update Existing Model Links", zap.Error(err))
-		return nil, err
-	}
-
-	err = tx.Commit()
-	if err != nil {
 		return nil, err
 	}
 

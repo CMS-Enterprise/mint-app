@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
@@ -151,17 +152,18 @@ func PlanCollaboratorUpdate(logger *zap.Logger, id uuid.UUID, newRoles []models.
 
 // PlanCollaboratorDelete implements resolver logic to delete a plan collaborator
 func PlanCollaboratorDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
-	existingCollaborator, err := storage.PlanCollaboratorGetByID(store, id)
-	if err != nil {
-		return nil, err
-	}
-	err = BaseStructPreDelete(logger, existingCollaborator, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanCollaborator, error) {
+		existingCollaborator, err := storage.PlanCollaboratorGetByID(tx, id)
+		if err != nil {
+			return nil, err
+		}
+		err = BaseStructPreDelete(logger, existingCollaborator, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
 
-	retCollaborator, err := store.PlanCollaboratorDelete(logger, id, principal.Account().ID)
-	return retCollaborator, err
+		return storage.PlanCollaboratorDelete(tx, logger, id, principal.Account().ID)
+	})
 }
 
 // PlanCollaboratorGetByModelPlanIDLOADER implements resolver logic to get Plan Collaborator by a model plan ID using a data loader

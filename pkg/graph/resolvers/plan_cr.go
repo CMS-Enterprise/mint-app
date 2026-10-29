@@ -1,13 +1,17 @@
 package resolvers
 
 import (
+	"fmt"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
@@ -48,18 +52,22 @@ func PlanCRUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface
 
 // PlanCRDelete deletes a plan cr_tdl record in the database
 func PlanCRDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCR, error) {
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanCR, error) {
+		existingPlanCR, err := storage.PlanCRGetByID(tx, logger, id)
+		if err != nil {
+			return nil, err
+		}
+		if existingPlanCR == nil {
+			return nil, fmt.Errorf("plan CR %s not found", id)
+		}
 
-	existingPlanCR, err := storage.PlanCRGetByID(store, logger, id)
-	if err != nil {
-		return nil, err
-	}
+		err = BaseStructPreDelete(logger, existingPlanCR, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
 
-	err = BaseStructPreDelete(logger, existingPlanCR, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
-
-	return store.PlanCRDelete(logger, id, principal.Account().ID)
+		return storage.PlanCRDelete(tx, logger, id, principal.Account().ID)
+	})
 }
 
 // PlanCRGet returns a plan_cr_tdl record in the database

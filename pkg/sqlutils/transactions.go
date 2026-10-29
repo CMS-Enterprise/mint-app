@@ -18,6 +18,9 @@ func WithTransaction[T any](txPrep TransactionPreparer, txFunc TransactionFunc[T
 		return nil, fmt.Errorf("error creating transaction %w", err)
 	}
 
+	// harmless - will catch panics in `txFunc`
+	defer tx.Rollback()
+
 	result, errFunc := txFunc(tx)
 	if errFunc != nil {
 		rollbackErr := tx.Rollback()

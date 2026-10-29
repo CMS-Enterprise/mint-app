@@ -72,7 +72,6 @@ func PlanPaymentsUpdate(
 		logger,
 		payments.ModelPlanID,
 		principal,
-		store,
 		nil,
 		email.AddressBook{},
 	); err != nil {
