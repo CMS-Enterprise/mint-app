@@ -27,6 +27,12 @@ export const reports: Record<
     description:
       'This report downloads a csv of all tickets submitted to the Contract Technical Assistance Team (CTAT).',
     formatExcel: 'Format: CSV'
+  },
+  groupFilteredView: {
+    heading: 'Group filtered view',
+    description:
+      'Download information about models, filtered to one of the available group filtered views.',
+    formatExcel: 'Format: CSV'
   }
 };
 
@@ -86,7 +92,13 @@ const analytics = {
           MODELS_I_FOLLOW: 'Models I follow'
         }
       }
-    }
+    },
+    otherFilterOptions: {
+      filteredView: {
+        label: 'Select filtered view'
+      }
+    },
+    selectOptionDefault: '- Select - '
   },
   selectDateRange: 'Select date range',
   dateRange: {

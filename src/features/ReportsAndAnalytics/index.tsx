@@ -65,7 +65,8 @@ export type ReportsType =
   | 'mtoMilestoneSummary'
   | 'allModels'
   | 'basicModelInfo'
-  | 'ctat';
+  | 'ctat'
+  | 'groupFilteredView';
 
 const ReportsAndAnalytics = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -167,11 +168,20 @@ const ReportsAndAnalytics = () => {
           'MINT-MTO_Milestone_Summary.xlsx'
         );
       } else if (reportKey === 'allModels') {
-        await fetchAllData(ModelShareSection.ALL);
+        await fetchAllData({
+          exportSection: ModelShareSection.ALL,
+          reportType: reportKey
+        });
       } else if (reportKey === 'basicModelInfo') {
-        await fetchAllData('basicModelInfo');
+        await fetchAllData({
+          exportSection: 'basicModelInfo',
+          reportType: reportKey
+        });
       } else if (reportKey === 'ctat') {
         await fetchCTATReport();
+      } else if (reportKey === 'groupFilteredView') {
+        setReportType(reportKey as ReportsType);
+        setIsDownloadSectionOpen(true);
       }
     } finally {
       setDownloadingReport(null);
@@ -306,33 +316,39 @@ const ReportsAndAnalytics = () => {
                       >
                         {downloadingReport === reportKey
                           ? t('loading')
-                          : t('downloadAll')}
+                          : t(
+                              reportKey === 'groupFilteredView'
+                                ? 'download'
+                                : 'downloadAll'
+                            )}
 
                         {downloadingReport === reportKey && (
                           <Spinner size="small" />
                         )}
                       </Button>
 
-                      <Button
-                        type="button"
-                        data-testid="select-time-range-button"
-                        unstyled
-                        className="deep-underline"
-                        onClick={() => {
-                          if (reportKey === 'ctat') {
-                            setIsDateRangeModalOpen(true);
-                          } else {
-                            setReportType(reportKey as ReportsType);
-                            setIsDownloadSectionOpen(true);
-                          }
-                        }}
-                      >
-                        {t(
-                          reportKey === 'ctat'
-                            ? 'selectDateRange'
-                            : 'downloadSection'
-                        )}
-                      </Button>
+                      {reportKey !== 'groupFilteredView' && (
+                        <Button
+                          type="button"
+                          data-testid="select-time-range-button"
+                          unstyled
+                          className="deep-underline"
+                          onClick={() => {
+                            if (reportKey === 'ctat') {
+                              setIsDateRangeModalOpen(true);
+                            } else {
+                              setReportType(reportKey as ReportsType);
+                              setIsDownloadSectionOpen(true);
+                            }
+                          }}
+                        >
+                          {t(
+                            reportKey === 'ctat'
+                              ? 'selectDateRange'
+                              : 'downloadSection'
+                          )}
+                        </Button>
+                      )}
                     </CardFooter>
                   </Card>
                 </Grid>

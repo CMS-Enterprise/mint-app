@@ -9,7 +9,11 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import useFetchCSVData from 'hooks/useFetchCSVData';
 
-import { getAllModelFilters, getBasicModelFilters } from './getFilterOptions';
+import {
+  getAllModelFilters,
+  getBasicModelFilters,
+  getGroupFilteredViewFilters
+} from './getFilterOptions';
 
 const DownloadSectionModal = ({
   isModalOpen,
@@ -30,6 +34,8 @@ const DownloadSectionModal = ({
     switch (reportType) {
       case 'basicModelInfo':
         return getBasicModelFilters();
+      case 'groupFilteredView':
+        return getGroupFilteredViewFilters();
       default:
         return getAllModelFilters();
     }
@@ -54,9 +60,27 @@ const DownloadSectionModal = ({
 
   const handleDownload = () => {
     if (reportType === 'allModels') {
-      fetchAllData(ModelShareSection.ALL, selectedFilters);
-    } else if (reportType === 'basicModelInfo') {
-      fetchAllData('basicModelInfo', selectedFilters);
+      fetchAllData({
+        exportSection: ModelShareSection.ALL,
+        filters: selectedFilters,
+        reportType
+      });
+    }
+
+    if (reportType === 'basicModelInfo') {
+      fetchAllData({
+        exportSection: 'basicModelInfo',
+        filters: selectedFilters,
+        reportType
+      });
+    }
+
+    if (reportType === 'groupFilteredView') {
+      fetchAllData({
+        exportSection: selectedFilters.filteredView[0],
+        filters: selectedFilters,
+        reportType
+      });
     }
     closeModal();
   };
