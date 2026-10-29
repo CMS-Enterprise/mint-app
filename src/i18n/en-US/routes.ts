@@ -21,6 +21,7 @@ const routes = {
 
     // Collaboration area
     '/collaboration-area': 'Collaboration area',
+    '/send-message-to-followers': 'Send a message to followers',
 
     // Collaborators
     '/collaborators': 'Manage model team',

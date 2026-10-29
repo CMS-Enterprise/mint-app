@@ -66,6 +66,11 @@ func (r *mTOReadyForReviewActivityMetaResolver) MarkedReadyForReviewByUserAccoun
 }
 
 // ModelPlan is the resolver for the modelPlan field.
+func (r *modelFollowerUpdateActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.ModelFollowerUpdateActivityMeta) (*models.ModelPlan, error) {
+	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
+}
+
+// ModelPlan is the resolver for the modelPlan field.
 func (r *modelPlanSharedActivityMetaResolver) ModelPlan(ctx context.Context, obj *models.ModelPlanSharedActivityMeta) (*models.ModelPlan, error) {
 	return ModelPlanGetByIDLOADER(ctx, obj.ModelPlanID)
 }
@@ -203,6 +208,11 @@ func (r *Resolver) MTOReadyForReviewActivityMeta() generated.MTOReadyForReviewAc
 	return &mTOReadyForReviewActivityMetaResolver{r}
 }
 
+// ModelFollowerUpdateActivityMeta returns generated.ModelFollowerUpdateActivityMetaResolver implementation.
+func (r *Resolver) ModelFollowerUpdateActivityMeta() generated.ModelFollowerUpdateActivityMetaResolver {
+	return &modelFollowerUpdateActivityMetaResolver{r}
+}
+
 // ModelPlanSharedActivityMeta returns generated.ModelPlanSharedActivityMetaResolver implementation.
 func (r *Resolver) ModelPlanSharedActivityMeta() generated.ModelPlanSharedActivityMetaResolver {
 	return &modelPlanSharedActivityMetaResolver{r}
@@ -256,6 +266,7 @@ type (
 	iddocQuestionnaireCompletedActivityMetaResolver            struct{ *Resolver }
 	incorrectModelStatusActivityMetaResolver                   struct{ *Resolver }
 	mTOReadyForReviewActivityMetaResolver                      struct{ *Resolver }
+	modelFollowerUpdateActivityMetaResolver                    struct{ *Resolver }
 	modelPlanSharedActivityMetaResolver                        struct{ *Resolver }
 	newDiscussionRepliedActivityMetaResolver                   struct{ *Resolver }
 	newModelPlanActivityMetaResolver                           struct{ *Resolver }

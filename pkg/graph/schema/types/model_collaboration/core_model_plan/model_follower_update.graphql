@@ -1,0 +1,24 @@
+"""
+ModelFollowerUpdate represents a message sent to everyone following a model plan
+"""
+type ModelFollowerUpdate {
+  id: UUID!
+  modelPlanID: UUID!
+  content: String!
+  createdBy: UUID!
+  createdByUserAccount: UserAccount!
+  createdDts: Time!
+  modifiedBy: UUID
+  modifiedByUserAccount: UserAccount
+  modifiedDts: Time
+}
+
+extend type Mutation {
+  """
+  SendModelFollowerUpdate saves a rich text message about a model plan and sends it to everyone following it.
+  """
+  sendModelFollowerUpdate(
+    modelPlanID: UUID!
+    content: String!
+  ): ModelFollowerUpdate! @hasRole(role: MINT_USER)
+}

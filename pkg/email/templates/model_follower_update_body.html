@@ -1,0 +1,77 @@
+{{template "shared_header.html"}}
+{{template "shared_non_mint_mailbox_header.html" .}}
+
+<hr>
+
+<h3 style="margin: 16px 0;">A model has shared a message:</h3>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+      <td align="center">
+        <div class="container-border">
+          <h2 style="display: inline-block; margin: 0;">{{.ModelName}}
+            {{if .ModelShortName}}<span style="display: inline-block; font-size: 1rem; font-weight: normal;"> ({{.ModelShortName}})</span>{{end}}
+          </h2>
+
+          <br/>
+          <br/>
+
+          <p><b>Category</b></p>
+          <p>
+              {{if .ModelCategories}}
+                  {{- range $index, $element := .ModelCategories -}}
+                      {{- if $index -}},&nbsp;{{- end -}}
+                      {{$element}}
+                  {{- end -}}
+              {{else}}
+                To be determined
+              {{end}}
+          </p>
+          <br/>
+
+          <p><b>Status</b></p>
+          <p>{{.ModelStatus}}</p>
+          <br/>
+
+          <p><b>Last updated</b></p>
+          <p>{{.ModelLastUpdated.Format "01/02/2006"}}</p>
+          <br/>
+
+          <p><b>Model lead(s)</b></p>
+          <p>
+              {{if .ModelLeads}}
+                  {{- range $index, $element := .ModelLeads -}}
+                      {{- if $index -}},&nbsp;{{- end -}}
+                      {{$element}}
+                  {{- end -}}
+              {{else}}
+                To be determined
+              {{end}}
+          </p>
+          <br/>
+
+          <p>
+            <a href="{{.ClientAddress}}/models/{{.ModelID}}/read-view/model-basics">
+              View more details in MINT
+            </a>
+          </p>
+        </div>
+      </td>
+    </tr>
+</table>
+
+<div style="margin-top: 16px;">{{.Content}}</div>
+
+<br/>
+
+<hr>
+
+<p>
+  You received this notification because you are currently following this model. To stop receiving notifications for this model, unfollow it in MINT or adjust your
+  <a href="{{.ClientAddress}}/notifications/settings" style="font-weight: normal">notification settings</a>.
+</p>
+
+<br>
+<br>
+
+{{template "shared_footer.html"}}

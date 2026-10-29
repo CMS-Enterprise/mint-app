@@ -61,7 +61,7 @@ export type Activity = {
 };
 
 /** ActivityMetaData is a type that represents all the data that can be captured in an Activity */
-export type ActivityMetaData = AddedAsCollaboratorMeta | DailyDigestCompleteActivityMeta | DatesChangedActivityMeta | IddocQuestionnaireCompletedActivityMeta | IncorrectModelStatusActivityMeta | MtoReadyForReviewActivityMeta | ModelPlanSharedActivityMeta | NewDiscussionAddedActivityMeta | NewDiscussionRepliedActivityMeta | NewModelPlanActivityMeta | NewTaskAddedActivityMeta | PlanDataExchangeApproachMarkedCompleteActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta | TaskCompletedActivityMeta | WaiverAssessmentSurveyMarkedCompleteActivityMeta;
+export type ActivityMetaData = AddedAsCollaboratorMeta | DailyDigestCompleteActivityMeta | DatesChangedActivityMeta | IddocQuestionnaireCompletedActivityMeta | IncorrectModelStatusActivityMeta | MtoReadyForReviewActivityMeta | ModelFollowerUpdateActivityMeta | ModelPlanSharedActivityMeta | NewDiscussionAddedActivityMeta | NewDiscussionRepliedActivityMeta | NewModelPlanActivityMeta | NewTaskAddedActivityMeta | PlanDataExchangeApproachMarkedCompleteActivityMeta | TaggedInDiscussionReplyActivityMeta | TaggedInPlanDiscussionActivityMeta | TaskCompletedActivityMeta | WaiverAssessmentSurveyMarkedCompleteActivityMeta;
 
 /** ActivityType represents the possible activities that happen in application that might result in a notification */
 export enum ActivityType {
@@ -71,6 +71,7 @@ export enum ActivityType {
   DATES_CHANGED = 'DATES_CHANGED',
   IDDOC_QUESTIONNAIRE_COMPLETED = 'IDDOC_QUESTIONNAIRE_COMPLETED',
   INCORRECT_MODEL_STATUS = 'INCORRECT_MODEL_STATUS',
+  MODEL_FOLLOWER_UPDATE = 'MODEL_FOLLOWER_UPDATE',
   MODEL_PLAN_SHARED = 'MODEL_PLAN_SHARED',
   MTO_READY_FOR_REVIEW = 'MTO_READY_FOR_REVIEW',
   NEW_DISCUSSION_ADDED = 'NEW_DISCUSSION_ADDED',
@@ -2237,6 +2238,29 @@ export type ModelCountAnalyticsOverTime = {
   numberOfModels: Scalars['Int']['output'];
 };
 
+/** ModelFollowerUpdate represents a message sent to everyone following a model plan */
+export type ModelFollowerUpdate = {
+  __typename: 'ModelFollowerUpdate';
+  content: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  modelPlanID: Scalars['UUID']['output'];
+  modifiedBy?: Maybe<Scalars['UUID']['output']>;
+  modifiedByUserAccount?: Maybe<UserAccount>;
+  modifiedDts?: Maybe<Scalars['Time']['output']>;
+};
+
+export type ModelFollowerUpdateActivityMeta = {
+  __typename: 'ModelFollowerUpdateActivityMeta';
+  content: Scalars['String']['output'];
+  modelPlan: ModelPlan;
+  modelPlanID: Scalars['UUID']['output'];
+  type: ActivityType;
+  version: Scalars['Int']['output'];
+};
+
 export type ModelFollowersAnalytics = {
   __typename: 'ModelFollowersAnalytics';
   modelName: Scalars['String']['output'];
@@ -2582,6 +2606,8 @@ export type Mutation = {
   reportAProblem: Scalars['Boolean']['output'];
   /** This mutation sends feedback about the MINT product to the MINT team */
   sendFeedbackEmail: Scalars['Boolean']['output'];
+  /** SendModelFollowerUpdate saves a rich text message about a model plan and sends it to everyone following it. */
+  sendModelFollowerUpdate: ModelFollowerUpdate;
   /**
    * ShareModelPlan allows a user to share a model plan with other users.
    * if both a view filter and a section are provided, the view filter will be ignored
@@ -2994,6 +3020,13 @@ export type MutationReportAProblemArgs = {
 /** Mutations definition for the schema */
 export type MutationSendFeedbackEmailArgs = {
   input: SendFeedbackEmailInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationSendModelFollowerUpdateArgs = {
+  content: Scalars['String']['input'];
+  modelPlanID: Scalars['UUID']['input'];
 };
 
 
@@ -7303,6 +7336,14 @@ export type GetNdaQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetNdaQuery = { __typename: 'Query', ndaInfo: { __typename: 'NDAInfo', agreed: boolean, agreedDts?: Time | null } };
 
+export type SendModelFollowerUpdateMutationVariables = Exact<{
+  modelPlanID: Scalars['UUID']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type SendModelFollowerUpdateMutation = { __typename: 'Mutation', sendModelFollowerUpdate: { __typename: 'ModelFollowerUpdate', id: UUID, modelPlanID: UUID, content: string } };
+
 export type ArchiveModelPlanMutationVariables = Exact<{
   id: Scalars['UUID']['input'];
   archived: Scalars['Boolean']['input'];
@@ -7858,7 +7899,7 @@ export type GetNotificationSettingsQuery = { __typename: 'Query', currentUser: {
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<TableName>, readyForReview: Array<TableName>, readyForClearance: Array<TableName>, dataExchangeApproachMarkedComplete?: boolean | null } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'DatesChangedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, dateChanges: Array<{ __typename: 'DateChange', isChanged: boolean, field: DateChangeFieldType, isRange: boolean, oldDate?: Time | null, newDate?: Time | null, oldRangeStart?: Time | null, oldRangeEnd?: Time | null, newRangeStart?: Time | null, newRangeEnd?: Time | null }> } | { __typename: 'IddocQuestionnaireCompletedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'IncorrectModelStatusActivityMeta', version: number, type: ActivityType, currentStatus: string, modelPlanName: string, modelPlanID: UUID, phaseSuggestion: { __typename: 'PhaseSuggestion', phase: ModelPhase, suggestedStatuses: Array<ModelStatus> }, modelPlan: { __typename: 'ModelPlan', modelName: string, status: ModelStatus } } | { __typename: 'MTOReadyForReviewActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, mtoInfoID: UUID, markedReadyForReview: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, markedReadyForReviewByUserAccount: { __typename: 'UserAccount', commonName: string } } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionAddedActivityMeta', version: number, type: ActivityType, discussionID: UUID, userName: string, modelPlanID: UUID, modelPlanName: string, modelAbbreviation: string, role: string, content: string } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewTaskAddedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, planTaskID: UUID, taskKey: PlanTaskKey, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'PlanDataExchangeApproachMarkedCompleteActivityMeta', version: number, type: ActivityType, modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaskCompletedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, planTaskID: UUID, taskKey: PlanTaskKey, completedBy: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, completedByUserAccount: { __typename: 'UserAccount', commonName: string } } | { __typename: 'WaiverAssessmentSurveyMarkedCompleteActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
+export type GetNotificationsQuery = { __typename: 'Query', currentUser: { __typename: 'CurrentUser', notifications: { __typename: 'UserNotifications', numUnreadNotifications: number, notifications: Array<{ __typename: 'UserNotification', id: UUID, isRead: boolean, inAppSent: boolean, emailSent: boolean, createdDts: Time, activity: { __typename: 'Activity', activityType: ActivityType, entityID: UUID, actorID: UUID, actorUserAccount: { __typename: 'UserAccount', commonName: string }, metaData: { __typename: 'AddedAsCollaboratorMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'DailyDigestCompleteActivityMeta', version: number, type: ActivityType, modelPlanIDs: Array<UUID>, date: Time, analyzedAudits: Array<{ __typename: 'AnalyzedAudit', id: UUID, modelPlanID: UUID, modelName: string, date: Time, changes: { __typename: 'AnalyzedAuditChange', modelPlan?: { __typename: 'AnalyzedModelPlan', oldName?: string | null, statusChanges?: Array<string | null> | null } | null, documents?: { __typename: 'AnalyzedDocuments', count?: number | null } | null, crTdls?: { __typename: 'AnalyzedCrTdls', activity?: boolean | null } | null, planSections?: { __typename: 'AnalyzedPlanSections', updated: Array<TableName>, readyForReview: Array<TableName>, readyForClearance: Array<TableName>, dataExchangeApproachMarkedComplete?: boolean | null } | null, modelLeads?: { __typename: 'AnalyzedModelLeads', added: Array<{ __typename: 'AnalyzedModelLeadInfo', id: UUID, commonName: string }> } | null, planDiscussions?: { __typename: 'AnalyzedPlanDiscussions', activity?: boolean | null } | null } }> } | { __typename: 'DatesChangedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, dateChanges: Array<{ __typename: 'DateChange', isChanged: boolean, field: DateChangeFieldType, isRange: boolean, oldDate?: Time | null, newDate?: Time | null, oldRangeStart?: Time | null, oldRangeEnd?: Time | null, newRangeStart?: Time | null, newRangeEnd?: Time | null }> } | { __typename: 'IddocQuestionnaireCompletedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'IncorrectModelStatusActivityMeta', version: number, type: ActivityType, currentStatus: string, modelPlanName: string, modelPlanID: UUID, phaseSuggestion: { __typename: 'PhaseSuggestion', phase: ModelPhase, suggestedStatuses: Array<ModelStatus> }, modelPlan: { __typename: 'ModelPlan', modelName: string, status: ModelStatus } } | { __typename: 'MTOReadyForReviewActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, mtoInfoID: UUID, markedReadyForReview: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, markedReadyForReviewByUserAccount: { __typename: 'UserAccount', commonName: string } } | { __typename: 'ModelFollowerUpdateActivityMeta' } | { __typename: 'ModelPlanSharedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, optionalMessage?: string | null, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewDiscussionAddedActivityMeta', version: number, type: ActivityType, discussionID: UUID, userName: string, modelPlanID: UUID, modelPlanName: string, modelAbbreviation: string, role: string, content: string } | { __typename: 'NewDiscussionRepliedActivityMeta', version: number, type: ActivityType, discussionID: UUID, replyID: UUID, modelPlanID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewModelPlanActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'NewTaskAddedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, planTaskID: UUID, taskKey: PlanTaskKey, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'PlanDataExchangeApproachMarkedCompleteActivityMeta', version: number, type: ActivityType, modelPlan: { __typename: 'ModelPlan', id: UUID, modelName: string } } | { __typename: 'TaggedInDiscussionReplyActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, replyID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaggedInPlanDiscussionActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, discussionID: UUID, content: string, modelPlan: { __typename: 'ModelPlan', modelName: string } } | { __typename: 'TaskCompletedActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, planTaskID: UUID, taskKey: PlanTaskKey, completedBy: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string }, completedByUserAccount: { __typename: 'UserAccount', commonName: string } } | { __typename: 'WaiverAssessmentSurveyMarkedCompleteActivityMeta', version: number, type: ActivityType, modelPlanID: UUID, modelPlan: { __typename: 'ModelPlan', modelName: string } } } }> } } };
 
 export type GetPollNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -13007,6 +13048,42 @@ export type GetNdaQueryHookResult = ReturnType<typeof useGetNdaQuery>;
 export type GetNdaLazyQueryHookResult = ReturnType<typeof useGetNdaLazyQuery>;
 export type GetNdaSuspenseQueryHookResult = ReturnType<typeof useGetNdaSuspenseQuery>;
 export type GetNdaQueryResult = Apollo.QueryResult<GetNdaQuery, GetNdaQueryVariables>;
+export const SendModelFollowerUpdateDocument = gql`
+    mutation SendModelFollowerUpdate($modelPlanID: UUID!, $content: String!) {
+  sendModelFollowerUpdate(modelPlanID: $modelPlanID, content: $content) {
+    id
+    modelPlanID
+    content
+  }
+}
+    `;
+export type SendModelFollowerUpdateMutationFn = Apollo.MutationFunction<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>;
+
+/**
+ * __useSendModelFollowerUpdateMutation__
+ *
+ * To run a mutation, you first call `useSendModelFollowerUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendModelFollowerUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendModelFollowerUpdateMutation, { data, loading, error }] = useSendModelFollowerUpdateMutation({
+ *   variables: {
+ *      modelPlanID: // value for 'modelPlanID'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useSendModelFollowerUpdateMutation(baseOptions?: Apollo.MutationHookOptions<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>(SendModelFollowerUpdateDocument, options);
+      }
+export type SendModelFollowerUpdateMutationHookResult = ReturnType<typeof useSendModelFollowerUpdateMutation>;
+export type SendModelFollowerUpdateMutationResult = Apollo.MutationResult<SendModelFollowerUpdateMutation>;
+export type SendModelFollowerUpdateMutationOptions = Apollo.BaseMutationOptions<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>;
 export const ArchiveModelPlanDocument = gql`
     mutation ArchiveModelPlan($id: UUID!, $archived: Boolean!) {
   updateModelPlan(id: $id, changes: {archived: $archived}) {
@@ -21217,6 +21294,7 @@ export const TypedupdateKeyContactCategoryDocument = {"kind":"Document","definit
 export const TypedGetExistingModelPlansDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetExistingModelPlans"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"existingModelCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]} as unknown as DocumentNode<GetExistingModelPlansQuery, GetExistingModelPlansQueryVariables>;
 export const TypedGetModelPlansBaseDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetModelPlansBase"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ModelPlanFilter"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"modelPlanCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}}]}}]} as unknown as DocumentNode<GetModelPlansBaseQuery, GetModelPlansBaseQueryVariables>;
 export const TypedGetNdaDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNDA"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ndaInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"agreed"}},{"kind":"Field","name":{"kind":"Name","value":"agreedDts"}}]}}]}}]} as unknown as DocumentNode<GetNdaQuery, GetNdaQueryVariables>;
+export const TypedSendModelFollowerUpdateDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendModelFollowerUpdate"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sendModelFollowerUpdate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelPlanID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelPlanID"}}},{"kind":"Argument","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<SendModelFollowerUpdateMutation, SendModelFollowerUpdateMutationVariables>;
 export const TypedArchiveModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ArchiveModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"archived"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"archived"},"value":{"kind":"Variable","name":{"kind":"Name","value":"archived"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ArchiveModelPlanMutation, ArchiveModelPlanMutationVariables>;
 export const TypedCreateModelPlanDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateModelPlan"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"modelName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createModelPlan"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"modelName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"modelName"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}},{"kind":"Field","name":{"kind":"Name","value":"basics"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelPlanID"}},{"kind":"Field","name":{"kind":"Name","value":"modelCategory"}},{"kind":"Field","name":{"kind":"Name","value":"cmsCenters"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroups"}},{"kind":"Field","name":{"kind":"Name","value":"modelType"}},{"kind":"Field","name":{"kind":"Name","value":"problem"}},{"kind":"Field","name":{"kind":"Name","value":"goal"}},{"kind":"Field","name":{"kind":"Name","value":"testInterventions"}},{"kind":"Field","name":{"kind":"Name","value":"note"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedBy"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"userAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"username"}}]}},{"kind":"Field","name":{"kind":"Name","value":"userID"}},{"kind":"Field","name":{"kind":"Name","value":"teamRoles"}}]}}]}}]}}]} as unknown as DocumentNode<CreateModelPlanMutation, CreateModelPlanMutationVariables>;
 export const TypedCreateModelPlanReplyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateModelPlanReply"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DiscussionReplyCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDiscussionReply"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"discussionID"}},{"kind":"Field","name":{"kind":"Name","value":"content"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"rawContent"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]} as unknown as DocumentNode<CreateModelPlanReplyMutation, CreateModelPlanReplyMutationVariables>;

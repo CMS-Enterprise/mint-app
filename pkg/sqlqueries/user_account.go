@@ -47,6 +47,9 @@ var userAccountGetNotificationPreferencesTaskCompleted string
 //go:embed SQL/user_account/get_notification_preferences_new_task_added.sql
 var userAccountGetNotificationPreferencesNewTaskAdded string
 
+//go:embed SQL/user_account/get_followers_for_model_follower_update.sql
+var userAccountGetFollowersForModelFollowerUpdate string
+
 //go:embed SQL/user_account/get_lead_model_plan_count.sql
 var userAccountGetLeadModelPlanCount string
 
@@ -67,6 +70,7 @@ type userAccountScripts struct {
 	GetLeadModelPlanCount                                          string
 	GetNotificationPreferencesTaskCompleted                        string
 	GetNotificationPreferencesNewTaskAdded                         string
+	GetFollowersForModelFollowerUpdate                             string
 }
 
 // UserAccount houses all the sql for getting data for user account from the database
@@ -87,4 +91,5 @@ var UserAccount = userAccountScripts{
 	GetLeadModelPlanCount:                                          userAccountGetLeadModelPlanCount,
 	GetNotificationPreferencesTaskCompleted:                        userAccountGetNotificationPreferencesTaskCompleted,
 	GetNotificationPreferencesNewTaskAdded:                         userAccountGetNotificationPreferencesNewTaskAdded,
+	GetFollowersForModelFollowerUpdate:                             userAccountGetFollowersForModelFollowerUpdate,
 }
