@@ -103,11 +103,26 @@ const notifications = {
         text: ' marked a task as complete for {{-modelName}}.',
         cta: 'View tasks'
       },
-      // TODO(MINT-3912): placeholder copy, the real notification rendering is implemented in MINT-3912
       MODEL_FOLLOWER_UPDATE: {
-        text: ' sent an update about {{-modelName}}.',
-        cta: 'View model'
+        text: ' sent a message about {{-modelName}}.',
+        cta: {
+          view: 'View message',
+          hide: 'Hide message'
+        }
       }
+    },
+    modelFollowerUpdate: {
+      heading: 'A model ({{-abbreviation}}) has shared a message',
+      headingNoAbbreviation: 'A model has shared a message',
+      category: 'Category',
+      status: 'Status',
+      lastUpdated: 'Last updated',
+      modelLeads: 'Model lead(s)',
+      toBeDetermined: 'To be determined',
+      viewDetails: 'View more details in MINT',
+      newMessage: 'New message:',
+      footer:
+        'You received this notification because you are currently following this model. To stop receiving notifications for this model, unfollow it in MINT or adjust your <link1>notification settings</link1>.'
     },
     dailyDigest: {
       heading: 'Your daily updates',
