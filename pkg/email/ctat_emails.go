@@ -29,6 +29,9 @@ const CTATUpdateTemplateName string = "ctat_update"
 // CTATUpdateAdminTemplateName is the template name for the CTAT update admin email.
 const CTATUpdateAdminTemplateName string = "ctat_update_admin"
 
+// CTATDiscussionTemplateName is the template name for the CTAT discussion email.
+const CTATDiscussionTemplateName string = "ctat_discussion"
+
 //go:embed templates/ctat_submitted_body.html
 var ctatSubmittedBodyTemplate string
 
@@ -53,6 +56,12 @@ var ctatUpdateAdminBodyTemplate string
 //go:embed templates/ctat_update_admin_subject.html
 var ctatUpdateAdminSubjectTemplate string
 
+//go:embed templates/ctat_discussion_body.html
+var ctatDiscussionBodyTemplate string
+
+//go:embed templates/ctat_discussion_subject.html
+var ctatDiscussionSubjectTemplate string
+
 type ctatEmails struct {
 	// Submitted is the email sent when a CTAT request is submitted.
 	Submitted *emailtemplates.GenEmailTemplate[CTATSubmittedSubjectContent, CTATSubmittedBodyContent]
@@ -62,6 +71,8 @@ type ctatEmails struct {
 	Update *emailtemplates.GenEmailTemplate[CTATUpdateSubjectContent, CTATUpdateBodyContent]
 	// UpdateAdmin is the email sent to admins when a CTAT request is updated.
 	UpdateAdmin *emailtemplates.GenEmailTemplate[CTATUpdateAdminSubjectContent, CTATUpdateAdminBodyContent]
+	// Discussion is the email sent when a discussion is added to a CTAT request.
+	Discussion *emailtemplates.GenEmailTemplate[CTATDiscussionSubjectContent, CTATDiscussionBodyContent]
 }
 
 // CTAT is the collection of CTAT-related email templates.
@@ -86,6 +97,27 @@ var CTAT = ctatEmails{
 		ctatUpdateAdminSubjectTemplate,
 		ctatUpdateAdminBodyTemplate,
 	),
+	Discussion: NewEmailTemplate[CTATDiscussionSubjectContent, CTATDiscussionBodyContent](
+		CTATDiscussionTemplateName,
+		ctatDiscussionSubjectTemplate,
+		ctatDiscussionBodyTemplate,
+	),
+}
+
+// CTATDiscussionSubjectContent defines the parameters for the discussion email subject.
+type CTATDiscussionSubjectContent struct {
+	TicketNumber string
+}
+
+// CTATDiscussionBodyContent defines the parameters for the discussion email body.
+type CTATDiscussionBodyContent struct {
+	ClientAddress     string
+	CTATTicketID      string
+	TicketNumber      string
+	PosterName        string
+	PosterRole        string
+	DiscussionContent string
+	DatePosted        string
 }
 
 // CTATSubmittedSubjectContent defines the parameters necessary for the corresponding email subject.

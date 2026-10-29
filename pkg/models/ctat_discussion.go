@@ -11,6 +11,14 @@ const (
 	CTATDiscussionPosterAdmin     CTATDiscussionPoster = "ADMIN"
 )
 
+func (c CTATDiscussionPoster) String() string {
+	if c == CTATDiscussionPosterRequester {
+		return "Requester"
+	}
+
+	return "Admin"
+}
+
 type CTATDiscussion struct {
 	baseStruct
 
