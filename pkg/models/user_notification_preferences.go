@@ -16,6 +16,7 @@ type UserNotificationPreferences struct {
 	UserID uuid.UUID `json:"userID" db:"user_id"`
 
 	DailyDigestComplete                                  UserNotificationPreferenceFlags                       `json:"dailyDigestComplete" db:"daily_digest_complete"`
+	ModelFollowerUpdate                                  UserNotificationPreferenceFlags                       `json:"modelFollowerUpdate" db:"model_follower_update"`
 	AddedAsCollaborator                                  UserNotificationPreferenceFlags                       `json:"addedAsCollaborator" db:"added_as_collaborator"`
 	TaggedInDiscussion                                   UserNotificationPreferenceFlags                       `json:"taggedInDiscussion" db:"tagged_in_discussion"`
 	TaggedInDiscussionReply                              UserNotificationPreferenceFlags                       `json:"taggedInDiscussionReply" db:"tagged_in_discussion_reply"`
@@ -47,6 +48,7 @@ func NewUserNotificationPreferences(userID uuid.UUID) *UserNotificationPreferenc
 		UserID:     userID,
 
 		DailyDigestComplete:                  DefaultUserNotificationPreferencesFlags(),
+		ModelFollowerUpdate:                  DefaultUserNotificationPreferencesFlags(),
 		AddedAsCollaborator:                  DefaultUserNotificationPreferencesFlags(),
 		TaggedInDiscussion:                   DefaultUserNotificationPreferencesFlags(),
 		TaggedInDiscussionReply:              DefaultUserNotificationPreferencesFlags(),

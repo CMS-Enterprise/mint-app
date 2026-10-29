@@ -217,6 +217,79 @@ func (suite *ResolverSuite) TestModelFollowerUpdateSendNotifiesFollowers() {
 	suite.NotContains(sent.body, "alert(")
 }
 
+func (suite *ResolverSuite) TestModelFollowerUpdateSendHonorsNotificationPreferences() {
+	plan := suite.createModelPlan("Plan For Follower Update Preferences")
+	suite.createPlanCollaborator(plan, "MFPC", []models.TeamRole{models.TeamRoleLeadership})
+	collaboratorPrincipal := suite.getTestPrincipal(suite.testConfigs.Store, "MFPC")
+
+	defaultFollower := suite.getTestPrincipal(suite.testConfigs.Store, "MFP1")
+	emailOnlyFollower := suite.getTestPrincipal(suite.testConfigs.Store, "MFP2")
+	inAppOnlyFollower := suite.getTestPrincipal(suite.testConfigs.Store, "MFP3")
+	optedOutFollower := suite.getTestPrincipal(suite.testConfigs.Store, "MFP4")
+	for _, follower := range []authentication.Principal{defaultFollower, emailOnlyFollower, inAppOnlyFollower, optedOutFollower} {
+		suite.followModelPlan(plan, follower)
+	}
+
+	setFlags := func(principal authentication.Principal, flags models.UserNotificationPreferenceFlags) {
+		_, err := UserNotificationPreferencesUpdate(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			principal,
+			suite.testConfigs.Store,
+			map[string]interface{}{"modelFollowerUpdate": flags},
+		)
+		suite.NoError(err)
+	}
+	setFlags(emailOnlyFollower, models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceEmail})
+	setFlags(inAppOnlyFollower, models.UserNotificationPreferenceFlags{models.UserNotificationPreferenceInApp})
+	setFlags(optedOutFollower, models.UserNotificationPreferenceFlags{})
+
+	mockEmailService, waitForEmail := suite.expectModelFollowerUpdateEmail(nil)
+
+	update, err := ModelFollowerUpdateSend(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		collaboratorPrincipal,
+		suite.testConfigs.Store,
+		mockEmailService,
+		email.AddressBook{DefaultSender: modelFollowerUpdateTestSender},
+		plan.ID,
+		"<p>Preference check</p>",
+	)
+	suite.NoError(err)
+
+	// notification, if any, that the user received for this update
+	getUpdateNotification := func(principal authentication.Principal) *models.UserNotification {
+		nots, err := notifications.UserNotificationCollectionGetByUser(suite.testConfigs.Context, suite.testConfigs.Store, principal)
+		suite.NoError(err)
+		found, _ := lo.Find(nots.Notifications, func(n *models.UserNotification) bool {
+			return n.ActivityID == update.ID
+		})
+		return found
+	}
+
+	// the default is both in app and email
+	defaultNot := getUpdateNotification(defaultFollower)
+	suite.NotNil(defaultNot)
+	suite.False(defaultNot.IsRead)
+
+	// users that turned off in app notifications do not see it in their notifications
+	suite.Nil(getUpdateNotification(emailOnlyFollower))
+	suite.NotNil(getUpdateNotification(inAppOnlyFollower))
+	suite.Nil(getUpdateNotification(optedOutFollower))
+
+	sent := waitForEmail()
+	suite.ElementsMatch(
+		[]string{
+			suite.testConfigs.Principal.Account().Email,
+			collaboratorPrincipal.Account().Email,
+			defaultFollower.Account().Email,
+			emailOnlyFollower.Account().Email,
+		},
+		sent.bcc,
+	)
+}
+
 func (suite *ResolverSuite) TestModelFollowerUpdateSendWithNoFollowers() {
 	plan := suite.createModelPlan("Plan For Follower Update No Followers")
 	// the creator automatically follows the model

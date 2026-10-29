@@ -209,6 +209,68 @@ exports[`Notification Settings Page > matches snapshot 1`] = `
                     <p
                       class="text-wrap margin-y-105"
                     >
+                      When a model I follow sends an update message
+                    </p>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-email-modelFollowerUpdate"
+                        id="notification-setting-email-modelFollowerUpdate"
+                        name="modelFollowerUpdate"
+                        type="checkbox"
+                        value="EMAIL"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-email-modelFollowerUpdate"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mobile:grid-col-3"
+                    data-testid="grid"
+                  >
+                    <div
+                      class="usa-checkbox padding-left-2"
+                      data-testid="checkbox"
+                    >
+                      <input
+                        class="usa-checkbox__input"
+                        data-testid="notification-setting-in-app-modelFollowerUpdate"
+                        disabled=""
+                        id="notification-setting-in-app-modelFollowerUpdate"
+                        name="modelFollowerUpdate"
+                        type="checkbox"
+                        value="IN_APP"
+                      />
+                      <label
+                        class="usa-checkbox__label"
+                        for="notification-setting-in-app-modelFollowerUpdate"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div
+                  class="grid-row flex-align-start"
+                  data-testid="grid"
+                >
+                  <div
+                    class="mobile:grid-col-6"
+                    data-testid="grid"
+                  >
+                    <p
+                      class="text-wrap margin-y-105"
+                    >
                       When I’m added as a collaborator to a Model Plan
                     </p>
                   </div>

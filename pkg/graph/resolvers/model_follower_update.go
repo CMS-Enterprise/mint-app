@@ -51,24 +51,19 @@ func ModelFollowerUpdateSend(
 		return nil, err
 	}
 
-	// TODO(MINT-3910): honor a dedicated notification preference for model follower updates
-	followers, err := storage.UserAccountGetFollowersForModelFollowerUpdate(store, modelPlanID)
-	if err != nil {
-		return nil, err
+	// the followers are read in the same transaction as the activity is created, so a user who follows or unfollows
+	// while the message is being sent is consistently included or excluded
+	type sendResult struct {
+		activity   *models.Activity
+		recipients []*models.UserAccountAndNotificationPreferences
 	}
-	// until MINT-3910 adds a preference, every follower receives both the in-app notification and the email
-	recipients := lo.Map(followers, func(follower *authentication.UserAccount, _ int) *models.UserAccountAndNotificationPreferences {
-		return &models.UserAccountAndNotificationPreferences{
-			UserAccount: *follower,
-			PreferenceFlags: models.UserNotificationPreferenceFlags{
-				models.UserNotificationPreferenceInApp,
-				models.UserNotificationPreferenceEmail,
-			},
+	result, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*sendResult, error) {
+		recipients, err := storage.UserAccountGetFollowersForModelFollowerUpdate(tx, modelPlanID)
+		if err != nil {
+			return nil, err
 		}
-	})
 
-	activity, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.Activity, error) {
-		return notifications.ActivityModelFollowerUpdateCreate(
+		activity, err := notifications.ActivityModelFollowerUpdateCreate(
 			ctx,
 			principal.Account().ID,
 			tx,
@@ -76,12 +71,17 @@ func ModelFollowerUpdateSend(
 			modelPlanID,
 			sanitizedContent,
 		)
+		if err != nil {
+			return nil, err
+		}
+		return &sendResult{activity: activity, recipients: recipients}, nil
 	})
 	if err != nil {
 		return nil, err
 	}
+	activity := result.activity
 
-	trySendModelFollowerUpdateEmail(ctx, logger, store, emailService, addressBook, modelPlan, recipients, sanitizedContent)
+	trySendModelFollowerUpdateEmail(ctx, logger, store, emailService, addressBook, modelPlan, result.recipients, sanitizedContent)
 
 	return &model.ModelFollowerUpdate{
 		ID:                   activity.ID,
