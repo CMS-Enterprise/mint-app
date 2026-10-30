@@ -27,6 +27,7 @@ import downloadAnalytics, {
   UsedAnalyticsSummaryKey
 } from 'features/ReportsAndAnalytics/util';
 import {
+  GetMtoMilestoneSummaryQuery,
   ModelShareSection,
   TableName,
   useGetAnalyticsSummaryQuery,
@@ -67,6 +68,9 @@ export type ReportsType =
   | 'basicModelInfo'
   | 'ctat'
   | 'groupFilteredView';
+
+export type MTOMilestoneSummary =
+  GetMtoMilestoneSummaryQuery['modelPlanCollection'];
 
 const ReportsAndAnalytics = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -163,10 +167,9 @@ const ReportsAndAnalytics = () => {
 
     try {
       if (reportKey === 'mtoMilestoneSummary') {
-        await downloadMTOMilestoneSummary(
-          mtoMilestoneSummaryData,
-          'MINT-MTO_Milestone_Summary.xlsx'
-        );
+        await downloadMTOMilestoneSummary({
+          data: mtoMilestoneSummaryData
+        });
       } else if (reportKey === 'allModels') {
         await fetchAllData({
           exportSection: ModelShareSection.ALL,
@@ -220,6 +223,11 @@ const ReportsAndAnalytics = () => {
           isModalOpen={isDownloadSectionOpen}
           closeModal={() => setIsDownloadSectionOpen(false)}
           reportType={reportType}
+          mtoMilestoneSummaryData={
+            reportType === 'mtoMilestoneSummary'
+              ? mtoMilestoneSummaryData
+              : undefined
+          }
         />
       )}
 

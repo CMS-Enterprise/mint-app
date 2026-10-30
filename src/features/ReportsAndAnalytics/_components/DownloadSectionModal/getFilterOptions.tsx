@@ -1,3 +1,4 @@
+import type { ReportsType } from 'features/ReportsAndAnalytics';
 import FilteredViewSelect from 'features/ReportsAndAnalytics/_components/FilteredViewSelect';
 import { ModelStatus } from 'gql/generated/graphql';
 import i18next from 'i18next';
@@ -5,16 +6,23 @@ import i18next from 'i18next';
 import { FilterGroupType } from 'components/FilterGroup';
 import { tObject } from 'utils/translation';
 
-export const getAllModelFilters = (): FilterGroupType[] => {
+export const getAllModelFilters = (
+  reportType: ReportsType = 'allModels'
+): FilterGroupType[] => {
   const statusOptions = Object.entries(
     tObject<string>('modelPlan:status.options')
   );
 
-  const otherOptions = Object.entries(
+  const allOtherOptions = Object.entries(
     tObject<string>(
       'analytics:configureDownload.basicFilterOptions.other.options'
     )
   );
+
+  const otherOptions =
+    reportType === 'mtoMilestoneSummary'
+      ? allOtherOptions
+      : allOtherOptions.filter(([value]) => value !== 'AT_RISK_MILESTONES');
 
   return [
     {
@@ -78,4 +86,10 @@ export const getGroupFilteredViewFilters = (): FilterGroupType[] => {
   };
 
   return [filteredViewConfig, ...allFilters];
+};
+
+export const getMTOSummaryFilters = (): FilterGroupType[] => {
+  const allFilters = getAllModelFilters('mtoMilestoneSummary');
+
+  return allFilters;
 };

@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 import {
   AnalyticsSummary,
   GetAnalyticsSummaryQuery,
-  GetMtoMilestoneSummaryQuery,
   MtoRiskIndicator,
   TableName
 } from 'gql/generated/graphql';
@@ -20,6 +19,8 @@ import {
 import tables from 'i18n/en-US/modelPlan/tables';
 import { getKeys } from 'types/translation';
 import { formatDateUtc } from 'utils/date';
+
+import { MTOMilestoneSummary } from '.';
 
 export type AnalyticsSummaryKey = keyof Omit<AnalyticsSummary, '__typename'>;
 
@@ -285,11 +286,51 @@ const riskMap: Record<MtoRiskIndicator, string> = {
   [MtoRiskIndicator.AT_RISK]: 'R'
 };
 
+const filterMTOSummaryData = (
+  mtoSummaryData: MTOMilestoneSummary,
+  filters: Record<string, string[]>
+) => {
+  if (!mtoSummaryData || mtoSummaryData.length === 0) {
+    return [];
+  }
+
+  if (!filters || (filters.status.length === 0 && filters.other.length === 0)) {
+    return mtoSummaryData;
+  }
+
+  return mtoSummaryData.filter(modelPlan => {
+    const isStatusMatch =
+      filters.status.length > 0 && filters.status.includes(modelPlan.status);
+
+    const isOtherMatch = filters.other.some(filter => {
+      if (filter === 'MY_MODELS') {
+        return modelPlan.isCollaborator;
+      }
+      if (filter === 'MODELS_I_FOLLOW') {
+        return modelPlan.isFavorite;
+      }
+      if (filter === 'AT_RISK_MILESTONES') {
+        return modelPlan.mtoMatrix.milestones.some(
+          milestone => milestone.riskIndicator !== MtoRiskIndicator.ON_TRACK
+        );
+      }
+      return false;
+    });
+
+    return isStatusMatch || isOtherMatch;
+  });
+};
+
 // Prepares the analytics data for download as an XLSX file
-export const downloadMTOMilestoneSummary = (
-  data: GetMtoMilestoneSummaryQuery['modelPlanCollection'],
-  exportFileName: string
-): void => {
+export const downloadMTOMilestoneSummary = ({
+  data,
+  exportFileName = 'MINT-MTO_Milestone_Summary.xlsx',
+  filters
+}: {
+  data: MTOMilestoneSummary;
+  exportFileName?: string;
+  filters?: Record<string, string[]>;
+}): void => {
   if (!data) return;
 
   const addedModelPlans: string[] = [];
@@ -318,7 +359,10 @@ export const downloadMTOMilestoneSummary = (
   const allQuarters = generateQuarterKeys();
 
   const flattenedData: any = [];
-  data.forEach(item => {
+
+  const mtoSummaryData = filters ? filterMTOSummaryData(data, filters) : data;
+
+  mtoSummaryData.forEach(item => {
     item.mtoMatrix.milestones.forEach(milestone => {
       // Create quarter object with all quarters initialized to empty string
       const quarterObject: { [key: string]: string } = {};

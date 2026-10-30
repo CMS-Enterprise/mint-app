@@ -89,7 +89,8 @@ const analytics = {
         label: 'Other categories',
         options: {
           MY_MODELS: 'My models',
-          MODELS_I_FOLLOW: 'Models I follow'
+          MODELS_I_FOLLOW: 'Models I follow',
+          AT_RISK_MILESTONES: 'Models with at risk milestones'
         }
       }
     },
