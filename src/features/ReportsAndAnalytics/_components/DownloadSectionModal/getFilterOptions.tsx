@@ -6,6 +6,8 @@ import i18next from 'i18next';
 import { FilterGroupType } from 'components/FilterGroup';
 import { tObject } from 'utils/translation';
 
+import MilestoneDateSelect from '../MilestoneDateSelect';
+
 export const getAllModelFilters = (
   reportType: ReportsType = 'allModels'
 ): FilterGroupType[] => {
@@ -90,6 +92,18 @@ export const getGroupFilteredViewFilters = (): FilterGroupType[] => {
 
 export const getMTOSummaryFilters = (): FilterGroupType[] => {
   const allFilters = getAllModelFilters('mtoMilestoneSummary');
+
+  const milestoneDateFilterConfig = {
+    key: 'milestoneNeededBy',
+    label: i18next.t(
+      `analytics:configureDownload.otherFilterOptions.neededByDateRange.label`
+    ),
+    tagLabel: '',
+    displayShowAll: false,
+    CustomComponent: MilestoneDateSelect
+  };
+
+  allFilters.splice(1, 0, milestoneDateFilterConfig);
 
   return allFilters;
 };

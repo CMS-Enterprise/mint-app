@@ -97,6 +97,15 @@ const analytics = {
     otherFilterOptions: {
       filteredView: {
         label: 'Select filtered view'
+      },
+      neededByDateRange: {
+        label: 'Milestones needed within',
+        options: {
+          ALL_TIME: 'all time',
+          NEXT_30_DAYS: 'Next 30 days',
+          NEXT_60_DAYS: 'Next 60 days',
+          NEXT_90_DAYS: 'Next 90 days'
+        }
       }
     },
     selectOptionDefault: '- Select - '

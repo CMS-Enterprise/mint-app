@@ -18,7 +18,7 @@ import {
 } from 'i18n/en-US/analytics';
 import tables from 'i18n/en-US/modelPlan/tables';
 import { getKeys } from 'types/translation';
-import { formatDateUtc } from 'utils/date';
+import { formatDateUtc, isNeededWithinDays } from 'utils/date';
 
 import { MTOMilestoneSummary } from '.';
 
@@ -294,13 +294,31 @@ const filterMTOSummaryData = (
     return [];
   }
 
-  if (!filters || (filters.status.length === 0 && filters.other.length === 0)) {
+  if (
+    !filters ||
+    (filters.status.length === 0 &&
+      filters.other.length === 0 &&
+      filters.milestoneNeededBy.length === 0)
+  ) {
     return mtoSummaryData;
   }
 
   return mtoSummaryData.filter(modelPlan => {
     const isStatusMatch =
       filters.status.length > 0 && filters.status.includes(modelPlan.status);
+
+    const neededWithinDays = Number(
+      filters.milestoneNeededBy[0]?.split('_')[1]
+    );
+
+    const isWithinNeededBy =
+      filters.milestoneNeededBy.length > 0 &&
+      !Number.isNaN(neededWithinDays) &&
+      modelPlan.mtoMatrix.milestones.some(
+        milestone =>
+          milestone.needBy &&
+          isNeededWithinDays(milestone.needBy, neededWithinDays)
+      );
 
     const isOtherMatch = filters.other.some(filter => {
       if (filter === 'MY_MODELS') {
@@ -317,7 +335,7 @@ const filterMTOSummaryData = (
       return false;
     });
 
-    return isStatusMatch || isOtherMatch;
+    return isStatusMatch || isWithinNeededBy || isOtherMatch;
   });
 };
 
