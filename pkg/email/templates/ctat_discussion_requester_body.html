@@ -1,5 +1,30 @@
 {{template "shared_header.html"}}
 
+<h3>New message for ticket {{.TicketNumber}}</h3>
+<p>Sent {{.DatePosted}}</p>
+
+<br />
+
+<div class="container-border">
+  <h2>Discussion</h2>
+  <p><strong>{{.PosterName}}</strong></p>
+  <p class="subtitle">{{.PosterRole}}</p>
+
+  <br />
+
+  <p>{{.DiscussionContent}}</p>
+  
+  <br />
+  <br />
+
+  <a href="{{.ClientAddress}}/TODO">Respond to this discussion in MINT</a>
+</div>
+
+<br />
+
+<hr />
+
+<br />
 
 <!-- FOOTER -->
 <p>You are receiving this email because you are the original submitter of this contract assistance request ticket.</p>
