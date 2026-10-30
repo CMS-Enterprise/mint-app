@@ -2,7 +2,9 @@ package worker
 
 import (
 	"context"
+	"crypto/rand"
 	"fmt"
+	"math/big"
 	"net"
 	"os/signal"
 	"syscall"
@@ -16,6 +18,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appconfig"
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/email"
+	"github.com/cms-enterprise/mint-app/pkg/logging"
 	"github.com/cms-enterprise/mint-app/pkg/oktaapi"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
@@ -35,6 +38,10 @@ type Worker struct {
 	Connections   int
 	ProcessJobs   bool
 	OktaAPIClient oktaapi.Client
+
+	// StartupDelayMaxSeconds is the upper bound of a random delay before Work() opens its
+	// Faktory connection pool. 0 disables the delay.
+	StartupDelayMaxSeconds int
 }
 
 type JobWrapper struct {
@@ -163,6 +170,35 @@ func (w *Worker) Work() {
 		return
 	}
 
+	zapLogger := appconfig.MustInitializeLogger(w.Environment)
+	ctx := appcontext.WithLogger(context.Background(), zapLogger)
+
+	// RunWithContext only shuts down when its context is canceled - it otherwise ignores OS
+	// signals entirely (unlike mgr.Run()). Without this, ECS's SIGTERM on every deploy/task
+	// replacement goes unhandled and the process is eventually SIGKILLed, which never gives
+	// mgr.Terminate() a chance to run and close the pooled Faktory connections. Those
+	// connections then linger on the Faktory server until it reaps them itself, and repeated
+	// deploys without that cleanup accumulate until the server hits its connection limit.
+	//
+	// Built this early (rather than right before RunWithContext) so the startup delay below is
+	// itself cancelable by SIGTERM/SIGINT - a task torn down mid-delay (e.g. a rolled-back
+	// deploy) should exit right away instead of sitting out the rest of the delay first.
+	ctx, stop := workerShutdownContext(ctx)
+	defer stop()
+
+	// On a rolling deploy, the new task's full connection burst (mgr.Concurrency+2 below) can
+	// briefly overlap with the outgoing task's pool before it finishes shutting down, and both
+	// compete for Faktory's limited connection allowance (INC1969969). A random delay here
+	// spreads that burst out so it's less likely to land in the same instant as the old task's
+	// shutdown - this narrows the collision window, it doesn't eliminate it. Zero (the default
+	// when unset) disables the delay.
+	if delay := randomStartupDelay(w.StartupDelayMaxSeconds, zapLogger); delay > 0 {
+		zapLogger.Info("delaying faktory worker startup", zap.Duration("delay", delay))
+		if err := waitForStartupDelay(ctx, delay); err != nil {
+			return
+		}
+	}
+
 	mgr := faktory_worker.NewManager()
 
 	// Setup Manager
@@ -189,24 +225,12 @@ func (w *Worker) Work() {
 	mgr.ProcessStrictPriorityQueues(criticalQueue, defaultQueue, auditTranslateQueue, emailQueue)
 	mgr.Use(FaktoryLoggerMiddleware())
 
-	zapLogger := appconfig.MustInitializeLogger(w.Environment)
-	ctx := appcontext.WithLogger(context.Background(), zapLogger)
-
 	// Initialize data loaders and attach them to the context
 	dataLoaders := loaders.NewDataLoaders(w.Store)
 	ctx = loaders.CTXWithLoaders(ctx, dataLoaders)
 
 	userFunction := userhelpers.UserAccountGetByIDLOADER
 	ctx = appcontext.WithUserAccountService(ctx, userFunction)
-
-	// RunWithContext only shuts down when its context is canceled - it otherwise ignores OS
-	// signals entirely (unlike mgr.Run()). Without this, ECS's SIGTERM on every deploy/task
-	// replacement goes unhandled and the process is eventually SIGKILLed, which never gives
-	// mgr.Terminate() a chance to run and close the pooled Faktory connections. Those
-	// connections then linger on the Faktory server until it reaps them itself, and repeated
-	// deploys without that cleanup accumulate until the server hits its connection limit.
-	ctx, stop := workerShutdownContext(ctx)
-	defer stop()
 
 	// Register jobs using JobWrapper
 	for _, job := range w.getJobWrappers(ctx) {
@@ -220,6 +244,37 @@ func (w *Worker) Work() {
 	err = mgr.RunWithContext(ctx)
 	if err != nil {
 		panic(err)
+	}
+}
+
+// randomStartupDelay returns a random duration in [0, maxDelaySeconds) seconds. It returns 0
+// (no delay) if maxDelaySeconds <= 0, or if generating the random value fails.
+func randomStartupDelay(maxDelaySeconds int, logger logging.ILogger) time.Duration {
+	if maxDelaySeconds <= 0 {
+		return 0
+	}
+
+	delaySeconds, err := rand.Int(rand.Reader, big.NewInt(int64(maxDelaySeconds)))
+	if err != nil {
+		logger.Warn("failed to generate faktory startup delay, skipping it", zap.Error(err))
+		return 0
+	}
+
+	return time.Duration(delaySeconds.Int64()) * time.Second
+}
+
+// waitForStartupDelay waits out delay, returning early with ctx.Err() if ctx is canceled
+// first. delay <= 0 returns immediately.
+func waitForStartupDelay(ctx context.Context, delay time.Duration) error {
+	if delay <= 0 {
+		return ctx.Err()
+	}
+
+	select {
+	case <-time.After(delay):
+		return nil
+	case <-ctx.Done():
+		return ctx.Err()
 	}
 }
 

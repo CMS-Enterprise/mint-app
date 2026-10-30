@@ -21,6 +21,10 @@ export const helpSubmenuLinks = [
     label: 'milestoneLibrary'
   },
   {
+    link: '/help-and-knowledge/waiver-library',
+    label: 'waiverLibrary'
+  },
+  {
     link: '/help-and-knowledge/operational-solutions',
     label: 'operationalSolutions'
   },

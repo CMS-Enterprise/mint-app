@@ -609,31 +609,36 @@ const waiverAssessmentSurvey: TranslationWaiverAssessmentSurvey = {
 
 const waiverTypes: Record<
   CommonWaiverType,
-  { heading: string; description: string }
+  { heading: string; description: string; shortName: string }
 > = {
   [CommonWaiverType.FRAUD_ABUSE]: {
     heading: 'Fraud and abuse waivers, safe harbors, and exceptions',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of fraud and abuse waivers, safe harbors, and exceptions. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of fraud and abuse waivers, safe harbors, and exceptions. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    shortName: 'Fraud and abuse waiver'
   },
   [CommonWaiverType.MEDICARE_PAYMENT]: {
     heading: 'Medicare payment waiver',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicare payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    shortName: 'Medicare payment waiver'
   },
   [CommonWaiverType.MEDICAID_PAYMENT]: {
     heading: 'Medicaid waiver',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Medicaid payment waivers. More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    shortName: 'Medicaid waiver'
   },
   [CommonWaiverType.PROGRAM_MEDICARE_BE]: {
     heading: 'Medicare program waiver',
     description:
-      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.'
+      'The following questions will help us rule out waivers that may not be applicable to your model, reducing the total number of questions you need to answer to complete this survey. Specifically, your answers in this section may help rule out any groups of Program waivers (Medicare BEs). More often than not, if you are not using one waiver in a grouping, that group of waivers doesn’t apply to your model.',
+    shortName: 'Medicare program waiver'
   },
   [CommonWaiverType.UNKNOWN]: {
     heading: 'Unknown waiver type',
-    description: 'The following waivers do not have a known waiver type.'
+    description: 'The following waivers do not have a known waiver type.',
+    shortName: 'Unknown waiver type'
   }
 };
 
