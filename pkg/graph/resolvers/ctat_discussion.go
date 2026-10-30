@@ -28,6 +28,10 @@ func createDiscussion(ctx context.Context, np sqlutils.NamedPreparer, input mode
 		return nil, err
 	}
 
+	if ctatTicket.Status == models.CTATStatusClosed {
+		return nil, fmt.Errorf("discussion cannot be posted on a closed ticket (%s)", input.TicketID.String())
+	}
+
 	var posterRole models.CTATDiscussionPoster
 
 	switch {
