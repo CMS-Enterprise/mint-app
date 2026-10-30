@@ -10,6 +10,7 @@ import {
   FilterGroup,
   filterGroupKey
 } from 'features/ModelPlan/ReadOnly/_components/FilterView/BodyContent/_filterGroupMapping';
+import { ReportsType } from 'features/ReportsAndAnalytics';
 import {
   GetAllModelDataQuery,
   GetAllModelDataQueryResult,
@@ -86,6 +87,9 @@ const getSectionAndFieldName = (csvHeader: string) => {
 
 // Generic translation for Ready for review/marked complete fields
 const getUserHeaderLabel = (fieldName: string, dataField: string): string => {
+  if (fieldName === 'id') {
+    return i18next.t('modelPlanMisc:modelID');
+  }
   if (fieldName === 'readyForReviewByUserAccount.commonName') {
     return i18next.t('modelPlanMisc:readyForReviewBy');
   }
@@ -473,11 +477,47 @@ const filterBasicModelPlanData = (data: CSVModelPlanType[]) => {
   });
 };
 
-const csvFormatter = (
+const filterCsvData = (
   csvData: CSVModelPlanType[],
-  allPlanTranslation: any,
-  exportSection: ExportSection
+  filters: Record<string, string[]>
 ) => {
+  if (!csvData || csvData.length === 0) {
+    return [];
+  }
+
+  if (!filters || (filters.status.length === 0 && filters.other.length === 0)) {
+    return csvData;
+  }
+
+  return csvData.filter(modelPlan => {
+    const isStatusMatch =
+      filters.status.length > 0 && filters.status.includes(modelPlan.status);
+
+    const isOtherMatch = filters.other.some(filter => {
+      if (filter === 'MY_MODELS') {
+        return modelPlan.isCollaborator;
+      }
+      if (filter === 'MODELS_I_FOLLOW') {
+        return modelPlan.isFavorite;
+      }
+      return false;
+    });
+
+    return isStatusMatch || isOtherMatch;
+  });
+};
+
+const csvFormatter = ({
+  csvData,
+  allPlanTranslation,
+  exportSection,
+  reportType
+}: {
+  csvData: CSVModelPlanType[];
+  allPlanTranslation: any;
+  exportSection: ExportSection;
+  reportType?: ReportsType;
+}) => {
   try {
     const transform = unwind({ paths: fieldsToUnwind, blankOut: true });
     const isBasicModelInfo = exportSection === 'basicModelInfo';
@@ -490,18 +530,32 @@ const csvFormatter = (
       ? selectFilteredFields(allPlanTranslation, exportSection)
       : csvFields(i18next.t)[exportSection];
 
+    if (reportType === 'groupFilteredView' && isFilterGroup(exportSection)) {
+      selectedCSVFields.unshift('id', 'modelName');
+    }
+
     let modelName: string;
 
-    if (csvData.length > 1) {
-      modelName = isBasicModelInfo ? 'Basic model information' : 'All models';
-    } else {
-      modelName = csvData[0].modelName;
+    switch (reportType) {
+      case 'allModels':
+        modelName = 'All models';
+        break;
+      case 'basicModelInfo':
+        modelName = 'Basic model information';
+        break;
+      case 'groupFilteredView':
+        modelName = 'Group filtered view';
+        break;
+      default:
+        modelName = csvData[0].modelName;
+        break;
     }
 
     const modelNameFormatted = modelName.replace(/ /g, '_');
 
-    const exportSectionFormatted =
-      csvData.length > 1 ? '' : `-${exportSection.toUpperCase()}`;
+    const exportSectionFormatted = reportType
+      ? ''
+      : `-${exportSection.toUpperCase()}`;
 
     const exportFileName = isBasicModelInfo
       ? `MINT-${modelNameFormatted}.csv`
@@ -540,9 +594,15 @@ type UseFetchCSVData = {
     input: string,
     exportSection?: ExportSection
   ) => Promise<GetAllSingleModelDataQueryResult>;
-  fetchAllData: (
-    exportSection?: ExportSection
-  ) => Promise<GetAllModelDataQueryResult>;
+  fetchAllData: ({
+    exportSection,
+    filters,
+    reportType
+  }: {
+    exportSection?: ExportSection;
+    filters?: Record<string, string[]>;
+    reportType?: ReportsType;
+  }) => Promise<GetAllModelDataQueryResult>;
   setExportSection: (exportSection: ExportSection) => void;
 };
 
@@ -565,24 +625,30 @@ const useFetchCSVData = (): UseFetchCSVData => {
       async (id, exportSection) => {
         if (exportSection) setExportSection(exportSection);
         const result = await fetchSingleDataQuery({ variables: { id } });
-        csvFormatter(
-          result.data?.modelPlan ? [result.data.modelPlan] : [],
+        csvFormatter({
+          csvData: result.data?.modelPlan ? [result.data.modelPlan] : [],
           allPlanTranslation,
-          exportSectionRef.current
-        );
+          exportSection: exportSectionRef.current
+        });
         return result;
       },
       [fetchSingleDataQuery, setExportSection, allPlanTranslation]
     ),
     fetchAllData: useCallback(
-      async exportSection => {
+      async ({ exportSection, filters, reportType }) => {
         if (exportSection) setExportSection(exportSection);
         const result = await fetchAllDataQuery();
-        csvFormatter(
-          result.data?.modelPlanCollection || [],
+
+        const csvData = filters
+          ? filterCsvData(result.data?.modelPlanCollection || [], filters || {})
+          : result.data?.modelPlanCollection || [];
+
+        csvFormatter({
+          csvData,
           allPlanTranslation,
-          exportSectionRef.current
-        );
+          exportSection: exportSectionRef.current,
+          reportType
+        });
         return result;
       },
       [fetchAllDataQuery, setExportSection, allPlanTranslation]

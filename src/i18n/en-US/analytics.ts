@@ -27,6 +27,12 @@ export const reports: Record<
     description:
       'This report downloads a csv of all tickets submitted to the Contract Technical Assistance Team (CTAT).',
     formatExcel: 'Format: CSV'
+  },
+  groupFilteredView: {
+    heading: 'Group filtered view',
+    description:
+      'Download information about models, filtered to one of the available group filtered views.',
+    formatExcel: 'Format: CSV'
   }
 };
 
@@ -72,6 +78,28 @@ const analytics = {
   loading: 'Loading',
   adminOnly: 'Admin only',
   downloadAll: 'Download all',
+  downloadSection: 'Download section',
+  configureDownload: {
+    heading: 'Configure download list',
+    description:
+      'Select the model statuses or groups of models you would like to include in this download. MINT will include all models from the selected groups in your excel download.',
+    basicFilterOptions: {
+      status: { label: 'Model status' },
+      other: {
+        label: 'Other categories',
+        options: {
+          MY_MODELS: 'My models',
+          MODELS_I_FOLLOW: 'Models I follow'
+        }
+      }
+    },
+    otherFilterOptions: {
+      filteredView: {
+        label: 'Select filtered view'
+      }
+    },
+    selectOptionDefault: '- Select - '
+  },
   selectDateRange: 'Select date range',
   dateRange: {
     heading: 'Configure report download',
