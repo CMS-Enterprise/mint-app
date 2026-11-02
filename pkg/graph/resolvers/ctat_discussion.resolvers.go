@@ -14,12 +14,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
-// CreateDiscussion is the resolver for the createDiscussion field.
-func (r *mutationResolver) CreateDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error) {
-	return createDiscussion(ctx, r.store, input)
-}
-
 // Discussions is the resolver for the discussions field.
 func (r *queryResolver) Discussions(ctx context.Context, ticketID uuid.UUID) ([]*models.CTATDiscussion, error) {
 	return discussions(ctx, ticketID)
+}
+
+// CreateDiscussion is the resolver for the createDiscussion field.
+func (r *mutationResolver) CreateDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error) {
+	return createDiscussion(ctx, r.store, r.emailService, r.addressBook, input)
 }

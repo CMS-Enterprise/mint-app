@@ -3,11 +3,14 @@ package resolvers
 import (
 	"time"
 
+	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 )
 
 func (suite *ResolverSuite) TestCreateCTATDiscussionAsRequester() {
@@ -23,7 +26,14 @@ func (suite *ResolverSuite) TestCreateCTATDiscussionAsRequester() {
 	// The suite principal also has assessment access; ticket ownership takes precedence.
 	suite.True(requester.AllowASSESSMENT())
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, requester)
-	created, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
+	created, err := createDiscussion(ctx, suite.testConfigs.Store, mockEmailService, addressBook, model.CTATDiscussionInput{
 		TicketID: ticket.ID,
 		Content:  "I have a question about this ticket.",
 	})
@@ -49,7 +59,13 @@ func (suite *ResolverSuite) TestCreateCTATDiscussionAsAdmin() {
 	admin := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, admin)
 
-	created, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
+	created, err := createDiscussion(ctx, suite.testConfigs.Store, mockEmailService, addressBook, model.CTATDiscussionInput{
 		TicketID: ticket.ID,
 		Content:  "The CTAT team is reviewing this request.",
 	})
@@ -76,7 +92,13 @@ func (suite *ResolverSuite) TestCTATDiscussionRejectsNonRequesterWithoutAssessme
 		models.CTATStatusNew,
 	)
 	requesterCtx := appcontext.WithPrincipal(suite.testConfigs.Context, requester)
-	posted, err := createDiscussion(requesterCtx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
+	posted, err := createDiscussion(requesterCtx, suite.testConfigs.Store, mockEmailService, addressBook, model.CTATDiscussionInput{
 		TicketID: ticket.ID,
 		Content:  "A private discussion on this ticket.",
 	})
@@ -89,7 +111,7 @@ func (suite *ResolverSuite) TestCTATDiscussionRejectsNonRequesterWithoutAssessme
 	suite.Require().NotEqual(requester.Account().ID, otherUser.Account().ID)
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, otherUser)
 
-	created, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	created, err := createDiscussion(ctx, suite.testConfigs.Store, mockEmailService, addressBook, model.CTATDiscussionInput{
 		TicketID: ticket.ID,
 		Content:  "I should not be able to post on this ticket.",
 	})
@@ -105,11 +127,17 @@ func (suite *ResolverSuite) TestCreateCTATDiscussionRequiresExistingTicketAndPri
 	input := model.CTATDiscussionInput{TicketID: uuid.New(), Content: "No ticket"}
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)
 
-	created, err := createDiscussion(ctx, suite.testConfigs.Store, input)
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
+	created, err := createDiscussion(ctx, suite.testConfigs.Store, mockEmailService, addressBook, input)
 	suite.ErrorContains(err, "not found")
 	suite.Nil(created)
 
-	created, err = createDiscussion(suite.testConfigs.Context, suite.testConfigs.Store, input)
+	created, err = createDiscussion(suite.testConfigs.Context, suite.testConfigs.Store, mockEmailService, addressBook, input)
 	suite.ErrorContains(err, "problem getting principal account")
 	suite.Nil(created)
 }
@@ -138,16 +166,21 @@ func (suite *ResolverSuite) TestCTATDiscussionsByTicket() {
 		models.CTATStatusNew,
 	)
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, requester)
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	addressBook := email.AddressBook{
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
 
-	first, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	first, err := createDiscussion(ctx, suite.testConfigs.Store, mockEmailService, addressBook, model.CTATDiscussionInput{
 		TicketID: ticketA.ID, Content: "First post",
 	})
 	suite.Require().NoError(err)
-	second, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	second, err := createDiscussion(ctx, suite.testConfigs.Store, mockEmailService, addressBook, model.CTATDiscussionInput{
 		TicketID: ticketA.ID, Content: "Second post",
 	})
 	suite.Require().NoError(err)
-	onOtherTicket, err := createDiscussion(ctx, suite.testConfigs.Store, model.CTATDiscussionInput{
+	onOtherTicket, err := createDiscussion(ctx, suite.testConfigs.Store, mockEmailService, addressBook, model.CTATDiscussionInput{
 		TicketID: ticketB.ID, Content: "Other ticket post",
 	})
 	suite.Require().NoError(err)
