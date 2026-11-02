@@ -117,7 +117,8 @@ func createDiscussion(
 		adminAcct, err := ctatTicket.AssignedAdminUserAccount(ctx)
 		if err != nil {
 			logger.Error("problem getting admin account for sending CTAT discussion email", zap.Error(err))
-			break
+			// set to `nil`, let following logic handle recipients
+			adminAcct = nil
 		}
 
 		// Send to the CTAT inbox when no admin has been assigned yet.

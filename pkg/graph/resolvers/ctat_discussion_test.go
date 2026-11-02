@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
+	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
@@ -273,6 +274,35 @@ func (suite *ResolverSuite) TestCTATDiscussionRejectsNonRequesterWithoutAssessme
 	stored, err := discussions(ctx, ticket.ID)
 	suite.ErrorContains(err, "is not authorized to view CTAT discussions")
 	suite.Nil(stored)
+}
+
+func (suite *ResolverSuite) TestCreateCTATDiscussionRejectsClosedTicket() {
+	requester := suite.testConfigs.Principal
+	ticket := suite.createTestCTATRequest(
+		requester.Account().ID,
+		time.Now().Add(24*time.Hour),
+		"Closed discussion ticket",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
+		models.CTATStatusClosed,
+	)
+	admin := suite.getTestPrincipal(suite.testConfigs.Store, "ADMI")
+
+	for _, principal := range []*authentication.ApplicationPrincipal{requester, admin} {
+		suite.Run(principal.ID(), func() {
+			ctx := appcontext.WithPrincipal(suite.testConfigs.Context, principal)
+			created, err := createDiscussion(ctx, suite.testConfigs.Store, nil, email.AddressBook{}, model.CTATDiscussionInput{
+				TicketID: ticket.ID,
+				Content:  "This closed ticket should not accept a discussion.",
+			})
+			suite.ErrorContains(err, "discussion cannot be posted on a closed ticket")
+			suite.Nil(created)
+		})
+	}
+
+	adminCtx := appcontext.WithPrincipal(suite.testConfigs.Context, admin)
+	stored, err := discussions(adminCtx, ticket.ID)
+	suite.Require().NoError(err)
+	suite.Empty(stored)
 }
 
 func (suite *ResolverSuite) TestCreateCTATDiscussionRequiresExistingTicketAndPrincipal() {
