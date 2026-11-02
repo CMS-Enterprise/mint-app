@@ -125,18 +125,28 @@ func createDiscussion(
 			&adminAcct.Email,
 			&addressBook.CTATTeamEmail,
 			createdDiscussion,
+			principalAcct.CommonName,
+			ctatTicket,
 		)
 
 	case models.CTATDiscussionPosterAdmin:
 		// admin posting discussion
+
+		requesterAcct, err := ctatTicket.CreatedByUserAccount(ctx)
+		if err != nil {
+			logger.Error("problem getting requester account for sending CTAT discussion email", zap.Error(err))
+			break
+		}
 
 		// send requester email
 		go sendRequesterEmail(
 			logger,
 			emailService,
 			addressBook.DefaultSender,
-			principalAcct.Email,
+			requesterAcct.Email,
 			createdDiscussion,
+			principalAcct.CommonName,
+			ctatTicket,
 		)
 
 		// send email ONLY to CTAT inbox
@@ -147,6 +157,8 @@ func createDiscussion(
 			&addressBook.CTATTeamEmail,
 			nil,
 			createdDiscussion,
+			principalAcct.CommonName,
+			ctatTicket,
 		)
 	}
 
@@ -159,21 +171,40 @@ func sendRequesterEmail(
 	from string,
 	requesterEmail string,
 	createdDiscussion *models.CTATDiscussion,
+	creatorName string,
 	ticket *models.CTATRequest,
 ) {
 	humanReadableID := ticket.HumanReadableID()
+
 	subject, body, err := email.CTAT.DiscussionRequester.GetContent(
 		email.CTATDiscussionRequesterSubjectContent{
 			TicketNumber: humanReadableID,
 		},
 		email.CTATDiscussionRequesterBodyContent{
-			ClientAddress: emailService.GetConfig().GetClientAddress(),
-			CTATTicketID:  ticket.ID.String(),
-			TicketNumber:  humanReadableID,
-			PosterName:    "",
-			PosterRole:    createdDiscussion.PosterRole.String(),
+			ClientAddress:     emailService.GetConfig().GetClientAddress(),
+			CTATTicketID:      ticket.ID.String(),
+			TicketNumber:      humanReadableID,
+			PosterName:        creatorName,
+			PosterRole:        createdDiscussion.PosterRole.String(),
+			DiscussionContent: createdDiscussion.Content,
+			DatePosted:        createdDiscussion.CreatedDts.Format("01/02/2006 at 03:04 pm"),
 		},
 	)
+	if err != nil {
+		logger.Error("problem building subject and body for requester email for CTAT discussion", zap.Error(err))
+		return
+	}
+
+	if err := emailService.Send(
+		from,
+		&requesterEmail,
+		nil,
+		subject,
+		"text/html",
+		body,
+	); err != nil {
+		logger.Error("problem sending requester email for CTAT discssion", zap.Error(err))
+	}
 }
 
 func sendAdminEmail(
@@ -183,6 +214,38 @@ func sendAdminEmail(
 	to *string,
 	cc *string,
 	createdDiscussion *models.CTATDiscussion,
+	creatorName string,
 	ticket *models.CTATRequest,
 ) {
+	humanReadableID := ticket.HumanReadableID()
+
+	subject, body, err := email.CTAT.DiscussionAdmin.GetContent(
+		email.CTATDiscussionRequesterSubjectContent{
+			TicketNumber: humanReadableID,
+		},
+		email.CTATDiscussionAdminBodyContent{
+			ClientAddress:     emailService.GetConfig().GetClientAddress(),
+			CTATTicketID:      ticket.ID.String(),
+			TicketNumber:      humanReadableID,
+			PosterName:        creatorName,
+			PosterRole:        createdDiscussion.PosterRole.String(),
+			DiscussionContent: createdDiscussion.Content,
+			DatePosted:        createdDiscussion.CreatedDts.Format("01/02/2006 at 03:04 pm"),
+		},
+	)
+	if err != nil {
+		logger.Error("problem building subject and body for admin email for CTAT discussion", zap.Error(err))
+		return
+	}
+
+	if err := emailService.Send(
+		from,
+		to,
+		cc,
+		subject,
+		"text/html",
+		body,
+	); err != nil {
+		logger.Error("problem sending admin email for CTAT discussion", zap.Error(err))
+	}
 }
