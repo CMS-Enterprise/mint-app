@@ -144,22 +144,20 @@ func createDiscussion(
 	case models.CTATDiscussionPosterAdmin:
 		// admin posting discussion
 
-		requesterAcct, err := ctatTicket.CreatedByUserAccount(ctx)
-		if err != nil {
+		if requesterAcct, err := ctatTicket.CreatedByUserAccount(ctx); err != nil {
 			logger.Error("problem getting requester account for sending CTAT discussion email", zap.Error(err))
-			break
+		} else {
+			// send requester email
+			go sendRequesterEmail(
+				logger,
+				emailService,
+				addressBook.DefaultSender,
+				requesterAcct.Email,
+				createdDiscussion,
+				principalAcct.CommonName,
+				ctatTicket,
+			)
 		}
-
-		// send requester email
-		go sendRequesterEmail(
-			logger,
-			emailService,
-			addressBook.DefaultSender,
-			requesterAcct.Email,
-			createdDiscussion,
-			principalAcct.CommonName,
-			ctatTicket,
-		)
 
 		// send email ONLY to CTAT inbox
 		go sendAdminEmail(
