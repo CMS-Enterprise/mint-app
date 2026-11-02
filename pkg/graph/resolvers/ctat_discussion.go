@@ -102,6 +102,9 @@ func createDiscussion(
 	//
 	// if an admin posts, we send the requester email
 	// -- we also send an email ONLY to the CTAT admin inbox
+	//
+	// in the event the requester posts and there is NO assigned admin, we only send an email to the
+	// CTAT admin inbox
 
 	// create logger prior to go routines to capture `ctx` prior to any http reqs ending
 	logger := appcontext.ZLogger(ctx)
