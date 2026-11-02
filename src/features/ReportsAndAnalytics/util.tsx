@@ -303,22 +303,13 @@ const filterMTOSummaryData = (
     return mtoSummaryData;
   }
 
-  return mtoSummaryData.filter(modelPlan => {
+  const generalFilteredData = mtoSummaryData.filter(modelPlan => {
+    if (filters.status.length === 0 && filters.other.length === 0) {
+      return true;
+    }
+
     const isStatusMatch =
       filters.status.length > 0 && filters.status.includes(modelPlan.status);
-
-    const neededWithinDays = Number(
-      filters.milestoneNeededBy[0]?.split('_')[1]
-    );
-
-    const isWithinNeededBy =
-      filters.milestoneNeededBy.length > 0 &&
-      !Number.isNaN(neededWithinDays) &&
-      modelPlan.mtoMatrix.milestones.some(
-        milestone =>
-          milestone.needBy &&
-          isNeededWithinDays(milestone.needBy, neededWithinDays)
-      );
 
     const isOtherMatch = filters.other.some(filter => {
       if (filter === 'MY_MODELS') {
@@ -335,8 +326,35 @@ const filterMTOSummaryData = (
       return false;
     });
 
-    return isStatusMatch || isWithinNeededBy || isOtherMatch;
+    return isStatusMatch || isOtherMatch;
   });
+
+  const neededWithinDays = Number(filters.milestoneNeededBy[0]?.split('_')[1]);
+
+  const hasNoValidNeededByFilter =
+    filters.milestoneNeededBy.length === 0 || Number.isNaN(neededWithinDays);
+
+  if (hasNoValidNeededByFilter) {
+    return generalFilteredData;
+  }
+
+  return generalFilteredData.reduce((filteredNeededByData, modelPlan) => {
+    const milestonesWithinNeededBy = modelPlan.mtoMatrix.milestones.filter(
+      milestone =>
+        milestone.needBy &&
+        isNeededWithinDays(milestone.needBy, neededWithinDays)
+    );
+
+    filteredNeededByData.push({
+      ...modelPlan,
+      mtoMatrix: {
+        ...modelPlan.mtoMatrix,
+        milestones: milestonesWithinNeededBy
+      }
+    });
+
+    return filteredNeededByData;
+  }, [] as MTOMilestoneSummary);
 };
 
 // Prepares the analytics data for download as an XLSX file
