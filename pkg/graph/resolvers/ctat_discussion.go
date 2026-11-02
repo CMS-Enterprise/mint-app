@@ -117,13 +117,21 @@ func createDiscussion(
 			break
 		}
 
+		// Send to the CTAT inbox when no admin has been assigned yet.
+		to := &addressBook.CTATTeamEmail
+		var cc *string
+		if adminAcct != nil {
+			to = &adminAcct.Email
+			cc = &addressBook.CTATTeamEmail
+		}
+
 		// send email to assigned admin and CC CTAT inbox
 		go sendAdminEmail(
 			logger,
 			emailService,
 			addressBook.DefaultSender,
-			&adminAcct.Email,
-			&addressBook.CTATTeamEmail,
+			to,
+			cc,
 			createdDiscussion,
 			principalAcct.CommonName,
 			ctatTicket,
