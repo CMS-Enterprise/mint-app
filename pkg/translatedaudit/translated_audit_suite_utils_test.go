@@ -44,14 +44,24 @@ func (suite *TAuditSuite) createPlanDocument(modelPlanID uuid.UUID, fileName str
 		false,
 		zero.String{})
 
-	retDocument, err := suite.testConfigs.Store.PlanDocumentCreate(suite.testConfigs.Logger, suite.testConfigs.Principal.UserAccount.ID.String(), document)
+	retDocument, err := sqlutils.WithTransaction(suite.testConfigs.Store, func(tx *sqlx.Tx) (*models.PlanDocument, error) {
+		retDocument, err := storage.PlanDocumentCreate(tx, suite.testConfigs.Logger, suite.testConfigs.Principal.UserAccount.ID.String(), document)
+		suite.NoError(err)
+		return retDocument, nil
+	})
 	suite.NoError(err)
+
 	return retDocument
 
 }
 
 func (suite *TAuditSuite) deleteDocument(documentID uuid.UUID) {
-	_, err := suite.testConfigs.Store.PlanDocumentDelete(suite.testConfigs.Logger, documentID, suite.testConfigs.Principal.UserAccount.ID)
+	err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+		_, err := storage.PlanDocumentDelete(tx, suite.testConfigs.Logger, documentID, suite.testConfigs.Principal.UserAccount.ID)
+		suite.NoError(err)
+		return nil
+	})
+
 	suite.NoError(err)
 }
 
@@ -140,13 +150,24 @@ func (suite *TAuditSuite) createPlanTDL(modelPlanID uuid.UUID, idNumber string, 
 }
 
 func (suite *TAuditSuite) deletePlanTDL(id uuid.UUID) *models.PlanTDL {
-	tdl, err := suite.testConfigs.Store.PlanTDLDelete(suite.testConfigs.Logger, id, suite.testConfigs.Principal.UserAccount.ID)
+	tdl, err := sqlutils.WithTransaction(suite.testConfigs.Store, func(tx *sqlx.Tx) (*models.PlanTDL, error) {
+		tdl, err := storage.PlanTDLDelete(tx, suite.testConfigs.Logger, id, suite.testConfigs.Principal.UserAccount.ID)
+		suite.NoError(err)
+		return tdl, nil
+	})
 	suite.NoError(err)
 	return tdl
 }
 func (suite *TAuditSuite) deletePlanCR(id uuid.UUID) *models.PlanCR {
-	cr, err := suite.testConfigs.Store.PlanCRDelete(suite.testConfigs.Logger, id, suite.testConfigs.Principal.UserAccount.ID)
+	cr, err := sqlutils.WithTransaction(suite.testConfigs.Store, func(tx *sqlx.Tx) (*models.PlanCR, error) {
+		cr, err := storage.PlanCRDelete(tx, suite.testConfigs.Logger, id, suite.testConfigs.Principal.UserAccount.ID)
+		suite.NoError(err)
+
+		return cr, nil
+	})
+
 	suite.NoError(err)
+
 	return cr
 }
 

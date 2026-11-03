@@ -37,7 +37,7 @@ All changes in this repository MUST be accompanied by appropriate tests.
 ## Test Quality Checklist
 - [ ] Tests are deterministic and isolated (no shared mutable state).
 - [ ] External network calls are mocked.
-- [ ] Backend integration tests wrap DB operations in transactions that roll back.
+- [ ] Backend integration tests isolate database state using the suite's table cleanup or an explicit transaction that rolls back, as appropriate for the test.
 - [ ] Authentication is mocked via `testhelpers` (not real Okta calls).
 - [ ] E2E tests cover all critical user journeys end-to-end.
 

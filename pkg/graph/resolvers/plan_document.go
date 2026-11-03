@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/guregu/null/zero"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
@@ -14,6 +15,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/s3"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/genericmodel"
 )
@@ -25,69 +27,73 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 		return nil, err
 	}
 
-	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
+	createdDoc := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), false, zero.String{})
 
-	err = BaseStructPreCreate(logger, document, principal, store, true)
+	err = BaseStructPreCreate(logger, createdDoc, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
 
-	err = s3Client.UploadFile(context.TODO(), input.FileData.File, document.FileKey)
+	err = s3Client.UploadFile(context.TODO(), input.FileData.File, createdDoc.FileKey)
 	if err != nil {
 		return &models.PlanDocument{}, err
 	}
 
-	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, document)
-	}
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanDocument, error) {
+		document, err := storage.PlanDocumentCreate(tx, logger, principal.ID(), createdDoc)
+		if err != nil {
+			return nil, genericmodel.HandleModelCreationError(logger, err, createdDoc)
+		}
 
-	return document, nil
+		return document, nil
+	})
 }
 
 // PlanDocumentCreateLinked creates a plan document which is a link to an external URL instead of an Uploaded file
 func PlanDocumentCreateLinked(logger *zap.Logger, input model.PlanDocumentLinkInput, principal authentication.Principal, store *storage.Store) (*models.PlanDocument, error) {
-	err := validatePlanDocumentTaskAttribution(store, logger, input.ModelPlanID, input.PlanTaskID)
-	if err != nil {
-		return nil, err
-	}
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanDocument, error) {
+		err := validatePlanDocumentTaskAttribution(tx, logger, input.ModelPlanID, input.PlanTaskID)
+		if err != nil {
+			return nil, err
+		}
 
-	contentType := "externalLink"
-	fileSize := 0
-	u, err := url.Parse(input.URL)
-	if err != nil {
-		return nil, fmt.Errorf(" url is not in a valid format. err : %w", err)
-	}
-	// Ensure the URL has a host specified and is not a relative link
-	if u.Host == "" {
-		return nil, fmt.Errorf(" url does not have a host specified. Please create a valid absolute reference. url : %s ", input.URL)
-	}
+		contentType := "externalLink"
+		fileSize := 0
+		u, err := url.Parse(input.URL)
+		if err != nil {
+			return nil, fmt.Errorf(" url is not in a valid format. err : %w", err)
+		}
+		// Ensure the URL has a host specified and is not a relative link
+		if u.Host == "" {
+			return nil, fmt.Errorf(" url does not have a host specified. Please create a valid absolute reference. url : %s ", input.URL)
+		}
 
-	// Ensure the URL has a scheme of either http or https
-	if u.Scheme != "http" && u.Scheme != "https" {
-		return nil, fmt.Errorf(" url does not have a valid scheme. It should begin with http or https. url : %s ", input.URL)
-	}
-	document := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
+		// Ensure the URL has a scheme of either http or https
+		if u.Scheme != "http" && u.Scheme != "https" {
+			return nil, fmt.Errorf(" url does not have a valid scheme. It should begin with http or https. url : %s ", input.URL)
+		}
+		createdDoc := models.NewPlanDocument(principal.Account().ID, input.ModelPlanID, contentType, contentType, contentType, input.Name, fileSize, input.DocumentType, input.Restricted, input.PlanTaskID, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes), true, zero.StringFrom(input.URL))
 
-	err = BaseStructPreCreate(logger, document, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
+		err = BaseStructPreCreate(logger, createdDoc, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
 
-	document, err = store.PlanDocumentCreate(logger, principal.ID(), document)
-	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, document)
-	}
+		document, err := storage.PlanDocumentCreate(tx, logger, principal.ID(), createdDoc)
+		if err != nil {
+			return nil, genericmodel.HandleModelCreationError(logger, err, createdDoc)
+		}
 
-	return document, nil
+		return document, nil
+	})
 }
 
-func validatePlanDocumentTaskAttribution(store *storage.Store, logger *zap.Logger, modelPlanID uuid.UUID, planTaskID *uuid.UUID) error {
+func validatePlanDocumentTaskAttribution(np sqlutils.NamedPreparer, logger *zap.Logger, modelPlanID uuid.UUID, planTaskID *uuid.UUID) error {
 	if planTaskID == nil {
 		return nil
 	}
 
-	tasks, err := storage.PlanTaskGetByIDLoader(store, logger, []uuid.UUID{*planTaskID})
+	tasks, err := storage.PlanTaskGetByIDLoader(np, logger, []uuid.UUID{*planTaskID})
 	if err != nil {
 		return err
 	}
@@ -165,21 +171,24 @@ func PlanDocumentsReadByPlanTaskID(logger *zap.Logger, task *models.PlanTask, pr
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
-func PlanDocumentDelete(logger *zap.Logger, s3Client *s3.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (int, error) {
-	existingdoc, err := storage.PlanDocumentRead(store, logger, s3Client, id)
-	if err != nil {
-		return 0, err
-	}
-	err = BaseStructPreDelete(logger, existingdoc, principal, store, true)
-	if err != nil {
-		return 0, err
-	}
+func PlanDocumentDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*int, error) {
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*int, error) {
+		existingdoc, err := storage.PlanDocumentGetByIDNoS3Check(tx, logger, id)
+		if err != nil {
+			return nil, err
+		}
+		err = BaseStructPreDelete(logger, existingdoc, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
 
-	sqlResult, err := store.PlanDocumentDelete(logger, id, principal.Account().ID)
-	if err != nil {
-		return 0, err
-	}
+		sqlResult, err := storage.PlanDocumentDelete(tx, logger, id, principal.Account().ID)
+		if err != nil {
+			return nil, err
+		}
 
-	rowsAffected, err := sqlResult.RowsAffected()
-	return int(rowsAffected), err
+		rowsAffected, err := sqlResult.RowsAffected()
+		return new(int(rowsAffected)), err
+	})
+
 }
