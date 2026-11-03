@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"strings"
 	"time"
 
 	"github.com/golang/mock/gomock"
@@ -232,10 +233,11 @@ func (suite *ResolverSuite) TestCreateCTATDiscussionAsAdmin() {
 		suite.Contains(sentEmail.body, created.Content)
 		suite.Contains(sentEmail.body, admin.Account().CommonName)
 		suite.Contains(sentEmail.body, created.PosterRole.String())
+		normalizedBody := strings.Join(strings.Fields(sentEmail.body), " ")
 		if sentEmail.to == requester.Account().Email {
-			suite.Contains(sentEmail.body, "original submitter of this contract assistance request ticket")
+			suite.Contains(normalizedBody, "original submitter of this contract assistance request ticket")
 		} else {
-			suite.Contains(sentEmail.body, "have access to the CTAT Admin mailbox")
+			suite.Contains(normalizedBody, "have access to the CTAT Admin mailbox")
 		}
 	}
 }
