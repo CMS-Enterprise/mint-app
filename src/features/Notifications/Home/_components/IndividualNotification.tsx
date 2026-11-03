@@ -23,6 +23,7 @@ import {
 import DailyDigest from './DailyDigest';
 import DatesChanged from './DatesChanged';
 import IncorrectModelStatus from './IncorrectModelStatus';
+import ModelFollowerUpdate from './ModelFollowerUpdate';
 
 type NotificationActivityType = Activity;
 
@@ -36,7 +37,8 @@ export type IndividualNotificationProps = {
 const ExpandableNotifications = [
   'DailyDigestCompleteActivityMeta',
   'DatesChangedActivityMeta',
-  'IncorrectModelStatusActivityMeta'
+  'IncorrectModelStatusActivityMeta',
+  'ModelFollowerUpdateActivityMeta'
 ];
 
 const formatExpandableNotifications: Record<string, boolean> =
@@ -80,6 +82,8 @@ const IndividualNotification = ({
         return <DatesChanged {...metaData} />;
       case 'IncorrectModelStatusActivityMeta':
         return <IncorrectModelStatus {...metaData} />;
+      case 'ModelFollowerUpdateActivityMeta':
+        return <ModelFollowerUpdate {...metaData} />;
       default:
         return null;
     }

@@ -126,6 +126,7 @@ const NotificationSettings = () => {
 
   const {
     dailyDigestComplete,
+    modelFollowerUpdate,
     addedAsCollaborator,
     taggedInDiscussion,
     newDiscussionAdded,
@@ -149,6 +150,7 @@ const NotificationSettings = () => {
   const methods = useForm<NotificationSettingsFormType>({
     defaultValues: {
       dailyDigestComplete: dailyDigestComplete ?? [],
+      modelFollowerUpdate: modelFollowerUpdate ?? [],
       addedAsCollaborator: addedAsCollaborator ?? [],
       taggedInDiscussion: taggedInDiscussion ?? [],
       newDiscussionAdded: newDiscussionAdded ?? [],

@@ -2912,6 +2912,7 @@ type ComplexityRoot struct {
 		IddocQuestionnaireCompletedNotificationType          func(childComplexity int) int
 		IncorrectModelStatus                                 func(childComplexity int) int
 		MTOReadyForReviewNotificationType                    func(childComplexity int) int
+		ModelFollowerUpdate                                  func(childComplexity int) int
 		ModelPlanShared                                      func(childComplexity int) int
 		ModifiedBy                                           func(childComplexity int) int
 		ModifiedByUserAccount                                func(childComplexity int) int
@@ -3640,6 +3641,7 @@ type UserNotificationResolver interface {
 }
 type UserNotificationPreferencesResolver interface {
 	DailyDigestComplete(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
+	ModelFollowerUpdate(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	AddedAsCollaborator(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	TaggedInDiscussion(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
 	TaggedInDiscussionReply(ctx context.Context, obj *models.UserNotificationPreferences) ([]models.UserNotificationPreferenceFlag, error)
@@ -18288,6 +18290,12 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.UserNotificationPreferences.MTOReadyForReviewNotificationType(childComplexity), true
+	case "UserNotificationPreferences.modelFollowerUpdate":
+		if e.ComplexityRoot.UserNotificationPreferences.ModelFollowerUpdate == nil {
+			break
+		}
+
+		return e.ComplexityRoot.UserNotificationPreferences.ModelFollowerUpdate(childComplexity), true
 	case "UserNotificationPreferences.modelPlanShared":
 		if e.ComplexityRoot.UserNotificationPreferences.ModelPlanShared == nil {
 			break
@@ -26414,6 +26422,7 @@ type UserNotificationPreferences {
   userID: UUID!
 
   dailyDigestComplete: [UserNotificationPreferenceFlag!]!
+  modelFollowerUpdate: [UserNotificationPreferenceFlag!]!
 
   addedAsCollaborator: [UserNotificationPreferenceFlag!]!
 
@@ -26461,6 +26470,7 @@ UserNotificationPreferencesChanges represents the ways that a UserNotifications 
 input UserNotificationPreferencesChanges
   @goModel(model: "map[string]interface{}") {
   dailyDigestComplete: [UserNotificationPreferenceFlag!]
+  modelFollowerUpdate: [UserNotificationPreferenceFlag!]
 
   addedAsCollaborator: [UserNotificationPreferenceFlag!]
 
@@ -30568,6 +30578,8 @@ func (ec *executionContext) childFields_UserNotificationPreferences(ctx context.
 		return ec.fieldContext_UserNotificationPreferences_userID(ctx, field)
 	case "dailyDigestComplete":
 		return ec.fieldContext_UserNotificationPreferences_dailyDigestComplete(ctx, field)
+	case "modelFollowerUpdate":
+		return ec.fieldContext_UserNotificationPreferences_modelFollowerUpdate(ctx, field)
 	case "addedAsCollaborator":
 		return ec.fieldContext_UserNotificationPreferences_addedAsCollaborator(ctx, field)
 	case "taggedInDiscussion":
@@ -98590,6 +98602,29 @@ func (ec *executionContext) fieldContext_UserNotificationPreferences_dailyDigest
 	return graphql.NewScalarFieldContext("UserNotificationPreferences", field, true, true, "UserNotificationPreferenceFlag")
 }
 
+func (ec *executionContext) _UserNotificationPreferences_modelFollowerUpdate(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_UserNotificationPreferences_modelFollowerUpdate(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			return ec.Resolvers.UserNotificationPreferences().ModelFollowerUpdate(ctx, obj)
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v []models.UserNotificationPreferenceFlag) graphql.Marshaler {
+			return ec.marshalNUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_UserNotificationPreferences_modelFollowerUpdate(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	return graphql.NewScalarFieldContext("UserNotificationPreferences", field, true, true, "UserNotificationPreferenceFlag")
+}
+
 func (ec *executionContext) _UserNotificationPreferences_addedAsCollaborator(ctx context.Context, field graphql.CollectedField, obj *models.UserNotificationPreferences) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -109123,7 +109158,7 @@ func (ec *executionContext) unmarshalInputUserNotificationPreferencesChanges(ctx
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"dailyDigestComplete", "addedAsCollaborator", "taggedInDiscussion", "taggedInDiscussionReply", "newDiscussionReply", "modelPlanShared", "newModelPlan", "newTaskAdded", "taskCompleted", "datesChanged", "datesChangedNotificationType", "dataExchangeApproachMarkedComplete", "dataExchangeApproachMarkedCompleteNotificationType", "newDiscussionAdded", "newDiscussionAddedNotificationType", "iddocQuestionnaireComplete", "iddocQuestionnaireCompletedNotificationType", "waiverAssessmentSurveyMarkedComplete", "waiverAssessmentSurveyMarkedCompleteNotificationType", "incorrectModelStatus", "mtoReadyForReview", "mtoReadyForReviewNotificationType"}
+	fieldsInOrder := [...]string{"dailyDigestComplete", "modelFollowerUpdate", "addedAsCollaborator", "taggedInDiscussion", "taggedInDiscussionReply", "newDiscussionReply", "modelPlanShared", "newModelPlan", "newTaskAdded", "taskCompleted", "datesChanged", "datesChangedNotificationType", "dataExchangeApproachMarkedComplete", "dataExchangeApproachMarkedCompleteNotificationType", "newDiscussionAdded", "newDiscussionAddedNotificationType", "iddocQuestionnaireComplete", "iddocQuestionnaireCompletedNotificationType", "waiverAssessmentSurveyMarkedComplete", "waiverAssessmentSurveyMarkedCompleteNotificationType", "incorrectModelStatus", "mtoReadyForReview", "mtoReadyForReviewNotificationType"}
 	it = make(map[string]any, len(asMap))
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
@@ -109138,6 +109173,13 @@ func (ec *executionContext) unmarshalInputUserNotificationPreferencesChanges(ctx
 				return it, err
 			}
 			it["dailyDigestComplete"] = data
+		case "modelFollowerUpdate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelFollowerUpdate"))
+			data, err := ec.unmarshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it["modelFollowerUpdate"] = data
 		case "addedAsCollaborator":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("addedAsCollaborator"))
 			data, err := ec.unmarshalOUserNotificationPreferenceFlag2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐUserNotificationPreferenceFlagᚄ(ctx, v)
@@ -126666,6 +126708,12 @@ func (ec *executionContext) _UserNotificationPreferences(ctx context.Context, se
 				true, true,
 				func(ctx context.Context) graphql.Marshaler {
 					return ec._UserNotificationPreferences_dailyDigestComplete(ctx, field, obj)
+				})
+		case "modelFollowerUpdate":
+			out.ResolveConcurrently(ec.OperationContext, &deferred, i,
+				true, true,
+				func(ctx context.Context) graphql.Marshaler {
+					return ec._UserNotificationPreferences_modelFollowerUpdate(ctx, field, obj)
 				})
 		case "addedAsCollaborator":
 			out.ResolveConcurrently(ec.OperationContext, &deferred, i,

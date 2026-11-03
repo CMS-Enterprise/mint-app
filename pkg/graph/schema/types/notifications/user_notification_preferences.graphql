@@ -47,6 +47,7 @@ type UserNotificationPreferences {
   userID: UUID!
 
   dailyDigestComplete: [UserNotificationPreferenceFlag!]!
+  modelFollowerUpdate: [UserNotificationPreferenceFlag!]!
 
   addedAsCollaborator: [UserNotificationPreferenceFlag!]!
 
@@ -94,6 +95,7 @@ UserNotificationPreferencesChanges represents the ways that a UserNotifications 
 input UserNotificationPreferencesChanges
   @goModel(model: "map[string]interface{}") {
   dailyDigestComplete: [UserNotificationPreferenceFlag!]
+  modelFollowerUpdate: [UserNotificationPreferenceFlag!]
 
   addedAsCollaborator: [UserNotificationPreferenceFlag!]
 
