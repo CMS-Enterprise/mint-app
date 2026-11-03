@@ -57,7 +57,6 @@ func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[
 		logger,
 		existing.ModelPlanID,
 		principal,
-		store,
 		nil,
 		email.AddressBook{},
 	); err != nil {

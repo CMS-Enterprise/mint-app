@@ -57,7 +57,6 @@ func PlanParticipantsAndProvidersUpdate(logger *zap.Logger, id uuid.UUID, change
 		logger,
 		existing.ModelPlanID,
 		principal,
-		store,
 		nil,
 		email.AddressBook{},
 	); err != nil {
