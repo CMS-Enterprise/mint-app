@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
@@ -57,30 +58,32 @@ func UpdatePlanTaskStateOnModelPlanStarted(
 	return err
 }
 
-// UpdatePlanTaskStateOnModelCleared runs when model plan status becomes CLEARED: MODEL_PLAN and DATA_EXCHANGE tasks complete.
-func UpdatePlanTaskStateOnModelCleared(
+// updatePlanTaskStateOnModelCleared runs when model plan status becomes CLEARED: MODEL_PLAN and DATA_EXCHANGE tasks complete.
+func updatePlanTaskStateOnModelCleared(
 	ctx context.Context,
-	np sqlutils.NamedPreparer,
+	tx *sqlx.Tx,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	emailService oddmail.EmailService,
-	addressBook email.AddressBook,
-) error {
-	modelPlanState, err := calculateModelPlanTaskState(np, logger, modelPlanID)
+) ([]*models.PlanTaskWithPreviousState, error) {
+	modelPlanState, err := calculateModelPlanTaskState(tx, logger, modelPlanID)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	if _, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanState, principal, principal.Account().ID, emailService, addressBook); err != nil {
-		return err
+	modelPlanTask, err := updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanState, principal, principal.Account().ID, nil, email.AddressBook{})
+	if err != nil {
+		return nil, err
 	}
 
-	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID)
+	dataExchangeState, err := calculateDataExchangeTaskState(tx, logger, modelPlanID)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, emailService, addressBook)
-	return err
+	dataExchangeTask, err := updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, nil, email.AddressBook{})
+	if err != nil {
+		return nil, err
+	}
+	return []*models.PlanTaskWithPreviousState{modelPlanTask, dataExchangeTask}, nil
 }
 
 // UpdatePlanTaskStateOnModelNoLongerCleared runs when model plan status regresses from CLEARED:
@@ -91,24 +94,26 @@ func UpdatePlanTaskStateOnModelNoLongerCleared(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	emailService oddmail.EmailService,
-	addressBook email.AddressBook,
-) error {
+) ([]*models.PlanTaskWithPreviousState, error) {
 	modelPlanState, err := calculateModelPlanTaskState(np, logger, modelPlanID)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	if _, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanState, principal, principal.Account().ID, emailService, addressBook); err != nil {
-		return err
+	modelPlanTask, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyModelPlan, modelPlanState, principal, principal.Account().ID, nil, email.AddressBook{})
+	if err != nil {
+		return nil, err
 	}
 
 	dataExchangeState, err := calculateDataExchangeTaskState(np, logger, modelPlanID)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, emailService, addressBook)
-	return err
+	dataExchangeTask, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyDataExchange, dataExchangeState, principal, principal.Account().ID, nil, email.AddressBook{})
+	if err != nil {
+		return nil, err
+	}
+	return []*models.PlanTaskWithPreviousState{modelPlanTask, dataExchangeTask}, nil
 }
 
 func calculateModelPlanTaskState(
@@ -303,16 +308,17 @@ func UpdatePlanTaskStateOnModelActive(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	emailService oddmail.EmailService,
-	addressBook email.AddressBook,
-) error {
+) ([]*models.PlanTaskWithPreviousState, error) {
 	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, emailService, addressBook)
-	return err
+	mtoTask, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, nil, email.AddressBook{})
+	if err != nil {
+		return nil, err
+	}
+	return []*models.PlanTaskWithPreviousState{mtoTask}, nil
 }
 
 // UpdatePlanTaskStateOnMTODataDeleted recalculates and applies MTO task status when MTO data is deleted.
@@ -341,16 +347,17 @@ func UpdatePlanTaskStateOnModelNoLongerActive(
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
 	principal authentication.Principal,
-	emailService oddmail.EmailService,
-	addressBook email.AddressBook,
-) error {
+) ([]*models.PlanTaskWithPreviousState, error) {
 	mtoState, err := calculateMTOTaskState(np, logger, modelPlanID)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	_, err = updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, emailService, addressBook)
-	return err
+	mtoTask, err := updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyMto, mtoState, principal, principal.Account().ID, nil, email.AddressBook{})
+	if err != nil {
+		return nil, err
+	}
+	return []*models.PlanTaskWithPreviousState{mtoTask}, nil
 }
 
 func calculateMTOTaskState(

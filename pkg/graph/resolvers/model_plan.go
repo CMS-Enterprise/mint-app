@@ -337,7 +337,8 @@ func ModelPlanUpdate(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) (*models.ModelPlan, error) {
-	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
+	var taskUpdates []*models.PlanTaskWithPreviousState
+	updatedPlan, err := sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.ModelPlan, error) {
 		// Get existing plan
 		existingPlan, err := storage.ModelPlanGetByID(tx, logger, id)
 		if err != nil {
@@ -358,39 +359,56 @@ func ModelPlanUpdate(
 
 		// Plan tasks: CLEARED model status completes MODEL_PLAN and DATA_EXCHANGE tasks
 		if oldStatus != models.ModelStatusCleared && retPlan.Status == models.ModelStatusCleared {
-			updErr := UpdatePlanTaskStateOnModelCleared(ctx, tx, logger, retPlan.ID, principal, emailService, addressBook)
+			updates, updErr := updatePlanTaskStateOnModelCleared(ctx, tx, logger, retPlan.ID, principal)
 			if updErr != nil {
 				return nil, updErr
 			}
+			taskUpdates = append(taskUpdates, updates...)
 		}
 
 		// Plan tasks: Regress DATA_EXCHANGE and MODEL_PLAN tasks if model status moves backwards from CLEARED
 		if oldStatus == models.ModelStatusCleared &&
 			models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusCleared) {
-			updErr := UpdatePlanTaskStateOnModelNoLongerCleared(ctx, tx, logger, retPlan.ID, principal, emailService, addressBook)
+			updates, updErr := UpdatePlanTaskStateOnModelNoLongerCleared(ctx, tx, logger, retPlan.ID, principal)
 			if updErr != nil {
 				return nil, updErr
 			}
+			taskUpdates = append(taskUpdates, updates...)
 		}
 
 		// Plan tasks: ACTIVE model status completes MTO task
 		if oldStatus != models.ModelStatusActive && retPlan.Status == models.ModelStatusActive {
-			updErr := UpdatePlanTaskStateOnModelActive(ctx, tx, logger, retPlan.ID, principal, emailService, addressBook)
+			updates, updErr := UpdatePlanTaskStateOnModelActive(ctx, tx, logger, retPlan.ID, principal)
 			if updErr != nil {
 				return nil, updErr
 			}
+			taskUpdates = append(taskUpdates, updates...)
 		}
 		// Plan tasks: Regress MTO task if model status moves backwards from ACTIVE
 		if oldStatus == models.ModelStatusActive &&
 			models.GetModelStatusChronologicalIndex(retPlan.Status) < models.GetModelStatusChronologicalIndex(models.ModelStatusActive) {
-			updErr := UpdatePlanTaskStateOnModelNoLongerActive(ctx, tx, logger, retPlan.ID, principal, emailService, addressBook)
+			updates, updErr := UpdatePlanTaskStateOnModelNoLongerActive(ctx, tx, logger, retPlan.ID, principal)
 			if updErr != nil {
 				return nil, updErr
 			}
+			taskUpdates = append(taskUpdates, updates...)
 		}
 
 		return retPlan, err
 	})
+	if err != nil {
+		return nil, err
+	}
+	// Email delivery cannot be rolled back, so send only after the task updates commit.
+	for _, update := range taskUpdates {
+		if update.PreviousState != models.PlanTaskStateComplete && update.State == models.PlanTaskStateComplete {
+			trySendPlanTaskCompletedEmails(ctx, store, logger, id, &update.PlanTask, principal, emailService, addressBook)
+		}
+		if update.PreviousState != models.PlanTaskStateToDo && update.State == models.PlanTaskStateToDo {
+			trySendPlanTaskNewAvailableEmails(ctx, store, logger, id, &update.PlanTask, principal.Account().ID, emailService, addressBook)
+		}
+	}
+	return updatedPlan, nil
 }
 
 // ModelPlanGetByID implements resolver logic to get a model plan by its ID
