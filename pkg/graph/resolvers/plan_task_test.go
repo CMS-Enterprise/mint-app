@@ -590,7 +590,6 @@ func (suite *ResolverSuite) TestPrepareForClearanceActivateIfDue() {
 			suite.testConfigs.Store,
 			suite.testConfigs.Logger,
 			modelPlanID,
-			suite.testConfigs.Store,
 			nil,
 			email.AddressBook{},
 		)
@@ -718,7 +717,6 @@ func (suite *ResolverSuite) TestPlanTaskChangeHistoryPrepareForClearance() {
 			suite.testConfigs.Store,
 			suite.testConfigs.Logger,
 			plan.ID,
-			suite.testConfigs.Store,
 			nil,
 			email.AddressBook{},
 		))
@@ -750,7 +748,6 @@ func (suite *ResolverSuite) TestPlanTaskGetModelPlanIDsDueForPrepareForClearance
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
 		alreadyToDo.ID,
-		suite.testConfigs.Store,
 		nil,
 		email.AddressBook{},
 	))
@@ -1352,17 +1349,18 @@ func (suite *ResolverSuite) TestTrySendPlanTaskNewAvailableNotificationsEmailRec
 		}).
 		Times(2)
 
-	trySendPlanTaskNewAvailableNotifications(
+	inAppBefore := suite.numUnreadNotifications(suite.testConfigs.Principal)
+	trySendPlanTaskNewAvailableEmails(
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
 		plan.ID,
 		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
 		suite.testConfigs.Principal.Account().ID,
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
 	)
+	suite.Equal(inAppBefore, suite.numUnreadNotifications(suite.testConfigs.Principal))
 
 	done := make(chan struct{})
 	go func() {
@@ -1420,7 +1418,6 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStateToDoSendsNewAvailableInAppNot
 		models.PlanTaskStateComplete,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,
-		suite.testConfigs.Store,
 		nil,
 		email.AddressBook{},
 	)
@@ -1439,7 +1436,6 @@ func (suite *ResolverSuite) TestUpdatePlanTaskStateToDoSendsNewAvailableInAppNot
 		models.PlanTaskStateToDo,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Principal.Account().ID,
-		suite.testConfigs.Store,
 		nil,
 		email.AddressBook{},
 	)
@@ -1511,17 +1507,18 @@ func (suite *ResolverSuite) TestTrySendPlanTaskCompletedNotificationsEmailRecipi
 		}).
 		Times(2)
 
-	trySendPlanTaskCompletedNotifications(
+	inAppBefore := suite.numUnreadNotifications(suite.testConfigs.Principal)
+	trySendPlanTaskCompletedEmails(
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
 		plan.ID,
 		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
 		suite.testConfigs.Principal,
 		mockEmailService,
 		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
 	)
+	suite.Equal(inAppBefore, suite.numUnreadNotifications(suite.testConfigs.Principal))
 
 	done := make(chan struct{})
 	go func() {
@@ -1578,7 +1575,6 @@ func (suite *ResolverSuite) TestTrySendPlanTaskCompletedNotificationsInAppRecipi
 		suite.testConfigs.Context,
 		suite.testConfigs.Store,
 		suite.testConfigs.Logger,
-		suite.testConfigs.Store,
 		plan.ID,
 		suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyModelPlan),
 		suite.testConfigs.Principal,

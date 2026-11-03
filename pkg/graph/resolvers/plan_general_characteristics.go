@@ -49,7 +49,6 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 		logger,
 		existing.ModelPlanID,
 		principal,
-		store,
 		nil,
 		email.AddressBook{},
 	); err != nil {
