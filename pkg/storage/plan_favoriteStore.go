@@ -95,6 +95,10 @@ func PlanFavoriteDelete(
 	delFavorite := models.PlanFavorite{}
 	err = stmt.Get(&delFavorite, arg)
 	if err != nil {
+		// guard against a double-delete
+		if sqlutils.IsNoRowsResult(err) {
+			return nil, nil
+		}
 		return nil, err
 	}
 

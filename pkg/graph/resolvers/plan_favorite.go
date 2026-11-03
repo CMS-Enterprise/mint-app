@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -41,9 +42,12 @@ func PlanFavoriteCreate(np sqlutils.NamedPreparer, logger *zap.Logger, principal
 func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanFavorite, error) {
 		existingFavorite, err := storage.PlanFavoriteGetByModelIDAndUserAccountID(tx, logger, principal.Account().ID, modelPlanID)
-
 		if err != nil {
 			return nil, err
+		}
+
+		if existingFavorite == nil {
+			return nil, fmt.Errorf("no existing favorite found for model plan %s", modelPlanID.String())
 		}
 
 		err = BaseStructPreDelete(logger, existingFavorite, principal, tx, false) //you don't need to be a collaborator to favorite a model plan.
@@ -51,7 +55,16 @@ func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, 
 			return nil, err
 		}
 
-		return storage.PlanFavoriteDelete(tx, logger, principal.Account().ID, modelPlanID, principal.Account().ID)
+		deletedFavorite, err := storage.PlanFavoriteDelete(tx, logger, principal.Account().ID, modelPlanID, principal.Account().ID)
+		if err != nil {
+			return nil, err
+		}
+
+		if deletedFavorite == nil {
+			return nil, fmt.Errorf("no existing favorite found post-deletion for model plan %s", modelPlanID.String())
+		}
+
+		return deletedFavorite, nil
 	})
 }
 
