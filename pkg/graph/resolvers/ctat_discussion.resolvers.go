@@ -16,7 +16,7 @@ import (
 
 // CreateDiscussion is the resolver for the createDiscussion field.
 func (r *mutationResolver) CreateDiscussion(ctx context.Context, input model.CTATDiscussionInput) (*models.CTATDiscussion, error) {
-	return createDiscussion(ctx, r.store, input)
+	return createDiscussion(ctx, r.store, r.emailService, r.addressBook, input)
 }
 
 // Discussions is the resolver for the discussions field.
