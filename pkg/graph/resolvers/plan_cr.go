@@ -41,13 +41,16 @@ func PlanCRUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface
 		return nil, err
 	}
 
+	if existingPlanCR == nil {
+		return nil, fmt.Errorf("plan CR %s not found", id)
+	}
+
 	err = BaseStructPreUpdate(logger, existingPlanCR, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}
 
-	result, err := storage.PlanCRUpdate(store, logger, existingPlanCR)
-	return result, err
+	return storage.PlanCRUpdate(store, logger, existingPlanCR)
 }
 
 // PlanCRDelete deletes a plan cr_tdl record in the database

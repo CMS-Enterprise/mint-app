@@ -35,22 +35,24 @@ func MTOCategoryCreate(
 	// Note, the position added is not respected when inserted. It will be have a position equal to the max of all other positions
 	category := models.NewMTOCategory(principalAccount.ID, name, modelPlanID, parentID, 0)
 
-	err := BaseStructPreCreate(logger, category, principal, store, true)
-	if err != nil {
-		return nil, err
-	}
-	created, err := storage.MTOCategoryCreate(store, logger, category)
-	if err != nil {
-		return nil, err
-	}
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCategory, error) {
+		err := BaseStructPreCreate(logger, category, principal, tx, true)
+		if err != nil {
+			return nil, err
+		}
+		created, err := storage.MTOCategoryCreate(tx, logger, category)
+		if err != nil {
+			return nil, err
+		}
 
-	// MTO task progression: creating MTO data counts as starting the MTO
-	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, modelPlanID, principal)
-	if err != nil {
-		return nil, err
-	}
+		// MTO task progression: creating MTO data counts as starting the MTO
+		err = UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal)
+		if err != nil {
+			return nil, err
+		}
 
-	return created, nil
+		return created, nil
+	})
 }
 
 // MTOCategoryDelete removes an MTOCategory or SubCategory
@@ -104,29 +106,32 @@ func MTOCategoryRename(
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	existing, err := storage.MTOCategoryGetByID(store, logger, id)
-	if err != nil {
-		return nil, fmt.Errorf("unable to update MTO category. Err %w", err)
-	}
-	// update the name
-	existing.Name = name
 
-	// Just check access, don't apply changes here
-	err = BaseStructPreUpdate(logger, existing, map[string]interface{}{}, principal, store, false, true)
-	if err != nil {
-		return nil, err
-	}
-	updated, err := storage.MTOCategoryUpdate(store, logger, existing)
-	if err != nil {
-		return nil, err
-	}
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCategory, error) {
+		existing, err := storage.MTOCategoryGetByID(tx, logger, id)
+		if err != nil {
+			return nil, fmt.Errorf("unable to update MTO category. Err %w", err)
+		}
+		// update the name
+		existing.Name = name
 
-	// MTO task progression: editing category data counts as starting the MTO
-	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal)
-	if err != nil {
-		return nil, err
-	}
-	return updated, nil
+		// Just check access, don't apply changes here
+		err = BaseStructPreUpdate(logger, existing, map[string]interface{}{}, principal, tx, false, true)
+		if err != nil {
+			return nil, err
+		}
+		updated, err := storage.MTOCategoryUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, err
+		}
+
+		// MTO task progression: editing category data counts as starting the MTO
+		err = UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, updated.ModelPlanID, principal)
+		if err != nil {
+			return nil, err
+		}
+		return updated, nil
+	})
 }
 
 // MTOCategoryReorder updates the position of an MTOCategory or SubCategory
@@ -146,50 +151,54 @@ func MTOCategoryReorder(
 	if principalAccount == nil {
 		return nil, fmt.Errorf("principal doesn't have an account, username %s", principal.String())
 	}
-	existing, err := storage.MTOCategoryGetByID(store, logger, id)
-	if err != nil {
-		return nil, fmt.Errorf("unable to update MTO category. Err %w", err)
-	}
-	// update the position to the new value
-	// the re-ordering of other rows is handled in the trigger added in migrations/V188__Add_MTO_Category_Reorder_Trigger.sql
-	if order != nil {
-		existing.Position = *order
-	}
-	if parentID != nil {
-		if existing.ParentID == nil {
-			return nil, fmt.Errorf("you cannot provide a parent id for a parent category")
+
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.MTOCategory, error) {
+		existing, err := storage.MTOCategoryGetByID(tx, logger, id)
+		if err != nil {
+			return nil, fmt.Errorf("unable to update MTO category. Err %w", err)
 		}
-		// If the changing parents, update here
-		if existing.ParentID != parentID {
-			existing.ParentID = parentID
-			// If an order wasn't provided, determine the position from the other subcategories
-			if order == nil {
-				existingSubCategories, err := loaders.MTOSubcategory.ByParentID.Load(ctx, *parentID)
-				if err != nil {
-					return nil, fmt.Errorf("unable to determine order for this new subcategory. Err %w", err)
+		// update the position to the new value
+		// the re-ordering of other rows is handled in the trigger added in migrations/V188__Add_MTO_Category_Reorder_Trigger.sql
+		if order != nil {
+			existing.Position = *order
+		}
+		if parentID != nil {
+			if existing.ParentID == nil {
+				return nil, fmt.Errorf("you cannot provide a parent id for a parent category")
+			}
+			// If the changing parents, update here
+			if existing.ParentID != parentID {
+				existing.ParentID = parentID
+				// If an order wasn't provided, determine the position from the other subcategories
+				if order == nil {
+					existingSubCategories, err := storage.MTOSubcategoryGetByParentIDLoader(tx, logger, []uuid.UUID{*parentID})
+					if err != nil {
+						return nil, fmt.Errorf("unable to determine order for this new subcategory. Err %w", err)
+					}
+					currentMax := models.GetMaxPosition(existingSubCategories)
+					existing.Position = currentMax + 1
 				}
-				currentMax := models.GetMaxPosition(existingSubCategories)
-				existing.Position = currentMax + 1
 			}
 		}
-	}
 
-	// Just check access, don't apply changes here
-	err = BaseStructPreUpdate(logger, existing, map[string]interface{}{}, principal, store, false, true)
-	if err != nil {
-		return nil, err
-	}
-	updated, err := storage.MTOCategoryUpdate(store, logger, existing)
-	if err != nil {
-		return nil, err
-	}
+		// Just check access, don't apply changes here
+		err = BaseStructPreUpdate(logger, existing, map[string]interface{}{}, principal, tx, false, true)
+		if err != nil {
+			return nil, err
+		}
+		updated, err := storage.MTOCategoryUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, err
+		}
 
-	// MTO task progression: editing category data counts as starting the MTO
-	err = UpdatePlanTaskStateOnMTOStarted(ctx, store, logger, updated.ModelPlanID, principal)
-	if err != nil {
-		return nil, err
-	}
-	return updated, nil
+		// MTO task progression: editing category data counts as starting the MTO
+		err = UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, updated.ModelPlanID, principal)
+		if err != nil {
+			return nil, err
+		}
+		return updated, nil
+	})
+
 }
 
 type mtoStandardCategory struct {

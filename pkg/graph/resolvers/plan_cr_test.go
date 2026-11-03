@@ -64,6 +64,15 @@ func (suite *ResolverSuite) TestPlanCRUpdate() {
 	suite.EqualValues(*result.Note, changes["note"])
 }
 
+func (suite *ResolverSuite) TestPlanCRUpdateMissingID() {
+	missingID := uuid.New()
+
+	result, err := PlanCRUpdate(suite.testConfigs.Logger, missingID, map[string]interface{}{"title": "Updated"}, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.Nil(result)
+	suite.ErrorContains(err, "not found")
+	suite.ErrorContains(err, missingID.String())
+}
+
 // TestPlanCRDelete tests deleting a plan_cr_tdl record in the database
 func (suite *ResolverSuite) TestPlanCRDelete() {
 
