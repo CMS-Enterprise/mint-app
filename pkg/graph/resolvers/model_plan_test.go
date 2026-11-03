@@ -5,7 +5,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/email"
@@ -13,6 +15,8 @@ import (
 
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
@@ -61,6 +65,100 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	suite.NotNil(result.ModifiedBy)
 	suite.NotNil(result.ModifiedDts)
 	suite.EqualValues(suite.testConfigs.Principal.Account().ID, *result.ModifiedBy)
+}
+
+func (suite *ResolverSuite) TestModelPlanUpdateSendsTaskEmailsAfterCommit() {
+	plan := suite.createModelPlan("Plan for committed task emails")
+	store := suite.testConfigs.Store
+	logger := suite.testConfigs.Logger
+
+	controller := gomock.NewController(suite.T())
+	emailService := oddmail.NewMockEmailService(controller)
+	sent := make(chan struct{}, 2)
+	emailService.EXPECT().GetConfig().DoAndReturn(func() oddmail.EmailServiceConfig {
+		// GetConfig runs before the email goroutine starts. Reading through the store here
+		// verifies that the model and both tasks are committed before email preparation.
+		committedPlan, err := storage.ModelPlanGetByID(store, logger, plan.ID)
+		suite.Require().NoError(err)
+		suite.Require().NotNil(committedPlan)
+		suite.Require().Equal(models.ModelStatusCleared, committedPlan.Status)
+		for _, key := range []models.PlanTaskKey{models.PlanTaskKeyModelPlan, models.PlanTaskKeyDataExchange} {
+			task, err := storage.PlanTaskGetByModelPlanIDAndKey(store, logger, plan.ID, key)
+			suite.Require().NoError(err)
+			suite.Require().NotNil(task)
+			suite.Require().Equal(models.PlanTaskStateComplete, task.State)
+		}
+		return &oddmail.GoSimpleMailServiceConfig{ClientAddress: "http://localhost:3005"}
+	}).Times(2)
+	emailService.EXPECT().Send(
+		"unit-test-execution@mint.cms.gov",
+		gomock.Nil(), gomock.Nil(), gomock.Any(), "text/html", gomock.Any(), gomock.Any(),
+	).DoAndReturn(func(_ string, _, _ *string, _, _ string, _ string, _ ...oddmail.EmailOption) error {
+		sent <- struct{}{}
+		return nil
+	}).Times(2)
+
+	addressBook := email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"}
+	changes := map[string]interface{}{"status": models.ModelStatusCleared}
+	_, err := ModelPlanUpdate(suite.testConfigs.Context, logger, plan.ID, changes, suite.testConfigs.Principal, store, emailService, addressBook)
+	suite.Require().NoError(err)
+	for range 2 {
+		select {
+		case <-sent:
+		case <-time.After(2 * time.Second):
+			suite.FailNow("timed out waiting for task completed emails")
+		}
+	}
+
+	// A second update to the same status does not transition either task.
+	_, err = ModelPlanUpdate(suite.testConfigs.Context, logger, plan.ID, changes, suite.testConfigs.Principal, store, emailService, addressBook)
+	suite.NoError(err)
+}
+
+func (suite *ResolverSuite) TestModelPlanUpdateRollsBackTaskNotifications() {
+	plan := suite.createModelPlan("Plan for rolled-back task notifications")
+	store := suite.testConfigs.Store
+	logger := suite.testConfigs.Logger
+	modelTask, err := storage.PlanTaskGetByModelPlanIDAndKey(store, logger, plan.ID, models.PlanTaskKeyModelPlan)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(modelTask)
+	suite.NotEqual(models.PlanTaskStateComplete, modelTask.State)
+	dataExchangeTask, err := storage.PlanTaskGetByModelPlanIDAndKey(store, logger, plan.ID, models.PlanTaskKeyDataExchange)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(dataExchangeTask)
+	notificationsBefore := suite.numUnreadNotifications(suite.testConfigs.Principal)
+
+	// Remove the second task so the first task and its in-app notification are
+	// written before the model update encounters an error.
+	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
+		_, err := tx.Exec("DELETE FROM plan_task WHERE id = $1", dataExchangeTask.ID)
+		return err
+	})
+	suite.Require().NoError(err)
+
+	controller := gomock.NewController(suite.T())
+	emailService := oddmail.NewMockEmailService(controller)
+	emailService.EXPECT().GetConfig().Times(0)
+	emailService.EXPECT().Send(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Times(0)
+	_, err = ModelPlanUpdate(
+		suite.testConfigs.Context, logger, plan.ID,
+		map[string]interface{}{"status": models.ModelStatusCleared},
+		suite.testConfigs.Principal, store, emailService,
+		email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"},
+	)
+	suite.Require().ErrorContains(err, "plan task not found")
+
+	unchangedPlan, err := storage.ModelPlanGetByID(store, logger, plan.ID)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(unchangedPlan)
+	suite.Equal(plan.Status, unchangedPlan.Status)
+	unchangedTask, err := storage.PlanTaskGetByModelPlanIDAndKey(store, logger, plan.ID, models.PlanTaskKeyModelPlan)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(unchangedTask)
+	suite.Equal(modelTask.State, unchangedTask.State)
+	suite.Equal(modelTask.CompletedBy, unchangedTask.CompletedBy)
+	suite.Equal(modelTask.CompletedDts, unchangedTask.CompletedDts)
+	suite.Equal(notificationsBefore, suite.numUnreadNotifications(suite.testConfigs.Principal))
 }
 
 func (suite *ResolverSuite) TestModelPlanGetByID() {
