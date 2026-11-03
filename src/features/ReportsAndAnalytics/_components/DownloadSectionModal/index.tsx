@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
-import type { ReportsType } from 'features/ReportsAndAnalytics';
+import type {
+  MTOMilestoneSummary,
+  ReportsType
+} from 'features/ReportsAndAnalytics';
+import { downloadMTOMilestoneSummary } from 'features/ReportsAndAnalytics/util';
 import { ModelShareSection } from 'gql/generated/graphql';
 
 import FilterGroup from 'components/FilterGroup';
@@ -12,17 +16,20 @@ import useFetchCSVData from 'hooks/useFetchCSVData';
 import {
   getAllModelFilters,
   getBasicModelFilters,
-  getGroupFilteredViewFilters
+  getGroupFilteredViewFilters,
+  getMTOSummaryFilters
 } from './getFilterOptions';
 
 const DownloadSectionModal = ({
   isModalOpen,
   closeModal,
-  reportType
+  reportType,
+  mtoMilestoneSummaryData
 }: {
   isModalOpen: boolean;
   closeModal: () => void;
   reportType: ReportsType;
+  mtoMilestoneSummaryData?: MTOMilestoneSummary;
 }) => {
   const { t: analyticsT } = useTranslation('analytics');
   const { t: generalT } = useTranslation('general');
@@ -36,6 +43,8 @@ const DownloadSectionModal = ({
         return getBasicModelFilters();
       case 'groupFilteredView':
         return getGroupFilteredViewFilters();
+      case 'mtoMilestoneSummary':
+        return getMTOSummaryFilters();
       default:
         return getAllModelFilters();
     }
@@ -80,6 +89,13 @@ const DownloadSectionModal = ({
         exportSection: selectedFilters.filteredView[0],
         filters: selectedFilters,
         reportType
+      });
+    }
+
+    if (reportType === 'mtoMilestoneSummary' && mtoMilestoneSummaryData) {
+      downloadMTOMilestoneSummary({
+        data: mtoMilestoneSummaryData,
+        filters: selectedFilters
       });
     }
     closeModal();

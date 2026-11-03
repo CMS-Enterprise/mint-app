@@ -15,7 +15,7 @@ const FilteredViewSelect = ({
   return (
     <div>
       <Select
-        className="margin-top-3 "
+        className="margin-top-3"
         id="filtered-view-select"
         data-testid="filtered-view-select"
         aria-label={analyticsT(

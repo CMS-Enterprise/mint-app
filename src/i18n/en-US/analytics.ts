@@ -89,13 +89,23 @@ const analytics = {
         label: 'Other categories',
         options: {
           MY_MODELS: 'My models',
-          MODELS_I_FOLLOW: 'Models I follow'
+          MODELS_I_FOLLOW: 'Models I follow',
+          AT_RISK_MILESTONES: 'Models with at risk milestones'
         }
       }
     },
     otherFilterOptions: {
       filteredView: {
         label: 'Select filtered view'
+      },
+      neededByDateRange: {
+        label: 'Milestones needed within',
+        options: {
+          ALL_TIME: 'all time',
+          NEXT_30_DAYS: 'Next 30 days',
+          NEXT_60_DAYS: 'Next 60 days',
+          NEXT_90_DAYS: 'Next 90 days'
+        }
       }
     },
     selectOptionDefault: '- Select - '
