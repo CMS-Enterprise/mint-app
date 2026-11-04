@@ -51,6 +51,10 @@ const mockNotificationSettingsWithInApp: MockedResponse<
             __typename: 'UserNotificationPreferences',
             id: 'pref-123',
             dailyDigestComplete: [],
+            modelFollowerUpdate: [
+              UserNotificationPreferenceFlag.IN_APP,
+              UserNotificationPreferenceFlag.EMAIL
+            ],
             addedAsCollaborator: [UserNotificationPreferenceFlag.EMAIL],
             taggedInDiscussion: [],
             taggedInDiscussionReply: [],
@@ -100,6 +104,10 @@ const mockNotificationSettingsWithoutInApp: MockedResponse<
             __typename: 'UserNotificationPreferences',
             id: 'pref-123',
             dailyDigestComplete: [],
+            modelFollowerUpdate: [
+              UserNotificationPreferenceFlag.IN_APP,
+              UserNotificationPreferenceFlag.EMAIL
+            ],
             addedAsCollaborator: [UserNotificationPreferenceFlag.EMAIL],
             taggedInDiscussion: [],
             taggedInDiscussionReply: [],
@@ -146,6 +154,10 @@ const mockNotificationSettingsEmpty: MockedResponse<
             __typename: 'UserNotificationPreferences',
             id: 'pref-123',
             dailyDigestComplete: [],
+            modelFollowerUpdate: [
+              UserNotificationPreferenceFlag.IN_APP,
+              UserNotificationPreferenceFlag.EMAIL
+            ],
             addedAsCollaborator: [],
             taggedInDiscussion: [],
             taggedInDiscussionReply: [],

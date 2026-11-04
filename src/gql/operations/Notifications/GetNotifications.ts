@@ -108,6 +108,33 @@ export default gql(/* GraphQL */ `
                   modelName
                 }
               }
+              ... on ModelFollowerUpdateActivityMeta {
+                version
+                type
+                modelPlanID
+                content
+                modelPlan {
+                  id
+                  modelName
+                  abbreviation
+                  status
+                  modifiedDts
+                  createdDts
+                  basics {
+                    id
+                    modelCategory
+                    additionalModelCategories
+                  }
+                  collaborators {
+                    id
+                    teamRoles
+                    userAccount {
+                      id
+                      commonName
+                    }
+                  }
+                }
+              }
               ... on IncorrectModelStatusActivityMeta {
                 version
                 type

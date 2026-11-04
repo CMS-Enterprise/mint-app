@@ -337,6 +337,19 @@ type MilestoneSuggestionReasons struct {
 	Count int `json:"count"`
 }
 
+// ModelFollowerUpdate represents a message sent to everyone following a model plan
+type ModelFollowerUpdate struct {
+	ID                    uuid.UUID                   `json:"id"`
+	ModelPlanID           uuid.UUID                   `json:"modelPlanID"`
+	Content               string                      `json:"content"`
+	CreatedBy             uuid.UUID                   `json:"createdBy"`
+	CreatedByUserAccount  authentication.UserAccount  `json:"createdByUserAccount"`
+	CreatedDts            time.Time                   `json:"createdDts"`
+	ModifiedBy            *uuid.UUID                  `json:"modifiedBy,omitempty"`
+	ModifiedByUserAccount *authentication.UserAccount `json:"modifiedByUserAccount,omitempty"`
+	ModifiedDts           *time.Time                  `json:"modifiedDts,omitempty"`
+}
+
 // Represents Model Plan MTO Template Link translation data
 type ModelPlanMTOTemplateLinkTranslation struct {
 	ModelPlanID models.TranslationField `json:"modelPlanID" db:"model_plan_id"`

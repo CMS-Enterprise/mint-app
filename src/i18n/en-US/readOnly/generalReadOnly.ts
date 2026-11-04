@@ -33,6 +33,7 @@ const generalReadOnly = {
     sharePlan: 'Share this Model Plan with others',
     shareModel: 'Share this model',
     exportModel: 'Export this Model Plan',
+    sendMessageToFollowers: 'Send a message to followers',
     removeModel: 'Remove this model from MINT',
     shareDescription:
       'This will email a link to view this Model Plan within MINT.',
