@@ -63,9 +63,10 @@ const DownloadSectionModal = ({
   const [selectedFilters, setSelectedFilters] =
     useState<Record<string, string[]>>(selectedFilterConfig);
 
-  const isDownloadDisabled = Object.values(selectedFilters).every(
-    selected => selected.length === 0
-  );
+  // If filtered view is present, disable download if no option is selected
+  const isDownloadDisabled = selectedFilters.filteredView
+    ? selectedFilters.filteredView.length === 0
+    : Object.values(selectedFilters).every(filter => filter.length === 0);
 
   const handleDownload = () => {
     if (reportType === 'allModels') {

@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import FieldGroup from 'components/FieldGroup';
 import HelpText from 'components/HelpText';
+import RequiredAsterisk from 'components/RequiredAsterisk';
 
 export type FilterGroupType = {
   key: string;
@@ -16,6 +17,7 @@ export type FilterGroupType = {
     value: string;
   }[];
   displayShowAll: boolean;
+  required?: boolean;
   CustomComponent?: React.ComponentType<{
     selectedFilters: string[];
     setSelectedFilters: (filters: string[]) => void;
@@ -87,6 +89,7 @@ const FilterGroup = ({
       <legend>
         <h3 className={classNames('margin-y-1', labelClass)}>
           {filterGroup.label}
+          {filterGroup.required && <RequiredAsterisk />}
         </h3>
       </legend>
 

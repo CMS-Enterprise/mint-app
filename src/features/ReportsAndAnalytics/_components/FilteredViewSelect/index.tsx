@@ -24,7 +24,9 @@ const FilteredViewSelect = ({
         name="filtered-view"
         value={selectedFilters[0] || 'default'}
         onChange={e => {
-          setSelectedFilters([e.target.value]);
+          setSelectedFilters(
+            e.target.value === 'default' ? [] : [e.target.value]
+          );
         }}
       >
         <option value="default">
