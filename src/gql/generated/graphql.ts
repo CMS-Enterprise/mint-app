@@ -6986,6 +6986,20 @@ export type CreateCtatRequestMutationVariables = Exact<{
 
 export type CreateCtatRequestMutation = { __typename: 'Mutation', createCTATRequest: { __typename: 'CTATRequest', id: UUID, humanReadableID: string, createdDts: Time } };
 
+export type CreateCtatDiscussionMutationVariables = Exact<{
+  input: CtatDiscussionInput;
+}>;
+
+
+export type CreateCtatDiscussionMutation = { __typename: 'Mutation', createDiscussion: { __typename: 'CTATDiscussion', id: UUID, ticketID: UUID, content: string, posterRole: CtatDiscussionPoster, createdBy: UUID, createdDts: Time, createdByUserAccount: { __typename: 'UserAccount', givenName: string, familyName: string } } };
+
+export type GetCtatDiscussionsQueryVariables = Exact<{
+  ticketID: Scalars['UUID']['input'];
+}>;
+
+
+export type GetCtatDiscussionsQuery = { __typename: 'Query', discussions: Array<{ __typename: 'CTATDiscussion', id: UUID, ticketID: UUID, content: string, posterRole: CtatDiscussionPoster, createdBy: UUID, createdDts: Time, createdByUserAccount: { __typename: 'UserAccount', givenName: string, familyName: string } }> };
+
 export type GetCtatRequestQueryVariables = Exact<{
   id: Scalars['UUID']['input'];
 }>;
@@ -10430,6 +10444,100 @@ export function useCreateCtatRequestMutation(baseOptions?: Apollo.MutationHookOp
 export type CreateCtatRequestMutationHookResult = ReturnType<typeof useCreateCtatRequestMutation>;
 export type CreateCtatRequestMutationResult = Apollo.MutationResult<CreateCtatRequestMutation>;
 export type CreateCtatRequestMutationOptions = Apollo.BaseMutationOptions<CreateCtatRequestMutation, CreateCtatRequestMutationVariables>;
+export const CreateCtatDiscussionDocument = gql`
+    mutation CreateCtatDiscussion($input: CTATDiscussionInput!) {
+  createDiscussion(input: $input) {
+    id
+    ticketID
+    content
+    posterRole
+    createdBy
+    createdByUserAccount {
+      givenName
+      familyName
+    }
+    createdDts
+  }
+}
+    `;
+export type CreateCtatDiscussionMutationFn = Apollo.MutationFunction<CreateCtatDiscussionMutation, CreateCtatDiscussionMutationVariables>;
+
+/**
+ * __useCreateCtatDiscussionMutation__
+ *
+ * To run a mutation, you first call `useCreateCtatDiscussionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCtatDiscussionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCtatDiscussionMutation, { data, loading, error }] = useCreateCtatDiscussionMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCtatDiscussionMutation(baseOptions?: Apollo.MutationHookOptions<CreateCtatDiscussionMutation, CreateCtatDiscussionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCtatDiscussionMutation, CreateCtatDiscussionMutationVariables>(CreateCtatDiscussionDocument, options);
+      }
+export type CreateCtatDiscussionMutationHookResult = ReturnType<typeof useCreateCtatDiscussionMutation>;
+export type CreateCtatDiscussionMutationResult = Apollo.MutationResult<CreateCtatDiscussionMutation>;
+export type CreateCtatDiscussionMutationOptions = Apollo.BaseMutationOptions<CreateCtatDiscussionMutation, CreateCtatDiscussionMutationVariables>;
+export const GetCtatDiscussionsDocument = gql`
+    query GetCtatDiscussions($ticketID: UUID!) {
+  discussions(ticketID: $ticketID) {
+    id
+    ticketID
+    content
+    posterRole
+    createdBy
+    createdByUserAccount {
+      givenName
+      familyName
+    }
+    createdDts
+  }
+}
+    `;
+
+/**
+ * __useGetCtatDiscussionsQuery__
+ *
+ * To run a query within a React component, call `useGetCtatDiscussionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCtatDiscussionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCtatDiscussionsQuery({
+ *   variables: {
+ *      ticketID: // value for 'ticketID'
+ *   },
+ * });
+ */
+export function useGetCtatDiscussionsQuery(baseOptions: Apollo.QueryHookOptions<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables> & ({ variables: GetCtatDiscussionsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>(GetCtatDiscussionsDocument, options);
+      }
+export function useGetCtatDiscussionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>(GetCtatDiscussionsDocument, options);
+        }
+// @ts-ignore
+export function useGetCtatDiscussionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>): Apollo.UseSuspenseQueryResult<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>;
+export function useGetCtatDiscussionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>): Apollo.UseSuspenseQueryResult<GetCtatDiscussionsQuery | undefined, GetCtatDiscussionsQueryVariables>;
+export function useGetCtatDiscussionsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>(GetCtatDiscussionsDocument, options);
+        }
+export type GetCtatDiscussionsQueryHookResult = ReturnType<typeof useGetCtatDiscussionsQuery>;
+export type GetCtatDiscussionsLazyQueryHookResult = ReturnType<typeof useGetCtatDiscussionsLazyQuery>;
+export type GetCtatDiscussionsSuspenseQueryHookResult = ReturnType<typeof useGetCtatDiscussionsSuspenseQuery>;
+export type GetCtatDiscussionsQueryResult = Apollo.QueryResult<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>;
 export const GetCtatRequestDocument = gql`
     query GetCtatRequest($id: UUID!) {
   ctatRequest(id: $id) {
@@ -21204,6 +21312,8 @@ export const TypedGetPeopleImpactedDocument = {"kind":"Document","definitions":[
 export const TypedUpdateModelPlanBeneficiariesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateModelPlanBeneficiaries"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"PlanBeneficiariesChanges"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updatePlanBeneficiaries"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateModelPlanBeneficiariesMutation, UpdateModelPlanBeneficiariesMutationVariables>;
 export const TypedAdminUpdateCtatRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AdminUpdateCtatRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"changes"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CTATAdminUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"adminUpdateCTATRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"changes"},"value":{"kind":"Variable","name":{"kind":"Name","value":"changes"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"resolution"}},{"kind":"Field","name":{"kind":"Name","value":"assignedAdminUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]}}]} as unknown as DocumentNode<AdminUpdateCtatRequestMutation, AdminUpdateCtatRequestMutationVariables>;
 export const TypedCreateCtatRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCTATRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CTATRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createCTATRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]} as unknown as DocumentNode<CreateCtatRequestMutation, CreateCtatRequestMutationVariables>;
+export const TypedCreateCtatDiscussionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateCtatDiscussion"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CTATDiscussionInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDiscussion"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ticketID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"posterRole"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]} as unknown as DocumentNode<CreateCtatDiscussionMutation, CreateCtatDiscussionMutationVariables>;
+export const TypedGetCtatDiscussionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCtatDiscussions"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"ticketID"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"discussions"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"ticketID"},"value":{"kind":"Variable","name":{"kind":"Name","value":"ticketID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"ticketID"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"posterRole"}},{"kind":"Field","name":{"kind":"Name","value":"createdBy"}},{"kind":"Field","name":{"kind":"Name","value":"createdByUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}}]}}]}}]} as unknown as DocumentNode<GetCtatDiscussionsQuery, GetCtatDiscussionsQueryVariables>;
 export const TypedGetCtatRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCtatRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ctatRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"assignedAdminUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"resolution"}},{"kind":"Field","name":{"kind":"Name","value":"requesterUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroup"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroupOther"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiDivision"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiDivisionOther"}},{"kind":"Field","name":{"kind":"Name","value":"relatedMINTModels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contractActivityType"}},{"kind":"Field","name":{"kind":"Name","value":"contractActivityTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractName"}},{"kind":"Field","name":{"kind":"Name","value":"contractNumber"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"contractTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeededOther"}},{"kind":"Field","name":{"kind":"Name","value":"describeHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"requestUrgency"}},{"kind":"Field","name":{"kind":"Name","value":"dateAssistanceNeededBy"}},{"kind":"Field","name":{"kind":"Name","value":"supportingDocuments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"downloadUrl"}},{"kind":"Field","name":{"kind":"Name","value":"virusScanned"}},{"kind":"Field","name":{"kind":"Name","value":"virusClean"}}]}}]}}]}}]} as unknown as DocumentNode<GetCtatRequestQuery, GetCtatRequestQueryVariables>;
 export const TypedGetCtatRequestAdminDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCtatRequestAdmin"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ctatRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"assignedAdminUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"notes"}},{"kind":"Field","name":{"kind":"Name","value":"resolution"}},{"kind":"Field","name":{"kind":"Name","value":"requesterUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}},{"kind":"Field","name":{"kind":"Name","value":"commonName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroup"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroupOther"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiDivision"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiDivisionOther"}},{"kind":"Field","name":{"kind":"Name","value":"relatedMINTModels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"modelName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"contractActivityType"}},{"kind":"Field","name":{"kind":"Name","value":"contractActivityTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"contractName"}},{"kind":"Field","name":{"kind":"Name","value":"contractNumber"}},{"kind":"Field","name":{"kind":"Name","value":"contractType"}},{"kind":"Field","name":{"kind":"Name","value":"contractTypeOther"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeededOther"}},{"kind":"Field","name":{"kind":"Name","value":"describeHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"requestUrgency"}},{"kind":"Field","name":{"kind":"Name","value":"dateAssistanceNeededBy"}},{"kind":"Field","name":{"kind":"Name","value":"supportingDocuments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"fileName"}},{"kind":"Field","name":{"kind":"Name","value":"fileType"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"downloadUrl"}},{"kind":"Field","name":{"kind":"Name","value":"virusScanned"}},{"kind":"Field","name":{"kind":"Name","value":"virusClean"}}]}}]}}]}}]} as unknown as DocumentNode<GetCtatRequestAdminQuery, GetCtatRequestAdminQueryVariables>;
 export const TypedGetCtatRequestsAdminDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCtatRequestsAdmin"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ctatRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"ctatRequests"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"humanReadableID"}},{"kind":"Field","name":{"kind":"Name","value":"createdDts"}},{"kind":"Field","name":{"kind":"Name","value":"contractName"}},{"kind":"Field","name":{"kind":"Name","value":"cmmiGroup"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeeded"}},{"kind":"Field","name":{"kind":"Name","value":"typeOfHelpNeededOther"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"assignedAdminUserAccount"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"givenName"}},{"kind":"Field","name":{"kind":"Name","value":"familyName"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetCtatRequestsAdminQuery, GetCtatRequestsAdminQueryVariables>;

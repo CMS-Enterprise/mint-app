@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Button,
+  Icon,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
@@ -14,9 +15,12 @@ import {
   CtatContractType,
   CtatStatus,
   GetCtatRequestAdminQuery,
-  GetCtatRequestQuery
+  GetCtatRequestQuery,
+  useGetCtatDiscussionsQuery
 } from 'gql/generated/graphql';
+import { DateTime } from 'luxon';
 
+import Alert from 'components/Alert';
 import CollapsableLink from 'components/CollapsableLink';
 import {
   DescriptionDefinition,
@@ -24,6 +28,7 @@ import {
 } from 'components/DescriptionGroup';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import Spinner from 'components/Spinner';
 import usePlanTranslation from 'hooks/usePlanTranslation';
 import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
@@ -62,6 +67,18 @@ const DetailField = ({ label, definition, className }: DetailFieldProps) => (
 const EmptyValue = ({ children }: { children: ReactNode }) => (
   <p className="margin-0 text-base-dark text-italic">{children}</p>
 );
+
+const formatDiscussionRelativeDate = (createdDts: string): string => {
+  const created = DateTime.fromISO(createdDts);
+  if (!created.isValid) return '';
+
+  const daysAgo = DateTime.local().diff(created, 'days').days;
+  if (daysAgo < 2) return created.toRelativeCalendar() ?? '';
+  if (daysAgo >= 7 && daysAgo < 30) {
+    return created.toRelative({ unit: 'weeks' }) ?? '';
+  }
+  return created.toRelative() ?? '';
+};
 
 type SupportingDocument =
   GetCtatRequestQuery['ctatRequest']['supportingDocuments'][number];
@@ -154,6 +171,28 @@ const CtatTicketViewContent = ({
   );
 
   const isClosed = ticket.status === CtatStatus.CLOSED;
+
+  const {
+    data: discussionData,
+    loading: discussionsLoading,
+    error: discussionsError
+  } = useGetCtatDiscussionsQuery({
+    variables: { ticketID: ticket.id },
+    skip: ticket.id.length < 1
+  });
+  const discussions = discussionData?.discussions ?? [];
+  const latestDiscussion = discussions[0];
+  const latestDate = latestDiscussion
+    ? formatDiscussionRelativeDate(latestDiscussion.createdDts)
+    : '';
+  const latestPosterName = latestDiscussion
+    ? [
+        latestDiscussion.createdByUserAccount.givenName,
+        latestDiscussion.createdByUserAccount.familyName
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : '';
 
   const assignedMemberDisplay = formatUserDisplay(
     ticket.assignedAdminUserAccount
@@ -262,6 +301,65 @@ const CtatTicketViewContent = ({
           />
         </div>
       )}
+
+      <PageHeading
+        headingLevel="h3"
+        className="margin-top-0 margin-bottom-2 border-top border-base-light padding-top-3"
+      >
+        {contractAssistanceMiscT('ctatViewPanel.discussionHeading')}
+      </PageHeading>
+
+      <div className="border-bottom border-base-light padding-bottom-3 margin-bottom-4">
+        {discussionsLoading && (
+          <div className="padding-y-2">
+            <Spinner
+              aria-label={contractAssistanceMiscT(
+                'ctatViewPanel.discussionLoading'
+              )}
+            />
+          </div>
+        )}
+        {!discussionsLoading && discussionsError && (
+          <p className="margin-top-0" role="alert">
+            {contractAssistanceMiscT('ctatViewPanel.discussionError')}
+          </p>
+        )}
+        {!discussionsLoading && !discussionsError && (
+          <>
+            <p className="text-bold margin-top-0 margin-bottom-1">
+              {contractAssistanceMiscT('ctatViewPanel.discussionMessageCount', {
+                count: discussions.length
+              })}
+            </p>
+            {latestDiscussion ? (
+              <p className="margin-top-0 margin-bottom-2 text-base-dark">
+                {contractAssistanceMiscT(
+                  'ctatViewPanel.discussionLatestMessage',
+                  {
+                    name: latestPosterName,
+                    date: latestDate
+                  }
+                )}
+              </p>
+            ) : (
+              <p className="margin-top-0 margin-bottom-2 text-base-dark">
+                {contractAssistanceMiscT('ctatViewPanel.discussionEmpty')}
+              </p>
+            )}
+            {isClosed && (
+              <Alert type="info" slim className="margin-top-2 margin-bottom-2">
+                {contractAssistanceMiscT(
+                  'ctatViewPanel.discussionClosedNotice'
+                )}
+              </Alert>
+            )}
+            <span className="usa-link display-inline-flex flex-align-center margin-top-2">
+              {contractAssistanceMiscT('ctatViewPanel.goToDiscussion')}
+              <Icon.ArrowForward className="margin-left-1" aria-hidden="true" />
+            </span>
+          </>
+        )}
+      </div>
 
       <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
         {contractAssistanceMiscT('ctatViewPanel.ticketDetailsHeading')}
