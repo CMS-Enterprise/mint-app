@@ -6,12 +6,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/accesscontrol"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
-	"github.com/cms-enterprise/mint-app/pkg/storage"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
 // BaseStructPreUpdate applies incoming changes from to a TaskList Section, and validates it's status
 // It modifies the base struct object bs that is passed to it.
-func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[string]interface{}, principal authentication.Principal, store *storage.Store, applyChanges bool, checkAccess bool) error {
+func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[string]interface{}, principal authentication.Principal, np sqlutils.NamedPreparer, applyChanges bool, checkAccess bool) error {
 	//Future Enhancement: Update this to take a named preparer instead of a store
 	err := bs.SetModifiedBy(principal)
 	if err != nil {
@@ -19,7 +19,7 @@ func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[
 	}
 
 	if checkAccess {
-		err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
+		err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, np)
 		if err != nil {
 			return err
 		}
@@ -37,9 +37,9 @@ func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[
 }
 
 // BaseStructPreCreate is called before an object is created to make sure the user has permissions to do so
-func BaseStructPreCreate(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store, checkAccess bool) error {
+func BaseStructPreCreate(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, np sqlutils.NamedPreparer, checkAccess bool) error {
 	if checkAccess {
-		err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
+		err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, np)
 		if err != nil {
 			return err
 		}
@@ -48,9 +48,9 @@ func BaseStructPreCreate(logger *zap.Logger, bs models.IBaseStruct, principal au
 }
 
 // BaseStructPreDelete is called before an object is deleted to make sure the user has permissions to do so
-func BaseStructPreDelete(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store, checkAccess bool) error {
+func BaseStructPreDelete(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, np sqlutils.NamedPreparer, checkAccess bool) error {
 	if checkAccess {
-		err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
+		err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, np)
 		if err != nil {
 			return err
 		}

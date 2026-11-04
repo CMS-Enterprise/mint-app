@@ -57,7 +57,6 @@ func PlanBeneficiariesUpdate(logger *zap.Logger, id uuid.UUID, changes map[strin
 		logger,
 		existing.ModelPlanID,
 		principal,
-		store,
 		nil,
 		email.AddressBook{},
 	); err != nil {
