@@ -43,7 +43,6 @@ func (w *Worker) PrepareForClearanceJob(ctx context.Context, args ...interface{}
 		w.Store,
 		logger.Logger,
 		modelPlanID,
-		w.Store,
 		w.EmailService,
 		w.AddressBook,
 	)

@@ -159,7 +159,8 @@ const helpAndKnowledgeArticles: ArticleProps[] = [
   },
   {
     key: HelpArticle.ICIP_REPOSITORY,
-    route: 'https://share.cms.gov/center/CMMI/ICIPs/SitePages/Home.aspx',
+    route:
+      'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/ICIPs/SitePages/Home.aspx',
     translation: HelpArticle.ICIP_REPOSITORY,
     type: ArticleCategories.MODEL_CONCEPT_AND_DESIGN,
     external: true

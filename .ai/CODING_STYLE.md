@@ -12,11 +12,16 @@ This document defines the coding patterns and standards that MUST be followed ac
 - **Interfaces**: PascalCase; use an `I` prefix when naming an interface that mirrors a concrete struct (`IBaseStruct`)
 
 ### 1. Store Pattern (Database Access)
-All database operations must live in the `storage` package. New functions should follow this signature:
+Keep database queries in the `storage` package. Prefer package-level functions that accept `sqlutils.NamedPreparer` so callers can pass either a store or a transaction:
 ```go
-func  {Entity}{Action}(ctx context.Context, np sqlutils.NamedPreparer, logger logging.ILogger, {entity} *models.{Entity}) (*models.{Entity}, error)
+func {Entity}{Action}(ctx context.Context, np sqlutils.NamedPreparer, ...) (..., error)
 ```
-- Always use `sqlutils.NamedPreparer` to support both direct and transactional queries.
+- Use `*sqlx.Tx` when a storage function needs transaction-specific behavior, such as setting the transaction-scoped audit user before a delete:
+```go
+func {Entity}{Action}(ctx context.Context, tx *sqlx.Tx, ...) (..., error)
+```
+- Start transactions at the resolver or other operation boundary with `sqlutils.WithTransaction` (or `WithTransactionNoReturn` when there is no result). Pass the same `tx` to every storage call that belongs to that atomic operation, including reads needed to decide what to write. Let the wrapper commit or roll back.
+- Keep transaction-scoped audit-user setup with the storage operation that requires it; do not set an audit user unconditionally for every transaction.
 - Use parameterized queries to prevent SQL injection.
 - All models should embed `baseStruct`, which provides a UUID-based `ID` field.
 - SQL files are embedded via `//go:embed` in the `sqlqueries` package and loaded at startup; do not construct SQL strings at runtime. Do not embed SQL directly in the `storage` package

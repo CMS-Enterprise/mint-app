@@ -43,23 +43,22 @@ func PlanBasicsCreate(np sqlutils.NamedPreparer, logger *zap.Logger, basics *mod
 
 // PlanBasicsUpdate updates the plan basics for a given id. When the saved model type includes
 // MANDATORY_NATIONAL or MANDATORY_REGIONAL_OR_STATE, timeline application period dates are cleared in the same transaction.
-func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
-	return sqlutils.WithTransaction(s, func(tx *sqlx.Tx) (*models.PlanBasics, error) {
-		updated, err := updatePlanBasics(tx, logger, plan)
+func PlanBasicsUpdate(tx *sqlx.Tx, logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
+	updated, err := updatePlanBasics(tx, logger, plan)
+	if err != nil {
+		return nil, err
+	}
+	if models.ModelTypeListIncludesMandatory(updated.ModelType) {
+		if updated.ModifiedBy == nil {
+			return nil, fmt.Errorf("plan basics modified_by is nil after update")
+		}
+		_, err = PlanTimelineClearApplicationDatesByModelPlanID(tx, logger, updated.ModelPlanID, *updated.ModifiedBy)
 		if err != nil {
 			return nil, err
 		}
-		if models.ModelTypeListIncludesMandatory(updated.ModelType) {
-			if updated.ModifiedBy == nil {
-				return nil, fmt.Errorf("plan basics modified_by is nil after update")
-			}
-			_, err = PlanTimelineClearApplicationDatesByModelPlanID(tx, logger, updated.ModelPlanID, *updated.ModifiedBy)
-			if err != nil {
-				return nil, err
-			}
-		}
-		return updated, nil
-	})
+	}
+	return updated, nil
+
 }
 
 func updatePlanBasics(np sqlutils.NamedPreparer, logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {

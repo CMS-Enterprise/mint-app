@@ -11,11 +11,12 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/apperrors"
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 // ErrorIfNotCollaborator returns an error if the user is not a collaborator. It wraps checks to see if it has a model plan, or Discussion relation, with priority given to ModelPlan
-func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authentication.Principal, store *storage.Store) error {
+func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authentication.Principal, np sqlutils.NamedPreparer) error {
 
 	modelPlanRelation, hasModelPlanRelation := obj.(models.IModelPlanRelation)
 	discussionRelation, hasDiscussionRelation := obj.(models.IDiscussionRelation)
@@ -24,7 +25,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 
 	if hasModelPlanRelation { //Favor modelPlanRelation  first
 
-		isCollaborator, err := IsCollaboratorModelPlanID(logger, principal, store, modelPlanRelation.GetModelPlanID())
+		isCollaborator, err := IsCollaboratorModelPlanID(logger, principal, np, modelPlanRelation.GetModelPlanID())
 		if err != nil {
 			return err
 		}
@@ -37,7 +38,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 			// return fmt.Errorf("user %s is not a collaborator on model plan %s", principal, modelPlanRelation.GetModelPlanID().String())
 		}
 	} else if hasDiscussionRelation {
-		isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, store, discussionRelation.GetDiscussionID())
+		isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, np, discussionRelation.GetDiscussionID())
 		if err != nil {
 			return err
 		}
@@ -48,7 +49,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 			}
 		}
 	} else if hasMilestoneRelation {
-		isCollaborator, err := IsCollaboratorByMilestoneID(logger, principal, store, milestoneRelation.GetMilestoneID())
+		isCollaborator, err := IsCollaboratorByMilestoneID(logger, principal, np, milestoneRelation.GetMilestoneID())
 		if err != nil {
 			return err
 		}
@@ -67,7 +68,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 
 // IsCollaboratorModelPlanID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
 // Users with the Assessment role are automatically allowed access to update all records.
-func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
+func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Principal, np sqlutils.NamedPreparer, modelPlanID uuid.UUID) (bool, error) {
 	if principal.AllowASSESSMENT() {
 		return true, nil
 	}
@@ -77,7 +78,7 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 	}
 
 	if principal.AllowUSER() {
-		collaborator, err := storage.CheckIfCollaborator(store, logger, principal.Account().ID, modelPlanID)
+		collaborator, err := storage.CheckIfCollaborator(np, logger, principal.Account().ID, modelPlanID)
 		return collaborator, err
 	}
 
@@ -88,7 +89,7 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 
 // IsCollaboratorByDiscussionID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
 // Users with the Assessment role are automatically allowed access to update all records.
-func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, discussionID uuid.UUID) (bool, error) {
+func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.Principal, np sqlutils.NamedPreparer, discussionID uuid.UUID) (bool, error) {
 	if principal.AllowASSESSMENT() {
 		return true, nil
 	}
@@ -98,7 +99,7 @@ func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.P
 	}
 
 	if principal.AllowUSER() {
-		collaborator, err := storage.CheckIfCollaboratorByDiscussionID(store, logger, principal.Account().ID, discussionID)
+		collaborator, err := storage.CheckIfCollaboratorByDiscussionID(np, logger, principal.Account().ID, discussionID)
 		return collaborator, err
 
 	}
@@ -108,7 +109,7 @@ func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.P
 	return false, errors.New(errString)
 }
 
-func IsCollaboratorByMilestoneID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, milestoneID uuid.UUID) (bool, error) {
+func IsCollaboratorByMilestoneID(logger *zap.Logger, principal authentication.Principal, np sqlutils.NamedPreparer, milestoneID uuid.UUID) (bool, error) {
 	if principal.AllowASSESSMENT() {
 		return true, nil
 	}
@@ -118,7 +119,7 @@ func IsCollaboratorByMilestoneID(logger *zap.Logger, principal authentication.Pr
 	}
 
 	if principal.AllowUSER() {
-		return storage.CheckIfCollaboratorByMilestoneID(store, logger, principal.Account().ID, milestoneID)
+		return storage.CheckIfCollaboratorByMilestoneID(np, logger, principal.Account().ID, milestoneID)
 	}
 
 	errString := "user has no roles"
