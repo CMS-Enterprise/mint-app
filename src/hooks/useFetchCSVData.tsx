@@ -216,13 +216,6 @@ export const dataFormatter = (
       }
     }
 
-    // Prepare for clearance is a model-level section that is not part of the shared plan translation map
-    else if (parentKey === 'prepareForClearance' && key === 'status') {
-      mappedObj[key] = transformObj[key]
-        ? i18next.t(`modelPlanTaskList:taskListStatus.${transformObj[key]}`)
-        : transformObj[key];
-    }
-
     // Translates and predefined/custom date field to human readable date
     else if (
       allPlanTranslation?.[key]?.dataType === TranslationDataType.DATE &&

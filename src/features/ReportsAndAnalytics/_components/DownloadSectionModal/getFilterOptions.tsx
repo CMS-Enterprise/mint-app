@@ -84,6 +84,7 @@ export const getGroupFilteredViewFilters = (): FilterGroupType[] => {
     ),
     tagLabel: '',
     displayShowAll: false,
+    required: true,
     CustomComponent: FilteredViewSelect
   };
 
