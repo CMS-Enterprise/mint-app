@@ -5,19 +5,27 @@ import { screen, waitFor } from '@testing-library/react';
 import {
   AdminUpdateCtatRequestDocument,
   CtatcmmiGroupOption,
+  CtatDiscussionPoster,
   CtatHelpNeededType,
   CtatRequestUrgency,
   CtatStatus,
+  GetCtatDiscussionsDocument,
   GetCtatRequestAdminDocument,
   GetCtatRequestDocument,
   GetCtatRequestsAdminDocument
 } from 'gql/generated/graphql';
+import { DateTime, Settings } from 'luxon';
 import setup from 'tests/util';
-import { vi } from 'vitest';
+import { afterEach, vi } from 'vitest';
 
 import CtatTicketViewPanel from './index';
 
 const ticketId = '550e8400-e29b-41d4-a716-446655440000';
+const originalLuxonNow = Settings.now;
+
+afterEach(() => {
+  Settings.now = originalLuxonNow;
+});
 
 const baseTicket = {
   __typename: 'CTATRequest' as const,
@@ -136,12 +144,27 @@ const adminListMock = {
   }
 };
 
+const emptyDiscussionsMock = {
+  request: {
+    query: GetCtatDiscussionsDocument,
+    variables: { ticketID: ticketId }
+  },
+  result: {
+    data: { discussions: [] }
+  }
+};
+
 const renderPanel = (
   mocks: MockedResponse[],
   {
     isAdmin = false,
-    closeModal = vi.fn()
-  }: { isAdmin?: boolean; closeModal?: () => void } = {}
+    closeModal = vi.fn(),
+    discussionsMock = emptyDiscussionsMock
+  }: {
+    isAdmin?: boolean;
+    closeModal?: () => void;
+    discussionsMock?: MockedResponse;
+  } = {}
 ) => {
   const router = createMemoryRouter(
     [
@@ -162,7 +185,7 @@ const renderPanel = (
   );
 
   return setup(
-    <MockedProvider mocks={mocks}>
+    <MockedProvider mocks={[...mocks, discussionsMock]}>
       <RouterProvider router={router} />
     </MockedProvider>
   );
@@ -184,11 +207,138 @@ describe('CtatTicketViewPanel', () => {
     expect(screen.queryByText('No notes added')).not.toBeInTheDocument();
     expect(screen.getByText('No resolution added')).toBeInTheDocument();
     expect(screen.getByText('What happens next?')).toBeInTheDocument();
+    expect(await screen.findByText('0 messages')).toBeInTheDocument();
+    expect(screen.getByText('Latest message: No messages yet')).not.toHaveClass(
+      'text-italic'
+    );
+    expect(
+      screen.queryByText(/^This ticket is closed/)
+    ).not.toBeInTheDocument();
 
     const progressBox = screen
       .getByText('Ticket progress and resolution')
       .closest('div');
     expect(progressBox).toHaveClass('bg-primary-lighter');
+  });
+
+  it.each([
+    {
+      latestDate: () => DateTime.local().minus({ weeks: 2 }).toISO(),
+      expectedDate: '2 weeks ago'
+    },
+    {
+      latestDate: () =>
+        DateTime.local()
+          .set({ hour: 15, minute: 42, second: 0, millisecond: 0 })
+          .toISO(),
+      expectedDate: 'today at 03:42 PM'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ months: 1 }).toISO(),
+      expectedDate: '1 month ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ months: 2 }).toISO(),
+      expectedDate: '2 months ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 1 }).toISO(),
+      expectedDate: '1 year ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 2 }).toISO(),
+      expectedDate: '2 years ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 9 }).toISO(),
+      expectedDate: '9 years ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 10 }).toISO(),
+      expectedDate: '1 decade ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 20 }).toISO(),
+      expectedDate: '2 decades ago'
+    },
+    {
+      now: '2026-11-01T12:00:00',
+      latestDate: () => DateTime.local().minus({ days: 1 }).toISO(),
+      expectedDate: 'yesterday'
+    },
+    {
+      now: '2026-01-01T12:00:00',
+      latestDate: () => DateTime.local().minus({ days: 1 }).toISO(),
+      expectedDate: 'yesterday'
+    }
+  ])(
+    'shows the count and latest poster with $expectedDate',
+    async ({ now, latestDate, expectedDate }) => {
+      if (now) Settings.now = () => new Date(now).getTime();
+      const postedDate = latestDate();
+      const olderDate = DateTime.fromISO(postedDate ?? '')
+        .minus({ years: 1 })
+        .toISO();
+      const discussionsMock = {
+        request: emptyDiscussionsMock.request,
+        result: {
+          data: {
+            discussions: [
+              {
+                __typename: 'CTATDiscussion',
+                id: '660e8400-e29b-41d4-a716-446655440001',
+                ticketID: ticketId,
+                content: 'Latest message',
+                posterRole: CtatDiscussionPoster.ADMIN,
+                createdBy: '770e8400-e29b-41d4-a716-446655440002',
+                createdByUserAccount: {
+                  __typename: 'UserAccount',
+                  givenName: 'Jane',
+                  familyName: 'Smith'
+                },
+                createdDts: postedDate
+              },
+              {
+                __typename: 'CTATDiscussion',
+                id: '880e8400-e29b-41d4-a716-446655440003',
+                ticketID: ticketId,
+                content: 'Earlier message',
+                posterRole: CtatDiscussionPoster.REQUESTER,
+                createdBy: '990e8400-e29b-41d4-a716-446655440004',
+                createdByUserAccount: {
+                  __typename: 'UserAccount',
+                  givenName: 'Luke',
+                  familyName: 'Skywalker'
+                },
+                createdDts: olderDate
+              }
+            ]
+          }
+        }
+      };
+
+      renderPanel([openTicketMock], { discussionsMock });
+
+      expect(await screen.findByText('2 messages')).toBeInTheDocument();
+      expect(
+        screen.getByText(`Latest message: Jane Smith, ${expectedDate}`)
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('Latest message: No messages yet')
+      ).not.toBeInTheDocument();
+    }
+  );
+
+  it('shows a spinner while discussions load inside the ticket', async () => {
+    renderPanel([openTicketMock], {
+      discussionsMock: { ...emptyDiscussionsMock, delay: 500 }
+    });
+
+    await screen.findByText('CTAT-001');
+    expect(
+      screen.getByRole('progressbar', { name: 'Loading discussion…' })
+    ).toBeInTheDocument();
+    expect(await screen.findByText('0 messages')).toBeInTheDocument();
   });
 
   it('renders downloadable supporting documents when virus scan is clean', async () => {
@@ -285,6 +435,10 @@ describe('CtatTicketViewPanel', () => {
       screen.getByText('Mace Windu (mace.windu@cms.hhs.gov)')
     ).toBeInTheDocument();
     expect(screen.queryByText('What happens next?')).not.toBeInTheDocument();
+    expect(await screen.findByText('0 messages')).toBeInTheDocument();
+    expect(
+      screen.getByText(/^This ticket is closed/).closest('.usa-alert')
+    ).toHaveClass('usa-alert--info');
 
     const progressBox = screen
       .getByText('Ticket progress and resolution')
