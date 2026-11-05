@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import FieldGroup from 'components/FieldGroup';
 import HelpText from 'components/HelpText';
+import RequiredAsterisk from 'components/RequiredAsterisk';
 
 export type FilterGroupType = {
   key: string;
@@ -16,6 +17,7 @@ export type FilterGroupType = {
     value: string;
   }[];
   displayShowAll: boolean;
+  required?: boolean;
   CustomComponent?: React.ComponentType<{
     selectedFilters: string[];
     setSelectedFilters: (filters: string[]) => void;
@@ -26,6 +28,8 @@ type FilterGroupProps = {
   filterGroup: FilterGroupType;
   selectedFilters: string[];
   setSelectedFilters: (filters: string[]) => void;
+  className?: string;
+  labelClass?: string;
 };
 
 /**
@@ -34,7 +38,9 @@ type FilterGroupProps = {
 const FilterGroup = ({
   filterGroup,
   selectedFilters,
-  setSelectedFilters
+  setSelectedFilters,
+  className,
+  labelClass
 }: FilterGroupProps) => {
   const { t } = useTranslation('general');
 
@@ -74,9 +80,17 @@ const FilterGroup = ({
   };
 
   return (
-    <Fieldset className="mint-filter-group font-body-sm margin-bottom-2 border-bottom-1px border-base-light padding-bottom-4">
+    <Fieldset
+      className={classNames(
+        'mint-filter-group font-body-sm margin-bottom-2 border-bottom-1px border-base-light padding-bottom-4',
+        className
+      )}
+    >
       <legend>
-        <h3 className="margin-y-1">{filterGroup.label}</h3>
+        <h3 className={classNames('margin-y-1', labelClass)}>
+          {filterGroup.label}
+          {filterGroup.required && <RequiredAsterisk />}
+        </h3>
       </legend>
 
       {filterGroup.description && (

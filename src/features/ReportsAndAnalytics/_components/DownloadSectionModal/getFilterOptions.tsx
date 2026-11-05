@@ -1,0 +1,110 @@
+import type { ReportsType } from 'features/ReportsAndAnalytics';
+import FilteredViewSelect from 'features/ReportsAndAnalytics/_components/FilteredViewSelect';
+import { ModelStatus } from 'gql/generated/graphql';
+import i18next from 'i18next';
+
+import { FilterGroupType } from 'components/FilterGroup';
+import { tObject } from 'utils/translation';
+
+import MilestoneDateSelect from '../MilestoneDateSelect';
+
+export const getAllModelFilters = (
+  reportType: ReportsType = 'allModels'
+): FilterGroupType[] => {
+  const statusOptions = Object.entries(
+    tObject<string>('modelPlan:status.options')
+  );
+
+  const allOtherOptions = Object.entries(
+    tObject<string>(
+      'analytics:configureDownload.basicFilterOptions.other.options'
+    )
+  );
+
+  const otherOptions =
+    reportType === 'mtoMilestoneSummary'
+      ? allOtherOptions
+      : allOtherOptions.filter(([value]) => value !== 'AT_RISK_MILESTONES');
+
+  return [
+    {
+      key: 'status',
+      label: i18next.t(
+        `analytics:configureDownload.basicFilterOptions.status.label`
+      ),
+      options: statusOptions.map(([value, label]) => ({
+        label,
+        value
+      })),
+      tagLabel: '',
+      displayShowAll: false
+    },
+    {
+      key: 'other',
+      label: i18next.t(
+        `analytics:configureDownload.basicFilterOptions.other.label`
+      ),
+      options: otherOptions.map(([value, label]) => ({
+        label,
+        value
+      })),
+      tagLabel: '',
+      displayShowAll: false
+    }
+  ];
+};
+
+export const getBasicModelFilters = (): FilterGroupType[] => {
+  const allFilters = getAllModelFilters();
+
+  return allFilters.map(filterGroup => {
+    if (filterGroup.key === 'status') {
+      return {
+        ...filterGroup,
+        options: filterGroup.options?.filter(
+          option =>
+            option.value !== ModelStatus.ENDED &&
+            option.value !== ModelStatus.PAUSED &&
+            option.value !== ModelStatus.CANCELED
+        )
+      };
+    }
+
+    return filterGroup;
+  });
+};
+
+export const getGroupFilteredViewFilters = (): FilterGroupType[] => {
+  const allFilters = getAllModelFilters();
+
+  const filteredViewConfig = {
+    key: 'filteredView',
+    label: i18next.t(
+      `analytics:configureDownload.otherFilterOptions.filteredView.label`
+    ),
+    tagLabel: '',
+    displayShowAll: false,
+    required: true,
+    CustomComponent: FilteredViewSelect
+  };
+
+  return [filteredViewConfig, ...allFilters];
+};
+
+export const getMTOSummaryFilters = (): FilterGroupType[] => {
+  const allFilters = getAllModelFilters('mtoMilestoneSummary');
+
+  const milestoneDateFilterConfig = {
+    key: 'milestoneNeededBy',
+    label: i18next.t(
+      `analytics:configureDownload.otherFilterOptions.neededByDateRange.label`
+    ),
+    tagLabel: '',
+    displayShowAll: false,
+    CustomComponent: MilestoneDateSelect
+  };
+
+  allFilters.splice(1, 0, milestoneDateFilterConfig);
+
+  return allFilters;
+};

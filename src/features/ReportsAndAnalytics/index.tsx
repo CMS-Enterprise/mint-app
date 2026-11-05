@@ -27,6 +27,7 @@ import downloadAnalytics, {
   UsedAnalyticsSummaryKey
 } from 'features/ReportsAndAnalytics/util';
 import {
+  GetMtoMilestoneSummaryQuery,
   ModelShareSection,
   TableName,
   useGetAnalyticsSummaryQuery,
@@ -59,12 +60,17 @@ import { formatDateUtc } from 'utils/date';
 import { isAssessment } from 'utils/user';
 
 import DateRangeModal from './_components/DateRangeModal';
+import DownloadSectionModal from './_components/DownloadSectionModal';
 
 export type ReportsType =
   | 'mtoMilestoneSummary'
   | 'allModels'
   | 'basicModelInfo'
-  | 'ctat';
+  | 'ctat'
+  | 'groupFilteredView';
+
+export type MTOMilestoneSummary =
+  GetMtoMilestoneSummaryQuery['modelPlanCollection'];
 
 const ReportsAndAnalytics = () => {
   const { t: modelPlanT } = useTranslation('modelPlan');
@@ -116,6 +122,10 @@ const ReportsAndAnalytics = () => {
   const [isDownloadingAllCharts, setIsDownloadingAllCharts] =
     useState<boolean>(false);
 
+  const [isDownloadSectionOpen, setIsDownloadSectionOpen] = useState(false);
+
+  const [reportType, setReportType] = useState<ReportsType | null>(null);
+
   const [isDateRangeModalOpen, setIsDateRangeModalOpen] = useState(false);
 
   const [downloadingReport, setDownloadingReport] =
@@ -157,16 +167,24 @@ const ReportsAndAnalytics = () => {
 
     try {
       if (reportKey === 'mtoMilestoneSummary') {
-        await downloadMTOMilestoneSummary(
-          mtoMilestoneSummaryData,
-          'MINT-MTO_Milestone_Summary.xlsx'
-        );
+        await downloadMTOMilestoneSummary({
+          data: mtoMilestoneSummaryData
+        });
       } else if (reportKey === 'allModels') {
-        await fetchAllData(ModelShareSection.ALL);
+        await fetchAllData({
+          exportSection: ModelShareSection.ALL,
+          reportType: reportKey
+        });
       } else if (reportKey === 'basicModelInfo') {
-        await fetchAllData('basicModelInfo');
+        await fetchAllData({
+          exportSection: 'basicModelInfo',
+          reportType: reportKey
+        });
       } else if (reportKey === 'ctat') {
         await fetchCTATReport();
+      } else if (reportKey === 'groupFilteredView') {
+        setReportType(reportKey as ReportsType);
+        setIsDownloadSectionOpen(true);
       }
     } finally {
       setDownloadingReport(null);
@@ -200,6 +218,19 @@ const ReportsAndAnalytics = () => {
 
   return (
     <MainContent className="mint-body-normal">
+      {isDownloadSectionOpen && reportType && (
+        <DownloadSectionModal
+          isModalOpen={isDownloadSectionOpen}
+          closeModal={() => setIsDownloadSectionOpen(false)}
+          reportType={reportType}
+          mtoMilestoneSummaryData={
+            reportType === 'mtoMilestoneSummary'
+              ? mtoMilestoneSummaryData
+              : undefined
+          }
+        />
+      )}
+
       {isDateRangeModalOpen && (
         <DateRangeModal
           isModalOpen={isDateRangeModalOpen}
@@ -294,7 +325,9 @@ const ReportsAndAnalytics = () => {
                         {downloadingReport === reportKey
                           ? t('loading')
                           : t(
-                              reportKey === 'ctat' ? 'downloadAll' : 'download'
+                              reportKey === 'groupFilteredView'
+                                ? 'download'
+                                : 'downloadAll'
                             )}
 
                         {downloadingReport === reportKey && (
@@ -302,17 +335,26 @@ const ReportsAndAnalytics = () => {
                         )}
                       </Button>
 
-                      {reportKey === 'ctat' && (
+                      {reportKey !== 'groupFilteredView' && (
                         <Button
                           type="button"
                           data-testid="select-time-range-button"
                           unstyled
                           className="deep-underline"
                           onClick={() => {
-                            setIsDateRangeModalOpen(true);
+                            if (reportKey === 'ctat') {
+                              setIsDateRangeModalOpen(true);
+                            } else {
+                              setReportType(reportKey as ReportsType);
+                              setIsDownloadSectionOpen(true);
+                            }
                           }}
                         >
-                          {t('selectDateRange')}
+                          {t(
+                            reportKey === 'ctat'
+                              ? 'selectDateRange'
+                              : 'downloadSection'
+                          )}
                         </Button>
                       )}
                     </CardFooter>

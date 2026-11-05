@@ -21,7 +21,7 @@ export const CsvExportLink = ({
         type="button"
         className="usa-button usa-button--unstyled display-flex"
         onClick={() =>
-          modelPlanID ? fetchSingleData(modelPlanID) : fetchAllData()
+          modelPlanID ? fetchSingleData(modelPlanID) : fetchAllData({})
         }
       >
         {!modelPlanID && (
