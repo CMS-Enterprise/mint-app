@@ -345,6 +345,29 @@ export enum CtatContractType {
   TIME_AND_MATERIALS = 'TIME_AND_MATERIALS'
 }
 
+export type CtatDiscussion = {
+  __typename: 'CTATDiscussion';
+  content: Scalars['String']['output'];
+  createdBy: Scalars['UUID']['output'];
+  createdByUserAccount: UserAccount;
+  createdDts: Scalars['Time']['output'];
+  id: Scalars['UUID']['output'];
+  posterRole: CtatDiscussionPoster;
+  ticketID: Scalars['UUID']['output'];
+};
+
+/** Input for creating a CTAT Discussion */
+export type CtatDiscussionInput = {
+  content: Scalars['String']['input'];
+  ticketID: Scalars['UUID']['input'];
+};
+
+/** The role of the discussion poster */
+export enum CtatDiscussionPoster {
+  ADMIN = 'ADMIN',
+  REQUESTER = 'REQUESTER'
+}
+
 /** The selected type of help needed for a CTAT record. */
 export enum CtatHelpNeededType {
   CALM_SYSTEM_REQUISITION_SUPPORT = 'CALM_SYSTEM_REQUISITION_SUPPORT',
@@ -2527,6 +2550,7 @@ export type Mutation = {
   archiveMTOCommonMilestone: MtoCommonMilestone;
   createCTATRequest: CtatRequest;
   createCustomTimelineDate: CustomTimelineDate;
+  createDiscussion: CtatDiscussion;
   createDiscussionReply: DiscussionReply;
   createKeyContactCategory: KeyContactCategory;
   createKeyContactMailbox: KeyContact;
@@ -2691,6 +2715,12 @@ export type MutationCreateCtatRequestArgs = {
 /** Mutations definition for the schema */
 export type MutationCreateCustomTimelineDateArgs = {
   input: CustomTimelineDateCreateInput;
+};
+
+
+/** Mutations definition for the schema */
+export type MutationCreateDiscussionArgs = {
+  input: CtatDiscussionInput;
 };
 
 
@@ -5310,6 +5340,7 @@ export type Query = {
   ctatRequestsRequester: CtatRequestsTableDataRequester;
   currentUser: CurrentUser;
   customTimelineDate: CustomTimelineDate;
+  discussions: Array<CtatDiscussion>;
   existingModelCollection: Array<ExistingModel>;
   existingModelLink: ExistingModelLink;
   keyContact: KeyContact;
@@ -5389,6 +5420,12 @@ export type QueryCtatRequestArgs = {
 /** Query definition for the schema */
 export type QueryCustomTimelineDateArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryDiscussionsArgs = {
+  ticketID: Scalars['UUID']['input'];
 };
 
 
