@@ -63,14 +63,6 @@ const csvFieldsModelPlan = (t: TFunction): (CSVLabel | string)[] => [
     label: 'Model Plan task list status',
     value: 'taskListStatus'
   },
-  {
-    label: 'Prepare for clearance status',
-    value: 'prepareForClearance.status'
-  },
-  {
-    label: 'Prepare for clearance latest clearance date',
-    value: 'prepareForClearance.latestClearanceDts'
-  },
 
   // Basics
   'basics.modelCategory',

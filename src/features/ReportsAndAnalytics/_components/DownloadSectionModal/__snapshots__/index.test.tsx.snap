@@ -1,0 +1,403 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DownloadSectionModal > matches snapshot 1`] = `
+<body
+  class="ReactModal__Body--open"
+>
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div />
+  <div
+    data-react-modal-body-trap=""
+    style="position: absolute; opacity: 0;"
+    tabindex="0"
+  />
+  <div
+    class="ReactModalPortal"
+  >
+    <div
+      class="ReactModal__Overlay mint-modal__overlay"
+    >
+      <div
+        aria-modal="true"
+        class="ReactModal__Content mint-modal__content tablet:width-mobile-lg mint-body-normal overflow-y-visible"
+        role="dialog"
+        tabindex="-1"
+      >
+        <div
+          class="mint-modal__top-section display-flex text-base mint-modal__fixed-top"
+        >
+          <button
+            aria-label="Close Modal"
+            class="mint-modal__x-button text-base"
+            type="button"
+          >
+            <svg
+              aria-label="close"
+              class="usa-icon usa-icon--size-4"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="mint-modal__body margin-top-6 mint-modal__height overflow-y-auto"
+        >
+          <div
+            class="padding-bottom-8"
+          >
+            <div
+              class="margin-bottom-2"
+            >
+              <h3
+                aria-live="polite"
+                class="mint-h1 margin-top-0 margin-bottom-2"
+                tabindex="-1"
+              >
+                Configure download list
+              </h3>
+              <p
+                class="text-base-darkest margin-y-0"
+              >
+                Select the model statuses or groups of models you would like to include in this download. MINT will include all models from the selected groups in your excel download.
+              </p>
+            </div>
+            <fieldset
+              class="usa-fieldset mint-filter-group font-body-sm margin-bottom-2 border-bottom-1px border-base-light padding-bottom-4 border-bottom-0 margin-bottom-3 padding-bottom-0"
+              data-testid="fieldset"
+            >
+              <legend>
+                <h3
+                  class="margin-y-1 font-body-sm margin-top-0 margin-bottom-neg-2"
+                >
+                  Model status
+                </h3>
+              </legend>
+              <div
+                class="usa-form-group mint-filter-group__options margin-top-105"
+              >
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-PLAN_DRAFT"
+                    name="PLAN_DRAFT"
+                    type="checkbox"
+                    value="PLAN_DRAFT"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-PLAN_DRAFT"
+                  >
+                    Draft Model Plan
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-PLAN_COMPLETE"
+                    name="PLAN_COMPLETE"
+                    type="checkbox"
+                    value="PLAN_COMPLETE"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-PLAN_COMPLETE"
+                  >
+                    Model Plan complete
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-ICIP_COMPLETE"
+                    name="ICIP_COMPLETE"
+                    type="checkbox"
+                    value="ICIP_COMPLETE"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-ICIP_COMPLETE"
+                  >
+                    ICIP complete
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-INTERNAL_CMMI_CLEARANCE"
+                    name="INTERNAL_CMMI_CLEARANCE"
+                    type="checkbox"
+                    value="INTERNAL_CMMI_CLEARANCE"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-INTERNAL_CMMI_CLEARANCE"
+                  >
+                    In internal (CMMI) clearance
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-CMS_CLEARANCE"
+                    name="CMS_CLEARANCE"
+                    type="checkbox"
+                    value="CMS_CLEARANCE"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-CMS_CLEARANCE"
+                  >
+                    In CMS clearance
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-HHS_CLEARANCE"
+                    name="HHS_CLEARANCE"
+                    type="checkbox"
+                    value="HHS_CLEARANCE"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-HHS_CLEARANCE"
+                  >
+                    In HHS clearance
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-OMB_ASRF_CLEARANCE"
+                    name="OMB_ASRF_CLEARANCE"
+                    type="checkbox"
+                    value="OMB_ASRF_CLEARANCE"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-OMB_ASRF_CLEARANCE"
+                  >
+                    In OMB clearance
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-CLEARED"
+                    name="CLEARED"
+                    type="checkbox"
+                    value="CLEARED"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-CLEARED"
+                  >
+                    Cleared
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-ANNOUNCED"
+                    name="ANNOUNCED"
+                    type="checkbox"
+                    value="ANNOUNCED"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-ANNOUNCED"
+                  >
+                    Announced
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-ACTIVE"
+                    name="ACTIVE"
+                    type="checkbox"
+                    value="ACTIVE"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-ACTIVE"
+                  >
+                    Active
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-ENDED"
+                    name="ENDED"
+                    type="checkbox"
+                    value="ENDED"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-ENDED"
+                  >
+                    Ended
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-PAUSED"
+                    name="PAUSED"
+                    type="checkbox"
+                    value="PAUSED"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-PAUSED"
+                  >
+                    Paused
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="status-CANCELED"
+                    name="CANCELED"
+                    type="checkbox"
+                    value="CANCELED"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="status-CANCELED"
+                  >
+                    Canceled
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset
+              class="usa-fieldset mint-filter-group font-body-sm margin-bottom-2 border-bottom-1px border-base-light padding-bottom-4 border-bottom-0 margin-bottom-3 padding-bottom-0"
+              data-testid="fieldset"
+            >
+              <legend>
+                <h3
+                  class="margin-y-1 font-body-sm margin-top-0 margin-bottom-neg-2"
+                >
+                  Other categories
+                </h3>
+              </legend>
+              <div
+                class="usa-form-group mint-filter-group__options margin-top-105"
+              >
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="other-MY_MODELS"
+                    name="MY_MODELS"
+                    type="checkbox"
+                    value="MY_MODELS"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="other-MY_MODELS"
+                  >
+                    My models
+                  </label>
+                </div>
+                <div
+                  class="usa-checkbox"
+                  data-testid="checkbox"
+                >
+                  <input
+                    class="usa-checkbox__input"
+                    id="other-MODELS_I_FOLLOW"
+                    name="MODELS_I_FOLLOW"
+                    type="checkbox"
+                    value="MODELS_I_FOLLOW"
+                  />
+                  <label
+                    class="usa-checkbox__label"
+                    for="other-MODELS_I_FOLLOW"
+                  >
+                    Models I follow
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+            <div
+              class="margin-top-2 display-flex mint-modal__footer"
+            >
+              <button
+                class="usa-button margin-right-3 margin-top-0"
+                data-testid="button"
+                disabled=""
+                type="button"
+              >
+                Download
+              </button>
+              <button
+                class="usa-button usa-button--unstyled margin-top-0 deep-underline"
+                data-testid="button"
+                type="button"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
