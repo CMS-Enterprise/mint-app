@@ -89,7 +89,8 @@ const formatDiscussionRelativeDate = (createdDts: string): string => {
   }
 
   const daysAgo = now.diff(created, 'days').days;
-  if (daysAgo < 2) return created.toRelativeCalendar({ base: now }) ?? '';
+  if (daysAgo < 2)
+    return created.toRelativeCalendar({ base: now, unit: 'days' }) ?? '';
   if (daysAgo >= 7) {
     return created.toRelative({ base: now, unit: 'weeks' }) ?? '';
   }

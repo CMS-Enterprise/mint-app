@@ -14,13 +14,18 @@ import {
   GetCtatRequestDocument,
   GetCtatRequestsAdminDocument
 } from 'gql/generated/graphql';
-import { DateTime } from 'luxon';
+import { DateTime, Settings } from 'luxon';
 import setup from 'tests/util';
-import { vi } from 'vitest';
+import { afterEach, vi } from 'vitest';
 
 import CtatTicketViewPanel from './index';
 
 const ticketId = '550e8400-e29b-41d4-a716-446655440000';
+const originalLuxonNow = Settings.now;
+
+afterEach(() => {
+  Settings.now = originalLuxonNow;
+});
 
 const baseTicket = {
   __typename: 'CTATRequest' as const,
@@ -255,10 +260,21 @@ describe('CtatTicketViewPanel', () => {
     {
       latestDate: () => DateTime.local().minus({ years: 20 }).toISO(),
       expectedDate: '2 decades ago'
+    },
+    {
+      now: '2026-11-01T12:00:00',
+      latestDate: () => DateTime.local().minus({ days: 1 }).toISO(),
+      expectedDate: 'yesterday'
+    },
+    {
+      now: '2026-01-01T12:00:00',
+      latestDate: () => DateTime.local().minus({ days: 1 }).toISO(),
+      expectedDate: 'yesterday'
     }
   ])(
     'shows the count and latest poster with $expectedDate',
-    async ({ latestDate, expectedDate }) => {
+    async ({ now, latestDate, expectedDate }) => {
+      if (now) Settings.now = () => new Date(now).getTime();
       const postedDate = latestDate();
       const olderDate = DateTime.fromISO(postedDate ?? '')
         .minus({ years: 1 })
