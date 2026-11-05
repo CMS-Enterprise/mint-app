@@ -70,23 +70,25 @@ export type PlanTaskEntry =
 const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.MODEL_PLAN,
   PlanTaskKey.TWO_PAGER,
-  PlanTaskKey.MTO,
+  PlanTaskKey.SIX_PAGER,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
-  PlanTaskKey.SIX_PAGER,
-  PlanTaskKey.OA_PRESENTATION,
-  PlanTaskKey.PREPARE_FOR_CLEARANCE
+  PlanTaskKey.DRAFT_ICIP,
+  PlanTaskKey.MTO,
+  PlanTaskKey.PREPARE_FOR_CLEARANCE,
+  PlanTaskKey.OA_PRESENTATION
 ] as const;
 
 const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
   [PlanTaskKey.MODEL_PLAN]: '2022-01-01T00:00:00Z',
-  [PlanTaskKey.MTO]: '2022-01-02T00:00:00Z',
-  [PlanTaskKey.DATA_EXCHANGE]: '2022-01-03T00:00:00Z',
-  [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: '2022-01-04T00:00:00Z',
   [PlanTaskKey.TWO_PAGER]: '2022-01-04T00:00:00Z',
   [PlanTaskKey.SIX_PAGER]: '2022-01-05T00:00:00Z',
-  [PlanTaskKey.OA_PRESENTATION]: '2022-01-06T00:00:00Z',
-  [PlanTaskKey.PREPARE_FOR_CLEARANCE]: '2022-01-07T00:00:00Z'
+  [PlanTaskKey.DATA_EXCHANGE]: '2022-01-03T00:00:00Z',
+  [PlanTaskKey.WAIVER_ASSESSMENT_SURVEY]: '2022-01-04T00:00:00Z',
+  [PlanTaskKey.DRAFT_ICIP]: '2022-01-05T00:00:00Z',
+  [PlanTaskKey.MTO]: '2022-01-02T00:00:00Z',
+  [PlanTaskKey.PREPARE_FOR_CLEARANCE]: '2022-01-07T00:00:00Z',
+  [PlanTaskKey.OA_PRESENTATION]: '2022-01-06T00:00:00Z'
 };
 
 // SIX_PAGER and OA_PRESENTATION start UPCOMING in production (see models.PlanTask default seeding)
