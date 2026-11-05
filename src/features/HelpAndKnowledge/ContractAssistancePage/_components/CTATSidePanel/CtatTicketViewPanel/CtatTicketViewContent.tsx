@@ -71,13 +71,29 @@ const EmptyValue = ({ children }: { children: ReactNode }) => (
 const formatDiscussionRelativeDate = (createdDts: string): string => {
   const created = DateTime.fromISO(createdDts);
   if (!created.isValid) return '';
+  const now = DateTime.local();
 
-  const daysAgo = DateTime.local().diff(created, 'days').days;
-  if (daysAgo < 2) return created.toRelativeCalendar() ?? '';
-  if (daysAgo >= 7 && daysAgo < 30) {
-    return created.toRelative({ unit: 'weeks' }) ?? '';
+  if (created.hasSame(now, 'day')) {
+    return `today at ${created.toFormat('hh:mm a')}`;
   }
-  return created.toRelative() ?? '';
+  const yearsAgo = now.diff(created, 'years').years;
+  if (yearsAgo >= 10) {
+    const decadesAgo = Math.floor(yearsAgo / 10);
+    return `${decadesAgo} ${decadesAgo === 1 ? 'decade' : 'decades'} ago`;
+  }
+  if (yearsAgo >= 1) {
+    return created.toRelative({ base: now, unit: 'years' }) ?? '';
+  }
+  if (now.diff(created, 'months').months >= 1) {
+    return created.toRelative({ base: now, unit: 'months' }) ?? '';
+  }
+
+  const daysAgo = now.diff(created, 'days').days;
+  if (daysAgo < 2) return created.toRelativeCalendar({ base: now }) ?? '';
+  if (daysAgo >= 7) {
+    return created.toRelative({ base: now, unit: 'weeks' }) ?? '';
+  }
+  return created.toRelative({ base: now }) ?? '';
 };
 
 type SupportingDocument =

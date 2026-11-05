@@ -216,57 +216,102 @@ describe('CtatTicketViewPanel', () => {
     expect(progressBox).toHaveClass('bg-primary-lighter');
   });
 
-  it('shows the count and latest poster from ticket discussions', async () => {
-    const latestDate = DateTime.local().minus({ weeks: 2 }).toISO();
-    const olderDate = DateTime.local().minus({ weeks: 3 }).toISO();
-    const discussionsMock = {
-      request: emptyDiscussionsMock.request,
-      result: {
-        data: {
-          discussions: [
-            {
-              __typename: 'CTATDiscussion',
-              id: '660e8400-e29b-41d4-a716-446655440001',
-              ticketID: ticketId,
-              content: 'Latest message',
-              posterRole: CtatDiscussionPoster.ADMIN,
-              createdBy: '770e8400-e29b-41d4-a716-446655440002',
-              createdByUserAccount: {
-                __typename: 'UserAccount',
-                givenName: 'Jane',
-                familyName: 'Smith'
+  it.each([
+    {
+      latestDate: () => DateTime.local().minus({ weeks: 2 }).toISO(),
+      expectedDate: '2 weeks ago'
+    },
+    {
+      latestDate: () =>
+        DateTime.local()
+          .set({ hour: 15, minute: 42, second: 0, millisecond: 0 })
+          .toISO(),
+      expectedDate: 'today at 03:42 PM'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ months: 1 }).toISO(),
+      expectedDate: '1 month ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ months: 2 }).toISO(),
+      expectedDate: '2 months ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 1 }).toISO(),
+      expectedDate: '1 year ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 2 }).toISO(),
+      expectedDate: '2 years ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 9 }).toISO(),
+      expectedDate: '9 years ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 10 }).toISO(),
+      expectedDate: '1 decade ago'
+    },
+    {
+      latestDate: () => DateTime.local().minus({ years: 20 }).toISO(),
+      expectedDate: '2 decades ago'
+    }
+  ])(
+    'shows the count and latest poster with $expectedDate',
+    async ({ latestDate, expectedDate }) => {
+      const postedDate = latestDate();
+      const olderDate = DateTime.fromISO(postedDate ?? '')
+        .minus({ years: 1 })
+        .toISO();
+      const discussionsMock = {
+        request: emptyDiscussionsMock.request,
+        result: {
+          data: {
+            discussions: [
+              {
+                __typename: 'CTATDiscussion',
+                id: '660e8400-e29b-41d4-a716-446655440001',
+                ticketID: ticketId,
+                content: 'Latest message',
+                posterRole: CtatDiscussionPoster.ADMIN,
+                createdBy: '770e8400-e29b-41d4-a716-446655440002',
+                createdByUserAccount: {
+                  __typename: 'UserAccount',
+                  givenName: 'Jane',
+                  familyName: 'Smith'
+                },
+                createdDts: postedDate
               },
-              createdDts: latestDate
-            },
-            {
-              __typename: 'CTATDiscussion',
-              id: '880e8400-e29b-41d4-a716-446655440003',
-              ticketID: ticketId,
-              content: 'Earlier message',
-              posterRole: CtatDiscussionPoster.REQUESTER,
-              createdBy: '990e8400-e29b-41d4-a716-446655440004',
-              createdByUserAccount: {
-                __typename: 'UserAccount',
-                givenName: 'Luke',
-                familyName: 'Skywalker'
-              },
-              createdDts: olderDate
-            }
-          ]
+              {
+                __typename: 'CTATDiscussion',
+                id: '880e8400-e29b-41d4-a716-446655440003',
+                ticketID: ticketId,
+                content: 'Earlier message',
+                posterRole: CtatDiscussionPoster.REQUESTER,
+                createdBy: '990e8400-e29b-41d4-a716-446655440004',
+                createdByUserAccount: {
+                  __typename: 'UserAccount',
+                  givenName: 'Luke',
+                  familyName: 'Skywalker'
+                },
+                createdDts: olderDate
+              }
+            ]
+          }
         }
-      }
-    };
+      };
 
-    renderPanel([openTicketMock], { discussionsMock });
+      renderPanel([openTicketMock], { discussionsMock });
 
-    expect(await screen.findByText('2 messages')).toBeInTheDocument();
-    expect(
-      screen.getByText('Latest message: Jane Smith, 2 weeks ago')
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByText('Latest message: No messages yet')
-    ).not.toBeInTheDocument();
-  });
+      expect(await screen.findByText('2 messages')).toBeInTheDocument();
+      expect(
+        screen.getByText(`Latest message: Jane Smith, ${expectedDate}`)
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('Latest message: No messages yet')
+      ).not.toBeInTheDocument();
+    }
+  );
 
   it('shows a spinner while discussions load inside the ticket', async () => {
     renderPanel([openTicketMock], {
