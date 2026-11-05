@@ -28,6 +28,7 @@ SELECT
     UNP.iddoc_questionnaire_completed_notification_type,
     UNP.incorrect_model_status,
     UNP.mto_ready_for_review,
+    UNP.model_follower_update,
     UNP.mto_ready_for_review_notification_type,
     UNP.waiver_assessment_survey_marked_complete,
     UNP.waiver_assessment_survey_marked_complete_notification_type,

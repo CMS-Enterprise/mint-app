@@ -96,9 +96,13 @@ func (suite *ResolverSuite) TestPlanFavoriteDelete() {
 	suite.NoError(err)
 
 	del, err := PlanFavoriteDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, favorite.ModelPlanID)
-	suite.NoError(err)
+	suite.Require().NoError(err)
+	suite.Require().NotNil(del)
 	suite.EqualValues(del.ID, favorite.ID)
 
+	del, err = PlanFavoriteDelete(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, favorite.ModelPlanID)
+	suite.Nil(del)
+	suite.ErrorContains(err, "no existing favorite found")
 }
 
 // PlanFavoriteGet returns a plan favorite record

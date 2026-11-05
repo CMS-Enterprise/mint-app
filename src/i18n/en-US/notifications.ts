@@ -102,7 +102,26 @@ const notifications = {
       TASK_COMPLETED: {
         text: ' marked a task as complete for {{-modelName}}.',
         cta: 'View tasks'
+      },
+      MODEL_FOLLOWER_UPDATE: {
+        text: ' sent a message about {{-modelName}}.',
+        cta: {
+          view: 'View message',
+          hide: 'Hide message'
+        }
       }
+    },
+    modelFollowerUpdate: {
+      heading: 'A model ({{-abbreviation}}) has shared a message',
+      category: 'Category',
+      status: 'Status',
+      lastUpdated: 'Last updated',
+      modelLeads: 'Model lead(s)',
+      toBeDetermined: 'To be determined',
+      viewDetails: 'View more details in MINT',
+      newMessage: 'New message:',
+      footer:
+        'You received this notification because you are currently following this model. To stop receiving notifications for this model, unfollow it in MINT or adjust your <link1>notification settings</link1>.'
     },
     dailyDigest: {
       heading: 'Your daily updates',
@@ -191,6 +210,11 @@ const notifications = {
           {
             name: 'dailyDigestComplete',
             copy: 'Daily digest of changes to the models I’m following',
+            disable: ['IN_APP']
+          },
+          {
+            name: 'modelFollowerUpdate',
+            copy: 'When a model I follow sends an update message',
             disable: ['IN_APP']
           },
           {

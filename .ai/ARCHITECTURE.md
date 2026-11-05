@@ -39,3 +39,6 @@ MINT is a web application designed to help CMS staff collaborate on model plans.
 3. **Resolver** calls a **Service** (`pkg/services`) for business logic and auth checks.
 4. **Service** calls **Storage** (`pkg/storage`) for database operations.
 5. **Storage** returns **Models** (`pkg/models`) back up the chain.
+
+## Transaction Boundaries
+The resolver or other entry point that coordinates an atomic operation starts its transaction with `sqlutils.WithTransaction` or `sqlutils.WithTransactionNoReturn`. It passes the same `*sqlx.Tx` through all storage calls in that operation so reads and writes use one transaction. Storage functions perform the database work and generally accept `sqlutils.NamedPreparer`; operations that need transaction-specific behavior accept `*sqlx.Tx`. Audit-user variables used by delete triggers are set on the transaction by the relevant storage operation.

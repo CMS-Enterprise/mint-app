@@ -47,7 +47,7 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 		}
 
 		// MTO task progression: creating milestone data counts as starting the MTO
-		err = UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal)
 		if err != nil {
 			return nil, err
 		}
@@ -57,7 +57,11 @@ func MTOMilestoneCreateCustom(ctx context.Context, logger *zap.Logger, principal
 }
 
 // MTOMilestoneCreateCommon uses the provided information to create a new Custom MTO Milestone
-func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal authentication.Principal, store *storage.Store,
+func MTOMilestoneCreateCommon(
+	ctx context.Context,
+	logger *zap.Logger,
+	principal authentication.Principal,
+	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	modelPlanID uuid.UUID,
@@ -112,7 +116,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		milestone.FacilitatedBy = &commonMilestone.FacilitatedByRole
 		milestone.FacilitatedByOther = commonMilestone.FacilitatedByOther
 
-		if err := BaseStructPreCreate(logger, milestone, principal, store, true); err != nil {
+		if err := BaseStructPreCreate(logger, milestone, principal, tx, true); err != nil {
 			return nil, err
 		}
 		createdMilestone, err := storage.MTOMilestoneCreate(tx, logger, milestone)
@@ -127,7 +131,6 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 			principal,
 			logger,
 			tx,
-			store,
 			emailService,
 			addressBook,
 			createdMilestone.ID,
@@ -141,7 +144,7 @@ func MTOMilestoneCreateCommon(ctx context.Context, logger *zap.Logger, principal
 		}
 
 		// MTO task progression: creating milestone data counts as starting the MTO
-		err = UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
+		err = UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal)
 		if err != nil {
 			return nil, err
 		}
@@ -222,7 +225,6 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 		principal,
 		logger,
 		tx,
-		store, // this is used for the emails being sent later
 		emailService,
 		addressBook,
 		createdMilestone.ID,
@@ -236,7 +238,7 @@ func MTOMilestoneCreateCommonWithTXAllowConflicts(
 	}
 
 	// MTO task progression: creating milestone data counts as starting the MTO
-	err = UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal, store)
+	err = UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, modelPlanID, principal)
 	if err != nil {
 		return nil, err
 	}
@@ -288,7 +290,6 @@ func MTOMilestoneUpdate(
 				principal,
 				logger,
 				tx,
-				store,
 				emailService,
 				addressBook,
 				id,
@@ -307,7 +308,7 @@ func MTOMilestoneUpdate(
 		}
 
 		// MTO task progression: when MTO is started, mark task IN_PROGRESS
-		err := UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, updated.ModelPlanID, principal, store)
+		err := UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, updated.ModelPlanID, principal)
 		if err != nil {
 			return nil, err
 		}
@@ -386,7 +387,7 @@ func MTOMilestoneDelete(
 		}
 
 		// Check permissions
-		if err := BaseStructPreDelete(logger, existing, principal, store, true); err != nil {
+		if err := BaseStructPreDelete(logger, existing, principal, tx, true); err != nil {
 			return fmt.Errorf("error deleting mto milestone. user doesnt have permissions. %s", err)
 		}
 
@@ -396,7 +397,7 @@ func MTOMilestoneDelete(
 		}
 
 		// MTO task regression: recalculate task after deleting MTO data.
-		if err := UpdatePlanTaskStateOnMTODataDeleted(ctx, tx, logger, existing.ModelPlanID, principal, store, emailService, addressBook); err != nil {
+		if err := UpdatePlanTaskStateOnMTODataDeleted(ctx, tx, logger, existing.ModelPlanID, principal, emailService, addressBook); err != nil {
 			return fmt.Errorf("unable to recalculate MTO task after deleting milestone. Err %w", err)
 		}
 		return nil
@@ -435,7 +436,6 @@ func MTOMilestoneUpdateLinkedSolutionsWithTX(
 	principal authentication.Principal,
 	logger *zap.Logger,
 	tx *sqlx.Tx,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 	milestoneID uuid.UUID,
@@ -498,18 +498,25 @@ func MTOMilestoneUpdateLinkedSolutions(
 	// Future Enhancement see about replacing this with a helper function that expects to return a slice instead of a single type
 	err = sqlutils.WithTransactionNoReturn(store, func(tx *sqlx.Tx) error {
 
-		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(ctx, principal, logger, tx,
-			store,
+		currentLinkedSolutions, err := MTOMilestoneUpdateLinkedSolutionsWithTX(
+			ctx,
+			principal,
+			logger,
+			tx,
 			emailService,
 			addressBook,
-			id, milestone.ModelPlanID, solutionIDs, commonSolutionKeys)
+			id,
+			milestone.ModelPlanID,
+			solutionIDs,
+			commonSolutionKeys,
+		)
 		if err != nil {
 			return err
 		}
 		retSolutions = currentLinkedSolutions
 
 		// MTO task progression: if linking creates MTO data, mark task IN_PROGRESS
-		updErr := UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, milestone.ModelPlanID, principal, store)
+		updErr := UpdatePlanTaskStateOnMTOStarted(ctx, tx, logger, milestone.ModelPlanID, principal)
 		if updErr != nil {
 			return updErr
 		}

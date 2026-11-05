@@ -11,8 +11,8 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 )
 
-// PlanTaskDocumentLinkCreate creates a new plan task document link in the database.
-func PlanTaskDocumentLinkCreate(
+// planTaskDocumentLinkCreate creates a new plan task document link in the database.
+func planTaskDocumentLinkCreate(
 	np sqlutils.NamedPreparer,
 	_ *zap.Logger,
 	planTaskDocumentLink *models.PlanTaskDocumentLink,

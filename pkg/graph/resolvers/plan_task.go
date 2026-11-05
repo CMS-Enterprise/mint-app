@@ -51,11 +51,10 @@ func updatePlanTaskStateByKey(
 	newState models.PlanTaskState,
 	principal authentication.Principal,
 	attributedTo uuid.UUID,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
-) (*models.PlanTask, error) {
-	if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, store); err != nil {
+) (*models.PlanTaskWithPreviousState, error) {
+	if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, np); err != nil {
 		return nil, err
 	}
 
@@ -80,20 +79,20 @@ func updatePlanTaskStateByKey(
 		if task == nil {
 			return nil, fmt.Errorf("plan task not found for modelPlanID %s and key %s", modelPlanID, key)
 		}
-		return task, nil
+		return &models.PlanTaskWithPreviousState{PlanTask: *task, PreviousState: task.State}, nil
 	}
 
 	didTransitionToDo := result.PreviousState != models.PlanTaskStateToDo && newState == models.PlanTaskStateToDo
 	didTransitionToComplete := result.PreviousState != models.PlanTaskStateComplete && newState == models.PlanTaskStateComplete
 
 	if didTransitionToComplete {
-		trySendPlanTaskCompletedNotifications(ctx, np, logger, store, modelPlanID, &result.PlanTask, principal, emailService, addressBook)
+		trySendPlanTaskCompletedNotifications(ctx, np, logger, modelPlanID, &result.PlanTask, principal, emailService, addressBook)
 	}
 	if didTransitionToDo {
-		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, &result.PlanTask, principal.Account().ID, emailService, addressBook)
+		trySendPlanTaskNewAvailableNotifications(ctx, np, logger, modelPlanID, &result.PlanTask, principal.Account().ID, emailService, addressBook)
 	}
 
-	return &result.PlanTask, nil
+	return result, nil
 }
 
 // PrepareForClearanceActivateIfDue moves the PREPARE_FOR_CLEARANCE task for modelPlanID from
@@ -115,7 +114,6 @@ func PrepareForClearanceActivateIfDue(
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
 	modelPlanID uuid.UUID,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
@@ -127,7 +125,6 @@ func PrepareForClearanceActivateIfDue(
 		modelPlanID,
 		nil,
 		systemAccountID,
-		store,
 		emailService,
 		addressBook,
 	)
@@ -162,20 +159,20 @@ func PlanTaskMarkComplete(
 	}
 
 	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
-		task, err := updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, key, newState, principal, principal.Account().ID, store, emailService, addressBook)
+		result, err := updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, key, newState, principal, principal.Account().ID, emailService, addressBook)
 		if err != nil {
 			return nil, err
 		}
 
 		if isComplete {
 			if targetKey, ok := key.ActivationTarget(); ok {
-				if err := activateUpcomingPlanTask(ctx, tx, logger, modelPlanID, targetKey, principal, store, emailService, addressBook); err != nil {
+				if err := activateUpcomingPlanTask(ctx, tx, logger, modelPlanID, targetKey, principal, emailService, addressBook); err != nil {
 					return nil, err
 				}
 			}
 		}
 
-		return task, nil
+		return &result.PlanTask, nil
 	})
 }
 
@@ -192,7 +189,6 @@ func activateUpcomingPlanTask(
 	modelPlanID uuid.UUID,
 	key models.PlanTaskKey,
 	principal authentication.Principal,
-	store *storage.Store,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
@@ -204,18 +200,18 @@ func activateUpcomingPlanTask(
 		return nil
 	}
 
-	trySendPlanTaskNewAvailableNotifications(ctx, np, logger, store, modelPlanID, task, principal.Account().ID, emailService, addressBook)
+	trySendPlanTaskNewAvailableNotifications(ctx, np, logger, modelPlanID, task, principal.Account().ID, emailService, addressBook)
 	return nil
 }
 
 // planTaskNotificationRecipientsByRole gets lists of both all model leads (regardless of settings) and non-model-leads (respecting settings) for notification purposes
 func planTaskNotificationRecipientsByRole(
 	logger *zap.Logger,
-	store *storage.Store,
+	np sqlutils.NamedPreparer,
 	modelPlanID uuid.UUID,
 	recipients []*models.UserAccountAndNotificationPreferences,
 ) ([]*models.UserAccountAndNotificationPreferences, []*models.UserAccountAndNotificationPreferences, error) {
-	collaborators, err := storage.PlanCollaboratorGetByModelPlanID(store, logger, modelPlanID)
+	collaborators, err := storage.PlanCollaboratorGetByModelPlanID(np, logger, modelPlanID)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -252,12 +248,38 @@ func trySendPlanTaskNewAvailableNotifications(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
-	store *storage.Store,
 	modelPlanID uuid.UUID,
 	task *models.PlanTask,
 	actorID uuid.UUID,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
+) {
+	trySendPlanTaskNewAvailableNotificationsParts(ctx, np, logger, modelPlanID, task, actorID, emailService, addressBook, true)
+}
+
+func trySendPlanTaskNewAvailableEmails(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	task *models.PlanTask,
+	actorID uuid.UUID,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	trySendPlanTaskNewAvailableNotificationsParts(ctx, np, logger, modelPlanID, task, actorID, emailService, addressBook, false)
+}
+
+func trySendPlanTaskNewAvailableNotificationsParts(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	task *models.PlanTask,
+	actorID uuid.UUID,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	createInApp bool,
 ) {
 	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
@@ -271,7 +293,7 @@ func trySendPlanTaskNewAvailableNotifications(
 		return
 	}
 
-	leadRecipients, nonLeadRecipients, err := planTaskNotificationRecipientsByRole(logger, store, modelPlanID, recipients)
+	leadRecipients, nonLeadRecipients, err := planTaskNotificationRecipientsByRole(logger, np, modelPlanID, recipients)
 	if err != nil {
 		logger.Error("failed to get new task available model lead recipients", zap.Error(err))
 		return
@@ -279,7 +301,7 @@ func trySendPlanTaskNewAvailableNotifications(
 
 	nonLeadEmailRecipients, nonLeadInAppRecipients := models.FilterNotificationPreferences(nonLeadRecipients)
 	inAppRecipients := append(leadRecipients, nonLeadInAppRecipients...)
-	if len(inAppRecipients) > 0 {
+	if createInApp && len(inAppRecipients) > 0 {
 		_, err = notifications.ActivityNewTaskAddedCreate(
 			ctx,
 			actorID,
@@ -370,12 +392,38 @@ func trySendPlanTaskCompletedNotifications(
 	ctx context.Context,
 	np sqlutils.NamedPreparer,
 	logger *zap.Logger,
-	store *storage.Store,
 	modelPlanID uuid.UUID,
 	task *models.PlanTask,
 	principal authentication.Principal,
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
+) {
+	trySendPlanTaskCompletedNotificationsParts(ctx, np, logger, modelPlanID, task, principal, emailService, addressBook, true)
+}
+
+func trySendPlanTaskCompletedEmails(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	task *models.PlanTask,
+	principal authentication.Principal,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	trySendPlanTaskCompletedNotificationsParts(ctx, np, logger, modelPlanID, task, principal, emailService, addressBook, false)
+}
+
+func trySendPlanTaskCompletedNotificationsParts(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	task *models.PlanTask,
+	principal authentication.Principal,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	createInApp bool,
 ) {
 	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
 	if err != nil {
@@ -389,7 +437,7 @@ func trySendPlanTaskCompletedNotifications(
 		return
 	}
 
-	leadRecipients, nonLeadRecipients, err := planTaskNotificationRecipientsByRole(logger, store, modelPlanID, recipients)
+	leadRecipients, nonLeadRecipients, err := planTaskNotificationRecipientsByRole(logger, np, modelPlanID, recipients)
 	if err != nil {
 		logger.Error("failed to get task completed model lead recipients", zap.Error(err))
 		return
@@ -398,7 +446,7 @@ func trySendPlanTaskCompletedNotifications(
 	// we only want to filter our non-leads. all leads receive these notifications regardless of their settings
 	nonLeadEmailRecipients, nonLeadInAppRecipients := models.FilterNotificationPreferences(nonLeadRecipients)
 	inAppRecipients := append(leadRecipients, nonLeadInAppRecipients...)
-	if len(inAppRecipients) > 0 {
+	if createInApp && len(inAppRecipients) > 0 {
 		_, err = notifications.ActivityTaskCompletedCreate(
 			ctx,
 			principal.Account().ID,
