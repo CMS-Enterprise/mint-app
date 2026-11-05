@@ -8,6 +8,7 @@ func (suite *ResolverSuite) TestUserNotificationPreferencesGetByUserID() {
 	suite.NotNil(pref)
 
 	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.DailyDigestComplete)
+	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.ModelFollowerUpdate)
 	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.AddedAsCollaborator)
 	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.TaggedInDiscussion)
 	suite.EqualValues(models.DefaultUserNotificationPreferencesFlags(), pref.TaggedInDiscussionReply)

@@ -164,6 +164,19 @@ const ShareExportButton = ({
               type="button"
               onClick={() => {
                 setIsMenuOpen(false);
+                navigate(
+                  `/models/${modelID}/collaboration-area/send-message-to-followers`
+                );
+              }}
+              className="share-export-modal__menu-item text-left padding-y-1 padding-x-2 width-full text-no-underline text-black"
+              unstyled
+            >
+              {generalReadOnlyT('modal.sendMessageToFollowers')}
+            </Button>,
+            <Button
+              type="button"
+              onClick={() => {
+                setIsMenuOpen(false);
                 setIsRemoveModalOpen(true);
               }}
               className="share-export-modal__menu-item text-left padding-y-1 padding-x-2 width-full text-no-underline text-red"

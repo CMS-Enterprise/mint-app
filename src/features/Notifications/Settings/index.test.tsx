@@ -21,6 +21,10 @@ type NotificationPerferenceType =
 const notificationPreferences: NotificationPerferenceType = {
   __typename: 'UserNotificationPreferences',
   id: '123',
+  modelFollowerUpdate: [
+    UserNotificationPreferenceFlag.IN_APP,
+    UserNotificationPreferenceFlag.EMAIL
+  ],
   dailyDigestComplete: [
     UserNotificationPreferenceFlag.EMAIL,
     UserNotificationPreferenceFlag.IN_APP
@@ -118,6 +122,15 @@ describe('Notification Settings Page', () => {
       expect(
         screen.getByTestId('notification-setting-in-app-dailyDigestComplete')
       ).toBeChecked();
+      expect(
+        screen.getByTestId('notification-setting-email-modelFollowerUpdate')
+      ).toBeChecked();
+      expect(
+        screen.getByTestId('notification-setting-in-app-modelFollowerUpdate')
+      ).toBeChecked();
+      expect(
+        screen.getByTestId('notification-setting-in-app-modelFollowerUpdate')
+      ).toBeDisabled();
 
       expect(
         screen.getByTestId('notification-setting-email-incorrectModelStatus')
