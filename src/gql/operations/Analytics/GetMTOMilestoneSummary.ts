@@ -5,6 +5,10 @@ export default gql(/* GraphQL */ `
     modelPlanCollection(filter: INCLUDE_ALL) {
       id
       modelName
+      status
+      isCollaborator
+      isFavorite
+
       mtoMatrix {
         # Used to cache the mto matrix - always include
         info {

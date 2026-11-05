@@ -43,6 +43,7 @@ import {
   GetMtoTemplatesDocument,
   GetMtoTemplatesQuery,
   GetMtoTemplatesQueryVariables,
+  ModelStatus,
   MtoCommonSolutionCmsComponent,
   MtoCommonSolutionKey,
   MtoCommonSolutionOwnerType,
@@ -1141,6 +1142,9 @@ export const mtoMilestoneSummaryMock: MockedResponse<
             __typename: 'ModelPlan',
             id: '123',
             modelName: 'Test Model 1',
+            status: ModelStatus.PLAN_DRAFT,
+            isCollaborator: true,
+            isFavorite: true,
             mtoMatrix: {
               __typename: 'ModelsToOperationMatrix',
               info: {
@@ -1179,6 +1183,9 @@ export const mtoMilestoneSummaryMock: MockedResponse<
             __typename: 'ModelPlan',
             id: '456',
             modelName: 'Test Model 2',
+            status: ModelStatus.PLAN_DRAFT,
+            isCollaborator: true,
+            isFavorite: true,
             mtoMatrix: {
               __typename: 'ModelsToOperationMatrix',
               info: {

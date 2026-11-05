@@ -20,6 +20,7 @@ SELECT
     iddoc_questionnaire_completed_notification_type,
     incorrect_model_status,
     mto_ready_for_review,
+    model_follower_update,
     mto_ready_for_review_notification_type,
     waiver_assessment_survey_marked_complete,
     waiver_assessment_survey_marked_complete_notification_type,
