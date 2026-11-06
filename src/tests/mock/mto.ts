@@ -95,6 +95,7 @@ const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
 // and only move to TO_DO once activated, so default them to UPCOMING here too unless overridden.
 const KEYS_DEFAULTING_TO_UPCOMING = new Set<PlanTaskKey>([
   PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.DRAFT_ICIP,
   PlanTaskKey.OA_PRESENTATION,
   PlanTaskKey.PREPARE_FOR_CLEARANCE
 ]);
