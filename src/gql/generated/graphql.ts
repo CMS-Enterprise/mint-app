@@ -5151,6 +5151,7 @@ export type PlanTask = {
 /** PlanTaskKey identifies which of the plan tasks this row represents. */
 export enum PlanTaskKey {
   DATA_EXCHANGE = 'DATA_EXCHANGE',
+  DRAFT_ICIP = 'DRAFT_ICIP',
   MODEL_PLAN = 'MODEL_PLAN',
   MTO = 'MTO',
   OA_PRESENTATION = 'OA_PRESENTATION',
