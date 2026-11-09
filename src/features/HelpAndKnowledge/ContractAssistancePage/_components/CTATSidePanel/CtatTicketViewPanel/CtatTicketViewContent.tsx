@@ -18,7 +18,6 @@ import {
   GetCtatRequestQuery,
   useGetCtatDiscussionsQuery
 } from 'gql/generated/graphql';
-import { DateTime } from 'luxon';
 
 import Alert from 'components/Alert';
 import CollapsableLink from 'components/CollapsableLink';
@@ -34,7 +33,11 @@ import { formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 import { tObject } from 'utils/translation';
 
-import { formatHelpTypes, formatUserDisplay } from '../../../utils';
+import {
+  formatDiscussionRelativeDate,
+  formatHelpTypes,
+  formatUserDisplay
+} from '../../../utils';
 
 import CtatTicketAdminForm from './CtatTicketAdminForm';
 
@@ -67,35 +70,6 @@ const DetailField = ({ label, definition, className }: DetailFieldProps) => (
 const EmptyValue = ({ children }: { children: ReactNode }) => (
   <p className="margin-0 text-base-dark text-italic">{children}</p>
 );
-
-const formatDiscussionRelativeDate = (createdDts: string): string => {
-  const created = DateTime.fromISO(createdDts);
-  if (!created.isValid) return '';
-  const now = DateTime.local();
-
-  if (created.hasSame(now, 'day')) {
-    return `today at ${created.toFormat('hh:mm a')}`;
-  }
-  const yearsAgo = now.diff(created, 'years').years;
-  if (yearsAgo >= 10) {
-    const decadesAgo = Math.floor(yearsAgo / 10);
-    return `${decadesAgo} ${decadesAgo === 1 ? 'decade' : 'decades'} ago`;
-  }
-  if (yearsAgo >= 1) {
-    return created.toRelative({ base: now, unit: 'years' }) ?? '';
-  }
-  if (now.diff(created, 'months').months >= 1) {
-    return created.toRelative({ base: now, unit: 'months' }) ?? '';
-  }
-
-  const daysAgo = now.diff(created, 'days').days;
-  if (daysAgo < 2)
-    return created.toRelativeCalendar({ base: now, unit: 'days' }) ?? '';
-  if (daysAgo >= 7) {
-    return created.toRelative({ base: now, unit: 'weeks' }) ?? '';
-  }
-  return created.toRelative({ base: now }) ?? '';
-};
 
 type SupportingDocument =
   GetCtatRequestQuery['ctatRequest']['supportingDocuments'][number];

@@ -14,19 +14,13 @@ import {
   GetCtatRequestDocument,
   GetCtatRequestsAdminDocument
 } from 'gql/generated/graphql';
-import { DateTime, Settings } from 'luxon';
+import { DateTime } from 'luxon';
 import setup from 'tests/util';
-import { afterEach, vi } from 'vitest';
+import { vi } from 'vitest';
 
 import CtatTicketViewPanel from './index';
 
 const ticketId = '550e8400-e29b-41d4-a716-446655440000';
-const originalLuxonNow = Settings.now;
-
-afterEach(() => {
-  Settings.now = originalLuxonNow;
-});
-
 const baseTicket = {
   __typename: 'CTATRequest' as const,
   id: ticketId,
@@ -221,113 +215,57 @@ describe('CtatTicketViewPanel', () => {
     expect(progressBox).toHaveClass('bg-primary-lighter');
   });
 
-  it.each([
-    {
-      latestDate: () => DateTime.local().minus({ weeks: 2 }).toISO(),
-      expectedDate: '2 weeks ago'
-    },
-    {
-      latestDate: () =>
-        DateTime.local()
-          .set({ hour: 15, minute: 42, second: 0, millisecond: 0 })
-          .toISO(),
-      expectedDate: 'today at 03:42 PM'
-    },
-    {
-      latestDate: () => DateTime.local().minus({ months: 1 }).toISO(),
-      expectedDate: '1 month ago'
-    },
-    {
-      latestDate: () => DateTime.local().minus({ months: 2 }).toISO(),
-      expectedDate: '2 months ago'
-    },
-    {
-      latestDate: () => DateTime.local().minus({ years: 1 }).toISO(),
-      expectedDate: '1 year ago'
-    },
-    {
-      latestDate: () => DateTime.local().minus({ years: 2 }).toISO(),
-      expectedDate: '2 years ago'
-    },
-    {
-      latestDate: () => DateTime.local().minus({ years: 9 }).toISO(),
-      expectedDate: '9 years ago'
-    },
-    {
-      latestDate: () => DateTime.local().minus({ years: 10 }).toISO(),
-      expectedDate: '1 decade ago'
-    },
-    {
-      latestDate: () => DateTime.local().minus({ years: 20 }).toISO(),
-      expectedDate: '2 decades ago'
-    },
-    {
-      now: '2026-11-01T12:00:00',
-      latestDate: () => DateTime.local().minus({ days: 1 }).toISO(),
-      expectedDate: 'yesterday'
-    },
-    {
-      now: '2026-01-01T12:00:00',
-      latestDate: () => DateTime.local().minus({ days: 1 }).toISO(),
-      expectedDate: 'yesterday'
-    }
-  ])(
-    'shows the count and latest poster with $expectedDate',
-    async ({ now, latestDate, expectedDate }) => {
-      if (now) Settings.now = () => new Date(now).getTime();
-      const postedDate = latestDate();
-      const olderDate = DateTime.fromISO(postedDate ?? '')
-        .minus({ years: 1 })
-        .toISO();
-      const discussionsMock = {
-        request: emptyDiscussionsMock.request,
-        result: {
-          data: {
-            discussions: [
-              {
-                __typename: 'CTATDiscussion',
-                id: '660e8400-e29b-41d4-a716-446655440001',
-                ticketID: ticketId,
-                content: 'Latest message',
-                posterRole: CtatDiscussionPoster.ADMIN,
-                createdBy: '770e8400-e29b-41d4-a716-446655440002',
-                createdByUserAccount: {
-                  __typename: 'UserAccount',
-                  givenName: 'Jane',
-                  familyName: 'Smith'
-                },
-                createdDts: postedDate
+  it('shows the count and latest poster from ticket discussions', async () => {
+    const postedDate = DateTime.local().minus({ weeks: 2 }).toISO();
+    const olderDate = DateTime.local().minus({ weeks: 3 }).toISO();
+    const discussionsMock = {
+      request: emptyDiscussionsMock.request,
+      result: {
+        data: {
+          discussions: [
+            {
+              __typename: 'CTATDiscussion',
+              id: '660e8400-e29b-41d4-a716-446655440001',
+              ticketID: ticketId,
+              content: 'Latest message',
+              posterRole: CtatDiscussionPoster.ADMIN,
+              createdBy: '770e8400-e29b-41d4-a716-446655440002',
+              createdByUserAccount: {
+                __typename: 'UserAccount',
+                givenName: 'Jane',
+                familyName: 'Smith'
               },
-              {
-                __typename: 'CTATDiscussion',
-                id: '880e8400-e29b-41d4-a716-446655440003',
-                ticketID: ticketId,
-                content: 'Earlier message',
-                posterRole: CtatDiscussionPoster.REQUESTER,
-                createdBy: '990e8400-e29b-41d4-a716-446655440004',
-                createdByUserAccount: {
-                  __typename: 'UserAccount',
-                  givenName: 'Luke',
-                  familyName: 'Skywalker'
-                },
-                createdDts: olderDate
-              }
-            ]
-          }
+              createdDts: postedDate
+            },
+            {
+              __typename: 'CTATDiscussion',
+              id: '880e8400-e29b-41d4-a716-446655440003',
+              ticketID: ticketId,
+              content: 'Earlier message',
+              posterRole: CtatDiscussionPoster.REQUESTER,
+              createdBy: '990e8400-e29b-41d4-a716-446655440004',
+              createdByUserAccount: {
+                __typename: 'UserAccount',
+                givenName: 'Luke',
+                familyName: 'Skywalker'
+              },
+              createdDts: olderDate
+            }
+          ]
         }
-      };
+      }
+    };
 
-      renderPanel([openTicketMock], { discussionsMock });
+    renderPanel([openTicketMock], { discussionsMock });
 
-      expect(await screen.findByText('2 messages')).toBeInTheDocument();
-      expect(
-        screen.getByText(`Latest message: Jane Smith, ${expectedDate}`)
-      ).toBeInTheDocument();
-      expect(
-        screen.queryByText('Latest message: No messages yet')
-      ).not.toBeInTheDocument();
-    }
-  );
+    expect(await screen.findByText('2 messages')).toBeInTheDocument();
+    expect(
+      screen.getByText('Latest message: Jane Smith, 2 weeks ago')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('Latest message: No messages yet')
+    ).not.toBeInTheDocument();
+  });
 
   it('shows a spinner while discussions load inside the ticket', async () => {
     renderPanel([openTicketMock], {
