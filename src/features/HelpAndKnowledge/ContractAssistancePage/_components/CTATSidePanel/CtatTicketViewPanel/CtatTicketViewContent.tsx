@@ -293,14 +293,10 @@ const CtatTicketViewContent = ({
         </div>
       )}
 
-      <PageHeading
-        headingLevel="h3"
-        className="margin-top-0 margin-bottom-2 border-top border-base-light padding-top-3"
-      >
-        {contractAssistanceMiscT('ctatViewPanel.discussionHeading')}
-      </PageHeading>
-
-      <div className="border-bottom border-base-light padding-bottom-3 margin-bottom-4">
+      <div className="border-top border-bottom border-base-light padding-y-3 margin-bottom-4">
+        <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-2">
+          {contractAssistanceMiscT('ctatViewPanel.discussionHeading')}
+        </PageHeading>
         {discussionsLoading && (
           <div className="padding-y-2">
             <Spinner
@@ -311,19 +307,19 @@ const CtatTicketViewContent = ({
           </div>
         )}
         {!discussionsLoading && discussionsError && (
-          <p className="margin-top-0" role="alert">
+          <p className="margin-y-0" role="alert">
             {contractAssistanceMiscT('ctatViewPanel.discussionError')}
           </p>
         )}
         {!discussionsLoading && !discussionsError && (
           <>
-            <p className="text-bold margin-top-0 margin-bottom-1">
+            <p className="text-bold margin-y-0">
               {contractAssistanceMiscT('ctatViewPanel.discussionMessageCount', {
                 count: discussions.length
               })}
             </p>
             {latestDiscussion ? (
-              <p className="margin-top-0 margin-bottom-2 text-base-dark">
+              <p className="margin-top-1 margin-bottom-0 text-base-dark">
                 {contractAssistanceMiscT(
                   'ctatViewPanel.discussionLatestMessage',
                   {
@@ -333,12 +329,12 @@ const CtatTicketViewContent = ({
                 )}
               </p>
             ) : (
-              <p className="margin-top-0 margin-bottom-2 text-base-dark">
+              <p className="margin-top-1 margin-bottom-0 text-base-dark">
                 {contractAssistanceMiscT('ctatViewPanel.discussionEmpty')}
               </p>
             )}
             {isClosed && (
-              <Alert type="info" slim className="margin-top-2 margin-bottom-2">
+              <Alert type="info" slim className="margin-top-2 margin-bottom-0">
                 {contractAssistanceMiscT(
                   'ctatViewPanel.discussionClosedNotice'
                 )}
