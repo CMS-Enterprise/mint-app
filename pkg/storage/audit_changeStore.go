@@ -59,9 +59,9 @@ func AuditChangeCollectionByIDAndTableAndField(
 
 	var auditChanges []*models.AuditChange
 
-	orderClause := "" //default to ASCENDING
+	orderClause := " ORDER BY audit.change.id ASC"
 	if sortDir == models.SortDesc {
-		orderClause = " ORDER BY 1 DESC"
+		orderClause = " ORDER BY audit.change.id DESC"
 	}
 
 	orderedQuery := sqlqueries.AuditChange.CollectionByIDAndTableAndField + orderClause
