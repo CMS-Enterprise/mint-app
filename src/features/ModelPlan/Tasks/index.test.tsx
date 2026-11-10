@@ -219,8 +219,8 @@ describe('Tasks page', () => {
     expect(getCardHeadings(container)).toEqual([
       'Prepare for clearance',
       'Prepare for your presentation to the Office of the Administrator (OA)',
-      'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'DRAFT_ICIP.COMPLETE.heading', // TODO fix strings later once UI is implemented
+      'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Complete your waiver assessment survey',
       'Finalize your data exchange approach',
