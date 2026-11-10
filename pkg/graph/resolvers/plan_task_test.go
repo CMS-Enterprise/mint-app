@@ -560,6 +560,7 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	suite.NotNil(taskByKey[models.PlanTaskKeyWaiverAssessmentSurvey])
 	suite.NotNil(taskByKey[models.PlanTaskKeyTwoPager])
 	suite.NotNil(taskByKey[models.PlanTaskKeySixPager])
+	suite.NotNil(taskByKey[models.PlanTaskKeyDraftIcip])
 	suite.NotNil(taskByKey[models.PlanTaskKeyOaPresentation])
 	suite.NotNil(taskByKey[models.PlanTaskKeyPrepareForClearance])
 
@@ -567,6 +568,7 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 		models.PlanTaskKeySixPager:            true,
 		models.PlanTaskKeyOaPresentation:      true,
 		models.PlanTaskKeyPrepareForClearance: true,
+		models.PlanTaskKeyDraftIcip:           true,
 	}
 
 	for _, t := range tasks {
