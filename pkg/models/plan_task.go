@@ -58,6 +58,7 @@ const PrepareForClearanceTriggerDays = 20
 var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
 	PlanTaskKeyTwoPager:       true,
 	PlanTaskKeySixPager:       true,
+	PlanTaskKeyDraftIcip:      true,
 	PlanTaskKeyOaPresentation: true,
 }
 
@@ -116,7 +117,7 @@ var planTaskKeyDisplayNames = map[PlanTaskKey]string{
 	PlanTaskKeySixPager:               "Prepare for your 6-page review meeting with CMMI Front Office",
 	PlanTaskKeyDataExchange:           "Data exchange approach",
 	PlanTaskKeyWaiverAssessmentSurvey: "Complete your waiver assessment survey",
-	PlanTaskKeyDraftIcip:              "Draft ICIP",
+	PlanTaskKeyDraftIcip:              "Start your ICIP",
 	PlanTaskKeyMto:                    "Model-to-operations matrix (MTO)",
 	PlanTaskKeyPrepareForClearance:    "Prepare for clearance",
 	PlanTaskKeyOaPresentation:         "Office of the Administrator (OA) presentation",
