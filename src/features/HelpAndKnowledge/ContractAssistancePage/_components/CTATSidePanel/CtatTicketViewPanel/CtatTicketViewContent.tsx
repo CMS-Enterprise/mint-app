@@ -294,7 +294,7 @@ const CtatTicketViewContent = ({
       )}
 
       <div className="border-top border-bottom border-base-light padding-y-3 margin-bottom-4">
-        <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-2">
+        <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-1">
           {contractAssistanceMiscT('ctatViewPanel.discussionHeading')}
         </PageHeading>
         {discussionsLoading && (
@@ -319,7 +319,7 @@ const CtatTicketViewContent = ({
               })}
             </p>
             {latestDiscussion ? (
-              <p className="margin-top-1 margin-bottom-0 text-base-dark">
+              <p className="margin-top-0 margin-bottom-0 text-base-dark">
                 {contractAssistanceMiscT(
                   'ctatViewPanel.discussionLatestMessage',
                   {
@@ -329,7 +329,7 @@ const CtatTicketViewContent = ({
                 )}
               </p>
             ) : (
-              <p className="margin-top-1 margin-bottom-0 text-base-dark">
+              <p className="margin-top-0 margin-bottom-0 text-base-dark">
                 {contractAssistanceMiscT('ctatViewPanel.discussionEmpty')}
               </p>
             )}
