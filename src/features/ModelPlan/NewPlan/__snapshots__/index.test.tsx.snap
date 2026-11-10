@@ -114,7 +114,7 @@ exports[`New Model Plan page > matches snapshot 1`] = `
               disabled=""
               type="submit"
             >
-              Next
+              Create model
             </button>
           </div>
         </form>
