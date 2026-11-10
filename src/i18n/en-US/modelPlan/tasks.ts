@@ -224,6 +224,32 @@ const tasks = {
       heading: 'Prepare for clearance',
       primaryAction: 'Continue'
     }
+  },
+  [PlanTaskKey.APPROVED_ICIP]: {
+    copy: "After clearing your model, please add your approved ICIP. When adding your full ICIP with cost estimate details, we suggest uploading it first to the ICIP repository on SharePoint and then adding a link to that SharePoint file within MINT. You can add a link in your model's document section by toggling to 'link to a document' on the add a document screen. This will ensure that the ICIP is stored in one place and that the right people can see it (those with access to the ICIP repository). You may also choose to use MINT to upload a version with cost information removed, so that MINT users can access the rest of the ICIP. If any changes are made during clearance, ensure your Model Plan and any associated documents including your uploaded and linked ICIPs reflect these changes.",
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}',
+    secondaryPath:
+      'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/ICIPs/SitePages/Home.aspx',
+    secondaryAction: 'Upload to ICIP repository on SharePoint',
+    [PlanTaskState.UPCOMING]: {
+      heading: 'Add approved ICIP',
+      primaryAction: 'Add ICIP'
+    },
+    [PlanTaskState.TO_DO]: {
+      heading: 'Add approved ICIP',
+      primaryAction: 'Add ICIP',
+      success: '<bold>Add approved ICIP</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskState.COMPLETE]: {
+      heading: 'Add approved ICIP',
+      primaryAction: 'Add ICIP',
+      success: '<bold>Add approved ICIP</bold> is now to-do.',
+      error:
+        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+    }
   }
 };
 

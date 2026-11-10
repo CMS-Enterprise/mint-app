@@ -43,7 +43,8 @@ export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.MTO,
   PlanTaskKey.OA_PRESENTATION,
-  PlanTaskKey.PREPARE_FOR_CLEARANCE
+  PlanTaskKey.PREPARE_FOR_CLEARANCE,
+  PlanTaskKey.APPROVED_ICIP
 ];
 
 const getTabIdFromSearchParams = (tab: string | null): TabId => {
@@ -99,7 +100,8 @@ const Tasks = () => {
       planTask =>
         planTask.key === key &&
         planTask.state !== PlanTaskState.COMPLETE &&
-        planTask.state !== PlanTaskState.UPCOMING
+        planTask.state !== PlanTaskState.UPCOMING &&
+        planTask.state !== PlanTaskState.NOT_NEEDED
     );
     return task ? [task] : [];
   });

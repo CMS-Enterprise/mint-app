@@ -165,6 +165,27 @@ describe('TaskCard', () => {
     ).toBeInTheDocument();
   });
 
+  it('renders Add approved ICIP with both actions and an external-link secondary button', async () => {
+    const { findByText, getByRole, getByText } = renderTaskCard(
+      getTask(PlanTaskKey.APPROVED_ICIP, {
+        state: PlanTaskState.TO_DO,
+        status: PlanTaskStatus.TO_DO
+      })
+    );
+
+    await findByText('Add approved ICIP');
+    expect(
+      getByText(/After clearing your model, please add your approved ICIP\./)
+    ).toBeInTheDocument();
+    expect(getByRole('button', { name: 'Add ICIP' })).toBeInTheDocument();
+    expect(
+      getByRole('button', { name: /Upload to ICIP repository on SharePoint/i })
+    ).toBeInTheDocument();
+    expect(
+      getByRole('checkbox', { name: 'Mark this task complete' })
+    ).toBeInTheDocument();
+  });
+
   it('renders Prepare for clearance upcoming state with alert and SharePoint link only', async () => {
     const { findByText, getByRole, getByText, queryByRole } = renderTaskCard(
       getTask(PlanTaskKey.PREPARE_FOR_CLEARANCE, {

@@ -139,6 +139,29 @@ describe('Tasks page', () => {
     ).not.toBeInTheDocument();
   });
 
+  it('keeps NOT_NEEDED approved ICIP out of every tab and shows it once activated', async () => {
+    const { unmount } = renderWithMock(planTasksAllToDo);
+
+    await waitFor(() => {
+      expect(screen.getByText('Current tasks (5)')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Upcoming tasks (3)')).toBeInTheDocument();
+    expect(screen.getByText('Completed tasks (0)')).toBeInTheDocument();
+    expect(screen.queryByText('Add approved ICIP')).not.toBeInTheDocument();
+    unmount();
+
+    const activated = renderWithMock(
+      makePlanTasks({ APPROVED_ICIP: { state: PlanTaskState.TO_DO } })
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Current tasks (6)')).toBeInTheDocument();
+    });
+    expect(getCardHeadings(activated.container).at(-1)).toEqual(
+      'Add approved ICIP'
+    );
+  });
+
   it('hides completed tasks from Current and still lists remaining to-do cards', async () => {
     renderWithMock(planTasksWithModelPlanComplete);
 
