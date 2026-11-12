@@ -15,10 +15,7 @@ import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import '../ModelsBySolution/index.scss';
 
 export type StatusCategories =
-  | 'total'
-  | GeneralStatus.PLANNED
-  | GeneralStatus.ACTIVE
-  | GeneralStatus.ENDED;
+  'total' | GeneralStatus.PLANNED | GeneralStatus.ACTIVE | GeneralStatus.ENDED;
 
 const ModelsBanner = ({
   type,

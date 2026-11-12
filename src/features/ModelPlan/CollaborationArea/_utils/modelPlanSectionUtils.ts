@@ -129,8 +129,7 @@ const getLatestClearanceEditSection = (
 
   CLEARANCE_SECTION_KEYS.forEach(key => {
     const section = modelPlan[key as ClearanceSectionKey] as
-      | ClearanceSection
-      | undefined;
+      ClearanceSection | undefined;
     const modifiedDts = section?.readyForClearanceDts;
     const commonName = section?.readyForClearanceByUserAccount?.commonName;
     if (
