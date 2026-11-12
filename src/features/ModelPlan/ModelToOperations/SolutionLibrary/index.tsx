@@ -38,11 +38,7 @@ export type SolutionCardType =
   GetMtoCommonSolutionsQuery['modelPlan']['mtoMatrix']['commonSolutions'][0];
 
 export type SolutionViewType =
-  | 'all'
-  | 'it-systems'
-  | 'contracts'
-  | 'cross-cut'
-  | 'other-solutions';
+  'all' | 'it-systems' | 'contracts' | 'cross-cut' | 'other-solutions';
 
 const SolutionLibrary = () => {
   const { t } = useTranslation('modelToOperationsMisc');

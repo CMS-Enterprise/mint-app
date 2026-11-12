@@ -31,8 +31,7 @@ const APPEAL_FIELDS = [
 ] as const;
 
 type PerformanceConfigWithOptionsType =
-  | (typeof RISK_FIELDS)[number]
-  | (typeof APPEAL_FIELDS)[number];
+  (typeof RISK_FIELDS)[number] | (typeof APPEAL_FIELDS)[number];
 
 type TranslationPerformanceConfigType = Pick<
   TranslationOpsEvalAndLearning,
