@@ -20,13 +20,13 @@ func TestPlanTaskKeyIsManuallyMarkable(t *testing.T) {
 }
 
 func TestPlanTaskKeyActivationTarget(t *testing.T) {
-	target, ok := PlanTaskKeyTwoPager.ActivationTarget()
+	target, ok := PlanTaskKeyTwoPager.ActivationTargets()
 	assert.True(t, ok)
-	assert.Equal(t, PlanTaskKeySixPager, target)
+	assert.Equal(t, []PlanTaskKey{PlanTaskKeySixPager}, target)
 
-	target, ok = PlanTaskKeySixPager.ActivationTarget()
+	target, ok = PlanTaskKeySixPager.ActivationTargets()
 	assert.True(t, ok)
-	assert.Equal(t, PlanTaskKeyOaPresentation, target)
+	assert.Equal(t, []PlanTaskKey{PlanTaskKeyDraftIcip, PlanTaskKeyOaPresentation}, target)
 
 	for _, key := range []PlanTaskKey{
 		PlanTaskKeyModelPlan,
@@ -36,7 +36,7 @@ func TestPlanTaskKeyActivationTarget(t *testing.T) {
 		PlanTaskKeyPrepareForClearance,
 		PlanTaskKey("NOT_A_REAL_KEY"),
 	} {
-		_, ok := key.ActivationTarget()
+		_, ok := key.ActivationTargets()
 		assert.False(t, ok, "expected key %s to have no activation target", key)
 	}
 }

@@ -519,6 +519,23 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteDraftICIP() {
 	plan := suite.createModelPlan("Plan For Draft ICIP Manual Task Marking")
 
+	// DRAFT_ICIP starts UPCOMING and isn't activated to TO_DO until SIX_PAGER is marked complete
+	_, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	draftIcipTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateToDo, draftIcipTask.State)
+
 	// mark the DRAFT_ICIP task complete
 	updated, err := PlanTaskMarkComplete(
 		suite.testConfigs.Context,
@@ -543,7 +560,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteDraftICIP() {
 		}
 	}
 
-	draftIcipTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	draftIcipTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
 	suite.Equal(models.PlanTaskStateComplete, draftIcipTask.State)
 
 	// mark it back to TO_DO
@@ -569,6 +586,40 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteDraftICIP() {
 	suite.Equal(models.PlanTaskStateToDo, draftIcipTask.State)
 	suite.Nil(draftIcipTask.CompletedBy)
 	suite.Nil(draftIcipTask.CompletedDts)
+}
+
+// TestDraftIcipStatusStaysToDoThroughActivation confirms the computed status field on the
+// draft_ICIP card stays TO_DO across the UPCOMING -> TO_DO state activation trigger, end to end
+// through the resolver (not just the Status function in isolation). Status is binary
+// (TO_DO/COMPLETE), so unlike state it does not distinguish UPCOMING from TO_DO.
+func (suite *ResolverSuite) TestDraftIcipStatusStaysToDoThroughActivation() {
+	plan := suite.createModelPlan("Plan For Draft ICIP Status Display")
+	r := &planTaskResolver{&Resolver{}}
+
+	draftIcipTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateUpcoming, draftIcipTask.State)
+	status, err := r.Status(suite.testConfigs.Context, draftIcipTask)
+	suite.NoError(err)
+	suite.Equal(model.PlanTaskStatusToDo, status)
+
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	draftIcipTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateToDo, draftIcipTask.State)
+	status, err = r.Status(suite.testConfigs.Context, draftIcipTask)
+	suite.NoError(err)
+	suite.Equal(model.PlanTaskStatusToDo, status)
 }
 
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
