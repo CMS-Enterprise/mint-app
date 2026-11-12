@@ -604,7 +604,8 @@ const contractAssistanceMisc = {
   },
 
   ctatDiscussionPanel: {
-    backToTicketDetails: 'Back to ticket details'
+    backToTicketDetails: 'Back to ticket details',
+    ticketNumber: 'Ticket {{ticketNumber}}'
   },
 
   ctatViewPanel: {

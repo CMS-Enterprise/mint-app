@@ -24,8 +24,7 @@ import PageLoading from 'components/PageLoading';
 import { isAssessment } from 'utils/user';
 
 import AdminTicketManagementSection from './_components/AdminTicketManagementSection';
-import CtatDiscussionPanel from './_components/CTATSidePanel/CtatDiscussionPanel';
-import CtatTicketViewPanel from './_components/CTATSidePanel/CtatTicketViewPanel';
+import CtatTicketPanel from './_components/CTATSidePanel/CtatTicketPanel';
 import UserSubmittedTicketsSection from './_components/UserSubmittedTicketsSection';
 import { mapCtatRequestsToContractAssistanceTickets } from './utils';
 
@@ -50,13 +49,6 @@ const ContractAssistancePage = () => {
       replace: true
     });
   }, [navigate, location.search]);
-
-  const closeDiscussionPanel = useCallback(() => {
-    navigate(
-      `/help-and-knowledge/contract-assistance/${ticketId}${location.search}`,
-      { replace: true }
-    );
-  }, [navigate, ticketId, location.search]);
 
   const {
     data: requesterData,
@@ -142,16 +134,13 @@ const ContractAssistancePage = () => {
         )}
         <UserSubmittedTicketsSection tickets={userTickets} />
       </GridContainer>
-
-      {ticketId && !isDiscussionView && (
-        <CtatTicketViewPanel
+      {ticketId && (
+        <CtatTicketPanel
           ticketId={ticketId}
           closeModal={closeTicketViewPanel}
           isAdmin={isAssessmentTeam}
+          isDiscussionView={isDiscussionView}
         />
-      )}
-      {ticketId && isDiscussionView && (
-        <CtatDiscussionPanel closeModal={closeDiscussionPanel} />
       )}
     </MainContent>
   );

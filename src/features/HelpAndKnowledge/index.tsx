@@ -96,11 +96,8 @@ export const helpAndKnowledgeRoutes = {
     { path: 'contract-assistance', element: <ContractAssistancePage /> },
     {
       path: 'contract-assistance/:ticketId',
-      element: <ContractAssistancePage />
-    },
-    {
-      path: 'contract-assistance/:ticketId/discussion',
-      element: <ContractAssistancePage />
+      element: <ContractAssistancePage />,
+      children: [{ path: 'discussion', element: null }]
     }
   ]
 };

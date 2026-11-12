@@ -1,9 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { screen, waitFor } from '@testing-library/react';
 import {
+  CtatStatus,
+  GetCtatRequestDocument,
   GetCtatRequestsAdminDocument,
   GetCtatRequestsRequesterDocument
 } from 'gql/generated/graphql';
@@ -56,13 +58,83 @@ const ctatRequestsMocks = [
   }
 ];
 
+const requesterTicketMock = {
+  request: { query: GetCtatRequestsRequesterDocument },
+  result: {
+    data: {
+      ctatRequestsRequester: {
+        __typename: 'CTATRequestsTableDataRequester',
+        ctatRequests: [
+          {
+            __typename: 'CTATRequest',
+            id: '550e8400-e29b-41d4-a716-446655440000',
+            humanReadableID: 'CTAT-001',
+            createdDts: '2026-05-02T00:00:00Z',
+            contractName: null,
+            cmmiGroup: null,
+            typeOfHelpNeeded: [],
+            typeOfHelpNeededOther: null,
+            status: CtatStatus.NEW,
+            assignedAdminUserAccount: null
+          }
+        ]
+      }
+    }
+  }
+};
+
+const requesterDetailMock = {
+  request: {
+    query: GetCtatRequestDocument,
+    variables: { id: '550e8400-e29b-41d4-a716-446655440000' }
+  },
+  result: {
+    data: {
+      ctatRequest: {
+        __typename: 'CTATRequest',
+        id: '550e8400-e29b-41d4-a716-446655440000',
+        humanReadableID: 'CTAT-001',
+        createdDts: '2026-05-02T00:00:00Z',
+        status: CtatStatus.NEW,
+        assignedAdminUserAccount: null,
+        resolution: null,
+        requesterUserAccount: {
+          __typename: 'UserAccount',
+          givenName: 'Luke',
+          familyName: 'Skywalker',
+          commonName: 'Luke Skywalker',
+          email: 'luke.skywalker@cms.hhs.gov'
+        },
+        cmmiGroup: null,
+        cmmiGroupOther: null,
+        cmmiDivision: null,
+        cmmiDivisionOther: null,
+        relatedMINTModels: [],
+        contractActivityType: null,
+        contractActivityTypeOther: null,
+        contractName: null,
+        contractNumber: null,
+        contractType: null,
+        contractTypeOther: null,
+        typeOfHelpNeeded: [],
+        typeOfHelpNeededOther: null,
+        describeHelpNeeded: 'Need help drafting a DUA.',
+        requestUrgency: null,
+        dateAssistanceNeededBy: null,
+        supportingDocuments: []
+      }
+    }
+  }
+};
+
 const mockStore = configureMockStore();
 const assessmentStore = mockStore({ auth: mockAuthAssessment });
 const nonAssessmentStore = mockStore({ auth: mockAuthNotAssessment });
 
 const renderPage = (
   store: ReturnType<typeof mockStore>,
-  initialEntry?: string
+  initialEntry?: string,
+  mocks: MockedResponse[] = ctatRequestsMocks
 ) => {
   const router = createMemoryRouter(
     [
@@ -72,11 +144,8 @@ const renderPage = (
       },
       {
         path: '/help-and-knowledge/contract-assistance/:ticketId',
-        element: <ContractAssistancePage />
-      },
-      {
-        path: '/help-and-knowledge/contract-assistance/:ticketId/discussion',
-        element: <ContractAssistancePage />
+        element: <ContractAssistancePage />,
+        children: [{ path: 'discussion', element: null }]
       }
     ],
     {
@@ -88,7 +157,7 @@ const renderPage = (
 
   return setup(
     <Provider store={store}>
-      <MockedProvider mocks={ctatRequestsMocks}>
+      <MockedProvider mocks={mocks}>
         <RouterProvider router={router} />
       </MockedProvider>
     </Provider>
@@ -164,12 +233,14 @@ describe('ContractAssistancePage', () => {
   it('opens the discussion panel at the ticket discussion URL', async () => {
     renderPage(
       nonAssessmentStore,
-      '/help-and-knowledge/contract-assistance/550e8400-e29b-41d4-a716-446655440000/discussion'
+      '/help-and-knowledge/contract-assistance/550e8400-e29b-41d4-a716-446655440000/discussion',
+      [requesterTicketMock, requesterDetailMock]
     );
 
     expect(
       await screen.findByTestId('ctat-discussion-sidepanel')
     ).toBeInTheDocument();
+    expect(await screen.findByText('Ticket CTAT-001')).toBeInTheDocument();
     expect(
       screen.queryByTestId('ctat-ticket-view-sidepanel')
     ).not.toBeInTheDocument();

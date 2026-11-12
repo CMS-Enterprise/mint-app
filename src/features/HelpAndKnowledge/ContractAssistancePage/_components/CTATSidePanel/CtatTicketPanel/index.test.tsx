@@ -1,5 +1,5 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider, useMatch } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { screen, waitFor } from '@testing-library/react';
 import {
@@ -18,7 +18,7 @@ import { DateTime } from 'luxon';
 import setup from 'tests/util';
 import { vi } from 'vitest';
 
-import CtatTicketViewPanel from './index';
+import CtatTicketPanel from './index';
 
 const ticketId = '550e8400-e29b-41d4-a716-446655440000';
 const baseTicket = {
@@ -153,43 +153,51 @@ const renderPanel = (
   {
     isAdmin = false,
     closeModal = vi.fn(),
-    discussionsMock = emptyDiscussionsMock
+    discussionsMock = emptyDiscussionsMock,
+    initialEntry = `/help-and-knowledge/contract-assistance/${ticketId}`
   }: {
     isAdmin?: boolean;
     closeModal?: () => void;
     discussionsMock?: MockedResponse;
+    initialEntry?: string;
   } = {}
 ) => {
+  const PanelOnRoute = () => {
+    const isDiscussionView = !!useMatch(
+      '/help-and-knowledge/contract-assistance/:ticketId/discussion'
+    );
+
+    return (
+      <CtatTicketPanel
+        ticketId={ticketId}
+        closeModal={closeModal}
+        isAdmin={isAdmin}
+        isDiscussionView={isDiscussionView}
+      />
+    );
+  };
+
   const router = createMemoryRouter(
     [
       {
         path: '/help-and-knowledge/contract-assistance/:ticketId',
-        element: (
-          <CtatTicketViewPanel
-            ticketId={ticketId}
-            closeModal={closeModal}
-            isAdmin={isAdmin}
-          />
-        )
-      },
-      {
-        path: '/help-and-knowledge/contract-assistance/:ticketId/discussion',
-        element: <div>Discussion destination</div>
+        element: <PanelOnRoute />,
+        children: [{ path: 'discussion', element: null }]
       }
     ],
     {
-      initialEntries: [`/help-and-knowledge/contract-assistance/${ticketId}`]
+      initialEntries: [initialEntry]
     }
   );
 
   return setup(
-    <MockedProvider mocks={[...mocks, discussionsMock]}>
+    <MockedProvider mocks={[...mocks, discussionsMock, discussionsMock]}>
       <RouterProvider router={router} />
     </MockedProvider>
   );
 };
 
-describe('CtatTicketViewPanel', () => {
+describe('CtatTicketPanel', () => {
   it('renders open ticket with blue progress box and what happens next', async () => {
     renderPanel([openTicketMock], { isAdmin: false });
 
@@ -431,7 +439,7 @@ describe('CtatTicketViewPanel', () => {
       screen.getByText('Are you sure you want to leave?')
     ).toBeInTheDocument();
     expect(
-      screen.queryByText('Discussion destination')
+      screen.queryByTestId('ctat-discussion-sidepanel')
     ).not.toBeInTheDocument();
 
     await user.click(screen.getByRole('button', { name: 'Stay on page' }));
@@ -445,9 +453,60 @@ describe('CtatTicketViewPanel', () => {
       screen.getByRole('button', { name: 'Leave without saving' })
     );
 
+    expect(await screen.findByText('Ticket CTAT-001')).toBeInTheDocument();
+    expect(screen.getByTestId('ctat-discussion-sidepanel')).toBeInTheDocument();
     expect(
-      await screen.findByText('Discussion destination')
+      screen.queryByRole('button', { name: 'Save changes' })
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+
+    expect(await screen.findByTestId('ctat-admin-status')).toBeInTheDocument();
+    expect(document.getElementById('ctat-admin-progress-notes')).toHaveValue(
+      ''
+    );
+    expect(screen.getByRole('button', { name: 'Save changes' })).toBeDisabled();
+  });
+
+  it('keeps one panel and ticket query while moving between ticket and discussion', async () => {
+    const { user } = renderPanel([openTicketMock]);
+
+    await screen.findByText('0 messages');
+    const panel = screen.getByTestId('side-panel');
+
+    await user.click(screen.getByRole('link', { name: 'Go to discussion' }));
+
+    expect(await screen.findByText('Ticket CTAT-001')).toBeInTheDocument();
+    expect(screen.getByTestId('side-panel')).toBe(panel);
+    expect(
+      screen.getByRole('heading', { name: 'Back to ticket details' })
     ).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+
+    expect(await screen.findByText('0 messages')).toBeInTheDocument();
+    expect(screen.getByTestId('side-panel')).toBe(panel);
+    expect(
+      screen.getByRole('heading', { name: 'Contract assistance ticket' })
+    ).toBeInTheDocument();
+  });
+
+  it('loads an admin discussion URL directly and returns to ticket details', async () => {
+    const { user } = renderPanel([openAdminTicketMock], {
+      isAdmin: true,
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
+    });
+
+    expect(await screen.findByText('Ticket CTAT-001')).toBeInTheDocument();
+    expect(screen.getByTestId('ctat-discussion-sidepanel')).toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: 'Save changes' })
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+
+    expect(await screen.findByTestId('ctat-admin-status')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Save changes' })).toBeDisabled();
   });
 
   it('renders blue admin progress box for open tickets', async () => {

@@ -42,7 +42,7 @@ import {
 
 import CtatTicketAdminForm from './CtatTicketAdminForm';
 
-type CtatTicketViewContentProps = {
+type CtatTicketDetailsProps = {
   ticket: GetCtatRequestQuery['ctatRequest'];
   adminTicket?: GetCtatRequestAdminQuery['ctatRequest'];
   isAdmin?: boolean;
@@ -136,7 +136,7 @@ const SupportingDocumentItem = ({
   );
 };
 
-const CtatTicketViewContent = ({
+const CtatTicketDetails = ({
   ticket,
   adminTicket,
   isAdmin = false,
@@ -145,7 +145,7 @@ const CtatTicketViewContent = ({
   setIsDirty,
   onSubmitted,
   onDiscussionClick
-}: CtatTicketViewContentProps) => {
+}: CtatTicketDetailsProps) => {
   const { t: contractAssistanceT } = useTranslation('contractAssistance');
   const { t: contractAssistanceMiscT } = useTranslation(
     'contractAssistanceMisc'
@@ -611,4 +611,4 @@ const CtatTicketViewContent = ({
   );
 };
 
-export default CtatTicketViewContent;
+export default CtatTicketDetails;

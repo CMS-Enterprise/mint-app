@@ -13,19 +13,22 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 
-import CtatTicketViewContent from './CtatTicketViewContent';
+import CtatDiscussionContent from '../CtatDiscussionContent';
+import CtatTicketDetails from '../CtatTicketDetails';
 
-type CtatTicketViewPanelProps = {
+type CtatTicketPanelProps = {
   ticketId: string;
   closeModal: () => void;
   isAdmin?: boolean;
+  isDiscussionView: boolean;
 };
 
-const CtatTicketViewPanel = ({
+const CtatTicketPanel = ({
   ticketId,
   closeModal,
-  isAdmin = false
-}: CtatTicketViewPanelProps) => {
+  isAdmin = false,
+  isDiscussionView
+}: CtatTicketPanelProps) => {
   const { t: contractAssistanceMiscT } = useTranslation(
     'contractAssistanceMisc'
   );
@@ -55,15 +58,29 @@ const CtatTicketViewPanel = ({
   const requesterTicket = requesterResult.data?.ctatRequest;
   // adminTicket will be populated when an admin (even if it's the requester) is viewing the ticket
   const adminTicket = adminResult.data?.ctatRequest;
+  const ticket = isAdmin ? adminTicket : requesterTicket;
 
   const closePanel = useCallback(() => {
-    if (isAdmin && isDirty && !submitted.current) {
+    if (isDiscussionView) {
+      navigate(
+        `/help-and-knowledge/contract-assistance/${ticketId}${location.search}`,
+        { replace: true }
+      );
+    } else if (isAdmin && isDirty && !submitted.current) {
       setDiscussionNavigationPending(false);
       setLeavePage(true);
     } else {
       closeModal();
     }
-  }, [closeModal, isAdmin, isDirty]);
+  }, [
+    closeModal,
+    isAdmin,
+    isDirty,
+    isDiscussionView,
+    location.search,
+    navigate,
+    ticketId
+  ]);
 
   const handleDiscussionClick = useCallback(
     (event: React.MouseEvent<HTMLElement>) => {
@@ -92,43 +109,64 @@ const CtatTicketViewPanel = ({
     closeModal();
   }, [closeModal]);
 
-  const footer = isAdmin ? (
-    <div className="border-top-1px border-base-lighter padding-y-4 panel-footer">
-      <Button
-        form="ctat-admin-form"
-        type="submit"
-        disabled={disabledSubmitBtn}
-        className="margin-right-3 margin-top-0"
-      >
-        {contractAssistanceMiscT('ctatAdminPanel.saveChanges')}
-      </Button>
-      <Button
-        type="button"
-        className="margin-top-0"
-        unstyled
-        onClick={closePanel}
-      >
-        {contractAssistanceMiscT('ctatSidePanel.cancel')}
-      </Button>
-    </div>
-  ) : undefined;
+  const footer =
+    isAdmin && !isDiscussionView ? (
+      <div className="border-top-1px border-base-lighter padding-y-4 panel-footer">
+        <Button
+          form="ctat-admin-form"
+          type="submit"
+          disabled={disabledSubmitBtn}
+          className="margin-right-3 margin-top-0"
+        >
+          {contractAssistanceMiscT('ctatAdminPanel.saveChanges')}
+        </Button>
+        <Button
+          type="button"
+          className="margin-top-0"
+          unstyled
+          onClick={closePanel}
+        >
+          {contractAssistanceMiscT('ctatSidePanel.cancel')}
+        </Button>
+      </div>
+    ) : undefined;
 
   return (
     <>
       <Sidepanel
         isOpen={!!ticketId}
         closeModal={closePanel}
-        ariaLabel={contractAssistanceMiscT('ctatSidePanel.modalHeading')}
-        testid="ctat-ticket-view-sidepanel"
-        modalHeading={contractAssistanceMiscT('ctatSidePanel.modalHeading')}
+        ariaLabel={contractAssistanceMiscT(
+          isDiscussionView
+            ? 'ctatViewPanel.discussionHeading'
+            : 'ctatSidePanel.modalHeading'
+        )}
+        testid={
+          isDiscussionView
+            ? 'ctat-discussion-sidepanel'
+            : 'ctat-ticket-view-sidepanel'
+        }
+        modalHeading={contractAssistanceMiscT(
+          isDiscussionView
+            ? 'ctatDiscussionPanel.backToTicketDetails'
+            : 'ctatSidePanel.modalHeading'
+        )}
+        backButton={isDiscussionView}
         footer={footer}
         fixed
-        contentScrollKey={loading ? undefined : ticketId}
+        contentScrollKey={
+          loading
+            ? undefined
+            : `${ticketId}:${isDiscussionView ? 'discussion' : 'ticket'}`
+        }
       >
         {loading && <PageLoading />}
         {error && <NotFound errorMessage={error.message} />}
-        {!loading && !error && isAdmin && adminTicket && (
-          <CtatTicketViewContent
+        {!loading && !error && isDiscussionView && ticket && (
+          <CtatDiscussionContent ticketNumber={ticket.humanReadableID} />
+        )}
+        {!loading && !error && !isDiscussionView && isAdmin && adminTicket && (
+          <CtatTicketDetails
             ticket={adminTicket}
             adminTicket={adminTicket}
             isAdmin
@@ -139,9 +177,11 @@ const CtatTicketViewPanel = ({
             onDiscussionClick={handleDiscussionClick}
           />
         )}
-        {!loading && !error && !isAdmin && requesterTicket && (
-          <CtatTicketViewContent ticket={requesterTicket} />
-        )}
+        {!loading &&
+          !error &&
+          !isDiscussionView &&
+          !isAdmin &&
+          requesterTicket && <CtatTicketDetails ticket={requesterTicket} />}
       </Sidepanel>
 
       {isAdmin && (
@@ -189,4 +229,4 @@ const CtatTicketViewPanel = ({
   );
 };
 
-export default CtatTicketViewPanel;
+export default CtatTicketPanel;
