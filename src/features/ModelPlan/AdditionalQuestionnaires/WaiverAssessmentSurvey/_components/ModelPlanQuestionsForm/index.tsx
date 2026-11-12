@@ -149,8 +149,8 @@ const ModelPlanQuestionsForm = ({
       if (!existingLinks) return [];
 
       const formattedLinks =
-        existingLinks.links?.map(
-          link => String(link.existingModelID || link.currentModelPlanID)!
+        existingLinks.links?.map(link =>
+          String(link.existingModelID || link.currentModelPlanID)!
         ) || [];
 
       // Checking if Other was persisted to db, if so add it as an resemblesExistingModelLinks value

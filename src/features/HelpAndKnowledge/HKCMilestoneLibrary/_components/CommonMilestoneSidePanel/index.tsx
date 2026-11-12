@@ -10,8 +10,7 @@ import Sidepanel from 'components/Sidepanel';
 import CommonMilestoneForm from '../CommonMilestoneForm';
 
 export type CommonMilestoneModalModeType =
-  | 'addCommonMilestone'
-  | 'editCommonMilestone';
+  'addCommonMilestone' | 'editCommonMilestone';
 
 export type CommonMilestoneType =
   GetMtoAllCommonMilestonesQuery['mtoCommonMilestones'][0];
