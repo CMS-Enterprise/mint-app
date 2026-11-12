@@ -41,6 +41,7 @@ export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.DRAFT_ICIP,
   PlanTaskKey.MTO,
   PlanTaskKey.OA_PRESENTATION,
   PlanTaskKey.PREPARE_FOR_CLEARANCE

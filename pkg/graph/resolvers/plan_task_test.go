@@ -516,6 +516,61 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 	suite.Nil(oaTask.CompletedDts)
 }
 
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteDraftICIP() {
+	plan := suite.createModelPlan("Plan For Draft ICIP Manual Task Marking")
+
+	// mark the DRAFT_ICIP task complete
+	updated, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyDraftIcip,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStateComplete, updated.State)
+		if suite.NotNil(updated.CompletedBy) {
+			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
+		}
+		suite.NotNil(updated.CompletedDts)
+		if suite.NotNil(updated.ModifiedBy) {
+			suite.Equal(suite.testConfigs.Principal.Account().ID, *updated.ModifiedBy)
+		}
+	}
+
+	draftIcipTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateComplete, draftIcipTask.State)
+
+	// mark it back to TO_DO
+	updated, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyDraftIcip,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStateToDo, updated.State)
+		suite.Nil(updated.CompletedBy)
+		suite.Nil(updated.CompletedDts)
+	}
+
+	draftIcipTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateToDo, draftIcipTask.State)
+	suite.Nil(draftIcipTask.CompletedBy)
+	suite.Nil(draftIcipTask.CompletedDts)
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
 	plan := suite.createModelPlan("Plan For Rejected Manual Task Marking")
 
