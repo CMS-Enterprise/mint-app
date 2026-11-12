@@ -33,6 +33,8 @@ func main() {
 	sendCTATSubmittedAdminTestEmail(emailService, addressBook)
 	sendCTATUpdateTestEmail(emailService, addressBook)
 	sendCTATUpdateAdminTestEmail(emailService, addressBook)
+	sendCTATDiscussionRequesterTestEmail(emailService, addressBook)
+	sendCTATDiscussionAdminTestEmail(emailService, addressBook)
 
 	//DiscussionReply email
 	sendDiscussionReplyOriginatorTestEmail(emailService, addressBook)
@@ -483,6 +485,69 @@ func sendCTATUpdateAdminTestEmail(
 		)
 		noErr(err)
 	}
+}
+
+func sendCTATDiscussionRequesterTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	subjectContent := email.CTATDiscussionRequesterSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATDiscussionRequesterBodyContent{
+		ClientAddress:     emailService.GetConfig().GetClientAddress(),
+		CTATTicketID:      "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		TicketNumber:      "CTAT-021",
+		PosterName:        "Audrey Abrams",
+		PosterRole:        "CTAT Admin",
+		DiscussionContent: "The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps.",
+		DatePosted:        "10/30/2026 at 8:30am",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.DiscussionRequester.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	requesterEmail := "betty.alpha@mint.dev.cms.gov"
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		&requesterEmail,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
+}
+
+func sendCTATDiscussionAdminTestEmail(
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) {
+	subjectContent := email.CTATDiscussionAdminSubjectContent{
+		TicketNumber: "CTAT-021",
+	}
+	bodyContent := email.CTATDiscussionAdminBodyContent{
+		ClientAddress:     emailService.GetConfig().GetClientAddress(),
+		CTATTicketID:      "c7e0f03b-3c67-4940-9213-8b5d59e7cae4",
+		TicketNumber:      "CTAT-021",
+		PosterName:        "Betty Alpha",
+		PosterRole:        "Requester",
+		DiscussionContent: "The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps.",
+		DatePosted:        "10/30/2026 at 8:30am",
+	}
+
+	emailSubject, emailBody, err := email.CTAT.DiscussionAdmin.GetContent(subjectContent, bodyContent)
+	noErr(err)
+
+	err = emailService.Send(
+		addressBook.DefaultSender,
+		&addressBook.CTATTeamEmail,
+		nil,
+		emailSubject,
+		"text/html",
+		emailBody,
+	)
+	noErr(err)
 }
 
 func sendModelPlanShareTest(

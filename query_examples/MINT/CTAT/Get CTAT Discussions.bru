@@ -1,0 +1,46 @@
+meta {
+  name: Get CTAT Discussions
+  type: graphql
+  seq: 8
+}
+
+post {
+  url: {{url}}
+  body: graphql
+  auth: apikey
+}
+
+auth:apikey {
+  key: Authorization
+  value: Local {"EUAID":"{{EUAID}}","jobCodes":{{jobCodes}},"favorLocalAuth":true}
+  placement: header
+}
+
+body:graphql {
+  query getCTATDiscussions($ticketID: UUID!) {
+    discussions(ticketID: $ticketID) {
+      id
+      ticketID
+      content
+      posterRole
+      createdBy
+      createdByUserAccount {
+        id
+        username
+        commonName
+      }
+      createdDts
+    }
+  }
+}
+
+body:graphql:vars {
+  {
+    "ticketID": "{{ctatRequestID}}"
+  }
+}
+
+vars:pre-request {
+  EUAID: BTAL
+  jobCodes: ["MINT_USER_NONPROD"]
+}

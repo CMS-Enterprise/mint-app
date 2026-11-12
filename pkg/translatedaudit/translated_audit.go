@@ -44,6 +44,7 @@ var unTranslatedTables = []models.TableName{
 	models.TNSuggestedWaiver,
 
 	// we don't translate CTAT tables
+	models.TNCTATDiscussion,
 	models.TNCTATRequest,
 	models.TNCTATRequestDocument,
 	models.TNCTATRequestModelPlanLink,

@@ -54,7 +54,6 @@ body:graphql {
       completedDts
       daysFromSubmittedToCompleted
       daysFromAssignedToCompleted    
-      notes
       resolution
       cmmiGroup
       cmmiGroupOther
@@ -192,9 +191,7 @@ body:graphql:vars {
     "input": {
       "cmmiGroup": "BSG",
       "cmmiDivision": "BSG_DBOM",
-      "relatedMINTModels": [
-        "{{modelPlanID}}"
-      ],
+      "relatedMINTModels": [],
       "contractActivityType": "TECHNICAL_ASSISTANCE",
       "contractName": "BTAL CTAT Request Example Contract",
       "contractNumber": "75FCMC26F1001",
@@ -205,7 +202,7 @@ body:graphql:vars {
       ],
       "describeHelpNeeded": "Bruno example request for CTAT assistance without supporting documents.",
       "requestUrgency": "HIGH",
-      "dateAssistanceNeededBy": "2026-06-30T12:00:00Z",
+      "dateAssistanceNeededBy": "2027-06-30T12:00:00Z",
       "supportingDocuments": []
     }
   }
@@ -217,9 +214,15 @@ vars:pre-request {
 }
 
 tests {
-  let responseData = res.getBody().data.createCTATRequest
-  
-  ctatRequestID = responseData.id
-  
+  const body = res.getBody();
+  if (body.errors && body.errors.length > 0) {
+    throw new Error(JSON.stringify(body.errors));
+  }
+
+  const ctatRequestID = body.data && body.data.createCTATRequest && body.data.createCTATRequest.id;
+  if (!ctatRequestID) {
+    throw new Error("Create CTAT Request returned no ticket ID: " + JSON.stringify(body));
+  }
+
   bru.setVar("ctatRequestID", ctatRequestID);
 }
