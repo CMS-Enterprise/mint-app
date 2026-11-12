@@ -10,4 +10,5 @@ SELECT
     audit.change.modified_dts
 FROM audit.change
 INNER JOIN audit.table_config ON audit.table_config.id = audit.change.table_id
-WHERE audit.table_config.name = :table_name AND audit.change.primary_key = :primary_key;
+WHERE audit.table_config.name = :table_name AND audit.change.primary_key = :primary_key
+ORDER BY audit.change.id ASC;
