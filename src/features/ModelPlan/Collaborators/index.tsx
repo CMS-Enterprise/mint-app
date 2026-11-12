@@ -242,26 +242,16 @@ export const CollaboratorsContent = () => {
               ))}
 
             {manageOrAdd === 'add' && (
-              <div className="margin-top-5 display-block">
-                <UswdsReactLink
-                  data-testid="button--back"
-                  className="usa-button usa-button--outline"
-                  variant="unstyled"
-                  to="/models/new-plan"
-                >
-                  {miscellaneousT('back')}
-                </UswdsReactLink>
-                <UswdsReactLink
-                  data-testid="continue-to-collaboration-area"
-                  className="usa-button usa-button--outline"
-                  variant="unstyled"
-                  to={`/models/${modelID}/collaboration-area`}
-                >
-                  {collaborators.length > 0
-                    ? miscellaneousT('continueToCollaborationArea')
-                    : collaboratorsMiscT('continueWithoutAdding')}
-                </UswdsReactLink>
-              </div>
+              <UswdsReactLink
+                data-testid="continue-to-collaboration-area"
+                className="margin-top-5 usa-button usa-button--outline"
+                variant="unstyled"
+                to={`/models/${modelID}/collaboration-area`}
+              >
+                {collaborators.length > 0
+                  ? miscellaneousT('continueToCollaborationArea')
+                  : collaboratorsMiscT('continueWithoutAdding')}
+              </UswdsReactLink>
             )}
           </Grid>
         </Grid>

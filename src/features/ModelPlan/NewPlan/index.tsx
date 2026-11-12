@@ -138,7 +138,7 @@ const NewPlan = () => {
                         disabled={!dirty}
                         onClick={() => setErrors({})}
                       >
-                        {miscellaneousT('next')}
+                        {modelPlanMiscT('createModel')}
                       </Button>
                     </div>
                   </MINTForm>

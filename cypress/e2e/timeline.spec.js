@@ -17,7 +17,7 @@ describe('The model timeline form', () => {
       .type('My New Timeline Model Plan')
       .should('have.value', 'My New Timeline Model Plan');
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', 'Create model').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(
