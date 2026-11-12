@@ -10,6 +10,7 @@ func TestPlanTaskKeyIsManuallyMarkable(t *testing.T) {
 	assert.True(t, PlanTaskKeyTwoPager.IsManuallyMarkable())
 	assert.True(t, PlanTaskKeySixPager.IsManuallyMarkable())
 	assert.True(t, PlanTaskKeyOaPresentation.IsManuallyMarkable())
+	assert.True(t, PlanTaskKeyApprovedIcip.IsManuallyMarkable())
 	assert.False(t, PlanTaskKeyPrepareForClearance.IsManuallyMarkable())
 
 	assert.False(t, PlanTaskKeyModelPlan.IsManuallyMarkable())
@@ -34,6 +35,7 @@ func TestPlanTaskKeyActivationTarget(t *testing.T) {
 		PlanTaskKeyDataExchange,
 		PlanTaskKeyOaPresentation,
 		PlanTaskKeyPrepareForClearance,
+		PlanTaskKeyApprovedIcip,
 		PlanTaskKey("NOT_A_REAL_KEY"),
 	} {
 		_, ok := key.ActivationTarget()
@@ -57,6 +59,7 @@ func TestPlanTaskKeyChangeHistoryDisplayName(t *testing.T) {
 		"Prepare for your presentation to the Office of the Administrator",
 		PlanTaskKeyOaPresentation.ChangeHistoryDisplayName(),
 	)
+	assert.Equal(t, "Add approved ICIP", PlanTaskKeyApprovedIcip.ChangeHistoryDisplayName())
 
 	// Keys without a change-history-specific name fall back to DisplayName()
 	assert.Equal(t, PlanTaskKeyModelPlan.DisplayName(), PlanTaskKeyModelPlan.ChangeHistoryDisplayName())

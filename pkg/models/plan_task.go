@@ -35,6 +35,7 @@ const (
 	PlanTaskKeySixPager               PlanTaskKey = "SIX_PAGER"
 	PlanTaskKeyOaPresentation         PlanTaskKey = "OA_PRESENTATION"
 	PlanTaskKeyPrepareForClearance    PlanTaskKey = "PREPARE_FOR_CLEARANCE"
+	PlanTaskKeyApprovedIcip           PlanTaskKey = "APPROVED_ICIP"
 )
 
 // PrepareForClearanceTriggerDays is how many days before a model plan's internal clearance start
@@ -58,6 +59,7 @@ var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
 	PlanTaskKeyTwoPager:       true,
 	PlanTaskKeySixPager:       true,
 	PlanTaskKeyOaPresentation: true,
+	PlanTaskKeyApprovedIcip:   true,
 }
 
 // PlanTaskDefault pairs a PlanTaskKey with the PlanTaskState it should start at when a model plan
@@ -116,6 +118,7 @@ var planTaskKeyDisplayNames = map[PlanTaskKey]string{
 	PlanTaskKeySixPager:               "Prepare for your 6-page review meeting with CMMI Front Office",
 	PlanTaskKeyOaPresentation:         "Office of the Administrator (OA) presentation",
 	PlanTaskKeyPrepareForClearance:    "Prepare for clearance",
+	PlanTaskKeyApprovedIcip:           "Add approved ICIP",
 }
 
 // DisplayName returns a short human-readable name for this task key.
@@ -134,6 +137,7 @@ var planTaskKeyChangeHistoryNames = map[PlanTaskKey]string{
 	PlanTaskKeyTwoPager:       "Prepare for your 2-page review meeting with CMMI Front Office",
 	PlanTaskKeySixPager:       "Prepare for your 6-page review meeting with CMMI Front Office",
 	PlanTaskKeyOaPresentation: "Prepare for your presentation to the Office of the Administrator",
+	PlanTaskKeyApprovedIcip:   "Add approved ICIP",
 }
 
 // ChangeHistoryDisplayName returns the task name shown in change history.
