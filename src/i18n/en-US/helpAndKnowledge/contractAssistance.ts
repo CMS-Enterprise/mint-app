@@ -610,6 +610,16 @@ const contractAssistanceMisc = {
     assignedMember: 'Assigned contract assistance team member',
     uploadedDocuments: 'Uploaded documents',
     viewModelInMint: 'View model in MINT',
+    discussionHeading: 'Discussion',
+    discussionMessageCount_one: '{{count}} message',
+    discussionMessageCount_other: '{{count}} messages',
+    discussionLatestMessage: 'Latest message: {{name}}, {{date}}',
+    discussionLoading: 'Loading discussion…',
+    discussionError: 'Discussion could not be loaded.',
+    discussionEmpty: 'Latest message: No messages yet',
+    discussionClosedNotice:
+      'This ticket is closed. You will not be able to add any additional messages to this discussion, but you may review the existing messages using the link. Please submit a new ticket if you need any additional contract assistance.',
+    goToDiscussion: 'Go to discussion',
     empty: {
       notAssigned: 'Not assigned yet',
       noNotes: 'No notes added',
