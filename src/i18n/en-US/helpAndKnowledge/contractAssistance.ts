@@ -603,6 +603,10 @@ const contractAssistanceMisc = {
     }
   },
 
+  ctatDiscussionPanel: {
+    backToTicketDetails: 'Back to ticket details'
+  },
+
   ctatViewPanel: {
     submittedOn: 'Submitted on {{date}}',
     progressHeading: 'Ticket progress and resolution',

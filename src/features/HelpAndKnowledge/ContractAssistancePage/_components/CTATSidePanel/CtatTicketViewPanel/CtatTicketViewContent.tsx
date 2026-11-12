@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import {
   Button,
   Icon,
@@ -49,6 +50,7 @@ type CtatTicketViewContentProps = {
   setDisableButton?: React.Dispatch<React.SetStateAction<boolean>>;
   setIsDirty?: (isDirty: boolean) => void;
   onSubmitted?: () => void;
+  onDiscussionClick?: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 type DetailFieldProps = {
@@ -141,12 +143,14 @@ const CtatTicketViewContent = ({
   closeModal,
   setDisableButton,
   setIsDirty,
-  onSubmitted
+  onSubmitted,
+  onDiscussionClick
 }: CtatTicketViewContentProps) => {
   const { t: contractAssistanceT } = useTranslation('contractAssistance');
   const { t: contractAssistanceMiscT } = useTranslation(
     'contractAssistanceMisc'
   );
+  const location = useLocation();
 
   const {
     status: statusConfig,
@@ -340,10 +344,14 @@ const CtatTicketViewContent = ({
                 )}
               </Alert>
             )}
-            <span className="usa-link display-inline-flex flex-align-center margin-top-2">
+            <UswdsReactLink
+              to={`/help-and-knowledge/contract-assistance/${ticket.id}/discussion${location.search}`}
+              className="display-inline-flex flex-align-center margin-top-2"
+              onClick={onDiscussionClick}
+            >
               {contractAssistanceMiscT('ctatViewPanel.goToDiscussion')}
               <Icon.ArrowForward className="margin-left-1" aria-hidden="true" />
-            </span>
+            </UswdsReactLink>
           </>
         )}
       </div>

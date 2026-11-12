@@ -1,7 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  useLocation,
+  useMatch,
+  useNavigate,
+  useParams
+} from 'react-router-dom';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
@@ -19,6 +24,7 @@ import PageLoading from 'components/PageLoading';
 import { isAssessment } from 'utils/user';
 
 import AdminTicketManagementSection from './_components/AdminTicketManagementSection';
+import CtatDiscussionPanel from './_components/CTATSidePanel/CtatDiscussionPanel';
 import CtatTicketViewPanel from './_components/CTATSidePanel/CtatTicketViewPanel';
 import UserSubmittedTicketsSection from './_components/UserSubmittedTicketsSection';
 import { mapCtatRequestsToContractAssistanceTickets } from './utils';
@@ -33,6 +39,9 @@ const ContractAssistancePage = () => {
   const isAssessmentTeam = isAssessment(groups, flags);
 
   const { ticketId } = useParams();
+  const isDiscussionView = !!useMatch(
+    '/help-and-knowledge/contract-assistance/:ticketId/discussion'
+  );
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -41,6 +50,13 @@ const ContractAssistancePage = () => {
       replace: true
     });
   }, [navigate, location.search]);
+
+  const closeDiscussionPanel = useCallback(() => {
+    navigate(
+      `/help-and-knowledge/contract-assistance/${ticketId}${location.search}`,
+      { replace: true }
+    );
+  }, [navigate, ticketId, location.search]);
 
   const {
     data: requesterData,
@@ -127,12 +143,15 @@ const ContractAssistancePage = () => {
         <UserSubmittedTicketsSection tickets={userTickets} />
       </GridContainer>
 
-      {ticketId && (
+      {ticketId && !isDiscussionView && (
         <CtatTicketViewPanel
           ticketId={ticketId}
           closeModal={closeTicketViewPanel}
           isAdmin={isAssessmentTeam}
         />
+      )}
+      {ticketId && isDiscussionView && (
+        <CtatDiscussionPanel closeModal={closeDiscussionPanel} />
       )}
     </MainContent>
   );

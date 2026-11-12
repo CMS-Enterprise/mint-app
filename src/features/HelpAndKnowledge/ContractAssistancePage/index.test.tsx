@@ -73,6 +73,10 @@ const renderPage = (
       {
         path: '/help-and-knowledge/contract-assistance/:ticketId',
         element: <ContractAssistancePage />
+      },
+      {
+        path: '/help-and-knowledge/contract-assistance/:ticketId/discussion',
+        element: <ContractAssistancePage />
       }
     ],
     {
@@ -109,7 +113,10 @@ describe('ContractAssistancePage', () => {
       ).toBeInTheDocument();
     });
     expect(
-      screen.getByRole('heading', { level: 2, name: 'Admin ticket management' })
+      screen.getByRole('heading', {
+        level: 2,
+        name: 'Admin ticket management'
+      })
     ).toBeInTheDocument();
     expect(
       screen.getByRole('heading', {
@@ -152,6 +159,20 @@ describe('ContractAssistancePage', () => {
     expect(
       screen.getByText('Visit the CTAT E-library on SharePoint')
     ).toBeInTheDocument();
+  });
+
+  it('opens the discussion panel at the ticket discussion URL', async () => {
+    renderPage(
+      nonAssessmentStore,
+      '/help-and-knowledge/contract-assistance/550e8400-e29b-41d4-a716-446655440000/discussion'
+    );
+
+    expect(
+      await screen.findByTestId('ctat-discussion-sidepanel')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByTestId('ctat-ticket-view-sidepanel')
+    ).not.toBeInTheDocument();
   });
 
   it('matches snapshot', async () => {

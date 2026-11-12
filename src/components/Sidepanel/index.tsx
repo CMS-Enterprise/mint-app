@@ -116,7 +116,7 @@ const Sidepanel = ({
           type="button"
           data-testid="close-discussions"
           className="mint-sidepanel__x-button margin-right-1"
-          aria-label="Close Modal"
+          aria-label={backButton ? 'Back' : 'Close Modal'}
           onClick={closeModal}
         >
           {backButton ? (

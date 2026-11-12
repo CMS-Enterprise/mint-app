@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
@@ -28,12 +29,16 @@ const CtatTicketViewPanel = ({
   const { t: contractAssistanceMiscT } = useTranslation(
     'contractAssistanceMisc'
   );
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const submitted = useRef<boolean>(false);
 
   const [disabledSubmitBtn, setDisableSubmitBtn] = useState(true);
   const [isDirty, setIsDirty] = useState<boolean>(false);
   const [leavePage, setLeavePage] = useState<boolean>(false);
+  const [discussionNavigationPending, setDiscussionNavigationPending] =
+    useState(false);
 
   const requesterResult = useGetCtatRequestQuery({
     variables: { id: ticketId },
@@ -53,11 +58,28 @@ const CtatTicketViewPanel = ({
 
   const closePanel = useCallback(() => {
     if (isAdmin && isDirty && !submitted.current) {
+      setDiscussionNavigationPending(false);
       setLeavePage(true);
     } else {
       closeModal();
     }
   }, [closeModal, isAdmin, isDirty]);
+
+  const handleDiscussionClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      if (isDirty && !submitted.current) {
+        event.preventDefault();
+        setDiscussionNavigationPending(true);
+        setLeavePage(true);
+      }
+    },
+    [isDirty]
+  );
+
+  const cancelLeave = useCallback(() => {
+    setLeavePage(false);
+    setDiscussionNavigationPending(false);
+  }, []);
 
   const handleSubmitted = useCallback(() => {
     submitted.current = true;
@@ -114,6 +136,7 @@ const CtatTicketViewPanel = ({
             setDisableButton={setDisableSubmitBtn}
             setIsDirty={setIsDirty}
             onSubmitted={handleSubmitted}
+            onDiscussionClick={handleDiscussionClick}
           />
         )}
         {!loading && !error && !isAdmin && requesterTicket && (
@@ -124,7 +147,7 @@ const CtatTicketViewPanel = ({
       {isAdmin && (
         <Modal
           isOpen={leavePage && !submitted.current}
-          closeModal={() => setLeavePage(false)}
+          closeModal={cancelLeave}
           className="confirmation-modal"
           zTop
         >
@@ -145,13 +168,19 @@ const CtatTicketViewPanel = ({
             onClick={() => {
               setIsDirty(false);
               setLeavePage(false);
-              handleCloseModal();
+              if (discussionNavigationPending) {
+                navigate(
+                  `/help-and-knowledge/contract-assistance/${ticketId}/discussion${location.search}`
+                );
+              } else {
+                handleCloseModal();
+              }
             }}
           >
             {contractAssistanceMiscT('ctatSidePanel.leaveConfirm.confirm')}
           </Button>
 
-          <Button type="button" unstyled onClick={() => setLeavePage(false)}>
+          <Button type="button" unstyled onClick={cancelLeave}>
             {contractAssistanceMiscT('ctatSidePanel.leaveConfirm.dontLeave')}
           </Button>
         </Modal>

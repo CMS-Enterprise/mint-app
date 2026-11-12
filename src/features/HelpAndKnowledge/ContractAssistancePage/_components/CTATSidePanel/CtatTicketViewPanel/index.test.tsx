@@ -171,6 +171,10 @@ const renderPanel = (
             isAdmin={isAdmin}
           />
         )
+      },
+      {
+        path: '/help-and-knowledge/contract-assistance/:ticketId/discussion',
+        element: <div>Discussion destination</div>
       }
     ],
     {
@@ -202,6 +206,12 @@ describe('CtatTicketViewPanel', () => {
     expect(screen.getByText('No resolution added')).toBeInTheDocument();
     expect(screen.getByText('What happens next?')).toBeInTheDocument();
     expect(await screen.findByText('0 messages')).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: 'Go to discussion' })
+    ).toHaveAttribute(
+      'href',
+      `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
+    );
     expect(screen.getByText('Latest message: No messages yet')).not.toHaveClass(
       'text-italic'
     );
@@ -403,6 +413,41 @@ describe('CtatTicketViewPanel', () => {
     expect(screen.getByRole('button', { name: 'Save changes' })).toBeDisabled();
     expect(screen.queryByText('Not assigned yet')).not.toBeInTheDocument();
     expect(screen.queryByText('What happens next?')).not.toBeInTheDocument();
+  });
+
+  it('confirms before leaving unsaved admin edits for the discussion', async () => {
+    const { user } = renderPanel([openAdminTicketMock], { isAdmin: true });
+
+    await screen.findByTestId('ctat-admin-status');
+    const notesField = document.getElementById(
+      'ctat-admin-progress-notes'
+    ) as HTMLTextAreaElement;
+    await user.type(notesField, 'Unsaved notes');
+    await screen.findByText('0 messages');
+
+    await user.click(screen.getByRole('link', { name: 'Go to discussion' }));
+
+    expect(
+      screen.getByText('Are you sure you want to leave?')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('Discussion destination')
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Stay on page' }));
+    expect(
+      screen.queryByText('Are you sure you want to leave?')
+    ).not.toBeInTheDocument();
+    expect(notesField).toHaveValue('Unsaved notes');
+
+    await user.click(screen.getByRole('link', { name: 'Go to discussion' }));
+    await user.click(
+      screen.getByRole('button', { name: 'Leave without saving' })
+    );
+
+    expect(
+      await screen.findByText('Discussion destination')
+    ).toBeInTheDocument();
   });
 
   it('renders blue admin progress box for open tickets', async () => {
