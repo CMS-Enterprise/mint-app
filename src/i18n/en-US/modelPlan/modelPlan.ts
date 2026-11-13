@@ -122,6 +122,7 @@ export const modelPlanMisc: Record<string, string> = {
   readyForClearanceAt: 'Ready for clearance at',
   breadcrumb: 'Add a new model to MINT',
   modelName: 'What is the name of your model?',
+  createModel: 'Create model',
   modelNameInfo:
     'This is not a permanent name. If needed, you may update it later.',
   headingStatus: 'Update status',
