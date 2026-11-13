@@ -176,7 +176,7 @@ const CtatTicketPanel = ({
         {!loading && !error && isDiscussionView && ticket && (
           <CtatDiscussionContent
             ticketNumber={ticket.humanReadableID}
-            messageCount={discussions.length}
+            discussions={discussions}
             discussionsLoading={discussionsLoading}
             discussionsError={discussionsError}
           />

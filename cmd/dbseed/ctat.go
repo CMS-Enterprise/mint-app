@@ -4,6 +4,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -86,7 +87,7 @@ func (s *Seeder) createCTATRequest(requester *authentication.ApplicationPrincipa
 	return request
 }
 
-func (s *Seeder) createCTATDiscussion(ticket *models.CTATRequest, author authentication.Principal, role models.CTATDiscussionPoster, content string) *models.CTATDiscussion {
+func (s *Seeder) createCTATDiscussion(ticket *models.CTATRequest, author authentication.Principal, role models.CTATDiscussionPoster, content string, createdDts time.Time) *models.CTATDiscussion {
 	if ticket == nil || author == nil || author.Account() == nil {
 		panic("ctat discussion seed requires a ticket and an author")
 	}
@@ -110,6 +111,7 @@ func (s *Seeder) createCTATDiscussion(ticket *models.CTATRequest, author authent
 		PosterRole: role,
 	}
 	discussion.CreatedBy = author.Account().ID
+	discussion.CreatedDts = createdDts
 
 	// Seed directly through storage so test data does not send discussion emails.
 	created, err := storage.CTATDiscussionCreate(s.Config.Store, discussion)
@@ -119,12 +121,42 @@ func (s *Seeder) createCTATDiscussion(ticket *models.CTATRequest, author authent
 	return created
 }
 
-func (s *Seeder) seedCTATDiscussionThread(ticket *models.CTATRequest, requester *authentication.ApplicationPrincipal, admin *authentication.ApplicationPrincipal, messages ...string) {
-	for index, content := range messages {
+var ctatSeedLoremIpsum = []string{
+	"Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	"Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+	"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+	"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+	"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+	"Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+	"Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
+	"Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.",
+	"Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.",
+	"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.",
+	"Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.",
+	"Et harum quidem rerum facilis est et expedita distinctio.",
+	"Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus.",
+	"Omnis voluptas assumenda est, omnis dolor repellendus.",
+}
+
+func ctatSeedDiscussionContent(ticketNumber int, messageIndex int) string {
+	start := (ticketNumber*7 + messageIndex*11) % len(ctatSeedLoremIpsum)
+	length := 1 + (ticketNumber+messageIndex*2)%5
+	sentences := make([]string, 0, length)
+	for offset := range length {
+		sentences = append(sentences, ctatSeedLoremIpsum[(start+offset)%len(ctatSeedLoremIpsum)])
+	}
+	return strings.Join(sentences, " ")
+}
+
+func (s *Seeder) seedCTATDiscussionThread(ticket *models.CTATRequest, requester *authentication.ApplicationPrincipal, admin *authentication.ApplicationPrincipal, latestAt time.Time, messageCount int) {
+	for index := range messageCount {
+		content := ctatSeedDiscussionContent(ticket.HumanReadableIDNumber, index)
+		createdDts := latestAt.AddDate(0, 0, index-messageCount+1)
 		if index%2 == 0 {
-			s.createCTATDiscussion(ticket, requester, models.CTATDiscussionPosterRequester, content)
+			s.createCTATDiscussion(ticket, requester, models.CTATDiscussionPosterRequester, content, createdDts)
 		} else {
-			s.createCTATDiscussion(ticket, admin, models.CTATDiscussionPosterAdmin, content)
+			s.createCTATDiscussion(ticket, admin, models.CTATDiscussionPosterAdmin, content, createdDts)
 		}
 	}
 }
@@ -345,85 +377,15 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 7),
 	})
 
-	s.seedCTATDiscussionThread(operationalSupportTicket, requesterBTAL, adminADMI,
-		"Can CTAT help us decide which market research findings should be reflected in the RFI?",
-		"Yes. Please share the draft RFI and market research summary so we can review them together.",
-		"Thanks. I will send the draft and highlight the sections where we need guidance.",
-		"The acquisition team has also asked whether the vendor questions should be grouped by topic.",
-		"Grouping them by topic would help respondents and make the answers easier to compare.",
-		"That makes sense. I have updated the outline and would appreciate a final review.",
-		"We will review the updated outline and return comments by the end of the week.",
-	)
-
-	s.seedCTATDiscussionThread(learningSystemsTicket, requesterBTAL, adminADMI,
-		"The draft performance work statement is ready for CTAT review. Are there specific sections we should prioritize?",
-		"Please start with the deliverables and evaluation criteria. We will review those first.",
-		"I have marked the deliverables that need clearer acceptance criteria.",
-		"The acceptance criteria should describe the expected output and review timeline for each deliverable.",
-		"We updated those sections. Would CTAT also review the reporting schedule?",
-		"Yes. We will include the reporting schedule in our next review pass.",
-	)
-
-	s.seedCTATDiscussionThread(seamlessCareTicket, requesterBTAL, adminADMI,
-		"We need guidance on the data use agreement for the financial risk analysis.",
-		"Please send the proposed data elements and the intended users of the data.",
-		"The proposed data elements are listed in the draft agreement we shared.",
-		"We found two fields that may need narrower access language.",
-		"Could you identify those fields so we can revise the agreement?",
-		"They are the beneficiary identifier and the provider-level payment amount.",
-		"I have updated the draft to limit access to those fields.",
-		"Thanks. CTAT will review the revised language before the next meeting.",
-	)
-
-	s.seedCTATDiscussionThread(primaryCareTicket, requesterBTAL, adminADMI,
-		"Can CTAT review the independent government cost estimate for the primary care effort?",
-		"Yes. Please include the assumptions behind the labor categories and estimated hours.",
-		"The labor assumptions are in the latest cost worksheet.",
-		"We recommend explaining the difference between the base year and option years.",
-		"I added that explanation and updated the estimated hours.",
-		"The revised estimate is clearer. We will finish our review of the RFQ package next.",
-	)
-
-	s.seedCTATDiscussionThread(dataAnalyticsTicket, requesterBTAL, adminADMI,
-		"Could CTAT advise on the market research sources for this analytics workstream?",
-		"Please include both the recent sources and the assumptions used in the cost review.",
-	)
-
-	s.seedCTATDiscussionThread(paymentResearchTicket, requesterBTAL, adminADMI,
-		"We would appreciate guidance on documenting contractor performance for this support contract.",
-		"Please share the current COR notes and any draft CPARS language.",
-		"I have gathered the notes and will send the draft language for review.",
-	)
-
-	s.seedCTATDiscussionThread(healthCareTicket, requesterBTAL, adminADMI,
-		"Can CTAT help us confirm the required approval steps for this contract modification?",
-	)
-
-	s.seedCTATDiscussionThread(seamlessInfrastructureTicket, requesterBTAL, adminADMI,
-		"We need help with the requisition and identity credentialing steps for the new effort.",
-		"Please send the planned start date and the list of staff who will need access.",
-	)
-
-	s.seedCTATDiscussionThread(technologySolutionsTicket, requesterBTAL, adminADMI,
-		"Could CTAT review the technical evaluation panel plan before we finalize the solicitation?",
-	)
-
-	s.seedCTATDiscussionThread(populationHealthTicket, requesterJANE, adminADMI,
-		"Could CTAT review our draft statement of work before we finalize the acquisition approach?",
-		"Yes. Please identify the deliverables and the decision points that need contract support.",
-		"I have marked those sections in the draft statement of work.",
-		"The milestones are clear, but the acceptance criteria need more detail.",
-		"I updated the criteria and added examples for the evaluation deliverables.",
-		"Those examples help. We will review the revised draft with the acquisition team.",
-		"Thank you. I will wait for the team's comments before making further changes.",
-	)
-
-	s.seedCTATDiscussionThread(crossCmmiTicket, requesterBTMN, adminADMI,
-		"We have follow-up questions about the post-award documentation closeout process.",
-		"We have received your request and will review the current closeout checklist.",
-		"The checklist is available, but we are unsure which records must be retained.",
-		"Please send the records list so we can identify the required retention items.",
-		"I sent the records list and highlighted the items in question.",
-		"Thanks. We will provide comments on those items after reviewing the checklist.",
-	)
+	s.seedCTATDiscussionThread(operationalSupportTicket, requesterBTAL, adminADMI, now.Add(-2*time.Hour), 7)
+	s.seedCTATDiscussionThread(learningSystemsTicket, requesterBTAL, adminADMI, now.AddDate(0, 0, -1), 6)
+	s.seedCTATDiscussionThread(seamlessCareTicket, requesterBTAL, adminADMI, now.AddDate(0, 0, -5), 8)
+	s.seedCTATDiscussionThread(primaryCareTicket, requesterBTAL, adminADMI, now.AddDate(0, 0, -14), 6)
+	s.seedCTATDiscussionThread(dataAnalyticsTicket, requesterBTAL, adminADMI, now.AddDate(0, 0, -3), 2)
+	s.seedCTATDiscussionThread(paymentResearchTicket, requesterBTAL, adminADMI, now.AddDate(0, -1, 0), 3)
+	s.seedCTATDiscussionThread(healthCareTicket, requesterBTAL, adminADMI, now.AddDate(0, 0, -2), 1)
+	s.seedCTATDiscussionThread(seamlessInfrastructureTicket, requesterBTAL, adminADMI, now.AddDate(0, 0, -7), 2)
+	s.seedCTATDiscussionThread(technologySolutionsTicket, requesterBTAL, adminADMI, now.AddDate(0, -2, 0), 1)
+	s.seedCTATDiscussionThread(populationHealthTicket, requesterJANE, adminADMI, now.Add(-4*time.Hour), 7)
+	s.seedCTATDiscussionThread(crossCmmiTicket, requesterBTMN, adminADMI, now.AddDate(0, 0, -21), 6)
 }

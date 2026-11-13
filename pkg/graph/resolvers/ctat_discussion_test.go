@@ -13,6 +13,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/userhelpers"
 )
 
@@ -21,6 +22,34 @@ type ctatDiscussionTestEmail struct {
 	cc      string
 	subject string
 	body    string
+}
+
+func (suite *ResolverSuite) TestCTATDiscussionCreateWithExplicitTimestamp() {
+	requester := suite.testConfigs.Principal
+	ticket := suite.createTestCTATRequest(
+		requester.Account().ID,
+		time.Now().Add(24*time.Hour),
+		"Discussion timestamp",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
+		models.CTATStatusNew,
+	)
+	wantCreatedDts := time.Now().UTC().Add(-7 * 24 * time.Hour).Truncate(time.Microsecond)
+	discussion := &models.CTATDiscussion{
+		TicketID:   ticket.ID,
+		Content:    "Seeded earlier message",
+		PosterRole: models.CTATDiscussionPosterRequester,
+	}
+	discussion.CreatedBy = requester.Account().ID
+	discussion.CreatedDts = wantCreatedDts
+
+	created, err := storage.CTATDiscussionCreate(suite.testConfigs.Store, discussion)
+	suite.Require().NoError(err)
+	suite.WithinDuration(wantCreatedDts, created.CreatedDts, time.Microsecond)
+
+	stored, err := storage.CTATDiscussionByTicketID(suite.testConfigs.Store, []uuid.UUID{ticket.ID})
+	suite.Require().NoError(err)
+	suite.Require().Len(stored, 1)
+	suite.WithinDuration(wantCreatedDts, stored[0].CreatedDts, time.Microsecond)
 }
 
 func recordCTATDiscussionTestEmail(sent chan<- ctatDiscussionTestEmail) func(string, *string, *string, string, string, string, ...oddmail.EmailOption) error {

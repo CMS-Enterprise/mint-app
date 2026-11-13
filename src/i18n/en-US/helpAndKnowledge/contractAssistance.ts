@@ -606,6 +606,12 @@ const contractAssistanceMisc = {
   ctatDiscussionPanel: {
     backToTicketDetails: 'Back to ticket details',
     ticketNumber: 'Ticket {{ticketNumber}}',
+    showingRecentMessages: 'Showing the most recent 2 messages',
+    showingAllMessages: 'Showing all messages',
+    showEarlierMessages: 'Show earlier messages',
+    hideEarlierMessages: 'Hide earlier messages',
+    adminRole: 'CTAT Admin',
+    requesterRole: 'Requester',
     empty:
       'There are not yet any messages about this ticket. Add a message to start a discussion.'
   },

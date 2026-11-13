@@ -37,8 +37,9 @@ export const formatDiscussionRelativeDate = (createdDts: string): string => {
   const now = DateTime.local();
 
   if (created.hasSame(now, 'day')) {
-    return `today at ${created.toFormat('hh:mm a')}`;
+    return `Today at ${created.toFormat('h:mm a')}`;
   }
+  if (created.hasSame(now.minus({ days: 1 }), 'day')) return 'Yesterday';
   const yearsAgo = now.diff(created, 'years').years;
   if (yearsAgo >= 10) {
     const decadesAgo = Math.floor(yearsAgo / 10);

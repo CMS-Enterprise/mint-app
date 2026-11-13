@@ -21,7 +21,7 @@ describe('formatDiscussionRelativeDate', () => {
         DateTime.local()
           .set({ hour: 15, minute: 42, second: 0, millisecond: 0 })
           .toISO(),
-      expected: 'today at 03:42 PM'
+      expected: 'Today at 3:42 PM'
     },
     {
       date: () => DateTime.local().minus({ months: 1 }).toISO(),
@@ -54,12 +54,12 @@ describe('formatDiscussionRelativeDate', () => {
     {
       now: '2026-11-01T12:00:00',
       date: () => DateTime.local().minus({ days: 1 }).toISO(),
-      expected: 'yesterday'
+      expected: 'Yesterday'
     },
     {
       now: '2026-01-01T12:00:00',
       date: () => DateTime.local().minus({ days: 1 }).toISO(),
-      expected: 'yesterday'
+      expected: 'Yesterday'
     }
   ])('formats discussion age as $expected', ({ now, date, expected }) => {
     if (now) Settings.now = () => new Date(now).getTime();

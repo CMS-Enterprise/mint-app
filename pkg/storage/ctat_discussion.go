@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 
@@ -10,7 +12,19 @@ import (
 )
 
 func CTATDiscussionCreate(np sqlutils.NamedPreparer, discussion *models.CTATDiscussion) (*models.CTATDiscussion, error) {
-	return sqlutils.GetProcedure[models.CTATDiscussion](np, sqlqueries.CTATDiscussion.Create, discussion)
+	var createdDts *time.Time
+	if !discussion.CreatedDts.IsZero() {
+		createdDts = &discussion.CreatedDts
+	}
+
+	args := map[string]any{
+		"ticket_id":   discussion.TicketID,
+		"content":     discussion.Content,
+		"poster_role": discussion.PosterRole,
+		"created_by":  discussion.CreatedBy,
+		"created_dts": createdDts,
+	}
+	return sqlutils.GetProcedure[models.CTATDiscussion](np, sqlqueries.CTATDiscussion.Create, args)
 }
 
 func CTATDiscussionByTicketID(np sqlutils.NamedPreparer, ticketIDs []uuid.UUID) ([]*models.CTATDiscussion, error) {
