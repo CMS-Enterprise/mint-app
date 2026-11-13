@@ -5,6 +5,7 @@ import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { screen, waitFor } from '@testing-library/react';
 import {
   CtatStatus,
+  GetCtatDiscussionsDocument,
   GetCtatRequestDocument,
   GetCtatRequestsAdminDocument,
   GetCtatRequestsRequesterDocument
@@ -127,6 +128,14 @@ const requesterDetailMock = {
   }
 };
 
+const emptyDiscussionsMock = {
+  request: {
+    query: GetCtatDiscussionsDocument,
+    variables: { ticketID: '550e8400-e29b-41d4-a716-446655440000' }
+  },
+  result: { data: { discussions: [] } }
+};
+
 const mockStore = configureMockStore();
 const assessmentStore = mockStore({ auth: mockAuthAssessment });
 const nonAssessmentStore = mockStore({ auth: mockAuthNotAssessment });
@@ -234,13 +243,18 @@ describe('ContractAssistancePage', () => {
     renderPage(
       nonAssessmentStore,
       '/help-and-knowledge/contract-assistance/550e8400-e29b-41d4-a716-446655440000/discussion',
-      [requesterTicketMock, requesterDetailMock]
+      [requesterTicketMock, requesterDetailMock, emptyDiscussionsMock]
     );
 
     expect(
       await screen.findByTestId('ctat-discussion-sidepanel')
     ).toBeInTheDocument();
     expect(await screen.findByText('Ticket CTAT-001')).toBeInTheDocument();
+    expect(
+      await screen.findByText(
+        'There are not yet any messages about this ticket. Add a message to start a discussion.'
+      )
+    ).toBeInTheDocument();
     expect(
       screen.queryByTestId('ctat-ticket-view-sidepanel')
     ).not.toBeInTheDocument();

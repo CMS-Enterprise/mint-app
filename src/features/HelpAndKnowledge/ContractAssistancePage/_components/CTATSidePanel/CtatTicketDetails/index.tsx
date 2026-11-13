@@ -15,9 +15,9 @@ import {
   CtatContractActivityType,
   CtatContractType,
   CtatStatus,
+  GetCtatDiscussionsQuery,
   GetCtatRequestAdminQuery,
-  GetCtatRequestQuery,
-  useGetCtatDiscussionsQuery
+  GetCtatRequestQuery
 } from 'gql/generated/graphql';
 
 import Alert from 'components/Alert';
@@ -44,6 +44,9 @@ import CtatTicketAdminForm from './CtatTicketAdminForm';
 
 type CtatTicketDetailsProps = {
   ticket: GetCtatRequestQuery['ctatRequest'];
+  discussions: GetCtatDiscussionsQuery['discussions'];
+  discussionsLoading: boolean;
+  discussionsError?: Error;
   adminTicket?: GetCtatRequestAdminQuery['ctatRequest'];
   isAdmin?: boolean;
   closeModal?: () => void;
@@ -138,6 +141,9 @@ const SupportingDocumentItem = ({
 
 const CtatTicketDetails = ({
   ticket,
+  discussions,
+  discussionsLoading,
+  discussionsError,
   adminTicket,
   isAdmin = false,
   closeModal,
@@ -167,15 +173,6 @@ const CtatTicketDetails = ({
 
   const isClosed = ticket.status === CtatStatus.CLOSED;
 
-  const {
-    data: discussionData,
-    loading: discussionsLoading,
-    error: discussionsError
-  } = useGetCtatDiscussionsQuery({
-    variables: { ticketID: ticket.id },
-    skip: ticket.id.length < 1
-  });
-  const discussions = discussionData?.discussions ?? [];
   const latestDiscussion = discussions[0];
   const latestDate = latestDiscussion
     ? formatDiscussionRelativeDate(latestDiscussion.createdDts)

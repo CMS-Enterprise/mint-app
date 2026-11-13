@@ -191,7 +191,7 @@ const renderPanel = (
   );
 
   return setup(
-    <MockedProvider mocks={[...mocks, discussionsMock, discussionsMock]}>
+    <MockedProvider mocks={[...mocks, discussionsMock]}>
       <RouterProvider router={router} />
     </MockedProvider>
   );
@@ -274,7 +274,7 @@ describe('CtatTicketPanel', () => {
       }
     };
 
-    renderPanel([openTicketMock], { discussionsMock });
+    const { user } = renderPanel([openTicketMock], { discussionsMock });
 
     expect(await screen.findByText('2 messages')).toBeInTheDocument();
     expect(
@@ -282,6 +282,13 @@ describe('CtatTicketPanel', () => {
     ).toBeInTheDocument();
     expect(
       screen.queryByText('Latest message: No messages yet')
+    ).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole('link', { name: 'Go to discussion' }));
+
+    expect(await screen.findByText('2 messages')).toHaveClass('text-bold');
+    expect(
+      screen.queryByText(/^There are not yet any messages/)
     ).not.toBeInTheDocument();
   });
 

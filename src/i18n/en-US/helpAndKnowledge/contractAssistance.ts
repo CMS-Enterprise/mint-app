@@ -605,7 +605,9 @@ const contractAssistanceMisc = {
 
   ctatDiscussionPanel: {
     backToTicketDetails: 'Back to ticket details',
-    ticketNumber: 'Ticket {{ticketNumber}}'
+    ticketNumber: 'Ticket {{ticketNumber}}',
+    empty:
+      'There are not yet any messages about this ticket. Add a message to start a discussion.'
   },
 
   ctatViewPanel: {

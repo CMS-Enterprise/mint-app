@@ -14,6 +14,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
 	"github.com/cms-enterprise/mint-app/pkg/graph/resolvers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
 func closeCTATSupportingDocumentInputs(inputs []*model.CTATRequestDocumentInput) {
@@ -85,6 +86,49 @@ func (s *Seeder) createCTATRequest(requester *authentication.ApplicationPrincipa
 	return request
 }
 
+func (s *Seeder) createCTATDiscussion(ticket *models.CTATRequest, author authentication.Principal, role models.CTATDiscussionPoster, content string) *models.CTATDiscussion {
+	if ticket == nil || author == nil || author.Account() == nil {
+		panic("ctat discussion seed requires a ticket and an author")
+	}
+
+	switch role {
+	case models.CTATDiscussionPosterRequester:
+		if ticket.Requester != author.Account().ID {
+			panic("ctat discussion requester must own the ticket")
+		}
+	case models.CTATDiscussionPosterAdmin:
+		if !author.AllowASSESSMENT() {
+			panic("ctat discussion admin must have assessment access")
+		}
+	default:
+		panic("ctat discussion seed requires a valid poster role")
+	}
+
+	discussion := &models.CTATDiscussion{
+		TicketID:   ticket.ID,
+		Content:    content,
+		PosterRole: role,
+	}
+	discussion.CreatedBy = author.Account().ID
+
+	// Seed directly through storage so test data does not send discussion emails.
+	created, err := storage.CTATDiscussionCreate(s.Config.Store, discussion)
+	if err != nil {
+		panic(err)
+	}
+	return created
+}
+
+func (s *Seeder) seedCTATDiscussionThread(ticket *models.CTATRequest, requester *authentication.ApplicationPrincipal, admin *authentication.ApplicationPrincipal, messages ...string) {
+	for index, content := range messages {
+		if index%2 == 0 {
+			s.createCTATDiscussion(ticket, requester, models.CTATDiscussionPosterRequester, content)
+		} else {
+			s.createCTATDiscussion(ticket, admin, models.CTATDiscussionPosterAdmin, content)
+		}
+	}
+}
+
 func (s *Seeder) seedCTATRequests(
 	now time.Time,
 	planWithBasics *models.ModelPlan,
@@ -96,6 +140,8 @@ func (s *Seeder) seedCTATRequests(
 	requesterBTAL := s.getTestPrincipalByUsername("BTAL")
 	requesterJANE := s.getTestPrincipalByUsername("JANE")
 	requesterBTMN := s.getTestPrincipalByUsername("BTMN")
+	adminADMI := s.getTestPrincipalByUsername("ADMI")
+	adminADMI.JobCodeASSESSMENT = true
 
 	bsgDivision := models.CTATCMMIDivisionOptionBSGDCCS
 	bsgTechDivision := models.CTATCMMIDivisionOptionBSGDTS
@@ -117,7 +163,7 @@ func (s *Seeder) seedCTATRequests(
 	incentiveContract := models.CTATContractTypeIncentiveContract
 	costPlusFixedFee := models.CTATContractTypeCostPlusFixedFee
 
-	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
+	operationalSupportTicket := s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           &bsgDivision,
 		RelatedMINTModels:      []uuid.UUID{planWithBasics.ID, sampleModelPlan.ID},
@@ -131,7 +177,7 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 14),
 	})
 
-	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
+	learningSystemsTicket := s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionLDG,
 		CmmiDivision:           &ldgDivision,
 		RelatedMINTModels:      []uuid.UUID{planWithDocuments.ID},
@@ -145,7 +191,7 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 21),
 	})
 
-	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
+	seamlessCareTicket := s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionSCMG,
 		CmmiDivision:           &scmgDivision,
 		RelatedMINTModels:      []uuid.UUID{planApproachingClearance.ID},
@@ -159,7 +205,7 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 10),
 	})
 
-	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
+	primaryCareTicket := s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionPCMG,
 		CmmiDivision:           &pcmgDivision,
 		RelatedMINTModels:      []uuid.UUID{sampleModelPlan.ID},
@@ -173,7 +219,7 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 28),
 	})
 
-	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
+	dataAnalyticsTicket := s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionPPG,
 		CmmiDivision:           &ppgDataDivision,
 		RelatedMINTModels:      []uuid.UUID{planWithBasics.ID},
@@ -187,7 +233,7 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 24),
 	})
 
-	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
+	paymentResearchTicket := s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionRREG,
 		CmmiDivision:           &rregDivision,
 		RelatedMINTModels:      []uuid.UUID{planWithCrTDLs.ID},
@@ -201,7 +247,7 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 20),
 	})
 
-	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
+	healthCareTicket := s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionSPHG,
 		CmmiDivision:           &sphgDivision,
 		RelatedMINTModels:      []uuid.UUID{planApproachingClearance.ID},
@@ -215,7 +261,7 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 18),
 	})
 
-	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
+	seamlessInfrastructureTicket := s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionSCMG,
 		CmmiDivision:           &scmgInfraDivision,
 		RelatedMINTModels:      []uuid.UUID{planWithDocuments.ID},
@@ -229,7 +275,7 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 16),
 	})
 
-	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
+	technologySolutionsTicket := s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionBSG,
 		CmmiDivision:           &bsgTechDivision,
 		RelatedMINTModels:      []uuid.UUID{planWithBasics.ID, planWithDocuments.ID},
@@ -243,6 +289,7 @@ func (s *Seeder) seedCTATRequests(
 		DateAssistanceNeededBy: now.AddDate(0, 0, 12),
 	})
 
+	// Leave this ticket without discussions to exercise the empty state.
 	s.createCTATRequest(requesterBTAL, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionLDG,
 		CmmiDivision:           &ldgAnalysisDivision,
@@ -263,7 +310,7 @@ func (s *Seeder) seedCTATRequests(
 	contractTypeOther := models.CTATContractTypeOther
 	typeOfHelpNeededOther := "Assistance drafting evaluation criteria for a new workstream"
 
-	s.createCTATRequest(requesterJANE, &model.CTATRequestInput{
+	populationHealthTicket := s.createCTATRequest(requesterJANE, &model.CTATRequestInput{
 		CmmiGroup:                 models.CTATCMMIGroupOptionPPG,
 		CmmiDivision:              &ppgDivision,
 		CmmiDivisionOther:         &ppgDivisionOther,
@@ -286,7 +333,7 @@ func (s *Seeder) seedCTATRequests(
 
 	crossCmmiGroupOther := "Cross-CMMI Strategic Operations"
 
-	s.createCTATRequest(requesterBTMN, &model.CTATRequestInput{
+	crossCmmiTicket := s.createCTATRequest(requesterBTMN, &model.CTATRequestInput{
 		CmmiGroup:              models.CTATCMMIGroupOptionOther,
 		CmmiGroupOther:         &crossCmmiGroupOther,
 		RelatedMINTModels:      []uuid.UUID{planWithCrTDLs.ID, planApproachingClearance.ID},
@@ -297,4 +344,86 @@ func (s *Seeder) seedCTATRequests(
 		RequestUrgency:         models.CTATRequestUrgencyLow,
 		DateAssistanceNeededBy: now.AddDate(0, 0, 7),
 	})
+
+	s.seedCTATDiscussionThread(operationalSupportTicket, requesterBTAL, adminADMI,
+		"Can CTAT help us decide which market research findings should be reflected in the RFI?",
+		"Yes. Please share the draft RFI and market research summary so we can review them together.",
+		"Thanks. I will send the draft and highlight the sections where we need guidance.",
+		"The acquisition team has also asked whether the vendor questions should be grouped by topic.",
+		"Grouping them by topic would help respondents and make the answers easier to compare.",
+		"That makes sense. I have updated the outline and would appreciate a final review.",
+		"We will review the updated outline and return comments by the end of the week.",
+	)
+
+	s.seedCTATDiscussionThread(learningSystemsTicket, requesterBTAL, adminADMI,
+		"The draft performance work statement is ready for CTAT review. Are there specific sections we should prioritize?",
+		"Please start with the deliverables and evaluation criteria. We will review those first.",
+		"I have marked the deliverables that need clearer acceptance criteria.",
+		"The acceptance criteria should describe the expected output and review timeline for each deliverable.",
+		"We updated those sections. Would CTAT also review the reporting schedule?",
+		"Yes. We will include the reporting schedule in our next review pass.",
+	)
+
+	s.seedCTATDiscussionThread(seamlessCareTicket, requesterBTAL, adminADMI,
+		"We need guidance on the data use agreement for the financial risk analysis.",
+		"Please send the proposed data elements and the intended users of the data.",
+		"The proposed data elements are listed in the draft agreement we shared.",
+		"We found two fields that may need narrower access language.",
+		"Could you identify those fields so we can revise the agreement?",
+		"They are the beneficiary identifier and the provider-level payment amount.",
+		"I have updated the draft to limit access to those fields.",
+		"Thanks. CTAT will review the revised language before the next meeting.",
+	)
+
+	s.seedCTATDiscussionThread(primaryCareTicket, requesterBTAL, adminADMI,
+		"Can CTAT review the independent government cost estimate for the primary care effort?",
+		"Yes. Please include the assumptions behind the labor categories and estimated hours.",
+		"The labor assumptions are in the latest cost worksheet.",
+		"We recommend explaining the difference between the base year and option years.",
+		"I added that explanation and updated the estimated hours.",
+		"The revised estimate is clearer. We will finish our review of the RFQ package next.",
+	)
+
+	s.seedCTATDiscussionThread(dataAnalyticsTicket, requesterBTAL, adminADMI,
+		"Could CTAT advise on the market research sources for this analytics workstream?",
+		"Please include both the recent sources and the assumptions used in the cost review.",
+	)
+
+	s.seedCTATDiscussionThread(paymentResearchTicket, requesterBTAL, adminADMI,
+		"We would appreciate guidance on documenting contractor performance for this support contract.",
+		"Please share the current COR notes and any draft CPARS language.",
+		"I have gathered the notes and will send the draft language for review.",
+	)
+
+	s.seedCTATDiscussionThread(healthCareTicket, requesterBTAL, adminADMI,
+		"Can CTAT help us confirm the required approval steps for this contract modification?",
+	)
+
+	s.seedCTATDiscussionThread(seamlessInfrastructureTicket, requesterBTAL, adminADMI,
+		"We need help with the requisition and identity credentialing steps for the new effort.",
+		"Please send the planned start date and the list of staff who will need access.",
+	)
+
+	s.seedCTATDiscussionThread(technologySolutionsTicket, requesterBTAL, adminADMI,
+		"Could CTAT review the technical evaluation panel plan before we finalize the solicitation?",
+	)
+
+	s.seedCTATDiscussionThread(populationHealthTicket, requesterJANE, adminADMI,
+		"Could CTAT review our draft statement of work before we finalize the acquisition approach?",
+		"Yes. Please identify the deliverables and the decision points that need contract support.",
+		"I have marked those sections in the draft statement of work.",
+		"The milestones are clear, but the acceptance criteria need more detail.",
+		"I updated the criteria and added examples for the evaluation deliverables.",
+		"Those examples help. We will review the revised draft with the acquisition team.",
+		"Thank you. I will wait for the team's comments before making further changes.",
+	)
+
+	s.seedCTATDiscussionThread(crossCmmiTicket, requesterBTMN, adminADMI,
+		"We have follow-up questions about the post-award documentation closeout process.",
+		"We have received your request and will review the current closeout checklist.",
+		"The checklist is available, but we are unsure which records must be retained.",
+		"Please send the records list so we can identify the required retention items.",
+		"I sent the records list and highlighted the items in question.",
+		"Thanks. We will provide comments on those items after reviewing the checklist.",
+	)
 }

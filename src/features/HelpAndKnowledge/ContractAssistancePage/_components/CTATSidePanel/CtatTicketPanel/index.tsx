@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
+  useGetCtatDiscussionsQuery,
   useGetCtatRequestAdminQuery,
   useGetCtatRequestQuery
 } from 'gql/generated/graphql';
@@ -59,6 +60,16 @@ const CtatTicketPanel = ({
   // adminTicket will be populated when an admin (even if it's the requester) is viewing the ticket
   const adminTicket = adminResult.data?.ctatRequest;
   const ticket = isAdmin ? adminTicket : requesterTicket;
+
+  const {
+    data: discussionData,
+    loading: discussionsLoading,
+    error: discussionsError
+  } = useGetCtatDiscussionsQuery({
+    variables: { ticketID: ticketId },
+    skip: ticket?.id !== ticketId
+  });
+  const discussions = discussionData?.discussions ?? [];
 
   const closePanel = useCallback(() => {
     if (isDiscussionView) {
@@ -163,7 +174,12 @@ const CtatTicketPanel = ({
         {loading && <PageLoading />}
         {error && <NotFound errorMessage={error.message} />}
         {!loading && !error && isDiscussionView && ticket && (
-          <CtatDiscussionContent ticketNumber={ticket.humanReadableID} />
+          <CtatDiscussionContent
+            ticketNumber={ticket.humanReadableID}
+            messageCount={discussions.length}
+            discussionsLoading={discussionsLoading}
+            discussionsError={discussionsError}
+          />
         )}
         {!loading && !error && !isDiscussionView && isAdmin && adminTicket && (
           <CtatTicketDetails
@@ -175,13 +191,23 @@ const CtatTicketPanel = ({
             setIsDirty={setIsDirty}
             onSubmitted={handleSubmitted}
             onDiscussionClick={handleDiscussionClick}
+            discussions={discussions}
+            discussionsLoading={discussionsLoading}
+            discussionsError={discussionsError}
           />
         )}
         {!loading &&
           !error &&
           !isDiscussionView &&
           !isAdmin &&
-          requesterTicket && <CtatTicketDetails ticket={requesterTicket} />}
+          requesterTicket && (
+            <CtatTicketDetails
+              ticket={requesterTicket}
+              discussions={discussions}
+              discussionsLoading={discussionsLoading}
+              discussionsError={discussionsError}
+            />
+          )}
       </Sidepanel>
 
       {isAdmin && (
