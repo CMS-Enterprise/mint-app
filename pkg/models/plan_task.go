@@ -74,6 +74,8 @@ type PlanTaskDefault struct {
 // PlanTaskMarkComplete once TWO_PAGER is marked complete (see PlanTaskKey.ActivationTarget).
 // OA_PRESENTATION starts UPCOMING and is activated once SIX_PAGER is marked complete.
 // PREPARE_FOR_CLEARANCE starts UPCOMING and is activated by the clearance-date job.
+// APPROVED_ICIP starts NOT_NEEDED: it only applies once the model has the MEDICARE_FFS_MODEL key
+// characteristic (see ApprovedIcipApplies), at which point it is recalculated from the model status.
 var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeyModelPlan, PlanTaskStateToDo},
 	{PlanTaskKeyMto, PlanTaskStateToDo},
@@ -83,6 +85,7 @@ var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeySixPager, PlanTaskStateUpcoming},
 	{PlanTaskKeyOaPresentation, PlanTaskStateUpcoming},
 	{PlanTaskKeyPrepareForClearance, PlanTaskStateUpcoming},
+	{PlanTaskKeyApprovedIcip, PlanTaskStateNotNeeded},
 }
 
 // IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user
@@ -146,6 +149,36 @@ func (k PlanTaskKey) ChangeHistoryDisplayName() string {
 		return name
 	}
 	return k.DisplayName()
+}
+
+// approvedIcipKeyCharacteristic is the KEY_CHARACTERISTIC that makes the APPROVED_ICIP task apply.
+const approvedIcipKeyCharacteristic = "MEDICARE_FFS_MODEL"
+
+// ApprovedIcipApplies reports whether the APPROVED_ICIP task applies to a model with the given key
+// characteristics. Keep the characteristic in one place so it is a one-line change.
+func ApprovedIcipApplies(keyCharacteristics []string) bool {
+	for _, characteristic := range keyCharacteristics {
+		if characteristic == approvedIcipKeyCharacteristic {
+			return true
+		}
+	}
+	return false
+}
+
+// ApprovedIcipStateForModelStatus returns the state of an applicable APPROVED_ICIP task for a model
+// status: TO_DO from INTERNAL_CMMI_CLEARANCE through ENDED, UPCOMING before that. The second
+// return value is false for statuses that say nothing about clearance progress (PAUSED, CANCELED,
+// or unknown), in which case the task's current state should be left alone.
+func ApprovedIcipStateForModelStatus(status ModelStatus) (PlanTaskState, bool) {
+	index := GetModelStatusChronologicalIndex(status)
+	switch {
+	case index < 0, status == ModelStatusPaused, status == ModelStatusCanceled:
+		return "", false
+	case index >= GetModelStatusChronologicalIndex(ModelStatusInternalCmmiClearance):
+		return PlanTaskStateToDo, true
+	default:
+		return PlanTaskStateUpcoming, true
+	}
 }
 
 // PlanTaskState is an enum representing the lifecycle state of a task, stored in the database.
