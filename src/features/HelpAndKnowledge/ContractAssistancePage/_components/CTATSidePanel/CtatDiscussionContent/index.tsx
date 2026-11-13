@@ -13,6 +13,8 @@ import Spinner from 'components/Spinner';
 
 import { formatDiscussionRelativeDate } from '../../../utils';
 
+import './index.scss';
+
 type CtatDiscussionContentProps = {
   ticketNumber: string;
   discussions: GetCtatDiscussionsQuery['discussions'];
@@ -56,14 +58,14 @@ const CtatDiscussionContent = ({
         !discussionsError &&
         (messageCount > 0 ? (
           <>
-            <p className="text-bold margin-top-0 margin-bottom-4">
+            <p className="text-bold margin-top-0 margin-bottom-1">
               {t('ctatViewPanel.discussionMessageCount', {
                 count: messageCount
               })}
             </p>
             {messageCount > 2 && (
               <div className="margin-bottom-4">
-                <p className="margin-y-0">
+                <p className="text-base margin-y-0">
                   {t(
                     showEarlierMessages
                       ? 'ctatDiscussionPanel.showingAllMessages'
@@ -95,16 +97,19 @@ const CtatDiscussionContent = ({
                 return (
                   <article
                     key={discussion.id}
-                    className="border-top-1px border-base-lighter padding-y-3"
+                    className="mint-ctat-discussion-message"
                   >
-                    <div className="display-flex flex-justify flex-align-start">
-                      <div className="display-flex flex-align-start">
-                        <AvatarCircle
-                          user={avatarName}
-                          className="margin-right-1 flex-none"
-                        />
+                    <div className="mint-ctat-discussion-message__timeline">
+                      <AvatarCircle user={avatarName} />
+                      <span
+                        className="mint-ctat-discussion-message__connector"
+                        aria-hidden="true"
+                      />
+                    </div>
+                    <div className="mint-ctat-discussion-message__body">
+                      <div className="display-flex flex-justify flex-align-start">
                         <div>
-                          <p className="text-bold margin-y-0">{fullName}</p>
+                          <p className="margin-y-0">{fullName}</p>
                           <p className="text-base margin-y-0">
                             {t(
                               discussion.posterRole ===
@@ -114,16 +119,16 @@ const CtatDiscussionContent = ({
                             )}
                           </p>
                         </div>
+                        <span className="text-base margin-left-2 text-no-wrap">
+                          {formatDiscussionRelativeDate(
+                            discussion.createdDts
+                          ).replace(/^Today at /, 'Today, ')}
+                        </span>
                       </div>
-                      <span className="text-base margin-left-2 text-no-wrap">
-                        {formatDiscussionRelativeDate(
-                          discussion.createdDts
-                        ).replace(/^Today at /, 'Today, ')}
-                      </span>
+                      <p className="margin-top-2 margin-bottom-0">
+                        {discussion.content}
+                      </p>
                     </div>
-                    <p className="margin-bottom-0 margin-left-5">
-                      {discussion.content}
-                    </p>
                   </article>
                 );
               })}

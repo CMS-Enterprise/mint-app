@@ -96,6 +96,9 @@ describe('CtatDiscussionContent', () => {
     ).not.toBeInTheDocument();
     expect(screen.getAllByRole('article')).toHaveLength(messageCount);
     expect(
+      document.querySelectorAll('.mint-ctat-discussion-message__connector')
+    ).toHaveLength(messageCount);
+    expect(
       screen.queryByRole('button', { name: 'Show earlier messages' })
     ).not.toBeInTheDocument();
   });
@@ -130,6 +133,9 @@ describe('CtatDiscussionContent', () => {
       screen.getByText('Showing the most recent 2 messages')
     ).toBeInTheDocument();
     expect(screen.getAllByRole('article')).toHaveLength(2);
+    expect(
+      document.querySelectorAll('.mint-ctat-discussion-message__connector')
+    ).toHaveLength(2);
     expect(screen.getAllByRole('article')[0]).toHaveTextContent(
       'Second message'
     );
@@ -151,6 +157,9 @@ describe('CtatDiscussionContent', () => {
 
     expect(screen.getByText('Showing all messages')).toBeInTheDocument();
     expect(screen.getAllByRole('article')).toHaveLength(3);
+    expect(
+      document.querySelectorAll('.mint-ctat-discussion-message__connector')
+    ).toHaveLength(3);
     expect(screen.getAllByRole('article')[0]).toHaveTextContent(
       'Oldest message'
     );
@@ -168,6 +177,9 @@ describe('CtatDiscussionContent', () => {
     await user.click(hideButton);
 
     expect(screen.getAllByRole('article')).toHaveLength(2);
+    expect(
+      document.querySelectorAll('.mint-ctat-discussion-message__connector')
+    ).toHaveLength(2);
     expect(screen.queryByText('Oldest message')).not.toBeInTheDocument();
   });
 

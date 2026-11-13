@@ -1,0 +1,34 @@
+@use 'uswds-core' as *;
+
+.mint-ctat-discussion-message {
+  display: flex;
+  gap: .5rem;
+
+  &__timeline {
+    align-items: center;
+    display: flex;
+    flex: 0 0 2rem;
+    flex-direction: column;
+  }
+
+  &__connector {
+    background-color: color('base-lightest');
+    flex: 1;
+    margin: 4px 0;
+    width: 4px;
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+    padding-bottom: 1.5rem;
+  }
+
+  &:last-child &__body {
+    padding-bottom: 0;
+  }
+
+  &:last-child &__connector {
+    margin-bottom: 0;
+  }
+}
