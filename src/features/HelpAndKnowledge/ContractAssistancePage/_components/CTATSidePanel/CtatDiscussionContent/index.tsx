@@ -158,7 +158,7 @@ const CtatDiscussionContent = ({
                           ).replace(/^Today at /, 'Today, ')}
                         </span>
                       </div>
-                      <p className="margin-top-2 margin-bottom-0">
+                      <p className="mint-ctat-discussion-message__content margin-top-2 margin-bottom-0">
                         {discussion.content}
                       </p>
                     </div>

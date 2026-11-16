@@ -24,6 +24,10 @@
     padding-bottom: 1.5rem;
   }
 
+  &__content {
+    white-space: pre-wrap;
+  }
+
   &:last-child &__body {
     padding-bottom: 0;
   }

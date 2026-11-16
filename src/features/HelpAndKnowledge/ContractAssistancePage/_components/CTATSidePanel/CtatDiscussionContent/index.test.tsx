@@ -177,13 +177,32 @@ describe('CtatDiscussionContent', () => {
     expect(saveButton).toBeDisabled();
     expect(cancelMessage).toHaveBeenCalledTimes(1);
 
-    await user.type(input, '  A saved message  ');
+    const message = '\n  First line\n\nSecond line  \n';
+    await user.type(input, message);
     await user.click(saveButton);
     await waitFor(() => {
-      expect(saveMessage).toHaveBeenCalledWith('A saved message');
+      expect(saveMessage).toHaveBeenCalledWith(message.trim());
       expect(input).toHaveValue('');
     });
     expect(saveButton).toBeDisabled();
+  });
+
+  it('renders saved line breaks in message content', () => {
+    const content = 'First line\n\nSecond line';
+    setup(
+      <CtatDiscussionContent
+        ticketNumber="CTAT-001"
+        discussions={[{ ...discussions[0], content }]}
+        discussionsLoading={false}
+        isClosed={false}
+        onSaveMessage={saveMessage}
+        onCancelMessage={cancelMessage}
+      />
+    );
+
+    const message = screen.getByText(/First line/);
+    expect(message).toHaveClass('mint-ctat-discussion-message__content');
+    expect(message.textContent).toBe(content);
   });
 
   it('hides the message form on a closed ticket', () => {

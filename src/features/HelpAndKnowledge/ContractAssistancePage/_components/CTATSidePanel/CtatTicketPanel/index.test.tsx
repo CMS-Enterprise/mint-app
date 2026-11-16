@@ -222,7 +222,8 @@ describe('CtatTicketPanel', () => {
   });
 
   it('posts a message and refreshes the discussion', async () => {
-    const content = 'A new CTAT message';
+    const typedContent = '\nA new CTAT message\nAnother line\n';
+    const content = typedContent.trim();
     const createdDiscussion = {
       __typename: 'CTATDiscussion' as const,
       id: '660e8400-e29b-41d4-a716-446655440001',
@@ -257,10 +258,12 @@ describe('CtatTicketPanel', () => {
     const input = await screen.findByRole('textbox', {
       name: /Type your message/
     });
-    await user.type(input, content);
+    await user.type(input, typedContent);
     await user.click(screen.getByRole('button', { name: 'Save message' }));
 
-    expect(await screen.findByText(content)).toBeInTheDocument();
+    expect((await screen.findByText(/A new CTAT message/)).textContent).toBe(
+      content
+    );
     expect(screen.getByText('1 message')).toBeInTheDocument();
     expect(input).toHaveValue('');
   });
