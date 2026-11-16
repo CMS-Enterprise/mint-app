@@ -11,6 +11,7 @@ import { vi } from 'vitest';
 import CtatDiscussionContent from './index';
 
 const saveMessage = vi.fn(async () => {});
+const cancelMessage = vi.fn();
 
 const discussions: GetCtatDiscussionsQuery['discussions'] = [
   {
@@ -66,6 +67,7 @@ describe('CtatDiscussionContent', () => {
         discussionsLoading={false}
         isClosed={false}
         onSaveMessage={saveMessage}
+        onCancelMessage={cancelMessage}
       />
     );
 
@@ -94,6 +96,7 @@ describe('CtatDiscussionContent', () => {
         discussionsLoading={false}
         isClosed={false}
         onSaveMessage={saveMessage}
+        onCancelMessage={cancelMessage}
       />
     );
 
@@ -121,6 +124,7 @@ describe('CtatDiscussionContent', () => {
         discussionsLoading={false}
         isClosed={false}
         onSaveMessage={saveMessage}
+        onCancelMessage={cancelMessage}
       />
     );
 
@@ -130,6 +134,7 @@ describe('CtatDiscussionContent', () => {
 
   it('shows the message form after the messages and validates before saving', async () => {
     saveMessage.mockClear();
+    cancelMessage.mockClear();
     const { user } = setup(
       <CtatDiscussionContent
         ticketNumber="CTAT-001"
@@ -137,6 +142,7 @@ describe('CtatDiscussionContent', () => {
         discussionsLoading={false}
         isClosed={false}
         onSaveMessage={saveMessage}
+        onCancelMessage={cancelMessage}
       />
     );
 
@@ -169,6 +175,7 @@ describe('CtatDiscussionContent', () => {
     await user.click(cancelButton);
     expect(input).toHaveValue('');
     expect(saveButton).toBeDisabled();
+    expect(cancelMessage).toHaveBeenCalledTimes(1);
 
     await user.type(input, '  A saved message  ');
     await user.click(saveButton);
@@ -187,6 +194,7 @@ describe('CtatDiscussionContent', () => {
         discussionsLoading={false}
         isClosed
         onSaveMessage={saveMessage}
+        onCancelMessage={cancelMessage}
       />
     );
 
@@ -206,6 +214,7 @@ describe('CtatDiscussionContent', () => {
         discussionsLoading={false}
         isClosed={false}
         onSaveMessage={failingSave}
+        onCancelMessage={cancelMessage}
       />
     );
 
@@ -228,6 +237,7 @@ describe('CtatDiscussionContent', () => {
         discussionsLoading={false}
         isClosed={false}
         onSaveMessage={saveMessage}
+        onCancelMessage={cancelMessage}
       />
     );
 
@@ -301,6 +311,7 @@ describe('CtatDiscussionContent', () => {
         discussionsLoading
         isClosed={false}
         onSaveMessage={saveMessage}
+        onCancelMessage={cancelMessage}
       />
     );
 
@@ -319,6 +330,7 @@ describe('CtatDiscussionContent', () => {
         discussionsError={new Error('Failed to load')}
         isClosed={false}
         onSaveMessage={saveMessage}
+        onCancelMessage={cancelMessage}
       />
     );
 

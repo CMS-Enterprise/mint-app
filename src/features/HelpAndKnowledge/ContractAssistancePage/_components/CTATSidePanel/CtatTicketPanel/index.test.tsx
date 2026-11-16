@@ -201,6 +201,26 @@ const renderPanel = (
 };
 
 describe('CtatTicketPanel', () => {
+  it('returns to ticket details when cancelling a message', async () => {
+    const { user } = renderPanel([openTicketMock], {
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
+    });
+
+    const input = await screen.findByRole('textbox', {
+      name: /Type your message/
+    });
+    await user.type(input, 'An unsaved message');
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+
+    expect(
+      await screen.findByTestId('ctat-ticket-view-sidepanel')
+    ).toBeInTheDocument();
+    await user.click(screen.getByRole('link', { name: 'Go to discussion' }));
+    expect(
+      await screen.findByRole('textbox', { name: /Type your message/ })
+    ).toHaveValue('');
+  });
+
   it('posts a message and refreshes the discussion', async () => {
     const content = 'A new CTAT message';
     const createdDiscussion = {

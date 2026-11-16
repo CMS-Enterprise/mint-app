@@ -198,6 +198,7 @@ const CtatTicketPanel = ({
             discussionsError={discussionsError}
             isClosed={ticket.status === CtatStatus.CLOSED}
             onSaveMessage={saveMessage}
+            onCancelMessage={closePanel}
           />
         )}
         {!loading && !error && !isDiscussionView && isAdmin && adminTicket && (

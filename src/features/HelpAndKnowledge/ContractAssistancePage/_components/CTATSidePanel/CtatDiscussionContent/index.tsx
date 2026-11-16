@@ -25,6 +25,7 @@ type CtatDiscussionContentProps = {
   discussionsError?: Error;
   isClosed: boolean;
   onSaveMessage: (content: string) => Promise<void>;
+  onCancelMessage: () => void;
 };
 
 type MessageFormValues = {
@@ -37,7 +38,8 @@ const CtatDiscussionContent = ({
   discussionsLoading,
   discussionsError,
   isClosed,
-  onSaveMessage
+  onSaveMessage,
+  onCancelMessage
 }: CtatDiscussionContentProps) => {
   const { t } = useTranslation('contractAssistanceMisc');
   const [showEarlierMessages, setShowEarlierMessages] = useState(false);
@@ -233,6 +235,7 @@ const CtatDiscussionContent = ({
             onClick={() => {
               reset();
               setSaveError(false);
+              onCancelMessage();
             }}
           >
             {t('ctatDiscussionPanel.cancelMessage')}
