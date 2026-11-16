@@ -4,10 +4,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
+  CtatStatus,
+  useCreateCtatDiscussionMutation,
   useGetCtatDiscussionsQuery,
   useGetCtatRequestAdminQuery,
   useGetCtatRequestQuery
 } from 'gql/generated/graphql';
+import GetCtatDiscussions from 'gql/operations/CTAT/GetCtatDiscussions';
 
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
@@ -70,6 +73,20 @@ const CtatTicketPanel = ({
     skip: ticket?.id !== ticketId
   });
   const discussions = discussionData?.discussions ?? [];
+  const [createDiscussion] = useCreateCtatDiscussionMutation({
+    refetchQueries: [
+      { query: GetCtatDiscussions, variables: { ticketID: ticketId } }
+    ]
+  });
+
+  const saveMessage = async (content: string) => {
+    const response = await createDiscussion({
+      variables: { input: { ticketID: ticketId, content } }
+    });
+    if (!response.data?.createDiscussion) {
+      throw new Error('CTAT discussion was not created');
+    }
+  };
 
   const closePanel = useCallback(() => {
     if (isDiscussionView) {
@@ -179,6 +196,8 @@ const CtatTicketPanel = ({
             discussions={discussions}
             discussionsLoading={discussionsLoading}
             discussionsError={discussionsError}
+            isClosed={ticket.status === CtatStatus.CLOSED}
+            onSaveMessage={saveMessage}
           />
         )}
         {!loading && !error && !isDiscussionView && isAdmin && adminTicket && (

@@ -612,6 +612,14 @@ const contractAssistanceMisc = {
     hideEarlierMessages: 'Hide earlier messages',
     adminRole: 'CTAT Admin',
     requesterRole: 'Requester',
+    addMessage: 'Add a message',
+    requiredFields: 'All fields marked with <s>*</s> are required.',
+    messageLabel: 'Type your message',
+    messageHint:
+      'This message will only be visible to the original ticket requester and the CTAT Admin team.',
+    cancelMessage: 'Cancel',
+    saveMessage: 'Save message',
+    saveMessageError: 'Your message could not be saved. Please try again.',
     empty:
       'There are not yet any messages about this ticket. Add a message to start a discussion.'
   },

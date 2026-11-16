@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Button } from '@trussworks/react-uswds';
+import { Controller, useForm } from 'react-hook-form';
+import { Trans, useTranslation } from 'react-i18next';
+import { Button, Form, FormGroup, Label } from '@trussworks/react-uswds';
 import {
   CtatDiscussionPoster,
   GetCtatDiscussionsQuery
@@ -8,8 +9,10 @@ import {
 
 import Alert from 'components/Alert';
 import { AvatarCircle } from 'components/Avatar';
+import HelpText from 'components/HelpText';
 import PageHeading from 'components/PageHeading';
 import Spinner from 'components/Spinner';
+import TextAreaField from 'components/TextAreaField';
 
 import { formatDiscussionRelativeDate } from '../../../utils';
 
@@ -20,16 +23,34 @@ type CtatDiscussionContentProps = {
   discussions: GetCtatDiscussionsQuery['discussions'];
   discussionsLoading: boolean;
   discussionsError?: Error;
+  isClosed: boolean;
+  onSaveMessage: (content: string) => Promise<void>;
+};
+
+type MessageFormValues = {
+  content: string;
 };
 
 const CtatDiscussionContent = ({
   ticketNumber,
   discussions,
   discussionsLoading,
-  discussionsError
+  discussionsError,
+  isClosed,
+  onSaveMessage
 }: CtatDiscussionContentProps) => {
   const { t } = useTranslation('contractAssistanceMisc');
   const [showEarlierMessages, setShowEarlierMessages] = useState(false);
+  const [saveError, setSaveError] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isValid, isSubmitting }
+  } = useForm<MessageFormValues>({
+    defaultValues: { content: '' },
+    mode: 'onChange'
+  });
   const discussionLabel = t('ctatViewPanel.discussionHeading');
   const messageCount = discussions.length;
   // The discussion query returns newest first, including a stable ID tie break.
@@ -37,6 +58,16 @@ const CtatDiscussionContent = ({
   const visibleDiscussions = showEarlierMessages
     ? chronologicalDiscussions
     : chronologicalDiscussions.slice(-2);
+
+  const submitMessage = handleSubmit(async ({ content }) => {
+    setSaveError(false);
+    try {
+      await onSaveMessage(content.trim());
+      reset();
+    } catch {
+      setSaveError(true);
+    }
+  });
 
   return (
     <div className="margin-top-8 padding-8 maxw-tablet">
@@ -139,6 +170,78 @@ const CtatDiscussionContent = ({
             {t('ctatDiscussionPanel.empty')}
           </Alert>
         ))}
+      {!isClosed && (
+        <Form
+          onSubmit={submitMessage}
+          className="maxw-none margin-top-5"
+          aria-labelledby="ctat-add-message-heading"
+        >
+          <h3
+            id="ctat-add-message-heading"
+            className="font-heading-xl margin-top-0 margin-bottom-1"
+          >
+            {t('ctatDiscussionPanel.addMessage')}
+          </h3>
+          <p className="margin-top-0 margin-bottom-4 text-base-darkest">
+            <Trans
+              i18nKey="contractAssistanceMisc:ctatDiscussionPanel.requiredFields"
+              components={{ s: <span className="text-red" /> }}
+            />
+          </p>
+          <FormGroup className="margin-top-0 margin-bottom-1">
+            <Label
+              id="label-ctat-discussion-message"
+              htmlFor="ctat-discussion-message"
+              className="maxw-none text-normal"
+              requiredMarker
+            >
+              {t('ctatDiscussionPanel.messageLabel')}
+            </Label>
+            <HelpText
+              id="hint-ctat-discussion-message"
+              className="margin-top-05"
+            >
+              {t('ctatDiscussionPanel.messageHint')}
+            </HelpText>
+            <Controller
+              name="content"
+              control={control}
+              rules={{ validate: value => value.trim().length > 0 }}
+              render={({ field: { ref, ...field } }) => (
+                <TextAreaField
+                  {...field}
+                  inputRef={ref}
+                  id="ctat-discussion-message"
+                  value={field.value || ''}
+                  className="height-card maxw-none"
+                  disabled={isSubmitting}
+                  required
+                />
+              )}
+            />
+          </FormGroup>
+          {saveError && (
+            <p role="alert" className="text-red">
+              {t('ctatDiscussionPanel.saveMessageError')}
+            </p>
+          )}
+          <Button
+            type="button"
+            outline
+            className="margin-right-3"
+            disabled={isSubmitting}
+            onClick={() => {
+              reset();
+              setSaveError(false);
+            }}
+          >
+            {t('ctatDiscussionPanel.cancelMessage')}
+          </Button>
+          <Button type="submit" disabled={!isValid || isSubmitting}>
+            {t('ctatDiscussionPanel.saveMessage')}
+          </Button>
+        </Form>
+      )}
     </div>
   );
 };

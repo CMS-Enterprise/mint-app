@@ -4,6 +4,7 @@ import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 import { screen, waitFor } from '@testing-library/react';
 import {
   AdminUpdateCtatRequestDocument,
+  CreateCtatDiscussionDocument,
   CtatcmmiGroupOption,
   CtatDiscussionPoster,
   CtatHelpNeededType,
@@ -154,11 +155,13 @@ const renderPanel = (
     isAdmin = false,
     closeModal = vi.fn(),
     discussionsMock = emptyDiscussionsMock,
+    additionalMocks = [],
     initialEntry = `/help-and-knowledge/contract-assistance/${ticketId}`
   }: {
     isAdmin?: boolean;
     closeModal?: () => void;
     discussionsMock?: MockedResponse;
+    additionalMocks?: MockedResponse[];
     initialEntry?: string;
   } = {}
 ) => {
@@ -191,13 +194,66 @@ const renderPanel = (
   );
 
   return setup(
-    <MockedProvider mocks={[...mocks, discussionsMock]}>
+    <MockedProvider mocks={[...mocks, discussionsMock, ...additionalMocks]}>
       <RouterProvider router={router} />
     </MockedProvider>
   );
 };
 
 describe('CtatTicketPanel', () => {
+  it('posts a message and refreshes the discussion', async () => {
+    const content = 'A new CTAT message';
+    const createdDiscussion = {
+      __typename: 'CTATDiscussion' as const,
+      id: '660e8400-e29b-41d4-a716-446655440001',
+      ticketID: ticketId,
+      content,
+      posterRole: CtatDiscussionPoster.REQUESTER,
+      createdBy: '770e8400-e29b-41d4-a716-446655440002',
+      createdByUserAccount: {
+        __typename: 'UserAccount' as const,
+        givenName: 'Luke',
+        familyName: 'Skywalker'
+      },
+      createdDts: DateTime.local().toISO()
+    };
+    const { user } = renderPanel([openTicketMock], {
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`,
+      additionalMocks: [
+        {
+          request: {
+            query: CreateCtatDiscussionDocument,
+            variables: { input: { ticketID: ticketId, content } }
+          },
+          result: { data: { createDiscussion: createdDiscussion } }
+        },
+        {
+          request: emptyDiscussionsMock.request,
+          result: { data: { discussions: [createdDiscussion] } }
+        }
+      ]
+    });
+
+    const input = await screen.findByRole('textbox', {
+      name: /Type your message/
+    });
+    await user.type(input, content);
+    await user.click(screen.getByRole('button', { name: 'Save message' }));
+
+    expect(await screen.findByText(content)).toBeInTheDocument();
+    expect(screen.getByText('1 message')).toBeInTheDocument();
+    expect(input).toHaveValue('');
+  });
+
+  it('does not offer the message form for a closed ticket', async () => {
+    renderPanel([closedTicketMock], {
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
+    });
+
+    expect(await screen.findByText('Ticket CTAT-001')).toBeInTheDocument();
+    expect(screen.queryByRole('form', { name: 'Add a message' })).toBeNull();
+  });
+
   it('renders open ticket with blue progress box and what happens next', async () => {
     renderPanel([openTicketMock], { isAdmin: false });
 

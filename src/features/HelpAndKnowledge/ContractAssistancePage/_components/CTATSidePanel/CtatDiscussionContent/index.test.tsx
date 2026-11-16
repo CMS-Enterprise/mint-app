@@ -1,13 +1,16 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import {
   CtatDiscussionPoster,
   GetCtatDiscussionsQuery
 } from 'gql/generated/graphql';
 import { DateTime } from 'luxon';
 import setup from 'tests/util';
+import { vi } from 'vitest';
 
 import CtatDiscussionContent from './index';
+
+const saveMessage = vi.fn(async () => {});
 
 const discussions: GetCtatDiscussionsQuery['discussions'] = [
   {
@@ -61,6 +64,8 @@ describe('CtatDiscussionContent', () => {
         ticketNumber="CTAT-001"
         discussions={[]}
         discussionsLoading={false}
+        isClosed={false}
+        onSaveMessage={saveMessage}
       />
     );
 
@@ -87,6 +92,8 @@ describe('CtatDiscussionContent', () => {
         ticketNumber="CTAT-001"
         discussions={discussions.slice(0, messageCount)}
         discussionsLoading={false}
+        isClosed={false}
+        onSaveMessage={saveMessage}
       />
     );
 
@@ -112,11 +119,105 @@ describe('CtatDiscussionContent', () => {
         ticketNumber="CTAT-001"
         discussions={[{ ...discussions[0], createdDts: postedToday ?? '' }]}
         discussionsLoading={false}
+        isClosed={false}
+        onSaveMessage={saveMessage}
       />
     );
 
     expect(screen.getByText('Today, 3:34 AM')).toBeInTheDocument();
     expect(screen.queryByText('Today at 3:34 AM')).not.toBeInTheDocument();
+  });
+
+  it('shows the message form after the messages and validates before saving', async () => {
+    saveMessage.mockClear();
+    const { user } = setup(
+      <CtatDiscussionContent
+        ticketNumber="CTAT-001"
+        discussions={discussions}
+        discussionsLoading={false}
+        isClosed={false}
+        onSaveMessage={saveMessage}
+      />
+    );
+
+    const form = screen.getByRole('form', { name: 'Add a message' });
+    const lastMessage = screen.getAllByRole('article').at(-1);
+    expect(lastMessage?.compareDocumentPosition(form)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING
+    );
+    expect(form).toHaveTextContent('All fields marked with * are required.');
+    expect(form).toHaveTextContent(
+      'This message will only be visible to the original ticket requester and the CTAT Admin team.'
+    );
+
+    const input = screen.getByRole('textbox', { name: /Type your message/ });
+    const saveButton = screen.getByRole('button', { name: 'Save message' });
+    expect((input as HTMLTextAreaElement).labels?.[0]).toHaveClass(
+      'text-normal'
+    );
+    expect(input).toHaveAttribute('required');
+    expect(saveButton).toBeDisabled();
+
+    await user.type(input, '   ');
+    expect(saveButton).toBeDisabled();
+    await user.clear(input);
+    await user.type(input, '  A new message  ');
+    expect(saveButton).toBeEnabled();
+
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+    expect(cancelButton).toHaveClass('usa-button--outline');
+    await user.click(cancelButton);
+    expect(input).toHaveValue('');
+    expect(saveButton).toBeDisabled();
+
+    await user.type(input, '  A saved message  ');
+    await user.click(saveButton);
+    await waitFor(() => {
+      expect(saveMessage).toHaveBeenCalledWith('A saved message');
+      expect(input).toHaveValue('');
+    });
+    expect(saveButton).toBeDisabled();
+  });
+
+  it('hides the message form on a closed ticket', () => {
+    setup(
+      <CtatDiscussionContent
+        ticketNumber="CTAT-001"
+        discussions={discussions}
+        discussionsLoading={false}
+        isClosed
+        onSaveMessage={saveMessage}
+      />
+    );
+
+    expect(screen.getAllByRole('article')).toHaveLength(2);
+    expect(screen.queryByRole('form', { name: 'Add a message' })).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Save message' })).toBeNull();
+  });
+
+  it('keeps the draft and shows an error when saving fails', async () => {
+    const failingSave = vi.fn(async () => {
+      throw new Error('Save failed');
+    });
+    const { user } = setup(
+      <CtatDiscussionContent
+        ticketNumber="CTAT-001"
+        discussions={[]}
+        discussionsLoading={false}
+        isClosed={false}
+        onSaveMessage={failingSave}
+      />
+    );
+
+    const input = screen.getByRole('textbox', { name: /Type your message/ });
+    await user.type(input, 'Keep this draft');
+    await user.click(screen.getByRole('button', { name: 'Save message' }));
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Your message could not be saved. Please try again.'
+    );
+    expect(input).toHaveValue('Keep this draft');
+    expect(screen.getByRole('button', { name: 'Save message' })).toBeEnabled();
   });
 
   it('shows the latest two messages and toggles earlier messages in chronological order', async () => {
@@ -125,6 +226,8 @@ describe('CtatDiscussionContent', () => {
         ticketNumber="CTAT-001"
         discussions={discussions}
         discussionsLoading={false}
+        isClosed={false}
+        onSaveMessage={saveMessage}
       />
     );
 
@@ -169,6 +272,13 @@ describe('CtatDiscussionContent', () => {
     expect(screen.getAllByRole('article')[2]).toHaveTextContent(
       'Newest message'
     );
+    expect(
+      screen
+        .getAllByRole('article')[2]
+        .compareDocumentPosition(
+          screen.getByRole('form', { name: 'Add a message' })
+        )
+    ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
 
     const hideButton = screen.getByRole('button', {
       name: 'Hide earlier messages'
@@ -189,6 +299,8 @@ describe('CtatDiscussionContent', () => {
         ticketNumber="CTAT-001"
         discussions={[]}
         discussionsLoading
+        isClosed={false}
+        onSaveMessage={saveMessage}
       />
     );
 
@@ -205,6 +317,8 @@ describe('CtatDiscussionContent', () => {
         discussions={[]}
         discussionsLoading={false}
         discussionsError={new Error('Failed to load')}
+        isClosed={false}
+        onSaveMessage={saveMessage}
       />
     );
 
