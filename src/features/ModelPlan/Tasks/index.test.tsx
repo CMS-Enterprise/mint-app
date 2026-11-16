@@ -125,9 +125,9 @@ describe('Tasks page', () => {
 
     expect(getCardHeadings(container)).toEqual([
       'Start your Model Plan',
+      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Start your data exchange approach',
       'Complete your waiver assessment survey',
-      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Start your model-to-operations matrix (MTO)'
     ]);
 
@@ -170,7 +170,7 @@ describe('Tasks page', () => {
 
     expect(getCardHeadings(container)).toEqual([
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
-      'DRAFT_ICIP.UPCOMING.heading', // TODO fix strings later once UI is implemented
+      'Start your ICIP',
       'Prepare for clearance',
       'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
@@ -200,10 +200,10 @@ describe('Tasks page', () => {
 
     expect(getCardHeadings(container)).toEqual([
       'Start your Model Plan',
-      'Start your data exchange approach',
-      'Complete your waiver assessment survey',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      'Start your data exchange approach',
+      'Complete your waiver assessment survey',
       'Start your model-to-operations matrix (MTO)',
       'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
@@ -219,7 +219,7 @@ describe('Tasks page', () => {
     expect(getCardHeadings(container)).toEqual([
       'Prepare for clearance',
       'Prepare for your presentation to the Office of the Administrator (OA)',
-      'DRAFT_ICIP.COMPLETE.heading', // TODO fix strings later once UI is implemented
+      'Start your ICIP',
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Complete your waiver assessment survey',
