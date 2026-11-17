@@ -1,6 +1,6 @@
-const glob = require('glob');
+const { globSync } = require('glob');
 
-const allGraphQLFiles = glob.sync('pkg/graph/schema/**/*.graphql');
+const allGraphQLFiles = globSync('pkg/graph/schema/**/*.graphql');
 
 module.exports = {
   client: {
