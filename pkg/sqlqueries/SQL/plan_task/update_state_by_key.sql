@@ -12,7 +12,8 @@ target AS (
         CAST(:completed_by AS UUID) AS completed_by,
         CAST(:completed_dts AS TIMESTAMPTZ) AS completed_dts,
         CAST(:modified_by AS UUID) AS modified_by,
-        CAST(:target_is_complete AS BOOLEAN) AS target_is_complete
+        CAST(:target_is_complete AS BOOLEAN) AS target_is_complete,
+        CAST(:preserve_complete AS BOOLEAN) AS preserve_complete
 )
 
 UPDATE plan_task
@@ -26,6 +27,9 @@ FROM target
 WHERE
     plan_task.model_plan_id = :model_plan_id
     AND plan_task.key = :key
+    -- callers that must never overwrite a completed task (see preserve_complete) skip COMPLETE rows
+    -- here, so a task completed after the caller's own read is left alone
+    AND NOT (target.preserve_complete AND plan_task.state = 'COMPLETE')
     -- completed_by/completed_dts are freshly generated on every call when the target state is
     -- COMPLETE, so comparing them directly against the stored values would never be a match
     -- (skip). Instead, mirror the original Go check - a row is already correct if its state

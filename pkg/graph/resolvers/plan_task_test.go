@@ -704,6 +704,60 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
 	})
 
+	suite.Run("a task completed after the sync's read is not overwritten", func() {
+		// The sync reads the task, then writes. Simulate a collaborator completing the task in that
+		// window by running the sync's write (preserveComplete) against an already-COMPLETE row: the
+		// write must leave it, and its completion metadata, untouched.
+		plan := suite.createModelPlan("Plan Approved ICIP Concurrent Completion")
+		setKeyCharacteristics(plan.ID, []string{"MEDICARE_FFS_MODEL"})
+		updateStatus(plan.ID, models.ModelStatusCleared)
+
+		_, err := PlanTaskMarkComplete(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			plan.ID,
+			models.PlanTaskKeyApprovedIcip,
+			true,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+		completed := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyApprovedIcip)
+		suite.Equal(models.PlanTaskStateComplete, completed.State)
+		suite.NotNil(completed.CompletedBy)
+		suite.NotNil(completed.CompletedDts)
+
+		for _, staleState := range []models.PlanTaskState{
+			models.PlanTaskStateToDo,
+			models.PlanTaskStateUpcoming,
+			models.PlanTaskStateNotNeeded,
+		} {
+			result, err := updatePlanTaskStateByKeyOpt(
+				suite.testConfigs.Context,
+				suite.testConfigs.Store,
+				suite.testConfigs.Logger,
+				plan.ID,
+				models.PlanTaskKeyApprovedIcip,
+				staleState,
+				suite.testConfigs.Principal,
+				suite.testConfigs.Principal.Account().ID,
+				nil,
+				email.AddressBook{},
+				true,
+			)
+			suite.NoError(err)
+			suite.Equal(models.PlanTaskStateComplete, result.State, "write of %s must not apply to a COMPLETE task", staleState)
+			suite.Equal(result.PreviousState, result.State)
+		}
+
+		after := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyApprovedIcip)
+		suite.Equal(models.PlanTaskStateComplete, after.State)
+		suite.Equal(completed.CompletedBy, after.CompletedBy)
+		suite.Equal(completed.CompletedDts, after.CompletedDts)
+	})
+
 	suite.Run("marking to do returns a completed task to TO_DO", func() {
 		plan := suite.createModelPlan("Plan Approved ICIP Mark To Do")
 		setKeyCharacteristics(plan.ID, []string{"MEDICARE_FFS_MODEL"})
@@ -926,6 +980,7 @@ func (suite *ResolverSuite) resetPrepareForClearanceTaskToUpcoming(modelPlanID u
 		nil,
 		nil,
 		modifiedBy,
+		false,
 	)
 	suite.NoError(err)
 }

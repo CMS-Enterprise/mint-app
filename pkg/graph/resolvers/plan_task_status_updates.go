@@ -510,6 +510,7 @@ func applyPrepareForClearancePlanTaskState(
 		completedBy,
 		completedDts,
 		attributedTo,
+		false,
 	)
 	if err != nil {
 		return err
@@ -628,7 +629,13 @@ func UpdatePlanTaskStateOnApprovedIcipSync(
 		return nil, nil
 	}
 
-	return updatePlanTaskStateByKey(ctx, np, logger, modelPlanID, models.PlanTaskKeyApprovedIcip, newState, principal, principal.Account().ID, nil, email.AddressBook{})
+	// The read above is only a shortcut: another collaborator can mark the task COMPLETE before this
+	// write, so the write itself refuses to overwrite a COMPLETE task.
+	update, err := updatePlanTaskStateByKeyOpt(ctx, np, logger, modelPlanID, models.PlanTaskKeyApprovedIcip, newState, principal, principal.Account().ID, nil, email.AddressBook{}, true)
+	if err != nil || update == nil || update.PreviousState == update.State {
+		return nil, err
+	}
+	return update, nil
 }
 
 // calculateApprovedIcipTaskState derives the APPROVED_ICIP task state for a task that is not
