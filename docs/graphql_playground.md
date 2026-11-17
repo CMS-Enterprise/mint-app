@@ -46,3 +46,16 @@ This will return a string with the authorization header you need, containing a B
 Copy the string (_without_ the surrounding quotes). In the GraphQL playground, paste the string in the HTTP Headers section to authenticate your requests.
 
 ![GraphQL Playground, HTTP Headers section, showing the Authorization header with the token added](./images/graphql_playground/graphql_playground_header.png)
+
+## Exporting operational solution help
+
+From the repository root, with frontend dependencies installed, run:
+
+```sh
+MINT_GRAPHQL_AUTH='Local {"favorLocalAuth":true,"jobCodes":["MINT_USER_NONPROD"]}' \
+  node scripts/export-solution-help.cjs http://localhost:8085/api/graph/query > solution-help.csv
+```
+
+For a deployed environment, use its HTTPS GraphQL URL and set `MINT_GRAPHQL_AUTH` to a valid `Bearer <token>` authorization header. Do not commit the token or the export. Local authorization requires a locally configured user with access to the query.
+
+The export joins GraphQL configuration with English frontend catalog and help translations by solution key. It includes keys missing from either source and flags their presence. Arrays and structured help are JSON inside CSV cells; translation markup and links are preserved. References to `window.location.origin` remain literal. React component factories and their import locations are recorded rather than rendered, so component-specific hardcoded content and reused timelines may require consulting those components. The query does not request contacts, contractors, owners, or model usage, although help text itself may mention contacts.
