@@ -85,6 +85,22 @@ func PlanGeneralCharacteristicsGetByID(
 	return &gc, nil
 }
 
+// PlanGeneralCharacteristicsKeyCharacteristicsGetByModelPlanID returns the plan general
+// characteristics for a model plan, populating only the id, model plan id and key characteristics.
+// It is meant for lightweight checks (e.g. whether a task applies) inside a transaction, where the
+// data loader is not appropriate.
+func PlanGeneralCharacteristicsKeyCharacteristicsGetByModelPlanID(
+	np sqlutils.NamedPreparer,
+	_ *zap.Logger,
+	modelPlanID uuid.UUID,
+) (*models.PlanGeneralCharacteristics, error) {
+	args := map[string]interface{}{
+		"model_plan_id": modelPlanID,
+	}
+
+	return sqlutils.GetProcedure[models.PlanGeneralCharacteristics](np, sqlqueries.PlanGeneralCharacteristics.GetByModelPlanID, args)
+}
+
 // PlanGeneralCharacteristicsGetByModelPlanIDLOADER returns the plan
 // GeneralCharacteristics for a slice of model plan ids
 func PlanGeneralCharacteristicsGetByModelPlanIDLOADER(

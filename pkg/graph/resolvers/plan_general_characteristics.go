@@ -4,11 +4,13 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -27,35 +29,48 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 		}
 	}
 
-	// Get existing plan general characteristics
-	existing, err := storage.PlanGeneralCharacteristicsGetByID(store, logger, id)
-	if err != nil {
-		return nil, err
-	}
+	// The section update and the APPROVED_ICIP task recalculation share a transaction so the task
+	// can never disagree with the saved key characteristics.
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanGeneralCharacteristics, error) {
+		// Get existing plan general characteristics
+		existing, err := storage.PlanGeneralCharacteristicsGetByID(tx, logger, id)
+		if err != nil {
+			return nil, err
+		}
 
-	err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
-	if err != nil {
-		return nil, err
-	}
+		err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, tx)
+		if err != nil {
+			return nil, err
+		}
 
-	retGeneralCharacteristics, err := storage.PlanGeneralCharacteristicsUpdate(store, logger, existing)
-	if err != nil {
-		return nil, err
-	}
+		retGeneralCharacteristics, err := storage.PlanGeneralCharacteristicsUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, err
+		}
 
-	if err := BaseTaskListSectionAfterUpdate(
-		context.Background(),
-		store,
-		logger,
-		existing.ModelPlanID,
-		principal,
-		nil,
-		email.AddressBook{},
-	); err != nil {
-		return nil, err
-	}
+		if err := BaseTaskListSectionAfterUpdate(
+			context.Background(),
+			tx,
+			logger,
+			existing.ModelPlanID,
+			principal,
+			nil,
+			email.AddressBook{},
+		); err != nil {
+			return nil, err
+		}
 
-	return retGeneralCharacteristics, nil
+		// Plan tasks: APPROVED_ICIP only applies to models with a specific key characteristic. This
+		// path has no email service, so a task that becomes available here only gets the in-app
+		// notification.
+		if _, ok := changes["keyCharacteristics"]; ok {
+			if _, err := UpdatePlanTaskStateOnApprovedIcipSync(context.Background(), tx, logger, existing.ModelPlanID, principal); err != nil {
+				return nil, err
+			}
+		}
+
+		return retGeneralCharacteristics, nil
+	})
 }
 
 // PlanGeneralCharacteristicsGetByModelPlanIDLOADER implements resolver logic to get plan general characteristics by a model plan ID using a data loader

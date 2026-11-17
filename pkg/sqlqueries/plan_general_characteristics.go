@@ -11,6 +11,9 @@ var planGeneralCharacteristicsUpdateSQL string
 //go:embed SQL/plan_general_characteristics/get_by_id.sql
 var planGeneralCharacteristicsGetByIDSQL string
 
+//go:embed SQL/plan_general_characteristics/get_by_model_plan_id.sql
+var planGeneralCharacteristicsGetByModelPlanIDSQL string
+
 //go:embed SQL/plan_general_characteristics/get_by_model_plan_id_LOADER.sql
 var planGeneralCharacteristicsGetByModelPlanIDLoaderSQL string
 
@@ -18,6 +21,7 @@ type planGeneralCharacteristicsScripts struct {
 	Create                 string
 	Update                 string
 	GetByID                string
+	GetByModelPlanID       string
 	GetByModelPlanIDLoader string
 }
 
@@ -26,5 +30,6 @@ var PlanGeneralCharacteristics = planGeneralCharacteristicsScripts{
 	Create:                 planGeneralCharacteristicsCreateSQL,
 	Update:                 planGeneralCharacteristicsUpdateSQL,
 	GetByID:                planGeneralCharacteristicsGetByIDSQL,
+	GetByModelPlanID:       planGeneralCharacteristicsGetByModelPlanIDSQL,
 	GetByModelPlanIDLoader: planGeneralCharacteristicsGetByModelPlanIDLoaderSQL,
 }

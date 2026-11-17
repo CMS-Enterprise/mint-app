@@ -72,8 +72,8 @@ func PlanTaskGetByModelPlanIDAndKey(
 // PlanTaskUpdateStateByKey sets a plan task's state and completion metadata (identified by
 // modelPlanID + key, rather than a pre-fetched row) in a single conditional update, attributing
 // the change to modifiedBy. It returns (nil, nil) - a no-op, not an error - if the task was
-// already at the target state and completion metadata, or if it doesn't exist for this model
-// plan; callers that need to distinguish "doesn't exist" from "no-op" should follow up with
+// already at the target state and completion metadata, if it doesn't exist for this model
+// plan, or if preserveComplete is set and the task is COMPLETE (never overwritten); callers that need to distinguish "doesn't exist" from "no-op" should follow up with
 // PlanTaskGetByModelPlanIDAndKey in that case.
 func PlanTaskUpdateStateByKey(
 	np sqlutils.NamedPreparer,
@@ -84,6 +84,7 @@ func PlanTaskUpdateStateByKey(
 	completedBy *uuid.UUID,
 	completedDts *time.Time,
 	modifiedBy uuid.UUID,
+	preserveComplete bool,
 ) (*models.PlanTaskWithPreviousState, error) {
 	args := map[string]interface{}{
 		"model_plan_id":      modelPlanID,
@@ -93,6 +94,7 @@ func PlanTaskUpdateStateByKey(
 		"completed_dts":      completedDts,
 		"modified_by":        modifiedBy,
 		"target_is_complete": newState == models.PlanTaskStateComplete,
+		"preserve_complete":  preserveComplete,
 	}
 
 	result, err := sqlutils.GetProcedure[models.PlanTaskWithPreviousState](np, sqlqueries.PlanTask.UpdateStateByKey, args)

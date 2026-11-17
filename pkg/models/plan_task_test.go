@@ -65,3 +65,49 @@ func TestPlanTaskKeyChangeHistoryDisplayName(t *testing.T) {
 	assert.Equal(t, PlanTaskKeyModelPlan.DisplayName(), PlanTaskKeyModelPlan.ChangeHistoryDisplayName())
 	assert.Equal(t, PlanTaskKey("NOT_A_REAL_KEY").DisplayName(), PlanTaskKey("NOT_A_REAL_KEY").ChangeHistoryDisplayName())
 }
+
+func TestApprovedIcipApplies(t *testing.T) {
+	assert.True(t, ApprovedIcipApplies([]string{"MEDICARE_FFS_MODEL"}))
+	assert.True(t, ApprovedIcipApplies([]string{"PART_C", "MEDICARE_FFS_MODEL"}))
+	assert.False(t, ApprovedIcipApplies([]string{"PART_C", "MEDICAID_MODEL"}))
+	assert.False(t, ApprovedIcipApplies([]string{}))
+	assert.False(t, ApprovedIcipApplies(nil))
+}
+
+func TestApprovedIcipStateForModelStatus(t *testing.T) {
+	for _, status := range []ModelStatus{ModelStatusPlanDraft, ModelStatusPlanComplete, ModelStatusIcipComplete} {
+		state, ok := ApprovedIcipStateForModelStatus(status)
+		assert.True(t, ok, status)
+		assert.Equal(t, PlanTaskStateUpcoming, state, status)
+	}
+
+	for _, status := range []ModelStatus{
+		ModelStatusInternalCmmiClearance,
+		ModelStatusCmsClearance,
+		ModelStatusHhsClearance,
+		ModelStatusOmbAsrfClearance,
+		ModelStatusCleared,
+		ModelStatusAnnounced,
+		ModelStatusActive,
+		ModelStatusEnded,
+	} {
+		state, ok := ApprovedIcipStateForModelStatus(status)
+		assert.True(t, ok, status)
+		assert.Equal(t, PlanTaskStateToDo, state, status)
+	}
+
+	for _, status := range []ModelStatus{ModelStatusPaused, ModelStatusCanceled, ModelStatus("NOT_A_STATUS")} {
+		_, ok := ApprovedIcipStateForModelStatus(status)
+		assert.False(t, ok, status)
+	}
+}
+
+func TestDefaultPlanTasksSeedsApprovedIcipNotNeeded(t *testing.T) {
+	for _, task := range DefaultPlanTasks {
+		if task.Key == PlanTaskKeyApprovedIcip {
+			assert.Equal(t, PlanTaskStateNotNeeded, task.State)
+			return
+		}
+	}
+	t.Fatal("APPROVED_ICIP missing from DefaultPlanTasks")
+}
