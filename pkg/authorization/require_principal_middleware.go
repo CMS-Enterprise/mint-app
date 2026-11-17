@@ -3,6 +3,7 @@ package authorization
 import (
 	"context"
 	"net/http"
+	"strings"
 
 	"github.com/99designs/gqlgen/graphql"
 
@@ -38,6 +39,37 @@ func NewRequirePrincipalMiddleware() func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return requirePrincipalMiddleware(next)
 	}
+}
+
+// NewRequirePrincipalGraphQLMiddleware requires authentication for HTTP GraphQL requests.
+// WebSocket upgrades are authenticated by the GraphQL transport's init function instead.
+func NewRequirePrincipalGraphQLMiddleware() func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		requirePrincipal := requirePrincipalMiddleware(next)
+
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if isWebSocketUpgrade(r) {
+				next.ServeHTTP(w, r)
+				return
+			}
+
+			requirePrincipal.ServeHTTP(w, r)
+		})
+	}
+}
+
+func isWebSocketUpgrade(r *http.Request) bool {
+	if !strings.EqualFold(r.Header.Get("Upgrade"), "websocket") {
+		return false
+	}
+
+	for _, connectionToken := range strings.Split(r.Header.Get("Connection"), ",") {
+		if strings.EqualFold(strings.TrimSpace(connectionToken), "upgrade") {
+			return true
+		}
+	}
+
+	return false
 }
 
 // NewRequirePrincipalOperationMiddleware returns a middleware that requires authentication
