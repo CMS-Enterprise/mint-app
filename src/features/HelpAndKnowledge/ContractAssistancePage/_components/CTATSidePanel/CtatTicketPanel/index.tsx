@@ -48,6 +48,8 @@ const CtatTicketPanel = ({
   const [leavePage, setLeavePage] = useState<boolean>(false);
   const [discussionNavigationPending, setDiscussionNavigationPending] =
     useState(false);
+  const [hasDiscussionDraft, setHasDiscussionDraft] = useState(false);
+  const [leaveDiscussion, setLeaveDiscussion] = useState(false);
 
   const requesterResult = useGetCtatRequestQuery({
     variables: { id: ticketId },
@@ -117,6 +119,10 @@ const CtatTicketPanel = ({
 
   const closePanel = useCallback(() => {
     if (isDiscussionView) {
+      if (hasDiscussionDraft) {
+        setLeaveDiscussion(true);
+        return;
+      }
       navigate(
         `/help-and-knowledge/contract-assistance/${ticketId}${location.search}`,
         { replace: true }
@@ -129,6 +135,7 @@ const CtatTicketPanel = ({
     }
   }, [
     closeModal,
+    hasDiscussionDraft,
     isAdmin,
     isDirty,
     isDiscussionView,
@@ -226,6 +233,7 @@ const CtatTicketPanel = ({
             isClosed={ticket.status === CtatStatus.CLOSED}
             onSaveMessage={saveMessage}
             onCancelMessage={closePanel}
+            onDraftChange={setHasDiscussionDraft}
           />
         )}
         {!loading && !error && !isDiscussionView && isAdmin && adminTicket && (
@@ -256,6 +264,51 @@ const CtatTicketPanel = ({
             />
           )}
       </Sidepanel>
+
+      <Modal
+        isOpen={leaveDiscussion && isDiscussionView}
+        closeModal={() => setLeaveDiscussion(false)}
+        className="confirmation-modal"
+        zTop
+      >
+        <PageHeading
+          headingLevel="h3"
+          className="margin-top-neg-2 margin-bottom-1"
+        >
+          {contractAssistanceMiscT('ctatDiscussionPanel.leaveConfirm.heading')}
+        </PageHeading>
+
+        <p className="margin-top-2 margin-bottom-3">
+          {contractAssistanceMiscT(
+            'ctatDiscussionPanel.leaveConfirm.description'
+          )}
+        </p>
+
+        <Button
+          type="button"
+          className="margin-right-4"
+          onClick={() => {
+            setLeaveDiscussion(false);
+            setHasDiscussionDraft(false);
+            navigate(
+              `/help-and-knowledge/contract-assistance/${ticketId}${location.search}`,
+              { replace: true }
+            );
+          }}
+        >
+          {contractAssistanceMiscT('ctatDiscussionPanel.leaveConfirm.confirm')}
+        </Button>
+
+        <Button
+          type="button"
+          unstyled
+          onClick={() => setLeaveDiscussion(false)}
+        >
+          {contractAssistanceMiscT(
+            'ctatDiscussionPanel.leaveConfirm.dontLeave'
+          )}
+        </Button>
+      </Modal>
 
       {isAdmin && (
         <Modal

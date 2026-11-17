@@ -623,6 +623,12 @@ const contractAssistanceMisc = {
       'You added a message to the discussion for a contract assistance ticket (<bold>{{ticketNumber}}</bold>).',
     saveMessageError:
       'There was an error adding your message. Please try again. If the error persists, please try again another time.',
+    leaveConfirm: {
+      heading: 'Are you sure you want to leave?',
+      description: 'Any unsent message content will be lost.',
+      confirm: 'Leave discussion',
+      dontLeave: "Don't leave"
+    },
     empty:
       'There are not yet any messages about this ticket. Add a message to start a discussion.'
   },

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
 import { Button, Form, FormGroup, Label } from '@trussworks/react-uswds';
 import {
@@ -27,6 +27,7 @@ type CtatDiscussionContentProps = {
   isClosed: boolean;
   onSaveMessage: (content: string) => Promise<void>;
   onCancelMessage: () => void;
+  onDraftChange?: (hasDraft: boolean) => void;
 };
 
 type MessageFormValues = {
@@ -40,7 +41,8 @@ const CtatDiscussionContent = ({
   discussionsError,
   isClosed,
   onSaveMessage,
-  onCancelMessage
+  onCancelMessage,
+  onDraftChange
 }: CtatDiscussionContentProps) => {
   const { t } = useTranslation('contractAssistanceMisc');
   const [showEarlierMessages, setShowEarlierMessages] = useState(false);
@@ -53,6 +55,12 @@ const CtatDiscussionContent = ({
     defaultValues: { content: '' },
     mode: 'onChange'
   });
+  const draftContent = useWatch({ control, name: 'content' });
+
+  useEffect(() => {
+    onDraftChange?.(draftContent.trim().length > 0);
+  }, [draftContent, onDraftChange]);
+
   const discussionLabel = t('ctatViewPanel.discussionHeading');
   const messageCount = discussions.length;
   // The discussion query returns newest first, including a stable ID tie break.
@@ -233,10 +241,7 @@ const CtatDiscussionContent = ({
             outline
             className="margin-right-3"
             disabled={isSubmitting}
-            onClick={() => {
-              reset();
-              onCancelMessage();
-            }}
+            onClick={onCancelMessage}
           >
             {t('ctatDiscussionPanel.cancelMessage')}
           </Button>

@@ -180,11 +180,12 @@ describe('CtatDiscussionContent', () => {
     const cancelButton = screen.getByRole('button', { name: 'Cancel' });
     expect(cancelButton).toHaveClass('usa-button--outline');
     await user.click(cancelButton);
-    expect(input).toHaveValue('');
-    expect(saveButton).toBeDisabled();
+    expect(input).toHaveValue('  A new message  ');
+    expect(saveButton).toBeEnabled();
     expect(cancelMessage).toHaveBeenCalledTimes(1);
 
     const message = '\n  First line\n\nSecond line  \n';
+    await user.clear(input);
     await user.type(input, message);
     await user.click(saveButton);
     await waitFor(() => {

@@ -204,7 +204,7 @@ const renderPanel = (
 };
 
 describe('CtatTicketPanel', () => {
-  it('returns to ticket details when cancelling a message', async () => {
+  it('confirms before discarding a message with Cancel', async () => {
     const { user } = renderPanel([openTicketMock], {
       initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
     });
@@ -215,6 +215,16 @@ describe('CtatTicketPanel', () => {
     await user.type(input, 'An unsaved message');
     await user.click(screen.getByRole('button', { name: 'Cancel' }));
 
+    expect(screen.getByText('Are you sure you want to leave?')).toBeVisible();
+    expect(
+      screen.getByText('Any unsent message content will be lost.')
+    ).toBeVisible();
+    await user.click(screen.getByRole('button', { name: "Don't leave" }));
+    expect(input).toHaveValue('An unsaved message');
+
+    await user.click(screen.getByRole('button', { name: 'Cancel' }));
+    await user.click(screen.getByRole('button', { name: 'Leave discussion' }));
+
     expect(
       await screen.findByTestId('ctat-ticket-view-sidepanel')
     ).toBeInTheDocument();
@@ -222,6 +232,67 @@ describe('CtatTicketPanel', () => {
     expect(
       await screen.findByRole('textbox', { name: /Type your message/ })
     ).toHaveValue('');
+  });
+
+  it('confirms before leaving a draft with the back arrow', async () => {
+    const { user } = renderPanel([openTicketMock], {
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
+    });
+
+    const input = await screen.findByRole('textbox', {
+      name: /Type your message/
+    });
+    await user.type(input, 'An unsent reply');
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+
+    expect(screen.getByText('Are you sure you want to leave?')).toBeVisible();
+    expect(input).toHaveValue('An unsent reply');
+    await user.click(screen.getByRole('button', { name: "Don't leave" }));
+    expect(input).toHaveValue('An unsent reply');
+    expect(screen.getByTestId('ctat-discussion-sidepanel')).toBeInTheDocument();
+  });
+
+  it('leaves without a warning when the message box is empty', async () => {
+    const { user } = renderPanel([openTicketMock], {
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
+    });
+
+    await screen.findByRole('textbox', { name: /Type your message/ });
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+
+    expect(
+      await screen.findByTestId('ctat-ticket-view-sidepanel')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('Any unsent message content will be lost.')
+    ).not.toBeInTheDocument();
+  });
+
+  it('confirms before dismissing a draft with Escape or the overlay', async () => {
+    const { user } = renderPanel([openTicketMock], {
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
+    });
+
+    const input = await screen.findByRole('textbox', {
+      name: /Type your message/
+    });
+    await user.type(input, 'An unsent reply');
+    await user.keyboard('{Escape}');
+
+    expect(
+      screen.getByText('Any unsent message content will be lost.')
+    ).toBeVisible();
+    await user.click(screen.getByRole('button', { name: "Don't leave" }));
+    expect(input).toHaveValue('An unsent reply');
+
+    const overlay = document.querySelector('.mint-sidepanel__overlay');
+    expect(overlay).not.toBeNull();
+    await user.click(overlay as Element);
+
+    expect(
+      screen.getByText('Any unsent message content will be lost.')
+    ).toBeVisible();
+    expect(input).toHaveValue('An unsent reply');
   });
 
   it('posts a message and refreshes the discussion', async () => {
@@ -269,6 +340,14 @@ describe('CtatTicketPanel', () => {
     );
     expect(screen.getByText('1 message')).toBeInTheDocument();
     expect(input).toHaveValue('');
+
+    await user.click(screen.getByRole('button', { name: 'Back' }));
+    expect(
+      await screen.findByTestId('ctat-ticket-view-sidepanel')
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText('Any unsent message content will be lost.')
+    ).not.toBeInTheDocument();
   });
 
   it('provides the discussion error to the global handler and clears the override after a failed save', async () => {
