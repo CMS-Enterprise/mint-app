@@ -217,15 +217,15 @@ describe('Tasks page', () => {
     });
 
     expect(getCardHeadings(container)).toEqual([
-      'Prepare for clearance',
-      'Prepare for your presentation to the Office of the Administrator (OA)',
-      'Start your ICIP',
-      'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      'Iterate on your Model Plan',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
-      'Complete your waiver assessment survey',
+      'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'Finalize your data exchange approach',
+      'Complete your waiver assessment survey',
+      'Start your ICIP',
       'Keep your model-to-operations matrix (MTO) up-to-date',
-      'Iterate on your Model Plan'
+      'Prepare for clearance',
+      'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
   });
 
