@@ -36,6 +36,13 @@ const tasks = {
   },
   markComplete: 'Mark this task complete',
   markTodo: 'Mark this task to do',
+  // Defaults used by TaskCard when a task state doesn't define its own success/error copy
+  markCompleteSuccess: '<bold>{{heading}}</bold> is now complete.',
+  markTodoSuccess: '<bold>{{heading}}</bold> is now to-do.',
+  markCompleteError:
+    'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.',
+  markTodoError:
+    'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.',
   [PlanTaskKey.MODEL_PLAN]: {
     copy: 'The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.',
     primaryPath: '/models/{{modelID}}/collaboration-area/model-plan',
@@ -238,17 +245,11 @@ const tasks = {
     },
     [PlanTaskState.TO_DO]: {
       heading: 'Add approved ICIP',
-      primaryAction: 'Add ICIP',
-      success: '<bold>Add approved ICIP</bold> is now complete.',
-      error:
-        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+      primaryAction: 'Add ICIP'
     },
     [PlanTaskState.COMPLETE]: {
       heading: 'Add approved ICIP',
-      primaryAction: 'Add ICIP',
-      success: '<bold>Add approved ICIP</bold> is now to-do.',
-      error:
-        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+      primaryAction: 'Add ICIP'
     }
   }
 };

@@ -132,7 +132,9 @@ const TaskCard = ({
     setCurrentErrorMeta({
       overrideMessage: getStatusAlertBody({
         type: 'error',
-        message: t(`${baseKey}.error`)
+        message: t(`${baseKey}.error`, {
+          defaultValue: t(markComplete ? 'markCompleteError' : 'markTodoError')
+        })
       })
     });
 
@@ -154,7 +156,12 @@ const TaskCard = ({
       if (!response.errors) {
         toastSuccess(
           <Trans
-            i18nKey={t(`${baseKey}.success`)}
+            i18nKey={t(`${baseKey}.success`, {
+              defaultValue: t(
+                markComplete ? 'markCompleteSuccess' : 'markTodoSuccess',
+                { heading: t(`${baseKey}.heading`) }
+              )
+            })}
             components={{
               bold: <span className="text-bold" />
             }}
