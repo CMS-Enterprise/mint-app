@@ -619,7 +619,10 @@ const contractAssistanceMisc = {
       'This message will only be visible to the original ticket requester and the CTAT Admin team.',
     cancelMessage: 'Cancel',
     saveMessage: 'Save message',
-    saveMessageError: 'Your message could not be saved. Please try again.',
+    saveMessageSuccess:
+      'You added a message to the discussion for a contract assistance ticket (<bold>{{ticketNumber}}</bold>).',
+    saveMessageError:
+      'There was an error adding your message. Please try again. If the error persists, please try again another time.',
     empty:
       'There are not yet any messages about this ticket. Add a message to start a discussion.'
   },

@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   CtatDiscussionPoster,
   GetCtatDiscussionsQuery
@@ -9,6 +9,9 @@ import setup from 'tests/util';
 import { vi } from 'vitest';
 
 import CtatDiscussionContent from './index';
+
+const toastSuccess = vi.hoisted(() => vi.fn());
+vi.mock('components/ToastSuccess', () => ({ default: toastSuccess }));
 
 const saveMessage = vi.fn(async () => {});
 const cancelMessage = vi.fn();
@@ -59,6 +62,10 @@ const discussions: GetCtatDiscussionsQuery['discussions'] = [
 ];
 
 describe('CtatDiscussionContent', () => {
+  beforeEach(() => {
+    toastSuccess.mockClear();
+  });
+
   it('shows an info banner when there are no messages', () => {
     setup(
       <CtatDiscussionContent
@@ -185,6 +192,12 @@ describe('CtatDiscussionContent', () => {
       expect(input).toHaveValue('');
     });
     expect(saveButton).toBeDisabled();
+    expect(toastSuccess).toHaveBeenCalledTimes(1);
+    render(toastSuccess.mock.calls[0][0]);
+    expect(screen.getByText('CTAT-001', { selector: 'strong' })).toBeVisible();
+    expect(document.body).toHaveTextContent(
+      'You added a message to the discussion for a contract assistance ticket (CTAT-001).'
+    );
   });
 
   it('renders saved line breaks in message content', () => {
@@ -222,7 +235,7 @@ describe('CtatDiscussionContent', () => {
     expect(screen.queryByRole('button', { name: 'Save message' })).toBeNull();
   });
 
-  it('keeps the draft and shows an error when saving fails', async () => {
+  it('keeps the draft when saving fails', async () => {
     const failingSave = vi.fn(async () => {
       throw new Error('Save failed');
     });
@@ -241,9 +254,8 @@ describe('CtatDiscussionContent', () => {
     await user.type(input, 'Keep this draft');
     await user.click(screen.getByRole('button', { name: 'Save message' }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent(
-      'Your message could not be saved. Please try again.'
-    );
+    await waitFor(() => expect(failingSave).toHaveBeenCalledTimes(1));
+    expect(toastSuccess).not.toHaveBeenCalled();
     expect(input).toHaveValue('Keep this draft');
     expect(screen.getByRole('button', { name: 'Save message' })).toBeEnabled();
   });

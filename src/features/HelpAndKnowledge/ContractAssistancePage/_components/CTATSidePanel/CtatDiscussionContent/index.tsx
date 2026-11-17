@@ -13,6 +13,7 @@ import HelpText from 'components/HelpText';
 import PageHeading from 'components/PageHeading';
 import Spinner from 'components/Spinner';
 import TextAreaField from 'components/TextAreaField';
+import toastSuccess from 'components/ToastSuccess';
 
 import { formatDiscussionRelativeDate } from '../../../utils';
 
@@ -43,7 +44,6 @@ const CtatDiscussionContent = ({
 }: CtatDiscussionContentProps) => {
   const { t } = useTranslation('contractAssistanceMisc');
   const [showEarlierMessages, setShowEarlierMessages] = useState(false);
-  const [saveError, setSaveError] = useState(false);
   const {
     control,
     handleSubmit,
@@ -62,12 +62,18 @@ const CtatDiscussionContent = ({
     : chronologicalDiscussions.slice(-2);
 
   const submitMessage = handleSubmit(async ({ content }) => {
-    setSaveError(false);
     try {
       await onSaveMessage(content.trim());
       reset();
+      toastSuccess(
+        <Trans
+          i18nKey="contractAssistanceMisc:ctatDiscussionPanel.saveMessageSuccess"
+          values={{ ticketNumber }}
+          components={{ bold: <strong /> }}
+        />
+      );
     } catch {
-      setSaveError(true);
+      // The parent shows the save error; keep the draft for another attempt.
     }
   });
 
@@ -222,11 +228,6 @@ const CtatDiscussionContent = ({
               )}
             />
           </FormGroup>
-          {saveError && (
-            <p role="alert" className="text-red">
-              {t('ctatDiscussionPanel.saveMessageError')}
-            </p>
-          )}
           <Button
             type="button"
             outline
@@ -234,7 +235,6 @@ const CtatDiscussionContent = ({
             disabled={isSubmitting}
             onClick={() => {
               reset();
-              setSaveError(false);
               onCancelMessage();
             }}
           >

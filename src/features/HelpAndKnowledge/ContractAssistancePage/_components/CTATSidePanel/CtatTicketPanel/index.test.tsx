@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider, useMatch } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import {
   AdminUpdateCtatRequestDocument,
   CreateCtatDiscussionDocument,
@@ -15,9 +15,12 @@ import {
   GetCtatRequestDocument,
   GetCtatRequestsAdminDocument
 } from 'gql/generated/graphql';
+import { GraphQLError } from 'graphql';
 import { DateTime } from 'luxon';
 import setup from 'tests/util';
 import { vi } from 'vitest';
+
+import { getCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
 import CtatTicketPanel from './index';
 
@@ -266,6 +269,43 @@ describe('CtatTicketPanel', () => {
     );
     expect(screen.getByText('1 message')).toBeInTheDocument();
     expect(input).toHaveValue('');
+  });
+
+  it('provides the discussion error to the global handler and clears the override after a failed save', async () => {
+    let overrideDuringRequest: unknown;
+    const { user } = renderPanel([openTicketMock], {
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`,
+      additionalMocks: [
+        {
+          request: {
+            query: CreateCtatDiscussionDocument,
+            variables: {
+              input: { ticketID: ticketId, content: 'Keep this draft' }
+            }
+          },
+          result: () => {
+            overrideDuringRequest = getCurrentErrorMeta().overrideMessage;
+            return { errors: [new GraphQLError('Save failed')] };
+          }
+        }
+      ]
+    });
+
+    const input = await screen.findByRole('textbox', {
+      name: /Type your message/
+    });
+    await user.type(input, 'Keep this draft');
+    await user.click(screen.getByRole('button', { name: 'Save message' }));
+
+    await waitFor(() => expect(overrideDuringRequest).toBeDefined());
+    const { container } = render(overrideDuringRequest as React.ReactElement);
+    expect(container).toHaveTextContent(
+      'There was an error adding your message. Please try again. If the error persists, please try again another time.'
+    );
+    await waitFor(() =>
+      expect(getCurrentErrorMeta().overrideMessage).toBeUndefined()
+    );
+    expect(input).toHaveValue('Keep this draft');
   });
 
   it('does not offer the message form for a closed ticket', async () => {
