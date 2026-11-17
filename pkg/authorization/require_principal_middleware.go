@@ -59,6 +59,9 @@ func NewRequirePrincipalGraphQLMiddleware() func(http.Handler) http.Handler {
 }
 
 func isWebSocketUpgrade(r *http.Request) bool {
+	if r.Method != http.MethodGet {
+		return false
+	}
 	if !strings.EqualFold(r.Header.Get("Upgrade"), "websocket") {
 		return false
 	}
