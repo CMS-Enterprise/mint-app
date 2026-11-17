@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -79,6 +80,57 @@ func (s *AuthorizationTestSuite) TestRejectsAnonymousRequests() {
 
 	s.Equal(1, len(payload.Errors))
 	s.Equal("Unauthorized", payload.Errors[0].Message)
+}
+
+func TestRequirePrincipalGraphQLMiddlewareRejectsAnonymousRequestBeforeHandler(t *testing.T) {
+	req := httptest.NewRequest("POST", "/api/graph/query", strings.NewReader(`{"query":"{ invalid"}`))
+	req.Header.Set("Content-Type", "application/json")
+
+	handlerCalled := false
+	next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		handlerCalled = true
+		http.Error(w, "GraphQL validation error", http.StatusBadRequest)
+	})
+
+	recorder := httptest.NewRecorder()
+	NewRequirePrincipalGraphQLMiddleware()(next).ServeHTTP(recorder, req)
+
+	assert.False(t, handlerCalled)
+	assert.Equal(t, http.StatusUnauthorized, recorder.Code)
+	assert.Contains(t, recorder.Body.String(), "Unauthorized")
+	assert.NotContains(t, recorder.Body.String(), "GraphQL validation error")
+}
+
+func TestRequirePrincipalGraphQLMiddlewareAllowsAuthenticatedRequest(t *testing.T) {
+	req := httptest.NewRequest("POST", "/api/graph/query", nil)
+	principal := &authentication.ApplicationPrincipal{Username: "QQQQ"}
+	req = req.WithContext(appcontext.WithPrincipal(req.Context(), principal))
+
+	handlerCalled := false
+	next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		handlerCalled = true
+	})
+
+	recorder := httptest.NewRecorder()
+	NewRequirePrincipalGraphQLMiddleware()(next).ServeHTTP(recorder, req)
+
+	assert.True(t, handlerCalled)
+}
+
+func TestRequirePrincipalGraphQLMiddlewareAllowsWebSocketUpgrade(t *testing.T) {
+	req := httptest.NewRequest("GET", "/api/graph/query", nil)
+	req.Header.Set("Connection", "keep-alive, Upgrade")
+	req.Header.Set("Upgrade", "websocket")
+
+	handlerCalled := false
+	next := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		handlerCalled = true
+	})
+
+	recorder := httptest.NewRecorder()
+	NewRequirePrincipalGraphQLMiddleware()(next).ServeHTTP(recorder, req)
+
+	assert.True(t, handlerCalled)
 }
 
 func TestNewRequirePrincipalOperationMiddleware(t *testing.T) {
