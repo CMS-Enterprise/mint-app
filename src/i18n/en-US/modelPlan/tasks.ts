@@ -36,7 +36,10 @@ const tasks = {
   },
   markComplete: 'Mark this task complete',
   markTodo: 'Mark this task to do',
-  // Defaults used by TaskCard when a task state doesn't define its own success/error copy
+  // Defaults used by TaskCard for the mark complete / mark to-do toasts.
+  // A new task does NOT need its own `success` or `error` copy: as long as each state has a
+  // `heading`, the toast reads "<heading> is now complete/to-do." Only add `success`/`error` to a
+  // task state when the toast text should differ from its heading.
   markCompleteSuccess: '<bold>{{heading}}</bold> is now complete.',
   markTodoSuccess: '<bold>{{heading}}</bold> is now to-do.',
   markCompleteError:
@@ -74,18 +77,14 @@ const tasks = {
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
       success:
-        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now complete.',
-      error:
-        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now complete.'
     },
     [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
       success:
-        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.',
-      error:
-        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.'
     }
   },
   [PlanTaskKey.SIX_PAGER]: {
@@ -101,27 +100,21 @@ const tasks = {
         'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 6-pager',
       success:
-        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.',
-      error:
-        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.'
     },
     [PlanTaskState.TO_DO]: {
       heading:
         'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 6-pager',
       success:
-        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.',
-      error:
-        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.'
     },
     [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 6-pager',
       success:
-        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now to-do.',
-      error:
-        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now to-do.'
     }
   },
   [PlanTaskKey.DATA_EXCHANGE]: {
@@ -174,20 +167,12 @@ const tasks = {
     [PlanTaskState.TO_DO]: {
       heading:
         'Prepare for your presentation to the Office of the Administrator (OA)',
-      primaryAction: 'Upload OA presentation',
-      success:
-        '<bold>Prepare for your presentation to the Office of the Administrator (OA)</bold> is now complete.',
-      error:
-        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+      primaryAction: 'Upload OA presentation'
     },
     [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your presentation to the Office of the Administrator (OA)',
-      primaryAction: 'Upload OA presentation',
-      success:
-        '<bold>Prepare for your presentation to the Office of the Administrator (OA)</bold> is now to-do.',
-      error:
-        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+      primaryAction: 'Upload OA presentation'
     }
   },
   [PlanTaskKey.MTO]: {
