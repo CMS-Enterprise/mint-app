@@ -286,6 +286,23 @@ exports[`Model Plan Add Documents page > matches snapshot 1`] = `
                   >
                     <input
                       class="usa-radio__input"
+                      id="FileUpload-FINAL_ICIP"
+                      name="documentType"
+                      type="radio"
+                      value="FINAL_ICIP"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-FINAL_ICIP"
+                    >
+                      Final ICIP
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
                       id="FileUpload-MARKET_RESEARCH"
                       name="documentType"
                       type="radio"

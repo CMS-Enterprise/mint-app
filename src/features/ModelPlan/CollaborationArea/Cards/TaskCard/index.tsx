@@ -70,7 +70,7 @@ const TASK_DOCUMENT_TYPE: Partial<Record<PlanTaskKey, DocumentType>> = {
   [PlanTaskKey.SIX_PAGER]: DocumentType.CONCEPT_PAPER,
   [PlanTaskKey.OA_PRESENTATION]:
     DocumentType.OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
-  [PlanTaskKey.APPROVED_ICIP]: DocumentType.ICIP_DRAFT
+  [PlanTaskKey.APPROVED_ICIP]: DocumentType.FINAL_ICIP
 };
 
 const isExternalUrl = (path: string) => /^https?:\/\//i.test(path);
