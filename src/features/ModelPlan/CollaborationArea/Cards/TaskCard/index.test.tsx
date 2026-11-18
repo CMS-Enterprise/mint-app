@@ -1,7 +1,12 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import {
+  createMemoryRouter,
+  RouterProvider,
+  useLocation
+} from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
+  DocumentType,
   GetCollaborationAreaQuery,
   PlanTaskKey,
   PlanTaskState,
@@ -184,6 +189,51 @@ describe('TaskCard', () => {
     expect(
       getByRole('checkbox', { name: 'Mark this task complete' })
     ).toBeInTheDocument();
+  });
+
+  it('navigates to Add document with Final ICIP preselected from the approved ICIP task', async () => {
+    const DestinationState = () => {
+      const location = useLocation();
+      return (
+        <div data-testid="document-type-state">
+          {(location.state as { documentType?: string } | null)?.documentType}
+        </div>
+      );
+    };
+
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area',
+          element: (
+            <MockedProvider mocks={[]}>
+              <TaskCard
+                modelPlan={collaborationAreaData}
+                task={getTask(PlanTaskKey.APPROVED_ICIP, {
+                  state: PlanTaskState.TO_DO,
+                  status: PlanTaskStatus.TO_DO
+                })}
+              />
+            </MockedProvider>
+          )
+        },
+        {
+          path: '/models/:modelID/collaboration-area/documents/add-document',
+          element: <DestinationState />
+        }
+      ],
+      { initialEntries: [`/models/${modelID}/collaboration-area`] }
+    );
+
+    const { findByRole, findByTestId, user } = setup(
+      <RouterProvider router={router} />
+    );
+
+    await user.click(await findByRole('button', { name: 'Add ICIP' }));
+
+    expect((await findByTestId('document-type-state')).textContent).toBe(
+      DocumentType.FINAL_ICIP
+    );
   });
 
   it('renders Prepare for clearance upcoming state with alert and SharePoint link only', async () => {

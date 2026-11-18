@@ -8,6 +8,7 @@ const (
 	DocumentTypeConceptPaper                         DocumentType = "CONCEPT_PAPER"
 	DocumentTypePolicyPaper                          DocumentType = "POLICY_PAPER"
 	DocumentTypeICIPDraft                            DocumentType = "ICIP_DRAFT"
+	DocumentTypeFinalICIP                            DocumentType = "FINAL_ICIP"
 	DocumentTypeMarketResearch                       DocumentType = "MARKET_RESEARCH"
 	DocumentTypeDesignParametersMemo                 DocumentType = "DESIGN_PARAMETERS_MEMO"
 	DocumentTypeOfficeOfTheAdministratorPresentation DocumentType = "OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION"
