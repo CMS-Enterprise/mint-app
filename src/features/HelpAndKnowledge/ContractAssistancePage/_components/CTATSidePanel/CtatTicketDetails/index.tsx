@@ -30,15 +30,11 @@ import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import Spinner from 'components/Spinner';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { formatDateLocal } from 'utils/date';
+import { formatCTATDiscussionRelativeDate, formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 import { tObject } from 'utils/translation';
 
-import {
-  formatDiscussionRelativeDate,
-  formatHelpTypes,
-  formatUserDisplay
-} from '../../../utils';
+import { formatHelpTypes, formatUserDisplay } from '../../../utils';
 
 import CtatTicketAdminForm from './CtatTicketAdminForm';
 
@@ -175,7 +171,7 @@ const CtatTicketDetails = ({
 
   const latestDiscussion = discussions[0];
   const latestDate = latestDiscussion
-    ? formatDiscussionRelativeDate(latestDiscussion.createdDts)
+    ? formatCTATDiscussionRelativeDate(latestDiscussion.createdDts)
     : '';
   const latestPosterName = latestDiscussion
     ? [

@@ -14,8 +14,7 @@ import PageHeading from 'components/PageHeading';
 import Spinner from 'components/Spinner';
 import TextAreaField from 'components/TextAreaField';
 import toastSuccess from 'components/ToastSuccess';
-
-import { formatDiscussionRelativeDate } from '../../../utils';
+import { formatCTATDiscussionRelativeDate } from 'utils/date';
 
 import './index.scss';
 
@@ -167,9 +166,10 @@ const CtatDiscussionContent = ({
                           </p>
                         </div>
                         <span className="text-base margin-left-2 text-no-wrap">
-                          {formatDiscussionRelativeDate(
-                            discussion.createdDts
-                          ).replace(/^Today at /, 'Today, ')}
+                          {formatCTATDiscussionRelativeDate(
+                            discussion.createdDts,
+                            { todaySeparator: 'comma' }
+                          )}
                         </span>
                       </div>
                       <p className="mint-ctat-discussion-message__content margin-top-2 margin-bottom-0">
