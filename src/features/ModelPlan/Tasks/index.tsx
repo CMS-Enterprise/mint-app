@@ -42,6 +42,7 @@ export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.MTO,
+  PlanTaskKey.APPROVED_ICIP,
   PlanTaskKey.OA_PRESENTATION,
   PlanTaskKey.PREPARE_FOR_CLEARANCE
 ];

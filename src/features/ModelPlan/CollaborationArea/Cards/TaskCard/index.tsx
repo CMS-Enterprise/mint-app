@@ -61,6 +61,7 @@ const TASK_STATUS_CONFIG: Partial<Record<PlanTaskStatus, TaskStatusConfig>> = {
 const USER_MARK_STATUS_TASKS = [
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.APPROVED_ICIP,
   PlanTaskKey.OA_PRESENTATION
 ];
 
