@@ -100,8 +100,7 @@ const Tasks = () => {
       planTask =>
         planTask.key === key &&
         planTask.state !== PlanTaskState.COMPLETE &&
-        planTask.state !== PlanTaskState.UPCOMING &&
-        planTask.state !== PlanTaskState.NOT_NEEDED
+        planTask.state !== PlanTaskState.UPCOMING
     );
     return task ? [task] : [];
   });

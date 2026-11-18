@@ -1,12 +1,8 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import {
-  GetCollaborationAreaQuery,
-  PlanTaskState
-} from 'gql/generated/graphql';
+import { GetCollaborationAreaQuery } from 'gql/generated/graphql';
 import { collaborationAreaData } from 'tests/mock/general';
 import {
-  makePlanTasks,
   modelID,
   planTasksAllToDo,
   planTasksWithModelPlanComplete,
@@ -44,37 +40,6 @@ describe('TasksWrapper', () => {
     expect(getByText('Previous')).toBeInTheDocument();
     expect(getByText('Next')).toBeInTheDocument();
     expect(getByText('See all (5)')).toBeInTheDocument();
-  });
-
-  it('does not count NOT_NEEDED approved ICIP, but counts it once it is to-do', async () => {
-    const renderWrapper = (tasks: typeof planTasksAllToDo) => {
-      const router = createMemoryRouter(
-        [
-          {
-            path: '/models/:modelID/collaboration-area',
-            element: (
-              <TasksWrapper modelPlan={collaborationAreaData} tasks={tasks} />
-            )
-          }
-        ],
-        { initialEntries: [`/models/${modelID}/collaboration-area`] }
-      );
-
-      return setup(
-        <MockedProvider mocks={[]}>
-          <RouterProvider router={router} />
-        </MockedProvider>
-      );
-    };
-
-    const notNeeded = renderWrapper(planTasksAllToDo);
-    await notNeeded.findByText('See all (5)');
-    notNeeded.unmount();
-
-    const activated = renderWrapper(
-      makePlanTasks({ APPROVED_ICIP: { state: PlanTaskState.TO_DO } })
-    );
-    await activated.findByText('See all (6)');
   });
 
   it('hides tasks with COMPLETE state and renders next state', async () => {

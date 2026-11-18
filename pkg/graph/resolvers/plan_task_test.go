@@ -565,6 +565,7 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	suite.NotNil(taskByKey[models.PlanTaskKeyApprovedIcip])
 
 	upcomingKeys := map[models.PlanTaskKey]bool{
+		models.PlanTaskKeyApprovedIcip:        true,
 		models.PlanTaskKeySixPager:            true,
 		models.PlanTaskKeyOaPresentation:      true,
 		models.PlanTaskKeyPrepareForClearance: true,
@@ -574,20 +575,16 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 		suite.Equal(plan.ID, t.ModelPlanID)
 		suite.Nil(t.CompletedBy)
 		suite.Nil(t.CompletedDts)
-		switch {
-		case t.Key == models.PlanTaskKeyApprovedIcip:
-			suite.Equal(models.PlanTaskStateNotNeeded, t.State)
-		case upcomingKeys[t.Key]:
+		if upcomingKeys[t.Key] {
 			suite.Equal(models.PlanTaskStateUpcoming, t.State)
-		default:
+		} else {
 			suite.Equal(models.PlanTaskStateToDo, t.State)
 		}
 	}
 }
 
-// TestApprovedIcipTaskState covers the APPROVED_ICIP task: it is NOT_NEEDED until the model has the
-// MEDICARE_FFS_MODEL key characteristic, then follows the model status (UPCOMING before
-// INTERNAL_CMMI_CLEARANCE, TO_DO from there through ENDED), and a COMPLETE task is never overwritten.
+// TestApprovedIcipTaskState covers the APPROVED_ICIP task: it starts UPCOMING, becomes TO_DO from
+// INTERNAL_CMMI_CLEARANCE through ENDED, and a COMPLETE task is never overwritten by the sync.
 func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 	updateStatus := func(planID uuid.UUID, status models.ModelStatus) {
 		_, err := ModelPlanUpdate(
@@ -602,15 +599,17 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		)
 		suite.NoError(err)
 	}
-	setKeyCharacteristics := func(planID uuid.UUID, characteristics []string) {
-		gc, err := PlanGeneralCharacteristicsGetByModelPlanIDLOADER(suite.testConfigs.Context, planID)
-		suite.NoError(err)
-		_, err = UpdatePlanGeneralCharacteristics(
+	markComplete := func(planID uuid.UUID, isComplete bool) {
+		_, err := PlanTaskMarkComplete(
+			suite.testConfigs.Context,
 			suite.testConfigs.Logger,
-			gc.ID,
-			map[string]interface{}{"keyCharacteristics": characteristics},
+			planID,
+			models.PlanTaskKeyApprovedIcip,
+			isComplete,
 			suite.testConfigs.Principal,
 			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
 		)
 		suite.NoError(err)
 	}
@@ -618,23 +617,8 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		return suite.getPlanTaskByKey(planID, models.PlanTaskKeyApprovedIcip).State
 	}
 
-	suite.Run("stays NOT_NEEDED through status changes without the characteristic", func() {
-		plan := suite.createModelPlan("Plan Without FFS Characteristic")
-		suite.Equal(models.PlanTaskStateNotNeeded, icipState(plan.ID))
-
-		updateStatus(plan.ID, models.ModelStatusInternalCmmiClearance)
-		suite.Equal(models.PlanTaskStateNotNeeded, icipState(plan.ID))
-
-		// an unrelated characteristic does not apply either
-		setKeyCharacteristics(plan.ID, []string{"PART_C"})
-		suite.Equal(models.PlanTaskStateNotNeeded, icipState(plan.ID))
-	})
-
-	suite.Run("follows model status once the characteristic is selected", func() {
-		plan := suite.createModelPlan("Plan With FFS Characteristic")
-
-		// selecting the characteristic before clearance makes the task UPCOMING
-		setKeyCharacteristics(plan.ID, []string{"PART_C", "MEDICARE_FFS_MODEL"})
+	suite.Run("follows model status", func() {
+		plan := suite.createModelPlan("Plan Approved ICIP Status")
 		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
 
 		updateStatus(plan.ID, models.ModelStatusIcipComplete)
@@ -663,48 +647,23 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		// regressing before clearance returns it to UPCOMING
 		updateStatus(plan.ID, models.ModelStatusIcipComplete)
 		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
-
-		// deselecting the characteristic hides it again
-		setKeyCharacteristics(plan.ID, []string{"PART_C"})
-		suite.Equal(models.PlanTaskStateNotNeeded, icipState(plan.ID))
 	})
 
-	suite.Run("selecting the characteristic after clearance starts the task TO_DO", func() {
-		plan := suite.createModelPlan("Plan Cleared Then FFS Characteristic")
+	suite.Run("automatic changes are attributed to the system account", func() {
+		plan := suite.createModelPlan("Plan Approved ICIP Attribution")
 		updateStatus(plan.ID, models.ModelStatusCmsClearance)
-		suite.Equal(models.PlanTaskStateNotNeeded, icipState(plan.ID))
-
-		setKeyCharacteristics(plan.ID, []string{"MEDICARE_FFS_MODEL"})
 		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
 
-		// automatic availability changes are attributed to the MINT system account so change
-		// history shows them as automatic rather than as a user action
 		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyApprovedIcip)
 		if suite.NotNil(task.ModifiedBy) {
 			suite.Equal(constants.GetSystemAccountUUID(), *task.ModifiedBy)
 		}
 	})
 
-	suite.Run("a COMPLETE task is preserved when the characteristic is deselected or status regresses", func() {
+	suite.Run("a COMPLETE task is preserved when status regresses", func() {
 		plan := suite.createModelPlan("Plan With Completed Approved ICIP")
-		setKeyCharacteristics(plan.ID, []string{"MEDICARE_FFS_MODEL"})
 		updateStatus(plan.ID, models.ModelStatusCleared)
-
-		_, err := PlanTaskMarkComplete(
-			suite.testConfigs.Context,
-			suite.testConfigs.Logger,
-			plan.ID,
-			models.PlanTaskKeyApprovedIcip,
-			true,
-			suite.testConfigs.Principal,
-			suite.testConfigs.Store,
-			nil,
-			email.AddressBook{},
-		)
-		suite.NoError(err)
-		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
-
-		setKeyCharacteristics(plan.ID, []string{"PART_C"})
+		markComplete(plan.ID, true)
 		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
 
 		updateStatus(plan.ID, models.ModelStatusPlanDraft)
@@ -716,21 +675,8 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		// window by running the sync's write (preserveComplete) against an already-COMPLETE row: the
 		// write must leave it, and its completion metadata, untouched.
 		plan := suite.createModelPlan("Plan Approved ICIP Concurrent Completion")
-		setKeyCharacteristics(plan.ID, []string{"MEDICARE_FFS_MODEL"})
 		updateStatus(plan.ID, models.ModelStatusCleared)
-
-		_, err := PlanTaskMarkComplete(
-			suite.testConfigs.Context,
-			suite.testConfigs.Logger,
-			plan.ID,
-			models.PlanTaskKeyApprovedIcip,
-			true,
-			suite.testConfigs.Principal,
-			suite.testConfigs.Store,
-			nil,
-			email.AddressBook{},
-		)
-		suite.NoError(err)
+		markComplete(plan.ID, true)
 		completed := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyApprovedIcip)
 		suite.Equal(models.PlanTaskStateComplete, completed.State)
 		suite.NotNil(completed.CompletedBy)
@@ -739,7 +685,6 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		for _, staleState := range []models.PlanTaskState{
 			models.PlanTaskStateToDo,
 			models.PlanTaskStateUpcoming,
-			models.PlanTaskStateNotNeeded,
 		} {
 			result, err := updatePlanTaskStateByKeyOpt(
 				suite.testConfigs.Context,
@@ -767,23 +712,11 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 
 	suite.Run("marking to do returns a completed task to TO_DO", func() {
 		plan := suite.createModelPlan("Plan Approved ICIP Mark To Do")
-		setKeyCharacteristics(plan.ID, []string{"MEDICARE_FFS_MODEL"})
 		updateStatus(plan.ID, models.ModelStatusCleared)
 
-		for _, isComplete := range []bool{true, false} {
-			_, err := PlanTaskMarkComplete(
-				suite.testConfigs.Context,
-				suite.testConfigs.Logger,
-				plan.ID,
-				models.PlanTaskKeyApprovedIcip,
-				isComplete,
-				suite.testConfigs.Principal,
-				suite.testConfigs.Store,
-				nil,
-				email.AddressBook{},
-			)
-			suite.NoError(err)
-		}
+		markComplete(plan.ID, true)
+		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+		markComplete(plan.ID, false)
 		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
 	})
 }

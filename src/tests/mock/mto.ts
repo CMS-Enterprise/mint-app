@@ -96,12 +96,7 @@ const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
 const KEYS_DEFAULTING_TO_UPCOMING = new Set<PlanTaskKey>([
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.OA_PRESENTATION,
-  PlanTaskKey.PREPARE_FOR_CLEARANCE
-]);
-
-// APPROVED_ICIP only applies when the model has the relevant characteristic, so new models seed it
-// as NOT_NEEDED and it stays out of every Tasks tab until activated.
-const KEYS_DEFAULTING_TO_NOT_NEEDED = new Set<PlanTaskKey>([
+  PlanTaskKey.PREPARE_FOR_CLEARANCE,
   PlanTaskKey.APPROVED_ICIP
 ]);
 
@@ -114,12 +109,9 @@ export function makePlanTasks(
   >
 ): PlanTaskEntry[] {
   return PLAN_TASK_KEYS_ORDER.map(key => {
-    let defaultState = PlanTaskState.TO_DO;
-    if (KEYS_DEFAULTING_TO_UPCOMING.has(key)) {
-      defaultState = PlanTaskState.UPCOMING;
-    } else if (KEYS_DEFAULTING_TO_NOT_NEEDED.has(key)) {
-      defaultState = PlanTaskState.NOT_NEEDED;
-    }
+    const defaultState = KEYS_DEFAULTING_TO_UPCOMING.has(key)
+      ? PlanTaskState.UPCOMING
+      : PlanTaskState.TO_DO;
     const defaultStatus = PlanTaskStatus.TO_DO;
 
     const resolvedState =
