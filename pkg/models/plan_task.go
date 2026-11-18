@@ -35,7 +35,6 @@ const (
 	PlanTaskKeySixPager               PlanTaskKey = "SIX_PAGER"
 	PlanTaskKeyOaPresentation         PlanTaskKey = "OA_PRESENTATION"
 	PlanTaskKeyPrepareForClearance    PlanTaskKey = "PREPARE_FOR_CLEARANCE"
-	PlanTaskKeyApprovedIcip           PlanTaskKey = "APPROVED_ICIP"
 )
 
 // PrepareForClearanceTriggerDays is how many days before a model plan's internal clearance start
@@ -59,7 +58,6 @@ var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
 	PlanTaskKeyTwoPager:       true,
 	PlanTaskKeySixPager:       true,
 	PlanTaskKeyOaPresentation: true,
-	PlanTaskKeyApprovedIcip:   true,
 }
 
 // PlanTaskDefault pairs a PlanTaskKey with the PlanTaskState it should start at when a model plan
@@ -74,8 +72,6 @@ type PlanTaskDefault struct {
 // PlanTaskMarkComplete once TWO_PAGER is marked complete (see PlanTaskKey.ActivationTarget).
 // OA_PRESENTATION starts UPCOMING and is activated once SIX_PAGER is marked complete.
 // PREPARE_FOR_CLEARANCE starts UPCOMING and is activated by the clearance-date job.
-// APPROVED_ICIP starts UPCOMING and moves to TO_DO once clearance starts (see
-// ApprovedIcipStateForModelStatus).
 var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeyModelPlan, PlanTaskStateToDo},
 	{PlanTaskKeyMto, PlanTaskStateToDo},
@@ -85,7 +81,6 @@ var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeySixPager, PlanTaskStateUpcoming},
 	{PlanTaskKeyOaPresentation, PlanTaskStateUpcoming},
 	{PlanTaskKeyPrepareForClearance, PlanTaskStateUpcoming},
-	{PlanTaskKeyApprovedIcip, PlanTaskStateUpcoming},
 }
 
 // IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user
@@ -121,7 +116,6 @@ var planTaskKeyDisplayNames = map[PlanTaskKey]string{
 	PlanTaskKeySixPager:               "Prepare for your 6-page review meeting with CMMI Front Office",
 	PlanTaskKeyOaPresentation:         "Office of the Administrator (OA) presentation",
 	PlanTaskKeyPrepareForClearance:    "Prepare for clearance",
-	PlanTaskKeyApprovedIcip:           "Add approved ICIP",
 }
 
 // DisplayName returns a short human-readable name for this task key.
@@ -140,7 +134,6 @@ var planTaskKeyChangeHistoryNames = map[PlanTaskKey]string{
 	PlanTaskKeyTwoPager:       "Prepare for your 2-page review meeting with CMMI Front Office",
 	PlanTaskKeySixPager:       "Prepare for your 6-page review meeting with CMMI Front Office",
 	PlanTaskKeyOaPresentation: "Prepare for your presentation to the Office of the Administrator",
-	PlanTaskKeyApprovedIcip:   "Add approved ICIP",
 }
 
 // ChangeHistoryDisplayName returns the task name shown in change history.
@@ -149,22 +142,6 @@ func (k PlanTaskKey) ChangeHistoryDisplayName() string {
 		return name
 	}
 	return k.DisplayName()
-}
-
-// ApprovedIcipStateForModelStatus returns the state of the APPROVED_ICIP task for a model status:
-// TO_DO from INTERNAL_CMMI_CLEARANCE through ENDED, UPCOMING before that. The second return value
-// is false for statuses that say nothing about clearance progress (PAUSED, CANCELED, or unknown),
-// in which case the task's current state should be left alone.
-func ApprovedIcipStateForModelStatus(status ModelStatus) (PlanTaskState, bool) {
-	index := GetModelStatusChronologicalIndex(status)
-	switch {
-	case index < 0, status == ModelStatusPaused, status == ModelStatusCanceled:
-		return "", false
-	case index >= GetModelStatusChronologicalIndex(ModelStatusInternalCmmiClearance):
-		return PlanTaskStateToDo, true
-	default:
-		return PlanTaskStateUpcoming, true
-	}
 }
 
 // PlanTaskState is an enum representing the lifecycle state of a task, stored in the database.
