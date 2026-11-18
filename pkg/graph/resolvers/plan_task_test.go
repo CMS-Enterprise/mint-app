@@ -676,6 +676,13 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 
 		setKeyCharacteristics(plan.ID, []string{"MEDICARE_FFS_MODEL"})
 		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
+
+		// automatic availability changes are attributed to the MINT system account so change
+		// history shows them as automatic rather than as a user action
+		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyApprovedIcip)
+		if suite.NotNil(task.ModifiedBy) {
+			suite.Equal(constants.GetSystemAccountUUID(), *task.ModifiedBy)
+		}
 	})
 
 	suite.Run("a COMPLETE task is preserved when the characteristic is deselected or status regresses", func() {
