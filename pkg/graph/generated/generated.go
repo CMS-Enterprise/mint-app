@@ -21736,6 +21736,7 @@ type PlanDiscussionTranslation {
   CONCEPT_PAPER
   POLICY_PAPER
   ICIP_DRAFT
+  FINAL_ICIP
   MARKET_RESEARCH
   DESIGN_PARAMETERS_MEMO
   OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION
@@ -25771,6 +25772,7 @@ enum PlanTaskKey {
   SIX_PAGER
   OA_PRESENTATION
   PREPARE_FOR_CLEARANCE
+  APPROVED_ICIP
 }
 
 """
@@ -25798,7 +25800,7 @@ extend type Mutation {
   """
   Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
   aren't calculated from other model state (currently TWO_PAGER, SIX_PAGER, OA_PRESENTATION, and
-  PREPARE_FOR_CLEARANCE) can be set this way; other keys will return an error.
+  APPROVED_ICIP) can be set this way; other keys will return an error.
   """
   markPlanTaskComplete(
     modelPlanID: UUID!

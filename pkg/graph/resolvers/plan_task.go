@@ -54,6 +54,25 @@ func updatePlanTaskStateByKey(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) (*models.PlanTaskWithPreviousState, error) {
+	return updatePlanTaskStateByKeyOpt(ctx, np, logger, modelPlanID, key, newState, principal, attributedTo, emailService, addressBook, false)
+}
+
+// updatePlanTaskStateByKeyOpt is updatePlanTaskStateByKey with preserveComplete: when true, a
+// COMPLETE task is never overwritten, even if it was completed after the caller's own read. The
+// check is part of the write itself, so it cannot race with a concurrent completion.
+func updatePlanTaskStateByKeyOpt(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
+	newState models.PlanTaskState,
+	principal authentication.Principal,
+	attributedTo uuid.UUID,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+	preserveComplete bool,
+) (*models.PlanTaskWithPreviousState, error) {
 	if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, np); err != nil {
 		return nil, err
 	}
@@ -65,7 +84,7 @@ func updatePlanTaskStateByKey(
 		completedDts = helpers.PointerTo(time.Now().UTC())
 	}
 
-	result, err := storage.PlanTaskUpdateStateByKey(np, logger, modelPlanID, key, newState, completedBy, completedDts, attributedTo)
+	result, err := storage.PlanTaskUpdateStateByKey(np, logger, modelPlanID, key, newState, completedBy, completedDts, attributedTo, preserveComplete)
 	if err != nil {
 		return nil, err
 	}

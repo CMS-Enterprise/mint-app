@@ -928,6 +928,7 @@ export enum DiscussionUserRole {
 export enum DocumentType {
   CONCEPT_PAPER = 'CONCEPT_PAPER',
   DESIGN_PARAMETERS_MEMO = 'DESIGN_PARAMETERS_MEMO',
+  FINAL_ICIP = 'FINAL_ICIP',
   ICIP_DRAFT = 'ICIP_DRAFT',
   MARKET_RESEARCH = 'MARKET_RESEARCH',
   OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION = 'OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION',
@@ -2587,7 +2588,7 @@ export type Mutation = {
   /**
    * Directly sets a manually-markable plan task's status to COMPLETE or TO_DO. Only plan tasks that
    * aren't calculated from other model state (currently TWO_PAGER, SIX_PAGER, OA_PRESENTATION, and
-   * PREPARE_FOR_CLEARANCE) can be set this way; other keys will return an error.
+   * APPROVED_ICIP) can be set this way; other keys will return an error.
    */
   markPlanTaskComplete: PlanTask;
   mtoMilestoneUpdateLinkedSolutions?: Maybe<Array<MtoSolution>>;
@@ -5150,6 +5151,7 @@ export type PlanTask = {
 
 /** PlanTaskKey identifies which of the plan tasks this row represents. */
 export enum PlanTaskKey {
+  APPROVED_ICIP = 'APPROVED_ICIP',
   DATA_EXCHANGE = 'DATA_EXCHANGE',
   MODEL_PLAN = 'MODEL_PLAN',
   MTO = 'MTO',
