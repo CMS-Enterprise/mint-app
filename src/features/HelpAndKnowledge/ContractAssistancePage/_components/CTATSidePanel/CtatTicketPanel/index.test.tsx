@@ -441,20 +441,6 @@ describe('CtatTicketPanel', () => {
           discussions: [
             {
               __typename: 'CTATDiscussion',
-              id: '660e8400-e29b-41d4-a716-446655440001',
-              ticketID: ticketId,
-              content: 'Latest message',
-              posterRole: CtatDiscussionPoster.ADMIN,
-              createdBy: '770e8400-e29b-41d4-a716-446655440002',
-              createdByUserAccount: {
-                __typename: 'UserAccount',
-                givenName: 'Jane',
-                familyName: 'Smith'
-              },
-              createdDts: postedDate
-            },
-            {
-              __typename: 'CTATDiscussion',
               id: '880e8400-e29b-41d4-a716-446655440003',
               ticketID: ticketId,
               content: 'Earlier message',
@@ -466,6 +452,20 @@ describe('CtatTicketPanel', () => {
                 familyName: 'Skywalker'
               },
               createdDts: olderDate
+            },
+            {
+              __typename: 'CTATDiscussion',
+              id: '660e8400-e29b-41d4-a716-446655440001',
+              ticketID: ticketId,
+              content: 'Latest message',
+              posterRole: CtatDiscussionPoster.ADMIN,
+              createdBy: '770e8400-e29b-41d4-a716-446655440002',
+              createdByUserAccount: {
+                __typename: 'UserAccount',
+                givenName: 'Jane',
+                familyName: 'Smith'
+              },
+              createdDts: postedDate
             }
           ]
         }

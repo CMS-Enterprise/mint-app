@@ -19,17 +19,17 @@ const cancelMessage = vi.fn();
 const discussions: GetCtatDiscussionsQuery['discussions'] = [
   {
     __typename: 'CTATDiscussion',
-    id: '3',
+    id: '1',
     ticketID: 'ticket',
-    content: 'Newest message',
-    posterRole: CtatDiscussionPoster.ADMIN,
-    createdBy: 'admin',
+    content: 'Oldest message',
+    posterRole: CtatDiscussionPoster.REQUESTER,
+    createdBy: 'Luke',
     createdByUserAccount: {
       __typename: 'UserAccount',
-      givenName: 'Jane',
-      familyName: 'Smith'
+      givenName: 'Luke',
+      familyName: 'Skywalker'
     },
-    createdDts: DateTime.local().minus({ days: 1 }).toISO() ?? ''
+    createdDts: DateTime.local().minus({ days: 3 }).toISO() ?? ''
   },
   {
     __typename: 'CTATDiscussion',
@@ -47,17 +47,17 @@ const discussions: GetCtatDiscussionsQuery['discussions'] = [
   },
   {
     __typename: 'CTATDiscussion',
-    id: '1',
+    id: '3',
     ticketID: 'ticket',
-    content: 'Oldest message',
-    posterRole: CtatDiscussionPoster.REQUESTER,
-    createdBy: 'Luke',
+    content: 'Newest message',
+    posterRole: CtatDiscussionPoster.ADMIN,
+    createdBy: 'admin',
     createdByUserAccount: {
       __typename: 'UserAccount',
-      givenName: 'Luke',
-      familyName: 'Skywalker'
+      givenName: 'Jane',
+      familyName: 'Smith'
     },
-    createdDts: DateTime.local().minus({ days: 3 }).toISO() ?? ''
+    createdDts: DateTime.local().minus({ days: 1 }).toISO() ?? ''
   }
 ];
 

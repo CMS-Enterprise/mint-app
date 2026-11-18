@@ -62,11 +62,9 @@ const CtatDiscussionContent = ({
 
   const discussionLabel = t('ctatViewPanel.discussionHeading');
   const messageCount = discussions.length;
-  // The discussion query returns newest first, including a stable ID tie break.
-  const chronologicalDiscussions = [...discussions].reverse();
   const visibleDiscussions = showEarlierMessages
-    ? chronologicalDiscussions
-    : chronologicalDiscussions.slice(-2);
+    ? discussions
+    : discussions.slice(-2);
 
   const submitMessage = handleSubmit(async ({ content }) => {
     try {

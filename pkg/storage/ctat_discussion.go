@@ -17,6 +17,7 @@ func CTATDiscussionCreate(np sqlutils.NamedPreparer, discussion *models.CTATDisc
 		createdDts = &discussion.CreatedDts
 	}
 
+	// we use an args map here to allow a seeder/test to set a custom insert time for testing order, specifically in the UI
 	args := map[string]any{
 		"ticket_id":   discussion.TicketID,
 		"content":     discussion.Content,
@@ -24,6 +25,7 @@ func CTATDiscussionCreate(np sqlutils.NamedPreparer, discussion *models.CTATDisc
 		"created_by":  discussion.CreatedBy,
 		"created_dts": createdDts,
 	}
+
 	return sqlutils.GetProcedure[models.CTATDiscussion](np, sqlqueries.CTATDiscussion.Create, args)
 }
 

@@ -169,7 +169,7 @@ const CtatTicketDetails = ({
 
   const isClosed = ticket.status === CtatStatus.CLOSED;
 
-  const latestDiscussion = discussions[0];
+  const latestDiscussion = discussions.at(-1);
   const latestDate = latestDiscussion
     ? formatCTATDiscussionRelativeDate(latestDiscussion.createdDts)
     : '';

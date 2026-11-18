@@ -390,8 +390,12 @@ func (suite *ResolverSuite) TestCTATDiscussionsByTicket() {
 	posts, err := discussions(ctx, ticketA.ID)
 	suite.Require().NoError(err)
 	suite.Require().Len(posts, 2)
-	suite.Equal(second.ID, posts[0].ID)
-	suite.Equal(first.ID, posts[1].ID)
+	suite.ElementsMatch([]uuid.UUID{first.ID, second.ID}, []uuid.UUID{posts[0].ID, posts[1].ID})
+	suite.True(
+		posts[0].CreatedDts.Before(posts[1].CreatedDts) ||
+			(posts[0].CreatedDts.Equal(posts[1].CreatedDts) && posts[0].ID.String() < posts[1].ID.String()),
+		"CTAT discussions should be ordered oldest first, then by ID",
+	)
 
 	otherPosts, err := discussions(ctx, ticketB.ID)
 	suite.Require().NoError(err)
