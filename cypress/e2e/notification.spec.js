@@ -299,7 +299,7 @@ describe('Notification Center', () => {
         .type('Cypress Model Plan')
         .should('have.value', 'Cypress Model Plan');
 
-      cy.contains('button', 'Next').click();
+      cy.contains('button', 'Create model').click();
       cy.url().should('include', '/collaboration-area/collaborators');
 
       openNotifications();

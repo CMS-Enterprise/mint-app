@@ -19,7 +19,7 @@ describe('The Model Plan Form', () => {
       .type('My New Model Plan')
       .should('have.value', 'My New Model Plan');
 
-    cy.contains('button', 'Next').click();
+    cy.contains('button', 'Create model').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(

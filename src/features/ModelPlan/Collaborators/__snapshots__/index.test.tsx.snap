@@ -60,7 +60,7 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
           <div
             class="font-body-md margin-bottom-4"
           >
-            Add any team members who will be collaborating on your Model Plan. You can edit this list at any time.
+            Add any team members who will be collaborating on your model. You can edit this list at any time.
           </div>
           <h4
             class="margin-bottom-1 margin-top-4"
@@ -292,26 +292,14 @@ exports[`Collaborator/Team Member page w/table > matches snapshot 1`] = `
               Requests table reset to default sort order
             </div>
           </div>
-          <div
-            class="margin-top-5 display-block"
+          <a
+            class="margin-top-5 usa-button usa-button--outline"
+            data-discover="true"
+            data-testid="continue-to-collaboration-area"
+            href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
           >
-            <a
-              class="usa-button usa-button--outline"
-              data-discover="true"
-              data-testid="button--back"
-              href="/models/new-plan"
-            >
-              Back
-            </a>
-            <a
-              class="usa-button usa-button--outline"
-              data-discover="true"
-              data-testid="continue-to-collaboration-area"
-              href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/collaboration-area"
-            >
-              Continue to model collaboration area
-            </a>
-          </div>
+            Continue to model collaboration area
+          </a>
         </div>
       </div>
     </div>
