@@ -603,6 +603,36 @@ const contractAssistanceMisc = {
     }
   },
 
+  ctatDiscussionPanel: {
+    backToTicketDetails: 'Back to ticket details',
+    ticketNumber: 'Ticket {{ticketNumber}}',
+    showingRecentMessages: 'Showing the most recent 2 messages',
+    showingAllMessages: 'Showing all messages',
+    showEarlierMessages: 'Show earlier messages',
+    hideEarlierMessages: 'Hide earlier messages',
+    adminRole: 'CTAT Admin',
+    requesterRole: 'Requester',
+    addMessage: 'Add a message',
+    requiredFields: 'All fields marked with <s>*</s> are required.',
+    messageLabel: 'Type your message',
+    messageHint:
+      'This message will only be visible to the original ticket requester and the CTAT Admin team.',
+    cancelMessage: 'Cancel',
+    saveMessage: 'Save message',
+    saveMessageSuccess:
+      'You added a message to the discussion for a contract assistance ticket (<bold>{{ticketNumber}}</bold>).',
+    saveMessageError:
+      'There was an error adding your message. Please try again. If the error persists, please try again another time.',
+    leaveConfirm: {
+      heading: 'Are you sure you want to leave?',
+      description: 'Any unsent message content will be lost.',
+      confirm: 'Leave discussion',
+      dontLeave: "Don't leave"
+    },
+    empty:
+      'There are not yet any messages about this ticket. Add a message to start a discussion.'
+  },
+
   ctatViewPanel: {
     submittedOn: 'Submitted on {{date}}',
     progressHeading: 'Ticket progress and resolution',
