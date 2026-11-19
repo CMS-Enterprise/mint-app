@@ -24,6 +24,12 @@ import { getCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
 import CtatTicketPanel from './index';
 
+const statusAlert = vi.hoisted(() => vi.fn());
+vi.mock('contexts/ErrorContext', async importOriginal => ({
+  ...(await importOriginal<typeof import('contexts/ErrorContext')>()),
+  statusAlert
+}));
+
 const ticketId = '550e8400-e29b-41d4-a716-446655440000';
 const baseTicket = {
   __typename: 'CTATRequest' as const,
@@ -204,6 +210,10 @@ const renderPanel = (
 };
 
 describe('CtatTicketPanel', () => {
+  beforeEach(() => {
+    statusAlert.mockClear();
+  });
+
   it('confirms before discarding a message with Cancel', async () => {
     const { user } = renderPanel([openTicketMock], {
       initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
@@ -385,6 +395,39 @@ describe('CtatTicketPanel', () => {
       expect(getCurrentErrorMeta().overrideMessage).toBeUndefined()
     );
     expect(input).toHaveValue('Keep this draft');
+    expect(statusAlert).not.toHaveBeenCalled();
+  });
+
+  it('shows the fallback error and keeps the draft when the save request fails', async () => {
+    const { user } = renderPanel([openTicketMock], {
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`,
+      additionalMocks: [
+        {
+          request: {
+            query: CreateCtatDiscussionDocument,
+            variables: {
+              input: { ticketID: ticketId, content: 'Keep this draft' }
+            }
+          },
+          error: new Error('Network failure')
+        }
+      ]
+    });
+
+    const input = await screen.findByRole('textbox', {
+      name: /Type your message/
+    });
+    await user.type(input, 'Keep this draft');
+    await user.click(screen.getByRole('button', { name: 'Save message' }));
+
+    await waitFor(() => expect(statusAlert).toHaveBeenCalledTimes(1));
+    expect(statusAlert).toHaveBeenCalledWith({
+      type: 'error',
+      message:
+        'There was an error adding your message. Please try again. If the error persists, please try again another time.'
+    });
+    expect(input).toHaveValue('Keep this draft');
+    expect(getCurrentErrorMeta().overrideMessage).toBeUndefined();
   });
 
   it('does not offer the message form for a closed ticket', async () => {

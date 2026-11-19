@@ -24,7 +24,7 @@ type CtatDiscussionContentProps = {
   discussionsLoading: boolean;
   discussionsError?: Error;
   isClosed: boolean;
-  onSaveMessage: (content: string) => Promise<void>;
+  onSaveMessage: (content: string) => Promise<boolean>;
   onCancelMessage: () => void;
   onDraftChange?: (hasDraft: boolean) => void;
 };
@@ -67,8 +67,7 @@ const CtatDiscussionContent = ({
     : discussions.slice(-2);
 
   const submitMessage = handleSubmit(async ({ content }) => {
-    try {
-      await onSaveMessage(content.trim());
+    if (await onSaveMessage(content.trim())) {
       reset();
       toastSuccess(
         <Trans
@@ -77,8 +76,6 @@ const CtatDiscussionContent = ({
           components={{ bold: <strong /> }}
         />
       );
-    } catch {
-      // The parent shows the save error; keep the draft for another attempt.
     }
   });
 

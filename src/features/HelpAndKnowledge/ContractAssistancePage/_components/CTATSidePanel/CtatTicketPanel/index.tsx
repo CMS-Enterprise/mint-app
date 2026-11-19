@@ -78,12 +78,13 @@ const CtatTicketPanel = ({
   });
   const discussions = discussionData?.discussions ?? [];
   const [createDiscussion] = useCreateCtatDiscussionMutation({
+    errorPolicy: 'all',
     refetchQueries: [
       { query: GetCtatDiscussions, variables: { ticketID: ticketId } }
     ]
   });
 
-  const saveMessage = async (content: string) => {
+  const saveMessage = async (content: string): Promise<boolean> => {
     const errorMessage = contractAssistanceMiscT(
       'ctatDiscussionPanel.saveMessageError'
     );
@@ -93,27 +94,23 @@ const CtatTicketPanel = ({
         message: errorMessage
       })
     });
-    let response: Awaited<ReturnType<typeof createDiscussion>>;
     try {
-      response = await createDiscussion({
+      const response = await createDiscussion({
         variables: { input: { ticketID: ticketId, content } }
       });
-    } catch (mutationError) {
-      // GraphQL errors are shown by the global error link.
-      if (
-        !(mutationError as { graphQLErrors?: unknown[] })?.graphQLErrors?.length
-      ) {
-        statusAlert({ type: 'error', message: errorMessage });
+      if (response.errors?.length) {
+        return false;
       }
-      throw mutationError;
+      if (!response.data?.createDiscussion) {
+        statusAlert({ type: 'error', message: errorMessage });
+        return false;
+      }
+      return true;
+    } catch {
+      statusAlert({ type: 'error', message: errorMessage });
+      return false;
     } finally {
       setCurrentErrorMeta({});
-    }
-    if (!response.data?.createDiscussion) {
-      if (!response.errors?.length) {
-        statusAlert({ type: 'error', message: errorMessage });
-      }
-      throw new Error('CTAT discussion was not created');
     }
   };
 

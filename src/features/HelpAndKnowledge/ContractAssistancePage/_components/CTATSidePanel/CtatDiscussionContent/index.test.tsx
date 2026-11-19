@@ -13,7 +13,7 @@ import CtatDiscussionContent from './index';
 const toastSuccess = vi.hoisted(() => vi.fn());
 vi.mock('components/ToastSuccess', () => ({ default: toastSuccess }));
 
-const saveMessage = vi.fn(async () => {});
+const saveMessage = vi.fn(async () => true);
 const cancelMessage = vi.fn();
 
 const discussions: GetCtatDiscussionsQuery['discussions'] = [
@@ -237,9 +237,7 @@ describe('CtatDiscussionContent', () => {
   });
 
   it('keeps the draft when saving fails', async () => {
-    const failingSave = vi.fn(async () => {
-      throw new Error('Save failed');
-    });
+    const failingSave = vi.fn(async () => false);
     const { user } = setup(
       <CtatDiscussionContent
         ticketNumber="CTAT-001"
