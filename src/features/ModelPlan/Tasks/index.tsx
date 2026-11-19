@@ -105,8 +105,11 @@ const Tasks = () => {
     return task ? [task] : [];
   });
 
-  const upcomingTasks = tasks.filter(
-    task => task.state === PlanTaskState.UPCOMING
+  // The API returns upcoming tasks newest-first; Approved ICIP always goes last in this tab
+  const upcomingTasks = orderBy(
+    tasks.filter(task => task.state === PlanTaskState.UPCOMING),
+    task => task.key === PlanTaskKey.APPROVED_ICIP,
+    'asc'
   );
 
   const completedTasks = tasks.filter(

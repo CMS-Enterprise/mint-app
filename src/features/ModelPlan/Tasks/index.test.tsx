@@ -173,6 +173,35 @@ describe('Tasks page', () => {
     expect(screen.getByText('Upload OA presentation')).toBeInTheDocument();
   });
 
+  it('lists Approved ICIP last on the Upcoming tab even when the API returns it first', async () => {
+    const icipTask: PlanTaskEntry = {
+      __typename: 'PlanTask',
+      id: 'approved_icip-task-id',
+      key: PlanTaskKey.APPROVED_ICIP,
+      state: PlanTaskState.UPCOMING,
+      status: PlanTaskStatus.TO_DO,
+      documents: [],
+      completedDts: null
+    };
+
+    const { container } = renderWithMock(
+      [icipTask, ...planTasksAllToDo],
+      'upcoming'
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
+    });
+
+    const headings = getCardHeadings(container);
+    expect(headings).toHaveLength(4);
+    expect(headings.slice(0, 3)).toEqual([
+      'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      'Prepare for your presentation to the Office of the Administrator (OA)',
+      'Prepare for clearance'
+    ]);
+  });
+
   it('moves activated 6-pager and OA presentation cards onto Current', async () => {
     const activatedLaterTasks = makePlanTasks({
       [PlanTaskKey.SIX_PAGER]: {
