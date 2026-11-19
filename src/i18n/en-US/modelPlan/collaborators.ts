@@ -87,10 +87,10 @@ export const collaboratorsMisc: Record<string, string | NestedTranslation> = {
     'This person is already a member of your model team. Please select a different person to add to your team.',
   headingTeamMembers: 'Add model team members',
   teamMemberInfo:
-    'Add any team members who will be collaborating on your Model Plan. You can edit this list at any time.',
+    'Add any team members who will be collaborating on your model. You can edit this list at any time.',
   addTeamMembers: 'Add model team members',
   addTeamMembersInfo:
-    'Add any team members who will be collaborating on your Model Plan.  You can edit this list at any time.',
+    'Add any team members who will be collaborating on your model. You can edit this list at any time.',
   teamMembers: 'Team members',
   table: {
     name: 'Name',
