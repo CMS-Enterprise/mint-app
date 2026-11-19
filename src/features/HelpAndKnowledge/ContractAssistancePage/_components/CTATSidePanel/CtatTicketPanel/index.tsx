@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useBlocker, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
@@ -18,6 +18,7 @@ import PageLoading from 'components/PageLoading';
 import Sidepanel from 'components/Sidepanel';
 import { getStatusAlertBody, statusAlert } from 'contexts/ErrorContext';
 import { setCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
+import useConfirmPageLeave from 'hooks/useConfirmPageLeave';
 
 import CtatDiscussionContent from '../CtatDiscussionContent';
 import CtatTicketDetails from '../CtatTicketDetails';
@@ -49,7 +50,15 @@ const CtatTicketPanel = ({
   const [discussionNavigationPending, setDiscussionNavigationPending] =
     useState(false);
   const [hasDiscussionDraft, setHasDiscussionDraft] = useState(false);
-  const [leaveDiscussion, setLeaveDiscussion] = useState(false);
+
+  const discussionBlocker = useBlocker(
+    ({ currentLocation, nextLocation }) =>
+      isDiscussionView &&
+      hasDiscussionDraft &&
+      (currentLocation.pathname !== nextLocation.pathname ||
+        currentLocation.search !== nextLocation.search)
+  );
+  useConfirmPageLeave(isDiscussionView && hasDiscussionDraft);
 
   const requesterResult = useGetCtatRequestQuery({
     variables: { id: ticketId },
@@ -116,10 +125,6 @@ const CtatTicketPanel = ({
 
   const closePanel = useCallback(() => {
     if (isDiscussionView) {
-      if (hasDiscussionDraft) {
-        setLeaveDiscussion(true);
-        return;
-      }
       navigate(
         `/help-and-knowledge/contract-assistance/${ticketId}${location.search}`,
         { replace: true }
@@ -132,7 +137,6 @@ const CtatTicketPanel = ({
     }
   }, [
     closeModal,
-    hasDiscussionDraft,
     isAdmin,
     isDirty,
     isDiscussionView,
@@ -263,8 +267,8 @@ const CtatTicketPanel = ({
       </Sidepanel>
 
       <Modal
-        isOpen={leaveDiscussion && isDiscussionView}
-        closeModal={() => setLeaveDiscussion(false)}
+        isOpen={discussionBlocker.state === 'blocked' && isDiscussionView}
+        closeModal={() => discussionBlocker.reset?.()}
         className="confirmation-modal"
         zTop
       >
@@ -285,12 +289,7 @@ const CtatTicketPanel = ({
           type="button"
           className="margin-right-4"
           onClick={() => {
-            setLeaveDiscussion(false);
-            setHasDiscussionDraft(false);
-            navigate(
-              `/help-and-knowledge/contract-assistance/${ticketId}${location.search}`,
-              { replace: true }
-            );
+            discussionBlocker.proceed?.();
           }}
         >
           {contractAssistanceMiscT('ctatDiscussionPanel.leaveConfirm.confirm')}
@@ -299,7 +298,7 @@ const CtatTicketPanel = ({
         <Button
           type="button"
           unstyled
-          onClick={() => setLeaveDiscussion(false)}
+          onClick={() => discussionBlocker.reset?.()}
         >
           {contractAssistanceMiscT(
             'ctatDiscussionPanel.leaveConfirm.dontLeave'

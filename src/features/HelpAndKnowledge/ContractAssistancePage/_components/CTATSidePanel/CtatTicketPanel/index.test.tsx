@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMemoryRouter, RouterProvider, useMatch } from 'react-router-dom';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import {
   AdminUpdateCtatRequestDocument,
   CreateCtatDiscussionDocument,
@@ -165,13 +165,15 @@ const renderPanel = (
     closeModal = vi.fn(),
     discussionsMock = emptyDiscussionsMock,
     additionalMocks = [],
-    initialEntry = `/help-and-knowledge/contract-assistance/${ticketId}`
+    initialEntry = `/help-and-knowledge/contract-assistance/${ticketId}`,
+    initialEntries = [initialEntry]
   }: {
     isAdmin?: boolean;
     closeModal?: () => void;
     discussionsMock?: MockedResponse;
     additionalMocks?: MockedResponse[];
     initialEntry?: string;
+    initialEntries?: string[];
   } = {}
 ) => {
   const PanelOnRoute = () => {
@@ -198,15 +200,16 @@ const renderPanel = (
       }
     ],
     {
-      initialEntries: [initialEntry]
+      initialEntries
     }
   );
 
-  return setup(
+  const result = setup(
     <MockedProvider mocks={[...mocks, discussionsMock, ...additionalMocks]}>
       <RouterProvider router={router} />
     </MockedProvider>
   );
+  return { ...result, router };
 };
 
 describe('CtatTicketPanel', () => {
@@ -260,6 +263,64 @@ describe('CtatTicketPanel', () => {
     await user.click(screen.getByRole('button', { name: "Don't leave" }));
     expect(input).toHaveValue('An unsent reply');
     expect(screen.getByTestId('ctat-discussion-sidepanel')).toBeInTheDocument();
+  });
+
+  it('confirms browser Back and preserves the draft when the user stays', async () => {
+    const ticketPath = `/help-and-knowledge/contract-assistance/${ticketId}`;
+    const { router, user } = renderPanel([openTicketMock], {
+      initialEntries: [ticketPath, `${ticketPath}/discussion`]
+    });
+
+    const input = await screen.findByRole('textbox', {
+      name: /Type your message/
+    });
+    await user.type(input, 'An unsent reply');
+
+    act(() => {
+      router.navigate(-1);
+    });
+    expect(
+      await screen.findByText('Are you sure you want to leave?')
+    ).toBeVisible();
+    expect(router.state.location.pathname).toBe(`${ticketPath}/discussion`);
+
+    await user.click(screen.getByRole('button', { name: "Don't leave" }));
+    expect(input).toHaveValue('An unsent reply');
+    expect(router.state.location.pathname).toBe(`${ticketPath}/discussion`);
+
+    act(() => {
+      router.navigate(-1);
+    });
+    await user.click(screen.getByRole('button', { name: 'Leave discussion' }));
+    expect(
+      await screen.findByTestId('ctat-ticket-view-sidepanel')
+    ).toBeInTheDocument();
+    expect(router.state.location.pathname).toBe(ticketPath);
+  });
+
+  it('prompts on page unload only while a discussion draft exists', async () => {
+    const { user } = renderPanel([openTicketMock], {
+      initialEntry: `/help-and-knowledge/contract-assistance/${ticketId}/discussion`
+    });
+
+    const unloadMessage = () => {
+      const event = new Event('beforeunload') as BeforeUnloadEvent;
+      Object.defineProperty(event, 'returnValue', {
+        value: '',
+        writable: true
+      });
+      window.dispatchEvent(event);
+      return event.returnValue;
+    };
+
+    const input = await screen.findByRole('textbox', {
+      name: /Type your message/
+    });
+    expect(unloadMessage()).toBe('');
+    await user.type(input, 'An unsent reply');
+    expect(unloadMessage()).not.toBe('');
+    await user.clear(input);
+    expect(unloadMessage()).toBe('');
   });
 
   it('leaves without a warning when the message box is empty', async () => {
