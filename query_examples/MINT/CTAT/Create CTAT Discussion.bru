@@ -20,16 +20,6 @@ body:graphql {
   mutation createDiscussion($input: CTATDiscussionInput!) {
     createDiscussion(input: $input) {
       id
-      ticketID
-      content
-      posterRole
-      createdBy
-      createdByUserAccount {
-        id
-        username
-        commonName
-      }
-      createdDts
     }
   }
 }

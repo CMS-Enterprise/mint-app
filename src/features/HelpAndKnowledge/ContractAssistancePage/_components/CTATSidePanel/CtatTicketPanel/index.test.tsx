@@ -330,7 +330,14 @@ describe('CtatTicketPanel', () => {
             query: CreateCtatDiscussionDocument,
             variables: { input: { ticketID: ticketId, content } }
           },
-          result: { data: { createDiscussion: createdDiscussion } }
+          result: {
+            data: {
+              createDiscussion: {
+                __typename: 'CTATDiscussion',
+                id: createdDiscussion.id
+              }
+            }
+          }
         },
         {
           request: emptyDiscussionsMock.request,
