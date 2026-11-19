@@ -74,10 +74,13 @@ func (suite *ResolverSuite) TestModelPlanUpdateSendsTaskEmailsAfterCommit() {
 
 	controller := gomock.NewController(suite.T())
 	emailService := oddmail.NewMockEmailService(controller)
-	sent := make(chan struct{}, 2)
+	// MODEL_PLAN and DATA_EXCHANGE completed emails, plus the APPROVED_ICIP new-task-available email
+	// (UPCOMING -> TO_DO once the model reaches CLEARED).
+	const expectedEmails = 3
+	sent := make(chan struct{}, expectedEmails)
 	emailService.EXPECT().GetConfig().DoAndReturn(func() oddmail.EmailServiceConfig {
 		// GetConfig runs before the email goroutine starts. Reading through the store here
-		// verifies that the model and both tasks are committed before email preparation.
+		// verifies that the model and the completed tasks are committed before email preparation.
 		committedPlan, err := storage.ModelPlanGetByID(store, logger, plan.ID)
 		suite.Require().NoError(err)
 		suite.Require().NotNil(committedPlan)
@@ -89,20 +92,20 @@ func (suite *ResolverSuite) TestModelPlanUpdateSendsTaskEmailsAfterCommit() {
 			suite.Require().Equal(models.PlanTaskStateComplete, task.State)
 		}
 		return &oddmail.GoSimpleMailServiceConfig{ClientAddress: "http://localhost:3005"}
-	}).Times(2)
+	}).Times(expectedEmails)
 	emailService.EXPECT().Send(
 		"unit-test-execution@mint.cms.gov",
 		gomock.Nil(), gomock.Nil(), gomock.Any(), "text/html", gomock.Any(), gomock.Any(),
 	).DoAndReturn(func(_ string, _, _ *string, _, _ string, _ string, _ ...oddmail.EmailOption) error {
 		sent <- struct{}{}
 		return nil
-	}).Times(2)
+	}).Times(expectedEmails)
 
 	addressBook := email.AddressBook{DefaultSender: "unit-test-execution@mint.cms.gov"}
 	changes := map[string]interface{}{"status": models.ModelStatusCleared}
 	_, err := ModelPlanUpdate(suite.testConfigs.Context, logger, plan.ID, changes, suite.testConfigs.Principal, store, emailService, addressBook)
 	suite.Require().NoError(err)
-	for range 2 {
+	for range expectedEmails {
 		select {
 		case <-sent:
 		case <-time.After(2 * time.Second):
