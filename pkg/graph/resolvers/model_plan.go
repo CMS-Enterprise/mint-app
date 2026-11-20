@@ -394,6 +394,17 @@ func ModelPlanUpdate(
 			taskUpdates = append(taskUpdates, updates...)
 		}
 
+		// Plan tasks: APPROVED_ICIP availability depends on the model status
+		if oldStatus != retPlan.Status {
+			update, updErr := UpdatePlanTaskStateOnApprovedIcipSync(ctx, tx, logger, retPlan.ID, principal)
+			if updErr != nil {
+				return nil, updErr
+			}
+			if update != nil {
+				taskUpdates = append(taskUpdates, update)
+			}
+		}
+
 		return retPlan, err
 	})
 	if err != nil {
