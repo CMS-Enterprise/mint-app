@@ -603,6 +603,36 @@ const contractAssistanceMisc = {
     }
   },
 
+  ctatDiscussionPanel: {
+    backToTicketDetails: 'Back to ticket details',
+    ticketNumber: 'Ticket {{ticketNumber}}',
+    showingRecentMessages: 'Showing the most recent 2 messages',
+    showingAllMessages: 'Showing all messages',
+    showEarlierMessages: 'Show earlier messages',
+    hideEarlierMessages: 'Hide earlier messages',
+    adminRole: 'CTAT Admin',
+    requesterRole: 'Requester',
+    addMessage: 'Add a message',
+    requiredFields: 'All fields marked with <s>*</s> are required.',
+    messageLabel: 'Type your message',
+    messageHint:
+      'This message will only be visible to the original ticket requester and the CTAT Admin team.',
+    cancelMessage: 'Cancel',
+    saveMessage: 'Save message',
+    saveMessageSuccess:
+      'You added a message to the discussion for a contract assistance ticket (<bold>{{ticketNumber}}</bold>).',
+    saveMessageError:
+      'There was an error adding your message. Please try again. If the error persists, please try again another time.',
+    leaveConfirm: {
+      heading: 'Are you sure you want to leave?',
+      description: 'Any unsent message content will be lost.',
+      confirm: 'Leave discussion',
+      dontLeave: "Don't leave"
+    },
+    empty:
+      'There are not yet any messages about this ticket. Add a message to start a discussion.'
+  },
+
   ctatViewPanel: {
     submittedOn: 'Submitted on {{date}}',
     progressHeading: 'Ticket progress and resolution',
@@ -610,6 +640,16 @@ const contractAssistanceMisc = {
     assignedMember: 'Assigned contract assistance team member',
     uploadedDocuments: 'Uploaded documents',
     viewModelInMint: 'View model in MINT',
+    discussionHeading: 'Discussion',
+    discussionMessageCount_one: '{{count}} message',
+    discussionMessageCount_other: '{{count}} messages',
+    discussionLatestMessage: 'Latest message: {{name}}, {{date}}',
+    discussionLoading: 'Loading discussion…',
+    discussionError: 'Discussion could not be loaded.',
+    discussionEmpty: 'Latest message: No messages yet',
+    discussionClosedNotice:
+      'This ticket is closed. You will not be able to add any additional messages to this discussion, but you may review the existing messages using the link. Please submit a new ticket if you need any additional contract assistance.',
+    goToDiscussion: 'Go to discussion',
     empty: {
       notAssigned: 'Not assigned yet',
       noNotes: 'No notes added',
