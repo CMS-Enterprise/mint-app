@@ -125,9 +125,9 @@ describe('Tasks page', () => {
 
     expect(getCardHeadings(container)).toEqual([
       'Start your Model Plan',
+      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Start your data exchange approach',
       'Complete your waiver assessment survey',
-      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Start your model-to-operations matrix (MTO)'
     ]);
 
@@ -191,12 +191,43 @@ describe('Tasks page', () => {
 
     expect(getCardHeadings(container)).toEqual([
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
-      'Prepare for your presentation to the Office of the Administrator (OA)',
       'Prepare for clearance',
-      'Add approved ICIP'
+      'Add approved ICIP',
+      'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
     expect(screen.getByText('Upload 6-pager')).toBeInTheDocument();
     expect(screen.getByText('Upload OA presentation')).toBeInTheDocument();
+  });
+
+  it('lists Approved ICIP right before OA on the Upcoming tab regardless of API order', async () => {
+    const icipTask: PlanTaskEntry = {
+      __typename: 'PlanTask',
+      id: 'approved_icip-task-id',
+      key: PlanTaskKey.APPROVED_ICIP,
+      state: PlanTaskState.UPCOMING,
+      status: PlanTaskStatus.TO_DO,
+      documents: [],
+      completedDts: null
+    };
+
+    const { container } = renderWithMock(
+      [icipTask, ...planTasksAllToDo],
+      'upcoming'
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
+    });
+
+    const headings = getCardHeadings(container);
+    expect(headings).toHaveLength(4);
+    expect(headings[0]).toBe(
+      'Prepare for your 6-page review meeting with CMMI Front Office (FO)'
+    );
+    expect(headings[1]).toBe('Prepare for clearance');
+    expect(headings[3]).toBe(
+      'Prepare for your presentation to the Office of the Administrator (OA)'
+    );
   });
 
   it('moves activated 6-pager and OA presentation cards onto Current', async () => {
@@ -221,16 +252,16 @@ describe('Tasks page', () => {
 
     expect(getCardHeadings(container)).toEqual([
       'Start your Model Plan',
-      'Start your data exchange approach',
-      'Complete your waiver assessment survey',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      'Start your data exchange approach',
+      'Complete your waiver assessment survey',
       'Start your model-to-operations matrix (MTO)',
       'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
   });
 
-  it('orders completed tasks newest-to-oldest by completedDts', async () => {
+  it('orders completed tasks by the fixed task order', async () => {
     const { container } = renderWithMock(completeAllTasks(), 'completed');
 
     await waitFor(() => {
@@ -238,15 +269,15 @@ describe('Tasks page', () => {
     });
 
     expect(getCardHeadings(container)).toEqual([
-      'Add approved ICIP',
-      'Prepare for clearance',
-      'Prepare for your presentation to the Office of the Administrator (OA)',
-      'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      'Iterate on your Model Plan',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
-      'Complete your waiver assessment survey',
+      'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'Finalize your data exchange approach',
+      'Complete your waiver assessment survey',
       'Keep your model-to-operations matrix (MTO) up-to-date',
-      'Iterate on your Model Plan'
+      'Prepare for clearance',
+      'Add approved ICIP',
+      'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
   });
 
