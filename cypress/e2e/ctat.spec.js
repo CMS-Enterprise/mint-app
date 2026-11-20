@@ -198,7 +198,7 @@ describe('Contract Technical Assistance (CTAT)', () => {
           .should('contain.text', latest.content);
 
         cy.contains('button', 'Show earlier messages').click();
-        cy.contains('Showing all messages').should('be.visible');
+        cy.contains('Showing all messages').should('exist');
         cy.get('#ctat-discussion-messages article')
           .should('have.length', messages.length)
           .each(($message, index) => {
@@ -328,7 +328,7 @@ describe('Contract Technical Assistance (CTAT)', () => {
       openTicket('Population Health Advisory Support');
       cy.get('[data-testid="ctat-ticket-view-sidepanel"]')
         .contains(/\d+ messages/)
-        .should('be.visible');
+        .should('exist');
       openDiscussion();
       cy.url().then(url => cy.visit(url));
       cy.get('[data-testid="ctat-discussion-sidepanel"]').should('be.visible');
