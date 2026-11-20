@@ -124,9 +124,11 @@ describe('Contract Technical Assistance (CTAT)', () => {
       openDiscussion();
       cy.url().should('match', /\/contract-assistance\/[^/]+\/discussion$/);
       cy.url().then(url => cy.visit(url));
-      cy.get('[data-testid="ctat-discussion-sidepanel"]')
-        .contains(`Ticket ${createdTicketId}`)
-        .should('be.visible');
+      cy.then(() => {
+        cy.get('[data-testid="ctat-discussion-sidepanel"]')
+          .contains(`Ticket ${createdTicketId}`)
+          .should('be.visible');
+      });
       cy.contains(
         'There are not yet any messages about this ticket. Add a message to start a discussion.'
       ).should('be.visible');
@@ -319,6 +321,10 @@ describe('Contract Technical Assistance (CTAT)', () => {
     });
 
     it('opens a discussion directly and posts as a CTAT admin', () => {
+      cy.contains('h2', 'Admin ticket management')
+        .closest('.admin-section')
+        .find('[data-testid="table-page-size"]')
+        .select('25');
       openTicket('Population Health Advisory Support');
       cy.get('[data-testid="ctat-ticket-view-sidepanel"]')
         .contains(/\d+ messages/)
