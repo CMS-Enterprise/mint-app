@@ -66,14 +66,6 @@ func TestPlanTaskKeyChangeHistoryDisplayName(t *testing.T) {
 	assert.Equal(t, PlanTaskKey("NOT_A_REAL_KEY").DisplayName(), PlanTaskKey("NOT_A_REAL_KEY").ChangeHistoryDisplayName())
 }
 
-func TestApprovedIcipApplies(t *testing.T) {
-	assert.True(t, ApprovedIcipApplies([]string{"MEDICARE_FFS_MODEL"}))
-	assert.True(t, ApprovedIcipApplies([]string{"PART_C", "MEDICARE_FFS_MODEL"}))
-	assert.False(t, ApprovedIcipApplies([]string{"PART_C", "MEDICAID_MODEL"}))
-	assert.False(t, ApprovedIcipApplies([]string{}))
-	assert.False(t, ApprovedIcipApplies(nil))
-}
-
 func TestApprovedIcipStateForModelStatus(t *testing.T) {
 	for _, status := range []ModelStatus{ModelStatusPlanDraft, ModelStatusPlanComplete, ModelStatusIcipComplete} {
 		state, ok := ApprovedIcipStateForModelStatus(status)
@@ -102,10 +94,10 @@ func TestApprovedIcipStateForModelStatus(t *testing.T) {
 	}
 }
 
-func TestDefaultPlanTasksSeedsApprovedIcipNotNeeded(t *testing.T) {
+func TestDefaultPlanTasksSeedsApprovedIcipUpcoming(t *testing.T) {
 	for _, task := range DefaultPlanTasks {
 		if task.Key == PlanTaskKeyApprovedIcip {
-			assert.Equal(t, PlanTaskStateNotNeeded, task.State)
+			assert.Equal(t, PlanTaskStateUpcoming, task.State)
 			return
 		}
 	}

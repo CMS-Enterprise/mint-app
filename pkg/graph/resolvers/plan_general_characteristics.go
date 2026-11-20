@@ -29,8 +29,8 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 		}
 	}
 
-	// The section update and the APPROVED_ICIP task recalculation share a transaction so the task
-	// can never disagree with the saved key characteristics.
+	// The pre-update, save, and post-update calls share a transaction so a failed save can never
+	// leave the model plan task advanced or the edit partially committed.
 	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanGeneralCharacteristics, error) {
 		// Get existing plan general characteristics
 		existing, err := storage.PlanGeneralCharacteristicsGetByID(tx, logger, id)
@@ -58,15 +58,6 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 			email.AddressBook{},
 		); err != nil {
 			return nil, err
-		}
-
-		// Plan tasks: APPROVED_ICIP only applies to models with a specific key characteristic. This
-		// path has no email service, so a task that becomes available here only gets the in-app
-		// notification.
-		if _, ok := changes["keyCharacteristics"]; ok {
-			if _, err := UpdatePlanTaskStateOnApprovedIcipSync(context.Background(), tx, logger, existing.ModelPlanID, principal); err != nil {
-				return nil, err
-			}
 		}
 
 		return retGeneralCharacteristics, nil
