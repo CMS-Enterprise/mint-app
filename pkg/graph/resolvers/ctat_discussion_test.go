@@ -336,6 +336,39 @@ func (suite *ResolverSuite) TestCreateCTATDiscussionRejectsClosedTicket() {
 	suite.Empty(stored)
 }
 
+func (suite *ResolverSuite) TestCreateCTATDiscussionRejectsBlankContent() {
+	requester := suite.testConfigs.Principal
+	ticket := suite.createTestCTATRequest(
+		requester.Account().ID,
+		time.Now().Add(24*time.Hour),
+		"Blank discussion content",
+		[]models.CTATHelpNeededType{models.CTATHelpNeededTypeRequestForInformationRFI},
+		models.CTATStatusNew,
+	)
+	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, requester)
+
+	for _, testCase := range []struct {
+		name    string
+		content string
+	}{
+		{name: "empty", content: ""},
+		{name: "whitespace only", content: " \t\n\r "},
+	} {
+		suite.Run(testCase.name, func() {
+			created, err := createDiscussion(ctx, suite.testConfigs.Store, nil, email.AddressBook{}, model.CTATDiscussionInput{
+				TicketID: ticket.ID,
+				Content:  testCase.content,
+			})
+			suite.ErrorContains(err, "discussion submission requires non-empty content")
+			suite.Nil(created)
+		})
+	}
+
+	stored, err := storage.CTATDiscussionByTicketID(suite.testConfigs.Store, []uuid.UUID{ticket.ID})
+	suite.Require().NoError(err)
+	suite.Empty(stored)
+}
+
 func (suite *ResolverSuite) TestCreateCTATDiscussionRequiresExistingTicketAndPrincipal() {
 	input := model.CTATDiscussionInput{TicketID: uuid.New(), Content: "No ticket"}
 	ctx := appcontext.WithPrincipal(suite.testConfigs.Context, suite.testConfigs.Principal)

@@ -6,7 +6,8 @@ CREATE TABLE IF NOT EXISTS ctat_discussion (
     created_by UUID NOT NULL REFERENCES user_account(id),
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by UUID REFERENCES user_account(id),
-    modified_dts TIMESTAMP WITH TIME ZONE
+    modified_dts TIMESTAMP WITH TIME ZONE,
+    CONSTRAINT ctat_discussion_content_nonblank CHECK (content ~ '[^[:space:]]') -- explicitly reject whitespace-only content fields
 );
 
 -- index by ticket for bulk retrievals by ticket id

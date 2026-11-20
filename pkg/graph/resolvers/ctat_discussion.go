@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -51,6 +52,13 @@ func createDiscussion(
 	addressBook email.AddressBook,
 	input model.CTATDiscussionInput,
 ) (*models.CTATDiscussion, error) {
+
+	// clean up input, reject empty trimmed string. UI prevents this, but we can also check it here in case of a direct API call
+	input.Content = strings.TrimSpace(input.Content)
+	if len(input.Content) < 1 {
+		return nil, errors.New("discussion submission requires non-empty content")
+	}
+
 	principal := appcontext.Principal(ctx)
 	principalAcct := principal.Account()
 	if principalAcct == nil {
