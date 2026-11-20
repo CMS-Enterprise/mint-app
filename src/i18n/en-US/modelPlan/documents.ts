@@ -62,6 +62,7 @@ export const documents: TranslationDocuments = {
       CONCEPT_PAPER: 'Concept Paper',
       DESIGN_PARAMETERS_MEMO: 'Design Parameter Memo',
       ICIP_DRAFT: 'ICIP Draft',
+      FINAL_ICIP: 'Final ICIP',
       MARKET_RESEARCH: 'Market Research',
       OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION:
         'Office of the Administrator Presentation',
@@ -210,6 +211,7 @@ export const documentsMisc = {
     designParamMemo: 'Design Parameter Memo',
     policy: 'Policy Paper',
     icipDraft: 'ICIP Draft',
+    finalIcip: 'Final ICIP',
     marketResearch: 'Market Research',
     adminOfficePresentation: 'Office of the Administrator Presentation',
     other: 'Other'

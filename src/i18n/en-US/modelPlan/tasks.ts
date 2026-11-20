@@ -36,6 +36,16 @@ const tasks = {
   },
   markComplete: 'Mark this task complete',
   markTodo: 'Mark this task to do',
+  // Defaults used by TaskCard for the mark complete / mark to-do toasts.
+  // A new task does NOT need its own `success` or `error` copy: as long as each state has a
+  // `heading`, the toast reads "<heading> is now complete/to-do." Only add `success`/`error` to a
+  // task state when the toast text should differ from its heading.
+  markCompleteSuccess: '<bold>{{heading}}</bold> is now complete.',
+  markTodoSuccess: '<bold>{{heading}}</bold> is now to-do.',
+  markCompleteError:
+    'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.',
+  markTodoError:
+    'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.',
   [PlanTaskKey.MODEL_PLAN]: {
     copy: 'The Model Plan will help components across CMS evaluate your model’s operational requirements and IT needs. It contains questions about payments, providers, general characteristics, and more. The Model Plan is flexible, so you may leave questions blank, add new information, and change information as you iterate on your model or learn of new dependencies.',
     primaryPath: '/models/{{modelID}}/collaboration-area/model-plan',
@@ -67,18 +77,14 @@ const tasks = {
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
       success:
-        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now complete.',
-      error:
-        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now complete.'
     },
     [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 2-pager',
       success:
-        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.',
-      error:
-        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 2-page review meeting with CMMI Front Office</bold> is now to-do.'
     }
   },
   [PlanTaskKey.SIX_PAGER]: {
@@ -94,27 +100,21 @@ const tasks = {
         'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 6-pager',
       success:
-        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.',
-      error:
-        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.'
     },
     [PlanTaskState.TO_DO]: {
       heading:
         'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 6-pager',
       success:
-        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.',
-      error:
-        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now complete.'
     },
     [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       primaryAction: 'Upload 6-pager',
       success:
-        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now to-do.',
-      error:
-        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+        '<bold>Prepare for your 6-page review meeting with CMMI Front Office</bold> is now to-do.'
     }
   },
   [PlanTaskKey.DATA_EXCHANGE]: {
@@ -167,20 +167,12 @@ const tasks = {
     [PlanTaskState.TO_DO]: {
       heading:
         'Prepare for your presentation to the Office of the Administrator (OA)',
-      primaryAction: 'Upload OA presentation',
-      success:
-        '<bold>Prepare for your presentation to the Office of the Administrator (OA)</bold> is now complete.',
-      error:
-        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+      primaryAction: 'Upload OA presentation'
     },
     [PlanTaskState.COMPLETE]: {
       heading:
         'Prepare for your presentation to the Office of the Administrator (OA)',
-      primaryAction: 'Upload OA presentation',
-      success:
-        '<bold>Prepare for your presentation to the Office of the Administrator (OA)</bold> is now to-do.',
-      error:
-        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+      primaryAction: 'Upload OA presentation'
     }
   },
   [PlanTaskKey.MTO]: {
@@ -223,6 +215,26 @@ const tasks = {
     [PlanTaskState.COMPLETE]: {
       heading: 'Prepare for clearance',
       primaryAction: 'Continue'
+    }
+  },
+  [PlanTaskKey.APPROVED_ICIP]: {
+    copy: "After clearing your model, please add your approved ICIP. When adding your full ICIP with cost estimate details, we suggest uploading it first to the ICIP repository on SharePoint and then adding a link to that SharePoint file within MINT. You can add a link in your model's document section by toggling to 'link to a document' on the add a document screen. This will ensure that the ICIP is stored in one place and that the right people can see it (those with access to the ICIP repository). You may also choose to use MINT to upload a version with cost information removed, so that MINT users can access the rest of the ICIP. If any changes are made during clearance, ensure your Model Plan and any associated documents including your uploaded and linked ICIPs reflect these changes.",
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}',
+    secondaryPath:
+      'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/ICIPs/SitePages/Home.aspx',
+    secondaryAction: 'Upload to ICIP repository on SharePoint',
+    [PlanTaskState.UPCOMING]: {
+      heading: 'Add approved ICIP',
+      primaryAction: 'Add ICIP'
+    },
+    [PlanTaskState.TO_DO]: {
+      heading: 'Add approved ICIP',
+      primaryAction: 'Add ICIP'
+    },
+    [PlanTaskState.COMPLETE]: {
+      heading: 'Add approved ICIP',
+      primaryAction: 'Add ICIP'
     }
   }
 };

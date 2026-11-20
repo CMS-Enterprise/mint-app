@@ -127,7 +127,8 @@ export const isTableWithStatus = (
 const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
-  PlanTaskKey.OA_PRESENTATION
+  PlanTaskKey.OA_PRESENTATION,
+  PlanTaskKey.APPROVED_ICIP
 ];
 
 // The common_name of the MINT system user account (seeded in migrations/V45), used to attribute

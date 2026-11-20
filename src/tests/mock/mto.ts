@@ -75,7 +75,8 @@ const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.OA_PRESENTATION,
-  PlanTaskKey.PREPARE_FOR_CLEARANCE
+  PlanTaskKey.PREPARE_FOR_CLEARANCE,
+  PlanTaskKey.APPROVED_ICIP
 ] as const;
 
 const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
@@ -95,7 +96,8 @@ const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
 const KEYS_DEFAULTING_TO_UPCOMING = new Set<PlanTaskKey>([
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.OA_PRESENTATION,
-  PlanTaskKey.PREPARE_FOR_CLEARANCE
+  PlanTaskKey.PREPARE_FOR_CLEARANCE,
+  PlanTaskKey.APPROVED_ICIP
 ]);
 
 export function makePlanTasks(
