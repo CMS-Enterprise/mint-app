@@ -127,6 +127,7 @@ export const isTableWithStatus = (
 const manuallyMarkablePlanTaskKeys: PlanTaskKey[] = [
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.DRAFT_ICIP,
   PlanTaskKey.OA_PRESENTATION
 ];
 

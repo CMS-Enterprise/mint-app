@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, CardGroup, Icon } from '@trussworks/react-uswds';
-import { CURRENT_TASK_ORDER } from 'features/ModelPlan/Tasks';
+import { FIXED_TASK_ORDER } from 'features/ModelPlan/Tasks';
 import {
   GetCollaborationAreaQuery,
   PlanTaskState
@@ -29,7 +29,7 @@ const TasksWrapper = ({ modelPlan, tasks }: TasksWrapperProps) => {
       incompleteTask.state !== PlanTaskState.COMPLETE &&
       incompleteTask.state !== PlanTaskState.UPCOMING
   );
-  const orderedTasks = CURRENT_TASK_ORDER.flatMap(key => {
+  const orderedTasks = FIXED_TASK_ORDER.flatMap(key => {
     const taskForKey = incompleteTasks.find(
       incompleteTask => incompleteTask.key === key
     );
