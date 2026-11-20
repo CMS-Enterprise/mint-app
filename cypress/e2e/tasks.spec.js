@@ -105,4 +105,61 @@ describe('Tasks page', () => {
       'be.visible'
     );
   });
+
+  it('adds an approved ICIP from the task card, then marks the task complete and to-do', () => {
+    cy.enterModelPlanCollaborationArea('Plan with Data Exchange');
+
+    cy.contains('button', /See all \(\d+\)/).click();
+
+    // Approved ICIP is UPCOMING until clearance starts, so it lives on the Upcoming tab
+    cy.get('[data-testid="upcoming-tab"]').click();
+    cy.url().should('include', 'tab=upcoming');
+
+    cy.contains('h3', 'Add approved ICIP')
+      .closest('.collaboration-area__card')
+      .as('icipCard');
+
+    cy.get('@icipCard')
+      .contains('button', /Upload to ICIP repository on SharePoint/i)
+      .should('be.visible');
+
+    // Primary action opens Add document with Final ICIP preselected
+    cy.get('@icipCard').contains('button', 'Add ICIP').click();
+
+    cy.location('pathname').should(
+      'match',
+      /\/models\/[^/]+\/collaboration-area\/documents\/add-document$/
+    );
+    cy.contains('h1', 'Add a document');
+    cy.contains('.usa-radio', 'Final ICIP').find('input').should('be.checked');
+
+    cy.go('back');
+
+    // Mark complete: success toast, then the task moves to the Completed tab
+    cy.get('[data-testid="upcoming-tab"]').click();
+    cy.contains('h3', 'Add approved ICIP')
+      .closest('.collaboration-area__card')
+      .contains('label', 'Mark this task complete')
+      .click();
+
+    cy.get('[data-testid="toast-success"]').contains(
+      'Add approved ICIP is now complete.'
+    );
+
+    cy.get('[data-testid="completed-tab"]').click();
+    cy.url().should('include', 'tab=completed');
+    cy.contains('h3', 'Add approved ICIP').should('be.visible');
+
+    // Revert so the seeded plan is left as found
+    cy.contains('h3', 'Add approved ICIP')
+      .closest('.collaboration-area__card')
+      .contains('button', 'Mark this task to do')
+      .click();
+
+    cy.get('[data-testid="toast-success"]').contains(
+      'Add approved ICIP is now to-do.'
+    );
+
+    cy.contains('h3', 'Add approved ICIP').should('not.exist');
+  });
 });

@@ -4,18 +4,25 @@ import {
   RouterProvider,
   useLocation
 } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
+import { ToastContainer } from 'react-toastify';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { render, waitFor } from '@testing-library/react';
 import {
   DocumentType,
+  GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   PlanTaskKey,
   PlanTaskState,
   PlanTaskStatus,
-  TaskStatus
+  TaskStatus,
+  UpdateTaskStatusDocument
 } from 'gql/generated/graphql';
+import { GraphQLError } from 'graphql';
 import { collaborationAreaData } from 'tests/mock/general';
 import { makePlanTasks, modelID, PlanTaskEntry } from 'tests/mock/mto';
 import setup from 'tests/util';
+
+import { getCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
 import TaskCard from './index';
 
@@ -318,5 +325,233 @@ describe('TaskCard', () => {
     expect(
       queryByRole('checkbox', { name: 'Mark this task complete' })
     ).not.toBeInTheDocument();
+  });
+
+  describe('mark complete / mark to-do messaging', () => {
+    const MARK_COMPLETE_ERROR =
+      /We encountered an error moving your task to complete/;
+    const MARK_TODO_ERROR = /We encountered an error marking your task to-do/;
+
+    const updateMock = (
+      task: PlanTaskEntry,
+      isComplete: boolean,
+      fail = false
+    ): MockedResponse => ({
+      request: {
+        query: UpdateTaskStatusDocument,
+        variables: { modelPlanID: modelID, key: task.key, isComplete }
+      },
+      result: fail
+        ? { errors: [new GraphQLError('mutation failed')] }
+        : {
+            data: {
+              markPlanTaskComplete: {
+                __typename: 'PlanTask',
+                id: task.id,
+                key: task.key,
+                status: isComplete
+                  ? PlanTaskStatus.COMPLETE
+                  : PlanTaskStatus.TO_DO,
+                state: isComplete
+                  ? PlanTaskState.COMPLETE
+                  : PlanTaskState.TO_DO,
+                completedBy: null,
+                completedByUserAccount: null,
+                completedDts: null
+              }
+            }
+          }
+    });
+
+    const renderWithMutation = (task: PlanTaskEntry, fail = false) => {
+      const refetch = vi.fn(() => ({
+        data: { modelPlan: collaborationAreaData }
+      }));
+      const mocks: MockedResponse[] = [
+        updateMock(task, task.status !== PlanTaskStatus.COMPLETE, fail),
+        {
+          request: {
+            query: GetCollaborationAreaDocument,
+            variables: { id: modelID }
+          },
+          result: refetch
+        }
+      ];
+
+      const router = createMemoryRouter(
+        [
+          {
+            path: '/models/:modelID/collaboration-area',
+            element: (
+              <>
+                <ToastContainer />
+                {/* errorPolicy 'all' resolves failed mutations with `errors`, as the app's error link does */}
+                <MockedProvider
+                  mocks={mocks}
+                  defaultOptions={{ mutate: { errorPolicy: 'all' } }}
+                >
+                  <TaskCard modelPlan={collaborationAreaData} task={task} />
+                </MockedProvider>
+              </>
+            )
+          }
+        ],
+        { initialEntries: [`/models/${modelID}/collaboration-area`] }
+      );
+
+      const r = setup(<RouterProvider router={router} />);
+      return { ...r, refetch };
+    };
+
+    const errorText = () => {
+      const { container } = render(
+        <>{getCurrentErrorMeta().overrideMessage}</>
+      );
+      return container.textContent;
+    };
+
+    // Approved ICIP and OA presentation define no success/error copy, so they use the shared defaults.
+    it.each([
+      {
+        key: PlanTaskKey.APPROVED_ICIP,
+        heading: 'Add approved ICIP'
+      },
+      {
+        key: PlanTaskKey.OA_PRESENTATION,
+        heading:
+          'Prepare for your presentation to the Office of the Administrator (OA)'
+      }
+    ])(
+      'uses the shared default messages for $key in both directions',
+      async ({ key, heading }) => {
+        // Mark complete: success toast built from the heading, then refetch
+        const complete = renderWithMutation(
+          getTask(key, {
+            state: PlanTaskState.TO_DO,
+            status: PlanTaskStatus.TO_DO
+          })
+        );
+        await complete.user.click(
+          await complete.findByRole('checkbox', {
+            name: 'Mark this task complete'
+          })
+        );
+        expect(await complete.findByTestId('toast-success')).toHaveTextContent(
+          `${heading} is now complete.`
+        );
+        await waitFor(() => expect(complete.refetch).toHaveBeenCalled());
+        complete.unmount();
+
+        // Mark to-do: success toast built from the heading, then refetch
+        const todo = renderWithMutation(
+          getTask(key, {
+            state: PlanTaskState.COMPLETE,
+            status: PlanTaskStatus.COMPLETE
+          })
+        );
+        await todo.user.click(
+          await todo.findByRole('button', { name: 'Mark this task to do' })
+        );
+        expect(await todo.findByTestId('toast-success')).toHaveTextContent(
+          `${heading} is now to-do.`
+        );
+        await waitFor(() => expect(todo.refetch).toHaveBeenCalled());
+      }
+    );
+
+    it.each([
+      {
+        key: PlanTaskKey.APPROVED_ICIP,
+        state: PlanTaskState.TO_DO,
+        status: PlanTaskStatus.TO_DO,
+        control: { role: 'checkbox', name: 'Mark this task complete' },
+        error: MARK_COMPLETE_ERROR
+      },
+      {
+        key: PlanTaskKey.APPROVED_ICIP,
+        state: PlanTaskState.COMPLETE,
+        status: PlanTaskStatus.COMPLETE,
+        control: { role: 'button', name: 'Mark this task to do' },
+        error: MARK_TODO_ERROR
+      },
+      {
+        key: PlanTaskKey.OA_PRESENTATION,
+        state: PlanTaskState.TO_DO,
+        status: PlanTaskStatus.TO_DO,
+        control: { role: 'checkbox', name: 'Mark this task complete' },
+        error: MARK_COMPLETE_ERROR
+      },
+      {
+        key: PlanTaskKey.OA_PRESENTATION,
+        state: PlanTaskState.COMPLETE,
+        status: PlanTaskStatus.COMPLETE,
+        control: { role: 'button', name: 'Mark this task to do' },
+        error: MARK_TODO_ERROR
+      }
+    ])(
+      'sets the default failure message and no success toast for $key ($state)',
+      async ({ key, state, status, control, error }) => {
+        const { findByRole, user, queryByTestId } = renderWithMutation(
+          getTask(key, { state, status }),
+          true
+        );
+
+        await user.click(
+          await findByRole(control.role as 'checkbox' | 'button', {
+            name: control.name
+          })
+        );
+
+        await waitFor(() => expect(errorText()).toMatch(error));
+        expect(queryByTestId('toast-success')).not.toBeInTheDocument();
+      }
+    );
+
+    it.each([
+      {
+        key: PlanTaskKey.TWO_PAGER,
+        label: '2-page',
+        state: PlanTaskState.TO_DO
+      },
+      {
+        key: PlanTaskKey.SIX_PAGER,
+        label: '6-page',
+        state: PlanTaskState.TO_DO
+      }
+    ])(
+      'prefers the task-specific $label success text over the shared default',
+      async ({ key, label, state }) => {
+        const complete = renderWithMutation(
+          getTask(key, { state, status: PlanTaskStatus.TO_DO })
+        );
+        await complete.user.click(
+          await complete.findByRole('checkbox', {
+            name: 'Mark this task complete'
+          })
+        );
+        const completeToast = await complete.findByTestId('toast-success');
+        expect(completeToast).toHaveTextContent(
+          `Prepare for your ${label} review meeting with CMMI Front Office is now complete.`
+        );
+        // The shared default would have appended "(FO)" via the heading
+        expect(completeToast).not.toHaveTextContent('(FO)');
+        complete.unmount();
+
+        const todo = renderWithMutation(
+          getTask(key, {
+            state: PlanTaskState.COMPLETE,
+            status: PlanTaskStatus.COMPLETE
+          })
+        );
+        await todo.user.click(
+          await todo.findByRole('button', { name: 'Mark this task to do' })
+        );
+        const todoToast = await todo.findByTestId('toast-success');
+        expect(todoToast).toHaveTextContent(
+          `Prepare for your ${label} review meeting with CMMI Front Office is now to-do.`
+        );
+        expect(todoToast).not.toHaveTextContent('(FO)');
+      }
+    );
   });
 });
