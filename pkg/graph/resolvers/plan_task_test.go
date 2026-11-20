@@ -516,6 +516,112 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 	suite.Nil(oaTask.CompletedDts)
 }
 
+func (suite *ResolverSuite) TestPlanTaskMarkCompleteDraftICIP() {
+	plan := suite.createModelPlan("Plan For Draft ICIP Manual Task Marking")
+
+	// DRAFT_ICIP starts UPCOMING and isn't activated to TO_DO until SIX_PAGER is marked complete
+	_, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	draftIcipTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateToDo, draftIcipTask.State)
+
+	// mark the DRAFT_ICIP task complete
+	updated, err := PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyDraftIcip,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStateComplete, updated.State)
+		if suite.NotNil(updated.CompletedBy) {
+			suite.EqualValues(suite.testConfigs.Principal.Account().ID, *updated.CompletedBy)
+		}
+		suite.NotNil(updated.CompletedDts)
+		if suite.NotNil(updated.ModifiedBy) {
+			suite.Equal(suite.testConfigs.Principal.Account().ID, *updated.ModifiedBy)
+		}
+	}
+
+	draftIcipTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateComplete, draftIcipTask.State)
+
+	// mark it back to TO_DO
+	updated, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeyDraftIcip,
+		false,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+	if suite.NotNil(updated) {
+		suite.Equal(models.PlanTaskStateToDo, updated.State)
+		suite.Nil(updated.CompletedBy)
+		suite.Nil(updated.CompletedDts)
+	}
+
+	draftIcipTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateToDo, draftIcipTask.State)
+	suite.Nil(draftIcipTask.CompletedBy)
+	suite.Nil(draftIcipTask.CompletedDts)
+}
+
+// TestDraftIcipStatusStaysToDoThroughActivation confirms the computed status field on the
+// draft_ICIP card stays TO_DO across the UPCOMING -> TO_DO state activation trigger, end to end
+// through the resolver (not just the Status function in isolation). Status is binary
+// (TO_DO/COMPLETE), so unlike state it does not distinguish UPCOMING from TO_DO.
+func (suite *ResolverSuite) TestDraftIcipStatusStaysToDoThroughActivation() {
+	plan := suite.createModelPlan("Plan For Draft ICIP Status Display")
+	r := &planTaskResolver{&Resolver{}}
+
+	draftIcipTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateUpcoming, draftIcipTask.State)
+	status, err := r.Status(suite.testConfigs.Context, draftIcipTask)
+	suite.NoError(err)
+	suite.Equal(model.PlanTaskStatusToDo, status)
+
+	_, err = PlanTaskMarkComplete(
+		suite.testConfigs.Context,
+		suite.testConfigs.Logger,
+		plan.ID,
+		models.PlanTaskKeySixPager,
+		true,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+		nil,
+		email.AddressBook{},
+	)
+	suite.NoError(err)
+
+	draftIcipTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyDraftIcip)
+	suite.Equal(models.PlanTaskStateToDo, draftIcipTask.State)
+	status, err = r.Status(suite.testConfigs.Context, draftIcipTask)
+	suite.NoError(err)
+	suite.Equal(model.PlanTaskStatusToDo, status)
+}
+
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteRejectsCalculatedKeys() {
 	plan := suite.createModelPlan("Plan For Rejected Manual Task Marking")
 
@@ -560,6 +666,7 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	suite.NotNil(taskByKey[models.PlanTaskKeyWaiverAssessmentSurvey])
 	suite.NotNil(taskByKey[models.PlanTaskKeyTwoPager])
 	suite.NotNil(taskByKey[models.PlanTaskKeySixPager])
+	suite.NotNil(taskByKey[models.PlanTaskKeyDraftIcip])
 	suite.NotNil(taskByKey[models.PlanTaskKeyOaPresentation])
 	suite.NotNil(taskByKey[models.PlanTaskKeyPrepareForClearance])
 
@@ -567,6 +674,7 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 		models.PlanTaskKeySixPager:            true,
 		models.PlanTaskKeyOaPresentation:      true,
 		models.PlanTaskKeyPrepareForClearance: true,
+		models.PlanTaskKeyDraftIcip:           true,
 	}
 
 	for _, t := range tasks {
