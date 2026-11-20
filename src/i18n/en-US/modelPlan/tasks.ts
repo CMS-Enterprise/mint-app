@@ -117,6 +117,35 @@ const tasks = {
         'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
     }
   },
+  [PlanTaskKey.DRAFT_ICIP]: {
+    copy: 'After your 6-pager has been approved, it’s time to start your Innovation Center Investment Proposal (ICIP) to iron out all the details. Your ICIP will include the purpose of the model, its alignment with CMMI strategy, participation, quality strategy, payment methodology, financial impact, and more. ICIPs should be at most 50 pages, with an appendix of at most 20 pages. As you iterate, please add your updated drafts.',
+    primaryPath:
+      '/models/{{modelID}}/collaboration-area/documents/add-document?planTaskID={{planTaskID}}',
+    secondaryPath:
+      'https://cmsgovonline.sharepoint.com/sites/CMS-SharePoint-CMMI-Classic/ICIPs/ICIPTemplate/Forms/AllItems.aspx',
+    secondaryAction: 'View ICIP template on SharePoint',
+    [PlanTaskState.UPCOMING]: {
+      heading: 'Start your ICIP',
+      primaryAction: 'Upload draft ICIP',
+      success: '<bold>Start your ICIP</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskState.TO_DO]: {
+      heading: 'Start your ICIP',
+      primaryAction: 'Upload draft ICIP',
+      success: '<bold>Start your ICIP</bold> is now complete.',
+      error:
+        'We encountered an error moving your task to complete. Please try again. If the problem persists, try again later.'
+    },
+    [PlanTaskState.COMPLETE]: {
+      heading: 'Start your ICIP',
+      primaryAction: 'Upload draft ICIP',
+      success: '<bold>Start your ICIP</bold> is now to-do.',
+      error:
+        'We encountered an error marking your task to-do. Please try again. If the problem persists, try again later.'
+    }
+  },
   [PlanTaskKey.DATA_EXCHANGE]: {
     copy: 'Work with your IT Lead to determine how your model will exchange data so that CMMI and BSG can help with new policy or technology opportunities. Some models may have more complex needs or could be avenues to explore broader HHS policy initiatives around data exchange, so detailed completion of the data exchange approach will also help the MINT Team understand how best to help you.',
     primaryPath:

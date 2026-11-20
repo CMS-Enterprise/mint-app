@@ -136,7 +136,7 @@ func PrepareForClearanceActivateIfDue(
 // (see models.PlanTaskKey.IsManuallyMarkable) have no calculated status and are only ever changed
 // by direct user action, so a key is rejected here if it isn't on that allow-list.
 //
-// Marking a key complete may also activate another task (see models.PlanTaskKey.ActivationTarget),
+// Marking a key complete may also activate another task (see models.PlanTaskKey.ActivationTargets),
 // moving it from UPCOMING to TO_DO.
 func PlanTaskMarkComplete(
 	ctx context.Context,
@@ -165,9 +165,11 @@ func PlanTaskMarkComplete(
 		}
 
 		if isComplete {
-			if targetKey, ok := key.ActivationTarget(); ok {
-				if err := activateUpcomingPlanTask(ctx, tx, logger, modelPlanID, targetKey, principal, emailService, addressBook); err != nil {
-					return nil, err
+			if targetKeys, ok := key.ActivationTargets(); ok {
+				for _, targetKey := range targetKeys {
+					if err := activateUpcomingPlanTask(ctx, tx, logger, modelPlanID, targetKey, principal, emailService, addressBook); err != nil {
+						return nil, err
+					}
 				}
 			}
 		}

@@ -17,7 +17,6 @@ import {
   PlanTaskState,
   useGetCollaborationAreaQuery
 } from 'gql/generated/graphql';
-import { orderBy } from 'lodash';
 
 import Alert from 'components/Alert';
 import Breadcrumbs, { BreadcrumbItemOptions } from 'components/Breadcrumbs';
@@ -27,23 +26,21 @@ import PageLoading from 'components/PageLoading';
 
 import 'components/Tabs/index.scss';
 
-type PlanTaskEntry = GetCollaborationAreaQuery['modelPlan']['tasks'][number];
+type Task = GetCollaborationAreaQuery['modelPlan']['tasks'][number];
 
 type TabId = 'current' | 'upcoming' | 'completed';
 
-// Current tasks are shown in this fixed order per requirements. OA_PRESENTATION is included here
-// so that once it activates from UPCOMING to TO_DO, it moves into the Current tab instead of
-// disappearing from both tabs. PREPARE_FOR_CLEARANCE is last since it's the final step before
-// clearance - final ordering/copy for its card is still pending a dedicated frontend ticket.
-export const CURRENT_TASK_ORDER: PlanTaskKey[] = [
+// Tasks under every tab are shown in this fixed order per requirements.
+export const FIXED_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.MODEL_PLAN,
-  PlanTaskKey.DATA_EXCHANGE,
-  PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
+  PlanTaskKey.DATA_EXCHANGE,
+  PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
+  PlanTaskKey.DRAFT_ICIP,
   PlanTaskKey.MTO,
-  PlanTaskKey.OA_PRESENTATION,
-  PlanTaskKey.PREPARE_FOR_CLEARANCE
+  PlanTaskKey.PREPARE_FOR_CLEARANCE,
+  PlanTaskKey.OA_PRESENTATION
 ];
 
 const getTabIdFromSearchParams = (tab: string | null): TabId => {
@@ -51,10 +48,6 @@ const getTabIdFromSearchParams = (tab: string | null): TabId => {
     return tab;
   }
   return 'current';
-};
-
-const getCompletedDts = (task: PlanTaskEntry): string => {
-  return task.completedDts ?? '';
 };
 
 const Tasks = () => {
@@ -94,25 +87,29 @@ const Tasks = () => {
   const { modelPlan } = data;
   const { modelName, tasks } = modelPlan;
 
-  const currentTasks = CURRENT_TASK_ORDER.flatMap(key => {
-    const task = tasks.find(
-      planTask =>
-        planTask.key === key &&
-        planTask.state !== PlanTaskState.COMPLETE &&
-        planTask.state !== PlanTaskState.UPCOMING
+  const { currentTasks, upcomingTasks, completedTasks } =
+    FIXED_TASK_ORDER.reduce(
+      (taskGroups, fixedTask) => {
+        const task = tasks.find(singleTask => singleTask.key === fixedTask);
+
+        if (!task) return taskGroups;
+
+        if (task.state === PlanTaskState.UPCOMING) {
+          taskGroups.upcomingTasks.push(task);
+        } else if (task.state === PlanTaskState.COMPLETE) {
+          taskGroups.completedTasks.push(task);
+        } else {
+          taskGroups.currentTasks.push(task);
+        }
+
+        return taskGroups;
+      },
+      { currentTasks: [], upcomingTasks: [], completedTasks: [] } as {
+        currentTasks: Task[];
+        upcomingTasks: Task[];
+        completedTasks: Task[];
+      }
     );
-    return task ? [task] : [];
-  });
-
-  const upcomingTasks = tasks.filter(
-    task => task.state === PlanTaskState.UPCOMING
-  );
-
-  const completedTasks = tasks.filter(
-    task => task.state === PlanTaskState.COMPLETE
-  );
-
-  const sortedCompletedTasks = orderBy(completedTasks, getCompletedDts, 'desc');
 
   const tabs = [
     {
@@ -246,13 +243,13 @@ const Tasks = () => {
               aria-labelledby="completed-tab"
               tabIndex={0}
             >
-              {sortedCompletedTasks.length === 0 ? (
+              {completedTasks.length === 0 ? (
                 <Alert type="info" heading={t('emptyState.completed.heading')}>
                   {t('emptyState.completed.copy')}
                 </Alert>
               ) : (
                 <CardGroup>
-                  {sortedCompletedTasks.map(task => (
+                  {completedTasks.map(task => (
                     <TaskCard
                       key={task.key}
                       task={task}

@@ -96,6 +96,10 @@ const completeAllTasks = () =>
       state: PlanTaskState.COMPLETE,
       status: PlanTaskStatus.COMPLETE
     },
+    [PlanTaskKey.DRAFT_ICIP]: {
+      state: PlanTaskState.COMPLETE,
+      status: PlanTaskStatus.COMPLETE
+    },
     [PlanTaskKey.OA_PRESENTATION]: {
       state: PlanTaskState.COMPLETE,
       status: PlanTaskStatus.COMPLETE
@@ -116,14 +120,14 @@ describe('Tasks page', () => {
 
     expect(screen.getByRole('heading', { name: 'Tasks' })).toBeInTheDocument();
     expect(screen.getByTestId('model-plan-name')).toHaveTextContent('for Test');
-    expect(screen.getByText('Upcoming tasks (3)')).toBeInTheDocument();
+    expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
     expect(screen.getByText('Completed tasks (0)')).toBeInTheDocument();
 
     expect(getCardHeadings(container)).toEqual([
       'Start your Model Plan',
+      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Start your data exchange approach',
       'Complete your waiver assessment survey',
-      'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Start your model-to-operations matrix (MTO)'
     ]);
 
@@ -161,13 +165,14 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(planTasksAllToDo, 'upcoming');
 
     await waitFor(() => {
-      expect(screen.getByText('Upcoming tasks (3)')).toBeInTheDocument();
+      expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
-      'Prepare for your presentation to the Office of the Administrator (OA)',
-      'Prepare for clearance'
+      'Start your ICIP',
+      'Prepare for clearance',
+      'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
     expect(screen.getByText('Upload 6-pager')).toBeInTheDocument();
     expect(screen.getByText('Upload OA presentation')).toBeInTheDocument();
@@ -190,15 +195,15 @@ describe('Tasks page', () => {
     await waitFor(() => {
       expect(screen.getByText('Completed tasks (0)')).toBeInTheDocument();
       expect(screen.getByText('Current tasks (7)')).toBeInTheDocument();
-      expect(screen.getByText('Upcoming tasks (1)')).toBeInTheDocument();
+      expect(screen.getByText('Upcoming tasks (2)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
       'Start your Model Plan',
-      'Start your data exchange approach',
-      'Complete your waiver assessment survey',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      'Start your data exchange approach',
+      'Complete your waiver assessment survey',
       'Start your model-to-operations matrix (MTO)',
       'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
@@ -208,18 +213,19 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(completeAllTasks(), 'completed');
 
     await waitFor(() => {
-      expect(screen.getByText('Completed tasks (8)')).toBeInTheDocument();
+      expect(screen.getByText('Completed tasks (9)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
-      'Prepare for clearance',
-      'Prepare for your presentation to the Office of the Administrator (OA)',
-      'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      'Iterate on your Model Plan',
       'Prepare for your 2-page review meeting with CMMI Front Office (FO)',
-      'Complete your waiver assessment survey',
+      'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'Finalize your data exchange approach',
+      'Complete your waiver assessment survey',
+      'Start your ICIP',
       'Keep your model-to-operations matrix (MTO) up-to-date',
-      'Iterate on your Model Plan'
+      'Prepare for clearance',
+      'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
   });
 

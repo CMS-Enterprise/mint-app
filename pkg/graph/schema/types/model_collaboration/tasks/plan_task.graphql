@@ -23,13 +23,14 @@ PlanTaskKey identifies which of the plan tasks this row represents.
 """
 enum PlanTaskKey {
   MODEL_PLAN
-  MTO
-  DATA_EXCHANGE
-  WAIVER_ASSESSMENT_SURVEY
   TWO_PAGER
   SIX_PAGER
-  OA_PRESENTATION
+  DATA_EXCHANGE
+  WAIVER_ASSESSMENT_SURVEY
+  DRAFT_ICIP
+  MTO
   PREPARE_FOR_CLEARANCE
+  OA_PRESENTATION
 }
 
 """
