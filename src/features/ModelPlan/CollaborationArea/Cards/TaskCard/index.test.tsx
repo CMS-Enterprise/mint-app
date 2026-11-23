@@ -367,13 +367,19 @@ describe('TaskCard', () => {
     const withResultSpy = (
       mock: MockedResponse,
       spy: () => void
-    ): MockedResponse => ({
-      ...mock,
-      result: () => {
-        spy();
-        return mock.result as any;
+    ): MockedResponse => {
+      const { result } = mock;
+      if (!result || typeof result === 'function') {
+        throw new Error('withResultSpy expects a static mock result');
       }
-    });
+      return {
+        ...mock,
+        result: () => {
+          spy();
+          return result;
+        }
+      };
+    };
 
     const renderWithMutation = (task: PlanTaskEntry, fail = false) => {
       const mutationResult = vi.fn();
