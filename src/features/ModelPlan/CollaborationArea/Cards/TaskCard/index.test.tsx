@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
-import { render, waitFor } from '@testing-library/react';
+import { act, render, waitFor } from '@testing-library/react';
 import {
   DocumentType,
   GetCollaborationAreaDocument,
@@ -363,12 +363,28 @@ describe('TaskCard', () => {
           }
     });
 
+    // Wraps a mock so tests can await the response actually being served
+    const withResultSpy = (
+      mock: MockedResponse,
+      spy: () => void
+    ): MockedResponse => ({
+      ...mock,
+      result: () => {
+        spy();
+        return mock.result as any;
+      }
+    });
+
     const renderWithMutation = (task: PlanTaskEntry, fail = false) => {
+      const mutationResult = vi.fn();
       const refetch = vi.fn(() => ({
         data: { modelPlan: collaborationAreaData }
       }));
       const mocks: MockedResponse[] = [
-        updateMock(task, task.status !== PlanTaskStatus.COMPLETE, fail),
+        withResultSpy(
+          updateMock(task, task.status !== PlanTaskStatus.COMPLETE, fail),
+          mutationResult
+        ),
         {
           request: {
             query: GetCollaborationAreaDocument,
@@ -385,11 +401,7 @@ describe('TaskCard', () => {
             element: (
               <>
                 <ToastContainer />
-                {/* errorPolicy 'all' resolves failed mutations with `errors`, as the app's error link does */}
-                <MockedProvider
-                  mocks={mocks}
-                  defaultOptions={{ mutate: { errorPolicy: 'all' } }}
-                >
+                <MockedProvider mocks={mocks}>
                   <TaskCard modelPlan={collaborationAreaData} task={task} />
                 </MockedProvider>
               </>
@@ -400,7 +412,7 @@ describe('TaskCard', () => {
       );
 
       const r = setup(<RouterProvider router={router} />);
-      return { ...r, refetch };
+      return { ...r, refetch, mutationResult };
     };
 
     const errorText = () => {
@@ -491,10 +503,8 @@ describe('TaskCard', () => {
     ])(
       'sets the default failure message and no success toast for $key ($state)',
       async ({ key, state, status, control, error }) => {
-        const { findByRole, user, queryByTestId } = renderWithMutation(
-          getTask(key, { state, status }),
-          true
-        );
+        const { findByRole, user, queryByTestId, mutationResult } =
+          renderWithMutation(getTask(key, { state, status }), true);
 
         await user.click(
           await findByRole(control.role as 'checkbox' | 'button', {
@@ -502,7 +512,15 @@ describe('TaskCard', () => {
           })
         );
 
-        await waitFor(() => expect(errorText()).toMatch(error));
+        // Wait for the failing response to be served and processed before asserting
+        await waitFor(() => expect(mutationResult).toHaveBeenCalled());
+        await act(async () => {
+          await new Promise(resolve => {
+            setTimeout(resolve, 0);
+          });
+        });
+
+        expect(errorText()).toMatch(error);
         expect(queryByTestId('toast-success')).not.toBeInTheDocument();
       }
     );

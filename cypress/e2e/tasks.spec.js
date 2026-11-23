@@ -111,9 +111,17 @@ describe('Tasks page', () => {
 
     cy.contains('button', /See all \(\d+\)/).click();
 
-    // Approved ICIP is UPCOMING until clearance starts, so it lives on the Upcoming tab
+    // Approved ICIP is UPCOMING until clearance starts, so it lives on the Upcoming tab.
+    // Marking it to-do (the cleanup below) persists TO_DO rather than UPCOMING, so on a
+    // retry without a DB reset the card sits on the Current tab instead.
     cy.get('[data-testid="upcoming-tab"]').click();
     cy.url().should('include', 'tab=upcoming');
+
+    cy.get('body').then($body => {
+      if ($body.find('h3:contains("Add approved ICIP")').length === 0) {
+        cy.get('[data-testid="current-tab"]').click();
+      }
+    });
 
     cy.contains('h3', 'Add approved ICIP')
       .closest('.collaboration-area__card')
@@ -136,7 +144,6 @@ describe('Tasks page', () => {
     cy.go('back');
 
     // Mark complete: success toast, then the task moves to the Completed tab
-    cy.get('[data-testid="upcoming-tab"]').click();
     cy.contains('h3', 'Add approved ICIP')
       .closest('.collaboration-area__card')
       .contains('label', 'Mark this task complete')
@@ -150,7 +157,7 @@ describe('Tasks page', () => {
     cy.url().should('include', 'tab=completed');
     cy.contains('h3', 'Add approved ICIP').should('be.visible');
 
-    // Revert so the seeded plan is left as found
+    // Revert to to-do (not back to UPCOMING; that state is derived from clearance)
     cy.contains('h3', 'Add approved ICIP')
       .closest('.collaboration-area__card')
       .contains('button', 'Mark this task to do')
