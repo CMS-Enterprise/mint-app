@@ -9,20 +9,20 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/models"
 )
 
 // CurrentBacklogSize is the resolver for the currentBacklogSize field.
-func (r *queryResolver) CurrentBacklogSize(ctx context.Context, input *model.CTATDashboardFilter) (bool, error) {
+func (r *queryResolver) CurrentBacklogSize(ctx context.Context, input *models.CTATDashboardFilter) (bool, error) {
 	panic(fmt.Errorf("not implemented: CurrentBacklogSize - currentBacklogSize"))
 }
 
 // RequestsOverTime is the resolver for the requestsOverTime field.
-func (r *queryResolver) RequestsOverTime(ctx context.Context, input *model.CTATDashboardFilter) (bool, error) {
+func (r *queryResolver) RequestsOverTime(ctx context.Context, input *models.CTATDashboardFilter) (bool, error) {
 	panic(fmt.Errorf("not implemented: RequestsOverTime - requestsOverTime"))
 }
 
 // RequestStatusFunnelView is the resolver for the requestStatusFunnelView field.
-func (r *queryResolver) RequestStatusFunnelView(ctx context.Context, input *model.CTATDashboardFilter) (bool, error) {
+func (r *queryResolver) RequestStatusFunnelView(ctx context.Context, input *models.CTATDashboardFilter) (bool, error) {
 	panic(fmt.Errorf("not implemented: RequestStatusFunnelView - requestStatusFunnelView"))
 }
