@@ -25,6 +25,33 @@ type ApplyTemplateResult struct {
 	Warnings        []string  `json:"warnings,omitempty"`
 }
 
+// Input for filtering on CMMI Groups/Divisions
+type CTATDashboardCMMIFilter struct {
+	Groups            []*CTATDashboardCMMIGroupFilter `json:"groups"`
+	IncludeOtherGroup bool                            `json:"includeOtherGroup"`
+}
+
+// Input for specific in-group filtering
+type CTATDashboardCMMIGroupFilter struct {
+	Group     models.CTATCMMIGroupOption      `json:"group"`
+	Divisions []models.CTATCMMIDivisionOption `json:"divisions"`
+}
+
+// Input for filtering CTAT Dashboard data
+type CTATDashboardFilter struct {
+	DivisionFilter     *CTATDashboardCMMIFilter           `json:"divisionFilter,omitempty"`
+	ModelFilter        *uuid.UUID                         `json:"modelFilter,omitempty"`
+	ContractTypeFilter *models.CTATContractType           `json:"contractTypeFilter,omitempty"`
+	DateFilter         *CTATDashboardSubmissionDateFilter `json:"dateFilter,omitempty"`
+}
+
+// Input for date filtering
+type CTATDashboardSubmissionDateFilter struct {
+	Selection CTATDashboardRelativeDateFilter `json:"selection"`
+	StartDate *time.Time                      `json:"startDate,omitempty"`
+	EndDate   *time.Time                      `json:"endDate,omitempty"`
+}
+
 // Input for uploading a supporting document for a CTAT request.
 type CTATRequestDocumentInput struct {
 	FileData graphql.Upload `json:"fileData"`
@@ -1523,6 +1550,69 @@ func (e *CMSCenter) UnmarshalJSON(b []byte) error {
 }
 
 func (e CMSCenter) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	e.MarshalGQL(&buf)
+	return buf.Bytes(), nil
+}
+
+type CTATDashboardRelativeDateFilter string
+
+const (
+	CTATDashboardRelativeDateFilterPastWeek         CTATDashboardRelativeDateFilter = "PAST_WEEK"
+	CTATDashboardRelativeDateFilterPastMonth        CTATDashboardRelativeDateFilter = "PAST_MONTH"
+	CTATDashboardRelativeDateFilterPastQuarter      CTATDashboardRelativeDateFilter = "PAST_QUARTER"
+	CTATDashboardRelativeDateFilterPastCalendarYear CTATDashboardRelativeDateFilter = "PAST_CALENDAR_YEAR"
+	CTATDashboardRelativeDateFilterAllTime          CTATDashboardRelativeDateFilter = "ALL_TIME"
+	CTATDashboardRelativeDateFilterCustomDateRange  CTATDashboardRelativeDateFilter = "CUSTOM_DATE_RANGE"
+)
+
+var AllCTATDashboardRelativeDateFilter = []CTATDashboardRelativeDateFilter{
+	CTATDashboardRelativeDateFilterPastWeek,
+	CTATDashboardRelativeDateFilterPastMonth,
+	CTATDashboardRelativeDateFilterPastQuarter,
+	CTATDashboardRelativeDateFilterPastCalendarYear,
+	CTATDashboardRelativeDateFilterAllTime,
+	CTATDashboardRelativeDateFilterCustomDateRange,
+}
+
+func (e CTATDashboardRelativeDateFilter) IsValid() bool {
+	switch e {
+	case CTATDashboardRelativeDateFilterPastWeek, CTATDashboardRelativeDateFilterPastMonth, CTATDashboardRelativeDateFilterPastQuarter, CTATDashboardRelativeDateFilterPastCalendarYear, CTATDashboardRelativeDateFilterAllTime, CTATDashboardRelativeDateFilterCustomDateRange:
+		return true
+	}
+	return false
+}
+
+func (e CTATDashboardRelativeDateFilter) String() string {
+	return string(e)
+}
+
+func (e *CTATDashboardRelativeDateFilter) UnmarshalGQL(v any) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CTATDashboardRelativeDateFilter(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CTATDashboardRelativeDateFilter", str)
+	}
+	return nil
+}
+
+func (e CTATDashboardRelativeDateFilter) MarshalGQL(w io.Writer) {
+	_, _ = fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+func (e *CTATDashboardRelativeDateFilter) UnmarshalJSON(b []byte) error {
+	s, err := strconv.Unquote(string(b))
+	if err != nil {
+		return err
+	}
+	return e.UnmarshalGQL(s)
+}
+
+func (e CTATDashboardRelativeDateFilter) MarshalJSON() ([]byte, error) {
 	var buf bytes.Buffer
 	e.MarshalGQL(&buf)
 	return buf.Bytes(), nil

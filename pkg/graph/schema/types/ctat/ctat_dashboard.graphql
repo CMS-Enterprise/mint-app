@@ -1,0 +1,50 @@
+enum CTATDashboardRelativeDateFilter {
+  PAST_WEEK
+  PAST_MONTH
+  PAST_QUARTER
+  PAST_CALENDAR_YEAR
+  ALL_TIME
+  CUSTOM_DATE_RANGE
+}
+
+"""
+Input for filtering CTAT Dashboard data
+"""
+input CTATDashboardFilter {
+  divisionFilter: CTATDashboardCMMIFilter
+  modelFilter: UUID
+  contractTypeFilter: CTATContractType
+  dateFilter: CTATDashboardSubmissionDateFilter
+}
+
+"""
+Input for filtering on CMMI Groups/Divisions
+"""
+input CTATDashboardCMMIFilter {
+  groups: [CTATDashboardCMMIGroupFilter!]!
+  includeOtherGroup: Boolean!
+}
+
+"""
+Input for specific in-group filtering
+"""
+input CTATDashboardCMMIGroupFilter {
+  group: CTATCMMIGroupOption!
+  divisions: [CTATCMMIDivisionOption!]!
+}
+
+"""
+Input for date filtering
+"""
+input CTATDashboardSubmissionDateFilter {
+  selection: CTATDashboardRelativeDateFilter!
+  startDate: Time
+  endDate: Time
+}
+
+# placeholders
+extend type Query {
+  currentBacklogSize(input: CTATDashboardFilter): Boolean!
+  requestsOverTime(input: CTATDashboardFilter): Boolean!
+  requestStatusFunnelView(input: CTATDashboardFilter): Boolean!
+}

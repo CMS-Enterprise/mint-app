@@ -2477,6 +2477,7 @@ type ComplexityRoot struct {
 		CtatRequest                       func(childComplexity int, id uuid.UUID) int
 		CtatRequests                      func(childComplexity int) int
 		CtatRequestsRequester             func(childComplexity int) int
+		CurrentBacklogSize                func(childComplexity int, input *model.CTATDashboardFilter) int
 		CurrentUser                       func(childComplexity int) int
 		CustomTimelineDate                func(childComplexity int, id uuid.UUID) int
 		ExistingModelCollection           func(childComplexity int) int
@@ -2508,6 +2509,8 @@ type ComplexityRoot struct {
 		PlanDocument                      func(childComplexity int, id uuid.UUID) int
 		PlanPayments                      func(childComplexity int, id uuid.UUID) int
 		PlanTdl                           func(childComplexity int, id uuid.UUID) int
+		RequestStatusFunnelView           func(childComplexity int, input *model.CTATDashboardFilter) int
+		RequestsOverTime                  func(childComplexity int, input *model.CTATDashboardFilter) int
 		SearchOktaUsers                   func(childComplexity int, searchTerm string) int
 		TranslatedAuditCollection         func(childComplexity int, modelPlanID uuid.UUID, limit *int, offset *int) int
 		UserAccount                       func(childComplexity int, username string) int
@@ -3550,6 +3553,9 @@ type QueryResolver interface {
 	Analytics(ctx context.Context) (*models.AnalyticsSummary, error)
 	LockableSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.LockableSectionLockStatus, error)
 	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
+	CurrentBacklogSize(ctx context.Context, input *model.CTATDashboardFilter) (bool, error)
+	RequestsOverTime(ctx context.Context, input *model.CTATDashboardFilter) (bool, error)
+	RequestStatusFunnelView(ctx context.Context, input *model.CTATDashboardFilter) (bool, error)
 	CtatRequest(ctx context.Context, id uuid.UUID) (*models.CTATRequest, error)
 	CtatRequestsRequester(ctx context.Context) (*models.CTATRequestsTableDataRequester, error)
 	CtatRequests(ctx context.Context) (*models.CTATRequestsTableData, error)
@@ -16027,6 +16033,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.CtatRequestsRequester(childComplexity), true
+	case "Query.currentBacklogSize":
+		if e.ComplexityRoot.Query.CurrentBacklogSize == nil {
+			break
+		}
+
+		args, err := ec.field_Query_currentBacklogSize_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Query.CurrentBacklogSize(childComplexity, args["input"].(*model.CTATDashboardFilter)), true
 	case "Query.currentUser":
 		if e.ComplexityRoot.Query.CurrentUser == nil {
 			break
@@ -16329,6 +16346,28 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 		}
 
 		return e.ComplexityRoot.Query.PlanTdl(childComplexity, args["id"].(uuid.UUID)), true
+	case "Query.requestStatusFunnelView":
+		if e.ComplexityRoot.Query.RequestStatusFunnelView == nil {
+			break
+		}
+
+		args, err := ec.field_Query_requestStatusFunnelView_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Query.RequestStatusFunnelView(childComplexity, args["input"].(*model.CTATDashboardFilter)), true
+	case "Query.requestsOverTime":
+		if e.ComplexityRoot.Query.RequestsOverTime == nil {
+			break
+		}
+
+		args, err := ec.field_Query_requestsOverTime_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Query.RequestsOverTime(childComplexity, args["input"].(*model.CTATDashboardFilter)), true
 	case "Query.searchOktaUsers":
 		if e.ComplexityRoot.Query.SearchOktaUsers == nil {
 			break
@@ -19227,6 +19266,10 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalers := func() *graphql.InputUnmarshalerIndex {
 		return graphql.NewInputUnmarshalerIndex(
 			graphql.NewInputUnmarshaler("CTATAdminUpdateInput", ec.unmarshalInputCTATAdminUpdateInput),
+			graphql.NewInputUnmarshaler("CTATDashboardCMMIFilter", ec.unmarshalInputCTATDashboardCMMIFilter),
+			graphql.NewInputUnmarshaler("CTATDashboardCMMIGroupFilter", ec.unmarshalInputCTATDashboardCMMIGroupFilter),
+			graphql.NewInputUnmarshaler("CTATDashboardFilter", ec.unmarshalInputCTATDashboardFilter),
+			graphql.NewInputUnmarshaler("CTATDashboardSubmissionDateFilter", ec.unmarshalInputCTATDashboardSubmissionDateFilter),
 			graphql.NewInputUnmarshaler("CTATRequestDocumentInput", ec.unmarshalInputCTATRequestDocumentInput),
 			graphql.NewInputUnmarshaler("CTATRequestInput", ec.unmarshalInputCTATRequestInput),
 			graphql.NewInputUnmarshaler("CustomTimelineDateChanges", ec.unmarshalInputCustomTimelineDateChanges),
@@ -20318,6 +20361,57 @@ Represents a translation of enum values.  generalName is the human readable name
 type EnumTranslation {
   generalName: String!
   groupedName: String
+}
+`, BuiltIn: false},
+	{Name: "../schema/types/ctat/ctat_dashboard.graphql", Input: `enum CTATDashboardRelativeDateFilter {
+  PAST_WEEK
+  PAST_MONTH
+  PAST_QUARTER
+  PAST_CALENDAR_YEAR
+  ALL_TIME
+  CUSTOM_DATE_RANGE
+}
+
+"""
+Input for filtering CTAT Dashboard data
+"""
+input CTATDashboardFilter {
+  divisionFilter: CTATDashboardCMMIFilter
+  modelFilter: UUID
+  contractTypeFilter: CTATContractType
+  dateFilter: CTATDashboardSubmissionDateFilter
+}
+
+"""
+Input for filtering on CMMI Groups/Divisions
+"""
+input CTATDashboardCMMIFilter {
+  groups: [CTATDashboardCMMIGroupFilter!]!
+  includeOtherGroup: Boolean!
+}
+
+"""
+Input for specific in-group filtering
+"""
+input CTATDashboardCMMIGroupFilter {
+  group: CTATCMMIGroupOption!
+  divisions: [CTATCMMIDivisionOption!]!
+}
+
+"""
+Input for date filtering
+"""
+input CTATDashboardSubmissionDateFilter {
+  selection: CTATDashboardRelativeDateFilter!
+  startDate: Time
+  endDate: Time
+}
+
+# placeholders
+extend type Query {
+  currentBacklogSize(input: CTATDashboardFilter): Boolean!
+  requestsOverTime(input: CTATDashboardFilter): Boolean!
+  requestStatusFunnelView(input: CTATDashboardFilter): Boolean!
 }
 `, BuiltIn: false},
 	{Name: "../schema/types/ctat/ctat_request.graphql", Input: `"""
@@ -33025,6 +33119,20 @@ func (ec *executionContext) field_Query_ctatRequest_args(ctx context.Context, ra
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_currentBacklogSize_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (*model.CTATDashboardFilter, error) {
+			return ec.unmarshalOCTATDashboardFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardFilter(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_customTimelineDate_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
@@ -33352,6 +33460,34 @@ func (ec *executionContext) field_Query_planTDL_args(ctx context.Context, rawArg
 		return nil, err
 	}
 	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_requestStatusFunnelView_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (*model.CTATDashboardFilter, error) {
+			return ec.unmarshalOCTATDashboardFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardFilter(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_requestsOverTime_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
+		func(ctx context.Context, v any) (*model.CTATDashboardFilter, error) {
+			return ec.unmarshalOCTATDashboardFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardFilter(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -89204,6 +89340,138 @@ func (ec *executionContext) fieldContext_Query_ndaInfo(_ context.Context, field 
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_currentBacklogSize(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_currentBacklogSize(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().CurrentBacklogSize(ctx, fc.Args["input"].(*model.CTATDashboardFilter))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_currentBacklogSize(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_currentBacklogSize_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_requestsOverTime(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_requestsOverTime(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().RequestsOverTime(ctx, fc.Args["input"].(*model.CTATDashboardFilter))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_requestsOverTime(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_requestsOverTime_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_requestStatusFunnelView(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Query_requestStatusFunnelView(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Query().RequestStatusFunnelView(ctx, fc.Args["input"].(*model.CTATDashboardFilter))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v bool) graphql.Marshaler {
+			return ec.marshalNBoolean2bool(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Query_requestStatusFunnelView(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_requestStatusFunnelView_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_ctatRequest(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -104085,6 +104353,223 @@ func (ec *executionContext) unmarshalInputCTATAdminUpdateInput(ctx context.Conte
 func UnmarshalCTATAdminUpdateInput(ctx context.Context, raw any) (map[string]any, error) {
 	var out map[string]any
 	err := graphql.UnmarshalNamedInputFromContext(ctx, "CTATAdminUpdateInput", raw, &out)
+	return out, err
+}
+
+func (ec *executionContext) unmarshalInputCTATDashboardCMMIFilter(ctx context.Context, obj any) (model.CTATDashboardCMMIFilter, error) {
+	var it model.CTATDashboardCMMIFilter
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"groups", "includeOtherGroup"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "groups":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("groups"))
+			data, err := ec.unmarshalNCTATDashboardCMMIGroupFilter2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardCMMIGroupFilterᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Groups = data
+		case "includeOtherGroup":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("includeOtherGroup"))
+			data, err := ec.unmarshalNBoolean2bool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.IncludeOtherGroup = data
+		}
+	}
+	return it, nil
+}
+
+// UnmarshalCTATDashboardCMMIFilter unmarshals raw into the CTATDashboardCMMIFilter input type, using the
+// unmarshaler bound to ctx's request. Call it from a resolver to decode an input
+// object that was not passed as a field argument.
+//
+// ctx must come from a gqlgen request; outside one there is no unmarshaler to use
+// and the returned error says so.
+func UnmarshalCTATDashboardCMMIFilter(ctx context.Context, raw any) (model.CTATDashboardCMMIFilter, error) {
+	var out model.CTATDashboardCMMIFilter
+	err := graphql.UnmarshalNamedInputFromContext(ctx, "CTATDashboardCMMIFilter", raw, &out)
+	return out, err
+}
+
+func (ec *executionContext) unmarshalInputCTATDashboardCMMIGroupFilter(ctx context.Context, obj any) (model.CTATDashboardCMMIGroupFilter, error) {
+	var it model.CTATDashboardCMMIGroupFilter
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"group", "divisions"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "group":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("group"))
+			data, err := ec.unmarshalNCTATCMMIGroupOption2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATCMMIGroupOption(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Group = data
+		case "divisions":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("divisions"))
+			data, err := ec.unmarshalNCTATCMMIDivisionOption2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATCMMIDivisionOptionᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Divisions = data
+		}
+	}
+	return it, nil
+}
+
+// UnmarshalCTATDashboardCMMIGroupFilter unmarshals raw into the CTATDashboardCMMIGroupFilter input type, using the
+// unmarshaler bound to ctx's request. Call it from a resolver to decode an input
+// object that was not passed as a field argument.
+//
+// ctx must come from a gqlgen request; outside one there is no unmarshaler to use
+// and the returned error says so.
+func UnmarshalCTATDashboardCMMIGroupFilter(ctx context.Context, raw any) (model.CTATDashboardCMMIGroupFilter, error) {
+	var out model.CTATDashboardCMMIGroupFilter
+	err := graphql.UnmarshalNamedInputFromContext(ctx, "CTATDashboardCMMIGroupFilter", raw, &out)
+	return out, err
+}
+
+func (ec *executionContext) unmarshalInputCTATDashboardFilter(ctx context.Context, obj any) (model.CTATDashboardFilter, error) {
+	var it model.CTATDashboardFilter
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"divisionFilter", "modelFilter", "contractTypeFilter", "dateFilter"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "divisionFilter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("divisionFilter"))
+			data, err := ec.unmarshalOCTATDashboardCMMIFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardCMMIFilter(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DivisionFilter = data
+		case "modelFilter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelFilter"))
+			data, err := ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ModelFilter = data
+		case "contractTypeFilter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("contractTypeFilter"))
+			data, err := ec.unmarshalOCTATContractType2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATContractType(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.ContractTypeFilter = data
+		case "dateFilter":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateFilter"))
+			data, err := ec.unmarshalOCTATDashboardSubmissionDateFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardSubmissionDateFilter(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.DateFilter = data
+		}
+	}
+	return it, nil
+}
+
+// UnmarshalCTATDashboardFilter unmarshals raw into the CTATDashboardFilter input type, using the
+// unmarshaler bound to ctx's request. Call it from a resolver to decode an input
+// object that was not passed as a field argument.
+//
+// ctx must come from a gqlgen request; outside one there is no unmarshaler to use
+// and the returned error says so.
+func UnmarshalCTATDashboardFilter(ctx context.Context, raw any) (model.CTATDashboardFilter, error) {
+	var out model.CTATDashboardFilter
+	err := graphql.UnmarshalNamedInputFromContext(ctx, "CTATDashboardFilter", raw, &out)
+	return out, err
+}
+
+func (ec *executionContext) unmarshalInputCTATDashboardSubmissionDateFilter(ctx context.Context, obj any) (model.CTATDashboardSubmissionDateFilter, error) {
+	var it model.CTATDashboardSubmissionDateFilter
+	if obj == nil {
+		return it, nil
+	}
+
+	asMap := map[string]any{}
+	for k, v := range obj.(map[string]any) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"selection", "startDate", "endDate"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "selection":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("selection"))
+			data, err := ec.unmarshalNCTATDashboardRelativeDateFilter2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardRelativeDateFilter(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Selection = data
+		case "startDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("startDate"))
+			data, err := ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.StartDate = data
+		case "endDate":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("endDate"))
+			data, err := ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.EndDate = data
+		}
+	}
+	return it, nil
+}
+
+// UnmarshalCTATDashboardSubmissionDateFilter unmarshals raw into the CTATDashboardSubmissionDateFilter input type, using the
+// unmarshaler bound to ctx's request. Call it from a resolver to decode an input
+// object that was not passed as a field argument.
+//
+// ctx must come from a gqlgen request; outside one there is no unmarshaler to use
+// and the returned error says so.
+func UnmarshalCTATDashboardSubmissionDateFilter(ctx context.Context, raw any) (model.CTATDashboardSubmissionDateFilter, error) {
+	var out model.CTATDashboardSubmissionDateFilter
+	err := graphql.UnmarshalNamedInputFromContext(ctx, "CTATDashboardSubmissionDateFilter", raw, &out)
 	return out, err
 }
 
@@ -124149,6 +124634,24 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				func(ctx context.Context) graphql.Marshaler {
 					return ec._Query_ndaInfo(ctx, field)
 				})
+		case "currentBacklogSize":
+			out.ResolveRootConcurrently(innerCtx, ec.OperationContext, i,
+				true, true,
+				func(ctx context.Context) graphql.Marshaler {
+					return ec._Query_currentBacklogSize(ctx, field)
+				})
+		case "requestsOverTime":
+			out.ResolveRootConcurrently(innerCtx, ec.OperationContext, i,
+				true, true,
+				func(ctx context.Context) graphql.Marshaler {
+					return ec._Query_requestsOverTime(ctx, field)
+				})
+		case "requestStatusFunnelView":
+			out.ResolveRootConcurrently(innerCtx, ec.OperationContext, i,
+				true, true,
+				func(ctx context.Context) graphql.Marshaler {
+					return ec._Query_requestStatusFunnelView(ctx, field)
+				})
 		case "ctatRequest":
 			out.ResolveRootConcurrently(innerCtx, ec.OperationContext, i,
 				true, true,
@@ -128656,6 +129159,51 @@ func (ec *executionContext) unmarshalNCTATAdminUpdateInput2map(ctx context.Conte
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) unmarshalNCTATCMMIDivisionOption2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATCMMIDivisionOption(ctx context.Context, v any) (models.CTATCMMIDivisionOption, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.CTATCMMIDivisionOption(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNCTATCMMIDivisionOption2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATCMMIDivisionOption(ctx context.Context, sel ast.SelectionSet, v models.CTATCMMIDivisionOption) graphql.Marshaler {
+	_ = sel
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		graphql.AddInvalidNullFromMarshaler(ctx, "CTATCMMIDivisionOption!")
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNCTATCMMIDivisionOption2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATCMMIDivisionOptionᚄ(ctx context.Context, v any) ([]models.CTATCMMIDivisionOption, error) {
+	vSlice := graphql.CoerceList(v)
+	var err error
+	res := make([]models.CTATCMMIDivisionOption, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNCTATCMMIDivisionOption2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATCMMIDivisionOption(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNCTATCMMIDivisionOption2ᚕgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATCMMIDivisionOptionᚄ(ctx context.Context, sel ast.SelectionSet, v []models.CTATCMMIDivisionOption) graphql.Marshaler {
+	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
+		fc := graphql.GetFieldContext(ctx)
+		fc.Result = &v[i]
+		return ec.marshalNCTATCMMIDivisionOption2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATCMMIDivisionOption(ctx, sel, v[i])
+	})
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNCTATCMMIGroupOption2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATCMMIGroupOption(ctx context.Context, v any) (models.CTATCMMIGroupOption, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.CTATCMMIGroupOption(tmp)
@@ -128669,6 +129217,35 @@ func (ec *executionContext) marshalNCTATCMMIGroupOption2githubᚗcomᚋcmsᚑent
 		graphql.AddInvalidNullFromMarshaler(ctx, "CTATCMMIGroupOption!")
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNCTATDashboardCMMIGroupFilter2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardCMMIGroupFilterᚄ(ctx context.Context, v any) ([]*model.CTATDashboardCMMIGroupFilter, error) {
+	vSlice := graphql.CoerceList(v)
+	var err error
+	res := make([]*model.CTATDashboardCMMIGroupFilter, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNCTATDashboardCMMIGroupFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardCMMIGroupFilter(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) unmarshalNCTATDashboardCMMIGroupFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardCMMIGroupFilter(ctx context.Context, v any) (*model.CTATDashboardCMMIGroupFilter, error) {
+	res, err := ec.unmarshalInputCTATDashboardCMMIGroupFilter(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNCTATDashboardRelativeDateFilter2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardRelativeDateFilter(ctx context.Context, v any) (model.CTATDashboardRelativeDateFilter, error) {
+	var res model.CTATDashboardRelativeDateFilter
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNCTATDashboardRelativeDateFilter2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardRelativeDateFilter(ctx context.Context, sel ast.SelectionSet, v model.CTATDashboardRelativeDateFilter) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNCTATHelpNeededType2githubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋmodelsᚐCTATHelpNeededType(ctx context.Context, v any) (models.CTATHelpNeededType, error) {
@@ -133784,6 +134361,30 @@ func (ec *executionContext) marshalOCTATContractType2ᚖgithubᚗcomᚋcmsᚑent
 	_ = ctx
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) unmarshalOCTATDashboardCMMIFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardCMMIFilter(ctx context.Context, v any) (*model.CTATDashboardCMMIFilter, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCTATDashboardCMMIFilter(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalOCTATDashboardFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardFilter(ctx context.Context, v any) (*model.CTATDashboardFilter, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCTATDashboardFilter(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalOCTATDashboardSubmissionDateFilter2ᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATDashboardSubmissionDateFilter(ctx context.Context, v any) (*model.CTATDashboardSubmissionDateFilter, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputCTATDashboardSubmissionDateFilter(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalOCTATRequestDocumentInput2ᚕᚖgithubᚗcomᚋcmsᚑenterpriseᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCTATRequestDocumentInputᚄ(ctx context.Context, v any) ([]*model.CTATRequestDocumentInput, error) {

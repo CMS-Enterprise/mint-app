@@ -345,6 +345,42 @@ export enum CtatContractType {
   TIME_AND_MATERIALS = 'TIME_AND_MATERIALS'
 }
 
+/** Input for filtering on CMMI Groups/Divisions */
+export type CtatDashboardCmmiFilter = {
+  groups: Array<CtatDashboardCmmiGroupFilter>;
+  includeOtherGroup: Scalars['Boolean']['input'];
+};
+
+/** Input for specific in-group filtering */
+export type CtatDashboardCmmiGroupFilter = {
+  divisions: Array<CtatcmmiDivisionOption>;
+  group: CtatcmmiGroupOption;
+};
+
+/** Input for filtering CTAT Dashboard data */
+export type CtatDashboardFilter = {
+  contractTypeFilter?: InputMaybe<CtatContractType>;
+  dateFilter?: InputMaybe<CtatDashboardSubmissionDateFilter>;
+  divisionFilter?: InputMaybe<CtatDashboardCmmiFilter>;
+  modelFilter?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+export enum CtatDashboardRelativeDateFilter {
+  ALL_TIME = 'ALL_TIME',
+  CUSTOM_DATE_RANGE = 'CUSTOM_DATE_RANGE',
+  PAST_CALENDAR_YEAR = 'PAST_CALENDAR_YEAR',
+  PAST_MONTH = 'PAST_MONTH',
+  PAST_QUARTER = 'PAST_QUARTER',
+  PAST_WEEK = 'PAST_WEEK'
+}
+
+/** Input for date filtering */
+export type CtatDashboardSubmissionDateFilter = {
+  endDate?: InputMaybe<Scalars['Time']['input']>;
+  selection: CtatDashboardRelativeDateFilter;
+  startDate?: InputMaybe<Scalars['Time']['input']>;
+};
+
 /** The selected type of help needed for a CTAT record. */
 export enum CtatHelpNeededType {
   CALM_SYSTEM_REQUISITION_SUPPORT = 'CALM_SYSTEM_REQUISITION_SUPPORT',
@@ -5309,6 +5345,7 @@ export type Query = {
   ctatRequest: CtatRequest;
   ctatRequests: CtatRequestsTableData;
   ctatRequestsRequester: CtatRequestsTableDataRequester;
+  currentBacklogSize: Scalars['Boolean']['output'];
   currentUser: CurrentUser;
   customTimelineDate: CustomTimelineDate;
   existingModelCollection: Array<ExistingModel>;
@@ -5341,6 +5378,8 @@ export type Query = {
   planDocument: PlanDocument;
   planPayments: PlanPayments;
   planTDL: PlanTdl;
+  requestStatusFunnelView: Scalars['Boolean']['output'];
+  requestsOverTime: Scalars['Boolean']['output'];
   searchOktaUsers: Array<UserInfo>;
   /**
    * TranslatedAuditCollection returns a collection of translated audits, with access dependant on who is viewing the audits.
@@ -5384,6 +5423,12 @@ export type QueryCommonWaiversArgs = {
 /** Query definition for the schema */
 export type QueryCtatRequestArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryCurrentBacklogSizeArgs = {
+  input?: InputMaybe<CtatDashboardFilter>;
 };
 
 
@@ -5523,6 +5568,18 @@ export type QueryPlanPaymentsArgs = {
 /** Query definition for the schema */
 export type QueryPlanTdlArgs = {
   id: Scalars['UUID']['input'];
+};
+
+
+/** Query definition for the schema */
+export type QueryRequestStatusFunnelViewArgs = {
+  input?: InputMaybe<CtatDashboardFilter>;
+};
+
+
+/** Query definition for the schema */
+export type QueryRequestsOverTimeArgs = {
+  input?: InputMaybe<CtatDashboardFilter>;
 };
 
 
