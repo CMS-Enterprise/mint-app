@@ -179,8 +179,10 @@ func PlanTaskMarkComplete(
 			newState = models.PlanTaskStateComplete
 		} else if key == models.PlanTaskKeyApprovedIcip {
 			// Un-completing the approved ICIP task returns it to where its criteria put it: TO_DO
-			// ("Current") only once clearance has started, otherwise back to UPCOMING.
-			modelPlan, err := storage.ModelPlanGetByID(tx, logger, modelPlanID)
+			// ("Current") only once clearance has started, otherwise back to UPCOMING. The plan row is
+			// locked so a concurrent ModelPlanUpdate (which locks the plan, then syncs the task) can't
+			// change the status between this read and the write below.
+			modelPlan, err := storage.ModelPlanGetByIDForUpdate(tx, logger, modelPlanID)
 			if err != nil {
 				return nil, err
 			}

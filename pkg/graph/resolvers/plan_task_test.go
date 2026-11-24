@@ -9,15 +9,18 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
@@ -836,6 +839,47 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
 		markComplete(plan.ID, false)
 		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
+	})
+
+	suite.Run("marking to do waits for a concurrent status change into clearance", func() {
+		// A ModelPlanUpdate into clearance locks the plan row and skips syncing the still-COMPLETE
+		// task. An unmark that read the stale pre-clearance status would then write UPCOMING after
+		// clearance started, so it must block on the plan row and see the new status instead.
+		plan := suite.createModelPlan("Plan Approved ICIP Concurrent Clearance")
+		markComplete(plan.ID, true)
+
+		unmarkDone := make(chan struct{})
+		err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+			existing, err := storage.ModelPlanGetByID(tx, suite.testConfigs.Logger, plan.ID)
+			suite.Require().NoError(err)
+			existing.Status = models.ModelStatusCmsClearance
+			existing.ModifiedBy = helpers.PointerTo(suite.testConfigs.Principal.Account().ID)
+			_, err = storage.ModelPlanUpdate(tx, suite.testConfigs.Logger, existing)
+			suite.Require().NoError(err)
+
+			go func() {
+				defer close(unmarkDone)
+				markComplete(plan.ID, false)
+			}()
+
+			select {
+			case <-unmarkDone:
+				suite.Fail("unmark must wait for the uncommitted status change instead of reading the stale status")
+			case <-time.After(500 * time.Millisecond):
+			}
+
+			// the sync leaves the COMPLETE task alone, as ModelPlanUpdate would
+			_, err = UpdatePlanTaskStateOnApprovedIcipSync(suite.testConfigs.Context, tx, suite.testConfigs.Logger, plan.ID, suite.testConfigs.Principal)
+			return err
+		})
+		suite.NoError(err)
+
+		select {
+		case <-unmarkDone:
+		case <-time.After(10 * time.Second):
+			suite.FailNow("unmark did not finish after the status change committed")
+		}
+		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
 	})
 }
 

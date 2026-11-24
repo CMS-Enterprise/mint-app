@@ -124,7 +124,7 @@ describe('Tasks page', () => {
 
     expect(screen.getByRole('heading', { name: 'Tasks' })).toBeInTheDocument();
     expect(screen.getByTestId('model-plan-name')).toHaveTextContent('for Test');
-    expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
+    expect(screen.getByText('Upcoming tasks (5)')).toBeInTheDocument();
     expect(screen.getByText('Completed tasks (0)')).toBeInTheDocument();
 
     expect(getCardHeadings(container)).toEqual([
@@ -153,7 +153,7 @@ describe('Tasks page', () => {
     await waitFor(() => {
       expect(screen.getByText('Current tasks (5)')).toBeInTheDocument();
     });
-    expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
+    expect(screen.getByText('Upcoming tasks (5)')).toBeInTheDocument();
     unmount();
 
     const activated = renderWithMock(
@@ -190,7 +190,7 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(planTasksAllToDo, 'upcoming');
 
     await waitFor(() => {
-      expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
+      expect(screen.getByText('Upcoming tasks (5)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
@@ -221,16 +221,18 @@ describe('Tasks page', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
+      expect(screen.getByText('Upcoming tasks (5)')).toBeInTheDocument();
     });
 
     const headings = getCardHeadings(container);
-    expect(headings).toHaveLength(4);
+    expect(headings).toHaveLength(5);
     expect(headings[0]).toBe(
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)'
     );
-    expect(headings[1]).toBe('Prepare for clearance');
-    expect(headings[3]).toBe(
+    expect(headings[1]).toBe('Start your ICIP');
+    expect(headings[2]).toBe('Prepare for clearance');
+    expect(headings[3]).toBe('Add approved ICIP');
+    expect(headings[4]).toBe(
       'Prepare for your presentation to the Office of the Administrator (OA)'
     );
   });
@@ -252,7 +254,7 @@ describe('Tasks page', () => {
     await waitFor(() => {
       expect(screen.getByText('Completed tasks (0)')).toBeInTheDocument();
       expect(screen.getByText('Current tasks (7)')).toBeInTheDocument();
-      expect(screen.getByText('Upcoming tasks (2)')).toBeInTheDocument();
+      expect(screen.getByText('Upcoming tasks (3)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
@@ -270,7 +272,7 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(completeAllTasks(), 'completed');
 
     await waitFor(() => {
-      expect(screen.getByText('Completed tasks (9)')).toBeInTheDocument();
+      expect(screen.getByText('Completed tasks (10)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
