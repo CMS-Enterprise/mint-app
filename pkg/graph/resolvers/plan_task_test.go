@@ -827,6 +827,16 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		markComplete(plan.ID, false)
 		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
 	})
+
+	suite.Run("marking to do before clearance returns a completed task to UPCOMING", func() {
+		plan := suite.createModelPlan("Plan Approved ICIP Mark To Do Before Clearance")
+		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
+
+		markComplete(plan.ID, true)
+		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+		markComplete(plan.ID, false)
+		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
+	})
 }
 
 // TestPrepareForClearanceActivateIfDue exercises the actual DB-backed activation path used by

@@ -156,7 +156,8 @@ func PrepareForClearanceActivateIfDue(
 // by direct user action, so a key is rejected here if it isn't on that allow-list.
 //
 // Marking a key complete may also activate another task (see models.PlanTaskKey.ActivationTargets),
-// moving it from UPCOMING to TO_DO.
+// moving it from UPCOMING to TO_DO. Marking APPROVED_ICIP incomplete restores the state implied by
+// the model status (UPCOMING before clearance, TO_DO after) rather than always TO_DO.
 func PlanTaskMarkComplete(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -172,12 +173,22 @@ func PlanTaskMarkComplete(
 		return nil, fmt.Errorf("plan task key %s can not be manually marked complete", key)
 	}
 
-	newState := models.PlanTaskStateToDo
-	if isComplete {
-		newState = models.PlanTaskStateComplete
-	}
-
 	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
+		newState := models.PlanTaskStateToDo
+		if isComplete {
+			newState = models.PlanTaskStateComplete
+		} else if key == models.PlanTaskKeyApprovedIcip {
+			// Un-completing the approved ICIP task returns it to where its criteria put it: TO_DO
+			// ("Current") only once clearance has started, otherwise back to UPCOMING.
+			modelPlan, err := storage.ModelPlanGetByID(tx, logger, modelPlanID)
+			if err != nil {
+				return nil, err
+			}
+			if state, ok := models.ApprovedIcipStateForModelStatus(modelPlan.Status); ok {
+				newState = state
+			}
+		}
+
 		result, err := updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, key, newState, principal, principal.Account().ID, emailService, addressBook)
 		if err != nil {
 			return nil, err
