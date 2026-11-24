@@ -48,6 +48,7 @@ SELECT DISTINCT
     ua.family_name,
     ua.zone_info,
     ua.has_logged_in,
+    ua.is_deactivated,
     combined_users.dates_changed AS preference_flags -- Alias 'dates_changed' to 'preference_flags'
 FROM (
     SELECT

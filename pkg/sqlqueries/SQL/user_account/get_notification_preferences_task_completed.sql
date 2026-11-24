@@ -9,6 +9,7 @@ SELECT
     ua.family_name,
     ua.zone_info,
     ua.has_logged_in,
+    ua.is_deactivated,
     unp.task_completed AS preference_flags
 FROM plan_collaborator AS pc
 INNER JOIN user_account AS ua ON pc.user_id = ua.id

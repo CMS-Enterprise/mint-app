@@ -9,6 +9,7 @@ SELECT
     u.family_name,
     u.zone_info,
     u.has_logged_in,
+    u.is_deactivated,
     unp.new_model_plan AS preference_flags
 FROM user_account AS u
 INNER JOIN user_notification_preferences AS unp ON u.id = unp.user_id

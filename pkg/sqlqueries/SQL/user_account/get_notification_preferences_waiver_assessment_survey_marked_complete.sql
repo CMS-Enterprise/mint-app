@@ -46,6 +46,7 @@ SELECT
     ua.family_name,
     ua.zone_info,
     ua.has_logged_in,
+    ua.is_deactivated,
     unp.waiver_assessment_survey_marked_complete AS preference_flags
 FROM combined_users
 INNER JOIN user_account AS ua ON combined_users.user_id = ua.id

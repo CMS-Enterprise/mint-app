@@ -8,6 +8,7 @@ SELECT
     given_name,
     family_name,
     zone_info,
-    has_logged_in
+    has_logged_in,
+    is_deactivated
 
 FROM user_account WHERE username = :username

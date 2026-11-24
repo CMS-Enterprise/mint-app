@@ -140,6 +140,64 @@ func TestUpdateUserAccountFromOkta_BlankOktaFieldsPreserveExisting(t *testing.T)
 	require.Equal(t, "User", updated.FamilyName)
 }
 
+func TestUpdateUserAccountFromOkta_PreservesIsDeactivated(t *testing.T) {
+	ctx := context.Background()
+
+	dbConfig, ldClient, logger, _, _ := getTestDependencies()
+	store, err := storage.NewStore(dbConfig, ldClient)
+	require.NoError(t, err)
+	require.NoError(t, store.TruncateAllTablesDANGEROUS(logger))
+
+	username := "TEST"
+
+	getUserInfo := func(ctx context.Context, _ string) (*models.UserInfo, error) {
+		return &models.UserInfo{
+			DisplayName: "Initial Test User",
+			Email:       "initial@test.com",
+			FirstName:   "Initial",
+			LastName:    "User",
+			Username:    username,
+		}, nil
+	}
+	account, err := userhelpers.GetOrCreateUserAccount(
+		ctx,
+		store,
+		store,
+		username,
+		true,  // hasLoggedIn
+		false, // isMacUser
+		userhelpers.GetUserInfoAccountInfoWrapperFunc(getUserInfo),
+	)
+	require.NoError(t, err)
+	require.False(t, account.IsDeactivated, "new accounts should default to active")
+
+	account.IsDeactivated = true
+	deactivated, err := storage.UserAccountUpdateByUserName(store, account)
+	require.NoError(t, err)
+	require.True(t, deactivated.IsDeactivated)
+
+	// A profile refresh from Okta must not reset the deactivated flag
+	fakeOkta := fakeOktaClient{
+		userInfo: &models.UserInfo{
+			DisplayName: "Updated Test User",
+			Email:       "updated@test.com",
+			FirstName:   "Updated",
+			LastName:    "User",
+			Username:    username,
+		},
+	}
+
+	resLogger := logging.NewZapLogger(logger)
+	err = UpdateUserAccountFromOkta(ctx, store, fakeOkta, resLogger, username)
+	require.NoError(t, err)
+
+	updated, err := storage.UserAccountGetByUsername(store, username)
+	require.NoError(t, err)
+	require.NotNil(t, updated)
+	require.True(t, updated.IsDeactivated)
+	require.Equal(t, "Updated Test User", updated.CommonName)
+}
+
 func TestUpdateUserAccountFromOkta_UserAccountMissing(t *testing.T) {
 	ctx := context.Background()
 
