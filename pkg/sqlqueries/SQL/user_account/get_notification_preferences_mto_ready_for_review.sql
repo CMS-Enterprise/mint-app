@@ -48,6 +48,7 @@ SELECT
     ua.family_name,
     ua.zone_info,
     ua.has_logged_in,
+    ua.is_deactivated,
     unp.mto_ready_for_review AS preference_flags
 FROM combined_users
 INNER JOIN user_account AS ua ON combined_users.user_id = ua.id

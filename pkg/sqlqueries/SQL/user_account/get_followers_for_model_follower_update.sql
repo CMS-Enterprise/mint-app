@@ -9,6 +9,7 @@ SELECT
     ua.family_name,
     ua.zone_info,
     ua.has_logged_in,
+    ua.is_deactivated,
     -- Fall back to the column default if a user has no preferences row, so they are not silently dropped
     COALESCE(unp.model_follower_update, CAST(ARRAY['IN_APP', 'EMAIL'] AS USER_NOTIFICATION_PREFERENCE_FLAG[])) AS preference_flags
 FROM plan_favorite AS pf
