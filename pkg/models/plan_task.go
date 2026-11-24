@@ -28,14 +28,15 @@ type PlanTaskKey string
 // These constants represent the possible values of a PlanTaskKey
 const (
 	PlanTaskKeyModelPlan              PlanTaskKey = "MODEL_PLAN"
-	PlanTaskKeyMto                    PlanTaskKey = "MTO"
-	PlanTaskKeyDataExchange           PlanTaskKey = "DATA_EXCHANGE"
-	PlanTaskKeyWaiverAssessmentSurvey PlanTaskKey = "WAIVER_ASSESSMENT_SURVEY"
 	PlanTaskKeyTwoPager               PlanTaskKey = "TWO_PAGER"
 	PlanTaskKeySixPager               PlanTaskKey = "SIX_PAGER"
-	PlanTaskKeyOaPresentation         PlanTaskKey = "OA_PRESENTATION"
+	PlanTaskKeyDataExchange           PlanTaskKey = "DATA_EXCHANGE"
+	PlanTaskKeyWaiverAssessmentSurvey PlanTaskKey = "WAIVER_ASSESSMENT_SURVEY"
+	PlanTaskKeyDraftIcip              PlanTaskKey = "DRAFT_ICIP"
+	PlanTaskKeyMto                    PlanTaskKey = "MTO"
 	PlanTaskKeyPrepareForClearance    PlanTaskKey = "PREPARE_FOR_CLEARANCE"
 	PlanTaskKeyApprovedIcip           PlanTaskKey = "APPROVED_ICIP"
+	PlanTaskKeyOaPresentation         PlanTaskKey = "OA_PRESENTATION"
 )
 
 // PrepareForClearanceTriggerDays is how many days before a model plan's internal clearance start
@@ -58,6 +59,7 @@ const PrepareForClearanceTriggerDays = 20
 var manuallyMarkablePlanTaskKeys = map[PlanTaskKey]bool{
 	PlanTaskKeyTwoPager:       true,
 	PlanTaskKeySixPager:       true,
+	PlanTaskKeyDraftIcip:      true,
 	PlanTaskKeyOaPresentation: true,
 	PlanTaskKeyApprovedIcip:   true,
 }
@@ -71,21 +73,23 @@ type PlanTaskDefault struct {
 
 // DefaultPlanTasks are the tasks seeded for every new model plan (see ModelPlanCreate in
 // pkg/graph/resolvers/model_plan.go). SIX_PAGER starts UPCOMING and is activated to TO_DO by
-// PlanTaskMarkComplete once TWO_PAGER is marked complete (see PlanTaskKey.ActivationTarget).
+// PlanTaskMarkComplete once TWO_PAGER is marked complete (see PlanTaskKey.ActivationTargets).
+// DRAFT_ICIP starts UPCOMING and is activated once SIX_PAGER is marked complete.
 // OA_PRESENTATION starts UPCOMING and is activated once SIX_PAGER is marked complete.
 // PREPARE_FOR_CLEARANCE starts UPCOMING and is activated by the clearance-date job.
 // APPROVED_ICIP starts UPCOMING and moves to TO_DO once clearance starts (see
 // ApprovedIcipStateForModelStatus).
 var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeyModelPlan, PlanTaskStateToDo},
-	{PlanTaskKeyMto, PlanTaskStateToDo},
-	{PlanTaskKeyDataExchange, PlanTaskStateToDo},
-	{PlanTaskKeyWaiverAssessmentSurvey, PlanTaskStateToDo},
 	{PlanTaskKeyTwoPager, PlanTaskStateToDo},
 	{PlanTaskKeySixPager, PlanTaskStateUpcoming},
-	{PlanTaskKeyOaPresentation, PlanTaskStateUpcoming},
+	{PlanTaskKeyDataExchange, PlanTaskStateToDo},
+	{PlanTaskKeyWaiverAssessmentSurvey, PlanTaskStateToDo},
+	{PlanTaskKeyDraftIcip, PlanTaskStateUpcoming},
+	{PlanTaskKeyMto, PlanTaskStateToDo},
 	{PlanTaskKeyPrepareForClearance, PlanTaskStateUpcoming},
 	{PlanTaskKeyApprovedIcip, PlanTaskStateUpcoming},
+	{PlanTaskKeyOaPresentation, PlanTaskStateUpcoming},
 }
 
 // IsManuallyMarkable reports whether a PlanTaskKey's status is set directly by a user
@@ -98,29 +102,30 @@ func (k PlanTaskKey) IsManuallyMarkable() bool {
 // (moves from UPCOMING to TO_DO) the moment the triggering key is marked complete. Activation is a
 // one-way transition: the target task is never moved back to UPCOMING, even if the triggering task
 // is later marked incomplete again (see PlanTaskMarkComplete in pkg/graph/resolvers/plan_task.go).
-var planTaskActivationTriggers = map[PlanTaskKey]PlanTaskKey{
-	PlanTaskKeyTwoPager: PlanTaskKeySixPager,
-	PlanTaskKeySixPager: PlanTaskKeyOaPresentation,
+var planTaskActivationTriggers = map[PlanTaskKey][]PlanTaskKey{
+	PlanTaskKeyTwoPager: {PlanTaskKeySixPager},
+	PlanTaskKeySixPager: {PlanTaskKeyDraftIcip, PlanTaskKeyOaPresentation},
 }
 
-// ActivationTarget returns the PlanTaskKey that should activate (move from UPCOMING to TO_DO) when k
-// is marked complete, if one is configured.
-func (k PlanTaskKey) ActivationTarget() (PlanTaskKey, bool) {
-	target, ok := planTaskActivationTriggers[k]
-	return target, ok
+// ActivationTargets returns the PlanTaskKeys that should activate (move from UPCOMING to TO_DO) when k
+// is marked complete, if any are configured.
+func (k PlanTaskKey) ActivationTargets() ([]PlanTaskKey, bool) {
+	targets, ok := planTaskActivationTriggers[k]
+	return targets, ok
 }
 
 // planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
 // and change history. Keys without an entry fall back to their raw string value.
 var planTaskKeyDisplayNames = map[PlanTaskKey]string{
 	PlanTaskKeyModelPlan:              "Model Plan",
-	PlanTaskKeyDataExchange:           "Data exchange approach",
-	PlanTaskKeyMto:                    "Model-to-operations matrix (MTO)",
-	PlanTaskKeyWaiverAssessmentSurvey: "Complete your waiver assessment survey",
 	PlanTaskKeyTwoPager:               "Prepare for your 2-page review meeting with CMMI Front Office",
 	PlanTaskKeySixPager:               "Prepare for your 6-page review meeting with CMMI Front Office",
-	PlanTaskKeyOaPresentation:         "Office of the Administrator (OA) presentation",
+	PlanTaskKeyDataExchange:           "Data exchange approach",
+	PlanTaskKeyWaiverAssessmentSurvey: "Complete your waiver assessment survey",
+	PlanTaskKeyDraftIcip:              "Start your ICIP",
+	PlanTaskKeyMto:                    "Model-to-operations matrix (MTO)",
 	PlanTaskKeyPrepareForClearance:    "Prepare for clearance",
+	PlanTaskKeyOaPresentation:         "Office of the Administrator (OA) presentation",
 	PlanTaskKeyApprovedIcip:           "Add approved ICIP",
 }
 

@@ -96,6 +96,10 @@ const completeAllTasks = () =>
       state: PlanTaskState.COMPLETE,
       status: PlanTaskStatus.COMPLETE
     },
+    [PlanTaskKey.DRAFT_ICIP]: {
+      state: PlanTaskState.COMPLETE,
+      status: PlanTaskStatus.COMPLETE
+    },
     [PlanTaskKey.OA_PRESENTATION]: {
       state: PlanTaskState.COMPLETE,
       status: PlanTaskStatus.COMPLETE
@@ -191,6 +195,7 @@ describe('Tasks page', () => {
 
     expect(getCardHeadings(container)).toEqual([
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
+      'Start your ICIP',
       'Prepare for clearance',
       'Add approved ICIP',
       'Prepare for your presentation to the Office of the Administrator (OA)'
@@ -274,6 +279,7 @@ describe('Tasks page', () => {
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'Finalize your data exchange approach',
       'Complete your waiver assessment survey',
+      'Start your ICIP',
       'Keep your model-to-operations matrix (MTO) up-to-date',
       'Prepare for clearance',
       'Add approved ICIP',

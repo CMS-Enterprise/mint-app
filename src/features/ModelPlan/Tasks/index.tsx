@@ -37,6 +37,7 @@ export const FIXED_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.DATA_EXCHANGE,
   PlanTaskKey.WAIVER_ASSESSMENT_SURVEY,
+  PlanTaskKey.DRAFT_ICIP,
   PlanTaskKey.MTO,
   PlanTaskKey.PREPARE_FOR_CLEARANCE,
   PlanTaskKey.APPROVED_ICIP,

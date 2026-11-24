@@ -61,13 +61,15 @@ const TASK_STATUS_CONFIG: Partial<Record<PlanTaskStatus, TaskStatusConfig>> = {
 const USER_MARK_STATUS_TASKS = [
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
-  PlanTaskKey.APPROVED_ICIP,
-  PlanTaskKey.OA_PRESENTATION
+  PlanTaskKey.DRAFT_ICIP,
+  PlanTaskKey.OA_PRESENTATION,
+  PlanTaskKey.APPROVED_ICIP
 ];
 
 const TASK_DOCUMENT_TYPE: Partial<Record<PlanTaskKey, DocumentType>> = {
   [PlanTaskKey.TWO_PAGER]: DocumentType.CONCEPT_PAPER,
   [PlanTaskKey.SIX_PAGER]: DocumentType.CONCEPT_PAPER,
+  [PlanTaskKey.DRAFT_ICIP]: DocumentType.ICIP_DRAFT,
   [PlanTaskKey.OA_PRESENTATION]:
     DocumentType.OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
   [PlanTaskKey.APPROVED_ICIP]: DocumentType.FINAL_ICIP
