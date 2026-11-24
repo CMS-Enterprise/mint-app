@@ -29,6 +29,7 @@ type PlanTaskKey string
 const (
 	PlanTaskKeyModelPlan              PlanTaskKey = "MODEL_PLAN"
 	PlanTaskKeyTwoPager               PlanTaskKey = "TWO_PAGER"
+	PlanTaskKeyBsgModel               PlanTaskKey = "BSG_MODEL"
 	PlanTaskKeySixPager               PlanTaskKey = "SIX_PAGER"
 	PlanTaskKeyDataExchange           PlanTaskKey = "DATA_EXCHANGE"
 	PlanTaskKeyWaiverAssessmentSurvey PlanTaskKey = "WAIVER_ASSESSMENT_SURVEY"
@@ -78,6 +79,7 @@ type PlanTaskDefault struct {
 var DefaultPlanTasks = []PlanTaskDefault{
 	{PlanTaskKeyModelPlan, PlanTaskStateToDo},
 	{PlanTaskKeyTwoPager, PlanTaskStateToDo},
+	{PlanTaskKeyBsgModel, PlanTaskStateUpcoming},
 	{PlanTaskKeySixPager, PlanTaskStateUpcoming},
 	{PlanTaskKeyDataExchange, PlanTaskStateToDo},
 	{PlanTaskKeyWaiverAssessmentSurvey, PlanTaskStateToDo},
