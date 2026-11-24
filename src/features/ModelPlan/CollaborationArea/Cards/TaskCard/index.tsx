@@ -152,23 +152,27 @@ const TaskCard = ({
           }
         }
       ]
-    }).then(response => {
-      if (!response.errors) {
-        toastSuccess(
-          <Trans
-            i18nKey={t(`${baseKey}.success`, {
-              defaultValue: t(
-                markComplete ? 'markCompleteSuccess' : 'markTodoSuccess',
-                { heading: t(`${baseKey}.heading`) }
-              )
-            })}
-            components={{
-              bold: <span className="text-bold" />
-            }}
-          />
-        );
-      }
-    });
+    })
+      .then(response => {
+        if (!response.errors) {
+          toastSuccess(
+            <Trans
+              i18nKey={t(`${baseKey}.success`, {
+                defaultValue: t(
+                  markComplete ? 'markCompleteSuccess' : 'markTodoSuccess',
+                  { heading: t(`${baseKey}.heading`) }
+                )
+              })}
+              components={{
+                bold: <span className="text-bold" />
+              }}
+            />
+          );
+        }
+      })
+      .catch(() => {
+        // The error link already surfaces mutation failures; skip the success toast
+      });
   };
 
   const secondaryLink = secondaryAction !== '' && (

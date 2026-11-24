@@ -105,4 +105,87 @@ describe('Tasks page', () => {
       'be.visible'
     );
   });
+
+  it('adds an approved ICIP from the task card, then marks the task complete and to-do', () => {
+    cy.enterModelPlanCollaborationArea('Plan with Data Exchange');
+
+    cy.contains('button', /See all \(\d+\)/).click();
+
+    // If a previous failed run left the task Completed (cleanup below is skipped when an
+    // assertion fails), revert it to to-do first so the search below can find it.
+    cy.get('[data-testid="completed-tab"]').click();
+    cy.url().should('include', 'tab=completed');
+
+    cy.get('body').then($body => {
+      if ($body.find('h3:contains("Add approved ICIP")').length > 0) {
+        cy.contains('h3', 'Add approved ICIP')
+          .closest('.collaboration-area__card')
+          .contains('button', 'Mark this task to do')
+          .click();
+
+        cy.get('[data-testid="toast-success"]').contains(
+          'Add approved ICIP is now to-do.'
+        );
+        cy.contains('h3', 'Add approved ICIP').should('not.exist');
+      }
+    });
+
+    // Approved ICIP is UPCOMING until clearance starts, so it lives on the Upcoming tab.
+    // Marking it to-do (the cleanup below) persists TO_DO rather than UPCOMING, so on a
+    // retry without a DB reset the card sits on the Current tab instead.
+    cy.get('[data-testid="upcoming-tab"]').click();
+    cy.url().should('include', 'tab=upcoming');
+
+    cy.get('body').then($body => {
+      if ($body.find('h3:contains("Add approved ICIP")').length === 0) {
+        cy.get('[data-testid="current-tab"]').click();
+      }
+    });
+
+    cy.contains('h3', 'Add approved ICIP')
+      .closest('.collaboration-area__card')
+      .as('icipCard');
+
+    cy.get('@icipCard')
+      .contains('button', /Upload to ICIP repository on SharePoint/i)
+      .should('be.visible');
+
+    // Primary action opens Add document with Final ICIP preselected
+    cy.get('@icipCard').contains('button', 'Add ICIP').click();
+
+    cy.location('pathname').should(
+      'match',
+      /\/models\/[^/]+\/collaboration-area\/documents\/add-document$/
+    );
+    cy.contains('h1', 'Add a document');
+    cy.contains('.usa-radio', 'Final ICIP').find('input').should('be.checked');
+
+    cy.go('back');
+
+    // Mark complete: success toast, then the task moves to the Completed tab
+    cy.contains('h3', 'Add approved ICIP')
+      .closest('.collaboration-area__card')
+      .contains('label', 'Mark this task complete')
+      .click();
+
+    cy.get('[data-testid="toast-success"]').contains(
+      'Add approved ICIP is now complete.'
+    );
+
+    cy.get('[data-testid="completed-tab"]').click();
+    cy.url().should('include', 'tab=completed');
+    cy.contains('h3', 'Add approved ICIP').should('be.visible');
+
+    // Revert to to-do (not back to UPCOMING; that state is derived from clearance)
+    cy.contains('h3', 'Add approved ICIP')
+      .closest('.collaboration-area__card')
+      .contains('button', 'Mark this task to do')
+      .click();
+
+    cy.get('[data-testid="toast-success"]').contains(
+      'Add approved ICIP is now to-do.'
+    );
+
+    cy.contains('h3', 'Add approved ICIP').should('not.exist');
+  });
 });
