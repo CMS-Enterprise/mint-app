@@ -149,7 +149,31 @@ func PrepareForClearanceActivateIfDue(
 	)
 }
 
-// PlanTaskMarkComplete directly sets a manually-markable plan task's status to COMPLETE or TO_DO.
+func getPlanTaskNewState(ctx context.Context, modelPlanID uuid.UUID, key models.PlanTaskKey, isComplete bool) (models.PlanTaskState, error) {
+	if isComplete {
+		return models.PlanTaskStateComplete, nil
+	}
+
+	if triggerKey := key.ActivationTrigger(); triggerKey != "" {
+		tasks, err := PlanTaskGetByModelPlanIDLOADER(ctx, modelPlanID)
+		if err != nil {
+			return "", err
+		}
+
+		for _, task := range tasks {
+			if task.Key == triggerKey {
+				if task.State != models.PlanTaskStateComplete {
+					return models.PlanTaskStateUpcoming, nil
+				}
+				break
+			}
+		}
+	}
+
+	return models.PlanTaskStateToDo, nil
+}
+
+// PlanTaskMarkComplete directly sets a manually-markable plan task's status to COMPLETE or TO_DO/UPCOMING.
 // Unlike the calculated task keys (MODEL_PLAN, MTO, DATA_EXCHANGE), which are derived from other
 // model state and updated via updatePlanTaskStateByKey's other callers, manually-markable keys
 // (see models.PlanTaskKey.IsManuallyMarkable) have no calculated status and are only ever changed
@@ -201,6 +225,11 @@ func PlanTaskMarkComplete(
 			}
 		}
 
+		newState, err := getPlanTaskNewState(ctx, modelPlanID, key, isComplete)
+		if err != nil {
+			return nil, err
+		}
+
 		result, err := updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, key, newState, principal, principal.Account().ID, emailService, addressBook)
 		if err != nil {
 			return nil, err
@@ -210,6 +239,14 @@ func PlanTaskMarkComplete(
 			if targetKeys, ok := key.ActivationTargets(); ok {
 				for _, targetKey := range targetKeys {
 					if err := activateUpcomingPlanTask(ctx, tx, logger, modelPlanID, targetKey, principal, emailService, addressBook); err != nil {
+						return nil, err
+					}
+				}
+			}
+		} else {
+			if targetKeys, ok := key.ActivationTargets(); ok {
+				for _, targetKey := range targetKeys {
+					if err := deactivateToDoPlanTask(ctx, tx, logger, modelPlanID, targetKey, principal, emailService, addressBook); err != nil {
 						return nil, err
 					}
 				}
@@ -245,6 +282,35 @@ func activateUpcomingPlanTask(
 	}
 
 	trySendPlanTaskNewAvailableNotifications(ctx, np, logger, modelPlanID, task, principal.Account().ID, emailService, addressBook)
+	return nil
+}
+
+// deactivateToDoPlanTask moves a plan task from TO_DO to UPCOMING via a single conditional
+func deactivateToDoPlanTask(
+	ctx context.Context,
+	tx *sqlx.Tx,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	key models.PlanTaskKey,
+	principal authentication.Principal,
+	emailService oddmail.EmailService,
+	addressBook email.AddressBook,
+) error {
+	tasks, err := PlanTaskGetByModelPlanIDLOADER(ctx, modelPlanID)
+	if err != nil {
+		return err
+	}
+
+	for _, task := range tasks {
+		if task.Key == key {
+			if task.State == models.PlanTaskStateComplete || task.State == models.PlanTaskStateUpcoming {
+				return nil
+			}
+			_, err = updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, key, models.PlanTaskStateUpcoming, principal, principal.Account().ID, emailService, addressBook)
+			return err
+		}
+	}
+
 	return nil
 }
 
