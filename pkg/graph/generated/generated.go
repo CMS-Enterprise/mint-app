@@ -25765,6 +25765,7 @@ PlanTaskKey identifies which of the plan tasks this row represents.
 enum PlanTaskKey {
   MODEL_PLAN
   TWO_PAGER
+  BSG_MODEL
   SIX_PAGER
   DATA_EXCHANGE
   WAIVER_ASSESSMENT_SURVEY

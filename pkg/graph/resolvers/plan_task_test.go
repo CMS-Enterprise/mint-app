@@ -662,6 +662,7 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	taskByKey := planTasksByKey(tasks)
 	suite.NotNil(taskByKey[models.PlanTaskKeyModelPlan])
 	suite.NotNil(taskByKey[models.PlanTaskKeyMto])
+	suite.NotNil(taskByKey[models.PlanTaskKeyBsgModel])
 	suite.NotNil(taskByKey[models.PlanTaskKeyDataExchange])
 	suite.NotNil(taskByKey[models.PlanTaskKeyWaiverAssessmentSurvey])
 	suite.NotNil(taskByKey[models.PlanTaskKeyTwoPager])
@@ -671,6 +672,7 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	suite.NotNil(taskByKey[models.PlanTaskKeyPrepareForClearance])
 
 	upcomingKeys := map[models.PlanTaskKey]bool{
+		models.PlanTaskKeyBsgModel:            true,
 		models.PlanTaskKeySixPager:            true,
 		models.PlanTaskKeyOaPresentation:      true,
 		models.PlanTaskKeyPrepareForClearance: true,
