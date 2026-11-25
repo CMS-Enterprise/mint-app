@@ -841,6 +841,27 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
 	})
 
+	suite.Run("a non-collaborator can not unmark the task", func() {
+		plan := suite.createModelPlan("Plan Approved ICIP Unauthorized Unmark")
+		markComplete(plan.ID, true)
+
+		notCollab := suite.getTestPrincipal(suite.testConfigs.Store, "FAIL")
+		notCollab.JobCodeASSESSMENT = false // assessment users bypass the collaborator check
+		_, err := PlanTaskMarkComplete(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			plan.ID,
+			models.PlanTaskKeyApprovedIcip,
+			false,
+			notCollab,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.Error(err)
+		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+	})
+
 	suite.Run("marking to do waits for a concurrent status change into clearance", func() {
 		// A ModelPlanUpdate into clearance locks the plan row and skips syncing the still-COMPLETE
 		// task. An unmark that read the stale pre-clearance status would then write UPCOMING after
