@@ -149,20 +149,13 @@ func PrepareForClearanceActivateIfDue(
 	)
 }
 
-func getPlanTaskNewState(ctx context.Context, tx *sqlx.Tx, modelPlanID uuid.UUID, key models.PlanTaskKey, isComplete bool) (models.PlanTaskState, error) {
+func getPlanTaskNewState(tx *sqlx.Tx, logger *zap.Logger,
+	modelPlan *models.ModelPlan, key models.PlanTaskKey, isComplete bool) (models.PlanTaskState, error) {
 	if isComplete {
 		return models.PlanTaskStateComplete, nil
 	}
 
 	if key == models.PlanTaskKeyApprovedIcip {
-		// Un-completing the approved ICIP task returns it to where its criteria put it: TO_DO
-		// ("Current") only once clearance has started, otherwise back to UPCOMING. The plan row is
-		// locked so a concurrent ModelPlanUpdate (which locks the plan, then syncs the task) can't
-		// change the status between this read and the write below.
-		modelPlan, err := storage.ModelPlanGetByIDForUpdate(tx, modelPlanID)
-		if err != nil {
-			return "", err
-		}
 		// PAUSED / CANCELED don't record whether clearance had started, so unmarking defaults to
 		// UPCOMING rather than putting a plan paused before clearance under Current. Known trade-off:
 		// a plan paused after clearance began also lands in UPCOMING until its status changes.
@@ -173,19 +166,15 @@ func getPlanTaskNewState(ctx context.Context, tx *sqlx.Tx, modelPlanID uuid.UUID
 	}
 
 	if triggerKey := key.ActivationTrigger(); triggerKey != "" {
-		tasks, err := PlanTaskGetByModelPlanIDLOADER(ctx, modelPlanID)
+		task, err := storage.PlanTaskGetByModelPlanIDAndKey(tx, logger, modelPlan.ID, triggerKey)
 		if err != nil {
 			return "", err
 		}
 
-		for _, task := range tasks {
-			if task.Key == triggerKey {
-				if task.State != models.PlanTaskStateComplete {
-					return models.PlanTaskStateUpcoming, nil
-				}
-				break
-			}
+		if task.State != models.PlanTaskStateComplete {
+			return models.PlanTaskStateUpcoming, nil
 		}
+
 	}
 
 	return models.PlanTaskStateToDo, nil
@@ -222,7 +211,12 @@ func PlanTaskMarkComplete(
 			return nil, err
 		}
 
-		newState, err := getPlanTaskNewState(ctx, tx, modelPlanID, key, isComplete)
+		modelPlan, err := storage.ModelPlanGetByIDForUpdate(tx, modelPlanID)
+		if err != nil {
+			return nil, err
+		}
+
+		newState, err := getPlanTaskNewState(tx, logger, modelPlan, key, isComplete)
 		if err != nil {
 			return nil, err
 		}
@@ -293,22 +287,20 @@ func deactivateToDoPlanTask(
 	emailService oddmail.EmailService,
 	addressBook email.AddressBook,
 ) error {
-	tasks, err := PlanTaskGetByModelPlanIDLOADER(ctx, modelPlanID)
-	if err != nil {
-		return err
-	}
-
-	for _, task := range tasks {
-		if task.Key == key {
-			if task.State == models.PlanTaskStateComplete || task.State == models.PlanTaskStateUpcoming {
-				return nil
-			}
-			_, err = updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, key, models.PlanTaskStateUpcoming, principal, principal.Account().ID, emailService, addressBook)
-			return err
-		}
-	}
-
-	return nil
+	_, err := updatePlanTaskStateByKeyOpt(
+		ctx,
+		tx,
+		logger,
+		modelPlanID,
+		key,
+		models.PlanTaskStateUpcoming,
+		principal,
+		constants.GetSystemAccountUUID(),
+		emailService,
+		addressBook,
+		true,
+	)
+	return err
 }
 
 // planTaskNotificationRecipientsByRole gets lists of both all model leads (regardless of settings) and non-model-leads (respecting settings) for notification purposes
