@@ -140,6 +140,14 @@ func ModelPlanGetByID(np sqlutils.NamedPreparer, logger logging.ILogger, id uuid
 	return &plan, nil
 }
 
+// ModelPlanGetByIDForUpdate returns a model plan for a given ID and row-locks it until the surrounding
+// transaction ends, so the read can't race a concurrent update of the plan (e.g. a status change).
+// It must be called inside a transaction.
+func ModelPlanGetByIDForUpdate(np sqlutils.NamedPreparer, id uuid.UUID) (*models.ModelPlan, error) {
+	arg := map[string]interface{}{"id": id}
+	return sqlutils.GetProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.GetByIDForUpdate, arg)
+}
+
 // ModelPlanGetByName returns a model plan for a given ID
 func ModelPlanGetByName(np sqlutils.NamedPreparer, logger *zap.Logger, modelName string) (*models.ModelPlan, error) {
 

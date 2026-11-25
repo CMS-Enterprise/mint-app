@@ -4,11 +4,13 @@ import (
 	"context"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/models"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 	"github.com/cms-enterprise/mint-app/pkg/storage/loaders"
 )
@@ -27,35 +29,39 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 		}
 	}
 
-	// Get existing plan general characteristics
-	existing, err := storage.PlanGeneralCharacteristicsGetByID(store, logger, id)
-	if err != nil {
-		return nil, err
-	}
+	// The pre-update, save, and post-update calls share a transaction so a failed save can never
+	// leave the model plan task advanced or the edit partially committed.
+	return sqlutils.WithTransaction(store, func(tx *sqlx.Tx) (*models.PlanGeneralCharacteristics, error) {
+		// Get existing plan general characteristics
+		existing, err := storage.PlanGeneralCharacteristicsGetByID(tx, logger, id)
+		if err != nil {
+			return nil, err
+		}
 
-	err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
-	if err != nil {
-		return nil, err
-	}
+		err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, tx)
+		if err != nil {
+			return nil, err
+		}
 
-	retGeneralCharacteristics, err := storage.PlanGeneralCharacteristicsUpdate(store, logger, existing)
-	if err != nil {
-		return nil, err
-	}
+		retGeneralCharacteristics, err := storage.PlanGeneralCharacteristicsUpdate(tx, logger, existing)
+		if err != nil {
+			return nil, err
+		}
 
-	if err := BaseTaskListSectionAfterUpdate(
-		context.Background(),
-		store,
-		logger,
-		existing.ModelPlanID,
-		principal,
-		nil,
-		email.AddressBook{},
-	); err != nil {
-		return nil, err
-	}
+		if err := BaseTaskListSectionAfterUpdate(
+			context.Background(),
+			tx,
+			logger,
+			existing.ModelPlanID,
+			principal,
+			nil,
+			email.AddressBook{},
+		); err != nil {
+			return nil, err
+		}
 
-	return retGeneralCharacteristics, nil
+		return retGeneralCharacteristics, nil
+	})
 }
 
 // PlanGeneralCharacteristicsGetByModelPlanIDLOADER implements resolver logic to get plan general characteristics by a model plan ID using a data loader

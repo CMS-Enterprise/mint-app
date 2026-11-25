@@ -9,15 +9,18 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cms-enterprise/mint-app/pkg/authentication"
 	"github.com/cms-enterprise/mint-app/pkg/constants"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/notifications"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
+	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
 	"github.com/cms-enterprise/mint-app/pkg/storage"
 )
 
@@ -669,8 +672,10 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 	suite.NotNil(taskByKey[models.PlanTaskKeyDraftIcip])
 	suite.NotNil(taskByKey[models.PlanTaskKeyOaPresentation])
 	suite.NotNil(taskByKey[models.PlanTaskKeyPrepareForClearance])
+	suite.NotNil(taskByKey[models.PlanTaskKeyApprovedIcip])
 
 	upcomingKeys := map[models.PlanTaskKey]bool{
+		models.PlanTaskKeyApprovedIcip:        true,
 		models.PlanTaskKeySixPager:            true,
 		models.PlanTaskKeyOaPresentation:      true,
 		models.PlanTaskKeyPrepareForClearance: true,
@@ -687,6 +692,228 @@ func (suite *ResolverSuite) TestModelPlanCreateCreatesDefaultTasks() {
 			suite.Equal(models.PlanTaskStateToDo, t.State)
 		}
 	}
+}
+
+// TestApprovedIcipTaskState covers the APPROVED_ICIP task: it starts UPCOMING, becomes TO_DO from
+// INTERNAL_CMMI_CLEARANCE through ENDED, and a COMPLETE task is never overwritten by the sync.
+func (suite *ResolverSuite) TestApprovedIcipTaskState() {
+	updateStatus := func(planID uuid.UUID, status models.ModelStatus) {
+		_, err := ModelPlanUpdate(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			planID,
+			map[string]interface{}{"status": status},
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+	}
+	markComplete := func(planID uuid.UUID, isComplete bool) {
+		_, err := PlanTaskMarkComplete(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			planID,
+			models.PlanTaskKeyApprovedIcip,
+			isComplete,
+			suite.testConfigs.Principal,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.NoError(err)
+	}
+	icipState := func(planID uuid.UUID) models.PlanTaskState {
+		return suite.getPlanTaskByKey(planID, models.PlanTaskKeyApprovedIcip).State
+	}
+
+	suite.Run("follows model status", func() {
+		plan := suite.createModelPlan("Plan Approved ICIP Status")
+		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
+
+		updateStatus(plan.ID, models.ModelStatusIcipComplete)
+		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
+
+		for _, status := range []models.ModelStatus{
+			models.ModelStatusInternalCmmiClearance,
+			models.ModelStatusCmsClearance,
+			models.ModelStatusHhsClearance,
+			models.ModelStatusOmbAsrfClearance,
+			models.ModelStatusCleared,
+			models.ModelStatusAnnounced,
+			models.ModelStatusActive,
+			models.ModelStatusEnded,
+		} {
+			updateStatus(plan.ID, status)
+			suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID), "expected TO_DO for status %s", status)
+		}
+
+		// PAUSED / CANCELED leave the task alone
+		updateStatus(plan.ID, models.ModelStatusPaused)
+		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
+		updateStatus(plan.ID, models.ModelStatusCanceled)
+		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
+
+		// regressing before clearance returns it to UPCOMING
+		updateStatus(plan.ID, models.ModelStatusIcipComplete)
+		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
+	})
+
+	suite.Run("automatic changes are attributed to the system account", func() {
+		plan := suite.createModelPlan("Plan Approved ICIP Attribution")
+		updateStatus(plan.ID, models.ModelStatusCmsClearance)
+		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
+
+		task := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyApprovedIcip)
+		if suite.NotNil(task.ModifiedBy) {
+			suite.Equal(constants.GetSystemAccountUUID(), *task.ModifiedBy)
+		}
+	})
+
+	suite.Run("a COMPLETE task is preserved when status regresses", func() {
+		plan := suite.createModelPlan("Plan With Completed Approved ICIP")
+		updateStatus(plan.ID, models.ModelStatusCleared)
+		markComplete(plan.ID, true)
+		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+
+		updateStatus(plan.ID, models.ModelStatusPlanDraft)
+		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+	})
+
+	suite.Run("a task completed after the sync's read is not overwritten", func() {
+		// The sync reads the task, then writes. Simulate a collaborator completing the task in that
+		// window by running the sync's write (preserveComplete) against an already-COMPLETE row: the
+		// write must leave it, and its completion metadata, untouched.
+		plan := suite.createModelPlan("Plan Approved ICIP Concurrent Completion")
+		updateStatus(plan.ID, models.ModelStatusCleared)
+		markComplete(plan.ID, true)
+		completed := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyApprovedIcip)
+		suite.Equal(models.PlanTaskStateComplete, completed.State)
+		suite.NotNil(completed.CompletedBy)
+		suite.NotNil(completed.CompletedDts)
+
+		for _, staleState := range []models.PlanTaskState{
+			models.PlanTaskStateToDo,
+			models.PlanTaskStateUpcoming,
+		} {
+			result, err := updatePlanTaskStateByKeyOpt(
+				suite.testConfigs.Context,
+				suite.testConfigs.Store,
+				suite.testConfigs.Logger,
+				plan.ID,
+				models.PlanTaskKeyApprovedIcip,
+				staleState,
+				suite.testConfigs.Principal,
+				suite.testConfigs.Principal.Account().ID,
+				nil,
+				email.AddressBook{},
+				true,
+			)
+			suite.NoError(err)
+			suite.Equal(models.PlanTaskStateComplete, result.State, "write of %s must not apply to a COMPLETE task", staleState)
+			suite.Equal(result.PreviousState, result.State)
+		}
+
+		after := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyApprovedIcip)
+		suite.Equal(models.PlanTaskStateComplete, after.State)
+		suite.Equal(completed.CompletedBy, after.CompletedBy)
+		suite.Equal(completed.CompletedDts, after.CompletedDts)
+	})
+
+	suite.Run("marking to do returns a completed task to TO_DO", func() {
+		plan := suite.createModelPlan("Plan Approved ICIP Mark To Do")
+		updateStatus(plan.ID, models.ModelStatusCleared)
+
+		markComplete(plan.ID, true)
+		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+		markComplete(plan.ID, false)
+		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
+	})
+
+	suite.Run("marking to do before clearance returns a completed task to UPCOMING", func() {
+		plan := suite.createModelPlan("Plan Approved ICIP Mark To Do Before Clearance")
+		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
+
+		markComplete(plan.ID, true)
+		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+		markComplete(plan.ID, false)
+		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
+	})
+
+	suite.Run("marking to do while PAUSED or CANCELED returns a completed task to UPCOMING", func() {
+		for _, status := range []models.ModelStatus{models.ModelStatusPaused, models.ModelStatusCanceled} {
+			plan := suite.createModelPlan("Plan Approved ICIP Unmark " + string(status))
+			markComplete(plan.ID, true)
+			updateStatus(plan.ID, status)
+			suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+
+			markComplete(plan.ID, false)
+			suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID), "expected UPCOMING for status %s", status)
+		}
+	})
+
+	suite.Run("a non-collaborator can not unmark the task", func() {
+		plan := suite.createModelPlan("Plan Approved ICIP Unauthorized Unmark")
+		markComplete(plan.ID, true)
+
+		notCollab := suite.getTestPrincipal(suite.testConfigs.Store, "FAIL")
+		notCollab.JobCodeASSESSMENT = false // assessment users bypass the collaborator check
+		_, err := PlanTaskMarkComplete(
+			suite.testConfigs.Context,
+			suite.testConfigs.Logger,
+			plan.ID,
+			models.PlanTaskKeyApprovedIcip,
+			false,
+			notCollab,
+			suite.testConfigs.Store,
+			nil,
+			email.AddressBook{},
+		)
+		suite.Error(err)
+		suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+	})
+
+	suite.Run("marking to do waits for a concurrent status change into clearance", func() {
+		// A ModelPlanUpdate into clearance locks the plan row and skips syncing the still-COMPLETE
+		// task. An unmark that read the stale pre-clearance status would then write UPCOMING after
+		// clearance started, so it must block on the plan row and see the new status instead.
+		plan := suite.createModelPlan("Plan Approved ICIP Concurrent Clearance")
+		markComplete(plan.ID, true)
+
+		unmarkDone := make(chan struct{})
+		err := sqlutils.WithTransactionNoReturn(suite.testConfigs.Store, func(tx *sqlx.Tx) error {
+			existing, err := storage.ModelPlanGetByID(tx, suite.testConfigs.Logger, plan.ID)
+			suite.Require().NoError(err)
+			existing.Status = models.ModelStatusCmsClearance
+			existing.ModifiedBy = helpers.PointerTo(suite.testConfigs.Principal.Account().ID)
+			_, err = storage.ModelPlanUpdate(tx, suite.testConfigs.Logger, existing)
+			suite.Require().NoError(err)
+
+			go func() {
+				defer close(unmarkDone)
+				markComplete(plan.ID, false)
+			}()
+
+			select {
+			case <-unmarkDone:
+				suite.Fail("unmark must wait for the uncommitted status change instead of reading the stale status")
+			case <-time.After(500 * time.Millisecond):
+			}
+
+			// the sync leaves the COMPLETE task alone, as ModelPlanUpdate would
+			_, err = UpdatePlanTaskStateOnApprovedIcipSync(suite.testConfigs.Context, tx, suite.testConfigs.Logger, plan.ID, suite.testConfigs.Principal)
+			return err
+		})
+		suite.NoError(err)
+
+		select {
+		case <-unmarkDone:
+		case <-time.After(10 * time.Second):
+			suite.FailNow("unmark did not finish after the status change committed")
+		}
+		suite.Equal(models.PlanTaskStateToDo, icipState(plan.ID))
+	})
 }
 
 // TestPrepareForClearanceActivateIfDue exercises the actual DB-backed activation path used by
@@ -888,6 +1115,7 @@ func (suite *ResolverSuite) resetPrepareForClearanceTaskToUpcoming(modelPlanID u
 		nil,
 		nil,
 		modifiedBy,
+		false,
 	)
 	suite.NoError(err)
 }

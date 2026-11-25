@@ -107,6 +107,10 @@ const completeAllTasks = () =>
     [PlanTaskKey.PREPARE_FOR_CLEARANCE]: {
       state: PlanTaskState.COMPLETE,
       status: PlanTaskStatus.COMPLETE
+    },
+    [PlanTaskKey.APPROVED_ICIP]: {
+      state: PlanTaskState.COMPLETE,
+      status: PlanTaskStatus.COMPLETE
     }
   });
 
@@ -120,7 +124,7 @@ describe('Tasks page', () => {
 
     expect(screen.getByRole('heading', { name: 'Tasks' })).toBeInTheDocument();
     expect(screen.getByTestId('model-plan-name')).toHaveTextContent('for Test');
-    expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
+    expect(screen.getByText('Upcoming tasks (5)')).toBeInTheDocument();
     expect(screen.getByText('Completed tasks (0)')).toBeInTheDocument();
 
     expect(getCardHeadings(container)).toEqual([
@@ -141,6 +145,27 @@ describe('Tasks page', () => {
         'Prepare for your presentation to the Office of the Administrator (OA)'
       )
     ).not.toBeInTheDocument();
+  });
+
+  it('lists approved ICIP under Upcoming until clearance starts, then under Current', async () => {
+    const { unmount } = renderWithMock(planTasksAllToDo);
+
+    await waitFor(() => {
+      expect(screen.getByText('Current tasks (5)')).toBeInTheDocument();
+    });
+    expect(screen.getByText('Upcoming tasks (5)')).toBeInTheDocument();
+    unmount();
+
+    const activated = renderWithMock(
+      makePlanTasks({ APPROVED_ICIP: { state: PlanTaskState.TO_DO } })
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Current tasks (6)')).toBeInTheDocument();
+    });
+    expect(getCardHeadings(activated.container).at(-1)).toEqual(
+      'Add approved ICIP'
+    );
   });
 
   it('hides completed tasks from Current and still lists remaining to-do cards', async () => {
@@ -165,17 +190,51 @@ describe('Tasks page', () => {
     const { container } = renderWithMock(planTasksAllToDo, 'upcoming');
 
     await waitFor(() => {
-      expect(screen.getByText('Upcoming tasks (4)')).toBeInTheDocument();
+      expect(screen.getByText('Upcoming tasks (5)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
       'Prepare for your 6-page review meeting with CMMI Front Office (FO)',
       'Start your ICIP',
       'Prepare for clearance',
+      'Add approved ICIP',
       'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
     expect(screen.getByText('Upload 6-pager')).toBeInTheDocument();
     expect(screen.getByText('Upload OA presentation')).toBeInTheDocument();
+  });
+
+  it('lists Approved ICIP right before OA on the Upcoming tab regardless of API order', async () => {
+    const icipTask: PlanTaskEntry = {
+      __typename: 'PlanTask',
+      id: 'approved_icip-task-id',
+      key: PlanTaskKey.APPROVED_ICIP,
+      state: PlanTaskState.UPCOMING,
+      status: PlanTaskStatus.TO_DO,
+      documents: [],
+      completedDts: null
+    };
+
+    const { container } = renderWithMock(
+      [icipTask, ...planTasksAllToDo],
+      'upcoming'
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Upcoming tasks (5)')).toBeInTheDocument();
+    });
+
+    const headings = getCardHeadings(container);
+    expect(headings).toHaveLength(5);
+    expect(headings[0]).toBe(
+      'Prepare for your 6-page review meeting with CMMI Front Office (FO)'
+    );
+    expect(headings[1]).toBe('Start your ICIP');
+    expect(headings[2]).toBe('Prepare for clearance');
+    expect(headings[3]).toBe('Add approved ICIP');
+    expect(headings[4]).toBe(
+      'Prepare for your presentation to the Office of the Administrator (OA)'
+    );
   });
 
   it('moves activated 6-pager and OA presentation cards onto Current', async () => {
@@ -195,7 +254,7 @@ describe('Tasks page', () => {
     await waitFor(() => {
       expect(screen.getByText('Completed tasks (0)')).toBeInTheDocument();
       expect(screen.getByText('Current tasks (7)')).toBeInTheDocument();
-      expect(screen.getByText('Upcoming tasks (2)')).toBeInTheDocument();
+      expect(screen.getByText('Upcoming tasks (3)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
@@ -209,11 +268,11 @@ describe('Tasks page', () => {
     ]);
   });
 
-  it('orders completed tasks newest-to-oldest by completedDts', async () => {
+  it('orders completed tasks by the fixed task order', async () => {
     const { container } = renderWithMock(completeAllTasks(), 'completed');
 
     await waitFor(() => {
-      expect(screen.getByText('Completed tasks (9)')).toBeInTheDocument();
+      expect(screen.getByText('Completed tasks (10)')).toBeInTheDocument();
     });
 
     expect(getCardHeadings(container)).toEqual([
@@ -225,6 +284,7 @@ describe('Tasks page', () => {
       'Start your ICIP',
       'Keep your model-to-operations matrix (MTO) up-to-date',
       'Prepare for clearance',
+      'Add approved ICIP',
       'Prepare for your presentation to the Office of the Administrator (OA)'
     ]);
   });

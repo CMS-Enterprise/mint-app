@@ -1,16 +1,28 @@
 import React from 'react';
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import {
+  createMemoryRouter,
+  RouterProvider,
+  useLocation
+} from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+import { act, render, waitFor } from '@testing-library/react';
+import {
+  DocumentType,
+  GetCollaborationAreaDocument,
   GetCollaborationAreaQuery,
   PlanTaskKey,
   PlanTaskState,
   PlanTaskStatus,
-  TaskStatus
+  TaskStatus,
+  UpdateTaskStatusDocument
 } from 'gql/generated/graphql';
+import { GraphQLError } from 'graphql';
 import { collaborationAreaData } from 'tests/mock/general';
 import { makePlanTasks, modelID, PlanTaskEntry } from 'tests/mock/mto';
 import setup from 'tests/util';
+
+import { getCurrentErrorMeta } from 'contexts/ErrorContext/errorMetaStore';
 
 import TaskCard from './index';
 
@@ -165,6 +177,72 @@ describe('TaskCard', () => {
     ).toBeInTheDocument();
   });
 
+  it('renders Add approved ICIP with both actions and an external-link secondary button', async () => {
+    const { findByText, getByRole, getByText } = renderTaskCard(
+      getTask(PlanTaskKey.APPROVED_ICIP, {
+        state: PlanTaskState.TO_DO,
+        status: PlanTaskStatus.TO_DO
+      })
+    );
+
+    await findByText('Add approved ICIP');
+    expect(
+      getByText(/After clearing your model, please add your approved ICIP\./)
+    ).toBeInTheDocument();
+    expect(getByRole('button', { name: 'Add ICIP' })).toBeInTheDocument();
+    expect(
+      getByRole('button', { name: /Upload to ICIP repository on SharePoint/i })
+    ).toBeInTheDocument();
+    expect(
+      getByRole('checkbox', { name: 'Mark this task complete' })
+    ).toBeInTheDocument();
+  });
+
+  it('navigates to Add document with Final ICIP preselected from the approved ICIP task', async () => {
+    const DestinationState = () => {
+      const location = useLocation();
+      return (
+        <div data-testid="document-type-state">
+          {(location.state as { documentType?: string } | null)?.documentType}
+        </div>
+      );
+    };
+
+    const router = createMemoryRouter(
+      [
+        {
+          path: '/models/:modelID/collaboration-area',
+          element: (
+            <MockedProvider mocks={[]}>
+              <TaskCard
+                modelPlan={collaborationAreaData}
+                task={getTask(PlanTaskKey.APPROVED_ICIP, {
+                  state: PlanTaskState.TO_DO,
+                  status: PlanTaskStatus.TO_DO
+                })}
+              />
+            </MockedProvider>
+          )
+        },
+        {
+          path: '/models/:modelID/collaboration-area/documents/add-document',
+          element: <DestinationState />
+        }
+      ],
+      { initialEntries: [`/models/${modelID}/collaboration-area`] }
+    );
+
+    const { findByRole, findByTestId, user } = setup(
+      <RouterProvider router={router} />
+    );
+
+    await user.click(await findByRole('button', { name: 'Add ICIP' }));
+
+    expect((await findByTestId('document-type-state')).textContent).toBe(
+      DocumentType.FINAL_ICIP
+    );
+  });
+
   it('renders Prepare for clearance upcoming state with alert and SharePoint link only', async () => {
     const { findByText, getByRole, getByText, queryByRole } = renderTaskCard(
       getTask(PlanTaskKey.PREPARE_FOR_CLEARANCE, {
@@ -247,5 +325,257 @@ describe('TaskCard', () => {
     expect(
       queryByRole('checkbox', { name: 'Mark this task complete' })
     ).not.toBeInTheDocument();
+  });
+
+  describe('mark complete / mark to-do messaging', () => {
+    const MARK_COMPLETE_ERROR =
+      /We encountered an error moving your task to complete/;
+    const MARK_TODO_ERROR = /We encountered an error marking your task to-do/;
+
+    const updateMock = (
+      task: PlanTaskEntry,
+      isComplete: boolean,
+      fail = false
+    ): MockedResponse => ({
+      request: {
+        query: UpdateTaskStatusDocument,
+        variables: { modelPlanID: modelID, key: task.key, isComplete }
+      },
+      result: fail
+        ? { errors: [new GraphQLError('mutation failed')] }
+        : {
+            data: {
+              markPlanTaskComplete: {
+                __typename: 'PlanTask',
+                id: task.id,
+                key: task.key,
+                status: isComplete
+                  ? PlanTaskStatus.COMPLETE
+                  : PlanTaskStatus.TO_DO,
+                state: isComplete
+                  ? PlanTaskState.COMPLETE
+                  : PlanTaskState.TO_DO,
+                completedBy: null,
+                completedByUserAccount: null,
+                completedDts: null
+              }
+            }
+          }
+    });
+
+    // Wraps a mock so tests can await the response actually being served
+    const withResultSpy = (
+      mock: MockedResponse,
+      spy: () => void
+    ): MockedResponse => {
+      const { result } = mock;
+      if (!result || typeof result === 'function') {
+        throw new Error('withResultSpy expects a static mock result');
+      }
+      return {
+        ...mock,
+        result: () => {
+          spy();
+          return result;
+        }
+      };
+    };
+
+    const renderWithMutation = (task: PlanTaskEntry, fail = false) => {
+      const mutationResult = vi.fn();
+      const refetch = vi.fn(() => ({
+        data: { modelPlan: collaborationAreaData }
+      }));
+      const mocks: MockedResponse[] = [
+        withResultSpy(
+          updateMock(task, task.status !== PlanTaskStatus.COMPLETE, fail),
+          mutationResult
+        ),
+        {
+          request: {
+            query: GetCollaborationAreaDocument,
+            variables: { id: modelID }
+          },
+          result: refetch
+        }
+      ];
+
+      const router = createMemoryRouter(
+        [
+          {
+            path: '/models/:modelID/collaboration-area',
+            element: (
+              <>
+                <ToastContainer />
+                <MockedProvider mocks={mocks}>
+                  <TaskCard modelPlan={collaborationAreaData} task={task} />
+                </MockedProvider>
+              </>
+            )
+          }
+        ],
+        { initialEntries: [`/models/${modelID}/collaboration-area`] }
+      );
+
+      const r = setup(<RouterProvider router={router} />);
+      return { ...r, refetch, mutationResult };
+    };
+
+    const errorText = () => {
+      const { container } = render(
+        <>{getCurrentErrorMeta().overrideMessage}</>
+      );
+      return container.textContent;
+    };
+
+    // Approved ICIP and OA presentation define no success/error copy, so they use the shared defaults.
+    it.each([
+      {
+        key: PlanTaskKey.APPROVED_ICIP,
+        heading: 'Add approved ICIP'
+      },
+      {
+        key: PlanTaskKey.OA_PRESENTATION,
+        heading:
+          'Prepare for your presentation to the Office of the Administrator (OA)'
+      }
+    ])(
+      'uses the shared default messages for $key in both directions',
+      async ({ key, heading }) => {
+        // Mark complete: success toast built from the heading, then refetch
+        const complete = renderWithMutation(
+          getTask(key, {
+            state: PlanTaskState.TO_DO,
+            status: PlanTaskStatus.TO_DO
+          })
+        );
+        await complete.user.click(
+          await complete.findByRole('checkbox', {
+            name: 'Mark this task complete'
+          })
+        );
+        expect(await complete.findByTestId('toast-success')).toHaveTextContent(
+          `${heading} is now complete.`
+        );
+        await waitFor(() => expect(complete.refetch).toHaveBeenCalled());
+        complete.unmount();
+
+        // Mark to-do: success toast built from the heading, then refetch
+        const todo = renderWithMutation(
+          getTask(key, {
+            state: PlanTaskState.COMPLETE,
+            status: PlanTaskStatus.COMPLETE
+          })
+        );
+        await todo.user.click(
+          await todo.findByRole('button', { name: 'Mark this task to do' })
+        );
+        expect(await todo.findByTestId('toast-success')).toHaveTextContent(
+          `${heading} is now to-do.`
+        );
+        await waitFor(() => expect(todo.refetch).toHaveBeenCalled());
+      }
+    );
+
+    it.each([
+      {
+        key: PlanTaskKey.APPROVED_ICIP,
+        state: PlanTaskState.TO_DO,
+        status: PlanTaskStatus.TO_DO,
+        control: { role: 'checkbox', name: 'Mark this task complete' },
+        error: MARK_COMPLETE_ERROR
+      },
+      {
+        key: PlanTaskKey.APPROVED_ICIP,
+        state: PlanTaskState.COMPLETE,
+        status: PlanTaskStatus.COMPLETE,
+        control: { role: 'button', name: 'Mark this task to do' },
+        error: MARK_TODO_ERROR
+      },
+      {
+        key: PlanTaskKey.OA_PRESENTATION,
+        state: PlanTaskState.TO_DO,
+        status: PlanTaskStatus.TO_DO,
+        control: { role: 'checkbox', name: 'Mark this task complete' },
+        error: MARK_COMPLETE_ERROR
+      },
+      {
+        key: PlanTaskKey.OA_PRESENTATION,
+        state: PlanTaskState.COMPLETE,
+        status: PlanTaskStatus.COMPLETE,
+        control: { role: 'button', name: 'Mark this task to do' },
+        error: MARK_TODO_ERROR
+      }
+    ])(
+      'sets the default failure message and no success toast for $key ($state)',
+      async ({ key, state, status, control, error }) => {
+        const { findByRole, user, queryByTestId, mutationResult } =
+          renderWithMutation(getTask(key, { state, status }), true);
+
+        await user.click(
+          await findByRole(control.role as 'checkbox' | 'button', {
+            name: control.name
+          })
+        );
+
+        // Wait for the failing response to be served and processed before asserting
+        await waitFor(() => expect(mutationResult).toHaveBeenCalled());
+        await act(async () => {
+          await new Promise(resolve => {
+            setTimeout(resolve, 0);
+          });
+        });
+
+        expect(errorText()).toMatch(error);
+        expect(queryByTestId('toast-success')).not.toBeInTheDocument();
+      }
+    );
+
+    it.each([
+      {
+        key: PlanTaskKey.TWO_PAGER,
+        label: '2-page',
+        state: PlanTaskState.TO_DO
+      },
+      {
+        key: PlanTaskKey.SIX_PAGER,
+        label: '6-page',
+        state: PlanTaskState.TO_DO
+      }
+    ])(
+      'prefers the task-specific $label success text over the shared default',
+      async ({ key, label, state }) => {
+        const complete = renderWithMutation(
+          getTask(key, { state, status: PlanTaskStatus.TO_DO })
+        );
+        await complete.user.click(
+          await complete.findByRole('checkbox', {
+            name: 'Mark this task complete'
+          })
+        );
+        const completeToast = await complete.findByTestId('toast-success');
+        expect(completeToast).toHaveTextContent(
+          `Prepare for your ${label} review meeting with CMMI Front Office is now complete.`
+        );
+        // The shared default would have appended "(FO)" via the heading
+        expect(completeToast).not.toHaveTextContent('(FO)');
+        complete.unmount();
+
+        const todo = renderWithMutation(
+          getTask(key, {
+            state: PlanTaskState.COMPLETE,
+            status: PlanTaskStatus.COMPLETE
+          })
+        );
+        await todo.user.click(
+          await todo.findByRole('button', { name: 'Mark this task to do' })
+        );
+        const todoToast = await todo.findByTestId('toast-success');
+        expect(todoToast).toHaveTextContent(
+          `Prepare for your ${label} review meeting with CMMI Front Office is now to-do.`
+        );
+        expect(todoToast).not.toHaveTextContent('(FO)');
+      }
+    );
   });
 });

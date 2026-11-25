@@ -45,6 +45,11 @@ import (
 //	WAIVER_ASSESSMENT_SURVEY
 //    - IN_PROGRESS — waiver assessment survey status is IN_PROGRESS.
 //    - COMPLETE — waiver assessment survey status is COMPLETE.
+//	APPROVED_ICIP (manually markable, but its availability is calculated)
+//    - UPCOMING — model status is before INTERNAL_CMMI_CLEARANCE.
+//    - TO_DO — model status is INTERNAL_CMMI_CLEARANCE through ENDED.
+//    - COMPLETE — set by the user; never overwritten by the calculation above.
+//    - PAUSED / CANCELED model status leaves an existing state alone.
 
 // UpdatePlanTaskStateOnModelPlanStarted runs when a model plan section goes from READY to IN_PROGRESS.
 func UpdatePlanTaskStateOnModelPlanStarted(
@@ -504,6 +509,7 @@ func applyPrepareForClearancePlanTaskState(
 		completedBy,
 		completedDts,
 		attributedTo,
+		false,
 	)
 	if err != nil {
 		return err
@@ -593,4 +599,42 @@ func UpdatePlanTaskStateOnPrepareForClearanceSync(
 		emailService,
 		addressBook,
 	)
+}
+
+// UpdatePlanTaskStateOnApprovedIcipSync recalculates the APPROVED_ICIP task after a model status
+// change: UPCOMING before clearance starts, TO_DO once it has. A COMPLETE task is never changed, so
+// completed work is kept if the status regresses. It returns nil when nothing changed so callers
+// only act on real transitions.
+func UpdatePlanTaskStateOnApprovedIcipSync(
+	ctx context.Context,
+	np sqlutils.NamedPreparer,
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	principal authentication.Principal,
+) (*models.PlanTaskWithPreviousState, error) {
+	task, err := storage.PlanTaskGetByModelPlanIDAndKey(np, logger, modelPlanID, models.PlanTaskKeyApprovedIcip)
+	if err != nil {
+		return nil, err
+	}
+	if task == nil || task.State == models.PlanTaskStateComplete {
+		return nil, nil
+	}
+
+	modelPlan, err := storage.ModelPlanGetByID(np, logger, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+	// PAUSED / CANCELED (or unknown) statuses say nothing about clearance progress: leave it alone.
+	newState, ok := models.ApprovedIcipStateForModelStatus(modelPlan.Status)
+	if !ok || newState == task.State {
+		return nil, nil
+	}
+
+	// The read above is only a shortcut: another collaborator can mark the task COMPLETE before this
+	// write, so the write itself refuses to overwrite a COMPLETE task.
+	update, err := updatePlanTaskStateByKeyOpt(ctx, np, logger, modelPlanID, models.PlanTaskKeyApprovedIcip, newState, principal, constants.GetSystemAccountUUID(), nil, email.AddressBook{}, true)
+	if err != nil || update == nil || update.PreviousState == update.State {
+		return nil, err
+	}
+	return update, nil
 }
