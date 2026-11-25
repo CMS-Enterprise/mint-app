@@ -174,6 +174,12 @@ func PlanTaskMarkComplete(
 	}
 
 	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
+		// Authorize before any data access, including the plan-row lock taken below, so a
+		// non-collaborator can't take (or queue behind) that lock before being rejected.
+		if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, tx); err != nil {
+			return nil, err
+		}
+
 		newState := models.PlanTaskStateToDo
 		if isComplete {
 			newState = models.PlanTaskStateComplete
@@ -181,12 +187,8 @@ func PlanTaskMarkComplete(
 			// Un-completing the approved ICIP task returns it to where its criteria put it: TO_DO
 			// ("Current") only once clearance has started, otherwise back to UPCOMING. The plan row is
 			// locked so a concurrent ModelPlanUpdate (which locks the plan, then syncs the task) can't
-			// change the status between this read and the write below. Authorize first so a
-			// non-collaborator can't take (or queue behind) the plan lock before being rejected.
-			if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, tx); err != nil {
-				return nil, err
-			}
-			modelPlan, err := storage.ModelPlanGetByIDForUpdate(tx, logger, modelPlanID)
+			// change the status between this read and the write below.
+			modelPlan, err := storage.ModelPlanGetByIDForUpdate(tx, modelPlanID)
 			if err != nil {
 				return nil, err
 			}

@@ -143,40 +143,9 @@ func ModelPlanGetByID(np sqlutils.NamedPreparer, logger logging.ILogger, id uuid
 // ModelPlanGetByIDForUpdate returns a model plan for a given ID and row-locks it until the surrounding
 // transaction ends, so the read can't race a concurrent update of the plan (e.g. a status change).
 // It must be called inside a transaction.
-func ModelPlanGetByIDForUpdate(np sqlutils.NamedPreparer, logger logging.ILogger, id uuid.UUID) (*models.ModelPlan, error) {
-
-	plan := models.ModelPlan{}
-	stmt, err := np.PrepareNamed(sqlqueries.ModelPlan.GetByIDForUpdate)
-	if err != nil {
-		return nil, fmt.Errorf("failed to prepare SQL statement: %w", err)
-	}
-	defer stmt.Close()
-
+func ModelPlanGetByIDForUpdate(np sqlutils.NamedPreparer, id uuid.UUID) (*models.ModelPlan, error) {
 	arg := map[string]interface{}{"id": id}
-
-	err = stmt.Get(&plan, arg)
-
-	if err != nil {
-		if sqlutils.IsNoRowsResult(err) {
-			logger.Warn("No model plan found for the given modelPlanID",
-				zap.String("modelPlanID", id.String()))
-			return nil, fmt.Errorf("no model plan found for the given modelPlanID: %w", err)
-		}
-
-		logger.Error(
-			"failed to fetch model plan",
-			zap.Error(err),
-			zap.String("id", id.String()),
-		)
-
-		return nil, &apperrors.QueryError{
-			Err:       fmt.Errorf("failed to fetch the model plan: %w", err),
-			Model:     plan,
-			Operation: apperrors.QueryFetch,
-		}
-	}
-
-	return &plan, nil
+	return sqlutils.GetProcedure[models.ModelPlan](np, sqlqueries.ModelPlan.GetByIDForUpdate, arg)
 }
 
 // ModelPlanGetByName returns a model plan for a given ID
