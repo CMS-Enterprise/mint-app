@@ -156,7 +156,8 @@ func PrepareForClearanceActivateIfDue(
 // by direct user action, so a key is rejected here if it isn't on that allow-list.
 //
 // Marking a key complete may also activate another task (see models.PlanTaskKey.ActivationTargets),
-// moving it from UPCOMING to TO_DO.
+// moving it from UPCOMING to TO_DO. Marking APPROVED_ICIP incomplete restores the state implied by
+// the model status (UPCOMING before clearance, TO_DO after) rather than always TO_DO.
 func PlanTaskMarkComplete(
 	ctx context.Context,
 	logger *zap.Logger,
@@ -172,12 +173,34 @@ func PlanTaskMarkComplete(
 		return nil, fmt.Errorf("plan task key %s can not be manually marked complete", key)
 	}
 
-	newState := models.PlanTaskStateToDo
-	if isComplete {
-		newState = models.PlanTaskStateComplete
-	}
-
 	return sqlutils.WithTransaction[models.PlanTask](store, func(tx *sqlx.Tx) (*models.PlanTask, error) {
+		// Authorize before any data access, including the plan-row lock taken below, so a
+		// non-collaborator can't take (or queue behind) that lock before being rejected.
+		if err := accesscontrol.ErrorIfNotCollaborator(models.NewModelPlanRelation(modelPlanID), logger, principal, tx); err != nil {
+			return nil, err
+		}
+
+		newState := models.PlanTaskStateToDo
+		if isComplete {
+			newState = models.PlanTaskStateComplete
+		} else if key == models.PlanTaskKeyApprovedIcip {
+			// Un-completing the approved ICIP task returns it to where its criteria put it: TO_DO
+			// ("Current") only once clearance has started, otherwise back to UPCOMING. The plan row is
+			// locked so a concurrent ModelPlanUpdate (which locks the plan, then syncs the task) can't
+			// change the status between this read and the write below.
+			modelPlan, err := storage.ModelPlanGetByIDForUpdate(tx, modelPlanID)
+			if err != nil {
+				return nil, err
+			}
+			// PAUSED / CANCELED don't record whether clearance had started, so unmarking defaults to
+			// UPCOMING rather than putting a plan paused before clearance under Current. Known trade-off:
+			// a plan paused after clearance began also lands in UPCOMING until its status changes.
+			newState = models.PlanTaskStateUpcoming
+			if state, ok := models.ApprovedIcipStateForModelStatus(modelPlan.Status); ok {
+				newState = state
+			}
+		}
+
 		result, err := updatePlanTaskStateByKey(ctx, tx, logger, modelPlanID, key, newState, principal, principal.Account().ID, emailService, addressBook)
 		if err != nil {
 			return nil, err
