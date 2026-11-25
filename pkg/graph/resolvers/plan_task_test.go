@@ -841,6 +841,18 @@ func (suite *ResolverSuite) TestApprovedIcipTaskState() {
 		suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID))
 	})
 
+	suite.Run("marking to do while PAUSED or CANCELED returns a completed task to UPCOMING", func() {
+		for _, status := range []models.ModelStatus{models.ModelStatusPaused, models.ModelStatusCanceled} {
+			plan := suite.createModelPlan("Plan Approved ICIP Unmark " + string(status))
+			markComplete(plan.ID, true)
+			updateStatus(plan.ID, status)
+			suite.Equal(models.PlanTaskStateComplete, icipState(plan.ID))
+
+			markComplete(plan.ID, false)
+			suite.Equal(models.PlanTaskStateUpcoming, icipState(plan.ID), "expected UPCOMING for status %s", status)
+		}
+	})
+
 	suite.Run("a non-collaborator can not unmark the task", func() {
 		plan := suite.createModelPlan("Plan Approved ICIP Unauthorized Unmark")
 		markComplete(plan.ID, true)

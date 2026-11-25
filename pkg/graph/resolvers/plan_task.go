@@ -190,6 +190,10 @@ func PlanTaskMarkComplete(
 			if err != nil {
 				return nil, err
 			}
+			// PAUSED / CANCELED don't record whether clearance had started, so unmarking defaults to
+			// UPCOMING rather than putting a plan paused before clearance under Current. Known trade-off:
+			// a plan paused after clearance began also lands in UPCOMING until its status changes.
+			newState = models.PlanTaskStateUpcoming
 			if state, ok := models.ApprovedIcipStateForModelStatus(modelPlan.Status); ok {
 				newState = state
 			}
