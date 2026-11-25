@@ -12,6 +12,7 @@ import (
 	"github.com/cms-enterprise/mint-app/pkg/appcontext"
 	"github.com/cms-enterprise/mint-app/pkg/email"
 	"github.com/cms-enterprise/mint-app/pkg/graph/model"
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 	"github.com/cms-enterprise/mint-app/pkg/models"
 	"github.com/cms-enterprise/mint-app/pkg/shared/oddmail"
 	"github.com/cms-enterprise/mint-app/pkg/sqlutils"
@@ -39,7 +40,7 @@ func discussions(ctx context.Context, ticketID uuid.UUID) ([]*models.CTATDiscuss
 
 	// check if acting user is requester
 	if ctatTicket.Requester != principalAcct.ID {
-		return nil, fmt.Errorf("user (%s) is not authorized to view CTAT discussions", principalAcct.Email)
+		return nil, errors.New("user is not authorized to view CTAT discussions")
 	}
 
 	return loaders.CTATDiscussion.ByTicketID.Load(ctx, ticketID)
@@ -84,7 +85,7 @@ func createDiscussion(
 	case principal.AllowASSESSMENT():
 		posterRole = models.CTATDiscussionPosterAdmin
 	default:
-		return nil, fmt.Errorf("user (%s) is not authorized to create a CTAT discussion", principalAcct.Email)
+		return nil, errors.New("user is not authorized to create a CTAT discussion")
 	}
 
 	discussion := models.CTATDiscussion{
@@ -152,7 +153,7 @@ func createDiscussion(
 	case models.CTATDiscussionPosterAdmin:
 		// admin posting discussion
 
-		if requesterAcct, err := ctatTicket.CreatedByUserAccount(ctx); err != nil {
+		if requesterAcct, err := ctatTicket.RequesterUserAccount(ctx); err != nil {
 			logger.Error("problem getting requester account for sending CTAT discussion email", zap.Error(err))
 		} else {
 			// send requester email
@@ -205,7 +206,7 @@ func sendRequesterEmail(
 			PosterName:        creatorName,
 			PosterRole:        createdDiscussion.PosterRole.String(),
 			DiscussionContent: createdDiscussion.Content,
-			DatePosted:        createdDiscussion.CreatedDts.Format("01/02/2006 at 03:04 pm"),
+			DatePosted:        createdDiscussion.CreatedDts.In(helpers.LoadEastern()).Format("01/02/2006 at 03:04 pm MST"),
 		},
 	)
 	if err != nil {
@@ -238,7 +239,7 @@ func sendAdminEmail(
 	humanReadableID := ticket.HumanReadableID()
 
 	subject, body, err := email.CTAT.DiscussionAdmin.GetContent(
-		email.CTATDiscussionRequesterSubjectContent{
+		email.CTATDiscussionAdminSubjectContent{
 			TicketNumber: humanReadableID,
 		},
 		email.CTATDiscussionAdminBodyContent{
@@ -248,7 +249,7 @@ func sendAdminEmail(
 			PosterName:        creatorName,
 			PosterRole:        createdDiscussion.PosterRole.String(),
 			DiscussionContent: createdDiscussion.Content,
-			DatePosted:        createdDiscussion.CreatedDts.Format("01/02/2006 at 03:04 pm"),
+			DatePosted:        createdDiscussion.CreatedDts.In(helpers.LoadEastern()).Format("01/02/2006 at 03:04 pm MST"),
 		},
 	)
 	if err != nil {
