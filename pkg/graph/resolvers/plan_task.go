@@ -149,9 +149,27 @@ func PrepareForClearanceActivateIfDue(
 	)
 }
 
-func getPlanTaskNewState(ctx context.Context, modelPlanID uuid.UUID, key models.PlanTaskKey, isComplete bool) (models.PlanTaskState, error) {
+func getPlanTaskNewState(ctx context.Context, tx *sqlx.Tx, modelPlanID uuid.UUID, key models.PlanTaskKey, isComplete bool) (models.PlanTaskState, error) {
 	if isComplete {
 		return models.PlanTaskStateComplete, nil
+	}
+
+	if key == models.PlanTaskKeyApprovedIcip {
+		// Un-completing the approved ICIP task returns it to where its criteria put it: TO_DO
+		// ("Current") only once clearance has started, otherwise back to UPCOMING. The plan row is
+		// locked so a concurrent ModelPlanUpdate (which locks the plan, then syncs the task) can't
+		// change the status between this read and the write below.
+		modelPlan, err := storage.ModelPlanGetByIDForUpdate(tx, modelPlanID)
+		if err != nil {
+			return "", err
+		}
+		// PAUSED / CANCELED don't record whether clearance had started, so unmarking defaults to
+		// UPCOMING rather than putting a plan paused before clearance under Current. Known trade-off:
+		// a plan paused after clearance began also lands in UPCOMING until its status changes.
+		if state, ok := models.ApprovedIcipStateForModelStatus(modelPlan.Status); ok {
+			return state, nil
+		}
+		return models.PlanTaskStateUpcoming, nil
 	}
 
 	if triggerKey := key.ActivationTrigger(); triggerKey != "" {
@@ -204,28 +222,7 @@ func PlanTaskMarkComplete(
 			return nil, err
 		}
 
-		newState := models.PlanTaskStateToDo
-		if isComplete {
-			newState = models.PlanTaskStateComplete
-		} else if key == models.PlanTaskKeyApprovedIcip {
-			// Un-completing the approved ICIP task returns it to where its criteria put it: TO_DO
-			// ("Current") only once clearance has started, otherwise back to UPCOMING. The plan row is
-			// locked so a concurrent ModelPlanUpdate (which locks the plan, then syncs the task) can't
-			// change the status between this read and the write below.
-			modelPlan, err := storage.ModelPlanGetByIDForUpdate(tx, modelPlanID)
-			if err != nil {
-				return nil, err
-			}
-			// PAUSED / CANCELED don't record whether clearance had started, so unmarking defaults to
-			// UPCOMING rather than putting a plan paused before clearance under Current. Known trade-off:
-			// a plan paused after clearance began also lands in UPCOMING until its status changes.
-			newState = models.PlanTaskStateUpcoming
-			if state, ok := models.ApprovedIcipStateForModelStatus(modelPlan.Status); ok {
-				newState = state
-			}
-		}
-
-		newState, err := getPlanTaskNewState(ctx, modelPlanID, key, isComplete)
+		newState, err := getPlanTaskNewState(ctx, tx, modelPlanID, key, isComplete)
 		if err != nil {
 			return nil, err
 		}
