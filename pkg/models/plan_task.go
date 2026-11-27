@@ -114,6 +114,18 @@ func (k PlanTaskKey) ActivationTargets() ([]PlanTaskKey, bool) {
 	return targets, ok
 }
 
+// ActivationTrigger returns what activates this given PlanTaskKey
+func (k PlanTaskKey) ActivationTrigger() PlanTaskKey {
+	for trigger, targets := range planTaskActivationTriggers {
+		for _, target := range targets {
+			if target == k {
+				return trigger
+			}
+		}
+	}
+	return ""
+}
+
 // planTaskKeyDisplayNames are short human-readable names for a PlanTaskKey, used in notifications
 // and change history. Keys without an entry fall back to their raw string value.
 var planTaskKeyDisplayNames = map[PlanTaskKey]string{

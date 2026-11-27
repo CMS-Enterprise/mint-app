@@ -203,7 +203,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 		suite.Equal(suite.testConfigs.Principal.Account().ID, *twoPagerTask.ModifiedBy)
 	}
 
-	// marking TWO_PAGER back to incomplete does not revert SIX_PAGER's activation (one-way)
+	// marking TWO_PAGER back to incomplete does revert SIX_PAGER's activation
 	_, err = PlanTaskMarkComplete(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
@@ -218,7 +218,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesSixPager() {
 	suite.NoError(err)
 
 	sixPagerTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeySixPager)
-	suite.Equal(models.PlanTaskStateToDo, sixPagerTask.State)
+	suite.Equal(models.PlanTaskStateUpcoming, sixPagerTask.State)
 }
 
 // TestPlanTaskActivationDoesNotRegressCompletedTarget confirms that re-triggering activation
@@ -399,8 +399,7 @@ func (suite *ResolverSuite) TestSixPagerStatusStaysToDoThroughActivation() {
 
 // TestPlanTaskMarkCompleteActivatesOAPresentation confirms marking SIX_PAGER complete activates
 // OA_PRESENTATION from UPCOMING to TO_DO, that OA_PRESENTATION requires TWO_PAGER and SIX_PAGER to
-// have both been marked complete first, and that activation is one-way (reverting SIX_PAGER does
-// not revert OA_PRESENTATION).
+// have both been marked complete first
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesOAPresentation() {
 	plan := suite.createModelPlan("Plan For OA Presentation Activation")
 
@@ -459,11 +458,11 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteActivatesOAPresentation() {
 	suite.NoError(err)
 
 	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
-	suite.Equal(models.PlanTaskStateToDo, oaTask.State)
+	suite.Equal(models.PlanTaskStateUpcoming, oaTask.State)
 }
 
 // TestPlanTaskMarkCompleteOAPresentation confirms OA_PRESENTATION can be manually marked complete
-// and reverted back to TO_DO via PlanTaskMarkComplete, now that it is a manually-markable key.
+// and reverted back to Upcoming via PlanTaskMarkComplete, now that it is a manually-markable key.
 func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 	plan := suite.createModelPlan("Plan For OA Presentation Manual Task Marking")
 
@@ -494,7 +493,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 	oaTask := suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
 	suite.Equal(models.PlanTaskStateComplete, oaTask.State)
 
-	// mark it back to TO_DO
+	// mark it back to Upcoming
 	updated, err = PlanTaskMarkComplete(
 		suite.testConfigs.Context,
 		suite.testConfigs.Logger,
@@ -508,13 +507,13 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteOAPresentation() {
 	)
 	suite.NoError(err)
 	if suite.NotNil(updated) {
-		suite.Equal(models.PlanTaskStateToDo, updated.State)
+		suite.Equal(models.PlanTaskStateUpcoming, updated.State)
 		suite.Nil(updated.CompletedBy)
 		suite.Nil(updated.CompletedDts)
 	}
 
 	oaTask = suite.getPlanTaskByKey(plan.ID, models.PlanTaskKeyOaPresentation)
-	suite.Equal(models.PlanTaskStateToDo, oaTask.State)
+	suite.Equal(models.PlanTaskStateUpcoming, oaTask.State)
 	suite.Nil(oaTask.CompletedBy)
 	suite.Nil(oaTask.CompletedDts)
 }
@@ -593,8 +592,7 @@ func (suite *ResolverSuite) TestPlanTaskMarkCompleteDraftICIP() {
 
 // TestDraftIcipStatusStaysToDoThroughActivation confirms the computed status field on the
 // draft_ICIP card stays TO_DO across the UPCOMING -> TO_DO state activation trigger, end to end
-// through the resolver (not just the Status function in isolation). Status is binary
-// (TO_DO/COMPLETE), so unlike state it does not distinguish UPCOMING from TO_DO.
+// through the resolver (not just the Status function in isolation).
 func (suite *ResolverSuite) TestDraftIcipStatusStaysToDoThroughActivation() {
 	plan := suite.createModelPlan("Plan For Draft ICIP Status Display")
 	r := &planTaskResolver{&Resolver{}}
