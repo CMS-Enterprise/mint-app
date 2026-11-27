@@ -29,6 +29,12 @@ const CTATUpdateTemplateName string = "ctat_update"
 // CTATUpdateAdminTemplateName is the template name for the CTAT update admin email.
 const CTATUpdateAdminTemplateName string = "ctat_update_admin"
 
+// CTATDiscussionRequesterTemplateName is the template name for the CTAT discussion requester email.
+const CTATDiscussionRequesterTemplateName string = "ctat_discussion_requester"
+
+// CTATDiscussionAdminTemplateName is the template name for the CTAT discussion admin email.
+const CTATDiscussionAdminTemplateName string = "ctat_discussion_admin"
+
 //go:embed templates/ctat_submitted_body.html
 var ctatSubmittedBodyTemplate string
 
@@ -53,6 +59,18 @@ var ctatUpdateAdminBodyTemplate string
 //go:embed templates/ctat_update_admin_subject.html
 var ctatUpdateAdminSubjectTemplate string
 
+//go:embed templates/ctat_discussion_requester_body.html
+var ctatDiscussionRequesterBodyTemplate string
+
+//go:embed templates/ctat_discussion_requester_subject.html
+var ctatDiscussionRequesterSubjectTemplate string
+
+//go:embed templates/ctat_discussion_admin_body.html
+var ctatDiscussionAdminBodyTemplate string
+
+//go:embed templates/ctat_discussion_admin_subject.html
+var ctatDiscussionAdminSubjectTemplate string
+
 type ctatEmails struct {
 	// Submitted is the email sent when a CTAT request is submitted.
 	Submitted *emailtemplates.GenEmailTemplate[CTATSubmittedSubjectContent, CTATSubmittedBodyContent]
@@ -62,6 +80,10 @@ type ctatEmails struct {
 	Update *emailtemplates.GenEmailTemplate[CTATUpdateSubjectContent, CTATUpdateBodyContent]
 	// UpdateAdmin is the email sent to admins when a CTAT request is updated.
 	UpdateAdmin *emailtemplates.GenEmailTemplate[CTATUpdateAdminSubjectContent, CTATUpdateAdminBodyContent]
+	// DiscussionRequester is the email sent to the requester when a discussion is added to a CTAT request.
+	DiscussionRequester *emailtemplates.GenEmailTemplate[CTATDiscussionRequesterSubjectContent, CTATDiscussionRequesterBodyContent]
+	// DiscussionAdmin is the email sent to admins when a discussion is added to a CTAT request.
+	DiscussionAdmin *emailtemplates.GenEmailTemplate[CTATDiscussionAdminSubjectContent, CTATDiscussionAdminBodyContent]
 }
 
 // CTAT is the collection of CTAT-related email templates.
@@ -86,7 +108,41 @@ var CTAT = ctatEmails{
 		ctatUpdateAdminSubjectTemplate,
 		ctatUpdateAdminBodyTemplate,
 	),
+	DiscussionRequester: NewEmailTemplate[CTATDiscussionRequesterSubjectContent, CTATDiscussionRequesterBodyContent](
+		CTATDiscussionRequesterTemplateName,
+		ctatDiscussionRequesterSubjectTemplate,
+		ctatDiscussionRequesterBodyTemplate,
+	),
+	DiscussionAdmin: NewEmailTemplate[CTATDiscussionAdminSubjectContent, CTATDiscussionAdminBodyContent](
+		CTATDiscussionAdminTemplateName,
+		ctatDiscussionAdminSubjectTemplate,
+		ctatDiscussionAdminBodyTemplate,
+	),
 }
+
+// CTATDiscussionRequesterSubjectContent defines the parameters for the requester discussion email subject.
+type CTATDiscussionRequesterSubjectContent struct {
+	TicketNumber string
+}
+
+// CTATDiscussionAdminSubjectContent defines the parameters for the admin discussion email subject.
+// It currently shares the same shape as the requester discussion email.
+type CTATDiscussionAdminSubjectContent = CTATDiscussionRequesterSubjectContent
+
+// CTATDiscussionRequesterBodyContent defines the parameters for the requester discussion email body.
+type CTATDiscussionRequesterBodyContent struct {
+	ClientAddress     string
+	CTATTicketID      string
+	TicketNumber      string
+	PosterName        string
+	PosterRole        string
+	DiscussionContent string
+	DatePosted        string
+}
+
+// CTATDiscussionAdminBodyContent defines the parameters for the admin discussion email body.
+// It currently shares the same shape as the requester discussion email.
+type CTATDiscussionAdminBodyContent = CTATDiscussionRequesterBodyContent
 
 // CTATSubmittedSubjectContent defines the parameters necessary for the corresponding email subject.
 type CTATSubmittedSubjectContent struct {

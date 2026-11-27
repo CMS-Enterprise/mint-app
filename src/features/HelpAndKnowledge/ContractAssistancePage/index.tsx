@@ -1,7 +1,12 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  useLocation,
+  useMatch,
+  useNavigate,
+  useParams
+} from 'react-router-dom';
 import { GridContainer, Icon } from '@trussworks/react-uswds';
 import NotFound from 'features/NotFound';
 import {
@@ -19,7 +24,7 @@ import PageLoading from 'components/PageLoading';
 import { isAssessment } from 'utils/user';
 
 import AdminTicketManagementSection from './_components/AdminTicketManagementSection';
-import CtatTicketViewPanel from './_components/CTATSidePanel/CtatTicketViewPanel';
+import CtatTicketPanel from './_components/CTATSidePanel/CtatTicketPanel';
 import UserSubmittedTicketsSection from './_components/UserSubmittedTicketsSection';
 import { mapCtatRequestsToContractAssistanceTickets } from './utils';
 
@@ -33,6 +38,9 @@ const ContractAssistancePage = () => {
   const isAssessmentTeam = isAssessment(groups, flags);
 
   const { ticketId } = useParams();
+  const isDiscussionView = !!useMatch(
+    '/help-and-knowledge/contract-assistance/:ticketId/discussion'
+  );
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -126,12 +134,12 @@ const ContractAssistancePage = () => {
         )}
         <UserSubmittedTicketsSection tickets={userTickets} />
       </GridContainer>
-
       {ticketId && (
-        <CtatTicketViewPanel
+        <CtatTicketPanel
           ticketId={ticketId}
           closeModal={closeTicketViewPanel}
           isAdmin={isAssessmentTeam}
+          isDiscussionView={isDiscussionView}
         />
       )}
     </MainContent>

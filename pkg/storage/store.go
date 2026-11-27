@@ -10,6 +10,8 @@ import (
 	"github.com/jmoiron/sqlx"
 	ld "github.com/launchdarkly/go-server-sdk/v6"
 	_ "github.com/lib/pq" // required for postgres driver in sql
+
+	"github.com/cms-enterprise/mint-app/pkg/helpers"
 )
 
 // Store performs database operations for MINT
@@ -56,12 +58,13 @@ func NewStore(
 	ldClient *ld.LDClient,
 ) (*Store, error) {
 	// LifecycleIDs are generated based on Eastern Time
-	tz, err := time.LoadLocation("America/New_York")
-	if err != nil {
-		return nil, err
-	}
+	tz := helpers.LoadEastern()
 
-	var db *sqlx.DB
+	var (
+		db  *sqlx.DB
+		err error
+	)
+
 	if dbConfig.UseIAM {
 		// Connect using the IAM DB package
 

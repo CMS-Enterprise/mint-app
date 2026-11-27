@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import {
   Button,
+  Icon,
   SummaryBox,
   SummaryBoxContent,
   SummaryBoxHeading
@@ -13,10 +15,12 @@ import {
   CtatContractActivityType,
   CtatContractType,
   CtatStatus,
+  GetCtatDiscussionsQuery,
   GetCtatRequestAdminQuery,
   GetCtatRequestQuery
 } from 'gql/generated/graphql';
 
+import Alert from 'components/Alert';
 import CollapsableLink from 'components/CollapsableLink';
 import {
   DescriptionDefinition,
@@ -24,8 +28,9 @@ import {
 } from 'components/DescriptionGroup';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
+import Spinner from 'components/Spinner';
 import usePlanTranslation from 'hooks/usePlanTranslation';
-import { formatDateLocal } from 'utils/date';
+import { formatCTATDiscussionRelativeDate, formatDateLocal } from 'utils/date';
 import downloadFile from 'utils/downloadFile';
 import { tObject } from 'utils/translation';
 
@@ -33,14 +38,18 @@ import { formatHelpTypes, formatUserDisplay } from '../../../utils';
 
 import CtatTicketAdminForm from './CtatTicketAdminForm';
 
-type CtatTicketViewContentProps = {
+type CtatTicketDetailsProps = {
   ticket: GetCtatRequestQuery['ctatRequest'];
+  discussions: GetCtatDiscussionsQuery['discussions'];
+  discussionsLoading: boolean;
+  discussionsError?: Error;
   adminTicket?: GetCtatRequestAdminQuery['ctatRequest'];
   isAdmin?: boolean;
   closeModal?: () => void;
   setDisableButton?: React.Dispatch<React.SetStateAction<boolean>>;
   setIsDirty?: (isDirty: boolean) => void;
   onSubmitted?: () => void;
+  onDiscussionClick?: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 type DetailFieldProps = {
@@ -126,19 +135,24 @@ const SupportingDocumentItem = ({
   );
 };
 
-const CtatTicketViewContent = ({
+const CtatTicketDetails = ({
   ticket,
+  discussions,
+  discussionsLoading,
+  discussionsError,
   adminTicket,
   isAdmin = false,
   closeModal,
   setDisableButton,
   setIsDirty,
-  onSubmitted
-}: CtatTicketViewContentProps) => {
+  onSubmitted,
+  onDiscussionClick
+}: CtatTicketDetailsProps) => {
   const { t: contractAssistanceT } = useTranslation('contractAssistance');
   const { t: contractAssistanceMiscT } = useTranslation(
     'contractAssistanceMisc'
   );
+  const location = useLocation();
 
   const {
     status: statusConfig,
@@ -154,6 +168,19 @@ const CtatTicketViewContent = ({
   );
 
   const isClosed = ticket.status === CtatStatus.CLOSED;
+
+  const latestDiscussion = discussions.at(-1);
+  const latestDate = latestDiscussion
+    ? formatCTATDiscussionRelativeDate(latestDiscussion.createdDts)
+    : '';
+  const latestPosterName = latestDiscussion
+    ? [
+        latestDiscussion.createdByUserAccount.givenName,
+        latestDiscussion.createdByUserAccount.familyName
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : '';
 
   const assignedMemberDisplay = formatUserDisplay(
     ticket.assignedAdminUserAccount
@@ -262,6 +289,65 @@ const CtatTicketViewContent = ({
           />
         </div>
       )}
+
+      <div className="border-top border-bottom border-base-light padding-y-3 margin-bottom-4">
+        <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-1">
+          {contractAssistanceMiscT('ctatViewPanel.discussionHeading')}
+        </PageHeading>
+        {discussionsLoading && (
+          <div className="padding-y-2">
+            <Spinner
+              aria-label={contractAssistanceMiscT(
+                'ctatViewPanel.discussionLoading'
+              )}
+            />
+          </div>
+        )}
+        {!discussionsLoading && discussionsError && (
+          <p className="margin-y-0" role="alert">
+            {contractAssistanceMiscT('ctatViewPanel.discussionError')}
+          </p>
+        )}
+        {!discussionsLoading && !discussionsError && (
+          <>
+            <p className="text-bold margin-y-0">
+              {contractAssistanceMiscT('ctatViewPanel.discussionMessageCount', {
+                count: discussions.length
+              })}
+            </p>
+            {latestDiscussion ? (
+              <p className="margin-top-0 margin-bottom-0 text-base-dark">
+                {contractAssistanceMiscT(
+                  'ctatViewPanel.discussionLatestMessage',
+                  {
+                    name: latestPosterName,
+                    date: latestDate
+                  }
+                )}
+              </p>
+            ) : (
+              <p className="margin-top-0 margin-bottom-0 text-base-dark">
+                {contractAssistanceMiscT('ctatViewPanel.discussionEmpty')}
+              </p>
+            )}
+            {isClosed && (
+              <Alert type="info" slim className="margin-top-2 margin-bottom-0">
+                {contractAssistanceMiscT(
+                  'ctatViewPanel.discussionClosedNotice'
+                )}
+              </Alert>
+            )}
+            <UswdsReactLink
+              to={`/help-and-knowledge/contract-assistance/${ticket.id}/discussion${location.search}`}
+              className="display-inline-flex flex-align-center margin-top-2"
+              onClick={onDiscussionClick}
+            >
+              {contractAssistanceMiscT('ctatViewPanel.goToDiscussion')}
+              <Icon.ArrowForward className="margin-left-1" aria-hidden="true" />
+            </UswdsReactLink>
+          </>
+        )}
+      </div>
 
       <PageHeading headingLevel="h3" className="margin-top-0 margin-bottom-3">
         {contractAssistanceMiscT('ctatViewPanel.ticketDetailsHeading')}
@@ -518,4 +604,4 @@ const CtatTicketViewContent = ({
   );
 };
 
-export default CtatTicketViewContent;
+export default CtatTicketDetails;

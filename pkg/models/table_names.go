@@ -21,6 +21,7 @@ const (
 	TNActivity                         TableName = "activity"
 	TNAnalyzedAudit                    TableName = "analyzed_audit"
 	TNDiscussionReply                  TableName = "discussion_reply"
+	TNCTATDiscussion                   TableName = "ctat_discussion"
 	TNCTATRequest                      TableName = "ctat_request"
 	TNCTATRequestDocument              TableName = "ctat_request_document"
 	TNCTATRequestModelPlanLink         TableName = "ctat_request_model_plan_link"

@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { DateTime, Interval } from 'luxon';
 
 type DateFormat = 'MM/dd/yyyy' | 'MMMM d, yyyy' | 'MMMM yyyy';
@@ -29,6 +30,47 @@ export const formatDateUtc = (
     if (parsedDate !== 'Invalid DateTime') return parsedDate;
   }
   return '';
+};
+
+export const formatCTATDiscussionRelativeDate = (
+  createdDts: string,
+  { todaySeparator = 'at' }: { todaySeparator?: 'at' | 'comma' } = {}
+): string => {
+  const locale = i18next.resolvedLanguage || i18next.language;
+  const created = DateTime.fromISO(createdDts).setLocale(locale);
+  if (!created.isValid) return '';
+  const now = DateTime.local().setLocale(locale);
+
+  if (created.hasSame(now, 'day')) {
+    return i18next.t(
+      todaySeparator === 'comma'
+        ? 'general:date.todayComma'
+        : 'general:date.todayAt',
+      { time: created.toFormat('h:mm a') }
+    );
+  }
+  if (created.hasSame(now.minus({ days: 1 }), 'day')) {
+    return i18next.t('general:date.yesterday');
+  }
+  const yearsAgo = now.diff(created, 'years').years;
+  if (yearsAgo >= 10) {
+    const decadesAgo = Math.floor(yearsAgo / 10);
+    return i18next.t('general:date.decadesAgo', { count: decadesAgo });
+  }
+  if (yearsAgo >= 1) {
+    return created.toRelative({ base: now, unit: 'years' }) ?? '';
+  }
+  if (now.diff(created, 'months').months >= 1) {
+    return created.toRelative({ base: now, unit: 'months' }) ?? '';
+  }
+
+  const daysAgo = now.diff(created, 'days').days;
+  if (daysAgo < 2)
+    return created.toRelativeCalendar({ base: now, unit: 'days' }) ?? '';
+  if (daysAgo >= 7) {
+    return created.toRelative({ base: now, unit: 'weeks' }) ?? '';
+  }
+  return created.toRelative({ base: now }) ?? '';
 };
 
 export const getTimeElapsed = (discussionCreated: string) => {

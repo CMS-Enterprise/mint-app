@@ -3,7 +3,12 @@ const general = {
   date: {
     day: 'Day',
     month: 'Month',
-    year: 'Year'
+    year: 'Year',
+    todayAt: 'Today at {{time}}',
+    todayComma: 'Today, {{time}}',
+    yesterday: 'Yesterday',
+    decadesAgo_one: '{{count}} decade ago',
+    decadesAgo_other: '{{count}} decades ago'
   },
   feedback: {
     improvement: 'Help us improve MINT',

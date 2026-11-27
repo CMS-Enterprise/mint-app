@@ -54,6 +54,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 		string(models.TNPlanTdl),
 
 		// CTAT tables
+		string(models.TNCTATDiscussion),
 		string(models.TNCTATRequestDocument),
 		string(models.TNCTATRequestModelPlanLink),
 		string(models.TNCTATRequest),
