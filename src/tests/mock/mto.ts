@@ -76,6 +76,7 @@ const PLAN_TASK_KEYS_ORDER = [
   PlanTaskKey.DRAFT_ICIP,
   PlanTaskKey.MTO,
   PlanTaskKey.PREPARE_FOR_CLEARANCE,
+  PlanTaskKey.APPROVED_ICIP,
   PlanTaskKey.OA_PRESENTATION
 ] as const;
 
@@ -88,7 +89,8 @@ const DEFAULT_COMPLETED_DTS_BY_KEY: Record<PlanTaskKey, string> = {
   [PlanTaskKey.SIX_PAGER]: '2022-01-06T00:00:00Z',
   [PlanTaskKey.DRAFT_ICIP]: '2022-01-07T00:00:00Z',
   [PlanTaskKey.OA_PRESENTATION]: '2022-01-08T00:00:00Z',
-  [PlanTaskKey.PREPARE_FOR_CLEARANCE]: '2022-01-09T00:00:00Z'
+  [PlanTaskKey.PREPARE_FOR_CLEARANCE]: '2022-01-09T00:00:00Z',
+  [PlanTaskKey.APPROVED_ICIP]: '2022-01-08T00:00:00Z'
 };
 
 // SIX_PAGER and OA_PRESENTATION start UPCOMING in production (see models.PlanTask default seeding)
@@ -97,7 +99,8 @@ const KEYS_DEFAULTING_TO_UPCOMING = new Set<PlanTaskKey>([
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.DRAFT_ICIP,
   PlanTaskKey.OA_PRESENTATION,
-  PlanTaskKey.PREPARE_FOR_CLEARANCE
+  PlanTaskKey.PREPARE_FOR_CLEARANCE,
+  PlanTaskKey.APPROVED_ICIP
 ]);
 
 export function makePlanTasks(

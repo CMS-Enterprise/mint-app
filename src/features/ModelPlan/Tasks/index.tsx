@@ -40,6 +40,7 @@ export const FIXED_TASK_ORDER: PlanTaskKey[] = [
   PlanTaskKey.DRAFT_ICIP,
   PlanTaskKey.MTO,
   PlanTaskKey.PREPARE_FOR_CLEARANCE,
+  PlanTaskKey.APPROVED_ICIP,
   PlanTaskKey.OA_PRESENTATION
 ];
 

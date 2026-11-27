@@ -23,7 +23,8 @@ s
 
 1. `7419` - A `TCP` connection that the [Faktory Worker Protocol (FWP)](https://github.com/contribsys/faktory/blob/main/docs/protocol-specification.md) server listens on.
 2. `7420` - The Web UI.
-  - The web UI is  accessible in deployed environments as well. You just need to look up the DNS name (A Record) from the load balancer in AWS. You will still need the `FAKTORY_PASSWORD` to view the UI.
+  - In deployed environments, Faktory sits behind an internal load balancer (`mint-faktory-<env>-nlb-int`), so the web UI is only reachable while you're on the CMS VPN. It isn't reachable from the public internet.
+  - To open it, connect to the CMS VPN, find the internal load balancer's DNS name (EC2 → Load Balancers → `mint-faktory-<env>-nlb-int`, or the `faktory_internal_nlb_dns_name` output in mint-infra), and go to `http://<dns name>:7420`. Log in with any username and that environment's `FAKTORY_PASSWORD` (from `s3://<td-env-bucket>/mint-faktory-<env>.env`).
     
 
 ### 🎛 Environment Variables

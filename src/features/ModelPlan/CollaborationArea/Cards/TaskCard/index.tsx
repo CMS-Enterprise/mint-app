@@ -62,7 +62,8 @@ const USER_MARK_STATUS_TASKS = [
   PlanTaskKey.TWO_PAGER,
   PlanTaskKey.SIX_PAGER,
   PlanTaskKey.DRAFT_ICIP,
-  PlanTaskKey.OA_PRESENTATION
+  PlanTaskKey.OA_PRESENTATION,
+  PlanTaskKey.APPROVED_ICIP
 ];
 
 const TASK_DOCUMENT_TYPE: Partial<Record<PlanTaskKey, DocumentType>> = {
@@ -70,7 +71,8 @@ const TASK_DOCUMENT_TYPE: Partial<Record<PlanTaskKey, DocumentType>> = {
   [PlanTaskKey.SIX_PAGER]: DocumentType.CONCEPT_PAPER,
   [PlanTaskKey.DRAFT_ICIP]: DocumentType.ICIP_DRAFT,
   [PlanTaskKey.OA_PRESENTATION]:
-    DocumentType.OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION
+    DocumentType.OFFICE_OF_THE_ADMINISTRATOR_PRESENTATION,
+  [PlanTaskKey.APPROVED_ICIP]: DocumentType.FINAL_ICIP
 };
 
 const isExternalUrl = (path: string) => /^https?:\/\//i.test(path);
@@ -132,7 +134,9 @@ const TaskCard = ({
     setCurrentErrorMeta({
       overrideMessage: getStatusAlertBody({
         type: 'error',
-        message: t(`${baseKey}.error`)
+        message: t(`${baseKey}.error`, {
+          defaultValue: t(markComplete ? 'markCompleteError' : 'markTodoError')
+        })
       })
     });
 
@@ -150,18 +154,27 @@ const TaskCard = ({
           }
         }
       ]
-    }).then(response => {
-      if (!response.errors) {
-        toastSuccess(
-          <Trans
-            i18nKey={t(`${baseKey}.success`)}
-            components={{
-              bold: <span className="text-bold" />
-            }}
-          />
-        );
-      }
-    });
+    })
+      .then(response => {
+        if (!response.errors) {
+          toastSuccess(
+            <Trans
+              i18nKey={t(`${baseKey}.success`, {
+                defaultValue: t(
+                  markComplete ? 'markCompleteSuccess' : 'markTodoSuccess',
+                  { heading: t(`${baseKey}.heading`) }
+                )
+              })}
+              components={{
+                bold: <span className="text-bold" />
+              }}
+            />
+          );
+        }
+      })
+      .catch(() => {
+        // The error link already surfaces mutation failures; skip the success toast
+      });
   };
 
   const secondaryLink = secondaryAction !== '' && (

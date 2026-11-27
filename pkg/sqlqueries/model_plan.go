@@ -11,6 +11,9 @@ var modelPlanUpdateSQL string
 //go:embed SQL/model_plan/get_by_id.sql
 var modelPlanGetByIDSQL string
 
+//go:embed SQL/model_plan/get_by_id_for_update.sql
+var modelPlanGetByIDForUpdateSQL string
+
 //go:embed SQL/model_plan/get_by_name.sql
 var modelPlanGetByNameSQL string
 
@@ -51,6 +54,7 @@ type modelPlanScripts struct {
 	Create                           string
 	Update                           string
 	GetByID                          string
+	GetByIDForUpdate                 string
 	GetByName                        string
 	CollectionWhereArchived          string
 	CollectionByCollaborator         string
@@ -70,6 +74,7 @@ var ModelPlan = modelPlanScripts{
 	Create:                           modelPlanCreateSQL,
 	Update:                           modelPlanUpdateSQL,
 	GetByID:                          modelPlanGetByIDSQL,
+	GetByIDForUpdate:                 modelPlanGetByIDForUpdateSQL,
 	GetByName:                        modelPlanGetByNameSQL,
 	CollectionWhereArchived:          modelPlanCollectionWhereArchivedSQL,
 	CollectionByCollaborator:         modelPlanCollectionByCollaboratorSQL,
