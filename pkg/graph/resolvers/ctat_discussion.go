@@ -206,7 +206,7 @@ func sendRequesterEmail(
 			PosterName:        creatorName,
 			PosterRole:        createdDiscussion.PosterRole.String(),
 			DiscussionContent: createdDiscussion.Content,
-			DatePosted:        createdDiscussion.CreatedDts.In(helpers.LoadEastern()).Format("01/02/2006 at 03:04 pm MST"),
+			DatePosted:        createdDiscussion.CreatedDts.In(helpers.LoadEastern()).Format("01/02/2006 at 03:04pm MST"),
 		},
 	)
 	if err != nil {
@@ -249,7 +249,7 @@ func sendAdminEmail(
 			PosterName:        creatorName,
 			PosterRole:        createdDiscussion.PosterRole.String(),
 			DiscussionContent: createdDiscussion.Content,
-			DatePosted:        createdDiscussion.CreatedDts.In(helpers.LoadEastern()).Format("01/02/2006 at 03:04 pm MST"),
+			DatePosted:        createdDiscussion.CreatedDts.In(helpers.LoadEastern()).Format("01/02/2006 at 03:04pm MST"),
 		},
 	)
 	if err != nil {

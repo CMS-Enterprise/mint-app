@@ -501,7 +501,7 @@ func sendCTATDiscussionRequesterTestEmail(
 		PosterName:        "Audrey Abrams",
 		PosterRole:        "CTAT Admin",
 		DiscussionContent: "The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps.",
-		DatePosted:        "10/30/2026 at 8:30am",
+		DatePosted:        "10/30/2026 at 08:30am EDT",
 	}
 
 	emailSubject, emailBody, err := email.CTAT.DiscussionRequester.GetContent(subjectContent, bodyContent)
@@ -533,7 +533,7 @@ func sendCTATDiscussionAdminTestEmail(
 		PosterName:        "Betty Alpha",
 		PosterRole:        "Requester",
 		DiscussionContent: "The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps. The CTAT team is reviewing your request and will follow up here with next steps.",
-		DatePosted:        "10/30/2026 at 8:30am",
+		DatePosted:        "10/30/2026 at 08:30am EDT",
 	}
 
 	emailSubject, emailBody, err := email.CTAT.DiscussionAdmin.GetContent(subjectContent, bodyContent)
